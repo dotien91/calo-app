@@ -7,12 +7,15 @@ import SplashScreen from "react-native-splash-screen";
  */
 import Navigation from "./src/navigation";
 import { isAndroid } from "@freakycoder/react-native-helpers";
+import useStore from "@services/zustand/store";
+import { translations } from "@localization";
 
 LogBox.ignoreAllLogs();
 
 const App = () => {
   const scheme = useColorScheme();
   const isDarkMode = scheme === "dark";
+  const language = useStore((state) => state.language);
 
   React.useEffect(() => {
     StatusBar.setBarStyle(isDarkMode ? "light-content" : "dark-content");
@@ -21,10 +24,11 @@ const App = () => {
       StatusBar.setTranslucent(true);
     }
 
+    translations.setLanguage(language);
     setTimeout(() => {
       SplashScreen.hide();
     }, 750);
-  }, [scheme, isDarkMode]);
+  }, [scheme, isDarkMode, language]);
 
   return (
     <>
