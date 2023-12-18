@@ -62,29 +62,23 @@ const CommonStyle = StyleSheet.create({
     zIndex: 1,
   },
   hnRegular: {
-    fontFamily: font.montserrat.regular,
+    fontFamily: font.outfit.regular,
   },
   hnBold: {
-    fontFamily: font.montserrat.bold,
+    fontFamily: font.outfit.bold,
   },
   hnSemiBold: {
-    fontFamily: font.montserrat.semiBold,
-  },
-  hnBoldItalic: {
-    fontFamily: font.montserrat.boldItalic,
+    fontFamily: font.outfit.semiBold,
   },
   hnMedium: {
-    fontFamily: font.montserrat.medium,
+    fontFamily: font.outfit.medium,
   },
   hnLight: {
-    fontFamily: font.montserrat.light,
+    fontFamily: font.outfit.light,
   },
-  hnItalic: {
-    fontFamily: font.montserrat.italic,
-  },
-  hnLightItalic: {
-    fontFamily: font.montserrat.lightItalic,
-  },
+  // hnItalic: {
+  //   fontFamily: font.outfit.italic,
+  // },
   borderStyle: {
     borderColor: palette.borderColor,
     borderStyle: "solid",
@@ -93,7 +87,7 @@ const CommonStyle = StyleSheet.create({
   text: {
     fontSize: 14,
     lineHeight: 16,
-    fontFamily: font.montserrat.medium,
+    fontFamily: font.outfit.medium,
     color: palette.black,
   },
 });

@@ -72,6 +72,42 @@
     {
       "path": "src/assets/fonts/Montserrat/Montserrat-ThinItalic.ttf",
       "sha1": "21fdb007ec60c23df8ef1fbb586b397b2f1f099a"
+    },
+    {
+      "path": "src/assets/fonts/Outfit/SVN-Outfit-Black.ttf",
+      "sha1": "29ab1b550c9a09b0fb191af31f6759ee9ecdf650"
+    },
+    {
+      "path": "src/assets/fonts/Outfit/SVN-Outfit-Bold.ttf",
+      "sha1": "b1359b29af1be3baa3ef2a66a8450a29d4c0a7b9"
+    },
+    {
+      "path": "src/assets/fonts/Outfit/SVN-Outfit-ExtraBold.ttf",
+      "sha1": "912947d7d2dbb10c69ed5455ca3346a3a25955cb"
+    },
+    {
+      "path": "src/assets/fonts/Outfit/SVN-Outfit-ExtraLight.ttf",
+      "sha1": "6814b72d82d3e44c0fb878a8292c123127a06de0"
+    },
+    {
+      "path": "src/assets/fonts/Outfit/SVN-Outfit-Light.ttf",
+      "sha1": "3725e011f3c91fdda4b0449f7615c349c10ce48b"
+    },
+    {
+      "path": "src/assets/fonts/Outfit/SVN-Outfit-Medium.ttf",
+      "sha1": "be813e4a6169a966d981053753fafd6faf706297"
+    },
+    {
+      "path": "src/assets/fonts/Outfit/SVN-Outfit-Regular.ttf",
+      "sha1": "41ef1524439dc062bb509d4f23dc5ba59ae4a136"
+    },
+    {
+      "path": "src/assets/fonts/Outfit/SVN-Outfit-SemiBold.ttf",
+      "sha1": "b59d9253efb02c813be2835cf5e07da6178e0805"
+    },
+    {
+      "path": "src/assets/fonts/Outfit/SVN-Outfit-Thin.ttf",
+      "sha1": "4686d088f741fb128fad6cd15e4fa3e8ca02a520"
     }
   ]
 }
