@@ -1,15 +1,19 @@
 import { Theme } from "@react-navigation/native";
 
 export const palette = {
-  primary: "#0564d4",
+  primary: "#C1121F",
+  mainColor2: "#595959",
+  secondColor: "#FDEBED",
+  error: "#eb032d",
+  textInput: "#4f5c61",
   secondary: "#ff6a00",
-  background: "#f6f8fa",
+  background: "#fff",
   white: "#fff",
   black: "#101214",
   button: "#1c1e21",
   shadow: "#757575",
   text: "#30363b",
-  borderColor: "#d0d7de",
+  borderColor: "#999a9a",
   borderColorDark: "#333942",
   placeholder: "#a1a1a1",
   danger: "rgb(208, 2, 27)",
@@ -24,6 +28,9 @@ export const palette = {
   dynamicBackground: "#fff",
   transparent: "transparent",
   calpyse: "#2b7488",
+  grey: "#eceeef",
+  blue: "#0a86cf",
+  orange: "#ea7a16",
 };
 
 interface ExtendedTheme extends Theme {

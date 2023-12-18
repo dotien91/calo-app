@@ -16,7 +16,6 @@ import CardItem from "./components/card-item/CardItem";
  */
 import { SCREENS } from "@shared-constants";
 import Text from "@shared-components/text-wrapper/TextWrapper";
-import fonts from "@fonts";
 
 const profileURI =
   // eslint-disable-next-line max-len
@@ -75,12 +74,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
       <Text h1 bold color={colors.text}>
         Hello Kuray
       </Text>
-      <Text
-        fontFamily={fonts.montserrat.lightItalic}
-        color={colors.placeholder}
-      >
-        Welcome Back
-      </Text>
+      <Text color={colors.placeholder}>Welcome Back</Text>
     </>
   );
 

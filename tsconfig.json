@@ -42,7 +42,8 @@
       "@utils": ["./utils/"],
       "@assets": ["./assets/"],
       "@local-storage": ["./services/local-storage"],
-      "@zustand": ["./services/zustand/store"]
+      "@zustand": ["./services/zustand/store"],
+      "@common/*": ["./common/*"],
     }
   },
   "extends": "@tsconfig/react-native/tsconfig.json",
