@@ -8,6 +8,7 @@ import createStyles from "./ProfileScreen.style";
 import Text from "@shared-components/text-wrapper/TextWrapper";
 import useStore from "@services/zustand/store";
 import RNBounceable from "@freakycoder/react-native-bounceable";
+import { translations } from "@localization";
 
 interface ProfileScreenProps {}
 
@@ -22,7 +23,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
   return (
     <View style={styles.container}>
       <Text h1 color={colors.text}>
-        Profile
+        {translations.profile}
       </Text>
       <View style={styles.userContainer}>
         <Text>{userData?.name}</Text>

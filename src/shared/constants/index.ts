@@ -5,4 +5,5 @@ export const SCREENS = {
   NOTIFICATION: "Notification",
   PROFILE: "Profile",
   DETAIL: "Detail",
+  SETTING: "Setting",
 };

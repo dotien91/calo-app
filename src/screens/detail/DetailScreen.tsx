@@ -8,6 +8,7 @@ import * as NavigationService from "react-navigation-helpers";
 import createStyles from "./DetailScreen.style";
 import Text from "@shared-components/text-wrapper/TextWrapper";
 import RNBounceable from "@freakycoder/react-native-bounceable";
+import { translations } from "@localization";
 
 interface DetailScreenProps {}
 
@@ -19,7 +20,7 @@ const DetailScreen: React.FC<DetailScreenProps> = () => {
   return (
     <View style={styles.container}>
       <Text h1 color={colors.text}>
-        Detail Screen
+        {translations.detail}
       </Text>
       <RNBounceable
         style={styles.buttonStyle}

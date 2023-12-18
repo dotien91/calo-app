@@ -1,5 +1,4 @@
 import React from "react";
-import { useColorScheme } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
@@ -16,14 +15,15 @@ import SearchScreen from "@screens/search/SearchScreen";
 import DetailScreen from "@screens/detail/DetailScreen";
 import ProfileScreen from "@screens/profile/ProfileScreen";
 import NotificationScreen from "@screens/notification/NotificationScreen";
+import SettingScreenStyle from "@screens/setting/SettingScreen";
+import useStore from "@services/zustand/store";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 const Navigation = () => {
-  const scheme = useColorScheme();
-  const isDarkMode = scheme === "dark";
+  const isDarkMode = useStore((state) => state.isDarkMode);
 
   React.useEffect((): any => {
     return () => (isReadyRef.current = false);
@@ -84,6 +84,7 @@ const Navigation = () => {
           component={NotificationScreen}
         />
         <Tab.Screen name={SCREENS.PROFILE} component={ProfileScreen} />
+        <Tab.Screen name={SCREENS.SETTING} component={SettingScreenStyle} />
       </Tab.Navigator>
     );
   };
