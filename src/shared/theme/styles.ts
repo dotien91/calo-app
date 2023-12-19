@@ -1,8 +1,8 @@
-import { StyleSheet } from "react-native";
+import { FlexStyle, StyleSheet } from "react-native";
 import font from "./fonts";
 import { palette } from "./themes";
 
-const flexBase = {
+const flexBase: FlexStyle = {
   flexDirection: "row",
   flexWrap: "nowrap",
   alignItems: "center",

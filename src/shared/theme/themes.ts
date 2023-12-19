@@ -8,6 +8,7 @@ export const palette = {
   textInput: "#4f5c61",
   secondary: "#ff6a00",
   background: "#fff",
+  background2: "#F0F0F0",
   white: "#fff",
   black: "#101214",
   button: "#1c1e21",
