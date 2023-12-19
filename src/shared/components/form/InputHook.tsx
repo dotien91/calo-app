@@ -55,11 +55,12 @@ export default InputHook;
 
 const styles = {
   wrapper: {
-    ...CommonStyle.mb10,
+    // ...CommonStyle.mb10,
+    ...CommonStyle.flex1,
   },
   input: {
-    ...CommonStyle.borderStyle,
-    ...CommonStyle.mb6,
+    // ...CommonStyle.borderStyle,
+    // ...CommonStyle.mb6,
   },
   errorText: {
     color: palette.danger,

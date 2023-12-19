@@ -17,7 +17,12 @@ import ProfileScreen from "@screens/profile/ProfileScreen";
 import NotificationScreen from "@screens/notification/NotificationScreen";
 import SettingScreenStyle from "@screens/setting/SettingScreen";
 import useStore from "@services/zustand/store";
-// import LoginScreen from "@screens/login/LoginScreen";
+import Intro from "@screens/login/intro/Intro";
+import ChooseLanguage from "@screens/login/chooselanguage/ChooseLanguage";
+import WelcomeScreen from "@screens/login/welcome/Welcome";
+import LoginPage from "@screens/login/loginpage/LoginPage";
+import LoginWithEmail from "@screens/login/loginwithemail/LoginWithEmail";
+import SignUp from "@screens/login/signup/SignUp";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -90,6 +95,25 @@ const Navigation = () => {
     );
   };
 
+  const renderStackLogin = () => {
+    return (
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name={SCREENS.LOGININTRO} component={Intro} />
+        <Stack.Screen
+          name={SCREENS.LOGINCHOOSELANGUAGE}
+          component={ChooseLanguage}
+        />
+        <Stack.Screen name={SCREENS.LOGINWELCOME} component={WelcomeScreen} />
+        <Stack.Screen name={SCREENS.LOGINPAGE} component={LoginPage} />
+        <Stack.Screen
+          name={SCREENS.LOGINWITHEMAIL}
+          component={LoginWithEmail}
+        />
+        <Stack.Screen name={SCREENS.SIGNUP} component={SignUp} />
+      </Stack.Navigator>
+    );
+  };
+
   return (
     <NavigationContainer
       ref={navigationRef}
@@ -99,6 +123,7 @@ const Navigation = () => {
       theme={isDarkMode ? DarkTheme : LightTheme}
     >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name={SCREENS.LOGIN} component={renderStackLogin} />
         <Stack.Screen name={SCREENS.HOME} component={renderTabNavigation} />
         <Stack.Screen name={SCREENS.DETAIL}>
           {(props) => <DetailScreen {...props} />}

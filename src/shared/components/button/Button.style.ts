@@ -12,6 +12,7 @@ export default (theme: ExtendedTheme) => {
       justifyContent: "center",
       alignItems: "center",
       width: "100%",
+      flexDirection: "row",
     },
     textButton: {
       ...CommonStyle.hnSemiBold,
