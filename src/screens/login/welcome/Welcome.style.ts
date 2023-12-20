@@ -1,10 +1,18 @@
 import { ExtendedTheme } from "@react-navigation/native";
 import CommonStyle from "@theme/styles";
 import { StyleSheet } from "react-native";
+import { getBottomSpace } from "react-native-iphone-screen-helper";
 
 const createStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
+    container: {
+      ...CommonStyle.flex1,
+      backgroundColor: colors.background,
+      justifyContent: "space-between",
+      marginBottom: getBottomSpace(),
+      paddingBottom: 10,
+    },
     imageStyle: {
       flex: 1,
       width: "100%",
@@ -15,7 +23,6 @@ const createStyles = (theme: ExtendedTheme) => {
     },
     textHeader: {
       ...CommonStyle.hnSemiBold,
-      marginTop: 32,
       fontSize: 36,
       color: colors.mainColor2,
       textAlign: "center",
@@ -28,9 +35,7 @@ const createStyles = (theme: ExtendedTheme) => {
       textAlign: "center",
     },
     styleButton: {
-      marginTop: 36,
       paddingHorizontal: 20,
-      marginBottom: 40,
     },
   });
 };

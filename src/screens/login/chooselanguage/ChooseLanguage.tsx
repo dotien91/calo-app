@@ -1,7 +1,6 @@
 import {
   View,
   Text,
-  SafeAreaView,
   TextInput,
   TouchableWithoutFeedback,
   Keyboard,
@@ -17,6 +16,8 @@ import { SvgProps } from "react-native-svg";
 import Button from "@shared-components/button/Button";
 import createStyles from "./ChooseLanguage.style";
 import { SCREENS } from "@shared-constants";
+import { translations } from "@localization";
+import useStore from "@services/zustand/store";
 
 interface TypeItemLanguage {
   label: string;
@@ -31,12 +32,16 @@ export default function ChooseLanguage() {
     // { label: "Korean", value: "kr" },
     { label: "Vietnamese", value: "vi", flag: Flagvi },
   ];
-  const [selected, setSelected] = useState("en");
+  const [selected, setSelected] = useState(useStore((state) => state.language));
   const [search, setSearch] = useState("");
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
+  const setLanguage = useStore((state) => state.setLanguage);
 
   const handleKeepGoing = () => {
+    translations.setLanguage(selected);
+    setLanguage(selected);
+
     NavigationService.replace(SCREENS.LOGINWELCOME);
   };
 
@@ -61,7 +66,7 @@ export default function ChooseLanguage() {
   };
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <Text style={styles.textHeader}>Choose the language</Text>
         <View style={styles.viewSearch}>
           <TextInput
@@ -86,7 +91,7 @@ export default function ChooseLanguage() {
             text="Keep going"
           />
         </View>
-      </SafeAreaView>
+      </View>
     </TouchableWithoutFeedback>
   );
 }

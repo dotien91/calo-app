@@ -2,7 +2,6 @@ import React, { useMemo } from "react";
 import { View, Text, Dimensions } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
-import CommonStyle from "@theme/styles";
 import Button from "@shared-components/button/Button";
 import createStyles from "./Welcome.style";
 import { Welcome } from "assets/svg";
@@ -20,15 +19,17 @@ export default function WelcomeScreen() {
   };
 
   return (
-    <View style={CommonStyle.flex1}>
+    <View style={styles.container}>
       <Welcome width={width} height={heightSvg} />
-      <View style={styles.viewText}>
-        <Text style={styles.textHeader}>
-          Take your IELTS proficiency to a new level
-        </Text>
-        <Text style={styles.textDescription}>
-          Enhance your IELTS skill and achieve the desired scores
-        </Text>
+      <View style={[{ width: "100%" }]}>
+        <View style={styles.viewText}>
+          <Text style={styles.textHeader}>
+            Welcome to the World of Languages{" "}
+          </Text>
+          <Text style={styles.textDescription}>
+            Learning has never been to easy! With IELTS you will learn …
+          </Text>
+        </View>
       </View>
       <Button
         onPress={handleStartNow}

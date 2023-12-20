@@ -7,6 +7,8 @@ export const SCREENS = {
   LOGINPAGE: "LoginPage",
   LOGINWITHEMAIL: "LoginWithEmail",
   SIGNUP: "SignUp",
+  FORGOTPASSWORD: "ForgotPassword",
+  NEWPASSWORD: "NewPassword",
   HOME: "Home",
   SEARCH: "Search",
   NOTIFICATION: "Notification",

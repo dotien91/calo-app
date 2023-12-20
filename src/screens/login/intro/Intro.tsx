@@ -4,7 +4,6 @@ import { loginIeltsHunter } from "assets/image";
 import { useTheme } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 
-import CommonStyle from "@theme/styles";
 import Button from "@shared-components/button/Button";
 import createStyles from "./Intro.style";
 import { SCREENS } from "@shared-constants";
@@ -18,7 +17,7 @@ export default function Intro() {
   };
 
   return (
-    <View style={CommonStyle.flex1}>
+    <View style={styles.container}>
       <Image style={styles.imageStyle} source={loginIeltsHunter} />
       <View style={styles.viewText}>
         <Text style={styles.textHeader}>

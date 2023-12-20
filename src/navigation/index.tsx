@@ -23,6 +23,8 @@ import WelcomeScreen from "@screens/login/welcome/Welcome";
 import LoginPage from "@screens/login/loginpage/LoginPage";
 import LoginWithEmail from "@screens/login/loginwithemail/LoginWithEmail";
 import SignUp from "@screens/login/signup/SignUp";
+import ForgotPassword from "@screens/login/forgotpassword/ForgotPassword";
+import NewPassword from "@screens/login/NewPassword/NewPassword";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -99,6 +101,11 @@ const Navigation = () => {
     return (
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name={SCREENS.LOGININTRO} component={Intro} />
+        <Stack.Screen
+          name={SCREENS.FORGOTPASSWORD}
+          component={ForgotPassword}
+        />
+        <Stack.Screen name={SCREENS.NEWPASSWORD} component={NewPassword} />
         <Stack.Screen
           name={SCREENS.LOGINCHOOSELANGUAGE}
           component={ChooseLanguage}

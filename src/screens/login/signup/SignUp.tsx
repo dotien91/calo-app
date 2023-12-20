@@ -1,10 +1,11 @@
 import {
   View,
   Text,
-  SafeAreaView,
   TouchableWithoutFeedback,
   Keyboard,
   Pressable,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import React, { useMemo, useState } from "react";
 import { useTheme } from "@react-navigation/native";
@@ -27,6 +28,7 @@ import Or from "../components/Or";
 import InputHook from "@shared-components/form/InputHook";
 import { useForm } from "react-hook-form";
 import { SvgProps } from "react-native-svg";
+import { translations } from "@localization";
 
 interface ButtonSocialProps {
   onPress: () => void;
@@ -80,102 +82,116 @@ export default function SignUp() {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <SafeAreaView style={[CommonStyle.flex1, { justifyContent: "center" }]}>
-        <View style={[CommonStyle.flex1, { alignItems: "center" }]}>
-          <IeltsHunter />
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "height" : undefined}
+      >
+        <View style={styles.container}>
+          <View style={[{ alignItems: "center" }]}>
+            <IeltsHunter />
+          </View>
+          <View>
+            <Text style={styles.textHeader}>
+              {translations.createNewAccount}
+            </Text>
+            <View style={styles.viewInput}>
+              <SocialMail />
+              <InputHook
+                name="fullname"
+                customStyle={CommonStyle.flex1}
+                inputProps={{
+                  type: "text",
+                  defaultValue: "",
+                  placeholder: translations.fullname,
+                }}
+                control={control}
+                rules={{ required: true }}
+              />
+            </View>
+            {errors.fullname && (
+              <Text style={styles.textWarning}>
+                {errors.fullname.type == "required"
+                  ? translations.required
+                  : translations.invalid}
+              </Text>
+            )}
+            <View style={styles.viewInput}>
+              <SocialMail />
+              <InputHook
+                name="email"
+                customStyle={CommonStyle.flex1}
+                inputProps={{
+                  type: "email",
+                  defaultValue: "",
+                  placeholder: translations.placeholderEmaiPhone,
+                }}
+                control={control}
+                rules={{ required: true }}
+              />
+            </View>
+            {errors.email && (
+              <Text style={styles.textWarning}>
+                {errors.email.type == "required"
+                  ? translations.required
+                  : translations.invalid}
+              </Text>
+            )}
+            <View style={styles.viewInput}>
+              <LoginPassword />
+              <InputHook
+                name="password"
+                customStyle={{}}
+                inputProps={{
+                  type: "text",
+                  defaultValue: "",
+                  placeholder: translations.placeholderPasword,
+                }}
+                control={control}
+                rules={{ required: true }}
+              />
+              <Pressable onPress={() => setShowPass((showPass) => !showPass)}>
+                {showPass ? <Eye /> : <EyeCrossed />}
+              </Pressable>
+            </View>
+            {errors.email && (
+              <Text style={styles.textWarning}>
+                {errors.email.type == "required"
+                  ? translations.required
+                  : translations.invalid}
+              </Text>
+            )}
+            <Button
+              style={styles.buttonMargin}
+              onPress={handleSubmit(onSubmit)}
+              textColor={colors.white}
+              backgroundColor={colors.primary}
+              text={translations.signUp}
+            />
+            <Or />
+            <View style={styles.viewSocial}>
+              <ButtonSocial IconSocial={SocialGG} onPress={pressGoogle} />
+              <ButtonSocial
+                IconSocial={SocialAppleBlack}
+                onPress={pressApple}
+              />
+              <ButtonSocial IconSocial={SocialFbBlue} onPress={pressFacebook} />
+            </View>
+            <TermPolicy style={{ paddingHorizontal: 20, marginTop: 36 }} />
+            <Text style={styles.textRegister}>
+              {translations.haveAnAccount}
+              <Text
+                style={[
+                  CommonStyle.hnSemiBold,
+                  { color: colors.primary, textDecorationLine: "underline" },
+                ]}
+                onPress={pressLoginNow}
+              >
+                {translations.loginNow}
+              </Text>
+            </Text>
+          </View>
         </View>
-        <Text style={styles.textHeader}>Create new account!</Text>
-        <View style={styles.viewInput}>
-          <SocialMail />
-          <InputHook
-            name="fullname"
-            errorTxt=""
-            customStyle={{ flex: 1 }}
-            inputProps={{
-              type: "text",
-              defaultValue: "",
-              placeholder: "Fullname",
-            }}
-            control={control}
-            rules={{ required: true }}
-          />
-        </View>
-        {errors.fullname && (
-          <Text style={styles.textWarning}>
-            {errors.fullname.type == "required" ? "Required" : "Invalid"}
-          </Text>
-        )}
-        <View style={styles.viewInput}>
-          <SocialMail />
-          <InputHook
-            name="email"
-            errorTxt=""
-            customStyle={{ flex: 1 }}
-            inputProps={{
-              type: "email",
-              defaultValue: "",
-              placeholder: "Email/Phone number",
-            }}
-            control={control}
-            rules={{ required: true }}
-          />
-        </View>
-        {errors.email && (
-          <Text style={styles.textWarning}>
-            {errors.email.type == "required" ? "Required" : "Invalid"}
-          </Text>
-        )}
-        <View style={styles.viewInput}>
-          <LoginPassword />
-          <InputHook
-            name="password"
-            errorTxt=""
-            customStyle={{}}
-            inputProps={{
-              type: "text",
-              defaultValue: "",
-              placeholder: "Password",
-            }}
-            control={control}
-            rules={{ required: true }}
-          />
-          <Pressable onPress={() => setShowPass((showPass) => !showPass)}>
-            {showPass ? <Eye /> : <EyeCrossed />}
-          </Pressable>
-        </View>
-        {errors.email && (
-          <Text style={styles.textWarning}>
-            {errors.email.type == "required" ? "Required" : "Invalid"}
-          </Text>
-        )}
-        <Button
-          style={styles.buttonMargin}
-          onPress={handleSubmit(onSubmit)}
-          textColor={colors.white}
-          backgroundColor={colors.primary}
-          text="Sign up"
-        />
-
-        <Or />
-        <View style={styles.viewSocial}>
-          <ButtonSocial IconSocial={SocialGG} onPress={pressGoogle} />
-          <ButtonSocial IconSocial={SocialAppleBlack} onPress={pressApple} />
-          <ButtonSocial IconSocial={SocialFbBlue} onPress={pressFacebook} />
-        </View>
-        <TermPolicy style={{ paddingHorizontal: 20, marginTop: 36 }} />
-        <Text style={styles.textRegister}>
-          Have an account?{" "}
-          <Text
-            style={[
-              CommonStyle.hnSemiBold,
-              { color: colors.primary, textDecorationLine: "underline" },
-            ]}
-            onPress={pressLoginNow}
-          >
-            Login now!
-          </Text>
-        </Text>
-      </SafeAreaView>
+      </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
 }

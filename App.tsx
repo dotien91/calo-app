@@ -1,5 +1,5 @@
 import React from "react";
-import { StatusBar, useColorScheme, LogBox } from "react-native";
+import { StatusBar, LogBox } from "react-native";
 import Toast from "react-native-toast-message";
 import SplashScreen from "react-native-splash-screen";
 
@@ -16,8 +16,8 @@ import { translations } from "@localization";
 LogBox.ignoreAllLogs();
 
 const App = () => {
-  const scheme = useColorScheme();
-  const isDarkMode = scheme === "dark";
+  const isDarkMode = useStore((state) => state.isDarkMode);
+
   React.useEffect(() => {
     NetworkManager.getInstance().configure();
     return () => {
@@ -37,7 +37,7 @@ const App = () => {
     setTimeout(() => {
       SplashScreen.hide();
     }, 750);
-  }, [scheme, isDarkMode, language]);
+  }, [isDarkMode, language]);
 
   return (
     <>

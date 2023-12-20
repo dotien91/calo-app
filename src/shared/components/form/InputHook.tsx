@@ -18,7 +18,7 @@ interface InputHookProps {
   control: any;
   rules: any;
   customStyle: ViewStyle;
-  errorTxt: string;
+  errorTxt?: string;
   name: string;
 }
 

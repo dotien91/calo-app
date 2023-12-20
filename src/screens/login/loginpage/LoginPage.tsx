@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView } from "react-native";
+import { View, Text } from "react-native";
 import React, { useMemo } from "react";
 import { useTheme } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
@@ -15,6 +15,7 @@ import createStyles from "./LoginPage.style";
 import TermPolicy from "../components/TermPolicy";
 import Or from "../components/Or";
 import { SCREENS } from "@shared-constants";
+import { translations } from "@localization";
 
 export default function LoginPage() {
   const theme = useTheme();
@@ -38,18 +39,18 @@ export default function LoginPage() {
   };
 
   return (
-    <SafeAreaView style={[CommonStyle.flex1, { justifyContent: "center" }]}>
+    <View style={styles.container}>
       <View style={[CommonStyle.flex1, { alignItems: "center" }]}>
         <IeltsHunter />
       </View>
-      <Text style={styles.textHeader}>Welcom back!</Text>
+      <Text style={styles.textHeader}>{translations.welcomeBack}</Text>
       <Button
         style={styles.buttonMarginGG}
         onPress={pressGoogle}
         textColor={colors.mainColor2}
         backgroundColor={"#DBDBDB"}
         SvgSo={SocialGG}
-        text="Continue with Google"
+        text={translations.continueWith("Google")}
       />
       <Button
         style={styles.buttonMargin}
@@ -57,7 +58,7 @@ export default function LoginPage() {
         textColor={colors.white}
         backgroundColor={"#1877F2"}
         SvgSo={SocialFb}
-        text="Continue with Facebook"
+        text={translations.continueWith("Facebook")}
       />
       <Button
         style={styles.buttonMargin}
@@ -65,7 +66,7 @@ export default function LoginPage() {
         textColor={colors.white}
         backgroundColor={colors.black}
         SvgSo={SocialApple}
-        text="Sign in with Apple"
+        text={translations.signInWith + " Apple"}
       />
       <Or />
       <Button
@@ -74,9 +75,9 @@ export default function LoginPage() {
         textColor={colors.mainColor2}
         backgroundColor={"#DBDBDB"}
         SvgSo={SocialMail}
-        text="Continue with E-mail"
+        text={translations.continueWith("E-mail")}
       />
       <TermPolicy style={{ paddingHorizontal: 20, marginTop: 36 }} />
-    </SafeAreaView>
+    </View>
   );
 }
