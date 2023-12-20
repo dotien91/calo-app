@@ -5,19 +5,21 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
+  Pressable,
 } from "react-native";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { useTheme } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 
 import Button from "@shared-components/button/Button";
-import { IeltsHunter, LoginPassword } from "assets/svg";
+import { Eye, EyeCrossed, IeltsHunter, LoginPassword } from "assets/svg";
 import createStyles from "./NewPassword.style";
 import TermPolicy from "../components/TermPolicy";
 import InputHook from "@shared-components/form/InputHook";
 import { useForm } from "react-hook-form";
 import { SCREENS } from "@shared-constants";
 import { translations } from "@localization";
+import GoBack from "../components/GoBack";
 
 export default function NewPassword() {
   const theme = useTheme();
@@ -33,6 +35,7 @@ export default function NewPassword() {
       otp: "",
     },
   });
+  const [showPass, setShowPass] = useState(false);
 
   const styles = useMemo(() => createStyles(theme), [theme]);
   const onSubmit = (data: any) => {
@@ -49,6 +52,7 @@ export default function NewPassword() {
         behavior={Platform.OS === "ios" ? "height" : undefined}
       >
         <View style={styles.container}>
+          <GoBack />
           <View style={[{ alignItems: "center" }]}>
             <IeltsHunter />
           </View>
@@ -68,7 +72,11 @@ export default function NewPassword() {
                 rules={{
                   required: true,
                 }}
+                isPassword={!showPass}
               />
+              <Pressable onPress={() => setShowPass((showPass) => !showPass)}>
+                {showPass ? <Eye /> : <EyeCrossed />}
+              </Pressable>
             </View>
             {errors.newPassword && (
               <Text style={styles.textWarning}>
@@ -91,7 +99,11 @@ export default function NewPassword() {
                 rules={{
                   required: true,
                 }}
+                isPassword={!showPass}
               />
+              <Pressable onPress={() => setShowPass((showPass) => !showPass)}>
+                {showPass ? <Eye /> : <EyeCrossed />}
+              </Pressable>
             </View>
             {errors.reNewPassword && (
               <Text style={styles.textWarning}>

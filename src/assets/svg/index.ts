@@ -18,6 +18,7 @@ import EyeCrossed from "./login-eye-crossed.svg";
 import Eye from "./login-eye.svg";
 import LoginFullname from "./login-fullname.svg";
 import LoginPassword from "./login-password.svg";
+import IconBack from "./icon-back.svg";
 
 export {
   Flagvi,
@@ -40,4 +41,5 @@ export {
   Eye,
   LoginFullname,
   LoginPassword,
+  IconBack,
 };

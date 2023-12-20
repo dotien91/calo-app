@@ -20,6 +20,7 @@ interface InputHookProps {
   customStyle: ViewStyle;
   errorTxt?: string;
   name: string;
+  isPassword?: boolean;
 }
 
 // eslint-disable-next-line react/display-name
@@ -30,6 +31,7 @@ const InputHook: React.FC<InputHookProps> = ({
   errorTxt,
   customStyle,
   name,
+  isPassword = false,
 }) => {
   return (
     <View style={styles.wrapper}>
@@ -42,6 +44,7 @@ const InputHook: React.FC<InputHookProps> = ({
             onChangeText={(value) => onChange(value)}
             value={value}
             style={[styles.input, !!customStyle && customStyle]}
+            secureTextEntry={isPassword}
           />
         )}
         name={name}

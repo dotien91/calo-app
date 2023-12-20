@@ -18,6 +18,7 @@ import InputHook from "@shared-components/form/InputHook";
 import { useForm } from "react-hook-form";
 import { SCREENS } from "@shared-constants";
 import { translations } from "@localization";
+import GoBack from "../components/GoBack";
 
 export default function ForgotPassword() {
   const theme = useTheme();
@@ -47,6 +48,7 @@ export default function ForgotPassword() {
         behavior={Platform.OS === "ios" ? "height" : undefined}
       >
         <View style={styles.container}>
+          <GoBack />
           <View style={[{ alignItems: "center" }]}>
             <IeltsHunter />
           </View>

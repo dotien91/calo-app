@@ -32,6 +32,7 @@ import { useForm } from "react-hook-form";
 import { SvgProps } from "react-native-svg";
 import { SCREENS } from "@shared-constants";
 import { translations } from "@localization";
+import GoBack from "../components/GoBack";
 
 interface ButtonSocialProps {
   onPress: () => void;
@@ -94,6 +95,7 @@ export default function LoginWithEmail() {
         behavior={Platform.OS === "ios" ? "height" : undefined}
       >
         <View style={styles.container}>
+          <GoBack />
           <View style={[{ alignItems: "center" }]}>
             <IeltsHunter />
           </View>
@@ -141,6 +143,7 @@ export default function LoginWithEmail() {
                   required: true,
                   minLength: 6,
                 }}
+                isPassword={!showPass}
               />
               <Pressable onPress={() => setShowPass((showPass) => !showPass)}>
                 {showPass ? <Eye /> : <EyeCrossed />}

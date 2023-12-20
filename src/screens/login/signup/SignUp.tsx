@@ -29,6 +29,7 @@ import InputHook from "@shared-components/form/InputHook";
 import { useForm } from "react-hook-form";
 import { SvgProps } from "react-native-svg";
 import { translations } from "@localization";
+import GoBack from "../components/GoBack";
 
 interface ButtonSocialProps {
   onPress: () => void;
@@ -87,6 +88,7 @@ export default function SignUp() {
         behavior={Platform.OS === "ios" ? "height" : undefined}
       >
         <View style={styles.container}>
+          <GoBack />
           <View style={[{ alignItems: "center" }]}>
             <IeltsHunter />
           </View>
@@ -148,6 +150,7 @@ export default function SignUp() {
                 }}
                 control={control}
                 rules={{ required: true }}
+                isPassword={!showPass}
               />
               <Pressable onPress={() => setShowPass((showPass) => !showPass)}>
                 {showPass ? <Eye /> : <EyeCrossed />}
