@@ -5,7 +5,7 @@ import { useTheme } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 
 import Button from "@shared-components/button/Button";
-import createStyles from "./Intro.style";
+import createStyles from "./IntroScreen.style";
 import { SCREENS } from "@shared-constants";
 
 export default function Intro() {

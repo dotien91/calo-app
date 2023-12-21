@@ -5,9 +5,9 @@ import * as NavigationService from "react-navigation-helpers";
 import CommonStyle from "@theme/styles";
 import Button from "@shared-components/button/Button";
 import IconSvg from "assets/svg";
-import createStyles from "./LoginPage.style";
-import TermPolicy from "../components/TermPolicy";
-import Or from "../components/Or";
+import createStyles from "./LoginPageScreen.style";
+import ViewTermPolicy from "../components/ViewTermPolicy";
+import ViewOr from "../components/ViewOr";
 import { SCREENS } from "@shared-constants";
 import { translations } from "@localization";
 
@@ -62,7 +62,7 @@ export default function LoginPage() {
         SvgSo={<IconSvg name="icApple" size={16} color={colors.white} />}
         text={translations.signInWith + " Apple"}
       />
-      <Or />
+      <ViewOr />
       <Button
         style={styles.buttonMargin}
         onPress={pressMail}
@@ -71,7 +71,7 @@ export default function LoginPage() {
         SvgSo={<IconSvg name="icMail" size={16} color={colors.mainColor2} />}
         text={translations.continueWith("E-mail")}
       />
-      <TermPolicy style={{ paddingHorizontal: 20, marginTop: 36 }} />
+      <ViewTermPolicy style={{ paddingHorizontal: 20, marginTop: 36 }} />
     </View>
   );
 }

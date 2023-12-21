@@ -13,7 +13,7 @@ import * as NavigationService from "react-navigation-helpers";
 import CommonStyle from "shared/theme/styles";
 import IconSvg from "assets/svg";
 import Button from "@shared-components/button/Button";
-import createStyles from "./ChooseLanguage.style";
+import createStyles from "./ChooseLanguageScreen.style";
 import { SCREENS } from "@shared-constants";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";
@@ -30,9 +30,6 @@ export default function ChooseLanguage() {
       value: "en",
       flag: <IconSvg name="icFlagen" size={48} />,
     },
-    // { label: "Chinese", value: "cn" },
-    // { label: "Japanese", value: "jp" },
-    // { label: "Korean", value: "kr" },
     {
       label: "Vietnamese",
       value: "vi",
@@ -40,7 +37,7 @@ export default function ChooseLanguage() {
     },
   ];
   const [selected, setSelected] = useState(useStore((state) => state.language));
-  const [search, setSearch] = useState("");
+  const [txtSearch, setTxtSearch] = useState("");
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const setLanguage = useStore((state) => state.setLanguage);
@@ -79,8 +76,8 @@ export default function ChooseLanguage() {
           <TextInput
             placeholder="Find a language"
             style={styles.textSearch}
-            value={search}
-            onChangeText={(text) => setSearch(text)}
+            value={txtSearch}
+            onChangeText={(text) => setTxtSearch(text)}
           />
           <Pressable style={CommonStyle.center}>
             <IconSvg name="icSearch" />

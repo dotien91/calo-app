@@ -3,7 +3,7 @@ import { View, Text, Dimensions } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 import Button from "@shared-components/button/Button";
-import createStyles from "./Welcome.style";
+import createStyles from "./WelcomeScreen.style";
 import { SCREENS } from "@shared-constants";
 import IconSvg from "assets/svg";
 

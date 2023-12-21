@@ -11,13 +11,13 @@ import { useTheme } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 
 import Button from "@shared-components/button/Button";
-import createStyles from "./ForgotPassword.style";
-import TermPolicy from "../components/TermPolicy";
+import createStyles from "./ForgotPasswordScreen.style";
+import ViewTermPolicy from "../components/ViewTermPolicy";
 import InputHook from "@shared-components/form/InputHook";
 import { useForm } from "react-hook-form";
 import { SCREENS } from "@shared-constants";
 import { translations } from "@localization";
-import GoBack from "../components/GoBack";
+import ButtonGoBack from "../components/ButtonGoBack";
 import IconSvg from "assets/svg";
 
 export default function ForgotPassword() {
@@ -48,7 +48,7 @@ export default function ForgotPassword() {
         behavior={Platform.OS === "ios" ? "height" : undefined}
       >
         <View style={styles.container}>
-          <GoBack />
+          <ButtonGoBack />
           <View style={[{ alignItems: "center" }]}>
             <IconSvg name="logoIeltsHunter" width={120} height={67} />
           </View>
@@ -86,7 +86,7 @@ export default function ForgotPassword() {
               text={translations.continue}
             />
           </View>
-          <TermPolicy style={{ paddingHorizontal: 20, marginTop: 36 }} />
+          <ViewTermPolicy style={{ paddingHorizontal: 20, marginTop: 36 }} />
         </View>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>

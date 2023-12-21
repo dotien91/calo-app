@@ -3,7 +3,7 @@ import { Pressable, View } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import { getStatusBarHeight } from "react-native-iphone-screen-helper";
 import IconSvg from "assets/svg";
-const GoBack = () => {
+const ButtonGoBack = () => {
   return (
     <View
       style={{
@@ -20,4 +20,4 @@ const GoBack = () => {
   );
 };
 
-export default GoBack;
+export default ButtonGoBack;

@@ -7,19 +7,19 @@ import {
   Platform,
   Pressable,
 } from "react-native";
+import { useForm } from "react-hook-form";
 import React, { useMemo, useState } from "react";
 import { useTheme } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 
 import Button from "@shared-components/button/Button";
-import createStyles from "./NewPassword.style";
-import TermPolicy from "../components/TermPolicy";
+import createStyles from "./NewPasswordScreen.style";
+import ViewTermPolicy from "../components/ViewTermPolicy";
 import InputHook from "@shared-components/form/InputHook";
-import { useForm } from "react-hook-form";
 import { SCREENS } from "@shared-constants";
 import { translations } from "@localization";
-import GoBack from "../components/GoBack";
 import IconSvg from "assets/svg";
+import ButtonGoBack from "../components/ButtonGoBack";
 
 export default function NewPassword() {
   const theme = useTheme();
@@ -52,7 +52,7 @@ export default function NewPassword() {
         behavior={Platform.OS === "ios" ? "height" : undefined}
       >
         <View style={styles.container}>
-          <GoBack />
+          <ButtonGoBack />
           <View style={[{ alignItems: "center" }]}>
             <IconSvg name="logoIeltsHunter" width={120} height={67} />
           </View>
@@ -152,7 +152,7 @@ export default function NewPassword() {
               text={translations.save}
             />
           </View>
-          <TermPolicy style={{ paddingHorizontal: 20, marginTop: 36 }} />
+          <ViewTermPolicy style={{ paddingHorizontal: 20, marginTop: 36 }} />
         </View>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>

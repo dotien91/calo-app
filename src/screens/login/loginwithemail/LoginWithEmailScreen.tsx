@@ -14,14 +14,14 @@ import * as NavigationService from "react-navigation-helpers";
 import CommonStyle from "@theme/styles";
 import Button from "@shared-components/button/Button";
 import IconSvg from "assets/svg";
-import createStyles from "./LoginWithEmail.style";
-import TermPolicy from "../components/TermPolicy";
-import Or from "../components/Or";
+import createStyles from "./LoginWithEmailScreen.style";
+import ViewTermPolicy from "../components/ViewTermPolicy";
+import ViewOr from "../components/ViewOr";
 import InputHook from "@shared-components/form/InputHook";
 import { useForm } from "react-hook-form";
 import { SCREENS } from "@shared-constants";
 import { translations } from "@localization";
-import GoBack from "../components/GoBack";
+import ButtonGoBack from "../components/ButtonGoBack";
 
 interface ButtonSocialProps {
   onPress: () => void;
@@ -84,7 +84,7 @@ export default function LoginWithEmail() {
         behavior={Platform.OS === "ios" ? "height" : undefined}
       >
         <View style={styles.container}>
-          <GoBack />
+          <ButtonGoBack />
           <View style={[{ alignItems: "center" }]}>
             <IconSvg name="logoIeltsHunter" width={120} height={67} />
           </View>
@@ -174,7 +174,7 @@ export default function LoginWithEmail() {
               </Text>
             </View>
 
-            <Or />
+            <ViewOr />
             <View style={styles.viewSocial}>
               <ButtonSocial
                 IconSocial={<IconSvg name="icGoogle" />}
@@ -189,7 +189,7 @@ export default function LoginWithEmail() {
                 onPress={pressFacebook}
               />
             </View>
-            <TermPolicy style={{ paddingHorizontal: 20, marginTop: 36 }} />
+            <ViewTermPolicy style={{ paddingHorizontal: 20, marginTop: 36 }} />
             <Text style={styles.textRegister}>
               {translations.needAnAccount}
               <Text
