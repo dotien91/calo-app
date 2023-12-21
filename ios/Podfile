@@ -21,7 +21,7 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-target 'IeltsHunter' do
+target 'ieltshunter' do
   config = use_native_modules!
 
   # Flags change depending on the env values.
@@ -43,7 +43,7 @@ target 'IeltsHunter' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'IeltsHunterTests' do
+  target 'ieltshunterTests' do
     inherit! :complete
     # Pods for testing
   end
