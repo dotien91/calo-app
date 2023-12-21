@@ -71,6 +71,17 @@ export default function SignUpScreen() {
     );
   };
 
+  const textWarning = (warning: string | undefined) => {
+    if (!warning) return "";
+    if (warning === "required") {
+      return translations.required;
+    }
+    if (warning === "invalid") {
+      return translations.invalid;
+    }
+    return "";
+  };
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <KeyboardAvoidingView
@@ -86,77 +97,56 @@ export default function SignUpScreen() {
             <Text style={styles.textHeader}>
               {translations.createNewAccount}
             </Text>
-            <View style={styles.viewInput}>
-              <IconSvg name="icLoginFullname" />
-              <InputHook
-                name="fullname"
-                customStyle={CommonStyle.flex1}
-                inputProps={{
-                  type: "text",
-                  defaultValue: "",
-                  placeholder: translations.fullname,
-                }}
-                control={control}
-                rules={{ required: true }}
-              />
-            </View>
-            {errors.fullname && (
-              <Text style={styles.textWarning}>
-                {errors.fullname.type == "required"
-                  ? translations.required
-                  : translations.invalid}
-              </Text>
-            )}
-            <View style={styles.viewInput}>
-              <IconSvg name="icMail" color={colors.mainColor2} />
-              <InputHook
-                name="email"
-                customStyle={CommonStyle.flex1}
-                inputProps={{
-                  type: "email",
-                  defaultValue: "",
-                  placeholder: translations.placeholderEmaiPhone,
-                }}
-                control={control}
-                rules={{ required: true }}
-              />
-            </View>
-            {errors.email && (
-              <Text style={styles.textWarning}>
-                {errors.email.type == "required"
-                  ? translations.required
-                  : translations.invalid}
-              </Text>
-            )}
-            <View style={styles.viewInput}>
-              <IconSvg name="icLock" />
-              <InputHook
-                name="password"
-                customStyle={{}}
-                inputProps={{
-                  type: "text",
-                  defaultValue: "",
-                  placeholder: translations.placeholderPasword,
-                }}
-                control={control}
-                rules={{ required: true }}
-                isPassword={!showPass}
-              />
-              <Pressable onPress={() => setShowPass((showPass) => !showPass)}>
-                {showPass ? (
-                  <IconSvg name="icEye" />
-                ) : (
-                  <IconSvg name="icEyeCrossed" />
-                )}
-              </Pressable>
-            </View>
-            {errors.email && (
-              <Text style={styles.textWarning}>
-                {errors.email.type == "required"
-                  ? translations.required
-                  : translations.invalid}
-              </Text>
-            )}
+            <InputHook
+              iconLeft={<IconSvg name="icLoginFullname" />}
+              name="fullname"
+              customStyle={CommonStyle.flex1}
+              inputProps={{
+                type: "text",
+                defaultValue: "",
+                placeholder: translations.fullname,
+              }}
+              control={control}
+              rules={{ required: true }}
+              errorTxt={textWarning(errors.fullname?.type)}
+            />
+
+            <InputHook
+              iconLeft={<IconSvg name="icMail" color={colors.mainColor2} />}
+              name="email"
+              customStyle={CommonStyle.flex1}
+              inputProps={{
+                type: "email",
+                defaultValue: "",
+                placeholder: translations.placeholderEmaiPhone,
+              }}
+              control={control}
+              rules={{ required: true }}
+              errorTxt={textWarning(errors.email?.type)}
+            />
+            <InputHook
+              iconLeft={<IconSvg name="icLock" />}
+              name="password"
+              customStyle={{}}
+              inputProps={{
+                type: "text",
+                defaultValue: "",
+                placeholder: translations.placeholderPasword,
+              }}
+              control={control}
+              rules={{ required: true }}
+              isPassword={!showPass}
+              iconRight={
+                <IconSvg
+                  onPress={() => {
+                    setShowPass((showPass) => !showPass);
+                  }}
+                  name={showPass ? "icEye" : "icEyeCrossed"}
+                />
+              }
+              errorTxt={textWarning(errors.password?.type)}
+            />
+
             <Button
               style={styles.buttonMargin}
               onPress={handleSubmit(onSubmit)}

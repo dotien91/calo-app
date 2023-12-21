@@ -6,6 +6,7 @@ import Button from "@shared-components/button/Button";
 import createStyles from "./WelcomeScreen.style";
 import { SCREENS } from "@shared-constants";
 import IconSvg from "assets/svg";
+import { translations } from "@localization";
 
 const { width } = Dimensions.get("window");
 const heightSvg = (width / 375) * 457;
@@ -23,18 +24,16 @@ export default function WelcomeScreen() {
       <IconSvg name="icWelcome" width={width} height={heightSvg} />
       <View style={[{ width: "100%" }]}>
         <View style={styles.viewText}>
-          <Text style={styles.textHeader}>
-            Welcome to the World of Languages{" "}
-          </Text>
+          <Text style={styles.textHeader}>{translations.welcomeHeader}</Text>
           <Text style={styles.textDescription}>
-            Learning has never been to easy! With IELTS you will learn …
+            {translations.welcomeDescription}
           </Text>
         </View>
       </View>
       <Button
         onPress={handleStartNow}
         style={styles.styleButton}
-        text="Start Now"
+        text={translations.startNow}
       />
     </View>
   );

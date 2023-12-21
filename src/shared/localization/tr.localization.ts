@@ -32,4 +32,8 @@ export default {
   fullname: "Fullname",
   haveAnAccount: "Have an account? ",
   loginNow: "Login now!",
+  welcomeHeader: "Welcome to the World of Languages",
+  welcomeDescription:
+    "Learning has never been to easy! With IELTS you will learn ...",
+  startNow: "Start Now",
 };

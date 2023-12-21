@@ -32,4 +32,7 @@ export default {
   fullname: "Họ và tên",
   haveAnAccount: "Đã có tài khoản? ",
   loginNow: "Đăng nhập ngay!",
+  welcomeHeader: "Chào mừng đến với thế giới ngôn ngữ",
+  welcomeDescription: "Học tập không bao giờ là dễ dàng, với IELTS bạn sẽ ..",
+  startNow: "Bắt đầu",
 };

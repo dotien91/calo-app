@@ -22,6 +22,7 @@ import { useForm } from "react-hook-form";
 import { SCREENS } from "@shared-constants";
 import { translations } from "@localization";
 import GoBackButton from "../components/GoBackButton";
+import { regexMail } from "@shared-constants/regex";
 
 interface ButtonSocialProps {
   onPress: () => void;
@@ -76,6 +77,16 @@ export default function LoginWithEmailScreen() {
     console.log("control...", JSON.stringify(control));
     NavigationService.push(SCREENS.FORGOTPASSWORD);
   };
+  const textWarning = (warning: string | undefined) => {
+    if (!warning) return "";
+    if (warning === "required") {
+      return translations.required;
+    }
+    if (warning === "invalid") {
+      return translations.invalid;
+    }
+    return "";
+  };
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -90,65 +101,48 @@ export default function LoginWithEmailScreen() {
           </View>
           <View>
             <Text style={styles.textHeader}>{translations.welcomeBack}</Text>
-            <View style={styles.viewInput}>
-              <IconSvg name="icMail" size={18} color={colors.mainColor2} />
-              <InputHook
-                name="email"
-                customStyle={{ flex: 1 }}
-                inputProps={{
-                  type: "email",
-                  defaultValue: "",
-                  placeholder: translations.placeholderEmaiPhone,
-                }}
-                control={control}
-                rules={{
-                  required: true,
-                  //   pattern:
-                  // /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]
-                  // {1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))|(^[0-9]{10})$/,
-                }}
-              />
-            </View>
-            {errors.email && (
-              <Text style={styles.textWarning}>
-                {errors.email.type == "required"
-                  ? translations.required
-                  : translations.invalid}
-              </Text>
-            )}
+            <InputHook
+              name="email"
+              customStyle={{ flex: 1 }}
+              inputProps={{
+                type: "email",
+                defaultValue: "",
+                placeholder: translations.placeholderEmaiPhone,
+              }}
+              iconLeft={
+                <IconSvg name="icMail" size={18} color={colors.mainColor2} />
+              }
+              control={control}
+              rules={{
+                required: true,
+                pattern: regexMail,
+              }}
+              errorTxt={textWarning(errors.email?.type)}
+            />
 
-            <View style={styles.viewInput}>
-              <IconSvg name="icLock" size={18} />
-              <InputHook
-                name="password"
-                customStyle={{}}
-                inputProps={{
-                  type: "password",
-                  defaultValue: "",
-                  placeholder: translations.placeholderPasword,
-                }}
-                control={control}
-                rules={{
-                  required: true,
-                  minLength: 6,
-                }}
-                isPassword={!showPass}
-              />
-              <Pressable onPress={() => setShowPass((showPass) => !showPass)}>
-                {showPass ? (
-                  <IconSvg name="icEye" />
-                ) : (
-                  <IconSvg name="icEyeCrossed" />
-                )}
-              </Pressable>
-            </View>
-            {errors.password && (
-              <Text style={styles.textWarning}>
-                {errors.password.type == "required"
-                  ? translations.required
-                  : translations.minLength(6)}
-              </Text>
-            )}
+            <InputHook
+              name="password"
+              customStyle={{}}
+              inputProps={{
+                type: "password",
+                defaultValue: "",
+                placeholder: translations.placeholderPasword,
+              }}
+              control={control}
+              rules={{
+                required: true,
+                minLength: 6,
+              }}
+              iconLeft={<IconSvg name="icLock" size={18} />}
+              isPassword={!showPass}
+              iconRight={
+                <IconSvg
+                  onPress={() => setShowPass((showPass) => !showPass)}
+                  name={showPass ? "icEye" : "icEyeCrossed"}
+                />
+              }
+              errorTxt={textWarning(errors.password?.type)}
+            />
 
             <Button
               style={styles.buttonMargin}

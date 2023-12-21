@@ -49,6 +49,7 @@ interface IconSvgProps {
   color?: string;
   rotate?: number; // Eg: 90 mean 90deg
   style?: object;
+  onPress?: () => void;
 }
 const IconSvg = (props: IconSvgProps) => {
   const {
@@ -59,6 +60,7 @@ const IconSvg = (props: IconSvgProps) => {
     color = "white",
     rotate = 0,
     style = null,
+    onPress,
   } = props;
   if (!(name in Icons)) {
     return null;
@@ -83,6 +85,7 @@ const IconSvg = (props: IconSvgProps) => {
   const IconSvgComponent: React.FC<SvgProps> = Icons[name];
   return (
     <IconSvgComponent
+      onPress={!!onPress && onPress}
       width={widthIcon}
       height={heightIcon}
       {...optionalProps}

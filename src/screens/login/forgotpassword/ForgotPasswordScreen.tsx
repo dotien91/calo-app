@@ -40,6 +40,16 @@ export default function ForgotPasswordScreen() {
     // navigation to screen otp
     NavigationService.push(SCREENS.NEWPASSWORD);
   };
+  const textWarning = (warning: string | undefined) => {
+    if (!warning) return "";
+    if (warning === "required") {
+      return translations.required;
+    }
+    if (warning === "invalid") {
+      return translations.invalid;
+    }
+    return "";
+  };
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -54,29 +64,23 @@ export default function ForgotPasswordScreen() {
           </View>
           <View>
             <Text style={styles.textHeader}>{translations.forgotPassword}</Text>
-            <View style={styles.viewInput}>
-              <IconSvg name="icMail" size={16} color={colors.mainColor2} />
-              <InputHook
-                name="email"
-                customStyle={{ flex: 1 }}
-                inputProps={{
-                  type: "text",
-                  defaultValue: "",
-                  placeholder: translations.placeholderEmaiPhone,
-                }}
-                control={control}
-                rules={{
-                  required: true,
-                }}
-              />
-            </View>
-            {errors.email && (
-              <Text style={styles.textWarning}>
-                {errors.email.type == "required"
-                  ? translations.required
-                  : translations.invalid}
-              </Text>
-            )}
+            <InputHook
+              name="email"
+              customStyle={{ flex: 1 }}
+              inputProps={{
+                type: "text",
+                defaultValue: "",
+                placeholder: translations.placeholderEmaiPhone,
+              }}
+              control={control}
+              rules={{
+                required: true,
+              }}
+              iconLeft={
+                <IconSvg name="icMail" size={16} color={colors.mainColor2} />
+              }
+              errorTxt={textWarning(errors.email?.type)}
+            />
 
             <Button
               style={styles.buttonMargin}

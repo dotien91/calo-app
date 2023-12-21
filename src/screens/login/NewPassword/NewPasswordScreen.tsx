@@ -5,7 +5,6 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  Pressable,
 } from "react-native";
 import { useForm } from "react-hook-form";
 import React, { useMemo, useState } from "react";
@@ -45,6 +44,17 @@ export default function NewPasswordScreen() {
     NavigationService.push(SCREENS.NEWPASSWORD);
   };
 
+  const textWarning = (warning: string | undefined) => {
+    if (!warning) return "";
+    if (warning === "required") {
+      return translations.required;
+    }
+    if (warning === "invalid") {
+      return translations.invalid;
+    }
+    return "";
+  };
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <KeyboardAvoidingView
@@ -58,92 +68,65 @@ export default function NewPasswordScreen() {
           </View>
           <View>
             <Text style={styles.textHeader}>{translations.updatePassword}</Text>
-            <View style={styles.viewInput}>
-              <IconSvg name="icLock" />
-              <InputHook
-                name="newPassword"
-                customStyle={{ flex: 1 }}
-                inputProps={{
-                  type: "text",
-                  defaultValue: "",
-                  placeholder: translations.enterNewPassword,
-                }}
-                control={control}
-                rules={{
-                  required: true,
-                }}
-                isPassword={!showPass}
-              />
-              <Pressable onPress={() => setShowPass((showPass) => !showPass)}>
-                {showPass ? (
-                  <IconSvg name="icEye" />
-                ) : (
-                  <IconSvg name="icEyeCrossed" />
-                )}
-              </Pressable>
-            </View>
-            {errors.newPassword && (
-              <Text style={styles.textWarning}>
-                {errors.newPassword.type == "required"
-                  ? translations.required
-                  : translations.invalid}
-              </Text>
-            )}
-            <View style={styles.viewInput}>
-              <IconSvg name="icLock" />
-              <InputHook
-                name="reNewPassword"
-                customStyle={{ flex: 1 }}
-                inputProps={{
-                  type: "text",
-                  defaultValue: "",
-                  placeholder: translations.confirmPassword,
-                }}
-                control={control}
-                rules={{
-                  required: true,
-                }}
-                isPassword={!showPass}
-              />
-              <Pressable onPress={() => setShowPass((showPass) => !showPass)}>
-                {showPass ? (
-                  <IconSvg name="icEye" />
-                ) : (
-                  <IconSvg name="icEyeCrossed" />
-                )}
-              </Pressable>
-            </View>
-            {errors.reNewPassword && (
-              <Text style={styles.textWarning}>
-                {errors.reNewPassword.type == "required"
-                  ? translations.required
-                  : translations.invalid}
-              </Text>
-            )}
-            <View style={styles.viewInput}>
-              <IconSvg name="icLock" />
-              <InputHook
-                name="otp"
-                customStyle={{ flex: 1 }}
-                inputProps={{
-                  type: "text",
-                  defaultValue: "",
-                  placeholder: translations.enterOTP,
-                }}
-                control={control}
-                rules={{
-                  required: true,
-                }}
-              />
-            </View>
-            {errors.otp && (
-              <Text style={styles.textWarning}>
-                {errors.otp.type == "required"
-                  ? translations.required
-                  : translations.invalid}
-              </Text>
-            )}
-
+            <InputHook
+              iconLeft={<IconSvg name="icLock" />}
+              name="newPassword"
+              customStyle={{ flex: 1 }}
+              inputProps={{
+                type: "text",
+                defaultValue: "",
+                placeholder: translations.enterNewPassword,
+              }}
+              control={control}
+              rules={{
+                required: true,
+              }}
+              isPassword={!showPass}
+              iconRight={
+                <IconSvg
+                  onPress={() => setShowPass((showPass) => !showPass)}
+                  name={showPass ? "icEye" : "icEyeCrossed"}
+                />
+              }
+              errorTxt={textWarning(errors.newPassword?.type)}
+            />
+            <InputHook
+              iconLeft={<IconSvg name="icLock" />}
+              name="reNewPassword"
+              customStyle={{ flex: 1 }}
+              inputProps={{
+                type: "text",
+                defaultValue: "",
+                placeholder: translations.confirmPassword,
+              }}
+              control={control}
+              rules={{
+                required: true,
+              }}
+              isPassword={!showPass}
+              iconRight={
+                <IconSvg
+                  onPress={() => setShowPass((showPass) => !showPass)}
+                  name={showPass ? "icEye" : "icEyeCrossed"}
+                />
+              }
+              errorTxt={textWarning(errors.reNewPassword?.type)}
+            />
+            <InputHook
+              iconLeft={<IconSvg name="icLock" />}
+              name="otp"
+              customStyle={{ flex: 1 }}
+              inputProps={{
+                type: "text",
+                defaultValue: "",
+                placeholder: translations.enterOTP,
+              }}
+              control={control}
+              rules={{
+                required: true,
+              }}
+              errorTxt={textWarning(errors.otp?.type)}
+            />
             <Button
               style={styles.buttonMargin}
               onPress={handleSubmit(onSubmit)}
