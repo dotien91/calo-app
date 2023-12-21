@@ -12,7 +12,7 @@ export interface AppSlice {
 const createAppSlice: StoreSlice<AppSlice> = (set) => ({
   isWalkthroughAvailable: true,
   setWalkthrough: (value: boolean) => set({ isWalkthroughAvailable: value }),
-  isDarkMode: true,
+  isDarkMode: false,
   setDarkMode: (value: boolean) => set({ isDarkMode: value }),
   language: "vi",
   setLanguage: (value: string) => set({ language: value }),
