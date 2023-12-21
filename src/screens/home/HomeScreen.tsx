@@ -1,10 +1,11 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect } from "react";
 import { View, FlatList, Image } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as NavigationService from "react-navigation-helpers";
 import RNBounceable from "@freakycoder/react-native-bounceable";
+import lodash from "lodash";
 /**
  * ? Local Imports
  */
@@ -16,6 +17,8 @@ import CardItem from "./components/card-item/CardItem";
  */
 import { SCREENS } from "@shared-constants";
 import Text from "@shared-components/text-wrapper/TextWrapper";
+import { getCurrentUser } from "@services/api/userApi";
+import useStore from "@services/zustand/store";
 
 const profileURI =
   // eslint-disable-next-line max-len
@@ -27,6 +30,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
   const theme = useTheme();
   const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
+  const setUserData = useStore((state) => state.setUserData);
 
   const handleItemPress = () => {
     NavigationService.push(SCREENS.DETAIL);
@@ -35,6 +39,14 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
   /* -------------------------------------------------------------------------- */
   /*                               Render Methods                               */
   /* -------------------------------------------------------------------------- */
+
+  useEffect(() => {
+    getCurrentUser().then((res) => {
+      if (!res.isError && !lodash.isEmpty(res)) {
+        setUserData(res);
+      }
+    });
+  }, [setUserData]);
 
   const MenuButton = () => (
     <RNBounceable>

@@ -1,7 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
-// import {
-//   _getJson,
-// } from "@services/local-storage";
+
 // eslint-disable-next-line import/no-extraneous-dependencies
 
 export const BASEURL = "https://api.edu-like.exam24h.com/api/";
@@ -25,24 +23,30 @@ export const apiClient = axios.create({
 });
 
 // Add a request interceptor
-axios.interceptors.request.use(
+apiClient.interceptors.request.use(
   function (config) {
+    // const token = _getJson(TOKEN);
+    //fake token
+    /* eslint-disable max-len */
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQ1Nzc3MDAsImRhdGEiOnsiX2lkIjoiNjU4MjVhYTQ5ZDY2YWM4YzQ3YzZiMDFkIiwia2V5IjoiOTNiOTgxN2VkZmQ1ZjU1NDBkZTI2MDNiM2M3N2JlZmEiLCJzaWduYXR1cmUiOiI2ZGI5M2RhMzE1YzRjNzBkNjY2YjNiNWRjZjIwYzUzMiIsInNlc3Npb24iOiI2NTgyNWFhNDlkNjZhYzhjNDdjNmIwMWYifSwiaWF0IjoxNzAzMDQxNzAwfQ.R0CrGfSMvi_V3T445vlp75Eetz_x6RHCrWtaSkXo0A8";
+    if (token) config.headers["X-Authorization"] = token;
     // Do something before request is sent
     return config;
   },
   function (error) {
     // Do something with request error
-    return Promise.reject(error);
+    return Promise.reject({ ...error, isError: true });
   },
 );
 
 // Add a response interceptor
 apiClient.interceptors.response.use(
   (response) => {
-    return response;
+    return response?.data;
   },
   (error) => {
-    return Promise.reject({ error, isError: true });
+    return Promise.reject({ ...error, isError: true });
   },
 );
 
@@ -68,6 +72,6 @@ export default function request({
       ...option,
     })
     .catch((error) => {
-      return Promise.resolve({ error, isError: true });
+      return Promise.resolve({ ...error, isError: true });
     });
 }
