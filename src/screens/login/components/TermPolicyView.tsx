@@ -3,11 +3,11 @@ import CommonStyle from "@theme/styles";
 import React from "react";
 import { Text, View, ViewStyle } from "react-native";
 
-interface TermPolicyProps {
+interface TermPolicyViewProps {
   style: ViewStyle;
 }
 
-const TermPolicy = ({ style }: TermPolicyProps) => {
+const TermPolicyView = ({ style }: TermPolicyViewProps) => {
   const theme = useTheme();
   const { colors } = theme;
   const pressPolicy = () => {
@@ -46,4 +46,4 @@ const TermPolicy = ({ style }: TermPolicyProps) => {
   );
 };
 
-export default TermPolicy;
+export default TermPolicyView;

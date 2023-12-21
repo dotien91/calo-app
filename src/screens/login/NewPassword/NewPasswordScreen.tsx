@@ -14,14 +14,14 @@ import * as NavigationService from "react-navigation-helpers";
 
 import Button from "@shared-components/button/Button";
 import createStyles from "./NewPasswordScreen.style";
-import ViewTermPolicy from "../components/ViewTermPolicy";
+import ViewTermPolicy from "../components/TermPolicyView";
 import InputHook from "@shared-components/form/InputHook";
 import { SCREENS } from "@shared-constants";
 import { translations } from "@localization";
 import IconSvg from "assets/svg";
-import ButtonGoBack from "../components/ButtonGoBack";
+import GoBackButton from "../components/GoBackButton";
 
-export default function NewPassword() {
+export default function NewPasswordScreen() {
   const theme = useTheme();
   const { colors } = theme;
   const {
@@ -52,7 +52,7 @@ export default function NewPassword() {
         behavior={Platform.OS === "ios" ? "height" : undefined}
       >
         <View style={styles.container}>
-          <ButtonGoBack />
+          <GoBackButton />
           <View style={[{ alignItems: "center" }]}>
             <IconSvg name="logoIeltsHunter" width={120} height={67} />
           </View>

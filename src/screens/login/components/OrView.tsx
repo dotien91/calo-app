@@ -4,7 +4,7 @@ import CommonStyle from "@theme/styles";
 import React from "react";
 import { Text, View } from "react-native";
 
-const Or = () => {
+const OrView = () => {
   const theme = useTheme();
   const { colors } = theme;
   return (
@@ -30,4 +30,4 @@ const Or = () => {
   );
 };
 
-export default Or;
+export default OrView;

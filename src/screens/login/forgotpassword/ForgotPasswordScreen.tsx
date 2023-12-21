@@ -12,15 +12,15 @@ import * as NavigationService from "react-navigation-helpers";
 
 import Button from "@shared-components/button/Button";
 import createStyles from "./ForgotPasswordScreen.style";
-import ViewTermPolicy from "../components/ViewTermPolicy";
+import ViewTermPolicy from "../components/TermPolicyView";
 import InputHook from "@shared-components/form/InputHook";
 import { useForm } from "react-hook-form";
 import { SCREENS } from "@shared-constants";
 import { translations } from "@localization";
-import ButtonGoBack from "../components/ButtonGoBack";
+import GoBackButton from "../components/GoBackButton";
 import IconSvg from "assets/svg";
 
-export default function ForgotPassword() {
+export default function ForgotPasswordScreen() {
   const theme = useTheme();
   const { colors } = theme;
   const {
@@ -48,7 +48,7 @@ export default function ForgotPassword() {
         behavior={Platform.OS === "ios" ? "height" : undefined}
       >
         <View style={styles.container}>
-          <ButtonGoBack />
+          <GoBackButton />
           <View style={[{ alignItems: "center" }]}>
             <IconSvg name="logoIeltsHunter" width={120} height={67} />
           </View>

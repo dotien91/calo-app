@@ -8,7 +8,7 @@ import Button from "@shared-components/button/Button";
 import createStyles from "./IntroScreen.style";
 import { SCREENS } from "@shared-constants";
 
-export default function Intro() {
+export default function IntroScreen() {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
 

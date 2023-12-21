@@ -23,7 +23,7 @@ interface TypeItemLanguage {
   value: string;
   flag: React.JSX.Element;
 }
-export default function ChooseLanguage() {
+export default function ChooseLanguageScreen() {
   const languageList: TypeItemLanguage[] = [
     {
       label: "English",

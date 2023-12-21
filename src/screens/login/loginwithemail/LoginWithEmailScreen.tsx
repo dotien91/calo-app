@@ -15,20 +15,20 @@ import CommonStyle from "@theme/styles";
 import Button from "@shared-components/button/Button";
 import IconSvg from "assets/svg";
 import createStyles from "./LoginWithEmailScreen.style";
-import ViewTermPolicy from "../components/ViewTermPolicy";
-import ViewOr from "../components/ViewOr";
+import ViewTermPolicy from "../components/TermPolicyView";
+import OrView from "../components/OrView";
 import InputHook from "@shared-components/form/InputHook";
 import { useForm } from "react-hook-form";
 import { SCREENS } from "@shared-constants";
 import { translations } from "@localization";
-import ButtonGoBack from "../components/ButtonGoBack";
+import GoBackButton from "../components/GoBackButton";
 
 interface ButtonSocialProps {
   onPress: () => void;
   IconSocial: React.JSX.Element;
 }
 
-export default function LoginWithEmail() {
+export default function LoginWithEmailScreen() {
   const theme = useTheme();
   const { colors } = theme;
   const {
@@ -84,7 +84,7 @@ export default function LoginWithEmail() {
         behavior={Platform.OS === "ios" ? "height" : undefined}
       >
         <View style={styles.container}>
-          <ButtonGoBack />
+          <GoBackButton />
           <View style={[{ alignItems: "center" }]}>
             <IconSvg name="logoIeltsHunter" width={120} height={67} />
           </View>
@@ -174,7 +174,7 @@ export default function LoginWithEmail() {
               </Text>
             </View>
 
-            <ViewOr />
+            <OrView />
             <View style={styles.viewSocial}>
               <ButtonSocial
                 IconSocial={<IconSvg name="icGoogle" />}

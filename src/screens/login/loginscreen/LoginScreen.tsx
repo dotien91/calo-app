@@ -5,13 +5,13 @@ import * as NavigationService from "react-navigation-helpers";
 import CommonStyle from "@theme/styles";
 import Button from "@shared-components/button/Button";
 import IconSvg from "assets/svg";
-import createStyles from "./LoginPageScreen.style";
-import ViewTermPolicy from "../components/ViewTermPolicy";
-import ViewOr from "../components/ViewOr";
+import createStyles from "./LoginScreen.style";
+import ViewTermPolicy from "../components/TermPolicyView";
+import OrView from "../components/OrView";
 import { SCREENS } from "@shared-constants";
 import { translations } from "@localization";
 
-export default function LoginPage() {
+export default function LoginScreen() {
   const theme = useTheme();
   const { colors } = theme;
 
@@ -62,7 +62,7 @@ export default function LoginPage() {
         SvgSo={<IconSvg name="icApple" size={16} color={colors.white} />}
         text={translations.signInWith + " Apple"}
       />
-      <ViewOr />
+      <OrView />
       <Button
         style={styles.buttonMargin}
         onPress={pressMail}

@@ -17,14 +17,14 @@ import ProfileScreen from "@screens/profile/ProfileScreen";
 import NotificationScreen from "@screens/notification/NotificationScreen";
 import SettingScreenStyle from "@screens/setting/SettingScreen";
 import useStore from "@services/zustand/store";
-import Intro from "@screens/login/intro/IntroScreen";
-import ChooseLanguage from "@screens/login/chooselanguage/ChooseLanguageScreen";
+import IntroScreen from "@screens/login/intro/IntroScreen";
+import ChooseLanguageScreen from "@screens/login/chooselanguage/ChooseLanguageScreen";
 import WelcomeScreen from "@screens/login/welcome/WelcomeScreen";
-import LoginPage from "@screens/login/loginpage/LoginPageScreen";
-import LoginWithEmail from "@screens/login/loginwithemail/LoginWithEmailScreen";
-import SignUp from "@screens/login/signup/SignUpScreen";
-import ForgotPassword from "@screens/login/forgotpassword/ForgotPasswordScreen";
-import NewPassword from "@screens/login/NewPassword/NewPasswordScreen";
+import LoginScreen from "@screens/login/loginscreen/LoginScreen";
+import LoginWithEmailScreen from "@screens/login/loginwithemail/LoginWithEmailScreen";
+import SignUpScreen from "@screens/login/signup/SignUpScreen";
+import ForgotPasswordScreen from "@screens/login/forgotpassword/ForgotPasswordScreen";
+import NewPasswordScreen from "@screens/login/newpassword/NewPasswordScreen";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -100,23 +100,26 @@ const Navigation = () => {
   const renderStackLogin = () => {
     return (
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name={SCREENS.LOGININTRO} component={Intro} />
+        <Stack.Screen name={SCREENS.LOGININTRO} component={IntroScreen} />
         <Stack.Screen
           name={SCREENS.FORGOTPASSWORD}
-          component={ForgotPassword}
+          component={ForgotPasswordScreen}
         />
-        <Stack.Screen name={SCREENS.NEWPASSWORD} component={NewPassword} />
+        <Stack.Screen
+          name={SCREENS.NEWPASSWORD}
+          component={NewPasswordScreen}
+        />
         <Stack.Screen
           name={SCREENS.LOGINCHOOSELANGUAGE}
-          component={ChooseLanguage}
+          component={ChooseLanguageScreen}
         />
         <Stack.Screen name={SCREENS.LOGINWELCOME} component={WelcomeScreen} />
-        <Stack.Screen name={SCREENS.LOGINPAGE} component={LoginPage} />
+        <Stack.Screen name={SCREENS.LOGINPAGE} component={LoginScreen} />
         <Stack.Screen
           name={SCREENS.LOGINWITHEMAIL}
-          component={LoginWithEmail}
+          component={LoginWithEmailScreen}
         />
-        <Stack.Screen name={SCREENS.SIGNUP} component={SignUp} />
+        <Stack.Screen name={SCREENS.SIGNUP} component={SignUpScreen} />
       </Stack.Navigator>
     );
   };
