@@ -2,7 +2,6 @@ import React, { useMemo } from "react";
 import { View, Text, Pressable, ViewStyle, ColorValue } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import createStyles from "./Button.style";
-import { SvgProps } from "react-native-svg";
 
 interface ButtonProps {
   onPress: () => void;
@@ -10,7 +9,7 @@ interface ButtonProps {
   style?: ViewStyle;
   backgroundColor?: ColorValue;
   textColor?: ColorValue;
-  SvgSo?: React.FC<SvgProps>;
+  SvgSo?: React.JSX.Element;
 }
 
 export default function Button({
@@ -33,7 +32,8 @@ export default function Button({
         ]}
         onPress={onPress}
       >
-        {!!SvgSo && <SvgSo style={{ marginRight: 12 }} color={textColor} />}
+        {!!SvgSo && SvgSo}
+        {!!SvgSo && <View style={{ width: 10 }} />}
         <Text style={[styles.textButton, !!textColor && { color: textColor }]}>
           {text}
         </Text>

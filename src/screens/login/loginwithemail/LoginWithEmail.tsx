@@ -13,30 +13,19 @@ import * as NavigationService from "react-navigation-helpers";
 
 import CommonStyle from "@theme/styles";
 import Button from "@shared-components/button/Button";
-import {
-  Eye,
-  EyeCrossed,
-  IeltsHunter,
-  LoginPassword,
-  SocialAppleBlack,
-  SocialFbBlue,
-  SocialGG,
-  SocialMail,
-  SocialMail2,
-} from "assets/svg";
+import IconSvg from "assets/svg";
 import createStyles from "./LoginWithEmail.style";
 import TermPolicy from "../components/TermPolicy";
 import Or from "../components/Or";
 import InputHook from "@shared-components/form/InputHook";
 import { useForm } from "react-hook-form";
-import { SvgProps } from "react-native-svg";
 import { SCREENS } from "@shared-constants";
 import { translations } from "@localization";
 import GoBack from "../components/GoBack";
 
 interface ButtonSocialProps {
   onPress: () => void;
-  IconSocial: React.FC<SvgProps>;
+  IconSocial: React.JSX.Element;
 }
 
 export default function LoginWithEmail() {
@@ -78,7 +67,7 @@ export default function LoginWithEmail() {
           borderRadius: 10,
         }}
       >
-        <IconSocial />
+        {IconSocial}
       </Pressable>
     );
   };
@@ -97,12 +86,12 @@ export default function LoginWithEmail() {
         <View style={styles.container}>
           <GoBack />
           <View style={[{ alignItems: "center" }]}>
-            <IeltsHunter />
+            <IconSvg name="logoIeltsHunter" width={120} height={67} />
           </View>
           <View>
             <Text style={styles.textHeader}>{translations.welcomeBack}</Text>
             <View style={styles.viewInput}>
-              <SocialMail />
+              <IconSvg name="icMail" size={18} color={colors.mainColor2} />
               <InputHook
                 name="email"
                 customStyle={{ flex: 1 }}
@@ -129,7 +118,7 @@ export default function LoginWithEmail() {
             )}
 
             <View style={styles.viewInput}>
-              <LoginPassword />
+              <IconSvg name="icLock" size={18} />
               <InputHook
                 name="password"
                 customStyle={{}}
@@ -146,7 +135,11 @@ export default function LoginWithEmail() {
                 isPassword={!showPass}
               />
               <Pressable onPress={() => setShowPass((showPass) => !showPass)}>
-                {showPass ? <Eye /> : <EyeCrossed />}
+                {showPass ? (
+                  <IconSvg name="icEye" />
+                ) : (
+                  <IconSvg name="icEyeCrossed" />
+                )}
               </Pressable>
             </View>
             {errors.password && (
@@ -162,7 +155,7 @@ export default function LoginWithEmail() {
               onPress={handleSubmit(onSubmit)}
               textColor={colors.white}
               backgroundColor={colors.primary}
-              SvgSo={SocialMail2}
+              SvgSo={<IconSvg size={18} name="icMail" color={colors.white} />}
               text={translations.continueWith("E-mail")}
             />
             <View style={CommonStyle.center}>
@@ -183,12 +176,18 @@ export default function LoginWithEmail() {
 
             <Or />
             <View style={styles.viewSocial}>
-              <ButtonSocial IconSocial={SocialGG} onPress={pressGoogle} />
               <ButtonSocial
-                IconSocial={SocialAppleBlack}
+                IconSocial={<IconSvg name="icGoogle" />}
+                onPress={pressGoogle}
+              />
+              <ButtonSocial
+                IconSocial={<IconSvg name="icApple" color={colors.black} />}
                 onPress={pressApple}
               />
-              <ButtonSocial IconSocial={SocialFbBlue} onPress={pressFacebook} />
+              <ButtonSocial
+                IconSocial={<IconSvg name="icFacebook" color="#1877F2" />}
+                onPress={pressFacebook}
+              />
             </View>
             <TermPolicy style={{ paddingHorizontal: 20, marginTop: 36 }} />
             <Text style={styles.textRegister}>

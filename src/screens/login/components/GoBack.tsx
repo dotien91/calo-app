@@ -1,8 +1,8 @@
-import { IconBack } from "assets/svg";
 import React from "react";
 import { Pressable, View } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import { getStatusBarHeight } from "react-native-iphone-screen-helper";
+import IconSvg from "assets/svg";
 const GoBack = () => {
   return (
     <View
@@ -14,7 +14,7 @@ const GoBack = () => {
       }}
     >
       <Pressable onPress={() => NavigationService.goBack()}>
-        <IconBack />
+        <IconSvg name="icBack" size={17} />
       </Pressable>
     </View>
   );

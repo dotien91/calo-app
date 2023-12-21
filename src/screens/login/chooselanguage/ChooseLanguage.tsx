@@ -11,8 +11,7 @@ import { useTheme } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 
 import CommonStyle from "shared/theme/styles";
-import { CheckCircleFill, Flagen, Flagvi, Search } from "assets/svg";
-import { SvgProps } from "react-native-svg";
+import IconSvg from "assets/svg";
 import Button from "@shared-components/button/Button";
 import createStyles from "./ChooseLanguage.style";
 import { SCREENS } from "@shared-constants";
@@ -22,15 +21,23 @@ import useStore from "@services/zustand/store";
 interface TypeItemLanguage {
   label: string;
   value: string;
-  flag: React.FC<SvgProps>;
+  flag: React.JSX.Element;
 }
 export default function ChooseLanguage() {
   const languageList: TypeItemLanguage[] = [
-    { label: "English", value: "en", flag: Flagen },
+    {
+      label: "English",
+      value: "en",
+      flag: <IconSvg name="icFlagen" size={48} />,
+    },
     // { label: "Chinese", value: "cn" },
     // { label: "Japanese", value: "jp" },
     // { label: "Korean", value: "kr" },
-    { label: "Vietnamese", value: "vi", flag: Flagvi },
+    {
+      label: "Vietnamese",
+      value: "vi",
+      flag: <IconSvg name="icFlagvi" size={48} />,
+    },
   ];
   const [selected, setSelected] = useState(useStore((state) => state.language));
   const [search, setSearch] = useState("");
@@ -57,10 +64,10 @@ export default function ChooseLanguage() {
         }
       >
         <View style={CommonStyle.row}>
-          {<item.flag />}
+          {item.flag}
           <Text style={styles.textLanguage}>{item.label}</Text>
         </View>
-        {item.value == selected && <CheckCircleFill />}
+        {item.value == selected && <IconSvg name="icCheckCircleFill" />}
       </Pressable>
     );
   };
@@ -76,7 +83,7 @@ export default function ChooseLanguage() {
             onChangeText={(text) => setSearch(text)}
           />
           <Pressable style={CommonStyle.center}>
-            <Search />
+            <IconSvg name="icSearch" />
           </Pressable>
         </View>
         <View style={styles.child}>

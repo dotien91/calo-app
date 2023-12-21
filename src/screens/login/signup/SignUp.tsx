@@ -12,28 +12,18 @@ import { useTheme } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 import CommonStyle from "@theme/styles";
 import Button from "@shared-components/button/Button";
-import {
-  Eye,
-  EyeCrossed,
-  IeltsHunter,
-  LoginPassword,
-  SocialAppleBlack,
-  SocialFbBlue,
-  SocialGG,
-  SocialMail,
-} from "assets/svg";
 import createStyles from "./SignUp.style";
 import TermPolicy from "../components/TermPolicy";
 import Or from "../components/Or";
 import InputHook from "@shared-components/form/InputHook";
 import { useForm } from "react-hook-form";
-import { SvgProps } from "react-native-svg";
 import { translations } from "@localization";
 import GoBack from "../components/GoBack";
+import IconSvg from "assets/svg";
 
 interface ButtonSocialProps {
   onPress: () => void;
-  IconSocial: React.FC<SvgProps>;
+  IconSocial: React.JSX.Element;
 }
 
 export default function SignUp() {
@@ -76,7 +66,7 @@ export default function SignUp() {
           borderRadius: 10,
         }}
       >
-        <IconSocial />
+        {IconSocial}
       </Pressable>
     );
   };
@@ -90,14 +80,14 @@ export default function SignUp() {
         <View style={styles.container}>
           <GoBack />
           <View style={[{ alignItems: "center" }]}>
-            <IeltsHunter />
+            <IconSvg name="logoIeltsHunter" width={120} height={67} />
           </View>
           <View>
             <Text style={styles.textHeader}>
               {translations.createNewAccount}
             </Text>
             <View style={styles.viewInput}>
-              <SocialMail />
+              <IconSvg name="icLoginFullname" />
               <InputHook
                 name="fullname"
                 customStyle={CommonStyle.flex1}
@@ -118,7 +108,7 @@ export default function SignUp() {
               </Text>
             )}
             <View style={styles.viewInput}>
-              <SocialMail />
+              <IconSvg name="icMail" color={colors.mainColor2} />
               <InputHook
                 name="email"
                 customStyle={CommonStyle.flex1}
@@ -139,7 +129,7 @@ export default function SignUp() {
               </Text>
             )}
             <View style={styles.viewInput}>
-              <LoginPassword />
+              <IconSvg name="icLock" />
               <InputHook
                 name="password"
                 customStyle={{}}
@@ -153,7 +143,11 @@ export default function SignUp() {
                 isPassword={!showPass}
               />
               <Pressable onPress={() => setShowPass((showPass) => !showPass)}>
-                {showPass ? <Eye /> : <EyeCrossed />}
+                {showPass ? (
+                  <IconSvg name="icEye" />
+                ) : (
+                  <IconSvg name="icEyeCrossed" />
+                )}
               </Pressable>
             </View>
             {errors.email && (
@@ -172,12 +166,18 @@ export default function SignUp() {
             />
             <Or />
             <View style={styles.viewSocial}>
-              <ButtonSocial IconSocial={SocialGG} onPress={pressGoogle} />
               <ButtonSocial
-                IconSocial={SocialAppleBlack}
+                IconSocial={<IconSvg name="icGoogle" />}
+                onPress={pressGoogle}
+              />
+              <ButtonSocial
+                IconSocial={<IconSvg name="icApple" color={colors.black} />}
                 onPress={pressApple}
               />
-              <ButtonSocial IconSocial={SocialFbBlue} onPress={pressFacebook} />
+              <ButtonSocial
+                IconSocial={<IconSvg name="icFacebook" color="#1877F2" />}
+                onPress={pressFacebook}
+              />
             </View>
             <TermPolicy style={{ paddingHorizontal: 20, marginTop: 36 }} />
             <Text style={styles.textRegister}>

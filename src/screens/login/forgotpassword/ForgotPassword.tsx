@@ -11,7 +11,6 @@ import { useTheme } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 
 import Button from "@shared-components/button/Button";
-import { IeltsHunter, SocialMail } from "assets/svg";
 import createStyles from "./ForgotPassword.style";
 import TermPolicy from "../components/TermPolicy";
 import InputHook from "@shared-components/form/InputHook";
@@ -19,6 +18,7 @@ import { useForm } from "react-hook-form";
 import { SCREENS } from "@shared-constants";
 import { translations } from "@localization";
 import GoBack from "../components/GoBack";
+import IconSvg from "assets/svg";
 
 export default function ForgotPassword() {
   const theme = useTheme();
@@ -50,12 +50,12 @@ export default function ForgotPassword() {
         <View style={styles.container}>
           <GoBack />
           <View style={[{ alignItems: "center" }]}>
-            <IeltsHunter />
+            <IconSvg name="logoIeltsHunter" width={120} height={67} />
           </View>
           <View>
             <Text style={styles.textHeader}>{translations.forgotPassword}</Text>
             <View style={styles.viewInput}>
-              <SocialMail />
+              <IconSvg name="icMail" size={16} color={colors.mainColor2} />
               <InputHook
                 name="email"
                 customStyle={{ flex: 1 }}

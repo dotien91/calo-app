@@ -12,7 +12,6 @@ import { useTheme } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 
 import Button from "@shared-components/button/Button";
-import { Eye, EyeCrossed, IeltsHunter, LoginPassword } from "assets/svg";
 import createStyles from "./NewPassword.style";
 import TermPolicy from "../components/TermPolicy";
 import InputHook from "@shared-components/form/InputHook";
@@ -20,6 +19,7 @@ import { useForm } from "react-hook-form";
 import { SCREENS } from "@shared-constants";
 import { translations } from "@localization";
 import GoBack from "../components/GoBack";
+import IconSvg from "assets/svg";
 
 export default function NewPassword() {
   const theme = useTheme();
@@ -54,12 +54,12 @@ export default function NewPassword() {
         <View style={styles.container}>
           <GoBack />
           <View style={[{ alignItems: "center" }]}>
-            <IeltsHunter />
+            <IconSvg name="logoIeltsHunter" width={120} height={67} />
           </View>
           <View>
             <Text style={styles.textHeader}>{translations.updatePassword}</Text>
             <View style={styles.viewInput}>
-              <LoginPassword />
+              <IconSvg name="icLock" />
               <InputHook
                 name="newPassword"
                 customStyle={{ flex: 1 }}
@@ -75,7 +75,11 @@ export default function NewPassword() {
                 isPassword={!showPass}
               />
               <Pressable onPress={() => setShowPass((showPass) => !showPass)}>
-                {showPass ? <Eye /> : <EyeCrossed />}
+                {showPass ? (
+                  <IconSvg name="icEye" />
+                ) : (
+                  <IconSvg name="icEyeCrossed" />
+                )}
               </Pressable>
             </View>
             {errors.newPassword && (
@@ -86,7 +90,7 @@ export default function NewPassword() {
               </Text>
             )}
             <View style={styles.viewInput}>
-              <LoginPassword />
+              <IconSvg name="icLock" />
               <InputHook
                 name="reNewPassword"
                 customStyle={{ flex: 1 }}
@@ -102,7 +106,11 @@ export default function NewPassword() {
                 isPassword={!showPass}
               />
               <Pressable onPress={() => setShowPass((showPass) => !showPass)}>
-                {showPass ? <Eye /> : <EyeCrossed />}
+                {showPass ? (
+                  <IconSvg name="icEye" />
+                ) : (
+                  <IconSvg name="icEyeCrossed" />
+                )}
               </Pressable>
             </View>
             {errors.reNewPassword && (
@@ -113,7 +121,7 @@ export default function NewPassword() {
               </Text>
             )}
             <View style={styles.viewInput}>
-              <LoginPassword />
+              <IconSvg name="icLock" />
               <InputHook
                 name="otp"
                 customStyle={{ flex: 1 }}
