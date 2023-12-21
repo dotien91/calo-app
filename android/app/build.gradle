@@ -100,9 +100,9 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    namespace "com.rntypescriptboilerplate"
+    namespace "com.ieltshunter"
     defaultConfig {
-        applicationId "com.rntypescriptboilerplate"
+        applicationId 'com.ieltshunter'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

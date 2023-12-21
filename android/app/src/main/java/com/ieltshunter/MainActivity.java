@@ -1,4 +1,4 @@
-package com.rntypescriptboilerplate;
+package com.ieltshunter;
 
 
 import com.facebook.react.ReactActivity;

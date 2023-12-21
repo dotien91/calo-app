@@ -1,4 +1,4 @@
-package com.rntypescriptboilerplate;
+package com.ieltshunter;
 
 import android.app.Application;
 import com.facebook.react.PackageList;
