@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "409582649419",
+    "project_id": "ieltshunter-65a03",
+    "storage_bucket": "ieltshunter-65a03.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:409582649419:android:291b7e52c0a824444c0dce",
+        "android_client_info": {
+          "package_name": "com.ieltshunter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "409582649419-fobjlc4eic3svjhe0tveuifvvl75f5cn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ieltshunter",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "409582649419-0bojiri21udlkk2gov3fc8u4tr9i3dmm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCD9MnjFHpq-v0Jj-2wqigh7RuqwvMBGeg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "409582649419-0bojiri21udlkk2gov3fc8u4tr9i3dmm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "409582649419-j3ler20j0fklont9ivpeud6lmq7hkkqn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.exam24h.ieltshunter"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

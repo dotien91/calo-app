@@ -9,6 +9,8 @@
     "@motify/components": "0.18.0",
     "@motify/core": "0.18.0",
     "@react-native-community/netinfo": "^11.2.1",
+    "@react-native-firebase/app": "^18.7.3",
+    "@react-native-google-signin/google-signin": "^11.0.0",
     "@react-native-masked-view/masked-view": "^0.2.9",
     "@react-navigation/bottom-tabs": "^6.5.8",
     "@react-navigation/native": "^6.1.7",

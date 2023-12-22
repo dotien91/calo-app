@@ -32,6 +32,7 @@ const Stack = createStackNavigator();
 
 const Navigation = () => {
   const isDarkMode = useStore((state) => state.isDarkMode);
+  const isFirstOpenApp = useStore((state) => state.isFirstOpenApp);
 
   React.useEffect((): any => {
     return () => (isReadyRef.current = false);
@@ -97,30 +98,18 @@ const Navigation = () => {
     );
   };
 
-  const renderStackLogin = () => {
+  const renderStackIntro = () => {
+    if (!isFirstOpenApp) return null;
     return (
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <>
         <Stack.Screen name={SCREENS.LOGININTRO} component={IntroScreen} />
-        <Stack.Screen
-          name={SCREENS.FORGOTPASSWORD}
-          component={ForgotPasswordScreen}
-        />
-        <Stack.Screen
-          name={SCREENS.NEWPASSWORD}
-          component={NewPasswordScreen}
-        />
+
         <Stack.Screen
           name={SCREENS.LOGINCHOOSELANGUAGE}
           component={ChooseLanguageScreen}
         />
         <Stack.Screen name={SCREENS.LOGINWELCOME} component={WelcomeScreen} />
-        <Stack.Screen name={SCREENS.LOGINPAGE} component={LoginScreen} />
-        <Stack.Screen
-          name={SCREENS.LOGINWITHEMAIL}
-          component={LoginWithEmailScreen}
-        />
-        <Stack.Screen name={SCREENS.SIGNUP} component={SignUpScreen} />
-      </Stack.Navigator>
+      </>
     );
   };
 
@@ -133,11 +122,25 @@ const Navigation = () => {
       theme={isDarkMode ? DarkTheme : LightTheme}
     >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name={SCREENS.LOGIN} component={renderStackLogin} />
+        {renderStackIntro()}
         <Stack.Screen name={SCREENS.HOME} component={renderTabNavigation} />
         <Stack.Screen name={SCREENS.DETAIL}>
           {(props) => <DetailScreen {...props} />}
         </Stack.Screen>
+        <Stack.Screen name={SCREENS.LOGINPAGE} component={LoginScreen} />
+        <Stack.Screen
+          name={SCREENS.LOGINWITHEMAIL}
+          component={LoginWithEmailScreen}
+        />
+        <Stack.Screen name={SCREENS.SIGNUP} component={SignUpScreen} />
+        <Stack.Screen
+          name={SCREENS.FORGOTPASSWORD}
+          component={ForgotPasswordScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.NEWPASSWORD}
+          component={NewPasswordScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

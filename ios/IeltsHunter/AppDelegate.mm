@@ -2,6 +2,8 @@
 
 #import <React/RCTBundleURLProvider.h>
 #import "RNSplashScreen.h"
+#import <Firebase.h>
+#import <GoogleSignIn/GoogleSignIn.h>
 
 @implementation AppDelegate
 
@@ -12,12 +14,14 @@
   // You can add your custom initial props in the dictionary below.
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
+  [FIRApp configure];
 
   bool didFinish=[super application:application didFinishLaunchingWithOptions:launchOptions];
 
   [RNSplashScreen show];  // here
   return didFinish;
 }
+
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {
@@ -27,6 +31,7 @@
   return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
 }
+
 
 /// This method controls whether the `concurrentRoot`feature of React18 is turned on or off.
 ///

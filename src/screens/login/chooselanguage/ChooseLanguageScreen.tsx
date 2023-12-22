@@ -1,7 +1,6 @@
 import {
   View,
   Text,
-  TextInput,
   TouchableWithoutFeedback,
   Keyboard,
   Pressable,
@@ -37,7 +36,7 @@ export default function ChooseLanguageScreen() {
     },
   ];
   const [selected, setSelected] = useState(useStore((state) => state.language));
-  const [txtSearch, setTxtSearch] = useState("");
+  // const [txtSearch, setTxtSearch] = useState("");
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const setLanguage = useStore((state) => state.setLanguage);
@@ -72,7 +71,7 @@ export default function ChooseLanguageScreen() {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
         <Text style={styles.textHeader}>Choose the language</Text>
-        <View style={styles.viewSearch}>
+        {/* <View style={styles.viewSearch}>
           <TextInput
             placeholder="Find a language"
             style={styles.textSearch}
@@ -82,7 +81,7 @@ export default function ChooseLanguageScreen() {
           <Pressable style={CommonStyle.center}>
             <IconSvg name="icSearch" />
           </Pressable>
-        </View>
+        </View> */}
         <View style={styles.child}>
           <View style={CommonStyle.flex1}>
             {languageList.map((item, index: number) => {
