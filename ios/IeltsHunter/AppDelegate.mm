@@ -4,7 +4,10 @@
 #import "RNSplashScreen.h"
 #import <Firebase.h>
 #import <GoogleSignIn/GoogleSignIn.h>
-
+//facebook login
+#import <AuthenticationServices/AuthenticationServices.h>
+#import <SafariServices/SafariServices.h>
+#import <FBSDKCoreKit/FBSDKCoreKit-Swift.h>
 @implementation AppDelegate
 
 
@@ -17,7 +20,8 @@
   [FIRApp configure];
 
   bool didFinish=[super application:application didFinishLaunchingWithOptions:launchOptions];
-
+  [[FBSDKApplicationDelegate sharedInstance] application:application
+                       didFinishLaunchingWithOptions:launchOptions];
   [RNSplashScreen show];  // here
   return didFinish;
 }
@@ -30,6 +34,10 @@
 #else
   return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(nonnull NSURL *)url options:(nonnull NSDictionary<NSString *,id> *)options {
+  return [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url options:options] || [GIDSignIn.sharedInstance handleURL:url];
 }
 
 
