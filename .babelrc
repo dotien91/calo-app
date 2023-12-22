@@ -22,7 +22,7 @@
           { "@event-emitter": "./src/services/event-emitter" },
           { "@local-storage": "./src/services/local-storage" },
           { "@zustand": "./src/services/zustand/store" },
-          { "@common": "./src/common" },
+          { "@helpers": "./src/helpers" },
         ],
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }

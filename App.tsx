@@ -8,10 +8,11 @@ import SplashScreen from "react-native-splash-screen";
  */
 import Navigation from "./src/navigation";
 import { isAndroid } from "@freakycoder/react-native-helpers";
-import NetworkManager from "@common/managers/NetworkManager";
+import NetworkManager from "@helpers/managers/NetworkManager";
 import { palette } from "@theme/themes";
 import useStore from "@services/zustand/store";
 import { translations } from "@localization";
+import SuperModal from "@shared-components/SuperModal";
 
 LogBox.ignoreAllLogs();
 
@@ -32,7 +33,6 @@ const App = () => {
       StatusBar.setBackgroundColor("rgba(0,0,0,0)");
       StatusBar.setTranslucent(true);
     }
-
     translations.setLanguage(language);
     setTimeout(() => {
       SplashScreen.hide();
@@ -44,6 +44,7 @@ const App = () => {
       <StatusBar backgroundColor={palette.white} />
       <Navigation />
       <Toast />
+      <SuperModal />
     </>
   );
 };
