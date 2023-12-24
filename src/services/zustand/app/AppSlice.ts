@@ -7,6 +7,8 @@ export interface AppSlice {
   setDarkMode: (value: boolean) => void;
   language: string;
   setLanguage: (language: string) => void;
+  isShowWelcome: boolean;
+  setShowWelcome: (value: boolean) => void;
 }
 
 const createAppSlice: StoreSlice<AppSlice> = (set) => ({
@@ -16,6 +18,8 @@ const createAppSlice: StoreSlice<AppSlice> = (set) => ({
   setDarkMode: (value: boolean) => set({ isDarkMode: value }),
   language: "vi",
   setLanguage: (value: string) => set({ language: value }),
+  isShowWelcome: true,
+  setShowWelcome: (value: boolean) => set({ isShowWelcome: value }),
 });
 
 export default createAppSlice;

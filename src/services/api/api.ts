@@ -3,6 +3,7 @@ import axios, { AxiosRequestConfig } from "axios";
 // eslint-disable-next-line import/no-extraneous-dependencies
 
 export const BASEURL = "https://api.edu-like.exam24h.com/api/";
+export const UPLOAD_URL = "https://media.exam24h.com/";
 
 export const METHOD = {
   GET: "GET",
@@ -70,6 +71,33 @@ export default function request({
       params,
       data,
       ...option,
+    })
+    .catch((error) => {
+      return Promise.resolve({ ...error, isError: true });
+    });
+}
+
+export function requestUpload({
+  params,
+  urlPath,
+  data,
+  method,
+  option,
+}: {
+  urlPath: string;
+  params?: any;
+  data?: FormData;
+  method?: string;
+  option?: RequestOption;
+}) {
+  return apiClient
+    .request({
+      method: method || METHOD.POST,
+      url: urlPath,
+      params,
+      data,
+      ...option,
+      headers: { "Content-Type": "multipart/form-data" },
     })
     .catch((error) => {
       return Promise.resolve({ ...error, isError: true });

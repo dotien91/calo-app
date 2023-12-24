@@ -1,7 +1,14 @@
 // Input.js
 
 import React from "react";
-import { View, Text, TextInput, ViewStyle, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  ViewStyle,
+  StyleSheet,
+  TextStyle,
+} from "react-native";
 import { Controller } from "react-hook-form";
 
 import { palette } from "@theme/themes";
@@ -16,7 +23,7 @@ interface InputHookProps {
   inputProps: InputPropsType;
   control: any;
   rules: any;
-  customStyle: ViewStyle;
+  customStyle: TextStyle;
   errorTxt?: string;
   name: string;
   isPassword?: boolean;
@@ -86,6 +93,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     paddingHorizontal: 20,
     height: 48,
+    paddingVertical: 10,
     alignItems: "center",
     flexDirection: "row",
     borderRadius: 30,
