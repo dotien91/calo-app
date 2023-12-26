@@ -31,6 +31,7 @@ interface InputHookProps {
   iconRight?: React.JSX.Element;
   viewStyle?: ViewStyle;
   noBorder?: boolean;
+  multiline?: boolean;
 }
 
 // eslint-disable-next-line react/display-name
@@ -46,6 +47,7 @@ const InputHook: React.FC<InputHookProps> = ({
   iconRight,
   viewStyle,
   noBorder,
+  multiline = false,
 }) => {
   return (
     <View style={styles.wrapper}>
@@ -64,6 +66,7 @@ const InputHook: React.FC<InputHookProps> = ({
           render={({ field: { onChange, value } }) => (
             <TextInput
               {...inputProps}
+              multiline={multiline}
               onChangeText={(value) => onChange(value)}
               value={value}
               style={[styles.input, !!customStyle && customStyle]}

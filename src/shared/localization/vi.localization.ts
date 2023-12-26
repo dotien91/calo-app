@@ -35,4 +35,8 @@ export default {
   welcomeHeader: "Chào mừng đến với thế giới ngôn ngữ",
   welcomeDescription: "Học tập không bao giờ là dễ dàng, với IELTS bạn sẽ ..",
   startNow: "Bắt đầu",
+  postCategory: "Chuyên mục",
+  createPost: "Tạo bài viết",
+  post: "Đăng",
+  placeholderContent: "Nội dung",
 };

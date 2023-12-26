@@ -135,7 +135,7 @@ const FileViewComponent = ({
         </Text>
 
         {(item.size || item.fileSize) && (
-          <Text style={{ fontSize: 10, color: colors.mainColor2 }}>
+          <Text style={{ fontSize: 10, color: colors.secondColor }}>
             {formatBytes(item.size || item.fileSize || 0)}
           </Text>
         )}
@@ -169,7 +169,7 @@ const FileViewComponent = ({
         hitSlop={HIT_SLOP_EXPAND_10}
         onPress={() => onPressClear()}
       >
-        <IconSvg name="icClose" size={12} color={colors.mainColor2} />
+        <IconSvg name="icClose" size={12} color={colors.white} />
       </Pressable>
     </View>
   );
@@ -180,22 +180,26 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   content: {
-    ...StyleSheet.absoluteFillObject,
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
     justifyContent: "flex-end",
     paddingHorizontal: 8,
     paddingVertical: 4,
+    borderWidth: 0,
   },
   iconClose: {
-    backgroundColor: palette.white,
+    backgroundColor: palette.mainColor2,
     width: 24,
     height: 24,
     borderRadius: 24,
     justifyContent: "center",
     alignItems: "center",
     position: "absolute",
-    top: 4,
-    right: 6,
-    zIndex: 100,
+    top: -4,
+    right: -4,
   },
 });
 

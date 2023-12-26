@@ -1,3 +1,4 @@
+import { translations } from "@localization";
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
 import IconSvg from "assets/svg";
@@ -7,18 +8,26 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 const pressGoBack = () => {};
 interface TypeHeaderPost {
   onPressPost: () => void;
+  visiblePost: boolean;
 }
 
-const HeaderPost = ({ onPressPost }: TypeHeaderPost) => {
+const HeaderPost = ({ onPressPost, visiblePost = false }: TypeHeaderPost) => {
   return (
     <View style={styles.container}>
       <Pressable style={styles.buttonLeft} onPress={pressGoBack}>
         <IconSvg name="icBack" />
       </Pressable>
-      <Text style={styles.textHeader}>Tạo bài viết</Text>
-      <Pressable onPress={onPressPost} style={styles.buttonRight}>
-        <Text style={styles.textPost}>Đăng</Text>
-      </Pressable>
+      <Text style={styles.textHeader}>{translations.createPost}</Text>
+      <View style={[{ ...styles.buttonLeft }, { alignItems: "flex-end" }]}>
+        <Pressable
+          onPress={visiblePost ? onPressPost : () => {}}
+          style={visiblePost ? styles.buttonRight : styles.buttonRightDisable}
+        >
+          <Text style={visiblePost ? styles.textPost : styles.textPostDisable}>
+            {translations.post}
+          </Text>
+        </Pressable>
+      </View>
     </View>
   );
 };
@@ -40,21 +49,34 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   buttonRight: {
-    height: 32,
-    width: 80,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: palette.primary,
-    borderRadius: 10,
+    backgroundColor: palette.secondColor,
+    borderRadius: 16,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+  },
+  buttonRightDisable: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: palette.borderColor,
+    borderRadius: 16,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
   },
   textHeader: {
-    ...CommonStyle.hnMedium,
-    fontSize: 20,
+    ...CommonStyle.hnSemiBold,
+    fontSize: 16,
     color: palette.mainColor2,
   },
   textPost: {
-    ...CommonStyle.hnMedium,
+    ...CommonStyle.hnBold,
     fontSize: 14,
-    color: palette.white,
+    color: palette.primary,
+  },
+  textPostDisable: {
+    ...CommonStyle.hnBold,
+    fontSize: 14,
+    color: palette.mainColor2,
   },
 });

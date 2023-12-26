@@ -43,7 +43,7 @@ export const selectMedia = async ({ config, callback, croping = true }) => {
     return;
   }
   launchImageLibrary({
-    selectionLimit: 0,
+    selectionLimit: 3,
     includeExtra: true,
     ...config,
   })

@@ -1,5 +1,5 @@
 import { Asset } from "react-native-image-picker";
-import request, { METHOD, BASEURL, UPLOAD_URL } from "./api";
+import request, { METHOD, BASEURL, UPLOAD_URL, requestUpload } from "./api";
 import { TypedCropImage } from "shared/models";
 
 interface MediaAsset extends TypedCropImage, Asset {
@@ -14,15 +14,13 @@ interface MediaAsset extends TypedCropImage, Asset {
 // }
 
 export async function uploadMedia(file: MediaAsset) {
-  console.log("ress...uploadMedia");
   const newForm = new FormData();
   newForm.append("file[]", file);
-  return request({
+  return requestUpload({
     method: METHOD.POST,
-    urlPath: `${UPLOAD_URL}upload-media?callback=${BASEURL}/api/media/create`,
+    urlPath: `${UPLOAD_URL}upload-media?callback=${BASEURL}media/create`,
     data: newForm,
   }).then((response) => {
-    console.log("ress...", response);
     if (Array.isArray(response.data)) {
       return response.data;
     }
@@ -31,16 +29,13 @@ export async function uploadMedia(file: MediaAsset) {
 }
 
 export async function uploadFile(file: MediaAsset) {
-  console.log("ress...uploadFile");
-
   const newForm = new FormData();
   newForm.append("file[]", file);
-  return request({
+  return requestUpload({
     method: METHOD.POST,
-    urlPath: `${UPLOAD_URL}/upload-file?callback=${BASEURL}/api/chat-media/create`,
+    urlPath: `${UPLOAD_URL}/upload-file?callback=${BASEURL}media/create`,
     data: newForm,
   }).then((response) => {
-    console.log("ress...", response);
     if (Array.isArray(response.data)) {
       return response.data;
     }
@@ -65,3 +60,59 @@ export async function uploadFile(file: MediaAsset) {
 //     throw error;
 //   }
 // }
+
+export async function getCategory() {
+  return request({
+    method: METHOD.GET,
+    urlPath: "community/list-category",
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function uploadMultiFile(files: MediaAsset[]): Promise<any> {
+  const newForm = new FormData();
+  files.forEach((element) => {
+    newForm.append("file[]", element);
+  });
+  return requestUpload({
+    method: METHOD.POST,
+    urlPath: `${UPLOAD_URL}upload-file?callback=${BASEURL}media/create`,
+    data: newForm,
+  }).then((response) => {
+    if (Array.isArray(response.data)) {
+      return response.data;
+    }
+    return response;
+  });
+}
+
+export async function uploadMultiMedia(files: MediaAsset[]): Promise<any> {
+  const newForm = new FormData();
+  files.forEach((element) => {
+    newForm.append("file[]", element);
+  });
+  return requestUpload({
+    method: METHOD.POST,
+    urlPath: `${UPLOAD_URL}upload-media?callback=${BASEURL}media/create`,
+    data: newForm,
+  }).then((response) => {
+    if (Array.isArray(response.data)) {
+      return response.data;
+    }
+    return response;
+  });
+}
+
+export async function createNewPost(data: any): Promise<any> {
+  return request({
+    method: METHOD.POST,
+    urlPath: "community/create",
+    data: data,
+  }).then((response) => {
+    if (Array.isArray(response.data)) {
+      return response.data;
+    }
+    return response;
+  });
+}

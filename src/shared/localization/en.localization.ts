@@ -36,4 +36,8 @@ export default {
   welcomeDescription:
     "Learning has never been to easy! With IELTS you will learn ...",
   startNow: "Start Now",
+  postCategory: "Sategories",
+  createPost: "Create post",
+  post: "Post",
+  placeholderContent: "Content",
 };

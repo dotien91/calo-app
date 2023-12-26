@@ -31,6 +31,8 @@ import icXls from "./icon-xls.svg";
 import icZip from "./icon-zip.svg";
 import icPoll from "./icon-poll.svg";
 import icCreatePostImage from "./icon-create-post-image.svg";
+import icLink from "./icon-link.svg";
+import icVideo from "./icon-video.svg";
 
 const Icons = {
   icFlagvi,
@@ -64,6 +66,8 @@ const Icons = {
   icZip,
   icPoll,
   icCreatePostImage,
+  icLink,
+  icVideo,
 };
 
 interface IconSvgProps {

@@ -1,30 +1,48 @@
+/*eslint camelcase: ["error", {properties: "never"}]*/
+
 import {
   View,
   Text,
   Pressable,
   Keyboard,
   TouchableWithoutFeedback,
-  ColorValue,
   ScrollView,
+  KeyboardAvoidingView,
+  TextInput,
 } from "react-native";
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useTheme, useRoute } from "@react-navigation/native";
+import { types, pick } from "react-native-document-picker";
 import IconSvg from "assets/svg";
 import createStyles from "./Post.style";
 import HeaderPost from "./components/HeaderPost";
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
-import { useForm } from "react-hook-form";
-import InputHook from "@shared-components/form/InputHook";
 import { translations } from "@localization";
-import { TypedRequest } from "shared/models";
+import { TypedCategory, TypedRequest } from "shared/models";
 import { selectMedia } from "utils/helpers/file-helper";
 import FileViewComponent from "./components/FileView";
-import useStore from "@services/zustand/store";
+import { isIos } from "utils/helpers/device-ui";
+import {
+  createNewPost,
+  getCategory,
+  uploadMultiFile,
+  uploadMultiMedia,
+} from "@services/api/post";
+import BottomSheet, {
+  BottomSheetBackdrop,
+  BottomSheetScrollView,
+} from "@gorhom/bottom-sheet";
+import { regexLink } from "@shared-constants/regex";
 
 interface OptionsState {
   file: any[];
-  poll: { _id: string; title: string }[];
   postCategory: string;
   link: string;
 }
@@ -34,7 +52,6 @@ export default function PostScreen() {
   const route: any = useRoute();
   const { colors } = theme;
   const item: TypedRequest = route?.params?.item || {};
-  const userData = useStore((state) => state.userData);
 
   const styles = useMemo(() => createStyles(theme), [theme]);
 
@@ -46,24 +63,54 @@ export default function PostScreen() {
       fileName: i.media_file_name,
       type: i.media_mime_type,
     })),
-    poll: (item.poll_ids || []).map((i) => ({ _id: i._id, title: i.question })),
     postCategory: item?.post_category?._id || "",
     link: "",
   });
 
-  const pressHastag = () => {};
+  const [listCategory, setListCategory] = useState<TypedCategory[]>([]);
+  const [description, setDescription] = useState<string>("");
+  const [link, setLink] = useState("");
+  const getListCategory = async () => {
+    const data = await getCategory();
+    setListCategory(data);
+    if (data[0]._id) {
+      setOptions((prev) => ({
+        ...prev,
+        postCategory: data[0]._id,
+      }));
+    }
+  };
+
+  useEffect(() => {
+    // gan
+    const getLink: string = description.match(regexLink)?.[0] || "";
+    setLink(getLink);
+  }, [description]);
+
+  useEffect(() => {
+    getListCategory();
+  }, []);
+
+  const pressCategory = () => {
+    Keyboard.dismiss();
+    console.log("category...", listCategory);
+    setTimeout(() => {
+      refBottomSheet.current?.expand();
+    }, 300);
+  };
 
   const scrollViewRef = useRef<ScrollView>(null);
+  const refBottomSheet = useRef<BottomSheet>(null);
+  const snapPoints = useMemo(() => ["60%"], []);
 
   const onPressPicture = async () => {
     selectMedia({
-      config: { mediaType: "any", selectionLimit: 30 },
-      callback: (images) => {
-        console.log("images...");
+      config: { mediaType: "photo", selectionLimit: 30 },
+      callback: (images: any) => {
         if (!images?.[0]) {
           return;
         }
-        const listImage = images.map((i) => ({
+        const listImage = images.map((i: any) => ({
           uri: i.uri || "",
           fileName: i.name || "",
           type: i.type || "",
@@ -76,64 +123,244 @@ export default function PostScreen() {
       croping: false,
     });
   };
-
-  const UserForm = () => {
-    return (
-      <View style={{ flexDirection: "row", paddingHorizontal: 20 }}>
-        <View
-          style={{
-            width: 50,
-            height: 50,
-            borderRadius: 25,
-            backgroundColor: "red",
-          }}
-        >
-          {/* avatar */}
-        </View>
-        <View style={{ paddingLeft: 15 }}>
-          <Text style={[CommonStyle.hnMedium, { fontSize: 18 }]}>
-            {userData?.name || " "}
-          </Text>
-          <Pressable onPress={pressHastag}>
-            <Text
-              style={[
-                CommonStyle.hnMedium,
-                { fontSize: 14, color: palette.primary },
-              ]}
-            >
-              # Hastag
-            </Text>
-          </Pressable>
-        </View>
-      </View>
-    );
+  const onPressVideo = async () => {
+    selectMedia({
+      config: { mediaType: "video", selectionLimit: 30 },
+      callback: (images: any) => {
+        if (!images?.[0]) {
+          return;
+        }
+        const listImage = images.map((i: any) => ({
+          uri: i.uri || "",
+          fileName: i.name || "",
+          type: i.type || "",
+        }));
+        setOptions((prev) => ({ ...prev, file: [...prev.file, ...listImage] }));
+        setTimeout(() => {
+          scrollViewRef.current?.scrollToEnd();
+        }, 300);
+      },
+      croping: false,
+    });
   };
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      title: "",
-      description: "",
-    },
-  });
+  const onPressFile = async () => {
+    try {
+      const pickerResult = await pick({
+        presentationStyle: "fullScreen",
+        type: [
+          types.doc,
+          types.docx,
+          types.pdf,
+          types.plainText,
+          types.xls,
+          types.xlsx,
+          types.ppt,
+          types.pptx,
+        ],
+      });
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+      if (pickerResult.length > 0) {
+        const fileUp = pickerResult.reduce((list: any[], current) => {
+          return options.file.find((i) => i.uri === current.uri)
+            ? list
+            : [...list, current];
+        }, []);
+        setOptions((prev) => ({
+          ...prev,
+          file: [
+            ...prev.file,
+            ...fileUp.map((i) => ({
+              ...i,
+              is_file: !i.type?.includes("image") && !i.type?.includes("video"),
+            })),
+          ],
+        }));
+        setTimeout(() => {
+          scrollViewRef.current?.scrollToEnd();
+        }, 300);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onSubmit = async () => {
+    // show loading
+    console.log("loading");
+    let listAttackFile: string[] = [];
+
+    const fileAlreadyUploaded = options.file
+      .filter((i) => i._id)
+      .map((i) => i._id);
+    //upload multi media
+    const listMedia = options.file.filter(
+      (i) => (i.type.includes("image") || i.type.includes("video")) && !i._id,
+    );
+
+    if (listMedia.length > 0) {
+      try {
+        const res = await uploadMultiMedia(
+          listMedia.map((i) => ({
+            name:
+              i.fileName ||
+              i.name ||
+              (i.uri || "")?.split("/")?.reverse()?.[0] ||
+              "",
+            uri: isIos ? i.uri?.replace("file://", "") : i.uri,
+            type: i.type,
+          })),
+        );
+        console.log("resuploadMultiMedia.post", JSON.stringify(res));
+        if (res) {
+          listAttackFile = listAttackFile.concat(
+            res.map((i: any) => i?.callback?._id),
+          );
+        }
+      } catch (error) {
+        // hide loading
+        // show Error
+        // GlobalPopupHelper.alert({
+        //   type: "error",
+        //   message: languages.somethingWentWrong
+        // })
+        return;
+      }
+    }
+
+    // upload multi file
+    const listFile = options.file.filter(
+      (i) => !i.type.includes("image") && !i.type.includes("video") && !i._id,
+    );
+    if (listFile.length > 0) {
+      try {
+        const res = await uploadMultiFile(
+          listFile.map((i) => ({
+            name:
+              i.fileName ||
+              i.name ||
+              (i.uri || "")?.split("/")?.reverse()?.[0] ||
+              "",
+            uri: isIos ? i.uri?.replace("file://", "") : i.uri,
+            type: i.type,
+          })),
+        );
+        console.log("resuploadMultiFile.post", JSON.stringify(res));
+        if (res) {
+          listAttackFile = listAttackFile.concat(
+            res.map((i: any) => i?.callback?._id),
+          );
+        }
+      } catch (error) {
+        // hide loading
+        // show Error
+        // GlobalPopupHelper.alert({
+        //   type: "error",
+        //   message: languages.somethingWentWrong
+        // })
+        return;
+      }
+    }
+
+    // update request
+    // if (item._id) {
+    //   useCall({
+    //     dispatchFunction: updateRequest,
+    //     params: {
+    //       _id: item._id,
+    //       post_title: titleRef.current?.trim(),
+    //       post_content: contentRef.current?.trim(),
+    //       post_category: options.post_category || undefined,
+    //       post_language: "en",
+    //       attach_files: JSON.stringify([...fileAlreadyUploaded, ...listAttackFile]),
+    //       channel_id: channel_id
+    //     },
+    //     messageSuccess: languages.updateSuccess,
+    //     actionSuccess: async (res) => {
+    //       await dispatch(createPolls({
+    //         request_id: res?._id,
+    //         question: JSON.stringify(optionsPost.length >= 2 ? optionsPost.map(i => i.title) : [])
+    //       }))
+    //       navigationHelper.goBack()
+    //     }
+    //   })
+    //   return;
+    // }
+
+    // create new request
+    const params = await {
+      post_title: "",
+      post_content: description.trim(),
+      post_category: options.postCategory || undefined,
+      post_language: "en",
+      attach_files: JSON.stringify([...fileAlreadyUploaded, ...listAttackFile]),
+    };
+
+    console.log("params...", params);
+    const res = await createNewPost(params);
+    console.log("res...", JSON.stringify(res));
+    // useCall({
+    //   dispatchFunction: createNewRequest,
+    //   params: {
+    //     post_title: titleRef.current?.trim(),
+    //     post_content: contentRef.current?.trim(),
+    //     post_category: options.postCategory || undefined,
+    //     post_language: "en",
+    //     attach_files: JSON.stringify([...fileAlreadyUploaded, ...listAttackFile]),
+    //     channel_id: channel_id
+    //   },
+    //   messageSuccess: "",
+    //   actionSuccess: async (res) => {
+    //     console.log("res create", res)
+    //     let message = languages.post.createPostSuccess
+    //     if (res?.post_status === "pending") {
+    //       message = languages.home.notificationPostPending
+    //     }
+    //     GlobalPopupHelper.alert({
+    //       type: "success",
+    //       message
+    //     })
+
+    //     navigationHelper.goBack()
+    //     playSound(AUDIO.postSuccess)
+    //   }
+    // })
   };
 
   const renderFile = useCallback(() => {
     return (
       <View style={styles.viewImage}>
-        {options.file.map((item, index) => (
-          <FileViewComponent
-            style={styles.viewFile}
-            item={item}
-            key={`option.file - ${index}`}
-            onPressClear={() => onRemove(item.uri)}
-          />
-        ))}
+        {options.file.slice(0, 4).map((item, index) => {
+          if (index < 3)
+            return (
+              <FileViewComponent
+                style={styles.viewFile}
+                item={item}
+                key={`option.file - ${index}`}
+                onPressClear={() => onRemove(item.uri)}
+              />
+            );
+          if (options.file.length >= 4) {
+            return (
+              <View
+                style={[
+                  styles.viewFile,
+                  {
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderWidth: 1,
+                    borderColor: palette.borderColor,
+                  },
+                ]}
+                key={`option.file - ${index}`}
+              >
+                <Text style={{ color: colors.textInput }}>
+                  +{options.file.length - 3}
+                </Text>
+              </View>
+            );
+          }
+          return;
+        })}
       </View>
     );
   }, [options.file]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -146,102 +373,169 @@ export default function PostScreen() {
 
   const SelectComponent = ({
     icon,
-    text,
-    color,
     onPress,
   }: {
     icon: React.JSX.Element;
-    text: string;
-    color: ColorValue;
     onPress?: () => void;
   }) => {
     return (
       <Pressable
         onPress={onPress}
-        style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        style={{
+          width: 40,
+          height: 40,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
         {icon}
-        <Text style={{ color: color, marginTop: 10 }}>{text}</Text>
       </Pressable>
     );
   };
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={styles.container}>
-        <ScrollView
-          ref={scrollViewRef}
-          style={CommonStyle.flex1}
-          keyboardShouldPersistTaps="handled"
+      <View style={[styles.container]}>
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={isIos ? "height" : undefined}
         >
-          <HeaderPost onPressPost={handleSubmit(onSubmit)} />
+          <HeaderPost
+            onPressPost={onSubmit}
+            visiblePost={description.trim() != ""}
+          />
           <View style={{ flex: 1 }}>
-            <UserForm />
-            <InputHook
-              name="title"
-              control={control}
-              rules={{ required: true }}
-              customStyle={{ ...CommonStyle.hnSemiBold, fontSize: 20 }}
-              inputProps={{
-                type: "text",
-                defaultValue: "",
-                placeholder: "Tiêu đề",
-              }}
-              viewStyle={{ borderRadius: 10, borderColor: colors.mainColor2 }}
-              errorTxt={
-                errors.title?.type === "required" ? translations.required : ""
-              }
-            />
-            <InputHook
-              name="description"
-              control={control}
-              rules={{ required: true }}
-              customStyle={{}}
-              inputProps={{
-                type: "text",
-                defaultValue: "",
-                placeholder: "Nội dung",
-              }}
-              viewStyle={{
-                borderRadius: 10,
-                alignItems: "flex-start",
-                height: 120,
-                marginVertical: 10,
-                borderColor: colors.mainColor2,
-              }}
-              errorTxt={
-                errors.description?.type === "required"
-                  ? translations.required
-                  : ""
-              }
-            />
-            {renderFile()}
-          </View>
-        </ScrollView>
-        <View style={{ flexDirection: "row", height: 60, borderTopWidth: 1 }}>
-          <SelectComponent
-            icon={
-              <IconSvg
-                size={24}
-                name="icCreatePostImage"
-                color={colors.mainColor2}
+            <Pressable
+              onPress={pressCategory}
+              style={{ paddingHorizontal: 20 }}
+            >
+              <Text
+                style={{ ...CommonStyle.hnSemiBold, color: colors.primary }}
+              >
+                #
+                {listCategory.length > 0
+                  ? listCategory?.find((i) => i._id === options.postCategory)
+                      ?.category_title || translations.postCategory
+                  : translations.postCategory}
+              </Text>
+            </Pressable>
+
+            <View
+              style={[
+                CommonStyle.flex1,
+                { alignItems: "flex-start", justifyContent: "flex-start" },
+              ]}
+            >
+              <TextInput
+                style={[styles.inputDescription]}
+                placeholder={translations.placeholderContent}
+                value={description}
+                onChangeText={setDescription}
+                multiline
+                placeholderTextColor={colors.placeholder}
               />
-            }
-            text="Ảnh"
-            color={colors.mainColor2}
-            onPress={onPressPicture}
-          />
-          <SelectComponent
-            icon={<IconSvg size={24} name="icFile" color={colors.mainColor2} />}
-            text="Tài liệu"
-            color={colors.mainColor2}
-          />
-          <SelectComponent
-            icon={<IconSvg size={24} name="icPoll" color={colors.mainColor2} />}
-            text="Bình chọn"
-            color={colors.mainColor2}
-          />
-        </View>
+            </View>
+            {link != "" && (
+              <View style={styles.viewContainerLink}>
+                <View style={styles.viewIconLink}>
+                  <IconSvg name="icLink" color={colors.mainColor2} />
+                </View>
+                <Text style={styles.textLink} numberOfLines={1}>
+                  {link}
+                </Text>
+              </View>
+            )}
+            <View style={{ paddingBottom: 20 }}>{renderFile()}</View>
+            <View
+              style={{
+                flexDirection: "row",
+                height: 40,
+                borderTopWidth: 1,
+                alignItems: "center",
+                borderColor: palette.borderColor,
+              }}
+            >
+              <SelectComponent
+                icon={
+                  <IconSvg
+                    size={24}
+                    name="icCreatePostImage"
+                    color={colors.mainColor2}
+                  />
+                }
+                onPress={onPressPicture}
+              />
+              <SelectComponent
+                icon={
+                  <IconSvg size={24} name="icFile" color={colors.mainColor2} />
+                }
+                onPress={onPressFile}
+              />
+              <SelectComponent
+                icon={
+                  <IconSvg size={24} name="icVideo" color={colors.mainColor2} />
+                }
+                onPress={onPressVideo}
+              />
+            </View>
+          </View>
+          {listCategory.length > 0 && (
+            <BottomSheet
+              snapPoints={snapPoints}
+              index={-1}
+              enablePanDownToClose
+              ref={refBottomSheet}
+              style={{ borderTopLeftRadius: 16, borderTopRightRadius: 16 }}
+              backdropComponent={(props) => (
+                <BottomSheetBackdrop
+                  {...props}
+                  disappearsOnIndex={-1}
+                  appearsOnIndex={0}
+                  pressBehavior={"close"}
+                  opacity={0.1}
+                />
+              )}
+            >
+              <View style={[{ paddingHorizontal: 16, flex: 1 }]}>
+                <Text
+                  style={{
+                    ...CommonStyle.hnSemiBold,
+                    textAlign: "center",
+                    fontSize: 20,
+                  }}
+                >
+                  {translations.postCategory}
+                </Text>
+                <BottomSheetScrollView style={{ flex: 1 }}>
+                  {listCategory.map((i) => (
+                    <Pressable
+                      key={i._id}
+                      style={styles.category}
+                      onPress={() => {
+                        refBottomSheet.current?.close();
+                        setOptions((prev) => ({
+                          ...prev,
+                          postCategory: i._id,
+                        }));
+                      }}
+                    >
+                      <Text
+                        style={{
+                          ...CommonStyle.hnSemiBold,
+                          fontSize: 16,
+                          color: colors.primary,
+                        }}
+                      >{`#${i.category_title}`}</Text>
+                      <Text style={{ ...CommonStyle.hnSemiBold, fontSize: 14 }}>
+                        {i.category_content}
+                      </Text>
+                    </Pressable>
+                  ))}
+                </BottomSheetScrollView>
+              </View>
+            </BottomSheet>
+          )}
+        </KeyboardAvoidingView>
       </View>
     </TouchableWithoutFeedback>
   );

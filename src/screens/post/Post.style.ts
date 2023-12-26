@@ -42,6 +42,44 @@ const createStyles = (theme: ExtendedTheme) => {
       width: (Device.width - 32 - 30) / 4,
       height: (Device.width - 32 - 30) / 4,
     },
+    inputDescription: {
+      ...CommonStyle.hnLight,
+      flex: 1,
+      textAlignVertical: "top",
+      paddingHorizontal: 20,
+      fontSize: 16,
+      width: "100%",
+      color: colors.textInput,
+    },
+    viewContainerLink: {
+      flexDirection: "row",
+      backgroundColor: colors.background2,
+      height: 40,
+      alignItems: "center",
+      marginHorizontal: 20,
+      borderRadius: 20,
+    },
+    viewIconLink: {
+      backgroundColor: colors.borderColor,
+      width: 50,
+      height: 40,
+      justifyContent: "center",
+      alignItems: "center",
+      borderRadius: 20,
+    },
+    textLink: {
+      ...CommonStyle.hnLight,
+      paddingHorizontal: 16,
+      fontSize: 16,
+      color: colors.mainColor2,
+      flex: 1,
+    },
+    category: {
+      marginTop: 10,
+      paddingHorizontal: 10,
+      marginHorizontal: -10,
+      borderRadius: 10,
+    },
   });
 };
 export default createStyles;
