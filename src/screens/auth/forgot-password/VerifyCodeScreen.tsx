@@ -6,9 +6,10 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import React, { useMemo } from "react";
-import { useTheme } from "@react-navigation/native";
+import React, { useMemo, useRef } from "react";
+import { useTheme, useRoute } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
+// import Recaptcha from "react-native-recaptcha-that-works";
 
 import Button from "@shared-components/button/Button";
 import createStyles from "./ForgotPasswordScreen.style";
@@ -19,36 +20,53 @@ import { SCREENS } from "@shared-constants";
 import { translations } from "@localization";
 import GoBackButton from "../components/GoBackButton";
 import IconSvg from "assets/svg";
+import { verifyCode } from "@services/api/userApi";
+import {
+  closeSuperModal,
+  showLoading,
+  showErrorModal,
+} from "@helpers/SuperModalHelper";
+import { IVerifyCode } from "@services/models";
 
-export default function ForgotPasswordScreen() {
+export default function VerifyCodeScreen() {
   const theme = useTheme();
   const { colors } = theme;
+  const route = useRoute();
+
+  const emailRef = useRef(route.params?.["user_email"] || "");
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      email: "",
+      verifyCode: "",
     },
   });
 
   const styles = useMemo(() => createStyles(theme), [theme]);
+
   const onSubmit = (data: any) => {
-    // call Api send otp
-    console.log(data);
+    showLoading();
+    const params: IVerifyCode = {
+      user_email: emailRef.current,
+      verify_code: data.verifyCode,
+    };
+
+    verifyCode(params).then((res) => {
+      console.log("resssss", res);
+      closeSuperModal();
+      if (!res.isError) {
+        NavigationService.push(SCREENS.NEW_PASSWORD, {
+          verify_code: data.verifyCode,
+          user_email: emailRef.current,
+        });
+      } else {
+        showErrorModal(res);
+      }
+    });
     // navigation to screen otp
-    NavigationService.push(SCREENS.NEWPASSWORD);
-  };
-  const textWarning = (warning: string | undefined) => {
-    if (!warning) return "";
-    if (warning === "required") {
-      return translations.required;
-    }
-    if (warning === "invalid") {
-      return translations.invalid;
-    }
-    return "";
+    // NavigationService.push(SCREENS.NEWPASSWORD);
   };
 
   return (
@@ -62,24 +80,32 @@ export default function ForgotPasswordScreen() {
           <View style={[{ alignItems: "center" }]}>
             <IconSvg name="logoIeltsHunter" width={120} height={67} />
           </View>
+
           <View>
-            <Text style={styles.textHeader}>{translations.forgotPassword}</Text>
+            <Text style={styles.textHeader}>
+              {translations.verifyCodeTitle(emailRef.current)}
+            </Text>
+
+            {/* code input */}
             <InputHook
-              name="email"
+              name="verifyCode"
               customStyle={{ flex: 1 }}
               inputProps={{
                 type: "text",
                 defaultValue: "",
-                placeholder: translations.placeholderEmaiPhone,
+                placeholder: translations.placeholderVerifyCode,
               }}
               control={control}
-              rules={{
-                required: true,
-              }}
               iconLeft={
                 <IconSvg name="icMail" size={16} color={colors.mainColor2} />
               }
-              errorTxt={textWarning(errors.email?.type)}
+              rules={{
+                required: {
+                  value: true,
+                  message: translations.required,
+                },
+              }}
+              errorTxt={errors.verifyCode?.message}
             />
 
             <Button

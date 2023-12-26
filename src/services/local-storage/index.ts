@@ -2,7 +2,7 @@ import { MMKV } from "react-native-mmkv";
 
 export const LocalStorage = new MMKV();
 
-export const TOKEN = "Token";
+export const USER_TOKEN = "userToken";
 
 export const _getJson = (key: string) => {
   const data: string = LocalStorage.getString(key) || "";

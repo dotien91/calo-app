@@ -46,7 +46,7 @@ const InputHook: React.FC<InputHookProps> = ({
         style={[
           styles.viewBorder,
           !!viewStyle && viewStyle,
-          errorTxt != "" ? { borderColor: palette.danger } : {},
+          errorTxt ? { borderColor: palette.danger } : {},
           !!noBorder && { borderWidth: 0 },
         ]}
       >

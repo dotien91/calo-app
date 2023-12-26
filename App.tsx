@@ -13,6 +13,7 @@ import { palette } from "@theme/themes";
 import useStore from "@services/zustand/store";
 import { translations } from "@localization";
 import SuperModal from "@shared-components/SuperModal";
+import { setDeviceInfo } from "@helpers/managers/DeviceInfo";
 
 LogBox.ignoreAllLogs();
 
@@ -20,12 +21,17 @@ const App = () => {
   const isDarkMode = useStore((state) => state.isDarkMode);
 
   React.useEffect(() => {
+    initData();
     NetworkManager.getInstance().configure();
     return () => {
       NetworkManager.getInstance().cleanup();
     };
   }, []);
   const language = useStore((state) => state.language);
+
+  const initData = () => {
+    setDeviceInfo();
+  };
 
   React.useEffect(() => {
     StatusBar.setBarStyle(isDarkMode ? "dark-content" : "light-content");

@@ -1,16 +1,25 @@
 import cmStyle from "@theme/styles";
 import { palette } from "@theme/themes";
-
+import { ViewStyle } from "react-native";
+import { translations } from "@localization";
 import eventEmitter from "@services/event-emitter";
+
+interface IBtnStyle {
+  typeError?: boolean;
+  text?: string | null;
+  style?: ViewStyle;
+  type: "btn";
+}
 
 interface ContentBasicPopupType {
   title: string;
   desc?: string;
+  btn?: IBtnStyle;
 }
 
 export const SuperModalHelper = {
-  getContentPopupNormal({ title, desc }: ContentBasicPopupType) {
-    return [
+  getContentPopupNormal({ title, desc, btn }: ContentBasicPopupType) {
+    const data = [
       {
         text: title,
         style: {
@@ -34,14 +43,39 @@ export const SuperModalHelper = {
         },
       },
     ];
+    if (btn) {
+      if (btn.typeError)
+        btn = {
+          ...btn,
+          type: "btn",
+          text: translations.approve,
+          style: { backgroundColor: palette.error },
+        };
+    }
+    if (!btn) return data;
+    return [...data, btn];
   },
 };
 
-export const openSuperModal = (params: ContentBasicPopupType) => {
+export const showSuperModal = (params: ContentBasicPopupType) => {
   eventEmitter.emit(
     "show_super_modal",
     SuperModalHelper.getContentPopupNormal(params),
   );
+};
+
+export const showErrorModal = (res: any) => {
+  if (res.message) {
+    showSuperModal({
+      title: res.message,
+      btn: { typeError: true },
+    });
+  } else {
+    showSuperModal({
+      title: translations.error.unknown,
+      btn: { typeError: true },
+    });
+  }
 };
 
 export const showLoading = () => {

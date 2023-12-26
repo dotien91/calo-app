@@ -2,6 +2,7 @@ import { View, Text } from "react-native";
 import React, { useMemo } from "react";
 import { useTheme } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
+
 import CommonStyle from "@theme/styles";
 import Button from "@shared-components/button/Button";
 import IconSvg from "assets/svg";
@@ -10,26 +11,17 @@ import ViewTermPolicy from "../components/TermPolicyView";
 import OrView from "../components/OrView";
 import { SCREENS } from "@shared-constants";
 import { translations } from "@localization";
+import GoogleLoginButton from "@shared-components/button/GoogleLoginButton";
+import FBLoginButton from "@shared-components/button/FBLoginButton";
 
 export default function LoginScreen() {
   const theme = useTheme();
   const { colors } = theme;
 
   const styles = useMemo(() => createStyles(theme), [theme]);
-
-  // const pressPolicy = () => {
-  //   console.log('PressPolicy')
-  // }
-  // const pressTerms = () => {
-  //   console.log('PressTerms')
-  // }
-
-  const pressGoogle = () => {};
-  const pressFacebook = () => {};
-
   const pressApple = () => {};
   const pressMail = () => {
-    NavigationService.push(SCREENS.LOGINWITHEMAIL);
+    NavigationService.push(SCREENS.LOGIN_WITH_EMAIL);
   };
 
   return (
@@ -38,22 +30,8 @@ export default function LoginScreen() {
         <IconSvg name="logoIeltsHunter" width={120} height={67} />
       </View>
       <Text style={styles.textHeader}>{translations.welcomeBack}</Text>
-      <Button
-        style={styles.buttonMarginGG}
-        onPress={pressGoogle}
-        textColor={colors.mainColor2}
-        backgroundColor={"#DBDBDB"}
-        SvgSo={<IconSvg name="icGoogle" size={16} />}
-        text={translations.continueWith("Google")}
-      />
-      <Button
-        style={styles.buttonMargin}
-        onPress={pressFacebook}
-        textColor={colors.white}
-        backgroundColor={"#1877F2"}
-        SvgSo={<IconSvg name="icFacebook" color={colors.white} size={18} />}
-        text={translations.continueWith("Facebook")}
-      />
+      <GoogleLoginButton showText={true} />
+      <FBLoginButton showText={true} />
       <Button
         style={styles.buttonMargin}
         onPress={pressApple}

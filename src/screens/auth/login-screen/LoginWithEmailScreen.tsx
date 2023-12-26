@@ -22,7 +22,17 @@ import { useForm } from "react-hook-form";
 import { SCREENS } from "@shared-constants";
 import { translations } from "@localization";
 import GoBackButton from "../components/GoBackButton";
-import { regexMail } from "@shared-constants/regex";
+import { getDeviceInfo } from "@helpers/managers/DeviceInfo";
+import { loginWithPass } from "@services/api/userApi";
+import {
+  closeSuperModal,
+  showLoading,
+  showErrorModal,
+} from "@helpers/SuperModalHelper";
+import { ILoginWithPass } from "@services/models";
+import GoogleLoginButton from "@shared-components/button/GoogleLoginButton";
+import FBLoginButton from "@shared-components/button/FBLoginButton";
+import { useUserHook } from "@helpers/useUserHook";
 
 interface ButtonSocialProps {
   onPress: () => void;
@@ -32,6 +42,8 @@ interface ButtonSocialProps {
 export default function LoginWithEmailScreen() {
   const theme = useTheme();
   const { colors } = theme;
+  const { handleLogin } = useUserHook();
+
   const {
     control,
     handleSubmit,
@@ -42,16 +54,36 @@ export default function LoginWithEmailScreen() {
       password: "",
     },
   });
+
   const [showPass, setShowPass] = useState(false);
 
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const onSubmit = (data: any) => console.log(data);
+  const onSubmit = (data: any) => {
+    showLoading();
+    const params: ILoginWithPass = {
+      user_email: data.email,
+      user_password: data.password,
+      ...getDeviceInfo(),
+    };
 
-  const pressGoogle = () => {};
-  const pressFacebook = () => {};
+    loginWithPass(params).then((res) => {
+      closeSuperModal();
+      console.log("ressss", res);
+      if (!res.isError) {
+        const user_token = res.headers["x-authorization"];
+        console.log("toke", user_token);
+        handleLogin(user_token);
+      } else {
+        showErrorModal(res);
+      }
+    });
+
+    // loginWithPass
+  };
+
   const pressApple = () => {};
   const pressRegister = () => {
-    NavigationService.push(SCREENS.SIGNUP);
+    NavigationService.push(SCREENS.SIGN_UP);
   };
 
   const ButtonSocial = ({ onPress, IconSocial }: ButtonSocialProps) => {
@@ -74,18 +106,7 @@ export default function LoginWithEmailScreen() {
   };
 
   const pressForgotPassword = () => {
-    console.log("control...", JSON.stringify(control));
-    NavigationService.push(SCREENS.FORGOTPASSWORD);
-  };
-  const textWarning = (warning: string | undefined) => {
-    if (!warning) return "";
-    if (warning === "required") {
-      return translations.required;
-    }
-    if (warning === "invalid") {
-      return translations.invalid;
-    }
-    return "";
+    NavigationService.push(SCREENS.FORGOT_PASSWORD);
   };
 
   return (
@@ -101,25 +122,31 @@ export default function LoginWithEmailScreen() {
           </View>
           <View>
             <Text style={styles.textHeader}>{translations.welcomeBack}</Text>
+
+            {/* email input */}
             <InputHook
               name="email"
               customStyle={{ flex: 1 }}
               inputProps={{
                 type: "email",
                 defaultValue: "",
-                placeholder: translations.placeholderEmaiPhone,
+                placeholder: translations.placeholderEmail,
               }}
               iconLeft={
                 <IconSvg name="icMail" size={18} color={colors.mainColor2} />
               }
               control={control}
               rules={{
-                required: true,
-                pattern: regexMail,
+                required: {
+                  value: true,
+                  message: translations.required,
+                },
+                // pattern: regexMail,
               }}
-              errorTxt={textWarning(errors.email?.type)}
+              errorTxt={errors.email?.message}
             />
 
+            {/* password input */}
             <InputHook
               name="password"
               customStyle={{}}
@@ -130,8 +157,11 @@ export default function LoginWithEmailScreen() {
               }}
               control={control}
               rules={{
-                required: true,
-                minLength: 6,
+                required: {
+                  value: true,
+                  message: translations.required,
+                },
+                // pattern: regexMail,
               }}
               iconLeft={<IconSvg name="icLock" size={18} />}
               isPassword={!showPass}
@@ -141,7 +171,7 @@ export default function LoginWithEmailScreen() {
                   name={showPass ? "icEye" : "icEyeCrossed"}
                 />
               }
-              errorTxt={textWarning(errors.password?.type)}
+              errorTxt={errors.password?.message}
             />
 
             <Button
@@ -170,18 +200,12 @@ export default function LoginWithEmailScreen() {
 
             <OrView />
             <View style={styles.viewSocial}>
-              <ButtonSocial
-                IconSocial={<IconSvg name="icGoogle" />}
-                onPress={pressGoogle}
-              />
+              <GoogleLoginButton />
               <ButtonSocial
                 IconSocial={<IconSvg name="icApple" color={colors.black} />}
                 onPress={pressApple}
               />
-              <ButtonSocial
-                IconSocial={<IconSvg name="icFacebook" color="#1877F2" />}
-                onPress={pressFacebook}
-              />
+              <FBLoginButton />
             </View>
             <ViewTermPolicy style={{ paddingHorizontal: 20, marginTop: 36 }} />
             <Text style={styles.textRegister}>

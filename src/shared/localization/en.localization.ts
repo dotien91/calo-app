@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 export default {
   home: "Home",
   profile: "Profile",
@@ -9,8 +10,11 @@ export default {
   approve: "Approve",
   cancel: "Cancel",
   placeholderEmaiPhone: "Email/Phone number",
+  placeholderEmail: "Email",
+  placeholderVerifyCode: "Verify code",
   placeholderPasword: "Password",
   forgotPassword: "forgot password",
+  verifyCodeTitle: (text: string) => `Input verify code from email ${text}`,
   signIn: "Sign in",
   signUp: "Sign up",
   signInWith: "Sign in with",
@@ -36,4 +40,16 @@ export default {
   welcomeDescription:
     "Learning has never been to easy! With IELTS you will learn ...",
   startNow: "Start Now",
+  sendingError: "An error occurred!",
+  createPassSuccess: "Create new password success!",
+  loginSuccess: "Login success!",
+  error: {
+    unknown: "Unknow error!",
+    invalidPhoneEmail: "Phone/Email invalid",
+    passDoesNotMatch: "Confirmation password does not match",
+    minLengthPass: "Password must be at least 6 characters",
+    errorPatternPass:
+      "Password includes at least 8 characters including letters, numbers and special characters, lowercase and uppercase",
+  },
 };
+/* eslint-disable max-len */

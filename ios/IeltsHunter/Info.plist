@@ -43,6 +43,12 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>FacebookAppID</key>
+	<string>908606980666349</string>
+	<key>FacebookClientToken</key>
+	<string>6054f4c2e7bae8d01389715aea05e97b</string>
+	<key>FacebookDisplayName</key>
+	<string>ielthunter</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -58,12 +64,6 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
-	<key>FacebookAppID</key>
-	<string>908606980666349</string>
-	<key>FacebookClientToken</key>
-	<string>6054f4c2e7bae8d01389715aea05e97b</string>
-	<key>FacebookDisplayName</key>
-	<string>ielthunter</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
@@ -109,6 +109,11 @@
 		<string>SVN-Outfit-Regular.ttf</string>
 		<string>SVN-Outfit-SemiBold.ttf</string>
 		<string>SVN-Outfit-Thin.ttf</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

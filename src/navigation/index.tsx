@@ -17,14 +17,15 @@ import ProfileScreen from "@screens/profile/ProfileScreen";
 import NotificationScreen from "@screens/notification/NotificationScreen";
 import SettingScreenStyle from "@screens/setting/SettingScreen";
 import useStore from "@services/zustand/store";
-import IntroScreen from "@screens/login/intro/IntroScreen";
-import ChooseLanguageScreen from "@screens/login/chooselanguage/ChooseLanguageScreen";
-import WelcomeScreen from "@screens/login/welcome/WelcomeScreen";
-import LoginScreen from "@screens/login/loginscreen/LoginScreen";
-import LoginWithEmailScreen from "@screens/login/loginwithemail/LoginWithEmailScreen";
-import SignUpScreen from "@screens/login/signup/SignUpScreen";
-import ForgotPasswordScreen from "@screens/login/forgotpassword/ForgotPasswordScreen";
-import NewPasswordScreen from "@screens/login/createnewpassword/CreateNewPassword";
+import IntroScreen from "@screens/welcome/intro/IntroScreen";
+import ChooseLanguageScreen from "@screens/welcome/choose-language/ChooseLanguageScreen";
+import WelcomeScreen from "@screens/welcome/WelcomeScreen";
+import LoginScreen from "@screens/auth/login-screen/LoginScreen";
+import LoginWithEmailScreen from "@screens/auth/login-screen/LoginWithEmailScreen";
+import SignUpScreen from "@screens/auth/sign-up/SignUpScreen";
+import ForgotPasswordScreen from "@screens/auth/forgot-password/ForgotPasswordScreen";
+import NewPasswordScreen from "@screens/auth/forgot-password/CreateNewPassword";
+import VerifyCodeScreen from "@screens/auth/forgot-password/VerifyCodeScreen";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -102,13 +103,13 @@ const Navigation = () => {
     if (!isFirstOpenApp) return null;
     return (
       <>
-        <Stack.Screen name={SCREENS.LOGININTRO} component={IntroScreen} />
+        <Stack.Screen name={SCREENS.INTRO} component={IntroScreen} />
 
         <Stack.Screen
-          name={SCREENS.LOGINCHOOSELANGUAGE}
+          name={SCREENS.CHOOSE_LANGUAGE}
           component={ChooseLanguageScreen}
         />
-        <Stack.Screen name={SCREENS.LOGINWELCOME} component={WelcomeScreen} />
+        <Stack.Screen name={SCREENS.WELCOME} component={WelcomeScreen} />
       </>
     );
   };
@@ -127,18 +128,19 @@ const Navigation = () => {
         <Stack.Screen name={SCREENS.DETAIL}>
           {(props) => <DetailScreen {...props} />}
         </Stack.Screen>
-        <Stack.Screen name={SCREENS.LOGINPAGE} component={LoginScreen} />
+        <Stack.Screen name={SCREENS.LOGIN_PAGE} component={LoginScreen} />
         <Stack.Screen
-          name={SCREENS.LOGINWITHEMAIL}
+          name={SCREENS.LOGIN_WITH_EMAIL}
           component={LoginWithEmailScreen}
         />
-        <Stack.Screen name={SCREENS.SIGNUP} component={SignUpScreen} />
+        <Stack.Screen name={SCREENS.SIGN_UP} component={SignUpScreen} />
         <Stack.Screen
-          name={SCREENS.FORGOTPASSWORD}
+          name={SCREENS.FORGOT_PASSWORD}
           component={ForgotPasswordScreen}
         />
+        <Stack.Screen name={SCREENS.VERIFY_CODE} component={VerifyCodeScreen} />
         <Stack.Screen
-          name={SCREENS.NEWPASSWORD}
+          name={SCREENS.NEW_PASSWORD}
           component={NewPasswordScreen}
         />
       </Stack.Navigator>

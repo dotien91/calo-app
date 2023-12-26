@@ -12,9 +12,12 @@ export type StoreSlice<T> = (
 
 const ZustandMMKVStorage: StateStorage = {
   setItem: (name: string, value: string) => {
+    console.log("setitem", name, value);
     return LocalStorage.set(name, value);
   },
   getItem: (name: string) => {
+    console.log("gertitem", name);
+
     const value = LocalStorage.getString(name);
     return value ?? null;
   },

@@ -5,7 +5,7 @@ import createStyles from "./Button.style";
 
 interface ButtonProps {
   onPress: () => void;
-  text: string;
+  text?: string;
   style?: ViewStyle;
   backgroundColor?: ColorValue;
   textColor?: ColorValue;

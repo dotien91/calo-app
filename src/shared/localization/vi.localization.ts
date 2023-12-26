@@ -9,8 +9,12 @@ export default {
   approve: "Đồng ý",
   cancel: "Huỷ",
   placeholderEmaiPhone: "Email/Số điện thoại",
+  placeholderEmail: "Email",
+  placeholderVerifyCode: "Mã xác thực",
   placeholderPasword: "Mật khẩu",
   forgotPassword: "Quên mật khẩu",
+  verifyCodeTitle: (text: string) =>
+    `Nhập mã xác thực nhận được từ email ${text}`,
   signIn: "Đăng nhặp",
   signUp: "Đăng ký",
   signInWith: "Đăng nhập với",
@@ -21,8 +25,8 @@ export default {
   enterOTP: "Nhập mã otp",
   updatePassword: "Cập nhật mật khẩu",
   save: "Lưu",
-  required: "không được để trống",
-  invalid: "không hợp lệ",
+  required: "Ô nhập không được để trống",
+  invalid: "Không hợp lệ",
   or: "Hoặc",
   welcomeBack: "Mừng bạn trở lại",
   minLength: (number: number) => `tối thiểu ${number} ký tự`,
@@ -35,4 +39,14 @@ export default {
   welcomeHeader: "Chào mừng đến với thế giới ngôn ngữ",
   welcomeDescription: "Học tập không bao giờ là dễ dàng, với IELTS bạn sẽ ..",
   startNow: "Bắt đầu",
+  createPassSuccess: "Tạo mật khẩu mới thành công!",
+  loginSuccess: "Đăng nhập thành công!",
+  error: {
+    unknown: "Có lỗi không xác định xảy ra!",
+    invalidPhoneEmail: "SĐT/Email không hợp lệ",
+    minLengthPass: "Mật khẩu phải ít nhất 6 kí tự",
+    passDoesNotMatch: "Mật khẩu xác nhận không trùng khớp",
+    errorPatternPass:
+      "Mật khẩu gồm ít nhất 8 kí tự ký tự có chữ cái, số và kí tự đặc biệt, viết thường và viết hoa",
+  },
 };

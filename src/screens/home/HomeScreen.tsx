@@ -1,10 +1,9 @@
 import React, { useMemo, useEffect } from "react";
-import { View, FlatList, Image } from "react-native";
+import { View, FlatList, Image, Pressable } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as NavigationService from "react-navigation-helpers";
-import RNBounceable from "@freakycoder/react-native-bounceable";
 import lodash from "lodash";
 import {
   GoogleSignin,
@@ -50,6 +49,12 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
   /* -------------------------------------------------------------------------- */
 
   useEffect(() => {
+    // setTimeout(() => {
+    //   NavigationService.navigate(SCREENS.LOGIN_PAGE);
+    // }, 100)
+  }, []);
+
+  useEffect(() => {
     getCurrentUser().then((res) => {
       if (!res.isError && !lodash.isEmpty(res)) {
         setUserData(res);
@@ -57,15 +62,19 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
     });
   }, [setUserData]);
 
+  const openLoginPage = () => {
+    NavigationService.push(SCREENS.LOGIN_PAGE);
+  };
+
   const MenuButton = () => (
-    <RNBounceable>
+    <Pressable onPress={openLoginPage}>
       <Icon
         name="menu"
         type={IconType.Ionicons}
         color={colors.iconBlack}
         size={30}
       />
-    </RNBounceable>
+    </Pressable>
   );
 
   const Header = () => (

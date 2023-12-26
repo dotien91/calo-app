@@ -21,6 +21,7 @@ const createStyles = (theme: ExtendedTheme) => {
       fontSize: 32,
       color: colors.mainColor2,
       textAlign: "center",
+      marginBottom: 18,
     },
     buttonMarginGG: {
       marginTop: 30,

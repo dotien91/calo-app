@@ -10,6 +10,7 @@ import {
 import React, { useMemo, useState } from "react";
 import { useTheme } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
+
 import CommonStyle from "@theme/styles";
 import Button from "@shared-components/button/Button";
 import createStyles from "./SignUpScreen.style";
@@ -20,6 +21,15 @@ import { useForm } from "react-hook-form";
 import { translations } from "@localization";
 import GoBackButton from "../components/GoBackButton";
 import IconSvg from "assets/svg";
+import { regexMail, passRegex } from "@shared-constants/regex";
+import { ISignUpWithEmail } from "@services/models";
+import { getDeviceInfo } from "@helpers/managers/DeviceInfo";
+import { singUp } from "@services/api/userApi";
+import {
+  closeSuperModal,
+  showErrorModal,
+  showLoading,
+} from "@helpers/SuperModalHelper";
 
 interface ButtonSocialProps {
   onPress: () => void;
@@ -29,7 +39,11 @@ interface ButtonSocialProps {
 export default function SignUpScreen() {
   const theme = useTheme();
   const { colors } = theme;
+  const [useMailRegex, setUseMailRegex] = useState(false);
+  const { handleLogin } = userHook();
+
   const {
+    watch,
     control,
     handleSubmit,
     formState: { errors },
@@ -40,10 +54,38 @@ export default function SignUpScreen() {
       password: "",
     },
   });
+
+  React.useEffect(() => {
+    const value = watch("email") || " ";
+    const isEmailValue = !Number(value);
+    if (isEmailValue != useMailRegex) {
+      setUseMailRegex((old) => !old);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watch("email")]);
+
   const [showPass, setShowPass] = useState(false);
 
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const onSubmit = (data: any) => console.log(data);
+  const onSubmit = (data: any) => {
+    showLoading();
+    const params: ISignUpWithEmail = {
+      full_name: data.fullname,
+      user_email: data.email,
+      re_password: data.password,
+      user_password: data.password,
+      ...getDeviceInfo(),
+    };
+    singUp(params).then((res) => {
+      closeSuperModal();
+      if (!res.isError) {
+        const user_token = res.headers["x-authorization"];
+        handleLogin(user_token);
+      } else {
+        showErrorModal(res);
+      }
+    });
+  };
 
   const pressGoogle = () => {};
   const pressFacebook = () => {};
@@ -71,17 +113,6 @@ export default function SignUpScreen() {
     );
   };
 
-  const textWarning = (warning: string | undefined) => {
-    if (!warning) return "";
-    if (warning === "required") {
-      return translations.required;
-    }
-    if (warning === "invalid") {
-      return translations.invalid;
-    }
-    return "";
-  };
-
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <KeyboardAvoidingView
@@ -97,6 +128,8 @@ export default function SignUpScreen() {
             <Text style={styles.textHeader}>
               {translations.createNewAccount}
             </Text>
+
+            {/* fullname input */}
             <InputHook
               iconLeft={<IconSvg name="icLoginFullname" />}
               name="fullname"
@@ -107,10 +140,16 @@ export default function SignUpScreen() {
                 placeholder: translations.fullname,
               }}
               control={control}
-              rules={{ required: true }}
-              errorTxt={textWarning(errors.fullname?.type)}
+              rules={{
+                required: {
+                  value: true,
+                  message: translations.required,
+                },
+              }}
+              errorTxt={errors.fullname?.message}
             />
 
+            {/* email input */}
             <InputHook
               iconLeft={<IconSvg name="icMail" color={colors.mainColor2} />}
               name="email"
@@ -118,12 +157,23 @@ export default function SignUpScreen() {
               inputProps={{
                 type: "email",
                 defaultValue: "",
-                placeholder: translations.placeholderEmaiPhone,
+                placeholder: translations.placeholderEmail,
               }}
               control={control}
-              rules={{ required: true }}
-              errorTxt={textWarning(errors.email?.type)}
+              rules={{
+                required: {
+                  value: true,
+                  message: translations.required,
+                },
+                pattern: {
+                  value: regexMail,
+                  message: translations.error.invalidPhoneEmail,
+                },
+              }}
+              errorTxt={errors.email?.message}
             />
+
+            {/* pass input */}
             <InputHook
               iconLeft={<IconSvg name="icLock" />}
               name="password"
@@ -134,7 +184,20 @@ export default function SignUpScreen() {
                 placeholder: translations.placeholderPasword,
               }}
               control={control}
-              rules={{ required: true }}
+              rules={{
+                required: {
+                  value: true,
+                  message: translations.required,
+                },
+                minLength: {
+                  value: 8,
+                  message: translations.error.minLengthPass,
+                },
+                pattern: {
+                  value: passRegex,
+                  message: translations.error.errorPatternPass,
+                },
+              }}
               isPassword={!showPass}
               iconRight={
                 <IconSvg
@@ -144,7 +207,7 @@ export default function SignUpScreen() {
                   name={showPass ? "icEye" : "icEyeCrossed"}
                 />
               }
-              errorTxt={textWarning(errors.password?.type)}
+              errorTxt={errors.password?.message}
             />
 
             <Button

@@ -7,23 +7,34 @@ import {
   Platform,
 } from "react-native";
 import { useForm } from "react-hook-form";
-import React, { useMemo, useState } from "react";
-import { useTheme } from "@react-navigation/native";
-import * as NavigationService from "react-navigation-helpers";
+import React, { useMemo, useState, useRef } from "react";
+import { useTheme, useRoute } from "@react-navigation/native";
 
 import Button from "@shared-components/button/Button";
 import createStyles from "./CreateNewPassword.style";
 import ViewTermPolicy from "../components/TermPolicyView";
 import InputHook from "@shared-components/form/InputHook";
-import { SCREENS } from "@shared-constants";
 import { translations } from "@localization";
 import IconSvg from "assets/svg";
 import GoBackButton from "../components/GoBackButton";
+import { ILoginWithPass, ICreateNewPass } from "@services/models";
+import { createNewPass, loginWithPass } from "@services/api/userApi";
+import {
+  closeSuperModal,
+  showErrorModal,
+  showSuperModal,
+  showLoading,
+} from "@helpers/SuperModalHelper";
+import { RECAPCHA_KEY } from "@shared-constants/config";
+import { passRegex } from "@shared-constants/regex";
+import { getDeviceInfo } from "@helpers/managers/DeviceInfo";
+import { useUserHook } from "@helpers/useUserHook";
 
 export default function NewPasswordScreen() {
   const theme = useTheme();
   const { colors } = theme;
   const {
+    watch,
     control,
     handleSubmit,
     formState: { errors },
@@ -31,28 +42,55 @@ export default function NewPasswordScreen() {
     defaultValues: {
       newPassword: "",
       reNewPassword: "",
-      otp: "",
     },
   });
   const [showPass, setShowPass] = useState(false);
+  const route = useRoute();
+  const { handleLogin } = useUserHook();
+  const verifyCodeRef = useRef(route.params?.["verify_code"]);
+  const emailRef = useRef(route.params?.["user_email"]);
+
+  console.log("outeroute", route);
 
   const styles = useMemo(() => createStyles(theme), [theme]);
   const onSubmit = (data: any) => {
-    // call Api send otp
-    console.log(data);
-    // navigation to screen otp
-    NavigationService.push(SCREENS.NEWPASSWORD);
+    showLoading();
+    const params: ICreateNewPass = {
+      verify_code: verifyCodeRef.current,
+      g_recaptcha: RECAPCHA_KEY,
+      re_password: data.newPassword,
+      user_password: data.reNewPassword,
+    };
+    createNewPass(params).then((res) => {
+      if (!res.isError) {
+        continueLoginWithPass(data.newPassword);
+      } else {
+        closeSuperModal();
+        showErrorModal(res);
+      }
+    });
   };
 
-  const textWarning = (warning: string | undefined) => {
-    if (!warning) return "";
-    if (warning === "required") {
-      return translations.required;
-    }
-    if (warning === "invalid") {
-      return translations.invalid;
-    }
-    return "";
+  const continueLoginWithPass = (password: string) => {
+    const params: ILoginWithPass = {
+      user_email: emailRef.current,
+      user_password: password,
+      ...getDeviceInfo(),
+    };
+    loginWithPass(params).then((res) => {
+      closeSuperModal();
+      if (!res.isError) {
+        const user_token = res.headers["x-authorization"];
+        handleLogin(user_token);
+      } else {
+        if (res.message) {
+          console.log("error", res);
+          setTimeout(() => {
+            showSuperModal({ title: res.message });
+          }, 2000);
+        }
+      }
+    });
   };
 
   return (
@@ -68,6 +106,8 @@ export default function NewPasswordScreen() {
           </View>
           <View>
             <Text style={styles.textHeader}>{translations.updatePassword}</Text>
+
+            {/* new pass input */}
             <InputHook
               iconLeft={<IconSvg name="icLock" />}
               name="newPassword"
@@ -80,6 +120,10 @@ export default function NewPasswordScreen() {
               control={control}
               rules={{
                 required: true,
+                pattern: {
+                  value: passRegex,
+                  message: translations.error.errorPatternPass,
+                },
               }}
               isPassword={!showPass}
               iconRight={
@@ -88,8 +132,10 @@ export default function NewPasswordScreen() {
                   name={showPass ? "icEye" : "icEyeCrossed"}
                 />
               }
-              errorTxt={textWarning(errors.newPassword?.type)}
+              errorTxt={errors.newPassword?.message}
             />
+
+            {/* renew pass input */}
             <InputHook
               iconLeft={<IconSvg name="icLock" />}
               name="reNewPassword"
@@ -102,6 +148,12 @@ export default function NewPasswordScreen() {
               control={control}
               rules={{
                 required: true,
+
+                validate: (val: string) => {
+                  if (watch("newPassword") != val) {
+                    return translations.error.passDoesNotMatch;
+                  }
+                },
               }}
               isPassword={!showPass}
               iconRight={
@@ -110,22 +162,7 @@ export default function NewPasswordScreen() {
                   name={showPass ? "icEye" : "icEyeCrossed"}
                 />
               }
-              errorTxt={textWarning(errors.reNewPassword?.type)}
-            />
-            <InputHook
-              iconLeft={<IconSvg name="icLock" />}
-              name="otp"
-              customStyle={{ flex: 1 }}
-              inputProps={{
-                type: "text",
-                defaultValue: "",
-                placeholder: translations.enterOTP,
-              }}
-              control={control}
-              rules={{
-                required: true,
-              }}
-              errorTxt={textWarning(errors.otp?.type)}
+              errorTxt={errors.reNewPassword?.message}
             />
             <Button
               style={styles.buttonMargin}

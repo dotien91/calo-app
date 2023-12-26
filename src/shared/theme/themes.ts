@@ -32,6 +32,7 @@ export const palette = {
   grey: "#eceeef",
   blue: "#0a86cf",
   orange: "#ea7a16",
+  green: "#60d140",
 };
 
 interface ExtendedTheme extends Theme {

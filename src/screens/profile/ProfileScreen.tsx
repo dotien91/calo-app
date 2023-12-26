@@ -9,6 +9,8 @@ import Text from "@shared-components/text-wrapper/TextWrapper";
 import useStore from "@services/zustand/store";
 import RNBounceable from "@freakycoder/react-native-bounceable";
 import { translations } from "@localization";
+import * as NavigationService from "react-navigation-helpers";
+import { SCREENS } from "@shared-constants";
 
 interface ProfileScreenProps {}
 
@@ -18,7 +20,6 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
   const styles = useMemo(() => createStyles(theme), [theme]);
 
   const userData = useStore((state) => state.userData);
-  const setUserData = useStore((state) => state.setUserData);
 
   return (
     <View style={styles.container}>
@@ -32,7 +33,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
       <RNBounceable
         style={styles.userButton}
         onPress={() => {
-          setUserData({ name: "John Doe", email: "johndoe@gmail.com" });
+          NavigationService.navigate(SCREENS.LOGIN_PAGE);
         }}
       >
         <Text color="#fff">Set User</Text>

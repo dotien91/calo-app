@@ -111,7 +111,7 @@ module.exports = {
     "react-hooks/rules-of-hooks": 2,
     "unused-imports/no-unused-imports": 2,
     "unused-imports/no-unused-vars": 2,
-    camelcase: 2,
+    camelcase: "off",
     "prefer-destructuring": 2,
     "no-nested-ternary": 2,
     "prettier/prettier": [

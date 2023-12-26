@@ -35,16 +35,18 @@ const SuperModal: React.FC<SuperModalProps> = () => {
   }, []);
 
   const showModal = (_content: object) => {
-    setVisible(true);
     if (_content?.showLoading) {
       setIsLoadingView(true);
       return;
     }
     setContent(_content);
+    setVisible(true);
   };
 
   const closeModal = () => {
+    setIsLoadingView(false);
     setVisible(false);
+    setContent([]);
   };
 
   const hasBtn = () => {
@@ -52,6 +54,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
   };
 
   const renderItem = (item: object, index: number) => {
+    console.log("itemmmmm", item);
     return (
       <View key={index}>
         {!item.type && !!item.text && (
@@ -59,9 +62,12 @@ const SuperModal: React.FC<SuperModalProps> = () => {
             {item.text}
           </Text>
         )}
-        {item?.type == "btn" && (
-          <TouchableOpacity style={item.btnStyle} onPress={item.onPress}>
-            <Text style={[item?.txtBtn ? item.txtBtn : styles.txtBtn]}>
+        {item?.type == "btn" && !!item.text && (
+          <TouchableOpacity
+            style={{ ...styles.btnStyle, ...item.style }}
+            onPress={item.onPress || closeModal}
+          >
+            <Text style={{ ...styles.txtBtn, ...item.txtBtn }}>
               {item.text}
             </Text>
           </TouchableOpacity>
@@ -73,16 +79,18 @@ const SuperModal: React.FC<SuperModalProps> = () => {
   if (isLoadingView)
     return (
       <Modal
-        isVisible={visible}
+        isVisible={isLoadingView}
         onBackdropPress={closeModal}
         onSwipeComplete={closeModal}
         onBackButtonPress={closeModal}
-        useNativeDriver={true}
+        // useNativeDriver={true}
         style={styles.loadingView}
       >
         <ActivityIndicator color={palette.white} size={"large"} />
       </Modal>
     );
+
+  if (!visible) return null;
 
   return (
     <Modal
@@ -90,7 +98,9 @@ const SuperModal: React.FC<SuperModalProps> = () => {
       onBackdropPress={closeModal}
       onSwipeComplete={closeModal}
       onBackButtonPress={closeModal}
-      useNativeDriver={true}
+      animationIn={"FadeIn"}
+      animationOut={"FadeOut"}
+      // useNativeDriver={true}
       style={styles.modal}
     >
       <View style={styles.modalInner}>
@@ -117,20 +127,20 @@ const styles = StyleSheet.create({
     minWidth: "60%",
     backgroundColor: palette.white,
     borderRadius: 6,
-    padding: 20,
+    padding: 30,
     overflow: "hidden",
   },
   txtDefault: {
     fontSize: 16,
     textAlign: "center",
     ...cmStyle.hnMedium,
-    marginBottom: 8,
+    marginBottom: 12,
   },
   btnStyle: {
     paddingVertical: 6,
     paddingHorizontal: 10,
-    backgroundColor: palette.primary,
-    borderRadius: 6,
+    backgroundColor: palette.green,
+    borderRadius: 99,
     ...cmStyle.flexCenter,
   },
   txtBtn: {
