@@ -6,6 +6,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import * as NavigationService from "react-navigation-helpers";
 import RNBounceable from "@freakycoder/react-native-bounceable";
 import lodash from "lodash";
+import {
+  GoogleSignin,
+  statusCodes,
+} from "@react-native-google-signin/google-signin";
+
 /**
  * ? Local Imports
  */
@@ -15,10 +20,14 @@ import CardItem from "./components/card-item/CardItem";
 /**
  * ? Shared Imports
  */
-import { SCREENS } from "@shared-constants";
 import Text from "@shared-components/text-wrapper/TextWrapper";
 import { getCurrentUser } from "@services/api/userApi";
 import useStore from "@services/zustand/store";
+import {
+  SCREENS,
+  IOS_CLIENT_ID_GOOGLE,
+  WEB_CLIENT_ID_GOOGLE,
+} from "@shared-constants";
 
 const profileURI =
   // eslint-disable-next-line max-len
@@ -81,9 +90,27 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
     </View>
   );
 
+  const loginGoogle = async () => {
+    try {
+      GoogleSignin.configure({
+        webClientId: WEB_CLIENT_ID_GOOGLE,
+        iosClientId: IOS_CLIENT_ID_GOOGLE,
+        offlineAccess: true,
+      });
+      await GoogleSignin.signOut();
+      await GoogleSignin.hasPlayServices();
+      const { idToken } = await GoogleSignin.signIn();
+      console.log("=========token", idToken);
+    } catch (error: any) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        //doToastError(trans("login_loginCanceled"));
+      }
+    }
+  };
+
   const Welcome = () => (
     <>
-      <Text h1 bold color={colors.text}>
+      <Text onPress={loginGoogle} h1 bold color={colors.text}>
         Hello Kuray
       </Text>
       <Text color={colors.placeholder}>Welcome Back</Text>

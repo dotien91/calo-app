@@ -10,6 +10,8 @@
     "@motify/components": "0.18.0",
     "@motify/core": "0.18.0",
     "@react-native-community/netinfo": "^11.2.1",
+    "@react-native-firebase/app": "^18.7.3",
+    "@react-native-google-signin/google-signin": "^11.0.0",
     "@react-native-masked-view/masked-view": "^0.2.9",
     "@react-navigation/bottom-tabs": "^6.5.8",
     "@react-navigation/native": "^6.1.7",
@@ -27,6 +29,7 @@
     "react-native-dynamic-vector-icons": "^1.3.0",
     "react-native-fast-image": "^8.6.3",
     "react-native-fs": "2.20.0",
+    "react-native-fbsdk-next": "^12.1.2",
     "react-native-gesture-handler": "^2.12.0",
     "react-native-image-crop-picker": "0.40.0",
     "react-native-image-picker": "5.6.0",
@@ -48,6 +51,15 @@
     "react-navigation-helpers": "^2.3.1",
     "zustand": "^4.3.9"
   },
+  "reactNativePermissionsIOS": [
+    "Camera",
+    "LocationWhenInUse",
+    "MediaLibrary",
+    "Microphone",
+    "Notifications",
+    "PhotoLibrary",
+    "PhotoLibraryAddOnly"
+  ],
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@babel/preset-env": "^7.20.0",

@@ -26,10 +26,13 @@ export default function Button({
   return (
     <View style={style}>
       <Pressable
-        style={[
-          styles.viewButton,
-          !!backgroundColor && { backgroundColor: backgroundColor },
-        ]}
+        style={({ pressed }) => {
+          return [
+            styles.viewButton,
+            !!backgroundColor && { backgroundColor: backgroundColor },
+            { opacity: pressed ? 0.5 : 1.0 },
+          ];
+        }}
         onPress={onPress}
       >
         {!!SvgSo && SvgSo}

@@ -20,6 +20,27 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.409582649419-j3ler20j0fklont9ivpeud6lmq7hkkqn</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleIdentifier</key>
+			<string></string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb908606980666349</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -37,6 +58,12 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>FacebookAppID</key>
+	<string>908606980666349</string>
+	<key>FacebookClientToken</key>
+	<string>6054f4c2e7bae8d01389715aea05e97b</string>
+	<key>FacebookDisplayName</key>
+	<string>ielthunter</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
