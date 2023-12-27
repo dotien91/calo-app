@@ -7,7 +7,6 @@ import {
   View,
   ViewStyle,
 } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
 import { useTheme } from "@react-navigation/native";
 
 export const HIT_SLOP_EXPAND_10 = { top: 10, left: 10, right: 10, bottom: 10 };
@@ -111,20 +110,7 @@ const FileViewComponent = ({
   return (
     <View style={[styles.viewFile, style]}>
       <IconFileComponent file={item} sizeIcon={sizeIcon} />
-      <LinearGradient
-        colors={[
-          "rgba(0,0,0,0.0)",
-          "rgba(0,0,0,0.0)",
-          "rgba(0,0,0,0.0)",
-          "rgba(0,0,0,0.0)",
-          "rgba(0,0,0,0.1)",
-          "rgba(0,0,0,0.2)",
-          "rgba(0,0,0,0.4)",
-          "rgba(0,0,0,0.6)",
-          "rgba(0,0,0,0.8)",
-        ]}
-        style={styles.content}
-      >
+      <View style={styles.content}>
         <Text
           style={[
             CommonStyle.hnSemiBold,
@@ -135,11 +121,11 @@ const FileViewComponent = ({
         </Text>
 
         {(item.size || item.fileSize) && (
-          <Text style={{ fontSize: 10, color: colors.secondColor }}>
+          <Text style={{ fontSize: 10, color: colors.placeholder }}>
             {formatBytes(item.size || item.fileSize || 0)}
           </Text>
         )}
-      </LinearGradient>
+      </View>
       {!done && (
         <View
           style={{
@@ -176,11 +162,8 @@ const FileViewComponent = ({
 };
 
 const styles = StyleSheet.create({
-  viewFile: {
-    flexDirection: "row",
-  },
+  viewFile: {},
   content: {
-    position: "absolute",
     top: 0,
     bottom: 0,
     left: 0,
@@ -189,17 +172,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderWidth: 0,
+    overflow: "hidden",
+    borderRadius: 99,
   },
   iconClose: {
-    backgroundColor: palette.mainColor2,
+    backgroundColor: palette.backgroundClose,
     width: 24,
     height: 24,
     borderRadius: 24,
-    justifyContent: "center",
-    alignItems: "center",
+    ...CommonStyle.flexCenter,
+    top: -10,
+    right: -10,
     position: "absolute",
-    top: -4,
-    right: -4,
   },
 });
 

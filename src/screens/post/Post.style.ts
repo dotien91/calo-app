@@ -43,7 +43,7 @@ const createStyles = (theme: ExtendedTheme) => {
       height: (Device.width - 32 - 30) / 4,
     },
     inputDescription: {
-      ...CommonStyle.hnLight,
+      ...CommonStyle.hnRegular,
       flex: 1,
       textAlignVertical: "top",
       paddingHorizontal: 20,
@@ -76,9 +76,15 @@ const createStyles = (theme: ExtendedTheme) => {
     },
     category: {
       marginTop: 10,
-      paddingHorizontal: 10,
-      marginHorizontal: -10,
+      padding: 10,
       borderRadius: 10,
+      backgroundColor: colors.background,
+    },
+    categorySelected: {
+      marginTop: 10,
+      padding: 10,
+      borderRadius: 10,
+      backgroundColor: colors.highlight,
     },
   });
 };

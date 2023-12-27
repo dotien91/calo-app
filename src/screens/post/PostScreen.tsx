@@ -450,6 +450,7 @@ export default function PostScreen() {
                     ...CommonStyle.hnSemiBold,
                     textAlign: "center",
                     fontSize: 20,
+                    color: colors.primary,
                   }}
                 >
                   {translations.postCategory}
@@ -458,7 +459,11 @@ export default function PostScreen() {
                   {listCategory.map((i) => (
                     <Pressable
                       key={i._id}
-                      style={styles.category}
+                      style={
+                        i._id === options.postCategory
+                          ? styles.categorySelected
+                          : styles.category
+                      }
                       onPress={() => {
                         refBottomSheet.current?.close();
                         setOptions((prev) => ({
@@ -474,9 +479,6 @@ export default function PostScreen() {
                           color: colors.primary,
                         }}
                       >{`#${i.category_title}`}</Text>
-                      <Text style={{ ...CommonStyle.hnSemiBold, fontSize: 14 }}>
-                        {i.category_content}
-                      </Text>
                     </Pressable>
                   ))}
                 </BottomSheetScrollView>

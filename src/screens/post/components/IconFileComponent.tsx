@@ -92,7 +92,7 @@ const IconFileComponent = ({ file, sizeIcon = 32 }: TypeIconFileComponent) => {
         <View style={styles.container}>
           <ImageLoad
             source={{ uri: file.thumbnail }}
-            style={StyleSheet.absoluteFillObject}
+            style={{ ...StyleSheet.absoluteFillObject, borderRadius: 10 }}
             resizeMode="cover"
           />
         </View>
@@ -103,7 +103,10 @@ const IconFileComponent = ({ file, sizeIcon = 32 }: TypeIconFileComponent) => {
         <Video
           paused={true}
           source={{ uri: file.uri }}
-          style={StyleSheet.absoluteFillObject}
+          style={{
+            ...StyleSheet.absoluteFillObject,
+            borderRadius: 10,
+          }}
         />
       </View>
     );
@@ -114,7 +117,7 @@ const IconFileComponent = ({ file, sizeIcon = 32 }: TypeIconFileComponent) => {
       <View style={styles.container}>
         <ImageLoad
           source={{ uri: file.uri }}
-          style={StyleSheet.absoluteFillObject}
+          style={{ ...StyleSheet.absoluteFillObject, borderRadius: 10 }}
           resizeMode="cover"
         />
       </View>
@@ -133,8 +136,9 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     justifyContent: "center",
     alignItems: "center",
-    borderWidth: 1,
-    borderColor: palette.borderColor,
+    overflow: "hidden",
+    backgroundColor: palette.background2,
+    borderRadius: 10,
   },
 });
 
