@@ -1,5 +1,5 @@
 import fs from "react-native-fs";
-import { requestPermission } from "./permisison-helper";
+import { requestPermission } from "./permission-helper";
 import { PERMISSION } from "./system.constant";
 import { openPicker } from "react-native-image-crop-picker";
 import { launchImageLibrary } from "react-native-image-picker";

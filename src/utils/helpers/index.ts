@@ -1,2 +1,2 @@
-import * as PermissionHelper from "./permisison-helper";
+import * as PermissionHelper from "./permission-helper";
 export { PermissionHelper };

@@ -108,12 +108,19 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
     }
   };
 
+  const handleNewPost = () => {
+    NavigationService.push(SCREENS.POST_SCREEN);
+  };
+
   const Welcome = () => (
     <>
       <Text onPress={loginGoogle} h1 bold color={colors.text}>
         Hello Kuray
       </Text>
       <Text color={colors.placeholder}>Welcome Back</Text>
+      <Text onPress={handleNewPost} color={colors.placeholder}>
+        New post
+      </Text>
     </>
   );
 

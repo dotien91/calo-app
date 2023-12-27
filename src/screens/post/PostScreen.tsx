@@ -40,6 +40,13 @@ import BottomSheet, {
   BottomSheetScrollView,
 } from "@gorhom/bottom-sheet";
 import { regexLink } from "@shared-constants/regex";
+import {
+  closeSuperModal,
+  showSuperModal,
+  showLoading,
+  showErrorModal,
+} from "@helpers/SuperModalHelper";
+import * as NavigationService from "react-navigation-helpers";
 
 interface OptionsState {
   file: any[];
@@ -186,7 +193,7 @@ export default function PostScreen() {
 
   const onSubmit = async () => {
     // show loading
-    console.log("loading");
+    showLoading();
     let listAttackFile: string[] = [];
 
     const fileAlreadyUploaded = options.file
@@ -198,32 +205,24 @@ export default function PostScreen() {
     );
 
     if (listMedia.length > 0) {
-      try {
-        const res = await uploadMultiMedia(
-          listMedia.map((i) => ({
-            name:
-              i.fileName ||
-              i.name ||
-              (i.uri || "")?.split("/")?.reverse()?.[0] ||
-              "",
-            uri: isIos ? i.uri?.replace("file://", "") : i.uri,
-            type: i.type,
-          })),
+      const res = await uploadMultiMedia(
+        listMedia.map((i) => ({
+          name:
+            i.fileName ||
+            i.name ||
+            (i.uri || "")?.split("/")?.reverse()?.[0] ||
+            "",
+          uri: isIos ? i.uri?.replace("file://", "") : i.uri,
+          type: i.type,
+        })),
+      );
+      if (Array.isArray(res)) {
+        listAttackFile = listAttackFile.concat(
+          res.map((i: any) => i?.callback?._id),
         );
-        console.log("resuploadMultiMedia.post", JSON.stringify(res));
-        if (res) {
-          listAttackFile = listAttackFile.concat(
-            res.map((i: any) => i?.callback?._id),
-          );
-        }
-      } catch (error) {
-        // hide loading
-        // show Error
-        // GlobalPopupHelper.alert({
-        //   type: "error",
-        //   message: languages.somethingWentWrong
-        // })
-        return;
+      } else {
+        closeSuperModal();
+        showErrorModal(res);
       }
     }
 
@@ -232,59 +231,27 @@ export default function PostScreen() {
       (i) => !i.type.includes("image") && !i.type.includes("video") && !i._id,
     );
     if (listFile.length > 0) {
-      try {
-        const res = await uploadMultiFile(
-          listFile.map((i) => ({
-            name:
-              i.fileName ||
-              i.name ||
-              (i.uri || "")?.split("/")?.reverse()?.[0] ||
-              "",
-            uri: isIos ? i.uri?.replace("file://", "") : i.uri,
-            type: i.type,
-          })),
+      const res = await uploadMultiFile(
+        listFile.map((i) => ({
+          name:
+            i.fileName ||
+            i.name ||
+            (i.uri || "")?.split("/")?.reverse()?.[0] ||
+            "",
+          uri: isIos ? i.uri?.replace("file://", "") : i.uri,
+          type: i.type,
+        })),
+      );
+      console.log("resuploadMultiFile.post", JSON.stringify(res));
+      if (Array.isArray(res)) {
+        listAttackFile = listAttackFile.concat(
+          res.map((i: any) => i?.callback?._id),
         );
-        console.log("resuploadMultiFile.post", JSON.stringify(res));
-        if (res) {
-          listAttackFile = listAttackFile.concat(
-            res.map((i: any) => i?.callback?._id),
-          );
-        }
-      } catch (error) {
-        // hide loading
-        // show Error
-        // GlobalPopupHelper.alert({
-        //   type: "error",
-        //   message: languages.somethingWentWrong
-        // })
-        return;
+      } else {
+        closeSuperModal();
+        showErrorModal(res);
       }
     }
-
-    // update request
-    // if (item._id) {
-    //   useCall({
-    //     dispatchFunction: updateRequest,
-    //     params: {
-    //       _id: item._id,
-    //       post_title: titleRef.current?.trim(),
-    //       post_content: contentRef.current?.trim(),
-    //       post_category: options.post_category || undefined,
-    //       post_language: "en",
-    //       attach_files: JSON.stringify([...fileAlreadyUploaded, ...listAttackFile]),
-    //       channel_id: channel_id
-    //     },
-    //     messageSuccess: languages.updateSuccess,
-    //     actionSuccess: async (res) => {
-    //       await dispatch(createPolls({
-    //         request_id: res?._id,
-    //         question: JSON.stringify(optionsPost.length >= 2 ? optionsPost.map(i => i.title) : [])
-    //       }))
-    //       navigationHelper.goBack()
-    //     }
-    //   })
-    //   return;
-    // }
 
     // create new request
     const params = await {
@@ -295,35 +262,16 @@ export default function PostScreen() {
       attach_files: JSON.stringify([...fileAlreadyUploaded, ...listAttackFile]),
     };
 
-    console.log("params...", params);
+    // console.log("params...", params);
     const res = await createNewPost(params);
-    console.log("res...", JSON.stringify(res));
-    // useCall({
-    //   dispatchFunction: createNewRequest,
-    //   params: {
-    //     post_title: titleRef.current?.trim(),
-    //     post_content: contentRef.current?.trim(),
-    //     post_category: options.postCategory || undefined,
-    //     post_language: "en",
-    //     attach_files: JSON.stringify([...fileAlreadyUploaded, ...listAttackFile]),
-    //     channel_id: channel_id
-    //   },
-    //   messageSuccess: "",
-    //   actionSuccess: async (res) => {
-    //     console.log("res create", res)
-    //     let message = languages.post.createPostSuccess
-    //     if (res?.post_status === "pending") {
-    //       message = languages.home.notificationPostPending
-    //     }
-    //     GlobalPopupHelper.alert({
-    //       type: "success",
-    //       message
-    //     })
-
-    //     navigationHelper.goBack()
-    //     playSound(AUDIO.postSuccess)
-    //   }
-    // })
+    if (res) {
+      closeSuperModal();
+      showSuperModal({
+        title: "Success",
+        desc: "Thêm mới bài viết thành công",
+      });
+      NavigationService.goBack();
+    }
   };
 
   const renderFile = useCallback(() => {

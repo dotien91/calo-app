@@ -15,6 +15,7 @@ export const SCREENS = {
   PROFILE: "Profile",
   DETAIL: "Detail",
   SETTING: "Setting",
+  POST_SCREEN: "PostScreen",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =
