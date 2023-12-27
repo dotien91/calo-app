@@ -23,7 +23,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
   return (
     <View style={styles.container}>
       <Text h1 color={colors.text}>
-        {translations.profile}
+        {translations.profile.profile}
       </Text>
       <View style={styles.userContainer}>
         <Text>{userData?.name}</Text>
