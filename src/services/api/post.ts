@@ -116,3 +116,60 @@ export async function createNewPost(data: any): Promise<any> {
     return response;
   });
 }
+
+export async function getListPost(params) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "Community/list",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function getPostDetail(id: string) {
+  return request({
+    method: METHOD.GET,
+    urlPath: `Community/detail/${id}`,
+  }).then((response) => {
+    return response;
+  });
+}
+export async function getListComment(params) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "Community/list-comment",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function postComment(data: any) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "community/create-comment",
+    data: data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function postLike(data: any) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "community/create-like",
+    data: data,
+  }).then((response) => {
+    return response;
+  });
+}
+export async function postLikeCommnent(data: any) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "community/create-like-comment",
+    data: data,
+  }).then((response) => {
+    return response;
+  });
+}

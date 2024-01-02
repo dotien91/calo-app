@@ -1,6 +1,10 @@
 import { FlexStyle, StyleSheet } from "react-native";
 import font from "./fonts";
 import { palette } from "./themes";
+import {
+  getBottomSpace,
+  getStatusBarHeight,
+} from "react-native-iphone-screen-helper";
 
 const flexBase: FlexStyle = {
   flexDirection: "row",
@@ -89,6 +93,11 @@ const CommonStyle = StyleSheet.create({
     lineHeight: 16,
     fontFamily: font.outfit.medium,
     color: palette.black,
+  },
+  safeAreaView: {
+    flex: 1,
+    marginTop: getStatusBarHeight(),
+    marginBottom: getBottomSpace(),
   },
 });
 

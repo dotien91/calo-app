@@ -67,6 +67,9 @@ export default {
   blockedUser: "You have blocked the profile of :username",
   commentAs: "Comment as",
   replying: "Replying",
+  reply: "reply",
+  like: "like",
+  comment: "comment",
   delete: "Delete",
   edit: "Edit",
   duplicate: "Duplicate",
@@ -142,6 +145,8 @@ export default {
     emptyComment: "No comments yet",
     emptyPost: "There are no posts yet",
     postInvalid: "Invalid post",
+    report: "Report this post",
+    save: "Save post",
   },
   navigation: {
     dashboard: "Dashboard",
@@ -228,6 +233,7 @@ export default {
     poll: "Bình chọn",
     select: "Select",
     maximunImage: "Maximum :count image",
+    emptyList: "Empty list",
   },
   chat: {
     search: "Search",

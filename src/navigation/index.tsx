@@ -26,6 +26,8 @@ import SignUpScreen from "@screens/login/signup/SignUpScreen";
 import ForgotPasswordScreen from "@screens/login/forgotpassword/ForgotPasswordScreen";
 import NewPasswordScreen from "@screens/login/createnewpassword/CreateNewPassword";
 import PostScreen from "@screens/post/PostScreen";
+import ListPost from "@screens/home/ListPost";
+import PostDetail from "@screens/post/PostDetailScreen";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -130,6 +132,8 @@ const Navigation = () => {
         </Stack.Screen>
         <Stack.Screen name={SCREENS.LOGINPAGE} component={LoginScreen} />
         <Stack.Screen name={SCREENS.POST_SCREEN} component={PostScreen} />
+        <Stack.Screen name={SCREENS.LIST_POST} component={ListPost} />
+        <Stack.Screen name={SCREENS.POST_DETAIL} component={PostDetail} />
         <Stack.Screen
           name={SCREENS.LOGINWITHEMAIL}
           component={LoginWithEmailScreen}

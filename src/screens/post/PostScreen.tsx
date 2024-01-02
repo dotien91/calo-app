@@ -1,4 +1,4 @@
-/*eslint camelcase: ["error", {properties: "never"}]*/
+/* eslint-disable camelcase */
 
 import {
   View,
@@ -6,7 +6,6 @@ import {
   Pressable,
   Keyboard,
   TouchableWithoutFeedback,
-  ScrollView,
   KeyboardAvoidingView,
   TextInput,
 } from "react-native";
@@ -18,7 +17,6 @@ import React, {
   useState,
 } from "react";
 import { useTheme, useRoute } from "@react-navigation/native";
-import { types, pick } from "react-native-document-picker";
 import IconSvg from "assets/svg";
 import createStyles from "./Post.style";
 import HeaderPost from "./components/HeaderPost";
@@ -26,15 +24,9 @@ import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
 import { translations } from "@localization";
 import { TypedCategory, TypedRequest } from "shared/models";
-import { selectMedia } from "utils/helpers/file-helper";
 import FileViewComponent from "./components/FileView";
 import { isIos } from "utils/helpers/device-ui";
-import {
-  createNewPost,
-  getCategory,
-  uploadMultiFile,
-  uploadMultiMedia,
-} from "@services/api/post";
+import { createNewPost, getCategory } from "@services/api/post";
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetScrollView,
@@ -44,9 +36,9 @@ import {
   closeSuperModal,
   showSuperModal,
   showLoading,
-  showErrorModal,
 } from "@helpers/SuperModalHelper";
 import * as NavigationService from "react-navigation-helpers";
+import { UploadFile } from "@shared-components/UploadMedia";
 
 interface OptionsState {
   file: any[];
@@ -73,6 +65,26 @@ export default function PostScreen() {
     postCategory: item?.post_category?._id || "",
     link: "",
   });
+
+  const [listFileUpload, setListFileUpload] = useState<any>([]);
+  const [listFileUploadLocal, setListFileUploadLocal] = useState<any>([]);
+
+  const { onPressFile, onPressPicture, onPressVideo, listFile, listFileLocal } =
+    UploadFile();
+
+  useEffect(() => {
+    setListFileUpload((listFileUpload: any) => [
+      ...listFileUpload,
+      ...listFile,
+    ]);
+  }, [listFile]);
+
+  useEffect(() => {
+    setListFileUploadLocal((listFileUploadLocal: any) => [
+      ...listFileUploadLocal,
+      ...listFileLocal,
+    ]);
+  }, [listFileLocal]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [listCategory, setListCategory] = useState<TypedCategory[]>([]);
   const [description, setDescription] = useState<string>("");
@@ -106,151 +118,19 @@ export default function PostScreen() {
     }, 300);
   };
 
-  const scrollViewRef = useRef<ScrollView>(null);
   const refBottomSheet = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ["60%"], []);
 
-  const onPressPicture = async () => {
-    selectMedia({
-      config: { mediaType: "photo", selectionLimit: 30 },
-      callback: (images: any) => {
-        if (!images?.[0]) {
-          return;
-        }
-        const listImage = images.map((i: any) => ({
-          uri: i.uri || "",
-          fileName: i.name || "",
-          type: i.type || "",
-        }));
-        setOptions((prev) => ({ ...prev, file: [...prev.file, ...listImage] }));
-        setTimeout(() => {
-          scrollViewRef.current?.scrollToEnd();
-        }, 300);
-      },
-      croping: false,
-    });
-  };
-  const onPressVideo = async () => {
-    selectMedia({
-      config: { mediaType: "video", selectionLimit: 30 },
-      callback: (images: any) => {
-        if (!images?.[0]) {
-          return;
-        }
-        const listImage = images.map((i: any) => ({
-          uri: i.uri || "",
-          fileName: i.name || "",
-          type: i.type || "",
-        }));
-        setOptions((prev) => ({ ...prev, file: [...prev.file, ...listImage] }));
-        setTimeout(() => {
-          scrollViewRef.current?.scrollToEnd();
-        }, 300);
-      },
-      croping: false,
-    });
-  };
-  const onPressFile = async () => {
-    try {
-      const pickerResult = await pick({
-        presentationStyle: "fullScreen",
-        type: [
-          types.doc,
-          types.docx,
-          types.pdf,
-          types.plainText,
-          types.xls,
-          types.xlsx,
-          types.ppt,
-          types.pptx,
-        ],
-      });
-
-      if (pickerResult.length > 0) {
-        const fileUp = pickerResult.reduce((list: any[], current) => {
-          return options.file.find((i) => i.uri === current.uri)
-            ? list
-            : [...list, current];
-        }, []);
-        setOptions((prev) => ({
-          ...prev,
-          file: [
-            ...prev.file,
-            ...fileUp.map((i) => ({
-              ...i,
-              is_file: !i.type?.includes("image") && !i.type?.includes("video"),
-            })),
-          ],
-        }));
-        setTimeout(() => {
-          scrollViewRef.current?.scrollToEnd();
-        }, 300);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const onSubmit = async () => {
-    // show loading
     showLoading();
-    let listAttackFile: string[] = [];
 
-    const fileAlreadyUploaded = options.file
-      .filter((i) => i._id)
-      .map((i) => i._id);
-    //upload multi media
-    const listMedia = options.file.filter(
-      (i) => (i.type.includes("image") || i.type.includes("video")) && !i._id,
-    );
-
-    if (listMedia.length > 0) {
-      const res = await uploadMultiMedia(
-        listMedia.map((i) => ({
-          name:
-            i.fileName ||
-            i.name ||
-            (i.uri || "")?.split("/")?.reverse()?.[0] ||
-            "",
-          uri: isIos ? i.uri?.replace("file://", "") : i.uri,
-          type: i.type,
-        })),
-      );
-      if (Array.isArray(res)) {
-        listAttackFile = listAttackFile.concat(
-          res.map((i: any) => i?.callback?._id),
-        );
-      } else {
-        closeSuperModal();
-        showErrorModal(res);
-      }
-    }
-
-    // upload multi file
-    const listFile = options.file.filter(
-      (i) => !i.type.includes("image") && !i.type.includes("video") && !i._id,
-    );
-    if (listFile.length > 0) {
-      const res = await uploadMultiFile(
-        listFile.map((i) => ({
-          name:
-            i.fileName ||
-            i.name ||
-            (i.uri || "")?.split("/")?.reverse()?.[0] ||
-            "",
-          uri: isIos ? i.uri?.replace("file://", "") : i.uri,
-          type: i.type,
-        })),
-      );
-      console.log("resuploadMultiFile.post", JSON.stringify(res));
-      if (Array.isArray(res)) {
-        listAttackFile = listAttackFile.concat(
-          res.map((i: any) => i?.callback?._id),
-        );
-      } else {
-        closeSuperModal();
-        showErrorModal(res);
-      }
+    if (listFileUpload.length != listFileUploadLocal.length) {
+      closeSuperModal();
+      showSuperModal({
+        title: "Error",
+        desc: "Vui lòng thử lại",
+      });
+      return;
     }
 
     // create new request
@@ -259,10 +139,10 @@ export default function PostScreen() {
       post_content: description.trim(),
       post_category: options.postCategory || undefined,
       post_language: "en",
-      attach_files: JSON.stringify([...fileAlreadyUploaded, ...listAttackFile]),
+      attach_files: JSON.stringify(listFileUpload.map((i) => i._id)),
     };
 
-    // console.log("params...", params);
+    console.log("params...", params);
     const res = await createNewPost(params);
     if (res) {
       closeSuperModal();
@@ -277,7 +157,7 @@ export default function PostScreen() {
   const renderFile = useCallback(() => {
     return (
       <View style={styles.viewImage}>
-        {options.file.slice(0, 4).map((item, index) => {
+        {listFileUploadLocal.slice(0, 4).map((item: any, index: number) => {
           if (index < 3)
             return (
               <FileViewComponent
@@ -311,12 +191,10 @@ export default function PostScreen() {
         })}
       </View>
     );
-  }, [options.file]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [listFileUploadLocal]); // eslint-disable-line react-hooks/exhaustive-deps
   const onRemove = (uri: string) => {
-    setOptions((prev) => ({
-      ...prev,
-      file: prev.file.filter((i) => i.uri !== uri),
-    }));
+    setListFileUpload(listFileUpload.filter((i) => i.uri !== uri));
+    setListFileUploadLocal(listFileUploadLocal.filter((i) => i.uri !== uri));
   };
 
   const SelectComponent = ({

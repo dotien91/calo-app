@@ -111,6 +111,9 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
   const handleNewPost = () => {
     NavigationService.push(SCREENS.POST_SCREEN);
   };
+  const handleListPost = () => {
+    NavigationService.push(SCREENS.LIST_POST);
+  };
 
   const Welcome = () => (
     <>
@@ -120,6 +123,9 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
       <Text color={colors.placeholder}>Welcome Back</Text>
       <Text onPress={handleNewPost} color={colors.placeholder}>
         New post
+      </Text>
+      <Text onPress={handleListPost} color={colors.placeholder}>
+        List post
       </Text>
     </>
   );

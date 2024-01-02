@@ -33,6 +33,12 @@ import icPoll from "./icon-poll.svg";
 import icCreatePostImage from "./icon-create-post-image.svg";
 import icLink from "./icon-link.svg";
 import icVideo from "./icon-video.svg";
+import icComment from "./icon-comment.svg";
+import icMore from "./icon-more.svg";
+import icVerify from "./icon-verify.svg";
+import icShare from "./icon-share.svg";
+import icHeart from "./icon-heart.svg";
+import icHearted from "./icon-hearted.svg";
 
 const Icons = {
   icFlagvi,
@@ -68,6 +74,12 @@ const Icons = {
   icCreatePostImage,
   icLink,
   icVideo,
+  icComment,
+  icMore,
+  icVerify,
+  icShare,
+  icHeart,
+  icHearted,
 };
 
 interface IconSvgProps {

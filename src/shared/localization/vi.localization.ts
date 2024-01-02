@@ -69,6 +69,9 @@ export default {
   blockedUser: "Bạn đã chặn trang cá nhân của :username",
   commentAs: "Bình luận dưới tên",
   replying: "Phản hồi",
+  reply: "phản hồi",
+  like: "thích",
+  comment: "bình luận",
   delete: "Xóa",
   edit: "Chỉnh sửa",
   duplicate: "Nhân bản",
@@ -152,6 +155,8 @@ export default {
     emptyComment: "Hãy là người đầu tiên bình luận",
     emptyPost: "Chưa có bài viết nào",
     postInvalid: "Bài đăng không tồn tại",
+    report: "Báo cáo bài viết",
+    save: "Lưu bài viết",
   },
   navigation: {
     dashboard: "Trang chủ",
