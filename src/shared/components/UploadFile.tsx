@@ -1,13 +1,18 @@
+import { useTheme } from "@react-navigation/native";
+import FileViewComponent from "@screens/post/components/FileView";
 import { uploadMultiFile, uploadMultiMedia } from "@services/api/post";
 import * as React from "react";
+import { Platform, StyleSheet, Text, View, Dimensions } from "react-native";
 import { pick, types } from "react-native-document-picker";
-import { isIos } from "utils/helpers/device-ui";
 import { selectMedia } from "utils/helpers/file-helper";
+const { width } = Dimensions.get("screen");
+const isIos = Platform.OS === "ios";
 
 export function UploadFile() {
   const [listFile, setListFile] = React.useState<any[]>([]);
   const [listFileLocal, setListFileLocal] = React.useState<any[]>([]);
-
+  const theme = useTheme();
+  const { colors } = theme;
   const onPressPicture = async () => {
     selectMedia({
       config: { mediaType: "photo", selectionLimit: 30 },
@@ -24,7 +29,7 @@ export function UploadFile() {
           uri: isIos ? i.uri?.replace("file://", "") : i.uri,
           type: i.type,
         }));
-        setListFileLocal(fileLocal);
+        setListFileLocal((listFileLocal) => [...listFileLocal, ...fileLocal]);
         const res = await uploadMultiMedia(
           listImage.map((i: any) => ({
             name:
@@ -42,12 +47,56 @@ export function UploadFile() {
             type: i.type,
             _id: res[index]?.callback?._id,
           }));
-          setListFile(data);
+          setListFile((listFile) => [...listFile, ...data]);
         }
       },
       croping: false,
     });
   };
+
+  const renderFile = React.useCallback(() => {
+    return (
+      <View style={styles.viewImage}>
+        {listFileLocal.slice(0, 4).map((item: any, index: number) => {
+          if (index < 3)
+            return (
+              <FileViewComponent
+                style={styles.viewFile}
+                item={item}
+                key={`listFileLocal - ${index}`}
+                onPressClear={() => onRemove(item.uri)}
+              />
+            );
+          if (listFileLocal.length >= 4) {
+            return (
+              <View
+                style={[
+                  styles.viewFile,
+                  {
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderWidth: 1,
+                    borderColor: colors.borderColor,
+                    borderRadius: 10,
+                  },
+                ]}
+                key={`listFileLocal - ${index}`}
+              >
+                <Text style={{ color: colors.textInput }}>
+                  +{listFileLocal.length - 3}
+                </Text>
+              </View>
+            );
+          }
+          return;
+        })}
+      </View>
+    );
+  }, [listFileLocal]); // eslint-disable-line react-hooks/exhaustive-deps
+  const onRemove = (uri: string) => {
+    setListFileLocal(listFileLocal.filter((i) => i.uri !== uri));
+  };
+
   const onPressVideo = async () => {
     selectMedia({
       config: { mediaType: "video", selectionLimit: 30 },
@@ -60,11 +109,11 @@ export function UploadFile() {
           fileName: i.name || "",
           type: i.type || "",
         }));
-        const flieLocal = listImage.map((i: any) => ({
+        const fileLocal = listImage.map((i: any) => ({
           uri: isIos ? i.uri?.replace("file://", "") : i.uri,
           type: i.type,
         }));
-        setListFileLocal(flieLocal);
+        setListFileLocal((listFileLocal) => [...listFileLocal, ...fileLocal]);
         const res = await uploadMultiFile(
           listImage.map((i: any) => ({
             name:
@@ -82,8 +131,7 @@ export function UploadFile() {
             type: i.type,
             _id: res[index]?.callback?._id,
           }));
-          console.log("data...", data);
-          setListFile(data);
+          setListFile((listFile) => [...listFile, ...data]);
         }
       },
       croping: false,
@@ -111,11 +159,11 @@ export function UploadFile() {
             ? list
             : [...list, current];
         }, []);
-        const flieLocal = fileUp.map((i) => ({
+        const fileLocal = fileUp.map((i) => ({
           uri: isIos ? i.uri?.replace("file://", "") : i.uri,
           type: i.type,
         }));
-        setListFileLocal(flieLocal);
+        setListFileLocal((listFileLocal) => [...listFileLocal, ...fileLocal]);
         const res = await uploadMultiFile(
           fileUp.map((i) => ({
             name:
@@ -138,8 +186,7 @@ export function UploadFile() {
             type: i.type,
             _id: res[index].callback?._id,
           }));
-          console.log("data...", data);
-          setListFile(data);
+          setListFile((listFile) => [...listFile, ...data]);
         }
       }
     } catch (error) {
@@ -149,9 +196,23 @@ export function UploadFile() {
 
   return {
     listFile,
-    listFileLocal,
     onPressPicture,
     onPressVideo,
     onPressFile,
+    renderFile,
   };
 }
+
+const styles = StyleSheet.create({
+  viewImage: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
+    paddingHorizontal: 14,
+    marginTop: 10,
+  },
+  viewFile: {
+    width: (width - 32 - 30) / 4,
+    height: (width - 32 - 30) / 4,
+  },
+});

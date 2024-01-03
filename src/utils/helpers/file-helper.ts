@@ -1,10 +1,7 @@
-import fs from "react-native-fs";
 import { requestPermission } from "./permission-helper";
 import { PERMISSION } from "./system.constant";
 import { openPicker } from "react-native-image-crop-picker";
 import { launchImageLibrary } from "react-native-image-picker";
-
-export const FOLDER_CACHE_VIDEO = fs.CachesDirectoryPath + "/video_ecosystem/";
 
 export const selectMedia = async ({ config, callback, croping = true }) => {
   const permission = await requestPermission(PERMISSION.permissionLibrary);

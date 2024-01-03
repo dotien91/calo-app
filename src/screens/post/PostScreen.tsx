@@ -9,13 +9,7 @@ import {
   KeyboardAvoidingView,
   TextInput,
 } from "react-native";
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useTheme, useRoute } from "@react-navigation/native";
 import IconSvg from "assets/svg";
 import createStyles from "./Post.style";
@@ -24,7 +18,6 @@ import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
 import { translations } from "@localization";
 import { TypedCategory, TypedRequest } from "shared/models";
-import FileViewComponent from "./components/FileView";
 import { isIos } from "utils/helpers/device-ui";
 import { createNewPost, getCategory } from "@services/api/post";
 import BottomSheet, {
@@ -38,7 +31,7 @@ import {
   showLoading,
 } from "@helpers/SuperModalHelper";
 import * as NavigationService from "react-navigation-helpers";
-import { UploadFile } from "@shared-components/UploadMedia";
+import { UploadFile } from "@shared-components/UploadFile";
 
 interface OptionsState {
   file: any[];
@@ -48,8 +41,8 @@ interface OptionsState {
 
 export default function PostScreen() {
   const theme = useTheme();
-  const route: any = useRoute();
   const { colors } = theme;
+  const route: any = useRoute();
   const item: TypedRequest = route?.params?.item || {};
 
   const styles = useMemo(() => createStyles(theme), [theme]);
@@ -65,26 +58,8 @@ export default function PostScreen() {
     postCategory: item?.post_category?._id || "",
     link: "",
   });
-
-  const [listFileUpload, setListFileUpload] = useState<any>([]);
-  const [listFileUploadLocal, setListFileUploadLocal] = useState<any>([]);
-
-  const { onPressFile, onPressPicture, onPressVideo, listFile, listFileLocal } =
+  const { onPressFile, onPressPicture, onPressVideo, listFile, renderFile } =
     UploadFile();
-
-  useEffect(() => {
-    setListFileUpload((listFileUpload: any) => [
-      ...listFileUpload,
-      ...listFile,
-    ]);
-  }, [listFile]);
-
-  useEffect(() => {
-    setListFileUploadLocal((listFileUploadLocal: any) => [
-      ...listFileUploadLocal,
-      ...listFileLocal,
-    ]);
-  }, [listFileLocal]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [listCategory, setListCategory] = useState<TypedCategory[]>([]);
   const [description, setDescription] = useState<string>("");
@@ -124,25 +99,14 @@ export default function PostScreen() {
   const onSubmit = async () => {
     showLoading();
 
-    if (listFileUpload.length != listFileUploadLocal.length) {
-      closeSuperModal();
-      showSuperModal({
-        title: "Error",
-        desc: "Vui lòng thử lại",
-      });
-      return;
-    }
-
-    // create new request
     const params = await {
       post_title: "",
       post_content: description.trim(),
       post_category: options.postCategory || undefined,
       post_language: "en",
-      attach_files: JSON.stringify(listFileUpload.map((i) => i._id)),
+      attach_files: JSON.stringify(listFile.map((i) => i._id)),
     };
 
-    console.log("params...", params);
     const res = await createNewPost(params);
     if (res) {
       closeSuperModal();
@@ -152,49 +116,6 @@ export default function PostScreen() {
       });
       NavigationService.goBack();
     }
-  };
-
-  const renderFile = useCallback(() => {
-    return (
-      <View style={styles.viewImage}>
-        {listFileUploadLocal.slice(0, 4).map((item: any, index: number) => {
-          if (index < 3)
-            return (
-              <FileViewComponent
-                style={styles.viewFile}
-                item={item}
-                key={`option.file - ${index}`}
-                onPressClear={() => onRemove(item.uri)}
-              />
-            );
-          if (options.file.length >= 4) {
-            return (
-              <View
-                style={[
-                  styles.viewFile,
-                  {
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderWidth: 1,
-                    borderColor: palette.borderColor,
-                  },
-                ]}
-                key={`option.file - ${index}`}
-              >
-                <Text style={{ color: colors.textInput }}>
-                  +{options.file.length - 3}
-                </Text>
-              </View>
-            );
-          }
-          return;
-        })}
-      </View>
-    );
-  }, [listFileUploadLocal]); // eslint-disable-line react-hooks/exhaustive-deps
-  const onRemove = (uri: string) => {
-    setListFileUpload(listFileUpload.filter((i) => i.uri !== uri));
-    setListFileUploadLocal(listFileUploadLocal.filter((i) => i.uri !== uri));
   };
 
   const SelectComponent = ({
