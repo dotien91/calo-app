@@ -18,6 +18,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "@shared-constants";
 import { postLike } from "@services/api/post";
+import { showErrorModal } from "@helpers/SuperModalHelper";
 
 const { width } = Dimensions.get("screen");
 
@@ -65,14 +66,17 @@ const ItemPost = ({ data, pressMore, disablePress = false }: ItemPostProps) => {
     );
   }, [data]);
   const pressLike = async () => {
+    setIsLike((isLike) => !isLike);
     const params = {
       community_id: data._id,
     };
     const res = await postLike(params);
-    const { community_id, is_like, vote_number } = res;
+    const { community_id, like_number } = res;
     if (community_id) {
-      setIsLike(is_like);
-      setLikeNumber(vote_number);
+      setLikeNumber(like_number);
+    } else {
+      setIsLike((isLike) => !isLike);
+      showErrorModal(res);
     }
   };
 
@@ -302,6 +306,10 @@ const ItemPost = ({ data, pressMore, disablePress = false }: ItemPostProps) => {
 
   const pressComment = () => {
     console.log("commnet");
+    NavigationService.push(SCREENS.POST_DETAIL, {
+      id: data._id,
+      isComment: true,
+    });
   };
   const pressShare = () => {
     console.log("share");

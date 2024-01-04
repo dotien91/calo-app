@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     ...CommonStyle.flexCenter,
   },
   backgroundVideo: {
-    backgroundColor: palette.black,
+    backgroundColor: palette.white,
     position: "absolute",
     alignSelf: "center",
     top: 0,

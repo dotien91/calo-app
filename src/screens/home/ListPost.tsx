@@ -1,14 +1,29 @@
 /* eslint-disable camelcase */
+/*eslint no-unsafe-optional-chaining: "error"*/
 
 import React, { useMemo, useRef, useState } from "react";
-import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  FlatList,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import ItemPost from "./components/ItemPost/ItemPost";
 import { palette } from "@theme/themes";
 import {
   getStatusBarHeight,
   getBottomSpace,
 } from "react-native-iphone-screen-helper";
-import { getListPost } from "@services/api/post";
+import {
+  blockUser,
+  deletePost,
+  followUser,
+  getListPost,
+  unFollowUser,
+} from "@services/api/post";
+import * as NavigationService from "react-navigation-helpers";
 
 import BottomSheet, {
   BottomSheetBackdrop,
@@ -20,11 +35,19 @@ import { translations } from "@localization";
 import useStore from "@services/zustand/store";
 import { useListData } from "utils/helpers/useListData";
 import LottieView from "lottie-react-native";
+import { showErrorModal, showSuperModal } from "@helpers/SuperModalHelper";
+import EmptyResultView from "@helpers/EmptyResultView";
+import { SCREENS } from "@shared-constants";
 
 const HEIGHT_BOTTOM_SHEET = 230;
 
 const ListPost = () => {
   const userData = useStore((state) => state.userData);
+  const setUserData = useStore((state) => state.setUserData);
+  const listPostDelete = useStore((state) => state.listPostDelete);
+  const addListPostDelete = useStore((state) => state.addListPostDelete);
+  // const listFollowing = useStore((state) => state.listFollowing);
+  // const addFollowing = useStore((state) => state.addFollowing);
 
   const refBottomSheet = useRef<BottomSheet>(null);
   const [itemSelectd, setItemSelectd] = useState<any>({});
@@ -38,10 +61,12 @@ const ListPost = () => {
   const snapPoints = useMemo(() => [HEIGHT_BOTTOM_SHEET], []);
 
   const renderItem = ({ item }) => {
+    // console.log("item...", JSON.stringify(item));
     return (
       <ItemPost key={item._id} data={item} pressMore={() => pressMore(item)} />
     );
   };
+  console.log("follow_users", userData);
 
   const {
     listData,
@@ -88,6 +113,19 @@ const ListPost = () => {
     );
   }
 
+  const pressDeletePost = async (id: string) => {
+    const resdelete = await deletePost(id);
+    console.log(resdelete);
+    if (resdelete._id) {
+      addListPostDelete(resdelete._id);
+      showSuperModal({
+        title: translations.home.deletePostSuccess,
+      });
+    } else {
+      showSuperModal({ title: translations.somethingWentWrong });
+    }
+  };
+
   return (
     <View
       style={{
@@ -98,7 +136,7 @@ const ListPost = () => {
       }}
     >
       <FlatList
-        data={listData}
+        data={listData.filter((item) => listPostDelete.indexOf(item._id) < 0)}
         renderItem={renderItem}
         scrollEventThrottle={16}
         // contentContainerStyle={styles.listChat}
@@ -109,6 +147,7 @@ const ListPost = () => {
         keyExtractor={(item) => item?._id + ""}
         refreshControl={refreshControl()}
         ListFooterComponent={renderFooterComponent()}
+        ListEmptyComponent={<EmptyResultView />}
       />
       <BottomSheet
         snapPoints={snapPoints}
@@ -130,7 +169,38 @@ const ListPost = () => {
           {/* Check post */}
           {userData?._id === itemSelectd?.user_id?._id ? (
             <BottomSheetScrollView style={{ flex: 1 }}>
-              <View></View>
+              <Pressable
+                onPress={() => {
+                  Alert.alert("", translations.home.deletePost, [
+                    {
+                      text: translations.delete,
+                      onPress: () => pressDeletePost(itemSelectd._id),
+                    },
+                    {
+                      text: translations.cancel,
+                      onPress: () => console.log("Cancel Pressed"),
+                      style: "cancel",
+                    },
+                  ]);
+                  refBottomSheet.current?.close();
+                }}
+                style={styles.buttonFlag}
+              >
+                <Icon size={24} name="trash-outline" />
+                <Text style={styles.textButton}>{translations.delete}</Text>
+              </Pressable>
+              <Pressable
+                onPress={() => {
+                  NavigationService.push(SCREENS.POST_SCREEN, {
+                    item: itemSelectd,
+                  });
+                  refBottomSheet.current?.close();
+                }}
+                style={styles.buttonFlag}
+              >
+                <Icon size={24} name="create-outline" />
+                <Text style={styles.textButton}>{translations.edit}</Text>
+              </Pressable>
             </BottomSheetScrollView>
           ) : (
             <BottomSheetScrollView style={{ flex: 1 }}>
@@ -138,13 +208,68 @@ const ListPost = () => {
                 <Icon size={24} name="bookmark-outline" />
                 <Text style={styles.textButton}>{translations.post.save}</Text>
               </Pressable>
-              <Pressable style={styles.buttonFlag}>
+              <Pressable
+                onPress={async () => {
+                  const params = { partner_id: itemSelectd?.user_id?._id };
+                  if (
+                    userData.follow_users.indexOf(itemSelectd?.user_id?._id) >=
+                    0
+                  ) {
+                    const res = await unFollowUser(params);
+                    if (res._id && userData) {
+                      setUserData({
+                        ...userData,
+                        follow_users: [
+                          ...userData.follow_users.map(
+                            (i) => i !== itemSelectd?.user_id?._id,
+                          ),
+                        ],
+                      });
+                    } else {
+                      showErrorModal(res);
+                    }
+                  } else {
+                    const res = await followUser(params);
+                    if (res._id && userData) {
+                      setUserData({
+                        ...userData,
+                        follow_users: [
+                          ...userData.follow_users,
+                          itemSelectd?.user_id?._id,
+                        ],
+                      });
+                    } else showErrorModal(res);
+                  }
+                  refBottomSheet.current?.close();
+                }}
+                style={styles.buttonFlag}
+              >
                 <Icon size={24} name="person-add-outline" />
                 <Text style={styles.textButton}>
-                  {translations.follow} {itemSelectd?.user_id?.display_name}
+                  {userData.follow_users.indexOf(itemSelectd?.user_id?._id) < 0
+                    ? translations.follow
+                    : translations.unfollow}{" "}
+                  {itemSelectd?.user_id?.display_name}
                 </Text>
               </Pressable>
-              <Pressable style={styles.buttonFlag}>
+              <Pressable
+                onPress={async () => {
+                  const params = { partner_id: itemSelectd?.user_id?._id };
+                  const res = await blockUser(params);
+                  if (res._id) {
+                    showSuperModal({
+                      title: translations.blockedUser.replace(
+                        ":username",
+                        itemSelectd?.user_id?.display_name || "",
+                      ),
+                    });
+                  } else {
+                    showErrorModal(res);
+                  }
+                  refBottomSheet.current?.close();
+                }}
+                style={styles.buttonFlag}
+              >
                 <Icon size={24} name="ban-outline" />
                 <Text style={styles.textButton}>
                   {translations.block} {itemSelectd?.user_id?.display_name}

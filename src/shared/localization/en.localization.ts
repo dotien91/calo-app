@@ -90,6 +90,7 @@ export default {
   follower: "Follower",
   following: "Following",
   follow: "Follow",
+  unfollow: "Unfollow",
   followed: "Followed",
   message: "Message",
   filter: "Filter",
@@ -234,6 +235,8 @@ export default {
     select: "Select",
     maximunImage: "Maximum :count image",
     emptyList: "Empty list",
+    deletePostSuccess: "Delete post success",
+    deletePost: "Delete post?",
   },
   chat: {
     search: "Search",

@@ -86,7 +86,7 @@ const IconFileComponent = ({ file, sizeIcon = 32 }: TypeIconFileComponent) => {
     );
   }
 
-  if (file?.type?.includes("video/")) {
+  if (file?.type?.includes("video")) {
     if (file.thumbnail && (file.thumbnail || "").includes("https://")) {
       return (
         <View style={styles.container}>
@@ -112,7 +112,7 @@ const IconFileComponent = ({ file, sizeIcon = 32 }: TypeIconFileComponent) => {
     );
   }
 
-  if (file.type.includes("image/")) {
+  if (file.type.includes("image")) {
     return (
       <View style={styles.container}>
         <ImageLoad

@@ -8,9 +8,11 @@ import { selectMedia } from "utils/helpers/file-helper";
 const { width } = Dimensions.get("screen");
 const isIos = Platform.OS === "ios";
 
-export function UploadFile() {
-  const [listFile, setListFile] = React.useState<any[]>([]);
-  const [listFileLocal, setListFileLocal] = React.useState<any[]>([]);
+export function UploadFile(initData?: any[]) {
+  const [listFile, setListFile] = React.useState<any[]>(initData || []);
+  const [listFileLocal, setListFileLocal] = React.useState<any[]>(
+    initData || [],
+  );
   const theme = useTheme();
   const { colors } = theme;
   const onPressPicture = async () => {
@@ -53,6 +55,7 @@ export function UploadFile() {
       croping: false,
     });
   };
+  console.log("file...", listFile);
 
   const renderFile = React.useCallback(() => {
     return (
@@ -104,18 +107,18 @@ export function UploadFile() {
         if (!images?.[0]) {
           return;
         }
-        const listImage = images.map((i: any) => ({
+        const listVideo = images.map((i: any) => ({
           uri: i.uri || "",
           fileName: i.name || "",
           type: i.type || "",
         }));
-        const fileLocal = listImage.map((i: any) => ({
+        const fileLocal = listVideo.map((i: any) => ({
           uri: isIos ? i.uri?.replace("file://", "") : i.uri,
           type: i.type,
         }));
         setListFileLocal((listFileLocal) => [...listFileLocal, ...fileLocal]);
-        const res = await uploadMultiFile(
-          listImage.map((i: any) => ({
+        const res = await uploadMultiMedia(
+          listVideo.map((i: any) => ({
             name:
               i.fileName ||
               i.name ||
@@ -125,8 +128,9 @@ export function UploadFile() {
             type: i.type,
           })),
         );
+        console.log("resup VId...", res);
         if (Array.isArray(res)) {
-          const data = listImage.map((i: any, index: number) => ({
+          const data = listVideo.map((i: any, index: number) => ({
             uri: isIos ? i.uri?.replace("file://", "") : i.uri,
             type: i.type,
             _id: res[index]?.callback?._id,

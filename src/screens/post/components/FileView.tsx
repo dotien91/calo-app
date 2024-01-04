@@ -51,7 +51,6 @@ const FileViewComponent = ({
         uri: isIos ? item.uri?.replace("file://", "") : item.uri,
         type: item.type,
       });
-
       if (res?.[0]?.callback?._id) {
         setDone(true);
 
@@ -81,6 +80,7 @@ const FileViewComponent = ({
         type: item.type,
       });
 
+      console.log("...", res);
       if (res?.[0]?.callback?._id) {
         setDone(true);
 

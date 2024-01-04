@@ -173,3 +173,59 @@ export async function postLikeCommnent(data: any) {
     return response;
   });
 }
+
+export async function deletePost(id: string) {
+  return request({
+    method: METHOD.DELETE,
+    urlPath: `community/delete/${id}`,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function deleteComment(id: string) {
+  return request({
+    method: METHOD.DELETE,
+    urlPath: `community/delete-comment/${id}`,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function followUser(data: any) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "user/follow",
+    data: data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function unFollowUser(data: any) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "user/un-follow",
+    data: data,
+  }).then((response) => {
+    return response;
+  });
+}
+export async function blockUser(data: any) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "user/block",
+    data: data,
+  }).then((response) => {
+    return response;
+  });
+}
+export async function updatePost(data: any) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "community/update",
+    data: data,
+  }).then((response) => {
+    return response;
+  });
+}

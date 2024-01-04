@@ -19,7 +19,7 @@ import { palette } from "@theme/themes";
 import { translations } from "@localization";
 import { TypedCategory, TypedRequest } from "shared/models";
 import { isIos } from "utils/helpers/device-ui";
-import { createNewPost, getCategory } from "@services/api/post";
+import { createNewPost, getCategory, updatePost } from "@services/api/post";
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetScrollView,
@@ -34,7 +34,6 @@ import * as NavigationService from "react-navigation-helpers";
 import { UploadFile } from "@shared-components/UploadFile";
 
 interface OptionsState {
-  file: any[];
   postCategory: string;
   link: string;
 }
@@ -44,25 +43,29 @@ export default function PostScreen() {
   const { colors } = theme;
   const route: any = useRoute();
   const item: TypedRequest = route?.params?.item || {};
-
+  console.log("item...", JSON.stringify(item));
   const styles = useMemo(() => createStyles(theme), [theme]);
 
   const [options, setOptions] = useState<OptionsState>({
-    file: (item.attach_files || []).map((i) => ({
-      _id: i._id,
-      thumbnail: i.media_thumbnail,
-      uri: i.media_url,
-      fileName: i.media_file_name,
-      type: i.media_mime_type,
-    })),
     postCategory: item?.post_category?._id || "",
     link: "",
   });
   const { onPressFile, onPressPicture, onPressVideo, listFile, renderFile } =
-    UploadFile();
+    UploadFile(
+      item?.attach_files?.map(
+        (i) =>
+          ({
+            uri: i.media_url,
+            type: i.media_type,
+            _id: i._id,
+          } || []),
+      ),
+    );
 
   const [listCategory, setListCategory] = useState<TypedCategory[]>([]);
-  const [description, setDescription] = useState<string>("");
+  const [description, setDescription] = useState<string>(
+    item.post_content || "",
+  );
   const [link, setLink] = useState("");
   const getListCategory = async () => {
     const data = await getCategory();
@@ -85,9 +88,8 @@ export default function PostScreen() {
     getListCategory();
   }, []);
 
-  const pressCategory = () => {
+  const openListCategory = () => {
     Keyboard.dismiss();
-    console.log("category...", listCategory);
     setTimeout(() => {
       refBottomSheet.current?.expand();
     }, 300);
@@ -105,16 +107,30 @@ export default function PostScreen() {
       post_category: options.postCategory || undefined,
       post_language: "en",
       attach_files: JSON.stringify(listFile.map((i) => i._id)),
+      _id: item._id || "",
     };
 
-    const res = await createNewPost(params);
-    if (res) {
-      closeSuperModal();
-      showSuperModal({
-        title: "Success",
-        desc: "Thêm mới bài viết thành công",
-      });
-      NavigationService.goBack();
+    if (item._id) {
+      const res = await updatePost(params);
+      console.log("res...", res);
+      if (res) {
+        closeSuperModal();
+        showSuperModal({
+          title: "Success",
+          desc: translations.updateSuccess,
+        });
+        NavigationService.goBack();
+      }
+    } else {
+      const res = await createNewPost(params);
+      if (res) {
+        closeSuperModal();
+        showSuperModal({
+          title: "Success",
+          desc: translations.post.createPostSuccess,
+        });
+        NavigationService.goBack();
+      }
     }
   };
 
@@ -153,7 +169,7 @@ export default function PostScreen() {
           />
           <View style={{ flex: 1 }}>
             <Pressable
-              onPress={pressCategory}
+              onPress={openListCategory}
               style={{ paddingHorizontal: 20 }}
             >
               <Text

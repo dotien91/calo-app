@@ -16,6 +16,14 @@ interface ContentBasicPopupType {
   desc?: string;
   btn?: IBtnStyle;
 }
+interface ItemMediaProps {
+  url: string;
+  type: string;
+}
+
+interface ContentMediaPopup {
+  listLink: ItemMediaProps[];
+}
 
 export const SuperModalHelper = {
   getContentPopupNormal({ title, desc, btn }: ContentBasicPopupType) {
@@ -62,6 +70,13 @@ export const showSuperModal = (params: ContentBasicPopupType) => {
     "show_super_modal",
     SuperModalHelper.getContentPopupNormal(params),
   );
+};
+export const showDetailImageView = (
+  listLink: ContentMediaPopup,
+  index: number,
+  type: string,
+) => {
+  eventEmitter.emit("show_media", { listLink, index, type });
 };
 
 export const showErrorModal = (res: any) => {

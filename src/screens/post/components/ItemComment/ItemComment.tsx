@@ -3,13 +3,14 @@
 import { useTheme } from "@react-navigation/native";
 import CommonStyle from "@theme/styles";
 import IconSvg from "assets/svg";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Text, View, StyleSheet, Pressable, Image } from "react-native";
 import { convertLastActive } from "../ItemPost/time";
 import Icon from "react-native-vector-icons/Ionicons";
 import { palette } from "@theme/themes";
 import { translations } from "@localization";
 import { postLikeCommnent } from "@services/api/post";
+import useStore from "@services/zustand/store";
 
 const SIZE_AVATAR = 30;
 const BORDER_AVATAR = 12;
@@ -19,28 +20,38 @@ const PADDING_LEFT = 12;
 interface ItemCommentProps {
   data: any;
   onPressReply: (data: string) => void;
+  onPressMore: (data: string) => void;
 }
 
 interface ItemReplyProps {
   item: any;
-  onPressReply: (data: string) => void;
+  onPressReplyChild: (data: string) => void;
+  repCmtId: string;
+  onPressMoreChild: (data: string) => void;
 }
 
-const ItemReply = ({ item, onPressReply }: ItemReplyProps) => {
+const ItemReply = ({
+  item,
+  onPressReplyChild,
+  repCmtId,
+  onPressMoreChild,
+}: ItemReplyProps) => {
   const theme = useTheme();
   const { colors } = theme;
   const [isLike, setIsLike] = useState<boolean>(item?.is_like);
   const [likeNumber, setLikeNumber] = useState<number>(item?.like_number);
-
-  const pressLikeComment = async () => {
+  const pressLikeCommentRep = async () => {
     const params = {
       comment_id: item._id,
     };
+
+    setIsLike((isLike) => !isLike);
     const res = await postLikeCommnent(params);
-    const { community_id, is_like, vote_number } = res;
+    const { community_id, vote_number } = res;
     if (community_id) {
-      setIsLike(is_like);
       setLikeNumber(vote_number);
+    } else {
+      setIsLike(!isLike);
     }
   };
 
@@ -64,8 +75,6 @@ const ItemReply = ({ item, onPressReply }: ItemReplyProps) => {
       </View>
     );
   }, [item]);
-
-  const pressMore = () => {};
 
   const HeaderItemComment = useMemo(() => {
     return (
@@ -108,7 +117,7 @@ const ItemReply = ({ item, onPressReply }: ItemReplyProps) => {
             {convertLastActive(item?.createdAt)}
           </Text>
         </View>
-        <Pressable onPress={pressMore}>
+        <Pressable onPress={() => onPressMoreChild(item)}>
           <Icon size={20} name="ellipsis-vertical" />
         </Pressable>
       </View>
@@ -131,9 +140,11 @@ const ItemReply = ({ item, onPressReply }: ItemReplyProps) => {
   }, [item]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const LikeCommentReply = () => {
+    const replyItem = item;
+    replyItem.parent_id = repCmtId;
     return (
       <View style={styles.containerLikeShare}>
-        <Pressable onPress={pressLikeComment} style={[styles.viewLike]}>
+        <Pressable onPress={pressLikeCommentRep} style={[styles.viewLike]}>
           <Text style={isLike ? styles.textLiked : styles.textLikeShare}>
             {likeNumber > 0 && likeNumber} {translations.like}
           </Text>
@@ -147,7 +158,7 @@ const ItemReply = ({ item, onPressReply }: ItemReplyProps) => {
           }}
         />
         <Pressable
-          onPress={() => onPressReply(item)}
+          onPress={() => onPressReplyChild(replyItem)}
           style={[styles.viewLike, { justifyContent: "center" }]}
         >
           <Text style={styles.textLikeShare}>{translations.reply}</Text>
@@ -155,6 +166,7 @@ const ItemReply = ({ item, onPressReply }: ItemReplyProps) => {
       </View>
     );
   };
+
   return (
     <View
       style={{
@@ -173,15 +185,19 @@ const ItemReply = ({ item, onPressReply }: ItemReplyProps) => {
   );
 };
 
-const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
+const ItemComment = ({ data, onPressReply, onPressMore }: ItemCommentProps) => {
   const theme = useTheme();
   const { colors } = theme;
+  const listCommentDelete = useStore((state) => state.listCommentDelete);
 
-  const pressMore = () => {};
-  // const [listReply, setListReply] = useState<any[]>(data?.child || []);
-  const listReply = data?.child || [];
+  const [listReply, setListReply] = useState([]);
   const [isLike, setIsLike] = useState<boolean>(data?.is_like);
   const [likeNumber, setLikeNumber] = useState<number>(data.like_number);
+
+  useEffect(() => {
+    setListReply(data.child);
+  }, [data.child]);
+
   const Avatar = useMemo(() => {
     return (
       <View
@@ -244,7 +260,7 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
             {convertLastActive(data?.createdAt)}
           </Text>
         </View>
-        <Pressable onPress={pressMore}>
+        <Pressable onPress={() => onPressMore(data)}>
           <Icon size={20} name="ellipsis-vertical" />
         </Pressable>
       </View>
@@ -269,10 +285,7 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
     const params = {
       comment_id: data._id,
     };
-    // console.log("params...", params);
-    console.log("data...", JSON.stringify(data));
     const res = await postLikeCommnent(params);
-    // console.log("res.like.comment...", res);
     const { community_id, is_like, vote_number } = res;
     if (community_id) {
       setIsLike(is_like);
@@ -331,11 +344,20 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
         {HeaderItemComment}
         {ContentStatus}
         <LikeComment />
-        {listReply.map((item) => {
-          return (
-            <ItemReply key={item._id} item={item} onPressReply={onPressReply} />
-          );
-        })}
+        {listReply.length > 0 &&
+          listReply
+            .filter((item) => listCommentDelete.indexOf(item._id) < 0)
+            .map((item) => {
+              return (
+                <ItemReply
+                  key={item._id}
+                  item={item}
+                  repCmtId={data._id}
+                  onPressReplyChild={onPressReply}
+                  onPressMoreChild={onPressMore}
+                />
+              );
+            })}
       </View>
     </View>
   );

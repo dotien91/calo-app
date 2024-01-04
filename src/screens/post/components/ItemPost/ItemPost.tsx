@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Dimensions,
   Image,
@@ -23,24 +23,33 @@ const PADDING_HORIZONTAL = 16;
 const SIZE_AVATAR = 30;
 const BORDER_AVATAR = 12;
 const GAP_HEADER = 10;
-const GAP_IMAGE = 4;
 const FONT_SIZE = 16;
-const BORDER_RADIUS1 = 16;
-const BORDER_RADIUS2 = 12;
 const PADDING_LEFT = 12;
-const SIZE_IMAGE1 = width - PADDING_HORIZONTAL * 2 - PADDING_LEFT - SIZE_AVATAR;
-const SIZE_IMAGE2 = (SIZE_IMAGE1 - 4) / 2;
+const SIZE_IMAGE = width - PADDING_HORIZONTAL * 2 - PADDING_LEFT - SIZE_AVATAR;
 
 interface ItemPostProps {
   data: any;
   pressMore: () => void;
+  pressComment: () => void;
+  pressImageVideo: (index: number) => void;
 }
 
-const ItemPost = ({ data, pressMore }: ItemPostProps) => {
+const ItemPost = ({
+  data,
+  pressMore,
+  pressComment,
+  pressImageVideo,
+}: ItemPostProps) => {
+  // console.log("data.1..", JSON.stringify(data));
   const theme = useTheme();
   const { colors } = theme;
-  const [isHearted, setIsHearted] = useState<boolean>(data?.is_like);
-  const [likeNumber, setLikeNumber] = useState<boolean>(data?.like_number);
+  const [isHearted, setIsHearted] = useState<boolean>(false);
+  const [likeNumber, setLikeNumber] = useState<number>(0);
+
+  useEffect(() => {
+    setIsHearted(data?.is_like);
+    setLikeNumber(data?.like_number);
+  }, [data]);
 
   const Avatar = useMemo(() => {
     return (
@@ -170,112 +179,26 @@ const ItemPost = ({ data, pressMore }: ItemPostProps) => {
         i.media_mime_type.includes("image") ||
         i.media_mime_type.includes("video"),
     );
-    if (listMedia.length == 1) {
-      return (
-        <View style={styles.image11}>
-          <Image
-            style={styles.image11}
-            source={{ uri: listMedia[0].media_thumbnail }}
-          />
-          {listMedia[0].media_mime_type.includes("video") && <PlayVideo />}
-        </View>
-      );
-    }
-    if (listMedia.length == 2) {
-      return (
-        <View
-          style={{ flexDirection: "row", height: SIZE_IMAGE2, gap: GAP_IMAGE }}
-        >
-          <View style={styles.image12}>
-            <Image
-              style={styles.image12}
-              source={{ uri: listMedia[0].media_thumbnail }}
-            />
-          </View>
-          <View style={styles.image22}>
-            <Image
-              style={styles.image22}
-              source={{ uri: listMedia[1].media_thumbnail }}
-            />
-          </View>
-        </View>
-      );
-    }
-    if (listMedia.length == 3) {
-      return (
-        <View
-          style={{ flexDirection: "row", height: SIZE_IMAGE2, gap: GAP_IMAGE }}
-        >
-          <View style={styles.image12}>
-            <Image
-              style={styles.image12}
-              source={{ uri: listMedia[0].media_thumbnail }}
-            />
-          </View>
-          <View style={{ flex: 1, gap: GAP_IMAGE }}>
-            <View style={styles.image23}>
-              <Image
-                style={styles.image23}
-                source={{ uri: listMedia[1].media_thumbnail }}
-              />
-            </View>
-            <View style={styles.image33}>
-              <Image
-                style={styles.image33}
-                source={{ uri: listMedia[2].media_thumbnail }}
-              />
-            </View>
-          </View>
-        </View>
-      );
-    }
-    if (listMedia.length > 3) {
-      return (
-        <View
-          style={{ flexDirection: "row", height: SIZE_IMAGE2, gap: GAP_IMAGE }}
-        >
-          <View style={styles.image12}>
-            <Image
-              style={styles.image12}
-              source={{ uri: listMedia[0].media_thumbnail }}
-            />
-          </View>
-          <View style={{ flex: 1, gap: GAP_IMAGE }}>
-            <View style={{ flex: 1 }}>
-              <Image
-                style={{
-                  flex: 1,
-                  borderTopRightRadius: BORDER_RADIUS2,
-                }}
-                source={{ uri: listMedia[1].media_thumbnail }}
-              />
-            </View>
-            <View style={{ flex: 1 }}>
-              <Image
-                style={{
-                  flex: 1,
-                  borderBottomRightRadius: BORDER_RADIUS2,
-                }}
-                source={{ uri: listMedia[2].media_thumbnail }}
-              />
-              <View
-                style={{
-                  ...CommonStyle.fillParent,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Text style={{ color: colors.primary }}>
-                  +{listMedia.length - 3}
-                </Text>
-              </View>
-            </View>
-          </View>
-        </View>
-      );
-    }
 
-    return null;
+    return (
+      <View style={{ alignItems: "flex-end" }}>
+        {listMedia.map((item, index) => {
+          return (
+            <Pressable
+              key={index}
+              onPress={() => pressImageVideo(index)}
+              style={styles.image11}
+            >
+              <Image
+                style={styles.image11}
+                source={{ uri: item.media_thumbnail }}
+              />
+              {item.media_mime_type.includes("video") && <PlayVideo />}
+            </Pressable>
+          );
+        })}
+      </View>
+    );
   }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const pressLike = async () => {
@@ -290,9 +213,6 @@ const ItemPost = ({ data, pressMore }: ItemPostProps) => {
     }
   };
 
-  const pressComment = () => {
-    console.log("commnet");
-  };
   const pressShare = () => {
     console.log("share");
   };
@@ -333,14 +253,22 @@ const ItemPost = ({ data, pressMore }: ItemPostProps) => {
   };
 
   return (
-    <View style={styles.container}>
-      {Avatar}
-      <View style={{ paddingLeft: PADDING_LEFT, flex: 1 }}>
-        {HeaderItemPost}
-        {HasTag}
-        {ContentStatus}
-        {ListFile}
-        <LikeShare />
+    <View
+      style={{
+        backgroundColor: colors.background,
+        borderBottomWidth: 1,
+        borderColor: colors.borderColor,
+      }}
+    >
+      <View style={styles.container}>
+        {Avatar}
+        <View style={{ paddingLeft: PADDING_LEFT, flex: 1 }}>
+          {HeaderItemPost}
+          {HasTag}
+          {ContentStatus}
+          {ListFile}
+          <LikeShare />
+        </View>
       </View>
     </View>
   );
@@ -356,34 +284,18 @@ const styles = StyleSheet.create({
     paddingBottom: 4,
   },
   image11: {
-    height: SIZE_IMAGE1,
-    width: SIZE_IMAGE1,
-    borderRadius: BORDER_RADIUS1,
-  },
-  image12: {
-    flex: 1,
-    borderTopLeftRadius: BORDER_RADIUS2,
-    borderBottomLeftRadius: BORDER_RADIUS2,
-  },
-  image22: {
-    flex: 1,
-    borderTopRightRadius: BORDER_RADIUS2,
-    borderBottomRightRadius: BORDER_RADIUS2,
-  },
-  image23: {
-    flex: 1,
-    borderTopRightRadius: BORDER_RADIUS2,
-  },
-  image33: {
-    flex: 1,
-    borderBottomRightRadius: BORDER_RADIUS2,
+    minHeight: SIZE_IMAGE,
+    width: SIZE_IMAGE,
+    paddingVertical: 4,
+    // borderRadius: BORDER_RADIUS1,
   },
 
   containerLikeShare: {
     flexDirection: "row",
-    marginTop: 4,
+    marginVertical: 4,
     justifyContent: "space-between",
     alignItems: "center",
+    // paddingHorizontal: 20,
   },
   viewLike: {
     flexDirection: "row",

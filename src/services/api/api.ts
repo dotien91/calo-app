@@ -8,6 +8,7 @@ export const UPLOAD_URL = "https://media.exam24h.com/";
 export const METHOD = {
   GET: "GET",
   POST: "POST",
+  DELETE: "DELETE",
 };
 
 interface RequestOption extends AxiosRequestConfig {

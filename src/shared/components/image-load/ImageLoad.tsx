@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-
 import { Pressable, StyleSheet, View } from "react-native";
 import FastImage, { FastImageProps } from "react-native-fast-image";
 import Animated, {
@@ -10,7 +9,6 @@ import Animated, {
   withDelay,
   withTiming,
 } from "react-native-reanimated";
-import { HIT_SLOP_EXPAND_20 } from "utils/helpers/system.constant";
 
 interface Props extends FastImageProps {
   width?: number;
@@ -18,11 +16,14 @@ interface Props extends FastImageProps {
   onPress?: () => void;
   style?: any;
   borderRadius?: number;
+  isAvatar?: boolean;
 }
+const HIT_SLOP_EXPAND_20 = { top: 20, left: 20, right: 20, bottom: 20 };
 
 const ImageLoad = (props: Props) => {
   const {
     width,
+    isAvatar = true,
     height,
     style,
     onLoad,
@@ -43,7 +44,7 @@ const ImageLoad = (props: Props) => {
     ) {
       loaded.value = withDelay(5000, withTiming(1, { duration: 2000 }));
     }
-  }, [loaded, source]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
@@ -74,7 +75,11 @@ const ImageLoad = (props: Props) => {
     >
       <Animated.View style={[StyleSheet.absoluteFillObject, blurhashStyle]}>
         <FastImage
-          source={require("assets/image/default_avatar.jpg")}
+          source={
+            isAvatar
+              ? require("assets/images/default_avatar.jpg")
+              : require("assets/images/defaultCover.jpg")
+          }
           style={{ width: "100%", height: "100%" }}
         />
       </Animated.View>

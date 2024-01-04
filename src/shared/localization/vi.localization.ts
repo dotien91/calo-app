@@ -93,6 +93,7 @@ export default {
   follower: "Người theo dõi",
   following: "Đang theo dõi",
   follow: "Theo dõi",
+  unfollow: "Bỏ theo dõi",
   followed: "Đã theo dõi",
   message: "Nhắn tin",
   filter: "Lọc",
