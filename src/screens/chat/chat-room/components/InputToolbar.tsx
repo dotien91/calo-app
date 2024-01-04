@@ -1,0 +1,82 @@
+import React, { useMemo, useRef } from "react";
+import { View, TouchableOpacity } from "react-native";
+import { useTheme } from "@react-navigation/native";
+
+/**
+ * ? Local Imports
+ */
+import createStyles from "../ChatRoomScreen.style";
+
+import { translations } from "@localization";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import KeyboardBtn from "./KeyboardBtn";
+import Input from "@shared-components/form/Input";
+
+interface InputToolbarProps {
+  openRecordModal: () => void;
+  sendChatMessage: () => void;
+  onSelectPicture: () => void;
+  onSelectVideo: () => void;
+}
+
+const InputToolbar: React.FC<InputToolbarProps> = ({
+  openRecordModal,
+  sendChatMessage,
+  onSelectPicture,
+  onSelectVideo,
+}) => {
+  const theme = useTheme();
+  const { colors } = theme;
+  const styles = useMemo(() => createStyles(theme), [theme]);
+  const inputRef = useRef(null);
+
+  const _sendChatMessage = () => {
+    const text = inputRef.current.value || "";
+    sendChatMessage(text);
+    inputRef.current.setValue("");
+  };
+
+  return (
+    <View style={styles.wrapInputToolbar}>
+      <View style={styles.wrapInput}>
+        <Input
+          ref={inputRef}
+          otherProps={{
+            placeholder: translations.chat.typeMessage,
+            placeholderTextColor: colors.placeholder2,
+          }}
+          customStyle={styles.input}
+        />
+        <View style={styles.wrapMediaBtn}>
+          <TouchableOpacity onPress={onSelectPicture} style={styles.btnMedia}>
+            <Icon
+              size={20}
+              type={IconType.Ionicons}
+              name="image"
+              color={colors.black}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onSelectVideo} style={styles.btnMedia}>
+            <Icon
+              size={20}
+              type={IconType.Ionicons}
+              name="play-circle"
+              color={colors.black}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={openRecordModal} style={styles.btnMedia}>
+            <Icon
+              size={20}
+              type={IconType.Ionicons}
+              name="mic"
+              color={colors.black}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+      <KeyboardBtn icon={"send"} callback={_sendChatMessage} />
+    </View>
+  );
+};
+
+export default React.memo(InputToolbar);

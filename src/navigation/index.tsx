@@ -11,7 +11,6 @@ import { SCREENS } from "@shared-constants";
 import { DarkTheme, LightTheme, palette } from "@theme/themes";
 // ? Screens
 import HomeScreen from "@screens/home/HomeScreen";
-import SearchScreen from "@screens/search/SearchScreen";
 import DetailScreen from "@screens/detail/DetailScreen";
 import ProfileScreen from "@screens/profile/ProfileScreen";
 import NotificationScreen from "@screens/notification/NotificationScreen";
@@ -20,12 +19,15 @@ import useStore from "@services/zustand/store";
 import IntroScreen from "@screens/welcome/intro/IntroScreen";
 import ChooseLanguageScreen from "@screens/welcome/choose-language/ChooseLanguageScreen";
 import WelcomeScreen from "@screens/welcome/WelcomeScreen";
-import LoginScreen from "@screens/auth/login-screen/LoginScreen";
-import LoginWithEmailScreen from "@screens/auth/login-screen/LoginWithEmailScreen";
+import LoginScreen from "@screens/auth/login/LoginScreen";
+import LoginWithEmailScreen from "@screens/auth/login/LoginWithEmailScreen";
 import SignUpScreen from "@screens/auth/sign-up/SignUpScreen";
 import ForgotPasswordScreen from "@screens/auth/forgot-password/ForgotPasswordScreen";
 import NewPasswordScreen from "@screens/auth/forgot-password/CreateNewPassword";
 import VerifyCodeScreen from "@screens/auth/forgot-password/VerifyCodeScreen";
+import ListChatScreen from "@screens/chat/chat-list/ListChatScreen";
+import SearchRoomChatScreen from "@screens/chat/search-room/SearchRoomChatScreen";
+import ChatRoomScreen from "@screens/chat/chat-room/ChatRoomScreen";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -50,8 +52,8 @@ const Navigation = () => {
       case SCREENS.HOME:
         iconName = focused ? "home" : "home-outline";
         break;
-      case SCREENS.SEARCH:
-        iconName = focused ? "search" : "search-outline";
+      case SCREENS.CHAT:
+        iconName = focused ? "chatbox" : "chatbox-outline";
         break;
       case SCREENS.NOTIFICATION:
         iconName = focused ? "notifications" : "notifications-outline";
@@ -88,7 +90,7 @@ const Navigation = () => {
         })}
       >
         <Tab.Screen name={SCREENS.HOME} component={HomeScreen} />
-        <Tab.Screen name={SCREENS.SEARCH} component={SearchScreen} />
+        <Tab.Screen name={SCREENS.CHAT} component={ListChatScreen} />
         <Tab.Screen
           name={SCREENS.NOTIFICATION}
           component={NotificationScreen}
@@ -129,6 +131,11 @@ const Navigation = () => {
           {(props) => <DetailScreen {...props} />}
         </Stack.Screen>
         <Stack.Screen name={SCREENS.LOGIN_PAGE} component={LoginScreen} />
+        <Stack.Screen
+          name={SCREENS.SEARCH_CHAT}
+          component={SearchRoomChatScreen}
+        />
+        <Stack.Screen name={SCREENS.CHAT_ROOM} component={ChatRoomScreen} />
         <Stack.Screen
           name={SCREENS.LOGIN_WITH_EMAIL}
           component={LoginWithEmailScreen}

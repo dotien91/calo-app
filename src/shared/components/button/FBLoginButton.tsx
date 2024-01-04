@@ -11,7 +11,7 @@ import {
   showErrorModal,
 } from "@helpers/SuperModalHelper";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
-import { getDeviceInfo } from "@helpers/managers/DeviceInfo";
+import { getDeviceInfo } from "@helpers/DeviceInfo";
 import { AccessToken, LoginManager } from "react-native-fbsdk-next";
 import { loginWithFB } from "@services/api/userApi";
 

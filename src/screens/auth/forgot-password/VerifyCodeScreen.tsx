@@ -14,7 +14,7 @@ import * as NavigationService from "react-navigation-helpers";
 import Button from "@shared-components/button/Button";
 import createStyles from "./ForgotPasswordScreen.style";
 import ViewTermPolicy from "../components/TermPolicyView";
-import InputHook from "@shared-components/form/InputHook";
+import InputHook from "@shared-components/form/InputHookForm";
 import { useForm } from "react-hook-form";
 import { SCREENS } from "@shared-constants";
 import { translations } from "@localization";

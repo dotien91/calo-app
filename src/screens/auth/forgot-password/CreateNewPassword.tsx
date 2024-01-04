@@ -13,7 +13,7 @@ import { useTheme, useRoute } from "@react-navigation/native";
 import Button from "@shared-components/button/Button";
 import createStyles from "./CreateNewPassword.style";
 import ViewTermPolicy from "../components/TermPolicyView";
-import InputHook from "@shared-components/form/InputHook";
+import InputHook from "@shared-components/form/InputHookForm";
 import { translations } from "@localization";
 import IconSvg from "assets/svg";
 import GoBackButton from "../components/GoBackButton";
@@ -25,10 +25,10 @@ import {
   showSuperModal,
   showLoading,
 } from "@helpers/SuperModalHelper";
-import { RECAPCHA_KEY } from "@shared-constants/config";
-import { passRegex } from "@shared-constants/regex";
-import { getDeviceInfo } from "@helpers/managers/DeviceInfo";
-import { useUserHook } from "@helpers/useUserHook";
+import { RECAPCHA_KEY } from "@shared-constants/Config";
+import { passRegex } from "@shared-constants/Regex";
+import { getDeviceInfo } from "@helpers/DeviceInfo";
+import { useUserHook } from "@helpers/hooks/useUserHook";
 
 export default function NewPasswordScreen() {
   const theme = useTheme();

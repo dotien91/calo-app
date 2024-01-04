@@ -13,9 +13,9 @@ import {
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { IOS_CLIENT_ID_GOOGLE, WEB_CLIENT_ID_GOOGLE } from "@shared-constants";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
-import { getDeviceInfo } from "@helpers/managers/DeviceInfo";
+import { getDeviceInfo } from "@helpers/DeviceInfo";
 import { loginWithGoogle } from "@services/api/userApi";
-import { useUserHook } from "@helpers/useUserHook";
+import { useUserHook } from "@helpers/hooks/useUserHook";
 
 interface BtnProps {
   showText: boolean | true;

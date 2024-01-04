@@ -16,14 +16,14 @@ import Button from "@shared-components/button/Button";
 import createStyles from "./SignUpScreen.style";
 import ViewTermPolicy from "../components/TermPolicyView";
 import OrView from "../components/OrView";
-import InputHook from "@shared-components/form/InputHook";
+import InputHook from "@shared-components/form/InputHookForm";
 import { useForm } from "react-hook-form";
 import { translations } from "@localization";
 import GoBackButton from "../components/GoBackButton";
 import IconSvg from "assets/svg";
-import { regexMail, passRegex } from "@shared-constants/regex";
+import { regexMail, passRegex } from "@shared-constants/Regex";
 import { ISignUpWithEmail } from "@services/models";
-import { getDeviceInfo } from "@helpers/managers/DeviceInfo";
+import { getDeviceInfo } from "@helpers/DeviceInfo";
 import { singUp } from "@services/api/userApi";
 import {
   closeSuperModal,

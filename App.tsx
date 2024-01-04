@@ -8,17 +8,21 @@ import SplashScreen from "react-native-splash-screen";
  */
 import Navigation from "./src/navigation";
 import { isAndroid } from "@freakycoder/react-native-helpers";
-import NetworkManager from "@helpers/managers/NetworkManager";
+import NetworkManager from "@helpers/NetworkManager";
 import { palette } from "@theme/themes";
 import useStore from "@services/zustand/store";
 import { translations } from "@localization";
-import SuperModal from "@shared-components/SuperModal";
-import { setDeviceInfo } from "@helpers/managers/DeviceInfo";
+import SuperModal from "@shared-components/modal/SuperModal";
+import { setDeviceInfo } from "@helpers/DeviceInfo";
+import SocketConnect from "@services/socket/SocketConnect";
+import { SocketHelperRef } from "@helpers/SocketHelper";
+import { useUserHook } from "@helpers/hooks/useUserHook";
 
 LogBox.ignoreAllLogs();
 
 const App = () => {
   const isDarkMode = useStore((state) => state.isDarkMode);
+  const { getUserData } = useUserHook();
 
   React.useEffect(() => {
     initData();
@@ -26,10 +30,12 @@ const App = () => {
     return () => {
       NetworkManager.getInstance().cleanup();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const language = useStore((state) => state.language);
 
   const initData = () => {
+    getUserData();
     setDeviceInfo();
   };
 
@@ -51,6 +57,7 @@ const App = () => {
       <Navigation />
       <Toast />
       <SuperModal />
+      <SocketConnect ref={SocketHelperRef} />
     </>
   );
 };

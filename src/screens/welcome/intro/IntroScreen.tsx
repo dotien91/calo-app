@@ -1,6 +1,6 @@
 import { View, Text, Image } from "react-native";
 import React, { useMemo } from "react";
-import { loginIeltsHunter } from "assets/image";
+import { loginIeltsHunter } from "assets/images";
 import { useTheme } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 
@@ -13,7 +13,7 @@ export default function IntroScreen() {
   const styles = useMemo(() => createStyles(theme), [theme]);
 
   const handleStartNow = () => {
-    NavigationService.replace(SCREENS.LOGINCHOOSELANGUAGE);
+    NavigationService.replace(SCREENS.CHOOSE_LANGUAGE);
   };
 
   return (

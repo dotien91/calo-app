@@ -14,7 +14,7 @@ import * as NavigationService from "react-navigation-helpers";
 import Button from "@shared-components/button/Button";
 import createStyles from "./ForgotPasswordScreen.style";
 import ViewTermPolicy from "../components/TermPolicyView";
-import InputHook from "@shared-components/form/InputHook";
+import InputHook from "@shared-components/form/InputHookForm";
 import { useForm } from "react-hook-form";
 import { SCREENS } from "@shared-constants";
 import { translations } from "@localization";
@@ -27,7 +27,7 @@ import {
   showErrorModal,
 } from "@helpers/SuperModalHelper";
 import { IRequestNewPass } from "@services/models";
-import { RECAPCHA_KEY } from "@shared-constants/config";
+import { RECAPCHA_KEY } from "@shared-constants/Config";
 
 export default function ForgotPasswordScreen() {
   const theme = useTheme();

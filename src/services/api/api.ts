@@ -1,9 +1,9 @@
 import axios, { AxiosRequestConfig } from "axios";
 import lodash from "lodash";
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { _getJson, USER_TOKEN } from "@services/local-storage";
 
 export const BASEURL = "https://api.edu-like.exam24h.com/api/";
+export const UPLOAD_URL = "https://media.exam24h.com/";
 
 export const METHOD = {
   GET: "GET",
@@ -28,7 +28,11 @@ export const apiClient = axios.create({
 apiClient.interceptors.request.use(
   function (config) {
     // Do something before request is sent
-    const userToken = _getJson(USER_TOKEN);
+    // const userToken = _getJson(USER_TOKEN);
+
+    // fake token for chat feature
+    const userToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQ1OTAxNTEsImRhdGEiOnsiX2lkIjoiNjU4MjVkY2RmYjQyMmU4NmEyMDBlN2ZiIiwia2V5IjoiMjZjNGVkODZmM2RjOTUxN2JlYWViY2UxNTQzMmE0NWUiLCJzaWduYXR1cmUiOiJjNGI1NDEzMGQ0MjNhYzc2ZDA1MjYzODAzMWNhYzBmNyIsInNlc3Npb24iOiI2NTgyOGI0NzhmZTc2YzllMzE0YmM1YmQifSwiaWF0IjoxNzAzMDU0MTUxfQ.CsNtK6PcYGCW0hLfZrvAvxWoihVG9GkkyyMQmz6Oopg";
     if (userToken) config.headers["X-Authorization"] = userToken;
     return config;
   },
@@ -73,6 +77,33 @@ export default function request({
       params,
       data,
       ...option,
+    })
+    .catch((error) => {
+      return Promise.resolve({ ...error, isError: true });
+    });
+}
+
+export function requestUpload({
+  params,
+  urlPath,
+  data,
+  method,
+  option,
+}: {
+  urlPath: string;
+  params?: any;
+  data?: FormData;
+  method?: string;
+  option?: RequestOption;
+}) {
+  return apiClient
+    .request({
+      method: method || METHOD.POST,
+      url: urlPath,
+      params,
+      data,
+      ...option,
+      headers: { "Content-Type": "multipart/form-data" },
     })
     .catch((error) => {
       return Promise.resolve({ ...error, isError: true });
