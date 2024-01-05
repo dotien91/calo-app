@@ -8,6 +8,7 @@ import {
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
   TextInput,
+  Alert,
 } from "react-native";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useTheme, useRoute } from "@react-navigation/native";
@@ -27,11 +28,14 @@ import BottomSheet, {
 import { regexLink } from "@shared-constants/regex";
 import {
   closeSuperModal,
-  showSuperModal,
   showLoading,
+  showToast,
+  showErrorModal,
 } from "@helpers/SuperModalHelper";
 import * as NavigationService from "react-navigation-helpers";
 import { UploadFile } from "@shared-components/UploadFile";
+import isEqual from "react-fast-compare";
+import eventEmitter from "@services/event-emitter";
 
 interface OptionsState {
   postCategory: string;
@@ -43,7 +47,6 @@ export default function PostScreen() {
   const { colors } = theme;
   const route: any = useRoute();
   const item: TypedRequest = route?.params?.item || {};
-  console.log("item...", JSON.stringify(item));
   const styles = useMemo(() => createStyles(theme), [theme]);
 
   const [options, setOptions] = useState<OptionsState>({
@@ -68,14 +71,15 @@ export default function PostScreen() {
   );
   const [link, setLink] = useState("");
   const getListCategory = async () => {
-    const data = await getCategory();
-    setListCategory(data);
-    if (data[0]._id) {
-      setOptions((prev) => ({
-        ...prev,
-        postCategory: data[0]._id,
-      }));
-    }
+    getCategory().then((res) => {
+      setListCategory(res);
+      if (!res.isError) {
+        setOptions((prev) => ({
+          ...prev,
+          postCategory: res[0]._id,
+        }));
+      }
+    });
   };
 
   useEffect(() => {
@@ -101,7 +105,7 @@ export default function PostScreen() {
   const onSubmit = async () => {
     showLoading();
 
-    const params = await {
+    const params = {
       post_title: "",
       post_content: description.trim(),
       post_category: options.postCategory || undefined,
@@ -111,26 +115,31 @@ export default function PostScreen() {
     };
 
     if (item._id) {
-      const res = await updatePost(params);
-      console.log("res...", res);
-      if (res) {
-        closeSuperModal();
-        showSuperModal({
-          title: "Success",
-          desc: translations.updateSuccess,
-        });
-        NavigationService.goBack();
-      }
+      updatePost(params).then((res) => {
+        if (!res.isError) {
+          closeSuperModal();
+          eventEmitter.emit("reload_list_post");
+          showToast({ type: "success", message: translations.updateSuccess });
+          NavigationService.popToTop();
+        } else {
+          closeSuperModal();
+          showErrorModal(res);
+        }
+      });
     } else {
-      const res = await createNewPost(params);
-      if (res) {
-        closeSuperModal();
-        showSuperModal({
-          title: "Success",
-          desc: translations.post.createPostSuccess,
-        });
-        NavigationService.goBack();
-      }
+      createNewPost(params).then((res) => {
+        if (!res.isError) {
+          closeSuperModal();
+          showToast({
+            type: "success",
+            message: translations.post.createPostSuccess,
+          });
+          NavigationService.goBack();
+        } else {
+          closeSuperModal();
+          showErrorModal(res);
+        }
+      });
     }
   };
 
@@ -156,6 +165,37 @@ export default function PostScreen() {
     );
   };
 
+  const beforeValue = {
+    file: (item.attach_files || []).map((i) => ({
+      _id: i._id,
+      uri: i.media_url,
+      type: i.media_mime_type,
+    })),
+    content: (item.post_content || "").trim(),
+  };
+
+  const onGoBack = () => {
+    const afterValue = {
+      content: description.trim(),
+      file: listFile,
+    };
+    if (isEqual(beforeValue, afterValue)) {
+      NavigationService.goBack();
+    } else {
+      Alert.alert(translations.cancelEdit, translations.cancelEditDes, [
+        {
+          text: translations.confirm,
+          onPress: () => NavigationService.goBack(),
+        },
+        {
+          text: translations.cancel,
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+      ]);
+    }
+  };
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={[styles.container]}>
@@ -166,6 +206,8 @@ export default function PostScreen() {
           <HeaderPost
             onPressPost={onSubmit}
             visiblePost={description.trim() != ""}
+            pressGoBack={onGoBack}
+            textPost={item._id ? translations.update : translations.post.post}
           />
           <View style={{ flex: 1 }}>
             <Pressable

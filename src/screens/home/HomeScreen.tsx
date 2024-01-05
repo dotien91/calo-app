@@ -1,8 +1,14 @@
 import React, { useMemo, useEffect } from "react";
-import { View, FlatList, Image } from "react-native";
+import {
+  View,
+  FlatList,
+  Image,
+  useWindowDimensions,
+  SafeAreaView,
+  Text,
+} from "react-native";
 import { useTheme } from "@react-navigation/native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
-import { SafeAreaView } from "react-native-safe-area-context";
 import * as NavigationService from "react-navigation-helpers";
 import RNBounceable from "@freakycoder/react-native-bounceable";
 import lodash from "lodash";
@@ -10,6 +16,8 @@ import {
   GoogleSignin,
   statusCodes,
 } from "@react-native-google-signin/google-signin";
+import { TabView, SceneMap, TabBar } from "react-native-tab-view";
+import HeaderHome from "./components/header-home/HeaderHome";
 
 /**
  * ? Local Imports
@@ -20,7 +28,6 @@ import CardItem from "./components/card-item/CardItem";
 /**
  * ? Shared Imports
  */
-import Text from "@shared-components/text-wrapper/TextWrapper";
 import { getCurrentUser } from "@services/api/userApi";
 import useStore from "@services/zustand/store";
 import {
@@ -28,6 +35,8 @@ import {
   IOS_CLIENT_ID_GOOGLE,
   WEB_CLIENT_ID_GOOGLE,
 } from "@shared-constants";
+import ListPost from "./ListPost";
+import CommonStyle from "@theme/styles";
 
 const profileURI =
   // eslint-disable-next-line max-len
@@ -111,9 +120,6 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
   const handleNewPost = () => {
     NavigationService.push(SCREENS.POST_SCREEN);
   };
-  const handleListPost = () => {
-    NavigationService.push(SCREENS.LIST_POST);
-  };
 
   const Welcome = () => (
     <>
@@ -123,9 +129,6 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
       <Text color={colors.placeholder}>Welcome Back</Text>
       <Text onPress={handleNewPost} color={colors.placeholder}>
         New post
-      </Text>
-      <Text onPress={handleListPost} color={colors.placeholder}>
-        List post
       </Text>
     </>
   );
@@ -137,10 +140,62 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
     </View>
   );
 
+  const HomeOld = () => {
+    return (
+      <View style={styles.container}>
+        <Header />
+        <Content />
+      </View>
+    );
+  };
+
+  const renderScene = SceneMap({
+    first: HomeOld,
+    second: ListPost,
+  });
+  const layout = useWindowDimensions();
+
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: "first", title: "Following" },
+    { key: "second", title: "For you " },
+  ]);
+
+  const renderTabBar = (props) => (
+    <TabBar
+      {...props}
+      indicatorStyle={{
+        backgroundColor: colors.primary,
+        width: 50,
+        left: "18%",
+      }}
+      renderLabel={({ route, focused }) => (
+        <Text
+          style={{
+            ...CommonStyle.hnBold,
+            fontSize: 16,
+            color: focused ? colors.primary : colors.text,
+            margin: 8,
+          }}
+        >
+          {route.title}
+        </Text>
+      )}
+      style={{ backgroundColor: colors.background, height: 50 }}
+    />
+  );
+
   return (
-    <SafeAreaView style={styles.container}>
-      <Header />
-      <Content />
+    <SafeAreaView style={{ flex: 1 }}>
+      <HeaderHome />
+      <TabView
+        style={{ flex: 1 }}
+        renderTabBar={renderTabBar}
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={{ width: layout.width }}
+      />
     </SafeAreaView>
   );
 };

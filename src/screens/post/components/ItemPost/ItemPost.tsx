@@ -16,6 +16,8 @@ import { palette } from "@theme/themes";
 import { convertLastActive } from "./time";
 import Icon from "react-native-vector-icons/Ionicons";
 import { postLike } from "@services/api/post";
+import { showToast } from "@helpers/SuperModalHelper";
+import { translations } from "@localization";
 
 const { width } = Dimensions.get("screen");
 
@@ -40,7 +42,6 @@ const ItemPost = ({
   pressComment,
   pressImageVideo,
 }: ItemPostProps) => {
-  // console.log("data.1..", JSON.stringify(data));
   const theme = useTheme();
   const { colors } = theme;
   const [isHearted, setIsHearted] = useState<boolean>(false);
@@ -205,12 +206,18 @@ const ItemPost = ({
     const params = {
       community_id: data._id,
     };
-    const res = await postLike(params);
-    const { community_id, is_like, vote_number } = res;
-    if (community_id) {
-      setIsHearted(is_like);
-      setLikeNumber(vote_number);
-    }
+    setIsHearted((isHearted) => !isHearted);
+    postLike(params).then((res) => {
+      if (!res.isError) {
+        setLikeNumber(res.like_number);
+      } else {
+        setIsHearted((isHearted) => !isHearted);
+        showToast({
+          type: "error",
+          message: translations.post.likeError,
+        });
+      }
+    });
   };
 
   const pressShare = () => {

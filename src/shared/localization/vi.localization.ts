@@ -155,9 +155,13 @@ export default {
     personLiked: "Những người thích bài viết này",
     emptyComment: "Hãy là người đầu tiên bình luận",
     emptyPost: "Chưa có bài viết nào",
+    emptyPostTitle: "Không có bài viết",
+    emptyPostDes:
+      "Khi một người bạn hoặc giáo viên đăng một bài viết, nó sẽ xuất hiện ở đây và sau đó bạn có thể thích, chia sẻ và bình luận về bài đăng đó.",
     postInvalid: "Bài đăng không tồn tại",
     report: "Báo cáo bài viết",
     save: "Lưu bài viết",
+    likeError: "Gửi lượt thích thất bại vui lòng thử lại!",
   },
   navigation: {
     dashboard: "Trang chủ",

@@ -15,6 +15,18 @@ export function UploadFile(initData?: any[]) {
   );
   const theme = useTheme();
   const { colors } = theme;
+  const getFileName = (i: any) => {
+    return (
+      i.fileName || i.name || (i.uri || "")?.split("/")?.reverse()?.[0] || ""
+    );
+  };
+  const getLinkUri = (i) => {
+    if (isIos) {
+      return i.uri?.replace("file://", "");
+    }
+    return i.uri;
+  };
+
   const onPressPicture = async () => {
     selectMedia({
       config: { mediaType: "photo", selectionLimit: 30 },
@@ -28,24 +40,20 @@ export function UploadFile(initData?: any[]) {
           type: i.type || "",
         }));
         const fileLocal = listImage.map((i: any) => ({
-          uri: isIos ? i.uri?.replace("file://", "") : i.uri,
+          uri: getLinkUri(i),
           type: i.type,
         }));
         setListFileLocal((listFileLocal) => [...listFileLocal, ...fileLocal]);
         const res = await uploadMultiMedia(
           listImage.map((i: any) => ({
-            name:
-              i.fileName ||
-              i.name ||
-              (i.uri || "")?.split("/")?.reverse()?.[0] ||
-              "",
-            uri: isIos ? i.uri?.replace("file://", "") : i.uri,
+            name: getFileName(i),
+            uri: getLinkUri(i),
             type: i.type,
           })),
         );
         if (Array.isArray(res)) {
           const data = listImage.map((i: any, index: number) => ({
-            uri: isIos ? i.uri?.replace("file://", "") : i.uri,
+            uri: getLinkUri(i),
             type: i.type,
             _id: res[index]?.callback?._id,
           }));
@@ -55,7 +63,6 @@ export function UploadFile(initData?: any[]) {
       croping: false,
     });
   };
-  console.log("file...", listFile);
 
   const renderFile = React.useCallback(() => {
     return (
@@ -113,25 +120,20 @@ export function UploadFile(initData?: any[]) {
           type: i.type || "",
         }));
         const fileLocal = listVideo.map((i: any) => ({
-          uri: isIos ? i.uri?.replace("file://", "") : i.uri,
+          uri: getLinkUri(i),
           type: i.type,
         }));
         setListFileLocal((listFileLocal) => [...listFileLocal, ...fileLocal]);
         const res = await uploadMultiMedia(
           listVideo.map((i: any) => ({
-            name:
-              i.fileName ||
-              i.name ||
-              (i.uri || "")?.split("/")?.reverse()?.[0] ||
-              "",
-            uri: isIos ? i.uri?.replace("file://", "") : i.uri,
+            name: getFileName(i),
+            uri: getLinkUri(i),
             type: i.type,
           })),
         );
-        console.log("resup VId...", res);
         if (Array.isArray(res)) {
           const data = listVideo.map((i: any, index: number) => ({
-            uri: isIos ? i.uri?.replace("file://", "") : i.uri,
+            uri: getLinkUri(i),
             type: i.type,
             _id: res[index]?.callback?._id,
           }));

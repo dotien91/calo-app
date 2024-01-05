@@ -120,6 +120,8 @@ export default {
   selectImage: "Select Image",
   draft: "Draft",
   public: "Public",
+  cancelEdit: "Xác nhận hủy",
+  cancelEditDes: "Các chỉnh sửa sẽ không được lưu lại. Bạn có muốn tiếp tục?",
   post: {
     post: "POST",
     createPost: "Create Post",
@@ -145,9 +147,13 @@ export default {
     personLiked: "The person who liked",
     emptyComment: "No comments yet",
     emptyPost: "There are no posts yet",
+    emptyPostTitle: "There is no article",
+    emptyPostDes:
+      "When a friend or a teacher posts an article, it will appear here, and you can then like, share, and comment on the post.",
     postInvalid: "Invalid post",
     report: "Report this post",
     save: "Save post",
+    likeError: "Send like error, please try again!",
   },
   navigation: {
     dashboard: "Dashboard",

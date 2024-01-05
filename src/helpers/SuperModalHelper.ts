@@ -3,6 +3,7 @@ import { palette } from "@theme/themes";
 import { ViewStyle } from "react-native";
 import { translations } from "@localization";
 import eventEmitter from "@services/event-emitter";
+import Toast from "react-native-toast-message";
 
 interface IBtnStyle {
   typeError?: boolean;
@@ -23,6 +24,11 @@ interface ItemMediaProps {
 
 interface ContentMediaPopup {
   listLink: ItemMediaProps[];
+}
+
+interface ToastProps {
+  type: "success" | "error" | "info";
+  message: string;
 }
 
 export const SuperModalHelper = {
@@ -91,6 +97,12 @@ export const showErrorModal = (res: any) => {
       btn: { typeError: true },
     });
   }
+};
+export const showToast = (res: ToastProps) => {
+  Toast.show({
+    type: res.type,
+    text1: res.message,
+  });
 };
 
 export const showLoading = () => {

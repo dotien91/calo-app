@@ -4,17 +4,20 @@ import { palette } from "@theme/themes";
 import IconSvg from "assets/svg";
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import * as NavigationService from "react-navigation-helpers";
 
 interface TypeHeaderPost {
   onPressPost: () => void;
   visiblePost: boolean;
+  pressGoBack: () => void;
+  textPost: string;
 }
 
-const HeaderPost = ({ onPressPost, visiblePost = false }: TypeHeaderPost) => {
-  const pressGoBack = () => {
-    NavigationService.goBack();
-  };
+const HeaderPost = ({
+  onPressPost,
+  visiblePost = false,
+  pressGoBack,
+  textPost,
+}: TypeHeaderPost) => {
   return (
     <View style={styles.container}>
       <Pressable style={styles.buttonLeft} onPress={pressGoBack}>
@@ -27,7 +30,7 @@ const HeaderPost = ({ onPressPost, visiblePost = false }: TypeHeaderPost) => {
           style={visiblePost ? styles.buttonRight : styles.buttonRightDisable}
         >
           <Text style={visiblePost ? styles.textPost : styles.textPostDisable}>
-            {translations.post.post}
+            {textPost}
           </Text>
         </Pressable>
       </View>

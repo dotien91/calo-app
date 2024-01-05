@@ -3,4 +3,5 @@ export interface IUser {
   name: string;
   email: string;
   follow_users: string[];
+  user_avatar_thumbnail: string;
 }

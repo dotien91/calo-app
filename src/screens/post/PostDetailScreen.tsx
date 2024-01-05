@@ -2,11 +2,14 @@
 
 import ItemPost from "@screens/post/components/ItemPost/ItemPost";
 import {
+  blockUser,
   deleteComment,
   deletePost,
+  followUser,
   getListComment,
   getPostDetail,
   postComment,
+  unFollowUser,
 } from "@services/api/post";
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
@@ -19,6 +22,7 @@ import {
   Pressable,
   ScrollView,
   Text,
+  Alert,
 } from "react-native";
 import { isIos } from "utils/helpers/device-ui";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -31,12 +35,13 @@ import {
   showDetailImageView,
   showErrorModal,
   showLoading,
-  showSuperModal,
+  showToast,
 } from "@helpers/SuperModalHelper";
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetScrollView,
 } from "@gorhom/bottom-sheet";
+import { SCREENS } from "@shared-constants";
 const HEIGHT_BOTTOM_SHEET = 230;
 
 interface PostDetailProps {
@@ -50,6 +55,7 @@ const PostDetail = (props: PostDetailProps) => {
   const [listComment, setListComment] = useState<any[]>([]);
 
   const userData = useStore((state) => state.userData);
+  const setUserData = useStore((state) => state.setUserData);
   const listCommentDelete = useStore((state) => state.listCommentDelete);
   const addListCommentDelete = useStore((state) => state.addListCommentDelete);
   const addListPostDelete = useStore((state) => state.addListPostDelete);
@@ -73,23 +79,25 @@ const PostDetail = (props: PostDetailProps) => {
       community_id: id,
       auth_id: userData?._id || "",
     };
-    const res = await getListComment(params);
-    if (Array.isArray(res)) {
-      setListComment(res);
-    } else {
-      showErrorModal(res);
-    }
+    getListComment(params).then((res) => {
+      if (!res.isError) {
+        setListComment(res);
+      } else {
+        showErrorModal(res);
+      }
+    });
   };
   const getData = async () => {
     showLoading();
-    const res = await getPostDetail(id);
-    closeSuperModal();
-    if (res._id) {
-      setData(res);
-    } else {
-      showErrorModal(res);
-      NavigationService.goBack();
-    }
+    getPostDetail(id, { auth_id: userData?._id || "" }).then((res) => {
+      closeSuperModal();
+      if (!res.isError) {
+        setData(res);
+      } else {
+        showErrorModal(res);
+        NavigationService.goBack();
+      }
+    });
   };
   const [replyItem, setReplyItem] = useState<any>({});
   const [value, setValue] = useState("");
@@ -98,7 +106,7 @@ const PostDetail = (props: PostDetailProps) => {
     getComment();
   }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const updateListCommentReply = async (_id: string, resComment: any) => {
+  const updateListCommentReply = (_id: string, resComment: any) => {
     const listCmtUpdate = [...listComment];
     const itemIndex = listCmtUpdate.find((item) => item._id === _id);
     itemIndex.child = [...itemIndex.child, resComment];
@@ -120,27 +128,26 @@ const PostDetail = (props: PostDetailProps) => {
       content: value,
       parent_id: replyItem.parent_id || replyItem._id || null,
     };
-    console.log("params", params);
     showLoading();
-    const resComment: any = await postComment(params);
-
-    if (resComment._id) {
-      closeSuperModal();
-      if (replyItem.parent_id || replyItem._id) {
-        const dataUpdate = await updateListCommentReply(
-          replyItem.parent_id || replyItem._id,
-          resComment,
-        );
-        console.log("dataupdate.1..", JSON.stringify(dataUpdate));
-
-        setListComment(dataUpdate);
+    await postComment(params).then((resComment) => {
+      if (!resComment.isError) {
+        closeSuperModal();
+        if (replyItem.parent_id || replyItem._id) {
+          const dataUpdate = updateListCommentReply(
+            replyItem.parent_id || replyItem._id,
+            resComment,
+          );
+          setListComment(dataUpdate);
+        } else {
+          setListComment((listComment) => [...listComment, resComment]);
+        }
+        setValue("");
+        deleteReplying();
+        refInput.current?.blur();
       } else {
-        setListComment((listComment) => [...listComment, resComment]);
+        showErrorModal(resComment);
       }
-      setValue("");
-      deleteReplying();
-      refInput.current?.blur();
-    }
+    });
   };
 
   const deleteReplying = () => {
@@ -183,34 +190,35 @@ const PostDetail = (props: PostDetailProps) => {
   };
   const deleteCommentWithid = async (id: string) => {
     refBottomSheetCmt.current?.close();
-    const res = await deleteComment(id);
-    console.log(res);
-    addListCommentDelete(id);
-    if (res._id) {
-      showSuperModal({
-        title: translations.deleteSuccess,
-      });
-    } else {
-      showErrorModal(res);
-      removeItemCommentDelete(id);
-    }
+    deleteComment(id).then((res) => {
+      addListCommentDelete(id);
+      if (!res.isError) {
+        showToast({
+          type: "success",
+          message: `${translations.deleteSuccess} ${translations.comment}`,
+        });
+      } else {
+        showErrorModal(res);
+        removeItemCommentDelete(id);
+      }
+    });
   };
 
-  const deletePostWithId = async (id: string) => {
-    const resdelete = await deletePost(id);
-    console.log(resdelete);
-    if (resdelete._id) {
-      addListPostDelete(resdelete._id);
-      refBottomSheet.current?.close();
-      showSuperModal({
-        title: translations.home.deletePostSuccess,
-      });
-      NavigationService.goBack();
-    } else {
-      refBottomSheet.current?.close();
-      showSuperModal({ title: translations.somethingWentWrong });
-    }
+  const pressDeletePost = (id: string) => {
+    deletePost(id).then((resdelete) => {
+      if (!resdelete.isError) {
+        addListPostDelete(resdelete._id);
+        showToast({
+          type: "success",
+          message: translations.home.deletePostSuccess,
+        });
+        NavigationService.goBack();
+      } else {
+        showToast({ type: "error", message: translations.somethingWentWrong });
+      }
+    });
   };
+
   const HeaderPost = () => {
     return (
       <View
@@ -294,7 +302,7 @@ const PostDetail = (props: PostDetailProps) => {
                 justifyContent: "center",
                 paddingVertical: 10,
               }}
-              placeholder="Bình luận"
+              placeholder={translations.comment}
               value={value}
               onChangeText={setValue}
               multiline
@@ -324,6 +332,147 @@ const PostDetail = (props: PostDetailProps) => {
         >
           <View style={[{ paddingHorizontal: 16, flex: 1 }]}>
             {/* Check post */}
+            {userData?._id === data?.user_id?._id ? (
+              <BottomSheetScrollView style={{ flex: 1 }}>
+                <Pressable
+                  onPress={() => {
+                    Alert.alert("", translations.home.deletePost, [
+                      {
+                        text: translations.delete,
+                        onPress: () => pressDeletePost(data._id),
+                      },
+                      {
+                        text: translations.cancel,
+                        onPress: () => console.log("Cancel Pressed"),
+                        style: "cancel",
+                      },
+                    ]);
+                    refBottomSheet.current?.close();
+                  }}
+                  style={styles.buttonFlag}
+                >
+                  <Icon size={24} name="trash-outline" />
+                  <Text style={styles.textButton}>{translations.delete}</Text>
+                </Pressable>
+                <Pressable
+                  onPress={() => {
+                    NavigationService.push(SCREENS.POST_SCREEN, {
+                      item: data,
+                    });
+                    refBottomSheet.current?.close();
+                  }}
+                  style={styles.buttonFlag}
+                >
+                  <Icon size={24} name="create-outline" />
+                  <Text style={styles.textButton}>{translations.edit}</Text>
+                </Pressable>
+              </BottomSheetScrollView>
+            ) : (
+              <BottomSheetScrollView style={{ flex: 1 }}>
+                <Pressable style={styles.buttonFlag}>
+                  <Icon size={24} name="bookmark-outline" />
+                  <Text style={styles.textButton}>
+                    {translations.post.save}
+                  </Text>
+                </Pressable>
+                <Pressable
+                  onPress={() => {
+                    const params = { partner_id: data?.user_id?._id };
+                    if (
+                      userData &&
+                      userData.follow_users.indexOf(data?.user_id?._id) >= 0
+                    ) {
+                      unFollowUser(params).then((resUnfollow) => {
+                        if (!resUnfollow.isError && userData) {
+                          setUserData({
+                            ...userData,
+                            follow_users: [
+                              ...userData.follow_users.map(
+                                (i) => i !== itemSelectd?.user_id?._id,
+                              ),
+                            ],
+                          });
+                        } else {
+                          showErrorModal(resUnfollow);
+                        }
+                      });
+                    } else {
+                      followUser(params).then((resFollow) => {
+                        if (!resFollow.isError && userData) {
+                          setUserData({
+                            ...userData,
+                            follow_users: [
+                              ...userData.follow_users,
+                              itemSelectd?.user_id?._id,
+                            ],
+                          });
+                        } else showErrorModal(resFollow);
+                      });
+                    }
+                    refBottomSheet.current?.close();
+                  }}
+                  style={styles.buttonFlag}
+                >
+                  <Icon size={24} name="person-add-outline" />
+                  <Text style={styles.textButton}>
+                    {userData.follow_users.indexOf(data?.user_id?._id) < 0
+                      ? translations.follow
+                      : translations.unfollow}{" "}
+                    {data?.user_id?.display_name}
+                  </Text>
+                </Pressable>
+                <Pressable
+                  onPress={() => {
+                    const params = { partner_id: data?.user_id?._id };
+                    blockUser(params).then((resBlock) => {
+                      if (!resBlock.isError) {
+                        showToast({
+                          type: "success",
+                          message: translations.blockedUser.replace(
+                            ":username",
+                            data?.user_id?.display_name || "",
+                          ),
+                        });
+                      } else {
+                        showErrorModal(resBlock);
+                      }
+                    });
+                    refBottomSheet.current?.close();
+                  }}
+                  style={styles.buttonFlag}
+                >
+                  <Icon size={24} name="ban-outline" />
+                  <Text style={styles.textButton}>
+                    {translations.block} {data?.user_id?.display_name}
+                  </Text>
+                </Pressable>
+                <Pressable style={styles.buttonFlag}>
+                  <Icon size={24} name="flag-outline" />
+                  <Text style={styles.textButton}>
+                    {translations.post.report}
+                  </Text>
+                </Pressable>
+              </BottomSheetScrollView>
+            )}
+          </View>
+        </BottomSheet>
+        {/* <BottomSheet
+          snapPoints={snapPoints}
+          index={-1}
+          enablePanDownToClose
+          ref={refBottomSheet}
+          style={{ borderTopLeftRadius: 16, borderTopRightRadius: 16 }}
+          backdropComponent={(props) => (
+            <BottomSheetBackdrop
+              {...props}
+              disappearsOnIndex={-1}
+              appearsOnIndex={0}
+              pressBehavior={"close"}
+              opacity={0.1}
+            />
+          )}
+        >
+          <View style={[{ paddingHorizontal: 16, flex: 1 }]}>
             {userData?._id === data?.user_id?._id ? (
               <BottomSheetScrollView style={{ flex: 1 }}>
                 <Pressable
@@ -363,7 +512,7 @@ const PostDetail = (props: PostDetailProps) => {
               </BottomSheetScrollView>
             )}
           </View>
-        </BottomSheet>
+        </BottomSheet> */}
         <BottomSheet
           snapPoints={snapPoints}
           index={-1}

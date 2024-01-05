@@ -51,11 +51,11 @@ export function useListData<T>(
     refreshListPage();
   }, [params]);
 
-  const refreshListPage = async () => {
+  const refreshListPage = () => {
     isFetching.current = true;
     if (stateListData.nextPage > 1) setRefreshing(true);
     setIsLoading(true);
-    await requestData({ page: 1, ...params }).then((res: any) => {
+    requestData({ page: 1, ...params }).then((res: any) => {
       const newData = res;
       setIsLoading(false);
 
@@ -77,6 +77,8 @@ export function useListData<T>(
           nextPage,
           listData: newData,
         }));
+      } else {
+        setIsFirstLoading(false);
       }
     });
   };

@@ -11,6 +11,7 @@ import { palette } from "@theme/themes";
 import { translations } from "@localization";
 import { postLikeCommnent } from "@services/api/post";
 import useStore from "@services/zustand/store";
+import { showToast } from "@helpers/SuperModalHelper";
 
 const SIZE_AVATAR = 30;
 const BORDER_AVATAR = 12;
@@ -46,13 +47,17 @@ const ItemReply = ({
     };
 
     setIsLike((isLike) => !isLike);
-    const res = await postLikeCommnent(params);
-    const { community_id, vote_number } = res;
-    if (community_id) {
-      setLikeNumber(vote_number);
-    } else {
-      setIsLike(!isLike);
-    }
+    postLikeCommnent(params).then((res) => {
+      if (!res.isError) {
+        setLikeNumber(res.like_number);
+      } else {
+        setIsLike(!isLike);
+        showToast({
+          type: "error",
+          message: translations.post.likeError,
+        });
+      }
+    });
   };
 
   const AvatarRep = useMemo(() => {
@@ -185,6 +190,8 @@ const ItemReply = ({
   );
 };
 
+//////////////////////////////
+
 const ItemComment = ({ data, onPressReply, onPressMore }: ItemCommentProps) => {
   const theme = useTheme();
   const { colors } = theme;
@@ -285,12 +292,18 @@ const ItemComment = ({ data, onPressReply, onPressMore }: ItemCommentProps) => {
     const params = {
       comment_id: data._id,
     };
-    const res = await postLikeCommnent(params);
-    const { community_id, is_like, vote_number } = res;
-    if (community_id) {
-      setIsLike(is_like);
-      setLikeNumber(vote_number);
-    }
+    setIsLike((isLike) => !isLike);
+    postLikeCommnent(params).then((res) => {
+      if (!res.isError) {
+        setLikeNumber(res.like_number);
+      } else {
+        setIsLike((isLike) => !isLike);
+        showToast({
+          type: "error",
+          message: translations.post.likeError,
+        });
+      }
+    });
   };
   const pressCommnet = () => {};
 
