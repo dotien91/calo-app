@@ -19,6 +19,8 @@ import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "@shared-constants";
 import { postLike } from "@services/api/post";
 import { showToast } from "@helpers/SuperModalHelper";
+import { sharePost } from "utils/share";
+import { translations } from "@localization";
 
 const { width } = Dimensions.get("screen");
 
@@ -310,9 +312,6 @@ const ItemPost = ({ data, pressMore, disablePress = false }: ItemPostProps) => {
       isComment: true,
     });
   };
-  const pressShare = () => {
-    console.log("share");
-  };
 
   const LikeShare = () => {
     return (
@@ -339,11 +338,11 @@ const ItemPost = ({ data, pressMore, disablePress = false }: ItemPostProps) => {
           </Text>
         </Pressable>
         <Pressable
-          onPress={pressShare}
+          onPress={() => sharePost(data.post_slug)}
           style={[styles.viewLike, { justifyContent: "flex-end" }]}
         >
           <Icon size={16} name="share-social-outline" />
-          <Text style={styles.textLikeShare}>Share</Text>
+          <Text style={styles.textLikeShare}>{translations.post.share}</Text>
         </Pressable>
       </View>
     );

@@ -18,6 +18,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { postLike } from "@services/api/post";
 import { showToast } from "@helpers/SuperModalHelper";
 import { translations } from "@localization";
+import { sharePost } from "utils/share";
 
 const { width } = Dimensions.get("screen");
 
@@ -220,10 +221,6 @@ const ItemPost = ({
     });
   };
 
-  const pressShare = () => {
-    console.log("share");
-  };
-
   const LikeShare = () => {
     return (
       <View style={styles.containerLikeShare}>
@@ -249,11 +246,11 @@ const ItemPost = ({
           </Text>
         </Pressable>
         <Pressable
-          onPress={pressShare}
+          onPress={() => sharePost(data.post_slug)}
           style={[styles.viewLike, { justifyContent: "flex-end" }]}
         >
           <Icon size={16} name="share-social-outline" />
-          <Text style={styles.textLikeShare}>Share</Text>
+          <Text style={styles.textLikeShare}>{translations.post.share}</Text>
         </Pressable>
       </View>
     );
