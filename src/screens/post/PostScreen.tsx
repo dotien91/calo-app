@@ -36,6 +36,7 @@ import * as NavigationService from "react-navigation-helpers";
 import { UploadFile } from "@shared-components/UploadFile";
 import isEqual from "react-fast-compare";
 import eventEmitter from "@services/event-emitter";
+import CustomBackground from "@shared-components/CustomBackgroundBottomSheet";
 
 interface OptionsState {
   postCategory: string;
@@ -116,6 +117,7 @@ export default function PostScreen() {
 
     if (item._id) {
       updatePost(params).then((res) => {
+        console.log("res...", JSON.stringify(res));
         if (!res.isError) {
           closeSuperModal();
           eventEmitter.emit("reload_list_post");
@@ -290,7 +292,11 @@ export default function PostScreen() {
               index={-1}
               enablePanDownToClose
               ref={refBottomSheet}
-              style={{ borderTopLeftRadius: 16, borderTopRightRadius: 16 }}
+              style={{
+                borderTopLeftRadius: 16,
+                borderTopRightRadius: 16,
+                backgroundColor: colors.background,
+              }}
               backdropComponent={(props) => (
                 <BottomSheetBackdrop
                   {...props}
@@ -300,6 +306,7 @@ export default function PostScreen() {
                   opacity={0.1}
                 />
               )}
+              backgroundComponent={CustomBackground}
             >
               <View style={[{ paddingHorizontal: 16, flex: 1 }]}>
                 <Text
@@ -312,7 +319,9 @@ export default function PostScreen() {
                 >
                   {translations.postCategory}
                 </Text>
-                <BottomSheetScrollView style={{ flex: 1 }}>
+                <BottomSheetScrollView
+                  style={{ flex: 1, backgroundColor: colors.background }}
+                >
                   {listCategory.map((i) => (
                     <Pressable
                       key={i._id}

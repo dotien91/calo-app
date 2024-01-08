@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 
-import ItemPost from "@screens/post/components/ItemPost/ItemPost";
+import ItemPost from "@screens/post/components/ItemPostDetail/ItemPostDetail";
 import {
   blockUser,
   deleteComment,
@@ -12,11 +12,9 @@ import {
   unFollowUser,
 } from "@services/api/post";
 import CommonStyle from "@theme/styles";
-import { palette } from "@theme/themes";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   View,
-  StyleSheet,
   KeyboardAvoidingView,
   TextInput,
   Pressable,
@@ -25,7 +23,6 @@ import {
   Alert,
 } from "react-native";
 import { isIos } from "utils/helpers/device-ui";
-import Icon from "react-native-vector-icons/Ionicons";
 import ItemComment from "./components/ItemComment/ItemComment";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";
@@ -41,7 +38,13 @@ import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetScrollView,
 } from "@gorhom/bottom-sheet";
+import createStyles from "./Post.style";
 import { SCREENS } from "@shared-constants";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import { useTheme } from "@react-navigation/native";
+import CustomBackground from "@shared-components/CustomBackgroundBottomSheet";
+import eventEmitter from "@services/event-emitter";
+import { useListData } from "utils/helpers/useListData";
 const HEIGHT_BOTTOM_SHEET = 230;
 
 interface PostDetailProps {
@@ -50,9 +53,9 @@ interface PostDetailProps {
 
 const PostDetail = (props: PostDetailProps) => {
   const id = props.route?.params?.id;
+  const dataItem = props.route?.params?.data;
   const isComment = props.route?.params?.isComment;
   const [data, setData] = useState<any>();
-  const [listComment, setListComment] = useState<any[]>([]);
 
   const userData = useStore((state) => state.userData);
   const setUserData = useStore((state) => state.setUserData);
@@ -66,6 +69,11 @@ const PostDetail = (props: PostDetailProps) => {
   const refInput = useRef<TextInput>(null);
   const refBottomSheet = useRef<BottomSheet>(null);
   const refBottomSheetCmt = useRef<BottomSheet>(null);
+
+  const theme = useTheme();
+  const { colors } = theme;
+  const styles = useMemo(() => createStyles(theme), [theme]);
+
   const snapPoints = useMemo(() => [HEIGHT_BOTTOM_SHEET], []);
 
   const [itemCmtSelected, setItemCmtSelected] = useState<any>();
@@ -74,19 +82,30 @@ const PostDetail = (props: PostDetailProps) => {
       refInput.current?.focus();
     }
   }, [isComment]);
-  const getComment = async () => {
-    const params = {
+
+  const updateListComment = (params) => {
+    console.log("prams=====", params);
+    refreshListPage();
+  };
+
+  useEffect(() => {
+    eventEmitter.on("reload_list_comment", updateListComment);
+    return () => {
+      eventEmitter.off("reload_list_comment", updateListComment);
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const { listData, refreshListPage, setListData } = useListData<any>(
+    {
       community_id: id,
       auth_id: userData?._id || "",
-    };
-    getListComment(params).then((res) => {
-      if (!res.isError) {
-        setListComment(res);
-      } else {
-        showErrorModal(res);
-      }
-    });
-  };
+      order_by: "DESC",
+      order_by_child: "DESC",
+      limit: 5,
+    },
+    getListComment,
+  );
+
   const getData = async () => {
     showLoading();
     getPostDetail(id, { auth_id: userData?._id || "" }).then((res) => {
@@ -98,18 +117,24 @@ const PostDetail = (props: PostDetailProps) => {
         NavigationService.goBack();
       }
     });
+    console.log("data get");
   };
   const [replyItem, setReplyItem] = useState<any>({});
   const [value, setValue] = useState("");
   useEffect(() => {
-    getData();
-    getComment();
+    if (dataItem) {
+      console.log("data....param");
+      setData(dataItem);
+    } else {
+      getData();
+    }
+    // getComment();
   }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const updateListCommentReply = (_id: string, resComment: any) => {
-    const listCmtUpdate = [...listComment];
+    const listCmtUpdate = [...listData];
     const itemIndex = listCmtUpdate.find((item) => item._id === _id);
-    itemIndex.child = [...itemIndex.child, resComment];
+    itemIndex.child = [resComment, ...itemIndex.child];
     const dataUpdate = [
       ...listCmtUpdate.map((item) => {
         if (item._id === _id) {
@@ -128,18 +153,16 @@ const PostDetail = (props: PostDetailProps) => {
       content: value,
       parent_id: replyItem.parent_id || replyItem._id || null,
     };
-    showLoading();
     await postComment(params).then((resComment) => {
       if (!resComment.isError) {
-        closeSuperModal();
         if (replyItem.parent_id || replyItem._id) {
           const dataUpdate = updateListCommentReply(
             replyItem.parent_id || replyItem._id,
             resComment,
           );
-          setListComment(dataUpdate);
+          setListData(dataUpdate);
         } else {
-          setListComment((listComment) => [...listComment, resComment]);
+          setListData([resComment, ...listData]);
         }
         setValue("");
         deleteReplying();
@@ -181,7 +204,7 @@ const PostDetail = (props: PostDetailProps) => {
         i.media_mime_type.includes("image") ||
         i.media_mime_type.includes("video"),
     );
-    const listLink = listMedia.map((i) => ({
+    const listLink = listMedia.map((i: any) => ({
       url: i.media_url,
       type: i.media_type,
       media_meta: i.media_meta,
@@ -227,16 +250,24 @@ const PostDetail = (props: PostDetailProps) => {
           alignItems: "center",
           paddingHorizontal: 20,
           flexDirection: "row",
-          backgroundColor: palette.background,
+          backgroundColor: colors.background,
         }}
       >
         <Icon
           onPress={() => NavigationService.goBack()}
           name="arrow-back-outline"
-          color={palette.black}
           size={25}
+          type={IconType.Ionicons}
+          color={colors.text}
         />
-        <Text style={{ ...CommonStyle.hnBold, fontSize: 16, left: 16 }}>
+        <Text
+          style={{
+            ...CommonStyle.hnBold,
+            fontSize: 16,
+            left: 16,
+            color: colors.text,
+          }}
+        >
           {translations.post.post}
         </Text>
       </View>
@@ -261,8 +292,8 @@ const PostDetail = (props: PostDetailProps) => {
             pressImageVideo={showImageVideo}
           />
           <View style={CommonStyle.flex1}>
-            {listComment.length > 0 &&
-              listComment
+            {listData.length > 0 &&
+              listData
                 .filter((item) => listCommentDelete.indexOf(item._id) < 0)
                 ?.map((item, index) => {
                   return (
@@ -276,12 +307,12 @@ const PostDetail = (props: PostDetailProps) => {
                 })}
           </View>
         </ScrollView>
-        <View style={{ backgroundColor: palette.background, paddingTop: 10 }}>
+        <View style={{ backgroundColor: colors.background, paddingTop: 10 }}>
           {replyItem._id && (
             <View
               style={{
                 paddingHorizontal: 20,
-                backgroundColor: palette.background,
+                backgroundColor: colors.background,
                 flexDirection: "row",
                 gap: 10,
               }}
@@ -294,7 +325,7 @@ const PostDetail = (props: PostDetailProps) => {
               </Pressable>
             </View>
           )}
-          <View style={styles.viewComment}>
+          <View style={styles.viewCommentPostDetail}>
             <TextInput
               ref={refInput}
               style={{
@@ -310,7 +341,12 @@ const PostDetail = (props: PostDetailProps) => {
               onBlur={() => setIsForcus(false)}
             />
             <Pressable onPress={sendComment}>
-              <Icon name={"send-outline"} size={20} />
+              <Icon
+                name={"send-outline"}
+                size={20}
+                type={IconType.Ionicons}
+                color={colors.text}
+              />
             </Pressable>
           </View>
         </View>
@@ -319,7 +355,11 @@ const PostDetail = (props: PostDetailProps) => {
           index={-1}
           enablePanDownToClose
           ref={refBottomSheet}
-          style={{ borderTopLeftRadius: 16, borderTopRightRadius: 16 }}
+          style={{
+            borderTopLeftRadius: 16,
+            borderTopRightRadius: 16,
+            backgroundColor: colors.background,
+          }}
           backdropComponent={(props) => (
             <BottomSheetBackdrop
               {...props}
@@ -329,11 +369,14 @@ const PostDetail = (props: PostDetailProps) => {
               opacity={0.1}
             />
           )}
+          backgroundComponent={CustomBackground}
         >
           <View style={[{ paddingHorizontal: 16, flex: 1 }]}>
             {/* Check post */}
             {userData?._id === data?.user_id?._id ? (
-              <BottomSheetScrollView style={{ flex: 1 }}>
+              <BottomSheetScrollView
+                style={{ flex: 1, backgroundColor: colors.background }}
+              >
                 <Pressable
                   onPress={() => {
                     Alert.alert("", translations.home.deletePost, [
@@ -349,10 +392,17 @@ const PostDetail = (props: PostDetailProps) => {
                     ]);
                     refBottomSheet.current?.close();
                   }}
-                  style={styles.buttonFlag}
+                  style={styles.buttonFlagPostDetail}
                 >
-                  <Icon size={24} name="trash-outline" />
-                  <Text style={styles.textButton}>{translations.delete}</Text>
+                  <Icon
+                    size={24}
+                    name="trash-outline"
+                    type={IconType.Ionicons}
+                    color={colors.text}
+                  />
+                  <Text style={styles.textButtonPostDetail}>
+                    {translations.delete}
+                  </Text>
                 </Pressable>
                 <Pressable
                   onPress={() => {
@@ -361,17 +411,29 @@ const PostDetail = (props: PostDetailProps) => {
                     });
                     refBottomSheet.current?.close();
                   }}
-                  style={styles.buttonFlag}
+                  style={styles.buttonFlagPostDetail}
                 >
-                  <Icon size={24} name="create-outline" />
-                  <Text style={styles.textButton}>{translations.edit}</Text>
+                  <Icon
+                    size={24}
+                    name="create-outline"
+                    type={IconType.Ionicons}
+                    color={colors.text}
+                  />
+                  <Text style={styles.textButtonPostDetail}>
+                    {translations.edit}
+                  </Text>
                 </Pressable>
               </BottomSheetScrollView>
             ) : (
               <BottomSheetScrollView style={{ flex: 1 }}>
-                <Pressable style={styles.buttonFlag}>
-                  <Icon size={24} name="bookmark-outline" />
-                  <Text style={styles.textButton}>
+                <Pressable style={styles.buttonFlagPostDetail}>
+                  <Icon
+                    size={24}
+                    name="bookmark-outline"
+                    type={IconType.Ionicons}
+                    color={colors.text}
+                  />
+                  <Text style={styles.textButtonPostDetail}>
                     {translations.post.save}
                   </Text>
                 </Pressable>
@@ -387,8 +449,8 @@ const PostDetail = (props: PostDetailProps) => {
                           setUserData({
                             ...userData,
                             follow_users: [
-                              ...userData.follow_users.map(
-                                (i) => i !== itemSelectd?.user_id?._id,
+                              ...userData.follow_users.filter(
+                                (i) => i !== dataItem?.user_id?._id,
                               ),
                             ],
                           });
@@ -403,7 +465,7 @@ const PostDetail = (props: PostDetailProps) => {
                             ...userData,
                             follow_users: [
                               ...userData.follow_users,
-                              itemSelectd?.user_id?._id,
+                              dataItem?.user_id?._id,
                             ],
                           });
                         } else showErrorModal(resFollow);
@@ -411,10 +473,15 @@ const PostDetail = (props: PostDetailProps) => {
                     }
                     refBottomSheet.current?.close();
                   }}
-                  style={styles.buttonFlag}
+                  style={styles.buttonFlagPostDetail}
                 >
-                  <Icon size={24} name="person-add-outline" />
-                  <Text style={styles.textButton}>
+                  <Icon
+                    size={24}
+                    name="person-add-outline"
+                    type={IconType.Ionicons}
+                    color={colors.text}
+                  />
+                  <Text style={styles.textButtonPostDetail}>
                     {userData.follow_users.indexOf(data?.user_id?._id) < 0
                       ? translations.follow
                       : translations.unfollow}{" "}
@@ -439,16 +506,26 @@ const PostDetail = (props: PostDetailProps) => {
                     });
                     refBottomSheet.current?.close();
                   }}
-                  style={styles.buttonFlag}
+                  style={styles.buttonFlagPostDetail}
                 >
-                  <Icon size={24} name="ban-outline" />
-                  <Text style={styles.textButton}>
+                  <Icon
+                    size={24}
+                    name="ban-outline"
+                    type={IconType.Ionicons}
+                    color={colors.text}
+                  />
+                  <Text style={styles.textButtonPostDetail}>
                     {translations.block} {data?.user_id?.display_name}
                   </Text>
                 </Pressable>
-                <Pressable style={styles.buttonFlag}>
-                  <Icon size={24} name="flag-outline" />
-                  <Text style={styles.textButton}>
+                <Pressable style={styles.buttonFlagPostDetail}>
+                  <Icon
+                    size={24}
+                    name="flag-outline"
+                    type={IconType.Ionicons}
+                    color={colors.text}
+                  />
+                  <Text style={styles.textButtonPostDetail}>
                     {translations.post.report}
                   </Text>
                 </Pressable>
@@ -456,69 +533,16 @@ const PostDetail = (props: PostDetailProps) => {
             )}
           </View>
         </BottomSheet>
-        {/* <BottomSheet
-          snapPoints={snapPoints}
-          index={-1}
-          enablePanDownToClose
-          ref={refBottomSheet}
-          style={{ borderTopLeftRadius: 16, borderTopRightRadius: 16 }}
-          backdropComponent={(props) => (
-            <BottomSheetBackdrop
-              {...props}
-              disappearsOnIndex={-1}
-              appearsOnIndex={0}
-              pressBehavior={"close"}
-              opacity={0.1}
-            />
-          )}
-        >
-          <View style={[{ paddingHorizontal: 16, flex: 1 }]}>
-            {userData?._id === data?.user_id?._id ? (
-              <BottomSheetScrollView style={{ flex: 1 }}>
-                <Pressable
-                  onPress={() => deletePostWithId(data._id)}
-                  style={styles.buttonFlag}
-                >
-                  <Icon size={24} name="trash-outline" />
-                  <Text style={styles.textButton}>{translations.delete}</Text>
-                </Pressable>
-              </BottomSheetScrollView>
-            ) : (
-              <BottomSheetScrollView style={{ flex: 1 }}>
-                <Pressable style={styles.buttonFlag}>
-                  <Icon size={24} name="bookmark-outline" />
-                  <Text style={styles.textButton}>
-                    {translations.post.save}
-                  </Text>
-                </Pressable>
-                <Pressable style={styles.buttonFlag}>
-                  <Icon size={24} name="person-add-outline" />
-                  <Text style={styles.textButton}>
-                    {translations.follow} {data?.user_id?.display_name}
-                  </Text>
-                </Pressable>
-                <Pressable style={styles.buttonFlag}>
-                  <Icon size={24} name="ban-outline" />
-                  <Text style={styles.textButton}>
-                    {translations.block} {data?.user_id?.display_name}
-                  </Text>
-                </Pressable>
-                <Pressable style={styles.buttonFlag}>
-                  <Icon size={24} name="flag-outline" />
-                  <Text style={styles.textButton}>
-                    {translations.post.report}
-                  </Text>
-                </Pressable>
-              </BottomSheetScrollView>
-            )}
-          </View>
-        </BottomSheet> */}
         <BottomSheet
           snapPoints={snapPoints}
           index={-1}
           enablePanDownToClose
           ref={refBottomSheetCmt}
-          style={{ borderTopLeftRadius: 16, borderTopRightRadius: 16 }}
+          style={{
+            borderTopLeftRadius: 16,
+            borderTopRightRadius: 16,
+            backgroundColor: colors.background,
+          }}
           backdropComponent={(props) => (
             <BottomSheetBackdrop
               {...props}
@@ -528,36 +552,85 @@ const PostDetail = (props: PostDetailProps) => {
               opacity={0.1}
             />
           )}
+          backgroundComponent={CustomBackground}
         >
-          <View style={[{ paddingHorizontal: 16, flex: 1 }]}>
+          <View
+            style={[
+              {
+                paddingHorizontal: 16,
+                flex: 1,
+              },
+            ]}
+          >
             {/* Check post */}
             {userData?._id === itemCmtSelected?.user_id?._id ? (
               <BottomSheetScrollView style={{ flex: 1 }}>
                 <Pressable
                   onPress={() => deleteCommentWithid(itemCmtSelected._id)}
-                  style={styles.buttonFlag}
+                  style={styles.buttonFlagPostDetail}
                 >
-                  <Icon size={24} name="trash-outline" />
-                  <Text style={styles.textButton}>{translations.delete}</Text>
+                  <Icon
+                    size={24}
+                    name="trash-outline"
+                    type={IconType.Ionicons}
+                    color={colors.text}
+                  />
+                  <Text style={styles.textButtonPostDetail}>
+                    {translations.delete}
+                  </Text>
+                </Pressable>
+                <Pressable
+                  onPress={() => {
+                    NavigationService.push(SCREENS.EDIT_COMMENT, {
+                      itemComment: itemCmtSelected,
+                    });
+                    refBottomSheetCmt.current?.close();
+                  }}
+                  style={styles.buttonFlagPostDetail}
+                >
+                  <Icon
+                    size={24}
+                    name="create-outline"
+                    type={IconType.Ionicons}
+                    color={colors.text}
+                  />
+                  <Text style={styles.textButtonPostDetail}>
+                    {translations.edit} {translations.comment}
+                  </Text>
                 </Pressable>
               </BottomSheetScrollView>
             ) : (
               <BottomSheetScrollView style={{ flex: 1 }}>
-                <Pressable style={styles.buttonFlag}>
-                  <Icon size={24} name="person-add-outline" />
-                  <Text style={styles.textButton}>
+                <Pressable style={styles.buttonFlagPostDetail}>
+                  <Icon
+                    size={24}
+                    name="person-add-outline"
+                    type={IconType.Ionicons}
+                    color={colors.text}
+                  />
+                  <Text style={styles.textButtonPostDetail}>
                     {translations.follow} {data?.user_id?.display_name}
                   </Text>
                 </Pressable>
-                <Pressable style={styles.buttonFlag}>
-                  <Icon size={24} name="ban-outline" />
-                  <Text style={styles.textButton}>
+                <Pressable style={styles.buttonFlagPostDetail}>
+                  <Icon
+                    size={24}
+                    name="ban-outline"
+                    type={IconType.Ionicons}
+                    color={colors.text}
+                  />
+                  <Text style={styles.textButtonPostDetail}>
                     {translations.block} {data?.user_id?.display_name}
                   </Text>
                 </Pressable>
-                <Pressable style={styles.buttonFlag}>
-                  <Icon size={24} name="flag-outline" />
-                  <Text style={styles.textButton}>
+                <Pressable style={styles.buttonFlagPostDetail}>
+                  <Icon
+                    size={24}
+                    name="flag-outline"
+                    type={IconType.Ionicons}
+                    color={colors.text}
+                  />
+                  <Text style={styles.textButtonPostDetail}>
                     {translations.post.report}
                   </Text>
                 </Pressable>
@@ -571,35 +644,3 @@ const PostDetail = (props: PostDetailProps) => {
 };
 
 export default PostDetail;
-
-const styles = StyleSheet.create({
-  container: {
-    ...CommonStyle.safeAreaView,
-    backgroundColor: palette.background2,
-  },
-  viewComment: {
-    marginHorizontal: 20,
-    alignItems: "center",
-    gap: 10,
-    flexDirection: "row",
-    backgroundColor: palette.background,
-    marginVertical: 10,
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: palette.borderColor,
-    paddingHorizontal: 10,
-  },
-  buttonFlag: {
-    height: 25,
-    marginTop: 20,
-    flexDirection: "row",
-    color: palette.highlight,
-    alignItems: "center",
-  },
-  textButton: {
-    ...CommonStyle.hnRegular,
-    fontSize: 16,
-    color: palette.black,
-    paddingLeft: 18,
-  },
-});

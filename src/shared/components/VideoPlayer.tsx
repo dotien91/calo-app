@@ -17,7 +17,7 @@ const VideoPlayer = ({ mediaUrl, resizeMode, width, height }: IVideoPlayer) => {
   const refVideo = useRef<Video>();
   const animationBackRef = useRef<Lottie>(null);
 
-  const [pause, setPause] = useState(true);
+  const [pause, setPause] = useState(false);
 
   useEffect(() => {
     if (animationBackRef.current) {

@@ -86,6 +86,35 @@ const createStyles = (theme: ExtendedTheme) => {
       borderRadius: 10,
       backgroundColor: colors.highlight,
     },
+    containerPostDetail: {
+      ...CommonStyle.safeAreaView,
+      backgroundColor: colors.background2,
+    },
+    viewCommentPostDetail: {
+      marginHorizontal: 20,
+      alignItems: "center",
+      gap: 10,
+      flexDirection: "row",
+      backgroundColor: colors.background,
+      marginVertical: 10,
+      borderRadius: 4,
+      borderWidth: 1,
+      borderColor: colors.borderColor,
+      paddingHorizontal: 10,
+    },
+    buttonFlagPostDetail: {
+      height: 25,
+      marginTop: 20,
+      flexDirection: "row",
+      color: colors.highlight,
+      alignItems: "center",
+    },
+    textButtonPostDetail: {
+      ...CommonStyle.hnRegular,
+      fontSize: 16,
+      color: colors.text,
+      paddingLeft: 18,
+    },
   });
 };
 export default createStyles;

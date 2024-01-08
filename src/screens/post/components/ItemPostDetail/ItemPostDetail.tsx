@@ -1,34 +1,24 @@
 /* eslint-disable camelcase */
 
 import React, { useEffect, useMemo, useState } from "react";
-import {
-  Dimensions,
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { Image, Pressable, Text, View } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import CommonStyle from "@theme/styles";
 import IconSvg from "assets/svg";
-import { palette } from "@theme/themes";
-import { convertLastActive } from "./time";
-import Icon from "react-native-vector-icons/Ionicons";
 import { postLike } from "@services/api/post";
 import { showToast } from "@helpers/SuperModalHelper";
 import { translations } from "@localization";
 import { sharePost } from "utils/share";
+import useStore from "@services/zustand/store";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import { convertLastActive } from "utils/time";
+import createStyles from "./ItemPostDetail.style";
 
-const { width } = Dimensions.get("screen");
-
-const PADDING_HORIZONTAL = 16;
 const SIZE_AVATAR = 30;
 const BORDER_AVATAR = 12;
 const GAP_HEADER = 10;
 const FONT_SIZE = 16;
 const PADDING_LEFT = 12;
-const SIZE_IMAGE = width - PADDING_HORIZONTAL * 2 - PADDING_LEFT - SIZE_AVATAR;
 
 interface ItemPostProps {
   data: any;
@@ -45,13 +35,25 @@ const ItemPost = ({
 }: ItemPostProps) => {
   const theme = useTheme();
   const { colors } = theme;
-  const [isHearted, setIsHearted] = useState<boolean>(false);
+  const [isLike, setIsLike] = useState<boolean>(data?.is_like);
   const [likeNumber, setLikeNumber] = useState<number>(0);
+  const listLike = useStore((state) => state.listLike);
+  const updateListLike = useStore((state) => state.updateListLike);
+  const styles = React.useMemo(() => createStyles(theme), [theme]);
 
   useEffect(() => {
-    setIsHearted(data?.is_like);
-    setLikeNumber(data?.like_number);
-  }, [data]);
+    if (listLike.indexOf(data?._id) >= 0) {
+      setIsLike(!data?.is_like);
+      if (data.is_like) {
+        setLikeNumber(data?.like_number - 1);
+      } else {
+        setLikeNumber(data?.like_number + 1);
+      }
+    } else {
+      setIsLike(data?.is_like);
+      setLikeNumber(data?.like_number);
+    }
+  }, [listLike, data]);
 
   const Avatar = useMemo(() => {
     return (
@@ -116,7 +118,12 @@ const ItemPost = ({
           </Text>
         </View>
         <Pressable onPress={pressMore}>
-          <Icon size={20} name="ellipsis-vertical" />
+          <Icon
+            size={20}
+            name="ellipsis-vertical"
+            type={IconType.Ionicons}
+            color={colors.text}
+          />
         </Pressable>
       </View>
     );
@@ -169,7 +176,12 @@ const ItemPost = ({
           alignItems: "center",
         }}
       >
-        <Icon size={62} name={"play-circle"} color={colors.baseColor2} />
+        <Icon
+          size={62}
+          name={"play-circle"}
+          type={IconType.Ionicons}
+          color={colors.text}
+        />
       </View>
     );
   };
@@ -184,7 +196,7 @@ const ItemPost = ({
 
     return (
       <View style={{ alignItems: "flex-end" }}>
-        {listMedia.map((item, index) => {
+        {listMedia.map((item: any, index: number) => {
           return (
             <Pressable
               key={index}
@@ -207,12 +219,12 @@ const ItemPost = ({
     const params = {
       community_id: data._id,
     };
-    setIsHearted((isHearted) => !isHearted);
+    updateListLike(data._id);
     postLike(params).then((res) => {
       if (!res.isError) {
         setLikeNumber(res.like_number);
       } else {
-        setIsHearted((isHearted) => !isHearted);
+        updateListLike(data._id);
         showToast({
           type: "error",
           message: translations.post.likeError,
@@ -230,8 +242,9 @@ const ItemPost = ({
         >
           <Icon
             size={16}
-            name={isHearted ? "heart" : "heart-outline"}
-            color={isHearted ? colors.primary : colors.text}
+            name={isLike ? "heart" : "heart-outline"}
+            type={IconType.Ionicons}
+            color={isLike ? colors.primary : colors.text}
           />
 
           <Text style={styles.textLikeShare}>{likeNumber}</Text>
@@ -240,7 +253,12 @@ const ItemPost = ({
           onPress={pressComment}
           style={[styles.viewLike, { justifyContent: "center" }]}
         >
-          <Icon size={16} name="chatbubbles-outline" />
+          <Icon
+            size={16}
+            name="chatbubbles-outline"
+            type={IconType.Ionicons}
+            color={colors.text}
+          />
           <Text style={styles.textLikeShare}>
             {data?.comment_number || "0"}
           </Text>
@@ -249,7 +267,12 @@ const ItemPost = ({
           onPress={() => sharePost(data.post_slug)}
           style={[styles.viewLike, { justifyContent: "flex-end" }]}
         >
-          <Icon size={16} name="share-social-outline" />
+          <Icon
+            size={16}
+            name="share-social-outline"
+            type={IconType.Ionicons}
+            color={colors.text}
+          />
           <Text style={styles.textLikeShare}>{translations.post.share}</Text>
         </Pressable>
       </View>
@@ -277,41 +300,5 @@ const ItemPost = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    paddingHorizontal: PADDING_HORIZONTAL,
-    marginBottom: 2,
-    backgroundColor: palette.background,
-    paddingTop: 14,
-    paddingBottom: 4,
-  },
-  image11: {
-    minHeight: SIZE_IMAGE,
-    width: SIZE_IMAGE,
-    paddingVertical: 4,
-    // borderRadius: BORDER_RADIUS1,
-  },
-
-  containerLikeShare: {
-    flexDirection: "row",
-    marginVertical: 4,
-    justifyContent: "space-between",
-    alignItems: "center",
-    // paddingHorizontal: 20,
-  },
-  viewLike: {
-    flexDirection: "row",
-    alignItems: "center",
-    flex: 1,
-  },
-  textLikeShare: {
-    ...CommonStyle.hnRegular,
-    fontSize: FONT_SIZE,
-    color: palette.text,
-    marginLeft: 8,
-  },
-});
 
 export default ItemPost;

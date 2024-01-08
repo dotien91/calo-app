@@ -2,16 +2,8 @@
 /*eslint no-unsafe-optional-chaining: "error"*/
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import {
-  Alert,
-  FlatList,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { Alert, FlatList, Pressable, Text, View } from "react-native";
 import ItemPost from "./components/ItemPost/ItemPost";
-import { palette } from "@theme/themes";
 import {
   blockUser,
   deletePost,
@@ -25,7 +17,6 @@ import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetScrollView,
 } from "@gorhom/bottom-sheet";
-import Icon from "react-native-vector-icons/Ionicons";
 import CommonStyle from "@theme/styles";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";
@@ -35,7 +26,10 @@ import { showErrorModal, showToast } from "@helpers/SuperModalHelper";
 import EmptyResultView from "@helpers/EmptyResultView";
 import { SCREENS } from "@shared-constants";
 import eventEmitter from "@services/event-emitter";
-
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import { useTheme } from "@react-navigation/native";
+import CustomBackground from "@shared-components/CustomBackgroundBottomSheet";
+import createStyles from "./ListPost.style";
 const HEIGHT_BOTTOM_SHEET = 230;
 
 const ListPost = () => {
@@ -43,9 +37,12 @@ const ListPost = () => {
   const setUserData = useStore((state) => state.setUserData);
   const listPostDelete = useStore((state) => state.listPostDelete);
   const addListPostDelete = useStore((state) => state.addListPostDelete);
-
+  const resetListLike = useStore((state) => state.resetListLike);
   const refBottomSheet = useRef<BottomSheet>(null);
   const [itemSelectd, setItemSelectd] = useState<any>({});
+  const theme = useTheme();
+  const { colors } = theme;
+  const styles = React.useMemo(() => createStyles(theme), [theme]);
 
   const showBottomSheet = (data: any) => {
     setTimeout(() => {
@@ -54,13 +51,17 @@ const ListPost = () => {
     setItemSelectd(data);
   };
   const snapPoints = useMemo(() => [HEIGHT_BOTTOM_SHEET], []);
+  useEffect(() => {
+    resetListLike();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({ item }: any) => {
     return (
       <ItemPost
         key={item._id}
         data={item}
         pressMore={() => showBottomSheet(item)}
+        refreshing={refreshing}
       />
     );
   };
@@ -72,14 +73,20 @@ const ListPost = () => {
     refreshControl,
     renderFooterComponent,
     refreshListPage,
+    refreshing,
   } = useListData<any>(
     { limit: 10, auth_id: userData?._id || "" },
     getListPost,
   );
+
+  useEffect(() => {
+    resetListLike();
+  }, [refreshing]); // eslint-disable-line react-hooks/exhaustive-deps
+
   useEffect(() => {
     eventEmitter.on("reload_list_post", refreshListPage);
     return () => {
-      eventEmitter.off("reload_list_post", () => refreshListPage());
+      eventEmitter.off("reload_list_post", () => refreshListPage);
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -88,7 +95,7 @@ const ListPost = () => {
       <View
         style={{
           ...CommonStyle.safeAreaView,
-          backgroundColor: palette.background2,
+          backgroundColor: colors.background2,
         }}
       >
         <LottieView
@@ -106,7 +113,7 @@ const ListPost = () => {
     return (
       <View
         style={{
-          backgroundColor: palette.background,
+          backgroundColor: colors.background,
           justifyContent: "center",
           alignItems: "center",
           paddingVertical: 40,
@@ -141,7 +148,7 @@ const ListPost = () => {
     <View
       style={{
         flex: 1,
-        backgroundColor: palette.background2,
+        backgroundColor: colors.background,
       }}
     >
       <FlatList
@@ -172,6 +179,7 @@ const ListPost = () => {
             opacity={0.1}
           />
         )}
+        backgroundComponent={CustomBackground}
       >
         <View style={[{ paddingHorizontal: 16, flex: 1 }]}>
           {/* Check post */}
@@ -194,7 +202,12 @@ const ListPost = () => {
                 }}
                 style={styles.buttonFlag}
               >
-                <Icon size={24} name="trash-outline" />
+                <Icon
+                  type={IconType.Ionicons}
+                  size={24}
+                  name="trash-outline"
+                  color={colors.text}
+                />
                 <Text style={styles.textButton}>{translations.delete}</Text>
               </Pressable>
               <Pressable
@@ -206,14 +219,24 @@ const ListPost = () => {
                 }}
                 style={styles.buttonFlag}
               >
-                <Icon size={24} name="create-outline" />
+                <Icon
+                  type={IconType.Ionicons}
+                  size={24}
+                  name="create-outline"
+                  color={colors.text}
+                />
                 <Text style={styles.textButton}>{translations.edit}</Text>
               </Pressable>
             </BottomSheetScrollView>
           ) : (
             <BottomSheetScrollView style={{ flex: 1 }}>
               <Pressable style={styles.buttonFlag}>
-                <Icon size={24} name="bookmark-outline" />
+                <Icon
+                  type={IconType.Ionicons}
+                  size={24}
+                  name="bookmark-outline"
+                  color={colors.text}
+                />
                 <Text style={styles.textButton}>{translations.post.save}</Text>
               </Pressable>
               <Pressable
@@ -229,7 +252,7 @@ const ListPost = () => {
                         setUserData({
                           ...userData,
                           follow_users: [
-                            ...userData.follow_users.map(
+                            ...userData.follow_users.filter(
                               (i) => i !== itemSelectd?.user_id?._id,
                             ),
                           ],
@@ -255,7 +278,12 @@ const ListPost = () => {
                 }}
                 style={styles.buttonFlag}
               >
-                <Icon size={24} name="person-add-outline" />
+                <Icon
+                  type={IconType.Ionicons}
+                  size={24}
+                  name="person-add-outline"
+                  color={colors.text}
+                />
                 <Text style={styles.textButton}>
                   {userData.follow_users.indexOf(itemSelectd?.user_id?._id) < 0
                     ? translations.follow
@@ -283,13 +311,23 @@ const ListPost = () => {
                 }}
                 style={styles.buttonFlag}
               >
-                <Icon size={24} name="ban-outline" />
+                <Icon
+                  type={IconType.Ionicons}
+                  size={24}
+                  name="ban-outline"
+                  color={colors.text}
+                />
                 <Text style={styles.textButton}>
                   {translations.block} {itemSelectd?.user_id?.display_name}
                 </Text>
               </Pressable>
               <Pressable style={styles.buttonFlag}>
-                <Icon size={24} name="flag-outline" />
+                <Icon
+                  type={IconType.Ionicons}
+                  size={24}
+                  name="flag-outline"
+                  color={colors.text}
+                />
                 <Text style={styles.textButton}>
                   {translations.post.report}
                 </Text>
@@ -302,20 +340,20 @@ const ListPost = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  buttonFlag: {
-    height: 25,
-    marginTop: 20,
-    flexDirection: "row",
-    color: palette.highlight,
-    alignItems: "center",
-  },
-  textButton: {
-    ...CommonStyle.hnRegular,
-    fontSize: 16,
-    color: palette.black,
-    paddingLeft: 18,
-  },
-});
+// const styles = StyleSheet.create({
+//   buttonFlag: {
+//     height: 25,
+//     marginTop: 20,
+//     flexDirection: "row",
+//     color: palette.highlight,
+//     alignItems: "center",
+//   },
+//   textButton: {
+//     ...CommonStyle.hnRegular,
+//     fontSize: 16,
+//     color: palette.text,
+//     paddingLeft: 18,
+//   },
+// });
 
 export default ListPost;

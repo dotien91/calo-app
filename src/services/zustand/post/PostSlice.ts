@@ -10,6 +10,9 @@ export interface PostSlice {
   resetListCommentDelete: () => void;
   listFollowing: string[];
   addFollowing: (id: string) => void;
+  listLike: string[];
+  updateListLike: (id: string, countLike?: number) => void;
+  resetListLike: () => void;
 }
 
 const createPostSlice: StoreSlice<PostSlice> = (set) => ({
@@ -40,6 +43,19 @@ const createPostSlice: StoreSlice<PostSlice> = (set) => ({
       listFollowing: [...state.listFollowing, id],
     }));
   },
+  listLike: [],
+  updateListLike: (id: string) => {
+    set((state) => {
+      if (state.listLike.indexOf(id) >= 0) {
+        return {
+          listLike: [...state.listLike.filter((item) => item !== id)],
+        };
+      } else {
+        return { listLike: [...state.listLike, id] };
+      }
+    });
+  },
+  resetListLike: () => set({ listLike: [] }),
 });
 
 export default createPostSlice;

@@ -4,15 +4,14 @@ import { useTheme } from "@react-navigation/native";
 import CommonStyle from "@theme/styles";
 import IconSvg from "assets/svg";
 import React, { useEffect, useMemo, useState } from "react";
-import { Text, View, StyleSheet, Pressable, Image } from "react-native";
-import { convertLastActive } from "../ItemPost/time";
-import Icon from "react-native-vector-icons/Ionicons";
-import { palette } from "@theme/themes";
+import { Text, View, Pressable, Image } from "react-native";
 import { translations } from "@localization";
 import { postLikeCommnent } from "@services/api/post";
 import useStore from "@services/zustand/store";
 import { showToast } from "@helpers/SuperModalHelper";
-
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import { convertLastActive } from "utils/time";
+import createStyles from "./ItemComment.style";
 const SIZE_AVATAR = 30;
 const BORDER_AVATAR = 12;
 const FONT_SIZE = 12;
@@ -39,6 +38,8 @@ const ItemReply = ({
 }: ItemReplyProps) => {
   const theme = useTheme();
   const { colors } = theme;
+  const styles = React.useMemo(() => createStyles(theme), [theme]);
+
   const [isLike, setIsLike] = useState<boolean>(item?.is_like);
   const [likeNumber, setLikeNumber] = useState<number>(item?.like_number);
   const pressLikeCommentRep = async () => {
@@ -123,7 +124,12 @@ const ItemReply = ({
           </Text>
         </View>
         <Pressable onPress={() => onPressMoreChild(item)}>
-          <Icon size={20} name="ellipsis-vertical" />
+          <Icon
+            size={20}
+            name="ellipsis-vertical"
+            type={IconType.Ionicons}
+            color={colors.text}
+          />
         </Pressable>
       </View>
     );
@@ -195,6 +201,8 @@ const ItemReply = ({
 const ItemComment = ({ data, onPressReply, onPressMore }: ItemCommentProps) => {
   const theme = useTheme();
   const { colors } = theme;
+  const styles = React.useMemo(() => createStyles(theme), [theme]);
+
   const listCommentDelete = useStore((state) => state.listCommentDelete);
 
   const [listReply, setListReply] = useState([]);
@@ -268,7 +276,12 @@ const ItemComment = ({ data, onPressReply, onPressMore }: ItemCommentProps) => {
           </Text>
         </View>
         <Pressable onPress={() => onPressMore(data)}>
-          <Icon size={20} name="ellipsis-vertical" />
+          <Icon
+            size={20}
+            name="ellipsis-vertical"
+            type={IconType.Ionicons}
+            color={colors.text}
+          />
         </Pressable>
       </View>
     );
@@ -378,34 +391,34 @@ const ItemComment = ({ data, onPressReply, onPressMore }: ItemCommentProps) => {
 
 export default ItemComment;
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    paddingHorizontal: 16,
-    marginBottom: 2,
-    backgroundColor: palette.background,
-    paddingTop: 14,
-    paddingBottom: 4,
-  },
+// const styles = StyleSheet.create({
+//   container: {
+//     flexDirection: "row",
+//     paddingHorizontal: 16,
+//     marginBottom: 2,
+//     backgroundColor: palette.background,
+//     paddingTop: 14,
+//     paddingBottom: 4,
+//   },
 
-  containerLikeShare: {
-    flexDirection: "row",
-    marginTop: 4,
-    alignItems: "center",
-    gap: 8,
-  },
-  viewLike: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  textLikeShare: {
-    ...CommonStyle.hnRegular,
-    fontSize: FONT_SIZE,
-    color: palette.text,
-  },
-  textLiked: {
-    ...CommonStyle.hnRegular,
-    fontSize: FONT_SIZE,
-    color: palette.primary,
-  },
-});
+//   containerLikeShare: {
+//     flexDirection: "row",
+//     marginTop: 4,
+//     alignItems: "center",
+//     gap: 8,
+//   },
+//   viewLike: {
+//     flexDirection: "row",
+//     alignItems: "center",
+//   },
+//   textLikeShare: {
+//     ...CommonStyle.hnRegular,
+//     fontSize: FONT_SIZE,
+//     color: palette.text,
+//   },
+//   textLiked: {
+//     ...CommonStyle.hnRegular,
+//     fontSize: FONT_SIZE,
+//     color: palette.primary,
+//   },
+// });

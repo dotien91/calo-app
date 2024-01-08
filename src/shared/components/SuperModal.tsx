@@ -14,7 +14,7 @@ import Modal from "react-native-modal";
 import cmStyle from "@theme/styles";
 import eventEmitter from "@services/event-emitter";
 import { palette } from "@theme/themes";
-import Icon from "react-native-vector-icons/Ionicons";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import VideoPlayer from "./VideoPlayer";
 import PageScroll from "@shared-components/page-scroll/PageScroll";
 import ImageLoad from "@screens/post/components/ImageLoad";
@@ -58,7 +58,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
     setListMeia(_listMedia.listLink);
     setTimeout(() => {
       scrollViewRef.current?.scrollToIndex(_listMedia.index);
-    }, 500);
+    }, 300);
     setVisible(true);
   };
 
@@ -129,7 +129,8 @@ const SuperModal: React.FC<SuperModalProps> = () => {
               <Icon
                 size={25}
                 name="close-circle-outline"
-                color={palette.black}
+                type={IconType.Ionicons}
+                color={palette.text}
               />
             </Pressable>
           </View>

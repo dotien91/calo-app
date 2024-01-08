@@ -60,6 +60,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
 
   useEffect(() => {
     getCurrentUser().then((res) => {
+      console.log("res...", res);
       if (!res.isError && !lodash.isEmpty(res)) {
         setUserData(res);
       }

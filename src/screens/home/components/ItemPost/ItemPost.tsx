@@ -1,27 +1,20 @@
 /* eslint-disable camelcase */
 
-import React, { useMemo, useState } from "react";
-import {
-  Dimensions,
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import React, { useEffect, useMemo, useState } from "react";
+import { Dimensions, Image, Pressable, Text, View } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import CommonStyle from "@theme/styles";
 import IconSvg from "assets/svg";
-import { palette } from "@theme/themes";
-import { convertLastActive } from "./time";
-import Icon from "react-native-vector-icons/Ionicons";
+import { convertLastActive } from "utils/time";
 import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "@shared-constants";
 import { postLike } from "@services/api/post";
-import { showToast } from "@helpers/SuperModalHelper";
+import { showDetailImageView, showToast } from "@helpers/SuperModalHelper";
 import { sharePost } from "utils/share";
 import { translations } from "@localization";
-
+import useStore from "@services/zustand/store";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import createStyles from "./ItemPost.style";
 const { width } = Dimensions.get("screen");
 
 const PADDING_HORIZONTAL = 16;
@@ -30,7 +23,6 @@ const BORDER_AVATAR = 12;
 const GAP_HEADER = 10;
 const GAP_IMAGE = 4;
 const FONT_SIZE = 16;
-const BORDER_RADIUS1 = 16;
 const BORDER_RADIUS2 = 12;
 const PADDING_LEFT = 12;
 const SIZE_IMAGE1 = width - PADDING_HORIZONTAL * 2 - PADDING_LEFT - SIZE_AVATAR;
@@ -39,14 +31,32 @@ const SIZE_IMAGE2 = (SIZE_IMAGE1 - 4) / 2;
 interface ItemPostProps {
   data: any;
   pressMore: () => void;
-  disablePress?: boolean;
+  refreshing?: boolean;
 }
 
-const ItemPost = ({ data, pressMore, disablePress = false }: ItemPostProps) => {
+const ItemPost = ({ data, pressMore, refreshing }: ItemPostProps) => {
   const theme = useTheme();
   const { colors } = theme;
   const [isLike, setIsLike] = useState<boolean>(data.is_like);
   const [likeNumber, setLikeNumber] = useState<number>(data.like_number);
+  const listLike = useStore((state) => state.listLike);
+  const updateListLike = useStore((state) => state.updateListLike);
+  const styles = React.useMemo(() => createStyles(theme), [theme]);
+
+  useEffect(() => {
+    if (!refreshing && listLike.indexOf(data._id) >= 0) {
+      setIsLike(!data.is_like);
+      if (data.is_like) {
+        setLikeNumber(data?.like_number - 1);
+      } else {
+        setLikeNumber(data?.like_number + 1);
+      }
+    } else {
+      setIsLike(data.is_like);
+      setLikeNumber(data?.like_number);
+    }
+  }, [listLike]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const Avatar = useMemo(() => {
     return (
       <View
@@ -66,17 +76,18 @@ const ItemPost = ({ data, pressMore, disablePress = false }: ItemPostProps) => {
         />
       </View>
     );
-  }, [data]);
+  }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const pressLike = async () => {
-    setIsLike((isLike) => !isLike);
     const params = {
       community_id: data._id,
     };
+    updateListLike(data._id);
     postLike(params).then((res) => {
       if (!res.isError) {
         setLikeNumber(res.like_number);
       } else {
-        setIsLike((isLike) => !isLike);
+        updateListLike(data._id);
         showToast({ type: "error", message: res.message });
       }
     });
@@ -124,7 +135,12 @@ const ItemPost = ({ data, pressMore, disablePress = false }: ItemPostProps) => {
           </Text>
         </View>
         <Pressable onPress={pressMore}>
-          <Icon size={20} name="ellipsis-vertical" />
+          <Icon
+            size={20}
+            name="ellipsis-vertical"
+            type={IconType.Ionicons}
+            color={colors.text}
+          />
         </Pressable>
       </View>
     );
@@ -177,7 +193,12 @@ const ItemPost = ({ data, pressMore, disablePress = false }: ItemPostProps) => {
           alignItems: "center",
         }}
       >
-        <Icon size={62} name={"play-circle"} color={colors.baseColor2} />
+        <Icon
+          size={62}
+          name={"play-circle"}
+          type={IconType.Ionicons}
+          color={colors.text}
+        />
       </View>
     );
   };
@@ -191,13 +212,13 @@ const ItemPost = ({ data, pressMore, disablePress = false }: ItemPostProps) => {
     );
     if (listMedia.length == 1) {
       return (
-        <View style={styles.image11}>
+        <Pressable onPress={() => showImageVideo(0)} style={styles.image11}>
           <Image
             style={styles.image11}
             source={{ uri: listMedia[0].media_thumbnail }}
           />
           {listMedia[0].media_mime_type.includes("video") && <PlayVideo />}
-        </View>
+        </Pressable>
       );
     }
     if (listMedia.length == 2) {
@@ -205,20 +226,20 @@ const ItemPost = ({ data, pressMore, disablePress = false }: ItemPostProps) => {
         <View
           style={{ flexDirection: "row", height: SIZE_IMAGE2, gap: GAP_IMAGE }}
         >
-          <View style={styles.image12}>
+          <Pressable onPress={() => showImageVideo(0)} style={styles.image12}>
             <Image
               style={styles.image12}
               source={{ uri: listMedia[0].media_thumbnail }}
             />
             {listMedia[0].media_mime_type.includes("video") && <PlayVideo />}
-          </View>
-          <View style={styles.image22}>
+          </Pressable>
+          <Pressable onPress={() => showImageVideo(1)} style={styles.image22}>
             <Image
               style={styles.image22}
               source={{ uri: listMedia[1].media_thumbnail }}
             />
             {listMedia[1].media_mime_type.includes("video") && <PlayVideo />}
-          </View>
+          </Pressable>
         </View>
       );
     }
@@ -227,28 +248,28 @@ const ItemPost = ({ data, pressMore, disablePress = false }: ItemPostProps) => {
         <View
           style={{ flexDirection: "row", height: SIZE_IMAGE2, gap: GAP_IMAGE }}
         >
-          <View style={styles.image12}>
+          <Pressable onPress={() => showImageVideo(0)} style={styles.image12}>
             <Image
               style={styles.image12}
               source={{ uri: listMedia[0].media_thumbnail }}
             />
             {listMedia[0].media_mime_type.includes("video") && <PlayVideo />}
-          </View>
+          </Pressable>
           <View style={{ flex: 1, gap: GAP_IMAGE }}>
-            <View style={styles.image23}>
+            <Pressable onPress={() => showImageVideo(1)} style={styles.image23}>
               <Image
                 style={styles.image23}
                 source={{ uri: listMedia[1].media_thumbnail }}
               />
               {listMedia[1].media_mime_type.includes("video") && <PlayVideo />}
-            </View>
-            <View style={styles.image33}>
+            </Pressable>
+            <Pressable onPress={() => showImageVideo(2)} style={styles.image33}>
               <Image
                 style={styles.image33}
                 source={{ uri: listMedia[2].media_thumbnail }}
               />
               {listMedia[2].media_mime_type.includes("video") && <PlayVideo />}
-            </View>
+            </Pressable>
           </View>
         </View>
       );
@@ -258,15 +279,15 @@ const ItemPost = ({ data, pressMore, disablePress = false }: ItemPostProps) => {
         <View
           style={{ flexDirection: "row", height: SIZE_IMAGE2, gap: GAP_IMAGE }}
         >
-          <View style={styles.image12}>
+          <Pressable onPress={() => showImageVideo(0)} style={styles.image12}>
             <Image
               style={styles.image12}
               source={{ uri: listMedia[0].media_thumbnail }}
             />
             {listMedia[0].media_mime_type.includes("video") && <PlayVideo />}
-          </View>
+          </Pressable>
           <View style={{ flex: 1, gap: GAP_IMAGE }}>
-            <View style={{ flex: 1 }}>
+            <Pressable onPress={() => showImageVideo(1)} style={{ flex: 1 }}>
               <Image
                 style={{
                   flex: 1,
@@ -275,8 +296,8 @@ const ItemPost = ({ data, pressMore, disablePress = false }: ItemPostProps) => {
                 source={{ uri: listMedia[1].media_thumbnail }}
               />
               {listMedia[1].media_mime_type.includes("video") && <PlayVideo />}
-            </View>
-            <View style={{ flex: 1 }}>
+            </Pressable>
+            <Pressable onPress={() => showImageVideo(2)} style={{ flex: 1 }}>
               <Image
                 style={{
                   flex: 1,
@@ -297,7 +318,7 @@ const ItemPost = ({ data, pressMore, disablePress = false }: ItemPostProps) => {
                   +{listMedia.length - 3}
                 </Text>
               </View>
-            </View>
+            </Pressable>
           </View>
         </View>
       );
@@ -307,10 +328,8 @@ const ItemPost = ({ data, pressMore, disablePress = false }: ItemPostProps) => {
   }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const pressComment = () => {
-    NavigationService.push(SCREENS.POST_DETAIL, {
-      id: data._id,
-      isComment: true,
-    });
+    const param = { id: data._id, data: data, isComment: true };
+    NavigationService.push(SCREENS.POST_DETAIL, param);
   };
 
   const LikeShare = () => {
@@ -321,6 +340,7 @@ const ItemPost = ({ data, pressMore, disablePress = false }: ItemPostProps) => {
           style={[styles.viewLike, { justifyContent: "flex-start" }]}
         >
           <Icon
+            type={IconType.Ionicons}
             size={16}
             name={isLike ? "heart" : "heart-outline"}
             color={isLike ? colors.primary : colors.text}
@@ -332,7 +352,12 @@ const ItemPost = ({ data, pressMore, disablePress = false }: ItemPostProps) => {
           onPress={pressComment}
           style={[styles.viewLike, { justifyContent: "center" }]}
         >
-          <Icon size={16} name="chatbubbles-outline" />
+          <Icon
+            type={IconType.Ionicons}
+            size={16}
+            name="chatbubbles-outline"
+            color={colors.text}
+          />
           <Text style={styles.textLikeShare}>
             {data?.comment_number || "0"}
           </Text>
@@ -341,7 +366,12 @@ const ItemPost = ({ data, pressMore, disablePress = false }: ItemPostProps) => {
           onPress={() => sharePost(data.post_slug)}
           style={[styles.viewLike, { justifyContent: "flex-end" }]}
         >
-          <Icon size={16} name="share-social-outline" />
+          <Icon
+            type={IconType.Ionicons}
+            size={16}
+            name="share-social-outline"
+            color={colors.text}
+          />
           <Text style={styles.textLikeShare}>{translations.post.share}</Text>
         </Pressable>
       </View>
@@ -349,9 +379,23 @@ const ItemPost = ({ data, pressMore, disablePress = false }: ItemPostProps) => {
   };
 
   const detailScreen = () => {
-    if (!disablePress) {
-      NavigationService.push(SCREENS.POST_DETAIL, { id: data._id });
-    }
+    const param = { id: data._id, data: data, isLike: isLike };
+    NavigationService.push(SCREENS.POST_DETAIL, param);
+  };
+  const showImageVideo = (index: number) => {
+    //gọi supermodal hiển thị danh sách image, video
+    // truyền vào danh sách
+    const listMedia = data.attach_files.filter(
+      (i: any) =>
+        i.media_mime_type.includes("image") ||
+        i.media_mime_type.includes("video"),
+    );
+    const listLink = listMedia.map((i: any) => ({
+      url: i.media_url,
+      type: i.media_type,
+      media_meta: i.media_meta,
+    }));
+    showDetailImageView(listLink, index, listMedia[0].media_type);
   };
 
   return (
@@ -369,57 +413,5 @@ const ItemPost = ({ data, pressMore, disablePress = false }: ItemPostProps) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    paddingHorizontal: PADDING_HORIZONTAL,
-    marginBottom: 2,
-    backgroundColor: palette.background,
-    paddingTop: 14,
-    paddingBottom: 4,
-  },
-  image11: {
-    height: SIZE_IMAGE1,
-    width: SIZE_IMAGE1,
-    borderRadius: BORDER_RADIUS1,
-  },
-  image12: {
-    flex: 1,
-    borderTopLeftRadius: BORDER_RADIUS2,
-    borderBottomLeftRadius: BORDER_RADIUS2,
-  },
-  image22: {
-    flex: 1,
-    borderTopRightRadius: BORDER_RADIUS2,
-    borderBottomRightRadius: BORDER_RADIUS2,
-  },
-  image23: {
-    flex: 1,
-    borderTopRightRadius: BORDER_RADIUS2,
-  },
-  image33: {
-    flex: 1,
-    borderBottomRightRadius: BORDER_RADIUS2,
-  },
-
-  containerLikeShare: {
-    flexDirection: "row",
-    marginTop: 4,
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  viewLike: {
-    flexDirection: "row",
-    alignItems: "center",
-    flex: 1,
-  },
-  textLikeShare: {
-    ...CommonStyle.hnRegular,
-    fontSize: FONT_SIZE,
-    color: palette.text,
-    marginLeft: 8,
-  },
-});
 
 export default ItemPost;

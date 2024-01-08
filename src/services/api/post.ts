@@ -212,3 +212,12 @@ export async function updatePost(data: any) {
     return response;
   });
 }
+export async function updateCommentWithId(data: any) {
+  return request({
+    method: METHOD.PATCH,
+    urlPath: "community/update-comment",
+    data: data,
+  }).then((response) => {
+    return response;
+  });
+}
