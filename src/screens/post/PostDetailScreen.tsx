@@ -10,6 +10,7 @@ import {
   getPostDetail,
   postComment,
   unFollowUser,
+  updateCommentWithId,
 } from "@services/api/post";
 import CommonStyle from "@theme/styles";
 import React, { useEffect, useMemo, useRef, useState } from "react";
@@ -21,6 +22,10 @@ import {
   ScrollView,
   Text,
   Alert,
+  FlatList,
+  Dimensions,
+  SafeAreaView,
+  Keyboard,
 } from "react-native";
 import { isIos } from "utils/helpers/device-ui";
 import ItemComment from "./components/ItemComment/ItemComment";
@@ -43,9 +48,9 @@ import { SCREENS } from "@shared-constants";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { useTheme } from "@react-navigation/native";
 import CustomBackground from "@shared-components/CustomBackgroundBottomSheet";
-import eventEmitter from "@services/event-emitter";
 import { useListData } from "utils/helpers/useListData";
 const HEIGHT_BOTTOM_SHEET = 230;
+const { height } = Dimensions.get("screen");
 
 interface PostDetailProps {
   route: any;
@@ -69,12 +74,14 @@ const PostDetail = (props: PostDetailProps) => {
   const refInput = useRef<TextInput>(null);
   const refBottomSheet = useRef<BottomSheet>(null);
   const refBottomSheetCmt = useRef<BottomSheet>(null);
+  const refBottomSheetUpdateCmt = useRef<BottomSheet>(null);
 
   const theme = useTheme();
   const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
 
   const snapPoints = useMemo(() => [HEIGHT_BOTTOM_SHEET], []);
+  const snapPointscmt = useMemo(() => [height], []);
 
   const [itemCmtSelected, setItemCmtSelected] = useState<any>();
   useEffect(() => {
@@ -83,25 +90,19 @@ const PostDetail = (props: PostDetailProps) => {
     }
   }, [isComment]);
 
-  const updateListComment = (params) => {
-    console.log("prams=====", params);
-    refreshListPage();
-  };
-
-  useEffect(() => {
-    eventEmitter.on("reload_list_comment", updateListComment);
-    return () => {
-      eventEmitter.off("reload_list_comment", updateListComment);
-    };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const { listData, refreshListPage, setListData } = useListData<any>(
+  const {
+    listData,
+    onEndReach,
+    refreshControl,
+    renderFooterComponent,
+    setListData,
+  } = useListData<any>(
     {
       community_id: id,
       auth_id: userData?._id || "",
       order_by: "DESC",
       order_by_child: "DESC",
-      limit: 5,
+      limit: 20,
     },
     getListComment,
   );
@@ -117,13 +118,14 @@ const PostDetail = (props: PostDetailProps) => {
         NavigationService.goBack();
       }
     });
-    console.log("data get");
   };
   const [replyItem, setReplyItem] = useState<any>({});
   const [value, setValue] = useState("");
+  const [valueEdit, setValueEdit] = useState("");
+  const [disableUpdate, setDisableUpdate] = useState(true);
+
   useEffect(() => {
     if (dataItem) {
-      console.log("data....param");
       setData(dataItem);
     } else {
       getData();
@@ -145,6 +147,39 @@ const PostDetail = (props: PostDetailProps) => {
       }),
     ];
     return dataUpdate;
+  };
+
+  const updateListCommentUpdate = (itemUpdate) => {
+    const newData = [...listData];
+    if (itemUpdate.parent_id) {
+      const index = newData.findIndex((i) => i._id === itemUpdate.parent_id);
+      const indexChild = newData[index].child.findIndex(
+        (item) => item._id === itemUpdate._id,
+      );
+      newData[index].child[indexChild].content = valueEdit;
+      return [...newData];
+    } else {
+      const index = newData.findIndex((i) => i._id === itemUpdate._id);
+      newData[index].content = valueEdit;
+      return [...newData];
+    }
+  };
+
+  const callApiUpdateComment = () => {
+    const params = { _id: itemCmtSelected._id, content: valueEdit };
+    setTimeout(() => {
+      refBottomSheetUpdateCmt.current?.close();
+    }, 100);
+    Keyboard.dismiss();
+    updateCommentWithId(params).then((res) => {
+      if (!res.isError) {
+        const newData = updateListCommentUpdate(itemCmtSelected);
+        setListData(newData);
+        setValueEdit("");
+      } else {
+        showErrorModal(res);
+      }
+    });
   };
 
   const sendComment = async () => {
@@ -197,8 +232,6 @@ const PostDetail = (props: PostDetailProps) => {
   const [isForcus, setIsForcus] = useState(false);
 
   const showImageVideo = (index: number) => {
-    //gọi supermodal hiển thị danh sách image, video
-    // truyền vào danh sách
     const listMedia = data.attach_files.filter(
       (i: any) =>
         i.media_mime_type.includes("image") ||
@@ -274,6 +307,17 @@ const PostDetail = (props: PostDetailProps) => {
     );
   };
 
+  const renderItem = ({ item }: any) => {
+    return (
+      <ItemComment
+        data={item}
+        // key={index}
+        onPressReply={pressReply}
+        onPressMore={showMoreItemComment}
+      />
+    );
+  };
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -292,7 +336,7 @@ const PostDetail = (props: PostDetailProps) => {
             pressImageVideo={showImageVideo}
           />
           <View style={CommonStyle.flex1}>
-            {listData.length > 0 &&
+            {/* {listData.length > 0 &&
               listData
                 .filter((item) => listCommentDelete.indexOf(item._id) < 0)
                 ?.map((item, index) => {
@@ -304,7 +348,23 @@ const PostDetail = (props: PostDetailProps) => {
                       onPressMore={showMoreItemComment}
                     />
                   );
-                })}
+                })} */}
+            <FlatList
+              nestedScrollEnabled
+              data={listData.filter(
+                (item) => listCommentDelete.indexOf(item._id) < 0,
+              )}
+              renderItem={renderItem}
+              scrollEventThrottle={16}
+              onEndReachedThreshold={0}
+              onEndReached={onEndReach}
+              showsVerticalScrollIndicator={false}
+              removeClippedSubviews={true}
+              keyExtractor={(item) => item?._id + ""}
+              refreshControl={refreshControl()}
+              ListFooterComponent={renderFooterComponent()}
+              // ListEmptyComponent={renderEmpty()}
+            />
           </View>
         </ScrollView>
         <View style={{ backgroundColor: colors.background, paddingTop: 10 }}>
@@ -374,9 +434,7 @@ const PostDetail = (props: PostDetailProps) => {
           <View style={[{ paddingHorizontal: 16, flex: 1 }]}>
             {/* Check post */}
             {userData?._id === data?.user_id?._id ? (
-              <BottomSheetScrollView
-                style={{ flex: 1, backgroundColor: colors.background }}
-              >
+              <BottomSheetScrollView style={CommonStyle.flex1}>
                 <Pressable
                   onPress={() => {
                     Alert.alert("", translations.home.deletePost, [
@@ -425,7 +483,7 @@ const PostDetail = (props: PostDetailProps) => {
                 </Pressable>
               </BottomSheetScrollView>
             ) : (
-              <BottomSheetScrollView style={{ flex: 1 }}>
+              <BottomSheetScrollView style={CommonStyle.flex1}>
                 <Pressable style={styles.buttonFlagPostDetail}>
                   <Icon
                     size={24}
@@ -564,7 +622,7 @@ const PostDetail = (props: PostDetailProps) => {
           >
             {/* Check post */}
             {userData?._id === itemCmtSelected?.user_id?._id ? (
-              <BottomSheetScrollView style={{ flex: 1 }}>
+              <BottomSheetScrollView style={CommonStyle.flex1}>
                 <Pressable
                   onPress={() => deleteCommentWithid(itemCmtSelected._id)}
                   style={styles.buttonFlagPostDetail}
@@ -581,10 +639,15 @@ const PostDetail = (props: PostDetailProps) => {
                 </Pressable>
                 <Pressable
                   onPress={() => {
-                    NavigationService.push(SCREENS.EDIT_COMMENT, {
-                      itemComment: itemCmtSelected,
-                    });
+                    // NavigationService.push(SCREENS.EDIT_COMMENT, {
+                    //   itemComment: itemCmtSelected,
+                    // });
+
                     refBottomSheetCmt.current?.close();
+                    setValueEdit(itemCmtSelected.content);
+                    setTimeout(() => {
+                      refBottomSheetUpdateCmt.current?.expand();
+                    }, 100);
                   }}
                   style={styles.buttonFlagPostDetail}
                 >
@@ -600,7 +663,7 @@ const PostDetail = (props: PostDetailProps) => {
                 </Pressable>
               </BottomSheetScrollView>
             ) : (
-              <BottomSheetScrollView style={{ flex: 1 }}>
+              <BottomSheetScrollView style={CommonStyle.flex1}>
                 <Pressable style={styles.buttonFlagPostDetail}>
                   <Icon
                     size={24}
@@ -637,6 +700,94 @@ const PostDetail = (props: PostDetailProps) => {
               </BottomSheetScrollView>
             )}
           </View>
+        </BottomSheet>
+        <BottomSheet
+          snapPoints={snapPointscmt}
+          index={-1}
+          enablePanDownToClose
+          ref={refBottomSheetUpdateCmt}
+          style={{
+            borderTopLeftRadius: 16,
+            borderTopRightRadius: 16,
+            backgroundColor: colors.background,
+          }}
+          backgroundComponent={CustomBackground}
+        >
+          <SafeAreaView
+            style={[
+              {
+                paddingHorizontal: 16,
+                flex: 1,
+              },
+            ]}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+                height: 40,
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <Pressable
+                style={{
+                  width: 40,
+                  height: 40,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  paddingLeft: 16,
+                }}
+                onPress={() => refBottomSheetUpdateCmt.current?.close()}
+              >
+                <Icon
+                  name="arrow-back-outline"
+                  size={25}
+                  type={IconType.Ionicons}
+                  color={colors.text}
+                />
+              </Pressable>
+              <Text
+                style={{
+                  ...CommonStyle.hnSemiBold,
+                  fontSize: 16,
+                  color: colors.text,
+                }}
+              >
+                {translations.update} {translations.comment}
+              </Text>
+              <View style={{ width: 40 }} />
+            </View>
+            <View style={styles.viewInput}>
+              <TextInput
+                style={{ color: colors.textInput }}
+                placeholder="Edit Comment"
+                value={valueEdit}
+                onChangeText={(text) => {
+                  setValueEdit(text);
+                  setDisableUpdate(false);
+                }}
+              />
+            </View>
+            <View style={styles.viewButton}>
+              <Pressable style={styles.btnCancel}>
+                <Text style={{ color: colors.text }}>
+                  {translations.cancel}
+                </Text>
+              </Pressable>
+              <Pressable
+                onPress={disableUpdate ? () => {} : callApiUpdateComment}
+                style={styles.btnCancel}
+              >
+                <Text
+                  style={{
+                    color: disableUpdate ? colors.placeholder : colors.primary,
+                  }}
+                >
+                  {translations.update}
+                </Text>
+              </Pressable>
+            </View>
+          </SafeAreaView>
         </BottomSheet>
       </View>
     </KeyboardAvoidingView>

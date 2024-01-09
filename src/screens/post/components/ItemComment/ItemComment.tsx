@@ -148,7 +148,7 @@ const ItemReply = ({
         {item?.content}
       </Text>
     );
-  }, [item]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [item, item.content]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const LikeCommentReply = () => {
     const replyItem = item;
@@ -208,10 +208,9 @@ const ItemComment = ({ data, onPressReply, onPressMore }: ItemCommentProps) => {
   const [listReply, setListReply] = useState([]);
   const [isLike, setIsLike] = useState<boolean>(data?.is_like);
   const [likeNumber, setLikeNumber] = useState<number>(data.like_number);
-
   useEffect(() => {
-    setListReply(data.child);
-  }, [data.child]);
+    setListReply(data.child || []);
+  }, [data, data.child]);
 
   const Avatar = useMemo(() => {
     return (
@@ -285,7 +284,7 @@ const ItemComment = ({ data, onPressReply, onPressMore }: ItemCommentProps) => {
         </Pressable>
       </View>
     );
-  }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [data, data.user_id]); // eslint-disable-line react-hooks/exhaustive-deps
   const ContentStatus = useMemo(() => {
     return (
       <Text
@@ -299,7 +298,7 @@ const ItemComment = ({ data, onPressReply, onPressMore }: ItemCommentProps) => {
         {data?.content}
       </Text>
     );
-  }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [data, data.content]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const pressLikeComment = async () => {
     const params = {
