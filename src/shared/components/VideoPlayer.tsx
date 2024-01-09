@@ -11,18 +11,24 @@ interface IVideoPlayer {
   resizeMode?: string | "cover";
   width: number;
   height: number;
+  autoPlay: boolean;
 }
 
-const VideoPlayer = ({ mediaUrl, resizeMode, width, height }: IVideoPlayer) => {
+const VideoPlayer = ({
+  mediaUrl,
+  resizeMode,
+  width,
+  height,
+  autoPlay,
+}: IVideoPlayer) => {
   const refVideo = useRef<Video>();
-  const animationBackRef = useRef<Lottie>(null);
-
-  const [pause, setPause] = useState(true);
+  const [pause, setPause] = useState(!autoPlay);
 
   useEffect(() => {
-    if (animationBackRef.current) {
-      animationBackRef.current.play(20, 20);
-    }
+    return () => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      refVideo.current.stop();
+    };
   }, []);
 
   const switchPause = useCallback(() => {
@@ -48,7 +54,7 @@ const VideoPlayer = ({ mediaUrl, resizeMode, width, height }: IVideoPlayer) => {
           <Icon
             type={IconType.Ionicons}
             name={"play"}
-            size={18}
+            size={width / 10}
             color={palette.white}
           />
         </View>
@@ -73,11 +79,9 @@ const styles = StyleSheet.create({
   },
   wrapIcon: {
     backgroundColor: palette.primary,
-    width: 30,
-    height: 30,
     borderRadius: 99,
     ...CommonStyle.flexCenter,
-    paddingLeft: 3,
+    padding: 10,
   },
 });
 

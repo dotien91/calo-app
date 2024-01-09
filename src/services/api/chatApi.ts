@@ -49,3 +49,18 @@ export async function sendChatToChatRoom(data: ISendMessage) {
     return response;
   });
 }
+
+interface INewChatRoom {
+  partner_id: string;
+  chat_type: string;
+}
+
+export async function createChatRoom(data: INewChatRoom) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "chat-room/create",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}

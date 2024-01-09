@@ -4,11 +4,6 @@ import { useTheme } from "@react-navigation/native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as NavigationService from "react-navigation-helpers";
-import lodash from "lodash";
-import {
-  GoogleSignin,
-  statusCodes,
-} from "@react-native-google-signin/google-signin";
 
 /**
  * ? Local Imports
@@ -20,13 +15,8 @@ import CardItem from "./components/card-item/CardItem";
  * ? Shared Imports
  */
 import Text from "@shared-components/text-wrapper/TextWrapper";
-import { getCurrentUser } from "@services/api/userApi";
-import useStore from "@services/zustand/store";
-import {
-  SCREENS,
-  IOS_CLIENT_ID_GOOGLE,
-  WEB_CLIENT_ID_GOOGLE,
-} from "@shared-constants";
+import { SCREENS } from "@shared-constants";
+import { useUserHook } from "@helpers/hooks/useUserHook";
 
 const profileURI =
   // eslint-disable-next-line max-len
@@ -38,7 +28,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
   const theme = useTheme();
   const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const setUserData = useStore((state) => state.setUserData);
+  const { isLoggedIn } = useUserHook();
 
   const handleItemPress = () => {
     NavigationService.push(SCREENS.DETAIL);
@@ -53,14 +43,6 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
     //   NavigationService.navigate(SCREENS.LOGIN_PAGE);
     // }, 100)
   }, []);
-
-  useEffect(() => {
-    getCurrentUser().then((res) => {
-      if (!res.isError && !lodash.isEmpty(res)) {
-        setUserData(res);
-      }
-    });
-  }, [setUserData]);
 
   const openLoginPage = () => {
     NavigationService.push(SCREENS.LOGIN_PAGE);
@@ -99,36 +81,38 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
     </View>
   );
 
-  const loginGoogle = async () => {
-    try {
-      GoogleSignin.configure({
-        webClientId: WEB_CLIENT_ID_GOOGLE,
-        iosClientId: IOS_CLIENT_ID_GOOGLE,
-        offlineAccess: true,
-      });
-      await GoogleSignin.signOut();
-      await GoogleSignin.hasPlayServices();
-      const { idToken } = await GoogleSignin.signIn();
-      console.log("=========token", idToken);
-    } catch (error: any) {
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        //doToastError(trans("login_loginCanceled"));
-      }
-    }
+  const viewLive = () => {
+    NavigationService.push(SCREENS.VIEW_LIVE_STREAM, {
+      liveStreamId: "6597cebd91125b0304b80819",
+    });
+  };
+
+  const startLive = () => {
+    NavigationService.push(SCREENS.LIVE_STREAM);
   };
 
   const Welcome = () => (
     <>
-      <Text onPress={loginGoogle} h1 bold color={colors.text}>
+      <Text h1 bold color={colors.text}>
         Hello Kuray
       </Text>
       <Text color={colors.placeholder}>Welcome Back</Text>
+      <Text onPress={viewLive} color={colors.placeholder}>
+        view livestream tony vu
+      </Text>
+      <Text onPress={startLive} color={colors.placeholder}>
+        start livestream
+      </Text>
     </>
   );
 
+  const goToLogin = () => {
+    NavigationService.navigate(SCREENS.LOGIN_PAGE);
+  };
+
   const Content = () => (
     <View style={styles.contentContainer}>
-      <Welcome />
+      {isLoggedIn() ? <Welcome /> : <Text onPress={goToLogin}>login</Text>}
       <List />
     </View>
   );

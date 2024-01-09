@@ -13,10 +13,11 @@ import KeyboardBtn from "./KeyboardBtn";
 import Input from "@shared-components/form/Input";
 
 interface InputToolbarProps {
-  openRecordModal: () => void;
+  openRecordModal?: () => void;
   sendChatMessage: () => void;
-  onSelectPicture: () => void;
-  onSelectVideo: () => void;
+  onSelectPicture?: () => void;
+  onSelectVideo?: () => void;
+  fromLiveStream?: boolean;
 }
 
 const InputToolbar: React.FC<InputToolbarProps> = ({
@@ -24,6 +25,7 @@ const InputToolbar: React.FC<InputToolbarProps> = ({
   sendChatMessage,
   onSelectPicture,
   onSelectVideo,
+  fromLiveStream,
 }) => {
   const theme = useTheme();
   const { colors } = theme;
@@ -47,32 +49,34 @@ const InputToolbar: React.FC<InputToolbarProps> = ({
           }}
           customStyle={styles.input}
         />
-        <View style={styles.wrapMediaBtn}>
-          <TouchableOpacity onPress={onSelectPicture} style={styles.btnMedia}>
-            <Icon
-              size={20}
-              type={IconType.Ionicons}
-              name="image"
-              color={colors.black}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={onSelectVideo} style={styles.btnMedia}>
-            <Icon
-              size={20}
-              type={IconType.Ionicons}
-              name="play-circle"
-              color={colors.black}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={openRecordModal} style={styles.btnMedia}>
-            <Icon
-              size={20}
-              type={IconType.Ionicons}
-              name="mic"
-              color={colors.black}
-            />
-          </TouchableOpacity>
-        </View>
+        {!fromLiveStream && (
+          <View style={styles.wrapMediaBtn}>
+            <TouchableOpacity onPress={onSelectPicture} style={styles.btnMedia}>
+              <Icon
+                size={20}
+                type={IconType.Ionicons}
+                name="image"
+                color={colors.black}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={onSelectVideo} style={styles.btnMedia}>
+              <Icon
+                size={20}
+                type={IconType.Ionicons}
+                name="play-circle"
+                color={colors.black}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={openRecordModal} style={styles.btnMedia}>
+              <Icon
+                size={20}
+                type={IconType.Ionicons}
+                name="mic"
+                color={colors.black}
+              />
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
       <KeyboardBtn icon={"send"} callback={_sendChatMessage} />
     </View>

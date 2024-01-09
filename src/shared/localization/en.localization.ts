@@ -551,5 +551,9 @@ export default {
     stop: "Stop",
     send: "Send",
   },
+  livestream: {
+    hello: "Hello!",
+    inputTitle: "Input title for livestream",
+  },
 };
 /* eslint-disable max-len */

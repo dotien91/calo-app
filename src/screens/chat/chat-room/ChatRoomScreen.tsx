@@ -2,7 +2,7 @@ import React, { useEffect, useRef, Platform } from "react";
 import { SafeAreaView } from "react-native";
 import { GiftedChat } from "react-native-gifted-chat";
 import emojiUtils from "emoji-utils";
-import { v4 as uuidv4 } from "uuid";
+import uuid from "react-native-uuid";
 
 /**
  * ? Local Imports
@@ -10,11 +10,11 @@ import { v4 as uuidv4 } from "uuid";
 import {
   IMediaUpload,
   TypedMessageGiftedChat,
-} from "@services/models/ChatModels";
+} from "@services/models/chatModel";
 import MessageItem from "./components/MessageItem";
 import { emitSocket } from "@helpers/SocketHelper";
 import useStore from "@services/zustand/store";
-import { useChatHistoryHelper } from "@helpers/hooks/useChatHistoryHelper";
+import { useChatHistory } from "@helpers/hooks/useChatHistory";
 import ChatHeader from "./ChatRoomHeader";
 import RecordModal from "./components/audio/RecordModal";
 import { useUploadFile } from "@helpers/hooks/useUploadFile";
@@ -41,7 +41,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
     sendChatMessage,
     loadMoreMessage,
     isCloseToTop,
-  } = useChatHistoryHelper();
+  } = useChatHistory();
 
   const {
     uploadRecord,
@@ -58,7 +58,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
     if (!listFileLocal.length) return;
     const messages: TypedMessageGiftedChat = {
       createdAt: new Date(),
-      _id: uuidv4(),
+      _id: uuid.v4(),
       status: EnumMessageStatus.Pending,
       media_ids: listFileLocal.map((item) => {
         return {
@@ -82,7 +82,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
     });
 
     console.log("listFile", mediaIds);
-    sendChatMessage("", mediaIds);
+    sendChatMessage("", mediaIds, messages);
     setListFile([]);
     setListFileLocal([]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -90,18 +90,17 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
 
   // send txt message
   const _sendChatMessage = (text: string) => {
-    const messages = {
+    const message = {
       text,
       createdAt: new Date(),
-      _id: uuidv4(),
+      _id: uuid.v4(),
       user: userSendMessage,
       status: EnumMessageStatus.Pending,
     };
+    const giftedMessages = GiftedChat.append(messages, message);
     emitSocket("typingToServer", "room_" + chatRoomId);
-    setMessages((previousMessages) =>
-      GiftedChat.append(previousMessages, messages),
-    );
-    sendChatMessage(text);
+    setMessages(giftedMessages);
+    sendChatMessage(text, [], giftedMessages);
   };
 
   const openRecordModal = () => {

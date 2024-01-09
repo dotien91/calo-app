@@ -24,6 +24,7 @@ const createStyles = (theme: ExtendedTheme) => {
       textAlign: "center",
     },
     buttonMargin: {
+      margin: 18,
       marginTop: 16,
       paddingHorizontal: 20,
     },

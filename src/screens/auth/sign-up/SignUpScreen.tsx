@@ -30,6 +30,7 @@ import {
   showErrorModal,
   showLoading,
 } from "@helpers/SuperModalHelper";
+import { useUserHook } from "@helpers/hooks/useUserHook";
 
 interface ButtonSocialProps {
   onPress: () => void;
@@ -40,7 +41,7 @@ export default function SignUpScreen() {
   const theme = useTheme();
   const { colors } = theme;
   const [useMailRegex, setUseMailRegex] = useState(false);
-  const { handleLogin } = userHook();
+  const { handleLogin } = useUserHook();
 
   const {
     watch,

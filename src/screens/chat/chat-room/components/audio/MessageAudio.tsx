@@ -8,11 +8,11 @@ import {
 } from "react-native";
 import Sound from "react-native-sound";
 
-import { HS, MHS } from "utils/Size";
+import { HS, MHS } from "utils/size";
 import { TypedDataMediaChatHistory } from "@services/models/ChatModels";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
-import { Device } from "utils/Device";
+import { Device } from "utils/device";
 import { EnumMessageStatus } from "@shared-constants/Chat";
 import Animated, {
   Easing,

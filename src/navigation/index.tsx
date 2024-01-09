@@ -14,7 +14,6 @@ import HomeScreen from "@screens/home/HomeScreen";
 import DetailScreen from "@screens/detail/DetailScreen";
 import ProfileScreen from "@screens/profile/ProfileScreen";
 import NotificationScreen from "@screens/notification/NotificationScreen";
-import SettingScreenStyle from "@screens/setting/SettingScreen";
 import useStore from "@services/zustand/store";
 import IntroScreen from "@screens/welcome/intro/IntroScreen";
 import ChooseLanguageScreen from "@screens/welcome/choose-language/ChooseLanguageScreen";
@@ -28,6 +27,9 @@ import VerifyCodeScreen from "@screens/auth/forgot-password/VerifyCodeScreen";
 import ListChatScreen from "@screens/chat/chat-list/ListChatScreen";
 import SearchRoomChatScreen from "@screens/chat/search-room/SearchRoomChatScreen";
 import ChatRoomScreen from "@screens/chat/chat-room/ChatRoomScreen";
+import LiveStreamScreen from "@screens/public-live-stream/LiveStreamScreen";
+import ViewStreamScreen from "@screens/public-live-stream/ViewStreamScreen";
+import SettingScreen from "@screens/setting/SettingScreen";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -96,7 +98,7 @@ const Navigation = () => {
           component={NotificationScreen}
         />
         <Tab.Screen name={SCREENS.PROFILE} component={ProfileScreen} />
-        <Tab.Screen name={SCREENS.SETTING} component={SettingScreenStyle} />
+        <Tab.Screen name={SCREENS.SETTING} component={SettingScreen} />
       </Tab.Navigator>
     );
   };
@@ -125,8 +127,13 @@ const Navigation = () => {
       theme={isDarkMode ? DarkTheme : LightTheme}
     >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {renderStackIntro()}
         <Stack.Screen name={SCREENS.HOME} component={renderTabNavigation} />
+        {renderStackIntro()}
+        <Stack.Screen
+          name={SCREENS.VIEW_LIVE_STREAM}
+          component={ViewStreamScreen}
+        />
+        <Stack.Screen name={SCREENS.LIVE_STREAM} component={LiveStreamScreen} />
         <Stack.Screen name={SCREENS.DETAIL}>
           {(props) => <DetailScreen {...props} />}
         </Stack.Screen>

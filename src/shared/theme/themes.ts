@@ -25,6 +25,7 @@ export const palette = {
   separator: "rgb(194, 194, 195)",
   highlight: "rgb(199, 198, 203)",
   blackOverlay: "rgba(0,0,0,0.6)",
+  lightOverlay: "rgba(0,0,0,0.2)",
   iconWhite: "#fff",
   iconBlack: "#101214",
   dynamicWhite: "#fff",
@@ -60,6 +61,7 @@ export const palette = {
   iconInactive: "#FA8072",
   iconLight: "#F3F3F3",
   iconDark: "#FA8072",
+  pink: "#ed435c",
 };
 
 interface ExtendedTheme extends Theme {

@@ -15,7 +15,12 @@ interface ContentBasicPopupType {
   title: string;
   desc?: string;
   btn?: IBtnStyle;
+  cb?: () => void;
 }
+
+export const typePopup = {
+  confirmPopup: "CONFIRM_POPup",
+};
 
 export const SuperModalHelper = {
   getContentPopupNormal({ title, desc, btn }: ContentBasicPopupType) {
@@ -52,8 +57,35 @@ export const SuperModalHelper = {
           style: { backgroundColor: palette.error },
         };
     }
-    if (!btn) return data;
-    return [...data, btn];
+    if (!btn) return { data };
+    return { data: [...data, btn] };
+  },
+  getContentConfirmPopup({ title, desc, btn, cb }: ContentBasicPopupType) {
+    const data = [
+      {
+        text: title,
+        style: {
+          fontSize: 20,
+          lineHeight: 24,
+          ...cmStyle.hnBold,
+          color: palette.text,
+          textAlign: "center",
+          marginBottom: 12,
+        },
+      },
+      {
+        text: desc,
+        style: {
+          fontSize: 16,
+          lineHeight: 18,
+          ...cmStyle.hnRegular,
+          color: palette.text,
+          textAlign: "center",
+          marginBottom: 8,
+        },
+      },
+    ];
+    return { type: typePopup.confirmPopup, data: [...data, btn], cb };
   },
 };
 
@@ -61,6 +93,13 @@ export const showSuperModal = (params: ContentBasicPopupType) => {
   eventEmitter.emit(
     "show_super_modal",
     SuperModalHelper.getContentPopupNormal(params),
+  );
+};
+
+export const showConfirmSuperModal = (params: ContentBasicPopupType) => {
+  eventEmitter.emit(
+    "show_super_modal",
+    SuperModalHelper.getContentConfirmPopup(params),
   );
 };
 

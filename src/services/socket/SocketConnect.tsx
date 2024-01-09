@@ -7,8 +7,6 @@ import React, {
 import { View } from "react-native";
 import { io } from "socket.io-client";
 
-import { USER_TOKEN, _getJson } from "@services/local-storage";
-
 const URL_CHAT_SOCKET = "https://socket.api-v2.ieltshunter.io/socket";
 
 export interface TypedSocket {
@@ -48,13 +46,15 @@ const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
   }));
 
   const connectSocket = async () => {
-    const token = _getJson(USER_TOKEN);
+    // const token = _getJson(USER_TOKEN);
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQ1OTAxNTEsImRhdGEiOnsiX2lkIjoiNjU4MjVkY2RmYjQyMmU4NmEyMDBlN2ZiIiwia2V5IjoiMjZjNGVkODZmM2RjOTUxN2JlYWViY2UxNTQzMmE0NWUiLCJzaWduYXR1cmUiOiJjNGI1NDEzMGQ0MjNhYzc2ZDA1MjYzODAzMWNhYzBmNyIsInNlc3Npb24iOiI2NTgyOGI0NzhmZTc2YzllMzE0YmM1YmQifSwiaWF0IjoxNzAzMDU0MTUxfQ.CsNtK6PcYGCW0hLfZrvAvxWoihVG9GkkyyMQmz6Oopg";
+    console.log("token", token);
     if (token) {
       refSocket.current = io(URL_CHAT_SOCKET, {
         extraHeaders: {
           "X-Authorization": token || "",
         },
-        transports: ["websocket"],
         rejectUnauthorized: false,
       })
         .on("connect", onConnected)

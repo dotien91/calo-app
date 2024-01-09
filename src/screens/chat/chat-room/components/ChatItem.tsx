@@ -6,7 +6,7 @@ import createStyles from "../../chat-list/ListChatScreen.style";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Avatar from "@shared-components/user/Avatar";
 import { TypedGeneralRoomChat } from "@services/models/ChatModels";
-import { getFormatDayMessage } from "utils/Date";
+import { getFormatDayMessage } from "utils/date";
 import CommonStyle from "@theme/styles";
 import { setViewRoom } from "@services/api/chatApi";
 import { SCREENS } from "@shared-constants";

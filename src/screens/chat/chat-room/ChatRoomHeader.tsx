@@ -8,7 +8,7 @@ import { useTheme, useRoute } from "@react-navigation/native";
 import createStyles from "./ChatRoomScreen.style";
 import ActionBtn from "./components/KeyboardBtn";
 import CommonStyle from "@theme/styles";
-import { getFormatDayMessage } from "utils/Date";
+import { getFormatDayMessage } from "utils/date";
 import { translations } from "@localization";
 import GoBackButton from "@screens/auth/components/GoBackButton";
 
@@ -22,20 +22,22 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ messages }) => {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const route = useRoute();
   const partnerName = route.params?.["partner_name"];
+  const time = getFormatDayMessage(messages?.[0]?.read_at, "HH:mm", "DD/MM");
 
   return (
     <View style={styles.wrapHeader}>
       <View style={[CommonStyle.flexEnd, styles.headerLeft]}>
         <GoBackButton />
       </View>
-      <View style={styles.headerCenter}>
+      <View style={[styles.headerCenter, !time && { paddingTop: 8 }]}>
         <Text numberOfLines={1} style={styles.txtNamePartner}>
           {partnerName}
         </Text>
-        <Text numberOfLines={1} style={styles.txtReadAt}>
-          {translations.chat.lastSeen}{" "}
-          {getFormatDayMessage(messages?.[0]?.read_at, "HH:mm", "DD/MM")}
-        </Text>
+        {!!time && (
+          <Text numberOfLines={1} style={styles.txtReadAt}>
+            {translations.chat.lastSeen + "  " + time}
+          </Text>
+        )}
       </View>
       <View style={[CommonStyle.flexEnd, styles.headerRight]}>
         <ActionBtn

@@ -39,9 +39,10 @@ const GoogleLoginButton = ({ showText }: BtnProps) => {
         user_token: idToken,
         ...getDeviceInfo(),
       };
+
       loginWithGoogle(paramsLogin).then((res) => {
         closeSuperModal();
-        console.log("Resssssssss", res);
+        console.log("Resssssssss=======", res, paramsLogin);
         if (!res.isError) {
           const user_token = res.headers["x-authorization"];
           handleLogin(user_token);
@@ -50,7 +51,6 @@ const GoogleLoginButton = ({ showText }: BtnProps) => {
           showErrorModal(res);
         }
       });
-      console.log("idToken", idToken);
     } catch (error: any) {
       closeSuperModal();
       setTimeout(() => {
@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
   btn: {
     paddingHorizontal: 20,
     marginBottom: 12,
+    marginHorizontal: 20,
   },
   iconBtn: {
     flex: 1,

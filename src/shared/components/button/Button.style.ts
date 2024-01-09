@@ -6,13 +6,11 @@ export default (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
     viewButton: {
-      height: 48,
+      paddingVertical: 12,
       borderRadius: 30,
       backgroundColor: colors.mainColor2,
-      justifyContent: "center",
-      alignItems: "center",
-      width: "100%",
-      flexDirection: "row",
+      ...CommonStyle.flexCenter,
+      paddingHorizontal: 30,
     },
     textButton: {
       ...CommonStyle.hnSemiBold,

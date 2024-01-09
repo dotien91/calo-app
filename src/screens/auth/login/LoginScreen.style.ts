@@ -28,7 +28,7 @@ const createStyles = (theme: ExtendedTheme) => {
       paddingHorizontal: 20,
     },
     buttonMargin: {
-      marginTop: 16,
+      margin: 16,
       paddingHorizontal: 20,
     },
   });

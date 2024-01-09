@@ -6,8 +6,11 @@ import { useTheme } from "@react-navigation/native";
  */
 import createStyles from "./ListChatScreen.style";
 import { getListFriend } from "@services/api/chatApi";
-import { TypedGeneralRoomChat } from "@services/models/ChatModels";
+import { TypedGeneralRoomChat } from "@services/models/chatModel";
 import Avatar from "@shared-components/user/Avatar";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import * as NavigationService from "react-navigation-helpers";
+import { SCREENS } from "@shared-constants";
 
 interface ListFriendProps {}
 
@@ -25,6 +28,15 @@ const ListFriend: React.FC<ListFriendProps> = () => {
     });
   }, []);
 
+  const openChatRoom = (item: any) => {
+    console.log("itemitem", item);
+    const { partner_id } = item;
+    NavigationService.navigate(SCREENS.CHAT_ROOM, {
+      partner_id: partner_id?._id,
+      partner_name: partner_id?.display_name,
+    });
+  };
+
   const renderItem = ({
     item,
     index,
@@ -34,7 +46,7 @@ const ListFriend: React.FC<ListFriendProps> = () => {
   }) => {
     const partnerId = item.partner_id;
     return (
-      <View key={index}>
+      <TouchableOpacity onPress={() => openChatRoom(item)} key={index}>
         <Avatar
           style={{
             width: 64,
@@ -49,7 +61,7 @@ const ListFriend: React.FC<ListFriendProps> = () => {
         <Text numberOfLines={1} style={styles.friendNameTxt}>
           {partnerId?.display_name}
         </Text>
-      </View>
+      </TouchableOpacity>
     );
   };
 

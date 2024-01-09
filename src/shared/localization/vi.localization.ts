@@ -1074,4 +1074,8 @@ export default {
     stop: "Dừng",
     send: "Gửi",
   },
+  livestream: {
+    hello: "Xin chào",
+    inputTitle: "Nhập tiêu đề cho phiên livestream",
+  },
 };

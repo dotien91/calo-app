@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 
-import { HS, MHS, VS } from "utils/Size";
+import { HS, MHS, VS } from "utils/size";
 import SkeletonPlaceholder from "./skeleton";
 
 const LoadingList = () => {

@@ -5,14 +5,13 @@ import IconSvg from "assets/svg";
 const GoBackButton = () => {
   return (
     <View
-      style={
-        {
-          // position: "absolute",
-          // top: getStatusBarHeight(),
-          // left: 20,
-          // zIndex: 1,
-        }
-      }
+      style={{
+        // position: "absolute",
+        // top: getStatusBarHeight(),
+        // left: 20,
+        // zIndex: 1,
+        marginLeft: 18,
+      }}
     >
       <Pressable onPress={() => NavigationService.goBack()}>
         <IconSvg name="icBack" size={17} />

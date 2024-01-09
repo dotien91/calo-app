@@ -8,9 +8,10 @@ import {
 } from "react-native";
 import Modal from "react-native-modal";
 
-import cmStyle from "@theme/styles";
 import eventEmitter from "@services/event-emitter";
 import { palette } from "@theme/themes";
+import { typePopup } from "@helpers/SuperModalHelper";
+import CommonStyle from "@theme/styles";
 
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
@@ -22,7 +23,7 @@ interface SuperModalProps {}
 
 const SuperModal: React.FC<SuperModalProps> = () => {
   const [visible, setVisible] = useState(false);
-  const [content, setContent] = useState([]);
+  const [content, setContent] = useState({});
   const [isLoadingView, setIsLoadingView] = useState(false);
 
   useEffect(() => {
@@ -50,13 +51,17 @@ const SuperModal: React.FC<SuperModalProps> = () => {
   };
 
   const hasBtn = () => {
-    return !!content.find((item) => item?.type == "btn");
+    return !!content?.data?.find((item) => item?.type == "btn");
+  };
+
+  const confirmType = () => {
+    return content?.type == typePopup.confirmPopup;
   };
 
   const renderItem = (item: object, index: number) => {
     return (
       <View key={index}>
-        {!item.type && !!item.text && (
+        {!item?.type && !!item?.text && (
           <Text style={[item?.style ? item.style : styles.txtDefault]}>
             {item.text}
           </Text>
@@ -90,7 +95,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
     );
 
   if (!visible) return null;
-
+  console.log("contentcontent", content);
   return (
     <Modal
       isVisible={visible}
@@ -103,11 +108,34 @@ const SuperModal: React.FC<SuperModalProps> = () => {
       style={styles.modal}
     >
       <View style={styles.modalInner}>
-        {content.map((item, index) => renderItem(item, index))}
-        {!hasBtn() && (
+        {(content?.data || []).map((item, index) => renderItem(item, index))}
+        {!confirmType() && !hasBtn() && (
           <TouchableOpacity style={styles.btnStyle} onPress={closeModal}>
             <Text style={styles.txtBtn}>OK</Text>
           </TouchableOpacity>
+        )}
+        {!!confirmType() && (
+          <View style={CommonStyle.flexRear}>
+            <TouchableOpacity
+              style={[styles.btnStyle, { flex: 1 }]}
+              onPress={closeModal}
+            >
+              <Text style={styles.txtBtn}>Cancel</Text>
+            </TouchableOpacity>
+            <View style={{ width: 10 }} />
+            <TouchableOpacity
+              style={[
+                styles.btnStyle,
+                { backgroundColor: palette.danger, flex: 1 },
+              ]}
+              onPress={() => {
+                content.cb();
+                closeModal();
+              }}
+            >
+              <Text style={styles.txtBtn}>Ok</Text>
+            </TouchableOpacity>
+          </View>
         )}
       </View>
     </Modal>
@@ -116,7 +144,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
 
 const styles = StyleSheet.create({
   modal: {
-    ...cmStyle.flexCenter,
+    ...CommonStyle.flexCenter,
   },
   loadingView: {
     flex: 1,
@@ -132,7 +160,7 @@ const styles = StyleSheet.create({
   txtDefault: {
     fontSize: 16,
     textAlign: "center",
-    ...cmStyle.hnMedium,
+    ...CommonStyle.hnMedium,
     marginBottom: 12,
   },
   btnStyle: {
@@ -140,12 +168,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     backgroundColor: palette.green,
     borderRadius: 99,
-    ...cmStyle.flexCenter,
+    ...CommonStyle.flexCenter,
   },
   txtBtn: {
     color: palette.white,
     fontSize: 16,
-    ...cmStyle.hnSemiBold,
+    ...CommonStyle.hnSemiBold,
   },
 });
 

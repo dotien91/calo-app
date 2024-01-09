@@ -5,17 +5,22 @@ import {
   TypedChatHistory,
   TypedMessageGiftedChat,
   IMediaUpload,
-} from "@services/models/ChatModels";
+} from "@services/models/chatModel";
 import useStore from "@services/zustand/store";
 import { onSocket, offSocket, emitSocket } from "../SocketHelper";
-import { getChatHistory, sendChatToChatRoom } from "@services/api/chatApi";
+import {
+  createChatRoom,
+  getChatHistory,
+  sendChatToChatRoom,
+} from "@services/api/chatApi";
 import { EnumMessageStatus } from "@shared-constants/Chat";
+import eventEmitter from "@services/event-emitter";
 
 const limit = 20;
 
-export const useChatHistoryHelper = () => {
+export const useChatHistory = () => {
   const route = useRoute();
-  const chatRoomId = route.params?.["id"];
+  const [chatRoomId, setChatRoomId] = useState(route.params?.["id"]);
 
   const userData = useStore((state) => state.userData);
   const [messages, setMessages] = useState([]);
@@ -104,7 +109,11 @@ export const useChatHistoryHelper = () => {
     }
   };
 
-  const sendChatMessage = (text: string, mediaData?: IMediaUpload[]) => {
+  const sendChatMessage = (
+    text: string,
+    mediaData?: IMediaUpload[],
+    giftedMessages: TypedMessageGiftedChat[],
+  ) => {
     sendChatToChatRoom({
       chat_content: text,
       chat_room_id: chatRoomId,
@@ -112,19 +121,36 @@ export const useChatHistoryHelper = () => {
     }).then((res) => {
       let newMessages = [];
       if (!res.isError) {
-        newMessages = messages.map((item) => {
-          return { ...item, status: EnumMessageStatus.Send };
+        newMessages = giftedMessages.map((item) => {
+          if (item?.status) return { ...item, status: EnumMessageStatus.Send };
+          return item;
         });
       } else {
-        newMessages = messages.map((item) => {
-          return { ...item, status: EnumMessageStatus.Fail };
+        newMessages = giftedMessages.map((item) => {
+          if (item?.status) return { ...item, status: EnumMessageStatus.Fail };
+          return item;
         });
       }
       setMessages(newMessages);
     });
   };
 
+  const partnerId = route.params?.["partner_id"];
+
   useEffect(() => {
+    if (!chatRoomId) {
+      //create chat room from listfriend
+      createChatRoom({
+        partner_id: partnerId,
+        chat_type: "personal",
+      }).then((res) => {
+        console.log("ressss create chat", res);
+        if (!res.isError) {
+          setChatRoomId(res.data.chat_room_id._id);
+        }
+      });
+      return;
+    }
     _getChatHistory();
     onSocket("msgToClient", msgToClient);
     onSocket("typingToClient", typingToClient);
@@ -132,9 +158,13 @@ export const useChatHistoryHelper = () => {
     return () => {
       offSocket("msgToClient", msgToClient);
       offSocket("typingToClient", typingToClient);
+      //update list chat for case create chat room
+      if (partnerId) {
+        eventEmitter.emit("refresh_list_chat");
+      }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [chatRoomId]);
 
   const isCloseToTop = ({
     layoutMeasurement,

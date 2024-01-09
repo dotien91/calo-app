@@ -6,7 +6,7 @@ export const USER_TOKEN = "userToken";
 
 export const _getJson = (key: string) => {
   const data: string = LocalStorage.getString(key) || "";
-  return !data ? {} : JSON.parse(data);
+  return !data ? null : JSON.parse(data);
 };
 
 export const _setJson = (key: string, value: any) => {

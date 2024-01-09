@@ -1,5 +1,5 @@
 import { Dimensions, Platform, StatusBar } from "react-native";
-import { VS } from "./Size";
+import { VS } from "./size";
 import { getStatusBarHeight } from "react-native-safearea-height";
 import { initialWindowMetrics } from "react-native-safe-area-context";
 

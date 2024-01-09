@@ -1,12 +1,15 @@
 import useStore from "@services/zustand/store";
 import { getCurrentUser } from "@services/api/userApi";
-import { _setJson, USER_TOKEN } from "@services/local-storage";
 import { showSuperModal } from "../SuperModalHelper";
 import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "@shared-constants";
+import { _setJson, _getJson, USER_TOKEN } from "@services/local-storage";
 
 export const useUserHook = () => {
   const setUserData = useStore((state) => state.setUserData);
+  const isLoggedIn = () => {
+    return !!_getJson(USER_TOKEN);
+  };
 
   const handleLogin = (token: string) => {
     _setJson(USER_TOKEN, token);
@@ -23,7 +26,9 @@ export const useUserHook = () => {
   };
 
   const getUserData = () => {
+    isLoggedIn();
     getCurrentUser().then((res) => {
+      console.log("res get current user");
       if (!res.isError) {
         setUserData(res.data);
         console.log("init user data", res.data);
@@ -31,5 +36,5 @@ export const useUserHook = () => {
     });
   };
 
-  return { handleLogin, getUserData };
+  return { handleLogin, getUserData, isLoggedIn };
 };

@@ -1,7 +1,7 @@
 import { FlexStyle, StyleSheet } from "react-native";
 import font from "./fonts";
 import { palette } from "./themes";
-import { mhs } from "utils/Size";
+import { mhs } from "utils/size";
 
 const flexBase: FlexStyle = {
   flexDirection: "row",
@@ -90,6 +90,11 @@ const CommonStyle = StyleSheet.create({
     borderColor: palette.borderColor,
     borderStyle: "solid",
     borderWidth: 1,
+  },
+  borderBottomStyle: {
+    borderColor: palette.borderColor,
+    borderStyle: "solid",
+    borderBottomWidth: 1,
   },
   text: {
     fontSize: 14,

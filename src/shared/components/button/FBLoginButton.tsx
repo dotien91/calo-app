@@ -14,13 +14,14 @@ import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { getDeviceInfo } from "@helpers/DeviceInfo";
 import { AccessToken, LoginManager } from "react-native-fbsdk-next";
 import { loginWithFB } from "@services/api/userApi";
+import { useUserHook } from "@helpers/hooks/useUserHook";
 
 interface BtnProps {
   showText: boolean | true;
 }
 
 const FBLoginButton = ({ showText }: BtnProps) => {
-  const { handleLogin } = userHook();
+  const { handleLogin } = useUserHook();
 
   const _onPress = async () => {
     showLoading();
@@ -86,6 +87,7 @@ const FBLoginButton = ({ showText }: BtnProps) => {
 const styles = StyleSheet.create({
   btn: {
     paddingHorizontal: 20,
+    marginHorizontal: 20,
   },
   iconBtn: {
     flex: 1,

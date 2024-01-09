@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect } from "react";
 import { View, FlatList, SafeAreaView, Text } from "react-native";
 import { useTheme } from "@react-navigation/native";
 /**
@@ -14,6 +14,7 @@ import FriendSearchInput from "../search-room/FriendSearchInput";
 import LoadingList from "@shared-components/LoadingList";
 import { useListData } from "@helpers/hooks/useListData";
 import EmptyResultView from "@shared-components/EmptyResultView";
+import eventEmitter from "@services/event-emitter";
 
 interface ListScreenProps {}
 
@@ -27,8 +28,15 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
     isFirstLoading,
     refreshControl,
     renderFooterComponent,
+    refreshListPage,
   } = useListData<TypedGeneralRoomChat>({ limit: 6 }, getListChat);
 
+  useEffect(() => {
+    eventEmitter.on("refresh_list_chat", refreshListPage);
+    return () => {
+      eventEmitter.off("refresh_list_chat", refreshListPage);
+    };
+  });
   const renderItem = ({
     item,
     index,

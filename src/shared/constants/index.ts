@@ -22,6 +22,8 @@ export const SCREENS = {
   CHAT: "Chat",
   CHAT_ROOM: "ChatRoom",
   SEARCH_CHAT: "SearchChat",
+  LIVE_STREAM: "LiveStream",
+  VIEW_LIVE_STREAM: "ViewLiveStream",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =
