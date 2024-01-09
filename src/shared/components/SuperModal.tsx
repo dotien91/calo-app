@@ -117,7 +117,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         animationIn={"FadeIn"}
         animationOut={"FadeOut"}
         // useNativeDriver={true}
-        style={[styles.modal]}
+        style={styles.modalMedia}
       >
         <PagerScrollMedia
           index={indexMedia}
@@ -155,6 +155,10 @@ const SuperModal: React.FC<SuperModalProps> = () => {
 const styles = StyleSheet.create({
   modal: {
     ...cmStyle.flexCenter,
+  },
+  modalMedia: {
+    ...cmStyle.flexCenter,
+    margin: 0,
   },
   loadingView: {
     ...cmStyle.flex1,

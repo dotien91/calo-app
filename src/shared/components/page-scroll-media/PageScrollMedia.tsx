@@ -8,6 +8,7 @@ import * as React from "react";
 import { View, StyleSheet, Dimensions, Pressable } from "react-native";
 import PageScroll from "@shared-components/page-scroll/PageScroll";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import { getStatusBarHeight } from "@freakycoder/react-native-helpers";
 const { width } = Dimensions.get("screen");
 
 interface PagerScrollMediaProps {
@@ -60,13 +61,7 @@ const PagerScrollMedia = ({
               : width;
           if (item?.type === "image") {
             return (
-              <View
-                style={{
-                  ...CommonStyle.flex1,
-                  ...CommonStyle.center,
-                  backgroundColor: palette.black,
-                }}
-              >
+              <View style={styles.viewBackground}>
                 <ImageLoad
                   source={{ uri: item?.url }}
                   style={[styles.image, { height: heightMedia }]}
@@ -76,13 +71,7 @@ const PagerScrollMedia = ({
             );
           }
           return (
-            <View
-              key={index}
-              style={{
-                ...CommonStyle.flex1,
-                ...CommonStyle.center,
-              }}
-            >
+            <View key={index} style={styles.viewBackground}>
               <VideoPlayer
                 mediaUrl={item?.url}
                 height={heightMedia}
@@ -103,8 +92,14 @@ const styles = StyleSheet.create({
     minWidth: "60%",
     backgroundColor: palette.black,
     borderRadius: 6,
-    padding: 30,
+    paddingHorizontal: 30,
+    paddingTop: getStatusBarHeight(),
     overflow: "hidden",
+  },
+  viewBackground: {
+    ...CommonStyle.flex1,
+    ...CommonStyle.center,
+    backgroundColor: palette.black,
   },
   image: {
     width: width,

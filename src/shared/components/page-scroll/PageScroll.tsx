@@ -111,7 +111,7 @@ const PageScroll = (props: Props, ref: React.Ref<PagerScrollRef>) => {
     scrollViewRef.current?.scrollTo({
       y: 0,
       x: index * width,
-      animated: true,
+      animated: false,
     });
     indexRef.current = index;
   };
