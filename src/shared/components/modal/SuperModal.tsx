@@ -10,7 +10,7 @@ import Modal from "react-native-modal";
 
 import eventEmitter from "@services/event-emitter";
 import { palette } from "@theme/themes";
-import { typePopup } from "@helpers/SuperModalHelper";
+import { typePopup } from "@helpers/super.modal.helper";
 import CommonStyle from "@theme/styles";
 
 // Super modal help you create a modal with a title, a content and a button

@@ -6,7 +6,7 @@ import {
   IRequestNewPass,
   IVerifyCode,
   ICreateNewPass,
-} from "@services/models";
+} from "models";
 
 export async function getCurrentUser() {
   return request({

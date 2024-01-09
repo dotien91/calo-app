@@ -15,8 +15,8 @@ import CardItem from "./components/card-item/CardItem";
  * ? Shared Imports
  */
 import Text from "@shared-components/text-wrapper/TextWrapper";
-import { SCREENS } from "@shared-constants";
-import { useUserHook } from "@helpers/hooks/useUserHook";
+import { SCREENS } from "constants";
+import { useUserHook } from "@helpers/hooks/use.user.hook";
 
 const profileURI =
   // eslint-disable-next-line max-len

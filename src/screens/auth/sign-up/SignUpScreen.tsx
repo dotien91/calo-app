@@ -21,16 +21,16 @@ import { useForm } from "react-hook-form";
 import { translations } from "@localization";
 import GoBackButton from "../components/GoBackButton";
 import IconSvg from "assets/svg";
-import { regexMail, passRegex } from "@shared-constants/Regex";
-import { ISignUpWithEmail } from "@services/models";
-import { getDeviceInfo } from "@helpers/DeviceInfo";
+import { regexMail, passRegex } from "constants/regex.constant";
+import { ISignUpWithEmail } from "models";
+import { getDeviceInfo } from "@helpers/device.info.helper";
 import { singUp } from "@services/api/userApi";
 import {
   closeSuperModal,
   showErrorModal,
   showLoading,
-} from "@helpers/SuperModalHelper";
-import { useUserHook } from "@helpers/hooks/useUserHook";
+} from "@helpers/super.modal.helper";
+import { useUserHook } from "@helpers/hooks/use.user.hook";
 
 interface ButtonSocialProps {
   onPress: () => void;

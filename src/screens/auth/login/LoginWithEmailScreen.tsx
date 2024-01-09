@@ -19,20 +19,20 @@ import ViewTermPolicy from "../components/TermPolicyView";
 import OrView from "../components/OrView";
 import InputHook from "@shared-components/form/InputHookForm";
 import { useForm } from "react-hook-form";
-import { SCREENS } from "@shared-constants";
+import { SCREENS } from "constants";
 import { translations } from "@localization";
 import GoBackButton from "../components/GoBackButton";
-import { getDeviceInfo } from "@helpers/DeviceInfo";
+import { getDeviceInfo } from "@helpers/device.info.helper";
 import { loginWithPass } from "@services/api/userApi";
 import {
   closeSuperModal,
   showLoading,
   showErrorModal,
-} from "@helpers/SuperModalHelper";
-import { ILoginWithPass } from "@services/models";
+} from "@helpers/super.modal.helper";
+import { ILoginWithPass } from "models";
 import GoogleLoginButton from "@shared-components/button/GoogleLoginButton";
 import FBLoginButton from "@shared-components/button/FBLoginButton";
-import { useUserHook } from "@helpers/hooks/useUserHook";
+import { useUserHook } from "@helpers/hooks/use.user.hook";
 
 interface ButtonSocialProps {
   onPress: () => void;

@@ -4,7 +4,7 @@ import { View, StyleSheet } from "react-native";
 
 import { Avatar, Day, utils } from "react-native-gifted-chat";
 import Bubble from "./MessageBubble";
-import { EnumMessageStatus } from "@shared-constants/Chat";
+import { EnumMessageStatus } from "constants/chat.constant";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { palette } from "@theme/themes";
 

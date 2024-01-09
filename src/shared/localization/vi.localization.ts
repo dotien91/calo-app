@@ -215,6 +215,7 @@ export default {
     send: "Gửi",
     forgotPasswordSuccess:
       "Gửi email thành công, vui lòng kiểm tra email của bạn!",
+    requireLogin: "Bạn cần đăng nhập để sử dựng chức năng này",
   },
   validate: {
     emailInvalid: "Email không tồn tại",

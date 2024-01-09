@@ -1,7 +1,7 @@
 import { FlexStyle, StyleSheet } from "react-native";
 import font from "./fonts";
 import { palette } from "./themes";
-import { mhs } from "utils/size";
+import { mhs } from "utils/size.utils";
 
 const flexBase: FlexStyle = {
   flexDirection: "row",
@@ -106,6 +106,17 @@ const CommonStyle = StyleSheet.create({
     fontSize: 26,
     fontFamily: font.outfit.bold,
     color: palette.mainColor2,
+  },
+  btnActive: {
+    padding: 12,
+    paddingHorizontal: 20,
+    borderRadius: 99,
+    backgroundColor: palette.primary,
+  },
+  txtBtnActive: {
+    fontFamily: font.outfit.medium,
+    fontSize: 16,
+    color: palette.white,
   },
 });
 

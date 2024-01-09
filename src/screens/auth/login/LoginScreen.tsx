@@ -9,7 +9,7 @@ import IconSvg from "assets/svg";
 import createStyles from "./LoginScreen.style";
 import ViewTermPolicy from "../components/TermPolicyView";
 import OrView from "../components/OrView";
-import { SCREENS } from "@shared-constants";
+import { SCREENS } from "constants";
 import { translations } from "@localization";
 import GoogleLoginButton from "@shared-components/button/GoogleLoginButton";
 import FBLoginButton from "@shared-components/button/FBLoginButton";

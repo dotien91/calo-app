@@ -198,6 +198,7 @@ export default {
     send: "Send",
     forgotPasswordSuccess:
       "Successfully sent an email, please check your email!",
+    requireLogin: "You need login for using this feature",
   },
   validate: {
     emailInvalid: "Email is invalid",

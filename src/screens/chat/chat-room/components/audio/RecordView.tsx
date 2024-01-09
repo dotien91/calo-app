@@ -26,7 +26,7 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import CommonStyle from "@theme/styles";
 import { translations } from "@localization";
 import { requestPermission } from "@helpers/permision.helper";
-import { PERMISSION } from "@shared-constants";
+import { PERMISSION } from "constants";
 
 const styles: any = StyleSheet.create({
   btnRecord: {},

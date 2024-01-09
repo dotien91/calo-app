@@ -2,14 +2,14 @@ import React, { useState, useMemo } from "react";
 import { View, Text } from "react-native";
 
 import { useTheme } from "@react-navigation/native";
-import createStyles from "../../chat-list/ListChatScreen.style";
+import createStyles from "../../chat-list/chat.list.screen.style";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Avatar from "@shared-components/user/Avatar";
 import { TypedGeneralRoomChat } from "@services/models/ChatModels";
-import { getFormatDayMessage } from "utils/date";
+import { getFormatDayMessage } from "utils/date.utils";
 import CommonStyle from "@theme/styles";
 import { setViewRoom } from "@services/api/chatApi";
-import { SCREENS } from "@shared-constants";
+import { SCREENS } from "constants";
 import * as NavigationService from "react-navigation-helpers";
 
 const avatarSize = 64;

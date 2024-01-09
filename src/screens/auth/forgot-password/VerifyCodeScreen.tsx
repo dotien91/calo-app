@@ -16,7 +16,7 @@ import createStyles from "./ForgotPasswordScreen.style";
 import ViewTermPolicy from "../components/TermPolicyView";
 import InputHook from "@shared-components/form/InputHookForm";
 import { useForm } from "react-hook-form";
-import { SCREENS } from "@shared-constants";
+import { SCREENS } from "constants";
 import { translations } from "@localization";
 import GoBackButton from "../components/GoBackButton";
 import IconSvg from "assets/svg";
@@ -25,8 +25,8 @@ import {
   closeSuperModal,
   showLoading,
   showErrorModal,
-} from "@helpers/SuperModalHelper";
-import { IVerifyCode } from "@services/models";
+} from "@helpers/super.modal.helper";
+import { IVerifyCode } from "models";
 
 export default function VerifyCodeScreen() {
   const theme = useTheme();

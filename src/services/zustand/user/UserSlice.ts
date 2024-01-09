@@ -1,5 +1,5 @@
 import { StoreSlice } from "@zustand";
-import { TypedUser } from "@services/models";
+import { TypedUser } from "models";
 
 export interface UserSlice {
   userData: TypedUser | null;

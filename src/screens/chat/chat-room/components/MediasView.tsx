@@ -4,7 +4,7 @@ import { StyleSheet, View } from "react-native";
 import CommonStyle from "@theme/styles";
 import { TypedChatMediaLocal } from "@services/models/ChatModels";
 import FastImage from "react-native-fast-image";
-import VideoPlayer from "../../../../shared/components/VideoPlayer";
+import VideoPlayer from "../../../../shared/components/video.player.component";
 import MessageAudio from "@screens/chat/chat-room/components/audio/MessageAudio";
 
 interface IMediasView {
