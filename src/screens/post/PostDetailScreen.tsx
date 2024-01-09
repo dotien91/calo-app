@@ -39,10 +39,7 @@ import {
   showLoading,
   showToast,
 } from "@helpers/SuperModalHelper";
-import BottomSheet, {
-  BottomSheetBackdrop,
-  BottomSheetScrollView,
-} from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import createStyles from "./Post.style";
 import { SCREENS } from "@shared-constants";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
@@ -377,11 +374,13 @@ const PostDetail = (props: PostDetailProps) => {
                 gap: 10,
               }}
             >
-              <Text>
+              <Text style={{ color: colors.text }}>
                 {translations.replying} {replyItem?.user_id?.display_name}
               </Text>
               <Pressable onPress={deleteReplying}>
-                <Text>{translations.cancel}</Text>
+                <Text style={{ color: colors.text }}>
+                  {translations.cancel}
+                </Text>
               </Pressable>
             </View>
           )}
@@ -392,8 +391,10 @@ const PostDetail = (props: PostDetailProps) => {
                 flex: 1,
                 justifyContent: "center",
                 paddingVertical: 10,
+                color: colors.text,
               }}
               placeholder={translations.comment}
+              placeholderTextColor={colors.placeholder}
               value={value}
               onChangeText={setValue}
               multiline
@@ -420,15 +421,15 @@ const PostDetail = (props: PostDetailProps) => {
             borderTopRightRadius: 16,
             backgroundColor: colors.background,
           }}
-          backdropComponent={(props) => (
-            <BottomSheetBackdrop
-              {...props}
-              disappearsOnIndex={-1}
-              appearsOnIndex={0}
-              pressBehavior={"close"}
-              opacity={0.1}
-            />
-          )}
+          // backdropComponent={(props) => (
+          //   <BottomSheetBackdrop
+          //     {...props}
+          //     disappearsOnIndex={-1}
+          //     appearsOnIndex={0}
+          //     pressBehavior={"close"}
+          //     opacity={0.1}
+          //   />
+          // )}
           backgroundComponent={CustomBackground}
         >
           <View style={[{ paddingHorizontal: 16, flex: 1 }]}>
@@ -601,15 +602,15 @@ const PostDetail = (props: PostDetailProps) => {
             borderTopRightRadius: 16,
             backgroundColor: colors.background,
           }}
-          backdropComponent={(props) => (
-            <BottomSheetBackdrop
-              {...props}
-              disappearsOnIndex={-1}
-              appearsOnIndex={0}
-              pressBehavior={"close"}
-              opacity={0.1}
-            />
-          )}
+          // backdropComponent={(props) => (
+          //   <BottomSheetBackdrop
+          //     {...props}
+          //     disappearsOnIndex={-1}
+          //     appearsOnIndex={0}
+          //     pressBehavior={"close"}
+          //     opacity={0.1}
+          //   />
+          // )}
           backgroundComponent={CustomBackground}
         >
           <View
@@ -759,13 +760,14 @@ const PostDetail = (props: PostDetailProps) => {
             </View>
             <View style={styles.viewInput}>
               <TextInput
-                style={{ color: colors.textInput }}
+                style={{ color: colors.text }}
                 placeholder="Edit Comment"
                 value={valueEdit}
                 onChangeText={(text) => {
                   setValueEdit(text);
                   setDisableUpdate(false);
                 }}
+                placeholderTextColor={colors.placeholder}
               />
             </View>
             <View style={styles.viewButton}>

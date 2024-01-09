@@ -1,12 +1,5 @@
 import React, { useMemo, useEffect } from "react";
-import {
-  View,
-  FlatList,
-  Image,
-  useWindowDimensions,
-  SafeAreaView,
-  Text,
-} from "react-native";
+import { View, FlatList, Image, useWindowDimensions, Text } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import * as NavigationService from "react-navigation-helpers";
@@ -124,11 +117,11 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
 
   const Welcome = () => (
     <>
-      <Text onPress={loginGoogle} h1 bold color={colors.text}>
+      <Text onPress={loginGoogle} h1 bold style={{ color: colors.text }}>
         Hello Kuray
       </Text>
-      <Text color={colors.placeholder}>Welcome Back</Text>
-      <Text onPress={handleNewPost} color={colors.placeholder}>
+      <Text style={{ color: colors.text }}>Welcome Back</Text>
+      <Text onPress={handleNewPost} style={{ color: colors.text }}>
         New post
       </Text>
     </>
@@ -187,7 +180,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
   );
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={CommonStyle.safeAreaView}>
       <HeaderHome />
       <TabView
         style={{ flex: 1 }}
@@ -197,7 +190,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 

@@ -57,8 +57,9 @@ const HeaderHome = () => {
           color={colors.text}
         />
         <TextInput
-          style={CommonStyle.flex1}
+          style={[CommonStyle.flex1, { color: colors.text }]}
           placeholder={translations.search}
+          placeholderTextColor={colors.placeholder}
           editable={false}
         />
       </Pressable>

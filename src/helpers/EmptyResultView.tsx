@@ -5,6 +5,7 @@ import { View, Text } from "react-native";
 import CommonStyle from "@theme/styles";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { palette } from "@theme/themes";
+import { useTheme } from "@react-navigation/native";
 
 interface IEmptyResultView {
   title?: string;
@@ -19,6 +20,8 @@ const EmptyResultView = ({
   icon,
   lottieJson,
 }: IEmptyResultView) => {
+  const theme = useTheme();
+  const { colors } = theme;
   return (
     <View
       style={{
@@ -46,11 +49,22 @@ const EmptyResultView = ({
         />
       )}
       <Text
-        style={{ ...CommonStyle.hnBold, textAlign: "center", marginBottom: 14 }}
+        style={{
+          ...CommonStyle.hnBold,
+          textAlign: "center",
+          marginBottom: 14,
+          color: colors.text,
+        }}
       >
         {title}
       </Text>
-      <Text style={{ ...CommonStyle.hnRegular, textAlign: "center" }}>
+      <Text
+        style={{
+          ...CommonStyle.hnRegular,
+          textAlign: "center",
+          color: colors.text,
+        }}
+      >
         {desc}
       </Text>
     </View>
