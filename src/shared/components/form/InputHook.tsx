@@ -12,6 +12,7 @@ import {
 import { Controller } from "react-hook-form";
 
 import { palette } from "@theme/themes";
+import CommonStyle from "@theme/styles";
 
 interface InputPropsType {
   type: "text" | "number" | "email" | "password";
@@ -105,8 +106,8 @@ const styles = StyleSheet.create({
     gap: 15,
   },
   input: {
-    // ...CommonStyle.borderStyle,
-    flex: 1,
+    ...CommonStyle.flex1,
+
     // ...CommonStyle.mb6,
   },
   errorText: {

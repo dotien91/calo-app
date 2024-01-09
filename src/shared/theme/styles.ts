@@ -5,6 +5,7 @@ import {
   getBottomSpace,
   getStatusBarHeight,
 } from "react-native-iphone-screen-helper";
+import { isAndroid } from "@freakycoder/react-native-helpers";
 
 const flexBase: FlexStyle = {
   flexDirection: "row",
@@ -97,7 +98,7 @@ const CommonStyle = StyleSheet.create({
   safeAreaView: {
     flex: 1,
     marginTop: getStatusBarHeight(),
-    marginBottom: getBottomSpace(),
+    marginBottom: isAndroid ? getBottomSpace() : 0,
   },
 });
 

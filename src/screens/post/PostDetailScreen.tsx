@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 
-import ItemPost from "@screens/post/components/ItemPostDetail/ItemPostDetail";
+import ItemPost from "@screens/post/components/item-post-detail/ItemPostDetail";
 import {
   blockUser,
   deleteComment,
@@ -28,7 +28,7 @@ import {
   Keyboard,
 } from "react-native";
 import { isIos } from "utils/helpers/device-ui";
-import ItemComment from "./components/ItemComment/ItemComment";
+import ItemComment from "./components/item-comment/ItemComment";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";
 import * as NavigationService from "react-navigation-helpers";
@@ -298,7 +298,7 @@ const PostDetail = (props: PostDetailProps) => {
             color: colors.text,
           }}
         >
-          {translations.post.post}
+          {translations.post.posts}
         </Text>
       </View>
     );
@@ -317,7 +317,7 @@ const PostDetail = (props: PostDetailProps) => {
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1 }}
+      style={CommonStyle.flex1}
       behavior={isIos ? "height" : undefined}
     >
       <View style={[styles.container, isForcus ? { marginBottom: 0 } : {}]}>
@@ -388,7 +388,7 @@ const PostDetail = (props: PostDetailProps) => {
             <TextInput
               ref={refInput}
               style={{
-                flex: 1,
+                ...CommonStyle.flex1,
                 justifyContent: "center",
                 paddingVertical: 10,
                 color: colors.text,
@@ -432,7 +432,7 @@ const PostDetail = (props: PostDetailProps) => {
           // )}
           backgroundComponent={CustomBackground}
         >
-          <View style={[{ paddingHorizontal: 16, flex: 1 }]}>
+          <View style={[{ paddingHorizontal: 16, ...CommonStyle.flex1 }]}>
             {/* Check post */}
             {userData?._id === data?.user_id?._id ? (
               <BottomSheetScrollView style={CommonStyle.flex1}>
@@ -616,8 +616,8 @@ const PostDetail = (props: PostDetailProps) => {
           <View
             style={[
               {
+                ...CommonStyle.flex1,
                 paddingHorizontal: 16,
-                flex: 1,
               },
             ]}
           >
@@ -717,8 +717,8 @@ const PostDetail = (props: PostDetailProps) => {
           <SafeAreaView
             style={[
               {
+                ...CommonStyle.flex1,
                 paddingHorizontal: 16,
-                flex: 1,
               },
             ]}
           >

@@ -1,3 +1,4 @@
+import CommonStyle from "@theme/styles";
 import { StyleSheet } from "react-native";
 import { ExtendedTheme } from "@react-navigation/native";
 
@@ -13,11 +14,11 @@ export default (theme: ExtendedTheme) => {
       gap: 10,
     },
     viewInput: {
+      ...CommonStyle.flex1,
       flexDirection: "row",
       borderWidth: 1,
       borderColor: colors.borderColor,
       borderRadius: 2,
-      flex: 1,
       height: 40,
       paddingHorizontal: 10,
       gap: 10,

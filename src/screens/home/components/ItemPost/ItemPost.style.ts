@@ -28,21 +28,21 @@ export default (theme: ExtendedTheme) => {
       borderRadius: BORDER_RADIUS1,
     },
     image12: {
-      flex: 1,
+      ...CommonStyle.flex1,
       borderTopLeftRadius: BORDER_RADIUS2,
       borderBottomLeftRadius: BORDER_RADIUS2,
     },
     image22: {
-      flex: 1,
+      ...CommonStyle.flex1,
       borderTopRightRadius: BORDER_RADIUS2,
       borderBottomRightRadius: BORDER_RADIUS2,
     },
     image23: {
-      flex: 1,
+      ...CommonStyle.flex1,
       borderTopRightRadius: BORDER_RADIUS2,
     },
     image33: {
-      flex: 1,
+      ...CommonStyle.flex1,
       borderBottomRightRadius: BORDER_RADIUS2,
     },
 
@@ -53,9 +53,9 @@ export default (theme: ExtendedTheme) => {
       alignItems: "center",
     },
     viewLike: {
+      ...CommonStyle.flex1,
       flexDirection: "row",
       alignItems: "center",
-      flex: 1,
     },
     textLikeShare: {
       ...CommonStyle.hnRegular,

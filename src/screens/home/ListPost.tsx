@@ -99,7 +99,7 @@ const ListPost = () => {
         }}
       >
         <LottieView
-          style={{ flex: 1 }}
+          style={CommonStyle.flex1}
           resizeMode="cover"
           source={require("./lottie/loading.json")}
           autoPlay
@@ -113,11 +113,10 @@ const ListPost = () => {
     return (
       <View
         style={{
+          ...CommonStyle.center,
+          ...CommonStyle.flex1,
           backgroundColor: colors.background,
-          justifyContent: "center",
-          alignItems: "center",
           paddingVertical: 40,
-          flex: 1,
           minHeight: 500,
         }}
       >
@@ -147,7 +146,7 @@ const ListPost = () => {
   return (
     <View
       style={{
-        flex: 1,
+        ...CommonStyle.flex1,
         backgroundColor: colors.background,
       }}
     >
@@ -181,10 +180,10 @@ const ListPost = () => {
         )}
         backgroundComponent={CustomBackground}
       >
-        <View style={[{ paddingHorizontal: 16, flex: 1 }]}>
+        <View style={[{ paddingHorizontal: 16, ...CommonStyle.flex1 }]}>
           {/* Check post */}
           {userData?._id === itemSelectd?.user_id?._id ? (
-            <BottomSheetScrollView style={{ flex: 1 }}>
+            <BottomSheetScrollView style={CommonStyle.flex1}>
               <Pressable
                 onPress={() => {
                   Alert.alert("", translations.home.deletePost, [
@@ -229,7 +228,7 @@ const ListPost = () => {
               </Pressable>
             </BottomSheetScrollView>
           ) : (
-            <BottomSheetScrollView style={{ flex: 1 }}>
+            <BottomSheetScrollView style={CommonStyle.flex1}>
               <Pressable style={styles.buttonFlag}>
                 <Icon
                   type={IconType.Ionicons}
@@ -339,21 +338,5 @@ const ListPost = () => {
     </View>
   );
 };
-
-// const styles = StyleSheet.create({
-//   buttonFlag: {
-//     height: 25,
-//     marginTop: 20,
-//     flexDirection: "row",
-//     color: palette.highlight,
-//     alignItems: "center",
-//   },
-//   textButton: {
-//     ...CommonStyle.hnRegular,
-//     fontSize: 16,
-//     color: palette.text,
-//     paddingLeft: 18,
-//   },
-// });
 
 export default ListPost;

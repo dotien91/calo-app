@@ -84,7 +84,7 @@ const ItemPost = ({
             flexDirection: "row",
             alignItems: "center",
             gap: GAP_HEADER,
-            flex: 1,
+            ...CommonStyle.flex1,
           }}
         >
           <Text
@@ -289,7 +289,7 @@ const ItemPost = ({
     >
       <View style={styles.container}>
         {Avatar}
-        <View style={{ paddingLeft: PADDING_LEFT, flex: 1 }}>
+        <View style={{ paddingLeft: PADDING_LEFT, ...CommonStyle.flex1 }}>
           {HeaderItemPost}
           {HasTag}
           {ContentStatus}

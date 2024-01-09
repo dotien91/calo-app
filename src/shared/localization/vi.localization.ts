@@ -132,6 +132,7 @@ export default {
   level: "Cấp độ",
   post: {
     post: "Đăng",
+    posts: "Bài viết",
     createPost: "Tạo bài viết",
     category: "Chuyên mục",
     title: "Tiêu đề",

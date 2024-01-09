@@ -35,7 +35,7 @@ export default (theme: ExtendedTheme) => {
     viewLike: {
       flexDirection: "row",
       alignItems: "center",
-      flex: 1,
+      ...CommonStyle.flex1,
     },
     textLikeShare: {
       ...CommonStyle.hnRegular,

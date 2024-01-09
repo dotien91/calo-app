@@ -6,19 +6,13 @@ import {
   View,
   TouchableOpacity,
   ActivityIndicator,
-  Dimensions,
-  Pressable,
 } from "react-native";
 import Modal from "react-native-modal";
 
 import cmStyle from "@theme/styles";
 import eventEmitter from "@services/event-emitter";
 import { palette } from "@theme/themes";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
-import VideoPlayer from "./VideoPlayer";
-import PageScroll from "@shared-components/page-scroll/PageScroll";
-import ImageLoad from "@screens/post/components/ImageLoad";
-const { width } = Dimensions.get("screen");
+import PagerScrollMedia from "./page-scroll-media/PageScrollMedia";
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
 // using normal one.
@@ -32,6 +26,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
   const [content, setContent] = useState([]);
   const [isLoadingView, setIsLoadingView] = useState(false);
   const [listMedia, setListMeia] = useState([]);
+  const [indexMedia, setIndexMedia] = useState(0);
   const scrollViewRef = useRef<any>(null);
 
   useEffect(() => {
@@ -56,9 +51,10 @@ const SuperModal: React.FC<SuperModalProps> = () => {
 
   const showMedia = (_listMedia: object) => {
     setListMeia(_listMedia.listLink);
+    setIndexMedia(_listMedia.index);
     setTimeout(() => {
       scrollViewRef.current?.scrollToIndex(_listMedia.index);
-    }, 300);
+    }, 2);
     setVisible(true);
   };
 
@@ -123,70 +119,11 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         // useNativeDriver={true}
         style={[styles.modal]}
       >
-        <View style={styles.modalInner}>
-          <View style={styles.headerContainer}>
-            <Pressable onPress={closeModal}>
-              <Icon
-                size={25}
-                name="close-circle-outline"
-                type={IconType.Ionicons}
-                color={palette.text}
-              />
-            </Pressable>
-          </View>
-
-          <PageScroll
-            ref={scrollViewRef}
-            scrollEnabled={true}
-            length={listMedia.length}
-          >
-            {listMedia.map((item, index) => {
-              const media_width = item?.media_meta?.find(
-                (i) => i.key === "width",
-              )?.value;
-              const media_height = item?.media_meta?.find(
-                (i) => i.key === "height",
-              )?.value;
-              const heightMedia =
-                media_width && media_height
-                  ? width / (Number(media_width) / Number(media_height))
-                  : width;
-              if (item?.type === "image") {
-                return (
-                  <View
-                    style={{
-                      flex: 1,
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <ImageLoad
-                      source={{ uri: item?.url }}
-                      style={[styles.image, { height: heightMedia }]}
-                      resizeMode="cover"
-                    />
-                  </View>
-                );
-              }
-              return (
-                <View
-                  key={index}
-                  style={{
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <VideoPlayer
-                    mediaUrl={item?.url}
-                    height={heightMedia}
-                    width={width}
-                  />
-                </View>
-              );
-            })}
-          </PageScroll>
-        </View>
+        <PagerScrollMedia
+          index={indexMedia}
+          listMedia={listMedia}
+          closeModal={closeModal}
+        />
       </Modal>
     );
   }
@@ -220,12 +157,12 @@ const styles = StyleSheet.create({
     ...cmStyle.flexCenter,
   },
   loadingView: {
-    flex: 1,
+    ...cmStyle.flex1,
     margin: 0,
   },
   modalInner: {
     minWidth: "60%",
-    backgroundColor: palette.white,
+    backgroundColor: palette.black,
     borderRadius: 6,
     padding: 30,
     overflow: "hidden",
@@ -247,17 +184,6 @@ const styles = StyleSheet.create({
     color: palette.white,
     fontSize: 16,
     ...cmStyle.hnSemiBold,
-  },
-
-  image: {
-    width: width,
-  },
-  headerContainer: {
-    flexDirection: "row",
-    paddingHorizontal: 16,
-    alignItems: "flex-end",
-    justifyContent: "flex-end",
-    width: "100%",
   },
 });
 

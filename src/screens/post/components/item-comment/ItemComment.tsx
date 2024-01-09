@@ -87,10 +87,10 @@ const ItemReply = ({
       <View style={{ flexDirection: "row", justifyContent: "center" }}>
         <View
           style={{
+            ...CommonStyle.flex1,
             flexDirection: "row",
             alignItems: "center",
             gap: 12,
-            flex: 1,
           }}
         >
           <Text
@@ -187,7 +187,7 @@ const ItemReply = ({
       }}
     >
       {AvatarRep}
-      <View style={{ paddingLeft: PADDING_LEFT, flex: 1 }}>
+      <View style={{ paddingLeft: PADDING_LEFT, ...CommonStyle.flex1 }}>
         {HeaderItemComment}
         {ContentStatus}
         <LikeCommentReply />
@@ -241,7 +241,7 @@ const ItemComment = ({ data, onPressReply, onPressMore }: ItemCommentProps) => {
             flexDirection: "row",
             alignItems: "center",
             gap: 12,
-            flex: 1,
+            ...CommonStyle.flex1,
           }}
         >
           <Text
@@ -365,7 +365,7 @@ const ItemComment = ({ data, onPressReply, onPressMore }: ItemCommentProps) => {
   return (
     <View style={styles.container}>
       {Avatar}
-      <View style={{ paddingLeft: PADDING_LEFT, flex: 1 }}>
+      <View style={{ paddingLeft: PADDING_LEFT, ...CommonStyle.flex1 }}>
         {HeaderItemComment}
         {ContentStatus}
         <LikeComment />

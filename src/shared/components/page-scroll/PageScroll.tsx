@@ -18,6 +18,7 @@ import {
   ViewProps,
 } from "react-native";
 import { palette } from "@theme/themes";
+import CommonStyle from "@theme/styles";
 const { width } = Dimensions.get("screen");
 const isAndroid = Platform.OS === "android";
 interface Props extends ViewProps {
@@ -144,11 +145,11 @@ const styles = StyleSheet.create({
   container: {
     width: width,
     backgroundColor: palette.background,
-    flex: 1,
+    ...CommonStyle.flex1,
   },
 
   content: {
-    flex: 1,
+    ...CommonStyle.flex1,
   },
 });
 

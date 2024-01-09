@@ -202,7 +202,7 @@ export default function PostScreen() {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={[styles.container]}>
         <KeyboardAvoidingView
-          style={{ flex: 1 }}
+          style={CommonStyle.flex1}
           behavior={isIos ? "height" : undefined}
         >
           <HeaderPost
@@ -211,7 +211,7 @@ export default function PostScreen() {
             pressGoBack={onGoBack}
             textPost={item._id ? translations.update : translations.post.post}
           />
-          <View style={{ flex: 1 }}>
+          <View style={CommonStyle.flex1}>
             <Pressable
               onPress={openListCategory}
               style={{ paddingHorizontal: 20 }}
@@ -308,7 +308,7 @@ export default function PostScreen() {
               )}
               backgroundComponent={CustomBackground}
             >
-              <View style={[{ paddingHorizontal: 16, flex: 1 }]}>
+              <View style={[{ paddingHorizontal: 16, ...CommonStyle.flex1 }]}>
                 <Text
                   style={{
                     ...CommonStyle.hnSemiBold,
@@ -320,7 +320,10 @@ export default function PostScreen() {
                   {translations.postCategory}
                 </Text>
                 <BottomSheetScrollView
-                  style={{ flex: 1, backgroundColor: colors.background }}
+                  style={{
+                    ...CommonStyle.flex1,
+                    backgroundColor: colors.background,
+                  }}
                 >
                   {listCategory.map((i) => (
                     <Pressable

@@ -44,7 +44,7 @@ const createStyles = (theme: ExtendedTheme) => {
     },
     inputDescription: {
       ...CommonStyle.hnRegular,
-      flex: 1,
+      ...CommonStyle.flex1,
       textAlignVertical: "top",
       paddingHorizontal: 20,
       fontSize: 16,
@@ -63,16 +63,15 @@ const createStyles = (theme: ExtendedTheme) => {
       backgroundColor: colors.borderColor,
       width: 50,
       height: 40,
-      justifyContent: "center",
-      alignItems: "center",
+      ...CommonStyle.center,
       borderRadius: 20,
     },
     textLink: {
       ...CommonStyle.hnLight,
+      ...CommonStyle.flex1,
       paddingHorizontal: 16,
       fontSize: 16,
       color: colors.mainColor2,
-      flex: 1,
     },
     category: {
       marginTop: 10,

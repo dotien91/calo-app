@@ -98,10 +98,10 @@ const ItemPost = ({ data, pressMore, refreshing }: ItemPostProps) => {
       <View style={{ flexDirection: "row", justifyContent: "center" }}>
         <View
           style={{
+            ...CommonStyle.flex1,
             flexDirection: "row",
             alignItems: "center",
             gap: GAP_HEADER,
-            flex: 1,
           }}
         >
           <Text
@@ -255,7 +255,7 @@ const ItemPost = ({ data, pressMore, refreshing }: ItemPostProps) => {
             />
             {listMedia[0].media_mime_type.includes("video") && <PlayVideo />}
           </Pressable>
-          <View style={{ flex: 1, gap: GAP_IMAGE }}>
+          <View style={{ ...CommonStyle.flex1, gap: GAP_IMAGE }}>
             <Pressable onPress={() => showImageVideo(1)} style={styles.image23}>
               <Image
                 style={styles.image23}
@@ -286,21 +286,27 @@ const ItemPost = ({ data, pressMore, refreshing }: ItemPostProps) => {
             />
             {listMedia[0].media_mime_type.includes("video") && <PlayVideo />}
           </Pressable>
-          <View style={{ flex: 1, gap: GAP_IMAGE }}>
-            <Pressable onPress={() => showImageVideo(1)} style={{ flex: 1 }}>
+          <View style={{ ...CommonStyle.flex1, gap: GAP_IMAGE }}>
+            <Pressable
+              onPress={() => showImageVideo(1)}
+              style={{ ...CommonStyle.flex1 }}
+            >
               <Image
                 style={{
-                  flex: 1,
+                  ...CommonStyle.flex1,
                   borderTopRightRadius: BORDER_RADIUS2,
                 }}
                 source={{ uri: listMedia[1].media_thumbnail }}
               />
               {listMedia[1].media_mime_type.includes("video") && <PlayVideo />}
             </Pressable>
-            <Pressable onPress={() => showImageVideo(2)} style={{ flex: 1 }}>
+            <Pressable
+              onPress={() => showImageVideo(2)}
+              style={{ ...CommonStyle.flex1 }}
+            >
               <Image
                 style={{
-                  flex: 1,
+                  ...CommonStyle.flex1,
                   borderBottomRightRadius: BORDER_RADIUS2,
                 }}
                 source={{ uri: listMedia[2].media_thumbnail }}
@@ -401,8 +407,8 @@ const ItemPost = ({ data, pressMore, refreshing }: ItemPostProps) => {
   return (
     <View style={styles.container}>
       {Avatar}
-      <View style={{ paddingLeft: PADDING_LEFT, flex: 1 }}>
-        <Pressable onPress={detailScreen} style={{ flex: 1 }}>
+      <View style={{ paddingLeft: PADDING_LEFT, ...CommonStyle.flex1 }}>
+        <Pressable onPress={detailScreen} style={CommonStyle.flex1}>
           {HeaderItemPost}
           {HasTag}
           {ContentStatus}
