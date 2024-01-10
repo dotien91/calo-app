@@ -1,6 +1,7 @@
 import { FlexStyle, StyleSheet } from "react-native";
 import font from "./fonts";
 import { palette } from "./themes";
+import { mhs } from "utils/size.utils";
 import {
   getBottomSpace,
   getStatusBarHeight,
@@ -68,18 +69,24 @@ const CommonStyle = StyleSheet.create({
   },
   hnRegular: {
     fontFamily: font.outfit.regular,
+    fontSize: 16,
+    color: palette.mainColor2,
   },
   hnBold: {
     fontFamily: font.outfit.bold,
+    fontSize: 16,
   },
   hnSemiBold: {
     fontFamily: font.outfit.semiBold,
+    fontSize: 16,
   },
   hnMedium: {
     fontFamily: font.outfit.medium,
+    fontSize: 16,
   },
   hnLight: {
     fontFamily: font.outfit.light,
+    fontSize: 16,
   },
   // hnItalic: {
   //   fontFamily: font.outfit.italic,
@@ -87,7 +94,12 @@ const CommonStyle = StyleSheet.create({
   borderStyle: {
     borderColor: palette.borderColor,
     borderStyle: "solid",
-    borderWidth: 0.5,
+    borderWidth: 1,
+  },
+  borderBottomStyle: {
+    borderColor: palette.borderColor,
+    borderStyle: "solid",
+    borderBottomWidth: 1,
   },
   text: {
     fontSize: 14,
@@ -95,11 +107,111 @@ const CommonStyle = StyleSheet.create({
     fontFamily: font.outfit.medium,
     color: palette.black,
   },
+  headerTitle: {
+    fontSize: 26,
+    fontFamily: font.outfit.bold,
+    color: palette.mainColor2,
+  },
+  btnActive: {
+    padding: 12,
+    paddingHorizontal: 20,
+    borderRadius: 99,
+    backgroundColor: palette.primary,
+  },
+  txtBtnActive: {
+    fontFamily: font.outfit.medium,
+    fontSize: 16,
+    color: palette.white,
+  },
   safeAreaView: {
     flex: 1,
     marginTop: getStatusBarHeight(),
     marginBottom: isAndroid ? getBottomSpace() : 0,
   },
 });
+
+interface Shadow {
+  shadowColor: string;
+  shadowOffset: {
+    width: number;
+    height: number;
+  };
+  shadowOpacity: number;
+  shadowRadius: number;
+
+  elevation: number;
+}
+
+export const Shadow7: Shadow = {
+  shadowColor: "#000",
+  shadowOffset: {
+    width: 0,
+    height: mhs(4, 1),
+  },
+  shadowOpacity: 0.3,
+  shadowRadius: mhs(4.65, 1),
+
+  elevation: 7,
+};
+
+export const Shadow5: Shadow = {
+  shadowColor: "#000",
+  shadowOffset: {
+    width: 0,
+    height: mhs(3, 1),
+  },
+  shadowOpacity: 0.25,
+  shadowRadius: mhs(3.65, 1),
+
+  elevation: 5,
+};
+
+export const Shadow3: Shadow = {
+  shadowColor: "#000",
+  shadowOffset: {
+    width: 0,
+    height: mhs(2, 1),
+  },
+  shadowOpacity: 0.2,
+  shadowRadius: mhs(2.22, 1),
+
+  elevation: 3,
+};
+
+export const Shadow2: Shadow = {
+  shadowColor: "#000",
+  shadowOffset: {
+    width: 0,
+    height: mhs(2, 1),
+  },
+  shadowOpacity: 0.4,
+  shadowRadius: mhs(1.41, 1),
+
+  elevation: 2,
+};
+
+export const Shadow1: Shadow = {
+  shadowColor: "#000",
+  shadowOffset: {
+    width: 0,
+    height: mhs(1, 1),
+  },
+  shadowOpacity: 0.1,
+  shadowRadius: mhs(0.7, 1),
+
+  elevation: 1,
+};
+
+export const Shadow0: Shadow = {
+  shadowColor: "#000",
+  shadowOffset: {
+    width: 0,
+    height: 0,
+  },
+  shadowOpacity: 0,
+  shadowRadius: 0,
+
+  elevation: 0,
+};
 
 export default CommonStyle;

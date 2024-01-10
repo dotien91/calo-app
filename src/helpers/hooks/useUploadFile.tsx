@@ -5,6 +5,8 @@ import * as React from "react";
 import { Platform, StyleSheet, Text, View, Dimensions } from "react-native";
 import { pick, types } from "react-native-document-picker";
 import { selectMedia } from "@helpers/file.helper";
+import getPath from "@flyerhq/react-native-android-uri-path";
+
 const { width } = Dimensions.get("screen");
 const isIos = Platform.OS === "ios";
 
@@ -209,6 +211,32 @@ export function useUploadFile(initData?: any[]) {
     }
   };
 
+  const uploadRecord = async (recordPaths: string) => {
+    const recordLocalData = [
+      {
+        uri: (!isIos ? "file://" : "") + getPath(recordPaths || ""),
+        name: Platform.select({
+          ios: "sound.m4a",
+          android: "sound.mp4",
+        }),
+        type: "audio/mpeg",
+      },
+    ];
+
+    setListFileLocal(recordLocalData);
+
+    const res = await uploadMultiFile(recordLocalData);
+    if (Array.isArray(res)) {
+      const data = recordLocalData.map((i, index) => ({
+        name: getFileName(i),
+        uri: getLinkUri(i),
+        type: i.type,
+        _id: res[index].callback?._id,
+      }));
+      setListFile(data);
+    }
+  };
+
   React.useEffect(() => {
     if (listFile?.length) {
       setIsUpLoadingFile(false);
@@ -222,6 +250,7 @@ export function useUploadFile(initData?: any[]) {
     onPressFile,
     renderFile,
     isUpLoadingFile,
+    uploadRecord,
   };
 }
 

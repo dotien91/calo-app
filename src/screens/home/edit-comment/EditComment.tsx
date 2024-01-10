@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-import { showErrorModal } from "@helpers/super.modal.helper";
 import { translations } from "@localization";
 import { useTheme } from "@react-navigation/native";
 import { updateCommentWithId } from "@services/api/post";
@@ -10,6 +9,7 @@ import { Keyboard, Pressable, SafeAreaView, Text, View } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { TextInput } from "react-native-gesture-handler";
 import * as NavigationService from "react-navigation-helpers";
+import { showErrorModal } from "@helpers/super.modal.helper";
 
 interface EditCommentProps {
   route: any;

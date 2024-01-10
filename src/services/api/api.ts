@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
-
+import lodash from "lodash";
+import { _getJson, USER_TOKEN } from "@services/local-storage";
 // eslint-disable-next-line import/no-extraneous-dependencies
 
 export const BASEURL = "https://api.edu-like.exam24h.com/api/";
@@ -28,14 +29,13 @@ export const apiClient = axios.create({
 // Add a request interceptor
 apiClient.interceptors.request.use(
   function (config) {
-    // const token = _getJson(TOKEN);
-    //fake token
-    /* eslint-disable max-len */
-    const token =
-      // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQ1Nzc3MDAsImRhdGEiOnsiX2lkIjoiNjU4MjVhYTQ5ZDY2YWM4YzQ3YzZiMDFkIiwia2V5IjoiOTNiOTgxN2VkZmQ1ZjU1NDBkZTI2MDNiM2M3N2JlZmEiLCJzaWduYXR1cmUiOiI2ZGI5M2RhMzE1YzRjNzBkNjY2YjNiNWRjZjIwYzUzMiIsInNlc3Npb24iOiI2NTgyNWFhNDlkNjZhYzhjNDdjNmIwMWYifSwiaWF0IjoxNzAzMDQxNzAwfQ.R0CrGfSMvi_V3T445vlp75Eetz_x6RHCrWtaSkXo0A8";
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzYyNDE3MDQsImRhdGEiOnsiX2lkIjoiNjU4OTIzMTM4MmE4MWQ2MTg3NzU4ZjdlIiwia2V5IjoiZjRiYzdmYjk4NWI1ZTk0MTdhODExZmVjMTBjMjVkNjQiLCJzaWduYXR1cmUiOiI3YWViNmQ2NGUzYTkyZWZjNGQ3YjAzZWQ0ZTM0ZjFhZiIsInNlc3Npb24iOiI2NTliYmVhODkxMTI1YjAzMDRiOTIzMWIifSwiaWF0IjoxNzA0NzA1NzA0fQ.pYupNtM60korCckbO5JOrmva7wK91gGbO1YwZG3lgdQ";
-    if (token) config.headers["X-Authorization"] = token;
-    // Do something before request is sent
+    const userToken = _getJson(USER_TOKEN);
+
+    // fake token for chat feature
+    // const userToken =
+    //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQ1OTAxNTEsImRhdGEiOnsiX2lkIjoiNjU4MjVkY2RmYjQyMmU4NmEyMDBlN2ZiIiwia2V5IjoiMjZjNGVkODZmM2RjOTUxN2JlYWViY2UxNTQzMmE0NWUiLCJzaWduYXR1cmUiOiJjNGI1NDEzMGQ0MjNhYzc2ZDA1MjYzODAzMWNhYzBmNyIsInNlc3Npb24iOiI2NTgyOGI0NzhmZTc2YzllMzE0YmM1YmQifSwiaWF0IjoxNzAzMDU0MTUxfQ.CsNtK6PcYGCW0hLfZrvAvxWoihVG9GkkyyMQmz6Oopg";
+
+    if (userToken) config.headers["X-Authorization"] = userToken;
     return config;
   },
   function (error) {
@@ -47,10 +47,15 @@ apiClient.interceptors.request.use(
 // Add a response interceptor
 apiClient.interceptors.response.use(
   (response) => {
-    return response?.data;
+    return response;
   },
   (error) => {
-    return Promise.reject({ ...error, isError: true });
+    console.log("error interceptors", error);
+    let message: string = error?.response?.data?.message;
+    if (lodash.isArray(message)) {
+      message = error?.response?.data?.message?.[0] || "";
+    }
+    return Promise.reject({ ...error, message, isError: true });
   },
 );
 

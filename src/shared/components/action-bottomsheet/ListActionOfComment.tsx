@@ -19,7 +19,6 @@ import {
 import ItemBottomSheet from "@shared-components/item-bottom-sheet/ItemBottomSheet";
 import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "constants";
-import { getBottomSpace } from "react-native-iphone-screen-helper";
 
 interface ListActionOfComment {
   data: any;

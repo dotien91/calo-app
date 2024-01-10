@@ -30,7 +30,7 @@ const HeaderHome = () => {
           source={
             userData?.user_avatar_thumbnail
               ? { uri: userData.user_avatar_thumbnail }
-              : require("assets/image/default_avatar.jpg")
+              : require("@assets/images/default_avatar.jpg")
           }
           style={{
             width: SIZE_AVATAR,

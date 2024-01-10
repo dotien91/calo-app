@@ -11,20 +11,25 @@ import { SCREENS } from "constants";
 import { DarkTheme, LightTheme, palette } from "@theme/themes";
 // ? Screens
 import HomeScreen from "@screens/home/HomeScreen";
-import SearchScreen from "@screens/search/SearchScreen";
 import DetailScreen from "@screens/detail/DetailScreen";
 import ProfileScreen from "@screens/profile/ProfileScreen";
 import NotificationScreen from "@screens/notification/NotificationScreen";
-import SettingScreenStyle from "@screens/setting/SettingScreen";
 import useStore from "@services/zustand/store";
-import IntroScreen from "@screens/login/intro/IntroScreen";
-import ChooseLanguageScreen from "@screens/login/chooselanguage/ChooseLanguageScreen";
-import WelcomeScreen from "@screens/login/welcome/WelcomeScreen";
-import LoginScreen from "@screens/login/loginscreen/LoginScreen";
-import LoginWithEmailScreen from "@screens/login/loginwithemail/LoginWithEmailScreen";
-import SignUpScreen from "@screens/login/signup/SignUpScreen";
-import ForgotPasswordScreen from "@screens/login/forgotpassword/ForgotPasswordScreen";
-import NewPasswordScreen from "@screens/login/createnewpassword/CreateNewPassword";
+import IntroScreen from "@screens/welcome/intro/intro.screen";
+import ChooseLanguageScreen from "@screens/welcome/choose-language/choose.language.screen";
+import WelcomeScreen from "@screens/welcome/welcome.screen";
+import LoginScreen from "@screens/auth/login/LoginScreen";
+import LoginWithEmailScreen from "@screens/auth/login/LoginWithEmailScreen";
+import SignUpScreen from "@screens/auth/sign-up/SignUpScreen";
+import ForgotPasswordScreen from "@screens/auth/forgot-password/ForgotPasswordScreen";
+import NewPasswordScreen from "@screens/auth/forgot-password/create.new.password";
+import VerifyCodeScreen from "@screens/auth/forgot-password/VerifyCodeScreen";
+import ListChatScreen from "@screens/chat/chat-list/chat.list.screen";
+import SearchRoomChatScreen from "@screens/chat/search-room/search.room.view";
+import ChatRoomScreen from "@screens/chat/chat-room/chat.room.screen";
+import LiveStreamScreen from "@screens/stream/stream.screen";
+import ViewStreamScreen from "@screens/stream/view.stream.screen";
+import SettingScreen from "@screens/setting/SettingScreen";
 import PostScreen from "@screens/post/PostScreen";
 import PostDetail from "@screens/post/PostDetailScreen";
 import EditComment from "@screens/home/edit-comment/EditComment";
@@ -52,8 +57,8 @@ const Navigation = () => {
       case SCREENS.HOME:
         iconName = focused ? "home" : "home-outline";
         break;
-      case SCREENS.SEARCH:
-        iconName = focused ? "search" : "search-outline";
+      case SCREENS.CHAT:
+        iconName = focused ? "chatbox" : "chatbox-outline";
         break;
       case SCREENS.NOTIFICATION:
         iconName = focused ? "notifications" : "notifications-outline";
@@ -90,13 +95,13 @@ const Navigation = () => {
         })}
       >
         <Tab.Screen name={SCREENS.HOME} component={HomeScreen} />
-        <Tab.Screen name={SCREENS.SEARCH} component={SearchScreen} />
+        <Tab.Screen name={SCREENS.CHAT} component={ListChatScreen} />
         <Tab.Screen
           name={SCREENS.NOTIFICATION}
           component={NotificationScreen}
         />
         <Tab.Screen name={SCREENS.PROFILE} component={ProfileScreen} />
-        <Tab.Screen name={SCREENS.SETTING} component={SettingScreenStyle} />
+        <Tab.Screen name={SCREENS.SETTING} component={SettingScreen} />
       </Tab.Navigator>
     );
   };
@@ -105,13 +110,13 @@ const Navigation = () => {
     if (!isFirstOpenApp) return null;
     return (
       <>
-        <Stack.Screen name={SCREENS.LOGININTRO} component={IntroScreen} />
+        <Stack.Screen name={SCREENS.INTRO} component={IntroScreen} />
 
         <Stack.Screen
-          name={SCREENS.LOGINCHOOSELANGUAGE}
+          name={SCREENS.CHOOSE_LANGUAGE}
           component={ChooseLanguageScreen}
         />
-        <Stack.Screen name={SCREENS.LOGINWELCOME} component={WelcomeScreen} />
+        <Stack.Screen name={SCREENS.WELCOME} component={WelcomeScreen} />
       </>
     );
   };
@@ -125,26 +130,37 @@ const Navigation = () => {
       theme={isDarkMode ? DarkTheme : LightTheme}
     >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {renderStackIntro()}
         <Stack.Screen name={SCREENS.HOME} component={renderTabNavigation} />
+        {renderStackIntro()}
+        <Stack.Screen
+          name={SCREENS.VIEW_LIVE_STREAM}
+          component={ViewStreamScreen}
+        />
+        <Stack.Screen name={SCREENS.LIVE_STREAM} component={LiveStreamScreen} />
         <Stack.Screen name={SCREENS.DETAIL}>
           {(props) => <DetailScreen {...props} />}
         </Stack.Screen>
-        <Stack.Screen name={SCREENS.LOGINPAGE} component={LoginScreen} />
+        <Stack.Screen name={SCREENS.LOGIN_PAGE} component={LoginScreen} />
         <Stack.Screen name={SCREENS.POST_SCREEN} component={PostScreen} />
         <Stack.Screen name={SCREENS.POST_DETAIL} component={PostDetail} />
         <Stack.Screen name={SCREENS.EDIT_COMMENT} component={EditComment} />
         <Stack.Screen
-          name={SCREENS.LOGINWITHEMAIL}
+          name={SCREENS.SEARCH_CHAT}
+          component={SearchRoomChatScreen}
+        />
+        <Stack.Screen name={SCREENS.CHAT_ROOM} component={ChatRoomScreen} />
+        <Stack.Screen
+          name={SCREENS.LOGIN_WITH_EMAIL}
           component={LoginWithEmailScreen}
         />
-        <Stack.Screen name={SCREENS.SIGNUP} component={SignUpScreen} />
+        <Stack.Screen name={SCREENS.SIGN_UP} component={SignUpScreen} />
         <Stack.Screen
-          name={SCREENS.FORGOTPASSWORD}
+          name={SCREENS.FORGOT_PASSWORD}
           component={ForgotPasswordScreen}
         />
+        <Stack.Screen name={SCREENS.VERIFY_CODE} component={VerifyCodeScreen} />
         <Stack.Screen
-          name={SCREENS.NEWPASSWORD}
+          name={SCREENS.NEW_PASSWORD}
           component={NewPasswordScreen}
         />
       </Stack.Navigator>

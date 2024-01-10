@@ -1,9 +1,10 @@
+import Toast from "react-native-toast-message";
+
 import cmStyle from "@theme/styles";
 import { palette } from "@theme/themes";
 import { ViewStyle } from "react-native";
 import { translations } from "@localization";
 import eventEmitter from "@services/event-emitter";
-import Toast from "react-native-toast-message";
 
 interface IBtnStyle {
   typeError?: boolean;
@@ -16,7 +17,13 @@ interface ContentBasicPopupType {
   title: string;
   desc?: string;
   btn?: IBtnStyle;
+  cb?: () => void;
 }
+
+export const typePopup = {
+  confirmPopup: "CONFIRM_POPup",
+};
+
 interface ItemMediaProps {
   url: string;
   type: string;
@@ -66,8 +73,35 @@ export const SuperModalHelper = {
           style: { backgroundColor: palette.error },
         };
     }
-    if (!btn) return data;
-    return [...data, btn];
+    if (!btn) return { data };
+    return { data: [...data, btn] };
+  },
+  getContentConfirmPopup({ title, desc, btn, cb }: ContentBasicPopupType) {
+    const data = [
+      {
+        text: title,
+        style: {
+          fontSize: 20,
+          lineHeight: 24,
+          ...cmStyle.hnBold,
+          color: palette.text,
+          textAlign: "center",
+          marginBottom: 12,
+        },
+      },
+      {
+        text: desc,
+        style: {
+          fontSize: 16,
+          lineHeight: 18,
+          ...cmStyle.hnRegular,
+          color: palette.text,
+          textAlign: "center",
+          marginBottom: 8,
+        },
+      },
+    ];
+    return { type: typePopup.confirmPopup, data: [...data, btn], cb };
   },
 };
 
@@ -77,6 +111,14 @@ export const showSuperModal = (params: ContentBasicPopupType) => {
     SuperModalHelper.getContentPopupNormal(params),
   );
 };
+
+export const showConfirmSuperModal = (params: ContentBasicPopupType) => {
+  eventEmitter.emit(
+    "show_super_modal",
+    SuperModalHelper.getContentConfirmPopup(params),
+  );
+};
+
 export const showDetailImageView = (
   listLink: ContentMediaPopup,
   index: number,

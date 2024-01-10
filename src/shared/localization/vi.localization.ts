@@ -9,8 +9,12 @@ export default {
   approve: "Đồng ý",
   cancel: "Huỷ",
   placeholderEmaiPhone: "Email/Số điện thoại",
+  placeholderEmail: "Email",
+  placeholderVerifyCode: "Mã xác thực",
   placeholderPasword: "Mật khẩu",
   forgotPassword: "Quên mật khẩu",
+  verifyCodeTitle: (text: string) =>
+    `Nhập mã xác thực nhận được từ email ${text}`,
   signIn: "Đăng nhặp",
   signUp: "Đăng ký",
   signInWith: "Đăng nhập với",
@@ -21,8 +25,8 @@ export default {
   enterOTP: "Nhập mã otp",
   updatePassword: "Cập nhật mật khẩu",
   save: "Lưu",
-  required: "không được để trống",
-  invalid: "không hợp lệ",
+  required: "Ô nhập không được để trống",
+  invalid: "Không hợp lệ",
   or: "Hoặc",
   welcomeBack: "Mừng bạn trở lại",
   minLength: (number: number) => `tối thiểu ${number} ký tự`,
@@ -35,6 +39,22 @@ export default {
   welcomeHeader: "Chào mừng đến với thế giới ngôn ngữ",
   welcomeDescription: "Học tập không bao giờ là dễ dàng, với IELTS bạn sẽ ..",
   startNow: "Bắt đầu",
+  createPassSuccess: "Tạo mật khẩu mới thành công!",
+  loginSuccess: "Đăng nhập thành công!",
+  error: {
+    unknown: "Có lỗi không xác định xảy ra!",
+    invalidPhoneEmail: "SĐT/Email không hợp lệ",
+    minLengthPass: "Mật khẩu phải ít nhất 6 kí tự",
+    passDoesNotMatch: "Mật khẩu xác nhận không trùng khớp",
+    errorPatternPass:
+      "Mật khẩu gồm ít nhất 8 kí tự ký tự có chữ cái, số và kí tự đặc biệt, viết thường và viết hoa",
+  },
+  channelLocked: "Kênh tạm thời đang bị khoá",
+  channelLockedDes: "Truy cập vào website kích hoạt kênh",
+  create_Channel: "Tạo Kênh",
+  unblock: "Mở khóa",
+  unblockDes: "Bạn có muốn mở khoá cho :username",
+  cancel: "Hủy",
   postCategory: "Chuyên mục",
   createPost: "Tạo bài viết",
   placeholderContent: "Nội dung",
@@ -98,6 +118,10 @@ export default {
   message: "Nhắn tin",
   filter: "Lọc",
   sort: "Sắp xếp",
+  save: "Lưu",
+  search: "Tìm kiếm...",
+  notInGroup: "Bạn đang không ở trong nhóm nào",
+  createChannel: "Bạn có thể tạo hệ thống theo những bước sau",
   search: "Tìm kiếm...",
   notInGroup: "Bạn đang không ở trong nhóm nào",
   createChannelDes: "Bạn có thể tạo hệ thống theo những bước sau",
@@ -112,6 +136,7 @@ export default {
   tomorrow: "ngày mai",
   from: "Từ",
   to: "Đến",
+  continue: "Tiếp tục",
   justNow: "Vừa xong",
   openFile: "Xem file",
   openFileDes: "Bạn có muốn mở file bằng trình duyệt không?",
@@ -158,6 +183,7 @@ export default {
     emptyCommentDes:
       "Hãy gửi ý kiến ​​của bạn cho bài viết này nhé! Vui lòng tuân thủ các nguyên tắc cộng đồng khi tham gia thảo luận tại IELTS Hunter.",
     emptyPost: "Chưa có bài viết nào",
+    postInvalid: "Bài đăng không tồn tại",
     emptyPostTitle: "Không có bài viết",
     emptyPostDes:
       "Khi một người bạn hoặc giáo viên đăng một bài viết, nó sẽ xuất hiện ở đây và sau đó bạn có thể thích, chia sẻ và bình luận về bài đăng đó.",
@@ -213,6 +239,7 @@ export default {
     send: "Gửi",
     forgotPasswordSuccess:
       "Gửi email thành công, vui lòng kiểm tra email của bạn!",
+    requireLogin: "Bạn cần đăng nhập để sử dựng chức năng này",
   },
   validate: {
     emailInvalid: "Email không tồn tại",
@@ -331,6 +358,8 @@ export default {
     emptyListChat:
       "Bạn chưa từng nói chuyện với ai. Hãy thử bắt đầu cuộc trò chuyện với",
     imageError: "Phát hiện ảnh lỗi. Vui lòng thử lại",
+    typeMessage: "Nhập tin nhắn...",
+    lastSeen: "Lần cuối xem: ",
   },
   keyboard: {
     writeSomething: "Nhập tin nhắn",
@@ -1036,5 +1065,43 @@ export default {
     scrollDownToSeeNewPost: "Kéo xuống để xem bài viết mới nhất",
     introducePoint: "Sử dụng để mở khoá các khoá học trong kênh",
     introduceDiamond: "Một loại tiền ảo dùng như tiền mua hàng",
+  },
+  noResult: "Không tìm thấy kết quả",
+  startChat: "Bắt đầu cuộc trò chuyện!",
+  startDesc:
+    "Gửi những tin nhắn hỏi về hành trình học tiếng anh hoặc thảo luận những chủ đề thú vị để bắt đầu cuộc trò chuyện",
+  noNewMessageTittle: "Không có tin nhắn mới",
+  noNewMessageDesc:
+    "Khi bạn liên lạc người khác hoặc trả phí khoá học, tin nhắn sẽ hiển thị ở đây",
+  actionView: {
+    sendYourAudioMessage: "Gửi tin nhắn âm thanh của bạn",
+    releaseToSend:
+      "Nhả để gửi, chuyển sang bên phải để sử dụng chế độ rảnh tay",
+    holdToRecord: "Giữ để ghi âm",
+  },
+  mediaKeyboard: {
+    chooseFromGallery: "Chọn từ thư viện",
+    permissionToRecord:
+      "Cần có quyền ghi, ghi dữ liệu và truy cập thư viện để sử dụng chức năng này",
+    grandPermission: "Cấp quyền",
+    weHaveRemovedErrorPhoto:
+      "Chúng tôi đã xóa các tệp ảnh hoặc video có lỗi dài hơn 1 phút",
+    attention: "Chú ý!",
+    imageIsError: "Ảnh bị lỗi!",
+    shootAVideo: "Quay video",
+    takeAPhoto: "Chụp ảnh",
+  },
+  keyboard: {
+    writeSomething: "Nhập tin nhắn...",
+  },
+  audio: {
+    pause: "Tạm dừng",
+    resume: "Tiếp tục",
+    stop: "Dừng",
+    send: "Gửi",
+  },
+  livestream: {
+    hello: "Xin chào",
+    inputTitle: "Nhập tiêu đề cho phiên livestream",
   },
 };

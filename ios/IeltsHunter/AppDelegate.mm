@@ -8,6 +8,9 @@
 #import <AuthenticationServices/AuthenticationServices.h>
 #import <SafariServices/SafariServices.h>
 #import <FBSDKCoreKit/FBSDKCoreKit-Swift.h>
+//feat livestream
+#import <AVFoundation/AVFoundation.h>
+
 @implementation AppDelegate
 
 
@@ -23,6 +26,40 @@
   [[FBSDKApplicationDelegate sharedInstance] application:application
                        didFinishLaunchingWithOptions:launchOptions];
   [RNSplashScreen show];  // here
+
+AVAudioSession *session = AVAudioSession.sharedInstance;
+  NSError *error = nil;
+
+  if (@available(iOS 10.0, *)) {
+      [session
+        setCategory:AVAudioSessionCategoryPlayAndRecord
+        mode:AVAudioSessionModeVoiceChat
+        options:AVAudioSessionCategoryOptionDefaultToSpeaker|AVAudioSessionCategoryOptionAllowBluetooth
+        error:&error];
+    } else {
+      SEL selector = NSSelectorFromString(@"setCategory:withOptions:error:");
+      
+      NSArray * optionsArray =
+          [NSArray arrayWithObjects:
+            [NSNumber numberWithInteger:AVAudioSessionCategoryOptionAllowBluetooth],
+            [NSNumber numberWithInteger:AVAudioSessionCategoryOptionDefaultToSpeaker], nil];
+      
+      [session
+        performSelector:selector
+        withObject: AVAudioSessionCategoryPlayAndRecord
+        withObject: optionsArray
+      ];
+      
+      [session 
+        setMode:AVAudioSessionModeVoiceChat 
+        error:&error
+      ];
+    }
+    
+    [session 
+      setActive:YES 
+      error:&error
+    ];
   return didFinish;
 }
 
@@ -39,6 +76,7 @@
 - (BOOL)application:(UIApplication *)application openURL:(nonnull NSURL *)url options:(nonnull NSDictionary<NSString *,id> *)options {
   return [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url options:options] || [GIDSignIn.sharedInstance handleURL:url];
 }
+
 
 
 /// This method controls whether the `concurrentRoot`feature of React18 is turned on or off.

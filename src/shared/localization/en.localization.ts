@@ -1,5 +1,4 @@
 /* eslint-disable max-len */
-
 export default {
   detail: "Detail",
   setting: "Setting",
@@ -9,8 +8,11 @@ export default {
   approve: "Approve",
   cancel: "Cancel",
   placeholderEmaiPhone: "Email/Phone number",
+  placeholderEmail: "Email",
+  placeholderVerifyCode: "Verify code",
   placeholderPasword: "Password",
   forgotPassword: "forgot password",
+  verifyCodeTitle: (text: string) => `Input verify code from email ${text}`,
   signIn: "Sign in",
   signUp: "Sign up",
   signInWith: "Sign in with",
@@ -36,6 +38,22 @@ export default {
   welcomeDescription:
     "Learning has never been to easy! With IELTS you will learn ...",
   startNow: "Start Now",
+  sendingError: "An error occurred!",
+  createPassSuccess: "Create new password success!",
+  loginSuccess: "Login success!",
+  error: {
+    unknown: "Unknow error!",
+    invalidPhoneEmail: "Phone/Email invalid",
+    passDoesNotMatch: "Confirmation password does not match",
+    minLengthPass: "Password must be at least 6 characters",
+    errorPatternPass:
+      "Password includes at least 8 characters including letters, numbers and special characters, lowercase and uppercase",
+  },
+  channelLocked: "The channel is temporarily locked",
+  channelLockedDes: "Go to website to active channel",
+  create_Channel: "Create Channel",
+  unblock: "Unblock",
+  cancel: "Cancel",
   postCategory: "Sategories",
   createPost: "Create post",
   placeholderContent: "Content",
@@ -95,6 +113,10 @@ export default {
   message: "Message",
   filter: "Filter",
   sort: "Sort",
+  save: "Save",
+  search: "Search...",
+  notInGroup: "You are not in any organization",
+  createChannel: "You can create an organization using the following ",
   search: "Search...",
   notInGroup: "You are not in any organization",
   createChannelDes: "You can create an organization using the following ",
@@ -109,6 +131,7 @@ export default {
   tomorrow: "Tomorrow",
   from: "From",
   to: "To",
+  continue: "Continue",
   justNow: "Just now",
   openFile: "Open File",
   openFileDes: "Do you want to open file in the browser?",
@@ -120,9 +143,9 @@ export default {
   selectImage: "Select Image",
   draft: "Draft",
   public: "Public",
-  cancelEdit: "Xác nhận hủy",
-  cancelEditDes: "Các chỉnh sửa sẽ không được lưu lại. Bạn có muốn tiếp tục?",
   post: {
+    cancelEdit: "Xác nhận hủy",
+    cancelEditDes: "Các chỉnh sửa sẽ không được lưu lại. Bạn có muốn tiếp tục?",
     post: "Post",
     posts: "Post",
     createPost: "Create Post",
@@ -198,6 +221,7 @@ export default {
     send: "Send",
     forgotPasswordSuccess:
       "Successfully sent an email, please check your email!",
+    requireLogin: "You need login for using this feature",
   },
   validate: {
     emailInvalid: "Email is invalid",
@@ -262,6 +286,8 @@ export default {
     noPeopleFound: "Currently this channel has no one to chat with",
     emptyListChat:
       "You have never talked to anyone. Try starting a conversation with",
+    typeMessage: "Type a message...",
+    lastSeen: "Last seen: ",
   },
   keyboard: {
     writeSomething: "Write something",
@@ -523,4 +549,39 @@ export default {
     goLive: "Go Live",
     finish: "Finish",
   },
+  noResult: "No result found!",
+  startChat: "Start a conversation!",
+  startChatDesc:
+    "Send a friendly message asking about their learning journey or discussing a common interest to start an interesting conversation.",
+  noNewMessageTittle: "No new messages",
+  noNewMessageDesc:
+    "When you contact others or purchase a course, you will receive messages here.",
+  actionView: {
+    sendYourAudioMessage: "Send your audio message",
+    releaseToSend: "Release to send, move to the right to use hand-free mode",
+    holdToRecord: "Hold to record",
+  },
+  mediaKeyboard: {
+    chooseFromGallery: "Choose from gallery",
+    permissionToRecord:
+      "Permission to record, write data and access library are required to use this function",
+    grandPermission: "Grant permission",
+    weHaveRemovedErrorPhoto:
+      "We have removed error photo files or videos longer than 1 minutes",
+    attention: "Attention!",
+    imageIsError: "Image is error!",
+    shootAVideo: "Shoot a video",
+    takeAPhoto: "Take a photo",
+  },
+  audio: {
+    pause: "Pause",
+    resume: "Resume",
+    stop: "Stop",
+    send: "Send",
+  },
+  livestream: {
+    hello: "Hello!",
+    inputTitle: "Input title for livestream",
+  },
 };
+/* eslint-disable max-len */

@@ -2,10 +2,11 @@ import create, { StoreApi } from "zustand";
 import { LocalStorage } from "@local-storage";
 import createAppSlice, { AppSlice } from "@services/zustand/app/AppSlice";
 import createUserSlice, { UserSlice } from "@services/zustand/user/UserSlice";
+import createChatSlice, { ChatSlice } from "@services/zustand/chat/ChatSlice";
 import createPostSlice, { PostSlice } from "@services/zustand/post/PostSlice";
 import { createJSONStorage, persist, StateStorage } from "zustand/middleware";
 
-export type StoreState = AppSlice & UserSlice & PostSlice;
+export type StoreState = AppSlice & UserSlice & PostSlice & ChatSlice;
 export type StoreSlice<T> = (
   set: StoreApi<StoreState>["setState"],
   get: StoreApi<StoreState>["getState"],
@@ -29,11 +30,18 @@ const useStore = create<StoreState>()(
     (set, get) => ({
       ...createAppSlice(set, get),
       ...createUserSlice(set, get),
+      ...createChatSlice(set, get),
       ...createPostSlice(set, get),
     }),
     {
       name: "store",
       storage: createJSONStorage(() => ZustandMMKVStorage),
+      partialize: (state) =>
+        Object.fromEntries(
+          Object.entries(state).filter(
+            ([key]) => !["searchFriendTxt"].includes(key),
+          ),
+        ),
     },
   ),
 );
