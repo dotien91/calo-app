@@ -47,7 +47,6 @@ const SuperModal: React.FC<SuperModalProps> = () => {
   }, []);
 
   const showBottomModal = (param: any) => {
-    console.log("data//...", param);
     setType(param.type);
     setContent(param.data);
     setVisible(true);

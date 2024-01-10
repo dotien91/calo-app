@@ -24,7 +24,7 @@ export default function StickBottomModal({
       style={[
         style,
         styles.modal,
-        { height: height * (heightPercent || 0.4), width },
+        { minHeight: height * (heightPercent || 0.1), width },
       ]}
     >
       {/* {typeof header === "string" ? (

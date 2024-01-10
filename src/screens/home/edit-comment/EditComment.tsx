@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { showErrorModal } from "@helpers/SuperModalHelper";
+import { showErrorModal } from "@helpers/super.modal.helper";
 import { translations } from "@localization";
 import { useTheme } from "@react-navigation/native";
 import { updateCommentWithId } from "@services/api/post";
@@ -38,9 +38,8 @@ const EditComment = (props: EditCommentProps) => {
       const itemupdate = {
         _id: data._id,
         content: txtEdit,
-        paren_id: data.parent_id || "",
+        parent_id: data.parent_id || "",
       };
-      console.log("item.update..", itemupdate);
       updateCommentWithId(params).then((res) => {
         if (!res.isError) {
           setItemUpdate(itemupdate);
