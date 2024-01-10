@@ -13,6 +13,7 @@ import useStore from "@services/zustand/store";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { convertLastActive } from "utils/time";
 import createStyles from "./ItemPostDetail.style";
+import { showStickBottom } from "@shared-components/stick-bottom/HomeStickBottomModal";
 
 const SIZE_AVATAR = 30;
 const BORDER_AVATAR = 12;
@@ -22,17 +23,11 @@ const PADDING_LEFT = 12;
 
 interface ItemPostProps {
   data: any;
-  pressMore: () => void;
   pressComment: () => void;
   pressImageVideo: (index: number) => void;
 }
 
-const ItemPost = ({
-  data,
-  pressMore,
-  pressComment,
-  pressImageVideo,
-}: ItemPostProps) => {
+const ItemPost = ({ data, pressComment, pressImageVideo }: ItemPostProps) => {
   const theme = useTheme();
   const { colors } = theme;
   const [isLike, setIsLike] = useState<boolean>(data?.is_like);
@@ -54,6 +49,10 @@ const ItemPost = ({
       setLikeNumber(data?.like_number);
     }
   }, [listLike, data]);
+
+  const _showStickBottom = () => {
+    showStickBottom(data, "post");
+  };
 
   const Avatar = useMemo(() => {
     return (
@@ -117,7 +116,7 @@ const ItemPost = ({
             {convertLastActive(data?.createdAt)}
           </Text>
         </View>
-        <Pressable onPress={pressMore}>
+        <Pressable onPress={_showStickBottom}>
           <Icon
             size={20}
             name="ellipsis-vertical"

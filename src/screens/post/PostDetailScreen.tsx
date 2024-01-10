@@ -1,17 +1,7 @@
 /* eslint-disable camelcase */
 
 import ItemPost from "@screens/post/components/item-post-detail/ItemPostDetail";
-import {
-  blockUser,
-  deleteComment,
-  deletePost,
-  followUser,
-  getListComment,
-  getPostDetail,
-  postComment,
-  unFollowUser,
-  updateCommentWithId,
-} from "@services/api/post";
+import { getListComment, getPostDetail, postComment } from "@services/api/post";
 import CommonStyle from "@theme/styles";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -21,33 +11,25 @@ import {
   Pressable,
   ScrollView,
   Text,
-  Alert,
   FlatList,
-  Dimensions,
-  SafeAreaView,
-  Keyboard,
 } from "react-native";
+import * as NavigationService from "react-navigation-helpers";
+import { isEmpty } from "lodash";
+
 import { isIos } from "utils/helpers/device-ui";
 import ItemComment from "./components/item-comment/ItemComment";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";
-import * as NavigationService from "react-navigation-helpers";
 import {
   closeSuperModal,
   showDetailImageView,
   showErrorModal,
   showLoading,
-  showToast,
 } from "@helpers/SuperModalHelper";
-import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import createStyles from "./Post.style";
-import { SCREENS } from "@shared-constants";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { useTheme } from "@react-navigation/native";
-import CustomBackground from "@shared-components/CustomBackgroundBottomSheet";
 import { useListData } from "utils/helpers/useListData";
-const HEIGHT_BOTTOM_SHEET = 230;
-const { height } = Dimensions.get("screen");
 
 interface PostDetailProps {
   route: any;
@@ -60,27 +42,15 @@ const PostDetail = (props: PostDetailProps) => {
   const [data, setData] = useState<any>();
 
   const userData = useStore((state) => state.userData);
-  const setUserData = useStore((state) => state.setUserData);
   const listCommentDelete = useStore((state) => state.listCommentDelete);
-  const addListCommentDelete = useStore((state) => state.addListCommentDelete);
-  const addListPostDelete = useStore((state) => state.addListPostDelete);
+  const itemUpdate = useStore((state) => state.itemUpdate);
 
-  const removeItemCommentDelete = useStore(
-    (state) => state.removeItemCommentDelete,
-  );
   const refInput = useRef<TextInput>(null);
-  const refBottomSheet = useRef<BottomSheet>(null);
-  const refBottomSheetCmt = useRef<BottomSheet>(null);
-  const refBottomSheetUpdateCmt = useRef<BottomSheet>(null);
 
   const theme = useTheme();
   const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
 
-  const snapPoints = useMemo(() => [HEIGHT_BOTTOM_SHEET], []);
-  const snapPointscmt = useMemo(() => [height], []);
-
-  const [itemCmtSelected, setItemCmtSelected] = useState<any>();
   useEffect(() => {
     if (isComment) {
       refInput.current?.focus();
@@ -118,8 +88,6 @@ const PostDetail = (props: PostDetailProps) => {
   };
   const [replyItem, setReplyItem] = useState<any>({});
   const [value, setValue] = useState("");
-  const [valueEdit, setValueEdit] = useState("");
-  const [disableUpdate, setDisableUpdate] = useState(true);
 
   useEffect(() => {
     if (dataItem) {
@@ -146,38 +114,31 @@ const PostDetail = (props: PostDetailProps) => {
     return dataUpdate;
   };
 
-  const updateListCommentUpdate = (itemUpdate) => {
+  const updateListCommentUpdate = (itemUpdate: any) => {
     const newData = [...listData];
     if (itemUpdate.parent_id) {
       const index = newData.findIndex((i) => i._id === itemUpdate.parent_id);
       const indexChild = newData[index].child.findIndex(
         (item) => item._id === itemUpdate._id,
       );
-      newData[index].child[indexChild].content = valueEdit;
+      newData[index].child[indexChild].content = itemUpdate?.content || "";
+      console.log();
       return [...newData];
     } else {
-      const index = newData.findIndex((i) => i._id === itemUpdate._id);
-      newData[index].content = valueEdit;
+      if (itemUpdate._id && itemUpdate.content) {
+        // newData[index].content = itemUpdate?.content || "";
+      }
       return [...newData];
     }
   };
 
-  const callApiUpdateComment = () => {
-    const params = { _id: itemCmtSelected._id, content: valueEdit };
-    setTimeout(() => {
-      refBottomSheetUpdateCmt.current?.close();
-    }, 100);
-    Keyboard.dismiss();
-    updateCommentWithId(params).then((res) => {
-      if (!res.isError) {
-        const newData = updateListCommentUpdate(itemCmtSelected);
-        setListData(newData);
-        setValueEdit("");
-      } else {
-        showErrorModal(res);
-      }
-    });
-  };
+  useEffect(() => {
+    if (!isEmpty(itemUpdate)) {
+      const newData = updateListCommentUpdate(itemUpdate);
+      // console.log("newData...", newData);
+      setListData(newData);
+    }
+  }, [itemUpdate]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const sendComment = async () => {
     const params = {
@@ -214,18 +175,6 @@ const PostDetail = (props: PostDetailProps) => {
     refInput.current?.focus();
   };
 
-  const showMoreItemComment = (item: any) => {
-    setItemCmtSelected(item);
-    setTimeout(() => {
-      refBottomSheetCmt.current?.expand();
-    }, 300);
-  };
-  const showMorePost = () => {
-    setTimeout(() => {
-      refBottomSheet.current?.expand();
-    }, 300);
-  };
-
   const [isForcus, setIsForcus] = useState(false);
 
   const showImageVideo = (index: number) => {
@@ -240,36 +189,6 @@ const PostDetail = (props: PostDetailProps) => {
       media_meta: i.media_meta,
     }));
     showDetailImageView(listLink, index, listMedia[0].media_type);
-  };
-  const deleteCommentWithid = async (id: string) => {
-    refBottomSheetCmt.current?.close();
-    deleteComment(id).then((res) => {
-      addListCommentDelete(id);
-      if (!res.isError) {
-        showToast({
-          type: "success",
-          message: `${translations.deleteSuccess} ${translations.comment}`,
-        });
-      } else {
-        showErrorModal(res);
-        removeItemCommentDelete(id);
-      }
-    });
-  };
-
-  const pressDeletePost = (id: string) => {
-    deletePost(id).then((resdelete) => {
-      if (!resdelete.isError) {
-        addListPostDelete(resdelete._id);
-        showToast({
-          type: "success",
-          message: translations.home.deletePostSuccess,
-        });
-        NavigationService.goBack();
-      } else {
-        showToast({ type: "error", message: translations.somethingWentWrong });
-      }
-    });
   };
 
   const HeaderPost = () => {
@@ -310,7 +229,6 @@ const PostDetail = (props: PostDetailProps) => {
         data={item}
         // key={index}
         onPressReply={pressReply}
-        onPressMore={showMoreItemComment}
       />
     );
   };
@@ -328,24 +246,10 @@ const PostDetail = (props: PostDetailProps) => {
         >
           <ItemPost
             data={data}
-            pressMore={showMorePost}
             pressComment={() => refInput.current?.focus()}
             pressImageVideo={showImageVideo}
           />
           <View style={CommonStyle.flex1}>
-            {/* {listData.length > 0 &&
-              listData
-                .filter((item) => listCommentDelete.indexOf(item._id) < 0)
-                ?.map((item, index) => {
-                  return (
-                    <ItemComment
-                      data={item}
-                      key={index}
-                      onPressReply={pressReply}
-                      onPressMore={showMoreItemComment}
-                    />
-                  );
-                })} */}
             <FlatList
               nestedScrollEnabled
               data={listData.filter(
@@ -411,386 +315,6 @@ const PostDetail = (props: PostDetailProps) => {
             </Pressable>
           </View>
         </View>
-        <BottomSheet
-          snapPoints={snapPoints}
-          index={-1}
-          enablePanDownToClose
-          ref={refBottomSheet}
-          style={{
-            borderTopLeftRadius: 16,
-            borderTopRightRadius: 16,
-            backgroundColor: colors.background,
-          }}
-          // backdropComponent={(props) => (
-          //   <BottomSheetBackdrop
-          //     {...props}
-          //     disappearsOnIndex={-1}
-          //     appearsOnIndex={0}
-          //     pressBehavior={"close"}
-          //     opacity={0.1}
-          //   />
-          // )}
-          backgroundComponent={CustomBackground}
-        >
-          <View style={[{ paddingHorizontal: 16, ...CommonStyle.flex1 }]}>
-            {/* Check post */}
-            {userData?._id === data?.user_id?._id ? (
-              <BottomSheetScrollView style={CommonStyle.flex1}>
-                <Pressable
-                  onPress={() => {
-                    Alert.alert("", translations.home.deletePost, [
-                      {
-                        text: translations.delete,
-                        onPress: () => pressDeletePost(data._id),
-                      },
-                      {
-                        text: translations.cancel,
-                        onPress: () => console.log("Cancel Pressed"),
-                        style: "cancel",
-                      },
-                    ]);
-                    refBottomSheet.current?.close();
-                  }}
-                  style={styles.buttonFlagPostDetail}
-                >
-                  <Icon
-                    size={24}
-                    name="trash-outline"
-                    type={IconType.Ionicons}
-                    color={colors.text}
-                  />
-                  <Text style={styles.textButtonPostDetail}>
-                    {translations.delete}
-                  </Text>
-                </Pressable>
-                <Pressable
-                  onPress={() => {
-                    NavigationService.push(SCREENS.POST_SCREEN, {
-                      item: data,
-                    });
-                    refBottomSheet.current?.close();
-                  }}
-                  style={styles.buttonFlagPostDetail}
-                >
-                  <Icon
-                    size={24}
-                    name="create-outline"
-                    type={IconType.Ionicons}
-                    color={colors.text}
-                  />
-                  <Text style={styles.textButtonPostDetail}>
-                    {translations.edit}
-                  </Text>
-                </Pressable>
-              </BottomSheetScrollView>
-            ) : (
-              <BottomSheetScrollView style={CommonStyle.flex1}>
-                <Pressable style={styles.buttonFlagPostDetail}>
-                  <Icon
-                    size={24}
-                    name="bookmark-outline"
-                    type={IconType.Ionicons}
-                    color={colors.text}
-                  />
-                  <Text style={styles.textButtonPostDetail}>
-                    {translations.post.save}
-                  </Text>
-                </Pressable>
-                <Pressable
-                  onPress={() => {
-                    const params = { partner_id: data?.user_id?._id };
-                    if (
-                      userData &&
-                      userData.follow_users.indexOf(data?.user_id?._id) >= 0
-                    ) {
-                      unFollowUser(params).then((resUnfollow) => {
-                        if (!resUnfollow.isError && userData) {
-                          setUserData({
-                            ...userData,
-                            follow_users: [
-                              ...userData.follow_users.filter(
-                                (i) => i !== dataItem?.user_id?._id,
-                              ),
-                            ],
-                          });
-                        } else {
-                          showErrorModal(resUnfollow);
-                        }
-                      });
-                    } else {
-                      followUser(params).then((resFollow) => {
-                        if (!resFollow.isError && userData) {
-                          setUserData({
-                            ...userData,
-                            follow_users: [
-                              ...userData.follow_users,
-                              dataItem?.user_id?._id,
-                            ],
-                          });
-                        } else showErrorModal(resFollow);
-                      });
-                    }
-                    refBottomSheet.current?.close();
-                  }}
-                  style={styles.buttonFlagPostDetail}
-                >
-                  <Icon
-                    size={24}
-                    name="person-add-outline"
-                    type={IconType.Ionicons}
-                    color={colors.text}
-                  />
-                  <Text style={styles.textButtonPostDetail}>
-                    {userData.follow_users.indexOf(data?.user_id?._id) < 0
-                      ? translations.follow
-                      : translations.unfollow}{" "}
-                    {data?.user_id?.display_name}
-                  </Text>
-                </Pressable>
-                <Pressable
-                  onPress={() => {
-                    const params = { partner_id: data?.user_id?._id };
-                    blockUser(params).then((resBlock) => {
-                      if (!resBlock.isError) {
-                        showToast({
-                          type: "success",
-                          message: translations.blockedUser.replace(
-                            ":username",
-                            data?.user_id?.display_name || "",
-                          ),
-                        });
-                      } else {
-                        showErrorModal(resBlock);
-                      }
-                    });
-                    refBottomSheet.current?.close();
-                  }}
-                  style={styles.buttonFlagPostDetail}
-                >
-                  <Icon
-                    size={24}
-                    name="ban-outline"
-                    type={IconType.Ionicons}
-                    color={colors.text}
-                  />
-                  <Text style={styles.textButtonPostDetail}>
-                    {translations.block} {data?.user_id?.display_name}
-                  </Text>
-                </Pressable>
-                <Pressable style={styles.buttonFlagPostDetail}>
-                  <Icon
-                    size={24}
-                    name="flag-outline"
-                    type={IconType.Ionicons}
-                    color={colors.text}
-                  />
-                  <Text style={styles.textButtonPostDetail}>
-                    {translations.post.report}
-                  </Text>
-                </Pressable>
-              </BottomSheetScrollView>
-            )}
-          </View>
-        </BottomSheet>
-        <BottomSheet
-          snapPoints={snapPoints}
-          index={-1}
-          enablePanDownToClose
-          ref={refBottomSheetCmt}
-          style={{
-            borderTopLeftRadius: 16,
-            borderTopRightRadius: 16,
-            backgroundColor: colors.background,
-          }}
-          // backdropComponent={(props) => (
-          //   <BottomSheetBackdrop
-          //     {...props}
-          //     disappearsOnIndex={-1}
-          //     appearsOnIndex={0}
-          //     pressBehavior={"close"}
-          //     opacity={0.1}
-          //   />
-          // )}
-          backgroundComponent={CustomBackground}
-        >
-          <View
-            style={[
-              {
-                ...CommonStyle.flex1,
-                paddingHorizontal: 16,
-              },
-            ]}
-          >
-            {/* Check post */}
-            {userData?._id === itemCmtSelected?.user_id?._id ? (
-              <BottomSheetScrollView style={CommonStyle.flex1}>
-                <Pressable
-                  onPress={() => deleteCommentWithid(itemCmtSelected._id)}
-                  style={styles.buttonFlagPostDetail}
-                >
-                  <Icon
-                    size={24}
-                    name="trash-outline"
-                    type={IconType.Ionicons}
-                    color={colors.text}
-                  />
-                  <Text style={styles.textButtonPostDetail}>
-                    {translations.delete}
-                  </Text>
-                </Pressable>
-                <Pressable
-                  onPress={() => {
-                    // NavigationService.push(SCREENS.EDIT_COMMENT, {
-                    //   itemComment: itemCmtSelected,
-                    // });
-
-                    refBottomSheetCmt.current?.close();
-                    setValueEdit(itemCmtSelected.content);
-                    setTimeout(() => {
-                      refBottomSheetUpdateCmt.current?.expand();
-                    }, 100);
-                  }}
-                  style={styles.buttonFlagPostDetail}
-                >
-                  <Icon
-                    size={24}
-                    name="create-outline"
-                    type={IconType.Ionicons}
-                    color={colors.text}
-                  />
-                  <Text style={styles.textButtonPostDetail}>
-                    {translations.edit} {translations.comment}
-                  </Text>
-                </Pressable>
-              </BottomSheetScrollView>
-            ) : (
-              <BottomSheetScrollView style={CommonStyle.flex1}>
-                <Pressable style={styles.buttonFlagPostDetail}>
-                  <Icon
-                    size={24}
-                    name="person-add-outline"
-                    type={IconType.Ionicons}
-                    color={colors.text}
-                  />
-                  <Text style={styles.textButtonPostDetail}>
-                    {translations.follow} {data?.user_id?.display_name}
-                  </Text>
-                </Pressable>
-                <Pressable style={styles.buttonFlagPostDetail}>
-                  <Icon
-                    size={24}
-                    name="ban-outline"
-                    type={IconType.Ionicons}
-                    color={colors.text}
-                  />
-                  <Text style={styles.textButtonPostDetail}>
-                    {translations.block} {data?.user_id?.display_name}
-                  </Text>
-                </Pressable>
-                <Pressable style={styles.buttonFlagPostDetail}>
-                  <Icon
-                    size={24}
-                    name="flag-outline"
-                    type={IconType.Ionicons}
-                    color={colors.text}
-                  />
-                  <Text style={styles.textButtonPostDetail}>
-                    {translations.post.report}
-                  </Text>
-                </Pressable>
-              </BottomSheetScrollView>
-            )}
-          </View>
-        </BottomSheet>
-        <BottomSheet
-          snapPoints={snapPointscmt}
-          index={-1}
-          enablePanDownToClose
-          ref={refBottomSheetUpdateCmt}
-          style={{
-            borderTopLeftRadius: 16,
-            borderTopRightRadius: 16,
-            backgroundColor: colors.background,
-          }}
-          backgroundComponent={CustomBackground}
-        >
-          <SafeAreaView
-            style={[
-              {
-                ...CommonStyle.flex1,
-                paddingHorizontal: 16,
-              },
-            ]}
-          >
-            <View
-              style={{
-                flexDirection: "row",
-                height: 40,
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              <Pressable
-                style={{
-                  width: 40,
-                  height: 40,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  paddingLeft: 16,
-                }}
-                onPress={() => refBottomSheetUpdateCmt.current?.close()}
-              >
-                <Icon
-                  name="arrow-back-outline"
-                  size={25}
-                  type={IconType.Ionicons}
-                  color={colors.text}
-                />
-              </Pressable>
-              <Text
-                style={{
-                  ...CommonStyle.hnSemiBold,
-                  fontSize: 16,
-                  color: colors.text,
-                }}
-              >
-                {translations.update} {translations.comment}
-              </Text>
-              <View style={{ width: 40 }} />
-            </View>
-            <View style={styles.viewInput}>
-              <TextInput
-                style={{ color: colors.text }}
-                placeholder="Edit Comment"
-                value={valueEdit}
-                onChangeText={(text) => {
-                  setValueEdit(text);
-                  setDisableUpdate(false);
-                }}
-                placeholderTextColor={colors.placeholder}
-              />
-            </View>
-            <View style={styles.viewButton}>
-              <Pressable style={styles.btnCancel}>
-                <Text style={{ color: colors.text }}>
-                  {translations.cancel}
-                </Text>
-              </Pressable>
-              <Pressable
-                onPress={disableUpdate ? () => {} : callApiUpdateComment}
-                style={styles.btnCancel}
-              >
-                <Text
-                  style={{
-                    color: disableUpdate ? colors.placeholder : colors.primary,
-                  }}
-                >
-                  {translations.update}
-                </Text>
-              </Pressable>
-            </View>
-          </SafeAreaView>
-        </BottomSheet>
       </View>
     </KeyboardAvoidingView>
   );

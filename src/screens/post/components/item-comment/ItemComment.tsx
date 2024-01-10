@@ -12,6 +12,7 @@ import { showToast } from "@helpers/SuperModalHelper";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { convertLastActive } from "utils/time";
 import createStyles from "./ItemComment.style";
+import { showStickBottom } from "@shared-components/stick-bottom/HomeStickBottomModal";
 const SIZE_AVATAR = 30;
 const BORDER_AVATAR = 12;
 const FONT_SIZE = 12;
@@ -20,22 +21,15 @@ const PADDING_LEFT = 12;
 interface ItemCommentProps {
   data: any;
   onPressReply: (data: string) => void;
-  onPressMore: (data: string) => void;
 }
 
 interface ItemReplyProps {
   item: any;
   onPressReplyChild: (data: string) => void;
   repCmtId: string;
-  onPressMoreChild: (data: string) => void;
 }
 
-const ItemReply = ({
-  item,
-  onPressReplyChild,
-  repCmtId,
-  onPressMoreChild,
-}: ItemReplyProps) => {
+const ItemReply = ({ item, onPressReplyChild, repCmtId }: ItemReplyProps) => {
   const theme = useTheme();
   const { colors } = theme;
   const styles = React.useMemo(() => createStyles(theme), [theme]);
@@ -82,6 +76,8 @@ const ItemReply = ({
     );
   }, [item]);
 
+  const _showStickBottom = () => showStickBottom(item, "comment");
+
   const HeaderItemComment = useMemo(() => {
     return (
       <View style={{ flexDirection: "row", justifyContent: "center" }}>
@@ -123,7 +119,7 @@ const ItemReply = ({
             {convertLastActive(item?.createdAt)}
           </Text>
         </View>
-        <Pressable onPress={() => onPressMoreChild(item)}>
+        <Pressable onPress={_showStickBottom}>
           <Icon
             size={20}
             name="ellipsis-vertical"
@@ -198,7 +194,7 @@ const ItemReply = ({
 
 //////////////////////////////
 
-const ItemComment = ({ data, onPressReply, onPressMore }: ItemCommentProps) => {
+const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
   const theme = useTheme();
   const { colors } = theme;
   const styles = React.useMemo(() => createStyles(theme), [theme]);
@@ -232,6 +228,7 @@ const ItemComment = ({ data, onPressReply, onPressMore }: ItemCommentProps) => {
       </View>
     );
   }, [data]);
+  const _showStickBottom = () => showStickBottom(data, "comment");
 
   const HeaderItemComment = useMemo(() => {
     return (
@@ -274,7 +271,7 @@ const ItemComment = ({ data, onPressReply, onPressMore }: ItemCommentProps) => {
             {convertLastActive(data?.createdAt)}
           </Text>
         </View>
-        <Pressable onPress={() => onPressMore(data)}>
+        <Pressable onPress={_showStickBottom}>
           <Icon
             size={20}
             name="ellipsis-vertical"
@@ -379,7 +376,6 @@ const ItemComment = ({ data, onPressReply, onPressMore }: ItemCommentProps) => {
                   item={item}
                   repCmtId={data._id}
                   onPressReplyChild={onPressReply}
-                  onPressMoreChild={onPressMore}
                 />
               );
             })}

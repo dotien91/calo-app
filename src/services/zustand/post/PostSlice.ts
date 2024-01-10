@@ -13,6 +13,8 @@ export interface PostSlice {
   listLike: string[];
   updateListLike: (id: string, countLike?: number) => void;
   resetListLike: () => void;
+  itemUpdate: any;
+  setItemUpdate: (data: any) => void;
 }
 
 const createPostSlice: StoreSlice<PostSlice> = (set) => ({
@@ -56,6 +58,10 @@ const createPostSlice: StoreSlice<PostSlice> = (set) => ({
     });
   },
   resetListLike: () => set({ listLike: [] }),
+  itemUpdate: {},
+  setItemUpdate: (item: any) => {
+    set({ itemUpdate: item });
+  },
 });
 
 export default createPostSlice;

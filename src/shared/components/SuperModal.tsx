@@ -13,6 +13,9 @@ import cmStyle from "@theme/styles";
 import eventEmitter from "@services/event-emitter";
 import { palette } from "@theme/themes";
 import PagerScrollMedia from "./page-scroll-media/PageScrollMedia";
+import ListActionOfPost from "./action-bottomsheet/ListActionOfPost";
+import ListActionOfComment from "./action-bottomsheet/ListActionOfComment";
+import StickBottomModal from "./stick-bottom/StickBottomModal";
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
 // using normal one.
@@ -27,18 +30,28 @@ const SuperModal: React.FC<SuperModalProps> = () => {
   const [isLoadingView, setIsLoadingView] = useState(false);
   const [listMedia, setListMeia] = useState([]);
   const [indexMedia, setIndexMedia] = useState(0);
+  const [type, setType] = useState("");
   const scrollViewRef = useRef<any>(null);
 
   useEffect(() => {
     eventEmitter.on("show_super_modal", showModal);
     eventEmitter.on("close_super_modal", closeModal);
     eventEmitter.on("show_media", showMedia);
+    eventEmitter.on("show_bottom_modal", showBottomModal);
     return () => {
       eventEmitter.off("show_super_modal", showModal);
       eventEmitter.off("close_super_modal", closeModal);
       eventEmitter.off("show_media", showMedia);
+      eventEmitter.on("show_bottom_modal", showBottomModal);
     };
   }, []);
+
+  const showBottomModal = (param: any) => {
+    console.log("data//...", param);
+    setType(param.type);
+    setContent(param.data);
+    setVisible(true);
+  };
 
   const showModal = (_content: object) => {
     if (_content?.showLoading) {
@@ -63,6 +76,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
     setVisible(false);
     setContent([]);
     setListMeia([]);
+    setType("");
   };
 
   const hasBtn = () => {
@@ -125,6 +139,30 @@ const SuperModal: React.FC<SuperModalProps> = () => {
           closeModal={closeModal}
         />
       </Modal>
+    );
+  }
+
+  if (type !== "") {
+    return (
+      <StickBottomModal
+        isVisible={visible}
+        header={""}
+        onBackdropPress={() => setVisible(false)}
+        onPressClose={() => setVisible(false)}
+      >
+        <View
+          style={{
+            ...cmStyle.flex1,
+            backgroundColor: palette.white,
+            paddingHorizontal: 16,
+            borderTopLeftRadius: 16,
+            borderTopRightRadius: 16,
+          }}
+        >
+          {type === "post" && <ListActionOfPost data={content} />}
+          {type === "comment" && <ListActionOfComment data={content} />}
+        </View>
+      </StickBottomModal>
     );
   }
 
