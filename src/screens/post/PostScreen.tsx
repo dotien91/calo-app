@@ -142,7 +142,6 @@ export default function PostScreen() {
 
     if (item._id) {
       updatePost(params).then((res) => {
-        console.log("res...", JSON.stringify(res));
         if (!res.isError) {
           closeSuperModal();
           eventEmitter.emit("reload_list_post");
@@ -170,7 +169,7 @@ export default function PostScreen() {
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isUpLoadingFile]);
+  }, [isUpLoadingFile, description, listFile]);
 
   const SelectComponent = ({
     icon,

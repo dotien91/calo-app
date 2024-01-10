@@ -134,7 +134,7 @@ const ItemPost = ({ data, pressMore, refreshing }: ItemPostProps) => {
             {convertLastActive(data?.createdAt)}
           </Text>
         </View>
-        <Pressable onPress={pressMore}>
+        <Pressable onPress={() => pressMore(data)}>
           <Icon
             size={20}
             name="ellipsis-vertical"

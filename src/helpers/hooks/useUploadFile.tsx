@@ -76,7 +76,7 @@ export function useUploadFile(initData?: any[]) {
                 style={styles.viewFile}
                 item={item}
                 key={`listFileLocal - ${index}`}
-                onPressClear={() => onRemove(item.uri)}
+                onPressClear={() => onRemove(item)}
               />
             );
           if (listFileLocal.length >= 4) {
@@ -105,8 +105,11 @@ export function useUploadFile(initData?: any[]) {
       </View>
     );
   }, [listFileLocal]); // eslint-disable-line react-hooks/exhaustive-deps
-  const onRemove = (uri: string) => {
+  const onRemove = ({ uri, _id }: { uri: string; _id: string }) => {
     setListFileLocal(listFileLocal.filter((i) => i.uri !== uri));
+    if (listFile?.length) {
+      setListFile(listFile.filter((i) => i._id !== _id));
+    }
   };
 
   const onPressVideo = async () => {
