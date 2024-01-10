@@ -12,6 +12,7 @@ interface IVideoPlayer {
   width: number;
   height: number;
   autoPlay: boolean;
+  onPress: () => voide;
 }
 
 const VideoPlayer = ({
@@ -20,6 +21,7 @@ const VideoPlayer = ({
   width,
   height,
   autoPlay,
+  onPress,
 }: IVideoPlayer) => {
   const refVideo = useRef<Video>();
   const [pause, setPause] = useState(!autoPlay);
@@ -38,7 +40,7 @@ const VideoPlayer = ({
   return (
     <Pressable
       style={{ ...styles.container, width, height }}
-      onPress={switchPause}
+      onPress={onPress || switchPause}
     >
       <Video
         source={{ uri: mediaUrl }}

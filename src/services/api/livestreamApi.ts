@@ -4,7 +4,7 @@ export async function createLiveStream(title: string) {
   return request({
     method: METHOD.POST,
     urlPath: "livestream/create",
-    data: { title },
+    data: { title, livestream_status: "live" },
   }).then((response) => {
     return response;
   });

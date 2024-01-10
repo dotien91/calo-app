@@ -13,7 +13,7 @@ interface IMediasView {
 
 const MediasView = ({ data }: IMediasView) => {
   const renderItem = (item: TypedChatMediaLocal, index: number) => {
-    if (item.media_type == "image") {
+    if (item.media_type.includes("image")) {
       return (
         <FastImage
           key={index}

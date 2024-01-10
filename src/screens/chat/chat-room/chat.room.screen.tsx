@@ -52,8 +52,8 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
 
   //append local media file
   useEffect(() => {
-    if (!listFileLocal.length) return;
-    const messages: TypedMessageGiftedChat = {
+    if (!listFileLocal?.length) return;
+    const message: TypedMessageGiftedChat = {
       createdAt: new Date(),
       _id: uuid.v4(),
       status: EnumMessageStatus.Pending,
@@ -65,8 +65,10 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
       }),
       user: userSendMessage,
     };
+
+    console.log("messagesmessagesmessages", message);
     setMessages((previousMessages) =>
-      GiftedChat.append(previousMessages, messages),
+      GiftedChat.append(previousMessages, message),
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listFileLocal]);

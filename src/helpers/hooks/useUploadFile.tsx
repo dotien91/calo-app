@@ -30,7 +30,7 @@ export function useUploadFile(initData?: any[]) {
     return i.uri;
   };
 
-  const onPressPicture = async () => {
+  const onSelectPicture = async () => {
     setIsUpLoadingFile(true);
     selectMedia({
       config: { mediaType: "photo", selectionLimit: 30 },
@@ -114,7 +114,7 @@ export function useUploadFile(initData?: any[]) {
     }
   };
 
-  const onPressVideo = async () => {
+  const onSelectVideo = async () => {
     setIsUpLoadingFile(true);
     selectMedia({
       config: { mediaType: "video", selectionLimit: 30 },
@@ -245,12 +245,15 @@ export function useUploadFile(initData?: any[]) {
 
   return {
     listFile,
-    onPressPicture,
-    onPressVideo,
+    onSelectPicture,
+    onSelectVideo,
     onPressFile,
     renderFile,
     isUpLoadingFile,
     uploadRecord,
+    setListFile,
+    setListFileLocal,
+    listFileLocal,
   };
 }
 

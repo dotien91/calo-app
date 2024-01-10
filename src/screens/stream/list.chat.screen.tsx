@@ -56,6 +56,7 @@ const ListChatLiveStream: React.FC<ChatViewProps> = ({
       <InputChatLive
         chatRoomId={liveStreamId}
         sendChatMessage={_sendChatMessage}
+        isPublisher={isPublisher}
       />
     </View>
   );

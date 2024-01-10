@@ -34,11 +34,13 @@ const reactionData = [
 interface InputChatLiveProps {
   sendChatMessage: () => void;
   chatRoomId: string;
+  isPublisher: boolean;
 }
 
 const InputChatLive: React.FC<InputChatLiveProps> = ({
   sendChatMessage,
   chatRoomId,
+  isPublisher,
 }) => {
   const inputRef = useRef(null);
   const onSend = () => {
@@ -48,6 +50,7 @@ const InputChatLive: React.FC<InputChatLiveProps> = ({
   };
 
   const renderReaction = () => {
+    if (isPublisher) return null;
     return (
       <>
         {reactionData.map((item, index) => (
@@ -83,7 +86,12 @@ const InputChatLive: React.FC<InputChatLiveProps> = ({
     >
       {/* <AnimationScreen /> */}
       <View style={styles.box}>
-        <View style={styles.wrapInput}>
+        <View
+          style={[
+            styles.wrapInput,
+            isPublisher && { width: Device.width - 30 },
+          ]}
+        >
           <Input
             ref={inputRef}
             otherProps={{

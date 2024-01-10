@@ -12,6 +12,9 @@ import {
 } from "react-native";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useTheme, useRoute } from "@react-navigation/native";
+import * as NavigationService from "react-navigation-helpers";
+import isEqual from "react-fast-compare";
+
 import IconSvg from "assets/svg";
 import createStyles from "./Post.style";
 import HeaderPost from "./components/HeaderPost";
@@ -32,11 +35,10 @@ import {
   showToast,
   showErrorModal,
 } from "@helpers/super.modal.helper";
-import * as NavigationService from "react-navigation-helpers";
 import { useUploadFile } from "@helpers/hooks/useUploadFile";
-import isEqual from "react-fast-compare";
 import eventEmitter from "@services/event-emitter";
 import CustomBackground from "@shared-components/CustomBackgroundBottomSheet";
+import { SCREENS } from "constants";
 
 interface OptionsState {
   postCategory: string;
@@ -57,8 +59,8 @@ export default function PostScreen() {
   });
   const {
     onPressFile,
-    onPressPicture,
-    onPressVideo,
+    onSelectPicture,
+    onSelectVideo,
     listFile,
     renderFile,
     isUpLoadingFile,
@@ -73,7 +75,11 @@ export default function PostScreen() {
     ),
   );
 
-  const onPressLive = () => {};
+  const onPressLive = () => {
+    NavigationService.navigate(SCREENS.LIVE_STREAM, {
+      titleLive: description,
+    });
+  };
 
   useEffect(() => {
     getListCategory();
@@ -105,11 +111,11 @@ export default function PostScreen() {
   const [link, setLink] = useState("");
   const getListCategory = async () => {
     getCategory().then((res) => {
-      setListCategory(res);
       if (!res.isError) {
+        setListCategory(res.data);
         setOptions((prev) => ({
           ...prev,
-          postCategory: res[0]._id,
+          postCategory: res.data?.[0]?._id,
         }));
       }
     });
@@ -302,7 +308,7 @@ export default function PostScreen() {
                     color={colors.mainColor2}
                   />
                 }
-                onPress={onPressPicture}
+                onPress={onSelectPicture}
               />
               <SelectComponent
                 icon={
@@ -314,7 +320,7 @@ export default function PostScreen() {
                 icon={
                   <IconSvg size={24} name="icVideo" color={colors.mainColor2} />
                 }
-                onPress={onPressVideo}
+                onPress={onSelectVideo}
               />
               <View style={{ width: 10 }} />
               <SelectComponent

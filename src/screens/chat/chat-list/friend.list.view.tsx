@@ -46,7 +46,11 @@ const ListFriend: React.FC<ListFriendProps> = () => {
   }) => {
     const partnerId = item.partner_id;
     return (
-      <TouchableOpacity onPress={() => openChatRoom(item)} key={index}>
+      <TouchableOpacity
+        style={{ marginRight: 8, width: 68 }}
+        onPress={() => openChatRoom(item)}
+        key={index}
+      >
         <Avatar
           style={{
             width: 64,

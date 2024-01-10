@@ -39,6 +39,7 @@ import icVerify from "./icon-verify.svg";
 import icShare from "./icon-share.svg";
 import icHeart from "./icon-heart.svg";
 import icHearted from "./icon-hearted.svg";
+import icLive from "./icon-live.svg";
 
 const Icons = {
   icFlagvi,
@@ -80,6 +81,7 @@ const Icons = {
   icShare,
   icHeart,
   icHearted,
+  icLive,
 };
 
 interface IconSvgProps {

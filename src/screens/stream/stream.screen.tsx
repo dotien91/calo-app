@@ -7,7 +7,7 @@ import RTMPPublisher, {
   BluetoothDeviceStatuses,
 } from "react-native-rtmp-publisher";
 // import Orientation from 'react-native-orientation';
-import { useTheme } from "@react-navigation/native";
+import { useTheme, useRoute } from "@react-navigation/native";
 
 import LiveBadge from "./components/LiveBadge";
 import usePermissions from "./hooks/use.permission";
@@ -49,6 +49,13 @@ function App() {
   const isStreaming = React.useCallback(() => !!liveData?._id, [liveData?._id]);
   const { permissionGranted } = usePermissions();
   const { isLoggedIn, renderViewRequestLogin } = useUserHook();
+  const route = useRoute();
+
+  useEffect(() => {
+    const txtFromPostScreen = route.params?.["titleLive"];
+    if (!txtFromPostScreen) return;
+    _createLiveStream(txtFromPostScreen);
+  }, []);
 
   useEffect(() => {
     publisherRef.current && publisherRef.current.startStream();
@@ -135,7 +142,7 @@ function App() {
     if (!liveData?._id) return null;
     return (
       <View style={styles.chatView}>
-        <ChatView liveStreamId={liveData._id} />
+        <ChatView liveStreamId={liveData._id} isPublisher={true} />
       </View>
     );
   };
