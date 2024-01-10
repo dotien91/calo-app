@@ -44,7 +44,7 @@ const ListPost = ({ isFollowingPost }: ListPostProps) => {
         const listDataStream = res.data.filter(
           (item) => item?.livestream_status == "live",
         );
-        setListDataStream(listDataStream);
+        setListDataStream(listDataStream.reverse());
       }
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps

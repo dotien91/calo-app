@@ -112,14 +112,6 @@ const StreamItem = ({ data, refreshing }: StreamItemProps) => {
             {convertLastActive(data?.createdAt)}
           </Text>
         </View>
-        <Pressable onPress={_showStickBottom}>
-          <Icon
-            size={20}
-            name="ellipsis-vertical"
-            type={IconType.Ionicons}
-            color={colors.text}
-          />
-        </Pressable>
       </View>
     );
   }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
