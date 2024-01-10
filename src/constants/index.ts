@@ -24,6 +24,10 @@ export const SCREENS = {
   SEARCH_CHAT: "SearchChat",
   LIVE_STREAM: "LiveStream",
   VIEW_LIVE_STREAM: "ViewLiveStream",
+  POST_SCREEN: "PostScreen",
+  LIST_POST: "ListPost",
+  POST_DETAIL: "PostDetail",
+  EDIT_COMMENT: "EditComment",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

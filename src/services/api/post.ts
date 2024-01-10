@@ -43,24 +43,6 @@ export async function uploadFile(file: MediaAsset) {
   });
 }
 
-// export async function uploadFile(file: MediaAsset): Promise<MediaResponse[]> {
-//   try {
-//     const newForm = new FormData();
-//     newForm.append("file[]", file);
-//     const mediaResponse = await axios.post(APP_URL.APP_UPLOAD_FILE, newForm, {
-//       headers: { "Content-Type": "multipart/form-data" },
-//     });
-
-//     if (Array.isArray(mediaResponse.data)) {
-//       return mediaResponse.data;
-//     }
-//     return [];
-//   } catch (error) {
-//     console.log(error, "syncMessages");
-//     throw error;
-//   }
-// }
-
 export async function getCategory() {
   return request({
     method: METHOD.GET,
@@ -127,10 +109,11 @@ export async function getListPost(params) {
   });
 }
 
-export async function getPostDetail(id: string) {
+export async function getPostDetail(id: string, params) {
   return request({
     method: METHOD.GET,
     urlPath: `Community/detail/${id}`,
+    params,
   }).then((response) => {
     return response;
   });
@@ -168,6 +151,71 @@ export async function postLikeCommnent(data: any) {
   return request({
     method: METHOD.POST,
     urlPath: "community/create-like-comment",
+    data: data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function deletePost(id: string) {
+  return request({
+    method: METHOD.DELETE,
+    urlPath: `community/delete/${id}`,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function deleteComment(id: string) {
+  return request({
+    method: METHOD.DELETE,
+    urlPath: `community/delete-comment/${id}`,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function followUser(data: any) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "user/follow",
+    data: data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function unFollowUser(data: any) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "user/un-follow",
+    data: data,
+  }).then((response) => {
+    return response;
+  });
+}
+export async function blockUser(data: any) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "user/block",
+    data: data,
+  }).then((response) => {
+    return response;
+  });
+}
+export async function updatePost(data: any) {
+  return request({
+    method: METHOD.PATCH,
+    urlPath: "community/update",
+    data: data,
+  }).then((response) => {
+    return response;
+  });
+}
+export async function updateCommentWithId(data: any) {
+  return request({
+    method: METHOD.PATCH,
+    urlPath: "community/update-comment",
     data: data,
   }).then((response) => {
     return response;

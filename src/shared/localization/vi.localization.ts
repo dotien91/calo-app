@@ -1,6 +1,6 @@
+/* eslint-disable max-len */
+
 export default {
-  home: "Trang chủ",
-  profile: "Hồ sơ",
   detail: "Chi tiết",
   setting: "Cài đặt",
   language: "Ngôn ngữ",
@@ -55,6 +55,13 @@ export default {
   unblock: "Mở khóa",
   unblockDes: "Bạn có muốn mở khoá cho :username",
   cancel: "Hủy",
+  postCategory: "Chuyên mục",
+  createPost: "Tạo bài viết",
+  placeholderContent: "Nội dung",
+  channelLocked: "Kênh tạm thời đang bị khoá",
+  channelLockedDes: "Truy cập vào website kích hoạt kênh",
+  unblock: "Mở khóa",
+  unblockDes: "Bạn có muốn mở khoá cho :username",
   confirm: "Xác nhận",
   somethingWentWrong: "Hệ thống xảy ra lỗi. Vui lòng thử lại sau.",
   notFound: "Danh sách trống",
@@ -82,6 +89,9 @@ export default {
   blockedUser: "Bạn đã chặn trang cá nhân của :username",
   commentAs: "Bình luận dưới tên",
   replying: "Phản hồi",
+  reply: "phản hồi",
+  like: "thích",
+  comment: "bình luận",
   delete: "Xóa",
   edit: "Chỉnh sửa",
   duplicate: "Nhân bản",
@@ -103,6 +113,7 @@ export default {
   follower: "Người theo dõi",
   following: "Đang theo dõi",
   follow: "Theo dõi",
+  unfollow: "Bỏ theo dõi",
   followed: "Đã theo dõi",
   message: "Nhắn tin",
   filter: "Lọc",
@@ -111,6 +122,9 @@ export default {
   search: "Tìm kiếm...",
   notInGroup: "Bạn đang không ở trong nhóm nào",
   createChannel: "Bạn có thể tạo hệ thống theo những bước sau",
+  search: "Tìm kiếm...",
+  notInGroup: "Bạn đang không ở trong nhóm nào",
+  createChannelDes: "Bạn có thể tạo hệ thống theo những bước sau",
   joinViaInvite:
     "Bạn có thể gửi email đến chủ hệ thống vì họ có thể mời bạn tham gia.",
   deleteConfirm: "Bạn có chắc chắn muốn xóa không?",
@@ -143,6 +157,7 @@ export default {
   level: "Cấp độ",
   post: {
     post: "Đăng",
+    posts: "Bài viết",
     createPost: "Tạo bài viết",
     category: "Chuyên mục",
     title: "Tiêu đề",
@@ -167,6 +182,13 @@ export default {
     emptyComment: "Hãy là người đầu tiên bình luận",
     emptyPost: "Chưa có bài viết nào",
     postInvalid: "Bài đăng không tồn tại",
+    emptyPostTitle: "Không có bài viết",
+    emptyPostDes:
+      "Khi một người bạn hoặc giáo viên đăng một bài viết, nó sẽ xuất hiện ở đây và sau đó bạn có thể thích, chia sẻ và bình luận về bài đăng đó.",
+    postInvalid: "Bài đăng không tồn tại",
+    report: "Báo cáo bài viết",
+    save: "Lưu bài viết",
+    likeError: "Gửi lượt thích thất bại vui lòng thử lại!",
   },
   navigation: {
     dashboard: "Trang chủ",

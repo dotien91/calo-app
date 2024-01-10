@@ -9,6 +9,7 @@ export const UPLOAD_URL = "https://media.exam24h.com/";
 export const METHOD = {
   GET: "GET",
   POST: "POST",
+  DELETE: "DELETE",
   PATCH: "PATCH",
 };
 
@@ -28,7 +29,6 @@ export const apiClient = axios.create({
 // Add a request interceptor
 apiClient.interceptors.request.use(
   function (config) {
-    // Do something before request is sent
     const userToken = _getJson(USER_TOKEN);
 
     // fake token for chat feature

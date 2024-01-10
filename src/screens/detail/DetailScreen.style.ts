@@ -1,3 +1,4 @@
+import CommonStyle from "@theme/styles";
 import { ExtendedTheme } from "@react-navigation/native";
 import { ViewStyle, StyleSheet, TextStyle } from "react-native";
 
@@ -12,9 +13,8 @@ export default (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create<Style>({
     container: {
-      flex: 1,
-      alignItems: "center",
-      justifyContent: "center",
+      ...CommonStyle.flex1,
+      ...CommonStyle.center,
     },
     titleTextStyle: {
       fontSize: 32,

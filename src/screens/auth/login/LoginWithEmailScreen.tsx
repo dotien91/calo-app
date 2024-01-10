@@ -32,7 +32,8 @@ import {
 import { ILoginWithPass } from "models";
 import GoogleLoginButton from "@shared-components/button/GoogleLoginButton";
 import FBLoginButton from "@shared-components/button/FBLoginButton";
-import { useUserHook } from "@helpers/hooks/use.user.hook";
+import { useUserHook } from "@helpers/hooks/useUserHook";
+// import { regexMail } from "constants/regex.constant";
 
 interface ButtonSocialProps {
   onPress: () => void;

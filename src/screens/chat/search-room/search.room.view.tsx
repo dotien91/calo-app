@@ -7,13 +7,13 @@ import { useTheme } from "@react-navigation/native";
 import createStyles from "../chat-list/chat.list.screen.style";
 import { getListChat } from "@services/api/chatApi";
 import ChatItem from "../chat-room/components/ChatItem";
-import { TypedGeneralRoomChat } from "@services/models/ChatModels";
 import FriendSearchInput from "./search.room.input";
 import LoadingList from "@shared-components/loading.list.component";
-import { useListData } from "@helpers/hooks/use.list.data";
 import EmptyResultView from "@shared-components/empty.data.component";
 import { translations } from "@localization";
 import lotieNoResult from "assets/lotties/no-result.json";
+import { useListData } from "@helpers/hooks/useListData";
+import { TypedGeneralRoomChat } from "models/chat.model";
 
 interface SearchRoomChatScreenProps {}
 

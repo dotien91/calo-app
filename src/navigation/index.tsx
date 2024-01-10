@@ -30,6 +30,9 @@ import ChatRoomScreen from "@screens/chat/chat-room/chat.room.screen";
 import LiveStreamScreen from "@screens/stream/stream.screen";
 import ViewStreamScreen from "@screens/stream/view.stream.screen";
 import SettingScreen from "@screens/setting/SettingScreen";
+import PostScreen from "@screens/post/PostScreen";
+import PostDetail from "@screens/post/PostDetailScreen";
+import EditComment from "@screens/home/edit-comment/EditComment";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -138,6 +141,9 @@ const Navigation = () => {
           {(props) => <DetailScreen {...props} />}
         </Stack.Screen>
         <Stack.Screen name={SCREENS.LOGIN_PAGE} component={LoginScreen} />
+        <Stack.Screen name={SCREENS.POST_SCREEN} component={PostScreen} />
+        <Stack.Screen name={SCREENS.POST_DETAIL} component={PostDetail} />
+        <Stack.Screen name={SCREENS.EDIT_COMMENT} component={EditComment} />
         <Stack.Screen
           name={SCREENS.SEARCH_CHAT}
           component={SearchRoomChatScreen}

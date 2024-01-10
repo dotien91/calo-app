@@ -14,7 +14,7 @@ import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { getDeviceInfo } from "@helpers/device.info.helper";
 import { AccessToken, LoginManager } from "react-native-fbsdk-next";
 import { loginWithFB } from "@services/api/userApi";
-import { useUserHook } from "@helpers/hooks/use.user.hook";
+import { useUserHook } from "@helpers/hooks/useUserHook";
 
 interface BtnProps {
   showText: boolean | true;

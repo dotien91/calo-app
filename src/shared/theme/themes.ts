@@ -18,7 +18,6 @@ export const palette = {
   shadow: "#757575",
   text: "#30363b",
   borderColor: "#999a9a",
-  borderColor2: "#ececec",
   borderColorDark: "#333942",
   danger: "rgb(208, 2, 27)",
   title: "rgb(102, 102, 102)",
@@ -34,7 +33,6 @@ export const palette = {
   transparent: "transparent",
   calpyse: "#2b7488",
   grey: "#eceeef",
-  grey2: "#595959",
   blue: "#0a86cf",
   orange: "#ea7a16",
   green: "#60d140",
@@ -62,6 +60,9 @@ export const palette = {
   iconLight: "#F3F3F3",
   iconDark: "#FA8072",
   pink: "#ed435c",
+  backgroundClose: "#121118",
+  baseColor2: "#FA8072",
+  grey2: "#eceeef",
 };
 
 interface ExtendedTheme extends Theme {

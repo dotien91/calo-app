@@ -1,127 +1,109 @@
-import React, { useMemo, useEffect } from "react";
-import { View, FlatList, Image, Pressable } from "react-native";
+import React, { useEffect } from "react";
+import { View, useWindowDimensions, Text, Pressable } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
-import { SafeAreaView } from "react-native-safe-area-context";
 import * as NavigationService from "react-navigation-helpers";
+import lodash from "lodash";
+import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 
-/**
- * ? Local Imports
- */
-import createStyles from "./HomeScreen.style";
-import MockData from "./mock/MockData";
-import CardItem from "./components/card-item/CardItem";
-/**
- * ? Shared Imports
- */
-import Text from "@shared-components/text-wrapper/TextWrapper";
+import HeaderHome from "./components/header-home/HeaderHome";
+import { getCurrentUser } from "@services/api/userApi";
+import useStore from "@services/zustand/store";
 import { SCREENS } from "constants";
-import { useUserHook } from "@helpers/hooks/use.user.hook";
+import ListPost from "./ListPost";
 
-const profileURI =
-  // eslint-disable-next-line max-len
-  "https://images.unsplash.com/photo-1544568100-847a948585b9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2574&q=80";
+import CommonStyle from "@theme/styles";
 
 interface HomeScreenProps {}
+
+const renderScene = SceneMap({
+  first: () => <ListPost isFollowingPost={true} />,
+  second: ListPost,
+});
 
 const HomeScreen: React.FC<HomeScreenProps> = () => {
   const theme = useTheme();
   const { colors } = theme;
-  const styles = useMemo(() => createStyles(theme), [theme]);
-  const { isLoggedIn } = useUserHook();
-
-  const handleItemPress = () => {
-    NavigationService.push(SCREENS.DETAIL);
-  };
-
+  const setUserData = useStore((state) => state.setUserData);
   /* -------------------------------------------------------------------------- */
   /*                               Render Methods                               */
   /* -------------------------------------------------------------------------- */
 
   useEffect(() => {
-    // setTimeout(() => {
-    //   NavigationService.navigate(SCREENS.LOGIN_PAGE);
-    // }, 100)
-  }, []);
-
-  const openLoginPage = () => {
-    NavigationService.push(SCREENS.LOGIN_PAGE);
-  };
-
-  const MenuButton = () => (
-    <Pressable onPress={openLoginPage}>
-      <Icon
-        name="menu"
-        type={IconType.Ionicons}
-        color={colors.iconBlack}
-        size={30}
-      />
-    </Pressable>
-  );
-
-  const Header = () => (
-    <View style={styles.header}>
-      <MenuButton />
-      <Image
-        resizeMode="cover"
-        source={{ uri: profileURI }}
-        style={styles.profilePicImageStyle}
-      />
-    </View>
-  );
-
-  const List = () => (
-    <View style={styles.listContainer}>
-      <FlatList
-        data={MockData}
-        renderItem={({ item }) => (
-          <CardItem data={item} onPress={handleItemPress} />
-        )}
-      />
-    </View>
-  );
-
-  const viewLive = () => {
-    NavigationService.push(SCREENS.VIEW_LIVE_STREAM, {
-      liveStreamId: "6597cebd91125b0304b80819",
+    getCurrentUser().then((res) => {
+      console.log("res...", res);
+      if (!res.isError && !lodash.isEmpty(res)) {
+        setUserData(res);
+      }
     });
-  };
+  }, [setUserData]);
 
-  const startLive = () => {
-    NavigationService.push(SCREENS.LIVE_STREAM);
-  };
+  const layout = useWindowDimensions();
 
-  const Welcome = () => (
-    <>
-      <Text h1 bold color={colors.text}>
-        Hello Kuray
-      </Text>
-      <Text color={colors.placeholder}>Welcome Back</Text>
-      <Text onPress={viewLive} color={colors.placeholder}>
-        view livestream tony vu
-      </Text>
-      <Text onPress={startLive} color={colors.placeholder}>
-        start livestream
-      </Text>
-    </>
-  );
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: "first", title: "Following" },
+    { key: "second", title: "For you " },
+  ]);
 
-  const goToLogin = () => {
-    NavigationService.navigate(SCREENS.LOGIN_PAGE);
-  };
-
-  const Content = () => (
-    <View style={styles.contentContainer}>
-      {isLoggedIn() ? <Welcome /> : <Text onPress={goToLogin}>login</Text>}
-      <List />
-    </View>
+  const renderTabBar = (props) => (
+    <TabBar
+      {...props}
+      indicatorStyle={{
+        backgroundColor: colors.primary,
+        width: 50,
+        left: "18%",
+      }}
+      renderLabel={({ route, focused }) => (
+        <Text
+          style={{
+            ...CommonStyle.hnBold,
+            fontSize: 16,
+            color: focused ? colors.primary : colors.text,
+            margin: 8,
+          }}
+        >
+          {route.title}
+        </Text>
+      )}
+      style={{ backgroundColor: colors.background, height: 50 }}
+    />
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Header />
-      <Content />
-    </SafeAreaView>
+    <View style={CommonStyle.safeAreaView}>
+      <HeaderHome />
+      <TabView
+        style={CommonStyle.flex1}
+        renderTabBar={renderTabBar}
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={{ width: layout.width }}
+      />
+      <Pressable
+        style={{
+          position: "absolute",
+          width: 50,
+          height: 50,
+          backgroundColor: colors.primary,
+          justifyContent: "center",
+          alignItems: "center",
+          borderRadius: 25,
+          bottom: 10,
+          right: 10,
+          zIndex: 1,
+        }}
+        onPress={() => NavigationService.push(SCREENS.POST_SCREEN)}
+      >
+        <Icon
+          name={"add-outline"}
+          type={IconType.Ionicons}
+          size={30}
+          color={colors.white}
+        />
+      </Pressable>
+    </View>
   );
 };
 

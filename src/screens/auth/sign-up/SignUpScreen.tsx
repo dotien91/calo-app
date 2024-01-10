@@ -30,7 +30,7 @@ import {
   showErrorModal,
   showLoading,
 } from "@helpers/super.modal.helper";
-import { useUserHook } from "@helpers/hooks/use.user.hook";
+import { useUserHook } from "@helpers/hooks/useUserHook";
 
 interface ButtonSocialProps {
   onPress: () => void;

@@ -1,3 +1,98 @@
+import { Platform } from "react-native";
+import { PERMISSIONS } from "react-native-permissions";
+import { Device } from "../utils/device.ui.utils";
+
+export const HIT_SLOP_EXPAND_20 = { top: 20, left: 20, right: 20, bottom: 20 };
+export const HIT_SLOP_EXPAND_10 = { top: 10, left: 10, right: 10, bottom: 10 };
+export const ADMIN_ID = "640fd0f476d23263d0ccb101";
+export const NUMBER_MESSAGE_BLOCK = 3;
+
+const permissionMedia = () => {
+  if (Device.isIos)
+    return [
+      PERMISSIONS.IOS.CAMERA,
+      PERMISSIONS.IOS.MICROPHONE,
+      PERMISSIONS.IOS.PHOTO_LIBRARY,
+    ];
+  if (Number(Platform.Version) >= 33)
+    return [
+      PERMISSIONS.ANDROID.CAMERA,
+      PERMISSIONS.ANDROID.READ_MEDIA_IMAGES,
+      PERMISSIONS.ANDROID.READ_MEDIA_VIDEO,
+      PERMISSIONS.ANDROID.READ_MEDIA_AUDIO,
+    ];
+  return [
+    PERMISSIONS.ANDROID.CAMERA,
+    PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,
+    PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
+  ];
+};
+const permissionRecord = () => {
+  if (Device.isIos) return [PERMISSIONS.IOS.MICROPHONE];
+  if (Number(Platform.Version) >= 33)
+    return [
+      PERMISSIONS.ANDROID.RECORD_AUDIO,
+      PERMISSIONS.ANDROID.READ_MEDIA_AUDIO,
+    ];
+  return [
+    PERMISSIONS.ANDROID.RECORD_AUDIO,
+    PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,
+    PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
+  ];
+};
+const permissionLibrary = () => {
+  if (Device.isIos) return [PERMISSIONS.IOS.PHOTO_LIBRARY];
+  if (Number(Platform.Version) >= 33)
+    [
+      PERMISSIONS.ANDROID.READ_MEDIA_IMAGES,
+      PERMISSIONS.ANDROID.READ_MEDIA_VIDEO,
+    ];
+  return [
+    PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,
+    PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
+  ];
+};
+
+export const PERMISSION = {
+  permissionVideoCall: Device.isIos
+    ? [PERMISSIONS.IOS.CAMERA, PERMISSIONS.IOS.MICROPHONE]
+    : [PERMISSIONS.ANDROID.CAMERA, PERMISSIONS.ANDROID.RECORD_AUDIO],
+  permissionMedia: permissionMedia(),
+  permissionRecord: permissionRecord(),
+  permissionLibrary: permissionLibrary(),
+  permissionDownload: [PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE],
+  permissionCamera: Device.isIos
+    ? [PERMISSIONS.IOS.CAMERA]
+    : [PERMISSIONS.ANDROID.CAMERA],
+  permissionCall: Device.isIos
+    ? []
+    : [PERMISSIONS.ANDROID.POST_NOTIFICATIONS, PERMISSIONS.ANDROID.CALL_PHONE],
+};
+
+export const LIST_PERMISSIONS_MENTOR = [
+  "channel/create",
+  "channel/update",
+  "channel/delete",
+  "category/create",
+  "category/update",
+  "category/delete",
+  "module/create",
+  "module/update",
+  "module/delete",
+  "course/create",
+  "course/update",
+  "course/delete",
+  "level/create",
+  "level/update",
+  "level/delete",
+  "request/delete",
+  "comment/update",
+  "comment/delete",
+  "user/create",
+  "user/update",
+  "user/delete",
+];
+
 export enum EnumPermission {
   Channel = "channel",
   Category = "category",

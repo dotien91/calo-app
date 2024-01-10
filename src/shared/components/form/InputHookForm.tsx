@@ -1,10 +1,18 @@
 // Input.js
 
 import React from "react";
-import { View, Text, TextInput, ViewStyle, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  ViewStyle,
+  StyleSheet,
+  TextStyle,
+} from "react-native";
 import { Controller } from "react-hook-form";
 
 import { palette } from "@theme/themes";
+import CommonStyle from "@theme/styles";
 
 interface InputPropsType {
   type: "text" | "number" | "email" | "password";
@@ -16,7 +24,7 @@ interface InputHookProps {
   inputProps: InputPropsType;
   control: any;
   rules: any;
-  customStyle: ViewStyle;
+  customStyle: TextStyle;
   errorTxt?: string;
   name: string;
   isPassword?: boolean;
@@ -24,6 +32,7 @@ interface InputHookProps {
   iconRight?: React.JSX.Element;
   viewStyle?: ViewStyle;
   noBorder?: boolean;
+  multiline?: boolean;
 }
 
 // eslint-disable-next-line react/display-name
@@ -39,6 +48,7 @@ const InputHook: React.FC<InputHookProps> = ({
   iconRight,
   viewStyle,
   noBorder,
+  multiline = false,
 }) => {
   return (
     <View style={styles.wrapper}>
@@ -57,6 +67,7 @@ const InputHook: React.FC<InputHookProps> = ({
           render={({ field: { onChange, value } }) => (
             <TextInput
               {...inputProps}
+              multiline={multiline}
               onChangeText={(value) => onChange(value)}
               value={value}
               style={[styles.input, !!customStyle && customStyle]}
@@ -86,6 +97,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     paddingHorizontal: 20,
     height: 48,
+    paddingVertical: 10,
     alignItems: "center",
     flexDirection: "row",
     borderRadius: 30,
@@ -94,8 +106,8 @@ const styles = StyleSheet.create({
     gap: 15,
   },
   input: {
-    // ...CommonStyle.borderStyle,
-    flex: 1,
+    ...CommonStyle.flex1,
+
     // ...CommonStyle.mb6,
   },
   errorText: {

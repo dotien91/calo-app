@@ -39,7 +39,7 @@
       "@theme/*": ["./shared/theme/*"],
       "@services/*": ["./services/*"],
       "@screens/*": ["./screens/*"],
-      "@utils": ["./utils/"],
+      "@utils/*": ["./utils/*"],
       "@assets": ["./assets/"],
       "@local-storage": ["./services/local-storage"],
       "@zustand": ["./services/zustand/store"],

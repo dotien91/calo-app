@@ -8,14 +8,14 @@ import SplashScreen from "react-native-splash-screen";
  */
 import Navigation from "./src/navigation";
 import { isAndroid } from "@freakycoder/react-native-helpers";
-import NetworkManager from "@helpers/NetworkManager";
+import NetworkManager from "@helpers/network.helper";
 import { palette } from "@theme/themes";
 import useStore from "@services/zustand/store";
 import { translations } from "@localization";
 import SuperModal from "@shared-components/modal/SuperModal";
-import { setDeviceInfo } from "@helpers/DeviceInfo";
+import { setDeviceInfo } from "@helpers/device.info.helper";
 import SocketConnect from "@services/socket/SocketConnect";
-import { SocketHelperRef } from "@helpers/SocketHelper";
+import { SocketHelperRef } from "@helpers/socket.helper";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 
 LogBox.ignoreAllLogs();

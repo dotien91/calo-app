@@ -1,7 +1,11 @@
-import { requestPermission } from "@helpers/permision.helper";
+
+import fs from "react-native-fs";
+
+import { getSha1FromString } from "./string.helper";
+import { requestPermission } from "./permission.helper";
+import { PERMISSION } from "../constants/system.constant";
 import { openPicker } from "react-native-image-crop-picker";
 import { launchImageLibrary } from "react-native-image-picker";
-import { PERMISSION } from "constants";
 
 export const selectMedia = async ({ config, callback, croping = true }) => {
   const permission = await requestPermission(PERMISSION.permissionLibrary);
@@ -52,9 +56,6 @@ export const selectMedia = async ({ config, callback, croping = true }) => {
     .catch(console.log)
     .finally(() => {});
 };
-
-import fs from "react-native-fs";
-import { getSha1FromString } from "./string.helper";
 
 /************************************************************************************************ *
  * FILE HELPER Jamviet.com refactor

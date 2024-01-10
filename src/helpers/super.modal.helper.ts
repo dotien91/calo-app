@@ -1,3 +1,5 @@
+import Toast from "react-native-toast-message";
+
 import cmStyle from "@theme/styles";
 import { palette } from "@theme/themes";
 import { ViewStyle } from "react-native";
@@ -21,6 +23,20 @@ interface ContentBasicPopupType {
 export const typePopup = {
   confirmPopup: "CONFIRM_POPup",
 };
+
+interface ItemMediaProps {
+  url: string;
+  type: string;
+}
+
+interface ContentMediaPopup {
+  listLink: ItemMediaProps[];
+}
+
+interface ToastProps {
+  type: "success" | "error" | "info";
+  message: string;
+}
 
 export const SuperModalHelper = {
   getContentPopupNormal({ title, desc, btn }: ContentBasicPopupType) {
@@ -103,6 +119,14 @@ export const showConfirmSuperModal = (params: ContentBasicPopupType) => {
   );
 };
 
+export const showDetailImageView = (
+  listLink: ContentMediaPopup,
+  index: number,
+  type: string,
+) => {
+  eventEmitter.emit("show_media", { listLink, index, type });
+};
+
 export const showErrorModal = (res: any) => {
   if (res.message) {
     showSuperModal({
@@ -115,6 +139,12 @@ export const showErrorModal = (res: any) => {
       btn: { typeError: true },
     });
   }
+};
+export const showToast = (res: ToastProps) => {
+  Toast.show({
+    type: res.type,
+    text1: res.message,
+  });
 };
 
 export const showLoading = () => {

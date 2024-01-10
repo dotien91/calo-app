@@ -11,12 +11,12 @@ import { IMediaUpload, TypedMessageGiftedChat } from "models/chat.model";
 import MessageItem from "./components/MessageItem";
 import { emitSocket } from "@helpers/socket.helper";
 import useStore from "@services/zustand/store";
-import { useChatHistory } from "@helpers/hooks/use.chat.history";
 import ChatHeader from "./chat.room.header";
 import RecordModal from "./components/audio/RecordModal";
-import { useUploadFile } from "@helpers/hooks/use.upload.file";
 import InputToolbar from "./components/InputToolbar";
 import { EnumMessageStatus } from "constants/chat.constant";
+import { useChatHistory } from "@helpers/hooks/useChatHistory";
+import { useUploadFile } from "@helpers/hooks/useUploadFile";
 
 interface ChatRoomScreenProps {}
 

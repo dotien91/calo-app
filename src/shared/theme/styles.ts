@@ -2,6 +2,11 @@ import { FlexStyle, StyleSheet } from "react-native";
 import font from "./fonts";
 import { palette } from "./themes";
 import { mhs } from "utils/size.utils";
+import {
+  getBottomSpace,
+  getStatusBarHeight,
+} from "react-native-iphone-screen-helper";
+import { isAndroid } from "@freakycoder/react-native-helpers";
 
 const flexBase: FlexStyle = {
   flexDirection: "row",
@@ -117,6 +122,11 @@ const CommonStyle = StyleSheet.create({
     fontFamily: font.outfit.medium,
     fontSize: 16,
     color: palette.white,
+  },
+  safeAreaView: {
+    flex: 1,
+    marginTop: getStatusBarHeight(),
+    marginBottom: isAndroid ? getBottomSpace() : 0,
   },
 });
 

@@ -1,3 +1,4 @@
+import CommonStyle from "@theme/styles";
 import { ViewStyle, StyleSheet, TextStyle, ImageStyle } from "react-native";
 import { ExtendedTheme } from "@react-navigation/native";
 import { ScreenWidth } from "@freakycoder/react-native-helpers";
@@ -17,7 +18,7 @@ export default (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create<Style>({
     container: {
-      flex: 1,
+      ...CommonStyle.flex1,
       alignItems: "center",
       backgroundColor: colors.background,
     },
@@ -25,12 +26,11 @@ export default (theme: ExtendedTheme) => {
       fontSize: 32,
     },
     buttonStyle: {
+      ...CommonStyle.center,
       height: 45,
       width: ScreenWidth * 0.9,
       marginTop: 32,
       borderRadius: 12,
-      alignItems: "center",
-      justifyContent: "center",
       backgroundColor: colors.primary,
       shadowRadius: 5,
       shadowOpacity: 0.7,
@@ -51,7 +51,7 @@ export default (theme: ExtendedTheme) => {
       justifyContent: "space-between",
     },
     contentContainer: {
-      flex: 1,
+      ...CommonStyle.flex1,
       marginTop: 16,
     },
     listContainer: {

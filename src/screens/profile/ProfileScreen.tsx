@@ -5,7 +5,7 @@ import { useTheme } from "@react-navigation/native";
  * ? Local Imports
  */
 import createStyles from "./ProfileScreen.style";
-import { useUserHook } from "@helpers/hooks/use.user.hook";
+import { useUserHook } from "@helpers/hooks/useUserHook";
 import useStore from "@services/zustand/store";
 import { USER_TOKEN, _getJson } from "@services/local-storage";
 

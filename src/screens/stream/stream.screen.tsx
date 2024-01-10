@@ -26,7 +26,7 @@ import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "constants";
 import { showConfirmSuperModal } from "@helpers/super.modal.helper";
 import { updateLivestream } from "@services/api/livestreamApi";
-import { useUserHook } from "@helpers/hooks/use.user.hook";
+import { useUserHook } from "@helpers/hooks/useUserHook";
 
 // const STREAM_URL = "rtmps://broadcast.ieltshunter.io:1935/live"; // ex: rtmp://a.rtmp.youtube.com/live2
 // const STREAM_NAME = "aieieiaowigar352"; // ex: abcd-1234-abcd-1234-abcd

@@ -7,6 +7,8 @@ export interface AppSlice {
   setIsFirstOpenApp: (value: boolean) => void;
   language: string;
   setLanguage: (language: string) => void;
+  isShowWelcome: boolean;
+  setShowWelcome: (value: boolean) => void;
 }
 
 const createAppSlice: StoreSlice<AppSlice> = (set) => ({
@@ -16,6 +18,8 @@ const createAppSlice: StoreSlice<AppSlice> = (set) => ({
   setIsFirstOpenApp: (value: boolean) => set({ isFirstOpenApp: value }),
   language: "vi",
   setLanguage: (value: string) => set({ language: value }),
+  isShowWelcome: true,
+  setShowWelcome: (value: boolean) => set({ isShowWelcome: value }),
 });
 
 export default createAppSlice;

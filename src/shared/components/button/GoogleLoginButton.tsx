@@ -15,7 +15,7 @@ import { IOS_CLIENT_ID_GOOGLE, WEB_CLIENT_ID_GOOGLE } from "constants";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { getDeviceInfo } from "@helpers/device.info.helper";
 import { loginWithGoogle } from "@services/api/userApi";
-import { useUserHook } from "@helpers/hooks/use.user.hook";
+import { useUserHook } from "@helpers/hooks/useUserHook";
 
 interface BtnProps {
   showText: boolean | true;

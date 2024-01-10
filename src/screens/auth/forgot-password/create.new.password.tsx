@@ -28,7 +28,7 @@ import {
 import { RECAPCHA_KEY } from "constants/config.constant";
 import { passRegex } from "constants/regex.constant";
 import { getDeviceInfo } from "@helpers/device.info.helper";
-import { useUserHook } from "@helpers/hooks/use.user.hook";
+import { useUserHook } from "@helpers/hooks/useUserHook";
 
 export default function NewPasswordScreen() {
   const theme = useTheme();
