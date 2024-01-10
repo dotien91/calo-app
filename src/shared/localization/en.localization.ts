@@ -170,6 +170,8 @@ export default {
     likeThisPost: "like this post",
     personLiked: "The person who liked",
     emptyComment: "No comments yet",
+    emptyCommentDes:
+      "Please submit your comments for this article! Kindly adhere to community guidelines when participating in discussions at IELTS Hunter.",
     emptyPost: "There are no posts yet",
     emptyPostTitle: "There is no article",
     emptyPostDes:
@@ -268,6 +270,7 @@ export default {
     emptyList: "Empty list",
     deletePostSuccess: "Delete post success",
     deletePost: "Delete post?",
+    deleteComment: "Delete comment",
   },
   chat: {
     search: "Search",

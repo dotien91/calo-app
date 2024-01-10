@@ -1,4 +1,4 @@
-import { Alert, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import React from "react";
 import CommonStyle from "@theme/styles";
 import { translations } from "@localization";
@@ -17,7 +17,7 @@ import {
 import * as NavigationService from "react-navigation-helpers";
 import ItemBottomSheet from "@shared-components/item-bottom-sheet/ItemBottomSheet";
 import { SCREENS } from "constants";
-
+import { getBottomSpace } from "react-native-iphone-screen-helper";
 interface ListActionOfPost {
   data: any;
 }
@@ -105,7 +105,7 @@ const ListActionOfPost = ({ data }: ListActionOfPost) => {
 
   if (userData?._id === data?.user_id?._id) {
     return (
-      <View>
+      <View style={styles.container}>
         <ItemBottomSheet
           nameIcon="trash-outline"
           onPress={showWarrningDelete}
@@ -126,7 +126,7 @@ const ListActionOfPost = ({ data }: ListActionOfPost) => {
   }
 
   return (
-    <View style={CommonStyle.flex1}>
+    <View style={styles.container}>
       <ItemBottomSheet
         nameIcon="bookmark-outline"
         text={translations.post.save}
@@ -158,5 +158,12 @@ const ListActionOfPost = ({ data }: ListActionOfPost) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    ...CommonStyle.flex1,
+    paddingBottom: getBottomSpace(),
+  },
+});
 
 export default ListActionOfPost;

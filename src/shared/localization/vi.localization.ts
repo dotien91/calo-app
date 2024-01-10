@@ -180,6 +180,8 @@ export default {
     likeThisPost: "lượt thích",
     personLiked: "Những người thích bài viết này",
     emptyComment: "Hãy là người đầu tiên bình luận",
+    emptyCommentDes:
+      "Hãy gửi ý kiến ​​của bạn cho bài viết này nhé! Vui lòng tuân thủ các nguyên tắc cộng đồng khi tham gia thảo luận tại IELTS Hunter.",
     emptyPost: "Chưa có bài viết nào",
     postInvalid: "Bài đăng không tồn tại",
     emptyPostTitle: "Không có bài viết",
@@ -321,6 +323,7 @@ export default {
     remarkable: "Đáng chú ý",
     viewMore: "Xem thêm",
     deletePost: "Bạn có muốn xoá bài viết này?",
+    deleteComment: "Bạn muốn xoá bình luận",
     postNeedApproval: "{post} bài viết cần phê duyệt",
     postApproval: "Duyệt bài viết",
     approval: "Duyệt",

@@ -30,6 +30,7 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { useTheme } from "@react-navigation/native";
 import { useListData } from "@helpers/hooks/useListData";
 import { isIos } from "@utils/device.ui.utils";
+import EmptyResultView from "@shared-components/empty.data.component";
 interface PostDetailProps {
   route: any;
 }
@@ -43,6 +44,7 @@ const PostDetail = (props: PostDetailProps) => {
   const userData = useStore((state) => state.userData);
   const listCommentDelete = useStore((state) => state.listCommentDelete);
   const itemUpdate = useStore((state) => state.itemUpdate);
+  const setItemUpdate = useStore((state) => state.setItemUpdate);
 
   const refInput = useRef<TextInput>(null);
 
@@ -94,6 +96,9 @@ const PostDetail = (props: PostDetailProps) => {
     } else {
       getData();
     }
+    return () => {
+      setItemUpdate({});
+    };
     // getComment();
   }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -113,19 +118,22 @@ const PostDetail = (props: PostDetailProps) => {
     return dataUpdate;
   };
 
-  const updateListCommentUpdate = (itemUpdate: any) => {
+  const _updateListComment = (itemUpdate: any) => {
     const newData = [...listData];
     if (itemUpdate.parent_id) {
       const index = newData.findIndex((i) => i._id === itemUpdate.parent_id);
-      const indexChild = newData[index].child.findIndex(
-        (item) => item._id === itemUpdate._id,
-      );
-      newData[index].child[indexChild].content = itemUpdate?.content || "";
-      console.log();
+      if (index >= 0) {
+        const indexChild = newData[index].child.findIndex(
+          (item) => item._id === itemUpdate._id,
+        );
+        if (indexChild >= 0)
+          newData[index].child[indexChild].content = itemUpdate?.content || "";
+      }
       return [...newData];
     } else {
-      if (itemUpdate._id && itemUpdate.content) {
-        // newData[index].content = itemUpdate?.content || "";
+      const index = newData.findIndex((i) => i._id === itemUpdate._id);
+      if (index >= 0) {
+        newData[index].content = itemUpdate?.content || "";
       }
       return [...newData];
     }
@@ -133,8 +141,8 @@ const PostDetail = (props: PostDetailProps) => {
 
   useEffect(() => {
     if (!isEmpty(itemUpdate)) {
-      const newData = updateListCommentUpdate(itemUpdate);
-      // console.log("newData...", newData);
+      const newData = _updateListComment(itemUpdate);
+      setItemUpdate({});
       setListData(newData);
     }
   }, [itemUpdate]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -232,6 +240,26 @@ const PostDetail = (props: PostDetailProps) => {
     );
   };
 
+  const renderEmpty = () => {
+    return (
+      <View
+        style={{
+          ...CommonStyle.center,
+          ...CommonStyle.flex1,
+          backgroundColor: colors.background,
+          paddingVertical: 40,
+          minHeight: 500,
+        }}
+      >
+        <EmptyResultView
+          title={translations.post.emptyComment}
+          desc={translations.post.emptyCommentDes}
+          icon="chatbubbles-outline"
+        />
+      </View>
+    );
+  };
+
   return (
     <KeyboardAvoidingView
       style={CommonStyle.flex1}
@@ -263,7 +291,7 @@ const PostDetail = (props: PostDetailProps) => {
               keyExtractor={(item) => item?._id + ""}
               refreshControl={refreshControl()}
               ListFooterComponent={renderFooterComponent()}
-              // ListEmptyComponent={renderEmpty()}
+              ListEmptyComponent={renderEmpty()}
             />
           </View>
         </ScrollView>

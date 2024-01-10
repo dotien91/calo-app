@@ -38,9 +38,8 @@ const EditComment = (props: EditCommentProps) => {
       const itemupdate = {
         _id: data._id,
         content: txtEdit,
-        paren_id: data.parent_id || "",
+        parent_id: data.parent_id || "",
       };
-      console.log("item.update..", itemupdate);
       updateCommentWithId(params).then((res) => {
         if (!res.isError) {
           setItemUpdate(itemupdate);

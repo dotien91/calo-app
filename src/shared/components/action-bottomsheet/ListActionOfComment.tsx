@@ -19,6 +19,7 @@ import {
 import ItemBottomSheet from "@shared-components/item-bottom-sheet/ItemBottomSheet";
 import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "constants";
+import { getBottomSpace } from "react-native-iphone-screen-helper";
 
 interface ListActionOfComment {
   data: any;
@@ -50,7 +51,7 @@ const ListActionOfComment = ({ data }: ListActionOfComment) => {
   const showWarrningDelete = () => {
     //close bottomsheet
     closeSuperModal();
-    Alert.alert("", translations.home.deletePost, [
+    Alert.alert("", translations.home.deleteComment, [
       {
         text: translations.delete,
         onPress: () => deleteCommentWithid(data._id),
@@ -165,6 +166,7 @@ const ListActionOfComment = ({ data }: ListActionOfComment) => {
 const styles = StyleSheet.create({
   container: {
     ...CommonStyle.flex1,
+    paddingBottom: getBottomSpace(),
   },
 });
 export default ListActionOfComment;
