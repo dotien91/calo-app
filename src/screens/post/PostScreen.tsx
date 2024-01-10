@@ -131,6 +131,7 @@ export default function PostScreen() {
     } else {
       createNewPost(params).then((res) => {
         if (!res.isError) {
+          eventEmitter.emit("reload_list_post");
           closeSuperModal();
           showToast({
             type: "success",

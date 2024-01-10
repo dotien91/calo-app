@@ -46,6 +46,8 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { useTheme } from "@react-navigation/native";
 import CustomBackground from "@shared-components/CustomBackgroundBottomSheet";
 import { useListData } from "utils/helpers/useListData";
+import eventEmitter from "@services/event-emitter";
+
 const HEIGHT_BOTTOM_SHEET = 230;
 const { height } = Dimensions.get("screen");
 
@@ -505,6 +507,8 @@ const PostDetail = (props: PostDetailProps) => {
                     ) {
                       unFollowUser(params).then((resUnfollow) => {
                         if (!resUnfollow.isError && userData) {
+                          eventEmitter.emit("reload_following_post");
+
                           setUserData({
                             ...userData,
                             follow_users: [
@@ -520,6 +524,8 @@ const PostDetail = (props: PostDetailProps) => {
                     } else {
                       followUser(params).then((resFollow) => {
                         if (!resFollow.isError && userData) {
+                          eventEmitter.emit("reload_following_post");
+
                           setUserData({
                             ...userData,
                             follow_users: [

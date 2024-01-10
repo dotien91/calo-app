@@ -397,7 +397,8 @@ PODS:
     - FBSDKGamingServicesKit (~> 16.1.3)
     - FBSDKShareKit (~> 16.1.3)
     - React-Core
-  - react-native-image-picker (5.6.0):
+  - react-native-image-picker (7.1.0):
+    - RCT-Folly (= 2021.07.22.00)
     - React-Core
   - react-native-mmkv (2.11.0):
     - MMKV (>= 1.2.13)
@@ -548,16 +549,16 @@ PODS:
   - RNGoogleSignin (11.0.0):
     - GoogleSignIn (~> 7.0)
     - React-Core
-  - RNImageCropPicker (0.40.0):
+  - RNImageCropPicker (0.40.2):
     - React-Core
     - React-RCTImage
-    - RNImageCropPicker/QBImagePickerController (= 0.40.0)
+    - RNImageCropPicker/QBImagePickerController (= 0.40.2)
     - TOCropViewController
-  - RNImageCropPicker/QBImagePickerController (0.40.0):
+  - RNImageCropPicker/QBImagePickerController (0.40.2):
     - React-Core
     - React-RCTImage
     - TOCropViewController
-  - RNPermissions (3.8.4):
+  - RNPermissions (4.0.4):
     - React-Core
   - RNReanimated (3.6.1):
     - RCT-Folly (= 2021.07.22.00)
@@ -854,7 +855,7 @@ SPEC CHECKSUMS:
   React-Core: aaacca67f9ca54f142827e67f44bfbd815875eb6
   React-CoreModules: 32fab1d62416849a3b6dac6feff9d54e5ddc2d1e
   React-cxxreact: 37765b4975541105b2a3322a4b473417c158c869
-  React-debug: 33e2befc8314e45749197031b53e59fa2fc6949d
+  React-debug: b9c06759ee0b708d5171ec5adefad5c9feac4e4a
   React-hermes: 935ae71fb3d7654e947beba8498835cd5e479707
   React-jsi: ec628dc7a15ffea969f237b0ea6d2fde212b19dd
   React-jsiexecutor: 59d1eb03af7d30b7d66589c410f13151271e8006
@@ -862,7 +863,7 @@ SPEC CHECKSUMS:
   React-logger: c5b527272d5f22eaa09bb3c3a690fee8f237ae95
   react-native-document-picker: b4f4a23b73f864ce17965b284c0757648993805b
   react-native-fbsdk-next: 9c40664b1501be29572795c2e4c8e347f39f556f
-  react-native-image-picker: db60857e03d63721f19b6f4027de20429ddd9cba
+  react-native-image-picker: be000cd54f1b1bd71dba9677b36847827f9cc012
   react-native-mmkv: e97c0c79403fb94577e5d902ab1ebd42b0715b43
   react-native-netinfo: 8a7fd3f7130ef4ad2fb4276d5c9f8d3f28d2df3d
   react-native-pager-view: cf96a223846458cc7e932017636b5c6d8cc2c549
@@ -870,7 +871,7 @@ SPEC CHECKSUMS:
   react-native-safe-area-context: cd1169d797a2ef722a00bfc5af10748d5b6c94f9
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
   react-native-video: 86950ad481cec184d7c9420ec3bca0c27904bbcd
-  React-NativeModulesApple: dc9e5b401d739f0b50bcfa5b970c0883173bc4c8
+  React-NativeModulesApple: 482d369753b009ace05d7fb678e70a0105e68eeb
   React-perflogger: 6bd153e776e6beed54c56b0847e1220a3ff92ba5
   React-RCTActionSheet: c0b62af44e610e69d9a2049a682f5dba4e9dff17
   React-RCTAnimation: fe7005136b58f58871cab2f70732343b6e330d30
@@ -884,9 +885,9 @@ SPEC CHECKSUMS:
   React-RCTVibration: ea3a68a49873a54ced927c90923fc6932baf344a
   React-rncore: 9672a017af4a7da7495d911f0b690cbcae9dd18d
   React-runtimeexecutor: 369ae9bb3f83b65201c0c8f7d50b72280b5a1dbc
-  React-runtimescheduler: 99b8ffc7b51b9fac326327843b3fd3a49612987a
-  React-utils: 1175a59f3f28ffedc9a7c270de980d1f3813afe3
-  ReactCommon: 7c45c5d98cb23f7a69160de2c6ac246bd52bae96
+  React-runtimescheduler: 5aa17013205940e1304f20ec06deea1dcfada88f
+  React-utils: c7d77cae5252fda80e9603c73201413aae61b7d3
+  ReactCommon: 5886700341dac9d0811532dd623af0fe18137870
   ReactNativeLocalization: fb171138cdc80d5d0d4f20243d2fc82c2b3cc48f
   RNCMaskedView: 949696f25ec596bfc697fc88e6f95cf0c79669b6
   RNFastImage: 5c9c9fed9c076e521b3f509fe79e790418a544e8
@@ -894,8 +895,8 @@ SPEC CHECKSUMS:
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNGestureHandler: a5039da2ac028b073ae801289476060b34d559b1
   RNGoogleSignin: fc408799f1990a12497a32f64280c0fe353ffcc1
-  RNImageCropPicker: 486e2f7e2b0461ce24321f751410dce1b3b49e6d
-  RNPermissions: f1cb877ce73f311c8632aa32528dd1dde2ca85ee
+  RNImageCropPicker: d9616a0cb9b72e8551ff94a7a5021fbd29050aa5
+  RNPermissions: 1d885d5f2b68ef8ff0ee251555bcc397dfdda6dd
   RNReanimated: 8a6a83984cb4d61ebf1065b6137150b6b31ce609
   RNScreens: 1c2444658fbb696a094272d946708167b1f63409
   RNShare: 859ff710211285676b0bcedd156c12437ea1d564
@@ -907,6 +908,6 @@ SPEC CHECKSUMS:
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   Yoga: 8796b55dba14d7004f980b54bcc9833ee45b28ce
 
-PODFILE CHECKSUM: 1091d5479bb5f3ddf8859ed08fd658282065db21
+PODFILE CHECKSUM: 8f1b59bd7fe02a310c426238b43de623dfd3dce3
 
 COCOAPODS: 1.12.1

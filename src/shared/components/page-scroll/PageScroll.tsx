@@ -10,14 +10,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
-import {
-  Dimensions,
-  Platform,
-  SafeAreaView,
-  StyleSheet,
-  ViewProps,
-} from "react-native";
-import { palette } from "@theme/themes";
+import { Dimensions, Platform, StyleSheet, ViewProps } from "react-native";
 import CommonStyle from "@theme/styles";
 const { width } = Dimensions.get("screen");
 const isAndroid = Platform.OS === "android";
@@ -117,37 +110,26 @@ const PageScroll = (props: Props, ref: React.Ref<PagerScrollRef>) => {
   };
 
   return (
-    <SafeAreaView style={[styles.container, props?.style]}>
-      {/* <Animated.View style={styles.viewHeader}>
-        <Animated.View style={[styles.inline, stylePercent]} />
-      </Animated.View> */}
-      <Animated.ScrollView
-        ref={scrollViewRef}
-        horizontal
-        pagingEnabled
-        bounces={false}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        style={styles.content}
-        scrollEventThrottle={16}
-        onMomentumScrollEnd={onMomentumScrollEnd}
-        onScroll={scrollHandler}
-        scrollEnabled={scrollEnabled}
-        keyboardShouldPersistTaps="handled"
-      >
-        {props?.children}
-      </Animated.ScrollView>
-    </SafeAreaView>
+    <Animated.ScrollView
+      ref={scrollViewRef}
+      horizontal
+      pagingEnabled
+      bounces={false}
+      showsHorizontalScrollIndicator={false}
+      showsVerticalScrollIndicator={false}
+      style={styles.content}
+      scrollEventThrottle={16}
+      onMomentumScrollEnd={onMomentumScrollEnd}
+      onScroll={scrollHandler}
+      scrollEnabled={scrollEnabled}
+      keyboardShouldPersistTaps="handled"
+    >
+      {props?.children}
+    </Animated.ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    width: width,
-    backgroundColor: palette.background,
-    ...CommonStyle.flex1,
-  },
-
   content: {
     ...CommonStyle.flex1,
   },

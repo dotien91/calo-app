@@ -32,13 +32,20 @@ import CustomBackground from "@shared-components/CustomBackgroundBottomSheet";
 import createStyles from "./ListPost.style";
 const HEIGHT_BOTTOM_SHEET = 230;
 
-const ListPost = () => {
+interface ListPostProps {
+  isFollowingPost: boolean;
+}
+
+const ListPost = ({ isFollowingPost }: ListPostProps) => {
   const userData = useStore((state) => state.userData);
   const setUserData = useStore((state) => state.setUserData);
   const listPostDelete = useStore((state) => state.listPostDelete);
   const addListPostDelete = useStore((state) => state.addListPostDelete);
   const resetListLike = useStore((state) => state.resetListLike);
+
   const refBottomSheet = useRef<BottomSheet>(null);
+  const listRef = useRef(null);
+
   const [itemSelectd, setItemSelectd] = useState<any>({});
   const theme = useTheme();
   const { colors } = theme;
@@ -50,6 +57,7 @@ const ListPost = () => {
     }, 300);
     setItemSelectd(data);
   };
+
   const snapPoints = useMemo(() => [HEIGHT_BOTTOM_SHEET], []);
   useEffect(() => {
     resetListLike();
@@ -60,7 +68,7 @@ const ListPost = () => {
       <ItemPost
         key={item._id}
         data={item}
-        pressMore={() => showBottomSheet(item)}
+        pressMore={showBottomSheet}
         refreshing={refreshing}
       />
     );
@@ -75,7 +83,11 @@ const ListPost = () => {
     refreshListPage,
     refreshing,
   } = useListData<any>(
-    { limit: 10, auth_id: userData?._id || "" },
+    {
+      limit: 10,
+      auth_id: userData?._id || "",
+      is_following_list: isFollowingPost + "",
+    },
     getListPost,
   );
 
@@ -83,10 +95,21 @@ const ListPost = () => {
     resetListLike();
   }, [refreshing]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const _refreshListPage = () => {
+    refreshListPage();
+    setTimeout(() => {
+      console.log("listReflistRef", listRef);
+      listRef && listRef.current?.scrollToOffset({ animated: true, offset: 0 });
+    }, 200);
+  };
+
   useEffect(() => {
-    eventEmitter.on("reload_list_post", refreshListPage);
+    const typeEmit = isFollowingPost
+      ? "reload_following_post"
+      : "reload_list_post";
+    eventEmitter.on(typeEmit, _refreshListPage);
     return () => {
-      eventEmitter.off("reload_list_post", () => refreshListPage);
+      eventEmitter.off(typeEmit, _refreshListPage);
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -151,6 +174,7 @@ const ListPost = () => {
       }}
     >
       <FlatList
+        ref={listRef}
         data={listData.filter((item) => listPostDelete.indexOf(item._id) < 0)}
         renderItem={renderItem}
         scrollEventThrottle={16}
@@ -248,6 +272,7 @@ const ListPost = () => {
                   ) {
                     unFollowUser(params).then((resUnfollow) => {
                       if (!resUnfollow.isError && userData) {
+                        eventEmitter.emit("reload_following_post");
                         setUserData({
                           ...userData,
                           follow_users: [
@@ -263,6 +288,7 @@ const ListPost = () => {
                   } else {
                     followUser(params).then((resFollow) => {
                       if (!resFollow.isError && userData) {
+                        eventEmitter.emit("reload_following_post");
                         setUserData({
                           ...userData,
                           follow_users: [
