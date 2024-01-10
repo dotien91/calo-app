@@ -10,7 +10,7 @@ import Animated, {
   withDelay,
   withTiming,
 } from "react-native-reanimated";
-import { HIT_SLOP_EXPAND_20 } from "utils/helpers/system.constant";
+import { HIT_SLOP_EXPAND_20 } from "constants/system.constant";
 
 interface Props extends FastImageProps {
   width?: number;
@@ -51,11 +51,11 @@ const ImageLoad = (props: Props) => {
     };
   });
 
-  const blurhashStyle = useAnimatedStyle(() => {
-    return {
-      opacity: interpolate(loaded.value, [0, 1], [1, 0], Extrapolate.CLAMP),
-    };
-  });
+  // const blurhashStyle = useAnimatedStyle(() => {
+  //   return {
+  //     opacity: interpolate(loaded.value, [0, 1], [1, 0], Extrapolate.CLAMP),
+  //   };
+  // });
 
   const ViewComponent = onPress ? Pressable : View;
 
@@ -72,12 +72,12 @@ const ImageLoad = (props: Props) => {
       }}
       hitSlop={HIT_SLOP_EXPAND_20}
     >
-      <Animated.View style={[StyleSheet.absoluteFillObject, blurhashStyle]}>
+      {/* <Animated.View style={[StyleSheet.absoluteFillObject, blurhashStyle]}>
         <FastImage
           source={require("assets/image/default_avatar.jpg")}
           style={{ width: "100%", height: "100%" }}
         />
-      </Animated.View>
+      </Animated.View> */}
       {(typeof source === "object" && source?.uri) ||
       typeof source !== "object" ? (
         <Animated.View

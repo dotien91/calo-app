@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 import { Alert, View } from "react-native";
 import React from "react";
 import CommonStyle from "@theme/styles";

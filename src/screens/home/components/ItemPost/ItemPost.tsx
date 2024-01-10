@@ -1,16 +1,16 @@
 /* eslint-disable camelcase */
-
 import React, { useEffect, useMemo, useState } from "react";
 import { Dimensions, Image, Pressable, Text, View } from "react-native";
 import { useTheme } from "@react-navigation/native";
+
 import CommonStyle from "@theme/styles";
 import IconSvg from "assets/svg";
-import { convertLastActive } from "utils/time";
+import { convertLastActive } from "@utils/time.utils";
 import * as NavigationService from "react-navigation-helpers";
-import { SCREENS } from "@shared-constants";
+import { SCREENS } from "constants";
 import { postLike } from "@services/api/post";
-import { showDetailImageView, showToast } from "@helpers/SuperModalHelper";
-import { sharePost } from "utils/share";
+import { showDetailImageView, showToast } from "@helpers/super.modal.helper";
+import { sharePost } from "@utils/share.utils";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";

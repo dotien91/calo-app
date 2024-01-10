@@ -4,12 +4,13 @@ import { uploadMultiFile, uploadMultiMedia } from "@services/api/post";
 import * as React from "react";
 import { Platform, StyleSheet, Text, View, Dimensions } from "react-native";
 import { pick, types } from "react-native-document-picker";
-import { selectMedia } from "utils/helpers/file-helper";
+import { selectMedia } from "@helpers/file.helper";
 const { width } = Dimensions.get("screen");
 const isIos = Platform.OS === "ios";
 
-export function UploadFile(initData?: any[]) {
+export function useUploadFile(initData?: any[]) {
   const [listFile, setListFile] = React.useState<any[]>(initData || []);
+  const [isUpLoadingFile, setIsUpLoadingFile] = React.useState(false);
   const [listFileLocal, setListFileLocal] = React.useState<any[]>(
     initData || [],
   );
@@ -28,6 +29,7 @@ export function UploadFile(initData?: any[]) {
   };
 
   const onPressPicture = async () => {
+    setIsUpLoadingFile(true);
     selectMedia({
       config: { mediaType: "photo", selectionLimit: 30 },
       callback: async (images: any) => {
@@ -74,7 +76,7 @@ export function UploadFile(initData?: any[]) {
                 style={styles.viewFile}
                 item={item}
                 key={`listFileLocal - ${index}`}
-                onPressClear={() => onRemove(item.uri)}
+                onPressClear={() => onRemove(item)}
               />
             );
           if (listFileLocal.length >= 4) {
@@ -103,11 +105,15 @@ export function UploadFile(initData?: any[]) {
       </View>
     );
   }, [listFileLocal]); // eslint-disable-line react-hooks/exhaustive-deps
-  const onRemove = (uri: string) => {
+  const onRemove = ({ uri, _id }: { uri: string; _id: string }) => {
     setListFileLocal(listFileLocal.filter((i) => i.uri !== uri));
+    if (listFile?.length) {
+      setListFile(listFile.filter((i) => i._id !== _id));
+    }
   };
 
   const onPressVideo = async () => {
+    setIsUpLoadingFile(true);
     selectMedia({
       config: { mediaType: "video", selectionLimit: 30 },
       callback: async (images: any) => {
@@ -123,6 +129,7 @@ export function UploadFile(initData?: any[]) {
           uri: getLinkUri(i),
           type: i.type,
         }));
+
         setListFileLocal((listFileLocal) => [...listFileLocal, ...fileLocal]);
         const res = await uploadMultiMedia(
           listVideo.map((i: any) => ({
@@ -159,6 +166,8 @@ export function UploadFile(initData?: any[]) {
           isIos ? "public.mp3" : "audio/mpeg",
         ],
       });
+      setIsUpLoadingFile(true);
+
       if (pickerResult.length > 0) {
         const fileUp = pickerResult.reduce((list: any[], current) => {
           return listFile.find((i) => i.uri === current.uri)
@@ -200,12 +209,19 @@ export function UploadFile(initData?: any[]) {
     }
   };
 
+  React.useEffect(() => {
+    if (listFile?.length) {
+      setIsUpLoadingFile(false);
+    }
+  }, [listFile]);
+
   return {
     listFile,
     onPressPicture,
     onPressVideo,
     onPressFile,
     renderFile,
+    isUpLoadingFile,
   };
 }
 

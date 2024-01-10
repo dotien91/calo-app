@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 
-import VideoPlayer from "@shared-components/VideoPlayer";
+import VideoPlayer from "@shared-components/video.palyer.component";
 import ImageLoad from "@screens/post/components/ImageLoad";
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
@@ -73,7 +73,9 @@ const PagerScrollMedia = ({
           return (
             <View key={index} style={styles.viewBackground}>
               <VideoPlayer
-                mediaUrl={item?.url}
+                mediaUrl={
+                  "https://live-par-2-cdn-alt.livepush.io/live/bigbuckbunnyclip/index.m3u8"
+                }
                 height={heightMedia}
                 width={width}
               />
@@ -89,12 +91,10 @@ export default PagerScrollMedia;
 
 const styles = StyleSheet.create({
   modalInner: {
-    minWidth: "60%",
     backgroundColor: palette.black,
     borderRadius: 6,
-    paddingHorizontal: 30,
-    paddingTop: getStatusBarHeight(),
-    overflow: "hidden",
+    paddingTop: getStatusBarHeight() + 10,
+    flex: 1,
   },
   viewBackground: {
     ...CommonStyle.flex1,

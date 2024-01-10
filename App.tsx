@@ -8,7 +8,7 @@ import SplashScreen from "react-native-splash-screen";
  */
 import Navigation from "./src/navigation";
 import { isAndroid } from "@freakycoder/react-native-helpers";
-import NetworkManager from "@helpers/managers/NetworkManager";
+import NetworkManager from "@helpers/network.helper";
 import { palette } from "@theme/themes";
 import useStore from "@services/zustand/store";
 import { translations } from "@localization";

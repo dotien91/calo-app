@@ -15,7 +15,7 @@ import Button from "@shared-components/button/Button";
 import createStyles from "./CreateNewPassword.style";
 import ViewTermPolicy from "../components/TermPolicyView";
 import InputHook from "@shared-components/form/InputHook";
-import { SCREENS } from "@shared-constants";
+import { SCREENS } from "constants";
 import { translations } from "@localization";
 import IconSvg from "assets/svg";
 import GoBackButton from "../components/GoBackButton";

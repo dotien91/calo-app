@@ -6,7 +6,7 @@ import * as NavigationService from "react-navigation-helpers";
 
 import Button from "@shared-components/button/Button";
 import createStyles from "./IntroScreen.style";
-import { SCREENS } from "@shared-constants";
+import { SCREENS } from "constants";
 
 export default function IntroScreen() {
   const theme = useTheme();

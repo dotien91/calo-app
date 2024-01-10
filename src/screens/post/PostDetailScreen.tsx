@@ -16,7 +16,6 @@ import {
 import * as NavigationService from "react-navigation-helpers";
 import { isEmpty } from "lodash";
 
-import { isIos } from "utils/helpers/device-ui";
 import ItemComment from "./components/item-comment/ItemComment";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";
@@ -25,12 +24,12 @@ import {
   showDetailImageView,
   showErrorModal,
   showLoading,
-} from "@helpers/SuperModalHelper";
+} from "@helpers/super.modal.helper";
 import createStyles from "./Post.style";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { useTheme } from "@react-navigation/native";
-import { useListData } from "utils/helpers/useListData";
-
+import { useListData } from "@helpers/hooks/useListData";
+import { isIos } from "@utils/device.ui.utils";
 interface PostDetailProps {
   route: any;
 }

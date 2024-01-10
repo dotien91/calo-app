@@ -6,12 +6,12 @@ import { useTheme } from "@react-navigation/native";
 import CommonStyle from "@theme/styles";
 import IconSvg from "assets/svg";
 import { postLike } from "@services/api/post";
-import { showToast } from "@helpers/SuperModalHelper";
+import { showToast } from "@helpers/super.modal.helper";
 import { translations } from "@localization";
-import { sharePost } from "utils/share";
+import { sharePost } from "@utils/share.utils";
+import { convertLastActive } from "@utils/time.utils";
 import useStore from "@services/zustand/store";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
-import { convertLastActive } from "utils/time";
 import createStyles from "./ItemPostDetail.style";
 import { showStickBottom } from "@shared-components/stick-bottom/HomeStickBottomModal";
 

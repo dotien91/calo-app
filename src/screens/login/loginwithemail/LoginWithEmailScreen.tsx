@@ -19,10 +19,10 @@ import ViewTermPolicy from "../components/TermPolicyView";
 import OrView from "../components/OrView";
 import InputHook from "@shared-components/form/InputHook";
 import { useForm } from "react-hook-form";
-import { SCREENS } from "@shared-constants";
+import { SCREENS } from "constants";
 import { translations } from "@localization";
 import GoBackButton from "../components/GoBackButton";
-import { regexMail } from "@shared-constants/regex";
+import { regexMail } from "constants/regex.constant";
 
 interface ButtonSocialProps {
   onPress: () => void;

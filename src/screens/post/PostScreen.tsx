@@ -19,21 +19,21 @@ import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
 import { translations } from "@localization";
 import { TypedCategory, TypedRequest } from "shared/models";
-import { isIos } from "utils/helpers/device-ui";
+import { isIos } from "@utils/device.ui.utils";
 import { createNewPost, getCategory, updatePost } from "@services/api/post";
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetScrollView,
 } from "@gorhom/bottom-sheet";
-import { regexLink } from "@shared-constants/regex";
+import { regexLink } from "constants/regex.constant";
 import {
   closeSuperModal,
   showLoading,
   showToast,
   showErrorModal,
-} from "@helpers/SuperModalHelper";
+} from "@helpers/super.modal.helper";
 import * as NavigationService from "react-navigation-helpers";
-import { UploadFile } from "@shared-components/UploadFile";
+import { useUploadFile } from "@helpers/hooks/useUploadFile";
 import isEqual from "react-fast-compare";
 import eventEmitter from "@services/event-emitter";
 import CustomBackground from "@shared-components/CustomBackgroundBottomSheet";
@@ -49,22 +49,52 @@ export default function PostScreen() {
   const route: any = useRoute();
   const item: TypedRequest = route?.params?.item || {};
   const styles = useMemo(() => createStyles(theme), [theme]);
+  const submitPostStatus = React.useRef("");
 
   const [options, setOptions] = useState<OptionsState>({
     postCategory: item?.post_category?._id || "",
     link: "",
   });
-  const { onPressFile, onPressPicture, onPressVideo, listFile, renderFile } =
-    UploadFile(
-      item?.attach_files?.map(
-        (i) =>
-          ({
-            uri: i.media_url,
-            type: i.media_type,
-            _id: i._id,
-          } || []),
-      ),
-    );
+  const {
+    onPressFile,
+    onPressPicture,
+    onPressVideo,
+    listFile,
+    renderFile,
+    isUpLoadingFile,
+  } = useUploadFile(
+    item?.attach_files?.map(
+      (i) =>
+        ({
+          uri: i.media_url,
+          type: i.media_type,
+          _id: i._id,
+        } || []),
+    ),
+  );
+
+  useEffect(() => {
+    getListCategory();
+  }, []);
+
+  //continue creating post ưhen file upload success
+  React.useEffect(() => {
+    if (
+      submitPostStatus.current == "waitUploadFile" &&
+      !isUpLoadingFile &&
+      !!listFile?.length
+    ) {
+      submitPostStatus.current = "";
+      onSubmit();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isUpLoadingFile, listFile]);
+
+  useEffect(() => {
+    const getLink: string = description.match(regexLink)?.[0] || "";
+    setLink(getLink);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [description]);
 
   const [listCategory, setListCategory] = useState<TypedCategory[]>([]);
   const [description, setDescription] = useState<string>(
@@ -83,16 +113,6 @@ export default function PostScreen() {
     });
   };
 
-  useEffect(() => {
-    // gan
-    const getLink: string = description.match(regexLink)?.[0] || "";
-    setLink(getLink);
-  }, [description]);
-
-  useEffect(() => {
-    getListCategory();
-  }, []);
-
   const openListCategory = () => {
     Keyboard.dismiss();
     setTimeout(() => {
@@ -103,9 +123,14 @@ export default function PostScreen() {
   const refBottomSheet = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ["60%"], []);
 
-  const onSubmit = async () => {
+  const onSubmit = React.useCallback(() => {
+    if (submitPostStatus.current == "waitUploadFile") return;
     showLoading();
-
+    if (isUpLoadingFile) {
+      //await upload file done
+      submitPostStatus.current = "waitUploadFile";
+      return;
+    }
     const params = {
       post_title: "",
       post_content: description.trim(),
@@ -117,7 +142,6 @@ export default function PostScreen() {
 
     if (item._id) {
       updatePost(params).then((res) => {
-        console.log("res...", JSON.stringify(res));
         if (!res.isError) {
           closeSuperModal();
           eventEmitter.emit("reload_list_post");
@@ -131,6 +155,7 @@ export default function PostScreen() {
     } else {
       createNewPost(params).then((res) => {
         if (!res.isError) {
+          eventEmitter.emit("reload_list_post");
           closeSuperModal();
           showToast({
             type: "success",
@@ -143,7 +168,8 @@ export default function PostScreen() {
         }
       });
     }
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isUpLoadingFile, description, listFile]);
 
   const SelectComponent = ({
     icon,
@@ -198,6 +224,10 @@ export default function PostScreen() {
     }
   };
 
+  const visiblePost = useMemo(() => {
+    return !!description.trim() || !!listFile?.length;
+  }, [listFile, description]);
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={[styles.container]}>
@@ -207,7 +237,7 @@ export default function PostScreen() {
         >
           <HeaderPost
             onPressPost={onSubmit}
-            visiblePost={description.trim() != ""}
+            visiblePost={visiblePost}
             pressGoBack={onGoBack}
             textPost={item._id ? translations.update : translations.post.post}
           />

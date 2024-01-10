@@ -1,4 +1,4 @@
-import { PermissionHelper } from "utils/helpers/index";
+import { PermissionHelper } from "@helpers/index";
 import {
   checkMultiple,
   openSettings,

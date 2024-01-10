@@ -1,23 +1,30 @@
 /* eslint-disable camelcase */
 /*eslint no-unsafe-optional-chaining: "error"*/
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { FlatList, View } from "react-native";
 import ItemPost from "./components/ItemPost/ItemPost";
 import { getListPost } from "@services/api/post";
 import CommonStyle from "@theme/styles";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";
-import { useListData } from "utils/helpers/useListData";
+import { useListData } from "@helpers/hooks/useListData";
 import LottieView from "lottie-react-native";
-import EmptyResultView from "@helpers/EmptyResultView";
+import EmptyResultView from "@shared-components/empty.data.component";
 import eventEmitter from "@services/event-emitter";
 import { useTheme } from "@react-navigation/native";
 
-const ListPost = () => {
+interface ListPostProps {
+  isFollowingPost: boolean;
+}
+
+const ListPost = ({ isFollowingPost }: ListPostProps) => {
   const userData = useStore((state) => state.userData);
   const listPostDelete = useStore((state) => state.listPostDelete);
   const resetListLike = useStore((state) => state.resetListLike);
+
+  const listRef = useRef(null);
+
   const theme = useTheme();
   const { colors } = theme;
 
@@ -38,7 +45,11 @@ const ListPost = () => {
     refreshListPage,
     refreshing,
   } = useListData<any>(
-    { limit: 10, auth_id: userData?._id || "" },
+    {
+      limit: 10,
+      auth_id: userData?._id || "",
+      is_following_list: isFollowingPost + "",
+    },
     getListPost,
   );
 
@@ -46,10 +57,21 @@ const ListPost = () => {
     resetListLike();
   }, [refreshing]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const _refreshListPage = () => {
+    refreshListPage();
+    setTimeout(() => {
+      console.log("listReflistRef", listRef);
+      listRef && listRef.current?.scrollToOffset({ animated: true, offset: 0 });
+    }, 200);
+  };
+
   useEffect(() => {
-    eventEmitter.on("reload_list_post", refreshListPage);
+    const typeEmit = isFollowingPost
+      ? "reload_following_post"
+      : "reload_list_post";
+    eventEmitter.on(typeEmit, _refreshListPage);
     return () => {
-      eventEmitter.off("reload_list_post", () => refreshListPage);
+      eventEmitter.off(typeEmit, _refreshListPage);
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -100,6 +122,7 @@ const ListPost = () => {
       }}
     >
       <FlatList
+        ref={listRef}
         data={listData.filter((item) => listPostDelete.indexOf(item._id) < 0)}
         renderItem={renderItem}
         scrollEventThrottle={16}
