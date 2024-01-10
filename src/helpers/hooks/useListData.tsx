@@ -51,14 +51,13 @@ export function useListData<T>(
     refreshListPage();
   }, [params]);
 
-  const refreshListPage = () => {
+  const refreshListPage = async () => {
     isFetching.current = true;
     if (stateListData.nextPage > 1) setRefreshing(true);
     setIsLoading(true);
-    requestData({ page: 1, ...params }).then((res: any) => {
-      const newData = res;
+    await requestData({ page: 1, ...params }).then((res: any) => {
+      const newData = res.data;
       setIsLoading(false);
-
       if (!res.isError && lodash.isArray(newData)) {
         isFetching.current = false;
 
@@ -69,7 +68,6 @@ export function useListData<T>(
         } else {
           nextPage = 2;
         }
-        setIsFirstLoading(false);
         setRefreshing(false);
         setStateListData((oldState) => ({
           ...oldState,
@@ -77,9 +75,8 @@ export function useListData<T>(
           nextPage,
           listData: newData,
         }));
-      } else {
-        setIsFirstLoading(false);
       }
+      setIsFirstLoading(false);
     });
   };
 
@@ -89,11 +86,11 @@ export function useListData<T>(
       setIsLoadmore(true);
       await requestData({ page: stateListData.nextPage, ...params }).then(
         (res: any) => {
-          const newData = res;
+          setIsLoadmore(false);
+          const newData = res.data;
           isFetching.current = false;
 
           if (!res.isError && lodash.isArray(newData)) {
-            setIsLoadmore(false);
             let isLastPage = false;
             let { nextPage } = stateListData;
 
@@ -139,7 +136,7 @@ export function useListData<T>(
     if (!isLoadMore) return <View />;
     return (
       <View style={{ padding: 10, flex: 1, marginTop: 20 }}>
-        <ActivityIndicator color={palette.backgroundClose} />
+        <ActivityIndicator color={palette.grey2} />
       </View>
     );
   };

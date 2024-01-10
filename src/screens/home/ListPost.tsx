@@ -28,10 +28,6 @@ const ListPost = ({ isFollowingPost }: ListPostProps) => {
   const theme = useTheme();
   const { colors } = theme;
 
-  useEffect(() => {
-    resetListLike();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
   const renderItem = ({ item }: any) => {
     return <ItemPost key={item._id} data={item} refreshing={refreshing} />;
   };

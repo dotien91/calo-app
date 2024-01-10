@@ -62,7 +62,7 @@ export const palette = {
   pink: "#ed435c",
   backgroundClose: "#121118",
   baseColor2: "#FA8072",
-  grey2: "#eceeef",
+  grey2: "#595959",
 };
 
 interface ExtendedTheme extends Theme {

@@ -1,14 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { View, useWindowDimensions, Text, Pressable } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import * as NavigationService from "react-navigation-helpers";
-import lodash from "lodash";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 
 import HeaderHome from "./components/header-home/HeaderHome";
-import { getCurrentUser } from "@services/api/userApi";
-import useStore from "@services/zustand/store";
 import { SCREENS } from "constants";
 import ListPost from "./ListPost";
 
@@ -24,19 +21,9 @@ const renderScene = SceneMap({
 const HomeScreen: React.FC<HomeScreenProps> = () => {
   const theme = useTheme();
   const { colors } = theme;
-  const setUserData = useStore((state) => state.setUserData);
   /* -------------------------------------------------------------------------- */
   /*                               Render Methods                               */
   /* -------------------------------------------------------------------------- */
-
-  useEffect(() => {
-    getCurrentUser().then((res) => {
-      console.log("res...", res);
-      if (!res.isError && !lodash.isEmpty(res)) {
-        setUserData(res);
-      }
-    });
-  }, [setUserData]);
 
   const layout = useWindowDimensions();
 
