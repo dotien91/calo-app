@@ -27,7 +27,7 @@ import {
   SafeAreaView,
   Keyboard,
 } from "react-native";
-import { isIos } from "utils/helpers/device-ui";
+import { isIos } from "@utils/device.ui.utils";
 import ItemComment from "./components/item-comment/ItemComment";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";
@@ -38,14 +38,14 @@ import {
   showErrorModal,
   showLoading,
   showToast,
-} from "@helpers/SuperModalHelper";
+} from "@helpers/super.modal.helper";
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import createStyles from "./Post.style";
-import { SCREENS } from "@shared-constants";
+import { SCREENS } from "constants";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { useTheme } from "@react-navigation/native";
 import CustomBackground from "@shared-components/CustomBackgroundBottomSheet";
-import { useListData } from "utils/helpers/useListData";
+import { useListData } from "@helpers/hooks/useListData";
 import eventEmitter from "@services/event-emitter";
 
 const HEIGHT_BOTTOM_SHEET = 230;

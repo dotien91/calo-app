@@ -14,9 +14,8 @@ export const HIT_SLOP_EXPAND_10 = { top: 10, left: 10, right: 10, bottom: 10 };
 import IconFileComponent from "./IconFileComponent";
 import CommonStyle from "@theme/styles";
 import IconSvg from "assets/svg";
-import { isIos } from "utils/helpers/device-ui";
+import { isIos, formatBytes } from "@utils/device.ui.utils";
 import { uploadFile, uploadMedia } from "@services/api/post";
-import { formatBytes } from "utils/helpers/format-bytes";
 import { palette } from "@theme/themes";
 
 interface Props {

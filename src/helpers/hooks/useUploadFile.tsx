@@ -4,11 +4,11 @@ import { uploadMultiFile, uploadMultiMedia } from "@services/api/post";
 import * as React from "react";
 import { Platform, StyleSheet, Text, View, Dimensions } from "react-native";
 import { pick, types } from "react-native-document-picker";
-import { selectMedia } from "utils/helpers/file-helper";
+import { selectMedia } from "@helpers/file.helper";
 const { width } = Dimensions.get("screen");
 const isIos = Platform.OS === "ios";
 
-export function UploadFile(initData?: any[]) {
+export function useUploadFile(initData?: any[]) {
   const [listFile, setListFile] = React.useState<any[]>(initData || []);
   const [listFileLocal, setListFileLocal] = React.useState<any[]>(
     initData || [],

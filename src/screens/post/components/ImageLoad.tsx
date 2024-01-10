@@ -10,7 +10,7 @@ import Animated, {
   withDelay,
   withTiming,
 } from "react-native-reanimated";
-import { HIT_SLOP_EXPAND_20 } from "utils/helpers/system.constant";
+import { HIT_SLOP_EXPAND_20 } from "constants/system.constant";
 
 interface Props extends FastImageProps {
   width?: number;

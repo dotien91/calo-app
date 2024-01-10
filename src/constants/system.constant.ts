@@ -1,6 +1,6 @@
 import { Platform } from "react-native";
 import { PERMISSIONS } from "react-native-permissions";
-import { Device } from "./device-ui";
+import { Device } from "../utils/device.ui.utils";
 
 export const HIT_SLOP_EXPAND_20 = { top: 20, left: 20, right: 20, bottom: 20 };
 export const HIT_SLOP_EXPAND_10 = { top: 10, left: 10, right: 10, bottom: 10 };

@@ -15,7 +15,7 @@ import createStyles from "./ForgotPasswordScreen.style";
 import ViewTermPolicy from "../components/TermPolicyView";
 import InputHook from "@shared-components/form/InputHook";
 import { useForm } from "react-hook-form";
-import { SCREENS } from "@shared-constants";
+import { SCREENS } from "constants";
 import { translations } from "@localization";
 import GoBackButton from "../components/GoBackButton";
 import IconSvg from "assets/svg";

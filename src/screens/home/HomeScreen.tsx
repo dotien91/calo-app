@@ -9,7 +9,7 @@ import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import HeaderHome from "./components/header-home/HeaderHome";
 import { getCurrentUser } from "@services/api/userApi";
 import useStore from "@services/zustand/store";
-import { SCREENS } from "@shared-constants";
+import { SCREENS } from "constants";
 import ListPost from "./ListPost";
 
 import CommonStyle from "@theme/styles";

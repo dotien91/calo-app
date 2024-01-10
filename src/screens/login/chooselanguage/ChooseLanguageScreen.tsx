@@ -13,7 +13,7 @@ import CommonStyle from "shared/theme/styles";
 import IconSvg from "assets/svg";
 import Button from "@shared-components/button/Button";
 import createStyles from "./ChooseLanguageScreen.style";
-import { SCREENS } from "@shared-constants";
+import { SCREENS } from "constants";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";
 

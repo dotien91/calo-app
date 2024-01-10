@@ -19,21 +19,21 @@ import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
 import { translations } from "@localization";
 import { TypedCategory, TypedRequest } from "shared/models";
-import { isIos } from "utils/helpers/device-ui";
+import { isIos } from "@utils/device.ui.utils";
 import { createNewPost, getCategory, updatePost } from "@services/api/post";
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetScrollView,
 } from "@gorhom/bottom-sheet";
-import { regexLink } from "@shared-constants/regex";
+import { regexLink } from "constants/regex.constant";
 import {
   closeSuperModal,
   showLoading,
   showToast,
   showErrorModal,
-} from "@helpers/SuperModalHelper";
+} from "@helpers/super.modal.helper";
 import * as NavigationService from "react-navigation-helpers";
-import { UploadFile } from "@shared-components/UploadFile";
+import { useUploadFile } from "@helpers/hooks/useUploadFile";
 import isEqual from "react-fast-compare";
 import eventEmitter from "@services/event-emitter";
 import CustomBackground from "@shared-components/CustomBackgroundBottomSheet";
@@ -55,7 +55,7 @@ export default function PostScreen() {
     link: "",
   });
   const { onPressFile, onPressPicture, onPressVideo, listFile, renderFile } =
-    UploadFile(
+    useUploadFile(
       item?.attach_files?.map(
         (i) =>
           ({

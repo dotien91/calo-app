@@ -1,5 +1,5 @@
-import { requestPermission } from "./permission-helper";
-import { PERMISSION } from "./system.constant";
+import { requestPermission } from "./permission.helper";
+import { PERMISSION } from "../constants/system.constant";
 import { openPicker } from "react-native-image-crop-picker";
 import { launchImageLibrary } from "react-native-image-picker";
 

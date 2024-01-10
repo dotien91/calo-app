@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 
-import VideoPlayer from "@shared-components/VideoPlayer";
+import VideoPlayer from "@shared-components/video.palyer.component";
 import ImageLoad from "@screens/post/components/ImageLoad";
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";

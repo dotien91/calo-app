@@ -5,7 +5,7 @@ import {
   getStatusBarHeight,
   getBottomSpace,
 } from "react-native-iphone-screen-helper";
-import { Device } from "utils/helpers/device-ui";
+import { Device } from "@utils/device.ui.utils";
 
 const createStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
