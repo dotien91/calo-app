@@ -144,8 +144,8 @@ export default {
   draft: "Draft",
   public: "Public",
   post: {
-  cancelEdit: "Xác nhận hủy",
-  cancelEditDes: "Các chỉnh sửa sẽ không được lưu lại. Bạn có muốn tiếp tục?",
+    cancelEdit: "Xác nhận hủy",
+    cancelEditDes: "Các chỉnh sửa sẽ không được lưu lại. Bạn có muốn tiếp tục?",
     post: "Post",
     posts: "Post",
     createPost: "Create Post",

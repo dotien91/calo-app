@@ -19,7 +19,7 @@ import CommonStyle from "@theme/styles";
 import { likeLiveStream } from "@services/api/livestreamApi";
 import { throttle } from "lodash";
 import images from "./reaction-animation/Themes/Images";
-import { Device } from "utils/device.utils";
+import { Device } from "@utils/device.utils";
 
 const reactionData = [
   { type: "like", image: images.like_static },

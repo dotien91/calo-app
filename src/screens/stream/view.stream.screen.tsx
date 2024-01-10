@@ -15,7 +15,7 @@ import { useLiveStream } from "./hooks/use.stream";
 import ChatView from "./list.chat.screen";
 import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "constants";
-import { Device } from "utils/device.utils";
+import { Device } from "@utils/device.utils";
 import AnimatedLottieView from "lottie-react-native";
 
 function App() {

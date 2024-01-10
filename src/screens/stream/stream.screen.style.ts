@@ -1,6 +1,6 @@
 import { ExtendedTheme } from "@react-navigation/native";
 import { ViewStyle, StyleSheet } from "react-native";
-import { Device } from "utils/device.utils";
+import { Device } from "@utils/device.utils";
 
 interface Style {
   container: ViewStyle;

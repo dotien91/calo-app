@@ -1,4 +1,3 @@
-
 import fs from "react-native-fs";
 
 import { getSha1FromString } from "./string.helper";

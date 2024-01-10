@@ -17,8 +17,8 @@ import CommonStyle from "@theme/styles";
 interface HomeScreenProps {}
 
 const renderScene = SceneMap({
-  first: () => <ListPost isFollowingPost={true} />,
-  second: ListPost,
+  first: ListPost,
+  second: () => <ListPost isFollowingPost={true} />,
 });
 
 const HomeScreen: React.FC<HomeScreenProps> = () => {
@@ -42,8 +42,8 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: "first", title: "Following" },
-    { key: "second", title: "For you " },
+    { key: "first", title: "For you" },
+    { key: "second", title: "Following" },
   ]);
 
   const renderTabBar = (props) => (

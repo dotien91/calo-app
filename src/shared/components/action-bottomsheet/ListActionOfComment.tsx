@@ -15,7 +15,7 @@ import {
   closeSuperModal,
   showErrorModal,
   showToast,
-} from "@helpers/super.modal.helper"
+} from "@helpers/super.modal.helper";
 import ItemBottomSheet from "@shared-components/item-bottom-sheet/ItemBottomSheet";
 import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "constants";

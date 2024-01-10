@@ -8,7 +8,7 @@ import { useTheme, useRoute } from "@react-navigation/native";
 import createStyles from "./chat.room.screen.style";
 import ActionBtn from "./components/KeyboardBtn";
 import CommonStyle from "@theme/styles";
-import { getFormatDayMessage } from "utils/date.utils";
+import { getFormatDayMessage } from "@utils/date.utils";
 import { translations } from "@localization";
 import GoBackButton from "@screens/auth/components/GoBackButton";
 

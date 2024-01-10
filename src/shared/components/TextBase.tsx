@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import isEqual from "react-fast-compare";
-import { mhs } from "utils/size.utils";
+import { mhs } from "@utils/size.utils";
 
 import { Text, TextProps, TextStyle } from "react-native";
 import { palette } from "@theme/themes";
