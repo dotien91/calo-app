@@ -10,6 +10,7 @@ const isIos = Platform.OS === "ios";
 
 export function useUploadFile(initData?: any[]) {
   const [listFile, setListFile] = React.useState<any[]>(initData || []);
+  const [isUpLoadingFile, setIsUpLoadingFile] = React.useState(false);
   const [listFileLocal, setListFileLocal] = React.useState<any[]>(
     initData || [],
   );
@@ -28,6 +29,7 @@ export function useUploadFile(initData?: any[]) {
   };
 
   const onPressPicture = async () => {
+    setIsUpLoadingFile(true);
     selectMedia({
       config: { mediaType: "photo", selectionLimit: 30 },
       callback: async (images: any) => {
@@ -108,6 +110,7 @@ export function useUploadFile(initData?: any[]) {
   };
 
   const onPressVideo = async () => {
+    setIsUpLoadingFile(true);
     selectMedia({
       config: { mediaType: "video", selectionLimit: 30 },
       callback: async (images: any) => {
@@ -123,6 +126,7 @@ export function useUploadFile(initData?: any[]) {
           uri: getLinkUri(i),
           type: i.type,
         }));
+
         setListFileLocal((listFileLocal) => [...listFileLocal, ...fileLocal]);
         const res = await uploadMultiMedia(
           listVideo.map((i: any) => ({
@@ -159,6 +163,8 @@ export function useUploadFile(initData?: any[]) {
           isIos ? "public.mp3" : "audio/mpeg",
         ],
       });
+      setIsUpLoadingFile(true);
+
       if (pickerResult.length > 0) {
         const fileUp = pickerResult.reduce((list: any[], current) => {
           return listFile.find((i) => i.uri === current.uri)
@@ -200,12 +206,19 @@ export function useUploadFile(initData?: any[]) {
     }
   };
 
+  React.useEffect(() => {
+    if (listFile?.length) {
+      setIsUpLoadingFile(false);
+    }
+  }, [listFile]);
+
   return {
     listFile,
     onPressPicture,
     onPressVideo,
     onPressFile,
     renderFile,
+    isUpLoadingFile,
   };
 }
 
