@@ -10,8 +10,8 @@ export interface PostSlice {
   resetListCommentDelete: () => void;
   listFollowing: string[];
   addFollowing: (id: string) => void;
-  listLike: string[];
-  updateListLike: (id: string, countLike?: number) => void;
+  listLike: { _id: string; numberLike: number; isLike: boolean }[];
+  updateListLike: (_id: string, numberLike: number, isLike: boolean) => void;
   resetListLike: () => void;
   itemUpdate: any;
   setItemUpdate: (data: any) => void;
@@ -46,14 +46,23 @@ const createPostSlice: StoreSlice<PostSlice> = (set) => ({
     }));
   },
   listLike: [],
-  updateListLike: (id: string) => {
+  updateListLike: (_id: string, numberLike: number, isLike: boolean) => {
     set((state) => {
-      if (state.listLike.indexOf(id) >= 0) {
+      const index = state.listLike.findIndex((item) => item._id === _id);
+      if (index >= 0) {
+        const listLike = [...state.listLike];
+        listLike[index] = { _id: _id, numberLike: numberLike, isLike: isLike };
+        console.log(listLike);
         return {
-          listLike: [...state.listLike.filter((item) => item !== id)],
+          listLike: listLike,
         };
       } else {
-        return { listLike: [...state.listLike, id] };
+        return {
+          listLike: [
+            ...state.listLike,
+            { _id: _id, numberLike: numberLike, isLike: isLike },
+          ],
+        };
       }
     });
   },

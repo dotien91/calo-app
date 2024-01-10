@@ -13,8 +13,11 @@ import LottieView from "lottie-react-native";
 import EmptyResultView from "@shared-components/empty.data.component";
 import eventEmitter from "@services/event-emitter";
 import { useTheme } from "@react-navigation/native";
+
 import { getListLiveStream } from "@services/api/livestreamApi";
 import StreamItem from "./components/ItemPost/stream.item";
+
+import { useUserHook } from "@helpers/hooks/useUserHook";
 
 interface ListPostProps {
   isFollowingPost: boolean;
@@ -24,7 +27,10 @@ const ListPost = ({ isFollowingPost }: ListPostProps) => {
   const userData = useStore((state) => state.userData);
   const listPostDelete = useStore((state) => state.listPostDelete);
   const resetListLike = useStore((state) => state.resetListLike);
+
   const [listDataStream, setListDataStream] = useState([]);
+
+  const { isLoggedIn, renderViewRequestLogin } = useUserHook();
 
   const listRef = useRef(null);
 
@@ -65,10 +71,6 @@ const ListPost = ({ isFollowingPost }: ListPostProps) => {
     },
     getListPost,
   );
-
-  useEffect(() => {
-    resetListLike();
-  }, [refreshing]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const _refreshListPage = () => {
     refreshListPage();
@@ -126,6 +128,14 @@ const ListPost = ({ isFollowingPost }: ListPostProps) => {
       </View>
     );
   };
+
+  if (!isLoggedIn() && isFollowingPost) {
+    return (
+      <View style={{ ...CommonStyle.flex1, ...CommonStyle.center }}>
+        {renderViewRequestLogin()}
+      </View>
+    );
+  }
 
   return (
     <View

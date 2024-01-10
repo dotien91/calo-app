@@ -1,19 +1,17 @@
 /* eslint-disable camelcase */
 
 import React, { useEffect, useMemo, useState } from "react";
-import { Image, Pressable, Text, View } from "react-native";
+import { Image, Pressable, Text, TouchableOpacity, View } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import CommonStyle from "@theme/styles";
 import IconSvg from "assets/svg";
-import { postLike } from "@services/api/post";
-import { showToast } from "@helpers/super.modal.helper";
 import { translations } from "@localization";
 import { sharePost } from "@utils/share.utils";
 import { convertLastActive } from "@utils/time.utils";
-import useStore from "@services/zustand/store";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import createStyles from "./ItemPostDetail.style";
 import { showStickBottom } from "@shared-components/stick-bottom/HomeStickBottomModal";
+import LikeBtn from "@screens/home/components/like-btn/LikeBtn";
 
 const SIZE_AVATAR = 30;
 const BORDER_AVATAR = 12;
@@ -30,25 +28,7 @@ interface ItemPostProps {
 const ItemPost = ({ data, pressComment, pressImageVideo }: ItemPostProps) => {
   const theme = useTheme();
   const { colors } = theme;
-  const [isLike, setIsLike] = useState<boolean>(data?.is_like);
-  const [likeNumber, setLikeNumber] = useState<number>(0);
-  const listLike = useStore((state) => state.listLike);
-  const updateListLike = useStore((state) => state.updateListLike);
   const styles = React.useMemo(() => createStyles(theme), [theme]);
-
-  useEffect(() => {
-    if (listLike.indexOf(data?._id) >= 0) {
-      setIsLike(!data?.is_like);
-      if (data.is_like) {
-        setLikeNumber(data?.like_number - 1);
-      } else {
-        setLikeNumber(data?.like_number + 1);
-      }
-    } else {
-      setIsLike(data?.is_like);
-      setLikeNumber(data?.like_number);
-    }
-  }, [listLike, data]);
 
   const _showStickBottom = () => {
     showStickBottom(data, "post");
@@ -154,7 +134,6 @@ const ItemPost = ({ data, pressComment, pressImageVideo }: ItemPostProps) => {
     return (
       <Text
         style={{
-          color: colors.mainColor2,
           ...CommonStyle.hnRegular,
           fontSize: FONT_SIZE,
           marginBottom: 4,
@@ -214,41 +193,11 @@ const ItemPost = ({ data, pressComment, pressImageVideo }: ItemPostProps) => {
     );
   }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const pressLike = async () => {
-    const params = {
-      community_id: data._id,
-    };
-    updateListLike(data._id);
-    postLike(params).then((res) => {
-      if (!res.isError) {
-        setLikeNumber(res.like_number);
-      } else {
-        updateListLike(data._id);
-        showToast({
-          type: "error",
-          message: translations.post.likeError,
-        });
-      }
-    });
-  };
-
   const LikeShare = () => {
     return (
       <View style={styles.containerLikeShare}>
-        <Pressable
-          onPress={pressLike}
-          style={[styles.viewLike, { justifyContent: "flex-start" }]}
-        >
-          <Icon
-            size={16}
-            name={isLike ? "heart" : "heart-outline"}
-            type={IconType.Ionicons}
-            color={isLike ? colors.primary : colors.text}
-          />
-
-          <Text style={styles.textLikeShare}>{likeNumber}</Text>
-        </Pressable>
-        <Pressable
+        <LikeBtn data={data} />
+        <TouchableOpacity
           onPress={pressComment}
           style={[styles.viewLike, { justifyContent: "center" }]}
         >
@@ -261,8 +210,8 @@ const ItemPost = ({ data, pressComment, pressImageVideo }: ItemPostProps) => {
           <Text style={styles.textLikeShare}>
             {data?.comment_number || "0"}
           </Text>
-        </Pressable>
-        <Pressable
+        </TouchableOpacity>
+        <TouchableOpacity
           onPress={() => sharePost(data.post_slug)}
           style={[styles.viewLike, { justifyContent: "flex-end" }]}
         >
@@ -273,7 +222,7 @@ const ItemPost = ({ data, pressComment, pressImageVideo }: ItemPostProps) => {
             color={colors.text}
           />
           <Text style={styles.textLikeShare}>{translations.post.share}</Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
     );
   };

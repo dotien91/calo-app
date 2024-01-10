@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Dimensions, Image, Pressable, Text, View } from "react-native";
 import { useTheme } from "@react-navigation/native";
 
@@ -8,14 +8,13 @@ import IconSvg from "assets/svg";
 import { convertLastActive } from "@utils/time.utils";
 import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "constants";
-import { postLike } from "@services/api/post";
-import { showDetailImageView, showToast } from "@helpers/super.modal.helper";
+import { showDetailImageView } from "@helpers/super.modal.helper";
 import { sharePost } from "@utils/share.utils";
 import { translations } from "@localization";
-import useStore from "@services/zustand/store";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import createStyles from "./ItemPost.style";
 import { showStickBottom } from "@shared-components/stick-bottom/HomeStickBottomModal";
+import LikeBtn from "../like-btn/LikeBtn";
 const { width } = Dimensions.get("screen");
 
 const PADDING_HORIZONTAL = 16;
@@ -37,25 +36,7 @@ interface ItemPostProps {
 const ItemPost = ({ data, refreshing }: ItemPostProps) => {
   const theme = useTheme();
   const { colors } = theme;
-  const [isLike, setIsLike] = useState<boolean>(data.is_like);
-  const [likeNumber, setLikeNumber] = useState<number>(data.like_number);
-  const listLike = useStore((state) => state.listLike);
-  const updateListLike = useStore((state) => state.updateListLike);
   const styles = React.useMemo(() => createStyles(theme), [theme]);
-
-  useEffect(() => {
-    if (!refreshing && listLike.indexOf(data._id) >= 0) {
-      setIsLike(!data.is_like);
-      if (data.is_like) {
-        setLikeNumber(data?.like_number - 1);
-      } else {
-        setLikeNumber(data?.like_number + 1);
-      }
-    } else {
-      setIsLike(data.is_like);
-      setLikeNumber(data?.like_number);
-    }
-  }, [listLike]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const Avatar = useMemo(() => {
     return (
@@ -78,20 +59,6 @@ const ItemPost = ({ data, refreshing }: ItemPostProps) => {
     );
   }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const pressLike = async () => {
-    const params = {
-      community_id: data._id,
-    };
-    updateListLike(data._id);
-    postLike(params).then((res) => {
-      if (!res.isError) {
-        setLikeNumber(res.like_number);
-      } else {
-        updateListLike(data._id);
-        showToast({ type: "error", message: res.message });
-      }
-    });
-  };
   const _showStickBottom = () => {
     showStickBottom(data, "post");
   };
@@ -344,19 +311,7 @@ const ItemPost = ({ data, refreshing }: ItemPostProps) => {
   const LikeShare = () => {
     return (
       <View style={styles.containerLikeShare}>
-        <Pressable
-          onPress={pressLike}
-          style={[styles.viewLike, { justifyContent: "flex-start" }]}
-        >
-          <Icon
-            type={IconType.Ionicons}
-            size={16}
-            name={isLike ? "heart" : "heart-outline"}
-            color={isLike ? colors.primary : colors.text}
-          />
-
-          <Text style={styles.textLikeShare}>{likeNumber}</Text>
-        </Pressable>
+        <LikeBtn data={data} />
         <Pressable
           onPress={pressComment}
           style={[styles.viewLike, { justifyContent: "center" }]}
@@ -388,7 +343,7 @@ const ItemPost = ({ data, refreshing }: ItemPostProps) => {
   };
 
   const detailScreen = () => {
-    const param = { id: data._id, data: data, isLike: isLike };
+    const param = { id: data._id, data: data };
     NavigationService.push(SCREENS.POST_DETAIL, param);
   };
   const showImageVideo = (index: number) => {
