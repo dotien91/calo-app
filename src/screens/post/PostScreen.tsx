@@ -73,6 +73,8 @@ export default function PostScreen() {
     ),
   );
 
+  const onPressLive = () => {};
+
   useEffect(() => {
     getListCategory();
   }, []);
@@ -313,6 +315,13 @@ export default function PostScreen() {
                   <IconSvg size={24} name="icVideo" color={colors.mainColor2} />
                 }
                 onPress={onPressVideo}
+              />
+              <View style={{ width: 10 }} />
+              <SelectComponent
+                icon={
+                  <IconSvg size={48} name="icLive" color={colors.mainColor2} />
+                }
+                onPress={onPressLive}
               />
             </View>
           </View>
