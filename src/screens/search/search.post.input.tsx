@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { debounce } from "lodash";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
@@ -9,7 +9,6 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import createStyles from "./search.post.screen.style";
 import { TextInput } from "react-native-gesture-handler";
 import { translations } from "@localization";
-import { SCREENS } from "constants";
 import * as NavigationService from "react-navigation-helpers";
 import CommonStyle from "@theme/styles";
 

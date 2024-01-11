@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { Dimensions, Image, Pressable, Text, View } from "react-native";
 import { useTheme } from "@react-navigation/native";
 
@@ -33,7 +33,7 @@ interface ItemPostProps {
   refreshing?: boolean;
 }
 
-const ItemPost = ({ data, refreshing }: ItemPostProps) => {
+const ItemPost = ({ data }: ItemPostProps) => {
   const theme = useTheme();
   const { colors } = theme;
   const styles = React.useMemo(() => createStyles(theme), [theme]);

@@ -2,12 +2,14 @@ import { ExtendedTheme } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 
 import CommonStyle from "@theme/styles";
+import { getStatusBarHeight } from "react-native-safearea-height";
 
 export default (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
     container: {
       backgroundColor: colors.white,
+      paddingTop: getStatusBarHeight(),
     },
     listChat: {
       paddingBottom: 250,

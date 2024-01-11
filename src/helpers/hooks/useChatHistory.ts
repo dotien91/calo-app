@@ -78,7 +78,7 @@ export const useChatHistory = () => {
   };
 
   const msgToClient = (data: string) => {
-    console.log("dataaaaaaa", data)
+    console.log("dataaaaaaa", data);
     let newMessage: TypedMessageGiftedChat = JSON.parse(data);
     newMessage = {
       ...newMessage,
