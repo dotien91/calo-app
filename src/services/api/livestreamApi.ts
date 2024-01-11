@@ -74,11 +74,11 @@ export async function likeLiveStream(data: ILikeLiveStream) {
   });
 }
 
-export async function updateLivestream(liveStreamStatus: string) {
+export async function updateLivestream(livestream_status: string, _id: string) {
   return request({
     method: METHOD.PATCH,
     urlPath: "livestream/update",
-    data: { livestream_status: liveStreamStatus },
+    data: { livestream_status, _id },
   }).then((response) => {
     return response;
   });

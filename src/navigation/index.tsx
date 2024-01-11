@@ -24,15 +24,16 @@ import SignUpScreen from "@screens/auth/sign-up/SignUpScreen";
 import ForgotPasswordScreen from "@screens/auth/forgot-password/ForgotPasswordScreen";
 import NewPasswordScreen from "@screens/auth/forgot-password/create.new.password";
 import VerifyCodeScreen from "@screens/auth/forgot-password/VerifyCodeScreen";
-import ListChatScreen from "@screens/chat/chat-list/chat.list.screen";
+import ListChatScreen from "@screens/chat/list-chat/chat.list.screen";
 import SearchRoomChatScreen from "@screens/chat/search-room/search.room.view";
-import ChatRoomScreen from "@screens/chat/chat-room/chat.room.screen";
+import ChatRoomScreen from "@screens/chat/room-chat/chat.room.screen";
 import LiveStreamScreen from "@screens/stream/stream.screen";
 import ViewStreamScreen from "@screens/stream/view.stream.screen";
 import SettingScreen from "@screens/setting/SettingScreen";
 import PostScreen from "@screens/post/PostScreen";
 import PostDetail from "@screens/post/PostDetailScreen";
 import EditComment from "@screens/home/edit-comment/EditComment";
+import SearchPostScreen from "@screens/search/search.post.view";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -130,8 +131,8 @@ const Navigation = () => {
       theme={isDarkMode ? DarkTheme : LightTheme}
     >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name={SCREENS.HOME} component={renderTabNavigation} />
         {renderStackIntro()}
+        <Stack.Screen name={SCREENS.HOME} component={renderTabNavigation} />
         <Stack.Screen
           name={SCREENS.VIEW_LIVE_STREAM}
           component={ViewStreamScreen}
@@ -148,6 +149,7 @@ const Navigation = () => {
           name={SCREENS.SEARCH_CHAT}
           component={SearchRoomChatScreen}
         />
+        <Stack.Screen name={SCREENS.SEARCH} component={SearchPostScreen} />
         <Stack.Screen name={SCREENS.CHAT_ROOM} component={ChatRoomScreen} />
         <Stack.Screen
           name={SCREENS.LOGIN_WITH_EMAIL}

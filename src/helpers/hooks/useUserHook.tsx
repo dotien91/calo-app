@@ -34,6 +34,7 @@ export const useUserHook = () => {
   };
 
   const getUserData = () => {
+    console.log("token", _getJson(USER_TOKEN));
     isLoggedIn();
     getCurrentUser().then((res) => {
       console.log("res get current user");

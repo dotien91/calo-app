@@ -4,9 +4,9 @@ import { useTheme } from "@react-navigation/native";
 /**
  * ? Local Imports
  */
-import createStyles from "../chat-list/chat.list.screen.style";
+import createStyles from "../list-chat/chat.list.screen.style";
 import { getListChat } from "@services/api/chatApi";
-import ChatItem from "../chat-room/components/ChatItem";
+import ChatItem from "../room-chat/components/ChatItem";
 import FriendSearchInput from "./search.room.input";
 import LoadingList from "@shared-components/loading.list.component";
 import EmptyResultView from "@shared-components/empty.data.component";

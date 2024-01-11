@@ -153,5 +153,6 @@ export function useListData<T>(
     setListData,
     refreshing,
     isLoading,
+    setStateListData,
   };
 }

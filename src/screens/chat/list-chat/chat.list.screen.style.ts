@@ -1,0 +1,79 @@
+import { ExtendedTheme } from "@react-navigation/native";
+import { StyleSheet } from "react-native";
+
+import CommonStyle from "@theme/styles";
+
+export default (theme: ExtendedTheme) => {
+  const { colors } = theme;
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+    listChat: {
+      paddingBottom: 250,
+    },
+    chatItem: {
+      ...CommonStyle.flexStart,
+      flex: 1,
+      padding: 16,
+      ...CommonStyle.borderStyle,
+      borderColor: colors.background2,
+    },
+    partnerNameTxt: {
+      ...CommonStyle.hnBold,
+      fontSize: 16,
+      color: colors.mainColor2,
+      flex: 1,
+    },
+    timeTxt: {
+      ...CommonStyle.hnRegular,
+      fontSize: 16,
+      color: colors.grey2,
+    },
+    lastMessageTxt: {
+      color: colors.grey2,
+      ...CommonStyle.hnBold,
+      fontSize: 16,
+    },
+    listFriend: {
+      paddingLeft: 16,
+    },
+    headerTitle: {
+      ...CommonStyle.headerTitle,
+      paddingHorizontal: 16,
+      marginBottom: 6,
+      marginTop: 20,
+    },
+    friendNameTxt: {
+      ...CommonStyle.hnRegular,
+      color: colors.mainColor2,
+      fontSize: 16,
+      // width: '100%'
+    },
+    wrapSearch: {
+      ...CommonStyle.borderStyle,
+      ...CommonStyle.flexStart,
+      borderRadius: 30,
+      flex: 1,
+      height: 42,
+    },
+    searchInput: {
+      paddingLeft: 40,
+      color: colors.grey2,
+      height: 40,
+      flex: 1,
+    },
+    iconSearch: {
+      color: colors.grey2,
+      position: "absolute",
+      left: 12,
+      top: 10,
+    },
+    iconClose: {
+      position: "absolute",
+      right: 10,
+      top: -10,
+      color: colors.mainColor2,
+    },
+  });
+};

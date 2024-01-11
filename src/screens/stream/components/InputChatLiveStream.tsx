@@ -24,7 +24,7 @@ import { Device } from "@utils/device.utils";
 const reactionData = [
   { type: "like", image: images.like_static },
   { type: "love", image: images.love_static },
-  { type: "care", image: images.care_static },
+  { type: "care", image: images.angry_static },
   { type: "haha", image: images.haha_static },
   { type: "wow", image: images.wow_static },
   { type: "sad", image: images.sad_static },

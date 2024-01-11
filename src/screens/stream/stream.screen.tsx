@@ -46,7 +46,7 @@ function App() {
     isPublisher: true,
   });
 
-  const isStreaming = React.useCallback(() => !!liveData?._id, [liveData?._id]);
+  const isStreaming = React.useMemo(() => !!liveData?._id, [liveData?._id]);
   const { permissionGranted } = usePermissions();
   const { isLoggedIn, renderViewRequestLogin } = useUserHook();
   const route = useRoute();
@@ -59,6 +59,13 @@ function App() {
 
   useEffect(() => {
     publisherRef.current && publisherRef.current.startStream();
+    return () => {
+      if (liveData?._id) {
+        updateLivestream("end", liveData?._id);
+        publisherRef.current && publisherRef.current.stopStream();
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [liveData]);
 
   const handleOnConnectionFailed = (data: string) => {
@@ -155,13 +162,13 @@ function App() {
   };
 
   const closeLiveStream = () => {
-    updateLivestream("end");
-    publisherRef.current && publisherRef.current.stopStream();
+    // updateLivestream("end");
+    // publisherRef.current && publisherRef.current.stopStream();
     NavigationService.navigate(SCREENS.HOME);
   };
 
   const onShouldCloseLive = () => {
-    if (!isStreaming()) {
+    if (!isStreaming) {
       NavigationService.navigate(SCREENS.HOME);
     } else {
       showPopupCloseLive();
@@ -169,7 +176,7 @@ function App() {
   };
 
   const renderInput = () => {
-    if (isStreaming()) return null;
+    if (isStreaming) return null;
     return (
       <View style={styles.topView}>
         <Input
@@ -212,7 +219,7 @@ function App() {
           onPress={onShouldCloseLive}
           size={30}
         />
-        {isStreaming() && permissionGranted && (
+        {isStreaming && permissionGranted && (
           <RTMPPublisher
             ref={publisherRef}
             streamURL={liveData?.livestream_data?.rtmp_url}
@@ -227,10 +234,10 @@ function App() {
             onBluetoothDeviceStatusChanged={handleBluetoothDeviceStatusChange}
           />
         )}
-        {isStreaming() && renderChatView()}
-        {isStreaming() && <LiveBadge />}
+        {isStreaming && renderChatView()}
+        {isStreaming && <LiveBadge />}
 
-        {!isStreaming() && (
+        {!isStreaming && (
           <View style={styles.footer_container}>
             {/* <View style={styles.mute_container}>
           {isMuted ? (

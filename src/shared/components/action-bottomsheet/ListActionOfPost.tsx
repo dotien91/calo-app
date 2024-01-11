@@ -12,12 +12,14 @@ import {
 import {
   closeSuperModal,
   showErrorModal,
+  showLoading,
   showToast,
 } from "@helpers/super.modal.helper";
 import * as NavigationService from "react-navigation-helpers";
 import ItemBottomSheet from "@shared-components/item-bottom-sheet/ItemBottomSheet";
 import { SCREENS } from "constants";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
+import eventEmitter from "@services/event-emitter";
 interface ListActionOfPost {
   data: any;
 }
@@ -25,7 +27,6 @@ interface ListActionOfPost {
 const ListActionOfPost = ({ data }: ListActionOfPost) => {
   const userData = useStore((state) => state.userData);
   const setUserData = useStore((state) => state.setUserData);
-  const addListPostDelete = useStore((state) => state.addListPostDelete);
 
   const pressFollowUser = () => {
     closeSuperModal();
@@ -74,14 +75,16 @@ const ListActionOfPost = ({ data }: ListActionOfPost) => {
   };
 
   const pressDeletePost = (id: string) => {
+    showLoading();
     deletePost(id).then((resdelete) => {
+      closeSuperModal();
       if (!resdelete.isError) {
-        addListPostDelete(resdelete._id);
+        eventEmitter.emit("reload_list_post");
         showToast({
           type: "success",
           message: translations.home.deletePostSuccess,
         });
-        NavigationService.goBack();
+        NavigationService.navigate(SCREENS.HOME);
       } else {
         showToast({ type: "error", message: translations.somethingWentWrong });
       }

@@ -153,16 +153,17 @@ const PostDetail = (props: PostDetailProps) => {
       content: value,
       parent_id: replyItem.parent_id || replyItem._id || null,
     };
-    await postComment(params).then((resComment) => {
+    postComment(params).then((resComment) => {
       if (!resComment.isError) {
         if (replyItem.parent_id || replyItem._id) {
+          console.log("...", JSON.stringify(resComment));
           const dataUpdate = updateListCommentReply(
             replyItem.parent_id || replyItem._id,
-            resComment,
+            resComment.data,
           );
           setListData(dataUpdate);
         } else {
-          setListData([resComment, ...listData]);
+          setListData([resComment.data, ...listData]);
         }
         setValue("");
         deleteReplying();

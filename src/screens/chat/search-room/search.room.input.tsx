@@ -6,7 +6,7 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 /**
  * ? Local Imports
  */
-import createStyles from "../chat-list/chat.list.screen.style";
+import createStyles from "../list-chat/chat.list.screen.style";
 import { TextInput } from "react-native-gesture-handler";
 import { translations } from "@localization";
 import { SCREENS } from "constants";

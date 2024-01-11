@@ -13,8 +13,11 @@ import LottieView from "lottie-react-native";
 import EmptyResultView from "@shared-components/empty.data.component";
 import eventEmitter from "@services/event-emitter";
 import { useTheme } from "@react-navigation/native";
+
 import { getListLiveStream } from "@services/api/livestreamApi";
 import StreamItem from "./components/ItemPost/stream.item";
+
+import { useUserHook } from "@helpers/hooks/useUserHook";
 
 interface ListPostProps {
   isFollowingPost: boolean;
@@ -22,9 +25,11 @@ interface ListPostProps {
 
 const ListPost = ({ isFollowingPost }: ListPostProps) => {
   const userData = useStore((state) => state.userData);
-  const listPostDelete = useStore((state) => state.listPostDelete);
   const resetListLike = useStore((state) => state.resetListLike);
+
   const [listDataStream, setListDataStream] = useState([]);
+
+  const { isLoggedIn, renderViewRequestLogin } = useUserHook();
 
   const listRef = useRef(null);
 
@@ -44,6 +49,7 @@ const ListPost = ({ isFollowingPost }: ListPostProps) => {
         const listDataStream = res.data.filter(
           (item) => item?.livestream_status == "live",
         );
+        console.log("listDataStreamlistDataStream", listDataStream);
         setListDataStream(listDataStream.reverse());
       }
     });
@@ -67,6 +73,16 @@ const ListPost = ({ isFollowingPost }: ListPostProps) => {
   );
 
   useEffect(() => {
+    const typeEmit = isFollowingPost
+      ? "reload_following_post"
+      : "reload_list_post";
+    eventEmitter.on(typeEmit, _refreshListPage);
+    return () => {
+      eventEmitter.off(typeEmit, _refreshListPage);
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
     resetListLike();
   }, [refreshing]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -78,15 +94,7 @@ const ListPost = ({ isFollowingPost }: ListPostProps) => {
     }, 200);
   };
 
-  useEffect(() => {
-    const typeEmit = isFollowingPost
-      ? "reload_following_post"
-      : "reload_list_post";
-    eventEmitter.on(typeEmit, _refreshListPage);
-    return () => {
-      eventEmitter.off(typeEmit, _refreshListPage);
-    };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  const getListData = () => listDataStream.concat(listData);
 
   if (isFirstLoading) {
     return (
@@ -127,6 +135,14 @@ const ListPost = ({ isFollowingPost }: ListPostProps) => {
     );
   };
 
+  if (!isLoggedIn() && isFollowingPost) {
+    return (
+      <View style={{ ...CommonStyle.flex1, ...CommonStyle.center }}>
+        {renderViewRequestLogin()}
+      </View>
+    );
+  }
+
   return (
     <View
       style={{
@@ -136,9 +152,7 @@ const ListPost = ({ isFollowingPost }: ListPostProps) => {
     >
       <FlatList
         ref={listRef}
-        data={listDataStream.concat(
-          listData.filter((item) => listPostDelete.indexOf(item._id) < 0),
-        )}
+        data={getListData()}
         renderItem={renderItem}
         scrollEventThrottle={16}
         onEndReachedThreshold={0}
