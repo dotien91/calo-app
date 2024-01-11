@@ -1,11 +1,12 @@
+import React, { useEffect, useState } from "react";
+import { Text, StyleSheet, TouchableOpacity } from "react-native";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
+
 import { showToast } from "@helpers/super.modal.helper";
 import { postLike } from "@services/api/post";
 import useStore from "@services/zustand/store";
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
-import React, { useEffect, useState } from "react";
-import { Text, StyleSheet, TouchableOpacity } from "react-native";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 interface LikeBtnProps {
   data: any;
@@ -23,7 +24,7 @@ const LikeBtn = (props: LikeBtnProps) => {
       setLikeNumber(listLike[index].numberLike);
       setIsLike(listLike[index].isLike);
     }
-  }, [listLike]);
+  }, [listLike]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const pressLike = async () => {
     const params = {

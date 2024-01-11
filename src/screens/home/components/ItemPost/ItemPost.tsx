@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { Dimensions, Image, Pressable, Text, View } from "react-native";
 import { useTheme } from "@react-navigation/native";
 
@@ -30,10 +30,9 @@ const SIZE_IMAGE2 = (SIZE_IMAGE1 - 4) / 2;
 
 interface ItemPostProps {
   data: any;
-  refreshing?: boolean;
 }
 
-const ItemPost = ({ data, refreshing }: ItemPostProps) => {
+const ItemPost = ({ data }: ItemPostProps) => {
   const theme = useTheme();
   const { colors } = theme;
   const styles = React.useMemo(() => createStyles(theme), [theme]);

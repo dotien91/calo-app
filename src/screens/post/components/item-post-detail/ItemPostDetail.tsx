@@ -1,7 +1,8 @@
 /* eslint-disable camelcase */
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { Image, Pressable, Text, TouchableOpacity, View } from "react-native";
+
 import { useTheme } from "@react-navigation/native";
 import CommonStyle from "@theme/styles";
 import IconSvg from "assets/svg";
