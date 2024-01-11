@@ -33,7 +33,7 @@ import SettingScreen from "@screens/setting/SettingScreen";
 import PostScreen from "@screens/post/PostScreen";
 import PostDetail from "@screens/post/PostDetailScreen";
 import EditComment from "@screens/home/edit-comment/EditComment";
-import SearchPostScreen from "@screens/search/search.post.view";
+import SearchPostScreen from "@screens/search/search.post.screen";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();

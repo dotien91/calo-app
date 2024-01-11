@@ -2,12 +2,14 @@ import { ExtendedTheme } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 
 import CommonStyle from "@theme/styles";
+import { getStatusBarHeight } from "react-native-iphone-screen-helper";
 
 export default (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
     container: {
       flex: 1,
+      paddingTop: getStatusBarHeight(),
     },
     listChat: {
       paddingBottom: 250,
@@ -42,7 +44,6 @@ export default (theme: ExtendedTheme) => {
       ...CommonStyle.headerTitle,
       paddingHorizontal: 16,
       marginBottom: 6,
-      marginTop: 20,
     },
     friendNameTxt: {
       ...CommonStyle.hnRegular,

@@ -17,6 +17,7 @@ import InputToolbar from "./components/InputToolbar";
 import { EnumMessageStatus } from "constants/chat.constant";
 import { useChatHistory } from "@helpers/hooks/useChatHistory";
 import { useUploadFile } from "@helpers/hooks/useUploadFile";
+import { getStatusBarHeight } from "react-native-safearea-height";
 
 interface ChatRoomScreenProps {}
 
@@ -148,7 +149,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, paddingTop: getStatusBarHeight() }}>
       <ChatHeader messages={messages} />
       <GiftedChat
         messages={messages}
