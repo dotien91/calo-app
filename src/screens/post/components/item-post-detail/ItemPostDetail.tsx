@@ -1,18 +1,21 @@
 /* eslint-disable camelcase */
 
 import React, { useMemo } from "react";
-import { Image, Pressable, Text, TouchableOpacity, View } from "react-native";
-
+import { Image, Text, TouchableOpacity, View } from "react-native";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { useTheme } from "@react-navigation/native";
+
+import createStyles from "./ItemPostDetail.style";
+
 import CommonStyle from "@theme/styles";
 import IconSvg from "assets/svg";
 import { translations } from "@localization";
 import { sharePost } from "@utils/share.utils";
 import { convertLastActive } from "@utils/time.utils";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
-import createStyles from "./ItemPostDetail.style";
 import { showStickBottom } from "@shared-components/stick-bottom/HomeStickBottomModal";
 import LikeBtn from "@screens/home/components/like-btn/LikeBtn";
+import useStore from "@services/zustand/store";
+import { showWarningLogin } from "@screens/home/components/request-login/login.request";
 
 const SIZE_AVATAR = 30;
 const BORDER_AVATAR = 12;
@@ -30,9 +33,14 @@ const ItemPost = ({ data, pressComment, pressImageVideo }: ItemPostProps) => {
   const theme = useTheme();
   const { colors } = theme;
   const styles = React.useMemo(() => createStyles(theme), [theme]);
+  const userData = useStore((state) => state.userData);
 
   const _showStickBottom = () => {
-    showStickBottom(data, "post");
+    if (!userData) {
+      showWarningLogin();
+    } else {
+      showStickBottom(data, "post");
+    }
   };
 
   const Avatar = useMemo(() => {
@@ -97,14 +105,14 @@ const ItemPost = ({ data, pressComment, pressImageVideo }: ItemPostProps) => {
             {convertLastActive(data?.createdAt)}
           </Text>
         </View>
-        <Pressable onPress={_showStickBottom}>
+        <TouchableOpacity onPress={_showStickBottom}>
           <Icon
             size={20}
             name="ellipsis-vertical"
             type={IconType.Ionicons}
             color={colors.text}
           />
-        </Pressable>
+        </TouchableOpacity>
       </View>
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -177,7 +185,7 @@ const ItemPost = ({ data, pressComment, pressImageVideo }: ItemPostProps) => {
       <View style={{ alignItems: "flex-end" }}>
         {listMedia.map((item: any, index: number) => {
           return (
-            <Pressable
+            <TouchableOpacity
               key={index}
               onPress={() => pressImageVideo(index)}
               style={styles.image11}
@@ -187,7 +195,7 @@ const ItemPost = ({ data, pressComment, pressImageVideo }: ItemPostProps) => {
                 source={{ uri: item.media_thumbnail }}
               />
               {item.media_mime_type.includes("video") && <PlayVideo />}
-            </Pressable>
+            </TouchableOpacity>
           );
         })}
       </View>

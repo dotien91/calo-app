@@ -1,9 +1,10 @@
+import React from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+
 import { translations } from "@localization";
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
 import IconSvg from "assets/svg";
-import React from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
 
 interface TypeHeaderPost {
   onPressPost: () => void;

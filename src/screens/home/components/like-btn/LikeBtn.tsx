@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
+import { showWarningLogin } from "../request-login/login.request";
+
 import { showToast } from "@helpers/super.modal.helper";
 import { postLike } from "@services/api/post";
 import useStore from "@services/zustand/store";
@@ -16,6 +18,7 @@ const LikeBtn = (props: LikeBtnProps) => {
   const [isLike, setIsLike] = useState(props.data?.is_like || false);
   const [likeNumber, setLikeNumber] = useState(props.data?.like_number || 0);
   const updateListLike = useStore((state) => state.updateListLike);
+  const userData = useStore((state) => state.userData);
   const listLike = useStore((state) => state.listLike);
 
   useEffect(() => {
@@ -27,19 +30,27 @@ const LikeBtn = (props: LikeBtnProps) => {
   }, [listLike]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const pressLike = async () => {
-    const params = {
-      community_id: props.data._id,
-    };
-    setIsLike(!isLike);
-    postLike(params).then((res) => {
-      if (!res.isError) {
-        console.log("res...", JSON.stringify(res.data));
-        updateListLike(props.data._id, res.data.like_number, res.data.is_like);
-      } else {
-        setIsLike(!isLike);
-        showToast({ type: "error", message: res.message });
-      }
-    });
+    if (!userData) {
+      showWarningLogin();
+    } else {
+      const params = {
+        community_id: props.data._id,
+      };
+      setIsLike(!isLike);
+      postLike(params).then((res) => {
+        if (!res.isError) {
+          console.log("res...", JSON.stringify(res.data));
+          updateListLike(
+            props.data._id,
+            res.data.like_number,
+            res.data.is_like,
+          );
+        } else {
+          setIsLike(!isLike);
+          showToast({ type: "error", message: res.message });
+        }
+      });
+    }
   };
   return (
     <TouchableOpacity

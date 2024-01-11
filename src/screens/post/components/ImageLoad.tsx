@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-
 import { Pressable, StyleSheet, View } from "react-native";
 import FastImage, { FastImageProps } from "react-native-fast-image";
 import Animated, {
@@ -10,6 +9,7 @@ import Animated, {
   withDelay,
   withTiming,
 } from "react-native-reanimated";
+
 import { HIT_SLOP_EXPAND_20 } from "constants/system.constant";
 
 interface Props extends FastImageProps {

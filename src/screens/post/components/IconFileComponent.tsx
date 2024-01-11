@@ -1,8 +1,10 @@
-import ImageLoad from "./ImageLoad";
 import Video from "react-native-video";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { types } from "react-native-document-picker";
+
+import ImageLoad from "./ImageLoad";
+
 import { palette } from "@theme/themes";
 import IconSvg from "assets/svg";
 

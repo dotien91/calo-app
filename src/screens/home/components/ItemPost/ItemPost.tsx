@@ -1,22 +1,32 @@
 /* eslint-disable camelcase */
 import React, { useMemo } from "react";
-import { Dimensions, Image, Pressable, Text, View } from "react-native";
+import {
+  Dimensions,
+  Image,
+  Pressable,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { useTheme } from "@react-navigation/native";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import * as NavigationService from "react-navigation-helpers";
+
+import createStyles from "./ItemPost.style";
+import { showWarningLogin } from "../request-login/login.request";
 
 import CommonStyle from "@theme/styles";
 import IconSvg from "assets/svg";
 import { convertLastActive } from "@utils/time.utils";
-import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "constants";
 import { showDetailImageView } from "@helpers/super.modal.helper";
 import { sharePost } from "@utils/share.utils";
 import { translations } from "@localization";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
-import createStyles from "./ItemPost.style";
 import { showStickBottom } from "@shared-components/stick-bottom/HomeStickBottomModal";
 import LikeBtn from "../like-btn/LikeBtn";
-const { width } = Dimensions.get("screen");
+import useStore from "@services/zustand/store";
 
+const { width } = Dimensions.get("screen");
 const PADDING_HORIZONTAL = 16;
 const SIZE_AVATAR = 30;
 const BORDER_AVATAR = 12;
@@ -36,6 +46,7 @@ const ItemPost = ({ data }: ItemPostProps) => {
   const theme = useTheme();
   const { colors } = theme;
   const styles = React.useMemo(() => createStyles(theme), [theme]);
+  const userData = useStore((state) => state.userData);
 
   const Avatar = useMemo(() => {
     return (
@@ -59,7 +70,11 @@ const ItemPost = ({ data }: ItemPostProps) => {
   }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const _showStickBottom = () => {
-    showStickBottom(data, "post");
+    if (!userData) {
+      showWarningLogin();
+    } else {
+      showStickBottom(data, "post");
+    }
   };
 
   const HeaderItemPost = useMemo(() => {
@@ -103,14 +118,14 @@ const ItemPost = ({ data }: ItemPostProps) => {
             {convertLastActive(data?.createdAt)}
           </Text>
         </View>
-        <Pressable onPress={_showStickBottom}>
+        <TouchableOpacity onPress={_showStickBottom}>
           <Icon
             size={20}
             name="ellipsis-vertical"
             type={IconType.Ionicons}
             color={colors.text}
           />
-        </Pressable>
+        </TouchableOpacity>
       </View>
     );
   }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -303,15 +318,19 @@ const ItemPost = ({ data }: ItemPostProps) => {
   }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const pressComment = () => {
-    const param = { id: data._id, data: data, isComment: true };
-    NavigationService.push(SCREENS.POST_DETAIL, param);
+    if (!userData) {
+      showWarningLogin();
+    } else {
+      const param = { id: data._id, data: data, isComment: true };
+      NavigationService.push(SCREENS.POST_DETAIL, param);
+    }
   };
 
   const LikeShare = () => {
     return (
       <View style={styles.containerLikeShare}>
         <LikeBtn data={data} />
-        <Pressable
+        <TouchableOpacity
           onPress={pressComment}
           style={[styles.viewLike, { justifyContent: "center" }]}
         >
@@ -324,8 +343,8 @@ const ItemPost = ({ data }: ItemPostProps) => {
           <Text style={styles.textLikeShare}>
             {data?.comment_number || "0"}
           </Text>
-        </Pressable>
-        <Pressable
+        </TouchableOpacity>
+        <TouchableOpacity
           onPress={() => sharePost(data.post_slug)}
           style={[styles.viewLike, { justifyContent: "flex-end" }]}
         >
@@ -336,14 +355,18 @@ const ItemPost = ({ data }: ItemPostProps) => {
             color={colors.text}
           />
           <Text style={styles.textLikeShare}>{translations.post.share}</Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
     );
   };
 
   const detailScreen = () => {
-    const param = { id: data._id, data: data };
-    NavigationService.push(SCREENS.POST_DETAIL, param);
+    if (!userData) {
+      showWarningLogin();
+    } else {
+      const param = { id: data._id, data: data };
+      NavigationService.push(SCREENS.POST_DETAIL, param);
+    }
   };
   const showImageVideo = (index: number) => {
     //gọi supermodal hiển thị danh sách image, video

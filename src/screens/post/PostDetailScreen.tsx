@@ -1,8 +1,5 @@
 /* eslint-disable camelcase */
 
-import ItemPost from "@screens/post/components/item-post-detail/ItemPostDetail";
-import { getListComment, getPostDetail, postComment } from "@services/api/post";
-import CommonStyle from "@theme/styles";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   View,
@@ -14,23 +11,29 @@ import {
   FlatList,
 } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { isEmpty } from "lodash";
 
 import ItemComment from "./components/item-comment/ItemComment";
-import { translations } from "@localization";
+import createStyles from "./Post.style";
+
 import useStore from "@services/zustand/store";
+import ItemPost from "@screens/post/components/item-post-detail/ItemPostDetail";
+import { getListComment, getPostDetail, postComment } from "@services/api/post";
+import CommonStyle from "@theme/styles";
+import { translations } from "@localization";
 import {
   closeSuperModal,
   showDetailImageView,
   showErrorModal,
   showLoading,
 } from "@helpers/super.modal.helper";
-import createStyles from "./Post.style";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { useTheme } from "@react-navigation/native";
 import { useListData } from "@helpers/hooks/useListData";
 import { isIos } from "@utils/device.ui.utils";
 import EmptyResultView from "@shared-components/empty.data.component";
+import { showWarningLogin } from "@screens/home/components/request-login/login.request";
+
 interface PostDetailProps {
   route: any;
 }
@@ -179,8 +182,12 @@ const PostDetail = (props: PostDetailProps) => {
   };
 
   const pressReply = (item: any) => {
-    setReplyItem(item);
-    refInput.current?.focus();
+    if (!userData) {
+      showWarningLogin();
+    } else {
+      setReplyItem(item);
+      refInput.current?.focus();
+    }
   };
 
   const [isForcus, setIsForcus] = useState(false);
@@ -261,6 +268,14 @@ const PostDetail = (props: PostDetailProps) => {
     );
   };
 
+  const _focusRepInput = () => {
+    if (!userData) {
+      showWarningLogin();
+    } else {
+      refInput.current?.focus();
+    }
+  };
+
   return (
     <KeyboardAvoidingView
       style={CommonStyle.flex1}
@@ -274,7 +289,7 @@ const PostDetail = (props: PostDetailProps) => {
         >
           <ItemPost
             data={data}
-            pressComment={() => refInput.current?.focus()}
+            pressComment={_focusRepInput}
             pressImageVideo={showImageVideo}
           />
           <View style={CommonStyle.flex1}>
@@ -316,32 +331,34 @@ const PostDetail = (props: PostDetailProps) => {
               </Pressable>
             </View>
           )}
-          <View style={styles.viewCommentPostDetail}>
-            <TextInput
-              ref={refInput}
-              style={{
-                ...CommonStyle.flex1,
-                justifyContent: "center",
-                paddingVertical: 10,
-                color: colors.text,
-              }}
-              placeholder={translations.comment}
-              placeholderTextColor={colors.placeholder}
-              value={value}
-              onChangeText={setValue}
-              multiline
-              onFocus={() => setIsForcus(true)}
-              onBlur={() => setIsForcus(false)}
-            />
-            <Pressable onPress={sendComment}>
-              <Icon
-                name={"send-outline"}
-                size={20}
-                type={IconType.Ionicons}
-                color={colors.text}
+          {userData && (
+            <View style={styles.viewCommentPostDetail}>
+              <TextInput
+                ref={refInput}
+                style={{
+                  ...CommonStyle.flex1,
+                  justifyContent: "center",
+                  paddingVertical: 10,
+                  color: colors.text,
+                }}
+                placeholder={translations.comment}
+                placeholderTextColor={colors.placeholder}
+                value={value}
+                onChangeText={setValue}
+                multiline
+                onFocus={() => setIsForcus(true)}
+                onBlur={() => setIsForcus(false)}
               />
-            </Pressable>
-          </View>
+              <Pressable onPress={sendComment}>
+                <Icon
+                  name={"send-outline"}
+                  size={20}
+                  type={IconType.Ionicons}
+                  color={colors.text}
+                />
+              </Pressable>
+            </View>
+          )}
         </View>
       </View>
     </KeyboardAvoidingView>
