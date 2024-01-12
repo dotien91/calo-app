@@ -14,6 +14,7 @@ import * as NavigationService from "react-navigation-helpers";
 
 import createStyles from "./ItemPost.style";
 import { showWarningLogin } from "../request-login/login.request";
+import LikeBtn from "../like-btn/LikeBtn";
 
 import CommonStyle from "@theme/styles";
 import IconSvg from "assets/svg";
@@ -23,7 +24,6 @@ import { showDetailImageView } from "@helpers/super.modal.helper";
 import { sharePost } from "@utils/share.utils";
 import { translations } from "@localization";
 import { showStickBottom } from "@shared-components/stick-bottom/HomeStickBottomModal";
-import LikeBtn from "../like-btn/LikeBtn";
 import useStore from "@services/zustand/store";
 
 const { width } = Dimensions.get("screen");
@@ -40,17 +40,29 @@ const SIZE_IMAGE2 = (SIZE_IMAGE1 - 4) / 2;
 
 interface ItemPostProps {
   data: any;
+  isProfile?: boolean;
 }
 
-const ItemPost = ({ data }: ItemPostProps) => {
+const ItemPost = ({ data, isProfile }: ItemPostProps) => {
   const theme = useTheme();
   const { colors } = theme;
   const styles = React.useMemo(() => createStyles(theme), [theme]);
   const userData = useStore((state) => state.userData);
 
+  const goToProfileCurrentUser = () => {
+    if (isProfile) {
+      console.log("isProfile");
+    } else {
+      NavigationService.push(SCREENS.PROFILE_CURRENT_USER, {
+        _id: data?.user_id?._id,
+      });
+    }
+  };
+
   const Avatar = useMemo(() => {
     return (
-      <View
+      <Pressable
+        onPress={goToProfileCurrentUser}
         style={{
           width: SIZE_AVATAR,
           height: SIZE_AVATAR,
@@ -65,7 +77,7 @@ const ItemPost = ({ data }: ItemPostProps) => {
             borderRadius: BORDER_AVATAR,
           }}
         />
-      </View>
+      </Pressable>
     );
   }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
 

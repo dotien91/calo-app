@@ -1,78 +1,38 @@
-import { StyleSheet, View } from "react-native";
 import React from "react";
+import { StyleSheet, View } from "react-native";
+import { getBottomSpace } from "react-native-iphone-screen-helper";
+import * as NavigationService from "react-navigation-helpers";
+
 import CommonStyle from "@theme/styles";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";
-import {
-  blockUser,
-  deletePost,
-  followUser,
-  unFollowUser,
-} from "@services/api/post";
+import { deletePost } from "@services/api/post";
 import {
   closeSuperModal,
   showConfirmSuperModal,
-  showErrorModal,
   showLoading,
   showToast,
 } from "@helpers/super.modal.helper";
-import * as NavigationService from "react-navigation-helpers";
 import ItemBottomSheet from "@shared-components/item-bottom-sheet/ItemBottomSheet";
 import { SCREENS } from "constants";
-import { getBottomSpace } from "react-native-iphone-screen-helper";
 import eventEmitter from "@services/event-emitter";
+import { useActionUser } from "@helpers/hooks/useActionUser";
 interface ListActionOfPost {
   data: any;
 }
 
 const ListActionOfPost = ({ data }: ListActionOfPost) => {
   const userData = useStore((state) => state.userData);
-  const setUserData = useStore((state) => state.setUserData);
+  const { _followUser, _blockUser } = useActionUser();
 
   const pressFollowUser = () => {
     closeSuperModal();
-    const params = { partner_id: data?.user_id?._id };
-    if (userData && userData.follow_users.indexOf(data?.user_id?._id) >= 0) {
-      unFollowUser(params).then((resUnfollow) => {
-        if (!resUnfollow.isError && userData) {
-          setUserData({
-            ...userData,
-            follow_users: [
-              ...userData.follow_users.filter((i) => i !== data?.user_id?._id),
-            ],
-          });
-        } else {
-          showErrorModal(resUnfollow);
-        }
-      });
-    } else {
-      followUser(params).then((resFollow) => {
-        if (!resFollow.isError && userData) {
-          setUserData({
-            ...userData,
-            follow_users: [...userData.follow_users, data?.user_id?._id],
-          });
-        } else showErrorModal(resFollow);
-      });
-    }
+    _followUser(data?.user_id?._id);
   };
 
   const pressBlockUser = () => {
     closeSuperModal();
-    const params = { partner_id: data?.user_id?._id };
-    blockUser(params).then((resBlock) => {
-      if (!resBlock.isError) {
-        showToast({
-          type: "success",
-          message: translations.blockedUser.replace(
-            ":username",
-            data?.user_id?.display_name || "",
-          ),
-        });
-      } else {
-        showErrorModal(resBlock);
-      }
-    });
+    _blockUser(data?.user_id?._id, data?.user_id?.display_name);
   };
 
   const pressDeletePost = (id: string) => {

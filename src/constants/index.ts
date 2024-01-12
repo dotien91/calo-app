@@ -28,6 +28,7 @@ export const SCREENS = {
   LIST_POST: "ListPost",
   POST_DETAIL: "PostDetail",
   EDIT_COMMENT: "EditComment",
+  PROFILE_CURRENT_USER: "ProfileCurentUser",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =
