@@ -72,6 +72,7 @@ const InputHook: React.FC<InputHookProps> = ({
               value={value}
               style={[styles.input, !!customStyle && customStyle]}
               secureTextEntry={isPassword}
+              placeholderTextColor={palette.placeholder}
             />
           )}
           name={name}
@@ -97,16 +98,16 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     paddingHorizontal: 20,
     height: 48,
-    paddingVertical: 10,
     alignItems: "center",
     flexDirection: "row",
-    borderRadius: 30,
+    borderRadius: 8,
     borderWidth: 1,
-    borderColor: palette.mainColor2,
+    borderColor: palette.borderColor,
     gap: 15,
   },
   input: {
     ...CommonStyle.flex1,
+    color: palette.text,
 
     // ...CommonStyle.mb6,
   },

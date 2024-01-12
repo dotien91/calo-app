@@ -1,7 +1,8 @@
-import { useTheme } from "@react-navigation/native";
-import CommonStyle from "@theme/styles";
 import React from "react";
 import { Text, View, ViewStyle } from "react-native";
+import { useTheme } from "@react-navigation/native";
+
+import CommonStyle from "@theme/styles";
 
 interface TermPolicyViewProps {
   style: ViewStyle;
@@ -25,13 +26,17 @@ const TermPolicyView = ({ style }: TermPolicyViewProps) => {
           {
             textAlign: "center",
             fontSize: 14,
+            color: colors.text,
           },
         ]}
       >
         {"By login or signing up, you're agree to our"}
       </Text>
       <Text
-        style={[CommonStyle.hnLight, { textAlign: "center", fontSize: 14 }]}
+        style={[
+          CommonStyle.hnLight,
+          { textAlign: "center", fontSize: 14, color: colors.text },
+        ]}
       >
         <Text onPress={pressTerms} style={{ color: colors.primary }}>
           {" "}

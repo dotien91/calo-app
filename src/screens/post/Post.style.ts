@@ -1,10 +1,11 @@
 import { StyleSheet } from "react-native";
-import CommonStyle from "@theme/styles";
 import { ExtendedTheme } from "@react-navigation/native";
 import {
   getStatusBarHeight,
   getBottomSpace,
 } from "react-native-iphone-screen-helper";
+
+import CommonStyle from "@theme/styles";
 import { Device } from "@utils/device.ui.utils";
 
 const createStyles = (theme: ExtendedTheme) => {
@@ -95,6 +96,7 @@ const createStyles = (theme: ExtendedTheme) => {
       gap: 10,
       flexDirection: "row",
       backgroundColor: colors.background,
+      maxHeight: 120,
       marginVertical: 10,
       borderRadius: 4,
       borderWidth: 1,

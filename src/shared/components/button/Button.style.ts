@@ -7,7 +7,7 @@ export default (theme: ExtendedTheme) => {
   return StyleSheet.create({
     viewButton: {
       paddingVertical: 12,
-      borderRadius: 30,
+      borderRadius: 8,
       backgroundColor: colors.mainColor2,
       ...CommonStyle.flexCenter,
       paddingHorizontal: 30,

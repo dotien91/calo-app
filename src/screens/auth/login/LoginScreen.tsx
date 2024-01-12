@@ -26,7 +26,7 @@ export default function LoginScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={[CommonStyle.flex1, { alignItems: "center" }]}>
+      <View style={[CommonStyle.flex1, CommonStyle.center]}>
         <IconSvg name="logoIeltsHunter" width={120} height={67} />
       </View>
       <Text style={styles.textHeader}>{translations.welcomeBack}</Text>

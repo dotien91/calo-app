@@ -1,8 +1,9 @@
-import { translations } from "@localization";
-import { useTheme } from "@react-navigation/native";
-import CommonStyle from "@theme/styles";
 import React from "react";
 import { Text, View } from "react-native";
+import { useTheme } from "@react-navigation/native";
+
+import { translations } from "@localization";
+import CommonStyle from "@theme/styles";
 
 const OrView = () => {
   const theme = useTheme();
@@ -20,7 +21,12 @@ const OrView = () => {
       <View
         style={{ height: 1, backgroundColor: colors.mainColor2, flex: 1 }}
       />
-      <Text style={[CommonStyle.hnMedium, { paddingHorizontal: 16 }]}>
+      <Text
+        style={[
+          CommonStyle.hnMedium,
+          { paddingHorizontal: 16, color: colors.text },
+        ]}
+      >
         {translations.or}
       </Text>
       <View

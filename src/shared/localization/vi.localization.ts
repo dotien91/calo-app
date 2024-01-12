@@ -49,6 +49,7 @@ export default {
     passDoesNotMatch: "Mật khẩu xác nhận không trùng khớp",
     errorPatternPass:
       "Mật khẩu gồm ít nhất 8 kí tự ký tự có chữ cái, số và kí tự đặc biệt, viết thường và viết hoa",
+    isOffline: "Kết nối với internet và thử lại",
   },
   channelLocked: "Kênh tạm thời đang bị khoá",
   channelLockedDes: "Truy cập vào website kích hoạt kênh",

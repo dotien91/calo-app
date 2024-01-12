@@ -1,18 +1,22 @@
 /* eslint-disable camelcase */
 
-import { useTheme } from "@react-navigation/native";
-import CommonStyle from "@theme/styles";
-import IconSvg from "assets/svg";
 import React, { useEffect, useMemo, useState } from "react";
-import { Text, View, Pressable, Image } from "react-native";
+import { Text, View, Pressable, Image, ActivityIndicator } from "react-native";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import { useTheme } from "@react-navigation/native";
+
+import createStyles from "./ItemComment.style";
+
+import IconSvg from "assets/svg";
+import CommonStyle from "@theme/styles";
 import { translations } from "@localization";
 import { postLikeCommnent } from "@services/api/post";
 import useStore from "@services/zustand/store";
 import { showToast } from "@helpers/super.modal.helper";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { convertLastActive } from "@utils/time.utils";
-import createStyles from "./ItemComment.style";
 import { showStickBottom } from "@shared-components/stick-bottom/HomeStickBottomModal";
+import { showWarningLogin } from "@screens/home/components/request-login/login.request";
+
 const SIZE_AVATAR = 30;
 const BORDER_AVATAR = 12;
 const FONT_SIZE = 12;
@@ -33,26 +37,31 @@ const ItemReply = ({ item, onPressReplyChild, repCmtId }: ItemReplyProps) => {
   const theme = useTheme();
   const { colors } = theme;
   const styles = React.useMemo(() => createStyles(theme), [theme]);
+  const userData = useStore((state) => state.userData);
 
   const [isLike, setIsLike] = useState<boolean>(item?.is_like);
   const [likeNumber, setLikeNumber] = useState<number>(item?.like_number);
   const pressLikeCommentRep = async () => {
-    const params = {
-      comment_id: item._id,
-    };
+    if (!userData) {
+      showWarningLogin();
+    } else {
+      const params = {
+        comment_id: item._id,
+      };
 
-    setIsLike((isLike) => !isLike);
-    postLikeCommnent(params).then((res) => {
-      if (!res.isError) {
-        setLikeNumber(res.like_number);
-      } else {
-        setIsLike(!isLike);
-        showToast({
-          type: "error",
-          message: translations.post.likeError,
-        });
-      }
-    });
+      setIsLike((isLike) => !isLike);
+      postLikeCommnent(params).then((res) => {
+        if (!res.isError) {
+          setLikeNumber(res.like_number);
+        } else {
+          setIsLike(!isLike);
+          showToast({
+            type: "error",
+            message: translations.post.likeError,
+          });
+        }
+      });
+    }
   };
 
   const AvatarRep = useMemo(() => {
@@ -119,30 +128,40 @@ const ItemReply = ({ item, onPressReplyChild, repCmtId }: ItemReplyProps) => {
             {convertLastActive(item?.createdAt)}
           </Text>
         </View>
-        <Pressable onPress={_showStickBottom}>
-          <Icon
-            size={20}
-            name="ellipsis-vertical"
-            type={IconType.Ionicons}
-            color={colors.text}
-          />
-        </Pressable>
+        {!item.sending && (
+          <Pressable onPress={_showStickBottom}>
+            <Icon
+              size={20}
+              name="ellipsis-vertical"
+              type={IconType.Ionicons}
+              color={colors.text}
+            />
+          </Pressable>
+        )}
       </View>
     );
   }, [item]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const ContentStatus = useMemo(() => {
     return (
-      <Text
-        style={{
-          color: colors.mainColor2,
-          ...CommonStyle.hnRegular,
-          fontSize: FONT_SIZE,
-          marginBottom: 4,
-        }}
-      >
-        {item?.content}
-      </Text>
+      <View style={{ flexDirection: "row" }}>
+        <Text
+          style={{
+            ...CommonStyle.hnRegular,
+            fontSize: FONT_SIZE,
+            marginBottom: 4,
+          }}
+        >
+          {item?.content}
+        </Text>
+        {item.sending && (
+          <ActivityIndicator
+            color={colors.text}
+            style={{ transform: [{ scaleX: 0.5 }, { scaleY: 0.5 }] }}
+            size={"small"}
+          />
+        )}
+      </View>
     );
   }, [item, item.content]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -186,7 +205,7 @@ const ItemReply = ({ item, onPressReplyChild, repCmtId }: ItemReplyProps) => {
       <View style={{ paddingLeft: PADDING_LEFT, ...CommonStyle.flex1 }}>
         {HeaderItemComment}
         {ContentStatus}
-        <LikeCommentReply />
+        {!item.send && <LikeCommentReply />}
       </View>
     </View>
   );
@@ -200,6 +219,7 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
   const styles = React.useMemo(() => createStyles(theme), [theme]);
 
   const listCommentDelete = useStore((state) => state.listCommentDelete);
+  const userData = useStore((state) => state.userData);
 
   const [listReply, setListReply] = useState([]);
   const [isLike, setIsLike] = useState<boolean>(data?.is_like);
@@ -228,7 +248,13 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
       </View>
     );
   }, [data]);
-  const _showStickBottom = () => showStickBottom(data, "comment");
+  const _showStickBottom = () => {
+    if (!userData) {
+      showWarningLogin();
+    } else {
+      showStickBottom(data, "comment");
+    }
+  };
 
   const HeaderItemComment = useMemo(() => {
     return (
@@ -271,48 +297,62 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
             {convertLastActive(data?.createdAt)}
           </Text>
         </View>
-        <Pressable onPress={_showStickBottom}>
-          <Icon
-            size={20}
-            name="ellipsis-vertical"
-            type={IconType.Ionicons}
-            color={colors.text}
-          />
-        </Pressable>
+        {!data.sending && (
+          <Pressable onPress={_showStickBottom}>
+            <Icon
+              size={20}
+              name="ellipsis-vertical"
+              type={IconType.Ionicons}
+              color={colors.text}
+            />
+          </Pressable>
+        )}
       </View>
     );
   }, [data, data.user_id]); // eslint-disable-line react-hooks/exhaustive-deps
   const ContentStatus = useMemo(() => {
     return (
-      <Text
-        style={{
-          color: colors.mainColor2,
-          ...CommonStyle.hnRegular,
-          fontSize: FONT_SIZE,
-          marginBottom: 4,
-        }}
-      >
-        {data?.content}
-      </Text>
+      <View style={{ flexDirection: "row" }}>
+        <Text
+          style={{
+            ...CommonStyle.hnRegular,
+            fontSize: FONT_SIZE,
+            marginBottom: 4,
+          }}
+        >
+          {data?.content}
+        </Text>
+        {data.sending && (
+          <ActivityIndicator
+            color={colors.text}
+            style={{ transform: [{ scaleX: 0.5 }, { scaleY: 0.5 }] }}
+            size={"small"}
+          />
+        )}
+      </View>
     );
   }, [data, data.content]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const pressLikeComment = async () => {
-    const params = {
-      comment_id: data._id,
-    };
-    setIsLike((isLike) => !isLike);
-    postLikeCommnent(params).then((res) => {
-      if (!res.isError) {
-        setLikeNumber(res.like_number);
-      } else {
-        setIsLike((isLike) => !isLike);
-        showToast({
-          type: "error",
-          message: translations.post.likeError,
-        });
-      }
-    });
+    if (!userData) {
+      showWarningLogin();
+    } else {
+      const params = {
+        comment_id: data._id,
+      };
+      setIsLike((isLike) => !isLike);
+      postLikeCommnent(params).then((res) => {
+        if (!res.isError) {
+          setLikeNumber(res.like_number);
+        } else {
+          setIsLike((isLike) => !isLike);
+          showToast({
+            type: "error",
+            message: translations.post.likeError,
+          });
+        }
+      });
+    }
   };
   const pressCommnet = () => {};
 
@@ -365,7 +405,7 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
       <View style={{ paddingLeft: PADDING_LEFT, ...CommonStyle.flex1 }}>
         {HeaderItemComment}
         {ContentStatus}
-        <LikeComment />
+        {!data.sending && <LikeComment />}
         {listReply.length > 0 &&
           listReply
             .filter((item) => listCommentDelete.indexOf(item._id) < 0)
