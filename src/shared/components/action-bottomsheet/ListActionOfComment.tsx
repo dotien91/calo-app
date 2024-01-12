@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 
-import { Alert, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
 import CommonStyle from "@theme/styles";
 import { translations } from "@localization";
@@ -13,6 +13,7 @@ import {
 } from "@services/api/post";
 import {
   closeSuperModal,
+  showConfirmSuperModal,
   showErrorModal,
   showToast,
 } from "@helpers/super.modal.helper";
@@ -51,17 +52,10 @@ const ListActionOfComment = ({ data }: ListActionOfComment) => {
   const showWarrningDelete = () => {
     //close bottomsheet
     closeSuperModal();
-    Alert.alert("", translations.home.deleteComment, [
-      {
-        text: translations.delete,
-        onPress: () => deleteCommentWithid(data._id),
-      },
-      {
-        text: translations.cancel,
-        onPress: () => console.log("Cancel Pressed"),
-        style: "cancel",
-      },
-    ]);
+    showConfirmSuperModal({
+      title: translations.home.deleteComment,
+      cb: () => deleteCommentWithid(data._id),
+    });
   };
 
   const pressFollowUser = () => {

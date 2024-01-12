@@ -1,4 +1,4 @@
-import { Alert, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
 import CommonStyle from "@theme/styles";
 import { translations } from "@localization";
@@ -11,6 +11,7 @@ import {
 } from "@services/api/post";
 import {
   closeSuperModal,
+  showConfirmSuperModal,
   showErrorModal,
   showLoading,
   showToast,
@@ -93,17 +94,10 @@ const ListActionOfPost = ({ data }: ListActionOfPost) => {
 
   const showWarrningDelete = () => {
     closeSuperModal();
-    Alert.alert("", translations.home.deletePost, [
-      {
-        text: translations.delete,
-        onPress: () => pressDeletePost(data._id),
-      },
-      {
-        text: translations.cancel,
-        onPress: () => console.log("Cancel Pressed"),
-        style: "cancel",
-      },
-    ]);
+    showConfirmSuperModal({
+      title: translations.home.deletePost,
+      cb: () => pressDeletePost(data._id),
+    });
   };
 
   if (userData?._id === data?.user_id?._id) {

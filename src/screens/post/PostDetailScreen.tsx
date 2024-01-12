@@ -5,14 +5,14 @@ import {
   View,
   KeyboardAvoidingView,
   TextInput,
-  Pressable,
   ScrollView,
   Text,
   FlatList,
+  TouchableOpacity,
 } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
-import { isEmpty } from "lodash";
+import { debounce, isEmpty } from "lodash";
 
 import ItemComment from "./components/item-comment/ItemComment";
 import createStyles from "./Post.style";
@@ -33,6 +33,8 @@ import { useListData } from "@helpers/hooks/useListData";
 import { isIos } from "@utils/device.ui.utils";
 import EmptyResultView from "@shared-components/empty.data.component";
 import { showWarningLogin } from "@screens/home/components/request-login/login.request";
+import { trim } from "@helpers/string.helper";
+import uuid from "react-native-uuid";
 
 interface PostDetailProps {
   route: any;
@@ -105,14 +107,34 @@ const PostDetail = (props: PostDetailProps) => {
     // getComment();
   }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const updateListCommentReply = (_id: string, resComment: any) => {
+  const updateListCommentReply = ({
+    parent_id,
+    data,
+  }: {
+    parent_id: string;
+    data?: any;
+  }) => {
     const listCmtUpdate = [...listData];
-    const itemIndex = listCmtUpdate.find((item) => item._id === _id);
-    itemIndex.child = [resComment, ...itemIndex.child];
+    const itemIndexParent = listCmtUpdate.find(
+      (item) => item._id === parent_id,
+    );
+    // tìm xem đã có trong danh sách hay chưa theo id local
+    const itemIndexChild = itemIndexParent.child.findIndex(
+      (itemChild) => itemChild.idLocal === data.idLocal,
+    );
+
+    if (itemIndexChild >= 0) {
+      // itemIndexChild = data
+      // itemIndexParent.child = itemIndexParent
+      itemIndexParent.child[itemIndexChild] = data;
+    } else {
+      itemIndexParent.child = [data, ...itemIndexParent.child];
+    }
+
     const dataUpdate = [
       ...listCmtUpdate.map((item) => {
-        if (item._id === _id) {
-          return itemIndex;
+        if (item._id === parent_id) {
+          return itemIndexParent;
         } else {
           return item;
         }
@@ -120,8 +142,21 @@ const PostDetail = (props: PostDetailProps) => {
     ];
     return dataUpdate;
   };
+  // const _updateListCommentWithAdd = ({ data }: { data?: any }) => {
+  //   const listCmtUpdate = [...listData];
+  //   const dataUpdate = [
+  //     ...listCmtUpdate.map((item) => {
+  //       if (item.idLocal === data.idLocal) {
+  //         return data;
+  //       } else {
+  //         return item;
+  //       }
+  //     }),
+  //   ];
+  //   return dataUpdate;
+  // };
 
-  const _updateListComment = (itemUpdate: any) => {
+  const _updateListCommentWithEdit = (itemUpdate: any) => {
     const newData = [...listData];
     if (itemUpdate.parent_id) {
       const index = newData.findIndex((i) => i._id === itemUpdate.parent_id);
@@ -144,7 +179,7 @@ const PostDetail = (props: PostDetailProps) => {
 
   useEffect(() => {
     if (!isEmpty(itemUpdate)) {
-      const newData = _updateListComment(itemUpdate);
+      const newData = _updateListCommentWithEdit(itemUpdate);
       setItemUpdate({});
       setListData(newData);
     }
@@ -153,24 +188,61 @@ const PostDetail = (props: PostDetailProps) => {
   const sendComment = async () => {
     const params = {
       community_id: id,
-      content: value,
+      content: trim(value),
       parent_id: replyItem.parent_id || replyItem._id || null,
     };
+    const _uuid = uuid.v4();
+
+    const userId = {
+      _id: userData?._id,
+      user_login: userData?.user_login,
+      user_avatar: userData?.user_avatar,
+      user_avatar_thumbnail: userData?.user_avatar_thumbnail,
+      display_name: userData?.display_name,
+      user_role: userData?.user_role,
+      user_status: userData?.user_status,
+    };
+
+    const dataChild = {
+      idLocal: _uuid,
+      community_id: id,
+      content: trim(value),
+      parent_id: replyItem.parent_id || replyItem._id || null,
+      user_id: userId,
+      sending: true,
+    };
+    const dataParent = {
+      idLocal: _uuid,
+      community_id: id,
+      content: trim(value),
+      user_id: userId,
+      sending: true,
+    };
+
+    if (replyItem.parent_id || replyItem._id) {
+      const dataUpdate = updateListCommentReply({
+        parent_id: replyItem.parent_id || replyItem._id,
+        data: dataChild,
+      });
+      setListData(dataUpdate);
+    } else {
+      setListData([dataParent, ...listData]);
+    }
+
+    setValue("");
+    deleteReplying();
+    refInput.current?.blur();
     postComment(params).then((resComment) => {
       if (!resComment.isError) {
         if (replyItem.parent_id || replyItem._id) {
-          console.log("...", JSON.stringify(resComment));
-          const dataUpdate = updateListCommentReply(
-            replyItem.parent_id || replyItem._id,
-            resComment.data,
-          );
+          const dataUpdate = updateListCommentReply({
+            parent_id: replyItem.parent_id || replyItem._id,
+            data: { ...resComment.data, idLocal: _uuid, sending: false },
+          });
           setListData(dataUpdate);
         } else {
           setListData([resComment.data, ...listData]);
         }
-        setValue("");
-        deleteReplying();
-        refInput.current?.blur();
       } else {
         showErrorModal(resComment);
       }
@@ -317,18 +389,22 @@ const PostDetail = (props: PostDetailProps) => {
               style={{
                 paddingHorizontal: 20,
                 backgroundColor: colors.background,
+                alignItems: "center",
                 flexDirection: "row",
                 gap: 10,
               }}
             >
-              <Text style={{ color: colors.text }}>
-                {translations.replying} {replyItem?.user_id?.display_name}
+              <Text style={{ color: colors.text, fontSize: 14 }}>
+                {translations.replying}{" "}
+                <Text style={{ ...CommonStyle.hnSemiBold, fontSize: 14 }}>
+                  {replyItem?.user_id?.display_name}
+                </Text>
               </Text>
-              <Pressable onPress={deleteReplying}>
-                <Text style={{ color: colors.text }}>
+              <TouchableOpacity onPress={deleteReplying}>
+                <Text style={{ color: colors.text, fontSize: 14 }}>
                   {translations.cancel}
                 </Text>
-              </Pressable>
+              </TouchableOpacity>
             </View>
           )}
           {userData && (
@@ -340,6 +416,7 @@ const PostDetail = (props: PostDetailProps) => {
                   justifyContent: "center",
                   paddingVertical: 10,
                   color: colors.text,
+                  fontSize: 14,
                 }}
                 placeholder={translations.comment}
                 placeholderTextColor={colors.placeholder}
@@ -349,14 +426,16 @@ const PostDetail = (props: PostDetailProps) => {
                 onFocus={() => setIsForcus(true)}
                 onBlur={() => setIsForcus(false)}
               />
-              <Pressable onPress={sendComment}>
-                <Icon
-                  name={"send-outline"}
-                  size={20}
-                  type={IconType.Ionicons}
-                  color={colors.text}
-                />
-              </Pressable>
+              {trim(value) !== "" && (
+                <TouchableOpacity onPress={debounce(sendComment, 1000)}>
+                  <Icon
+                    name={"send-outline"}
+                    size={20}
+                    type={IconType.Ionicons}
+                    color={colors.text}
+                  />
+                </TouchableOpacity>
+              )}
             </View>
           )}
         </View>

@@ -48,6 +48,7 @@ export default {
     minLengthPass: "Password must be at least 6 characters",
     errorPatternPass:
       "Password includes at least 8 characters including letters, numbers and special characters, lowercase and uppercase",
+    isOffline: "Connect to internet and retry!",
   },
   channelLocked: "The channel is temporarily locked",
   channelLockedDes: "Go to website to active channel",
@@ -143,9 +144,9 @@ export default {
   selectImage: "Select Image",
   draft: "Draft",
   public: "Public",
+  cancelEdit: "Xác nhận hủy",
+  cancelEditDes: "Các chỉnh sửa sẽ không được lưu lại. Bạn có muốn tiếp tục?",
   post: {
-    cancelEdit: "Xác nhận hủy",
-    cancelEditDes: "Các chỉnh sửa sẽ không được lưu lại. Bạn có muốn tiếp tục?",
     post: "Post",
     posts: "Post",
     createPost: "Create Post",

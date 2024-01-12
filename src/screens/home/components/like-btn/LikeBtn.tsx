@@ -9,6 +9,8 @@ import { postLike } from "@services/api/post";
 import useStore from "@services/zustand/store";
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
+import { translations } from "@localization";
+import { debounce } from "lodash";
 
 interface LikeBtnProps {
   data: any;
@@ -29,7 +31,7 @@ const LikeBtn = (props: LikeBtnProps) => {
     }
   }, [listLike]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const pressLike = async () => {
+  const pressLike = () => {
     if (!userData) {
       showWarningLogin();
     } else {
@@ -37,9 +39,13 @@ const LikeBtn = (props: LikeBtnProps) => {
         community_id: props.data._id,
       };
       setIsLike(!isLike);
+      updateListLike(
+        props.data._id,
+        isLike ? likeNumber - 1 : likeNumber + 1,
+        !isLike,
+      );
       postLike(params).then((res) => {
         if (!res.isError) {
-          console.log("res...", JSON.stringify(res.data));
           updateListLike(
             props.data._id,
             res.data.like_number,
@@ -47,14 +53,19 @@ const LikeBtn = (props: LikeBtnProps) => {
           );
         } else {
           setIsLike(!isLike);
-          showToast({ type: "error", message: res.message });
+          showToast({
+            type: "error",
+            message: res.message || translations.error.isOffline,
+          });
+          updateListLike(props.data._id, likeNumber, isLike);
         }
       });
     }
   };
+  const onPressLikeDebounce = debounce(pressLike, 600);
   return (
     <TouchableOpacity
-      onPress={pressLike}
+      onPress={onPressLikeDebounce}
       style={[styles.viewLike, { justifyContent: "flex-start" }]}
     >
       <Icon

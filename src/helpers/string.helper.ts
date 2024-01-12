@@ -7,7 +7,7 @@ import { sha1 } from "react-native-sha1";
 export function trim(string = ""): string {
   return String(string || " ")
     .trim()
-    .replace(/^\s+|\s+$/g, "");
+    .replace(/(\r\n|\r|\n)+/g, "$1");
 }
 
 /**

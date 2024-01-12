@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 
 import React, { useEffect, useMemo, useState } from "react";
-import { Text, View, Pressable, Image } from "react-native";
+import { Text, View, Pressable, Image, ActivityIndicator } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { useTheme } from "@react-navigation/native";
 
@@ -128,30 +128,40 @@ const ItemReply = ({ item, onPressReplyChild, repCmtId }: ItemReplyProps) => {
             {convertLastActive(item?.createdAt)}
           </Text>
         </View>
-        <Pressable onPress={_showStickBottom}>
-          <Icon
-            size={20}
-            name="ellipsis-vertical"
-            type={IconType.Ionicons}
-            color={colors.text}
-          />
-        </Pressable>
+        {!item.sending && (
+          <Pressable onPress={_showStickBottom}>
+            <Icon
+              size={20}
+              name="ellipsis-vertical"
+              type={IconType.Ionicons}
+              color={colors.text}
+            />
+          </Pressable>
+        )}
       </View>
     );
   }, [item]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const ContentStatus = useMemo(() => {
     return (
-      <Text
-        style={{
-          color: colors.mainColor2,
-          ...CommonStyle.hnRegular,
-          fontSize: FONT_SIZE,
-          marginBottom: 4,
-        }}
-      >
-        {item?.content}
-      </Text>
+      <View style={{ flexDirection: "row" }}>
+        <Text
+          style={{
+            ...CommonStyle.hnRegular,
+            fontSize: FONT_SIZE,
+            marginBottom: 4,
+          }}
+        >
+          {item?.content}
+        </Text>
+        {item.sending && (
+          <ActivityIndicator
+            color={colors.text}
+            style={{ transform: [{ scaleX: 0.5 }, { scaleY: 0.5 }] }}
+            size={"small"}
+          />
+        )}
+      </View>
     );
   }, [item, item.content]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -195,7 +205,7 @@ const ItemReply = ({ item, onPressReplyChild, repCmtId }: ItemReplyProps) => {
       <View style={{ paddingLeft: PADDING_LEFT, ...CommonStyle.flex1 }}>
         {HeaderItemComment}
         {ContentStatus}
-        <LikeCommentReply />
+        {!item.send && <LikeCommentReply />}
       </View>
     </View>
   );
@@ -287,29 +297,39 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
             {convertLastActive(data?.createdAt)}
           </Text>
         </View>
-        <Pressable onPress={_showStickBottom}>
-          <Icon
-            size={20}
-            name="ellipsis-vertical"
-            type={IconType.Ionicons}
-            color={colors.text}
-          />
-        </Pressable>
+        {!data.sending && (
+          <Pressable onPress={_showStickBottom}>
+            <Icon
+              size={20}
+              name="ellipsis-vertical"
+              type={IconType.Ionicons}
+              color={colors.text}
+            />
+          </Pressable>
+        )}
       </View>
     );
   }, [data, data.user_id]); // eslint-disable-line react-hooks/exhaustive-deps
   const ContentStatus = useMemo(() => {
     return (
-      <Text
-        style={{
-          color: colors.mainColor2,
-          ...CommonStyle.hnRegular,
-          fontSize: FONT_SIZE,
-          marginBottom: 4,
-        }}
-      >
-        {data?.content}
-      </Text>
+      <View style={{ flexDirection: "row" }}>
+        <Text
+          style={{
+            ...CommonStyle.hnRegular,
+            fontSize: FONT_SIZE,
+            marginBottom: 4,
+          }}
+        >
+          {data?.content}
+        </Text>
+        {data.sending && (
+          <ActivityIndicator
+            color={colors.text}
+            style={{ transform: [{ scaleX: 0.5 }, { scaleY: 0.5 }] }}
+            size={"small"}
+          />
+        )}
+      </View>
     );
   }, [data, data.content]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -385,7 +405,7 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
       <View style={{ paddingLeft: PADDING_LEFT, ...CommonStyle.flex1 }}>
         {HeaderItemComment}
         {ContentStatus}
-        <LikeComment />
+        {!data.sending && <LikeComment />}
         {listReply.length > 0 &&
           listReply
             .filter((item) => listCommentDelete.indexOf(item._id) < 0)

@@ -96,6 +96,7 @@ const createStyles = (theme: ExtendedTheme) => {
       gap: 10,
       flexDirection: "row",
       backgroundColor: colors.background,
+      maxHeight: 120,
       marginVertical: 10,
       borderRadius: 4,
       borderWidth: 1,

@@ -8,7 +8,6 @@ import {
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
   TextInput,
-  Alert,
 } from "react-native";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useTheme, useRoute } from "@react-navigation/native";
@@ -34,6 +33,7 @@ import {
   showLoading,
   showToast,
   showErrorModal,
+  showConfirmSuperModal,
 } from "@helpers/super.modal.helper";
 import { useUploadFile } from "@helpers/hooks/useUploadFile";
 import eventEmitter from "@services/event-emitter";
@@ -218,17 +218,11 @@ export default function PostScreen() {
     if (isEqual(beforeValue, afterValue)) {
       NavigationService.goBack();
     } else {
-      Alert.alert(translations.cancelEdit, translations.cancelEditDes, [
-        {
-          text: translations.confirm,
-          onPress: () => NavigationService.goBack(),
-        },
-        {
-          text: translations.cancel,
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel",
-        },
-      ]);
+      showConfirmSuperModal({
+        title: translations.cancelEdit,
+        desc: translations.cancelEditDes,
+        cb: () => NavigationService.goBack(),
+      });
     }
   };
 
