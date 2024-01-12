@@ -78,7 +78,6 @@ export const useChatHistory = () => {
   };
 
   const msgToClient = (data: string) => {
-    console.log("dataaaaaaa", data);
     let newMessage: TypedMessageGiftedChat = JSON.parse(data);
     newMessage = {
       ...newMessage,
@@ -98,7 +97,7 @@ export const useChatHistory = () => {
     if (newMessage.user._id == userData?._id) {
       return;
     }
-    setMessages([newMessage, ...messages]);
+    setMessages((old) => [newMessage, ...old]);
   };
 
   const typingToClient = (data: string) => {
@@ -116,11 +115,14 @@ export const useChatHistory = () => {
     mediaData?: IMediaUpload[],
     giftedMessages: TypedMessageGiftedChat[],
   ) => {
-    sendChatToChatRoom({
+    const data = {
       chat_content: text,
       chat_room_id: chatRoomId,
-      media_data: JSON.stringify(mediaData),
-    }).then((res) => {
+    };
+    if (mediaData.length) {
+      data.media_data = JSON.stringify(mediaData);
+    }
+    sendChatToChatRoom(data).then((res) => {
       let newMessages = [];
       if (!res.isError) {
         newMessages = giftedMessages.map((item) => {
@@ -161,9 +163,7 @@ export const useChatHistory = () => {
       offSocket("msgToClient", msgToClient);
       offSocket("typingToClient", typingToClient);
       //update list chat for case create chat room
-      if (partnerId) {
-        eventEmitter.emit("refresh_list_chat");
-      }
+      eventEmitter.emit("refresh_list_chat");
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatRoomId]);

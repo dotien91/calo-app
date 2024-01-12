@@ -14,13 +14,15 @@ import LoadingList from "@shared-components/loading.list.component";
 import EmptyResultView from "@shared-components/empty.data.component";
 import eventEmitter from "@services/event-emitter";
 import { useListData } from "@helpers/hooks/useListData";
-import { TypedGeneralRoomChat } from "models/chat.model";
+import { TypedGeneralRoomChat, TypedUserChat } from "models/chat.model";
+import { onSocket, offSocket } from "@helpers/socket.helper";
 
 interface ListScreenProps {}
 
 const ListChatScreen: React.FC<ListScreenProps> = () => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
+  const listDataRef = React.useRef([]);
   // const { colors } = theme;
   const {
     listData,
@@ -29,14 +31,54 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
     refreshControl,
     renderFooterComponent,
     refreshListPage,
+    setListData,
   } = useListData<TypedGeneralRoomChat>({ limit: 6 }, getListChat);
 
+  const _refreshListChat = () => {
+    refreshListPage(false);
+  };
+
   useEffect(() => {
-    eventEmitter.on("refresh_list_chat", refreshListPage);
+    onSocket("msgToUser", msgToUser);
+    eventEmitter.on("refresh_list_chat", _refreshListChat);
+
     return () => {
-      eventEmitter.off("refresh_list_chat", refreshListPage);
+      offSocket("msgToUser", msgToUser);
+      eventEmitter.off("refresh_list_chat", _refreshListChat);
     };
   });
+
+  useEffect(() => {
+    listDataRef.current = listData;
+  }, [listData]);
+
+  const msgToUser = (data: string) => {
+    const newChatItem: TypedUserChat = JSON.parse(data)?.chat_room_data;
+    if (!newChatItem) return;
+    const indexNewChatItem = listDataRef.current.findIndex(
+      (item) => newChatItem.chat_room_id._id == item.chat_room_id._id,
+    );
+    if (indexNewChatItem > -1) {
+      const currentItem = listDataRef.current[indexNewChatItem];
+      listDataRef.current[indexNewChatItem] = {
+        ...currentItem,
+        chat_room_id: {
+          ...currentItem.chat_room_id,
+          last_message: newChatItem.chat_room_id.last_message,
+        },
+        read_count: currentItem.read_count + 1,
+      };
+    } else {
+      listDataRef.current.unshift(newChatItem);
+    }
+    console.log(
+      "isnewRoom",
+      { newChatItem, indexNewChatItem },
+      listDataRef.current,
+    );
+    setListData(listDataRef.current);
+  };
+
   const renderItem = ({
     item,
     index,

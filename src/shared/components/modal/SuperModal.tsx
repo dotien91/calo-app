@@ -137,6 +137,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         animationOut={"FadeOut"}
         // useNativeDriver={true}
         style={styles.modalMedia}
+        statusBarTranslucent={true}
       >
         <PagerScrollMedia
           index={indexMedia}

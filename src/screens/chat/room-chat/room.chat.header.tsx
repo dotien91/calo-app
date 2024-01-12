@@ -5,7 +5,7 @@ import { useTheme, useRoute } from "@react-navigation/native";
 /**
  * ? Local Imports
  */
-import createStyles from "./chat.room.screen.style";
+import createStyles from "./room.chat.screen.style";
 import ActionBtn from "./components/KeyboardBtn";
 import CommonStyle from "@theme/styles";
 import { getFormatDayMessage } from "@utils/date.utils";

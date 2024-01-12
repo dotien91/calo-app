@@ -1,3 +1,5 @@
+import { View, StyleSheet, Dimensions, Pressable } from "react-native";
+
 /* eslint-disable camelcase */
 
 import VideoPlayer from "@shared-components/video.palyer.component";
@@ -5,10 +7,10 @@ import ImageLoad from "@screens/post/components/ImageLoad";
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
 import * as React from "react";
-import { View, StyleSheet, Dimensions, Pressable } from "react-native";
 import PageScroll from "@shared-components/page-scroll/PageScroll";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { getStatusBarHeight } from "@freakycoder/react-native-helpers";
+
 const { width } = Dimensions.get("screen");
 
 interface PagerScrollMediaProps {
@@ -49,9 +51,7 @@ const PagerScrollMedia = ({
         length={listMedia.length}
       >
         {listMedia.map((item, index) => {
-          const media_width = item?.media_meta?.find(
-            (i) => i.key === "width",
-          )?.value;
+          const media_width = width;
           const media_height = item?.media_meta?.find(
             (i) => i.key === "height",
           )?.value;
@@ -65,7 +65,7 @@ const PagerScrollMedia = ({
                 <ImageLoad
                   source={{ uri: item?.url }}
                   style={[styles.image, { height: heightMedia }]}
-                  resizeMode="cover"
+                  resizeMode="contain"
                 />
               </View>
             );
@@ -78,6 +78,7 @@ const PagerScrollMedia = ({
                 }
                 height={heightMedia}
                 width={width}
+                resizeMode="contain"
               />
             </View>
           );

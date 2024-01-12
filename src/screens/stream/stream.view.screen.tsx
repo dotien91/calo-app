@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useEffect, useState } from "react";
 
-import { View, KeyboardAvoidingView, Platform } from "react-native";
+import { View, KeyboardAvoidingView, Platform, StatusBar } from "react-native";
 // import Orientation from 'react-native-orientation';
 import { useTheme, useRoute } from "@react-navigation/native";
 
@@ -11,8 +11,8 @@ import VideoPlayer from "@shared-components/video.player.component";
 import CommonStyle from "@theme/styles";
 import createStyles from "./stream.screen.style";
 import IconBtn from "@shared-components/button/IconBtn";
-import { useLiveStream } from "./hooks/use.stream";
-import ChatView from "./list.chat.screen";
+import { useLiveStream } from "./hooks/useLiveStream";
+import ChatView from "./stream.chat.list.view";
 import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "constants";
 import { Device } from "@utils/device.utils";
@@ -30,6 +30,10 @@ function App() {
     liveStreamId,
   });
   const [showReactionAnimation, setShowReactionAnimation] = useState(true);
+
+  useEffect(() => {
+    StatusBar.setBackgroundColor("black");
+  }, []);
 
   const isStreaming = useCallback(() => {
     return !!liveData?._id;

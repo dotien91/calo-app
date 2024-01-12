@@ -3,6 +3,7 @@
 export default {
   detail: "Chi tiết",
   setting: "Cài đặt",
+  openSetting: "Mở cài đặt",
   language: "Ngôn ngữ",
   darkMode: "Chế độ tối",
   switchLanguage: "Đổi ngôn ngữ",
@@ -591,8 +592,8 @@ export default {
     off: "Tắt",
     pointToLevelUp: "điểm để thăng hạng",
     permisisonDenied: "Không có quyền truy cập",
-    permissionDeniedDes:
-      "Hiện tại đang không có quyền truy cập vào thư viện. Bạn có muốn vào Cài đặt để có thể tiếp tục?",
+    permissionDeniedDes: (text: string) =>
+      `Hiện tại đang không có quyền truy cập ${text}. Bạn có muốn vào Cài đặt để có thể tiếp tục?`,
   },
   member: {
     chat: "Hội thoại",
@@ -1093,6 +1094,7 @@ export default {
   },
   keyboard: {
     writeSomething: "Nhập tin nhắn...",
+    sending: "Đang gửi...",
   },
   audio: {
     pause: "Tạm dừng",

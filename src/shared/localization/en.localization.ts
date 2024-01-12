@@ -2,6 +2,7 @@
 export default {
   detail: "Detail",
   setting: "Setting",
+  openSetting: "Open setting",
   language: "Language",
   darkMode: "Dark mode",
   switchLanguage: "Switch language",
@@ -291,6 +292,7 @@ export default {
   },
   keyboard: {
     writeSomething: "Write something",
+    sending: "Sending...",
   },
   common: {
     yrs: "yrs",
@@ -463,6 +465,9 @@ export default {
     on: "On",
     off: "Off",
     pointToLevelUp: "points to level up",
+    permisisonDenied: "Permission denied",
+    permissionDeniedDes: (text) =>
+      `There is currently no access to ${text}. Do you want to go to Settings so you can continue?`,
   },
   member: {
     chat: "chat",

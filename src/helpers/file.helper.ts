@@ -7,7 +7,10 @@ import { openPicker } from "react-native-image-crop-picker";
 import { launchImageLibrary } from "react-native-image-picker";
 
 export const selectMedia = async ({ config, callback, croping = true }) => {
-  const permission = await requestPermission(PERMISSION.permissionLibrary);
+  const permission = await requestPermission(
+    PERMISSION.permissionLibrary,
+    "photo, video",
+  );
 
   if (permission === "blocked") {
     return;

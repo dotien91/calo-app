@@ -11,7 +11,7 @@ import { IMediaUpload, TypedMessageGiftedChat } from "models/chat.model";
 import MessageItem from "./components/MessageItem";
 import { emitSocket } from "@helpers/socket.helper";
 import useStore from "@services/zustand/store";
-import ChatHeader from "./chat.room.header";
+import ChatHeader from "./room.chat.header";
 import RecordModal from "./components/audio/RecordModal";
 import InputToolbar from "./components/InputToolbar";
 import { EnumMessageStatus } from "constants/chat.constant";
@@ -149,7 +149,9 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, paddingTop: getStatusBarHeight() }}>
+    <SafeAreaView
+      style={{ flex: 1, paddingTop: getStatusBarHeight(), paddingBottom: 8 }}
+    >
       <ChatHeader messages={messages} />
       <GiftedChat
         messages={messages}

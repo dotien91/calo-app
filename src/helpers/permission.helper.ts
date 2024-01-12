@@ -1,4 +1,5 @@
 import { PermissionHelper } from "@helpers/index";
+import { translations } from "@localization";
 import {
   checkMultiple,
   openSettings,
@@ -6,38 +7,58 @@ import {
   requestMultiple,
   RESULTS,
 } from "react-native-permissions";
-
+import { Alert, Linking, PermissionsAndroid } from "react-native";
+import { isAndroid } from "./device.info.helper";
 /**
  *
  * @param listPermission chưa check null ?
  * @returns
  */
+
 export async function requestPermission(
   listPermission: Permission[],
+  txtWaring: string,
 ): Promise<string> {
-  return await requestMultiple(listPermission)
-    .then((statuses) => {
-      const permissionRequestResult: Permission[] = [];
-      let isBlocked = false;
-      listPermission.map((item) => {
-        if (statuses[item] === RESULTS.DENIED)
-          permissionRequestResult.push(item);
-        if (statuses[item] === RESULTS.BLOCKED) isBlocked = true;
-      });
+  let status = null;
+  if (isAndroid()) {
+    status = await PermissionsAndroid.requestMultiple(listPermission);
+  } else {
+    status = await requestMultiple(listPermission);
+  }
+  const permissionRequestResult: Permission[] = [];
+  let isBlocked = false;
+  let isNerverAskAgain = false;
 
-      if (isBlocked) {
-        return RESULTS.BLOCKED;
-      } else {
-        if (permissionRequestResult.length === 0) {
-          return RESULTS.GRANTED;
-        }
-        return RESULTS.DENIED;
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-      return RESULTS.BLOCKED;
-    });
+  listPermission.map((item) => {
+    if (status[item] === RESULTS.DENIED) permissionRequestResult.push(item);
+    if (status[item] === RESULTS.BLOCKED) isBlocked = true;
+    if (status[item] === "never_ask_again") isNerverAskAgain = true;
+  });
+
+  if ((!isAndroid() && isBlocked) || isNerverAskAgain) {
+    Alert.alert(
+      translations.profile.permisisonDenied,
+      translations.profile.permissionDeniedDes(txtWaring || ""),
+      [
+        {
+          text: translations.cancel,
+          style: "cancel",
+        },
+        {
+          text: translations.openSetting,
+          onPress: () => {
+            Linking.openSettings();
+          },
+        },
+      ],
+      { cancelable: false },
+    );
+    return RESULTS.BLOCKED;
+  }
+  if (permissionRequestResult.length === 0) {
+    return RESULTS.GRANTED;
+  }
+  return RESULTS.DENIED;
 }
 
 export async function checkPermission(

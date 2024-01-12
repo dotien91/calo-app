@@ -15,7 +15,7 @@ export default StyleSheet.create({
     borderColor: "#bdbdbd",
     borderWidth: 0.5,
     borderRadius: 6,
-    top: 45,
+    top: 55,
     height: 30,
   },
   title: {
@@ -36,7 +36,7 @@ export default StyleSheet.create({
     position: "absolute",
     margin: 10,
     borderRadius: 4,
-    top: 45,
+    top: 55,
     left: 70,
     height: 30,
   },

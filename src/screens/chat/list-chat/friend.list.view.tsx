@@ -45,6 +45,7 @@ const ListFriend: React.FC<ListFriendProps> = () => {
     index: number;
   }) => {
     const partnerId = item.partner_id;
+    console.log(item);
     return (
       <TouchableOpacity
         style={{ marginRight: 8, width: 68 }}
@@ -77,7 +78,7 @@ const ListFriend: React.FC<ListFriendProps> = () => {
         renderItem={renderItem}
         contentContainerStyle={styles.listFriend}
         showsHorizontalScrollIndicator={false}
-        keyExtractor={(item) => item?.chat_room_id?._id + ""}
+        keyExtractor={(item) => item?._id + ""}
         // ListEmptyComponent={ListEmptyComponent}
       />
     </View>

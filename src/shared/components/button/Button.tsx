@@ -10,6 +10,7 @@ interface ButtonProps {
   backgroundColor?: ColorValue;
   textColor?: ColorValue;
   SvgSo?: React.JSX.Element;
+  disabled: boolean;
 }
 
 export default function Button({
@@ -19,12 +20,14 @@ export default function Button({
   backgroundColor,
   textColor,
   SvgSo,
+  disabled,
 }: ButtonProps) {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
 
   return (
     <Pressable
+      disabled={disabled}
       style={({ pressed }) => {
         return [
           styles.viewButton,

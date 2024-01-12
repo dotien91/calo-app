@@ -1,35 +1,31 @@
 import React, { useRef, useMemo, useEffect } from "react";
 
-import { View, KeyboardAvoidingView, Platform } from "react-native";
+import { View, KeyboardAvoidingView, Platform, StatusBar } from "react-native";
 import RTMPPublisher, {
   RTMPPublisherRefProps,
   StreamState,
   BluetoothDeviceStatuses,
 } from "react-native-rtmp-publisher";
-// import Orientation from 'react-native-orientation';
 import { useTheme, useRoute } from "@react-navigation/native";
 
 import LiveBadge from "./components/LiveBadge";
-import usePermissions from "./hooks/use.permission";
-// import MicrophoneSelectModal from './components/MicrophoneSelectModal';
-// import {LivePlayer} from "react-native-live-stream";
-// import Video from "react-native-video";
 
 import Button from "@shared-components/button/Button";
 import createStyles from "./stream.screen.style";
 import Input from "@shared-components/form/Input";
 import IconBtn from "@shared-components/button/IconBtn";
-import { useLiveStream } from "./hooks/use.stream";
+import { useLiveStream } from "./hooks/useLiveStream";
 import { translations } from "@localization";
-import ChatView from "./list.chat.screen";
+import ChatView from "./stream.chat.list.view";
 import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "constants";
 import { showConfirmSuperModal } from "@helpers/super.modal.helper";
 import { updateLivestream } from "@services/api/livestreamApi";
 import { useUserHook } from "@helpers/hooks/useUserHook";
-
-// const STREAM_URL = "rtmps://broadcast.ieltshunter.io:1935/live"; // ex: rtmp://a.rtmp.youtube.com/live2
-// const STREAM_NAME = "aieieiaowigar352"; // ex: abcd-1234-abcd-1234-abcd
+import { requestPermission } from "@helpers/permission.helper";
+import { PERMISSION } from "constants/system.constant";
+import { RESULTS } from "react-native-permissions";
+import useAppStateCheck from "@helpers/hooks/useAppStateCheck";
 
 function App() {
   const publisherRef = useRef<RTMPPublisherRefProps>(null);
@@ -42,22 +38,55 @@ function App() {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const inputRef = useRef("");
 
-  const { _createLiveStream, liveData } = useLiveStream({
+  const { _createLiveStream, liveData, loading } = useLiveStream({
     isPublisher: true,
   });
 
+  const [show, setShow] = React.useState(true);
+
   const isStreaming = React.useMemo(() => !!liveData?._id, [liveData?._id]);
-  const { permissionGranted } = usePermissions();
   const { isLoggedIn, renderViewRequestLogin } = useUserHook();
   const route = useRoute();
+  const [permissionGranted, setPermissionGranted] =
+    React.useState<boolean>(false);
+
+  const { appStateStatus } = useAppStateCheck();
 
   useEffect(() => {
+    console.log("appStateStatus", appStateStatus);
+    if (appStateStatus == "active") {
+      setShow(true);
+      setTimeout(() => {
+        publisherRef.current && publisherRef.current.startStream();
+      }, 1000);
+    }
+    if (appStateStatus == "background") {
+      publisherRef.current && publisherRef.current.stopStream();
+      setShow(false);
+    }
+  }, [appStateStatus]);
+
+  const checkPermission = async () => {
+    const permission = await requestPermission(
+      PERMISSION.permissionRecordVideo,
+      "camera, microphone",
+    );
+
+    console.log("permissionpermission", permission, RESULTS.GRANTED);
+    setPermissionGranted(permission == RESULTS.GRANTED);
+  };
+
+  useEffect(() => {
+    StatusBar.setBackgroundColor("black");
+    checkPermission();
     const txtFromPostScreen = route.params?.["titleLive"];
     if (!txtFromPostScreen) return;
     _createLiveStream(txtFromPostScreen);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
+    if (!publisherRef.current) return
     publisherRef.current && publisherRef.current.startStream();
     return () => {
       if (liveData?._id) {
@@ -69,27 +98,27 @@ function App() {
   }, [liveData]);
 
   const handleOnConnectionFailed = (data: string) => {
-    console.log("Connection Failed: " + data);
+    console.log("Connection Failed: =====" + data);
   };
 
   const handleOnConnectionStarted = (data: string) => {
-    console.log("Connection Started: " + data);
+    console.log("Connection Started: =====" + data);
   };
 
   const handleOnConnectionSuccess = () => {
-    console.log("Connected");
+    console.log("Connected====");
   };
 
   const handleOnDisconnect = () => {
-    console.log("Disconnected");
+    console.log("Disconnected====");
   };
 
   const handleOnNewBitrateReceived = (data: number) => {
-    console.log("New Bitrate Received: " + data);
+    console.log("New Bitrate Received: =====" + data);
   };
 
   const handleOnStreamStateChanged = (data: StreamState) => {
-    console.log("Stream Status: " + data);
+    console.log("Stream Status: =====" + data);
   };
 
   // const handleUnmute = () => {
@@ -103,19 +132,22 @@ function App() {
   // };
 
   const handleStartStream = () => {
-    //fake ios start live
-    _createLiveStream(inputRef.current.value || translations.livestream.hello);
-
-    // publisherRef.current && publisherRef.current.startStream();
+    if (permissionGranted) {
+      _createLiveStream(
+        inputRef.current.value || translations.livestream.hello,
+      );
+    } else {
+      checkPermission();
+    }
   };
 
   // const handleStopStream = () => {
   //   publisherRef.current && publisherRef.current.stopStream();
   // };
 
-  // const handleSwitchCamera = () => {
-  //   publisherRef.current && publisherRef.current.switchCamera();
-  // };
+  const handleSwitchCamera = () => {
+    publisherRef.current && publisherRef.current.switchCamera();
+  };
 
   // const handleToggleMicrophoneModal = () => {
   //   setMicrophoneModalVisibility(!microphoneModalVisibility);
@@ -139,7 +171,6 @@ function App() {
         setHasBluetoothDevice(false);
         break;
       }
-
       default:
         break;
     }
@@ -196,13 +227,6 @@ function App() {
     );
   };
 
-  // return <View style={{...CommonStyle.flexCenter, backgroundColor: 'grey', marginTop: 150}}>
-  //   <AnimationScreen />
-  //   <View style={{width: 30, height: 30, backgroundColor: 'red'}} />
-  //   <View style={{width: 30, height: 30, backgroundColor: 'blue'}} />
-
-  // </View>
-
   if (!isLoggedIn) return renderViewRequestLogin();
 
   return (
@@ -215,15 +239,24 @@ function App() {
         <IconBtn
           name="close"
           color={colors.white}
-          customStyle={{ position: "absolute", top: 50, right: 20, zIndex: 1 }}
+          customStyle={{ position: "absolute", top: 60, right: 20, zIndex: 1 }}
           onPress={onShouldCloseLive}
           size={30}
         />
-        {isStreaming && permissionGranted && (
+        {!isStreaming && (
+          <IconBtn
+            name="camera-reverse-outline"
+            color={colors.white}
+            customStyle={{ position: "absolute", top: 60, left: 20, zIndex: 1 }}
+            onPress={handleSwitchCamera}
+            size={30}
+          />
+        )}
+        {permissionGranted && show && (
           <RTMPPublisher
             ref={publisherRef}
-            streamURL={liveData?.livestream_data?.rtmp_url}
-            streamName={liveData?.livestream_data?.stream_key}
+            streamURL={liveData?.livestream_data?.rtmp_url || ""}
+            streamName={liveData?.livestream_data?.stream_key || ""}
             style={styles.publisher_camera}
             onDisconnect={handleOnDisconnect}
             onConnectionFailed={handleOnConnectionFailed}
@@ -251,12 +284,15 @@ function App() {
           lottieJson={require('../../assets/lotties/bell.json')}
           style={{width: 60, height: 150}}
         /> */}
-            <View style={styles.stream_container}>
+            <View
+              style={[styles.stream_container, loading && { opacity: 0.7 }]}
+            >
               <Button
                 onPress={handleStartStream}
                 textColor={colors.white}
                 backgroundColor={colors.primary}
                 text={"GO Live"}
+                disabled={loading}
               />
             </View>
             {/* <View style={styles.controller_container}>

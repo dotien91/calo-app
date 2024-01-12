@@ -24,17 +24,15 @@ interface ListPostProps {
 }
 
 const ListPost = ({ isFollowingPost }: ListPostProps) => {
-  const userData = useStore((state) => state.userData);
-  const resetListLike = useStore((state) => state.resetListLike);
-
-  const [listDataStream, setListDataStream] = useState([]);
-
-  const { isLoggedIn, renderViewRequestLogin } = useUserHook();
-
   const listRef = useRef(null);
 
   const theme = useTheme();
   const { colors } = theme;
+
+  const userData = useStore((state) => state.userData);
+  const resetListLike = useStore((state) => state.resetListLike);
+  const [listDataStream, setListDataStream] = useState([]);
+  const { isLoggedIn, renderViewRequestLogin } = useUserHook();
 
   const renderItem = ({ item }: any) => {
     if (item?.livestream_status)
@@ -89,12 +87,9 @@ const ListPost = ({ isFollowingPost }: ListPostProps) => {
   const _refreshListPage = () => {
     refreshListPage();
     setTimeout(() => {
-      console.log("listReflistRef", listRef);
       listRef && listRef.current?.scrollToOffset({ animated: true, offset: 0 });
     }, 200);
   };
-
-  const getListData = () => listDataStream.concat(listData);
 
   if (isFirstLoading) {
     return (
@@ -142,6 +137,8 @@ const ListPost = ({ isFollowingPost }: ListPostProps) => {
       </View>
     );
   }
+
+  const getListData = () => listDataStream.concat(listData);
 
   return (
     <View

@@ -26,9 +26,9 @@ import NewPasswordScreen from "@screens/auth/forgot-password/create.new.password
 import VerifyCodeScreen from "@screens/auth/forgot-password/VerifyCodeScreen";
 import ListChatScreen from "@screens/chat/list-chat/chat.list.screen";
 import SearchRoomChatScreen from "@screens/chat/search-room/search.room.view";
-import ChatRoomScreen from "@screens/chat/room-chat/chat.room.screen";
+import ChatRoomScreen from "@screens/chat/room-chat/room.chat.screen";
 import LiveStreamScreen from "@screens/stream/stream.screen";
-import ViewStreamScreen from "@screens/stream/view.stream.screen";
+import ViewStreamScreen from "@screens/stream/stream.view.screen";
 import SettingScreen from "@screens/setting/SettingScreen";
 import PostScreen from "@screens/post/PostScreen";
 import PostDetail from "@screens/post/PostDetailScreen";

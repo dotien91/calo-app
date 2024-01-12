@@ -12,7 +12,7 @@ export default (theme: ExtendedTheme) => {
       paddingTop: getStatusBarHeight(),
     },
     listChat: {
-      paddingBottom: 250,
+      paddingBottom: 12,
     },
     chatItem: {
       ...CommonStyle.flexStart,

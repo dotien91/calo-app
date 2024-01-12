@@ -1,12 +1,12 @@
 import React from "react";
-import { View, FlatList } from "react-native";
+import { FlatList } from "react-native";
 import uuid from "react-native-uuid";
 
 /**
  * ? Local Imports
  */
 import useStore from "@services/zustand/store";
-import { useLiveChatHistory } from "./hooks/use.stream.chat";
+import { useLiveChatHistory } from "./hooks/useChatStream";
 import LiveMessageItem from "./components/LiveStreamMessageItem";
 import { isIos } from "@helpers/device.info.helper";
 import InputChatLive from "./components/InputChatLiveStream";
@@ -41,7 +41,7 @@ const ListChatLiveStream: React.FC<ChatViewProps> = ({
   };
 
   return (
-    <View>
+    <>
       <FlatList
         style={!isIos() ? { scaleY: -1 } : {}}
         inverted={isIos()}
@@ -58,7 +58,7 @@ const ListChatLiveStream: React.FC<ChatViewProps> = ({
         sendChatMessage={_sendChatMessage}
         isPublisher={isPublisher}
       />
-    </View>
+    </>
   );
 };
 

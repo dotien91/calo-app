@@ -25,7 +25,7 @@ import { palette } from "@theme/themes";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import CommonStyle from "@theme/styles";
 import { translations } from "@localization";
-import { requestPermission } from "@helpers/permision.helper";
+import { requestPermission } from "@helpers/permission.helper";
 import { PERMISSION } from "constants";
 
 const styles: any = StyleSheet.create({
@@ -98,7 +98,10 @@ class RecordView extends React.PureComponent<any, State> {
           <View style={styles.viewRecorder}>
             <View style={styles.recordBtnWrapper}>
               <TouchableOpacity
-                style={styles.btnRecord}
+                style={[
+                  styles.btnRecord,
+                  this.state.loadingRecordPlayer && { opacity: 0.5 },
+                ]}
                 onPress={this.onStartRecord}
                 disabled={this.state.loadingRecordPlayer}
               >
@@ -133,14 +136,16 @@ class RecordView extends React.PureComponent<any, State> {
   }
 
   private onStartRecord = async (): Promise<void> => {
-    this.setState({ loadingRecordPlayer: true });
     const permission = await requestPermission(PERMISSION.permissionRecord);
+    console.log("permissionpermission", permission);
     if (permission === "blocked") {
       return;
     }
     if (permission !== "granted") {
       return;
     }
+    this.setState({ loadingRecordPlayer: true });
+
     const audioSet: AudioSet = {
       AudioEncoderAndroid: AudioEncoderAndroidType.AAC,
       AudioSourceAndroid: AudioSourceAndroidType.MIC,

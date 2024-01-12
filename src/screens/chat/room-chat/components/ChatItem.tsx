@@ -28,6 +28,10 @@ const ChatItem = ({
 
   const { group_partners } = chat_room_id;
 
+  React.useEffect(() => {
+    setReadCount(read_count);
+  }, [read_count]);
+
   const onPress = () => {
     if (read_count) {
       setViewRoom(chat_room_id?._id);

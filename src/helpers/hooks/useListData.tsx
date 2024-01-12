@@ -51,11 +51,11 @@ export function useListData<T>(
     refreshListPage();
   }, [params]);
 
-  const refreshListPage = async () => {
+  const refreshListPage = (showRefreshing: boolean | true) => {
     isFetching.current = true;
-    if (stateListData.nextPage > 1) setRefreshing(true);
+    if (stateListData.nextPage > 1 && showRefreshing) setRefreshing(true);
     setIsLoading(true);
-    await requestData({ page: 1, ...params }).then((res: any) => {
+    requestData({ page: 1, ...params }).then((res: any) => {
       const newData = res.data;
       setIsLoading(false);
       if (!res.isError && lodash.isArray(newData)) {
@@ -141,6 +141,10 @@ export function useListData<T>(
     );
   };
 
+  const getListData = useCallback(() => {
+    return stateListData.listData;
+  }, [stateListData]);
+
   return {
     listData: stateListData.listData,
     nextPage: stateListData.nextPage,
@@ -154,5 +158,6 @@ export function useListData<T>(
     refreshing,
     isLoading,
     setStateListData,
+    getListData,
   };
 }

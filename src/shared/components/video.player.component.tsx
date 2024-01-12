@@ -29,7 +29,7 @@ const VideoPlayer = ({
   useEffect(() => {
     return () => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      refVideo.current.stop();
+      refVideo && refVideo?.current?.stop();
     };
   }, []);
 

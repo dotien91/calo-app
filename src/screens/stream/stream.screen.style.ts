@@ -12,16 +12,14 @@ export default (theme: ExtendedTheme) => {
   return StyleSheet.create<Style>({
     container: {
       flex: 1,
-      backgroundColor: "grey",
+      backgroundColor: colors.black,
     },
     chatView: {
       position: "absolute",
       left: 0,
       right: 0,
-      bottom: 40,
-      height: 250,
+      bottom: 10,
       zIndex: 1,
-      justifyContent: "flex-end",
     },
     publisher_camera: {
       flex: 1,

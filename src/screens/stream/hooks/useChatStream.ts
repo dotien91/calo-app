@@ -69,6 +69,7 @@ export const useLiveChatHistory = ({
   };
 
   const isMe = (user: TypedUser) => {
+    alert(userData?._id + ".   " + user?._id);
     return userData?._id == user?._id;
   };
 
@@ -88,7 +89,6 @@ export const useLiveChatHistory = ({
   };
 
   const joinRoomToClient = (data) => {
-    // console.log("onsocket join room", JSON.parse(data))
     if (!data) return;
     data = JSON.parse(data);
     if (isMe(data)) return;

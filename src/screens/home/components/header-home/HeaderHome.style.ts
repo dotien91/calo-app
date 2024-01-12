@@ -7,10 +7,10 @@ export default (theme: ExtendedTheme) => {
   return StyleSheet.create({
     container: {
       flexDirection: "row",
-      height: 50,
       alignItems: "center",
       backgroundColor: colors.background,
       paddingHorizontal: 16,
+      paddingTop: 16,
       gap: 10,
     },
     viewInput: {

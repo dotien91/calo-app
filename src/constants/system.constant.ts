@@ -53,6 +53,15 @@ const permissionLibrary = () => {
   ];
 };
 
+const permissionRecordVideo = () => {
+  if (Device.isIos) return [PERMISSIONS.IOS.CAMERA, PERMISSIONS.IOS.MICROPHONE];
+  return [
+    PERMISSIONS.ANDROID.CAMERA,
+    PERMISSIONS.ANDROID.RECORD_AUDIO,
+    PERMISSIONS.ANDROID.BLUETOOTH_CONNECT,
+  ];
+};
+
 export const PERMISSION = {
   permissionVideoCall: Device.isIos
     ? [PERMISSIONS.IOS.CAMERA, PERMISSIONS.IOS.MICROPHONE]
@@ -60,6 +69,7 @@ export const PERMISSION = {
   permissionMedia: permissionMedia(),
   permissionRecord: permissionRecord(),
   permissionLibrary: permissionLibrary(),
+  permissionRecordVideo: permissionRecordVideo(),
   permissionDownload: [PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE],
   permissionCamera: Device.isIos
     ? [PERMISSIONS.IOS.CAMERA]

@@ -1,12 +1,14 @@
 /* eslint-disable no-underscore-dangle, no-use-before-define */
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 
 import { Avatar, Day, utils } from "react-native-gifted-chat";
 import Bubble from "./MessageBubble";
 import { EnumMessageStatus } from "constants/chat.constant";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { palette } from "@theme/themes";
+import { translations } from "@localization";
+import CommonStyle from "@theme/styles";
 
 const { isSameUser, isSameDay } = utils;
 
@@ -80,7 +82,15 @@ const MessageBubble = (props: IMessageBubble) => {
     if (status == EnumMessageStatus.Pending) {
       return (
         <View style={styles.wrapStatus}>
-          <Icon type={IconType.Ionicons} size={18} name={"time-outline"} />
+          <Text
+            style={{
+              ...CommonStyle.hnRegular,
+              fontSize: 14,
+              color: palette.timeColor,
+            }}
+          >
+            {translations.keyboard.sending}
+          </Text>
         </View>
       );
     }
@@ -112,9 +122,7 @@ const MessageBubble = (props: IMessageBubble) => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
+    ...CommonStyle.flexStart,
     marginLeft: 8,
     marginRight: 0,
   },
