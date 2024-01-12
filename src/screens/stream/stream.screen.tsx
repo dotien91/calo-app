@@ -86,7 +86,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (!publisherRef.current) return
+    if (!publisherRef.current) return;
     publisherRef.current && publisherRef.current.startStream();
     return () => {
       if (liveData?._id) {

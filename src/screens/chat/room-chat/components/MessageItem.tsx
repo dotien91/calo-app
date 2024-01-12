@@ -9,6 +9,7 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { palette } from "@theme/themes";
 import { translations } from "@localization";
 import CommonStyle from "@theme/styles";
+import { isSameMinute } from "@utils/date.utils";
 
 const { isSameUser, isSameDay } = utils;
 
@@ -55,8 +56,12 @@ const MessageBubble = (props: IMessageBubble) => {
   const renderAvatar = () => {
     let extraStyle;
     if (
-      isSameUser(props.currentMessage, props.previousMessage) &&
-      isSameDay(props.currentMessage, props.previousMessage)
+      // isSameUser(props.currentMessage, props.previousMessage) &&
+      // isSameDay(props.currentMessage, props.previousMessage)
+      isSameMinute(
+        props.currentMessage.createdAt,
+        props.previousMessage.createdAt,
+      )
     ) {
       // Set the invisible avatar height to 0, but keep the width, padding, etc.
       extraStyle = { height: 0 };
@@ -125,12 +130,14 @@ const styles = StyleSheet.create({
     ...CommonStyle.flexStart,
     marginLeft: 8,
     marginRight: 0,
+    alignItems: "flex-start",
   },
   slackAvatar: {
     // The bottom should roughly line up with the first line of message text.
     height: 30,
     width: 30,
     borderRadius: 12,
+    marginTop: 6,
   },
   wrapStatus: {
     paddingLeft: 45,

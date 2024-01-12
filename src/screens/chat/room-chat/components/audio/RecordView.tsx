@@ -29,7 +29,11 @@ import { requestPermission } from "@helpers/permission.helper";
 import { PERMISSION } from "constants";
 
 const styles: any = StyleSheet.create({
-  btnRecord: {},
+  btnRecord: {
+    width: 70,
+    height: 70,
+    ...CommonStyle.flexCenter,
+  },
   wrapBtn: {
     ...CommonStyle.flexCenter,
   },
@@ -50,6 +54,13 @@ const styles: any = StyleSheet.create({
     ...CommonStyle.hnRegular,
     fontSize: 20,
     textAlign: "center",
+  },
+  titleTxt: {
+    ...CommonStyle.hnRegular,
+    fontSize: 18,
+    paddingHorizontal: 30,
+    textAlign: "center",
+    marginBottom: 12,
   },
 });
 
@@ -82,7 +93,7 @@ class RecordView extends React.PureComponent<any, State> {
       playTime: "00:00:00",
       duration: "00:00:00",
     };
-
+    this.isRecording = false;
     this.audioRecorderPlayer = new AudioRecorderPlayer();
     this.audioRecorderPlayer.setSubscriptionDuration(0.1); // optional. Default is 0.5
   }
@@ -93,7 +104,9 @@ class RecordView extends React.PureComponent<any, State> {
     return (
       <View style={styles.container}>
         <View>
-          {/* <Text style={styles.titleTxt}>Audio Recorder Player</Text> */}
+          <Text style={styles.titleTxt}>
+            Chạm vào biểu tượng micro để bắt đầu ghi âm
+          </Text>
           <Text style={styles.txtRecordCounter}>{this.state.recordTime}</Text>
           <View style={styles.viewRecorder}>
             <View style={styles.recordBtnWrapper}>
@@ -107,7 +120,7 @@ class RecordView extends React.PureComponent<any, State> {
               >
                 <Icon
                   type={IconType.Ionicons}
-                  name={isRecording > 0 ? "mic-circle-outline" : "mic"}
+                  name={isRecording ? "mic-circle" : "mic"}
                   size={60}
                   color={isRecording ? palette.primary : palette.mainColor2}
                 />
@@ -136,8 +149,9 @@ class RecordView extends React.PureComponent<any, State> {
   }
 
   private onStartRecord = async (): Promise<void> => {
+    const isRecording = this.state.recordSecs > 0;
+    if (isRecording) return;
     const permission = await requestPermission(PERMISSION.permissionRecord);
-    console.log("permissionpermission", permission);
     if (permission === "blocked") {
       return;
     }
@@ -175,6 +189,7 @@ class RecordView extends React.PureComponent<any, State> {
   };
 
   private onPauseRecord = async (): Promise<void> => {
+    this.isRecording = false;
     try {
       const r = await this.audioRecorderPlayer.pauseRecorder();
       console.log(r);
@@ -184,6 +199,7 @@ class RecordView extends React.PureComponent<any, State> {
   };
 
   private onResumeRecord = async (): Promise<void> => {
+    this.isRecording = true;
     await this.audioRecorderPlayer.resumeRecorder();
   };
 

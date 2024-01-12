@@ -273,3 +273,15 @@ export const formatVNDate = (date) => {
     month < 10 ? `0${month}` : month
   }/${year}`;
 };
+
+export const isSameMinute = (date1: string, date2: string) => {
+  console.log("date1date1", date1);
+  const _date1 = new Date(date1);
+  const _date2 = new Date(date2);
+  return (
+    _date1.getMinutes() == _date2.getMinutes() &&
+    _date1.getDate() == _date2.getDate() &&
+    _date1.getMonth() == _date2.getMonth() &&
+    _date1.getYear() == _date2.getYear()
+  );
+};

@@ -11,11 +11,10 @@ import {
   Platform,
   ViewStyle,
 } from "react-native";
+import { MessageText, Time } from "react-native-gifted-chat";
 
-import { MessageText, Time, utils } from "react-native-gifted-chat";
-
+import { isSameMinute } from "@utils/date.utils";
 import MediasView from "@screens/chat/room-chat/components/MediasView";
-const { isSameUser, isSameDay } = utils;
 
 interface IBubble {
   touchableProps: any;
@@ -48,7 +47,6 @@ const Bubble = (props: IBubble) => {
     wrapperStyle,
     messageTextStyle,
     user,
-    previousMessage,
     renderUsername,
     usernameStyle,
     touchableProps,
@@ -191,9 +189,10 @@ const Bubble = (props: IBubble) => {
     return null;
   };
 
-  const isSameThread =
-    isSameUser(currentMessage, previousMessage) &&
-    isSameDay(currentMessage, previousMessage);
+  const isSameThread = isSameMinute(
+    props.currentMessage.createdAt,
+    props.previousMessage.createdAt,
+  );
 
   const messageHeader = isSameThread ? null : (
     <View style={styles.headerView}>
