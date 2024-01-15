@@ -106,6 +106,7 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
               fontSize: FONT_SIZE,
               color: colors.mainColor2,
             }}
+            onPress={goToProfileCurrentUser}
           >
             {data?.user_id?.display_name}
           </Text>

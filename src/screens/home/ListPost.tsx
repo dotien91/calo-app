@@ -21,7 +21,7 @@ import { useUserHook } from "@helpers/hooks/useUserHook";
 
 interface ListPostProps {
   isFollowingPost: boolean;
-  id: string;
+  id?: string;
 }
 
 const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
@@ -38,7 +38,7 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
   const renderItem = ({ item }: any) => {
     if (item?.livestream_status)
       return <StreamItem key={item._id} data={item} />;
-    return <ItemPost key={item._id} data={item} />;
+    return <ItemPost key={item._id} data={item} isProfile={id?.length > 0} />;
   };
 
   useEffect(() => {

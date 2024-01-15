@@ -4,30 +4,34 @@ import { showErrorModal, showToast } from "@helpers/super.modal.helper";
 import { translations } from "@localization";
 
 export function useActionUser() {
-  const userData = useStore((store) => store.userData);
-  const setUserData = useStore((store) => store.setUserData);
-
+  // const userData = useStore((store) => store.userData);
+  // const setUserData = useStore((store) => store.setUserData);
+  const updateListFollow = useStore((store) => store.initListFollow);
+  const listFollow = useStore((store) => store.listFollow);
+  console.log(listFollow);
   const _followUser = (id: string) => {
     const params = { partner_id: id };
 
-    if (userData && userData.follow_users.indexOf(id) >= 0) {
+    if (listFollow.indexOf(id) >= 0) {
       unFollowUser(params).then((resUnfollow) => {
-        if (!resUnfollow.isError && userData) {
-          setUserData({
-            ...userData,
-            follow_users: [...userData.follow_users.filter((i) => i !== id)],
-          });
+        if (!resUnfollow.isError) {
+          // setUserData({
+          //   ...userData,
+          //   follow_users: [...userData.follow_users.filter((i) => i !== id)],
+          // });
+          updateListFollow([...listFollow.filter((i) => i !== id)]);
         } else {
           showErrorModal(resUnfollow);
         }
       });
     } else {
       followUser(params).then((resFollow) => {
-        if (!resFollow.isError && userData) {
-          setUserData({
-            ...userData,
-            follow_users: [...userData.follow_users, id],
-          });
+        if (!resFollow.isError) {
+          // setUserData({
+          //   ...userData,
+          //   follow_users: [...userData.follow_users, id],
+          // });
+          updateListFollow([...listFollow, id]);
         } else {
           showErrorModal(resFollow);
         }

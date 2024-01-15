@@ -23,6 +23,7 @@ interface ListActionOfPost {
 
 const ListActionOfPost = ({ data }: ListActionOfPost) => {
   const userData = useStore((state) => state.userData);
+  const listFollow = useStore((state) => state.listFollow);
   const { _followUser, _blockUser } = useActionUser();
 
   const pressFollowUser = () => {
@@ -94,7 +95,7 @@ const ListActionOfPost = ({ data }: ListActionOfPost) => {
       <ItemBottomSheet
         nameIcon="person-add-outline"
         text={`${
-          userData.follow_users.indexOf(data?.user_id?._id) < 0
+          listFollow.indexOf(data?.user_id?._id) < 0
             ? translations.follow
             : translations.unfollow
         } ${data?.user_id?.display_name}`}

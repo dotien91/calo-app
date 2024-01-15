@@ -35,6 +35,7 @@ import PostDetail from "@screens/post/PostDetailScreen";
 import EditComment from "@screens/home/edit-comment/EditComment";
 import SearchPostScreen from "@screens/search/search.post.screen";
 import ProfileUserScreen from "@screens/profile-user/ProfileUserScreen";
+import EditProfileScreen from "@screens/profile-user/edit-profile/EditProfileScreen";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -153,6 +154,10 @@ const Navigation = () => {
         <Stack.Screen
           name={SCREENS.SEARCH_CHAT}
           component={SearchRoomChatScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.EDIT_PROFILE}
+          component={EditProfileScreen}
         />
         <Stack.Screen name={SCREENS.SEARCH} component={SearchPostScreen} />
         <Stack.Screen name={SCREENS.CHAT_ROOM} component={ChatRoomScreen} />

@@ -6,9 +6,12 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import { useTheme } from "@react-navigation/native";
+import { debounce } from "lodash";
 
 import useStore from "@services/zustand/store";
 import CommonStyle from "@theme/styles";
@@ -18,9 +21,15 @@ import CountFollow from "./count-follow/CountFollow";
 import { getUserById } from "@services/api/curentUser";
 import { showWarningLogin } from "@screens/home/components/request-login/login.request";
 import { useActionUser } from "@helpers/hooks/useActionUser";
-import { debounce } from "lodash";
 import ListPost from "@screens/home/ListPost";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
+import { SCREENS } from "constants";
+import { selectMedia } from "@helpers/file.helper";
+import { uploadMedia } from "@services/api/post";
+import { isIos } from "@helpers/device.info.helper";
+import { updateProfile } from "@services/api/userApi";
+import { showToast } from "@helpers/super.modal.helper";
+import eventEmitter from "@services/event-emitter";
 
 interface ProfileUserProps {
   route: any;
@@ -28,20 +37,24 @@ interface ProfileUserProps {
 
 const ProfileUser = (props: ProfileUserProps) => {
   const userData = useStore((store) => store.userData);
+  const listFollow = useStore((store) => store.listFollow);
   const _id = props.route?.params?._id;
-
+  const theme = useTheme();
+  const { colors } = theme;
   const [userInfo, setUserInfo] = useState();
+  const [linkAvatar, setLinkAvatar] = useState();
+  const [updateing, setUpdating] = useState(false);
 
   const _getUserById = (id: string) => {
     getUserById(id).then((res) => {
-      console.log("res userInfo...", JSON.stringify(res));
       setUserInfo(res.data);
+      setLinkAvatar(res.data.user_avatar_thumbnail);
     });
   };
 
   useEffect(() => {
     _getUserById(_id);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [userData]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const goback = () => {
     NavigationService.goBack();
@@ -73,6 +86,43 @@ const ProfileUser = (props: ProfileUserProps) => {
     );
   };
 
+  const onPressChangeAvatar = async () => {
+    selectMedia({
+      config: { mediaType: "photo", cropping: true, width: 400, height: 400 },
+      callback: async (image) => {
+        const res = await uploadMedia({
+          name: image?.filename || image.path?.split("/")?.reverse()?.[0] || "",
+          uri: isIos() ? image.path?.replace("file://", "") : image.path,
+          type: image.mime,
+        });
+        if (res?.[0]?.callback?._id) {
+          setLinkAvatar(res?.[0]?.callback?.media_thumbnail);
+          const params = {
+            _id: userData._id,
+            user_avatar: res?.[0]?.callback?.media_url,
+            user_avatar_thumbnail: res?.[0]?.callback?.media_thumbnail,
+          };
+          updateProfile(params).then((res) => {
+            console.log("res...", res);
+            if (!res.isError) {
+              showToast({
+                type: "success",
+                message: translations.updateSuccess,
+              });
+              eventEmitter.emit("reload_list_post");
+            } else {
+              showToast({
+                type: "error",
+                message: translations.somethingWentWrong,
+              });
+              setUpdating(false);
+            }
+          });
+        }
+      },
+    });
+  };
+
   const Avatar = useMemo(() => {
     return (
       <View
@@ -82,25 +132,64 @@ const ProfileUser = (props: ProfileUserProps) => {
           paddingVertical: 26,
         }}
       >
-        <Image
-          style={{ width: 86, height: 86, borderRadius: 30 }}
-          source={{ uri: userInfo?.user_avatar_thumbnail }}
-        />
+        <View style={{ width: 86, height: 86, ...CommonStyle.center }}>
+          <Image
+            style={{ width: 86, height: 86, borderRadius: 30 }}
+            source={{
+              uri: linkAvatar,
+            }}
+          />
+          {updateing && (
+            <View
+              style={{
+                ...CommonStyle.fillParent,
+                ...CommonStyle.center,
+              }}
+            >
+              <ActivityIndicator size={"small"} color={colors.text} />
+            </View>
+          )}
+          {userData?._id === userInfo?._id && (
+            <View
+              style={{
+                position: "absolute",
+                bottom: 0,
+                right: -10,
+                width: 30,
+                height: 30,
+                backgroundColor: colors.background2,
+                ...CommonStyle.center,
+                borderRadius: 15,
+              }}
+            >
+              <Icon
+                onPress={onPressChangeAvatar}
+                name="camera-outline"
+                type={IconType.Ionicons}
+                color={colors.text}
+                size={25}
+              />
+            </View>
+          )}
+        </View>
       </View>
     );
-  }, [userInfo]);
+  }, [linkAvatar]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const ButtomAction = ({
     text,
     isBackground,
     onPress,
+    disable,
   }: {
     text: string;
     isBackground?: boolean;
     onPress: () => void;
+    disable?: boolean;
   }) => {
     return (
       <TouchableOpacity
+        disabled={disable}
         onPress={onPress}
         style={[
           styles.bottonAction,
@@ -130,7 +219,7 @@ const ProfileUser = (props: ProfileUserProps) => {
           <ButtomAction
             onPress={debounce(_followUserWithId, 1000)}
             text={`${
-              userData?.follow_users.indexOf(userInfo?._id) >= 0
+              listFollow.indexOf(userInfo?._id) >= 0
                 ? translations.unfollow
                 : translations.follow
             }`}
@@ -143,7 +232,9 @@ const ProfileUser = (props: ProfileUserProps) => {
     return (
       <View style={styles.listAction}>
         <ButtomAction
-          onPress={() => {}}
+          onPress={() => {
+            NavigationService.push(SCREENS.EDIT_PROFILE);
+          }}
           text={translations.profile.editProfile}
         />
         <ButtomAction

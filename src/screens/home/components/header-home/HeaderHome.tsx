@@ -14,10 +14,19 @@ const SIZE_AVATAR = 30;
 const BORDER_AVATAR = 12;
 const HeaderHome = () => {
   const userData = useStore((state) => state.userData);
+  console.log("userData.....", userData);
   const theme = useTheme();
   const { colors } = theme;
   const styles = React.useMemo(() => createStyles(theme), [theme]);
-
+  const gotoProfile = () => {
+    if (userData) {
+      NavigationService.push(SCREENS.PROFILE_CURRENT_USER, {
+        _id: userData._id,
+      });
+    } else {
+      NavigationService.push(SCREENS.LOGIN_PAGE);
+    }
+  };
   const Avatar = React.useMemo(() => {
     return (
       <Pressable
@@ -26,6 +35,7 @@ const HeaderHome = () => {
           height: SIZE_AVATAR,
           borderRadius: BORDER_AVATAR,
         }}
+        onPress={gotoProfile}
       >
         <Image
           // source={{ uri: userData?.user_avatar_thumbnail  }}
@@ -42,7 +52,8 @@ const HeaderHome = () => {
         />
       </Pressable>
     );
-  }, [userData]);
+  }, [userData]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const goToSearchScreen = () => {
     NavigationService.navigate(SCREENS.SEARCH);
   };

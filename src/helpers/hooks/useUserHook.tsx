@@ -14,6 +14,7 @@ import { palette } from "@theme/themes";
 export const useUserHook = () => {
   const setUserData = useStore((state) => state.setUserData);
   const userData = useStore((state) => state.userData);
+  const initListFollow = useStore((state) => state.initListFollow);
 
   const isLoggedIn = () => {
     return !!_getJson(USER_TOKEN) && !!userData?._id;
@@ -25,6 +26,7 @@ export const useUserHook = () => {
       console.log("ressss current", { res, token });
       if (!res.isError) {
         setUserData(res.data);
+        initListFollow(res.data.follow_users);
         NavigationService.push(SCREENS.HOME);
         setTimeout(() => {
           showSuperModal({ title: "Đăng nhập thành công!" });
@@ -39,6 +41,7 @@ export const useUserHook = () => {
       console.log("res get current user");
       if (!res.isError) {
         setUserData(res.data);
+        initListFollow(res.data.follow_users);
         console.log("init user data", res.data);
       }
     });
@@ -47,6 +50,7 @@ export const useUserHook = () => {
   const logout = () => {
     _setJson(USER_TOKEN, "");
     setUserData(null);
+    initListFollow([]);
   };
 
   const renderViewRequestLogin = () => {

@@ -25,6 +25,7 @@ interface ListActionOfComment {
 
 const ListActionOfComment = ({ data }: ListActionOfComment) => {
   const userData = useStore((state) => state.userData);
+  const listFollow = useStore((state) => state.listFollow);
   const addListCommentDelete = useStore((state) => state.addListCommentDelete);
   const removeItemCommentDelete = useStore(
     (state) => state.removeItemCommentDelete,
@@ -92,7 +93,7 @@ const ListActionOfComment = ({ data }: ListActionOfComment) => {
       <ItemBottomSheet
         nameIcon="person-add-outline"
         text={`${
-          userData.follow_users.indexOf(data?.user_id?._id) < 0
+          listFollow.indexOf(data?.user_id?._id) < 0
             ? translations.follow
             : translations.unfollow
         } ${data?.user_id?.display_name}`}
