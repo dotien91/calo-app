@@ -69,10 +69,8 @@ export default function LoginWithEmailScreen() {
 
     loginWithPass(params).then((res) => {
       closeSuperModal();
-      console.log("ressss", res);
       if (!res.isError) {
         const user_token = res.headers["x-authorization"];
-        console.log("toke", user_token);
         handleLogin(user_token);
       } else {
         showErrorModal(res);

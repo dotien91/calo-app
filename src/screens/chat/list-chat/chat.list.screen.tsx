@@ -1,6 +1,6 @@
 import React, { useMemo, useEffect } from "react";
 import { View, FlatList, SafeAreaView, Text } from "react-native";
-import { useTheme } from "@react-navigation/native";
+import { useTheme, useRoute } from "@react-navigation/native";
 /**
  * ? Local Imports
  */
@@ -23,7 +23,9 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const listDataRef = React.useRef([]);
-  // const { colors } = theme;
+  const route = useRoute();
+  const paramsFromNavigation = route.params?.["groupData"];
+
   const {
     listData,
     onEndReach,
@@ -38,7 +40,51 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
     refreshListPage(false);
   };
 
+  const msgToUser = (data: string) => {
+    const newChatItem: TypedUserChat = JSON.parse(data)?.chat_room_data;
+    console.log("newChatItemnewChatItem", newChatItem);
+    if (!newChatItem) return;
+    const indexNewChatItem = listDataRef.current.findIndex(
+      (item) => newChatItem.chat_room_id._id == item.chat_room_id._id,
+    );
+    if (indexNewChatItem > -1) {
+      const currentItem = listDataRef.current[indexNewChatItem];
+      listDataRef.current.splice(indexNewChatItem, 1);
+      listDataRef.current.unshift({
+        ...currentItem,
+        chat_room_id: {
+          ...currentItem.chat_room_id,
+          last_message: newChatItem.chat_room_id.last_message,
+        },
+        read_count: currentItem.read_count + 1,
+      });
+    } else {
+      listDataRef.current.unshift({
+        ...newChatItem,
+        chat_room_id: {
+          ...newChatItem.chat_room_id,
+          room_name: newChatItem.room_title,
+        },
+      });
+    }
+    console.log(
+      "isnewRoom",
+      { newChatItem, indexNewChatItem },
+      listDataRef.current,
+    );
+    setListData(listDataRef.current);
+  };
+
   useEffect(() => {
+    console.log("paramsFromNavigation chat list", paramsFromNavigation);
+    // if (paramsFromNavigation) {
+    //   // id: messageItem?.chat_room_id,
+    //   //   partner_name: partner?.display_name,
+    //   //   partner
+    //   NavigationService.navigate(SCREENS.CHAT_ROOM, {
+    //     id: paramsFromNavigation?.id,
+    //   });
+    // }
     onSocket("msgToUser", msgToUser);
     eventEmitter.on("refresh_list_chat", _refreshListChat);
 
@@ -51,33 +97,6 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
   useEffect(() => {
     listDataRef.current = listData;
   }, [listData]);
-
-  const msgToUser = (data: string) => {
-    const newChatItem: TypedUserChat = JSON.parse(data)?.chat_room_data;
-    if (!newChatItem) return;
-    const indexNewChatItem = listDataRef.current.findIndex(
-      (item) => newChatItem.chat_room_id._id == item.chat_room_id._id,
-    );
-    if (indexNewChatItem > -1) {
-      const currentItem = listDataRef.current[indexNewChatItem];
-      listDataRef.current[indexNewChatItem] = {
-        ...currentItem,
-        chat_room_id: {
-          ...currentItem.chat_room_id,
-          last_message: newChatItem.chat_room_id.last_message,
-        },
-        read_count: currentItem.read_count + 1,
-      };
-    } else {
-      listDataRef.current.unshift(newChatItem);
-    }
-    console.log(
-      "isnewRoom",
-      { newChatItem, indexNewChatItem },
-      listDataRef.current,
-    );
-    setListData(listDataRef.current);
-  };
 
   const renderItem = ({
     item,

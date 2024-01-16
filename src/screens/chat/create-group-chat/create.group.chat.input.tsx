@@ -13,18 +13,14 @@ import { SCREENS } from "constants";
 import * as NavigationService from "react-navigation-helpers";
 import CommonStyle from "@theme/styles";
 
-interface IFriendSearchInput {
+interface ICreateGroupChatInput {
   fromChatList?: boolean;
   setTxtSearch?: () => void;
-  onCancel: () => void;
-  autoFocus: boolean;
 }
 
-const FriendSearchInput: React.FC<IFriendSearchInput> = ({
+const CreateGroupChatInput: React.FC<ICreateGroupChatInput> = ({
   fromChatList,
   setTxtSearch,
-  autoFocus,
-  onCancel,
 }) => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
@@ -45,12 +41,8 @@ const FriendSearchInput: React.FC<IFriendSearchInput> = ({
     inputSearchRef.current.focus();
   };
 
-  const _onCancel = () => {
-    if (onCancel) {
-      onCancel();
-      return;
-    }
-    NavigationService.navigate(SCREENS.CHAT);
+  const onCancel = () => {
+    NavigationService.goBack();
   };
 
   const clearInput = () => {
@@ -89,7 +81,6 @@ const FriendSearchInput: React.FC<IFriendSearchInput> = ({
               onSearchDebounce();
             }}
             onSubmitEditing={onSearch}
-            autoFocus={autoFocus}
           />
         </View>
         {!!txt && (
@@ -102,9 +93,8 @@ const FriendSearchInput: React.FC<IFriendSearchInput> = ({
           </TouchableOpacity>
         )}
       </TouchableOpacity>
-
       {!fromChatList && (
-        <TouchableOpacity onPress={_onCancel}>
+        <TouchableOpacity onPress={onCancel}>
           <Text style={{ ...CommonStyle.hnRegular, marginLeft: 10 }}>
             {translations.cancel}
           </Text>
@@ -114,4 +104,4 @@ const FriendSearchInput: React.FC<IFriendSearchInput> = ({
   );
 };
 
-export default FriendSearchInput;
+export default CreateGroupChatInput;

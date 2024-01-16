@@ -28,6 +28,11 @@ export const SCREENS = {
   LIST_POST: "ListPost",
   POST_DETAIL: "PostDetail",
   EDIT_COMMENT: "EditComment",
+  PROFILE_CHAT: "ProfileChat",
+  CREATE_GROUP_CHAT: "CreateGroupChat",
+  MEDIA_CHAT_SCREEN: "MediaChat",
+  ADD_USER_TO_GROUP: "AddUserToGroup",
+  PROFILE_GROUP_CHAT: "ProfileGroupChat",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

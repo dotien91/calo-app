@@ -9,7 +9,6 @@ export default function useAppStateCheck() {
   const [appStateStatus, setAppStateStatus] = React.useState(null);
 
   const handleAppStateChange = (nextAppState: AppStateStatus) => {
-    console.log("nextAppStatenextAppState", nextAppState);
     setAppStateStatus(nextAppState);
   };
 

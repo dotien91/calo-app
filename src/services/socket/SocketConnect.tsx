@@ -6,7 +6,8 @@ import React, {
 } from "react";
 import { View } from "react-native";
 import { io } from "socket.io-client";
-
+import { _getJson, USER_TOKEN } from "@services/local-storage";
+import useStore from "@services/zustand/store";
 const URL_CHAT_SOCKET = "https://socket.api-v2.ieltshunter.io/socket";
 
 export interface TypedSocket {
@@ -18,12 +19,18 @@ export interface TypedSocket {
 
 const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
   const refSocket = useRef<any>();
+  const userData = useStore((state) => state.userData);
   // const { isAuthenticated, account } = useStore(state => state.user)
 
   useEffect(() => {
+    if (!_getJson(USER_TOKEN) || !userData?._id) return;
     connectSocket();
+    return () => {
+      console.log("dissssssss");
+      stopSocket();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [userData?._id]);
 
   useImperativeHandle(ref, () => ({
     disconnect: () => {
@@ -46,9 +53,8 @@ const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
   }));
 
   const connectSocket = async () => {
-    // const token = _getJson(USER_TOKEN);
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQ1OTAxNTEsImRhdGEiOnsiX2lkIjoiNjU4MjVkY2RmYjQyMmU4NmEyMDBlN2ZiIiwia2V5IjoiMjZjNGVkODZmM2RjOTUxN2JlYWViY2UxNTQzMmE0NWUiLCJzaWduYXR1cmUiOiJjNGI1NDEzMGQ0MjNhYzc2ZDA1MjYzODAzMWNhYzBmNyIsInNlc3Npb24iOiI2NTgyOGI0NzhmZTc2YzllMzE0YmM1YmQifSwiaWF0IjoxNzAzMDU0MTUxfQ.CsNtK6PcYGCW0hLfZrvAvxWoihVG9GkkyyMQmz6Oopg";
+    const token = _getJson(USER_TOKEN);
+
     console.log("token", token);
     if (token) {
       refSocket.current = io(URL_CHAT_SOCKET, {
@@ -60,6 +66,11 @@ const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
         .on("connect", onConnected)
         .on("disconnect", onDisconnect);
     }
+  };
+
+  const stopSocket = () => {
+    refSocket.current.removeAllListeners();
+    // refSocket.current.stop()
   };
 
   const onDisconnect = () => {

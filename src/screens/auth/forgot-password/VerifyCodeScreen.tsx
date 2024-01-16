@@ -54,7 +54,6 @@ export default function VerifyCodeScreen() {
     };
 
     verifyCode(params).then((res) => {
-      console.log("resssss", res);
       closeSuperModal();
       if (!res.isError) {
         NavigationService.push(SCREENS.NEW_PASSWORD, {

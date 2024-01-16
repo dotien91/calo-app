@@ -24,7 +24,7 @@ const IconBtn = React.forwardRef(
         {!!name && (
           <Icon
             name={name}
-            type={IconType.Ionicons}
+            type={IconType.MaterialCommunityIcons}
             size={size}
             style={{ color }}
           />

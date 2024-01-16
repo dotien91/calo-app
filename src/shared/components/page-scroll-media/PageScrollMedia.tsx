@@ -59,12 +59,15 @@ const PagerScrollMedia = ({
             media_width && media_height
               ? width / (Number(media_width) / Number(media_height))
               : width;
-          if (item?.type === "image") {
+          if (item?.type.includes("image")) {
             return (
               <View style={styles.viewBackground}>
                 <ImageLoad
                   source={{ uri: item?.url }}
-                  style={[styles.image, { height: heightMedia }]}
+                  style={[
+                    styles.image,
+                    { height: heightMedia, width: media_width },
+                  ]}
                   resizeMode="contain"
                 />
               </View>
@@ -73,9 +76,7 @@ const PagerScrollMedia = ({
           return (
             <View key={index} style={styles.viewBackground}>
               <VideoPlayer
-                mediaUrl={
-                  "https://live-par-2-cdn-alt.livepush.io/live/bigbuckbunnyclip/index.m3u8"
-                }
+                mediaUrl={item?.url}
                 height={heightMedia}
                 width={width}
                 resizeMode="contain"

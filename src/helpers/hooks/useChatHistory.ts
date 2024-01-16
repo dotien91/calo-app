@@ -12,24 +12,38 @@ import {
   createChatRoom,
   getChatHistory,
   sendChatToChatRoom,
+  viewRoom,
 } from "@services/api/chatApi";
 import { EnumMessageStatus } from "constants/chat.constant";
-import eventEmitter from "@services/event-emitter";
 
 const limit = 20;
 
-export const useChatHistory = () => {
+export const useChatHistory = (txtSearch: string) => {
   const route = useRoute();
   const [chatRoomId, setChatRoomId] = useState(route.params?.["id"]);
 
   const userData = useStore((state) => state.userData);
   const [messages, setMessages] = useState([]);
+  const [isEmptyMessage, setIsEmptyMessage] = useState(false);
+
+  const [roomDetail, setRoomDetail] = useState();
   const [isTyping, setIsTyping] = useState(false);
   const [isLoadmore, setIsLoadmore] = useState(false);
+  const setCurrentChatList = useStore((state) => state.setCurrentChatList);
+  const setCurrentMediaIds = useStore((state) => state.setCurrentMediaIds);
+  const setSearchModeChat = useStore((state) => state.setSearchModeChat);
 
   const pageNumber = useRef(1);
   const isFetching = useRef(false);
   const noMoredata = useRef(false);
+
+  useEffect(() => {
+    pageNumber.current = 1;
+    noMoredata.current = false;
+    setMessages([]);
+    _getChatHistory();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [txtSearch]);
 
   const _getChatHistory = () => {
     if (isFetching.current || noMoredata.current) return;
@@ -39,16 +53,23 @@ export const useChatHistory = () => {
       limit,
       page: pageNumber.current,
       order_by: "DESC",
+      search: txtSearch,
     };
     getChatHistory(params).then((res) => {
       isFetching.current = false;
+      console.log("ressss getChatHistory", res);
       if (!res.isError) {
         setIsLoadmore(false);
         pageNumber.current = pageNumber.current + 1;
         const data = res.data.map((item: TypedChatHistory) => {
+          const systemMessage = item.media_ids?.[0];
           return {
             ...item,
-            text: item.chat_content,
+            text:
+              item.chat_content ||
+              (systemMessage?.media_type == "system_message"
+                ? systemMessage?.media_meta?.[0]?.value
+                : ""),
             createdAt: item.send_at,
             user: {
               ...item.createBy,
@@ -59,6 +80,9 @@ export const useChatHistory = () => {
         });
         if (data.length < limit) {
           noMoredata.current = true;
+        }
+        if (!data.length && pageNumber.current == 2) {
+          setIsEmptyMessage(true);
         }
         if (pageNumber.current > 2) {
           setMessages([...messages, ...data]);
@@ -141,6 +165,24 @@ export const useChatHistory = () => {
 
   const partnerId = route.params?.["partner_id"];
 
+  const getRoomDetail = () => {
+    viewRoom({ id: chatRoomId }).then((res) => {
+      console.log("Ressssss detail room", res.data);
+      if (!res.isError) {
+        setRoomDetail(res.data);
+      }
+    });
+  };
+
+  useEffect(() => {
+    const mediaIds = [...messages]
+      .reverse()
+      .reduce((ids, currentItem) => ids.concat(currentItem.media_ids), []);
+    setCurrentChatList(messages);
+    setCurrentMediaIds(mediaIds);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [messages, setCurrentChatList]);
+
   useEffect(() => {
     if (!chatRoomId) {
       //create chat room from listfriend
@@ -148,13 +190,13 @@ export const useChatHistory = () => {
         partner_id: partnerId,
         chat_type: "personal",
       }).then((res) => {
-        console.log("ressss create chat", res);
         if (!res.isError) {
           setChatRoomId(res.data.chat_room_id._id);
         }
       });
       return;
     }
+    getRoomDetail();
     _getChatHistory();
     onSocket("msgToClient", msgToClient);
     onSocket("typingToClient", typingToClient);
@@ -162,8 +204,7 @@ export const useChatHistory = () => {
     return () => {
       offSocket("msgToClient", msgToClient);
       offSocket("typingToClient", typingToClient);
-      //update list chat for case create chat room
-      eventEmitter.emit("refresh_list_chat");
+      setSearchModeChat(false);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatRoomId]);
@@ -188,5 +229,7 @@ export const useChatHistory = () => {
     sendChatMessage,
     loadMoreMessage,
     isCloseToTop,
+    roomDetail,
+    isEmptyMessage,
   };
 };

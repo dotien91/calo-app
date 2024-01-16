@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { View, Text } from "react-native";
+import * as NavigationService from "react-navigation-helpers";
 
 import { useTheme } from "@react-navigation/native";
 import createStyles from "../../list-chat/chat.list.screen.style";
@@ -10,7 +11,6 @@ import { getFormatDayMessage } from "@utils/date.utils";
 import CommonStyle from "@theme/styles";
 import { setViewRoom } from "@services/api/chatApi";
 import { SCREENS } from "constants";
-import * as NavigationService from "react-navigation-helpers";
 
 const avatarSize = 64;
 
@@ -20,6 +20,7 @@ const ChatItem = ({
   partner_id,
   last_updated,
   room_type,
+  ...res
 }: TypedGeneralRoomChat) => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
@@ -27,7 +28,7 @@ const ChatItem = ({
   const isGroup = room_type == "group";
 
   const { group_partners } = chat_room_id;
-
+  console.log("group_partnersgroup_partners", chat_room_id, res);
   React.useEffect(() => {
     setReadCount(read_count);
   }, [read_count]);
@@ -37,12 +38,14 @@ const ChatItem = ({
       setViewRoom(chat_room_id?._id);
       setReadCount(0);
     }
-    const groupName = group_partners
-      .map((item) => item.display_name)
-      .toString();
+    const groupName = chat_room_id?.room_name;
+
     NavigationService.navigate(SCREENS.CHAT_ROOM, {
       id: chat_room_id?._id,
       partner_name: groupName || partner_id?.display_name,
+      user: partner_id,
+      isGroup: !!group_partners.length,
+      chat_room_id,
     });
   };
 
@@ -54,7 +57,6 @@ const ChatItem = ({
     const avatarGroup = group_partners.map(
       (item) => item.user_avatar || item.user_avatar_thumbnail,
     );
-    console.log("avatarGroupavatarGroup", avatarGroup);
     return (
       <View
         style={{

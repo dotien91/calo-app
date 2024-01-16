@@ -17,7 +17,6 @@ interface ListFriendProps {}
 const ListFriend: React.FC<ListFriendProps> = () => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
-
   const [listFriend, setListFriend] = useState([]);
 
   useEffect(() => {
@@ -29,7 +28,6 @@ const ListFriend: React.FC<ListFriendProps> = () => {
   }, []);
 
   const openChatRoom = (item: any) => {
-    console.log("itemitem", item);
     const { partner_id } = item;
     NavigationService.navigate(SCREENS.CHAT_ROOM, {
       partner_id: partner_id?._id,
@@ -45,7 +43,6 @@ const ListFriend: React.FC<ListFriendProps> = () => {
     index: number;
   }) => {
     const partnerId = item.partner_id;
-    console.log(item);
     return (
       <TouchableOpacity
         style={{ marginRight: 8, width: 68 }}
@@ -79,7 +76,6 @@ const ListFriend: React.FC<ListFriendProps> = () => {
         contentContainerStyle={styles.listFriend}
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item) => item?._id + ""}
-        // ListEmptyComponent={ListEmptyComponent}
       />
     </View>
   );

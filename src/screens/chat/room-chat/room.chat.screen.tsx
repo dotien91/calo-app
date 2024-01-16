@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, Platform } from "react";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, View, Text } from "react-native";
 import { GiftedChat } from "react-native-gifted-chat";
 import emojiUtils from "emoji-utils";
 import uuid from "react-native-uuid";
+import { useTheme } from "@react-navigation/native";
 
 /**
  * ? Local Imports
@@ -18,11 +19,22 @@ import { EnumMessageStatus } from "constants/chat.constant";
 import { useChatHistory } from "@helpers/hooks/useChatHistory";
 import { useUploadFile } from "@helpers/hooks/useUploadFile";
 import { getStatusBarHeight } from "react-native-safearea-height";
+import FriendSearchInput from "../search-room/search.room.input";
+import CommonStyle from "@theme/styles";
+import { translations } from "@localization";
+import EmptyResultView from "@shared-components/empty.data.component";
+import createStyles from "./room.chat.screen.style";
 
 interface ChatRoomScreenProps {}
 
 const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
   const userData = useStore((state) => state.userData);
+  const theme = useTheme();
+  const styles = React.useMemo(() => createStyles(theme), [theme]);
+
+  const [txtSearch, setTxtSearch] = React.useState("");
+  const setSearchModeChat = useStore((state) => state.setSearchModeChat);
+  const searchModeChat = useStore((state) => state.searchModeChat);
 
   const recordModalRef = useRef(null);
   const userSendMessage = {
@@ -39,7 +51,9 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
     sendChatMessage,
     loadMoreMessage,
     isCloseToTop,
-  } = useChatHistory();
+    roomDetail,
+    isEmptyMessage,
+  } = useChatHistory(txtSearch);
 
   const {
     uploadRecord,
@@ -51,6 +65,13 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
     onSelectVideo,
   } = useUploadFile();
 
+  const cancelSearchMode = () => {
+    setTxtSearch("");
+    setSearchModeChat(false);
+  };
+  console.log("render======");
+
+
   //append local media file
   useEffect(() => {
     if (!listFileLocal?.length) return;
@@ -61,13 +82,14 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
       media_ids: listFileLocal.map((item) => {
         return {
           ...item,
+          media_mime_type: item.type,
           media_type: item.type,
+          media_url: item.uri,
         };
       }),
       user: userSendMessage,
     };
 
-    console.log("messagesmessagesmessages", message);
     setMessages((previousMessages) =>
       GiftedChat.append(previousMessages, message),
     );
@@ -81,7 +103,6 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
       return { id: item._id };
     });
 
-    console.log("listFile", mediaIds);
     sendChatMessage("", mediaIds, messages);
     setListFile([]);
     setListFileLocal([]);
@@ -109,7 +130,6 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
 
   const renderMessage = (props) => {
     const { currentMessage } = props;
-
     let messageTextStyle;
     // Make "pure emoji" messages much bigger than plain text.
     if (
@@ -118,26 +138,28 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
     ) {
       messageTextStyle = {
         fontSize: 28,
-        // Emoji get clipped if lineHeight isn't increased; make it consistent across platforms.
         lineHeight: Platform.OS === "android" ? 34 : 30,
       };
     }
     return <MessageItem {...props} messageTextStyle={messageTextStyle} />;
   };
 
-  // const _renderChatEmpty = () => {
-  //   return (
-  //     <View style={styles.emptyView}>
-  //       <EmptyResultView
-  //         title={translations.noNewMessageTittle}
-  //         desc={translations.noNewMessageDesc}
-  //         icon={"chatbubble-ellipses-outline"}
-  //       />
-  //     </View>
-  //   );
-  // };
+  const _renderChatEmpty = () => {
+    if (searchModeChat) return null;
+    if (!!messages.length || !isEmptyMessage) return null;
+    return (
+      <View style={styles.emptyView}>
+        <EmptyResultView
+          title={translations.noNewMessageTittle}
+          desc={translations.noNewMessageDesc}
+          icon={"chatbubble-ellipses-outline"}
+        />
+      </View>
+    );
+  };
 
   const renderInputToolbar = () => {
+    if (searchModeChat) return null;
     return (
       <InputToolbar
         sendChatMessage={_sendChatMessage}
@@ -148,11 +170,12 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
     );
   };
 
+
   return (
     <SafeAreaView
       style={{ flex: 1, paddingTop: getStatusBarHeight(), paddingBottom: 8 }}
     >
-      <ChatHeader messages={messages} />
+      <ChatHeader roomDetail={roomDetail} messages={messages} />
       <GiftedChat
         messages={messages}
         user={{
@@ -170,7 +193,22 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
           },
         }}
         renderInputToolbar={renderInputToolbar}
+        renderChatEmpty={_renderChatEmpty}
       />
+
+      {searchModeChat && !messages.length && (
+        <View style={{ ...CommonStyle.flexCenter, padding: 12, flex: 1 }}>
+          <Text style={CommonStyle.hnMedium}>{translations.noResult}</Text>
+        </View>
+      )}
+      {searchModeChat && (
+        <FriendSearchInput
+          onCancel={cancelSearchMode}
+          autoFocus={true}
+          setTxtSearch={setTxtSearch}
+        />
+      )}
+
       <RecordModal uploadRecord={uploadRecord} ref={recordModalRef} />
     </SafeAreaView>
   );

@@ -50,8 +50,6 @@ export default function NewPasswordScreen() {
   const verifyCodeRef = useRef(route.params?.["verify_code"]);
   const emailRef = useRef(route.params?.["user_email"]);
 
-  console.log("outeroute", route);
-
   const styles = useMemo(() => createStyles(theme), [theme]);
   const onSubmit = (data: any) => {
     showLoading();
@@ -84,7 +82,6 @@ export default function NewPasswordScreen() {
         handleLogin(user_token);
       } else {
         if (res.message) {
-          console.log("error", res);
           setTimeout(() => {
             showSuperModal({ title: res.message });
           }, 2000);

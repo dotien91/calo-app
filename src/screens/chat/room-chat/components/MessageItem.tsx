@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle, no-use-before-define */
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
+import * as NavigationService from "react-navigation-helpers";
 
 import { Avatar, Day, utils } from "react-native-gifted-chat";
 import Bubble from "./MessageBubble";
@@ -10,6 +11,9 @@ import { palette } from "@theme/themes";
 import { translations } from "@localization";
 import CommonStyle from "@theme/styles";
 import { isSameMinute } from "@utils/date.utils";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { TypedMessageGiftedChat } from "models/chat.model";
+import { SCREENS } from "constants";
 
 const { isSameUser, isSameDay } = utils;
 
@@ -53,6 +57,18 @@ const MessageBubble = (props: IMessageBubble) => {
     return <Bubble {...bubbleProps} />;
   };
 
+  const checkIsMe = (currentMessage: TypedMessageGiftedChat) => {
+    return currentMessage?.createBy?._id == props.user._id;
+  };
+
+  const openProfileChat = () => {
+    const isMe = checkIsMe(props.currentMessage);
+    if (isMe) return;
+    NavigationService.navigate(SCREENS.PROFILE_CHAT, {
+      user: props.currentMessage.createBy,
+    });
+  };
+
   const renderAvatar = () => {
     let extraStyle;
     if (
@@ -69,12 +85,14 @@ const MessageBubble = (props: IMessageBubble) => {
 
     const avatarProps = getInnerComponentProps();
     return (
-      <Avatar
-        {...avatarProps}
-        imageStyle={{
-          left: [styles.slackAvatar, avatarProps.imageStyle, extraStyle],
-        }}
-      />
+      <TouchableOpacity onPress={openProfileChat}>
+        <Avatar
+          {...avatarProps}
+          imageStyle={{
+            left: [styles.slackAvatar, avatarProps.imageStyle, extraStyle],
+          }}
+        />
+      </TouchableOpacity>
     );
   };
 

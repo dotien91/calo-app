@@ -34,7 +34,10 @@ import PostScreen from "@screens/post/PostScreen";
 import PostDetail from "@screens/post/PostDetailScreen";
 import EditComment from "@screens/home/edit-comment/EditComment";
 import SearchPostScreen from "@screens/search/search.post.screen";
-
+import ProfileChatScreen from "@screens/chat/profile-chat/profile.chat.screen";
+import CreateGroupChatScreen from "@screens/chat/create-group-chat/create.group.chat.screen";
+import MediaChatScreen from "@screens/chat/profile-chat/media.chat.screen";
+import AddUserGroupChatScreen from "@screens/chat/add-user-to-group-chat/add.user.group.chat.screen";
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -133,6 +136,22 @@ const Navigation = () => {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {renderStackIntro()}
         <Stack.Screen name={SCREENS.HOME} component={renderTabNavigation} />
+        <Stack.Screen
+          name={SCREENS.PROFILE_CHAT}
+          component={ProfileChatScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.ADD_USER_TO_GROUP}
+          component={AddUserGroupChatScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.MEDIA_CHAT_SCREEN}
+          component={MediaChatScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.CREATE_GROUP_CHAT}
+          component={CreateGroupChatScreen}
+        />
         <Stack.Screen
           name={SCREENS.VIEW_LIVE_STREAM}
           component={ViewStreamScreen}

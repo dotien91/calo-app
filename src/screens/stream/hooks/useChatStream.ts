@@ -104,7 +104,7 @@ export const useLiveChatHistory = ({
     if (!data) return;
     data = JSON.parse(data);
     const viewNumber = data?.livestream_id?.view_number;
-    if (!viewNumber) return;
+    if (viewNumber > 0) return;
     setViewNumber(viewNumber);
   };
 

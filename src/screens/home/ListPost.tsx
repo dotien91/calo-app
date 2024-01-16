@@ -40,17 +40,20 @@ const ListPost = ({ isFollowingPost }: ListPostProps) => {
     return <ItemPost key={item._id} data={item} />;
   };
 
-  useEffect(() => {
-    if (isFollowingPost) return;
+  const _getListLiveStream = () => {
     getListLiveStream().then((res) => {
       if (!res.isError) {
         const listDataStream = res.data.filter(
           (item) => item?.livestream_status == "live",
         );
-        console.log("listDataStreamlistDataStream", listDataStream);
         setListDataStream(listDataStream.reverse());
       }
     });
+  };
+
+  useEffect(() => {
+    if (isFollowingPost) return;
+    _getListLiveStream();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const {
@@ -81,10 +84,12 @@ const ListPost = ({ isFollowingPost }: ListPostProps) => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
+    _getListLiveStream();
     resetListLike();
   }, [refreshing]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const _refreshListPage = () => {
+    _getListLiveStream();
     refreshListPage();
     setTimeout(() => {
       listRef && listRef.current?.scrollToOffset({ animated: true, offset: 0 });

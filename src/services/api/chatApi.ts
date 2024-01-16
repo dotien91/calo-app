@@ -12,10 +12,11 @@ export async function getListChat(params) {
   });
 }
 
-export async function getListFriend() {
+export async function getListFriend(params) {
   return request({
     method: METHOD.GET,
     urlPath: "user/list/friend",
+    params,
   }).then((response) => {
     return response;
   });
@@ -60,6 +61,35 @@ export async function createChatRoom(data: INewChatRoom) {
     method: METHOD.POST,
     urlPath: "chat-room/create",
     data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function addUserToRoom(data: any) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "chat-room/user-role",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function leaveRoom(data: any) {
+  return request({
+    method: METHOD.DELETE,
+    urlPath: "chat-room/user-role",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function viewRoom(params: { id: string }) {
+  return request({
+    method: METHOD.GET,
+    urlPath: `chat-room/${params.id}`,
   }).then((response) => {
     return response;
   });

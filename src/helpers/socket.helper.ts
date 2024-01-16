@@ -8,7 +8,6 @@ export function disconnectSocket() {
 }
 
 export function onSocket(topic: string, callback: () => void) {
-  console.log("SocketHelper.current", SocketHelperRef);
   SocketHelperRef.current?.on?.(topic, callback);
 }
 

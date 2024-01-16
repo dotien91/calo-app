@@ -266,3 +266,8 @@ export interface ISendMessage {
   chat_room_id: string;
   media_data: string;
 }
+
+export enum EnumMediaChat {
+  Image = "image/jpeg",
+  Audio = "audio/x-m4a",
+}

@@ -275,7 +275,6 @@ export const formatVNDate = (date) => {
 };
 
 export const isSameMinute = (date1: string, date2: string) => {
-  console.log("date1date1", date1);
   const _date1 = new Date(date1);
   const _date2 = new Date(date2);
   return (

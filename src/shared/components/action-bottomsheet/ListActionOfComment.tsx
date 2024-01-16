@@ -59,6 +59,7 @@ const ListActionOfComment = ({ data }: ListActionOfComment) => {
   };
 
   const pressFollowUser = () => {
+    alert(2);
     //close bottomsheet
     closeSuperModal();
     const params = { partner_id: data?.user_id?._id };

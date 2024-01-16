@@ -12,7 +12,8 @@ interface IVideoPlayer {
   width: number;
   height: number;
   autoPlay: boolean;
-  onPress: () => voide;
+  onPress: () => void;
+  pressable: boolean | true;
 }
 
 const VideoPlayer = ({
@@ -21,6 +22,7 @@ const VideoPlayer = ({
   width,
   height,
   autoPlay,
+  pressable,
   onPress,
 }: IVideoPlayer) => {
   const refVideo = useRef<Video>();
@@ -29,7 +31,7 @@ const VideoPlayer = ({
   useEffect(() => {
     return () => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      refVideo && refVideo?.current?.stop();
+      !!refVideo?.current?.stop && refVideo?.current?.stop();
     };
   }, []);
 
@@ -41,6 +43,7 @@ const VideoPlayer = ({
     <Pressable
       style={{ ...styles.container, width, height }}
       onPress={onPress || switchPause}
+      disabled={!pressable}
     >
       <Video
         source={{ uri: mediaUrl }}

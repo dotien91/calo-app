@@ -22,7 +22,6 @@ export const useUserHook = () => {
   const handleLogin = (token: string) => {
     _setJson(USER_TOKEN, token);
     getCurrentUser().then((res) => {
-      console.log("ressss current", { res, token });
       if (!res.isError) {
         setUserData(res.data);
         NavigationService.push(SCREENS.HOME);
@@ -34,12 +33,10 @@ export const useUserHook = () => {
   };
 
   const getUserData = () => {
-    console.log("token", _getJson(USER_TOKEN));
     getCurrentUser().then((res) => {
-      console.log("res get current user");
       if (!res.isError) {
+        console.log("token", _getJson(USER_TOKEN));
         setUserData(res.data);
-        console.log("init user data", res.data);
       }
     });
   };

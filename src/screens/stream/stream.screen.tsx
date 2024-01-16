@@ -53,7 +53,6 @@ function App() {
   const { appStateStatus } = useAppStateCheck();
 
   useEffect(() => {
-    console.log("appStateStatus", appStateStatus);
     if (appStateStatus == "active") {
       setShow(true);
       setTimeout(() => {
@@ -245,7 +244,7 @@ function App() {
         />
         {!isStreaming && (
           <IconBtn
-            name="camera-reverse-outline"
+            name="camera-flip"
             color={colors.white}
             customStyle={{ position: "absolute", top: 60, left: 20, zIndex: 1 }}
             onPress={handleSwitchCamera}

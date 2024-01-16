@@ -39,7 +39,13 @@ const useStore = create<StoreState>()(
       partialize: (state) =>
         Object.fromEntries(
           Object.entries(state).filter(
-            ([key]) => !["searchFriendTxt", "listPostDelete"].includes(key),
+            ([key]) =>
+              ![
+                "searchFriendTxt",
+                "listPostDelete",
+                "currentMediaIds",
+                "currentChatList",
+              ].includes(key),
           ),
         ),
     },

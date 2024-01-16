@@ -2,6 +2,7 @@ import { ExtendedTheme } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 
 import CommonStyle from "@theme/styles";
+import { Device } from "@utils/device.ui.utils";
 
 export default (theme: ExtendedTheme) => {
   const { colors } = theme;
@@ -121,8 +122,8 @@ export default (theme: ExtendedTheme) => {
       width: "100%",
     },
     headerCenter: {
-      maxWidth: "50%",
       alignItems: "flex-center",
+      width: Device.width - 200,
     },
     txtNamePartner: {
       ...CommonStyle.hnBold,

@@ -15,6 +15,7 @@ import { MessageText, Time } from "react-native-gifted-chat";
 
 import { isSameMinute } from "@utils/date.utils";
 import MediasView from "@screens/chat/room-chat/components/MediasView";
+import { palette } from "@theme/themes";
 
 interface IBubble {
   touchableProps: any;
@@ -249,6 +250,7 @@ const styles = StyleSheet.create({
   time: {
     textAlign: "left",
     fontSize: 16,
+    color: palette.grey2,
   },
   timeContainer: {
     marginLeft: 0,

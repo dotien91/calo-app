@@ -1,0 +1,355 @@
+import React, { useMemo } from "react";
+import { View, SafeAreaView, Text } from "react-native";
+import { useTheme, useRoute } from "@react-navigation/native";
+import * as NavigationService from "react-navigation-helpers";
+
+/**
+ * ? Local Imports
+ */
+import createStyles from "./profile.chat.style";
+import { leaveRoom } from "@services/api/chatApi";
+import { translations } from "@localization";
+import Avatar from "@shared-components/user/Avatar";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import { SCREENS } from "constants";
+import CommonStyle from "@theme/styles";
+import {
+  closeSuperModal,
+  showErrorModal,
+  showLoading,
+  showToast,
+} from "@helpers/super.modal.helper";
+import useStore from "@services/zustand/store";
+import IconBtn from "@shared-components/button/IconBtn";
+import GoBackButton from "@screens/auth/components/GoBackButton";
+import { blockUser } from "@services/api/post";
+import MediasView from "../room-chat/components/MediasView";
+import { Device } from "@utils/device.ui.utils";
+import eventEmitter from "@services/event-emitter";
+
+const profileChatMenu = [
+  {
+    type: "GROUP_ACTION",
+    title: "Group action",
+    data: [
+      {
+        icon: "account-multiple-plus",
+        txt: (text) => "Create group with " + text,
+        type: "ACC-PLUS",
+      },
+      {
+        icon: "account-supervisor",
+        txt: (text) => "Add " + text + " to groups",
+        type: "ACC-GR",
+      },
+    ],
+  },
+  {
+    type: "MEDIA",
+    title: "Send photo, files, links",
+  },
+  {
+    type: "PRIVACY",
+    title: "Privacy & support",
+    data: [
+      {
+        icon: "block-helper",
+        txt: () => "Block user",
+        type: "BLOCK",
+      },
+      // {
+      //   icon: "trash-can-outline",
+      //   txt: () => "Delete chat history",
+      //   type: "DELETE-CHAT",
+      // },
+    ],
+  },
+];
+
+const profileGroupChatMenu = [
+  {
+    type: "GROUP_ACTION",
+    title: "Group action",
+    data: [
+      {
+        icon: "account-multiple-plus",
+        txt: () => "Thêm thành viên",
+        type: "ACC-PLUS",
+      },
+      {
+        icon: "account-arrow-right",
+        txt: () => "Rời nhóm",
+        type: "LEAVE-GR",
+      },
+    ],
+  },
+  {
+    type: "MEDIA",
+    title: "Send photo, files, links",
+  },
+  {
+    type: "MEMBERS",
+    title: "Members",
+  },
+];
+
+const numberItemsMediaShow = Math.floor((Device.width - 24 - 76) / 76);
+
+interface ProfileChatScreenProps {}
+
+const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
+  const theme = useTheme();
+  const styles = useMemo(() => createStyles(theme), [theme]);
+  const route = useRoute();
+  const { colors } = theme;
+  const partner = route.params?.["partner"];
+  const roomDetail = route.params?.["roomDetail"];
+  const isGroup = route.params?.["isGroup"];
+  const { partner_id, chat_room_id } = roomDetail;
+  const { group_partners } = chat_room_id;
+  const currentMediaIds = useStore((state) => state.currentMediaIds);
+  const mediaIds = currentMediaIds;
+  const mediaIdsShow = mediaIds.slice(0, numberItemsMediaShow);
+  const userData = useStore((state) => state.userData);
+  const setSearchModeChat = useStore((state) => state.setSearchModeChat);
+
+  console.log("partner_idpartner_id", partner_id);
+
+  const onSearchMessage = () => {
+    setSearchModeChat(true);
+    NavigationService.goBack();
+  };
+
+  const openUserProfile = () => {};
+
+  const _blockUser = () => {
+    const params = { partner_id: partner._id };
+    blockUser(params).then((res) => {
+      if (!res.isError) {
+        showToast({
+          type: "success",
+          message: translations.blockedUser.replace(
+            ":username",
+            partner.display_name || "",
+          ),
+        });
+      } else {
+        showErrorModal(res);
+      }
+    });
+  };
+
+  const openCreateGroupChatScreen = () => {
+    if (isGroup) {
+      NavigationService.navigate(SCREENS.CREATE_GROUP_CHAT, {
+        roomDetail,
+      });
+      return;
+    }
+    NavigationService.navigate(SCREENS.CREATE_GROUP_CHAT, {
+      initData: [{ ...partner, partner_id: partner }],
+      roomDetail,
+    });
+  };
+
+  const addToGroup = () => {
+    NavigationService.navigate(SCREENS.ADD_USER_TO_GROUP, {
+      roomDetail,
+    });
+  };
+
+  const openMediaChatScreen = () => {
+    NavigationService.navigate(SCREENS.MEDIA_CHAT_SCREEN);
+  };
+
+  const leaveGroup = () => {
+    // {
+    //   "user_id": "string",
+    //   "chat_room_id": "string"
+    // }
+    // {
+    //   "user_id": "string",
+    //   "chat_room_id": "string"
+    // }
+    const data = {
+      user_id: userData?._id,
+      chat_room_id: chat_room_id._id,
+    };
+    showLoading();
+    leaveRoom(data).then((res) => {
+      closeSuperModal();
+      if (!res.isError) {
+        showToast({
+          type: "success",
+          message: "Rời nhóm thành công",
+        });
+        eventEmitter.emit("refresh_list_chat");
+        NavigationService.pop(2);
+      } else {
+        showToast({
+          type: "error",
+          message: "Có lỗi không xác định xảy ra",
+        });
+      }
+    });
+  };
+
+  const onPressItem = (item) => {
+    console.log("item onPress", item);
+    switch (item.type) {
+      case "ACC-PLUS":
+        openCreateGroupChatScreen();
+        break;
+      case "ACC-GR":
+        addToGroup();
+        break;
+      case "MEDIA":
+        openMediaChatScreen();
+        break;
+      case "BLOCK":
+        _blockUser();
+        break;
+      case "DELETE-CHAT":
+        break;
+      case "LEAVE-GR":
+        leaveGroup();
+        break;
+      default:
+        break;
+    }
+  };
+
+  const renderTop = () => {
+    return (
+      <View style={styles.topAction}>
+        <Avatar
+          sourceUri={{
+            uri: partner?.user_avatar || partner?.user_avatar_thumbnail,
+          }}
+          resizeMode="cover"
+          style={styles.avatar}
+        />
+        <Text style={styles.txtName}>
+          {chat_room_id?.room_name || roomDetail.room_title}
+        </Text>
+        <View style={styles.wrapTopBtn}>
+          <IconBtn
+            name="magnify"
+            color={colors.mainColor2}
+            customStyle={styles.topActionBtn}
+            onPress={onSearchMessage}
+            size={20}
+          />
+          {!isGroup && (
+            <IconBtn
+              name="account"
+              color={colors.mainColor2}
+              customStyle={styles.topActionBtn}
+              onPress={openUserProfile}
+              size={20}
+            />
+          )}
+        </View>
+      </View>
+    );
+  };
+
+  const renderMenu = (item) => {
+    return (
+      <TouchableOpacity style={styles.menu} onPress={() => onPressItem(item)}>
+        <IconBtn
+          name={item.icon}
+          color={colors.mainColor2}
+          customStyle={styles.menuIcon}
+          size={20}
+        />
+        <Text style={CommonStyle.hnRegular}>
+          {item.txt(chat_room_id?.room_name || roomDetail.room_title)}
+        </Text>
+        <IconBtn
+          name={"chevron-right"}
+          color={colors.mainColor2}
+          customStyle={styles.iconArrow}
+          size={20}
+        />
+      </TouchableOpacity>
+    );
+  };
+
+  const renderMediaSection = (item) => {
+    console.log("mediaIdsmediaIds", mediaIds);
+    return (
+      <TouchableOpacity onPress={openMediaChatScreen} style={styles.section}>
+        <Text style={styles.titleSection}>{item.title}</Text>
+        <View style={styles.wrapMedia}>
+          <MediasView fromProfileChat data={mediaIdsShow} />
+          {mediaIds.length > numberItemsMediaShow && (
+            <View style={styles.viewMoreMedia}>
+              <Text style={styles.txtViewMoreMedia}>
+                + {mediaIds.length - numberItemsMediaShow}
+              </Text>
+            </View>
+          )}
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  const renderMembers = (item) => {
+    console.log("group_partners=======", group_partners);
+    return (
+      <TouchableOpacity onPress={openMediaChatScreen} style={styles.section}>
+        <Text style={styles.titleSection}>{item.title}</Text>
+        <View>
+          {group_partners.map((item, index) => (
+            <View
+              key={index}
+              style={{ ...CommonStyle.flexStart, marginVertical: 6 }}
+            >
+              <Avatar
+                sourceUri={{
+                  uri: item.user_avatar || item.user_avatar_thumbnail,
+                }}
+                resizeMode="cover"
+                style={{
+                  width: 30,
+                  height: 30,
+                  borderRadius: 8,
+                  marginRight: 6,
+                }}
+              />
+              <Text style={CommonStyle.hnRegular}>{item.display_name}</Text>
+            </View>
+          ))}
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  const renderSection = (item) => {
+    if (item.type == "MEDIA") return renderMediaSection(item);
+    if (item.type == "MEMBERS") return renderMembers(item);
+    return (
+      <View style={styles.section}>
+        <Text style={styles.titleSection}>{item.title}</Text>
+        <View>{item.data.map((_item) => renderMenu(_item))}</View>
+      </View>
+    );
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+        <View style={[CommonStyle.flexStart, styles.headerLeft]}>
+          <GoBackButton customStyle={styles.backBtn} />
+        </View>
+        {renderTop()}
+        {(isGroup ? profileGroupChatMenu : profileChatMenu).map((item) =>
+          renderSection(item),
+        )}
+      </ScrollView>
+    </SafeAreaView>
+  );
+};
+
+export default ProfileChatScreen;
