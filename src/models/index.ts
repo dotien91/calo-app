@@ -122,3 +122,13 @@ export interface TypedUser {
   is_verify_email?: boolean;
   phone_number: string;
 }
+
+export interface TypedFollowUser {
+  _id?: string;
+  createdAt?: string;
+  is_follow: boolean;
+  match_status: number;
+  updatedAt: string;
+  user_id: string;
+  partner_id: TypedUser;
+}

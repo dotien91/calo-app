@@ -16,7 +16,6 @@ import EmptyResultView from "@shared-components/empty.data.component";
 import { translations } from "@localization";
 import lotieNoResult from "assets/lotties/no-result.json";
 import { useListData } from "@helpers/hooks/useListData";
-import { TypedGeneralRoomChat } from "models/chat.model";
 import Avatar from "@shared-components/user/Avatar";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import * as NavigationService from "react-navigation-helpers";
@@ -30,6 +29,7 @@ import {
   showToast,
 } from "@helpers/super.modal.helper";
 import eventEmitter from "@services/event-emitter";
+import { TypedFollowUser } from "shared/models";
 
 interface CreateGroupChatScreenProps {}
 
@@ -51,7 +51,7 @@ const CreateGroupChatScreen: React.FC<CreateGroupChatScreenProps> = () => {
     onEndReach,
     isFirstLoading,
     renderFooterComponent,
-  } = useListData<TypedGeneralRoomChat>(
+  } = useListData<TypedFollowUser>(
     { limit: 20, search: txtSearch },
     getListFriend,
     [],
@@ -93,9 +93,10 @@ const CreateGroupChatScreen: React.FC<CreateGroupChatScreenProps> = () => {
     item,
     index,
   }: {
-    item: TypedGeneralRoomChat;
+    item: TypedFollowUser;
     index: number;
   }) => {
+    console.log("itemitem", item);
     const partnerData = item.partner_id;
 
     const isCurrentMember = group_partners.find(
@@ -137,7 +138,7 @@ const CreateGroupChatScreen: React.FC<CreateGroupChatScreenProps> = () => {
     item,
     index,
   }: {
-    item: TypedGeneralRoomChat;
+    item: TypedFollowUser;
     index: number;
   }) => {
     const partnerId = item.partner_id;
@@ -245,14 +246,6 @@ const CreateGroupChatScreen: React.FC<CreateGroupChatScreenProps> = () => {
             chat_room_id,
           });
         }, 500);
-
-        // NavigationService.navigate(SCREENS.CHAT_ROOM, {
-        //   id: chat_room_id?._id,
-        //   partner_name: groupName || partner_id?.display_name,
-        //   user: partner_id,
-        //   isGroup: !!group_partners.length,
-        //   chat_room_id
-        // });
       } else {
         showErrorModal(res);
       }

@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle, no-use-before-define */
 import React from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, ViewStyle } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
 import { Avatar, Day, utils } from "react-native-gifted-chat";
@@ -21,11 +21,11 @@ interface IMessageBubble {
   renderAvatar: () => React.JSX.Element;
   renderBubble: () => React.JSX.Element;
   renderDay: () => React.JSX.Element;
-  currentMessage: any;
-  nextMessage: any;
-  previousMessage: any;
+  currentMessage: TypedMessageGiftedChat;
+  nextMessage: TypedMessageGiftedChat;
+  previousMessage: TypedMessageGiftedChat;
   user: any;
-  containerStyle: any;
+  containerStyle: ViewStyle;
 }
 
 const MessageBubble = (props: IMessageBubble) => {

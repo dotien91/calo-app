@@ -16,19 +16,20 @@ import { MessageText, Time } from "react-native-gifted-chat";
 import { isSameMinute } from "@utils/date.utils";
 import MediasView from "@screens/chat/room-chat/components/MediasView";
 import { palette } from "@theme/themes";
+import { TypedMessageGiftedChat } from "models/chat.model";
 
 interface IBubble {
-  touchableProps: any;
-  onLongPress: any;
+  touchableProps: () => void;
+  onLongPress: () => void;
   // renderMessageImage: () => React.JSX.Element;
   renderMessageText: () => React.JSX.Element;
   renderCustomView: () => React.JSX.Element;
   renderUsername: () => React.JSX.Element;
   renderTime: () => React.JSX.Element;
   renderTicks: () => React.JSX.Element;
-  currentMessage: any;
-  nextMessage: any;
-  previousMessage: any;
+  currentMessage: TypedMessageGiftedChat;
+  nextMessage: TypedMessageGiftedChat;
+  previousMessage: TypedMessageGiftedChat;
   user: any;
   containerStyle: ViewStyle;
   wrapperStyle: ViewStyle;

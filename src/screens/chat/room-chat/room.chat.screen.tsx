@@ -69,7 +69,6 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
     setTxtSearch("");
     setSearchModeChat(false);
   };
-  console.log("render======");
 
   //append local media file
   useEffect(() => {

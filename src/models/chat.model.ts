@@ -231,7 +231,6 @@ export interface TypedMessageGiftedChat extends IMessage {
   chat_file?: [];
   media_ids?: TypedDataMediaChatHistory[];
   chat_type?: string;
-  chat_status?: EnumMessageStatus;
   send_at?: string;
   read_at?: string;
   updatedAt?: string;
@@ -250,11 +249,7 @@ export interface TypedMessageGiftedChat extends IMessage {
   media_data?: string;
   media_modal?: any;
   system?: boolean;
-
-  //Local attributes
-  message_type?: EnumTypeMessage;
-  local_id?: string;
-  local_data_media?: TypedDataMediaChatHistory[];
+  status?: EnumMessageStatus;
 }
 
 export interface IMediaUpload {

@@ -4,9 +4,13 @@ import FastImage, { ResizeMode } from "react-native-fast-image";
 import defaultAvatar from "@assets/images/default_avatar.jpg";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
+interface ISource {
+  uri: string;
+}
+
 interface IAvatar {
   style: StyleProp<ImageStyle>;
-  sourceUri: any;
+  sourceUri: ISource;
   resizeMode?: ResizeMode;
   onPress?: () => void;
 }

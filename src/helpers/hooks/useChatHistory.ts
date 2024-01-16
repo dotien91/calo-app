@@ -29,7 +29,6 @@ export const useChatHistory = (txtSearch: string) => {
   const [roomDetail, setRoomDetail] = useState();
   const [isTyping, setIsTyping] = useState(false);
   const [isLoadmore, setIsLoadmore] = useState(false);
-  const setCurrentChatList = useStore((state) => state.setCurrentChatList);
   const setCurrentMediaIds = useStore((state) => state.setCurrentMediaIds);
   const setSearchModeChat = useStore((state) => state.setSearchModeChat);
 
@@ -178,10 +177,9 @@ export const useChatHistory = (txtSearch: string) => {
     const mediaIds = [...messages]
       .reverse()
       .reduce((ids, currentItem) => ids.concat(currentItem.media_ids), []);
-    setCurrentChatList(messages);
     setCurrentMediaIds(mediaIds);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [messages, setCurrentChatList]);
+  }, [messages]);
 
   useEffect(() => {
     if (!chatRoomId) {
