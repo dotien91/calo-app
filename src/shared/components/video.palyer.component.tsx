@@ -46,9 +46,9 @@ const VideoPlayer = ({ mediaUrl, resizeMode, width, height }: IVideoPlayer) => {
       {pause && (
         <Icon
           type={IconType.Ionicons}
-          name={"play-circle-outline"}
+          name={"play-circle"}
           size={40}
-          color={palette.mainColor2}
+          color={palette.primary}
         />
       )}
     </Pressable>

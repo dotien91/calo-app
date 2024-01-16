@@ -469,6 +469,7 @@ export default {
     permisisonDenied: "Permission denied",
     permissionDeniedDes: (text) =>
       `There is currently no access to ${text}. Do you want to go to Settings so you can continue?`,
+    shareProfile: "Share profile",
   },
   member: {
     chat: "chat",
@@ -522,6 +523,7 @@ export default {
     eventNotFound: "There are no events",
   },
   notifications: {
+    notifications: "notifications",
     markAll: "Mark all as read",
     turnonChat: "Turn on notifications when a message arrives",
     turnonCourse:

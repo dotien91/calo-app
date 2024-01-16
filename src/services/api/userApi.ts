@@ -86,3 +86,12 @@ export async function createNewPass(data: ICreateNewPass) {
     return response;
   });
 }
+export async function updateProfile(data: any) {
+  return request({
+    method: METHOD.PATCH,
+    urlPath: "user/update/user",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}

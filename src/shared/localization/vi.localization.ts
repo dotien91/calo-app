@@ -595,6 +595,7 @@ export default {
     permisisonDenied: "Không có quyền truy cập",
     permissionDeniedDes: (text: string) =>
       `Hiện tại đang không có quyền truy cập ${text}. Bạn có muốn vào Cài đặt để có thể tiếp tục?`,
+    shareProfile: "Chia sẻ",
   },
   member: {
     chat: "Hội thoại",

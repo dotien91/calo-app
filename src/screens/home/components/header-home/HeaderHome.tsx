@@ -1,12 +1,18 @@
-import { translations } from "@localization";
+import React, { useMemo } from "react";
+import {
+  View,
+  Image,
+  Pressable,
+  TouchableOpacity,
+  TextInput,
+} from "react-native";
 import { useTheme } from "@react-navigation/native";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import * as NavigationService from "react-navigation-helpers";
+
+import { translations } from "@localization";
 import useStore from "@services/zustand/store";
 import CommonStyle from "@theme/styles";
-import * as React from "react";
-import { View, Image, Pressable, TouchableOpacity } from "react-native";
-import * as NavigationService from "react-navigation-helpers";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
-import { TextInput } from "react-native-gesture-handler";
 import createStyles from "./HeaderHome.style";
 import { SCREENS } from "constants";
 
@@ -14,11 +20,21 @@ const SIZE_AVATAR = 30;
 const BORDER_AVATAR = 12;
 const HeaderHome = () => {
   const userData = useStore((state) => state.userData);
+  const linkAvatar = useStore((state) => state.linkAvatar);
+
   const theme = useTheme();
   const { colors } = theme;
-  const styles = React.useMemo(() => createStyles(theme), [theme]);
-
-  const Avatar = React.useMemo(() => {
+  const styles = useMemo(() => createStyles(theme), [theme]);
+  const gotoProfile = () => {
+    if (userData) {
+      NavigationService.push(SCREENS.PROFILE_CURRENT_USER, {
+        _id: userData._id,
+      });
+    } else {
+      NavigationService.push(SCREENS.LOGIN_PAGE);
+    }
+  };
+  const Avatar = useMemo(() => {
     return (
       <Pressable
         style={{
@@ -26,12 +42,13 @@ const HeaderHome = () => {
           height: SIZE_AVATAR,
           borderRadius: BORDER_AVATAR,
         }}
+        onPress={gotoProfile}
       >
         <Image
           // source={{ uri: userData?.user_avatar_thumbnail  }}
           source={
-            userData?.user_avatar_thumbnail
-              ? { uri: userData.user_avatar_thumbnail }
+            linkAvatar.trim().length > 0
+              ? { uri: linkAvatar }
               : require("@assets/images/default_avatar.jpg")
           }
           style={{
@@ -42,7 +59,8 @@ const HeaderHome = () => {
         />
       </Pressable>
     );
-  }, [userData]);
+  }, [linkAvatar]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const goToSearchScreen = () => {
     NavigationService.navigate(SCREENS.SEARCH);
   };

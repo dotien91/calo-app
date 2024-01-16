@@ -1,6 +1,6 @@
 // Input.js
 
-import React from "react";
+import React, { useRef } from "react";
 import {
   View,
   Text,
@@ -8,6 +8,7 @@ import {
   ViewStyle,
   StyleSheet,
   TextStyle,
+  Pressable,
 } from "react-native";
 import { Controller } from "react-hook-form";
 
@@ -50,9 +51,14 @@ const InputHook: React.FC<InputHookProps> = ({
   noBorder,
   multiline = false,
 }) => {
+  const refInput = useRef<TextInput>(null);
+  const _forcusInput = () => {
+    refInput.current?.focus();
+  };
   return (
     <View style={styles.wrapper}>
-      <View
+      <Pressable
+        onPress={_forcusInput}
         style={[
           styles.viewBorder,
           !!viewStyle && viewStyle,
@@ -67,6 +73,7 @@ const InputHook: React.FC<InputHookProps> = ({
           render={({ field: { onChange, value } }) => (
             <TextInput
               {...inputProps}
+              ref={refInput}
               multiline={multiline}
               onChangeText={(value) => onChange(value)}
               value={value}
@@ -78,7 +85,7 @@ const InputHook: React.FC<InputHookProps> = ({
           name={name}
         />
         {!!iconRight && iconRight}
-      </View>
+      </Pressable>
 
       {errorTxt && <Text style={styles.errorText}>{errorTxt}</Text>}
     </View>

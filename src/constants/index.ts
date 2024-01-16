@@ -33,6 +33,8 @@ export const SCREENS = {
   MEDIA_CHAT_SCREEN: "MediaChat",
   ADD_USER_TO_GROUP: "AddUserToGroup",
   PROFILE_GROUP_CHAT: "ProfileGroupChat",
+  PROFILE_CURRENT_USER: "ProfileCurentUser",
+  EDIT_PROFILE: "EditProfile",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

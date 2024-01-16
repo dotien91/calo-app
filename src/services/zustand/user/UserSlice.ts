@@ -7,6 +7,11 @@ export interface UserSlice {
   userToken: string | null;
   setUserToken: (userToken: string) => void;
   resetUserData: () => void;
+  listFollow: string[];
+  updateListFollow: (id: string) => void;
+  initListFollow: (data: string[]) => void;
+  linkAvatar: string;
+  setLinkAvatar: (link: string) => void;
 }
 
 const createUserSlice: StoreSlice<UserSlice> = (set) => ({
@@ -15,6 +20,28 @@ const createUserSlice: StoreSlice<UserSlice> = (set) => ({
   userToken: null,
   setUserToken: (value: string) => set({ userToken: value }),
   resetUserData: () => set({ userData: null }),
+  listFollow: [],
+  initListFollow: (data: string[]) => {
+    set({ listFollow: data });
+  },
+  updateListFollow: (_id) => {
+    set((state) => {
+      const index = state.listFollow.findIndex((item) => item === _id);
+      if (index >= 0) {
+        return {
+          listFollow: [...state.listFollow.filter((item) => item !== id)],
+        };
+      } else {
+        return {
+          listFollow: [...state.listFollow, _id],
+        };
+      }
+    });
+  },
+  linkAvatar: "",
+  setLinkAvatar: (link) => {
+    set({ linkAvatar: link });
+  },
 });
 
 export default createUserSlice;

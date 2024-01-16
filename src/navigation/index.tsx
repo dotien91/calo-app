@@ -38,6 +38,9 @@ import ProfileChatScreen from "@screens/chat/profile-chat/profile.chat.screen";
 import CreateGroupChatScreen from "@screens/chat/create-group-chat/create.group.chat.screen";
 import MediaChatScreen from "@screens/chat/profile-chat/media.chat.screen";
 import AddUserGroupChatScreen from "@screens/chat/add-user-to-group-chat/add.user.group.chat.screen";
+import ProfileUserScreen from "@screens/profile-user/ProfileUserScreen";
+import EditProfileScreen from "@screens/profile-user/edit-profile/EditProfileScreen";
+
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -165,8 +168,16 @@ const Navigation = () => {
         <Stack.Screen name={SCREENS.POST_DETAIL} component={PostDetail} />
         <Stack.Screen name={SCREENS.EDIT_COMMENT} component={EditComment} />
         <Stack.Screen
+          name={SCREENS.PROFILE_CURRENT_USER}
+          component={ProfileUserScreen}
+        />
+        <Stack.Screen
           name={SCREENS.SEARCH_CHAT}
           component={SearchRoomChatScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.EDIT_PROFILE}
+          component={EditProfileScreen}
         />
         <Stack.Screen name={SCREENS.SEARCH} component={SearchPostScreen} />
         <Stack.Screen name={SCREENS.CHAT_ROOM} component={ChatRoomScreen} />

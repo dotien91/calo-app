@@ -13,7 +13,9 @@ import { palette } from "@theme/themes";
 
 export const useUserHook = () => {
   const setUserData = useStore((state) => state.setUserData);
+  const setLinkAvatar = useStore((state) => state.setLinkAvatar);
   const userData = useStore((state) => state.userData);
+  const initListFollow = useStore((state) => state.initListFollow);
 
   const isLoggedIn = () => {
     return !!_getJson(USER_TOKEN) && !!userData?._id;
@@ -24,6 +26,8 @@ export const useUserHook = () => {
     getCurrentUser().then((res) => {
       if (!res.isError) {
         setUserData(res.data);
+        setLinkAvatar(res.data.user_avatar_thumbnail);
+        initListFollow(res.data.follow_users);
         NavigationService.push(SCREENS.HOME);
         setTimeout(() => {
           showSuperModal({ title: "Đăng nhập thành công!" });
@@ -37,6 +41,8 @@ export const useUserHook = () => {
       if (!res.isError) {
         console.log("token", _getJson(USER_TOKEN));
         setUserData(res.data);
+        setLinkAvatar(res.data.user_avatar_thumbnail);
+        initListFollow(res.data.follow_users);
       }
     });
   };
@@ -44,6 +50,8 @@ export const useUserHook = () => {
   const logout = () => {
     _setJson(USER_TOKEN, "");
     setUserData(null);
+    setLinkAvatar("");
+    initListFollow([]);
   };
 
   const renderViewRequestLogin = () => {

@@ -47,6 +47,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
       indicatorStyle={{
         backgroundColor: colors.primary,
         width: 50,
+        left: "18%",
       }}
       renderLabel={({ route, focused }) => (
         <Text

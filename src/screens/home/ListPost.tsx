@@ -21,9 +21,10 @@ import { useUserHook } from "@helpers/hooks/useUserHook";
 
 interface ListPostProps {
   isFollowingPost: boolean;
+  id?: string;
 }
 
-const ListPost = ({ isFollowingPost }: ListPostProps) => {
+const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
   const listRef = useRef(null);
 
   const theme = useTheme();
@@ -37,7 +38,7 @@ const ListPost = ({ isFollowingPost }: ListPostProps) => {
   const renderItem = ({ item }: any) => {
     if (item?.livestream_status)
       return <StreamItem key={item._id} data={item} />;
-    return <ItemPost key={item._id} data={item} />;
+    return <ItemPost key={item._id} data={item} isProfile={id?.length > 0} />;
   };
 
   const _getListLiveStream = () => {
@@ -56,6 +57,15 @@ const ListPost = ({ isFollowingPost }: ListPostProps) => {
     _getListLiveStream();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const paramsRequest = {
+    limit: 10,
+    auth_id: userData?._id || "",
+    is_following_list: isFollowingPost + "",
+  };
+  if (id) {
+    paramsRequest.user_id = id;
+  }
+
   const {
     listData,
     onEndReach,
@@ -64,14 +74,7 @@ const ListPost = ({ isFollowingPost }: ListPostProps) => {
     renderFooterComponent,
     refreshListPage,
     refreshing,
-  } = useListData<any>(
-    {
-      limit: 10,
-      auth_id: userData?._id || "",
-      is_following_list: isFollowingPost + "",
-    },
-    getListPost,
-  );
+  } = useListData<any>(paramsRequest, getListPost);
 
   useEffect(() => {
     const typeEmit = isFollowingPost
@@ -143,7 +146,10 @@ const ListPost = ({ isFollowingPost }: ListPostProps) => {
     );
   }
 
-  const getListData = () => listDataStream.concat(listData);
+  const getListData = () => {
+    if (id) return listData;
+    return listDataStream.concat(listData);
+  };
 
   return (
     <View
