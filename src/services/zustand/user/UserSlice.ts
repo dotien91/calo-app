@@ -10,6 +10,8 @@ export interface UserSlice {
   listFollow: string[];
   updateListFollow: (id: string) => void;
   initListFollow: (data: string[]) => void;
+  linkAvatar: string;
+  setLinkAvatar: (link: string) => void;
 }
 
 const createUserSlice: StoreSlice<UserSlice> = (set) => ({
@@ -35,6 +37,10 @@ const createUserSlice: StoreSlice<UserSlice> = (set) => ({
         };
       }
     });
+  },
+  linkAvatar: "",
+  setLinkAvatar: (link) => {
+    set({ linkAvatar: link });
   },
 });
 

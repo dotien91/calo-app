@@ -523,6 +523,7 @@ export default {
     eventNotFound: "There are no events",
   },
   notifications: {
+    notifications: "notifications",
     markAll: "Mark all as read",
     turnonChat: "Turn on notifications when a message arrives",
     turnonCourse:

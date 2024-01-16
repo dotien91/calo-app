@@ -57,9 +57,7 @@ const EditProfileScreen = () => {
       },
     };
     setUpdating(true);
-    console.log("params...", params);
     updateProfile(params).then((res) => {
-      console.log("res...", res);
       if (!res.isError) {
         showToast({ type: "success", message: translations.updateSuccess });
         setUpdating(false);
@@ -252,7 +250,7 @@ const EditProfileScreen = () => {
           style={{
             marginHorizontal: 16,
             marginTop: 16,
-            backgroundColor: colors.primary,
+            backgroundColor: updating ? colors.placeholder : colors.primary,
           }}
           text={translations.confirm}
           disabled={updating}

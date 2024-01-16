@@ -13,6 +13,7 @@ import { palette } from "@theme/themes";
 
 export const useUserHook = () => {
   const setUserData = useStore((state) => state.setUserData);
+  const setLinkAvatar = useStore((state) => state.setLinkAvatar);
   const userData = useStore((state) => state.userData);
   const initListFollow = useStore((state) => state.initListFollow);
 
@@ -23,9 +24,9 @@ export const useUserHook = () => {
   const handleLogin = (token: string) => {
     _setJson(USER_TOKEN, token);
     getCurrentUser().then((res) => {
-      console.log("ressss current", { res, token });
       if (!res.isError) {
         setUserData(res.data);
+        setLinkAvatar(res.data.user_avatar_thumbnail);
         initListFollow(res.data.follow_users);
         NavigationService.push(SCREENS.HOME);
         setTimeout(() => {
@@ -36,13 +37,11 @@ export const useUserHook = () => {
   };
 
   const getUserData = () => {
-    console.log("token", _getJson(USER_TOKEN));
     getCurrentUser().then((res) => {
-      console.log("res get current user");
       if (!res.isError) {
         setUserData(res.data);
+        setLinkAvatar(res.data.user_avatar_thumbnail);
         initListFollow(res.data.follow_users);
-        console.log("init user data", res.data);
       }
     });
   };
@@ -50,6 +49,7 @@ export const useUserHook = () => {
   const logout = () => {
     _setJson(USER_TOKEN, "");
     setUserData(null);
+    setLinkAvatar("");
     initListFollow([]);
   };
 

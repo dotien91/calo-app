@@ -194,7 +194,7 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
           size={62}
           name={"play-circle"}
           type={IconType.Ionicons}
-          color={colors.text}
+          color={colors.primary}
         />
       </View>
     );

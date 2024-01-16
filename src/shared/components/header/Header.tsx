@@ -1,30 +1,33 @@
+import React from "react";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { useTheme } from "@react-navigation/native";
-import CommonStyle from "@theme/styles";
-import * as React from "react";
-import { Text, View, StyleSheet } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
+
+import CommonStyle from "@theme/styles";
 
 interface HeaderProps {
   iconNameLeft: string;
   iconNameRight?: string;
   text: string;
-  onPressLess: () => void;
+  onPressLeft: () => void;
   onPressRight?: () => void;
+  textRight?: string;
 }
 
 const Header = ({
   iconNameLeft,
   iconNameRight,
   text,
-  onPressLess,
+  onPressLeft,
   onPressRight,
+  textRight,
 }: HeaderProps) => {
   const theme = useTheme();
   const { colors } = theme;
   return (
     <View style={styles.container}>
       <Icon
-        onPress={onPressLess}
+        onPress={onPressLeft}
         name={iconNameLeft}
         type={IconType.Ionicons}
         size={25}
@@ -32,16 +35,40 @@ const Header = ({
       />
       <Text style={[styles.textHeader, { color: colors.text }]}>{text}</Text>
       <View style={styles.viewIcons}>
-        {iconNameRight && (
+        {iconNameRight && textRight?.trim()?.length == 0 && (
           <Icon
             onPress={onPressRight}
-            name={iconNameLeft}
+            name={iconNameRight}
             type={IconType.Ionicons}
             size={25}
             color={colors.text}
           />
         )}
       </View>
+      {textRight?.trim() !== "" && (
+        <TouchableOpacity
+          onPress={onPressRight}
+          style={{
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+            right: 0,
+            zIndex: 1,
+            justifyContent: "center",
+            alignItems: "flex-end",
+            paddingRight: 16,
+          }}
+        >
+          <Text
+            style={[
+              styles.textHeader,
+              { color: colors.text, textDecorationLine: "underline" },
+            ]}
+          >
+            {textRight}
+          </Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

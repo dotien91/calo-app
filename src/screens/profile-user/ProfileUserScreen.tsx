@@ -38,6 +38,7 @@ interface ProfileUserProps {
 const ProfileUser = (props: ProfileUserProps) => {
   const userData = useStore((store) => store.userData);
   const listFollow = useStore((store) => store.listFollow);
+  const _setLinkAvatar = useStore((store) => store.setLinkAvatar);
   const _id = props.route?.params?._id;
   const theme = useTheme();
   const { colors } = theme;
@@ -97,6 +98,7 @@ const ProfileUser = (props: ProfileUserProps) => {
         });
         if (res?.[0]?.callback?._id) {
           setLinkAvatar(res?.[0]?.callback?.media_thumbnail);
+          _setLinkAvatar(res?.[0]?.callback?.media_thumbnail);
           const params = {
             _id: userData._id,
             user_avatar: res?.[0]?.callback?.media_url,
