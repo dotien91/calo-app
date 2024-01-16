@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "409582649419-6b1h6bhnopj8asftg4048nrhkppd3tkj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ieltshunter",
+            "certificate_hash": "9337d4bd4a04789ec038086b9a3b339008cda81f"
+          }
+        },
+        {
           "client_id": "409582649419-fobjlc4eic3svjhe0tveuifvvl75f5cn.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

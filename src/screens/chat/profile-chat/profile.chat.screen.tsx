@@ -219,10 +219,18 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
     }
   };
 
+  const openProfile = () => {
+    if (isGroup) return;
+    NavigationService.navigate(SCREENS.PROFILE_CURRENT_USER, {
+      _id: partner_id._id,
+    });
+  };
+
   const renderTop = () => {
     return (
       <View style={styles.topAction}>
         <Avatar
+          onPress={openProfile}
           sourceUri={{
             uri: partner?.user_avatar || partner?.user_avatar_thumbnail,
           }}
@@ -296,7 +304,6 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
   };
 
   const renderMembers = (item) => {
-    console.log("group_partners=======", group_partners);
     return (
       <TouchableOpacity onPress={openMediaChatScreen} style={styles.section}>
         <Text style={styles.titleSection}>{item.title}</Text>

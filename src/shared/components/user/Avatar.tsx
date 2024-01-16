@@ -1,8 +1,8 @@
 import React from "react";
 import { View, Image, ImageStyle, StyleProp } from "react-native";
 import FastImage, { ResizeMode } from "react-native-fast-image";
-import Button from "@shared-components/button/Button";
 import defaultAvatar from "@assets/images/default_avatar.jpg";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 interface IAvatar {
   style: StyleProp<ImageStyle>;
@@ -12,7 +12,7 @@ interface IAvatar {
 }
 
 const Avatar = ({ style, sourceUri, resizeMode, onPress }: IAvatar) => {
-  const Component = onPress ? Button : View;
+  const Component = onPress ? TouchableOpacity : View;
 
   return (
     <Component onPress={() => onPress?.()}>

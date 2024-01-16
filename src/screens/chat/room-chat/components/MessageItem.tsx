@@ -61,11 +61,11 @@ const MessageBubble = (props: IMessageBubble) => {
     return currentMessage?.createBy?._id == props.user._id;
   };
 
-  const openProfileChat = () => {
+  const openProfile = () => {
     const isMe = checkIsMe(props.currentMessage);
     if (isMe) return;
-    NavigationService.navigate(SCREENS.PROFILE_CHAT, {
-      user: props.currentMessage.createBy,
+    NavigationService.navigate(SCREENS.PROFILE_CURRENT_USER, {
+      _id: props.currentMessage.createBy?._id,
     });
   };
 
@@ -85,7 +85,7 @@ const MessageBubble = (props: IMessageBubble) => {
 
     const avatarProps = getInnerComponentProps();
     return (
-      <TouchableOpacity onPress={openProfileChat}>
+      <TouchableOpacity onPress={openProfile}>
         <Avatar
           {...avatarProps}
           imageStyle={{

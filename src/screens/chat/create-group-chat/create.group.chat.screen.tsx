@@ -71,10 +71,6 @@ const CreateGroupChatScreen: React.FC<CreateGroupChatScreenProps> = () => {
   };
 
   const renderCheckbox = (item) => {
-    console.log("====", {
-      itemsSelect,
-      item,
-    });
     const isSelected = itemsSelect.find((_item) => isSameId(item, _item));
     let isCurrentMember = false;
     if (group_partners) {

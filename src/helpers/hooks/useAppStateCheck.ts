@@ -1,20 +1,19 @@
 import React, { useEffect } from "react";
-import {
-  NativeEventSubscription,
-  AppState,
-  AppStateStatus,
-} from "react-native";
+import { AppState, AppStateStatus } from "react-native";
 
 export default function useAppStateCheck() {
   const [appStateStatus, setAppStateStatus] = React.useState(null);
 
   const handleAppStateChange = (nextAppState: AppStateStatus) => {
     setAppStateStatus(nextAppState);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   };
 
   useEffect(() => {
-    let eventListener: NativeEventSubscription;
-    eventListener = AppState.addEventListener("change", handleAppStateChange);
+    const eventListener = AppState.addEventListener(
+      "change",
+      handleAppStateChange,
+    );
     return () => {
       eventListener && eventListener.remove();
     };
