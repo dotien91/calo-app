@@ -169,13 +169,12 @@ class RecordView extends React.PureComponent<any, State> {
       OutputFormatAndroid: OutputFormatAndroidType.AAC_ADTS,
     };
 
-    const uri = await this.audioRecorderPlayer.startRecorder(
-      this.path,
-      audioSet,
-    );
+    // const uri = await this.audioRecorderPlayer.startRecorder(
+    //   this.path,
+    //   audioSet,
+    // );
 
     this.audioRecorderPlayer.addRecordBackListener((e: RecordBackType) => {
-      // console.log('record-back', e);
       this.setState({
         recordSecs: e.currentPosition,
         recordTime: this.audioRecorderPlayer.mmssss(
@@ -184,8 +183,6 @@ class RecordView extends React.PureComponent<any, State> {
       });
     });
     this.setState({ loadingRecordPlayer: false });
-
-    console.log(`uri: ${uri}`);
   };
 
   private onPauseRecord = async (): Promise<void> => {

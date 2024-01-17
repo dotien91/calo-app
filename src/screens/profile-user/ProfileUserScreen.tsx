@@ -105,7 +105,6 @@ const ProfileUser = (props: ProfileUserProps) => {
             user_avatar_thumbnail: res?.[0]?.callback?.media_thumbnail,
           };
           updateProfile(params).then((res) => {
-            console.log("res...", res);
             if (!res.isError) {
               showToast({
                 type: "success",

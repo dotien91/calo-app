@@ -128,7 +128,6 @@ const MessageBubble = (props: IMessageBubble) => {
     }
     return null;
   };
-  console.log("render========= message");
   return (
     <View>
       {renderDay()}

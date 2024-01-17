@@ -41,8 +41,6 @@ const EditProfileScreen = () => {
     },
   });
 
-  // console.log(userData);
-
   const onSubmit = (data: any) => {
     const params = {
       display_name: data.fullname,

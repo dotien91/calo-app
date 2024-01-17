@@ -60,11 +60,8 @@ export default function ForgotPasswordScreen() {
       g_recaptcha: RECAPCHA_KEY,
     };
 
-    console.log("pram", params);
-
     requestNewPassWithEmail(params).then((res) => {
       closeSuperModal();
-      console.log("Resssss", res);
       if (!res.isError) {
         NavigationService.push(SCREENS.VERIFY_CODE, { user_email: data.email });
       } else {

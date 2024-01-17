@@ -43,7 +43,6 @@ export const useLiveChatHistory = ({
 
     getChatLiveHistory(params).then((res) => {
       isFetching.current = false;
-      console.log("ressss live message", res);
       if (!res.isError) {
         const data = res.data;
         pageNumber.current = pageNumber.current + 1;
@@ -63,8 +62,6 @@ export const useLiveChatHistory = ({
     sendChatToLiveRoom({
       chat_content: text,
       livestream_id: liveStreamId,
-    }).then((res) => {
-      console.log("ressss send live message", res);
     });
   };
 
@@ -75,7 +72,6 @@ export const useLiveChatHistory = ({
   const msgToClient = (data: string) => {
     if (!data) return;
     const newMessage = JSON.parse(data);
-    console.log("datadata", newMessage);
     //Check case message from another room
     if (newMessage.livestream_id != liveStreamId) {
       return;

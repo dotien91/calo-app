@@ -52,7 +52,6 @@ const createPostSlice: StoreSlice<PostSlice> = (set) => ({
       if (index >= 0) {
         const listLike = [...state.listLike];
         listLike[index] = { _id: _id, numberLike: numberLike, isLike: isLike };
-        console.log(listLike);
         return {
           listLike: listLike,
         };

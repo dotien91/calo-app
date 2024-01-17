@@ -68,7 +68,6 @@ export async function checkPermission(
     .then((statuses) => {
       const permissionNeedRequest: Permission[] = [];
       let isBlocked = false;
-      console.log(statuses);
       listPermission.map((item) => {
         if (statuses[item] === RESULTS.DENIED) permissionNeedRequest.push(item);
         if (statuses[item] === RESULTS.BLOCKED) isBlocked = true;

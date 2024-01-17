@@ -41,7 +41,6 @@ const MediaChatScreen: React.FC<MediaChatScreenProps> = () => {
   ]);
 
   const renderMedia = () => {
-    console.log("filesss22", medias);
     return (
       <ScrollView contentContainerStyle={{ padding: 12 }}>
         <MediasView data={medias} />
@@ -62,8 +61,6 @@ const MediaChatScreen: React.FC<MediaChatScreenProps> = () => {
   };
 
   const renderFiles = () => {
-    console.log("filesss", files);
-
     return (
       <ScrollView contentContainerStyle={{ padding: 12, maxWidth: 250 }}>
         {files.map((item) => renderFile(item))}

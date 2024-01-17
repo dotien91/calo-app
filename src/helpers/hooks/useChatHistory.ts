@@ -56,7 +56,6 @@ export const useChatHistory = (txtSearch: string) => {
     };
     getChatHistory(params).then((res) => {
       isFetching.current = false;
-      console.log("ressss getChatHistory", res);
       if (!res.isError) {
         setIsLoadmore(false);
         pageNumber.current = pageNumber.current + 1;
@@ -126,7 +125,6 @@ export const useChatHistory = (txtSearch: string) => {
   const typingToClient = (data: string) => {
     if (data) {
       const dataTyping = JSON.parse(data);
-      console.log("dataTypingdataTyping", dataTyping, userData);
       if (dataTyping.user_id != userData?._id) {
         setIsTyping(true);
       }
@@ -166,7 +164,6 @@ export const useChatHistory = (txtSearch: string) => {
 
   const getRoomDetail = () => {
     viewRoom({ id: chatRoomId }).then((res) => {
-      console.log("Ressssss detail room", res.data);
       if (!res.isError) {
         setRoomDetail(res.data);
       }

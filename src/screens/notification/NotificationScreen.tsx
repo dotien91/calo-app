@@ -35,7 +35,6 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
       _id: item._id,
       read_status: "1",
     };
-    console.log("item...", JSON.stringify(item));
     switch (item.router) {
       case "NAVIGATION_CHAT_ROOM":
         NavigationService.navigate(SCREENS.CHAT_ROOM, {

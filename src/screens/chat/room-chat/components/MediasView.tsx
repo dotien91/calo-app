@@ -19,28 +19,18 @@ interface IMediasView {
 const MediasView = ({ data, fromProfileChat }: IMediasView) => {
   const currentMediaIds = useStore((state) => state.currentMediaIds);
   const openMediaModal = (item) => {
-    console.log("Data====", item);
-
     const listMedia = currentMediaIds.filter(
       (i: any) =>
         (i?.media_mime_type || "").includes("image") ||
         (i?.media_mime_type || "").includes("video"),
     );
 
-    console.log("listMedialistMedia", listMedia);
     const listLink = listMedia.map((i: any) => ({
       url: i.media_url,
       type: i.media_type,
       media_meta: i.media_meta,
     }));
     const index = listLink.findIndex((_item) => _item.url == item.media_url);
-
-    console.log("index====", {
-      index,
-      currentMediaIds,
-      listLink,
-      url: listLink[index],
-    });
     showDetailImageView(listLink, index, listMedia[0].media_type);
   };
 

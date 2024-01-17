@@ -8,7 +8,6 @@ export function useActionUser() {
   // const setUserData = useStore((store) => store.setUserData);
   const updateListFollow = useStore((store) => store.initListFollow);
   const listFollow = useStore((store) => store.listFollow);
-  console.log(listFollow);
   const _followUser = (id: string) => {
     const params = { partner_id: id };
 

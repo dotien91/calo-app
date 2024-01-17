@@ -30,7 +30,6 @@ const AddUserGroupChatScreen: React.FC<AddUserGroupChatScreenProps> = () => {
   const [txtSearch, setTxtSearch] = useState("");
   const route = useRoute();
   const roomDetail = route.params?.["roomDetail"];
-  console.log("roomDetailroomDetailroomDetailroomDetail", roomDetail);
   const { partner_id } = roomDetail;
   const [itemsSelect, setItemsSelect] = useState([]);
 
@@ -186,7 +185,6 @@ const AddUserGroupChatScreen: React.FC<AddUserGroupChatScreenProps> = () => {
       user_permission: "write",
     };
     addUserToRoom(data).then((res) => {
-      console.log("add user to group res", res);
       if (!res.isError) {
         showToast({
           type: "success",

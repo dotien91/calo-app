@@ -7,7 +7,6 @@ export async function getListChat(params) {
     urlPath: "chat-room/list",
     params,
   }).then((response) => {
-    console.log("resssss", response);
     return response;
   });
 }

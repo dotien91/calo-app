@@ -79,7 +79,6 @@ const FileViewComponent = ({
         type: item.type,
       });
 
-      console.log("...", res);
       if (res?.[0]?.callback?._id) {
         setDone(true);
 

@@ -160,7 +160,6 @@ export function getFormatDayMessage(
   sameYear = "HH:mm DD/MM",
   diffYear = "DD/MM/YYYY",
 ) {
-  console.log(sameYear);
   if (!time) {
     return "";
   }

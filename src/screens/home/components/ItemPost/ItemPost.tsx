@@ -52,9 +52,7 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
   const userData = useStore((state) => state.userData);
 
   const goToProfileCurrentUser = () => {
-    if (isProfile) {
-      console.log("isProfile");
-    } else {
+    if (!isProfile) {
       NavigationService.push(SCREENS.PROFILE_CURRENT_USER, {
         _id: data?.user_id?._id,
       });

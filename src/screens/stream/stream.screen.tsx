@@ -71,7 +71,6 @@ function App() {
       "camera, microphone",
     );
 
-    console.log("permissionpermission", permission, RESULTS.GRANTED);
     setPermissionGranted(permission == RESULTS.GRANTED);
   };
 

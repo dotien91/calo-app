@@ -42,7 +42,6 @@ const GoogleLoginButton = ({ showText }: BtnProps) => {
 
       loginWithGoogle(paramsLogin).then((res) => {
         closeSuperModal();
-        console.log("Resssssssss=======", res, paramsLogin);
         if (!res.isError) {
           const user_token = res.headers["x-authorization"];
           handleLogin(user_token);

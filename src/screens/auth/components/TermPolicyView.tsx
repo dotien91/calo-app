@@ -11,13 +11,9 @@ interface TermPolicyViewProps {
 const TermPolicyView = ({ style }: TermPolicyViewProps) => {
   const theme = useTheme();
   const { colors } = theme;
-  const pressPolicy = () => {
-    console.log("PressPolicy");
-  };
+  const pressPolicy = () => {};
 
-  const pressTerms = () => {
-    console.log("PressTerms");
-  };
+  const pressTerms = () => {};
   return (
     <View style={style}>
       <Text

@@ -42,7 +42,6 @@ const SearchRoomChatScreen: React.FC<SearchRoomChatScreenProps> = () => {
     item: TypedGeneralRoomChat;
     index: number;
   }) => {
-    console.log("itemitem", item);
     return <ChatItem {...item} key={index} />;
   };
 

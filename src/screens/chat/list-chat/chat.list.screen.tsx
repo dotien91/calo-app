@@ -1,6 +1,6 @@
 import React, { useMemo, useEffect } from "react";
 import { View, FlatList, SafeAreaView, Text } from "react-native";
-import { useTheme, useRoute } from "@react-navigation/native";
+import { useTheme } from "@react-navigation/native";
 /**
  * ? Local Imports
  */
@@ -23,8 +23,8 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const listDataRef = React.useRef([]);
-  const route = useRoute();
-  const paramsFromNavigation = route.params?.["groupData"];
+  // const route = useRoute();
+  // const paramsFromNavigation = route.params?.["groupData"];
 
   const {
     listData,
@@ -42,7 +42,6 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
 
   const msgToUser = (data: string) => {
     const newChatItem: TypedUserChat = JSON.parse(data)?.chat_room_data;
-    console.log("newChatItemnewChatItem", newChatItem);
     if (!newChatItem) return;
     const indexNewChatItem = listDataRef.current.findIndex(
       (item) => newChatItem.chat_room_id._id == item.chat_room_id._id,
@@ -67,16 +66,10 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
         },
       });
     }
-    console.log(
-      "isnewRoom",
-      { newChatItem, indexNewChatItem },
-      listDataRef.current,
-    );
     setListData(listDataRef.current);
   };
 
   useEffect(() => {
-    console.log("paramsFromNavigation chat list", paramsFromNavigation);
     // if (paramsFromNavigation) {
     //   // id: messageItem?.chat_room_id,
     //   //   partner_name: partner?.display_name,
@@ -107,8 +100,6 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
   }) => {
     return <ChatItem {...item} key={index} />;
   };
-
-  console.log("chat list", listData);
 
   return (
     <SafeAreaView style={styles.container}>

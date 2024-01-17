@@ -116,7 +116,6 @@ export async function downloadFileToPath(
       background: true,
       begin: (res) => {
         if (res.statusCode === 200) {
-          console.log(res.headers);
           typeFile = getFileExtensionViaCode(res.headers["Content-Type"]);
         }
       },
