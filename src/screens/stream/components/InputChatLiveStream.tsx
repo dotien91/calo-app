@@ -22,13 +22,13 @@ import images from "./reaction-animation/Themes/Images";
 import { Device } from "@utils/device.utils";
 
 const reactionData = [
-  { type: "like", image: images.like_static },
-  { type: "love", image: images.love_static },
-  { type: "care", image: images.angry_static },
-  { type: "haha", image: images.haha_static },
-  { type: "wow", image: images.wow_static },
-  { type: "sad", image: images.sad_static },
-  { type: "angry", image: images.angry_static },
+  { type: "like", image: images.like_static, gif: images.like_gif },
+  { type: "love", image: images.love_static, gif: images.love_gif },
+  { type: "care", image: images.angry_static, gif: images.angry_gif },
+  { type: "haha", image: images.haha_static, gif: images.haha_gif },
+  { type: "wow", image: images.wow_static, gif: images.wow_gif },
+  { type: "sad", image: images.sad_static, gif: images.sad_gif },
+  { type: "angry", image: images.angry_static, gif: images.angry_gif },
 ];
 
 interface InputChatLiveProps {
@@ -43,6 +43,8 @@ const InputChatLive: React.FC<InputChatLiveProps> = ({
   isPublisher,
 }) => {
   const inputRef = useRef(null);
+  const [reactType, setReactType] = React.useState("");
+
   const onSend = () => {
     const text = inputRef.current.value || "";
     sendChatMessage(text);
@@ -53,24 +55,31 @@ const InputChatLive: React.FC<InputChatLiveProps> = ({
     if (isPublisher) return null;
     return (
       <>
-        {reactionData.map((item, index) => (
-          <TouchableOpacity
-            onPress={throttle(() => pressLike(item), 3000)}
-            key={index}
-            style={styles.reactionBtn}
-          >
-            <Image
-              source={item.image}
-              style={{ width: 40, height: 40 }}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-        ))}
+        {reactionData.map((item, index) => {
+          const isSameReactType = reactType == item.type;
+          return (
+            <TouchableOpacity
+              onPress={throttle(() => pressLike(item), 3000)}
+              key={index}
+              style={styles.reactionBtn}
+            >
+              <Image
+                source={isSameReactType ? item.gif : item.image}
+                style={{ width: 40, height: 40 }}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+          );
+        })}
       </>
     );
   };
 
   const pressLike = (item: any) => {
+    setReactType(item.type);
+    setTimeout(() => {
+      setReactType("");
+    }, 2000);
     likeLiveStream({
       livestream_id: chatRoomId,
       react_type: item.type,

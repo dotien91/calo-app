@@ -20,10 +20,12 @@ import CommonStyle from "@theme/styles";
 import IconSvg from "assets/svg";
 import { convertLastActive } from "@utils/time.utils";
 import { SCREENS } from "constants";
-import { showDetailImageView } from "@helpers/super.modal.helper";
+import {
+  showDetailImageView,
+  showSuperModalByType,
+} from "@helpers/super.modal.helper";
 import { sharePost } from "@utils/share.utils";
 import { translations } from "@localization";
-import { showStickBottom } from "@shared-components/stick-bottom/HomeStickBottomModal";
 import useStore from "@services/zustand/store";
 
 const { width } = Dimensions.get("screen");
@@ -82,11 +84,18 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
   }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const _showStickBottom = () => {
-    if (!userData) {
-      showWarningLogin();
-    } else {
-      showStickBottom(data, "post");
-    }
+    showSuperModalByType({
+      type: "report",
+      data: {
+        report_type: "post",
+        partner_id: data?.user_id?._id,
+      },
+    });
+    // if (!userData) {
+    //   showWarningLogin();
+    // } else {
+    //   showStickBottom(data, "post");
+    // }
   };
 
   const HeaderItemPost = useMemo(() => {
@@ -413,4 +422,4 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
   );
 };
 
-export default ItemPost;
+export default React.memo(ItemPost);

@@ -31,6 +31,8 @@ const StreamItem = ({ data }: { data: IStreamItem }) => {
     });
   };
 
+  console.log("====12 stream");
+
   const Avatar = useMemo(() => {
     return (
       <TouchableOpacity
@@ -134,7 +136,7 @@ const StreamItem = ({ data }: { data: IStreamItem }) => {
         {data?.title}
       </Text>
     );
-  }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [data.title]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const renderVideoLive = () => {
     return (
@@ -181,4 +183,4 @@ const StreamItem = ({ data }: { data: IStreamItem }) => {
   );
 };
 
-export default StreamItem;
+export default React.memo(StreamItem);

@@ -54,7 +54,7 @@ const InputToolbar: React.FC<InputToolbarProps> = ({
             <TouchableOpacity onPress={onSelectPicture} style={styles.btnMedia}>
               <Icon
                 size={20}
-                type={IconType.Ionicons}
+                type={IconType.Feather}
                 name="image"
                 color={colors.black}
               />
@@ -62,7 +62,7 @@ const InputToolbar: React.FC<InputToolbarProps> = ({
             <TouchableOpacity onPress={onSelectVideo} style={styles.btnMedia}>
               <Icon
                 size={20}
-                type={IconType.Ionicons}
+                type={IconType.Feather}
                 name="play-circle"
                 color={colors.black}
               />
@@ -70,7 +70,7 @@ const InputToolbar: React.FC<InputToolbarProps> = ({
             <TouchableOpacity onPress={openRecordModal} style={styles.btnMedia}>
               <Icon
                 size={20}
-                type={IconType.Ionicons}
+                type={IconType.Feather}
                 name="mic"
                 color={colors.black}
               />

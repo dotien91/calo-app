@@ -1,11 +1,11 @@
 import React, { useState, useImperativeHandle } from "react";
-import { StyleSheet, TextInput, View } from "react-native";
+import { StyleSheet, TextInput, View, ViewStyle } from "react-native";
 import { palette } from "@theme/themes";
 import CommonStyle from "@theme/styles";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 interface customStyleType {
-  input: object;
+  input: ViewStyle;
 }
 
 interface IconType {

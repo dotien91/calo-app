@@ -76,6 +76,7 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
     refreshListPage,
     refreshing,
   } = useListData<any>(paramsRequest, getListPost);
+  console.log("listData home", listData);
 
   useEffect(() => {
     const typeEmit = isFollowingPost
@@ -142,6 +143,8 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
       </View>
     );
   };
+
+  console.log("re====12");
 
   if (!isLoggedIn() && isFollowingPost) {
     return (

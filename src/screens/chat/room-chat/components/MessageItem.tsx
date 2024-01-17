@@ -14,13 +14,13 @@ import { isSameMinute } from "@utils/date.utils";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { TypedMessageGiftedChat } from "models/chat.model";
 import { SCREENS } from "constants";
+import { isEqualObjectsSameKeys } from "@utils/index";
 
 const { isSameUser, isSameDay } = utils;
 
 interface IMessageBubble {
   renderAvatar: () => React.JSX.Element;
   renderBubble: () => React.JSX.Element;
-  renderDay: () => React.JSX.Element;
   currentMessage: TypedMessageGiftedChat;
   nextMessage: TypedMessageGiftedChat;
   previousMessage: TypedMessageGiftedChat;
@@ -41,9 +41,6 @@ const MessageBubble = (props: IMessageBubble) => {
   const renderDay = () => {
     if (props.currentMessage.createdAt) {
       const dayProps = getInnerComponentProps();
-      if (props.renderDay) {
-        return props.renderDay(dayProps);
-      }
       return <Day {...dayProps} />;
     }
     return null;
@@ -131,6 +128,7 @@ const MessageBubble = (props: IMessageBubble) => {
     }
     return null;
   };
+  console.log("render========= message");
   return (
     <View>
       {renderDay()}
@@ -164,4 +162,6 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(MessageBubble);
+export default React.memo(MessageBubble, (props, nextProps) => {
+  return isEqualObjectsSameKeys(props.currentMessage, nextProps.currentMessage);
+});

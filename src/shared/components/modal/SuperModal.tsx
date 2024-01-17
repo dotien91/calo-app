@@ -18,6 +18,8 @@ import PagerScrollMedia from "@shared-components/page-scroll-media/PageScrollMed
 import ListActionOfPost from "@shared-components/action-bottomsheet/ListActionOfPost";
 import ListActionOfComment from "@shared-components/action-bottomsheet/ListActionOfComment";
 import StickBottomModal from "@shared-components/stick-bottom/StickBottomModal";
+import ReportView from "./ReportView";
+
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
 // using normal one.
@@ -151,7 +153,9 @@ const SuperModal: React.FC<SuperModalProps> = () => {
   if (type !== "") {
     return (
       <StickBottomModal
-        isVisible={visible}
+        isVisible={true}
+        // isVisible={visible}
+
         header={""}
         onBackdropPress={() => setVisible(false)}
         onPressClose={() => setVisible(false)}
@@ -165,6 +169,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
             borderTopRightRadius: 16,
           }}
         >
+          {type === "report" && <ReportView {...content} />}
           {type === "post" && <ListActionOfPost data={content} />}
           {type === "comment" && <ListActionOfComment data={content} />}
         </View>

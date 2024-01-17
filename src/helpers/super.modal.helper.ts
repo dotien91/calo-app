@@ -119,6 +119,14 @@ export const showConfirmSuperModal = (params: ContentBasicPopupType) => {
   );
 };
 
+interface IModalByTypeData {
+  type: string;
+  data: any;
+}
+export const showSuperModalByType = ({ type, data }: IModalByTypeData) => {
+  eventEmitter.emit("show_bottom_modal", { type, data });
+};
+
 export const showDetailImageView = (
   listLink: ContentMediaPopup,
   index: number,

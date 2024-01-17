@@ -236,7 +236,7 @@ function App() {
       <View style={styles.container}>
         {renderInput()}
         <IconBtn
-          name="close"
+          name="x"
           color={colors.white}
           customStyle={{ position: "absolute", top: 60, right: 20, zIndex: 1 }}
           onPress={onShouldCloseLive}
@@ -244,7 +244,7 @@ function App() {
         />
         {!isStreaming && (
           <IconBtn
-            name="camera-flip"
+            name="camera"
             color={colors.white}
             customStyle={{ position: "absolute", top: 60, left: 20, zIndex: 1 }}
             onPress={handleSwitchCamera}
@@ -327,4 +327,4 @@ function App() {
   );
 }
 
-export default React.forwardRef(App);
+export default App;

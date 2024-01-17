@@ -27,4 +27,4 @@ const LiveBadge = ({ customStyle }: { customStyle: ViewStyle }) => {
   );
 };
 
-export default LiveBadge;
+export default React.memo(LiveBadge);

@@ -64,7 +64,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
       style={{ backgroundColor: colors.background }}
     />
   );
-
+  console.log("render=====111");
   return (
     <View style={CommonStyle.safeAreaView}>
       <HeaderHome />
