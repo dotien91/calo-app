@@ -1,5 +1,7 @@
 import Toast from "react-native-toast-message";
+import * as NavigationService from "react-navigation-helpers";
 
+import { SCREENS } from "constants";
 import cmStyle from "@theme/styles";
 import { palette } from "@theme/themes";
 import { ViewStyle } from "react-native";
@@ -117,6 +119,13 @@ export const showConfirmSuperModal = (params: ContentBasicPopupType) => {
     "show_super_modal",
     SuperModalHelper.getContentConfirmPopup(params),
   );
+};
+
+export const showWarningLogin = (message?: string) => {
+  showConfirmSuperModal({
+    title: message || translations.login.requireLogin,
+    cb: () => NavigationService.navigate(SCREENS.LOGIN_PAGE),
+  });
 };
 
 export const showDetailImageView = (

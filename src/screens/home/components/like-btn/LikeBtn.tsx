@@ -2,18 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
-import { showWarningLogin } from "../request-login/login.request";
-
-import { showToast } from "@helpers/super.modal.helper";
+import { showToast, showWarningLogin } from "@helpers/super.modal.helper";
 import { postLike } from "@services/api/post";
 import useStore from "@services/zustand/store";
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
 import { translations } from "@localization";
-import { debounce } from "lodash";
+import { TypedRequest } from "shared/models";
 
 interface LikeBtnProps {
-  data: any;
+  data: TypedRequest;
 }
 
 const LikeBtn = (props: LikeBtnProps) => {
@@ -22,6 +20,7 @@ const LikeBtn = (props: LikeBtnProps) => {
   const updateListLike = useStore((state) => state.updateListLike);
   const userData = useStore((state) => state.userData);
   const listLike = useStore((state) => state.listLike);
+  const [loadding, setLoading] = useState(false);
 
   useEffect(() => {
     const index = listLike.findIndex((item) => item._id === props.data?._id);
@@ -39,6 +38,7 @@ const LikeBtn = (props: LikeBtnProps) => {
         community_id: props.data._id,
       };
       setIsLike(!isLike);
+      setLoading(true);
       updateListLike(
         props.data._id,
         isLike ? likeNumber - 1 : likeNumber + 1,
@@ -51,8 +51,10 @@ const LikeBtn = (props: LikeBtnProps) => {
             res.data.like_number,
             res.data.is_like,
           );
+          setLoading(false);
         } else {
           setIsLike(!isLike);
+          setLoading(false);
           showToast({
             type: "error",
             message: res.message || translations.error.isOffline,
@@ -62,10 +64,11 @@ const LikeBtn = (props: LikeBtnProps) => {
       });
     }
   };
-  const onPressLikeDebounce = debounce(pressLike, 600);
+  // const onPressLikeDebounce = debounce(pressLike, 600);
   return (
     <TouchableOpacity
-      onPress={onPressLikeDebounce}
+      onPress={pressLike}
+      disabled={loadding}
       style={[styles.viewLike, { justifyContent: "flex-start" }]}
     >
       <Icon

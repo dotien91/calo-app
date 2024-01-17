@@ -238,9 +238,9 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   txtDefault: {
+    ...CommonStyle.hnMedium,
     fontSize: 16,
     textAlign: "center",
-    ...CommonStyle.hnMedium,
     marginBottom: 12,
   },
   btnStyle: {
@@ -251,9 +251,9 @@ const styles = StyleSheet.create({
     ...CommonStyle.flexCenter,
   },
   txtBtn: {
-    color: palette.white,
-    fontSize: 16,
     ...CommonStyle.hnSemiBold,
+    fontSize: 16,
+    color: palette.white,
   },
 });
 

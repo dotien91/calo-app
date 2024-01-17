@@ -60,7 +60,7 @@ const ListActionOfComment = ({ data }: ListActionOfComment) => {
   const pressFollowUser = () => {
     //close bottomsheet
     closeSuperModal();
-    _followUser(data?.user_id?._id);
+    _followUser(data?.user_id?._id, data?.user_id?.display_name);
   };
 
   if (userData?._id === data?.user_id?._id) {

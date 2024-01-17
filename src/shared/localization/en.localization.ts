@@ -182,6 +182,9 @@ export default {
     report: "Report this post",
     save: "Save post",
     likeError: "Send like error, please try again!",
+    savePostSuccess: "Save post success",
+    listPostSave: "Post save",
+    deleteFromSave: "Delete from save",
   },
   navigation: {
     dashboard: "Dashboard",

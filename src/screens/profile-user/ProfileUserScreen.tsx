@@ -12,6 +12,7 @@ import * as NavigationService from "react-navigation-helpers";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { useTheme } from "@react-navigation/native";
 import { debounce } from "lodash";
+import { Tabs, MaterialTabBar } from "react-native-collapsible-tab-view";
 
 import useStore from "@services/zustand/store";
 import CommonStyle from "@theme/styles";
@@ -19,17 +20,19 @@ import { palette } from "@theme/themes";
 import { translations } from "@localization";
 import CountFollow from "./count-follow/CountFollow";
 import { getUserById } from "@services/api/curentUser";
-import { showWarningLogin } from "@screens/home/components/request-login/login.request";
 import { useActionUser } from "@helpers/hooks/useActionUser";
 import ListPost from "@screens/home/ListPost";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
 import { SCREENS } from "constants";
 import { selectMedia } from "@helpers/file.helper";
-import { uploadMedia } from "@services/api/post";
+import { getListPost, uploadMedia } from "@services/api/post";
 import { isIos } from "@helpers/device.info.helper";
 import { updateProfile } from "@services/api/userApi";
-import { showToast } from "@helpers/super.modal.helper";
+import { showToast, showWarningLogin } from "@helpers/super.modal.helper";
 import eventEmitter from "@services/event-emitter";
+import { useListData } from "@helpers/hooks/useListData";
+import ItemPost from "@screens/home/components/ItemPost/ItemPost";
+import Header from "@shared-components/header/Header";
 
 interface ProfileUserProps {
   route: any;
@@ -38,6 +41,7 @@ interface ProfileUserProps {
 const ProfileUser = (props: ProfileUserProps) => {
   const userData = useStore((store) => store.userData);
   const listFollow = useStore((store) => store.listFollow);
+  const listPostSave = useStore((store) => store.listPostSave);
   const _setLinkAvatar = useStore((store) => store.setLinkAvatar);
   const _id = props.route?.params?._id;
   const theme = useTheme();
@@ -63,27 +67,12 @@ const ProfileUser = (props: ProfileUserProps) => {
 
   const HeaderProfile = () => {
     return (
-      <View style={styles.viewHeader}>
-        <TouchableOpacity style={{ borderRadius: 30 }} onPress={goback}>
-          <Icon
-            name="arrow-back-outline"
-            type={IconType.Ionicons}
-            size={25}
-            color={palette.text}
-          />
-        </TouchableOpacity>
-        <View style={{ flexDirection: "row", gap: 8 }}>
-          <Text style={{ ...CommonStyle.hnSemiBold }}>
-            {userInfo?.display_name}
-          </Text>
-        </View>
-        <Icon
-          name="ellipsis-horizontal"
-          type={IconType.Ionicons}
-          size={25}
-          color={palette.text}
-        />
-      </View>
+      <Header
+        iconNameLeft="arrow-back-outline"
+        iconNameRight="ellipsis-horizontal"
+        onPressLeft={goback}
+        text={userInfo?.display_name}
+      />
     );
   };
 
@@ -134,9 +123,9 @@ const ProfileUser = (props: ProfileUserProps) => {
           paddingVertical: 26,
         }}
       >
-        <View style={{ width: 86, height: 86, ...CommonStyle.center }}>
+        <View style={{ ...styles.viewAvatar, ...CommonStyle.center }}>
           <Image
-            style={{ width: 86, height: 86, borderRadius: 30 }}
+            style={styles.viewAvatar}
             source={{
               uri: linkAvatar,
             }}
@@ -152,18 +141,7 @@ const ProfileUser = (props: ProfileUserProps) => {
             </View>
           )}
           {userData?._id === userInfo?._id && (
-            <View
-              style={{
-                position: "absolute",
-                bottom: 0,
-                right: -10,
-                width: 30,
-                height: 30,
-                backgroundColor: colors.background2,
-                ...CommonStyle.center,
-                borderRadius: 15,
-              }}
-            >
+            <View style={styles.viewCamera}>
               <Icon
                 onPress={onPressChangeAvatar}
                 name="camera-outline"
@@ -209,7 +187,7 @@ const ProfileUser = (props: ProfileUserProps) => {
     if (!userData) {
       showWarningLogin();
     } else {
-      _followUser(userInfo._id);
+      _followUser(userInfo._id, userInfo?.display_name);
     }
   };
 
@@ -275,9 +253,29 @@ const ProfileUser = (props: ProfileUserProps) => {
       </View>
     );
   };
+  const paramsRequest = {
+    limit: 10,
+    auth_id: userData?._id || "",
+    user_id: _id,
+  };
 
-  return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+  const {
+    listData,
+    onEndReach,
+    refreshControl,
+    renderFooterComponent,
+    refreshing,
+  } = useListData<any>(paramsRequest, getListPost);
+
+  const renderItem = ({ item }: any) => {
+    return <ItemPost key={item._id} data={item} isProfile={_id?.length > 0} />;
+  };
+  const renderItemSave = ({ item }: any) => {
+    return <ItemPost key={item._id} data={item} />;
+  };
+
+  const renderHeader = () => {
+    return (
       <View>
         <HeaderProfile />
         {Avatar}
@@ -285,10 +283,84 @@ const ProfileUser = (props: ProfileUserProps) => {
         <ListAction />
         <Bio text={userInfo?.bio || ""} />
         <View style={{ height: 1, backgroundColor: palette.borderColor }} />
+      </View>
+    );
+  };
+
+  const renderTabBar = (props) => {
+    return (
+      <MaterialTabBar
+        {...props}
+        indicatorStyle={{
+          backgroundColor: colors.primary,
+        }}
+        activeColor={colors.primary}
+        labelStyle={{ ...CommonStyle.hnBold }}
+      />
+    );
+  };
+
+  if (userData?._id === userInfo?._id) {
+    return (
+      <View style={styles.container}>
+        <Tabs.Container renderHeader={renderHeader} renderTabBar={renderTabBar}>
+          <Tabs.Tab
+            name={translations.post.post}
+            label={translations.post.post}
+          >
+            {/* <ListPost isFollowingPost={false} id={_id} /> */}
+            <Tabs.FlatList
+              data={listData}
+              renderItem={renderItem}
+              scrollEventThrottle={16}
+              onEndReachedThreshold={0}
+              onEndReached={onEndReach}
+              showsVerticalScrollIndicator={false}
+              removeClippedSubviews={true}
+              keyExtractor={(item) => item?._id + ""}
+              refreshControl={refreshControl()}
+              ListFooterComponent={renderFooterComponent()}
+              refreshing={refreshing}
+            />
+          </Tabs.Tab>
+          <Tabs.Tab
+            name={translations.post.listPostSave}
+            label={translations.post.listPostSave}
+          >
+            <Tabs.FlatList
+              data={listPostSave}
+              renderItem={renderItemSave}
+              scrollEventThrottle={16}
+              onEndReachedThreshold={0}
+              onEndReached={onEndReach}
+              showsVerticalScrollIndicator={false}
+              removeClippedSubviews={true}
+              keyExtractor={(item) => item?._id + ""}
+              refreshControl={refreshControl()}
+              ListFooterComponent={renderFooterComponent()}
+            />
+          </Tabs.Tab>
+        </Tabs.Container>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.container}>
+      <HeaderProfile />
+      <ScrollView
+        style={CommonStyle.flex1}
+        showsVerticalScrollIndicator={false}
+      >
+        {Avatar}
+        <CountFollow id={_id} />
+        <ListAction />
+        <Bio text={userInfo?.bio || ""} />
+        <View style={{ height: 1, backgroundColor: palette.borderColor }} />
 
         <ListPost isFollowingPost={false} id={_id} />
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
@@ -298,12 +370,6 @@ const styles = StyleSheet.create({
   container: {
     ...CommonStyle.safeAreaView,
     marginBottom: getBottomSpace(),
-  },
-  viewHeader: {
-    height: 40,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingHorizontal: 20,
   },
   listAction: {
     flexDirection: "row",
@@ -323,5 +389,16 @@ const styles = StyleSheet.create({
     ...CommonStyle.hnBold,
     fontSize: 14,
     color: palette.mainColor2,
+  },
+  viewAvatar: { width: 86, height: 86, borderRadius: 30 },
+  viewCamera: {
+    position: "absolute",
+    bottom: 0,
+    right: -10,
+    width: 30,
+    height: 30,
+    backgroundColor: palette.background2,
+    ...CommonStyle.center,
+    borderRadius: 15,
   },
 });

@@ -71,7 +71,6 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
   };
   console.log("render======");
 
-
   //append local media file
   useEffect(() => {
     if (!listFileLocal?.length) return;
@@ -169,7 +168,6 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
       />
     );
   };
-
 
   return (
     <SafeAreaView

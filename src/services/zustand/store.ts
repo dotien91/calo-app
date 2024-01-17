@@ -4,9 +4,16 @@ import createAppSlice, { AppSlice } from "@services/zustand/app/AppSlice";
 import createUserSlice, { UserSlice } from "@services/zustand/user/UserSlice";
 import createChatSlice, { ChatSlice } from "@services/zustand/chat/ChatSlice";
 import createPostSlice, { PostSlice } from "@services/zustand/post/PostSlice";
+import createSavePostSlice, {
+  SavePostSlice,
+} from "@services/zustand/save-post/SavePostSlice";
 import { createJSONStorage, persist, StateStorage } from "zustand/middleware";
 
-export type StoreState = AppSlice & UserSlice & PostSlice & ChatSlice;
+export type StoreState = AppSlice &
+  UserSlice &
+  PostSlice &
+  ChatSlice &
+  SavePostSlice;
 export type StoreSlice<T> = (
   set: StoreApi<StoreState>["setState"],
   get: StoreApi<StoreState>["getState"],
@@ -32,6 +39,7 @@ const useStore = create<StoreState>()(
       ...createUserSlice(set, get),
       ...createChatSlice(set, get),
       ...createPostSlice(set, get),
+      ...createSavePostSlice(set, get),
     }),
     {
       name: "store",
