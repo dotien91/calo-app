@@ -1,6 +1,8 @@
 import React, { useMemo, useEffect } from "react";
 import { View, FlatList, SafeAreaView, Text } from "react-native";
 import { useTheme } from "@react-navigation/native";
+import * as NavigationService from "react-navigation-helpers";
+
 /**
  * ? Local Imports
  */
@@ -9,13 +11,14 @@ import { getListChat } from "@services/api/chatApi";
 import ChatItem from "../room-chat/components/ChatItem";
 import ListFriend from "./friend.list.view";
 import { translations } from "@localization";
-import FriendSearchInput from "../search-room/search.room.input";
+import SearchInput from "../../../shared/components/search-input.tsx/search.input";
 import LoadingList from "@shared-components/loading.list.component";
 import EmptyResultView from "@shared-components/empty.data.component";
 import eventEmitter from "@services/event-emitter";
 import { useListData } from "@helpers/hooks/useListData";
 import { TypedGeneralRoomChat, TypedUserChat } from "models/chat.model";
 import { onSocket, offSocket } from "@helpers/socket.helper";
+import { SCREENS } from "constants";
 
 interface ListScreenProps {}
 
@@ -101,10 +104,14 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
     return <ChatItem {...item} key={index} />;
   };
 
+  const openSearchRoom = () => {
+    NavigationService.navigate(SCREENS.SEARCH_CHAT);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.headerTitle}>{translations.navigation.messages}</Text>
-      <FriendSearchInput fromChatList />
+      <SearchInput onPressInput={openSearchRoom} />
       <View style={{ height: 12 }} />
       <ListFriend />
       <View style={{ height: 8 }} />

@@ -10,8 +10,8 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 interface KeyboardBtnProps {
   icon: string;
   callback: () => void;
-  customStyle: ViewStyle;
-  color: string;
+  customStyle?: ViewStyle;
+  color?: string;
 }
 
 const KeyboardBtn: React.FC<KeyboardBtnProps> = ({

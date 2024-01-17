@@ -53,6 +53,8 @@ function App() {
   const { appStateStatus } = useAppStateCheck();
 
   useEffect(() => {
+    if (!publisherRef.current) return;
+
     if (appStateStatus == "active") {
       setShow(true);
       setTimeout(() => {
@@ -68,9 +70,10 @@ function App() {
   const checkPermission = async () => {
     const permission = await requestPermission(
       PERMISSION.permissionRecordVideo,
-      "camera, microphone",
+      "camera, microphone, bluetooth",
     );
 
+    console.log("permissionpermissionpermission", permission);
     setPermissionGranted(permission == RESULTS.GRANTED);
   };
 
@@ -210,10 +213,8 @@ function App() {
       <View style={styles.topView}>
         <Input
           ref={inputRef}
-          otherProps={{
-            placeholder: translations.livestream.inputTitle,
-            placeholderTextColor: colors.white,
-          }}
+          placeholder={translations.livestream.inputTitle}
+          placeholderTextColor={colors.white}
           customStyle={styles.input}
           icon={{
             name: "pencil-outline",

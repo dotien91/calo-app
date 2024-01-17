@@ -43,10 +43,8 @@ const InputToolbar: React.FC<InputToolbarProps> = ({
       <View style={styles.wrapInput}>
         <Input
           ref={inputRef}
-          otherProps={{
-            placeholder: translations.chat.typeMessage,
-            placeholderTextColor: colors.placeholder2,
-          }}
+          placeholder={translations.chat.typeMessage}
+          placeholderTextColor={colors.placeholder2}
           customStyle={styles.input}
         />
         {!fromLiveStream && (

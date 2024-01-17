@@ -20,7 +20,6 @@ const HomeStickBottomModal = () => {
   //     eventEmitter.off("close_bottom_modal", closeBottomModal);
   //   };
   // }, []);
-  
 
   return (
     <StickBottomModal

@@ -33,6 +33,7 @@ import eventEmitter from "@services/event-emitter";
 import { useListData } from "@helpers/hooks/useListData";
 import ItemPost from "@screens/home/components/ItemPost/ItemPost";
 import Header from "@shared-components/header/Header";
+import { useUserHook } from "@helpers/hooks/useUserHook";
 
 interface ProfileUserProps {
   route: any;
@@ -49,6 +50,8 @@ const ProfileUser = (props: ProfileUserProps) => {
   const [userInfo, setUserInfo] = useState();
   const [linkAvatar, setLinkAvatar] = useState();
   const [updateing, setUpdating] = useState(false);
+
+  const { isLoggedIn } = useUserHook();
 
   const _getUserById = (id: string) => {
     getUserById(id).then((res) => {
@@ -190,6 +193,14 @@ const ProfileUser = (props: ProfileUserProps) => {
     }
   };
 
+  const openChatRoom = () => {
+    console.log("userInfouserInfo", userInfo._id, _id);
+    NavigationService.navigate(SCREENS.CHAT_ROOM, {
+      partner_id: userInfo?._id,
+      partner_name: userInfo?.display_name,
+    });
+  };
+
   const ListAction = () => {
     const isUserLogin = userData?._id === userInfo?._id;
     if (!userData || !isUserLogin) {
@@ -204,7 +215,9 @@ const ProfileUser = (props: ProfileUserProps) => {
             }`}
             isBackground
           />
-          <ButtomAction onPress={() => {}} text={translations.message} />
+          {isLoggedIn() && (
+            <ButtomAction onPress={openChatRoom} text={translations.message} />
+          )}
         </View>
       );
     }
@@ -216,10 +229,7 @@ const ProfileUser = (props: ProfileUserProps) => {
           }}
           text={translations.profile.editProfile}
         />
-        <ButtomAction
-          onPress={() => {}}
-          text={translations.profile.shareProfile}
-        />
+        <ButtomAction text={translations.profile.shareProfile} />
       </View>
     );
   };

@@ -23,9 +23,6 @@ const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
   // const { isAuthenticated, account } = useStore(state => state.user)
 
   useEffect(() => {
-    setTimeout(() => {
-      stopSocket();
-    }, 5000);
     if (!_getJson(USER_TOKEN) || !userData?._id) return;
     connectSocket();
     return () => {
@@ -77,7 +74,7 @@ const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
   };
 
   const stopSocket = () => {
-    refSocket.current.removeAllListeners();
+    refSocket.current?.removeAllListeners();
     refSocket.current?.disconnect?.();
   };
 

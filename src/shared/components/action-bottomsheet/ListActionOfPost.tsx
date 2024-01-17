@@ -74,7 +74,7 @@ const ListActionOfPost = ({ data }: ListActionOfPost) => {
   };
 
   const openReportModal = () => {
-    closeSuperModal()
+    closeSuperModal();
     showSuperModalByType({
       type: "report",
       data: {

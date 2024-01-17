@@ -320,9 +320,6 @@ const CreateGroupChatScreen: React.FC<CreateGroupChatScreenProps> = () => {
         keyExtractor={(item) => item.partner_id._id + ""}
         ListFooterComponent={renderFooterComponent()}
       />
-      {!!itemsSelect.length && (
-        <View style={{ height: 60, width: 100, backgroundColor: "red" }} />
-      )}
       {renderBottom()}
     </SafeAreaView>
   );

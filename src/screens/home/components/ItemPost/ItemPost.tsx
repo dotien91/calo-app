@@ -22,7 +22,6 @@ import { SCREENS } from "constants";
 import {
   showDetailImageView,
   showWarningLogin,
-  showSuperModalByType,
 } from "@helpers/super.modal.helper";
 import { sharePost } from "@utils/share.utils";
 import { translations } from "@localization";
@@ -84,7 +83,6 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
   }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const _showStickBottom = () => {
-
     if (!userData) {
       showWarningLogin();
     } else {
