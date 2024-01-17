@@ -28,6 +28,7 @@ import { sharePost } from "@utils/share.utils";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";
 import { TypedRequest } from "shared/models";
+import { showStickBottom } from "@shared-components/stick-bottom/HomeStickBottomModal";
 
 const { width } = Dimensions.get("screen");
 const PADDING_HORIZONTAL = 16;
@@ -83,18 +84,12 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
   }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const _showStickBottom = () => {
-    showSuperModalByType({
-      type: "report",
-      data: {
-        report_type: "post",
-        partner_id: data?.user_id?._id,
-      },
-    });
-    // if (!userData) {
-    //   showWarningLogin();
-    // } else {
-    //   showStickBottom(data, "post");
-    // }
+
+    if (!userData) {
+      showWarningLogin();
+    } else {
+      showStickBottom(data, "post");
+    }
   };
 
   const HeaderItemPost = useMemo(() => {
