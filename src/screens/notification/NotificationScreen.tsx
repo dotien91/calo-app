@@ -19,6 +19,7 @@ import {
 import EmptyResultView from "@shared-components/empty.data.component";
 import { SCREENS } from "constants";
 import LoadingList from "@shared-components/loading.list.component";
+import { TypedNotification } from "models/notification.model";
 
 interface ProfileScreenProps {}
 
@@ -35,7 +36,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
     }
   }, [isFocused]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const _pressNotification = (item: any) => {
+  const _pressNotification = (item: TypedNotification) => {
     const params = {
       _id: item._id,
       read_status: "1",
@@ -82,7 +83,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
     });
   };
 
-  const renderItem = ({ item }: any) => {
+  const renderItem = ({ item }: { item: TypedNotification }) => {
     return (
       <ItemNotification
         key={item._id}
@@ -108,7 +109,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
     renderFooterComponent,
     refreshListPage,
     refreshing,
-  } = useListData<any>(paramsRequest, getListNotification);
+  } = useListData<TypedNotification>(paramsRequest, getListNotification);
 
   const _refreshListPage = () => {
     refreshListPage();

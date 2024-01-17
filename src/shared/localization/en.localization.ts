@@ -185,6 +185,7 @@ export default {
     savePostSuccess: "Save post success",
     listPostSave: "Post save",
     deleteFromSave: "Delete from save",
+    emptyListSave: "Saved posts list is empty",
   },
   navigation: {
     dashboard: "Dashboard",

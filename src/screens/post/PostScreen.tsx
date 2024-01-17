@@ -74,7 +74,7 @@ export default function PostScreen() {
         } || []),
     ),
   );
-
+  console.log("item...", JSON.stringify(item));
   const onPressLive = () => {
     NavigationService.navigate(SCREENS.LIVE_STREAM, {
       titleLive: description,
@@ -113,10 +113,17 @@ export default function PostScreen() {
     getCategory().then((res) => {
       if (!res.isError) {
         setListCategory(res.data);
-        setOptions((prev) => ({
-          ...prev,
-          postCategory: res.data?.[0]?._id,
-        }));
+        if (item) {
+          setOptions((prev) => ({
+            ...prev,
+            postCategory: item.post_category?._id,
+          }));
+        } else {
+          setOptions((prev) => ({
+            ...prev,
+            postCategory: res.data?.[0]?._id,
+          }));
+        }
       }
     });
   };
@@ -254,7 +261,7 @@ export default function PostScreen() {
                 #
                 {listCategory.length > 0
                   ? listCategory?.find((i) => i._id === options.postCategory)
-                      ?.category_title || translations.postCategory
+                      ?.category_content || translations.postCategory
                   : translations.postCategory}
               </Text>
             </Pressable>
@@ -386,7 +393,7 @@ export default function PostScreen() {
                           fontSize: 16,
                           color: colors.primary,
                         }}
-                      >{`#${i.category_title}`}</Text>
+                      >{`#${i.category_content}`}</Text>
                     </Pressable>
                   ))}
                 </BottomSheetScrollView>

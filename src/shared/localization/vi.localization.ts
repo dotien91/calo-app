@@ -189,13 +189,13 @@ export default {
     emptyPostTitle: "Không có bài viết",
     emptyPostDes:
       "Khi một người bạn hoặc giáo viên đăng một bài viết, nó sẽ xuất hiện ở đây và sau đó bạn có thể thích, chia sẻ và bình luận về bài đăng đó.",
-    postInvalid: "Bài đăng không tồn tại",
     report: "Báo cáo bài viết",
     save: "Lưu bài viết",
     likeError: "Gửi lượt thích thất bại vui lòng thử lại!",
     savePostSuccess: "Lưu bài viết thành công",
-    listPostSave: "bài viết đã lưu",
+    listPostSave: "Bài viết đã lưu",
     deleteFromSave: "Xoá khỏi danh sách đã lưu",
+    emptyListSave: "Danh sách bài viết đã lưu trống",
   },
   navigation: {
     dashboard: "Trang chủ",

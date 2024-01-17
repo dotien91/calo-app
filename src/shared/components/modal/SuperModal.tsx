@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, ReactNode } from "react";
 import {
   StyleSheet,
   Text,
@@ -19,6 +19,7 @@ import ListActionOfPost from "@shared-components/action-bottomsheet/ListActionOf
 import ListActionOfComment from "@shared-components/action-bottomsheet/ListActionOfComment";
 import StickBottomModal from "@shared-components/stick-bottom/StickBottomModal";
 import ReportView from "./ReportView";
+import { TypedMedia } from "shared/models";
 
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
@@ -27,12 +28,16 @@ import ReportView from "./ReportView";
 // todo custome view modal
 
 interface SuperModalProps {}
+interface TypehowBottomModal {
+  type: "post" | "comment";
+  data: ReactNode;
+}
 
 const SuperModal: React.FC<SuperModalProps> = () => {
   const [visible, setVisible] = useState(false);
-  const [content, setContent] = useState({});
+  const [content, setContent] = useState<object | ReactNode>({});
   const [isLoadingView, setIsLoadingView] = useState(false);
-  const [listMedia, setListMeia] = useState([]);
+  const [listMedia, setListMeia] = useState<TypedMedia[]>([]);
   const [indexMedia, setIndexMedia] = useState(0);
   const [type, setType] = useState("");
   const scrollViewRef = useRef<any>(null);
@@ -50,7 +55,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
     };
   }, []);
 
-  const showBottomModal = (param: any) => {
+  const showBottomModal = (param: TypehowBottomModal) => {
     setType(param.type);
     setContent(param.data);
     setVisible(true);
@@ -65,7 +70,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
     setVisible(true);
   };
 
-  const showMedia = (_listMedia: object) => {
+  const showMedia = (_listMedia: { listLink: TypedMedia[]; index: number }) => {
     setListMeia(_listMedia.listLink);
     setIndexMedia(_listMedia.index);
     setTimeout(() => {

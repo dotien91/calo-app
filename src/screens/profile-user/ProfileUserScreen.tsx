@@ -11,7 +11,6 @@ import {
 import * as NavigationService from "react-navigation-helpers";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { useTheme } from "@react-navigation/native";
-import { debounce } from "lodash";
 import { Tabs, MaterialTabBar } from "react-native-collapsible-tab-view";
 
 import useStore from "@services/zustand/store";
@@ -20,7 +19,6 @@ import { palette } from "@theme/themes";
 import { translations } from "@localization";
 import CountFollow from "./count-follow/CountFollow";
 import { getUserById } from "@services/api/curentUser";
-import { useActionUser } from "@helpers/hooks/useActionUser";
 import ListPost from "@screens/home/ListPost";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
 import { SCREENS } from "constants";
@@ -28,11 +26,15 @@ import { selectMedia } from "@helpers/file.helper";
 import { getListPost, uploadMedia } from "@services/api/post";
 import { isIos } from "@helpers/device.info.helper";
 import { updateProfile } from "@services/api/userApi";
-import { showToast, showWarningLogin } from "@helpers/super.modal.helper";
+import { showToast } from "@helpers/super.modal.helper";
 import eventEmitter from "@services/event-emitter";
 import { useListData } from "@helpers/hooks/useListData";
 import ItemPost from "@screens/home/components/ItemPost/ItemPost";
 import Header from "@shared-components/header/Header";
+import { TypedRequest } from "shared/models";
+import { TypedUser } from "models";
+import FollowBtn from "@screens/home/components/follow-btn/FollowBtn";
+import EmptyResultView from "@shared-components/empty.data.component";
 
 interface ProfileUserProps {
   route: any;
@@ -40,13 +42,12 @@ interface ProfileUserProps {
 
 const ProfileUser = (props: ProfileUserProps) => {
   const userData = useStore((store) => store.userData);
-  const listFollow = useStore((store) => store.listFollow);
   const listPostSave = useStore((store) => store.listPostSave);
   const _setLinkAvatar = useStore((store) => store.setLinkAvatar);
   const _id = props.route?.params?._id;
   const theme = useTheme();
   const { colors } = theme;
-  const [userInfo, setUserInfo] = useState();
+  const [userInfo, setUserInfo] = useState<TypedUser | null>(null);
   const [linkAvatar, setLinkAvatar] = useState();
   const [updateing, setUpdating] = useState(false);
 
@@ -71,7 +72,7 @@ const ProfileUser = (props: ProfileUserProps) => {
         iconNameLeft="arrow-back-outline"
         iconNameRight="ellipsis-horizontal"
         onPressLeft={goback}
-        text={userInfo?.display_name}
+        text={userInfo?.display_name || ""}
       />
     );
   };
@@ -89,7 +90,7 @@ const ProfileUser = (props: ProfileUserProps) => {
           setLinkAvatar(res?.[0]?.callback?.media_thumbnail);
           _setLinkAvatar(res?.[0]?.callback?.media_thumbnail);
           const params = {
-            _id: userData._id,
+            _id: userData?._id,
             user_avatar: res?.[0]?.callback?.media_url,
             user_avatar_thumbnail: res?.[0]?.callback?.media_thumbnail,
           };
@@ -181,30 +182,12 @@ const ProfileUser = (props: ProfileUserProps) => {
     );
   };
 
-  const { _followUser } = useActionUser();
-
-  const _followUserWithId = () => {
-    if (!userData) {
-      showWarningLogin();
-    } else {
-      _followUser(userInfo._id, userInfo?.display_name);
-    }
-  };
-
   const ListAction = () => {
     const isUserLogin = userData?._id === userInfo?._id;
     if (!userData || !isUserLogin) {
       return (
         <View style={styles.listAction}>
-          <ButtomAction
-            onPress={debounce(_followUserWithId, 1000)}
-            text={`${
-              listFollow.indexOf(userInfo?._id) >= 0
-                ? translations.unfollow
-                : translations.follow
-            }`}
-            isBackground
-          />
+          <FollowBtn data={userInfo} />
           <ButtomAction onPress={() => {}} text={translations.message} />
         </View>
       );
@@ -265,12 +248,12 @@ const ProfileUser = (props: ProfileUserProps) => {
     refreshControl,
     renderFooterComponent,
     refreshing,
-  } = useListData<any>(paramsRequest, getListPost);
+  } = useListData<TypedRequest>(paramsRequest, getListPost);
 
-  const renderItem = ({ item }: any) => {
+  const renderItem = ({ item }: { item: TypedRequest }) => {
     return <ItemPost key={item._id} data={item} isProfile={_id?.length > 0} />;
   };
-  const renderItemSave = ({ item }: any) => {
+  const renderItemSave = ({ item }: { item: TypedRequest }) => {
     return <ItemPost key={item._id} data={item} />;
   };
 
@@ -300,13 +283,48 @@ const ProfileUser = (props: ProfileUserProps) => {
     );
   };
 
+  const renderEmpty = () => {
+    return (
+      <View
+        style={{
+          ...CommonStyle.flex1,
+          backgroundColor: colors.background,
+          paddingVertical: 40,
+          minHeight: 300,
+        }}
+      >
+        <EmptyResultView
+          title={translations.post.emptyListSave}
+          icon="document-text-outline"
+        />
+      </View>
+    );
+  };
+  const renderEmptyPostOfMe = () => {
+    return (
+      <View
+        style={{
+          ...CommonStyle.flex1,
+          backgroundColor: colors.background,
+          paddingVertical: 40,
+          minHeight: 300,
+        }}
+      >
+        <EmptyResultView
+          title={translations.post.emptyPost}
+          icon="document-text-outline"
+        />
+      </View>
+    );
+  };
+
   if (userData?._id === userInfo?._id) {
     return (
       <View style={styles.container}>
         <Tabs.Container renderHeader={renderHeader} renderTabBar={renderTabBar}>
           <Tabs.Tab
-            name={translations.post.post}
-            label={translations.post.post}
+            name={translations.post.posts}
+            label={translations.post.posts}
           >
             {/* <ListPost isFollowingPost={false} id={_id} /> */}
             <Tabs.FlatList
@@ -321,6 +339,7 @@ const ProfileUser = (props: ProfileUserProps) => {
               refreshControl={refreshControl()}
               ListFooterComponent={renderFooterComponent()}
               refreshing={refreshing}
+              ListEmptyComponent={renderEmptyPostOfMe}
             />
           </Tabs.Tab>
           <Tabs.Tab
@@ -338,6 +357,7 @@ const ProfileUser = (props: ProfileUserProps) => {
               keyExtractor={(item) => item?._id + ""}
               refreshControl={refreshControl()}
               ListFooterComponent={renderFooterComponent()}
+              ListEmptyComponent={renderEmpty}
             />
           </Tabs.Tab>
         </Tabs.Container>

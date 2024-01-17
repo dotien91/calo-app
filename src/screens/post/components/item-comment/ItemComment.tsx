@@ -15,6 +15,7 @@ import useStore from "@services/zustand/store";
 import { showToast, showWarningLogin } from "@helpers/super.modal.helper";
 import { convertLastActive } from "@utils/time.utils";
 import { showStickBottom } from "@shared-components/stick-bottom/HomeStickBottomModal";
+import { TypedComment } from "shared/models";
 
 const SIZE_AVATAR = 30;
 const BORDER_AVATAR = 12;
@@ -22,12 +23,12 @@ const FONT_SIZE = 12;
 const PADDING_LEFT = 12;
 
 interface ItemCommentProps {
-  data: any;
+  data: TypedComment;
   onPressReply: (data: string) => void;
 }
 
 interface ItemReplyProps {
-  item: any;
+  item: TypedComment;
   onPressReplyChild: (data: string) => void;
   repCmtId: string;
 }
@@ -127,7 +128,7 @@ const ItemReply = ({ item, onPressReplyChild, repCmtId }: ItemReplyProps) => {
             {convertLastActive(item?.createdAt)}
           </Text>
         </View>
-        {!item.sending && (
+        {!item?.sending && (
           <Pressable onPress={_showStickBottom}>
             <Icon
               size={20}
@@ -204,7 +205,7 @@ const ItemReply = ({ item, onPressReplyChild, repCmtId }: ItemReplyProps) => {
       <View style={{ paddingLeft: PADDING_LEFT, ...CommonStyle.flex1 }}>
         {HeaderItemComment}
         {ContentStatus}
-        {!item.send && <LikeCommentReply />}
+        {!item.sending && <LikeCommentReply />}
       </View>
     </View>
   );
@@ -220,7 +221,7 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
   const listCommentDelete = useStore((state) => state.listCommentDelete);
   const userData = useStore((state) => state.userData);
 
-  const [listReply, setListReply] = useState([]);
+  const [listReply, setListReply] = useState<TypedComment[]>([]);
   const [isLike, setIsLike] = useState<boolean>(data?.is_like);
   const [likeNumber, setLikeNumber] = useState<number>(data.like_number);
   useEffect(() => {
@@ -407,7 +408,7 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
         {!data.sending && <LikeComment />}
         {listReply.length > 0 &&
           listReply
-            .filter((item) => listCommentDelete.indexOf(item._id) < 0)
+            .filter((item) => listCommentDelete.indexOf(item?._id) < 0)
             .map((item) => {
               return (
                 <ItemReply
@@ -423,7 +424,7 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
   );
 };
 
-export default ItemComment;
+export default React.memo(ItemComment);
 
 // const styles = StyleSheet.create({
 //   container: {

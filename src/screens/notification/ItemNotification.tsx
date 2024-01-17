@@ -4,9 +4,10 @@ import { Text, View, Image, TouchableOpacity } from "react-native";
 import CommonStyle from "@theme/styles";
 import { useTheme } from "@react-navigation/native";
 import { getFormatDayNotification } from "@utils/date.utils";
+import { TypedNotification } from "models/notification.model";
 
 interface ItemNotificationProps {
-  item: any;
+  item: TypedNotification;
   onPress: () => void;
 }
 
@@ -37,7 +38,7 @@ const ItemNotification = ({ onPress, item }: ItemNotificationProps) => {
       <View>
         <Image
           style={{ width: 50, height: 50, borderRadius: 25 }}
-          source={{ uri: item.createdBy.user_avatar_thumbnail }}
+          source={{ uri: item?.createdBy?.user_avatar_thumbnail }}
         />
       </View>
       <View style={{ flex: 1, justifyContent: "center" }}>
@@ -66,7 +67,7 @@ const ItemNotification = ({ onPress, item }: ItemNotificationProps) => {
             }}
             numberOfLines={1}
           >
-            {getFormatDayNotification(item.createdAt)}
+            {getFormatDayNotification(item?.createdAt || "")}
           </Text>
         </View>
         <Text

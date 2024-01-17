@@ -43,13 +43,13 @@ const EditProfileScreen = () => {
 
   // console.log(userData);
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data) => {
     const params = {
       display_name: data.fullname,
       description: data.description,
       bio: data.bio,
       user_address: data.address,
-      _id: userData._id,
+      _id: userData?._id,
       phone_number: data.phoneNumber,
       links: {
         facebook: data.facebook,
@@ -66,7 +66,7 @@ const EditProfileScreen = () => {
           display_name: data.fullname,
           bio: data.bio,
           user_address: data.address,
-          _id: userData._id,
+          _id: userData?._id,
           description: data.description,
           phone_number: data.phoneNumber,
           links: [
@@ -93,7 +93,7 @@ const EditProfileScreen = () => {
       <ScrollView style={CommonStyle.safeAreaView}>
         <Header
           iconNameLeft="arrow-back-outline"
-          onPressLess={() => NavigationService.goBack()}
+          onPressLeft={() => NavigationService.goBack()}
           text={translations.profile.editProfile}
         />
         <InputHook

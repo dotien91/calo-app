@@ -7,15 +7,18 @@ import ImageLoad from "@screens/post/components/ImageLoad";
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
 import * as React from "react";
-import PageScroll from "@shared-components/page-scroll/PageScroll";
+import PageScroll, {
+  PagerScrollRef,
+} from "@shared-components/page-scroll/PageScroll";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { getStatusBarHeight } from "@freakycoder/react-native-helpers";
+import { TypedMedia } from "shared/models";
 
 const { width } = Dimensions.get("screen");
 
 interface PagerScrollMediaProps {
-  listMedia: any;
-  closeModal: any;
+  listMedia: TypedMedia[];
+  closeModal: () => void;
   index: number;
 }
 
@@ -24,7 +27,7 @@ const PagerScrollMedia = ({
   closeModal,
   index,
 }: PagerScrollMediaProps) => {
-  const scrollViewRef = React.useRef<any>(null);
+  const scrollViewRef = React.useRef<PagerScrollRef>(null);
   React.useEffect(() => {
     console.log("index", index);
     setTimeout(() => {

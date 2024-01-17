@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
-import { debounce, isEmpty } from "lodash";
+import { isEmpty } from "lodash";
 
 import ItemComment from "./components/item-comment/ItemComment";
 import createStyles from "./Post.style";
@@ -35,6 +35,7 @@ import { isIos } from "@utils/device.ui.utils";
 import EmptyResultView from "@shared-components/empty.data.component";
 import { trim } from "@helpers/string.helper";
 import uuid from "react-native-uuid";
+import { TypedComment, TypedRequest } from "shared/models";
 
 interface PostDetailProps {
   route: any;
@@ -44,7 +45,7 @@ const PostDetail = (props: PostDetailProps) => {
   const id = props.route?.params?.id;
   const dataItem = props.route?.params?.data;
   const isComment = props.route?.params?.isComment;
-  const [data, setData] = useState<any>();
+  const [data, setData] = useState<TypedRequest>();
 
   const userData = useStore((state) => state.userData);
   const listCommentDelete = useStore((state) => state.listCommentDelete);
@@ -69,7 +70,7 @@ const PostDetail = (props: PostDetailProps) => {
     refreshControl,
     renderFooterComponent,
     setListData,
-  } = useListData<any>(
+  } = useListData<TypedComment>(
     {
       community_id: id,
       auth_id: userData?._id || "",
@@ -92,7 +93,7 @@ const PostDetail = (props: PostDetailProps) => {
       }
     });
   };
-  const [replyItem, setReplyItem] = useState<any>({});
+  const [replyItem, setReplyItem] = useState<TypedComment | null>(null);
   const [value, setValue] = useState("");
 
   useEffect(() => {
@@ -112,23 +113,23 @@ const PostDetail = (props: PostDetailProps) => {
     data,
   }: {
     parent_id: string;
-    data?: any;
+    data: TypedComment;
   }) => {
     const listCmtUpdate = [...listData];
     const itemIndexParent = listCmtUpdate.find(
       (item) => item._id === parent_id,
     );
     // tìm xem đã có trong danh sách hay chưa theo id local
-    const itemIndexChild = itemIndexParent.child.findIndex(
-      (itemChild) => itemChild.idLocal === data.idLocal,
-    );
 
-    if (itemIndexChild >= 0) {
-      // itemIndexChild = data
-      // itemIndexParent.child = itemIndexParent
-      itemIndexParent.child[itemIndexChild] = data;
-    } else {
-      itemIndexParent.child = [data, ...itemIndexParent.child];
+    if (itemIndexParent) {
+      const indexChild = itemIndexParent?.child.findIndex(
+        (itemChild) => itemChild.local_id === data.local_id,
+      );
+      if (indexChild >= 0) {
+        itemIndexParent.child[indexChild] = data;
+      } else {
+        itemIndexParent.child = [data, ...itemIndexParent.child];
+      }
     }
 
     const dataUpdate = [
@@ -142,27 +143,14 @@ const PostDetail = (props: PostDetailProps) => {
     ];
     return dataUpdate;
   };
-  // const _updateListCommentWithAdd = ({ data }: { data?: any }) => {
-  //   const listCmtUpdate = [...listData];
-  //   const dataUpdate = [
-  //     ...listCmtUpdate.map((item) => {
-  //       if (item.idLocal === data.idLocal) {
-  //         return data;
-  //       } else {
-  //         return item;
-  //       }
-  //     }),
-  //   ];
-  //   return dataUpdate;
-  // };
 
-  const _updateListCommentWithEdit = (itemUpdate: any) => {
+  const _updateListCommentWithEdit = (itemUpdate: TypedComment) => {
     const newData = [...listData];
     if (itemUpdate.parent_id) {
       const index = newData.findIndex((i) => i._id === itemUpdate.parent_id);
       if (index >= 0) {
         const indexChild = newData[index].child.findIndex(
-          (item) => item._id === itemUpdate._id,
+          (item: TypedComment) => item._id === itemUpdate._id,
         );
         if (indexChild >= 0)
           newData[index].child[indexChild].content = itemUpdate?.content || "";
@@ -189,9 +177,9 @@ const PostDetail = (props: PostDetailProps) => {
     const params = {
       community_id: id,
       content: trim(value),
-      parent_id: replyItem.parent_id || replyItem._id || null,
+      parent_id: replyItem?.parent_id || replyItem?._id || null,
     };
-    const _uuid = uuid.v4();
+    const _uuid = uuid.v4().toString();
 
     const userId = {
       _id: userData?._id,
@@ -204,22 +192,22 @@ const PostDetail = (props: PostDetailProps) => {
     };
 
     const dataChild = {
-      idLocal: _uuid,
+      local_id: _uuid,
       community_id: id,
       content: trim(value),
-      parent_id: replyItem.parent_id || replyItem._id || null,
+      parent_id: replyItem?.parent_id || replyItem?._id || null,
       user_id: userId,
       sending: true,
     };
-    const dataParent = {
-      idLocal: _uuid,
+    const dataParent: TypedComment = {
+      local_id: _uuid,
       community_id: id,
       content: trim(value),
       user_id: userId,
       sending: true,
     };
 
-    if (replyItem.parent_id || replyItem._id) {
+    if (replyItem?.parent_id || replyItem?._id) {
       const dataUpdate = updateListCommentReply({
         parent_id: replyItem.parent_id || replyItem._id,
         data: dataChild,
@@ -234,12 +222,15 @@ const PostDetail = (props: PostDetailProps) => {
     refInput.current?.blur();
     postComment(params).then((resComment) => {
       if (!resComment.isError) {
-        if (replyItem.parent_id || replyItem._id) {
-          const dataUpdate = updateListCommentReply({
-            parent_id: replyItem.parent_id || replyItem._id,
-            data: { ...resComment.data, idLocal: _uuid, sending: false },
-          });
-          setListData(dataUpdate);
+        if (replyItem?.parent_id || replyItem?._id) {
+          setTimeout(() => {
+            console.log(2);
+            const dataUpdate = updateListCommentReply({
+              parent_id: replyItem.parent_id || replyItem._id,
+              data: { ...resComment.data, idLocal: _uuid, sending: false },
+            });
+            setListData(dataUpdate);
+          }, 3000);
         } else {
           setListData([resComment.data, ...listData]);
         }
@@ -250,10 +241,10 @@ const PostDetail = (props: PostDetailProps) => {
   };
 
   const deleteReplying = () => {
-    setReplyItem({});
+    setReplyItem(null);
   };
 
-  const pressReply = (item: any) => {
+  const pressReply = (item: TypedComment) => {
     if (!userData) {
       showWarningLogin();
     } else {
@@ -265,17 +256,17 @@ const PostDetail = (props: PostDetailProps) => {
   const [isForcus, setIsForcus] = useState(false);
 
   const showImageVideo = (index: number) => {
-    const listMedia = data.attach_files.filter(
+    const listMedia = data?.attach_files.filter(
       (i: any) =>
         i.media_mime_type.includes("image") ||
         i.media_mime_type.includes("video"),
     );
-    const listLink = listMedia.map((i: any) => ({
+    const listLink = listMedia?.map((i: any) => ({
       url: i.media_url,
       type: i.media_type,
       media_meta: i.media_meta,
     }));
-    showDetailImageView(listLink, index, listMedia[0].media_type);
+    showDetailImageView(listLink, index, listMedia?.[0].media_type);
   };
 
   const HeaderPost = () => {
@@ -310,12 +301,12 @@ const PostDetail = (props: PostDetailProps) => {
     );
   };
 
-  const renderItem = ({ item }: any) => {
+  const renderItem = ({ item }: { item: TypedComment }) => {
     return (
       <ItemComment
         data={item}
         // key={index}
-        onPressReply={pressReply}
+        onPressReply={() => pressReply(item)}
       />
     );
   };
@@ -384,7 +375,7 @@ const PostDetail = (props: PostDetailProps) => {
           </View>
         </ScrollView>
         <View style={{ backgroundColor: colors.background, paddingTop: 10 }}>
-          {replyItem._id && (
+          {replyItem?._id && (
             <View
               style={{
                 paddingHorizontal: 20,
@@ -427,7 +418,7 @@ const PostDetail = (props: PostDetailProps) => {
                 onBlur={() => setIsForcus(false)}
               />
               {trim(value) !== "" && (
-                <TouchableOpacity onPress={debounce(sendComment, 1000)}>
+                <TouchableOpacity onPress={sendComment}>
                   <Icon
                     name={"send-outline"}
                     size={20}
