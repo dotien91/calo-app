@@ -196,7 +196,6 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
   };
 
   const onPressItem = (item) => {
-    console.log("item onPress", item);
     switch (item.type) {
       case "ACC-PLUS":
         openCreateGroupChatScreen();
@@ -289,7 +288,6 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
   };
 
   const renderMediaSection = (item) => {
-    console.log("mediaIdsmediaIds", mediaIds);
     return (
       <TouchableOpacity onPress={openMediaChatScreen} style={styles.section}>
         <Text style={styles.titleSection}>{item.title}</Text>

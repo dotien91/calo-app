@@ -1,6 +1,6 @@
-import React, { useCallback, useMemo, useEffect } from "react";
+import React, { useCallback, useMemo } from "react";
 
-import { View, KeyboardAvoidingView, Platform, StatusBar } from "react-native";
+import { View, KeyboardAvoidingView, Platform } from "react-native";
 // import Orientation from 'react-native-orientation';
 import { useTheme, useRoute } from "@react-navigation/native";
 
@@ -29,9 +29,13 @@ function App() {
     liveStreamId,
   });
 
-  useEffect(() => {
-    StatusBar.setBackgroundColor("black");
-  }, []);
+  // React.useEffect(() => {
+  //   StatusBar.setBackgroundColor("black");
+  //   return(() => {
+  //   StatusBar.setBackgroundColor("black");
+
+  //   })
+  // }, []);
 
   const isStreaming = useCallback(() => {
     return !!liveData?._id;
@@ -41,10 +45,10 @@ function App() {
     return (
       <View style={{ flex: 1, padding: 30, ...CommonStyle.flexCenter }}>
         <VideoPlayer
-          // mediaUrl={liveData.livestream_data?.m3u8_url}
-          mediaUrl={
-            "https://live-par-2-cdn-alt.livepush.io/live/bigbuckbunnyclip/index.m3u8"
-          }
+          mediaUrl={liveData.livestream_data?.m3u8_url}
+          // mediaUrl={
+          //   "https://live-par-2-cdn-alt.livepush.io/live/bigbuckbunnyclip/index.m3u8"
+          // }
           resizeMode="cover"
           width={Device.width}
           height={Device.height}

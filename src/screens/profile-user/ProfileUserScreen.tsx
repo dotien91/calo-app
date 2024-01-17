@@ -35,6 +35,7 @@ import { TypedRequest } from "shared/models";
 import { TypedUser } from "models";
 import FollowBtn from "@screens/home/components/follow-btn/FollowBtn";
 import EmptyResultView from "@shared-components/empty.data.component";
+import { useUserHook } from "@helpers/hooks/useUserHook";
 
 interface ProfileUserProps {
   route: any;
@@ -50,6 +51,8 @@ const ProfileUser = (props: ProfileUserProps) => {
   const [userInfo, setUserInfo] = useState<TypedUser | null>(null);
   const [linkAvatar, setLinkAvatar] = useState();
   const [updateing, setUpdating] = useState(false);
+
+  const { isLoggedIn } = useUserHook();
 
   const _getUserById = (id: string) => {
     getUserById(id).then((res) => {
@@ -95,7 +98,6 @@ const ProfileUser = (props: ProfileUserProps) => {
             user_avatar_thumbnail: res?.[0]?.callback?.media_thumbnail,
           };
           updateProfile(params).then((res) => {
-            console.log("res...", res);
             if (!res.isError) {
               showToast({
                 type: "success",
@@ -181,7 +183,6 @@ const ProfileUser = (props: ProfileUserProps) => {
       </TouchableOpacity>
     );
   };
-
   const ListAction = () => {
     const isUserLogin = userData?._id === userInfo?._id;
     if (!userData || !isUserLogin) {
@@ -189,6 +190,9 @@ const ProfileUser = (props: ProfileUserProps) => {
         <View style={styles.listAction}>
           <FollowBtn data={userInfo} />
           <ButtomAction onPress={() => {}} text={translations.message} />
+          {isLoggedIn() && (
+            <ButtomAction onPress={openChatRoom} text={translations.message} />
+          )}
         </View>
       );
     }
@@ -200,10 +204,7 @@ const ProfileUser = (props: ProfileUserProps) => {
           }}
           text={translations.profile.editProfile}
         />
-        <ButtomAction
-          onPress={() => {}}
-          text={translations.profile.shareProfile}
-        />
+        <ButtomAction text={translations.profile.shareProfile} />
       </View>
     );
   };

@@ -11,12 +11,14 @@ import {
   closeSuperModal,
   showConfirmSuperModal,
   showLoading,
+  showSuperModalByType,
   showToast,
 } from "@helpers/super.modal.helper";
 import ItemBottomSheet from "@shared-components/item-bottom-sheet/ItemBottomSheet";
 import { SCREENS } from "constants";
 import eventEmitter from "@services/event-emitter";
 import { useActionUser } from "@helpers/hooks/useActionUser";
+
 interface ListActionOfPost {
   data: any;
 }
@@ -71,6 +73,17 @@ const ListActionOfPost = ({ data }: ListActionOfPost) => {
     });
   };
 
+  const openReportModal = () => {
+    closeSuperModal();
+    showSuperModalByType({
+      type: "report",
+      data: {
+        report_type: "post",
+        partner_id: data?.user_id?._id,
+      },
+    });
+  };
+
   if (userData?._id === data?.user_id?._id) {
     return (
       <View style={styles.container}>
@@ -121,9 +134,7 @@ const ListActionOfPost = ({ data }: ListActionOfPost) => {
       <ItemBottomSheet
         nameIcon="flag-outline"
         text={translations.post.report}
-        onPress={() => {
-          closeSuperModal();
-        }}
+        onPress={openReportModal}
       />
     </View>
   );

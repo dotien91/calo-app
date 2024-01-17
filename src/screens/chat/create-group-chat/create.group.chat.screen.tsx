@@ -96,7 +96,6 @@ const CreateGroupChatScreen: React.FC<CreateGroupChatScreenProps> = () => {
     item: TypedFollowUser;
     index: number;
   }) => {
-    console.log("itemitem", item);
     const partnerData = item.partner_id;
 
     const isCurrentMember = group_partners.find(
@@ -185,7 +184,6 @@ const CreateGroupChatScreen: React.FC<CreateGroupChatScreenProps> = () => {
           type: "success",
           message: "Thêm thành viên thành công",
         });
-        console.log("addUserToRoom res", res.data);
         eventEmitter.emit("refresh_list_chat");
         NavigationService.pop(3);
         const data = res.data[0];
@@ -226,7 +224,6 @@ const CreateGroupChatScreen: React.FC<CreateGroupChatScreenProps> = () => {
     };
     createChatRoom(data).then((res) => {
       closeSuperModal();
-      console.log("Resss create group", res);
       if (!res.isError) {
         showToast({
           type: "success",
@@ -296,7 +293,6 @@ const CreateGroupChatScreen: React.FC<CreateGroupChatScreenProps> = () => {
     );
   };
 
-  console.log("listDatalistData", listData);
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.headerTitle}>Chọn thành viên</Text>
@@ -324,9 +320,6 @@ const CreateGroupChatScreen: React.FC<CreateGroupChatScreenProps> = () => {
         keyExtractor={(item) => item.partner_id._id + ""}
         ListFooterComponent={renderFooterComponent()}
       />
-      {!!itemsSelect.length && (
-        <View style={{ height: 60, width: 100, backgroundColor: "red" }} />
-      )}
       {renderBottom()}
     </SafeAreaView>
   );

@@ -17,5 +17,10 @@ export default (theme: ExtendedTheme) => {
       color: colors.white,
       fontSize: 16,
     },
+    pressableBtn: {
+      padding: 12,
+      borderRadius: 8,
+      backgroundColor: colors.mainColor2,
+    },
   });
 };

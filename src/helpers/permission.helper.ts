@@ -7,7 +7,7 @@ import {
   requestMultiple,
   RESULTS,
 } from "react-native-permissions";
-import { Alert, Linking, PermissionsAndroid } from "react-native";
+import { Alert, Linking } from "react-native";
 import { isAndroid } from "./device.info.helper";
 /**
  *
@@ -20,19 +20,18 @@ export async function requestPermission(
   txtWaring: string,
 ): Promise<string> {
   let status = null;
-  if (isAndroid()) {
-    status = await PermissionsAndroid.requestMultiple(listPermission);
-  } else {
-    status = await requestMultiple(listPermission);
-  }
+
+  status = await requestMultiple(listPermission);
+  console.log("statusstatusstatus", status);
   const permissionRequestResult: Permission[] = [];
   let isBlocked = false;
-  let isNerverAskAgain = false;
+  const isNerverAskAgain = false;
 
   listPermission.map((item) => {
+    console.log("22222", item);
     if (status[item] === RESULTS.DENIED) permissionRequestResult.push(item);
     if (status[item] === RESULTS.BLOCKED) isBlocked = true;
-    if (status[item] === "never_ask_again") isNerverAskAgain = true;
+    // if (status[item] === "never_ask_again") isNerverAskAgain = true;
   });
 
   if ((!isAndroid() && isBlocked) || isNerverAskAgain) {
@@ -55,6 +54,7 @@ export async function requestPermission(
     );
     return RESULTS.BLOCKED;
   }
+  if (isBlocked) return RESULTS.BLOCKED;
   if (permissionRequestResult.length === 0) {
     return RESULTS.GRANTED;
   }
@@ -68,7 +68,6 @@ export async function checkPermission(
     .then((statuses) => {
       const permissionNeedRequest: Permission[] = [];
       let isBlocked = false;
-      console.log(statuses);
       listPermission.map((item) => {
         if (statuses[item] === RESULTS.DENIED) permissionNeedRequest.push(item);
         if (statuses[item] === RESULTS.BLOCKED) isBlocked = true;

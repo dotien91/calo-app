@@ -16,7 +16,6 @@ export async function getListChat(params) {
     urlPath: "chat-room/list",
     params,
   }).then((response) => {
-    console.log("resssss", response);
     return response;
   });
 }
@@ -69,7 +68,6 @@ export async function likeLiveStream(data: ILikeLiveStream) {
     urlPath: "livestream/like",
     data,
   }).then((response) => {
-    console.log("ressssssssss", response);
     return response;
   });
 }

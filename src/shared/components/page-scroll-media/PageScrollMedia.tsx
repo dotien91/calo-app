@@ -29,7 +29,6 @@ const PagerScrollMedia = ({
 }: PagerScrollMediaProps) => {
   const scrollViewRef = React.useRef<PagerScrollRef>(null);
   React.useEffect(() => {
-    console.log("index", index);
     setTimeout(() => {
       scrollViewRef.current?.scrollToIndex(index);
     }, 1);

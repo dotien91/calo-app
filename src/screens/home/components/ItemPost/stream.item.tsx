@@ -31,8 +31,6 @@ const StreamItem = ({ data }: { data: IStreamItem }) => {
     });
   };
 
-  console.log("====12 stream");
-
   const Avatar = useMemo(() => {
     return (
       <TouchableOpacity

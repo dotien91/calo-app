@@ -53,9 +53,7 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
   const userData = useStore((state) => state.userData);
 
   const goToProfileCurrentUser = () => {
-    if (isProfile) {
-      console.log("isProfile");
-    } else {
+    if (!isProfile) {
       NavigationService.push(SCREENS.PROFILE_CURRENT_USER, {
         _id: data?.user_id?._id,
       });
@@ -85,13 +83,6 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
   }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const _showStickBottom = () => {
-    // showSuperModalByType({
-    //   type: "report",
-    //   data: {
-    //     report_type: "post",
-    //     partner_id: data?.user_id?._id,
-    //   },
-    // });
     if (!userData) {
       showWarningLogin();
     } else {

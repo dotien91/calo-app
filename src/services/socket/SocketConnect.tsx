@@ -26,9 +26,9 @@ const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
     if (!_getJson(USER_TOKEN) || !userData?._id) return;
     connectSocket();
     return () => {
-      console.log("dissssssss");
       stopSocket();
     };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData?._id]);
 
@@ -47,15 +47,12 @@ const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
       }
     },
     emit(topic, callback) {
-      console.log("topic", topic, callback);
       refSocket.current?.emit(topic, callback);
     },
   }));
 
   const connectSocket = async () => {
     const token = _getJson(USER_TOKEN);
-
-    console.log("token", token);
     if (token) {
       refSocket.current = io(URL_CHAT_SOCKET, {
         extraHeaders: {
@@ -68,17 +65,17 @@ const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
     }
   };
 
-  const stopSocket = () => {
-    refSocket.current.removeAllListeners();
-    // refSocket.current.stop()
-  };
-
   const onDisconnect = () => {
     console.log("disconnected");
   };
 
   const onConnected = () => {
     console.log("onConnected");
+  };
+
+  const stopSocket = () => {
+    refSocket.current?.removeAllListeners();
+    refSocket.current?.disconnect?.();
   };
 
   return <View />;

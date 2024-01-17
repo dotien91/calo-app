@@ -103,10 +103,8 @@ const InputChatLive: React.FC<InputChatLiveProps> = ({
         >
           <Input
             ref={inputRef}
-            otherProps={{
-              placeholder: translations.chat.typeMessage,
-              placeholderTextColor: palette.white,
-            }}
+            placeholder={translations.chat.typeMessage}
+            placeholderTextColor={palette.white}
             customStyle={styles.input}
           />
           <IconBtn

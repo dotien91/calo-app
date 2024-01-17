@@ -155,7 +155,7 @@ export default (theme: ExtendedTheme) => {
       ...CommonStyle.flexCenter,
     },
     emptyView: {
-      transform: [{ scaleY: -1 }],
+      // transform: [{ scaleY: isIOS ? -1: 1 }],
       flex: 1,
       ...CommonStyle.flexCenter,
     },

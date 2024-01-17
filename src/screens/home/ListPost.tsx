@@ -44,7 +44,6 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
   const _getListLiveStream = () => {
     getListLiveStream().then((res) => {
       if (!res.isError) {
-        console.log("list live stream", res.data);
         const listDataStream = res.data.filter(
           (item) => item?.livestream_status == "live",
         );
@@ -76,7 +75,6 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
     refreshListPage,
     refreshing,
   } = useListData<TypedRequest>(paramsRequest, getListPost);
-  console.log("listData home", listData);
 
   useEffect(() => {
     const typeEmit = isFollowingPost

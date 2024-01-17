@@ -11,7 +11,7 @@ export function useActionUser() {
   const addPostSave = useStore((store) => store.addPostSave);
   const deletePostSave = useStore((store) => store.deletePostSave);
   const listFollow = useStore((store) => store.listFollow);
-  console.log(listFollow);
+
   const _followUser = (id: string, display_name: string) => {
     const params = { partner_id: id };
     if (listFollow.indexOf(id) >= 0) {

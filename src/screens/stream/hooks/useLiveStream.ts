@@ -22,7 +22,6 @@ export const useLiveStream = ({
     setLoading(true);
     createLiveStream(title).then((res) => {
       setLoading(false);
-      console.log("resssss create live", res);
       if (!res.isError && res.data._id) {
         setLiveData(res.data);
       } else {

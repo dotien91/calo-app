@@ -56,7 +56,6 @@ export const useChatHistory = (txtSearch: string) => {
     };
     getChatHistory(params).then((res) => {
       isFetching.current = false;
-      console.log("ressss getChatHistory", res);
       if (!res.isError) {
         setIsLoadmore(false);
         pageNumber.current = pageNumber.current + 1;
@@ -126,7 +125,6 @@ export const useChatHistory = (txtSearch: string) => {
   const typingToClient = (data: string) => {
     if (data) {
       const dataTyping = JSON.parse(data);
-      console.log("dataTypingdataTyping", dataTyping, userData);
       if (dataTyping.user_id != userData?._id) {
         setIsTyping(true);
       }
@@ -145,7 +143,10 @@ export const useChatHistory = (txtSearch: string) => {
     if (mediaData.length) {
       data.media_data = JSON.stringify(mediaData);
     }
+    console.log("resresres====", data);
+
     sendChatToChatRoom(data).then((res) => {
+      console.log("resresres====", res);
       let newMessages = [];
       if (!res.isError) {
         newMessages = giftedMessages.map((item) => {
@@ -166,7 +167,6 @@ export const useChatHistory = (txtSearch: string) => {
 
   const getRoomDetail = () => {
     viewRoom({ id: chatRoomId }).then((res) => {
-      console.log("Ressssss detail room", res.data);
       if (!res.isError) {
         setRoomDetail(res.data);
       }
@@ -188,6 +188,7 @@ export const useChatHistory = (txtSearch: string) => {
         partner_id: partnerId,
         chat_type: "personal",
       }).then((res) => {
+        console.log("create room====", res);
         if (!res.isError) {
           setChatRoomId(res.data.chat_room_id._id);
         }

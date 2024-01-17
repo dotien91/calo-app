@@ -1,14 +1,5 @@
-import AudioRecorderPlayer, {
-  AVEncoderAudioQualityIOSType,
-  AVEncodingOption,
-  AudioEncoderAndroidType,
-  AudioSourceAndroidType,
-  OutputFormatAndroidType,
-} from "react-native-audio-recorder-player";
-import type {
-  AudioSet,
-  RecordBackType,
-} from "react-native-audio-recorder-player";
+import AudioRecorderPlayer from "react-native-audio-recorder-player";
+import type { RecordBackType } from "react-native-audio-recorder-player";
 import {
   Platform,
   StyleSheet,
@@ -160,22 +151,21 @@ class RecordView extends React.PureComponent<any, State> {
     }
     this.setState({ loadingRecordPlayer: true });
 
-    const audioSet: AudioSet = {
-      AudioEncoderAndroid: AudioEncoderAndroidType.AAC,
-      AudioSourceAndroid: AudioSourceAndroidType.MIC,
-      AVEncoderAudioQualityKeyIOS: AVEncoderAudioQualityIOSType.high,
-      AVNumberOfChannelsKeyIOS: 2,
-      AVFormatIDKeyIOS: AVEncodingOption.aac,
-      OutputFormatAndroid: OutputFormatAndroidType.AAC_ADTS,
-    };
+    // const audioSet: AudioSet = {
+    //   AudioEncoderAndroid: AudioEncoderAndroidType.AAC,
+    //   AudioSourceAndroid: AudioSourceAndroidType.MIC,
+    //   AVEncoderAudioQualityKeyIOS: AVEncoderAudioQualityIOSType.high,
+    //   AVNumberOfChannelsKeyIOS: 2,
+    //   AVFormatIDKeyIOS: AVEncodingOption.aac,
+    //   OutputFormatAndroid: OutputFormatAndroidType.AAC_ADTS,
+    // };
 
-    const uri = await this.audioRecorderPlayer.startRecorder(
-      this.path,
-      audioSet,
-    );
+    // const uri = await this.audioRecorderPlayer.startRecorder(
+    //   this.path,
+    //   audioSet,
+    // );
 
     this.audioRecorderPlayer.addRecordBackListener((e: RecordBackType) => {
-      // console.log('record-back', e);
       this.setState({
         recordSecs: e.currentPosition,
         recordTime: this.audioRecorderPlayer.mmssss(
@@ -184,8 +174,6 @@ class RecordView extends React.PureComponent<any, State> {
       });
     });
     this.setState({ loadingRecordPlayer: false });
-
-    console.log(`uri: ${uri}`);
   };
 
   private onPauseRecord = async (): Promise<void> => {

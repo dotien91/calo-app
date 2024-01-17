@@ -19,7 +19,7 @@ import { EnumMessageStatus } from "constants/chat.constant";
 import { useChatHistory } from "@helpers/hooks/useChatHistory";
 import { useUploadFile } from "@helpers/hooks/useUploadFile";
 import { getStatusBarHeight } from "react-native-safearea-height";
-import FriendSearchInput from "../search-room/search.room.input";
+import SearchInput from "../../../shared/components/search-input.tsx/search.input";
 import CommonStyle from "@theme/styles";
 import { translations } from "@localization";
 import EmptyResultView from "@shared-components/empty.data.component";
@@ -172,6 +172,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
       style={{ flex: 1, paddingTop: getStatusBarHeight(), paddingBottom: 8 }}
     >
       <ChatHeader roomDetail={roomDetail} messages={messages} />
+      {_renderChatEmpty()}
       <GiftedChat
         messages={messages}
         user={{
@@ -189,7 +190,6 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
           },
         }}
         renderInputToolbar={renderInputToolbar}
-        renderChatEmpty={_renderChatEmpty}
       />
 
       {searchModeChat && !messages.length && (
@@ -198,13 +198,13 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
         </View>
       )}
       {searchModeChat && (
-        <FriendSearchInput
+        <SearchInput
           onCancel={cancelSearchMode}
-          autoFocus={true}
           setTxtSearch={setTxtSearch}
+          txtSearch={txtSearch}
+          showCancelBtn={true}
         />
       )}
-
       <RecordModal uploadRecord={uploadRecord} ref={recordModalRef} />
     </SafeAreaView>
   );

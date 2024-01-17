@@ -42,11 +42,13 @@ const permissionRecord = () => {
 };
 const permissionLibrary = () => {
   if (Device.isIos) return [PERMISSIONS.IOS.PHOTO_LIBRARY];
-  if (Number(Platform.Version) >= 33)
-    [
+  if (Number(Platform.Version) >= 33) {
+    return [
       PERMISSIONS.ANDROID.READ_MEDIA_IMAGES,
       PERMISSIONS.ANDROID.READ_MEDIA_VIDEO,
     ];
+  }
+
   return [
     PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,
     PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,

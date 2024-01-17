@@ -29,9 +29,7 @@ export const useUserHook = () => {
         setLinkAvatar(res.data.user_avatar_thumbnail);
         initListFollow(res.data.follow_users);
         NavigationService.push(SCREENS.HOME);
-        setTimeout(() => {
-          showSuperModal({ title: "Đăng nhập thành công!" });
-        }, 1000);
+        showSuperModal({ title: "Đăng nhập thành công!" });
       }
     });
   };

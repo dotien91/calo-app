@@ -3,43 +3,49 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { debounce } from "lodash";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import * as NavigationService from "react-navigation-helpers";
+
 /**
  * ? Local Imports
  */
-import createStyles from "../list-chat/chat.list.screen.style";
+import createStyles from "./search.input.style";
 import { TextInput } from "react-native-gesture-handler";
 import { translations } from "@localization";
-import { SCREENS } from "constants";
-import * as NavigationService from "react-navigation-helpers";
 import CommonStyle from "@theme/styles";
 
-interface IFriendSearchInput {
-  fromChatList?: boolean;
-  setTxtSearch?: () => void;
+interface ISearchInput {
+  txtSearch: string;
+  setTxtSearch?: (text: string) => void;
   onCancel: () => void;
   autoFocus: boolean;
+  onPressInput?: () => void;
+  showCancelBtn: boolean;
 }
 
-const FriendSearchInput: React.FC<IFriendSearchInput> = ({
-  fromChatList,
+const SearchInput: React.FC<ISearchInput> = ({
+  onPressInput,
   setTxtSearch,
-  autoFocus,
+  autoFocus = true,
   onCancel,
+  showCancelBtn = false,
 }) => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const { colors } = theme;
+  const disableInput = !!onPressInput;
 
   const inputSearchRef = useRef(null);
   const [txt, setTxt] = useState("");
 
-  const onSearch = () => {
-    setTxtSearch(inputSearchRef.current.value);
+  const _onSearch = (v: string) => {
+    setTxtSearch(v);
   };
 
+  const onSearchDebounce = debounce(_onSearch, 600);
+
   const onPress = () => {
-    if (fromChatList) {
-      NavigationService.navigate(SCREENS.SEARCH_CHAT);
+    if (onPressInput) {
+      onPressInput();
       return;
     }
     inputSearchRef.current.focus();
@@ -50,21 +56,17 @@ const FriendSearchInput: React.FC<IFriendSearchInput> = ({
       onCancel();
       return;
     }
-    NavigationService.navigate(SCREENS.CHAT);
+    NavigationService.goBack();
   };
 
   const clearInput = () => {
     setTxtSearch?.("");
-    inputSearchRef.current.value = "";
+    setTxt("");
   };
 
-  const onSearchDebounce = debounce(onSearch, 600);
-
   return (
-    <View
-      style={{ ...CommonStyle.flexRear, width: "100%", paddingHorizontal: 12 }}
-    >
-      <TouchableOpacity style={styles.wrapSearch} onPress={onPress}>
+    <View style={styles.box}>
+      <TouchableOpacity style={styles.wrapInput} onPress={onPress}>
         <Icon
           name={"search"}
           type={IconType.Ionicons}
@@ -74,21 +76,20 @@ const FriendSearchInput: React.FC<IFriendSearchInput> = ({
         />
         <View
           style={{ flex: 1 }}
-          pointerEvents={fromChatList ? "none" : "auto"}
+          pointerEvents={disableInput ? "none" : "auto"}
         >
           <TextInput
-            editable={!fromChatList}
+            editable={!disableInput}
             ref={inputSearchRef}
             style={styles.searchInput}
             placeholderTextColor={colors.placeholder}
             placeholder={translations.search}
-            value={inputSearchRef.current?.value || ""}
+            value={txt}
             onChangeText={(v) => {
               setTxt(v);
-              inputSearchRef.current.value = v;
-              onSearchDebounce();
+              onSearchDebounce(v);
             }}
-            onSubmitEditing={onSearch}
+            onSubmitEditing={_onSearch}
             autoFocus={autoFocus}
           />
         </View>
@@ -103,7 +104,7 @@ const FriendSearchInput: React.FC<IFriendSearchInput> = ({
         )}
       </TouchableOpacity>
 
-      {!fromChatList && (
+      {showCancelBtn && (
         <TouchableOpacity onPress={_onCancel}>
           <Text style={{ ...CommonStyle.hnRegular, marginLeft: 10 }}>
             {translations.cancel}
@@ -114,4 +115,4 @@ const FriendSearchInput: React.FC<IFriendSearchInput> = ({
   );
 };
 
-export default FriendSearchInput;
+export default React.memo(SearchInput);

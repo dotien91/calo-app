@@ -1,12 +1,14 @@
 import React, { useState, useImperativeHandle } from "react";
-import { StyleSheet, TextInput, View, ViewStyle } from "react-native";
+import {
+  StyleSheet,
+  TextInput,
+  View,
+  ViewStyle,
+  TextInputProps,
+} from "react-native";
 import { palette } from "@theme/themes";
 import CommonStyle from "@theme/styles";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
-
-interface customStyleType {
-  input: ViewStyle;
-}
 
 interface IconType {
   name: string;
@@ -14,21 +16,19 @@ interface IconType {
   size?: number;
 }
 
-interface InputPropsType {
-  customStyle?: customStyleType;
-  otherProps?: object;
+interface InputPropsType extends TextInputProps {
+  customStyle?: ViewStyle;
   icon?: IconType;
 }
 
 // eslint-disable-next-line react/display-name
 const Input = React.forwardRef(
-  ({ customStyle, otherProps, icon }: InputPropsType, ref) => {
+  ({ customStyle, icon, ...res }: InputPropsType, ref) => {
     const [value, setValue] = useState();
 
     useImperativeHandle(ref, () => {
       return {
         value,
-        // error,
         setValue,
       };
     });
@@ -41,17 +41,21 @@ const Input = React.forwardRef(
       <View style={styles.wrapInput}>
         {!!icon?.name && (
           <Icon
-            name={"pencil-outline"}
+            name={icon.name}
             type={IconType.Ionicons}
-            size={icon.size}
-            style={[styles.icon, icon?.style && icon.style]}
+            size={icon.size || 20}
+            style={[styles.icon, !!icon?.style && icon.style]}
           />
         )}
         <TextInput
+          {...res}
           ref={ref}
           onChangeText={onChangeText}
-          {...otherProps}
-          style={[styles.input, customStyle, icon && { paddingLeft: 40 }]}
+          style={[
+            styles.input,
+            !!customStyle && customStyle,
+            icon && { paddingLeft: 40 },
+          ]}
           value={value}
         />
       </View>

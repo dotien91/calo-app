@@ -7,7 +7,7 @@ import { useTheme } from "@react-navigation/native";
 import createStyles from "../list-chat/chat.list.screen.style";
 import { getListChat } from "@services/api/chatApi";
 import ChatItem from "../room-chat/components/ChatItem";
-import FriendSearchInput from "./search.room.input";
+import SearchInput from "../../../shared/components/search-input.tsx/search.input";
 import LoadingList from "@shared-components/loading.list.component";
 import EmptyResultView from "@shared-components/empty.data.component";
 import { translations } from "@localization";
@@ -42,13 +42,12 @@ const SearchRoomChatScreen: React.FC<SearchRoomChatScreenProps> = () => {
     item: TypedGeneralRoomChat;
     index: number;
   }) => {
-    console.log("itemitem", item);
     return <ChatItem {...item} key={index} />;
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <FriendSearchInput setTxtSearch={setTxtSearch} />
+      <SearchInput setTxtSearch={setTxtSearch} showCancelBtn={true} />
       <View style={{ margin: 10 }} />
       {isLoading && <LoadingList />}
       {!listData?.length && !isFirstLoading && !isLoading && (
