@@ -62,28 +62,26 @@ const Navigation = () => {
     let iconName = "home";
     switch (route.name) {
       case SCREENS.HOME:
-        iconName = focused ? "home" : "home-outline";
+        iconName = focused ? "home" : "home";
         break;
       case SCREENS.CHAT:
-        iconName = focused ? "chatbox" : "chatbox-outline";
+        iconName = focused ? "message-square" : "message-square";
         break;
       case SCREENS.NOTIFICATION:
-        iconName = focused ? "notifications" : "notifications-outline";
+        iconName = focused ? "bell" : "bell";
         break;
       case SCREENS.PROFILE:
-        iconName = focused ? "person" : "person-outline";
+        iconName = focused ? "user" : "user";
+        break;
+      case SCREENS.SETTING:
+        iconName = focused ? "settings" : "settings";
         break;
       default:
-        iconName = focused ? "home" : "home-outline";
+        iconName = focused ? "home" : "home";
         break;
     }
     return (
-      <Icon
-        name={iconName}
-        type={IconType.Ionicons}
-        size={size}
-        color={color}
-      />
+      <Icon name={iconName} type={IconType.Feather} size={size} color={color} />
     );
   };
 

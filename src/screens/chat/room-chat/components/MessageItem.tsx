@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle, no-use-before-define */
 import React from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, ViewStyle } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
 import { Avatar, Day, utils } from "react-native-gifted-chat";
@@ -14,18 +14,18 @@ import { isSameMinute } from "@utils/date.utils";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { TypedMessageGiftedChat } from "models/chat.model";
 import { SCREENS } from "constants";
+import { isEqualObjectsSameKeys } from "@utils/index";
 
 const { isSameUser, isSameDay } = utils;
 
 interface IMessageBubble {
   renderAvatar: () => React.JSX.Element;
   renderBubble: () => React.JSX.Element;
-  renderDay: () => React.JSX.Element;
-  currentMessage: any;
-  nextMessage: any;
-  previousMessage: any;
+  currentMessage: TypedMessageGiftedChat;
+  nextMessage: TypedMessageGiftedChat;
+  previousMessage: TypedMessageGiftedChat;
   user: any;
-  containerStyle: any;
+  containerStyle: ViewStyle;
 }
 
 const MessageBubble = (props: IMessageBubble) => {
@@ -41,9 +41,6 @@ const MessageBubble = (props: IMessageBubble) => {
   const renderDay = () => {
     if (props.currentMessage.createdAt) {
       const dayProps = getInnerComponentProps();
-      if (props.renderDay) {
-        return props.renderDay(dayProps);
-      }
       return <Day {...dayProps} />;
     }
     return null;
@@ -61,11 +58,11 @@ const MessageBubble = (props: IMessageBubble) => {
     return currentMessage?.createBy?._id == props.user._id;
   };
 
-  const openProfileChat = () => {
+  const openProfile = () => {
     const isMe = checkIsMe(props.currentMessage);
     if (isMe) return;
-    NavigationService.navigate(SCREENS.PROFILE_CHAT, {
-      user: props.currentMessage.createBy,
+    NavigationService.navigate(SCREENS.PROFILE_CURRENT_USER, {
+      _id: props.currentMessage.createBy?._id,
     });
   };
 
@@ -85,7 +82,7 @@ const MessageBubble = (props: IMessageBubble) => {
 
     const avatarProps = getInnerComponentProps();
     return (
-      <TouchableOpacity onPress={openProfileChat}>
+      <TouchableOpacity onPress={openProfile}>
         <Avatar
           {...avatarProps}
           imageStyle={{
@@ -131,6 +128,7 @@ const MessageBubble = (props: IMessageBubble) => {
     }
     return null;
   };
+  console.log("render========= message");
   return (
     <View>
       {renderDay()}
@@ -164,4 +162,6 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(MessageBubble);
+export default React.memo(MessageBubble, (props, nextProps) => {
+  return isEqualObjectsSameKeys(props.currentMessage, nextProps.currentMessage);
+});

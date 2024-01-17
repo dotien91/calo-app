@@ -31,7 +31,7 @@ const KeyboardBtn: React.FC<KeyboardBtnProps> = ({
     >
       <Icon
         size={16}
-        type={IconType.Ionicons}
+        type={IconType.Feather}
         name={icon}
         color={color || colors.black}
       />

@@ -59,11 +59,11 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ messages, roomDetail }) => {
       </TouchableOpacity>
       <View style={[CommonStyle.flexEnd, styles.headerRight]}>
         <ActionBtn
-          icon="call"
+          icon="phone"
           color={colors.black}
           customStyle={{ backgroundColor: colors.white }}
         />
-        <ActionBtn icon="videocam" />
+        <ActionBtn icon="video" />
       </View>
     </View>
   );

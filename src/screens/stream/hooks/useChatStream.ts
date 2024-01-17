@@ -69,7 +69,6 @@ export const useLiveChatHistory = ({
   };
 
   const isMe = (user: TypedUser) => {
-    alert(userData?._id + ".   " + user?._id);
     return userData?._id == user?._id;
   };
 

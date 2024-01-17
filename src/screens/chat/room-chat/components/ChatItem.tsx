@@ -6,7 +6,7 @@ import { useTheme } from "@react-navigation/native";
 import createStyles from "../../list-chat/chat.list.screen.style";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Avatar from "@shared-components/user/Avatar";
-import { TypedGeneralRoomChat } from "@services/models/ChatModels";
+import { TypedGeneralRoomChat } from "models/chat.model";
 import { getFormatDayMessage } from "@utils/date.utils";
 import CommonStyle from "@theme/styles";
 import { setViewRoom } from "@services/api/chatApi";
@@ -20,7 +20,6 @@ const ChatItem = ({
   partner_id,
   last_updated,
   room_type,
-  ...res
 }: TypedGeneralRoomChat) => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
@@ -28,7 +27,6 @@ const ChatItem = ({
   const isGroup = room_type == "group";
 
   const { group_partners } = chat_room_id;
-  console.log("group_partnersgroup_partners", chat_room_id, res);
   React.useEffect(() => {
     setReadCount(read_count);
   }, [read_count]);

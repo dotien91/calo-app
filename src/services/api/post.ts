@@ -221,3 +221,17 @@ export async function updateCommentWithId(data: any) {
     return response;
   });
 }
+
+export async function createReport(data: {
+  report_type: string;
+  partner_id: string;
+  report_content: string;
+}) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "report/create-report",
+    data: data,
+  }).then((response) => {
+    return response;
+  });
+}

@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useEffect, useState } from "react";
+import React, { useCallback, useMemo, useEffect } from "react";
 
 import { View, KeyboardAvoidingView, Platform, StatusBar } from "react-native";
 // import Orientation from 'react-native-orientation';
@@ -16,7 +16,6 @@ import ChatView from "./stream.chat.list.view";
 import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "constants";
 import { Device } from "@utils/device.utils";
-import AnimatedLottieView from "lottie-react-native";
 
 function App() {
   const theme = useTheme();
@@ -29,7 +28,6 @@ function App() {
     isPublisher: false,
     liveStreamId,
   });
-  const [showReactionAnimation, setShowReactionAnimation] = useState(true);
 
   useEffect(() => {
     StatusBar.setBackgroundColor("black");
@@ -43,10 +41,10 @@ function App() {
     return (
       <View style={{ flex: 1, padding: 30, ...CommonStyle.flexCenter }}>
         <VideoPlayer
-          mediaUrl={liveData.livestream_data?.m3u8_url}
-          // mediaUrl={
-          //   "https://live-par-2-cdn-alt.livepush.io/live/bigbuckbunnyclip/index.m3u8"
-          // }
+          // mediaUrl={liveData.livestream_data?.m3u8_url}
+          mediaUrl={
+            "https://live-par-2-cdn-alt.livepush.io/live/bigbuckbunnyclip/index.m3u8"
+          }
           resizeMode="cover"
           width={Device.width}
           height={Device.height}
@@ -69,12 +67,6 @@ function App() {
     NavigationService.navigate(SCREENS.HOME);
   };
 
-  useEffect(() => {
-    setTimeout(() => {
-      setShowReactionAnimation(false);
-    }, 7000);
-  }, []);
-
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -82,7 +74,7 @@ function App() {
     >
       <View style={styles.container}>
         <IconBtn
-          name="close"
+          name="x"
           color={colors.white}
           customStyle={{ position: "absolute", top: 50, right: 20, zIndex: 1 }}
           onPress={closeLiveStream}
@@ -91,19 +83,6 @@ function App() {
         {isStreaming() && renderVideoLive()}
         {isStreaming() && renderChatView()}
         {isStreaming() && <LiveBadge />}
-        {showReactionAnimation && (
-          <AnimatedLottieView
-            source={require("assets/lotties/reaction.json")}
-            style={{
-              width: Device.width,
-              height: Device.width,
-              position: "absolute",
-              right: -150,
-              bottom: 80,
-            }}
-            autoPlay
-          />
-        )}
       </View>
     </KeyboardAvoidingView>
   );

@@ -127,6 +127,14 @@ export const showWarningLogin = (message?: string) => {
     cb: () => NavigationService.navigate(SCREENS.LOGIN_PAGE),
   });
 };
+interface IModalByTypeData {
+  type: string;
+  data: any;
+}
+
+export const showSuperModalByType = ({ type, data }: IModalByTypeData) => {
+  eventEmitter.emit("show_bottom_modal", { type, data });
+};
 
 export const showDetailImageView = (
   listLink: ContentMediaPopup,

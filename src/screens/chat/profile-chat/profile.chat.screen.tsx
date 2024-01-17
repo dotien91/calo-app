@@ -17,6 +17,7 @@ import {
   closeSuperModal,
   showErrorModal,
   showLoading,
+  showSuperModalByType,
   showToast,
 } from "@helpers/super.modal.helper";
 import useStore from "@services/zustand/store";
@@ -33,12 +34,12 @@ const profileChatMenu = [
     title: "Group action",
     data: [
       {
-        icon: "account-multiple-plus",
+        icon: "users",
         txt: (text) => "Create group with " + text,
         type: "ACC-PLUS",
       },
       {
-        icon: "account-supervisor",
+        icon: "user-plus",
         txt: (text) => "Add " + text + " to groups",
         type: "ACC-GR",
       },
@@ -53,15 +54,15 @@ const profileChatMenu = [
     title: "Privacy & support",
     data: [
       {
-        icon: "block-helper",
+        icon: "lock",
         txt: () => "Block user",
         type: "BLOCK",
       },
-      // {
-      //   icon: "trash-can-outline",
-      //   txt: () => "Delete chat history",
-      //   type: "DELETE-CHAT",
-      // },
+      {
+        icon: "flag",
+        txt: () => "Report",
+        type: "REPORT",
+      },
     ],
   },
 ];
@@ -72,12 +73,12 @@ const profileGroupChatMenu = [
     title: "Group action",
     data: [
       {
-        icon: "account-multiple-plus",
+        icon: "user-plus",
         txt: () => "Thêm thành viên",
         type: "ACC-PLUS",
       },
       {
-        icon: "account-arrow-right",
+        icon: "user-minus",
         txt: () => "Rời nhóm",
         type: "LEAVE-GR",
       },
@@ -113,11 +114,19 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
   const userData = useStore((state) => state.userData);
   const setSearchModeChat = useStore((state) => state.setSearchModeChat);
 
-  console.log("partner_idpartner_id", partner_id);
-
   const onSearchMessage = () => {
     setSearchModeChat(true);
     NavigationService.goBack();
+  };
+
+  const openReport = () => {
+    showSuperModalByType({
+      type: "report",
+      data: {
+        report_type: "chat",
+        partner_id: partner_id?._id,
+      },
+    });
   };
 
   const openUserProfile = () => {};
@@ -163,14 +172,6 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
   };
 
   const leaveGroup = () => {
-    // {
-    //   "user_id": "string",
-    //   "chat_room_id": "string"
-    // }
-    // {
-    //   "user_id": "string",
-    //   "chat_room_id": "string"
-    // }
     const data = {
       user_id: userData?._id,
       chat_room_id: chat_room_id._id,
@@ -214,15 +215,26 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
       case "LEAVE-GR":
         leaveGroup();
         break;
+      case "REPORT":
+        openReport();
+        break;
       default:
         break;
     }
+  };
+
+  const openProfile = () => {
+    if (isGroup) return;
+    NavigationService.navigate(SCREENS.PROFILE_CURRENT_USER, {
+      _id: partner_id._id,
+    });
   };
 
   const renderTop = () => {
     return (
       <View style={styles.topAction}>
         <Avatar
+          onPress={openProfile}
           sourceUri={{
             uri: partner?.user_avatar || partner?.user_avatar_thumbnail,
           }}
@@ -234,7 +246,7 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
         </Text>
         <View style={styles.wrapTopBtn}>
           <IconBtn
-            name="magnify"
+            name="search"
             color={colors.mainColor2}
             customStyle={styles.topActionBtn}
             onPress={onSearchMessage}
@@ -242,7 +254,7 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
           />
           {!isGroup && (
             <IconBtn
-              name="account"
+              name="user"
               color={colors.mainColor2}
               customStyle={styles.topActionBtn}
               onPress={openUserProfile}
@@ -296,7 +308,6 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
   };
 
   const renderMembers = (item) => {
-    console.log("group_partners=======", group_partners);
     return (
       <TouchableOpacity onPress={openMediaChatScreen} style={styles.section}>
         <Text style={styles.titleSection}>{item.title}</Text>

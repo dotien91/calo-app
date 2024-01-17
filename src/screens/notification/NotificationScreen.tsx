@@ -47,10 +47,10 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
           partner_name: item.title,
         });
         break;
-      case "NAVIGATION_LIST_NOTIFICATIONS_SCREEN":
+      case "NAVIGATION_LIST_NOTIFICATIONS_SCREEN": {
         const param = { id: JSON.parse(item.param).community_id };
-        NavigationService.navigate(SCREENS.POST_DETAIL, param);
-        break;
+        return NavigationService.navigate(SCREENS.POST_DETAIL, param);
+      }
       case "NAVIGATION_PURCHASE_SUCCESS_SCREEN":
         break;
       case "NAVIGATION_MESSAGE_SCREEN":

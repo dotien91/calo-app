@@ -12,6 +12,7 @@ import {
   closeSuperModal,
   showConfirmSuperModal,
   showErrorModal,
+  showSuperModalByType,
   showToast,
 } from "@helpers/super.modal.helper";
 import ItemBottomSheet from "@shared-components/item-bottom-sheet/ItemBottomSheet";
@@ -88,6 +89,16 @@ const ListActionOfComment = ({ data }: ListActionOfComment) => {
     _blockUser(data?.user_id?._id, data?.user_id?.display_name);
   };
 
+  const openReport = () => {
+    showSuperModalByType({
+      type: "report",
+      data: {
+        report_type: "comment",
+        partner_id: data?.user_id?._id,
+      },
+    });
+  };
+
   return (
     <View style={styles.container}>
       <ItemBottomSheet
@@ -110,9 +121,7 @@ const ListActionOfComment = ({ data }: ListActionOfComment) => {
       <ItemBottomSheet
         nameIcon="flag-outline"
         text={translations.post.report}
-        onPress={() => {
-          closeSuperModal();
-        }}
+        onPress={openReport}
       />
     </View>
   );

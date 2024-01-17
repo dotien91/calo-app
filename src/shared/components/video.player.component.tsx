@@ -13,7 +13,7 @@ interface IVideoPlayer {
   height: number;
   autoPlay: boolean;
   onPress: () => void;
-  pressable: boolean | true;
+  pressable: boolean;
 }
 
 const VideoPlayer = ({
@@ -22,7 +22,7 @@ const VideoPlayer = ({
   width,
   height,
   autoPlay,
-  pressable,
+  pressable = true,
   onPress,
 }: IVideoPlayer) => {
   const refVideo = useRef<Video>();
@@ -57,7 +57,7 @@ const VideoPlayer = ({
       {pause && (
         <View style={styles.wrapIcon}>
           <Icon
-            type={IconType.Ionicons}
+            type={IconType.Feather}
             name={"play"}
             size={width / 10}
             color={palette.white}

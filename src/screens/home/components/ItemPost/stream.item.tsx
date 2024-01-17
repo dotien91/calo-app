@@ -11,6 +11,8 @@ import { SCREENS } from "constants";
 import createStyles from "./ItemPost.style";
 import VideoPlayer from "@shared-components/video.player.component";
 import LiveBadge from "@screens/stream/components/LiveBadge/LiveBadge";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { IStreamItem } from "models/stream.model";
 
 const SIZE_AVATAR = 30;
 const BORDER_AVATAR = 12;
@@ -18,19 +20,23 @@ const GAP_HEADER = 10;
 const FONT_SIZE = 16;
 const PADDING_LEFT = 12;
 
-interface StreamItemProps {
-  data: any;
-  refreshing?: boolean;
-}
-
-const StreamItem = ({ data }: StreamItemProps) => {
+const StreamItem = ({ data }: { data: IStreamItem }) => {
   const theme = useTheme();
   const { colors } = theme;
   const styles = React.useMemo(() => createStyles(theme), [theme]);
 
+  const openProfile = () => {
+    NavigationService.push(SCREENS.PROFILE_CURRENT_USER, {
+      _id: data?.user_id?._id,
+    });
+  };
+
+  console.log("====12 stream");
+
   const Avatar = useMemo(() => {
     return (
-      <View
+      <TouchableOpacity
+        onPress={openProfile}
         style={{
           width: SIZE_AVATAR,
           height: SIZE_AVATAR,
@@ -45,7 +51,7 @@ const StreamItem = ({ data }: StreamItemProps) => {
             borderRadius: BORDER_AVATAR,
           }}
         />
-      </View>
+      </TouchableOpacity>
     );
   }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -61,6 +67,7 @@ const StreamItem = ({ data }: StreamItemProps) => {
           }}
         >
           <Text
+            onPress={openProfile}
             style={{
               ...CommonStyle.hnBold,
               fontSize: FONT_SIZE,
@@ -129,53 +136,7 @@ const StreamItem = ({ data }: StreamItemProps) => {
         {data?.title}
       </Text>
     );
-  }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // const LikeShare = () => {
-  //   return (
-  //     <View style={styles.containerLikeShare}>
-  //       <Pressable
-  //         onPress={pressLike}
-  //         style={[styles.viewLike, { justifyContent: "flex-start" }]}
-  //       >
-  //         <Icon
-  //           type={IconType.Ionicons}
-  //           size={16}
-  //           name={isLike ? "heart" : "heart-outline"}
-  //           color={isLike ? colors.primary : colors.text}
-  //         />
-
-  //         <Text style={styles.textLikeShare}>{likeNumber}</Text>
-  //       </Pressable>
-  //       <Pressable
-  //         onPress={pressComment}
-  //         style={[styles.viewLike, { justifyContent: "center" }]}
-  //       >
-  //         <Icon
-  //           type={IconType.Ionicons}
-  //           size={16}
-  //           name="chatbubbles-outline"
-  //           color={colors.text}
-  //         />
-  //         <Text style={styles.textLikeShare}>
-  //           {data?.comment_number || "0"}
-  //         </Text>
-  //       </Pressable>
-  //       <Pressable
-  //         onPress={() => sharePost(data.post_slug)}
-  //         style={[styles.viewLike, { justifyContent: "flex-end" }]}
-  //       >
-  //         <Icon
-  //           type={IconType.Ionicons}
-  //           size={16}
-  //           name="share-social-outline"
-  //           color={colors.text}
-  //         />
-  //         <Text style={styles.textLikeShare}>{translations.post.share}</Text>
-  //       </Pressable>
-  //     </View>
-  //   );
-  // };
+  }, [data.title]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const renderVideoLive = () => {
     return (
@@ -190,9 +151,6 @@ const StreamItem = ({ data }: StreamItemProps) => {
         />
         <VideoPlayer
           mediaUrl={data.livestream_data?.m3u8_url}
-          // mediaUrl={
-          //   "https://live-par-2-cdn-alt.livepush.io/live/bigbuckbunnyclip/index.m3u8"
-          // }
           resizeMode="cover"
           width={styles.image11.width}
           height={styles.image11.height}
@@ -225,4 +183,4 @@ const StreamItem = ({ data }: StreamItemProps) => {
   );
 };
 
-export default StreamItem;
+export default React.memo(StreamItem);

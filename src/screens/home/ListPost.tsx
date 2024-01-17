@@ -44,6 +44,7 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
   const _getListLiveStream = () => {
     getListLiveStream().then((res) => {
       if (!res.isError) {
+        console.log("list live stream", res.data);
         const listDataStream = res.data.filter(
           (item) => item?.livestream_status == "live",
         );
@@ -75,6 +76,7 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
     refreshListPage,
     refreshing,
   } = useListData<any>(paramsRequest, getListPost);
+  console.log("listData home", listData);
 
   useEffect(() => {
     const typeEmit = isFollowingPost
@@ -98,6 +100,10 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
       listRef && listRef.current?.scrollToOffset({ animated: true, offset: 0 });
     }, 200);
   };
+
+  if (!isFollowingPost) {
+    console.log("redner=======");
+  }
 
   if (isFirstLoading) {
     return (
@@ -137,6 +143,8 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
       </View>
     );
   };
+
+  console.log("re====12");
 
   if (!isLoggedIn() && isFollowingPost) {
     return (

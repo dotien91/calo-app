@@ -10,6 +10,8 @@ import { useLiveChatHistory } from "./hooks/useChatStream";
 import LiveMessageItem from "./components/LiveStreamMessageItem";
 import { isIos } from "@helpers/device.info.helper";
 import InputChatLive from "./components/InputChatLiveStream";
+import { Device } from "@utils/device.utils";
+import AnimatedLottieView from "lottie-react-native";
 
 interface ChatViewProps {
   liveStreamId: string;
@@ -24,6 +26,14 @@ const ListChatLiveStream: React.FC<ChatViewProps> = ({
 
   const { setMessages, messages, sendChatMessage, _getChatHistory } =
     useLiveChatHistory({ liveStreamId, isPublisher });
+  const [showReactionAnimation, setShowReactionAnimation] =
+    React.useState(true);
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      setShowReactionAnimation(false);
+    }, 7000);
+  }, []);
 
   // send txt message
   const _sendChatMessage = (text: string) => {
@@ -58,6 +68,20 @@ const ListChatLiveStream: React.FC<ChatViewProps> = ({
         sendChatMessage={_sendChatMessage}
         isPublisher={isPublisher}
       />
+
+      {showReactionAnimation && (
+        <AnimatedLottieView
+          source={require("assets/lotties/reaction.json")}
+          style={{
+            width: Device.width,
+            height: Device.width,
+            position: "absolute",
+            right: -150,
+            bottom: 80,
+          }}
+          autoPlay
+        />
+      )}
     </>
   );
 };
