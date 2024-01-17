@@ -1,6 +1,6 @@
-import React, { useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import { FlatList, View } from "react-native";
-import { useTheme } from "@react-navigation/native";
+import { useTheme, useIsFocused } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 /**
  * ? Local Imports
@@ -11,7 +11,6 @@ import createStyles from "./NotificationScreen.style";
 import Header from "@shared-components/header/Header";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";
-import CommonStyle from "@theme/styles";
 import { useListData } from "@helpers/hooks/useListData";
 import {
   getListNotification,
@@ -19,16 +18,22 @@ import {
 } from "@services/api/notification";
 import EmptyResultView from "@shared-components/empty.data.component";
 import { SCREENS } from "constants";
+import LoadingList from "@shared-components/loading.list.component";
 
 interface ProfileScreenProps {}
 
 const ProfileScreen: React.FC<ProfileScreenProps> = () => {
+  const isFocused = useIsFocused();
   const theme = useTheme();
-  const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
   const userData = useStore((state) => state.userData);
   const readAll = () => {};
   const listRef = useRef(null);
+  useEffect(() => {
+    if (isFocused) {
+      refreshListPage();
+    }
+  }, [isFocused]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const _pressNotification = (item: any) => {
     const params = {
@@ -42,16 +47,11 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
           partner_name: item.title,
         });
         break;
-      case "NAVIGATION_LIST_NOTIFICATIONS_SCREEN":
-        //1
-        console.log("NAVIGATION_LIST_NOTIFICATIONS_SCREEN");
-        break;
+      case "NAVIGATION_LIST_NOTIFICATIONS_SCREEN": {
+        const param = { id: JSON.parse(item.param).community_id };
+        return NavigationService.navigate(SCREENS.POST_DETAIL, param);
+      }
       case "NAVIGATION_PURCHASE_SUCCESS_SCREEN":
-        //2
-        console.log(
-          "NAVIGATION_PURCHASE_SUCCESS_SCREEN",
-          JSON.parse(item.param).data_id,
-        );
         break;
       case "NAVIGATION_MESSAGE_SCREEN":
         NavigationService.navigate(SCREENS.CHAT);
@@ -93,7 +93,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
   };
 
   const paramsRequest = {
-    limit: 10,
+    limit: 20,
     auth_id: userData?._id || "",
     order_by: "DESC",
   };
@@ -101,6 +101,8 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
   const {
     listData,
     setListData,
+    isFirstLoading,
+    isLoading,
     onEndReach,
     refreshControl,
     renderFooterComponent,
@@ -108,24 +110,6 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
     refreshing,
   } = useListData<any>(paramsRequest, getListNotification);
 
-  const renderEmpty = () => {
-    return (
-      <View
-        style={{
-          ...CommonStyle.center,
-          ...CommonStyle.flex1,
-          backgroundColor: colors.background,
-          paddingVertical: 40,
-          minHeight: 500,
-        }}
-      >
-        <EmptyResultView
-          title={translations.notifications.emptyNotification}
-          icon="document-text-outline"
-        />
-      </View>
-    );
-  };
   const _refreshListPage = () => {
     refreshListPage();
     setTimeout(() => {
@@ -139,12 +123,19 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
         onPressLeft={() => {
           NavigationService.navigate(SCREENS.HOME);
         }}
-        iconNameLeft="chevron-back-outline"
+        iconNameLeft="arrow-back-outline"
         text={translations.notifications.notifications}
-        iconNameRight="mail-unread-outline"
         onPressRight={readAll}
-        textRight="see all"
+        textRight={translations.notifications.markAll}
       />
+
+      {isFirstLoading && <LoadingList />}
+      {!listData?.length && !isFirstLoading && !isLoading && (
+        <EmptyResultView
+          title={translations.notifications.emptyNotification}
+          icon="document-text-outline"
+        />
+      )}
       <FlatList
         ref={listRef}
         data={listData}
@@ -157,7 +148,6 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
         keyExtractor={(item) => item?._id + ""}
         refreshControl={refreshControl()}
         ListFooterComponent={renderFooterComponent()}
-        ListEmptyComponent={renderEmpty()}
         refreshing={refreshing}
         onRefresh={_refreshListPage}
       />

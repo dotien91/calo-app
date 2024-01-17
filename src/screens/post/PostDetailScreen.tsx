@@ -27,12 +27,12 @@ import {
   showDetailImageView,
   showErrorModal,
   showLoading,
+  showWarningLogin,
 } from "@helpers/super.modal.helper";
 import { useTheme } from "@react-navigation/native";
 import { useListData } from "@helpers/hooks/useListData";
 import { isIos } from "@utils/device.ui.utils";
 import EmptyResultView from "@shared-components/empty.data.component";
-import { showWarningLogin } from "@screens/home/components/request-login/login.request";
 import { trim } from "@helpers/string.helper";
 import uuid from "react-native-uuid";
 
@@ -85,7 +85,7 @@ const PostDetail = (props: PostDetailProps) => {
     getPostDetail(id, { auth_id: userData?._id || "" }).then((res) => {
       closeSuperModal();
       if (!res.isError) {
-        setData(res);
+        setData(res.data);
       } else {
         showErrorModal(res);
         NavigationService.goBack();
@@ -105,7 +105,7 @@ const PostDetail = (props: PostDetailProps) => {
       setItemUpdate({});
     };
     // getComment();
-  }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [id, dataItem]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const updateListCommentReply = ({
     parent_id,

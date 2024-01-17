@@ -193,6 +193,9 @@ export default {
     report: "Báo cáo bài viết",
     save: "Lưu bài viết",
     likeError: "Gửi lượt thích thất bại vui lòng thử lại!",
+    savePostSuccess: "Lưu bài viết thành công",
+    listPostSave: "bài viết đã lưu",
+    deleteFromSave: "Xoá khỏi danh sách đã lưu",
   },
   navigation: {
     dashboard: "Trang chủ",

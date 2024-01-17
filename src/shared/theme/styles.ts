@@ -69,23 +69,28 @@ const CommonStyle = StyleSheet.create({
   },
   hnRegular: {
     fontFamily: font.outfit.regular,
+    color: palette.text,
     fontSize: 16,
     color: palette.mainColor2,
   },
   hnBold: {
     fontFamily: font.outfit.bold,
+    color: palette.text,
     fontSize: 16,
   },
   hnSemiBold: {
     fontFamily: font.outfit.semiBold,
+    color: palette.text,
     fontSize: 16,
   },
   hnMedium: {
     fontFamily: font.outfit.medium,
+    color: palette.text,
     fontSize: 16,
   },
   hnLight: {
     fontFamily: font.outfit.light,
+    color: palette.text,
     fontSize: 16,
   },
   // hnItalic: {

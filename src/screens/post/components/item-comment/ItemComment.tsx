@@ -12,10 +12,9 @@ import CommonStyle from "@theme/styles";
 import { translations } from "@localization";
 import { postLikeCommnent } from "@services/api/post";
 import useStore from "@services/zustand/store";
-import { showToast } from "@helpers/super.modal.helper";
+import { showToast, showWarningLogin } from "@helpers/super.modal.helper";
 import { convertLastActive } from "@utils/time.utils";
 import { showStickBottom } from "@shared-components/stick-bottom/HomeStickBottomModal";
-import { showWarningLogin } from "@screens/home/components/request-login/login.request";
 
 const SIZE_AVATAR = 30;
 const BORDER_AVATAR = 12;

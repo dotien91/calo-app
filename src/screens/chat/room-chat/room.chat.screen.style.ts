@@ -127,6 +127,7 @@ export default (theme: ExtendedTheme) => {
     },
     txtNamePartner: {
       ...CommonStyle.hnBold,
+      color: colors.text,
       fontSize: 20,
       textAlign: "center",
       width: "100%",

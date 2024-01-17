@@ -24,11 +24,12 @@ interface ListActionOfPost {
 const ListActionOfPost = ({ data }: ListActionOfPost) => {
   const userData = useStore((state) => state.userData);
   const listFollow = useStore((state) => state.listFollow);
+  const listPostSave = useStore((state) => state.listPostSave);
   const { _followUser, _blockUser } = useActionUser();
 
   const pressFollowUser = () => {
     closeSuperModal();
-    _followUser(data?.user_id?._id);
+    _followUser(data?.user_id?._id, data?.user_id?.display_name);
   };
 
   const pressBlockUser = () => {
@@ -52,7 +53,16 @@ const ListActionOfPost = ({ data }: ListActionOfPost) => {
       }
     });
   };
+  const { _savePost, _deletePostSave } = useActionUser();
 
+  const pressSavePost = () => {
+    closeSuperModal();
+    _savePost(data);
+  };
+  const deletePostSave = () => {
+    closeSuperModal();
+    _deletePostSave(data);
+  };
   const showWarrningDelete = () => {
     closeSuperModal();
     showConfirmSuperModal({
@@ -83,14 +93,16 @@ const ListActionOfPost = ({ data }: ListActionOfPost) => {
     );
   }
 
+  const isSave = listPostSave.findIndex((item) => item._id === data._id) >= 0;
+
   return (
     <View style={styles.container}>
       <ItemBottomSheet
         nameIcon="bookmark-outline"
-        text={translations.post.save}
-        onPress={() => {
-          closeSuperModal();
-        }}
+        text={
+          isSave ? translations.post.deleteFromSave : translations.post.save
+        }
+        onPress={isSave ? deletePostSave : pressSavePost}
       />
       <ItemBottomSheet
         nameIcon="person-add-outline"

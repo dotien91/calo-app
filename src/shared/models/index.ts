@@ -71,6 +71,7 @@ export interface TypedUser {
   is_follow?: boolean;
   is_validate_phone?: boolean;
   is_verify_email?: boolean;
+  official_status?: boolean;
 }
 
 export interface TypedPlan {

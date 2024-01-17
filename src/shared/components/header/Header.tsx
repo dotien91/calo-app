@@ -35,7 +35,7 @@ const Header = ({
       />
       <Text style={[styles.textHeader, { color: colors.text }]}>{text}</Text>
       <View style={styles.viewIcons}>
-        {iconNameRight && textRight?.trim()?.length == 0 && (
+        {iconNameRight && (
           <Icon
             onPress={onPressRight}
             name={iconNameRight}
@@ -45,7 +45,7 @@ const Header = ({
           />
         )}
       </View>
-      {textRight?.trim() !== "" && (
+      {(!textRight || textRight?.trim() !== "") && (
         <TouchableOpacity
           onPress={onPressRight}
           style={{

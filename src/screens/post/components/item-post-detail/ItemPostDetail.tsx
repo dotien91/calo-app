@@ -15,7 +15,7 @@ import { convertLastActive } from "@utils/time.utils";
 import { showStickBottom } from "@shared-components/stick-bottom/HomeStickBottomModal";
 import LikeBtn from "@screens/home/components/like-btn/LikeBtn";
 import useStore from "@services/zustand/store";
-import { showWarningLogin } from "@screens/home/components/request-login/login.request";
+import { showWarningLogin } from "@helpers/super.modal.helper";
 
 const SIZE_AVATAR = 30;
 const BORDER_AVATAR = 12;

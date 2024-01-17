@@ -13,7 +13,6 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import * as NavigationService from "react-navigation-helpers";
 
 import createStyles from "./ItemPost.style";
-import { showWarningLogin } from "../request-login/login.request";
 import LikeBtn from "../like-btn/LikeBtn";
 
 import CommonStyle from "@theme/styles";
@@ -22,11 +21,13 @@ import { convertLastActive } from "@utils/time.utils";
 import { SCREENS } from "constants";
 import {
   showDetailImageView,
+  showWarningLogin,
   showSuperModalByType,
 } from "@helpers/super.modal.helper";
 import { sharePost } from "@utils/share.utils";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";
+import { TypedRequest } from "shared/models";
 
 const { width } = Dimensions.get("screen");
 const PADDING_HORIZONTAL = 16;
@@ -41,7 +42,7 @@ const SIZE_IMAGE1 = width - PADDING_HORIZONTAL * 2 - PADDING_LEFT - SIZE_AVATAR;
 const SIZE_IMAGE2 = (SIZE_IMAGE1 - 4) / 2;
 
 interface ItemPostProps {
-  data: any;
+  data: TypedRequest;
   isProfile?: boolean;
 }
 
@@ -176,8 +177,8 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
       <Text
         numberOfLines={2}
         style={{
-          color: colors.mainColor2,
           ...CommonStyle.hnRegular,
+          color: colors.mainColor2,
           fontSize: FONT_SIZE,
           marginBottom: 4,
         }}
