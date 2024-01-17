@@ -21,6 +21,7 @@
     "@react-navigation/stack": "^6.3.17",
     "axios": "^1.4.0",
     "axios-hooks": "^4.0.0",
+    "babel-plugin-transform-remove-console": "^6.9.4",
     "dayjs": "^1.11.10",
     "emoji-utils": "^1.0.1",
     "events": "^3.3.0",
