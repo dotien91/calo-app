@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 
 import React, { useEffect, useMemo, useState } from "react";
-import { Text, View, Pressable, Image, ActivityIndicator } from "react-native";
+import { Text, View, Image, ActivityIndicator } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { useTheme } from "@react-navigation/native";
 
@@ -16,6 +16,7 @@ import { showToast, showWarningLogin } from "@helpers/super.modal.helper";
 import { convertLastActive } from "@utils/time.utils";
 import { showStickBottom } from "@shared-components/stick-bottom/HomeStickBottomModal";
 import { TypedComment } from "shared/models";
+import PressableBtn from "@shared-components/button/PressableBtn";
 
 const SIZE_AVATAR = 30;
 const BORDER_AVATAR = 12;
@@ -129,14 +130,14 @@ const ItemReply = ({ item, onPressReplyChild, repCmtId }: ItemReplyProps) => {
           </Text>
         </View>
         {!item?.sending && (
-          <Pressable onPress={_showStickBottom}>
+          <PressableBtn onPress={_showStickBottom}>
             <Icon
               size={20}
               name="ellipsis-vertical"
               type={IconType.Ionicons}
               color={colors.text}
             />
-          </Pressable>
+          </PressableBtn>
         )}
       </View>
     );
@@ -170,11 +171,11 @@ const ItemReply = ({ item, onPressReplyChild, repCmtId }: ItemReplyProps) => {
     replyItem.parent_id = repCmtId;
     return (
       <View style={styles.containerLikeShare}>
-        <Pressable onPress={pressLikeCommentRep} style={[styles.viewLike]}>
+        <PressableBtn onPress={pressLikeCommentRep} style={[styles.viewLike]}>
           <Text style={isLike ? styles.textLiked : styles.textLikeShare}>
             {likeNumber > 0 && likeNumber} {translations.like}
           </Text>
-        </Pressable>
+        </PressableBtn>
         <View
           style={{
             width: 2,
@@ -183,12 +184,12 @@ const ItemReply = ({ item, onPressReplyChild, repCmtId }: ItemReplyProps) => {
             backgroundColor: colors.text,
           }}
         />
-        <Pressable
+        <PressableBtn
           onPress={() => onPressReplyChild(replyItem)}
           style={[styles.viewLike, { justifyContent: "center" }]}
         >
           <Text style={styles.textLikeShare}>{translations.reply}</Text>
-        </Pressable>
+        </PressableBtn>
       </View>
     );
   };
@@ -298,14 +299,14 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
           </Text>
         </View>
         {!data.sending && (
-          <Pressable onPress={_showStickBottom}>
+          <PressableBtn onPress={_showStickBottom}>
             <Icon
               size={20}
               name="ellipsis-vertical"
               type={IconType.Ionicons}
               color={colors.text}
             />
-          </Pressable>
+          </PressableBtn>
         )}
       </View>
     );
@@ -359,11 +360,11 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
   const LikeComment = () => {
     return (
       <View style={styles.containerLikeShare}>
-        <Pressable onPress={pressLikeComment} style={[styles.viewLike]}>
+        <PressableBtn onPress={pressLikeComment} style={styles.viewLike}>
           <Text style={isLike ? styles.textLiked : styles.textLikeShare}>
             {likeNumber > 0 && likeNumber} {translations.like}
           </Text>
-        </Pressable>
+        </PressableBtn>
         {data?.child_number > 0 && (
           <View
             style={{
@@ -375,11 +376,11 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
           />
         )}
         {data?.child_number > 0 && (
-          <Pressable onPress={pressCommnet} style={[styles.viewLike]}>
+          <PressableBtn onPress={pressCommnet} style={styles.viewLike}>
             <Text style={styles.textLikeShare}>
               {data.child_number} {translations.comment}
             </Text>
-          </Pressable>
+          </PressableBtn>
         )}
         <View
           style={{
@@ -389,12 +390,12 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
             backgroundColor: colors.text,
           }}
         />
-        <Pressable
+        <PressableBtn
           onPress={() => onPressReply(data)}
           style={[styles.viewLike, { justifyContent: "center" }]}
         >
           <Text style={styles.textLikeShare}>{translations.reply}</Text>
-        </Pressable>
+        </PressableBtn>
       </View>
     );
   };

@@ -3,7 +3,6 @@
 import {
   View,
   Text,
-  Pressable,
   Keyboard,
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
@@ -39,6 +38,7 @@ import { useUploadFile } from "@helpers/hooks/useUploadFile";
 import eventEmitter from "@services/event-emitter";
 import CustomBackground from "@shared-components/CustomBackgroundBottomSheet";
 import { SCREENS } from "constants";
+import PressableBtn from "@shared-components/button/PressableBtn";
 
 export default function PostScreen() {
   const theme = useTheme();
@@ -175,10 +175,10 @@ export default function PostScreen() {
     onPress,
   }: {
     icon: React.JSX.Element;
-    onPress?: () => void;
+    onPress: () => void;
   }) => {
     return (
-      <Pressable
+      <PressableBtn
         onPress={onPress}
         style={{
           width: 40,
@@ -188,7 +188,7 @@ export default function PostScreen() {
         }}
       >
         {icon}
-      </Pressable>
+      </PressableBtn>
     );
   };
 
@@ -235,7 +235,7 @@ export default function PostScreen() {
             textPost={item._id ? translations.update : translations.post.post}
           />
           <View style={CommonStyle.flex1}>
-            <Pressable
+            <PressableBtn
               onPress={openListCategory}
               style={{ paddingHorizontal: 20 }}
             >
@@ -248,7 +248,7 @@ export default function PostScreen() {
                       ?.category_content || translations.postCategory
                   : translations.postCategory}
               </Text>
-            </Pressable>
+            </PressableBtn>
 
             <View
               style={[
@@ -357,7 +357,7 @@ export default function PostScreen() {
                   }}
                 >
                   {listCategory.map((i) => (
-                    <Pressable
+                    <PressableBtn
                       key={i._id}
                       style={
                         i._id === postCategory
@@ -376,7 +376,7 @@ export default function PostScreen() {
                           color: colors.primary,
                         }}
                       >{`#${i.category_content}`}</Text>
-                    </Pressable>
+                    </PressableBtn>
                   ))}
                 </BottomSheetScrollView>
               </View>

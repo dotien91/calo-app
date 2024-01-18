@@ -1,26 +1,17 @@
-import React, { useMemo } from "react";
-import { Pressable, ViewStyle } from "react-native";
-import { useTheme } from "@react-navigation/native";
-import createStyles from "./Button.style";
+import React, { ReactNode } from "react";
+import { Pressable, StyleProp, ViewStyle } from "react-native";
 
 interface IPressableBtn {
   onPress: () => void;
-  customStyle?: ViewStyle;
-  children: () => React.JSX.Element;
+  style?: StyleProp<ViewStyle>;
+  children: ReactNode;
 }
 
-const PressableBtn = ({ customStyle, onPress, children }: IPressableBtn) => {
-  const theme = useTheme();
-  const styles = useMemo(() => createStyles(theme), [theme]);
-
+const PressableBtn = ({ style, onPress, children }: IPressableBtn) => {
   return (
     <Pressable
       style={({ pressed }) => {
-        return [
-          styles.pressableBtn,
-          { opacity: pressed ? 0.5 : 1.0 },
-          customStyle && customStyle,
-        ];
+        return [{ opacity: pressed ? 0.5 : 1.0 }, style && style];
       }}
       onPress={onPress}
     >

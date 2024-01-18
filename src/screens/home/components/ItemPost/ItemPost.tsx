@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import React, { useMemo } from "react";
-import { Dimensions, Pressable, Text, View } from "react-native";
+import { Dimensions, Text, View } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 
@@ -15,6 +15,7 @@ import AvatarPost from "./avatar.post";
 import HeaderItempost from "./header.post.item";
 import ListFile from "./list.media.post.item";
 import LikeSharePostItem from "./like.share.post.item";
+import PressableBtn from "@shared-components/button/PressableBtn";
 
 const { width } = Dimensions.get("screen");
 const PADDING_HORIZONTAL = 16;
@@ -105,7 +106,7 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
         sizeAvatar={SIZE_AVATAR}
       />
       <View style={{ ...CommonStyle.flex1 }}>
-        <Pressable
+        <PressableBtn
           onPress={detailScreen}
           style={[CommonStyle.flex1, { paddingLeft: 8 }]}
         >
@@ -113,7 +114,7 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
           {HasTag}
           {ContentStatus}
           <ListFile listFile={data.attach_files} sizeImage2={SIZE_IMAGE2} />
-        </Pressable>
+        </PressableBtn>
         <LikeSharePostItem data={data} pressComment={pressComment} />
       </View>
     </View>

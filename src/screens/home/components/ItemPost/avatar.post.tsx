@@ -1,5 +1,6 @@
+import PressableBtn from "@shared-components/button/PressableBtn";
 import * as React from "react";
-import { Image, Pressable } from "react-native";
+import { Image } from "react-native";
 
 import { TypedRequest } from "shared/models";
 
@@ -12,7 +13,7 @@ interface AvatarPostProps {
 const AvatarPost = ({ data, pressAvatar, sizeAvatar }: AvatarPostProps) => {
   const BORDER_AVATAR = (sizeAvatar * 4) / 10;
   return (
-    <Pressable
+    <PressableBtn
       onPress={pressAvatar}
       style={{
         width: sizeAvatar,
@@ -28,7 +29,7 @@ const AvatarPost = ({ data, pressAvatar, sizeAvatar }: AvatarPostProps) => {
           borderRadius: BORDER_AVATAR,
         }}
       />
-    </Pressable>
+    </PressableBtn>
   );
 };
 

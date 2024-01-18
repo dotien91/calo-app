@@ -1,10 +1,11 @@
 import React from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 import { translations } from "@localization";
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
 import IconSvg from "assets/svg";
+import PressableBtn from "@shared-components/button/PressableBtn";
 
 interface TypeHeaderPost {
   onPressPost: () => void;
@@ -21,19 +22,19 @@ const HeaderPost = ({
 }: TypeHeaderPost) => {
   return (
     <View style={styles.container}>
-      <Pressable style={styles.buttonLeft} onPress={pressGoBack}>
+      <PressableBtn style={styles.buttonLeft} onPress={pressGoBack}>
         <IconSvg name="icBack" />
-      </Pressable>
+      </PressableBtn>
       <Text style={styles.textHeader}>{translations.createPost}</Text>
       <View style={[{ ...styles.buttonLeft }, { alignItems: "flex-end" }]}>
-        <Pressable
+        <PressableBtn
           onPress={visiblePost ? onPressPost : () => {}}
           style={visiblePost ? styles.buttonRight : styles.buttonRightDisable}
         >
           <Text style={visiblePost ? styles.textPost : styles.textPostDisable}>
             {textPost}
           </Text>
-        </Pressable>
+        </PressableBtn>
       </View>
     </View>
   );

@@ -31,6 +31,7 @@ import EmptyResultView from "@shared-components/empty.data.component";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import { shareProfile } from "@utils/share.utils";
 import AvatarProfile from "./avatar.profile";
+import LottieView from "lottie-react-native";
 
 interface ProfileUserProps {
   route: any;
@@ -203,11 +204,25 @@ const ProfileUser = (props: ProfileUserProps) => {
     return (
       <View>
         <HeaderProfile />
-        <AvatarProfile userInfo={userInfo} />
-        <CountFollow id={_id} />
-        <ListAction />
-        <Bio text={userInfo?.bio || ""} />
-        <View style={{ height: 1, backgroundColor: palette.borderColor }} />
+        {!userInfo ? (
+          <View style={{ height: 300 }}>
+            <LottieView
+              style={CommonStyle.flex1}
+              resizeMode="cover"
+              source={require("./lottie/lottie_profile.json")}
+              autoPlay
+              loop
+            />
+          </View>
+        ) : (
+          <View>
+            <AvatarProfile userInfo={userInfo} />
+            <CountFollow id={_id} />
+            <ListAction />
+            <Bio text={userInfo?.bio || ""} />
+            <View style={{ height: 1, backgroundColor: palette.borderColor }} />
+          </View>
+        )}
       </View>
     );
   };
@@ -314,11 +329,25 @@ const ProfileUser = (props: ProfileUserProps) => {
         style={CommonStyle.flex1}
         showsVerticalScrollIndicator={false}
       >
-        <AvatarProfile userInfo={userInfo} />
-        <CountFollow id={_id} />
-        <ListAction />
-        <Bio text={userInfo?.bio || ""} />
-        <View style={{ height: 1, backgroundColor: palette.borderColor }} />
+        {!userInfo ? (
+          <View style={{ height: 300 }}>
+            <LottieView
+              style={CommonStyle.flex1}
+              resizeMode="cover"
+              source={require("./lottie/lottie_profile.json")}
+              autoPlay
+              loop
+            />
+          </View>
+        ) : (
+          <View>
+            <AvatarProfile userInfo={userInfo} />
+            <CountFollow id={_id} />
+            <ListAction />
+            <Bio text={userInfo?.bio || ""} />
+            <View style={{ height: 1, backgroundColor: palette.borderColor }} />
+          </View>
+        )}
 
         <ListPost isFollowingPost={false} id={_id} />
       </ScrollView>
