@@ -183,6 +183,15 @@ const ProfileUser = (props: ProfileUserProps) => {
       </TouchableOpacity>
     );
   };
+
+  const openChatRoom = () => {
+    console.log("userInfouserInfo", userInfo._id, _id);
+    NavigationService.navigate(SCREENS.CHAT_ROOM, {
+      partner_id: userInfo?._id,
+      partner_name: userInfo?.display_name,
+    });
+  };
+
   const ListAction = () => {
     const isUserLogin = userData?._id === userInfo?._id;
     if (!userData || !isUserLogin) {
