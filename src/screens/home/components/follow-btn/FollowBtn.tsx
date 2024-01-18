@@ -35,36 +35,40 @@ const FollowBtn = (props: FollowBtnProps) => {
     }
   }, [listFollow]); // eslint-disable-line react-hooks/exhaustive-deps
   const _followUser = (id: string, display_name: string) => {
-    const params = { partner_id: id };
-    setLoading(true);
-    if (listFollow.indexOf(id) >= 0) {
-      unFollowUser(params).then((resUnfollow) => {
-        if (!resUnfollow.isError) {
-          updateListFollow([...listFollow.filter((i) => i !== id)]);
-          showToast({
-            type: "success",
-            message: translations.unfollow + " " + display_name,
-          });
-          setLoading(false);
-        } else {
-          setLoading(false);
-          showErrorModal(resUnfollow);
-        }
-      });
+    if (userData) {
+      const params = { partner_id: id };
+      setLoading(true);
+      if (listFollow.indexOf(id) >= 0) {
+        unFollowUser(params).then((resUnfollow) => {
+          if (!resUnfollow.isError) {
+            updateListFollow([...listFollow.filter((i) => i !== id)]);
+            showToast({
+              type: "success",
+              message: translations.unfollow + " " + display_name,
+            });
+            setLoading(false);
+          } else {
+            setLoading(false);
+            showErrorModal(resUnfollow);
+          }
+        });
+      } else {
+        followUser(params).then((resFollow) => {
+          if (!resFollow.isError) {
+            updateListFollow([...listFollow, id]);
+            showToast({
+              type: "success",
+              message: translations.followed + " " + display_name,
+            });
+            setLoading(false);
+          } else {
+            showErrorModal(resFollow);
+            setLoading(false);
+          }
+        });
+      }
     } else {
-      followUser(params).then((resFollow) => {
-        if (!resFollow.isError) {
-          updateListFollow([...listFollow, id]);
-          showToast({
-            type: "success",
-            message: translations.followed + " " + display_name,
-          });
-          setLoading(false);
-        } else {
-          showErrorModal(resFollow);
-          setLoading(false);
-        }
-      });
+      showWarningLogin();
     }
   };
   const pressFollow = () => {

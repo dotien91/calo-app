@@ -198,7 +198,6 @@ const ProfileUser = (props: ProfileUserProps) => {
       return (
         <View style={styles.listAction}>
           <FollowBtn data={userInfo} />
-          <ButtomAction onPress={() => {}} text={translations.message} />
           {isLoggedIn() && (
             <ButtomAction onPress={openChatRoom} text={translations.message} />
           )}
