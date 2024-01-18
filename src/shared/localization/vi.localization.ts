@@ -45,6 +45,11 @@ export default {
   error: {
     unknown: "Có lỗi không xác định xảy ra!",
     invalidPhoneEmail: "SĐT/Email không hợp lệ",
+    invalidEmail: "Email không hợp lệ",
+    invalidPhone: "Phone không hợp lệ",
+    invalidLink: "Link không hợp lệ",
+    invalidYoutube: "Kênh youtube không hợp lệ",
+    invalidFacebook: "Link Youtube không hợp lệ",
     minLengthPass: "Mật khẩu phải ít nhất 6 kí tự",
     passDoesNotMatch: "Mật khẩu xác nhận không trùng khớp",
     errorPatternPass:

@@ -40,11 +40,6 @@ import eventEmitter from "@services/event-emitter";
 import CustomBackground from "@shared-components/CustomBackgroundBottomSheet";
 import { SCREENS } from "constants";
 
-interface OptionsState {
-  postCategory: string;
-  link: string;
-}
-
 export default function PostScreen() {
   const theme = useTheme();
   const { colors } = theme;
@@ -52,11 +47,12 @@ export default function PostScreen() {
   const item: TypedRequest = route?.params?.item || {};
   const styles = useMemo(() => createStyles(theme), [theme]);
   const submitPostStatus = React.useRef("");
-
-  const [options, setOptions] = useState<OptionsState>({
-    postCategory: item?.post_category?._id || "",
-    link: "",
-  });
+  const [postCategory, setPostCategory] = useState("");
+  const [link, setLink] = useState("");
+  const [listCategory, setListCategory] = useState<TypedCategory[]>([]);
+  const [description, setDescription] = useState<string>(
+    item.post_content || "",
+  );
   const {
     onPressFile,
     onSelectPicture,
@@ -74,7 +70,6 @@ export default function PostScreen() {
         } || []),
     ),
   );
-  console.log("item...", JSON.stringify(item));
   const onPressLive = () => {
     NavigationService.navigate(SCREENS.LIVE_STREAM, {
       titleLive: description,
@@ -104,25 +99,14 @@ export default function PostScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [description]);
 
-  const [listCategory, setListCategory] = useState<TypedCategory[]>([]);
-  const [description, setDescription] = useState<string>(
-    item.post_content || "",
-  );
-  const [link, setLink] = useState("");
   const getListCategory = async () => {
     getCategory().then((res) => {
       if (!res.isError) {
         setListCategory(res.data);
         if (item) {
-          setOptions((prev) => ({
-            ...prev,
-            postCategory: item.post_category?._id,
-          }));
+          setPostCategory(item.post_category?._id);
         } else {
-          setOptions((prev) => ({
-            ...prev,
-            postCategory: res.data?.[0]?._id,
-          }));
+          setPostCategory(res.data?.[0]?._id);
         }
       }
     });
@@ -149,7 +133,7 @@ export default function PostScreen() {
     const params = {
       post_title: "",
       post_content: description.trim(),
-      post_category: options.postCategory || undefined,
+      post_category: postCategory,
       post_language: "en",
       attach_files: JSON.stringify(listFile.map((i) => i._id)),
       _id: item._id || "",
@@ -184,7 +168,7 @@ export default function PostScreen() {
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isUpLoadingFile, description, listFile]);
+  }, [isUpLoadingFile, description, listFile, postCategory]);
 
   const SelectComponent = ({
     icon,
@@ -260,7 +244,7 @@ export default function PostScreen() {
               >
                 #
                 {listCategory.length > 0
-                  ? listCategory?.find((i) => i._id === options.postCategory)
+                  ? listCategory?.find((i) => i._id === postCategory)
                       ?.category_content || translations.postCategory
                   : translations.postCategory}
               </Text>
@@ -279,6 +263,7 @@ export default function PostScreen() {
                 onChangeText={setDescription}
                 multiline
                 placeholderTextColor={colors.placeholder}
+                maxLength={500}
               />
             </View>
             {link != "" && (
@@ -375,16 +360,13 @@ export default function PostScreen() {
                     <Pressable
                       key={i._id}
                       style={
-                        i._id === options.postCategory
+                        i._id === postCategory
                           ? styles.categorySelected
                           : styles.category
                       }
                       onPress={() => {
                         refBottomSheet.current?.close();
-                        setOptions((prev) => ({
-                          ...prev,
-                          postCategory: i._id,
-                        }));
+                        setPostCategory(i._id);
                       }}
                     >
                       <Text

@@ -31,6 +31,7 @@ interface SuperModalProps {}
 interface TypehowBottomModal {
   type: "post" | "comment";
   data: ReactNode;
+  isDetail?: boolean;
 }
 
 const SuperModal: React.FC<SuperModalProps> = () => {
@@ -40,6 +41,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
   const [listMedia, setListMeia] = useState<TypedMedia[]>([]);
   const [indexMedia, setIndexMedia] = useState(0);
   const [type, setType] = useState("");
+  const [isDetail, setIsDetail] = useState(false);
   const scrollViewRef = useRef<any>(null);
 
   useEffect(() => {
@@ -58,6 +60,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
   const showBottomModal = (param: TypehowBottomModal) => {
     setType(param.type);
     setContent(param.data);
+    setIsDetail(param.isDetail || false);
     setVisible(true);
   };
 
@@ -175,7 +178,9 @@ const SuperModal: React.FC<SuperModalProps> = () => {
           }}
         >
           {type === "report" && <ReportView {...content} />}
-          {type === "post" && <ListActionOfPost data={content} />}
+          {type === "post" && (
+            <ListActionOfPost data={content} isDetail={isDetail} />
+          )}
           {type === "comment" && <ListActionOfComment data={content} />}
         </View>
       </StickBottomModal>

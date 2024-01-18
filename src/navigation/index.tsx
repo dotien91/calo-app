@@ -38,8 +38,8 @@ import ProfileChatScreen from "@screens/chat/profile-chat/profile.chat.screen";
 import CreateGroupChatScreen from "@screens/chat/create-group-chat/create.group.chat.screen";
 import MediaChatScreen from "@screens/chat/profile-chat/media.chat.screen";
 import AddUserGroupChatScreen from "@screens/chat/add-user-to-group-chat/add.user.group.chat.screen";
-import ProfileUserScreen from "@screens/profile-user/ProfileUserScreen";
-import EditProfileScreen from "@screens/profile-user/edit-profile/EditProfileScreen";
+import ProfileUserScreen from "@screens/profile-user/profile.screen";
+import EditProfileScreen from "@screens/profile-user/edit-profile/edit.profile.screen";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();

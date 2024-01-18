@@ -24,6 +24,7 @@ interface Props {
   onUpload?: () => void;
   style: ViewStyle;
   sizeIcon?: number;
+  isDone?: boolean;
 }
 
 const FileViewComponent = ({
@@ -32,6 +33,7 @@ const FileViewComponent = ({
   onUpload,
   style,
   sizeIcon = 32,
+  isDone = true,
 }: Props) => {
   const theme = useTheme();
   const { colors } = theme;
@@ -124,7 +126,7 @@ const FileViewComponent = ({
           </Text>
         )}
       </View>
-      {!done && (
+      {(!done || !isDone) && (
         <View
           style={{
             ...StyleSheet.absoluteFillObject,

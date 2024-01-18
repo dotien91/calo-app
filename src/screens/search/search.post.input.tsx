@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { View, TouchableOpacity } from "react-native";
 import { useTheme } from "@react-navigation/native";
 
@@ -24,6 +24,11 @@ const PostSearchInput: React.FC<IPostSearchInput> = ({ setTxtSearch }) => {
 
   const inputSearchRef = useRef(null);
   const [txt, setTxt] = useState("");
+  useEffect(() => {
+    setTimeout(() => {
+      inputSearchRef.current.focus();
+    }, 100);
+  }, []);
 
   const onSearch = () => {
     setTxtSearch(inputSearchRef.current.value);

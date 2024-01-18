@@ -10,7 +10,13 @@ import InputHook from "@shared-components/form/InputHookForm";
 import { isIos } from "@helpers/device.info.helper";
 import { translations } from "@localization";
 import CommonStyle from "@theme/styles";
-import { phoneRegex, regexLink, regexMail } from "constants/regex.constant";
+import {
+  phoneRegex,
+  regexEmail,
+  regexFB,
+  regexLink,
+  regexYoutubeChannel,
+} from "constants/regex.constant";
 import Button from "@shared-components/button/Button";
 import useStore from "@services/zustand/store";
 import { updateProfile } from "@services/api/userApi";
@@ -52,6 +58,7 @@ const EditProfileScreen = () => {
       links: {
         facebook: data.facebook,
         website: data.website,
+        youtube: data.youtube,
       },
     };
     setUpdating(true);
@@ -71,6 +78,7 @@ const EditProfileScreen = () => {
             {
               facebook: data.facebook,
               website: data.website,
+              youtube: data.youtube,
             },
           ],
         });
@@ -110,6 +118,7 @@ const EditProfileScreen = () => {
             },
           }}
           errorTxt={errors.fullname?.message}
+          maxLength={32}
         />
 
         <InputHook
@@ -127,8 +136,8 @@ const EditProfileScreen = () => {
               message: translations.required,
             },
             pattern: {
-              value: regexMail,
-              message: translations.error.invalidPhoneEmail,
+              value: regexEmail,
+              message: translations.error.invalidEmail,
             },
           }}
           errorTxt={errors.email?.message}
@@ -157,6 +166,7 @@ const EditProfileScreen = () => {
           }}
           control={control}
           rules={{}}
+          maxLength={256}
           errorTxt={errors.bio?.message}
         />
 
@@ -172,7 +182,7 @@ const EditProfileScreen = () => {
           rules={{
             pattern: {
               value: phoneRegex,
-              message: translations.error.invalidPhoneEmail,
+              message: translations.error.invalidPhone,
             },
           }}
           errorTxt={errors.phoneNumber?.message}
@@ -201,8 +211,8 @@ const EditProfileScreen = () => {
           control={control}
           rules={{
             pattern: {
-              value: regexLink,
-              message: translations.error.invalidPhoneEmail,
+              value: regexFB,
+              message: translations.error.invalidFacebook,
             },
           }}
           errorTxt={errors.facebook?.message}
@@ -220,7 +230,7 @@ const EditProfileScreen = () => {
           rules={{
             pattern: {
               value: regexLink,
-              message: translations.error.invalidPhoneEmail,
+              message: translations.error.invalidLink,
             },
           }}
           errorTxt={errors.website?.message}
@@ -237,11 +247,12 @@ const EditProfileScreen = () => {
           control={control}
           rules={{
             pattern: {
-              value: regexLink,
-              message: translations.error.invalidPhoneEmail,
+              value: regexYoutubeChannel,
+              message: translations.error.invalidYoutube,
             },
           }}
-          errorTxt={errors.website?.message}
+          maxLength={100}
+          errorTxt={errors.youtube?.message}
         />
 
         <Button

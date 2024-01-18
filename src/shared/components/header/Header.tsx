@@ -82,9 +82,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 16,
+    gap: 8,
   },
   textHeader: {
     ...CommonStyle.hnBold,
+    flex: 1,
+    textAlign: "center",
   },
   viewIcons: {
     width: 40,

@@ -18,12 +18,14 @@ import ItemBottomSheet from "@shared-components/item-bottom-sheet/ItemBottomShee
 import { SCREENS } from "constants";
 import eventEmitter from "@services/event-emitter";
 import { useActionUser } from "@helpers/hooks/useActionUser";
+import { TypedRequest } from "shared/models";
 
 interface ListActionOfPost {
-  data: any;
+  data: TypedRequest;
+  isDetail?: boolean;
 }
 
-const ListActionOfPost = ({ data }: ListActionOfPost) => {
+const ListActionOfPost = ({ data, isDetail = false }: ListActionOfPost) => {
   const userData = useStore((state) => state.userData);
   const listFollow = useStore((state) => state.listFollow);
   const listPostSave = useStore((state) => state.listPostSave);
@@ -49,7 +51,9 @@ const ListActionOfPost = ({ data }: ListActionOfPost) => {
           type: "success",
           message: translations.home.deletePostSuccess,
         });
-        NavigationService.navigate(SCREENS.HOME);
+        if (isDetail) {
+          NavigationService.goBack();
+        }
       } else {
         showToast({ type: "error", message: translations.somethingWentWrong });
       }
@@ -81,6 +85,7 @@ const ListActionOfPost = ({ data }: ListActionOfPost) => {
         report_type: "post",
         partner_id: data?.user_id?._id,
       },
+      isDetail,
     });
   };
 

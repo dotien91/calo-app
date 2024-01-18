@@ -18,7 +18,7 @@ import ItemComment from "./components/item-comment/ItemComment";
 import createStyles from "./Post.style";
 
 import useStore from "@services/zustand/store";
-import ItemPost from "@screens/post/components/item-post-detail/ItemPostDetail";
+import ItemPost from "@screens/post/components/item-post-detail/item.post.detail";
 import { getListComment, getPostDetail, postComment } from "@services/api/post";
 import CommonStyle from "@theme/styles";
 import { translations } from "@localization";
@@ -126,7 +126,7 @@ const PostDetail = (props: PostDetailProps) => {
         (itemChild) => itemChild.local_id === data.local_id,
       );
       if (indexChild >= 0) {
-        itemIndexParent.child[indexChild] = data;
+        itemIndexParent.child[0] = data;
       } else {
         itemIndexParent.child = [data, ...itemIndexParent.child];
       }
@@ -224,7 +224,6 @@ const PostDetail = (props: PostDetailProps) => {
       if (!resComment.isError) {
         if (replyItem?.parent_id || replyItem?._id) {
           setTimeout(() => {
-            console.log(2);
             const dataUpdate = updateListCommentReply({
               parent_id: replyItem.parent_id || replyItem._id,
               data: { ...resComment.data, idLocal: _uuid, sending: false },

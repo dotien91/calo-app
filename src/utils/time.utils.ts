@@ -34,7 +34,7 @@ export const convertLastActive = (time: string) => {
   // Calculate the number of minutes
   const remainingMinutes = timeNumber % 60;
 
-  if (days > 0) return `${days} ${translations.days} ${translations.ago}`;
-  if (hours > 0) return `${hours} ${translations.hours} ${translations.ago}`;
-  return `${remainingMinutes} ${translations.minutes} ${translations.ago}`;
+  if (days > 0) return `${days} ${translations.days}`;
+  if (hours > 0) return `${hours} ${translations.hours}`;
+  return `${remainingMinutes} ${translations.minutes}`;
 };

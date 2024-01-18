@@ -1,22 +1,66 @@
 import * as React from "react";
 import { Text, View, Image, TouchableOpacity } from "react-native";
+import * as NavigationService from "react-navigation-helpers";
 
 import CommonStyle from "@theme/styles";
 import { useTheme } from "@react-navigation/native";
 import { getFormatDayNotification } from "@utils/date.utils";
 import { TypedNotification } from "models/notification.model";
+import { readNotification } from "@services/api/notification";
+import { SCREENS } from "constants";
 
 interface ItemNotificationProps {
   item: TypedNotification;
-  onPress: () => void;
 }
 
-const ItemNotification = ({ onPress, item }: ItemNotificationProps) => {
+const ItemNotification = ({ item }: ItemNotificationProps) => {
   const theme = useTheme();
   const { colors } = theme;
+  const [isReaded, setIsReaded] = React.useState<boolean>(
+    item.read_status !== 0,
+  );
+
+  const _pressNotification = () => {
+    const params = {
+      _id: item._id,
+      read_status: "1",
+    };
+    switch (item.router) {
+      case "NAVIGATION_CHAT_ROOM":
+        NavigationService.navigate(SCREENS.CHAT_ROOM, {
+          id: JSON.parse(item.param).chat_room_id,
+          partner_name: item.title,
+        });
+        break;
+      case "NAVIGATION_LIST_NOTIFICATIONS_SCREEN": {
+        const param = { id: JSON.parse(item.param).community_id };
+        return NavigationService.navigate(SCREENS.POST_DETAIL, param);
+      }
+      case "NAVIGATION_PURCHASE_SUCCESS_SCREEN":
+        break;
+      case "NAVIGATION_MESSAGE_SCREEN":
+        NavigationService.navigate(SCREENS.CHAT);
+        break;
+      case "NAVIGATION_PROFILE_SCREEN":
+      case "NAVIGATION_LIKED_SCREEN":
+        NavigationService.navigate(SCREENS.PROFILE_CURRENT_USER, {
+          _id: JSON.parse(item.param).data_id,
+        });
+        break;
+
+      default:
+        break;
+    }
+    readNotification(params).then((res) => {
+      if (!res.isError) {
+        setIsReaded(true);
+      }
+    });
+  };
+
   return (
     <TouchableOpacity
-      onPress={onPress}
+      onPress={_pressNotification}
       style={{
         width: "100%",
         height: 60,
@@ -31,8 +75,7 @@ const ItemNotification = ({ onPress, item }: ItemNotificationProps) => {
           width: 4,
           height: 4,
           borderRadius: 2,
-          backgroundColor:
-            item.read_status !== 0 ? colors.background : colors.placeholder,
+          backgroundColor: isReaded ? colors.background : colors.placeholder,
         }}
       />
       <View>
