@@ -12,7 +12,7 @@ import Header from "@shared-components/header/Header";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";
 import { useListData } from "@helpers/hooks/useListData";
-import { getListNotification } from "@services/api/notification";
+import { getListNotification } from "@services/api/notification.api";
 import EmptyResultView from "@shared-components/empty.data.component";
 import { SCREENS } from "constants";
 import LoadingList from "@shared-components/loading.list.component";
@@ -27,11 +27,6 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
   const userData = useStore((state) => state.userData);
   const readAll = () => {};
   const listRef = useRef(null);
-  useEffect(() => {
-    if (isFocused) {
-      refreshListPage();
-    }
-  }, [isFocused]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const renderItem = ({ item }: { item: TypedNotification }) => {
     return <ItemNotification key={item._id} item={item} />;
@@ -50,12 +45,18 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
     onEndReach,
     refreshControl,
     renderFooterComponent,
-    refreshListPage,
+    _requestData,
     refreshing,
   } = useListData<TypedNotification>(paramsRequest, getListNotification);
 
-  const _refreshListPage = () => {
-    refreshListPage();
+  useEffect(() => {
+    if (isFocused) {
+      _requestData();
+    }
+  }, [isFocused]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const onRefresh = () => {
+    _requestData();
     setTimeout(() => {
       listRef && listRef.current?.scrollToOffset({ animated: true, offset: 0 });
     }, 200);
@@ -93,7 +94,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
         refreshControl={refreshControl()}
         ListFooterComponent={renderFooterComponent()}
         refreshing={refreshing}
-        onRefresh={_refreshListPage}
+        onRefresh={onRefresh}
       />
     </View>
   );

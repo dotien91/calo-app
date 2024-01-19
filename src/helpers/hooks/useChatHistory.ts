@@ -13,7 +13,7 @@ import {
   getChatHistory,
   sendChatToChatRoom,
   viewRoom,
-} from "@services/api/chatApi";
+} from "@services/api/chat.api";
 import { EnumMessageStatus } from "constants/chat.constant";
 
 const limit = 20;

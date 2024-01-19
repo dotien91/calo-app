@@ -15,7 +15,7 @@ interface TypedUseListData<T> {
   refreshControl: () => JSX.Element;
   renderFooterComponent: () => JSX.Element;
   setListData: (newListData: T[]) => void;
-  refreshListPage: () => void;
+  _requestData: () => void;
 }
 
 interface TypedRequestParams {
@@ -48,14 +48,15 @@ export function useListData<T>(
   const isFetching = useRef(false);
 
   useDeepCompareEffect(() => {
-    refreshListPage();
+    _requestData();
   }, [params]);
 
-  const refreshListPage = (showRefreshing: boolean | true) => {
+  const _requestData = (showRefreshing: boolean | true) => {
     isFetching.current = true;
     if (stateListData.nextPage > 1 && showRefreshing) setRefreshing(true);
     setIsLoading(true);
     requestData({ page: 1, ...params }).then((res: any) => {
+      console.log("ressss", res);
       const newData = res.data;
       setIsLoading(false);
       if (!res.isError && lodash.isArray(newData)) {
@@ -125,7 +126,7 @@ export function useListData<T>(
 
   const refreshControl = () => (
     <RefreshControl
-      onRefresh={refreshListPage}
+      onRefresh={_requestData}
       refreshing={refreshing}
       tintColor={palette.grey2}
       colors={[palette.grey2]}
@@ -141,23 +142,17 @@ export function useListData<T>(
     );
   };
 
-  const getListData = useCallback(() => {
-    return stateListData.listData;
-  }, [stateListData]);
-
   return {
     listData: stateListData.listData,
     nextPage: stateListData.nextPage,
-    isLastPage: stateListData.isLastPage,
+    // isLastPage: stateListData.isLastPage,
     isFirstLoading,
     onEndReach,
     refreshControl,
-    refreshListPage,
+    _requestData,
     renderFooterComponent,
     setListData,
     refreshing,
     isLoading,
-    setStateListData,
-    getListData,
   };
 }

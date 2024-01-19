@@ -11,7 +11,7 @@ import { useTheme } from "@react-navigation/native";
 import { selectMedia } from "@helpers/file.helper";
 import { uploadMedia } from "@services/api/post";
 import { isIos } from "@helpers/device.info.helper";
-import { updateProfile } from "@services/api/userApi";
+import { updateProfile } from "@services/api/user.api";
 import { showToast } from "@helpers/super.modal.helper";
 import { translations } from "@localization";
 

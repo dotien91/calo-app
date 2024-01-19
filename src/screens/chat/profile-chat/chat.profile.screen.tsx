@@ -7,7 +7,7 @@ import * as NavigationService from "react-navigation-helpers";
  * ? Local Imports
  */
 import createStyles from "./chat.profile.style";
-import { leaveRoom } from "@services/api/chatApi";
+import { leaveRoom } from "@services/api/chat.api";
 import { translations } from "@localization";
 import Avatar from "@shared-components/user/Avatar";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";

@@ -9,13 +9,14 @@ import {
 import * as NavigationService from "react-navigation-helpers";
 import { useTheme } from "@react-navigation/native";
 import { Tabs, MaterialTabBar } from "react-native-collapsible-tab-view";
+import LottieView from "lottie-react-native";
 
 import useStore from "@services/zustand/store";
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
 import { translations } from "@localization";
 import CountFollow from "./count-follow/CountFollow";
-import { getUserById } from "@services/api/curentUser";
+import { getUserById } from "@services/api/user.api";
 import ListPost from "@screens/home/ListPost";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
 import { SCREENS } from "constants";
@@ -30,7 +31,7 @@ import FollowBtn from "@screens/home/components/follow-btn/FollowBtn";
 import EmptyResultView from "@shared-components/empty.data.component";
 import { shareProfile } from "@utils/share.utils";
 import AvatarProfile from "./avatar.profile";
-import LottieView from "lottie-react-native";
+import { useUserHook } from "@helpers/hooks/useUserHook";
 
 interface ProfileUserProps {
   route: any;
@@ -43,6 +44,7 @@ const ProfileUser = (props: ProfileUserProps) => {
   const theme = useTheme();
   const { colors } = theme;
   const [userInfo, setUserInfo] = useState<TypedUser | null>(null);
+  const { isLoggedIn } = useUserHook();
 
   const _getUserById = (id: string) => {
     getUserById(id).then((res) => {
@@ -50,16 +52,27 @@ const ProfileUser = (props: ProfileUserProps) => {
     });
   };
 
+  const paramsRequest = {
+    limit: 5,
+    auth_id: userData?._id || "",
+    user_id: _id,
+  };
+
+  const {
+    listData,
+    onEndReach,
+    refreshControl,
+    _requestData,
+    renderFooterComponent,
+    refreshing,
+  } = useListData<TypedRequest>(paramsRequest, getListPost);
+
   useEffect(() => {
-    eventEmitter.on("reload_list_post", _refreshListPage);
+    eventEmitter.on("reload_list_post", _requestData);
     return () => {
-      eventEmitter.off("reload_list_post", _refreshListPage);
+      eventEmitter.off("reload_list_post", _requestData);
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const _refreshListPage = () => {
-    refreshListPage();
-  };
 
   useEffect(() => {
     _getUserById(_id);
@@ -174,20 +187,6 @@ const ProfileUser = (props: ProfileUserProps) => {
       </View>
     );
   };
-  const paramsRequest = {
-    limit: 10,
-    auth_id: userData?._id || "",
-    user_id: _id,
-  };
-
-  const {
-    listData,
-    onEndReach,
-    refreshControl,
-    refreshListPage,
-    renderFooterComponent,
-    refreshing,
-  } = useListData<TypedRequest>(paramsRequest, getListPost);
 
   const renderItem = ({ item }: { item: TypedRequest }) => {
     return <ItemPost key={item._id} data={item} isProfile={_id?.length > 0} />;

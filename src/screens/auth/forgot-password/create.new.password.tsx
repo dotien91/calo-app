@@ -18,7 +18,7 @@ import { translations } from "@localization";
 import IconSvg from "assets/svg";
 import GoBackButton from "../components/GoBackButton";
 import { ILoginWithPass, ICreateNewPass } from "models";
-import { createNewPass, loginWithPass } from "@services/api/userApi";
+import { createNewPass, loginWithPass } from "@services/api/user.api";
 import {
   closeSuperModal,
   showSuperModal,

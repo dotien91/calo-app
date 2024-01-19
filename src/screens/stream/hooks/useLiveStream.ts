@@ -4,7 +4,7 @@ import { showToast } from "@helpers/super.modal.helper";
 import {
   createLiveStream,
   getLiveStreamDetail,
-} from "@services/api/livestreamApi";
+} from "@services/api/stream.api";
 import { ILiveData } from "models/stream.model";
 
 export const useLiveStream = ({

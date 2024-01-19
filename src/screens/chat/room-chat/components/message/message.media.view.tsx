@@ -46,12 +46,13 @@ const MessageMediaView = ({ data, fromProfileChat, status }: IMediasView) => {
     const index = listMedia.findIndex(
       (_item: TypedDataMediaChatHistory) => _item.media_url == item.media_url,
     );
+    console.log("indexindex", index);
     showSuperModal({
       contentModalType: EnumModalContentType.Library,
       styleModalType: EnumStyleModalType.Middle,
       data: {
         listMedia,
-        indexMedia: index,
+        index,
       },
     });
   };

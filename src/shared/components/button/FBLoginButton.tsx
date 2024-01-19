@@ -9,7 +9,7 @@ import { closeSuperModal, showSuperModal } from "@helpers/super.modal.helper";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { getDeviceInfo } from "@helpers/device.info.helper";
 import { AccessToken, LoginManager } from "react-native-fbsdk-next";
-import { loginWithFB } from "@services/api/userApi";
+import { loginWithFB } from "@services/api/user.api";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 
 interface BtnProps {

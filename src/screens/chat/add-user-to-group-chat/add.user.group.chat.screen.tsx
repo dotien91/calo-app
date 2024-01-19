@@ -5,7 +5,7 @@ import { useTheme, useRoute } from "@react-navigation/native";
  * ? Local Imports
  */
 import createStyles from "./add.user.group.chat.style";
-import { getListChat, addUserToRoom } from "@services/api/chatApi";
+import { getListChat, addUserToRoom } from "@services/api/chat.api";
 import ProfileChatInput from "./add.user.group.chat.input";
 import LoadingList from "@shared-components/loading.list.component";
 import EmptyResultView from "@shared-components/empty.data.component";

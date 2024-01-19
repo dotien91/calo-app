@@ -9,7 +9,7 @@ import Avatar from "@shared-components/user/Avatar";
 import { TypedGeneralRoomChat } from "models/chat.model";
 import { getFormatDayMessage } from "@utils/date.utils";
 import CommonStyle from "@theme/styles";
-import { setViewRoom } from "@services/api/chatApi";
+import { setViewRoom } from "@services/api/chat.api";
 import { SCREENS } from "constants";
 
 const avatarSize = 64;

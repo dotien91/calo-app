@@ -1,9 +1,9 @@
 import request, { METHOD } from "./api";
 
-export async function getVideos(params: any) {
+export async function getCourseList(params) {
   return request({
     method: METHOD.GET,
-    urlPath: "short/list",
+    urlPath: "course/list",
     params,
   }).then((response) => {
     return response;

@@ -40,6 +40,7 @@ import MediaChatScreen from "@screens/chat/profile-chat/chat.media.screen";
 import AddUserGroupChatScreen from "@screens/chat/add-user-to-group-chat/add.user.group.chat.screen";
 import ProfileUserScreen from "@screens/profile-user/profile.screen";
 import EditProfileScreen from "@screens/profile-user/edit-profile/edit.profile.screen";
+import CourseListScreen from "@screens/course/course-list/course.list.screen";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -136,7 +137,10 @@ const Navigation = () => {
     >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {renderStackIntro()}
+        <Stack.Screen name={SCREENS.COURSE_LIST} component={CourseListScreen} />
+
         <Stack.Screen name={SCREENS.HOME} component={renderTabNavigation} />
+
         <Stack.Screen
           name={SCREENS.PROFILE_CHAT}
           component={ProfileChatScreen}

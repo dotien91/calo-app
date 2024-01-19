@@ -3,7 +3,7 @@ import { Text, View, ActivityIndicator } from "react-native";
 
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
-import { getCountFollow } from "@services/api/curentUser";
+import { getCountFollow } from "@services/api/user.api";
 import { translations } from "@localization";
 
 interface CountFollowProps {

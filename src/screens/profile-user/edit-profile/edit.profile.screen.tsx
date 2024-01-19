@@ -19,7 +19,7 @@ import {
 } from "constants/regex.constant";
 import Button from "@shared-components/button/Button";
 import useStore from "@services/zustand/store";
-import { updateProfile } from "@services/api/userApi";
+import { updateProfile } from "@services/api/user.api";
 import { showToast } from "@helpers/super.modal.helper";
 import eventEmitter from "@services/event-emitter";
 

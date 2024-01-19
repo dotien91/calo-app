@@ -7,7 +7,7 @@ import LottieView from "lottie-react-native";
 import { useTheme } from "@react-navigation/native";
 
 import ItemPost from "./components/ItemPost/ItemPost";
-import { getListLiveStream } from "@services/api/livestreamApi";
+import { getListLiveStream } from "@services/api/stream.api";
 import StreamItem from "./components/ItemPost/stream.item";
 
 import eventEmitter from "@services/event-emitter";
@@ -72,7 +72,7 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
     isFirstLoading,
     refreshControl,
     renderFooterComponent,
-    refreshListPage,
+    _requestData,
     refreshing,
   } = useListData<TypedRequest>(paramsRequest, getListPost);
 
@@ -80,9 +80,9 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
     const typeEmit = isFollowingPost
       ? "reload_following_post"
       : "reload_list_post";
-    eventEmitter.on(typeEmit, _refreshListPage);
+    eventEmitter.on(typeEmit, onRefresh);
     return () => {
-      eventEmitter.off(typeEmit, _refreshListPage);
+      eventEmitter.off(typeEmit, onRefresh);
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -91,9 +91,9 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
     // resetListLike();
   }, [refreshing]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const _refreshListPage = () => {
+  const onRefresh = () => {
     _getListLiveStream();
-    refreshListPage();
+    _requestData();
     setTimeout(() => {
       listRef && listRef.current?.scrollToOffset({ animated: true, offset: 0 });
     }, 200);

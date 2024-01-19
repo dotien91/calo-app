@@ -14,7 +14,7 @@ const flexBase: FlexStyle = {
   alignItems: "center",
 };
 
-const CommonStyle = StyleSheet.create({
+const CS = StyleSheet.create({
   flex1: { flex: 1 },
   row: {
     flexDirection: "row",
@@ -219,4 +219,4 @@ export const Shadow0: Shadow = {
   elevation: 0,
 };
 
-export default CommonStyle;
+export default CS;

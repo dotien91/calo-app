@@ -41,7 +41,7 @@ const SearchInput: React.FC<ISearchInput> = ({
     setTxtSearch(v);
   };
 
-  const onSearchDebounce = debounce(_onSearch, 600);
+  const onSearchDebounce = debounce(_onSearch, 1000);
 
   const onPress = () => {
     if (onPressInput) {

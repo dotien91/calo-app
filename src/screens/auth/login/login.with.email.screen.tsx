@@ -23,7 +23,7 @@ import { SCREENS } from "constants";
 import { translations } from "@localization";
 import GoBackButton from "../components/GoBackButton";
 import { getDeviceInfo } from "@helpers/device.info.helper";
-import { loginWithPass } from "@services/api/userApi";
+import { loginWithPass } from "@services/api/user.api";
 import {
   closeSuperModal,
   showSuperModal,

@@ -17,7 +17,7 @@ import Input from "@shared-components/form/Input";
 import IconBtn from "@shared-components/button/IconBtn";
 import { palette } from "@theme/themes";
 import CommonStyle from "@theme/styles";
-import { likeLiveStream } from "@services/api/livestreamApi";
+import { likeLiveStream } from "@services/api/stream.api";
 import { throttle } from "lodash";
 import images from "./reaction-animation/Themes/Images";
 import { Device } from "@utils/device.utils";

@@ -5,7 +5,7 @@ import { onSocket, offSocket, emitSocket } from "@helpers/socket.helper";
 import {
   sendChatToLiveRoom,
   getChatLiveHistory,
-} from "@services/api/livestreamApi";
+} from "@services/api/stream.api";
 import { v4 as uuidv4 } from "uuid";
 import { TypedUser } from "models";
 

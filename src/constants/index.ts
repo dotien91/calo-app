@@ -35,6 +35,7 @@ export const SCREENS = {
   PROFILE_GROUP_CHAT: "ProfileGroupChat",
   PROFILE_CURRENT_USER: "ProfileCurentUser",
   EDIT_PROFILE: "EditProfile",
+  COURSE_LIST: "CourseList",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

@@ -20,7 +20,7 @@ import { SCREENS } from "constants";
 import { translations } from "@localization";
 import GoBackButton from "../components/GoBackButton";
 import IconSvg from "assets/svg";
-import { verifyCode } from "@services/api/userApi";
+import { verifyCode } from "@services/api/user.api";
 import {
   closeSuperModal,
   showSuperModal,

@@ -9,7 +9,7 @@ import {
   addUserToRoom,
   createChatRoom,
   getListFriend,
-} from "@services/api/chatApi";
+} from "@services/api/chat.api";
 import ProfileChatInput from "./create.group.chat.input";
 import LoadingList from "@shared-components/loading.list.component";
 import EmptyResultView from "@shared-components/empty.data.component";

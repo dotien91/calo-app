@@ -7,7 +7,7 @@ import * as NavigationService from "react-navigation-helpers";
  * ? Local Imports
  */
 import createStyles from "./chat.list.screen.style";
-import { getListChat } from "@services/api/chatApi";
+import { getListChat } from "@services/api/chat.api";
 import ChatItem from "./chat.item";
 import ListFriend from "./friend.list.view";
 import { translations } from "@localization";
@@ -35,12 +35,12 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
     isFirstLoading,
     refreshControl,
     renderFooterComponent,
-    refreshListPage,
+    _requestData,
     setListData,
   } = useListData<TypedGeneralRoomChat>({ limit: 6 }, getListChat);
 
-  const _refreshListChat = () => {
-    refreshListPage(false);
+  const onRefresh = () => {
+    _requestData(false);
   };
 
   const msgToUser = (data: string) => {
@@ -82,11 +82,11 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
     //   });
     // }
     onSocket("msgToUser", msgToUser);
-    eventEmitter.on("refresh_list_chat", _refreshListChat);
+    eventEmitter.on("refresh_list_chat", onRefresh);
 
     return () => {
       offSocket("msgToUser", msgToUser);
-      eventEmitter.off("refresh_list_chat", _refreshListChat);
+      eventEmitter.off("refresh_list_chat", onRefresh);
     };
   });
 

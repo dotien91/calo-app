@@ -6,7 +6,7 @@ import CommonStyle from "@theme/styles";
 import { useTheme } from "@react-navigation/native";
 import { getFormatDayNotification } from "@utils/date.utils";
 import { TypedNotification } from "models/notification.model";
-import { readNotification } from "@services/api/notification";
+import { readNotification } from "@services/api/notification.api";
 import { SCREENS } from "constants";
 
 interface ItemNotificationProps {

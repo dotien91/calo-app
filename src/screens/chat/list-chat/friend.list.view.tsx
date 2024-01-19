@@ -5,7 +5,7 @@ import { useTheme } from "@react-navigation/native";
  * ? Local Imports
  */
 import createStyles from "./chat.list.screen.style";
-import { getListFriend } from "@services/api/chatApi";
+import { getListFriend } from "@services/api/chat.api";
 import { TypedGeneralRoomChat } from "models/chat.model";
 import Avatar from "@shared-components/user/Avatar";
 import { TouchableOpacity } from "react-native-gesture-handler";

@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
 import useStore from "@services/zustand/store";
-import { getCurrentUser } from "@services/api/userApi";
+import { getCurrentUser } from "@services/api/user.api";
 import { showToast } from "../super.modal.helper";
 import { SCREENS } from "constants";
 import { _setJson, _getJson, USER_TOKEN } from "@services/local-storage";

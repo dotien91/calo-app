@@ -24,7 +24,7 @@ import IconSvg from "assets/svg";
 import { regexMail, passRegex } from "constants/regex.constant";
 import { ISignUpWithEmail } from "models";
 import { getDeviceInfo } from "@helpers/device.info.helper";
-import { singUp } from "@services/api/userApi";
+import { singUp } from "@services/api/user.api";
 import {
   closeSuperModal,
   showSuperModal,

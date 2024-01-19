@@ -16,7 +16,7 @@ import ChatView from "./stream.chat.list.view";
 import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "constants";
 import { Device } from "@utils/device.utils";
-import { requestViewStream } from "@services/api/livestreamApi";
+import { requestViewStream } from "@services/api/stream.api";
 
 function App() {
   const theme = useTheme();

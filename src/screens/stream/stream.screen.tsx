@@ -24,7 +24,7 @@ import {
   EnumStyleModalType,
   showSuperModal,
 } from "@helpers/super.modal.helper";
-import { updateLivestream } from "@services/api/livestreamApi";
+import { updateLivestream } from "@services/api/stream.api";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import { requestPermission } from "@helpers/permission.helper";
 import { PERMISSION } from "constants/system.constant";

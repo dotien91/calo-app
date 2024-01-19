@@ -5,7 +5,7 @@ import { useTheme } from "@react-navigation/native";
  * ? Local Imports
  */
 import createStyles from "../list-chat/chat.list.screen.style";
-import { getListChat } from "@services/api/chatApi";
+import { getListChat } from "@services/api/chat.api";
 import ChatItem from "../list-chat/chat.item";
 import SearchInput from "../../../shared/components/search-input.tsx/search.input";
 import LoadingList from "@shared-components/loading.list.component";
