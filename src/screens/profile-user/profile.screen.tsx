@@ -16,15 +16,15 @@ import { palette } from "@theme/themes";
 import { translations } from "@localization";
 import CountFollow from "./count-follow/CountFollow";
 import { getUserById } from "@services/api/curentUser";
-import ListPost from "@screens/home/ListPost";
+import ListPost from "@screens/home/list.post";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
 import { SCREENS } from "constants";
 import { getListPost } from "@services/api/post";
 import eventEmitter from "@services/event-emitter";
 import { useListData } from "@helpers/hooks/useListData";
-import ItemPost from "@screens/home/components/ItemPost/ItemPost";
+import ItemPost from "@screens/home/components/post-item/post.item";
 import Header from "@shared-components/header/Header";
-import { TypedRequest } from "shared/models";
+import { TypedPost } from "shared/models";
 import { TypedUser } from "models";
 import FollowBtn from "@screens/home/components/follow-btn/FollowBtn";
 import EmptyResultView from "@shared-components/empty.data.component";
@@ -39,7 +39,7 @@ interface ProfileUserProps {
 const ProfileUser = (props: ProfileUserProps) => {
   const userData = useStore((store) => store.userData);
   const listPostSave = useStore((store) => store.listPostSave);
-  const _id = props.route?.params?._id;
+  const _id = props.route?.params?._id || userData?._id;
   const theme = useTheme();
   const { colors } = theme;
   const [userInfo, setUserInfo] = useState<TypedUser | null>(null);
@@ -126,7 +126,7 @@ const ProfileUser = (props: ProfileUserProps) => {
       return (
         <View style={styles.listAction}>
           <FollowBtn data={userInfo} />
-          {isLoggedIn() && (
+          {isUserLogin && (
             <ButtomAction onPress={openChatRoom} text={translations.message} />
           )}
         </View>
@@ -185,15 +185,16 @@ const ProfileUser = (props: ProfileUserProps) => {
     onEndReach,
     refreshControl,
     refreshListPage,
+    isFirstLoading,
     renderFooterComponent,
     refreshing,
-  } = useListData<TypedRequest>(paramsRequest, getListPost);
+  } = useListData<TypedPost>(paramsRequest, getListPost);
 
-  const renderItem = ({ item }: { item: TypedRequest }) => {
-    return <ItemPost key={item._id} data={item} isProfile={_id?.length > 0} />;
+  const renderItem = ({ item }: { item: TypedPost }) => {
+    return <ItemPost data={item} isProfile={_id?.length > 0} />;
   };
-  const renderItemSave = ({ item }: { item: TypedRequest }) => {
-    return <ItemPost key={item._id} data={item} />;
+  const renderItemSave = ({ item }: { item: TypedPost }) => {
+    return <ItemPost data={item} />;
   };
 
   const renderHeader = () => {
@@ -279,21 +280,23 @@ const ProfileUser = (props: ProfileUserProps) => {
             name={translations.post.posts}
             label={translations.post.posts}
           >
-            {/* <ListPost isFollowingPost={false} id={_id} /> */}
-            <Tabs.FlatList
-              data={listData}
-              renderItem={renderItem}
-              scrollEventThrottle={16}
-              onEndReachedThreshold={0}
-              onEndReached={onEndReach}
-              showsVerticalScrollIndicator={false}
-              removeClippedSubviews={true}
-              keyExtractor={(item) => item?._id + ""}
-              refreshControl={refreshControl()}
-              ListFooterComponent={renderFooterComponent()}
-              refreshing={refreshing}
-              ListEmptyComponent={renderEmptyPostOfMe}
-            />
+            {isFirstLoading ? (
+              renderEmptyPostOfMe()
+            ) : (
+              <Tabs.FlatList
+                data={listData}
+                renderItem={renderItem}
+                scrollEventThrottle={16}
+                onEndReachedThreshold={0}
+                onEndReached={onEndReach}
+                showsVerticalScrollIndicator={false}
+                removeClippedSubviews={true}
+                keyExtractor={(item) => item?._id + ""}
+                refreshControl={refreshControl()}
+                ListFooterComponent={renderFooterComponent()}
+                refreshing={refreshing}
+              />
+            )}
           </Tabs.Tab>
           <Tabs.Tab
             name={translations.post.listPostSave}

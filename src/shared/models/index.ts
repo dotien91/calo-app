@@ -189,7 +189,7 @@ export interface TypedMedia {
   url: string;
 }
 
-export interface TypedRequest {
+export interface TypedPost {
   _id: string;
   user_id: TypedUser;
   post_language: string;

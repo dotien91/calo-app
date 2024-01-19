@@ -1,13 +1,13 @@
 import * as React from "react";
 import { useTheme } from "@react-navigation/native";
 import { Text, View, Pressable, Image } from "react-native";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
-import createStyles from "./ItemPost.style";
+import createStyles from "./post.item.style";
 
 import CommonStyle from "@theme/styles";
 import { TypedMedia } from "shared/models";
 import { showDetailImageView } from "@helpers/super.modal.helper";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 const BORDER_RADIUS2 = 12;
 

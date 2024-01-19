@@ -12,7 +12,7 @@ import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 
 import HeaderHome from "./components/header-home/HeaderHome";
 import { SCREENS } from "constants";
-import ListPost from "./ListPost";
+import ListPost from "./list.post";
 
 import CommonStyle from "@theme/styles";
 import { useUserHook } from "@helpers/hooks/useUserHook";

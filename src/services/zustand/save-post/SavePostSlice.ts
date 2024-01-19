@@ -1,20 +1,20 @@
 import { StoreSlice } from "@zustand";
-import { TypedRequest } from "shared/models";
+import { TypedPost } from "shared/models";
 
 export interface SavePostSlice {
-  listPostSave: TypedRequest[];
-  addPostSave: (item: TypedRequest) => void;
-  deletePostSave: (item: TypedRequest) => void;
+  listPostSave: TypedPost[];
+  addPostSave: (item: TypedPost) => void;
+  deletePostSave: (item: TypedPost) => void;
 }
 
 const createSavePostSlice: StoreSlice<SavePostSlice> = (set) => ({
   listPostSave: [],
-  addPostSave: (item: TypedRequest) => {
+  addPostSave: (item: TypedPost) => {
     set((state) => ({
       listPostSave: [...state.listPostSave, item],
     }));
   },
-  deletePostSave: (item: TypedRequest) => {
+  deletePostSave: (item: TypedPost) => {
     set((state) => ({
       listPostSave: [...state.listPostSave.filter((i) => item._id !== i._id)],
     }));

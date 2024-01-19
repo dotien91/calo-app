@@ -2,10 +2,10 @@ import PressableBtn from "@shared-components/button/PressableBtn";
 import * as React from "react";
 import { Image } from "react-native";
 
-import { TypedRequest } from "shared/models";
+import { TypedPost } from "shared/models";
 
 interface AvatarPostProps {
-  data: TypedRequest;
+  data: TypedPost;
   pressAvatar: () => void;
   sizeAvatar: number;
 }

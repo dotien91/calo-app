@@ -19,7 +19,7 @@ import HeaderPost from "./components/HeaderPost";
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
 import { translations } from "@localization";
-import { TypedCategory, TypedRequest } from "shared/models";
+import { TypedCategory, TypedPost } from "shared/models";
 import { isIos } from "@utils/device.ui.utils";
 import { createNewPost, getCategory, updatePost } from "@services/api/post";
 import BottomSheet, {
@@ -44,7 +44,7 @@ export default function PostScreen() {
   const theme = useTheme();
   const { colors } = theme;
   const route: any = useRoute();
-  const item: TypedRequest = route?.params?.item || {};
+  const item: TypedPost = route?.params?.item || {};
   const styles = useMemo(() => createStyles(theme), [theme]);
   const submitPostStatus = React.useRef("");
   const [postCategory, setPostCategory] = useState("");
