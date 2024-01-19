@@ -12,7 +12,7 @@ import * as NavigationService from "react-navigation-helpers";
 // import Recaptcha from "react-native-recaptcha-that-works";
 
 import Button from "@shared-components/button/Button";
-import createStyles from "./ForgotPasswordScreen.style";
+import createStyles from "./forgot.password.screen.style";
 import ViewTermPolicy from "../components/TermPolicyView";
 import InputHook from "@shared-components/form/InputHookForm";
 import { useForm } from "react-hook-form";

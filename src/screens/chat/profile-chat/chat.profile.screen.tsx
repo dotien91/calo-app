@@ -6,7 +6,7 @@ import * as NavigationService from "react-navigation-helpers";
 /**
  * ? Local Imports
  */
-import createStyles from "./profile.chat.style";
+import createStyles from "./chat.profile.style";
 import { leaveRoom } from "@services/api/chatApi";
 import { translations } from "@localization";
 import Avatar from "@shared-components/user/Avatar";

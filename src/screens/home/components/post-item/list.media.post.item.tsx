@@ -7,7 +7,11 @@ import createStyles from "./post.item.style";
 
 import CommonStyle from "@theme/styles";
 import { TypedMedia } from "shared/models";
-import { showDetailImageView } from "@helpers/super.modal.helper";
+import {
+  EnumModalContentType,
+  EnumStyleModalType,
+  showSuperModal,
+} from "@helpers/super.modal.helper";
 
 const BORDER_RADIUS2 = 12;
 
@@ -35,12 +39,14 @@ const ListFile = ({ listFile, sizeImage2 }: ListFileProps) => {
         i.media_mime_type.includes("image") ||
         i.media_mime_type.includes("video"),
     );
-    const listLink = listMedia.map((i: any) => ({
-      url: i.media_url,
-      type: i.media_type,
-      media_meta: i.media_meta,
-    }));
-    showDetailImageView(listLink, index, listMedia[0].media_type);
+    showSuperModal({
+      contentModalType: EnumModalContentType.Library,
+      styleModalType: EnumStyleModalType.Middle,
+      data: {
+        listMedia,
+        indexMedia: index,
+      },
+    });
   };
 
   const PlayVideo = () => {

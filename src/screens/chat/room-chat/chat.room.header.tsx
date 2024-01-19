@@ -6,7 +6,7 @@ import * as NavigationService from "react-navigation-helpers";
 /**
  * ? Local Imports
  */
-import createStyles from "./room.chat.screen.style";
+import createStyles from "./chat.room.screen.style";
 import ActionBtn from "./components/form/KeyboardBtn";
 import CommonStyle from "@theme/styles";
 import { getFormatDayMessage } from "@utils/date.utils";

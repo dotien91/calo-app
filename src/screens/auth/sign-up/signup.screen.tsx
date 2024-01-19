@@ -13,7 +13,7 @@ import * as NavigationService from "react-navigation-helpers";
 
 import CommonStyle from "@theme/styles";
 import Button from "@shared-components/button/Button";
-import createStyles from "./SignUpScreen.style";
+import createStyles from "./signup.screen.style";
 import ViewTermPolicy from "../components/TermPolicyView";
 import OrView from "../components/OrView";
 import InputHook from "@shared-components/form/InputHookForm";

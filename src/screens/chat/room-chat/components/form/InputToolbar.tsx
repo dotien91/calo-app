@@ -5,7 +5,7 @@ import { useTheme } from "@react-navigation/native";
 /**
  * ? Local Imports
  */
-import createStyles from "../../room.chat.screen.style";
+import createStyles from "../../chat.room.screen.style";
 
 import { translations } from "@localization";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";

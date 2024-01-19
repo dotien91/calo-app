@@ -147,7 +147,7 @@ export const useChatHistory = (txtSearch: string) => {
       let newMessages = [];
       if (!res.isError) {
         newMessages = giftedMessages.map((item) => {
-          if (item?.status)
+          if (item?.status == EnumMessageStatus.Pending)
             return {
               ...item,
               status: EnumMessageStatus.Send,
@@ -156,7 +156,7 @@ export const useChatHistory = (txtSearch: string) => {
         });
       } else {
         newMessages = giftedMessages.map((item) => {
-          if (item?.status)
+          if (item?.status == EnumMessageStatus.Pending)
             return {
               ...item,
               status: EnumMessageStatus.Fail,
