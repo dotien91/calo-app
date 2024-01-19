@@ -14,7 +14,7 @@ import * as NavigationService from "react-navigation-helpers";
 import CommonStyle from "@theme/styles";
 import Button from "@shared-components/button/Button";
 import IconSvg from "assets/svg";
-import createStyles from "./LoginWithEmailScreen.style";
+import createStyles from "./login.with.email.screen.style";
 import ViewTermPolicy from "../components/TermPolicyView";
 import OrView from "../components/OrView";
 import InputHook from "@shared-components/form/InputHookForm";

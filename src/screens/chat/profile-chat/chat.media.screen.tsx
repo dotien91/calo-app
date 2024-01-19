@@ -6,7 +6,7 @@ import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 /**
  * ? Local Imports
  */
-import createStyles from "./profile.chat.style";
+import createStyles from "./chat.profile.style";
 
 import { EnumMediaChat } from "models/chat.model";
 import { ScrollView } from "react-native-gesture-handler";

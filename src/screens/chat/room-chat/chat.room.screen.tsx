@@ -12,7 +12,7 @@ import { IMediaUpload, TypedMessageGiftedChat } from "models/chat.model";
 import MessageItem from "./components/message/message.item";
 import { emitSocket } from "@helpers/socket.helper";
 import useStore from "@services/zustand/store";
-import ChatHeader from "./room.chat.header";
+import ChatHeader from "./chat.room.header";
 import RecordModal from "./components/audio/RecordModal";
 import InputToolbar from "./components/form/InputToolbar";
 import { EnumMessageStatus } from "constants/chat.constant";
@@ -23,7 +23,7 @@ import SearchInput from "../../../shared/components/search-input.tsx/search.inpu
 import CommonStyle from "@theme/styles";
 import { translations } from "@localization";
 import EmptyResultView from "@shared-components/empty.data.component";
-import createStyles from "./room.chat.screen.style";
+import createStyles from "./chat.room.screen.style";
 
 interface ChatRoomScreenProps {}
 
@@ -87,18 +87,6 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
       user: userSendMessage,
     };
 
-    console.log(
-      "media_idsmedia_ids",
-      listFileLocal.map((item) => {
-        return {
-          ...item,
-          media_mime_type: item.type,
-          media_type: item.type,
-          media_url: item.uri,
-        };
-      }),
-    );
-
     setMessages((previousMessages) =>
       GiftedChat.append(previousMessages, message),
     );
@@ -128,8 +116,6 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
       user: userSendMessage,
       status: EnumMessageStatus.Pending,
     };
-
-    console.log("messagemessagemessage", message);
     const giftedMessages = GiftedChat.append(messages, message);
     emitSocket("typingToServer", "room_" + chatRoomId);
     setMessages(giftedMessages);
