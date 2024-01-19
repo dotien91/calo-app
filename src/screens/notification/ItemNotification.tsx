@@ -8,6 +8,7 @@ import { getFormatDayNotification } from "@utils/date.utils";
 import { TypedNotification } from "models/notification.model";
 import { readNotification } from "@services/api/notification";
 import { SCREENS } from "constants";
+import useStore from "@services/zustand/store";
 
 interface ItemNotificationProps {
   item: TypedNotification;
@@ -18,6 +19,9 @@ const ItemNotification = ({ item }: ItemNotificationProps) => {
   const { colors } = theme;
   const [isReaded, setIsReaded] = React.useState<boolean>(
     item.read_status !== 0,
+  );
+  const addNotificationReaded = useStore(
+    (state) => state.addNotificationReaded,
   );
 
   const _pressNotification = () => {
@@ -52,10 +56,15 @@ const ItemNotification = ({ item }: ItemNotificationProps) => {
         break;
     }
     readNotification(params).then((res) => {
+      notificationReaded();
       if (!res.isError) {
         setIsReaded(true);
       }
     });
+  };
+
+  const notificationReaded = () => {
+    addNotificationReaded(item._id);
   };
 
   return (
@@ -70,14 +79,7 @@ const ItemNotification = ({ item }: ItemNotificationProps) => {
         paddingHorizontal: 8,
       }}
     >
-      <View
-        style={{
-          width: 4,
-          height: 4,
-          borderRadius: 2,
-          backgroundColor: isReaded ? colors.background : colors.placeholder,
-        }}
-      />
+      <ViewReaded item={item} isReaded={isReaded} />
       <View>
         <Image
           style={{ width: 50, height: 50, borderRadius: 25 }}
@@ -133,6 +135,36 @@ const ItemNotification = ({ item }: ItemNotificationProps) => {
         )}
       </View>
     </TouchableOpacity>
+  );
+};
+
+const ViewReaded = ({
+  item,
+  isReaded,
+}: {
+  item: TypedNotification;
+  isReaded: boolean;
+}) => {
+  const theme = useTheme();
+  const { colors } = theme;
+
+  const listNotifiReaded = useStore((state) => state.listNotifiReaded);
+
+  const readAllAt = useStore((state) => state.readAllAt);
+  const index = listNotifiReaded.findIndex((i) => i === item._id);
+  const isReadAll = readAllAt > item.createdAt;
+  return (
+    <View
+      style={{
+        width: 4,
+        height: 4,
+        borderRadius: 2,
+        backgroundColor:
+          isReaded || index >= 0 || isReadAll
+            ? colors.background
+            : colors.placeholder,
+      }}
+    />
   );
 };
 

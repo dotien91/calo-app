@@ -25,7 +25,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const userData = useStore((state) => state.userData);
-  const readAll = () => {};
+  const setReadAllAt = useStore((state) => state.setReadAllAt);
   const listRef = useRef(null);
   useEffect(() => {
     if (isFocused) {
@@ -61,6 +61,11 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
     }, 200);
   };
 
+  const _readAll = () => {
+    const date = new Date().toISOString();
+    setReadAllAt(date);
+  };
+
   return (
     <View style={styles.container}>
       <Header
@@ -69,7 +74,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
         }}
         iconNameLeft="arrow-back-outline"
         text={translations.notifications.notifications}
-        onPressRight={readAll}
+        onPressRight={_readAll}
         textRight={translations.notifications.markAll}
       />
 
