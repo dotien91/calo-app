@@ -4,7 +4,7 @@ import { useTheme } from "@react-navigation/native";
 /**
  * ? Local Imports
  */
-import createStyles from "../room.chat.screen.style";
+import createStyles from "../../room.chat.screen.style";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 interface KeyboardBtnProps {

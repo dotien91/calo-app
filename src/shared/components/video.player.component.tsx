@@ -1,76 +1,91 @@
 import React, { useCallback, useEffect, useRef, useState, memo } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import Video from "react-native-video";
+import FastImage from "react-native-fast-image";
 
 import { palette } from "@theme/themes";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import CommonStyle from "@theme/styles";
 
 interface IVideoPlayer {
+  mediaThumbail: string;
   mediaUrl: string;
   resizeMode?: string | "cover";
   width: number;
   height: number;
-  autoPlay: boolean;
-  onPress: () => void;
   pressable: boolean;
+  autoPlay: boolean;
+  repeat: boolean;
 }
 
 const VideoPlayer = ({
+  mediaThumbail,
   mediaUrl,
-  resizeMode,
   width,
   height,
-  autoPlay,
   pressable = true,
-  onPress,
+  autoPlay,
+  ...res
 }: IVideoPlayer) => {
   const refVideo = useRef<Video>();
+  const animationBackRef = useRef<Lottie>(null);
+
   const [pause, setPause] = useState(!autoPlay);
 
   useEffect(() => {
-    return () => {
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      !!refVideo?.current?.stop && refVideo?.current?.stop();
-    };
+    if (animationBackRef.current) {
+      animationBackRef.current.play(20, 20);
+    }
   }, []);
 
   const switchPause = useCallback(() => {
     setPause((old) => !old);
   }, []);
 
+  const Component = pressable ? Pressable : View;
+
   return (
-    <Pressable
+    <Component
       style={{ ...styles.container, width, height }}
-      onPress={onPress || switchPause}
-      disabled={!pressable}
+      onPress={switchPause}
     >
+      {pause && (
+        <Icon
+          type={IconType.Ionicons}
+          name={"play-circle"}
+          size={40}
+          color={palette.primary}
+          style={[styles.icon, { top: height / 2 - 20 }]}
+        />
+      )}
+      {!!mediaThumbail && (
+        <FastImage
+          style={{
+            width,
+            height,
+            position: "absolute",
+            left: 0,
+            top: 0,
+            zIndex: 1,
+          }}
+          source={{ uri: mediaThumbail }}
+        />
+      )}
       <Video
         source={{ uri: mediaUrl }}
         ref={refVideo}
-        repeat
         paused={pause}
-        disableFocus
-        resizeMode={resizeMode}
         style={styles.backgroundVideo}
+        autoPlay={autoPlay}
+        {...res}
       />
-      {pause && (
-        <View style={styles.wrapIcon}>
-          <Icon
-            type={IconType.Feather}
-            name={"play"}
-            size={width / 10}
-            color={palette.white}
-          />
-        </View>
-      )}
-    </Pressable>
+    </Component>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: palette.white,
+    backgroundColor: palette.black,
     ...CommonStyle.flexCenter,
   },
   backgroundVideo: {
@@ -82,11 +97,9 @@ const styles = StyleSheet.create({
     bottom: 0,
     right: 0,
   },
-  wrapIcon: {
-    backgroundColor: palette.primary,
-    borderRadius: 99,
-    ...CommonStyle.flexCenter,
-    padding: 10,
+  icon: {
+    position: "absolute",
+    zIndex: 2,
   },
 });
 

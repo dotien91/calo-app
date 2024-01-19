@@ -5,7 +5,7 @@ import { Image, Text, TouchableOpacity, View } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { useTheme } from "@react-navigation/native";
 
-import createStyles from "./item.post.detail.style";
+import createStyles from "./post.detail.item.style";
 
 import CommonStyle from "@theme/styles";
 import HeaderPostItem from "@screens/home/components/ItemPost/header.post.item";

@@ -9,7 +9,7 @@ import { translations } from "@localization";
 import { updateCommentWithId } from "@services/api/post";
 import useStore from "@services/zustand/store";
 import CommonStyle from "@theme/styles";
-import { showErrorModal } from "@helpers/super.modal.helper";
+import { showToast } from "@helpers/super.modal.helper";
 import PressableBtn from "@shared-components/button/PressableBtn";
 
 interface EditCommentProps {
@@ -46,7 +46,10 @@ const EditComment = (props: EditCommentProps) => {
           setItemUpdate(itemupdate);
           NavigationService.goBack();
         } else {
-          showErrorModal(res);
+          showToast({
+            type: "error",
+            ...res,
+          });
         }
       });
     }

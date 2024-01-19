@@ -12,9 +12,14 @@ import CommonStyle from "@theme/styles";
 import { translations } from "@localization";
 import { postLikeCommnent } from "@services/api/post";
 import useStore from "@services/zustand/store";
-import { showToast, showWarningLogin } from "@helpers/super.modal.helper";
+import {
+  EnumModalContentType,
+  EnumStyleModalType,
+  showSuperModal,
+  showToast,
+  showWarningLogin,
+} from "@helpers/super.modal.helper";
 import { convertLastActive } from "@utils/time.utils";
-import { showStickBottom } from "@shared-components/stick-bottom/HomeStickBottomModal";
 import { TypedComment } from "shared/models";
 import PressableBtn from "@shared-components/button/PressableBtn";
 
@@ -86,7 +91,12 @@ const ItemReply = ({ item, onPressReplyChild, repCmtId }: ItemReplyProps) => {
     );
   }, [item]);
 
-  const _showStickBottom = () => showStickBottom(item, "comment");
+  const _showStickBottom = () =>
+    showSuperModal({
+      contentModalType: EnumModalContentType.CommentAction,
+      styleModalType: EnumStyleModalType.Bottom,
+      data: item,
+    });
 
   const HeaderItemComment = useMemo(() => {
     return (
@@ -253,7 +263,11 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
     if (!userData) {
       showWarningLogin();
     } else {
-      showStickBottom(data, "comment");
+      showSuperModal({
+        contentModalType: EnumModalContentType.CommentAction,
+        styleModalType: EnumStyleModalType.Bottom,
+        data,
+      });
     }
   };
 

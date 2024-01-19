@@ -19,7 +19,7 @@ import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "constants";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import CommonStyle from "@theme/styles";
-import { showErrorModal, showToast } from "@helpers/super.modal.helper";
+import { showToast } from "@helpers/super.modal.helper";
 
 interface AddUserGroupChatScreenProps {}
 
@@ -198,7 +198,10 @@ const AddUserGroupChatScreen: React.FC<AddUserGroupChatScreenProps> = () => {
           });
         }, 500);
       } else {
-        showErrorModal(res);
+        showToast({
+          type: "error",
+          ...res,
+        });
       }
     });
   };

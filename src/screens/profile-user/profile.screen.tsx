@@ -28,7 +28,6 @@ import { TypedRequest } from "shared/models";
 import { TypedUser } from "models";
 import FollowBtn from "@screens/home/components/follow-btn/FollowBtn";
 import EmptyResultView from "@shared-components/empty.data.component";
-import { useUserHook } from "@helpers/hooks/useUserHook";
 import { shareProfile } from "@utils/share.utils";
 import AvatarProfile from "./avatar.profile";
 import LottieView from "lottie-react-native";
@@ -44,8 +43,6 @@ const ProfileUser = (props: ProfileUserProps) => {
   const theme = useTheme();
   const { colors } = theme;
   const [userInfo, setUserInfo] = useState<TypedUser | null>(null);
-
-  const { isLoggedIn } = useUserHook();
 
   const _getUserById = (id: string) => {
     getUserById(id).then((res) => {
@@ -109,7 +106,6 @@ const ProfileUser = (props: ProfileUserProps) => {
   };
 
   const openChatRoom = () => {
-    console.log("userInfouserInfo", userInfo._id, _id);
     NavigationService.navigate(SCREENS.CHAT_ROOM, {
       partner_id: userInfo?._id,
       partner_name: userInfo?.display_name,

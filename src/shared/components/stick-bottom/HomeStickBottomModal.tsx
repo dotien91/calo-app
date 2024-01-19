@@ -53,6 +53,7 @@ export const showStickBottom = (
     isDetail,
   });
 };
+
 export const closeStickBottom = () => {
   eventEmitter.emit("close_bottom_modal");
 };

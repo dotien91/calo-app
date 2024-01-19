@@ -1,6 +1,6 @@
 import React, { useRef, useMemo, useEffect } from "react";
 
-import { View, KeyboardAvoidingView, Platform, StatusBar } from "react-native";
+import { View, KeyboardAvoidingView, Platform } from "react-native";
 import RTMPPublisher, {
   RTMPPublisherRefProps,
   StreamState,
@@ -19,7 +19,11 @@ import { translations } from "@localization";
 import ChatView from "./stream.chat.list.view";
 import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "constants";
-import { showConfirmSuperModal } from "@helpers/super.modal.helper";
+import {
+  EnumModalContentType,
+  EnumStyleModalType,
+  showSuperModal,
+} from "@helpers/super.modal.helper";
 import { updateLivestream } from "@services/api/livestreamApi";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import { requestPermission } from "@helpers/permission.helper";
@@ -78,7 +82,7 @@ function App() {
   };
 
   useEffect(() => {
-    StatusBar.setBackgroundColor("black");
+    // StatusBar.setBackgroundColor("black");
     checkPermission();
     const txtFromPostScreen = route.params?.["titleLive"];
     if (!txtFromPostScreen) return;
@@ -87,8 +91,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (!publisherRef.current) return;
-    publisherRef.current && publisherRef.current.startStream();
+    publisherRef.current?.startStream && publisherRef.current.startStream();
     return () => {
       if (liveData?._id) {
         updateLivestream("end", liveData?._id);
@@ -187,9 +190,13 @@ function App() {
   };
 
   const showPopupCloseLive = () => {
-    showConfirmSuperModal({
-      title: "Bạn có muốn dừng phiên livestream không?",
-      cb: closeLiveStream,
+    showSuperModal({
+      contentModalType: EnumModalContentType.Confirm,
+      styleModalType: EnumStyleModalType.Middle,
+      data: {
+        title: "Bạn có muốn dừng phiên livestream không?",
+        cb: closeLiveStream,
+      },
     });
   };
 
@@ -238,7 +245,13 @@ function App() {
         <IconBtn
           name="x"
           color={colors.white}
-          customStyle={{ position: "absolute", top: 60, right: 20, zIndex: 1 }}
+          customStyle={{
+            position: "absolute",
+            top: 60,
+            right: 20,
+            zIndex: 1,
+            backgroundColor: colors.blackOverlay,
+          }}
           onPress={onShouldCloseLive}
           size={30}
         />
@@ -246,7 +259,13 @@ function App() {
           <IconBtn
             name="camera"
             color={colors.white}
-            customStyle={{ position: "absolute", top: 60, left: 20, zIndex: 1 }}
+            customStyle={{
+              position: "absolute",
+              top: 60,
+              left: 20,
+              zIndex: 1,
+              backgroundColor: colors.blackOverlay,
+            }}
             onPress={handleSwitchCamera}
             size={30}
           />

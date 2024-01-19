@@ -24,8 +24,7 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import CommonStyle from "@theme/styles";
 import {
   closeSuperModal,
-  showErrorModal,
-  showLoading,
+  showSuperModal,
   showToast,
 } from "@helpers/super.modal.helper";
 import eventEmitter from "@services/event-emitter";
@@ -193,13 +192,19 @@ const CreateGroupChatScreen: React.FC<CreateGroupChatScreenProps> = () => {
           });
         }, 500);
       } else {
-        showErrorModal(res);
+        showToast({
+          type: "error",
+          ...res,
+        });
       }
     });
   };
 
   const createGroupChat = () => {
-    showLoading();
+    showSuperModal({
+      contentModalType: "loading",
+      styleModalType: "middle",
+    });
     if (group_partners.length) {
       addUserToGroup();
       return;
@@ -244,7 +249,10 @@ const CreateGroupChatScreen: React.FC<CreateGroupChatScreenProps> = () => {
           });
         }, 500);
       } else {
-        showErrorModal(res);
+        showToast({
+          type: "error",
+          ...res,
+        });
       }
     });
   };

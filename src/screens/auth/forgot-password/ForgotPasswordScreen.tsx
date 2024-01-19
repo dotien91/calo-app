@@ -23,8 +23,8 @@ import IconSvg from "assets/svg";
 import { requestNewPassWithEmail } from "@services/api/userApi";
 import {
   closeSuperModal,
-  showLoading,
-  showErrorModal,
+  showSuperModal,
+  showToast,
 } from "@helpers/super.modal.helper";
 import { IRequestNewPass } from "models";
 import { RECAPCHA_KEY } from "constants/config.constant";
@@ -53,8 +53,10 @@ export default function ForgotPasswordScreen() {
     //   $recaptcha.current.open();
     //   return;
     // }
-    showLoading();
-
+    showSuperModal({
+      contentModalType: "loading",
+      styleModalType: "middle",
+    });
     const params: IRequestNewPass = {
       [typePhoneOrEmail]: data.email,
       g_recaptcha: RECAPCHA_KEY,
@@ -65,7 +67,10 @@ export default function ForgotPasswordScreen() {
       if (!res.isError) {
         NavigationService.push(SCREENS.VERIFY_CODE, { user_email: data.email });
       } else {
-        showErrorModal(res);
+        showToast({
+          type: "error",
+          ...res,
+        });
       }
     });
     // navigation to screen otp

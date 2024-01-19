@@ -4,7 +4,7 @@ import * as NavigationService from "react-navigation-helpers";
 
 import useStore from "@services/zustand/store";
 import { getCurrentUser } from "@services/api/userApi";
-import { showSuperModal } from "../super.modal.helper";
+import { showToast } from "../super.modal.helper";
 import { SCREENS } from "constants";
 import { _setJson, _getJson, USER_TOKEN } from "@services/local-storage";
 import { translations } from "@localization";
@@ -29,7 +29,10 @@ export const useUserHook = () => {
         setLinkAvatar(res.data.user_avatar_thumbnail);
         initListFollow(res.data.follow_users);
         NavigationService.push(SCREENS.HOME);
-        showSuperModal({ title: "Đăng nhập thành công!" });
+        showToast({
+          type: "success",
+          message: "Đăng nhập thành công!",
+        });
       }
     });
   };

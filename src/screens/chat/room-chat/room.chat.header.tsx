@@ -7,7 +7,7 @@ import * as NavigationService from "react-navigation-helpers";
  * ? Local Imports
  */
 import createStyles from "./room.chat.screen.style";
-import ActionBtn from "./components/KeyboardBtn";
+import ActionBtn from "./components/form/KeyboardBtn";
 import CommonStyle from "@theme/styles";
 import { getFormatDayMessage } from "@utils/date.utils";
 import { translations } from "@localization";
@@ -41,22 +41,19 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ messages, roomDetail }) => {
 
   return (
     <View style={styles.wrapHeader}>
-      <View style={[CommonStyle.flexEnd, styles.headerLeft]}>
+      <View style={styles.headerLeft}>
         <GoBackButton />
-      </View>
-      <TouchableOpacity
-        onPress={goToProfileChat}
-        style={[styles.headerCenter, !readAt && { paddingTop: 8 }]}
-      >
-        <Text numberOfLines={1} style={styles.txtNamePartner}>
-          {roomDetail?.chat_room_id?.room_name || partnerName}
-        </Text>
-        {!!readAt && (
-          <Text numberOfLines={1} style={styles.txtReadAt}>
-            {translations.chat.lastSeen + "  " + time}
+        <TouchableOpacity style={styles.roomInfo} onPress={goToProfileChat}>
+          <Text numberOfLines={1} style={styles.txtNamePartner}>
+            {roomDetail?.chat_room_id?.room_name || partnerName}
           </Text>
-        )}
-      </TouchableOpacity>
+          {!!readAt && (
+            <Text numberOfLines={1} style={styles.txtReadAt}>
+              {readAt ? translations.chat.lastSeen + "  " + time : ""}
+            </Text>
+          )}
+        </TouchableOpacity>
+      </View>
       <View style={[CommonStyle.flexEnd, styles.headerRight]}>
         <ActionBtn
           icon="phone"

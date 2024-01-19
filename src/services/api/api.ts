@@ -13,6 +13,11 @@ export const METHOD = {
   PATCH: "PATCH",
 };
 
+const headersDefault = {
+  "Content-Type": "application/json",
+  Accept: "application/json, text/plain, */*",
+};
+
 interface RequestOption extends AxiosRequestConfig {
   requestTime?: number;
   retry?: boolean;
@@ -20,10 +25,7 @@ interface RequestOption extends AxiosRequestConfig {
 
 export const apiClient = axios.create({
   timeout: 20000,
-  headers: {
-    "Content-Type": "application/json",
-    Accept: "application/json, text/plain, */*",
-  },
+  headers: headersDefault,
 });
 
 // Add a request interceptor
@@ -59,53 +61,33 @@ apiClient.interceptors.response.use(
   },
 );
 
-export default function request({
-  params,
-  urlPath,
-  data,
-  method,
-  option,
-}: {
-  urlPath: string;
+interface IRequest {
+  url?: string;
+  urlPath?: string;
   params?: any;
   data?: any;
   method?: string;
   option?: RequestOption;
-}) {
-  return apiClient
-    .request({
-      method: method || METHOD.POST,
-      url: BASEURL + urlPath,
-      params,
-      data,
-      ...option,
-    })
-    .catch((error) => {
-      return Promise.resolve({ ...error, isError: true });
-    });
+  customHeader?: Headers;
 }
 
-export function requestUpload({
+export default function request({
   params,
+  url,
   urlPath,
   data,
   method,
   option,
-}: {
-  urlPath: string;
-  params?: any;
-  data?: FormData;
-  method?: string;
-  option?: RequestOption;
-}) {
+  customHeader,
+}: IRequest) {
   return apiClient
     .request({
       method: method || METHOD.POST,
-      url: urlPath,
+      url: url || BASEURL + urlPath,
       params,
       data,
       ...option,
-      headers: { "Content-Type": "multipart/form-data" },
+      headers: customHeader || headersDefault,
     })
     .catch((error) => {
       return Promise.resolve({ ...error, isError: true });

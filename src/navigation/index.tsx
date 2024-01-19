@@ -31,7 +31,7 @@ import LiveStreamScreen from "@screens/stream/stream.screen";
 import ViewStreamScreen from "@screens/stream/stream.view.screen";
 import SettingScreen from "@screens/setting/SettingScreen";
 import PostScreen from "@screens/post/PostScreen";
-import PostDetail from "@screens/post/PostDetailScreen";
+import PostDetail from "@screens/post/post.detail.screen";
 import EditComment from "@screens/home/edit-comment/EditComment";
 import SearchPostScreen from "@screens/search/search.post.screen";
 import ProfileChatScreen from "@screens/chat/profile-chat/profile.chat.screen";

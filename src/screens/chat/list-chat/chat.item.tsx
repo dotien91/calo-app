@@ -3,7 +3,7 @@ import { View, Text } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
 import { useTheme } from "@react-navigation/native";
-import createStyles from "../../list-chat/chat.list.screen.style";
+import createStyles from "./chat.list.screen.style";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Avatar from "@shared-components/user/Avatar";
 import { TypedGeneralRoomChat } from "models/chat.model";
@@ -109,15 +109,17 @@ const ChatItem = ({
           }}
         />
       )}
-      <View>
-        <View>
-          <Text numberOfLines={1} style={styles.partnerNameTxt}>
-            {chat_room_id?.room_name}
+      <View style={{ flex: 1 }}>
+        <View style={CommonStyle.flexStart}>
+          <Text>
+            <Text numberOfLines={1} style={styles.partnerNameTxt}>
+              {chat_room_id?.room_name}
+            </Text>
             <Text style={styles.timeTxt}> • {timeLastMessage}</Text>
           </Text>
         </View>
         <Text
-          numberOfLines={2}
+          numberOfLines={1}
           style={[styles.lastMessageTxt, !readCount && CommonStyle.hnRegular]}
         >
           {chat_room_id?.last_message}

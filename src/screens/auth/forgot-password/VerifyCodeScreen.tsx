@@ -23,8 +23,8 @@ import IconSvg from "assets/svg";
 import { verifyCode } from "@services/api/userApi";
 import {
   closeSuperModal,
-  showLoading,
-  showErrorModal,
+  showSuperModal,
+  showToast,
 } from "@helpers/super.modal.helper";
 import { IVerifyCode } from "models";
 
@@ -47,7 +47,10 @@ export default function VerifyCodeScreen() {
   const styles = useMemo(() => createStyles(theme), [theme]);
 
   const onSubmit = (data: any) => {
-    showLoading();
+    showSuperModal({
+      contentModalType: "loading",
+      styleModalType: "middle",
+    });
     const params: IVerifyCode = {
       user_email: emailRef.current,
       verify_code: data.verifyCode,
@@ -61,7 +64,10 @@ export default function VerifyCodeScreen() {
           user_email: emailRef.current,
         });
       } else {
-        showErrorModal(res);
+        showToast({
+          type: "error",
+          ...res,
+        });
       }
     });
     // navigation to screen otp

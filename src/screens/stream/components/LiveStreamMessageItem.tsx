@@ -13,7 +13,7 @@ const LiveStreamMessageItem = ({
   createBy,
 }: TypedChatHistory) => {
   const sourceUri = createBy?.user_avatar || createBy?.user_avatar_thumbnail;
-
+  const displayName = createBy?.display_name || " ";
   return (
     <View style={styles.box}>
       {!!sourceUri && (
@@ -30,8 +30,14 @@ const LiveStreamMessageItem = ({
           }}
         />
       )}
-      <Text style={styles.txtName}>{createBy?.display_name}</Text>
-      <Text style={styles.txt}>{chat_content}</Text>
+      <Text>
+        <Text style={styles.txtName}>
+          {displayName.length < 15
+            ? `${displayName}`
+            : `${displayName.substring(0, 12)}...`}{" "}
+        </Text>
+        <Text style={styles.txt}>{chat_content}</Text>
+      </Text>
     </View>
   );
 };
@@ -53,7 +59,8 @@ const styles: any = StyleSheet.create({
     ...CommonStyle.hnRegular,
     fontSize: 14,
     color: palette.placeholder,
-    marginRight: 4,
+    width: 100,
+    flex: 1,
   },
 });
 

@@ -26,8 +26,8 @@ import { getDeviceInfo } from "@helpers/device.info.helper";
 import { loginWithPass } from "@services/api/userApi";
 import {
   closeSuperModal,
-  showLoading,
-  showErrorModal,
+  showSuperModal,
+  showToast,
 } from "@helpers/super.modal.helper";
 import { ILoginWithPass } from "models";
 import GoogleLoginButton from "@shared-components/button/GoogleLoginButton";
@@ -60,7 +60,10 @@ export default function LoginWithEmailScreen() {
 
   const styles = useMemo(() => createStyles(theme), [theme]);
   const onSubmit = (data: any) => {
-    showLoading();
+    showSuperModal({
+      contentModalType: "loading",
+      styleModalType: "middle",
+    });
     const params: ILoginWithPass = {
       user_email: data.email,
       user_password: data.password,
@@ -73,7 +76,10 @@ export default function LoginWithEmailScreen() {
         const user_token = res.headers["x-authorization"];
         handleLogin(user_token);
       } else {
-        showErrorModal(res);
+        showToast({
+          type: "error",
+          ...res,
+        });
       }
     });
 

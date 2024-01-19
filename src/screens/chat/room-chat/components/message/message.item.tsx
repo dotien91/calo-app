@@ -4,14 +4,13 @@ import { View, StyleSheet, Text, ViewStyle } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
 import { Avatar, Day, utils } from "react-native-gifted-chat";
-import Bubble from "./MessageBubble";
+import Bubble from "./message.bubble";
 import { EnumMessageStatus } from "constants/chat.constant";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { palette } from "@theme/themes";
 import { translations } from "@localization";
 import CommonStyle from "@theme/styles";
 import { isSameMinute } from "@utils/date.utils";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { TypedMessageGiftedChat } from "models/chat.model";
 import { SCREENS } from "constants";
 import { isEqualObjectsSameKeys } from "@utils/index";
@@ -69,8 +68,6 @@ const MessageBubble = (props: IMessageBubble) => {
   const renderAvatar = () => {
     let extraStyle;
     if (
-      // isSameUser(props.currentMessage, props.previousMessage) &&
-      // isSameDay(props.currentMessage, props.previousMessage)
       isSameMinute(
         props.currentMessage.createdAt,
         props.previousMessage.createdAt,
@@ -82,14 +79,13 @@ const MessageBubble = (props: IMessageBubble) => {
 
     const avatarProps = getInnerComponentProps();
     return (
-      <TouchableOpacity onPress={openProfile}>
-        <Avatar
-          {...avatarProps}
-          imageStyle={{
-            left: [styles.slackAvatar, avatarProps.imageStyle, extraStyle],
-          }}
-        />
-      </TouchableOpacity>
+      <Avatar
+        {...avatarProps}
+        onPressAvatar={openProfile}
+        imageStyle={{
+          left: [styles.slackAvatar, avatarProps.imageStyle, extraStyle],
+        }}
+      />
     );
   };
 

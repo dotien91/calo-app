@@ -138,6 +138,8 @@ export function useUploadFile(initData?: any[]) {
         }));
 
         setListFileLocal((listFileLocal) => [...listFileLocal, ...fileLocal]);
+        console.log("imagesimagesimages", fileLocal);
+
         const res = await uploadMultiMedia(
           listVideo.map((i: any) => ({
             name: getFileName(i),
@@ -145,18 +147,22 @@ export function useUploadFile(initData?: any[]) {
             type: i.type,
           })),
         );
+
+        console.log("resssss video", res);
         if (Array.isArray(res)) {
           const data = listVideo.map((i: any, index: number) => ({
             uri: getLinkUri(i),
             type: i.type,
             _id: res[index]?.callback?._id,
           }));
+
           setListFile((listFile) => [...listFile, ...data]);
         }
       },
       croping: false,
     });
   };
+
   const onPressFile = async () => {
     try {
       const pickerResult = await pick({

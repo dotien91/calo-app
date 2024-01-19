@@ -12,6 +12,8 @@ import { isIos } from "@helpers/device.info.helper";
 import InputChatLive from "./components/InputChatLiveStream";
 import { Device } from "@utils/device.utils";
 import AnimatedLottieView from "lottie-react-native";
+import ReactionLiveStreamComponent from "./components/ReactionLiveStreamComponent";
+import eventEmitter from "@services/event-emitter";
 
 interface ChatViewProps {
   liveStreamId: string;
@@ -23,7 +25,7 @@ const ListChatLiveStream: React.FC<ChatViewProps> = ({
   isPublisher,
 }) => {
   const userData = useStore((state) => state.userData);
-
+  const refReaction = React.useRef(null);
   const { setMessages, messages, sendChatMessage, _getChatHistory } =
     useLiveChatHistory({ liveStreamId, isPublisher });
   const [showReactionAnimation, setShowReactionAnimation] =
@@ -50,6 +52,18 @@ const ListChatLiveStream: React.FC<ChatViewProps> = ({
     return <LiveMessageItem {...item.item} key={index} />;
   };
 
+  React.useEffect(() => {
+    eventEmitter.on("show_reaction_animation", showReact);
+
+    return () => {
+      eventEmitter.off("show_reaction_animation", showReact);
+    };
+  }, []);
+
+  const showReact = (type: string) => {
+    refReaction.current?.newReaction({ react_type: type, user_id: userData });
+  };
+
   return (
     <>
       <FlatList
@@ -63,6 +77,7 @@ const ListChatLiveStream: React.FC<ChatViewProps> = ({
         onEndReached={_getChatHistory}
         // ListEmptyComponent={ListEmptyComponent}
       />
+      <ReactionLiveStreamComponent ref={refReaction} />
       <InputChatLive
         chatRoomId={liveStreamId}
         sendChatMessage={_sendChatMessage}

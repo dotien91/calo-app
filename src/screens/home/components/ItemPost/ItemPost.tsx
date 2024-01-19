@@ -97,6 +97,21 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
       NavigationService.push(SCREENS.POST_DETAIL, param);
     }
   };
+  // const showImageVideo = (index: number) => {
+  //   const listMedia = data.attach_files.filter(
+  //     (i: any) =>
+  //       i.media_mime_type.includes("image") ||
+  //       i.media_mime_type.includes("video"),
+  //   );
+  //   showSuperModal({
+  //     contentModalType: EnumModalContentType.Library,
+  //     styleModalType: EnumStyleModalType.Middle,
+  //     data: {
+  //       listMedia,
+  //       indexMedia: index,
+  //     },
+  //   });
+  // };
 
   return (
     <View style={styles.container}>

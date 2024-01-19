@@ -99,3 +99,13 @@ export async function getLiveStreamDetail(id: string) {
     return response;
   });
 }
+
+export async function requestViewStream(data: { livestream_id: string }) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "livestream/view",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}

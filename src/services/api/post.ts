@@ -1,5 +1,5 @@
 import { Asset } from "react-native-image-picker";
-import request, { METHOD, BASEURL, UPLOAD_URL, requestUpload } from "./api";
+import request, { METHOD, BASEURL, UPLOAD_URL } from "./api";
 import { TypedCropImage } from "shared/models";
 
 interface MediaAsset extends TypedCropImage, Asset {
@@ -16,10 +16,11 @@ interface MediaAsset extends TypedCropImage, Asset {
 export async function uploadMedia(file: MediaAsset) {
   const newForm = new FormData();
   newForm.append("file[]", file);
-  return requestUpload({
+  return request({
     method: METHOD.POST,
-    urlPath: `${UPLOAD_URL}upload-media?callback=${BASEURL}media/create`,
+    url: `${UPLOAD_URL}upload-media?callback=${BASEURL}media/create`,
     data: newForm,
+    customHeader: { "Content-Type": "multipart/form-data" },
   }).then((response) => {
     if (Array.isArray(response.data)) {
       return response.data;
@@ -31,10 +32,11 @@ export async function uploadMedia(file: MediaAsset) {
 export async function uploadFile(file: MediaAsset) {
   const newForm = new FormData();
   newForm.append("file[]", file);
-  return requestUpload({
+  return request({
     method: METHOD.POST,
-    urlPath: `${UPLOAD_URL}/upload-file?callback=${BASEURL}media/create`,
+    url: `${UPLOAD_URL}/upload-file?callback=${BASEURL}media/create`,
     data: newForm,
+    customHeader: { "Content-Type": "multipart/form-data" },
   }).then((response) => {
     if (Array.isArray(response.data)) {
       return response.data;
@@ -57,10 +59,11 @@ export async function uploadMultiFile(files: MediaAsset[]): Promise<any> {
   files.forEach((element) => {
     newForm.append("file[]", element);
   });
-  return requestUpload({
+  return request({
     method: METHOD.POST,
-    urlPath: `${UPLOAD_URL}upload-file?callback=${BASEURL}media/create`,
+    url: `${UPLOAD_URL}upload-file?callback=${BASEURL}media/create`,
     data: newForm,
+    customHeader: { "Content-Type": "multipart/form-data" },
   }).then((response) => {
     if (Array.isArray(response.data)) {
       return response.data;
@@ -74,10 +77,11 @@ export async function uploadMultiMedia(files: MediaAsset[]): Promise<any> {
   files.forEach((element) => {
     newForm.append("file[]", element);
   });
-  return requestUpload({
+  return request({
     method: METHOD.POST,
-    urlPath: `${UPLOAD_URL}upload-media?callback=${BASEURL}media/create`,
+    url: `${UPLOAD_URL}upload-media?callback=${BASEURL}media/create`,
     data: newForm,
+    customHeader: { "Content-Type": "multipart/form-data" },
   }).then((response) => {
     if (Array.isArray(response.data)) {
       return response.data;
