@@ -5,13 +5,13 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 import LikeBtn from "../like-btn/LikeBtn";
 
-import { TypedRequest } from "shared/models";
-import createStyles from "./ItemPost.style";
+import { TypedPost } from "shared/models";
+import createStyles from "./post.item.style";
 import { translations } from "@localization";
 import { sharePost } from "@utils/share.utils";
 
 interface LikeSharePostItemProps {
-  data: TypedRequest;
+  data: TypedPost;
   pressComment: () => void;
 }
 

@@ -4,17 +4,17 @@ import { Dimensions, Text, View } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 
-import createStyles from "./ItemPost.style";
+import createStyles from "./post.item.style";
+import HeaderItempost from "./header.post.item";
+import AvatarPost from "./avatar.post";
+import ListFile from "./list.media.post.item";
+import LikeSharePostItem from "./like.share.post.item";
 
 import CommonStyle from "@theme/styles";
 import { SCREENS } from "constants";
 import { showWarningLogin } from "@helpers/super.modal.helper";
 import useStore from "@services/zustand/store";
-import { TypedRequest } from "shared/models";
-import AvatarPost from "./avatar.post";
-import HeaderItempost from "./header.post.item";
-import ListFile from "./list.media.post.item";
-import LikeSharePostItem from "./like.share.post.item";
+import { TypedPost } from "shared/models";
 import PressableBtn from "@shared-components/button/PressableBtn";
 
 const { width } = Dimensions.get("screen");
@@ -26,7 +26,7 @@ const SIZE_IMAGE1 = width - PADDING_HORIZONTAL * 2 - PADDING_LEFT - SIZE_AVATAR;
 const SIZE_IMAGE2 = (SIZE_IMAGE1 - 4) / 2;
 
 interface ItemPostProps {
-  data: TypedRequest;
+  data: TypedPost;
   isProfile?: boolean;
 }
 
@@ -128,7 +128,10 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
           <HeaderItempost data={data} onPress={goToProfileCurrentUser} />
           {HasTag}
           {ContentStatus}
-          <ListFile listFile={data.attach_files} sizeImage2={SIZE_IMAGE2} />
+          <ListFile
+            listFile={data?.attach_files || []}
+            sizeImage2={SIZE_IMAGE2}
+          />
         </PressableBtn>
         <LikeSharePostItem data={data} pressComment={pressComment} />
       </View>

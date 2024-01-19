@@ -10,10 +10,10 @@ import EmptyResultView from "@shared-components/empty.data.component";
 import { translations } from "@localization";
 import lotieNoResult from "assets/lotties/no-result.json";
 import { useListData } from "@helpers/hooks/useListData";
-import ItemPost from "@screens/home/components/ItemPost/ItemPost";
+import ItemPost from "@screens/home/components/post-item/post.item";
 import { getListPost } from "@services/api/post";
 import PostSearchInput from "./search.post.input";
-import { TypedRequest } from "shared/models";
+import { TypedPost } from "shared/models";
 
 interface SearchPostScreenProps {}
 
@@ -29,7 +29,7 @@ const SearchPostScreen: React.FC<SearchPostScreenProps> = () => {
     onEndReach,
     isFirstLoading,
     renderFooterComponent,
-  } = useListData<TypedRequest>(
+  } = useListData<TypedPost>(
     { limit: 8, search: txtSearch.trim() },
     getListPost,
     [],

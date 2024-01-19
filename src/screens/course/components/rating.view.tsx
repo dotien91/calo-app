@@ -21,7 +21,15 @@ const RatingView: React.FC<RatingViewProps> = ({ rating }: RatingViewProps) => {
 
   const renderStar = (i: number) => {
     const color = rating < i ? colors.white : colors.primary;
-    return <Icon key={i} type={IconType.Feather} name="star" size={12} color={color} />;
+    return (
+      <Icon
+        key={i}
+        type={IconType.Feather}
+        name="star"
+        size={12}
+        color={color}
+      />
+    );
   };
 
   return (

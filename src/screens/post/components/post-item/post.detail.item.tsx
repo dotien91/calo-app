@@ -8,9 +8,9 @@ import { useTheme } from "@react-navigation/native";
 import createStyles from "./post.detail.item.style";
 
 import CommonStyle from "@theme/styles";
-import HeaderPostItem from "@screens/home/components/ItemPost/header.post.item";
-import AvatarPost from "@screens/home/components/ItemPost/avatar.post";
-import LikeSharePostItem from "@screens/home/components/ItemPost/like.share.post.item";
+import HeaderPostItem from "@screens/home/components/post-item/header.post.item";
+import AvatarPost from "@screens/home/components/post-item/avatar.post";
+import LikeSharePostItem from "@screens/home/components/post-item/like.share.post.item";
 
 const SIZE_AVATAR = 30;
 const FONT_SIZE = 16;

@@ -8,10 +8,10 @@ import useStore from "@services/zustand/store";
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
 import { translations } from "@localization";
-import { TypedRequest } from "shared/models";
+import { TypedPost } from "shared/models";
 
 interface LikeBtnProps {
-  data: TypedRequest;
+  data: TypedPost;
 }
 
 const LikeBtn = (props: LikeBtnProps) => {

@@ -6,9 +6,9 @@ import { FlatList, View } from "react-native";
 import LottieView from "lottie-react-native";
 import { useTheme } from "@react-navigation/native";
 
-import ItemPost from "./components/ItemPost/ItemPost";
+import ItemPost from "./components/post-item/post.item";
 import { getListLiveStream } from "@services/api/stream.api";
-import StreamItem from "./components/ItemPost/stream.item";
+import StreamItem from "./components/post-item/stream.item";
 
 import eventEmitter from "@services/event-emitter";
 import { getListPost } from "@services/api/post";
@@ -18,7 +18,7 @@ import useStore from "@services/zustand/store";
 import { useListData } from "@helpers/hooks/useListData";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import EmptyResultView from "@shared-components/empty.data.component";
-import { TypedRequest } from "shared/models";
+import { TypedPost } from "shared/models";
 
 interface ListPostProps {
   isFollowingPost: boolean;
@@ -74,7 +74,7 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
     renderFooterComponent,
     _requestData,
     refreshing,
-  } = useListData<TypedRequest>(paramsRequest, getListPost);
+  } = useListData<TypedPost>(paramsRequest, getListPost);
 
   useEffect(() => {
     const typeEmit = isFollowingPost
@@ -138,7 +138,7 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
     );
   };
 
-  if (!isLoggedIn() && isFollowingPost) {
+  if (!isLoggedIn && isFollowingPost) {
     return (
       <View style={{ ...CommonStyle.flex1, ...CommonStyle.center }}>
         {renderViewRequestLogin()}

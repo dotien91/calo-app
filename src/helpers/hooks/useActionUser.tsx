@@ -2,7 +2,7 @@ import useStore from "@services/zustand/store";
 import { blockUser, followUser, unFollowUser } from "@services/api/post";
 import { showToast } from "@helpers/super.modal.helper";
 import { translations } from "@localization";
-import { TypedRequest } from "shared/models";
+import { TypedPost } from "shared/models";
 
 export function useActionUser() {
   // const userData = useStore((store) => store.userData);
@@ -67,11 +67,11 @@ export function useActionUser() {
     });
   };
 
-  const _savePost = (data: TypedRequest) => {
+  const _savePost = (data: TypedPost) => {
     addPostSave(data);
     showToast({ type: "success", message: translations.post.savePostSuccess });
   };
-  const _deletePostSave = (data: TypedRequest) => {
+  const _deletePostSave = (data: TypedPost) => {
     deletePostSave(data);
   };
 

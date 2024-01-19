@@ -8,7 +8,7 @@ import IconSvg from "assets/svg";
 import { convertLastActive } from "@utils/time.utils";
 import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "constants";
-import createStyles from "./ItemPost.style";
+import createStyles from "./post.item.style";
 import VideoPlayer from "@shared-components/video.player.component";
 import LiveBadge from "@screens/stream/components/LiveBadge/LiveBadge";
 import { TouchableOpacity } from "react-native-gesture-handler";

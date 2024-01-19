@@ -18,14 +18,16 @@ import ItemBottomSheet from "@shared-components/item-bottom-sheet/ItemBottomShee
 import { SCREENS } from "constants";
 import eventEmitter from "@services/event-emitter";
 import { useActionUser } from "@helpers/hooks/useActionUser";
-import { TypedRequest } from "shared/models";
+import { TypedPost } from "shared/models";
 
+interface TypeData extends TypedPost {
+  isDetail: boolean;
+}
 interface ListActionOfPost {
-  data: TypedRequest;
-  isDetail?: boolean;
+  data: TypeData;
 }
 
-const ListActionOfPost = ({ data, isDetail = false }: ListActionOfPost) => {
+const ListActionOfPost = ({ data }: ListActionOfPost) => {
   const userData = useStore((state) => state.userData);
   const listFollow = useStore((state) => state.listFollow);
   const listPostSave = useStore((state) => state.listPostSave);
@@ -54,7 +56,7 @@ const ListActionOfPost = ({ data, isDetail = false }: ListActionOfPost) => {
           type: "success",
           message: translations.home.deletePostSuccess,
         });
-        if (isDetail) {
+        if (data.isDetail) {
           NavigationService.goBack();
         }
       } else {
@@ -93,9 +95,10 @@ const ListActionOfPost = ({ data, isDetail = false }: ListActionOfPost) => {
         report_type: "post",
         partner_id: data?.user_id?._id,
       },
-      isDetail,
     });
   };
+  console.log("userData?._id", userData?._id);
+  console.log("data?.user_id?._id?._id...", data);
 
   if (userData?._id === data?.user_id?._id) {
     return (
@@ -119,7 +122,8 @@ const ListActionOfPost = ({ data, isDetail = false }: ListActionOfPost) => {
     );
   }
 
-  const isSave = listPostSave.findIndex((item) => item._id === data._id) >= 0;
+  const isSave =
+    listPostSave?.findIndex((item) => item._id === data._id) >= 0 || false;
 
   return (
     <View style={styles.container}>

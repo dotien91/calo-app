@@ -6,16 +6,20 @@ import { useTheme } from "@react-navigation/native";
 import CommonStyle from "@theme/styles";
 import IconSvg from "assets/svg";
 import { convertLastActive } from "@utils/time.utils";
-import { showWarningLogin } from "@helpers/super.modal.helper";
-import { showStickBottom } from "@shared-components/stick-bottom/HomeStickBottomModal";
+import {
+  EnumModalContentType,
+  EnumStyleModalType,
+  showSuperModal,
+  showWarningLogin,
+} from "@helpers/super.modal.helper";
 import useStore from "@services/zustand/store";
-import { TypedRequest } from "shared/models";
+import { TypedPost } from "shared/models";
 
 const FONT_SIZE = 16;
 
 interface HeaderItempostProps {
   onPress: () => void;
-  data: TypedRequest;
+  data: TypedPost;
   isDetail?: boolean;
 }
 
@@ -32,7 +36,11 @@ const HeaderItempost = ({
     if (!userData) {
       showWarningLogin();
     } else {
-      showStickBottom(data, "post", isDetail);
+      showSuperModal({
+        contentModalType: EnumModalContentType.PostAction,
+        styleModalType: EnumStyleModalType.Bottom,
+        data: { ...data, isDetail },
+      });
     }
   };
   return (

@@ -36,7 +36,7 @@ import { isIos } from "@utils/device.ui.utils";
 import EmptyResultView from "@shared-components/empty.data.component";
 import { trim } from "@helpers/string.helper";
 import uuid from "react-native-uuid";
-import { TypedComment, TypedRequest } from "shared/models";
+import { TypedComment, TypedPost } from "shared/models";
 
 interface PostDetailProps {
   route: any;
@@ -46,7 +46,7 @@ const PostDetail = (props: PostDetailProps) => {
   const id = props.route?.params?.id;
   const dataItem = props.route?.params?.data;
   const isComment = props.route?.params?.isComment;
-  const [data, setData] = useState<TypedRequest>();
+  const [data, setData] = useState<TypedPost>();
 
   const userData = useStore((state) => state.userData);
   const listCommentDelete = useStore((state) => state.listCommentDelete);
@@ -330,7 +330,7 @@ const PostDetail = (props: PostDetailProps) => {
           ...CommonStyle.flex1,
           backgroundColor: colors.background,
           paddingVertical: 40,
-          minHeight: 500,
+          minHeight: 300,
         }}
       >
         <EmptyResultView
