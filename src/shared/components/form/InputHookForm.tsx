@@ -34,6 +34,7 @@ interface InputHookProps {
   viewStyle?: ViewStyle;
   noBorder?: boolean;
   multiline?: boolean;
+  maxLength?: number;
 }
 
 // eslint-disable-next-line react/display-name
@@ -50,6 +51,7 @@ const InputHook: React.FC<InputHookProps> = ({
   viewStyle,
   noBorder,
   multiline = false,
+  maxLength = 500,
 }) => {
   const refInput = useRef<TextInput>(null);
   const _forcusInput = () => {
@@ -80,6 +82,7 @@ const InputHook: React.FC<InputHookProps> = ({
               style={[styles.input, !!customStyle && customStyle]}
               secureTextEntry={isPassword}
               placeholderTextColor={palette.placeholder}
+              maxLength={maxLength}
             />
           )}
           name={name}

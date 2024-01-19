@@ -185,6 +185,8 @@ export interface TypedMedia {
   createBy: string;
   createdAt: string;
   updatedAt: string;
+  type: string;
+  url: string;
 }
 
 export interface TypedRequest {
@@ -251,19 +253,22 @@ export interface TypedCropImage {
 }
 
 export interface TypedComment {
-  _id: string;
-  user_id: TypedUser;
-  request_id: string;
-  content: string;
-  parent_id: any;
-  createdAt: string;
-  updatedAt: string;
-  child: TypedComment[];
-  child_number: number;
-  vote_number: number;
-  is_like: boolean;
-  is_dislike: boolean;
+  _id?: string;
+  user_id?: TypedUser;
+  request_id?: string;
+  content?: string;
+  parent_id?: any;
+  createdAt?: string;
+  updatedAt?: string;
+  child?: TypedComment[];
+  child_number?: number;
+  vote_number?: number;
+  like_number?: number;
+  is_like?: boolean;
+  is_dislike?: boolean;
   local_id?: string;
+  sending?: boolean;
+  community_id?: string;
 }
 
 export interface TypedCourse {

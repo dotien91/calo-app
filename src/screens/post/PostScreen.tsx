@@ -3,7 +3,6 @@
 import {
   View,
   Text,
-  Pressable,
   Keyboard,
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
@@ -39,11 +38,7 @@ import { useUploadFile } from "@helpers/hooks/useUploadFile";
 import eventEmitter from "@services/event-emitter";
 import CustomBackground from "@shared-components/CustomBackgroundBottomSheet";
 import { SCREENS } from "constants";
-
-interface OptionsState {
-  postCategory: string;
-  link: string;
-}
+import PressableBtn from "@shared-components/button/PressableBtn";
 
 export default function PostScreen() {
   const theme = useTheme();
@@ -52,11 +47,12 @@ export default function PostScreen() {
   const item: TypedRequest = route?.params?.item || {};
   const styles = useMemo(() => createStyles(theme), [theme]);
   const submitPostStatus = React.useRef("");
-
-  const [options, setOptions] = useState<OptionsState>({
-    postCategory: item?.post_category?._id || "",
-    link: "",
-  });
+  const [postCategory, setPostCategory] = useState("");
+  const [link, setLink] = useState("");
+  const [listCategory, setListCategory] = useState<TypedCategory[]>([]);
+  const [description, setDescription] = useState<string>(
+    item.post_content || "",
+  );
   const {
     onPressFile,
     onSelectPicture,
@@ -74,7 +70,6 @@ export default function PostScreen() {
         } || []),
     ),
   );
-
   const onPressLive = () => {
     NavigationService.navigate(SCREENS.LIVE_STREAM, {
       titleLive: description,
@@ -104,19 +99,15 @@ export default function PostScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [description]);
 
-  const [listCategory, setListCategory] = useState<TypedCategory[]>([]);
-  const [description, setDescription] = useState<string>(
-    item.post_content || "",
-  );
-  const [link, setLink] = useState("");
   const getListCategory = async () => {
     getCategory().then((res) => {
       if (!res.isError) {
         setListCategory(res.data);
-        setOptions((prev) => ({
-          ...prev,
-          postCategory: res.data?.[0]?._id,
-        }));
+        if (item) {
+          setPostCategory(item.post_category?._id);
+        } else {
+          setPostCategory(res.data?.[0]?._id);
+        }
       }
     });
   };
@@ -145,7 +136,7 @@ export default function PostScreen() {
     const params = {
       post_title: "",
       post_content: description.trim(),
-      post_category: options.postCategory || undefined,
+      post_category: postCategory,
       post_language: "en",
       attach_files: JSON.stringify(listFile.map((i) => i._id)),
       _id: item._id || "",
@@ -186,17 +177,17 @@ export default function PostScreen() {
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isUpLoadingFile, description, listFile]);
+  }, [isUpLoadingFile, description, listFile, postCategory]);
 
   const SelectComponent = ({
     icon,
     onPress,
   }: {
     icon: React.JSX.Element;
-    onPress?: () => void;
+    onPress: () => void;
   }) => {
     return (
-      <Pressable
+      <PressableBtn
         onPress={onPress}
         style={{
           width: 40,
@@ -206,7 +197,7 @@ export default function PostScreen() {
         }}
       >
         {icon}
-      </Pressable>
+      </PressableBtn>
     );
   };
 
@@ -257,7 +248,7 @@ export default function PostScreen() {
             textPost={item._id ? translations.update : translations.post.post}
           />
           <View style={CommonStyle.flex1}>
-            <Pressable
+            <PressableBtn
               onPress={openListCategory}
               style={{ paddingHorizontal: 20 }}
             >
@@ -266,11 +257,11 @@ export default function PostScreen() {
               >
                 #
                 {listCategory.length > 0
-                  ? listCategory?.find((i) => i._id === options.postCategory)
-                      ?.category_title || translations.postCategory
+                  ? listCategory?.find((i) => i._id === postCategory)
+                      ?.category_content || translations.postCategory
                   : translations.postCategory}
               </Text>
-            </Pressable>
+            </PressableBtn>
 
             <View
               style={[
@@ -285,6 +276,7 @@ export default function PostScreen() {
                 onChangeText={setDescription}
                 multiline
                 placeholderTextColor={colors.placeholder}
+                maxLength={500}
               />
             </View>
             {link != "" && (
@@ -378,19 +370,16 @@ export default function PostScreen() {
                   }}
                 >
                   {listCategory.map((i) => (
-                    <Pressable
+                    <PressableBtn
                       key={i._id}
                       style={
-                        i._id === options.postCategory
+                        i._id === postCategory
                           ? styles.categorySelected
                           : styles.category
                       }
                       onPress={() => {
                         refBottomSheet.current?.close();
-                        setOptions((prev) => ({
-                          ...prev,
-                          postCategory: i._id,
-                        }));
+                        setPostCategory(i._id);
                       }}
                     >
                       <Text
@@ -399,8 +388,8 @@ export default function PostScreen() {
                           fontSize: 16,
                           color: colors.primary,
                         }}
-                      >{`#${i.category_title}`}</Text>
-                    </Pressable>
+                      >{`#${i.category_content}`}</Text>
+                    </PressableBtn>
                   ))}
                 </BottomSheetScrollView>
               </View>

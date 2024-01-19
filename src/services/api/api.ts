@@ -35,6 +35,7 @@ apiClient.interceptors.request.use(
 
     // fake token for chat feature
     // const userToken =
+    //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzcwODQyMDQsImRhdGEiOnsiX2lkIjoiNjU5MGVmNzEzZjlhMDQ2OGM4MjkwZWI5Iiwia2V5IjoiYTI0MTcxYzcxYjNjMjViZWI0OTQzMTQ1NjQyZjJmNTciLCJzaWduYXR1cmUiOiI4ZTJmODFmZjY1NmRjMjUyYzZhNmVlZGFkN2U3ZTc3OCIsInNlc3Npb24iOiI2NWE4OTlhY2JkYzcwYmJiN2U4YjE1MDgifSwiaWF0IjoxNzA1NTQ4MjA0fQ.DrEymcugAraXnGcu-KdKtBF44QpJE_rZlaxA9V-ZXtg";
     //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQ1OTAxNTEsImRhdGEiOnsiX2lkIjoiNjU4MjVkY2RmYjQyMmU4NmEyMDBlN2ZiIiwia2V5IjoiMjZjNGVkODZmM2RjOTUxN2JlYWViY2UxNTQzMmE0NWUiLCJzaWduYXR1cmUiOiJjNGI1NDEzMGQ0MjNhYzc2ZDA1MjYzODAzMWNhYzBmNyIsInNlc3Npb24iOiI2NTgyOGI0NzhmZTc2YzllMzE0YmM1YmQifSwiaWF0IjoxNzAzMDU0MTUxfQ.CsNtK6PcYGCW0hLfZrvAvxWoihVG9GkkyyMQmz6Oopg";
 
     if (userToken) config.headers["X-Authorization"] = userToken;

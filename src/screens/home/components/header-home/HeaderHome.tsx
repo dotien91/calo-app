@@ -1,11 +1,5 @@
 import React, { useMemo } from "react";
-import {
-  View,
-  Image,
-  Pressable,
-  TouchableOpacity,
-  TextInput,
-} from "react-native";
+import { View, Image, TouchableOpacity, TextInput } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import * as NavigationService from "react-navigation-helpers";
@@ -15,6 +9,7 @@ import useStore from "@services/zustand/store";
 import CommonStyle from "@theme/styles";
 import createStyles from "./HeaderHome.style";
 import { SCREENS } from "constants";
+import PressableBtn from "@shared-components/button/PressableBtn";
 
 const SIZE_AVATAR = 30;
 const BORDER_AVATAR = 12;
@@ -36,7 +31,7 @@ const HeaderHome = () => {
   };
   const Avatar = useMemo(() => {
     return (
-      <Pressable
+      <PressableBtn
         style={{
           width: SIZE_AVATAR,
           height: SIZE_AVATAR,
@@ -57,7 +52,7 @@ const HeaderHome = () => {
             borderRadius: BORDER_AVATAR,
           }}
         />
-      </Pressable>
+      </PressableBtn>
     );
   }, [linkAvatar]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -72,7 +67,7 @@ const HeaderHome = () => {
   return (
     <View style={styles.container}>
       {Avatar}
-      <Pressable style={styles.viewInput} onPress={goToSearchScreen}>
+      <PressableBtn style={styles.viewInput} onPress={goToSearchScreen}>
         <Icon
           name="search-outline"
           size={24}
@@ -86,7 +81,7 @@ const HeaderHome = () => {
           placeholderTextColor={colors.placeholder}
           editable={false}
         />
-      </Pressable>
+      </PressableBtn>
       <TouchableOpacity onPress={goToChatScreen}>
         <Icon
           name="chatbubbles-outline"

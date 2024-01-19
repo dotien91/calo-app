@@ -3,21 +3,22 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { FlatList, View } from "react-native";
+import LottieView from "lottie-react-native";
+import { useTheme } from "@react-navigation/native";
+
 import ItemPost from "./components/ItemPost/ItemPost";
+import { getListLiveStream } from "@services/api/livestreamApi";
+import StreamItem from "./components/ItemPost/stream.item";
+
+import eventEmitter from "@services/event-emitter";
 import { getListPost } from "@services/api/post";
 import CommonStyle from "@theme/styles";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";
 import { useListData } from "@helpers/hooks/useListData";
-import LottieView from "lottie-react-native";
-import EmptyResultView from "@shared-components/empty.data.component";
-import eventEmitter from "@services/event-emitter";
-import { useTheme } from "@react-navigation/native";
-
-import { getListLiveStream } from "@services/api/livestreamApi";
-import StreamItem from "./components/ItemPost/stream.item";
-
 import { useUserHook } from "@helpers/hooks/useUserHook";
+import EmptyResultView from "@shared-components/empty.data.component";
+import { TypedRequest } from "shared/models";
 
 interface ListPostProps {
   isFollowingPost: boolean;
@@ -31,7 +32,6 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
   const { colors } = theme;
 
   const userData = useStore((state) => state.userData);
-  const resetListLike = useStore((state) => state.resetListLike);
   const [listDataStream, setListDataStream] = useState([]);
   const { isLoggedIn, renderViewRequestLogin } = useUserHook();
 
@@ -74,7 +74,7 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
     renderFooterComponent,
     refreshListPage,
     refreshing,
-  } = useListData<any>(paramsRequest, getListPost);
+  } = useListData<TypedRequest>(paramsRequest, getListPost);
 
   useEffect(() => {
     const typeEmit = isFollowingPost
@@ -88,7 +88,7 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
 
   useEffect(() => {
     _getListLiveStream();
-    resetListLike();
+    // resetListLike();
   }, [refreshing]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const _refreshListPage = () => {

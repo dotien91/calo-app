@@ -1,13 +1,6 @@
 /* eslint-disable camelcase */
 import React, { useEffect, useState } from "react";
-import {
-  Keyboard,
-  Pressable,
-  SafeAreaView,
-  Text,
-  View,
-  TextInput,
-} from "react-native";
+import { Keyboard, SafeAreaView, Text, View, TextInput } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import * as NavigationService from "react-navigation-helpers";
@@ -17,6 +10,7 @@ import { updateCommentWithId } from "@services/api/post";
 import useStore from "@services/zustand/store";
 import CommonStyle from "@theme/styles";
 import { showToast } from "@helpers/super.modal.helper";
+import PressableBtn from "@shared-components/button/PressableBtn";
 
 interface EditCommentProps {
   route: any;
@@ -121,7 +115,7 @@ const EditComment = (props: EditCommentProps) => {
           marginTop: 8,
         }}
       >
-        <Pressable
+        <PressableBtn
           onPress={cancelEdit}
           style={{
             padding: 8,
@@ -130,8 +124,8 @@ const EditComment = (props: EditCommentProps) => {
           }}
         >
           <Text style={{ color: colors.text }}>{translations.cancel}</Text>
-        </Pressable>
-        <Pressable
+        </PressableBtn>
+        <PressableBtn
           onPress={_updateComment}
           style={{
             backgroundColor: edited ? colors.secondColor : colors.background2,
@@ -142,7 +136,7 @@ const EditComment = (props: EditCommentProps) => {
           <Text style={{ color: edited ? colors.primary : colors.placeholder }}>
             {translations.update}
           </Text>
-        </Pressable>
+        </PressableBtn>
       </View>
     </SafeAreaView>
   );

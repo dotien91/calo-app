@@ -13,6 +13,7 @@ import { useListData } from "@helpers/hooks/useListData";
 import ItemPost from "@screens/home/components/ItemPost/ItemPost";
 import { getListPost } from "@services/api/post";
 import PostSearchInput from "./search.post.input";
+import { TypedRequest } from "shared/models";
 
 interface SearchPostScreenProps {}
 
@@ -28,7 +29,11 @@ const SearchPostScreen: React.FC<SearchPostScreenProps> = () => {
     onEndReach,
     isFirstLoading,
     renderFooterComponent,
-  } = useListData<any>({ limit: 8, search: txtSearch.trim() }, getListPost, []);
+  } = useListData<TypedRequest>(
+    { limit: 8, search: txtSearch.trim() },
+    getListPost,
+    [],
+  );
 
   const renderItem = ({ item }: any) => {
     return <ItemPost data={item} />;

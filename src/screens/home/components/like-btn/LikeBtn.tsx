@@ -64,7 +64,6 @@ const LikeBtn = (props: LikeBtnProps) => {
       });
     }
   };
-  // const onPressLikeDebounce = debounce(pressLike, 600);
   return (
     <TouchableOpacity
       onPress={pressLike}

@@ -61,10 +61,15 @@ export const showWarningLogin = (message?: string) => {
 interface IModalByTypeData {
   type: string;
   data: any;
+  isDetail?: boolean;
 }
 
-export const showSuperModalByType = ({ type, data }: IModalByTypeData) => {
-  eventEmitter.emit("show_bottom_modal", { type, data });
+export const showSuperModalByType = ({
+  type,
+  data,
+  isDetail = false,
+}: IModalByTypeData) => {
+  eventEmitter.emit("show_bottom_modal", { type, data, isDetail });
 };
 
 export const showToast = (res: ToastProps) => {

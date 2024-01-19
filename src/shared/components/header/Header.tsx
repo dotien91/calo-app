@@ -33,7 +33,14 @@ const Header = ({
         size={25}
         color={colors.text}
       />
-      <Text style={[styles.textHeader, { color: colors.text }]}>{text}</Text>
+      <Text
+        style={[
+          styles.textHeader,
+          { color: colors.text, ...CommonStyle.flex1 },
+        ]}
+      >
+        {text}
+      </Text>
       <View style={styles.viewIcons}>
         {iconNameRight && (
           <Icon
@@ -54,8 +61,7 @@ const Header = ({
             bottom: 0,
             right: 0,
             zIndex: 1,
-            justifyContent: "center",
-            alignItems: "flex-end",
+            ...CommonStyle.center,
             paddingRight: 16,
           }}
         >
@@ -82,9 +88,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 16,
+    gap: 8,
   },
   textHeader: {
     ...CommonStyle.hnBold,
+    textAlign: "center",
   },
   viewIcons: {
     width: 40,

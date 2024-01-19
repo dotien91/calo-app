@@ -1,17 +1,13 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Text,
   View,
   StyleSheet,
-  Image,
   TouchableOpacity,
   ScrollView,
-  ActivityIndicator,
 } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { useTheme } from "@react-navigation/native";
-import { debounce } from "lodash";
 import { Tabs, MaterialTabBar } from "react-native-collapsible-tab-view";
 
 import useStore from "@services/zustand/store";
@@ -20,19 +16,21 @@ import { palette } from "@theme/themes";
 import { translations } from "@localization";
 import CountFollow from "./count-follow/CountFollow";
 import { getUserById } from "@services/api/curentUser";
-import { useActionUser } from "@helpers/hooks/useActionUser";
 import ListPost from "@screens/home/ListPost";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
 import { SCREENS } from "constants";
-import { selectMedia } from "@helpers/file.helper";
-import { getListPost, uploadMedia } from "@services/api/post";
-import { isIos } from "@helpers/device.info.helper";
-import { updateProfile } from "@services/api/userApi";
-import { showToast, showWarningLogin } from "@helpers/super.modal.helper";
+import { getListPost } from "@services/api/post";
 import eventEmitter from "@services/event-emitter";
 import { useListData } from "@helpers/hooks/useListData";
 import ItemPost from "@screens/home/components/ItemPost/ItemPost";
 import Header from "@shared-components/header/Header";
+import { TypedRequest } from "shared/models";
+import { TypedUser } from "models";
+import FollowBtn from "@screens/home/components/follow-btn/FollowBtn";
+import EmptyResultView from "@shared-components/empty.data.component";
+import { shareProfile } from "@utils/share.utils";
+import AvatarProfile from "./avatar.profile";
+import LottieView from "lottie-react-native";
 
 interface ProfileUserProps {
   route: any;
@@ -40,21 +38,27 @@ interface ProfileUserProps {
 
 const ProfileUser = (props: ProfileUserProps) => {
   const userData = useStore((store) => store.userData);
-  const listFollow = useStore((store) => store.listFollow);
   const listPostSave = useStore((store) => store.listPostSave);
-  const _setLinkAvatar = useStore((store) => store.setLinkAvatar);
   const _id = props.route?.params?._id;
   const theme = useTheme();
   const { colors } = theme;
-  const [userInfo, setUserInfo] = useState();
-  const [linkAvatar, setLinkAvatar] = useState();
-  const [updateing, setUpdating] = useState(false);
+  const [userInfo, setUserInfo] = useState<TypedUser | null>(null);
 
   const _getUserById = (id: string) => {
     getUserById(id).then((res) => {
       setUserInfo(res.data);
-      setLinkAvatar(res.data.user_avatar_thumbnail);
     });
+  };
+
+  useEffect(() => {
+    eventEmitter.on("reload_list_post", _refreshListPage);
+    return () => {
+      eventEmitter.off("reload_list_post", _refreshListPage);
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const _refreshListPage = () => {
+    refreshListPage();
   };
 
   useEffect(() => {
@@ -71,89 +75,10 @@ const ProfileUser = (props: ProfileUserProps) => {
         iconNameLeft="arrow-back-outline"
         iconNameRight="ellipsis-horizontal"
         onPressLeft={goback}
-        text={userInfo?.display_name}
+        text={userInfo?.display_name || ""}
       />
     );
   };
-
-  const onPressChangeAvatar = async () => {
-    selectMedia({
-      config: { mediaType: "photo", cropping: true, width: 400, height: 400 },
-      callback: async (image) => {
-        const res = await uploadMedia({
-          name: image?.filename || image.path?.split("/")?.reverse()?.[0] || "",
-          uri: isIos() ? image.path?.replace("file://", "") : image.path,
-          type: image.mime,
-        });
-        if (res?.[0]?.callback?._id) {
-          setLinkAvatar(res?.[0]?.callback?.media_thumbnail);
-          _setLinkAvatar(res?.[0]?.callback?.media_thumbnail);
-          const params = {
-            _id: userData._id,
-            user_avatar: res?.[0]?.callback?.media_url,
-            user_avatar_thumbnail: res?.[0]?.callback?.media_thumbnail,
-          };
-          updateProfile(params).then((res) => {
-            if (!res.isError) {
-              showToast({
-                type: "success",
-                message: translations.updateSuccess,
-              });
-              eventEmitter.emit("reload_list_post");
-            } else {
-              showToast({
-                type: "error",
-                message: translations.somethingWentWrong,
-              });
-              setUpdating(false);
-            }
-          });
-        }
-      },
-    });
-  };
-
-  const Avatar = useMemo(() => {
-    return (
-      <View
-        style={{
-          ...CommonStyle.center,
-          width: "100%",
-          paddingVertical: 26,
-        }}
-      >
-        <View style={{ ...styles.viewAvatar, ...CommonStyle.center }}>
-          <Image
-            style={styles.viewAvatar}
-            source={{
-              uri: linkAvatar,
-            }}
-          />
-          {updateing && (
-            <View
-              style={{
-                ...CommonStyle.fillParent,
-                ...CommonStyle.center,
-              }}
-            >
-              <ActivityIndicator size={"small"} color={colors.text} />
-            </View>
-          )}
-          {userData?._id === userInfo?._id && (
-            <View style={styles.viewCamera}>
-              <Icon
-                onPress={onPressChangeAvatar}
-                name="camera-outline"
-                type={IconType.Ionicons}
-                color={colors.text}
-                size={25}
-              />
-            </View>
-          )}
-        </View>
-      </View>
-    );
-  }, [linkAvatar]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const ButtomAction = ({
     text,
@@ -180,16 +105,6 @@ const ProfileUser = (props: ProfileUserProps) => {
     );
   };
 
-  const { _followUser } = useActionUser();
-
-  const _followUserWithId = () => {
-    if (!userData) {
-      showWarningLogin();
-    } else {
-      _followUser(userInfo._id, userInfo?.display_name);
-    }
-  };
-
   const openChatRoom = () => {
     NavigationService.navigate(SCREENS.CHAT_ROOM, {
       partner_id: userInfo?._id,
@@ -197,33 +112,36 @@ const ProfileUser = (props: ProfileUserProps) => {
     });
   };
 
+  const gotoEditProfile = () => {
+    NavigationService.push(SCREENS.EDIT_PROFILE);
+  };
+
+  const _shareProfile = () => {
+    shareProfile(userInfo?._id);
+  };
+
   const ListAction = () => {
     const isUserLogin = userData?._id === userInfo?._id;
     if (!userData || !isUserLogin) {
       return (
         <View style={styles.listAction}>
-          <ButtomAction
-            onPress={debounce(_followUserWithId, 1000)}
-            text={`${
-              listFollow.indexOf(userInfo?._id) >= 0
-                ? translations.unfollow
-                : translations.follow
-            }`}
-            isBackground
-          />
-          <ButtomAction onPress={openChatRoom} text={translations.message} />
+          <FollowBtn data={userInfo} />
+          {isLoggedIn() && (
+            <ButtomAction onPress={openChatRoom} text={translations.message} />
+          )}
         </View>
       );
     }
     return (
       <View style={styles.listAction}>
         <ButtomAction
-          onPress={() => {
-            NavigationService.push(SCREENS.EDIT_PROFILE);
-          }}
+          onPress={gotoEditProfile}
           text={translations.profile.editProfile}
         />
-        <ButtomAction text={translations.profile.shareProfile} />
+        <ButtomAction
+          onPress={_shareProfile}
+          text={translations.profile.shareProfile}
+        />
       </View>
     );
   };
@@ -266,14 +184,15 @@ const ProfileUser = (props: ProfileUserProps) => {
     listData,
     onEndReach,
     refreshControl,
+    refreshListPage,
     renderFooterComponent,
     refreshing,
-  } = useListData<any>(paramsRequest, getListPost);
+  } = useListData<TypedRequest>(paramsRequest, getListPost);
 
-  const renderItem = ({ item }: any) => {
+  const renderItem = ({ item }: { item: TypedRequest }) => {
     return <ItemPost key={item._id} data={item} isProfile={_id?.length > 0} />;
   };
-  const renderItemSave = ({ item }: any) => {
+  const renderItemSave = ({ item }: { item: TypedRequest }) => {
     return <ItemPost key={item._id} data={item} />;
   };
 
@@ -281,11 +200,25 @@ const ProfileUser = (props: ProfileUserProps) => {
     return (
       <View>
         <HeaderProfile />
-        {Avatar}
-        <CountFollow id={_id} />
-        <ListAction />
-        <Bio text={userInfo?.bio || ""} />
-        <View style={{ height: 1, backgroundColor: palette.borderColor }} />
+        {!userInfo ? (
+          <View style={{ height: 300 }}>
+            <LottieView
+              style={CommonStyle.flex1}
+              resizeMode="cover"
+              source={require("./lottie/lottie_profile.json")}
+              autoPlay
+              loop
+            />
+          </View>
+        ) : (
+          <View>
+            <AvatarProfile userInfo={userInfo} />
+            <CountFollow id={_id} />
+            <ListAction />
+            <Bio text={userInfo?.bio || ""} />
+            <View style={{ height: 1, backgroundColor: palette.borderColor }} />
+          </View>
+        )}
       </View>
     );
   };
@@ -303,13 +236,48 @@ const ProfileUser = (props: ProfileUserProps) => {
     );
   };
 
+  const renderEmpty = () => {
+    return (
+      <View
+        style={{
+          ...CommonStyle.flex1,
+          backgroundColor: colors.background,
+          paddingVertical: 40,
+          minHeight: 300,
+        }}
+      >
+        <EmptyResultView
+          title={translations.post.emptyListSave}
+          icon="document-text-outline"
+        />
+      </View>
+    );
+  };
+  const renderEmptyPostOfMe = () => {
+    return (
+      <View
+        style={{
+          ...CommonStyle.flex1,
+          backgroundColor: colors.background,
+          paddingVertical: 40,
+          minHeight: 300,
+        }}
+      >
+        <EmptyResultView
+          title={translations.post.emptyPost}
+          icon="document-text-outline"
+        />
+      </View>
+    );
+  };
+
   if (userData?._id === userInfo?._id) {
     return (
       <View style={styles.container}>
         <Tabs.Container renderHeader={renderHeader} renderTabBar={renderTabBar}>
           <Tabs.Tab
-            name={translations.post.post}
-            label={translations.post.post}
+            name={translations.post.posts}
+            label={translations.post.posts}
           >
             {/* <ListPost isFollowingPost={false} id={_id} /> */}
             <Tabs.FlatList
@@ -324,6 +292,7 @@ const ProfileUser = (props: ProfileUserProps) => {
               refreshControl={refreshControl()}
               ListFooterComponent={renderFooterComponent()}
               refreshing={refreshing}
+              ListEmptyComponent={renderEmptyPostOfMe}
             />
           </Tabs.Tab>
           <Tabs.Tab
@@ -341,6 +310,7 @@ const ProfileUser = (props: ProfileUserProps) => {
               keyExtractor={(item) => item?._id + ""}
               refreshControl={refreshControl()}
               ListFooterComponent={renderFooterComponent()}
+              ListEmptyComponent={renderEmpty}
             />
           </Tabs.Tab>
         </Tabs.Container>
@@ -355,11 +325,25 @@ const ProfileUser = (props: ProfileUserProps) => {
         style={CommonStyle.flex1}
         showsVerticalScrollIndicator={false}
       >
-        {Avatar}
-        <CountFollow id={_id} />
-        <ListAction />
-        <Bio text={userInfo?.bio || ""} />
-        <View style={{ height: 1, backgroundColor: palette.borderColor }} />
+        {!userInfo ? (
+          <View style={{ height: 300 }}>
+            <LottieView
+              style={CommonStyle.flex1}
+              resizeMode="cover"
+              source={require("./lottie/lottie_profile.json")}
+              autoPlay
+              loop
+            />
+          </View>
+        ) : (
+          <View>
+            <AvatarProfile userInfo={userInfo} />
+            <CountFollow id={_id} />
+            <ListAction />
+            <Bio text={userInfo?.bio || ""} />
+            <View style={{ height: 1, backgroundColor: palette.borderColor }} />
+          </View>
+        )}
 
         <ListPost isFollowingPost={false} id={_id} />
       </ScrollView>
@@ -392,16 +376,5 @@ const styles = StyleSheet.create({
     ...CommonStyle.hnBold,
     fontSize: 14,
     color: palette.mainColor2,
-  },
-  viewAvatar: { width: 86, height: 86, borderRadius: 30 },
-  viewCamera: {
-    position: "absolute",
-    bottom: 0,
-    right: -10,
-    width: 30,
-    height: 30,
-    backgroundColor: palette.background2,
-    ...CommonStyle.center,
-    borderRadius: 15,
   },
 });

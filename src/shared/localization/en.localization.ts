@@ -45,6 +45,11 @@ export default {
   error: {
     unknown: "Unknow error!",
     invalidPhoneEmail: "Phone/Email invalid",
+    invalidEmail: "Email invalid",
+    invalidPhone: "Phone invalid",
+    invalidLink: "Link invalid",
+    invalidYoutube: "Link youtube invalid",
+    invalidFacebook: "Link facebook invalid",
     passDoesNotMatch: "Confirmation password does not match",
     minLengthPass: "Password must be at least 6 characters",
     errorPatternPass:
@@ -185,6 +190,7 @@ export default {
     savePostSuccess: "Save post success",
     listPostSave: "Post save",
     deleteFromSave: "Delete from save",
+    emptyListSave: "Saved posts list is empty",
   },
   navigation: {
     dashboard: "Dashboard",

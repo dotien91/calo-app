@@ -1,43 +1,26 @@
 /* eslint-disable camelcase */
 import React, { useMemo } from "react";
-import {
-  Dimensions,
-  Image,
-  Pressable,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Dimensions, Text, View } from "react-native";
 import { useTheme } from "@react-navigation/native";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import * as NavigationService from "react-navigation-helpers";
 
 import createStyles from "./ItemPost.style";
-import LikeBtn from "../like-btn/LikeBtn";
 
 import CommonStyle from "@theme/styles";
-import IconSvg from "assets/svg";
-import { convertLastActive } from "@utils/time.utils";
 import { SCREENS } from "constants";
-import {
-  EnumModalContentType,
-  EnumStyleModalType,
-  showSuperModal,
-  showWarningLogin,
-} from "@helpers/super.modal.helper";
-import { sharePost } from "@utils/share.utils";
-import { translations } from "@localization";
+import { showWarningLogin } from "@helpers/super.modal.helper";
 import useStore from "@services/zustand/store";
 import { TypedRequest } from "shared/models";
+import AvatarPost from "./avatar.post";
+import HeaderItempost from "./header.post.item";
+import ListFile from "./list.media.post.item";
+import LikeSharePostItem from "./like.share.post.item";
+import PressableBtn from "@shared-components/button/PressableBtn";
 
 const { width } = Dimensions.get("screen");
 const PADDING_HORIZONTAL = 16;
 const SIZE_AVATAR = 30;
-const BORDER_AVATAR = 12;
-const GAP_HEADER = 10;
-const GAP_IMAGE = 4;
 const FONT_SIZE = 16;
-const BORDER_RADIUS2 = 12;
 const PADDING_LEFT = 12;
 const SIZE_IMAGE1 = width - PADDING_HORIZONTAL * 2 - PADDING_LEFT - SIZE_AVATAR;
 const SIZE_IMAGE2 = (SIZE_IMAGE1 - 4) / 2;
@@ -60,94 +43,6 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
       });
     }
   };
-
-  const Avatar = useMemo(() => {
-    return (
-      <Pressable
-        onPress={goToProfileCurrentUser}
-        style={{
-          width: SIZE_AVATAR,
-          height: SIZE_AVATAR,
-          borderRadius: BORDER_AVATAR,
-        }}
-      >
-        <Image
-          source={{ uri: data?.user_id?.user_avatar_thumbnail }}
-          style={{
-            width: SIZE_AVATAR,
-            height: SIZE_AVATAR,
-            borderRadius: BORDER_AVATAR,
-          }}
-        />
-      </Pressable>
-    );
-  }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const _showStickBottom = () => {
-    if (!userData) {
-      showWarningLogin();
-    } else {
-      showSuperModal({
-        contentModalType: EnumModalContentType.PostAction,
-        styleModalType: EnumStyleModalType.Bottom,
-        data,
-      });
-    }
-  };
-
-  const HeaderItemPost = useMemo(() => {
-    return (
-      <View style={{ flexDirection: "row", justifyContent: "center" }}>
-        <View
-          style={{
-            ...CommonStyle.flex1,
-            flexDirection: "row",
-            alignItems: "center",
-            gap: GAP_HEADER,
-          }}
-        >
-          <Text
-            style={{
-              ...CommonStyle.hnBold,
-              fontSize: FONT_SIZE,
-              color: colors.mainColor2,
-            }}
-            onPress={goToProfileCurrentUser}
-          >
-            {data?.user_id?.display_name}
-          </Text>
-          {data?.user_id?.official_status && (
-            <IconSvg name="icVerify" size={14} />
-          )}
-          <View
-            style={{
-              width: 2,
-              height: 2,
-              borderRadius: 1,
-              backgroundColor: colors.text,
-            }}
-          />
-          <Text
-            style={{
-              ...CommonStyle.hnRegular,
-              color: colors.text,
-              fontSize: FONT_SIZE,
-            }}
-          >
-            {convertLastActive(data?.createdAt)}
-          </Text>
-        </View>
-        <TouchableOpacity onPress={_showStickBottom}>
-          <Icon
-            size={20}
-            name="ellipsis-vertical"
-            type={IconType.Ionicons}
-            color={colors.text}
-          />
-        </TouchableOpacity>
-      </View>
-    );
-  }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const HasTag = useMemo(() => {
     if (
@@ -186,156 +81,6 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
     );
   }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const PlayVideo = () => {
-    return (
-      <View
-        style={{
-          ...CommonStyle.fillParent,
-          zIndex: 0,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Icon
-          size={62}
-          name={"play-circle"}
-          type={IconType.Ionicons}
-          color={colors.primary}
-        />
-      </View>
-    );
-  };
-
-  const ListFile = useMemo(() => {
-    const listFile = data?.attach_files || [];
-    const listMedia = listFile.filter(
-      (i: any) =>
-        i.media_mime_type.includes("image") ||
-        i.media_mime_type.includes("video"),
-    );
-    if (listMedia.length == 1) {
-      return (
-        <Pressable onPress={() => showImageVideo(0)} style={styles.image11}>
-          <Image
-            style={styles.image11}
-            source={{ uri: listMedia[0].media_thumbnail }}
-          />
-          {listMedia[0].media_mime_type.includes("video") && <PlayVideo />}
-        </Pressable>
-      );
-    }
-    if (listMedia.length == 2) {
-      return (
-        <View
-          style={{ flexDirection: "row", height: SIZE_IMAGE2, gap: GAP_IMAGE }}
-        >
-          <Pressable onPress={() => showImageVideo(0)} style={styles.image12}>
-            <Image
-              style={styles.image12}
-              source={{ uri: listMedia[0].media_thumbnail }}
-            />
-            {listMedia[0].media_mime_type.includes("video") && <PlayVideo />}
-          </Pressable>
-          <Pressable onPress={() => showImageVideo(1)} style={styles.image22}>
-            <Image
-              style={styles.image22}
-              source={{ uri: listMedia[1].media_thumbnail }}
-            />
-            {listMedia[1].media_mime_type.includes("video") && <PlayVideo />}
-          </Pressable>
-        </View>
-      );
-    }
-    if (listMedia.length == 3) {
-      return (
-        <View
-          style={{ flexDirection: "row", height: SIZE_IMAGE2, gap: GAP_IMAGE }}
-        >
-          <Pressable onPress={() => showImageVideo(0)} style={styles.image12}>
-            <Image
-              style={styles.image12}
-              source={{ uri: listMedia[0].media_thumbnail }}
-            />
-            {listMedia[0].media_mime_type.includes("video") && <PlayVideo />}
-          </Pressable>
-          <View style={{ ...CommonStyle.flex1, gap: GAP_IMAGE }}>
-            <Pressable onPress={() => showImageVideo(1)} style={styles.image23}>
-              <Image
-                style={styles.image23}
-                source={{ uri: listMedia[1].media_thumbnail }}
-              />
-              {listMedia[1].media_mime_type.includes("video") && <PlayVideo />}
-            </Pressable>
-            <Pressable onPress={() => showImageVideo(2)} style={styles.image33}>
-              <Image
-                style={styles.image33}
-                source={{ uri: listMedia[2].media_thumbnail }}
-              />
-              {listMedia[2].media_mime_type.includes("video") && <PlayVideo />}
-            </Pressable>
-          </View>
-        </View>
-      );
-    }
-    if (listMedia.length > 3) {
-      return (
-        <View
-          style={{ flexDirection: "row", height: SIZE_IMAGE2, gap: GAP_IMAGE }}
-        >
-          <Pressable onPress={() => showImageVideo(0)} style={styles.image12}>
-            <Image
-              style={styles.image12}
-              source={{ uri: listMedia[0].media_thumbnail }}
-            />
-            {listMedia[0].media_mime_type.includes("video") && <PlayVideo />}
-          </Pressable>
-          <View style={{ ...CommonStyle.flex1, gap: GAP_IMAGE }}>
-            <Pressable
-              onPress={() => showImageVideo(1)}
-              style={{ ...CommonStyle.flex1 }}
-            >
-              <Image
-                style={{
-                  ...CommonStyle.flex1,
-                  borderTopRightRadius: BORDER_RADIUS2,
-                }}
-                source={{ uri: listMedia[1].media_thumbnail }}
-              />
-              {listMedia[1].media_mime_type.includes("video") && <PlayVideo />}
-            </Pressable>
-            <Pressable
-              onPress={() => showImageVideo(2)}
-              style={{ ...CommonStyle.flex1 }}
-            >
-              <Image
-                style={{
-                  ...CommonStyle.flex1,
-                  borderBottomRightRadius: BORDER_RADIUS2,
-                }}
-                source={{ uri: listMedia[2].media_thumbnail }}
-              />
-              <View
-                style={{
-                  ...CommonStyle.fillParent,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: colors.blackOverlay,
-                  borderBottomRightRadius: 12,
-                }}
-              >
-                <Text style={{ color: colors.primary }}>
-                  +{listMedia.length - 3}
-                </Text>
-              </View>
-            </Pressable>
-          </View>
-        </View>
-      );
-    }
-
-    return null;
-  }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
-
   const pressComment = () => {
     if (!userData) {
       showWarningLogin();
@@ -344,41 +89,6 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
       NavigationService.push(SCREENS.POST_DETAIL, param);
     }
   };
-
-  const LikeShare = () => {
-    return (
-      <View style={styles.containerLikeShare}>
-        <LikeBtn data={data} />
-        <TouchableOpacity
-          onPress={pressComment}
-          style={[styles.viewLike, { justifyContent: "center" }]}
-        >
-          <Icon
-            type={IconType.Ionicons}
-            size={16}
-            name="chatbubbles-outline"
-            color={colors.text}
-          />
-          <Text style={styles.textLikeShare}>
-            {data?.comment_number || "0"}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => sharePost(data.post_slug)}
-          style={[styles.viewLike, { justifyContent: "flex-end" }]}
-        >
-          <Icon
-            type={IconType.Ionicons}
-            size={16}
-            name="share-social-outline"
-            color={colors.text}
-          />
-          <Text style={styles.textLikeShare}>{translations.post.share}</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  };
-
   const detailScreen = () => {
     if (!userData) {
       showWarningLogin();
@@ -387,33 +97,40 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
       NavigationService.push(SCREENS.POST_DETAIL, param);
     }
   };
-  const showImageVideo = (index: number) => {
-    const listMedia = data.attach_files.filter(
-      (i: any) =>
-        i.media_mime_type.includes("image") ||
-        i.media_mime_type.includes("video"),
-    );
-    showSuperModal({
-      contentModalType: EnumModalContentType.Library,
-      styleModalType: EnumStyleModalType.Middle,
-      data: {
-        listMedia,
-        indexMedia: index,
-      },
-    });
-  };
+  // const showImageVideo = (index: number) => {
+  //   const listMedia = data.attach_files.filter(
+  //     (i: any) =>
+  //       i.media_mime_type.includes("image") ||
+  //       i.media_mime_type.includes("video"),
+  //   );
+  //   showSuperModal({
+  //     contentModalType: EnumModalContentType.Library,
+  //     styleModalType: EnumStyleModalType.Middle,
+  //     data: {
+  //       listMedia,
+  //       indexMedia: index,
+  //     },
+  //   });
+  // };
 
   return (
     <View style={styles.container}>
-      {Avatar}
-      <View style={{ paddingLeft: PADDING_LEFT, ...CommonStyle.flex1 }}>
-        <Pressable onPress={detailScreen} style={CommonStyle.flex1}>
-          {HeaderItemPost}
+      <AvatarPost
+        data={data}
+        pressAvatar={goToProfileCurrentUser}
+        sizeAvatar={SIZE_AVATAR}
+      />
+      <View style={{ ...CommonStyle.flex1 }}>
+        <PressableBtn
+          onPress={detailScreen}
+          style={[CommonStyle.flex1, { paddingLeft: 8 }]}
+        >
+          <HeaderItempost data={data} onPress={goToProfileCurrentUser} />
           {HasTag}
           {ContentStatus}
-          {ListFile}
-        </Pressable>
-        <LikeShare />
+          <ListFile listFile={data.attach_files} sizeImage2={SIZE_IMAGE2} />
+        </PressableBtn>
+        <LikeSharePostItem data={data} pressComment={pressComment} />
       </View>
     </View>
   );

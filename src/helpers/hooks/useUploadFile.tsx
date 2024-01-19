@@ -69,18 +69,23 @@ export function useUploadFile(initData?: any[]) {
   };
 
   const renderFile = React.useCallback(() => {
+    // console.log("listFile...", listFile);
+    // console.log("listFileLocal...", listFileLocal);
     return (
       <View style={styles.viewImage}>
         {listFileLocal.slice(0, 4).map((item: any, index: number) => {
-          if (index < 3)
+          if (index < 3) {
+            const done = listFile.findIndex((i) => i.uri == item.uri);
             return (
               <FileViewComponent
                 style={styles.viewFile}
                 item={item}
                 key={`listFileLocal - ${index}`}
                 onPressClear={() => onRemove(item)}
+                isDone={done > -1}
               />
             );
+          }
           if (listFileLocal.length >= 4) {
             return (
               <View
@@ -106,7 +111,7 @@ export function useUploadFile(initData?: any[]) {
         })}
       </View>
     );
-  }, [listFileLocal]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [listFileLocal, listFile]); // eslint-disable-line react-hooks/exhaustive-deps
   const onRemove = ({ uri, _id }: { uri: string; _id: string }) => {
     setListFileLocal(listFileLocal.filter((i) => i.uri !== uri));
     if (listFile?.length) {

@@ -42,6 +42,18 @@ const HomeStickBottomModal = () => {
   );
 };
 
+export const showStickBottom = (
+  data: any,
+  type: string,
+  isDetail?: boolean,
+) => {
+  eventEmitter.emit("show_bottom_modal", {
+    data,
+    type,
+    isDetail,
+  });
+};
+
 export const closeStickBottom = () => {
   eventEmitter.emit("close_bottom_modal");
 };

@@ -45,6 +45,11 @@ export default {
   error: {
     unknown: "Có lỗi không xác định xảy ra!",
     invalidPhoneEmail: "SĐT/Email không hợp lệ",
+    invalidEmail: "Email không hợp lệ",
+    invalidPhone: "Phone không hợp lệ",
+    invalidLink: "Link không hợp lệ",
+    invalidYoutube: "Kênh youtube không hợp lệ",
+    invalidFacebook: "Link Youtube không hợp lệ",
     minLengthPass: "Mật khẩu phải ít nhất 6 kí tự",
     passDoesNotMatch: "Mật khẩu xác nhận không trùng khớp",
     errorPatternPass:
@@ -189,13 +194,13 @@ export default {
     emptyPostTitle: "Không có bài viết",
     emptyPostDes:
       "Khi một người bạn hoặc giáo viên đăng một bài viết, nó sẽ xuất hiện ở đây và sau đó bạn có thể thích, chia sẻ và bình luận về bài đăng đó.",
-    postInvalid: "Bài đăng không tồn tại",
     report: "Báo cáo bài viết",
     save: "Lưu bài viết",
     likeError: "Gửi lượt thích thất bại vui lòng thử lại!",
     savePostSuccess: "Lưu bài viết thành công",
-    listPostSave: "bài viết đã lưu",
+    listPostSave: "Bài viết đã lưu",
     deleteFromSave: "Xoá khỏi danh sách đã lưu",
+    emptyListSave: "Danh sách bài viết đã lưu trống",
   },
   navigation: {
     dashboard: "Trang chủ",

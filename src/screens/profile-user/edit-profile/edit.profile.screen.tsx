@@ -10,7 +10,13 @@ import InputHook from "@shared-components/form/InputHookForm";
 import { isIos } from "@helpers/device.info.helper";
 import { translations } from "@localization";
 import CommonStyle from "@theme/styles";
-import { phoneRegex, regexLink, regexMail } from "constants/regex.constant";
+import {
+  phoneRegex,
+  regexEmail,
+  regexFB,
+  regexLink,
+  regexYoutubeChannel,
+} from "constants/regex.constant";
 import Button from "@shared-components/button/Button";
 import useStore from "@services/zustand/store";
 import { updateProfile } from "@services/api/userApi";
@@ -41,17 +47,18 @@ const EditProfileScreen = () => {
     },
   });
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data) => {
     const params = {
       display_name: data.fullname,
       description: data.description,
       bio: data.bio,
       user_address: data.address,
-      _id: userData._id,
+      _id: userData?._id,
       phone_number: data.phoneNumber,
       links: {
         facebook: data.facebook,
         website: data.website,
+        youtube: data.youtube,
       },
     };
     setUpdating(true);
@@ -64,13 +71,14 @@ const EditProfileScreen = () => {
           display_name: data.fullname,
           bio: data.bio,
           user_address: data.address,
-          _id: userData._id,
+          _id: userData?._id,
           description: data.description,
           phone_number: data.phoneNumber,
           links: [
             {
               facebook: data.facebook,
               website: data.website,
+              youtube: data.youtube,
             },
           ],
         });
@@ -91,7 +99,7 @@ const EditProfileScreen = () => {
       <ScrollView style={CommonStyle.safeAreaView}>
         <Header
           iconNameLeft="arrow-back-outline"
-          onPressLess={() => NavigationService.goBack()}
+          onPressLeft={() => NavigationService.goBack()}
           text={translations.profile.editProfile}
         />
         <InputHook
@@ -110,6 +118,7 @@ const EditProfileScreen = () => {
             },
           }}
           errorTxt={errors.fullname?.message}
+          maxLength={32}
         />
 
         <InputHook
@@ -127,8 +136,8 @@ const EditProfileScreen = () => {
               message: translations.required,
             },
             pattern: {
-              value: regexMail,
-              message: translations.error.invalidPhoneEmail,
+              value: regexEmail,
+              message: translations.error.invalidEmail,
             },
           }}
           errorTxt={errors.email?.message}
@@ -157,6 +166,7 @@ const EditProfileScreen = () => {
           }}
           control={control}
           rules={{}}
+          maxLength={256}
           errorTxt={errors.bio?.message}
         />
 
@@ -172,7 +182,7 @@ const EditProfileScreen = () => {
           rules={{
             pattern: {
               value: phoneRegex,
-              message: translations.error.invalidPhoneEmail,
+              message: translations.error.invalidPhone,
             },
           }}
           errorTxt={errors.phoneNumber?.message}
@@ -201,8 +211,8 @@ const EditProfileScreen = () => {
           control={control}
           rules={{
             pattern: {
-              value: regexLink,
-              message: translations.error.invalidPhoneEmail,
+              value: regexFB,
+              message: translations.error.invalidFacebook,
             },
           }}
           errorTxt={errors.facebook?.message}
@@ -220,7 +230,7 @@ const EditProfileScreen = () => {
           rules={{
             pattern: {
               value: regexLink,
-              message: translations.error.invalidPhoneEmail,
+              message: translations.error.invalidLink,
             },
           }}
           errorTxt={errors.website?.message}
@@ -237,11 +247,12 @@ const EditProfileScreen = () => {
           control={control}
           rules={{
             pattern: {
-              value: regexLink,
-              message: translations.error.invalidPhoneEmail,
+              value: regexYoutubeChannel,
+              message: translations.error.invalidYoutube,
             },
           }}
-          errorTxt={errors.website?.message}
+          maxLength={100}
+          errorTxt={errors.youtube?.message}
         />
 
         <Button

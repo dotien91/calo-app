@@ -16,7 +16,7 @@ export default (theme: ExtendedTheme) => {
       flexDirection: "row",
       paddingHorizontal: PADDING_HORIZONTAL,
       marginBottom: 2,
-      backgroundColor: colors.background,
+      // backgroundColor: colors.background,
       paddingTop: 14,
       paddingBottom: 4,
     },
