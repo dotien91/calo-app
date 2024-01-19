@@ -6,9 +6,9 @@ import IconSvg from "assets/svg";
 import { translations } from "@localization";
 import { palette } from "@theme/themes";
 import {
-  showLoading,
   closeSuperModal,
-  showErrorModal,
+  showSuperModal,
+  showToast,
 } from "@helpers/super.modal.helper";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { IOS_CLIENT_ID_GOOGLE, WEB_CLIENT_ID_GOOGLE } from "constants";
@@ -26,7 +26,10 @@ const GoogleLoginButton = ({ showText }: BtnProps) => {
 
   const _onPress = async () => {
     try {
-      showLoading();
+      showSuperModal({
+        contentModalType: "loading",
+        styleModalType: "middle",
+      });
       GoogleSignin.configure({
         webClientId: WEB_CLIENT_ID_GOOGLE,
         iosClientId: IOS_CLIENT_ID_GOOGLE,
@@ -47,7 +50,10 @@ const GoogleLoginButton = ({ showText }: BtnProps) => {
           handleLogin(user_token);
           //todo get current user
         } else {
-          showErrorModal(res);
+          showToast({
+            type: "error",
+            ...res,
+          });
         }
       });
     } catch (error: any) {

@@ -2,7 +2,7 @@ import { View, StyleSheet, Dimensions, Pressable } from "react-native";
 
 /* eslint-disable camelcase */
 
-import VideoPlayer from "@shared-components/video.palyer.component";
+import VideoPlayer from "@shared-components/video.player.component";
 import ImageLoad from "@screens/post/components/ImageLoad";
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
@@ -58,11 +58,11 @@ const PagerScrollMedia = ({
             media_width && media_height
               ? width / (Number(media_width) / Number(media_height))
               : width;
-          if (item?.type.includes("image")) {
+          if ((item?.media_type || "").includes("image")) {
             return (
-              <View style={styles.viewBackground}>
+              <View key={index} style={styles.viewBackground}>
                 <ImageLoad
-                  source={{ uri: item?.url }}
+                  source={{ uri: item?.media_url }}
                   style={[
                     styles.image,
                     { height: heightMedia, width: media_width },
@@ -72,16 +72,20 @@ const PagerScrollMedia = ({
               </View>
             );
           }
-          return (
-            <View key={index} style={styles.viewBackground}>
-              <VideoPlayer
-                mediaUrl={item?.url}
-                height={heightMedia}
-                width={width}
-                resizeMode="contain"
-              />
-            </View>
-          );
+          if ((item?.media_type || "").includes("video")) {
+            return (
+              <View key={index} style={styles.viewBackground}>
+                <VideoPlayer
+                  mediaUrl={item?.media_url}
+                  height={heightMedia}
+                  width={width}
+                  resizeMode="contain"
+                  autoPlay={true}
+                />
+              </View>
+            );
+          }
+          return null;
         })}
       </PageScroll>
     </View>

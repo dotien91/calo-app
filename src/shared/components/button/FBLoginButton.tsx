@@ -5,11 +5,7 @@ import Button from "@shared-components/button/Button";
 import IconSvg from "assets/svg";
 import { translations } from "@localization";
 import { palette } from "@theme/themes";
-import {
-  showLoading,
-  closeSuperModal,
-  showErrorModal,
-} from "@helpers/super.modal.helper";
+import { closeSuperModal, showSuperModal } from "@helpers/super.modal.helper";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { getDeviceInfo } from "@helpers/device.info.helper";
 import { AccessToken, LoginManager } from "react-native-fbsdk-next";
@@ -24,7 +20,10 @@ const FBLoginButton = ({ showText }: BtnProps) => {
   const { handleLogin } = useUserHook();
 
   const _onPress = async () => {
-    showLoading();
+    showSuperModal({
+      contentModalType: "loading",
+      styleModalType: "middle",
+    });
     try {
       LoginManager.logInWithPermissions().then(({ isCancelled }) => {
         if (!isCancelled) {
@@ -44,7 +43,10 @@ const FBLoginButton = ({ showText }: BtnProps) => {
                   }
                 });
               } else {
-                showErrorModal(res);
+                showToast({
+                  type: "error",
+                  ...res,
+                });
               }
             },
           );

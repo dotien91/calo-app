@@ -1,6 +1,6 @@
 import useStore from "@services/zustand/store";
 import { blockUser, followUser, unFollowUser } from "@services/api/post";
-import { showErrorModal, showToast } from "@helpers/super.modal.helper";
+import { showToast } from "@helpers/super.modal.helper";
 import { translations } from "@localization";
 import { TypedRequest } from "shared/models";
 
@@ -23,7 +23,10 @@ export function useActionUser() {
             message: translations.unfollow + " " + display_name,
           });
         } else {
-          showErrorModal(resUnfollow);
+          showToast({
+            type: "error",
+            ...resUnfollow,
+          });
         }
       });
     } else {
@@ -35,7 +38,10 @@ export function useActionUser() {
             message: translations.followed + " " + display_name,
           });
         } else {
-          showErrorModal(resFollow);
+          showToast({
+            type: "error",
+            ...resFollow,
+          });
         }
       });
     }
@@ -53,7 +59,10 @@ export function useActionUser() {
           ),
         });
       } else {
-        showErrorModal(resBlock);
+        showToast({
+          type: "error",
+          ...resBlock,
+        });
       }
     });
   };

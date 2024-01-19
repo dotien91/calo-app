@@ -9,12 +9,12 @@ import { useTheme } from "@react-navigation/native";
  * ? Local Imports
  */
 import { IMediaUpload, TypedMessageGiftedChat } from "models/chat.model";
-import MessageItem from "./components/MessageItem";
+import MessageItem from "./components/message/message.item";
 import { emitSocket } from "@helpers/socket.helper";
 import useStore from "@services/zustand/store";
 import ChatHeader from "./room.chat.header";
 import RecordModal from "./components/audio/RecordModal";
-import InputToolbar from "./components/InputToolbar";
+import InputToolbar from "./components/form/InputToolbar";
 import { EnumMessageStatus } from "constants/chat.constant";
 import { useChatHistory } from "@helpers/hooks/useChatHistory";
 import { useUploadFile } from "@helpers/hooks/useUploadFile";
@@ -87,6 +87,18 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
       user: userSendMessage,
     };
 
+    console.log(
+      "media_idsmedia_ids",
+      listFileLocal.map((item) => {
+        return {
+          ...item,
+          media_mime_type: item.type,
+          media_type: item.type,
+          media_url: item.uri,
+        };
+      }),
+    );
+
     setMessages((previousMessages) =>
       GiftedChat.append(previousMessages, message),
     );
@@ -108,6 +120,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
 
   // send txt message
   const _sendChatMessage = (text: string) => {
+    if (!text) return;
     const message = {
       text,
       createdAt: new Date(),
@@ -115,6 +128,8 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
       user: userSendMessage,
       status: EnumMessageStatus.Pending,
     };
+
+    console.log("messagemessagemessage", message);
     const giftedMessages = GiftedChat.append(messages, message);
     emitSocket("typingToServer", "room_" + chatRoomId);
     setMessages(giftedMessages);
@@ -173,6 +188,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
     >
       <ChatHeader roomDetail={roomDetail} messages={messages} />
       {_renderChatEmpty()}
+
       <GiftedChat
         messages={messages}
         user={{

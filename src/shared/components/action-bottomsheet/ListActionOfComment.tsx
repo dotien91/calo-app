@@ -9,10 +9,10 @@ import { translations } from "@localization";
 import useStore from "@services/zustand/store";
 import { deleteComment } from "@services/api/post";
 import {
+  EnumModalContentType,
+  EnumStyleModalType,
   closeSuperModal,
-  showConfirmSuperModal,
-  showErrorModal,
-  showSuperModalByType,
+  showSuperModal,
   showToast,
 } from "@helpers/super.modal.helper";
 import ItemBottomSheet from "@shared-components/item-bottom-sheet/ItemBottomSheet";
@@ -41,7 +41,10 @@ const ListActionOfComment = ({ data }: ListActionOfComment) => {
           message: `${translations.deleteSuccess} ${translations.comment}`,
         });
       } else {
-        showErrorModal(res);
+        showToast({
+          type: "error",
+          ...res,
+        });
         removeItemCommentDelete(id);
       }
     });
@@ -50,9 +53,13 @@ const ListActionOfComment = ({ data }: ListActionOfComment) => {
   const showWarrningDelete = () => {
     //close bottomsheet
     closeSuperModal();
-    showConfirmSuperModal({
-      title: translations.home.deleteComment,
-      cb: () => deleteCommentWithid(data._id),
+    showSuperModal({
+      contentModalType: EnumModalContentType.Confirm,
+      styleModalType: EnumStyleModalType.Middle,
+      data: {
+        title: translations.home.deleteComment,
+        cb: () => deleteCommentWithid(data._id),
+      },
     });
   };
 
@@ -90,8 +97,9 @@ const ListActionOfComment = ({ data }: ListActionOfComment) => {
   };
 
   const openReport = () => {
-    showSuperModalByType({
-      type: "report",
+    showSuperModal({
+      contentModalType: EnumModalContentType.Report,
+      styleModalType: EnumStyleModalType.Middle,
       data: {
         report_type: "comment",
         partner_id: data?.user_id?._id,

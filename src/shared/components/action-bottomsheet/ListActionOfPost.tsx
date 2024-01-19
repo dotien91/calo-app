@@ -8,10 +8,10 @@ import { translations } from "@localization";
 import useStore from "@services/zustand/store";
 import { deletePost } from "@services/api/post";
 import {
+  EnumModalContentType,
+  EnumStyleModalType,
   closeSuperModal,
-  showConfirmSuperModal,
-  showLoading,
-  showSuperModalByType,
+  showSuperModal,
   showToast,
 } from "@helpers/super.modal.helper";
 import ItemBottomSheet from "@shared-components/item-bottom-sheet/ItemBottomSheet";
@@ -40,7 +40,10 @@ const ListActionOfPost = ({ data }: ListActionOfPost) => {
   };
 
   const pressDeletePost = (id: string) => {
-    showLoading();
+    showSuperModal({
+      contentModalType: "loading",
+      styleModalType: "middle",
+    });
     deletePost(id).then((resdelete) => {
       closeSuperModal();
       if (!resdelete.isError) {
@@ -67,16 +70,21 @@ const ListActionOfPost = ({ data }: ListActionOfPost) => {
   };
   const showWarrningDelete = () => {
     closeSuperModal();
-    showConfirmSuperModal({
-      title: translations.home.deletePost,
-      cb: () => pressDeletePost(data._id),
+    showSuperModal({
+      contentModalType: EnumModalContentType.Confirm,
+      styleModalType: EnumStyleModalType.Middle,
+      data: {
+        title: translations.home.deletePost,
+        cb: () => pressDeletePost(data._id),
+      },
     });
   };
 
   const openReportModal = () => {
     closeSuperModal();
-    showSuperModalByType({
-      type: "report",
+    showSuperModal({
+      contentModalType: EnumModalContentType.Report,
+      styleModalType: EnumStyleModalType.Bottom,
       data: {
         report_type: "post",
         partner_id: data?.user_id?._id,

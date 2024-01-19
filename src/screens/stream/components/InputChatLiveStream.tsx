@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Image,
   ScrollView,
+  Keyboard,
 } from "react-native";
 
 /**
@@ -20,6 +21,7 @@ import { likeLiveStream } from "@services/api/livestreamApi";
 import { throttle } from "lodash";
 import images from "./reaction-animation/Themes/Images";
 import { Device } from "@utils/device.utils";
+import eventEmitter from "@services/event-emitter";
 
 const reactionData = [
   { type: "like", image: images.like_static, gif: images.like_gif },
@@ -43,7 +45,20 @@ const InputChatLive: React.FC<InputChatLiveProps> = ({
   isPublisher,
 }) => {
   const inputRef = useRef(null);
-  const [reactType, setReactType] = React.useState("");
+
+  const [isKeyboardVisible, setKeyboardVisible] = React.useState(false);
+
+  React.useEffect(() => {
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => {
+        setKeyboardVisible(false);
+      },
+    );
+    return () => {
+      keyboardDidHideListener.remove();
+    };
+  }, []);
 
   const onSend = () => {
     const text = inputRef.current.value || "";
@@ -56,15 +71,17 @@ const InputChatLive: React.FC<InputChatLiveProps> = ({
     return (
       <>
         {reactionData.map((item, index) => {
-          const isSameReactType = reactType == item.type;
           return (
             <TouchableOpacity
-              onPress={throttle(() => pressLike(item), 3000)}
+              onPress={() => {
+                eventEmitter.emit("show_reaction_animation", item.type);
+                throttle(() => pressLike(item), 3000)();
+              }}
               key={index}
               style={styles.reactionBtn}
             >
               <Image
-                source={isSameReactType ? item.gif : item.image}
+                source={item.image}
                 style={{ width: 40, height: 40 }}
                 resizeMode="contain"
               />
@@ -76,10 +93,6 @@ const InputChatLive: React.FC<InputChatLiveProps> = ({
   };
 
   const pressLike = (item: any) => {
-    setReactType(item.type);
-    setTimeout(() => {
-      setReactType("");
-    }, 2000);
     likeLiveStream({
       livestream_id: chatRoomId,
       react_type: item.type,
@@ -98,7 +111,7 @@ const InputChatLive: React.FC<InputChatLiveProps> = ({
         <View
           style={[
             styles.wrapInput,
-            isPublisher && { width: Device.width - 30 },
+            (isKeyboardVisible || isPublisher) && { width: Device.width - 30 },
           ]}
         >
           <Input
@@ -106,6 +119,9 @@ const InputChatLive: React.FC<InputChatLiveProps> = ({
             placeholder={translations.chat.typeMessage}
             placeholderTextColor={palette.white}
             customStyle={styles.input}
+            onFocus={() => {
+              setKeyboardVisible(true);
+            }}
           />
           <IconBtn
             name={"send"}
@@ -122,7 +138,7 @@ const InputChatLive: React.FC<InputChatLiveProps> = ({
           onPress={pressLike}
           customStyle={styles.iconLike}
         /> */}
-        {renderReaction()}
+        {!isKeyboardVisible && renderReaction()}
       </View>
     </ScrollView>
   );

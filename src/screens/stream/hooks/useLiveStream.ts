@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import useStore from "@services/zustand/store";
-import { showErrorModal } from "@helpers/super.modal.helper";
+import { showToast } from "@helpers/super.modal.helper";
 import {
   createLiveStream,
   getLiveStreamDetail,
@@ -22,10 +22,15 @@ export const useLiveStream = ({
     setLoading(true);
     createLiveStream(title).then((res) => {
       setLoading(false);
+
+      console.log("Resssssss", res);
       if (!res.isError && res.data._id) {
         setLiveData(res.data);
       } else {
-        showErrorModal(res);
+        showToast({
+          type: "error",
+          ...res,
+        });
       }
     });
   };
@@ -38,7 +43,10 @@ export const useLiveStream = ({
         setLiveData(res.data);
         setViewNumber(res.data?.view_number || 0);
       } else {
-        showErrorModal(res);
+        showToast({
+          type: "error",
+          ...res,
+        });
       }
     });
   };

@@ -1,4 +1,11 @@
-import AudioRecorderPlayer from "react-native-audio-recorder-player";
+import AudioRecorderPlayer, {
+  OutputFormatAndroidType,
+  AVEncodingOption,
+  AudioSourceAndroidType,
+  AudioEncoderAndroidType,
+  AudioSet,
+  AVEncoderAudioQualityIOSType,
+} from "react-native-audio-recorder-player";
 import type { RecordBackType } from "react-native-audio-recorder-player";
 import {
   Platform,
@@ -89,6 +96,11 @@ class RecordView extends React.PureComponent<any, State> {
     this.audioRecorderPlayer.setSubscriptionDuration(0.1); // optional. Default is 0.5
   }
 
+  async componentWillUnmount() {
+    this.audioRecorderPlayer.stopRecorder();
+    this.audioRecorderPlayer.removeRecordBackListener();
+  }
+
   public render(): ReactElement {
     const isRecording = this.state.recordSecs > 0;
 
@@ -123,10 +135,12 @@ class RecordView extends React.PureComponent<any, State> {
                   title={translations.audio.pause}
                   onPress={this.onPauseRecord}
                 />
+                <View style={{ width: 10 }} />
                 <Button
                   title={translations.audio.resume}
                   onPress={this.onResumeRecord}
                 />
+                <View style={{ width: 10 }} />
                 <Button
                   title={translations.audio.send}
                   onPress={this.onStopRecord}
@@ -143,6 +157,7 @@ class RecordView extends React.PureComponent<any, State> {
     const isRecording = this.state.recordSecs > 0;
     if (isRecording) return;
     const permission = await requestPermission(PERMISSION.permissionRecord);
+    console.log("permission", permission);
     if (permission === "blocked") {
       return;
     }
@@ -151,20 +166,16 @@ class RecordView extends React.PureComponent<any, State> {
     }
     this.setState({ loadingRecordPlayer: true });
 
-    // const audioSet: AudioSet = {
-    //   AudioEncoderAndroid: AudioEncoderAndroidType.AAC,
-    //   AudioSourceAndroid: AudioSourceAndroidType.MIC,
-    //   AVEncoderAudioQualityKeyIOS: AVEncoderAudioQualityIOSType.high,
-    //   AVNumberOfChannelsKeyIOS: 2,
-    //   AVFormatIDKeyIOS: AVEncodingOption.aac,
-    //   OutputFormatAndroid: OutputFormatAndroidType.AAC_ADTS,
-    // };
+    const audioSet: AudioSet = {
+      AudioEncoderAndroid: AudioEncoderAndroidType.AAC,
+      AudioSourceAndroid: AudioSourceAndroidType.MIC,
+      AVEncoderAudioQualityKeyIOS: AVEncoderAudioQualityIOSType.high,
+      AVNumberOfChannelsKeyIOS: 2,
+      AVFormatIDKeyIOS: AVEncodingOption.aac,
+      OutputFormatAndroid: OutputFormatAndroidType.AAC_ADTS,
+    };
 
-    // const uri = await this.audioRecorderPlayer.startRecorder(
-    //   this.path,
-    //   audioSet,
-    // );
-
+    await this.audioRecorderPlayer.startRecorder(this.path, audioSet);
     this.audioRecorderPlayer.addRecordBackListener((e: RecordBackType) => {
       this.setState({
         recordSecs: e.currentPosition,

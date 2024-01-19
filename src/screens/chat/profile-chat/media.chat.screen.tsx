@@ -13,8 +13,8 @@ import { ScrollView } from "react-native-gesture-handler";
 import CommonStyle from "@theme/styles";
 import useStore from "@services/zustand/store";
 import GoBackButton from "@screens/auth/components/GoBackButton";
-import MediasView from "../room-chat/components/MediasView";
 import MessageAudio from "../room-chat/components/audio/MessageAudio";
+import MessageMediaView from "../room-chat/components/message/message.media.view";
 
 interface MediaChatScreenProps {}
 
@@ -43,7 +43,7 @@ const MediaChatScreen: React.FC<MediaChatScreenProps> = () => {
   const renderMedia = () => {
     return (
       <ScrollView contentContainerStyle={{ padding: 12 }}>
-        <MediasView data={medias} />
+        <MessageMediaView data={medias} />
       </ScrollView>
     );
   };

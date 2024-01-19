@@ -2,7 +2,6 @@ import { ExtendedTheme } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 
 import CommonStyle from "@theme/styles";
-import { Device } from "@utils/device.ui.utils";
 
 export default (theme: ExtendedTheme) => {
   const { colors } = theme;
@@ -89,13 +88,11 @@ export default (theme: ExtendedTheme) => {
       paddingLeft: 12,
     },
     wrapInputToolbar: {
-      flex: 1,
       ...CommonStyle.flexRear,
       paddingHorizontal: 12,
     },
     input: {
-      height: 40,
-      flex: 1,
+      // height: 40,
     },
     btnMedia: {
       marginRight: 12,
@@ -112,52 +109,42 @@ export default (theme: ExtendedTheme) => {
       marginLeft: 6,
     },
     wrapHeader: {
-      ...CommonStyle.flexCenter,
-      padding: 12,
-      paddingTop: 0,
+      ...CommonStyle.flexRear,
+      paddingTop: 4,
       ...CommonStyle.borderStyle,
       borderWidth: 0,
       borderBottomWidth: 1,
       borderColor: colors.borderColor2,
       width: "100%",
     },
-    headerCenter: {
-      alignItems: "flex-center",
-      width: Device.width - 200,
+    headerLeft: {
+      ...CommonStyle.flexStart,
+      flex: 0.7,
+    },
+    roomInfo: {
+      marginLeft: 16,
     },
     txtNamePartner: {
       ...CommonStyle.hnBold,
       color: colors.text,
       fontSize: 20,
-      textAlign: "center",
-      width: "100%",
     },
     txtReadAt: {
       ...CommonStyle.hnRegular,
       fontSize: 12,
       color: colors.timeColor,
-      textAlign: "center",
-      width: "100%",
-    },
-    headerLeft: {
-      position: "absolute",
-      left: 0,
-      top: 0,
-      height: 40,
-      width: 40,
-      ...CommonStyle.flexCenter,
     },
     headerRight: {
-      position: "absolute",
-      right: 10,
-      top: 5,
-      height: 40,
-      ...CommonStyle.flexCenter,
+      flex: 0.3,
+      ...CommonStyle.flexEnd,
+      marginRight: 12,
+      paddingVertical: 8,
     },
     emptyView: {
-      // transform: [{ scaleY: isIOS ? -1: 1 }],
       flex: 1,
+      // transform: [{ scaleY: isIOS ? -1: 1 }],
       ...CommonStyle.flexCenter,
+      alignItems: "flex-end",
     },
   });
 };

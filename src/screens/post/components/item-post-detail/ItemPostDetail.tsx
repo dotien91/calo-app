@@ -12,10 +12,14 @@ import IconSvg from "assets/svg";
 import { translations } from "@localization";
 import { sharePost } from "@utils/share.utils";
 import { convertLastActive } from "@utils/time.utils";
-import { showStickBottom } from "@shared-components/stick-bottom/HomeStickBottomModal";
 import LikeBtn from "@screens/home/components/like-btn/LikeBtn";
 import useStore from "@services/zustand/store";
-import { showWarningLogin } from "@helpers/super.modal.helper";
+import {
+  EnumModalContentType,
+  EnumStyleModalType,
+  showSuperModal,
+  showWarningLogin,
+} from "@helpers/super.modal.helper";
 
 const SIZE_AVATAR = 30;
 const BORDER_AVATAR = 12;
@@ -39,7 +43,11 @@ const ItemPost = ({ data, pressComment, pressImageVideo }: ItemPostProps) => {
     if (!userData) {
       showWarningLogin();
     } else {
-      showStickBottom(data, "post");
+      showSuperModal({
+        contentModalType: EnumModalContentType.PostAction,
+        styleModalType: EnumStyleModalType.Bottom,
+        data,
+      });
     }
   };
 

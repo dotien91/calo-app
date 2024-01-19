@@ -16,6 +16,7 @@ import ChatView from "./stream.chat.list.view";
 import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "constants";
 import { Device } from "@utils/device.utils";
+import { requestViewStream } from "@services/api/livestreamApi";
 
 function App() {
   const theme = useTheme();
@@ -29,13 +30,9 @@ function App() {
     liveStreamId,
   });
 
-  // React.useEffect(() => {
-  //   StatusBar.setBackgroundColor("black");
-  //   return(() => {
-  //   StatusBar.setBackgroundColor("black");
-
-  //   })
-  // }, []);
+  React.useEffect(() => {
+    requestViewStream({ livestream_id: liveStreamId });
+  }, []);
 
   const isStreaming = useCallback(() => {
     return !!liveData?._id;
@@ -53,6 +50,7 @@ function App() {
           width={Device.width}
           height={Device.height}
           autoPlay={true}
+          onPress={() => {}}
         />
       </View>
     );
@@ -80,7 +78,13 @@ function App() {
         <IconBtn
           name="x"
           color={colors.white}
-          customStyle={{ position: "absolute", top: 50, right: 20, zIndex: 1 }}
+          customStyle={{
+            position: "absolute",
+            top: 50,
+            right: 20,
+            zIndex: 1,
+            backgroundColor: colors.blackOverlay,
+          }}
           onPress={closeLiveStream}
           size={30}
         />

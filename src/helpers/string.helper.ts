@@ -63,3 +63,7 @@ export const removeVietnameseTones = (str: string) => {
   );
   return str;
 };
+
+export const sliceString = (text: string, limit: number) => {
+  return text.length < limit ? `${text}` : `${text.substring(0, limit)}...`;
+};

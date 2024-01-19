@@ -20,14 +20,15 @@ import IconSvg from "assets/svg";
 import { convertLastActive } from "@utils/time.utils";
 import { SCREENS } from "constants";
 import {
-  showDetailImageView,
+  EnumModalContentType,
+  EnumStyleModalType,
+  showSuperModal,
   showWarningLogin,
 } from "@helpers/super.modal.helper";
 import { sharePost } from "@utils/share.utils";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";
 import { TypedRequest } from "shared/models";
-import { showStickBottom } from "@shared-components/stick-bottom/HomeStickBottomModal";
 
 const { width } = Dimensions.get("screen");
 const PADDING_HORIZONTAL = 16;
@@ -86,7 +87,11 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
     if (!userData) {
       showWarningLogin();
     } else {
-      showStickBottom(data, "post");
+      showSuperModal({
+        contentModalType: EnumModalContentType.PostAction,
+        styleModalType: EnumStyleModalType.Bottom,
+        data,
+      });
     }
   };
 
@@ -383,19 +388,19 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
     }
   };
   const showImageVideo = (index: number) => {
-    //gọi supermodal hiển thị danh sách image, video
-    // truyền vào danh sách
     const listMedia = data.attach_files.filter(
       (i: any) =>
         i.media_mime_type.includes("image") ||
         i.media_mime_type.includes("video"),
     );
-    const listLink = listMedia.map((i: any) => ({
-      url: i.media_url,
-      type: i.media_type,
-      media_meta: i.media_meta,
-    }));
-    showDetailImageView(listLink, index, listMedia[0].media_type);
+    showSuperModal({
+      contentModalType: EnumModalContentType.Library,
+      styleModalType: EnumStyleModalType.Middle,
+      data: {
+        listMedia,
+        indexMedia: index,
+      },
+    });
   };
 
   return (

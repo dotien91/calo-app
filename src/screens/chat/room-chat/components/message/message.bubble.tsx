@@ -14,9 +14,10 @@ import {
 import { MessageText, Time } from "react-native-gifted-chat";
 
 import { isSameMinute } from "@utils/date.utils";
-import MediasView from "@screens/chat/room-chat/components/MediasView";
 import { palette } from "@theme/themes";
 import { TypedMessageGiftedChat } from "models/chat.model";
+import MessageMediaView from "./message.media.view";
+import { sliceString } from "@helpers/string.helper";
 
 interface IBubble {
   touchableProps: () => void;
@@ -122,7 +123,9 @@ const Bubble = (props: IBubble) => {
   const _renderMessageVideo = () => {
     const mediaIds = props.currentMessage.media_ids;
     if (!mediaIds?.length) return null;
-    return <MediasView data={mediaIds} />;
+    return (
+      <MessageMediaView data={mediaIds} status={props.currentMessage.status} />
+    );
   };
 
   const _renderTicks = () => {
@@ -162,7 +165,7 @@ const Bubble = (props: IBubble) => {
             usernameStyle,
           ]}
         >
-          {username}
+          {sliceString(username, 12)}{" "}
         </Text>
       );
     }
@@ -230,7 +233,7 @@ const Bubble = (props: IBubble) => {
 const styles = StyleSheet.create({
   standardFont: {
     ...CommonStyle.hnRegular,
-    // color: Colors.mainColor2
+    // color: Colors.danger
   },
   slackMessageText: {
     marginLeft: 0,

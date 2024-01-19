@@ -8,7 +8,7 @@ import * as NavigationService from "react-navigation-helpers";
  */
 import createStyles from "./chat.list.screen.style";
 import { getListChat } from "@services/api/chatApi";
-import ChatItem from "../room-chat/components/ChatItem";
+import ChatItem from "./chat.item";
 import ListFriend from "./friend.list.view";
 import { translations } from "@localization";
 import SearchInput from "../../../shared/components/search-input.tsx/search.input";

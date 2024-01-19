@@ -91,6 +91,8 @@ export const DarkTheme: ExtendedTheme = {
     dynamicBackground: palette.dynamicBlack,
     shadow: palette.transparent,
     borderColor: palette.borderColorDark,
+    mainColor2: palette.white,
+    grey2: palette.white,
   },
 };
 

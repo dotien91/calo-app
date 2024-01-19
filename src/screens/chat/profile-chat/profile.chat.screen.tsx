@@ -14,17 +14,17 @@ import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { SCREENS } from "constants";
 import CommonStyle from "@theme/styles";
 import {
+  EnumModalContentType,
+  EnumStyleModalType,
   closeSuperModal,
-  showErrorModal,
-  showLoading,
-  showSuperModalByType,
+  showSuperModal,
   showToast,
 } from "@helpers/super.modal.helper";
 import useStore from "@services/zustand/store";
 import IconBtn from "@shared-components/button/IconBtn";
 import GoBackButton from "@screens/auth/components/GoBackButton";
 import { blockUser } from "@services/api/post";
-import MediasView from "../room-chat/components/MediasView";
+import MessageMediaView from "../room-chat/components/message/message.media.view";
 import { Device } from "@utils/device.ui.utils";
 import eventEmitter from "@services/event-emitter";
 
@@ -120,8 +120,9 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
   };
 
   const openReport = () => {
-    showSuperModalByType({
-      type: "report",
+    showSuperModal({
+      contentModalType: EnumModalContentType.Report,
+      styleModalType: EnumStyleModalType.Bottom,
       data: {
         report_type: "chat",
         partner_id: partner_id?._id,
@@ -143,7 +144,10 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
           ),
         });
       } else {
-        showErrorModal(res);
+        showToast({
+          type: "error",
+          ...res,
+        });
       }
     });
   };
@@ -176,7 +180,10 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
       user_id: userData?._id,
       chat_room_id: chat_room_id._id,
     };
-    showLoading();
+    showSuperModal({
+      contentModalType: "loading",
+      styleModalType: "middle",
+    });
     leaveRoom(data).then((res) => {
       closeSuperModal();
       if (!res.isError) {
@@ -292,7 +299,7 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
       <TouchableOpacity onPress={openMediaChatScreen} style={styles.section}>
         <Text style={styles.titleSection}>{item.title}</Text>
         <View style={styles.wrapMedia}>
-          <MediasView fromProfileChat data={mediaIdsShow} />
+          <MessageMediaView fromProfileChat data={mediaIdsShow} />
           {mediaIds.length > numberItemsMediaShow && (
             <View style={styles.viewMoreMedia}>
               <Text style={styles.txtViewMoreMedia}>

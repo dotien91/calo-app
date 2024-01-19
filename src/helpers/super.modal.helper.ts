@@ -2,37 +2,27 @@ import Toast from "react-native-toast-message";
 import * as NavigationService from "react-navigation-helpers";
 
 import { SCREENS } from "constants";
-import cmStyle from "@theme/styles";
-import { palette } from "@theme/themes";
-import { ViewStyle } from "react-native";
 import { translations } from "@localization";
 import eventEmitter from "@services/event-emitter";
 
-interface IBtnStyle {
-  typeError?: boolean;
-  text?: string | null;
-  style?: ViewStyle;
-  type: "btn";
+export enum EnumModalContentType {
+  Confirm = "confirm",
+  Loading = "loading",
+  Library = "libray",
+  Report = "report",
+  PostAction = "post-action",
+  CommentAction = "comment-action",
 }
 
-interface ContentBasicPopupType {
-  title: string;
-  desc?: string;
-  btn?: IBtnStyle;
-  cb?: () => void;
+export enum EnumStyleModalType {
+  Bottom = "bottom",
+  Middle = "middle",
 }
 
-export const typePopup = {
-  confirmPopup: "CONFIRM_POPup",
-};
-
-interface ItemMediaProps {
-  url: string;
-  type: string;
-}
-
-interface ContentMediaPopup {
-  listLink: ItemMediaProps[];
+export interface IShowModalParams {
+  contentModalType: EnumModalContentType;
+  styleModalType: EnumStyleModalType;
+  data: any;
 }
 
 interface ToastProps {
@@ -40,91 +30,32 @@ interface ToastProps {
   message: string;
 }
 
-export const SuperModalHelper = {
-  getContentPopupNormal({ title, desc, btn }: ContentBasicPopupType) {
-    const data = [
-      {
-        text: title,
-        style: {
-          fontSize: 20,
-          lineHeight: 24,
-          ...cmStyle.hnBold,
-          color: palette.text,
-          textAlign: "center",
-          marginBottom: 12,
-        },
-      },
-      {
-        text: desc,
-        style: {
-          fontSize: 16,
-          lineHeight: 18,
-          ...cmStyle.hnRegular,
-          color: palette.text,
-          textAlign: "center",
-          marginBottom: 8,
-        },
-      },
-    ];
-    if (btn) {
-      if (btn.typeError)
-        btn = {
-          ...btn,
-          type: "btn",
-          text: translations.approve,
-          style: { backgroundColor: palette.error },
-        };
-    }
-    if (!btn) return { data };
-    return { data: [...data, btn] };
-  },
-  getContentConfirmPopup({ title, desc, btn, cb }: ContentBasicPopupType) {
-    const data = [
-      {
-        text: title,
-        style: {
-          fontSize: 20,
-          lineHeight: 24,
-          ...cmStyle.hnBold,
-          color: palette.text,
-          textAlign: "center",
-          marginBottom: 12,
-        },
-      },
-      {
-        text: desc,
-        style: {
-          fontSize: 16,
-          lineHeight: 18,
-          ...cmStyle.hnRegular,
-          color: palette.text,
-          textAlign: "center",
-          marginBottom: 8,
-        },
-      },
-    ];
-    return { type: typePopup.confirmPopup, data: [...data, btn], cb };
-  },
-};
+// example
+// show loading
+// showSuperModal({
+//   contentModalType: EnumModalContentType.Loading,
+//   styleModalType: EnumStyleModalType.Middle,
+// })
 
-export const showSuperModal = (params: ContentBasicPopupType) => {
-  eventEmitter.emit(
-    "show_super_modal",
-    SuperModalHelper.getContentPopupNormal(params),
-  );
-};
+// show report
+// showSuperModal({
+//   contentModalType: EnumModalContentType.Report,
+//   styleModalType: EnumStyleModalType.Bottom,
+//   data
+// })
 
-export const showConfirmSuperModal = (params: ContentBasicPopupType) => {
-  eventEmitter.emit(
-    "show_super_modal",
-    SuperModalHelper.getContentConfirmPopup(params),
-  );
+export const showSuperModal = (params: IShowModalParams) => {
+  eventEmitter.emit("show_super_modal", params);
 };
 
 export const showWarningLogin = (message?: string) => {
-  showConfirmSuperModal({
-    title: message || translations.login.requireLogin,
-    cb: () => NavigationService.navigate(SCREENS.LOGIN_PAGE),
+  showSuperModal({
+    contentModalType: EnumModalContentType.Confirm,
+    styleModalType: EnumStyleModalType.Middle,
+    data: {
+      title: message || translations.login.requireLogin,
+      cb: () => NavigationService.navigate(SCREENS.LOGIN_PAGE),
+    },
   });
 };
 interface IModalByTypeData {
@@ -136,36 +67,11 @@ export const showSuperModalByType = ({ type, data }: IModalByTypeData) => {
   eventEmitter.emit("show_bottom_modal", { type, data });
 };
 
-export const showDetailImageView = (
-  listLink: ContentMediaPopup,
-  index: number,
-  type: string,
-) => {
-  eventEmitter.emit("show_media", { listLink, index, type });
-};
-
-export const showErrorModal = (res: any) => {
-  if (res.message) {
-    showSuperModal({
-      title: res.message,
-      btn: { typeError: true },
-    });
-  } else {
-    showSuperModal({
-      title: translations.error.unknown,
-      btn: { typeError: true },
-    });
-  }
-};
 export const showToast = (res: ToastProps) => {
   Toast.show({
-    type: res.type,
-    text1: res.message,
+    type: res.type || "info",
+    text1: res.message || "Có lỗi không xác định xảy ra!",
   });
-};
-
-export const showLoading = () => {
-  eventEmitter.emit("show_super_modal", { showLoading: true });
 };
 
 export const closeSuperModal = () => {

@@ -30,10 +30,10 @@ import BottomSheet, {
 import { regexLink } from "constants/regex.constant";
 import {
   closeSuperModal,
-  showLoading,
   showToast,
-  showErrorModal,
-  showConfirmSuperModal,
+  showSuperModal,
+  EnumModalContentType,
+  EnumStyleModalType,
 } from "@helpers/super.modal.helper";
 import { useUploadFile } from "@helpers/hooks/useUploadFile";
 import eventEmitter from "@services/event-emitter";
@@ -133,7 +133,10 @@ export default function PostScreen() {
 
   const onSubmit = React.useCallback(() => {
     if (submitPostStatus.current == "waitUploadFile") return;
-    showLoading();
+    showSuperModal({
+      contentModalType: "loading",
+      styleModalType: "middle",
+    });
     if (isUpLoadingFile) {
       //await upload file done
       submitPostStatus.current = "waitUploadFile";
@@ -157,7 +160,10 @@ export default function PostScreen() {
           NavigationService.popToTop();
         } else {
           closeSuperModal();
-          showErrorModal(res);
+          showToast({
+            type: "error",
+            ...res,
+          });
         }
       });
     } else {
@@ -172,7 +178,10 @@ export default function PostScreen() {
           NavigationService.goBack();
         } else {
           closeSuperModal();
-          showErrorModal(res);
+          showToast({
+            type: "error",
+            ...res,
+          });
         }
       });
     }
@@ -218,10 +227,14 @@ export default function PostScreen() {
     if (isEqual(beforeValue, afterValue)) {
       NavigationService.goBack();
     } else {
-      showConfirmSuperModal({
-        title: translations.cancelEdit,
-        desc: translations.cancelEditDes,
-        cb: () => NavigationService.goBack(),
+      showSuperModal({
+        contentModalType: EnumModalContentType.Confirm,
+        styleModalType: EnumStyleModalType.Middle,
+        data: {
+          title: translations.cancelEdit,
+          desc: translations.cancelEditDes,
+          cb: () => NavigationService.goBack(),
+        },
       });
     }
   };

@@ -143,19 +143,24 @@ export const useChatHistory = (txtSearch: string) => {
     if (mediaData.length) {
       data.media_data = JSON.stringify(mediaData);
     }
-    console.log("resresres====", data);
-
     sendChatToChatRoom(data).then((res) => {
-      console.log("resresres====", res);
       let newMessages = [];
       if (!res.isError) {
         newMessages = giftedMessages.map((item) => {
-          if (item?.status) return { ...item, status: EnumMessageStatus.Send };
+          if (item?.status)
+            return {
+              ...item,
+              status: EnumMessageStatus.Send,
+            };
           return item;
         });
       } else {
         newMessages = giftedMessages.map((item) => {
-          if (item?.status) return { ...item, status: EnumMessageStatus.Fail };
+          if (item?.status)
+            return {
+              ...item,
+              status: EnumMessageStatus.Fail,
+            };
           return item;
         });
       }

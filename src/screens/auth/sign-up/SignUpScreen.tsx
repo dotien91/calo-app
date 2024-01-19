@@ -27,8 +27,8 @@ import { getDeviceInfo } from "@helpers/device.info.helper";
 import { singUp } from "@services/api/userApi";
 import {
   closeSuperModal,
-  showErrorModal,
-  showLoading,
+  showSuperModal,
+  showToast,
 } from "@helpers/super.modal.helper";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 
@@ -69,7 +69,10 @@ export default function SignUpScreen() {
 
   const styles = useMemo(() => createStyles(theme), [theme]);
   const onSubmit = (data: any) => {
-    showLoading();
+    showSuperModal({
+      contentModalType: "loading",
+      styleModalType: "middle",
+    });
     const params: ISignUpWithEmail = {
       full_name: data.fullname,
       user_email: data.email,
@@ -83,7 +86,10 @@ export default function SignUpScreen() {
         const user_token = res.headers["x-authorization"];
         handleLogin(user_token);
       } else {
-        showErrorModal(res);
+        showToast({
+          type: "error",
+          ...res,
+        });
       }
     });
   };

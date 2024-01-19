@@ -25,7 +25,6 @@ export default (theme: ExtendedTheme) => {
       ...CommonStyle.hnBold,
       fontSize: 16,
       color: colors.mainColor2,
-      flex: 1,
     },
     timeTxt: {
       ...CommonStyle.hnRegular,
@@ -33,8 +32,8 @@ export default (theme: ExtendedTheme) => {
       color: colors.grey2,
     },
     lastMessageTxt: {
-      color: colors.grey2,
       ...CommonStyle.hnBold,
+      color: colors.grey2,
       fontSize: 16,
     },
     listFriend: {

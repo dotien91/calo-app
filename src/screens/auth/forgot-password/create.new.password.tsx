@@ -21,9 +21,8 @@ import { ILoginWithPass, ICreateNewPass } from "models";
 import { createNewPass, loginWithPass } from "@services/api/userApi";
 import {
   closeSuperModal,
-  showErrorModal,
   showSuperModal,
-  showLoading,
+  showToast,
 } from "@helpers/super.modal.helper";
 import { RECAPCHA_KEY } from "constants/config.constant";
 import { passRegex } from "constants/regex.constant";
@@ -52,7 +51,10 @@ export default function NewPasswordScreen() {
 
   const styles = useMemo(() => createStyles(theme), [theme]);
   const onSubmit = (data: any) => {
-    showLoading();
+    showSuperModal({
+      contentModalType: "loading",
+      styleModalType: "middle",
+    });
     const params: ICreateNewPass = {
       verify_code: verifyCodeRef.current,
       g_recaptcha: RECAPCHA_KEY,
@@ -64,7 +66,10 @@ export default function NewPasswordScreen() {
         continueLoginWithPass(data.newPassword);
       } else {
         closeSuperModal();
-        showErrorModal(res);
+        showToast({
+          type: "error",
+          ...res,
+        });
       }
     });
   };
@@ -81,11 +86,10 @@ export default function NewPasswordScreen() {
         const user_token = res.headers["x-authorization"];
         handleLogin(user_token);
       } else {
-        if (res.message) {
-          setTimeout(() => {
-            showSuperModal({ title: res.message });
-          }, 2000);
-        }
+        showToast({
+          type: "error",
+          ...res,
+        });
       }
     });
   };

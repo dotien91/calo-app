@@ -24,9 +24,10 @@ import CommonStyle from "@theme/styles";
 import { translations } from "@localization";
 import {
   closeSuperModal,
-  showDetailImageView,
-  showErrorModal,
-  showLoading,
+  EnumModalContentType,
+  EnumStyleModalType,
+  showSuperModal,
+  showToast,
   showWarningLogin,
 } from "@helpers/super.modal.helper";
 import { useTheme } from "@react-navigation/native";
@@ -81,13 +82,19 @@ const PostDetail = (props: PostDetailProps) => {
   );
 
   const getData = async () => {
-    showLoading();
+    showSuperModal({
+      contentModalType: EnumModalContentType.Loading,
+      styleModalType: EnumStyleModalType.Middle,
+    });
     getPostDetail(id, { auth_id: userData?._id || "" }).then((res) => {
       closeSuperModal();
       if (!res.isError) {
         setData(res.data);
       } else {
-        showErrorModal(res);
+        showToast({
+          type: "error",
+          ...res,
+        });
         NavigationService.goBack();
       }
     });
@@ -244,7 +251,10 @@ const PostDetail = (props: PostDetailProps) => {
           setListData([resComment.data, ...listData]);
         }
       } else {
-        showErrorModal(resComment);
+        showToast({
+          type: "error",
+          ...res,
+        });
       }
     });
   };
@@ -270,12 +280,14 @@ const PostDetail = (props: PostDetailProps) => {
         i.media_mime_type.includes("image") ||
         i.media_mime_type.includes("video"),
     );
-    const listLink = listMedia.map((i: any) => ({
-      url: i.media_url,
-      type: i.media_type,
-      media_meta: i.media_meta,
-    }));
-    showDetailImageView(listLink, index, listMedia[0].media_type);
+    showSuperModal({
+      contentModalType: EnumModalContentType.Library,
+      styleModalType: EnumStyleModalType.Middle,
+      data: {
+        listMedia,
+        indexMedia: index,
+      },
+    });
   };
 
   const HeaderPost = () => {
