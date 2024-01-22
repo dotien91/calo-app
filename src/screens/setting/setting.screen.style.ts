@@ -11,7 +11,7 @@ export default (theme: ExtendedTheme) => {
     container: {
       flex: 1,
       backgroundColor: colors.background,
-      paddingHorizontal: 10,
+      paddingHorizontal: 12,
     },
   });
 };

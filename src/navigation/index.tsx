@@ -10,7 +10,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { SCREENS } from "constants";
 import { DarkTheme, LightTheme, palette } from "@theme/themes";
 // ? Screens
-import HomeScreen from "@screens/home/home.screen";
 import DetailScreen from "@screens/detail/DetailScreen";
 import ProfileScreen from "@screens/profile/ProfileScreen";
 import NotificationScreen from "@screens/notification/NotificationScreen";
@@ -29,7 +28,7 @@ import SearchRoomChatScreen from "@screens/chat/search-room/search.room.view";
 import ChatRoomScreen from "@screens/chat/room-chat/chat.room.screen";
 import LiveStreamScreen from "@screens/stream/stream.screen";
 import ViewStreamScreen from "@screens/stream/stream.view.screen";
-import SettingScreen from "@screens/setting/SettingScreen";
+import SettingScreen from "@screens/setting/setting.screen";
 import PostScreen from "@screens/post/create.post.screen";
 import PostDetailScreen from "@screens/post/post.detail.screen";
 import EditCommentScreen from "@screens/home/edit-comment/edit.comment.screen";

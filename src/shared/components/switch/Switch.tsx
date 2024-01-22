@@ -1,85 +1,136 @@
-import React, { useMemo } from "react";
-import { View, Pressable } from "react-native";
-import { MotiView } from "@motify/components";
-import { MotiTransitionProp } from "@motify/core";
-import { Easing } from "react-native-reanimated";
+import React, { useEffect, useRef, useState } from "react";
+import { StyleProp, StyleSheet, ViewStyle } from "react-native";
+import {
+  PanGestureHandler,
+  PanGestureHandlerGestureEvent,
+  State,
+  TapGestureHandler,
+  TapGestureHandlerStateChangeEvent,
+} from "react-native-gesture-handler";
+import Animated, {
+  interpolate,
+  interpolateColor,
+  runOnJS,
+  useAnimatedGestureHandler,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from "react-native-reanimated";
+import { clamp, snapPoint } from "react-native-redash";
+import { scale } from "react-native-size-matters";
+import { useMemo } from "use-memo-one";
 
-interface SwitchProps {
-  size: number;
-  onPress: () => void;
-  isActive: boolean;
-}
-
-const _color = {
-  active: "#77A300",
-  inActive: "#00363D",
+type SwitchComponentProps = {
+  value: boolean;
+  onChange: (value: boolean) => void;
+  style?: StyleProp<ViewStyle>;
+  labelContainer: React.ReactNode;
+  backgroundColor: string;
 };
-
-const transition: MotiTransitionProp = {
-  type: "timing",
-  duration: 300,
-  easing: Easing.inOut(Easing.ease),
+const SWITCH_CONTAINER_WIDTH = scale(50);
+const SWITCH_CONTAINER_HEIGHT = scale(26);
+const CIRCLE_WIDTH = scale(24);
+const BORDER = scale(1);
+// const DEFAULT_MARGIN = scale(10);
+const TRACK_CIRCLE_WIDTH = SWITCH_CONTAINER_WIDTH - CIRCLE_WIDTH - BORDER * 2;
+const config: Animated.WithSpringConfig = {
+  overshootClamping: true,
 };
+const SwitchComponent = ({
+  value,
+  onChange,
+  backgroundColor,
+}: SwitchComponentProps) => {
+  const [isToggled, setIsToggled] = useState(value);
+  const translateX = useSharedValue(!value ? 0 : TRACK_CIRCLE_WIDTH);
+  useEffect(() => {
+    setTimeout(() => {
+      onChange(isToggled);
+    }, 100);
+  }, [isToggled]);
+  const onPress = ({
+    nativeEvent: { state },
+  }: TapGestureHandlerStateChangeEvent) => {
+    if (state !== State.ACTIVE) return;
+    setIsToggled((prevstate) => !prevstate);
+    translateX.value = withSpring(isToggled ? 0 : TRACK_CIRCLE_WIDTH, config);
+  };
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateX: translateX.value }],
+      width: interpolate(
+        translateX.value,
+        [0, TRACK_CIRCLE_WIDTH / 3, TRACK_CIRCLE_WIDTH],
+        [CIRCLE_WIDTH, (CIRCLE_WIDTH / 2) * 2.5, CIRCLE_WIDTH],
+      ),
+    };
+  });
+  const animatedContainerStyle = useAnimatedStyle(() => {
+    return {
+      backgroundColor: interpolateColor(
+        translateX.value,
+        [0, TRACK_CIRCLE_WIDTH],
+        ["white", backgroundColor],
+      ),
+    };
+  });
 
-export default function Switch({ size, onPress, isActive }: SwitchProps) {
-  const trackWidth = useMemo(() => {
-    return size * 1.2;
-  }, [size]);
-  const trackHeight = useMemo(() => {
-    return size * 0.5;
-  }, [size]);
-  const knobSize = useMemo(() => {
-    return size * 0.6;
-  }, [size]);
+  const animatedStyles = useMemo(() => animatedContainerStyle, []);
+
+  const onGestureEvent = useAnimatedGestureHandler<
+    PanGestureHandlerGestureEvent,
+    { x: number }
+  >({
+    onStart: (_e, ctx) => {
+      ctx.x = translateX.value;
+    },
+    onActive: ({ translationX }, ctx) => {
+      translateX.value = clamp(translationX + ctx.x, 0, TRACK_CIRCLE_WIDTH);
+    },
+    onEnd: ({ velocityX }) => {
+      const selectedSnapPoint = snapPoint(translateX.value, velocityX, [
+        0,
+        TRACK_CIRCLE_WIDTH,
+      ]);
+      translateX.value = withSpring(selectedSnapPoint, config);
+      runOnJS(setIsToggled)(selectedSnapPoint !== 0);
+    },
+  });
+
+  const panRef = useRef<PanGestureHandler>(null);
+
   return (
-    <Pressable onPress={onPress} style={{ paddingHorizontal: size * 0.3 }}>
-      <View style={{ alignContent: "center", justifyContent: "center" }}>
-        <MotiView
-          from={{
-            backgroundColor: isActive ? _color.active : _color.inActive,
-          }}
-          animate={{
-            backgroundColor: isActive ? _color.active : _color.inActive,
-          }}
-          transition={transition}
-          style={{
-            position: "absolute",
-            width: trackWidth,
-            height: trackHeight,
-            borderRadius: trackHeight / 2,
-            backgroundColor: _color.active,
-          }}
-        ></MotiView>
-        <MotiView
-          transition={transition}
-          animate={{
-            translateX: isActive ? trackWidth / 3 : -trackWidth / 6,
-          }}
-          style={{
-            width: size,
-            height: size,
-            borderRadius: size / 2,
-            backgroundColor: "white",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <MotiView
-            transition={transition}
-            animate={{
-              width: isActive ? 0 : knobSize,
-              borderColor: isActive ? _color.active : _color.inActive,
-            }}
-            style={{
-              width: knobSize,
-              height: knobSize,
-              borderRadius: knobSize / 2,
-              borderWidth: size * 0.1,
-              borderColor: _color.active,
-            }}
+    <TapGestureHandler waitFor={panRef} onHandlerStateChange={onPress}>
+      <Animated.View style={[animatedStyles, styles.switchContainer]}>
+        <PanGestureHandler ref={panRef} onGestureEvent={onGestureEvent}>
+          <Animated.View
+            style={[
+              animatedStyle,
+              styles.circle,
+              { borderColor: "transparent" },
+            ]}
           />
-        </MotiView>
-      </View>
-    </Pressable>
+        </PanGestureHandler>
+      </Animated.View>
+    </TapGestureHandler>
   );
-}
+};
+export default SwitchComponent;
+
+const styles = StyleSheet.create({
+  switchContainer: {
+    width: SWITCH_CONTAINER_WIDTH,
+    height: SWITCH_CONTAINER_HEIGHT,
+    borderRadius: 999,
+    flexDirection: "row",
+  },
+  circle: {
+    alignSelf: "center",
+    width: CIRCLE_WIDTH,
+    height: CIRCLE_WIDTH,
+    borderRadius: 999,
+    borderWidth: BORDER,
+    elevation: 18,
+    backgroundColor: "white",
+  },
+});

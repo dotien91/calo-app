@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Alert } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -10,9 +10,9 @@ import Text from "@shared-components/text-wrapper/TextWrapper";
 import useStore from "@services/zustand/store";
 import { translations } from "@localization";
 import DropDownItem from "@shared-components/dropdown/DropDownItem";
-import Switch from "@shared-components/switch/Switch";
-import createStyles from "./SettingScreen.style";
-
+import createStyles from "./setting.screen.style";
+import { useMemo, useCallback } from "use-memo-one";
+import SwitchComponent from "@shared-components/switch/Switch";
 interface SettingScreenProps {}
 
 const SettingScreen: React.FC<SettingScreenProps> = () => {
@@ -32,6 +32,13 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
   const language = useStore((state) => state.language);
   const isDarkMode = useStore((state) => state.isDarkMode);
   const setDarkMode = useStore((state) => state.setDarkMode);
+
+  const toggleDarkmode = useCallback(
+    (value) => {
+      setDarkMode(value);
+    },
+    [setDarkMode],
+  );
 
   useEffect(() => {
     if (language != languageSelected) {
@@ -56,7 +63,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text h1 color={colors.text}>
+      <Text h1 color={colors.danger}>
         {translations.setting}
       </Text>
       <View
@@ -67,14 +74,13 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
         }}
       >
         <Text>{translations.darkMode}</Text>
-        <Switch
-          isActive={isDarkMode}
-          onPress={() => {
-            setDarkMode(!isDarkMode);
-          }}
-          size={30}
+        <SwitchComponent
+          backgroundColor="green"
+          value={isDarkMode}
+          onChange={toggleDarkmode}
         />
       </View>
+      <View style={{ height: 10 }} />
       <DropDownItem
         value={languageSelected}
         setValue={setLanguageSelected}
