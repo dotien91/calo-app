@@ -128,6 +128,24 @@ const CS = StyleSheet.create({
     fontSize: 16,
     color: palette.white,
   },
+  textCourse: {
+    fontSize: 14,
+    lineHeight: 16,
+    fontFamily: font.outfit.medium,
+    color: palette.text,
+  },
+  textOpacity8: {
+    fontSize: 14,
+    lineHeight: 16,
+    fontFamily: font.outfit.semiBold,
+    color: palette.textOpacity6,
+  },
+  textOpacity6: {
+    fontSize: 14,
+    lineHeight: 16,
+    fontFamily: font.outfit.regular,
+    color: palette.textOpacity6,
+  },
   safeAreaView: {
     flex: 1,
     marginTop: getStatusBarHeight(),

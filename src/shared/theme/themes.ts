@@ -1,9 +1,9 @@
 import { Theme } from "@react-navigation/native";
 
 export const palette = {
-  primary: "#FA8072",
+  primary: "#E14242",
   mainColor2: "#121118",
-  secondColor: "#FDEBED",
+  secondColor: "#FFEDED",
   error: "#eb032d",
   textInput: "#4f5c61",
   secondary: "#ff6a00",
@@ -16,7 +16,7 @@ export const palette = {
   black: "#101214",
   button: "#1c1e21",
   shadow: "#757575",
-  text: "#30363b",
+  text: "#161C24",
   borderColor: "#DCDBE2",
   borderColorDark: "#333942",
   danger: "rgb(208, 2, 27)",
@@ -65,6 +65,8 @@ export const palette = {
   grey2: "#595959",
   grey3: "#A6A6A6",
   grey1: "#D9D9D9",
+  textOpacity8: "rgba(22, 28, 36, 0.8)",
+  textOpacity6: "rgba(22, 28, 36, 0.64)",
 };
 
 interface ExtendedTheme extends Theme {
