@@ -39,3 +39,30 @@ export async function getCourseClassListById(course_id: string) {
     return response;
   });
 }
+
+export async function getCourseDetail(id: string) {
+  return request({
+    method: METHOD.GET,
+    urlPath: `course/detail/${id}`,
+  }).then((response) => {
+    return response;
+  });
+}
+export async function getListModule(params) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "course/list-module",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}
+export async function getListReview(params) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "course/list-review",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}

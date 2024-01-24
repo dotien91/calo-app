@@ -40,6 +40,22 @@ import icShare from "./icon-share.svg";
 import icHeart from "./icon-heart.svg";
 import icHearted from "./icon-hearted.svg";
 import icLive from "./icon-live.svg";
+import icBook from "./book.svg";
+import icBookFull from "./book-full.svg";
+import icCourse from "./course.svg";
+import icDiscovery from "./discovery.svg";
+import icGraduate from "./graduate.svg";
+import icProfile from "./profile.svg";
+import icReview from "./review.svg";
+import icStarFull from "./star-full.svg";
+import icStarHalf from "./star-half.svg";
+import icStar from "./star.svg";
+import icStudent from "./student.svg";
+import icRateStar from "./rate-star.svg";
+import icFormOfLearn from "./form-of-learn.svg";
+import icWarningCircle from "./warning.svg";
+import icLanguage from "./icon-language.svg";
+import icCC from "./iconCC.svg";
 
 const Icons = {
   icFlagvi,
@@ -82,6 +98,22 @@ const Icons = {
   icHeart,
   icHearted,
   icLive,
+  icBook,
+  icBookFull,
+  icCourse,
+  icDiscovery,
+  icGraduate,
+  icProfile,
+  icReview,
+  icStarFull,
+  icStarHalf,
+  icStar,
+  icStudent,
+  icRateStar,
+  icFormOfLearn,
+  icWarningCircle,
+  icLanguage,
+  icCC,
 };
 
 interface IconSvgProps {

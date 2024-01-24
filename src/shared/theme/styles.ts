@@ -134,21 +134,20 @@ const CS = StyleSheet.create({
     color: palette.white,
   },
   textCourse: {
-    fontSize: 14,
-    lineHeight: 16,
+    fontSize: 16,
+    lineHeight: 20,
     fontFamily: font.outfit.medium,
     color: palette.text,
   },
   textOpacity8: {
-    fontSize: 14,
-    lineHeight: 16,
+    fontSize: 16,
+    lineHeight: 20,
     fontFamily: font.outfit.semiBold,
     color: palette.textOpacity6,
   },
   textOpacity6: {
-    fontSize: 14,
-    lineHeight: 16,
-    fontFamily: font.outfit.regular,
+    fontSize: 16,
+    lineHeight: 20,
     color: palette.textOpacity6,
   },
   safeAreaView: {

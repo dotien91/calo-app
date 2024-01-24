@@ -67,3 +67,14 @@ export const removeVietnameseTones = (str: string) => {
 export const sliceString = (text: string, limit: number) => {
   return text.length < limit ? `${text}` : `${text.substring(0, limit)}...`;
 };
+
+export const formatPrice = (price?: number) => {
+  if (price) {
+    return new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    }).format(price);
+  } else {
+    return null;
+  }
+};

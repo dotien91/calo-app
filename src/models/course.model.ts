@@ -30,6 +30,32 @@ export interface ICourseItem {
   module_count: number;
   module_child_count: number;
   hashtag_id: any[];
+  skills: string[];
+  labels: string[];
+  formOfLearn: string;
+  updatedAt: string;
+  promotion: number;
+}
+
+export interface ICourseModuleItem {
+  _id: string;
+  user_id: TypedUser;
+  course_id: string;
+  title: string;
+  type: string;
+  createdAt: string;
+  updatedAt: string;
+  child?: ICourseModuleItem[];
+}
+
+export interface ICourseReview {
+  _id: string;
+  user_id: TypedUser;
+  course_id: string;
+  review: string;
+  rating: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface IListCourseFilterParams {

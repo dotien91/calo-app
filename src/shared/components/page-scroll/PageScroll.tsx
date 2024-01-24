@@ -18,6 +18,7 @@ interface Props extends ViewProps {
   length: number;
   children: React.ReactNode;
   scrollEnabled: boolean;
+  widthItem?: number;
 }
 
 export interface PagerScrollRef {
@@ -29,9 +30,10 @@ export interface PagerScrollRef {
 }
 
 const PageScroll = (props: Props, ref: React.Ref<PagerScrollRef>) => {
-  const { length, scrollEnabled } = props;
+  const { length, scrollEnabled, widthItem } = props;
   const scrollViewRef = useRef<Animated.ScrollView>(null);
   const indexRef = useRef<number>(0);
+  const widthI = widthItem || width;
 
   useImperativeHandle(ref, () => ({
     scrollToLeft,
@@ -43,13 +45,13 @@ const PageScroll = (props: Props, ref: React.Ref<PagerScrollRef>) => {
 
   const percent = useSharedValue((1 / length) * 100);
   const totalWidth = useMemo(() => {
-    return length * width;
+    return length * widthI;
   }, [length]);
 
   const scrollHandler = useAnimatedScrollHandler({
     onEndDrag: (event) => {
       percent.value = withSpring(
-        ((width + event.contentOffset.x) / totalWidth) * 100,
+        ((widthI + event.contentOffset.x) / totalWidth) * 100,
       );
     },
   });
@@ -60,7 +62,7 @@ const PageScroll = (props: Props, ref: React.Ref<PagerScrollRef>) => {
 
   const onMomentumScrollEnd = (event) => {
     percent.value = withSpring(
-      ((width + event.nativeEvent.contentOffset.x) / totalWidth) * 100,
+      ((widthI + event.nativeEvent.contentOffset.x) / totalWidth) * 100,
     );
   };
 
@@ -68,7 +70,7 @@ const PageScroll = (props: Props, ref: React.Ref<PagerScrollRef>) => {
     if (indexRef.current - 1 >= 0) {
       scrollViewRef.current?.scrollTo({
         y: 0,
-        x: (indexRef.current - 1) * width,
+        x: (indexRef.current - 1) * widthI,
         animated: true,
       });
       indexRef.current -= 1;
@@ -82,7 +84,7 @@ const PageScroll = (props: Props, ref: React.Ref<PagerScrollRef>) => {
     if (indexRef.current + 1 <= length) {
       scrollViewRef.current?.scrollTo({
         y: 0,
-        x: (indexRef.current + 1) * width,
+        x: (indexRef.current + 1) * widthI,
         animated: true,
       });
       indexRef.current += 1;
@@ -95,7 +97,7 @@ const PageScroll = (props: Props, ref: React.Ref<PagerScrollRef>) => {
   const scrollToEnd = () => {
     scrollViewRef.current?.scrollTo({
       y: 0,
-      x: length * width,
+      x: length * widthI,
       animated: true,
     });
     indexRef.current = length - 1;
@@ -103,7 +105,7 @@ const PageScroll = (props: Props, ref: React.Ref<PagerScrollRef>) => {
   const scrollToIndex = (index: number) => {
     scrollViewRef.current?.scrollTo({
       y: 0,
-      x: index * width,
+      x: index * widthI,
       animated: false,
     });
     indexRef.current = index;

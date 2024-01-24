@@ -12,8 +12,8 @@ import { getStatusBarHeight } from "react-native-safearea-height";
 interface HeaderProps {
   iconNameLeft?: string;
   iconNameRight?: string;
-  text: string;
-  onPressLeft?: () => void;
+  text?: string;
+  onPressLeft: () => void;
   onPressRight?: () => void;
   textRight?: string;
   customStyle: ViewStyle;
@@ -55,7 +55,7 @@ const Header = ({
           { color: colors.text, ...CommonStyle.flex1 },
         ]}
       >
-        {text}
+        {text || ""}
       </Text>
       <View style={styles.viewIcons}>
         {iconNameRight && (

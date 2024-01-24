@@ -1,4 +1,7 @@
+import * as React from "react";
 import { View, StyleSheet, Dimensions, Pressable } from "react-native";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import { getStatusBarHeight } from "@freakycoder/react-native-helpers";
 
 /* eslint-disable camelcase */
 
@@ -6,12 +9,9 @@ import VideoPlayer from "@shared-components/video.player.component";
 import ImageLoad from "@screens/post/components/ImageLoad";
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
-import * as React from "react";
 import PageScroll, {
   PagerScrollRef,
 } from "@shared-components/page-scroll/PageScroll";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
-import { getStatusBarHeight } from "@freakycoder/react-native-helpers";
 import { TypedMedia } from "shared/models";
 
 const { width } = Dimensions.get("screen");
