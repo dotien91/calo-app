@@ -49,19 +49,21 @@ const AuthorView = ({ data }: AuthorViewProps) => {
         <View style={{ marginLeft: 8, justifyContent: "space-between" }}>
           <IconText
             nameIcon="icRateStar"
-            text={`${data?.rating} ${translations.course.rate}`}
+            text={`${data?.rating.toFixed(2)} ${
+              translations.course.rankTeacher
+            }`}
           />
           <IconText
             nameIcon="icReview"
-            text={`${data?.rating} ${translations.course.reviews}`}
+            text={`${data?.user_id.rating_count} ${translations.course.reviews}`}
           />
           <IconText
             nameIcon="icStudent"
-            text={`${data?.join_number} ${translations.course.student}`}
+            text={`${data?.user_id.member_count} ${translations.course.student}`}
           />
           <IconText
             nameIcon="icBookFull"
-            text={`${data?.join_number} ${translations.course.course}`}
+            text={`${data?.user_id.course_count} ${translations.course.course}`}
           />
         </View>
       </View>

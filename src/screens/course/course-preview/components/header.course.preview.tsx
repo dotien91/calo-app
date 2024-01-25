@@ -8,7 +8,7 @@ import { translations } from "@localization";
 import { formatPrice } from "@helpers/string.helper";
 import { PlayVideo } from "@screens/course/detail-teacher/components/header.teacher.view";
 import { formatVNDate } from "@utils/date.utils";
-import StarRate from "@screens/course/components/star.rate";
+import StarRate from "@screens/course/components/star.rate.view";
 import IconSvg from "assets/svg";
 
 interface HeaderCourseProps {
@@ -38,18 +38,20 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
       </View>
       <Text style={styles.textTitle}>{data?.title}</Text>
       <Text style={styles.textDescription}>{data?.description}</Text>
-      <StarRate number={2.4} size={16} />
+      <StarRate number={data?.rating} size={16} />
+      <View>
+        <Text>{`${data?.user_id.rating_count} ${translations.course.rate}/${data?.user_id.member_count} ${translations.course.student}`}</Text>
+      </View>
       <Text style={styles.textCreateBy}>
         {translations.course.teacher}:{" "}
         <Text onPress={_gotoDetailTeacher} style={styles.textAuthor}>
           {data?.user_id?.display_name || ""}
         </Text>
       </Text>
-
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <IconSvg name="icFormOfLearn" size={20} color={palette.textOpacity8} />
         <Text style={styles.txtUpdate}>{`${translations.course.formOfLearn} ${
-          data?.formOfLearn || ""
+          data?.type || ""
         }`}</Text>
       </View>
 
@@ -66,25 +68,31 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
 
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <IconSvg name="icLanguage" size={20} color={palette.textOpacity8} />
-        <Text style={styles.txtUpdate}></Text>
+        <Text style={styles.txtUpdate}>{data?.language}</Text>
       </View>
 
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <IconSvg name="icCC" size={20} color={palette.textOpacity8} />
         <Text style={styles.txtUpdate}>{data?.language}</Text>
       </View>
-      {data?.promotion !== 0 ? (
+      {data?.promotion == 0 ? (
         <View style={{ flexDirection: "row" }}>
           <Text style={styles.textPrice}>{formatPrice(data?.price)}</Text>
         </View>
       ) : (
         <View style={{ flexDirection: "row" }}>
           <Text style={styles.textPrice}>
-            {formatPrice((data?.price * 80) / 100)}
+            {formatPrice((data?.price * data?.promotion) / 100)}
           </Text>
           <Text style={styles.textPriceOld}>{formatPrice(data?.price)}</Text>
         </View>
       )}
+      {data?.promotion && data.promotion > 0 ? (
+        <View style={{ flexDirection: "row" }}>
+          <IconSvg name="icClock" size={20} color={palette.textOpacity8} />
+          <Text style={styles.textPrice}>{`discount: ${data.promotion}`}</Text>
+        </View>
+      ) : null}
     </View>
   );
 };

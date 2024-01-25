@@ -30,8 +30,6 @@ const TextRequest = ({ text }: { text: string }) => {
 };
 
 const RequestSkillView = ({ data }: RequestSkillViewProps) => {
-  console.log("Skill1", data?.skills);
-
   return (
     <View style={styles.container}>
       <Text style={styles.paragraph}>{translations.course.requestSkills}</Text>

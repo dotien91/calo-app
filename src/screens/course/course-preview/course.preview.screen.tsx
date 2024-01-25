@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, ScrollView, View, Text } from "react-native";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
+// import * as NavigationService from "react-navigation-helpers";
 
 import HeaderCourse from "./components/header.course.preview";
 import BuyButton from "../components/buy.button";
@@ -18,17 +19,29 @@ import Header from "@shared-components/header/Header";
 import { palette } from "@theme/themes";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { translations } from "@localization";
+import useStore from "@services/zustand/store";
+import eventEmitter from "@services/event-emitter";
 
 const CoursePreviewScreen = () => {
+  const userData = useStore((state) => state.userData);
   React.useEffect(() => {
     _getCourseDetail();
   }, []);
 
   const [data, setData] = useState<ICourseItem>();
   const course_id = "6583a1fc8e5e75e353a7bedf"; // tonyvu
+  React.useEffect(() => {
+    eventEmitter.on("reload_data_preview", _getCourseDetail);
+    return () => {
+      eventEmitter.off("reload_data_preview", _getCourseDetail);
+    };
+  });
+  const params = { auth_id: userData?._id };
   const _getCourseDetail = () => {
-    getCourseDetail(course_id).then((res) => {
-      setData(res.data);
+    getCourseDetail(course_id, params).then((res) => {
+      if (!res.isError) {
+        setData(res.data);
+      }
     });
   };
 
@@ -123,7 +136,7 @@ const CoursePreviewScreen = () => {
         <PartView id={course_id} hide={tabSelected == 1} />
 
         <AuthorView data={data} />
-        <ListReviewCourse _id={course_id} type="top" />
+        <ListReviewCourse _id={course_id} type="top" data={data} />
         <View style={{ height: 50 }} />
       </ScrollView>
       <BuyBottom show={showBuyBottom} data={data} />

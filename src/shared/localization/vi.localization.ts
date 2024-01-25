@@ -508,6 +508,9 @@ export default {
     calendar: "Lịch học",
     reviews: "Lượt",
     apply: "Áp dụng",
+    placeholderReiview: "Nhập đánh giá của bạn",
+    sendReview: "Gửi đánh giá",
+    updateReview: "Cập nhật đánh giá",
   },
   seeAll: "Xem tất cả",
   settings: {

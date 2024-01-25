@@ -56,6 +56,8 @@ import icFormOfLearn from "./form-of-learn.svg";
 import icWarningCircle from "./warning.svg";
 import icLanguage from "./icon-language.svg";
 import icCC from "./iconCC.svg";
+import icClock from "./clock.svg";
+import icReviewComment from "./review-comment.svg";
 
 const Icons = {
   icFlagvi,
@@ -114,6 +116,8 @@ const Icons = {
   icWarningCircle,
   icLanguage,
   icCC,
+  icClock,
+  icReviewComment,
 };
 
 interface IconSvgProps {

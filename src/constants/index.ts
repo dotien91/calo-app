@@ -43,6 +43,8 @@ export const SCREENS = {
   PAYMENT_COURES: "PaymentCoures",
   COURSE_DETAIL: "CourseDetail",
   TEACHER_DETAIL: "TeacherDetail",
+  COURSE_RATE: "CourseRate",
+  COURSE_LIST_RATE: "CourseListRate",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

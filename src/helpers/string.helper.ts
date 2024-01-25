@@ -75,6 +75,9 @@ export const formatPrice = (price?: number) => {
       currency: "VND",
     }).format(price);
   } else {
-    return null;
+    if (price == 0) return "FREE";
+    else {
+      return "";
+    }
   }
 };

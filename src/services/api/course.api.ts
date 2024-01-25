@@ -19,6 +19,7 @@ export async function getCourseFilterKeys() {
     return response;
   });
 }
+<<<<<<< HEAD
 
 export async function getListTutor(data) {
   return request({
@@ -41,9 +42,13 @@ export async function getCourseClassListById(course_id: string) {
 }
 
 export async function getCourseDetail(id: string) {
+=======
+export async function getCourseDetail(id: string, params) {
+>>>>>>> 207ab41 (feat: course preview)
   return request({
     method: METHOD.GET,
     urlPath: `course/detail/${id}`,
+    params,
   }).then((response) => {
     return response;
   });
@@ -62,6 +67,37 @@ export async function getListReview(params) {
     method: METHOD.GET,
     urlPath: "course/list-review",
     params,
+  }).then((response) => {
+    return response;
+  });
+}
+
+interface INewReview {
+  course_id: string;
+  user_id?: string;
+  review: string;
+  rating: number;
+}
+export async function createReview(data: INewReview) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "course/create-review",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+interface IUpdateReview {
+  _id: string;
+  review: string;
+  rating: number;
+}
+export async function updateReview(data: IUpdateReview) {
+  return request({
+    method: METHOD.PATCH,
+    urlPath: "course/update-review",
+    data,
   }).then((response) => {
     return response;
   });

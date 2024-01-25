@@ -417,6 +417,9 @@ export default {
     calendar: "Calendar",
     reviews: "Review",
     apply: "Apply",
+    placeholderReiview: "Input review",
+    sendReview: "Send review",
+    updateReview: "Update review",
   },
   seeAll: "See all",
   settings: {

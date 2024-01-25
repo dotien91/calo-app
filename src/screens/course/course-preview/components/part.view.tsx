@@ -6,7 +6,7 @@ import {
   ActivityIndicator,
   Dimensions,
 } from "react-native";
-import Animatable from "react-native-animatable";
+import * as Animatable from "react-native-animatable";
 
 import Accordion from "react-native-collapsible/Accordion";
 import PressableBtn from "@shared-components/button/PressableBtn";

@@ -1,8 +1,13 @@
 import { TypedMedia, TypedUser } from "shared/models";
 
+interface TypeUserCourse extends TypedUser {
+  rating_count: number;
+  member_count: number;
+  course_count: number;
+}
 export interface ICourseItem {
   _id: string;
-  user_id: TypedUser;
+  user_id: TypeUserCourse;
   title: string;
   description: string;
   long_description: string;
@@ -32,14 +37,15 @@ export interface ICourseItem {
   hashtag_id: any[];
   skills: string[];
   labels: string[];
-  formOfLearn: string;
+  type: string;
   updatedAt: string;
   promotion: number;
+  is_join: boolean;
 }
 
 export interface ICourseModuleItem {
   _id: string;
-  user_id: TypedUser;
+  user_id: TypeUserCourse;
   course_id: string;
   title: string;
   type: string;
@@ -50,7 +56,7 @@ export interface ICourseModuleItem {
 
 export interface ICourseReview {
   _id: string;
-  user_id: TypedUser;
+  user_id: TypeUserCourse;
   course_id: string;
   review: string;
   rating: number;
