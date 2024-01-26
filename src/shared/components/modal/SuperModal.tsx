@@ -1,12 +1,6 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  ActivityIndicator,
-} from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import Modal from "react-native-modal";
 
 import eventEmitter from "@services/event-emitter";
@@ -26,6 +20,7 @@ import ReportView from "./modal-inner/ReportView";
 import CourseFilterModalInnter from "@screens/course/components/course.filter.modal.inner";
 import IconBtn from "@shared-components/button/IconBtn";
 import SelectBox from "@shared-components/modal/modal-inner/SelectBox";
+import LottieComponent from "@shared-components/lottie/LottieComponent";
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
 // using normal one.
@@ -92,7 +87,14 @@ const SuperModal: React.FC<SuperModalProps> = () => {
   };
 
   const renderLoading = () => {
-    return <ActivityIndicator color={palette.white} size={"large"} />;
+    return (
+      <LottieComponent
+        resizeMode="contain"
+        height={120}
+        customStyle={{}}
+        lottieJson={require("../../../assets/lotties/loading-circle.json")}
+      />
+    );
   };
 
   const renderConfirmView = () => {
@@ -180,6 +182,9 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         onBackButtonPress={closeModal}
         useNativeDriver={true}
         style={getStyleModal()}
+        backdropOpacity={
+          contentModalType == EnumModalContentType.Loading ? 0.1 : 0.6
+        }
       >
         {contentModalType == EnumModalContentType.Confirm &&
           renderConfirmView()}
@@ -211,6 +216,7 @@ const styles = StyleSheet.create({
   loadingView: {
     ...CommonStyle.flex1,
     margin: 0,
+    // backgroundColor: palette.whiteOverlay
   },
   modalInner: {
     minWidth: "60%",

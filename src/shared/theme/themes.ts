@@ -25,6 +25,7 @@ export const palette = {
   highlight: "rgb(199, 198, 203)",
   blackOverlay: "rgba(0,0,0,0.6)",
   lightOverlay: "rgba(0,0,0,0.2)",
+  whiteOverlay: "rgba(255,255,255,0.2)",
   iconWhite: "#fff",
   iconBlack: "#101214",
   dynamicWhite: "#fff",

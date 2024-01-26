@@ -1,26 +1,34 @@
-import { palette } from "@theme/themes";
 import { View } from "react-native";
 import LottieView from "lottie-react-native";
-import CS from "@theme/styles";
 import React from "react";
+import { ViewStyle } from "react-native-size-matters";
 
 interface ILottieComponent {
   height: number;
   lottieJson?: string;
+  resizeMode?: string;
+  customStyle?: ViewStyle;
 }
 
-const LottieComponent = ({ height, lottieJson }: ILottieComponent) => {
+const LottieComponent = ({
+  height,
+  lottieJson,
+  resizeMode,
+  customStyle,
+}: ILottieComponent) => {
   return (
     <View
-      style={{
-        height: height || 315,
-        backgroundColor: palette.white,
-        paddingHorizontal: 16,
-      }}
+      style={[
+        {
+          height: height || 315,
+          paddingHorizontal: 16,
+        },
+        !!customStyle && customStyle,
+      ]}
     >
       <LottieView
-        style={CS.flex1}
-        resizeMode="cover"
+        style={{ flex: 1 }}
+        resizeMode={resizeMode || "contain"}
         source={
           lottieJson || require("../../../assets/lotties/loading-item.json")
         }
