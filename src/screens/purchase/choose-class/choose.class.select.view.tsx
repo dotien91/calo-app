@@ -97,7 +97,7 @@ const ChooseClassSelectView: React.FC<ChooseClassSelectViewProps> = ({
 
   return (
     <ScrollView style={styles.container}>
-      {classData.map((item) => renderClass(item, index))}
+      {classData.map((item, index) => renderClass(item, index))}
       {renderPurchaseBtn()}
     </ScrollView>
   );
