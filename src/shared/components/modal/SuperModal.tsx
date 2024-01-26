@@ -16,17 +16,14 @@ import PagerScrollMedia from "@shared-components/page-scroll-media/PageScrollMed
 import ListActionOfPost from "@shared-components/action-bottomsheet/ListActionOfPost";
 import ListActionOfComment from "@shared-components/action-bottomsheet/ListActionOfComment";
 import StickBottomModal from "@shared-components/stick-bottom/StickBottomModal";
-<<<<<<< HEAD
+
 import ReportView from "./modal-inner/ReportView";
 import CourseFilterModalInnter from "@screens/course-list/components/course.filter.modal.inner";
 import IconBtn from "@shared-components/button/IconBtn";
 import SelectBox from "@shared-components/modal/modal-inner/SelectBox";
 import LottieComponent from "@shared-components/lottie/LottieComponent";
-=======
-import ReportView from "./ReportView";
 import ActionMore from "@screens/course/detail-teacher/components/ActionMore";
 
->>>>>>> 0f0450f (feat: preview teacher)
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
 // using normal one.
@@ -168,16 +165,13 @@ const SuperModal: React.FC<SuperModalProps> = () => {
           {contentModalType == EnumModalContentType.CommentAction && (
             <ListActionOfComment data={data} />
           )}
-<<<<<<< HEAD
           {contentModalType == EnumModalContentType.FilterListCourse && (
             <CourseFilterModalInnter {...data} />
           )}
           {contentModalType == EnumModalContentType.FilterTypeCourse && (
             <SelectBox {...data} />
-=======
           {contentModalType == EnumModalContentType.MoreTeacher && (
             <ActionMore data={data} />
->>>>>>> 0f0450f (feat: preview teacher)
           )}
         </View>
       </StickBottomModal>

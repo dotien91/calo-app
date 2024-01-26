@@ -39,7 +39,6 @@ import MediaChatScreen from "@screens/chat/profile-chat/chat.media.screen";
 import AddUserGroupChatScreen from "@screens/chat/add-user-to-group-chat/add.user.group.chat.screen";
 import ProfileUserScreen from "@screens/profile-user/profile.screen";
 import EditProfileScreen from "@screens/profile-user/edit-profile/edit.profile.screen";
-<<<<<<< HEAD
 import CourseListScreen from "@screens/course-list/course-list/course.list.screen";
 import CourseSearchScreen from "@screens/course-list/course-search/course.search.screen";
 import CourseFilterResultScreen from "@screens/course-list/course-filter-result/course.filter.result.screen";
@@ -47,13 +46,10 @@ import BookLessonScreen from "@screens/purchase-course/book-lesson/book.lesson.s
 import ChooseClassScreen from "@screens/purchase-course/choose-class/choose.class.screen";
 import CourseCategoryDetailScreen from "@screens/course-list/course-filter-result/course.filter.result.screen";
 import PaymentCoures from "@screens/payment-coures/payment.coures";
-=======
-import CourseListScreen from "@screens/course/course-list/course.list.screen";
 import CoursePreviewScreen from "@screens/course/course-preview/course.preview.screen";
 import DetailTeacherScreen from "@screens/course/detail-teacher/detail.teacher.screen";
 import CourseRate from "@screens/course/course-rate/course.rate.screen";
 import ReviewScreen from "@screens/course/course-preview/review.screen";
->>>>>>> 0f0450f (feat: preview teacher)
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -149,12 +145,11 @@ const Navigation = () => {
       theme={isDarkMode ? DarkTheme : LightTheme}
     >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-       
         <Stack.Screen
           name={SCREENS.COURSE_LIST}
           component={renderTabNavigation}
         />
-         <Stack.Screen
+        <Stack.Screen
           name={SCREENS.CHOOSE_CLASS}
           component={ChooseClassScreen}
         />
@@ -170,11 +165,10 @@ const Navigation = () => {
         />
         <Stack.Screen name={SCREENS.COURSE_RATE} component={CourseRate} />
 
-<<<<<<< HEAD
         <Stack.Screen
           name={SCREENS.COURSE_SEARCH}
           component={CourseSearchScreen}
-=======
+        />
         <Stack.Screen name={SCREENS.HOME} component={renderTabNavigation} />
         <Stack.Screen
           name={SCREENS.TEACHER_DETAIL}
@@ -183,7 +177,6 @@ const Navigation = () => {
         <Stack.Screen
           name={SCREENS.COURSE_LIST_RATE}
           component={ReviewScreen}
->>>>>>> 0f0450f (feat: preview teacher)
         />
 
         <Stack.Screen
