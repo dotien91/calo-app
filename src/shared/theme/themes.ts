@@ -3,7 +3,7 @@ import { Theme } from "@react-navigation/native";
 export const palette = {
   primary: "#E14242",
   mainColor2: "#121118",
-  secondColor: "#FDEBED",
+  secondColor: "#FFEDED",
   error: "#eb032d",
   textInput: "#4f5c61",
   secondary: "#ff6a00",
