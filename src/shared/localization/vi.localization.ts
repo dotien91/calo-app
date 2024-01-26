@@ -511,6 +511,7 @@ export default {
     placeholderReiview: "Nhập đánh giá của bạn",
     sendReview: "Gửi đánh giá",
     updateReview: "Cập nhật đánh giá",
+    certifications: "Chứng chỉ",
   },
   seeAll: "Xem tất cả",
   settings: {

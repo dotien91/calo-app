@@ -8,12 +8,6 @@ interface IPressableBtn extends PressableProps {
   disable?: boolean;
 }
 
-<<<<<<< HEAD
-const PressableBtn = ({ style, onPress, children, ...res }: IPressableBtn) => {
-  return (
-    <Pressable
-      {...res}
-=======
 const PressableBtn = ({
   style,
   onPress,
@@ -23,7 +17,6 @@ const PressableBtn = ({
   return (
     <Pressable
       disabled={disable}
->>>>>>> 207ab41 (feat: course preview)
       style={({ pressed }) => {
         return [{ opacity: pressed ? 0.5 : 1.0 }, style && style];
       }}

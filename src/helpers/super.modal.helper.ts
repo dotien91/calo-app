@@ -12,9 +12,13 @@ export enum EnumModalContentType {
   Report = "report",
   PostAction = "post-action",
   CommentAction = "comment-action",
+<<<<<<< HEAD
   FilterListCourse = "filter-list-course",
   FilterTypeCourse = "filter-type-course",
   SelectBox = "select-box",
+=======
+  MoreTeacher = "more-teacher",
+>>>>>>> 0f0450f (feat: preview teacher)
 }
 
 export enum EnumStyleModalType {

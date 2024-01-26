@@ -1,5 +1,11 @@
 import React from "react";
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  ViewStyle,
+} from "react-native";
 import { useTheme } from "@react-navigation/native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import * as NavigationService from "react-navigation-helpers";
@@ -16,8 +22,12 @@ interface HeaderProps {
   onPressLeft: () => void;
   onPressRight?: () => void;
   textRight?: string;
+<<<<<<< HEAD
   customStyle: ViewStyle;
   badge: number;
+=======
+  style?: ViewStyle;
+>>>>>>> 0f0450f (feat: preview teacher)
 }
 
 const Header = ({
@@ -27,8 +37,12 @@ const Header = ({
   onPressLeft,
   onPressRight,
   textRight,
+<<<<<<< HEAD
   customStyle,
   badge,
+=======
+  style,
+>>>>>>> 0f0450f (feat: preview teacher)
 }: HeaderProps) => {
   const theme = useTheme();
   const { colors } = theme;
@@ -40,7 +54,11 @@ const Header = ({
     }
   };
   return (
+<<<<<<< HEAD
     <View style={[styles.container, customStyle && customStyle]}>
+=======
+    <View style={[styles.container, style]}>
+>>>>>>> 0f0450f (feat: preview teacher)
       <Icon
         onPress={_onPressLeft}
         name={iconNameLeft || "chevron-left"}

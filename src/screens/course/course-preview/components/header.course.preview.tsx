@@ -1,5 +1,6 @@
 import React from "react";
 import { Text, View, StyleSheet, Image } from "react-native";
+import * as NavigationService from "react-navigation-helpers";
 
 import { ICourseItem } from "models/course.model";
 import CS from "@theme/styles";
@@ -10,6 +11,7 @@ import { PlayVideo } from "@screens/course/detail-teacher/components/header.teac
 import { formatVNDate } from "@utils/date.utils";
 import StarRate from "@screens/course/components/star.rate.view";
 import IconSvg from "assets/svg";
+import { SCREENS } from "constants";
 
 interface HeaderCourseProps {
   data?: ICourseItem;
@@ -18,7 +20,11 @@ interface HeaderCourseProps {
 const HeaderCourse = ({ data }: HeaderCourseProps) => {
   const _playVideo = () => {};
 
-  const _gotoDetailTeacher = () => {};
+  const _gotoDetailTeacher = () => {
+    NavigationService.navigate(SCREENS.TEACHER_DETAIL, {
+      idTeacher: data?.user_id?._id,
+    });
+  };
 
   return (
     <View style={styles.container}>

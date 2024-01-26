@@ -58,6 +58,9 @@ import icLanguage from "./icon-language.svg";
 import icCC from "./iconCC.svg";
 import icClock from "./clock.svg";
 import icReviewComment from "./review-comment.svg";
+import icSocialYoutube from "./social-youtube.svg";
+import icCheck from "./c-check.svg";
+import icFlagPoint from "./flag-points.svg";
 
 const Icons = {
   icFlagvi,
@@ -118,6 +121,9 @@ const Icons = {
   icCC,
   icClock,
   icReviewComment,
+  icSocialYoutube,
+  icCheck,
+  icFlagPoint,
 };
 
 interface IconSvgProps {

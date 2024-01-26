@@ -420,6 +420,8 @@ export default {
     placeholderReiview: "Input review",
     sendReview: "Send review",
     updateReview: "Update review",
+    certifications: "Certifications",
+    more: "More",
   },
   seeAll: "See all",
   settings: {

@@ -19,7 +19,7 @@ const TextViewCollapsed = ({ text }: TextViewCollapsedProps) => {
 
   const collapseView = () => {
     setTimeout(() => {
-      setMaxLines(2);
+      setMaxLines(3);
     }, 300);
     Animated.timing(animationHeight, {
       duration: 300,
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   paragraph: {
-    ...CS.hnMedium,
+    ...CS.hnRegular,
     fontSize: 16,
   },
 });

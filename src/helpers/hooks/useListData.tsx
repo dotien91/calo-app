@@ -14,12 +14,8 @@ interface TypedUseListData<T> {
   isFirstLoading: boolean;
   isLoading: boolean;
   setListData: (newListData: T[]) => void;
-<<<<<<< HEAD
-  _requestData: (v: boolean) => void;
-=======
   _requestData: () => void;
   totalCount: number;
->>>>>>> 207ab41 (feat: course preview)
 }
 
 interface TypedRequestParams {
@@ -53,11 +49,6 @@ export function useListData<T>(
 
   const [isLoadMore, setIsLoadmore] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
-<<<<<<< HEAD
-=======
-  const [isFirstLoading, setIsFirstLoading] = useState(!initData.length);
-  const [totalCount, setTotalCount] = useState(0);
->>>>>>> 207ab41 (feat: course preview)
   const isFetching = useRef(false);
 
   useDeepCompareEffect(() => {
@@ -67,13 +58,8 @@ export function useListData<T>(
   const _requestData = (showRefreshing: boolean | true) => {
     isFetching.current = true;
     if (stateListData.nextPage > 1 && showRefreshing) setRefreshing(true);
-<<<<<<< HEAD
     // setIsLoading(true);
     requestData({ page: "1", ...params }).then((res: any) => {
-=======
-    setIsLoading(true);
-    requestData({ page: 1, ...params }).then((res: any) => {
->>>>>>> 207ab41 (feat: course preview)
       const newData = res.data;
       // setIsLoading(false);
       if (!res.isError && lodash.isArray(newData)) {
@@ -174,12 +160,7 @@ export function useListData<T>(
     renderFooterComponent,
     setListData,
     refreshing,
-<<<<<<< HEAD
     isLoading: stateListData.isLoading,
     isFirstLoading: false,
-=======
-    isLoading,
-    totalCount,
->>>>>>> 207ab41 (feat: course preview)
   };
 }

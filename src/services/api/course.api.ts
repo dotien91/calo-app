@@ -19,7 +19,6 @@ export async function getCourseFilterKeys() {
     return response;
   });
 }
-<<<<<<< HEAD
 
 export async function getListTutor(data) {
   return request({
@@ -41,10 +40,7 @@ export async function getCourseClassListById(course_id: string) {
   });
 }
 
-export async function getCourseDetail(id: string) {
-=======
 export async function getCourseDetail(id: string, params) {
->>>>>>> 207ab41 (feat: course preview)
   return request({
     method: METHOD.GET,
     urlPath: `course/detail/${id}`,

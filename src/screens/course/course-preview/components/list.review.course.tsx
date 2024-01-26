@@ -85,7 +85,6 @@ const ListReviewCourse = ({ _id, type, data }: ListReviewCourseProps) => {
     item: ICourseReview;
     index: number;
   }) => {
-    // console.log("index", index, item);
     return <ItemReview key={index} item={item} isFull={type === "full"} />;
   };
 
