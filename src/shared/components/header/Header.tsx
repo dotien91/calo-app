@@ -118,7 +118,8 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
   },
   textHeader: {
-    ...CommonStyle.hnBold,
+    ...CommonStyle.hnSemiBold,
+    fontSize: 20,
     textAlign: "center",
   },
   viewIcons: {

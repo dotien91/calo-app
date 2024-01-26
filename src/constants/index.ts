@@ -38,6 +38,8 @@ export const SCREENS = {
   COURSE_LIST: "CourseList",
   COURSE_SEARCH: "CourseSearch",
   COURSE_CATEGORY: "CourseCategory",
+  BOOK_LESSON: "BookLesson",
+  CHOOSE_CLASS: "ChooseClass",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

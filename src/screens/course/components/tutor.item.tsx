@@ -101,7 +101,7 @@ const TutorItem = ({
             width: 64,
             height: 64,
             borderRadius: 99,
-            marginRight: 4,
+            marginRight: 10,
           }}
           sourceUri={{ uri: user_avatar_thumbnail }}
         />

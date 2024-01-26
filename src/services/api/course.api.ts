@@ -29,3 +29,13 @@ export async function getListTutor(data) {
     return response;
   });
 }
+
+export async function getCourseClassListById(course_id: string) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "course/class/list",
+    params: { course_id },
+  }).then((response) => {
+    return response;
+  });
+}

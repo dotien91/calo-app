@@ -41,8 +41,9 @@ import ProfileUserScreen from "@screens/profile-user/profile.screen";
 import EditProfileScreen from "@screens/profile-user/edit-profile/edit.profile.screen";
 import CourseListScreen from "@screens/course/course-list/course.list.screen";
 import CourseSearchScreen from "@screens/course/course-search/course.search.screen";
-import CourseCategoryDetailScreen from "@screens/course/course-filter-result/course.filter.result.screen";
-
+import CourseFilterResultScreen from "@screens/course/course-filter-result/course.filter.result.screen";
+import BookLessonScreen from "@screens/purchase/book-lesson/book.lesson.screen";
+import ChooseClassScreen from "@screens/purchase/choose-class/choose.class.screen";
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -103,7 +104,6 @@ const Navigation = () => {
       >
         <Tab.Screen name={SCREENS.COURSE_LIST} component={CourseListScreen} />
         <Tab.Screen name={SCREENS.CHAT} component={ListChatScreen} />
-
         <Tab.Screen
           name={SCREENS.NOTIFICATION}
           component={NotificationScreen}
@@ -139,12 +139,17 @@ const Navigation = () => {
     >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen
+          name={SCREENS.CHOOSE_CLASS}
+          component={ChooseClassScreen}
+        />
+        <Stack.Screen name={SCREENS.BOOK_LESSON} component={BookLessonScreen} />
+        <Stack.Screen
           name={SCREENS.COURSE_LIST}
           component={renderTabNavigation}
         />
         <Stack.Screen
           name={SCREENS.COURSE_CATEGORY}
-          component={CourseCategoryDetailScreen}
+          component={CourseFilterResultScreen}
         />
         {renderStackIntro()}
 

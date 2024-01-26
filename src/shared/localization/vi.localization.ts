@@ -1169,4 +1169,21 @@ export default {
     hello: "Xin chào",
     inputTitle: "Nhập tiêu đề cho phiên livestream",
   },
+  purchase: {
+    headerBookLesson: "Đặt lịch học",
+    headerChooseClass: "Chọn lớp",
+
+    timeDuration: "Thời lượng học",
+    chooseDay: "Chọn ngày học",
+    chooseDayDes: "Bạn chỉ được chọn tối đa 4 ngày",
+    timeNote: "Múi giờ của bạn, Asia/Ho Chi Minh (GMT +7:00)",
+    morning: "Sáng",
+    Afternoon: "Chiều",
+    Night: "Tối",
+    hoursNote: "Bạn chỉ được chọn tối đa 2 khung giờ học",
+    orderNow: "Thanh toán!",
+    participants: "Thành viên",
+    startDate: "Ngày bắt đầu",
+    endDate: "Ngày kết thúc",
+  },
 };

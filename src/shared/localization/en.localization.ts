@@ -655,5 +655,22 @@ export default {
     hello: "Hello!",
     inputTitle: "Input title for livestream",
   },
+  purchase: {
+    headerBookLesson: "Book lesson",
+    headerChooseClass: "Choose a class",
+
+    timeDuration: "Time per course",
+    chooseDay: "Choose the day of week",
+    chooseDayDes: "You can only choose up to 4 option for class",
+    timeNote: "In your time zone, Asia/Ho Chi Minh (GMT +7:00)",
+    morning: "Morning",
+    Afternoon: "Afternoon",
+    Night: "Night",
+    hoursNote: "You can only choose up to 2 options fo class hours",
+    orderNow: "Order Now!",
+    participants: "Participants",
+    startDate: "Start date",
+    endDate: "End date",
+  },
 };
 /* eslint-disable max-len */

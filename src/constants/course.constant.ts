@@ -292,3 +292,382 @@ export const sortTutorSelectData = [
     order_by: "DESC",
   },
 ];
+
+export const daysOfWeek = [
+  {
+    value: 1,
+    label: "Mon",
+  },
+  {
+    value: 2,
+    label: "Tue",
+  },
+  {
+    value: 3,
+    label: "Wed",
+  },
+  {
+    value: 4,
+    label: "Thu",
+  },
+  {
+    value: 5,
+    label: "Fri",
+  },
+  {
+    value: 6,
+    label: "Sat",
+  },
+  {
+    value: 0,
+    label: "Sun",
+  },
+];
+
+export const timeOfDay = [
+  {
+    name: "7:00 - 8:00",
+    id: {
+      time_end: "8:00",
+      time_start: "7:00",
+    },
+  },
+  {
+    name: "8:00 - 9:00",
+    id: {
+      time_end: "9:00",
+      time_start: "8:00",
+    },
+  },
+  {
+    name: "9:00 - 10:00",
+    id: {
+      time_end: "10:00",
+      time_start: "9:00",
+    },
+  },
+  {
+    name: "10:00 - 11:00",
+    id: {
+      time_end: "11:00",
+      time_start: "10:00",
+    },
+  },
+  {
+    name: "10:00 - 12:00",
+    id: {
+      time_end: "8:00",
+      time_start: "7:00",
+    },
+  },
+  {
+    name: "13:00 - 14:00",
+    id: {
+      time_end: "14:00",
+      time_start: "13:00",
+    },
+  },
+  {
+    name: "14:00 - 15:00",
+    id: {
+      time_end: "15:00",
+      time_start: "14:00",
+    },
+  },
+  {
+    name: "15:00 - 16:00",
+    id: {
+      time_end: "16:00",
+      time_start: "15:00",
+    },
+  },
+  {
+    name: "16:00 - 17:00",
+    id: {
+      time_end: "17:00",
+      time_start: "16:00",
+    },
+  },
+  {
+    name: "17:00 - 18:00",
+    id: {
+      time_end: "18:00",
+      time_start: "17:00",
+    },
+  },
+  {
+    name: "13:00 - 14:00",
+    id: {
+      time_end: "14:00",
+      time_start: "13:00",
+    },
+  },
+  {
+    name: "13:00 - 14:00",
+    id: {
+      time_end: "14:00",
+      time_start: "13:00",
+    },
+  },
+];
+
+export const exampleData = [
+  {
+    value: 0,
+    label: "Sun",
+    times: [
+      {
+        time_duration: 1,
+        label: "1 hour",
+        times_in_utc: [
+          {
+            label: "0:00 - 1:00",
+            is_picked: false,
+            time_start: 0,
+          },
+          {
+            label: "1:00 - 2:00",
+            is_picked: false,
+            time_start: 1,
+          },
+          {
+            label: "2:00 - 3:00",
+            is_picked: false,
+            time_start: 2,
+          },
+          {
+            label: "3:00 - 4:00",
+            is_picked: false,
+            time_start: 3,
+          },
+          {
+            label: "4:00 - 5:00",
+            is_picked: false,
+            time_start: 4,
+          },
+          {
+            label: "5:00 - 6:00",
+            is_picked: false,
+            time_start: 5,
+          },
+          {
+            label: "6:00 - 7:00",
+            is_picked: false,
+            time_start: 6,
+          },
+          {
+            label: "7:00 - 8:00",
+            is_picked: false,
+            time_start: 7,
+          },
+          {
+            label: "8:00 - 9:00",
+            is_picked: false,
+            time_start: 8,
+          },
+          {
+            label: "9:00 - 10:00",
+            is_picked: false,
+            time_start: 9,
+          },
+          {
+            label: "10:00 - 11:00",
+            is_picked: false,
+            time_start: 10,
+          },
+          {
+            label: "11:00 - 12:00",
+            is_picked: false,
+            time_start: 11,
+          },
+          {
+            label: "12:00 - 13:00",
+            is_picked: false,
+            time_start: 12,
+          },
+          {
+            label: "13:00 - 14:00",
+            is_picked: false,
+            time_start: 13,
+          },
+          {
+            label: "14:00 - 15:00",
+            is_picked: false,
+            time_start: 14,
+          },
+          {
+            label: "15:00 - 16:00",
+            is_picked: false,
+            time_start: 15,
+          },
+          {
+            label: "16:00 - 17:00",
+            is_picked: false,
+            time_start: 16,
+          },
+          {
+            label: "17:00 - 18:00",
+            is_picked: false,
+            time_start: 17,
+          },
+          {
+            label: "18:00 - 19:00",
+            is_picked: false,
+            time_start: 18,
+          },
+          {
+            label: "19:00 - 20:00",
+            is_picked: false,
+            time_start: 19,
+          },
+          {
+            label: "20:00 - 21:00",
+            is_picked: false,
+            time_start: 20,
+          },
+          {
+            label: "21:00 - 22:00",
+            is_picked: false,
+            time_start: 21,
+          },
+          {
+            label: "22:00 - 23:00",
+            is_picked: false,
+            time_start: 22,
+          },
+          {
+            label: "23:00 - 24:00",
+            is_picked: false,
+            time_start: 23,
+          },
+        ],
+      },
+      {
+        time_duration: 2,
+        label: "2 hours",
+        times_in_utc: [
+          {
+            label: "0:00 - 2:00",
+            is_picked: false,
+            time_start: 0,
+          },
+          {
+            label: "1:00 - 3:00",
+            is_picked: false,
+            time_start: 1,
+          },
+          {
+            label: "2:00 - 4:00",
+            is_picked: false,
+            time_start: 2,
+          },
+          {
+            label: "3:00 - 5:00",
+            is_picked: false,
+            time_start: 3,
+          },
+          {
+            label: "4:00 - 6:00",
+            is_picked: false,
+            time_start: 4,
+          },
+          {
+            label: "5:00 - 7:00",
+            is_picked: false,
+            time_start: 5,
+          },
+          {
+            label: "6:00 - 8:00",
+            is_picked: false,
+            time_start: 6,
+          },
+          {
+            label: "7:00 - 9:00",
+            is_picked: false,
+            time_start: 7,
+          },
+          {
+            label: "8:00 - 10:00",
+            is_picked: false,
+            time_start: 8,
+          },
+          {
+            label: "9:00 - 11:00",
+            is_picked: false,
+            time_start: 9,
+          },
+          {
+            label: "10:00 - 12:00",
+            is_picked: false,
+            time_start: 10,
+          },
+          {
+            label: "11:00 - 13:00",
+            is_picked: false,
+            time_start: 11,
+          },
+          {
+            label: "12:00 - 14:00",
+            is_picked: false,
+            time_start: 12,
+          },
+          {
+            label: "13:00 - 15:00",
+            is_picked: false,
+            time_start: 13,
+          },
+          {
+            label: "14:00 - 16:00",
+            is_picked: false,
+            time_start: 14,
+          },
+          {
+            label: "15:00 - 17:00",
+            is_picked: false,
+            time_start: 15,
+          },
+          {
+            label: "16:00 - 18:00",
+            is_picked: false,
+            time_start: 16,
+          },
+          {
+            label: "17:00 - 19:00",
+            is_picked: false,
+            time_start: 17,
+          },
+          {
+            label: "18:00 - 20:00",
+            is_picked: false,
+            time_start: 18,
+          },
+          {
+            label: "19:00 - 21:00",
+            is_picked: false,
+            time_start: 19,
+          },
+          {
+            label: "20:00 - 22:00",
+            is_picked: false,
+            time_start: 20,
+          },
+          {
+            label: "21:00 - 23:00",
+            is_picked: false,
+            time_start: 21,
+          },
+          {
+            label: "22:00 - 24:00",
+            is_picked: false,
+            time_start: 22,
+          },
+          {
+            label: "23:00 - 1:00",
+            is_picked: false,
+            time_start: 23,
+          },
+        ],
+      },
+    ],
+  },
+];

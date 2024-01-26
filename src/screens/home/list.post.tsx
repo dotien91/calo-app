@@ -18,7 +18,7 @@ import { useListData } from "@helpers/hooks/useListData";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import EmptyResultView from "@shared-components/empty.data.component";
 import { TypedPost } from "shared/models";
-import LottieComponent from "@shared-components/lottie/LottieComponent";
+import LoadingList from "@shared-components/loading.list.component";
 
 interface ListPostProps {
   isFollowingPost: boolean;
@@ -69,7 +69,7 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
   const {
     listData,
     onEndReach,
-    isFirstLoading,
+    isLoading,
     refreshControl,
     renderFooterComponent,
     _requestData,
@@ -99,8 +99,14 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
     }, 200);
   };
 
-  if (isFirstLoading) {
-    return <LottieComponent />;
+  if (isLoading) {
+    return (
+      <>
+        <LoadingList />
+        <LoadingList />
+        <LoadingList />
+      </>
+    );
   }
 
   const renderEmpty = () => {

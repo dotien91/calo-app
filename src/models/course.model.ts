@@ -72,3 +72,17 @@ export enum EnumTutorFilter {
   timeAvailable = "timeAvailable",
   levelOfTutor = "levelOfTutor",
 }
+
+export interface IClass {
+  bio: string;
+  certificates: string;
+  country: string;
+  createdAt: string;
+  description: string;
+  display_name: string;
+  educations: string;
+  rating: string;
+  tutor_level: string;
+  user_avatar_thumbnail: string;
+  _id: string;
+}

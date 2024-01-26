@@ -106,6 +106,11 @@ const CS = StyleSheet.create({
     borderStyle: "solid",
     borderBottomWidth: 1,
   },
+  borderTopStyle: {
+    borderColor: palette.borderColor,
+    borderStyle: "solid",
+    borderTopWidth: 1,
+  },
   text: {
     fontSize: 14,
     lineHeight: 16,
