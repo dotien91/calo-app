@@ -40,6 +40,8 @@ import AddUserGroupChatScreen from "@screens/chat/add-user-to-group-chat/add.use
 import ProfileUserScreen from "@screens/profile-user/profile.screen";
 import EditProfileScreen from "@screens/profile-user/edit-profile/edit.profile.screen";
 import CourseListScreen from "@screens/course/course-list/course.list.screen";
+import CourseSearchScreen from "@screens/course/course-search/course.search.screen";
+import CourseCategoryDetailScreen from "@screens/course/course-filter-result/course.filter.result.screen";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -99,8 +101,9 @@ const Navigation = () => {
           },
         })}
       >
-        <Stack.Screen name={SCREENS.COURSE_LIST} component={CourseListScreen} />
+        <Tab.Screen name={SCREENS.COURSE_LIST} component={CourseListScreen} />
         <Tab.Screen name={SCREENS.CHAT} component={ListChatScreen} />
+
         <Tab.Screen
           name={SCREENS.NOTIFICATION}
           component={NotificationScreen}
@@ -135,9 +138,20 @@ const Navigation = () => {
       theme={isDarkMode ? DarkTheme : LightTheme}
     >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen
+          name={SCREENS.COURSE_LIST}
+          component={renderTabNavigation}
+        />
+        <Stack.Screen
+          name={SCREENS.COURSE_CATEGORY}
+          component={CourseCategoryDetailScreen}
+        />
         {renderStackIntro()}
 
-        <Stack.Screen name={SCREENS.HOME} component={renderTabNavigation} />
+        <Stack.Screen
+          name={SCREENS.COURSE_SEARCH}
+          component={CourseSearchScreen}
+        />
 
         <Stack.Screen
           name={SCREENS.PROFILE_CHAT}

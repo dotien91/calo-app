@@ -150,8 +150,10 @@ export default {
   selectImage: "Select Image",
   draft: "Draft",
   public: "Public",
-  cancelEdit: "Xác nhận hủy",
+  cancelEdit: "Cancel confirm",
   cancelEditDes: "Các chỉnh sửa sẽ không được lưu lại. Bạn có muốn tiếp tục?",
+  clear: "Clear all",
+  searchForKey: "Kết quả cho từ khoá: ",
   post: {
     post: "Post",
     posts: "Post",
@@ -356,6 +358,22 @@ export default {
     requireLevel: "Require level",
     requireLevelDes: "SORRY YOU ARE NOT LEVEL ENOUGH TO OPEN THIS COURSE",
     emptyCourse: "There are no courses available",
+    teacher: "Giáo viên",
+    typeLearning: "Kiểu học tập",
+    formLearning: "Hình thức học",
+    skills: "Kỹ năng",
+    filterSpeaker: "Giáo viên bản địa",
+    viewResult: (text: string) =>
+      text != "0" ? "View " + text + " courses" : "No result find",
+    viewResultTutor: (text: string) =>
+      text != 0 ? "View " + text + " tutors" : "No result find",
+    priceCourse: "Giá khoá học",
+    filterLevel: "Cấp độ khoá học",
+    select: "Chọn",
+    price_low: "Price: lowest first",
+    price_high: "Price: highest first",
+    rating: "Highest rating",
+    newest: "Sort by newest",
   },
   settings: {
     shortcut: "Shortcut",
@@ -567,6 +585,8 @@ export default {
     finish: "Finish",
   },
   noResult: "No result found!",
+  results: "results",
+  sort_by_relevance: "Sort by relevance",
   startChat: "Start a conversation!",
   startChatDesc:
     "Send a friendly message asking about their learning journey or discussing a common interest to start an interesting conversation.",

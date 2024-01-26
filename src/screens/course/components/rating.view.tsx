@@ -5,8 +5,8 @@ import { useTheme } from "@react-navigation/native";
 /**
  * ? Local Imports
  */
-import createStyles from "./course.component.style";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import createStyles from "../course.style";
 
 interface RatingViewProps {
   rating: number;

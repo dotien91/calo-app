@@ -31,3 +31,44 @@ export interface ICourseItem {
   module_child_count: number;
   hashtag_id: any[];
 }
+
+export interface IListCourseFilterParams {
+  limit: number;
+  search?: string;
+}
+// const courseFilterKeysDefault = {
+//   levels: ["4+", "5+", "6+", "7+", "8+", "9"],
+//   skills: ["All skills", "Listening", "Reading", "Writing", "Speaking"],
+//   types: ["All forms", "Call 1-1", "Self-learning", "Call group"],
+//   price: "slider",
+//   onlyEnglishNativeSpeakers: "checkbox",
+// };
+export interface ICourseFilterKeys {
+  levels: string[];
+  skills: string[];
+  types: string[];
+  price: string;
+  onlyEnglishNativeSpeakers: string;
+}
+
+export enum EnumCourseType {
+  course = "course",
+  tutor = "tutor",
+}
+
+export enum EnumCourseFilter {
+  types = "types",
+  skills = "skills",
+  price = "price",
+  levels = "levels",
+  onlyEnglishNativeSpeakers = "onlyEnglishNativeSpeakers",
+}
+
+export enum EnumTutorFilter {
+  types = "types",
+  skills = "skills",
+  price = "price",
+  onlyEnglishNativeSpeakers = "onlyEnglishNativeSpeakers",
+  timeAvailable = "timeAvailable",
+  levelOfTutor = "levelOfTutor",
+}

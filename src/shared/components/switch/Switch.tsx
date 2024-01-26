@@ -1,3 +1,4 @@
+import { palette } from "@theme/themes";
 import React, { useEffect, useRef, useState } from "react";
 import { StyleProp, StyleSheet, ViewStyle } from "react-native";
 import {
@@ -36,11 +37,7 @@ const TRACK_CIRCLE_WIDTH = SWITCH_CONTAINER_WIDTH - CIRCLE_WIDTH - BORDER * 2;
 const config: Animated.WithSpringConfig = {
   overshootClamping: true,
 };
-const SwitchComponent = ({
-  value,
-  onChange,
-  backgroundColor,
-}: SwitchComponentProps) => {
+const SwitchComponent = ({ value, onChange }: SwitchComponentProps) => {
   const [isToggled, setIsToggled] = useState(value);
   const translateX = useSharedValue(!value ? 0 : TRACK_CIRCLE_WIDTH);
   useEffect(() => {
@@ -70,7 +67,7 @@ const SwitchComponent = ({
       backgroundColor: interpolateColor(
         translateX.value,
         [0, TRACK_CIRCLE_WIDTH],
-        ["white", backgroundColor],
+        ["white", palette.primary],
       ),
     };
   });

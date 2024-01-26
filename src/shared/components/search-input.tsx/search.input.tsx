@@ -12,22 +12,27 @@ import createStyles from "./search.input.style";
 import { TextInput } from "react-native-gesture-handler";
 import { translations } from "@localization";
 import CommonStyle from "@theme/styles";
+import IconBtn from "@shared-components/button/IconBtn";
 
 interface ISearchInput {
   txtSearch: string;
   setTxtSearch?: (text: string) => void;
   onCancel: () => void;
+  showBackBtn: boolean;
   autoFocus: boolean;
   onPressInput?: () => void;
   showCancelBtn: boolean;
+  onSubmitEditing?: () => void;
 }
 
 const SearchInput: React.FC<ISearchInput> = ({
   onPressInput,
   setTxtSearch,
   autoFocus = true,
+  showBackBtn,
   onCancel,
   showCancelBtn = false,
+  onSubmitEditing,
 }) => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
@@ -41,7 +46,7 @@ const SearchInput: React.FC<ISearchInput> = ({
     setTxtSearch(v);
   };
 
-  const onSearchDebounce = debounce(_onSearch, 1000);
+  const onSearchDebounce = React.useCallback(debounce(_onSearch, 1000), []);
 
   const onPress = () => {
     if (onPressInput) {
@@ -64,8 +69,25 @@ const SearchInput: React.FC<ISearchInput> = ({
     setTxt("");
   };
 
+  const _onSubmitEditing = () => {
+    if (onSubmitEditing) {
+      onSubmitEditing(txt);
+      return;
+    }
+    _onSearch();
+  };
+
   return (
     <View style={styles.box}>
+      {showBackBtn && (
+        <IconBtn
+          size={28}
+          color={colors.textOpacity6}
+          customStyle={{ paddingRight: 12 }}
+          name={"chevron-left"}
+          onPress={_onCancel}
+        />
+      )}
       <TouchableOpacity style={styles.wrapInput} onPress={onPress}>
         <Icon
           name={"search"}
@@ -82,14 +104,14 @@ const SearchInput: React.FC<ISearchInput> = ({
             editable={!disableInput}
             ref={inputSearchRef}
             style={styles.searchInput}
-            placeholderTextColor={colors.placeholder}
+            placeholderTextColor={colors.textOpacity4}
             placeholder={translations.search}
             value={txt}
             onChangeText={(v) => {
               setTxt(v);
               onSearchDebounce(v);
             }}
-            onSubmitEditing={_onSearch}
+            onSubmitEditing={_onSubmitEditing}
             autoFocus={autoFocus}
           />
         </View>
@@ -104,7 +126,7 @@ const SearchInput: React.FC<ISearchInput> = ({
         )}
       </TouchableOpacity>
 
-      {showCancelBtn && (
+      {!!showCancelBtn && (
         <TouchableOpacity onPress={_onCancel}>
           <Text style={{ ...CommonStyle.hnRegular, marginLeft: 10 }}>
             {translations.cancel}

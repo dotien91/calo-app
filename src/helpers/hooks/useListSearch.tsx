@@ -1,66 +1,69 @@
 import React, { useCallback, useRef, useState } from "react";
-import { ActivityIndicator, RefreshControl, View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import { palette } from "@theme/themes";
 import lodash from "lodash";
 import useDeepCompareEffect from "use-deep-compare-effect";
-// onEndReach: (info?: { distanceFromEnd: number }) => void;
-// refreshControl: () => JSX.Element;
-// renderFooterComponent: () => JSX.Element;
-interface TypedUseListData<T> {
+
+interface TypedUseListSearch<T> {
   listData: T[];
   nextPage: number;
   isLastPage: boolean;
   refreshing: boolean;
-  isFirstLoading: boolean;
   isLoading: boolean;
+  onEndReach: (info?: { distanceFromEnd: number }) => void;
+  refreshControl: () => JSX.Element;
+  renderFooterComponent: () => JSX.Element;
   setListData: (newListData: T[]) => void;
   _requestData: (v: boolean) => void;
 }
 
 interface TypedRequestParams {
-  limit: string;
+  limit?: string;
   search?: string;
-  page?: number;
+  page?: string;
 }
 
-interface TypedStateListData<T> {
+interface TypedStateListSearch<T> {
   listData: T[];
   nextPage: number;
   isLastPage: boolean;
   totalCount: number;
-  isLoading: boolean;
   noData: boolean;
 }
 
-export function useListData<T>(
+export function useListSearch<T>(
   params: TypedRequestParams,
   requestData: (params: TypedRequestParams) => Promise<T[]>,
   initData: T[] = [],
-): TypedUseListData<T> {
-  const [stateListData, setStateListData] = useState<TypedStateListData<T>>({
+): TypedUseListSearch<T> {
+  const [stateListData, setStateListData] = useState<TypedStateListSearch<T>>({
     listData: initData,
     nextPage: 1,
     isLastPage: false,
     totalCount: 0,
-    isLoading: true,
     noData: false,
   });
 
   const [isLoadMore, setIsLoadmore] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const isFetching = useRef(false);
 
   useDeepCompareEffect(() => {
-    _requestData(false);
+    setStateListData((oldState) => ({
+      ...oldState,
+      listData: [],
+      totalCount: 0,
+    }));
+    _requestData();
   }, [params]);
 
-  const _requestData = (showRefreshing: boolean | true) => {
+  const _requestData = () => {
     isFetching.current = true;
-    if (stateListData.nextPage > 1 && showRefreshing) setRefreshing(true);
-    // setIsLoading(true);
+    setIsLoading(true);
     requestData({ page: "1", ...params }).then((res: any) => {
+      console.log("Request");
       const newData = res.data;
-      // setIsLoading(false);
+      setIsLoading(false);
       if (!res.isError && lodash.isArray(newData)) {
         isFetching.current = false;
 
@@ -71,15 +74,12 @@ export function useListData<T>(
         } else {
           nextPage = 2;
         }
-        setRefreshing(false);
         setStateListData((oldState) => ({
           ...oldState,
           isLastPage,
           nextPage,
           listData: newData,
           totalCount: res?.headers?.["x-total-count"] || 0,
-          isLoading: false,
-          noData: !newData.length,
         }));
       }
     });
@@ -110,6 +110,7 @@ export function useListData<T>(
               isLastPage,
               nextPage,
               listData: [...stateListData.listData, ...newData],
+              totalCount: res?.headers?.["x-total-count"] || 0,
             }));
           } else {
             setStateListData((oldState) => ({
@@ -128,15 +129,6 @@ export function useListData<T>(
     }));
   }, []);
 
-  const refreshControl = () => (
-    <RefreshControl
-      onRefresh={_requestData}
-      refreshing={refreshing}
-      tintColor={palette.grey2}
-      colors={[palette.grey2]}
-    />
-  );
-
   const renderFooterComponent = () => {
     if (!isLoadMore) return <View />;
     return (
@@ -146,19 +138,18 @@ export function useListData<T>(
     );
   };
 
+  const a = 1;
+
   return {
     listData: stateListData.listData,
     nextPage: stateListData.nextPage,
     isLastPage: stateListData.isLastPage,
     totalCount: stateListData.totalCount,
-    noData: stateListData.noData,
     onEndReach,
-    refreshControl,
     _requestData,
     renderFooterComponent,
     setListData,
-    refreshing,
-    isLoading: stateListData.isLoading,
-    isFirstLoading: false,
+    isLoading,
+    a,
   };
 }

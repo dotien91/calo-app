@@ -15,6 +15,11 @@ import { useMemo, useCallback } from "use-memo-one";
 import SwitchComponent from "@shared-components/switch/Switch";
 interface SettingScreenProps {}
 
+const optionsLanguage = [
+  { label: "Tiếng Việt", value: "vi" },
+  { label: "English", value: "en" },
+];
+
 const SettingScreen: React.FC<SettingScreenProps> = () => {
   const theme = useTheme();
   const { colors } = theme;
@@ -22,11 +27,6 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
   const [languageSelected, setLanguageSelected] = useState(
     useStore((state) => state.language),
   );
-
-  const [items, setItems] = useState([
-    { label: "Tiếng Việt", value: "vi" },
-    { label: "English", value: "en" },
-  ]);
 
   const setLanguage = useStore((state) => state.setLanguage);
   const language = useStore((state) => state.language);
@@ -84,8 +84,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
       <DropDownItem
         value={languageSelected}
         setValue={setLanguageSelected}
-        items={items}
-        setItems={setItems}
+        items={optionsLanguage}
       />
     </SafeAreaView>
   );

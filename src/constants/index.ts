@@ -36,6 +36,8 @@ export const SCREENS = {
   PROFILE_CURRENT_USER: "ProfileCurentUser",
   EDIT_PROFILE: "EditProfile",
   COURSE_LIST: "CourseList",
+  COURSE_SEARCH: "CourseSearch",
+  COURSE_CATEGORY: "CourseCategory",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

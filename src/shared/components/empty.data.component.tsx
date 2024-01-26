@@ -25,6 +25,7 @@ const EmptyResultView = ({
         justifyContent: "center",
         alignItems: "center",
         paddingHorizontal: 40,
+        marginTop: 16,
       }}
     >
       {!!icon && (

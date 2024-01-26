@@ -32,11 +32,12 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
   const {
     listData,
     onEndReach,
-    isFirstLoading,
+    isLoading,
     refreshControl,
     renderFooterComponent,
     _requestData,
     setListData,
+    noData,
   } = useListData<TypedGeneralRoomChat>({ limit: 6 }, getListChat);
 
   const onRefresh = () => {
@@ -115,8 +116,8 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
       <View style={{ height: 12 }} />
       <ListFriend />
       <View style={{ height: 8 }} />
-      {isFirstLoading && <LoadingList />}
-      {!listData?.length && !isFirstLoading && (
+      {isLoading && <LoadingList />}
+      {noData && (
         <EmptyResultView
           title={translations.noNewMessageTittle}
           desc={translations.noNewMessageDesc}

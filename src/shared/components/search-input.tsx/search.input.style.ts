@@ -6,25 +6,24 @@ import CommonStyle from "@theme/styles";
 export default (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
-    box: { ...CommonStyle.flexRear, width: "100%", paddingHorizontal: 12 },
+    box: { ...CommonStyle.flexRear, width: "100%", paddingHorizontal: 16 },
     wrapInput: {
-      ...CommonStyle.borderStyle,
       ...CommonStyle.flexStart,
-      borderRadius: 30,
+      borderRadius: 8,
       flex: 1,
-      height: 42,
+      height: 32,
+      backgroundColor: colors.bgInput,
     },
     searchInput: {
       paddingLeft: 40,
-      color: colors.grey2,
-      height: 40,
+      color: colors.textOpacity4,
       flex: 1,
     },
     iconSearch: {
-      color: colors.grey2,
+      color: colors.textOpacity6,
       position: "absolute",
       left: 12,
-      top: 10,
+      top: 6,
     },
     iconClose: {
       position: "absolute",

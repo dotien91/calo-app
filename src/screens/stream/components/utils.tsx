@@ -1,6 +1,10 @@
 import React from "react";
 import { SvgXml } from "react-native-svg";
 
+export const numberWithCommas = (x) => {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
 export const IconLike = ({ width, height }) => {
   const xml = `
   <svg width="101" height="101" viewBox="0 0 101 101" xmlns="http://www.w3.org/2000/svg">

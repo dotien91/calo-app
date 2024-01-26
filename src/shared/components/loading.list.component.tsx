@@ -71,7 +71,8 @@ const LoadingList = () => {
           </View>
         </View>
       </View>
-      <View style={{ width: "100%", alignSelf: "center" }}>
+
+      {/* <View style={{ width: "100%", alignSelf: "center" }}>
         <View
           style={{
             flexDirection: "row",
@@ -102,7 +103,7 @@ const LoadingList = () => {
             />
           </View>
         </View>
-      </View>
+      </View> */}
     </SkeletonPlaceholder>
   );
 };

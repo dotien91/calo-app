@@ -1,15 +1,16 @@
 import React, { ReactNode } from "react";
-import { Pressable, StyleProp, ViewStyle } from "react-native";
+import { Pressable, PressableProps, StyleProp, ViewStyle } from "react-native";
 
-interface IPressableBtn {
+interface IPressableBtn extends PressableProps {
   onPress: () => void;
   style?: StyleProp<ViewStyle>;
   children: ReactNode;
 }
 
-const PressableBtn = ({ style, onPress, children }: IPressableBtn) => {
+const PressableBtn = ({ style, onPress, children, ...res }: IPressableBtn) => {
   return (
     <Pressable
+      {...res}
       style={({ pressed }) => {
         return [{ opacity: pressed ? 0.5 : 1.0 }, style && style];
       }}

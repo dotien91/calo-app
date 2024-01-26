@@ -22,8 +22,10 @@ import PagerScrollMedia from "@shared-components/page-scroll-media/PageScrollMed
 import ListActionOfPost from "@shared-components/action-bottomsheet/ListActionOfPost";
 import ListActionOfComment from "@shared-components/action-bottomsheet/ListActionOfComment";
 import StickBottomModal from "@shared-components/stick-bottom/StickBottomModal";
-import ReportView from "./ReportView";
-
+import ReportView from "./modal-inner/ReportView";
+import CourseFilterModalInnter from "@screens/course/components/course.filter.modal.inner";
+import IconBtn from "@shared-components/button/IconBtn";
+import SelectBox from "@shared-components/modal/modal-inner/SelectBox";
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
 // using normal one.
@@ -131,6 +133,24 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         onPressClose={closeModal}
       >
         <View style={styles.bottomInner}>
+          <IconBtn
+            onPress={closeModal}
+            name={"x"}
+            size={32}
+            customStyle={styles.closeIcon}
+          />
+          <View
+            style={{
+              height: 4,
+              width: 32,
+              borderRadius: 99,
+              backgroundColor: palette.grey3,
+              position: "absolute",
+              left: "50%",
+              marginRight: 16,
+              top: 8,
+            }}
+          />
           {contentModalType == EnumModalContentType.Report && (
             <ReportView {...data} />
           )}
@@ -139,6 +159,12 @@ const SuperModal: React.FC<SuperModalProps> = () => {
           )}
           {contentModalType == EnumModalContentType.CommentAction && (
             <ListActionOfComment data={data} />
+          )}
+          {contentModalType == EnumModalContentType.FilterListCourse && (
+            <CourseFilterModalInnter {...data} />
+          )}
+          {contentModalType == EnumModalContentType.FilterTypeCourse && (
+            <SelectBox {...data} />
           )}
         </View>
       </StickBottomModal>
@@ -176,6 +202,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
+    paddingVertical: 16,
   },
   modalMedia: {
     ...CommonStyle.flexCenter,
@@ -216,6 +243,12 @@ const styles = StyleSheet.create({
     color: palette.text,
     textAlign: "center",
     marginBottom: 12,
+  },
+  closeIcon: {
+    position: "absolute",
+    left: 14,
+    top: 24,
+    zIndex: 1,
   },
 });
 

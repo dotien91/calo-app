@@ -1,7 +1,7 @@
 import { Theme } from "@react-navigation/native";
 
 export const palette = {
-  primary: "#FA8072",
+  primary: "#E14242",
   mainColor2: "#121118",
   secondColor: "#FDEBED",
   error: "#eb032d",
@@ -9,15 +9,15 @@ export const palette = {
   secondary: "#ff6a00",
   background: "#fff",
   background2: "#F0F0F0",
-  placeholder: "#59595999",
+  placeholder: "rgba(22, 28, 36, 0.4)",
   placeholder2: "#737373",
   borderColor2: "#DCDBE2",
   white: "#fff",
   black: "#101214",
   button: "#1c1e21",
   shadow: "#757575",
-  text: "#30363b",
-  borderColor: "#DCDBE2",
+  text: "#161C24",
+  borderColor: "rgba(0, 53, 128, 0.2)",
   borderColorDark: "#333942",
   danger: "rgb(208, 2, 27)",
   title: "rgb(102, 102, 102)",
@@ -36,7 +36,7 @@ export const palette = {
   blue: "#0a86cf",
   orange: "#ea7a16",
   green: "#60d140",
-  timeColor: "#797979",
+  timeColor: "rgba(22, 28, 36, 0.64)",
   Transparent: "#00000000",
   backgroundMain: "#FA8072",
   // background: "#FA8072",
@@ -49,8 +49,8 @@ export const palette = {
   lightText: "#FA8072",
 
   btnNegative: "#FA8072",
-  btnActive: "#FA8072",
-  btnInactive: "#FA8072",
+  btnActive: "#E14242",
+  // btnInactive: "#E8EBEF",
   btnLight: "#F5F5F5",
   btnLightSmoke: "#FA8072",
 
@@ -62,9 +62,17 @@ export const palette = {
   pink: "#ed435c",
   backgroundClose: "#121118",
   baseColor2: "#FA8072",
-  grey2: "#595959",
-  grey3: "#A6A6A6",
+  grey2: "rgba(240, 243, 246, 1)",
+  grey3: "rgba(232, 235, 239, 1)",
   grey1: "#D9D9D9",
+  btnInactive: "rgba(0, 53, 128, 0.1)",
+  textOpacity8: "rgba(22, 28, 36, 0.8)",
+  textOpacity6: "rgba(22, 28, 36, 0.64)",
+  textOpacity4: "rgba(22, 28, 36, 0.4)",
+  gold: "rgba(255, 163, 71, 1)",
+  bgInput: "rgba(232, 235, 239, 1)",
+  bgBestSeller: "rgba(255, 237, 237, 1)",
+  red: "rgba(252, 53, 53, 1)",
 };
 
 interface ExtendedTheme extends Theme {

@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, ViewStyle, TouchableOpacity } from "react-native";
 import CommonStyle from "@theme/styles";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import { palette } from "@theme/themes";
 
 interface IconType {
   name: string;
@@ -15,6 +16,18 @@ interface IconType {
 const IconBtn = React.forwardRef(
   ({ name, color, size, customStyle, onPress }: IconType) => {
     if (!name) return null;
+    if (!onPress)
+      return (
+        <Icon
+          name={name}
+          type={IconType.Feather}
+          size={size}
+          style={[
+            { color: color || palette.text },
+            !!customStyle && customStyle,
+          ]}
+        />
+      );
 
     return (
       <TouchableOpacity

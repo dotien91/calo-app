@@ -12,6 +12,9 @@ export enum EnumModalContentType {
   Report = "report",
   PostAction = "post-action",
   CommentAction = "comment-action",
+  FilterListCourse = "filter-list-course",
+  FilterTypeCourse = "filter-type-course",
+  SelectBox = "select-box",
 }
 
 export enum EnumStyleModalType {
@@ -22,7 +25,7 @@ export enum EnumStyleModalType {
 export interface IShowModalParams {
   contentModalType: EnumModalContentType;
   styleModalType: EnumStyleModalType;
-  data: any;
+  data?: any;
 }
 
 interface ToastProps {

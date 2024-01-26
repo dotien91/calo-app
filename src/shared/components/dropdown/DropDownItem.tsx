@@ -16,14 +16,12 @@ interface DropDownItemProps {
   value: string;
   setValue: Dispatch<SetStateCallback<string>>;
   items: ItemType[];
-  setItems: Dispatch<SetStateCallback<ItemType[]>>;
 }
 
 export default function DropDownItem({
   value,
   setValue,
   items,
-  setItems,
 }: DropDownItemProps) {
   const [open, setOpen] = useState(false);
   const theme = useTheme();
@@ -36,8 +34,10 @@ export default function DropDownItem({
         value={value}
         items={items}
         setOpen={setOpen}
-        setValue={setValue}
-        setItems={setItems}
+        setValue={(e) => {
+          setValue(e);
+          alert(e);
+        }}
         multiple={false}
       />
     </View>

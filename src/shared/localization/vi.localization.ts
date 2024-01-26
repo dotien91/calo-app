@@ -129,7 +129,6 @@ export default {
   search: "Tìm kiếm...",
   notInGroup: "Bạn đang không ở trong nhóm nào",
   createChannel: "Bạn có thể tạo hệ thống theo những bước sau",
-  search: "Tìm kiếm...",
   notInGroup: "Bạn đang không ở trong nhóm nào",
   createChannelDes: "Bạn có thể tạo hệ thống theo những bước sau",
   joinViaInvite:
@@ -158,6 +157,8 @@ export default {
   add: "Thêm mới",
   cancelEdit: "Xác nhận hủy",
   cancelEditDes: "Các chỉnh sửa sẽ không được lưu lại. Bạn có muốn tiếp tục?",
+  clear: "Xoá tất cả",
+  searchForKey: "Kết quả cho từ khoá: ",
   viewMore: "Xem chi tiết",
   role: "Vai trò",
   free: "Miễn phí",
@@ -450,6 +451,22 @@ export default {
     notificationPublicCourse: "Bạn chắc chắn muốn công khai khoá học này?",
     publicCourseSuccess: "Công khai khoá học thành công",
     noModuleInCourse: "Chưa có bài học nào",
+    teacher: "Giáo viên",
+    typeLearning: "Kiểu học tập",
+    formLearning: "Hình thức học",
+    skills: "Kỹ năng",
+    filterSpeaker: "Giáo viên bản địa",
+    viewResult: (text: string) =>
+      text != 0 ? "Xem" + text + " khoá học" : "Không tìm thấy kết quả",
+    viewResultTutor: (text: string) =>
+      text != 0 ? "Xem " + text + " giáo viên" : "Không tìm thấy kết quả",
+    priceCourse: "Giá khoá học",
+    filterLevel: "Cấp độ khoá học",
+    select: "Chọn",
+    price_low: "Giá: thấp nhất",
+    price_high: "Giá: cao nhất",
+    rating: "Đánh giá cao nhất",
+    newest: "Mới nhất",
   },
   settings: {
     numberOfDays: "Số ngày diễn ra",
@@ -1077,6 +1094,8 @@ export default {
     introducePoint: "Sử dụng để mở khoá các khoá học trong kênh",
     introduceDiamond: "Một loại tiền ảo dùng như tiền mua hàng",
   },
+  results: "kết quả",
+  sort_by_relevance: "Sắp xếp theo tiêu chí",
   noResult: "Không tìm thấy kết quả",
   startChat: "Bắt đầu cuộc trò chuyện!",
   startDesc:

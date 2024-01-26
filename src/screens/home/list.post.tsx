@@ -3,7 +3,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { FlatList, View } from "react-native";
-import LottieView from "lottie-react-native";
 import { useTheme } from "@react-navigation/native";
 
 import ItemPost from "./components/post-item/post.item";
@@ -19,6 +18,7 @@ import { useListData } from "@helpers/hooks/useListData";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import EmptyResultView from "@shared-components/empty.data.component";
 import { TypedPost } from "shared/models";
+import LottieComponent from "@shared-components/lottie/LottieComponent";
 
 interface ListPostProps {
   isFollowingPost: boolean;
@@ -100,22 +100,7 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
   };
 
   if (isFirstLoading) {
-    return (
-      <View
-        style={{
-          ...CommonStyle.safeAreaView,
-          backgroundColor: colors.background2,
-        }}
-      >
-        <LottieView
-          style={CommonStyle.flex1}
-          resizeMode="cover"
-          source={require("./lottie/loading.json")}
-          autoPlay
-          loop
-        />
-      </View>
-    );
+    return <LottieComponent />;
   }
 
   const renderEmpty = () => {

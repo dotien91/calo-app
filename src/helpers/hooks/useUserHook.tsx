@@ -14,11 +14,15 @@ import { palette } from "@theme/themes";
 export const useUserHook = () => {
   const setUserData = useStore((state) => state.setUserData);
   const setLinkAvatar = useStore((state) => state.setLinkAvatar);
-  const userData = useStore((state) => state.userData);
+  // const userData = useStore((state) => state.userData);
   const initListFollow = useStore((state) => state.initListFollow);
 
+  // const isLoggedIn = () => {
+  //   return !!_getJson(USER_TOKEN) && !!userData?._id;
+  // };
+
   const isLoggedIn = () => {
-    return !!_getJson(USER_TOKEN) && !!userData?._id;
+    return _getJson(USER_TOKEN);
   };
 
   const handleLogin = (token: string) => {
