@@ -28,6 +28,7 @@ export const countNumberFilter = (params) => {
 };
 
 export const getLabelHourLesson = (data) => {
+  console.log("222222", data);
   let hasMorningLabel = false;
   let hasAfternoonLabel = false;
   let hasNightLabel = false;

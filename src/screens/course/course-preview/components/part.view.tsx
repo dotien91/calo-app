@@ -1,12 +1,9 @@
 import * as React from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  ActivityIndicator,
-  Dimensions,
-} from "react-native";
+import { Text, View, StyleSheet, Dimensions } from "react-native";
 import * as Animatable from "react-native-animatable";
+import FileViewer from "react-native-file-viewer";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import RNFS from "react-native-fs";
 
 import Accordion from "react-native-collapsible/Accordion";
 import PressableBtn from "@shared-components/button/PressableBtn";
@@ -15,18 +12,23 @@ import { palette } from "@theme/themes";
 import { getListModule } from "@services/api/course.api";
 import { ICourseModuleItem } from "models/course.model";
 import useStore from "@services/zustand/store";
+import { showToast } from "@helpers/super.modal.helper";
+import LoadingList from "@shared-components/loading.list.component";
+import { formatTime } from "@utils/date.utils";
+import IconSvg from "assets/svg";
+import { downloadFileToPath } from "@helpers/file.helper";
 import { translations } from "@localization";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 const { width } = Dimensions.get("screen");
 interface PartViewProps {
   id: string;
-  hide: boolean;
+  hide?: boolean;
+  onPressItem?: (item: any) => void;
+  isLearnScreen?: boolean;
 }
 
-const PartView = ({ id, hide }: PartViewProps) => {
+const PartView = ({ id, hide, onPressItem, isLearnScreen }: PartViewProps) => {
   const userData = useStore((state) => state.userData);
-
   const param = {
     auth_id: userData?._id,
     course_id: id,
@@ -36,24 +38,15 @@ const PartView = ({ id, hide }: PartViewProps) => {
   const [activeSections, setActiveSections] = React.useState<number[]>([0]);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
-  const getFullData = async (data: ICourseModuleItem[]) => {
-    const dataFull = data;
-    for (let index = 0; index < data.length; index++) {
-      const element = data[index];
-      param.parent_id = element._id;
-      await getListModule(param).then((res) => {
-        dataFull[index].child = res.data;
-      });
-    }
-    return [...dataFull];
-  };
-
   const _getListModule = async () => {
     getListModule(param).then(async (res) => {
-      const data: ICourseModuleItem[] = res.data;
-      const dataFull = await getFullData(data);
-      setIsLoading(false);
-      setSectionList(dataFull);
+      if (!res.isError) {
+        setIsLoading(false);
+        setSectionList(res.data);
+      } else {
+        setIsLoading(false);
+        showToast({ type: "error", message: res.mesage });
+      }
     });
   };
 
@@ -107,8 +100,14 @@ const PartView = ({ id, hide }: PartViewProps) => {
           easing="ease-out"
           animation={isActive ? "zoomIn" : "zoomOut"}
         >
-          {section.child?.map((item) => (
-            <Lession key={item._id} data={item} />
+          {section.children?.map((item, index) => (
+            <Lession
+              key={item._id}
+              index={index}
+              data={item}
+              pressItem={() => onPressItem && onPressItem(item)}
+              isLearnScreen={isLearnScreen}
+            />
           ))}
         </Animatable.View>
       </Animatable.View>
@@ -127,31 +126,18 @@ const PartView = ({ id, hide }: PartViewProps) => {
     return null;
   }
 
-  if (isLoading) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.paragraph}>
-          {translations.course.educationProgram}
-        </Text>
-        <ActivityIndicator size={"large"} />
-      </View>
-    );
-  } else {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.paragraph}>
-          {translations.course.educationProgram}
-        </Text>
-        <Accordion
-          sections={sectionList}
-          activeSections={activeSections}
-          renderHeader={_renderHeader}
-          renderContent={_renderContent}
-          onChange={() => {}}
-        />
-      </View>
-    );
-  }
+  return (
+    <View style={styles.container}>
+      {isLoading && <LoadingList />}
+      <Accordion
+        sections={sectionList}
+        activeSections={activeSections}
+        renderHeader={_renderHeader}
+        renderContent={_renderContent}
+        onChange={() => {}}
+      />
+    </View>
+  );
 };
 
 export default React.memo(PartView);
@@ -166,28 +152,114 @@ const styles = StyleSheet.create({
   },
   viewContent: {
     flexDirection: "row",
-    height: 40,
+    height: 52,
     alignItems: "center",
     paddingVertical: 4,
-  },
-  paragraph: {
-    ...CS.hnMedium,
   },
   textDetail: {
     ...CS.hnRegular,
     fontSize: 16,
     lineHeight: 24,
   },
+  textDes: {
+    ...CS.hnRegular,
+    fontSize: 12,
+    lineHeight: 16,
+    color: palette.textOpacity6,
+  },
 });
 
 interface LessionProps {
   data: any;
+  pressItem: () => void;
+  index: number;
+  isLearnScreen?: boolean;
 }
 
-const Lession = ({ data }: LessionProps) => {
+const Lession = ({ data, pressItem, index, isLearnScreen }: LessionProps) => {
+  const media_duration = data.media_id.media_meta.find(
+    (i) => i.key === "duration",
+  )?.value;
+  const fileCourseLocal = useStore((state) => state.fileCourseLocal);
+  const addFileCourseLocal = useStore((state) => state.addFileCourseLocal);
+  const isDownload = fileCourseLocal.filter((item) => item.id === data._id);
+  const _downloadFile = async () => {
+    if (isDownload.length > 0) {
+      console.log("isDownload...", isDownload);
+      FileViewer.open(isDownload[0].localFile);
+    } else {
+      data.media_id.media_url, data._id;
+      const file = await downloadFileToPath(
+        data.media_id.media_url,
+        `${RNFS.DocumentDirectoryPath}/${data._id}`,
+      );
+      console.log("fileLocal...", fileCourseLocal);
+      if (file) {
+        addFileCourseLocal(data._id, file);
+      }
+    }
+  };
+
   return (
-    <PressableBtn style={styles.viewContent} onPress={() => console.log(data)}>
-      <Animatable.Text style={styles.textDetail}>{data.title}</Animatable.Text>
+    <PressableBtn style={styles.viewContent} onPress={pressItem}>
+      <View
+        style={{
+          width: 32,
+          height: 32,
+          borderRadius: 16,
+          ...CS.center,
+          backgroundColor: palette.background2,
+          marginRight: 8,
+        }}
+      >
+        {data.type === "video" ? (
+          <Text style={CS.hnRegular}>{index + 1}</Text>
+        ) : (
+          <IconSvg name="icFile" size={16} />
+        )}
+      </View>
+      <View style={{ flex: 1, height: 60, justifyContent: "center" }}>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          {data.is_view && <IconSvg name="icCheckCircleFill" size={16} />}
+          {data.is_view && <View style={{ width: 4 }} />}
+          <Animatable.Text style={styles.textDetail}>
+            {data.title}
+          </Animatable.Text>
+        </View>
+        {data.type === "video" && (
+          <Animatable.Text style={styles.textDes}>
+            {data.type === "video" ? "video - " : ""}
+            {formatTime(media_duration)} {translations.minutes}
+          </Animatable.Text>
+        )}
+      </View>
+      {data.type === "video" && !isLearnScreen && (
+        <Icon type={IconType.Ionicons} name={"play-circle-outline"} size={20} />
+      )}
+      {data.type !== "video" && isLearnScreen && (
+        <PressableBtn
+          style={{
+            width: 20,
+            height: 20,
+            borderRadius: 10,
+            backgroundColor: palette.background2,
+            ...CS.center,
+          }}
+          onPress={() => {
+            _downloadFile(data.media_id.media_url, data._id);
+          }}
+        >
+          {isDownload.length == 0 ? (
+            <Icon
+              type={IconType.Ionicons}
+              name={"download-outline"}
+              size={13}
+            />
+          ) : (
+            <IconSvg name="icCheckCircleFill" size={16} />
+          )}
+        </PressableBtn>
+      )}
     </PressableBtn>
   );
 };

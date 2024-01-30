@@ -56,6 +56,7 @@ import SettingUser from "@screens/setting-user/setting.user";
 import ChangeLanguage from "@screens/change-language/change.language";
 import SmartBanking from "@screens/smart-banking/smart.banking";
 import PaymentSuccess from "@screens/payment-success/payment.success";
+import CourseLearnScreen from "@screens/course/course-learn-video/course.learn.video.screen";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -181,6 +182,10 @@ const Navigation = () => {
         <Stack.Screen
           name={SCREENS.TEACHER_DETAIL}
           component={DetailTeacherScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.COURSE_LEARN_VIDEO_SCREEN}
+          component={CourseLearnScreen}
         />
         <Stack.Screen
           name={SCREENS.COURSE_LIST_RATE}

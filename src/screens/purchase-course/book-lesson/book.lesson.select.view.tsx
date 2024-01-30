@@ -15,7 +15,6 @@ import { getLabelHourLesson } from "@screens/course-tab/course.helper";
 import IconBtn from "@shared-components/button/IconBtn";
 import { palette } from "@theme/themes";
 import { getTimeAvailableTeacher } from "@services/api/course.api";
-import LoadingList from "@shared-components/loading.list.component";
 import { SCREENS } from "constants";
 
 interface BookLessonSelectViewProps {}
@@ -270,8 +269,6 @@ const BookLessonSelectView: React.FC<BookLessonSelectViewProps> = () => {
       </PressableBtn>
     );
   };
-
-  if (loading || !data?.length) return <LoadingList />;
 
   return (
     <ScrollView style={styles.container}>

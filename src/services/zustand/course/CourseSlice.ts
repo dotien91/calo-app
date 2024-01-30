@@ -16,6 +16,31 @@ interface ICurrentSort {
   id: string;
   name: string;
 }
+export interface CourseSlice {
+  fileCourseLocal: { id: string; localFile: string }[];
+  addFileCourseLocal: (id: string, localFile: string) => void;
+}
+
+const createCoursePostSlice: StoreSlice<CourseSlice> = (set) => ({
+  fileCourseLocal: [],
+  addFileCourseLocal: (id: string, localFile: string) => {
+    set((state) => {
+      const index = state.fileCourseLocal.findIndex((item) => item.id === id);
+      if (index < 0) {
+        return {
+          fileCourseLocal: [
+            ...state.fileCourseLocal,
+            { id: id, localFile: localFile },
+          ],
+        };
+      } else {
+        return {
+          fileCourseLocal: [...state.fileCourseLocal],
+        };
+      }
+    });
+  },
+});
 
 export interface CourseSlice {
   listCourseFilterParams: IListCourseFilterParams;

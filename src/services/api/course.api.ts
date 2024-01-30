@@ -107,3 +107,22 @@ export async function updateReview(data: IUpdateReview) {
     return response;
   });
 }
+
+export async function getTimeAvailable(params) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "course/one-one/time-available",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}
+export async function updateViewed(data: { module_id: string }) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "course/view",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}

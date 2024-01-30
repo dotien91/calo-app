@@ -50,6 +50,7 @@ export const SCREENS = {
   CHANGELANGUAGE: "ChangeLanguage",
   SMARTBANKING: "SmartBanking",
   PAYMENT_SUCCESS: "PaymentSuccess",
+  COURSE_LEARN_VIDEO_SCREEN: "CourseLearnVideoScreen",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

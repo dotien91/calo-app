@@ -411,6 +411,23 @@ export const timeOfDay = [
   },
 ];
 
+export interface TimeAvailableType {
+  time_duration: number;
+  label: string;
+  times_in_utc: {
+    label: string;
+    is_picked: boolean;
+    time_start: number;
+  }[];
+}
+
+export interface TypeTimeAvailableRes {
+  value: number;
+  label: string;
+  times: TimeAvailableType[];
+}
+[];
+
 export const exampleData = [
   {
     value: 0,

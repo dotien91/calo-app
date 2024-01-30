@@ -25,6 +25,32 @@ export function getLastDayOfWeek(currentDate: Date): Date {
 }
 
 /**
+ * Get last day of week
+ * @param currentDate
+ */
+
+export function getDayOfWeek(day: number) {
+  switch (day) {
+    case 0:
+      return "Sun";
+    case 1:
+      return "Mon";
+    case 2:
+      return "Tue";
+    case 3:
+      return "Wed";
+    case 4:
+      return "Thu";
+    case 5:
+      return "Fri";
+    case 6:
+      return "Sat";
+    default:
+      return "";
+  }
+}
+
+/**
  * Calculate age from date
  * @param birthday
  */
@@ -269,6 +295,11 @@ export const formatVNDate = (date) => {
   return `${day < 10 ? `0${day}` : day}/${
     month < 10 ? `0${month}` : month
   }/${year}`;
+};
+export const formatTime = (time: number) => {
+  const minute = Math.floor(time / 60);
+  const sec = Math.floor(time % 60);
+  return `${minute}:${sec < 10 ? "0" : ""}${sec}`;
 };
 
 export const isSameMinute = (date1: string, date2: string) => {

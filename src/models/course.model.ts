@@ -51,7 +51,8 @@ export interface ICourseModuleItem {
   type: string;
   createdAt: string;
   updatedAt: string;
-  child?: ICourseModuleItem[];
+  children?: ICourseModuleItem[];
+  parent_id: string;
 }
 
 export interface ICourseReview {
@@ -145,4 +146,16 @@ export interface IClassRoom {
   start_time: string;
   updatedAt: string;
   _id: string;
+}
+
+export interface TypedModule {
+  course_id: string;
+  createdAt: string;
+  title: string;
+  updatedAt: string;
+  user_id: TypedUser;
+  _id: string;
+  parent_id: string;
+  media_id: TypedMedia;
+  is_view: boolean;
 }

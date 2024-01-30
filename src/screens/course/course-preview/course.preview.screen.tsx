@@ -3,6 +3,7 @@ import { StyleSheet, ScrollView, View, Text } from "react-native";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
 // import * as NavigationService from "react-navigation-helpers";
 import { useRoute } from "@react-navigation/native";
+import * as NavigationService from "react-navigation-helpers";
 
 import HeaderCourse from "./components/header.course.preview";
 import BuyButton from "../components/buy.button";
@@ -22,6 +23,10 @@ import PressableBtn from "@shared-components/button/PressableBtn";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";
 import eventEmitter from "@services/event-emitter";
+import BookLessonSelectView from "../components/book-lesson/book.lesson.select.view";
+import ChooseClassSelectView from "../components/choose-class/choose.class.select.view";
+import EnrollNow from "../components/EnrollNow";
+import { SCREENS } from "constants";
 
 const CoursePreviewScreen = () => {
   const userData = useStore((state) => state.userData);
@@ -32,10 +37,11 @@ const CoursePreviewScreen = () => {
 
   const [data, setData] = useState<ICourseItem>();
   const route = useRoute();
-  const course_id = route.params?.["course_id"];
+  // const course_id = route.params?.["course_id"];
   // const course_id = "65b773efb11a3c94cc62c5e2";
-  // const course_id = "65b77490b11a3c94cc62c69a"; //class room
+  const course_id = "65b77490b11a3c94cc62c69a"; //class room
 
+  // const course_id = "65c0411bb513eeff42783867" // video
   // const course_id = "6583a1fc8e5e75e353a7bedf"; // tonyvu
   // const course_id = "65b389be0f42bfed90716e2f"; // dangth
   // const course_id = "65b386fd0f42bfed90716957"; // tonyvu
@@ -116,6 +122,14 @@ const CoursePreviewScreen = () => {
 
   const _shareCourse = () => {};
 
+  const _pressItem = (item) => {
+    console.log("item...", item);
+    NavigationService.navigate(SCREENS.COURSE_LEARN_VIDEO_SCREEN, {
+      source: item,
+      course_id: course_id,
+    });
+  };
+
   return (
     <View style={styles.container}>
       <Header iconNameRight="share-outline" onPressRight={_shareCourse} />
@@ -127,7 +141,10 @@ const CoursePreviewScreen = () => {
         nestedScrollEnabled={true}
       >
         <HeaderCourse data={data} />
-        <BuyButton data={data} type="full" />
+        {!data?.is_join && <BuyButton data={data} type="full" />}
+        {/* {data?.is_join &&  */}
+        <EnrollNow data={data} course_id={course_id} />
+        {/* } */}
         {/* <AddToCartButton data={data} type="full" /> */}
         <TabSelect />
         {tabSelected == 1 && (
@@ -137,7 +154,19 @@ const CoursePreviewScreen = () => {
             <DescriptionView data={data} />
           </View>
         )}
-        <PartView id={course_id} hide={tabSelected == 1} />
+        {data?.type === "Call 1-1" && tabSelected !== 1 && (
+          <BookLessonSelectView course_id={course_id} />
+        )}
+        {data?.type === "Call group" && tabSelected !== 1 && (
+          <ChooseClassSelectView course_id={course_id} />
+        )}
+        {data?.type === "Self-learning" && (
+          <PartView
+            id={course_id}
+            hide={tabSelected == 1}
+            onPressItem={_pressItem}
+          />
+        )}
 
         <AuthorView data={data} />
         <ListReviewCourse _id={course_id} type="top" data={data} />

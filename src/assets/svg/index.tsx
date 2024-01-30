@@ -61,6 +61,12 @@ import icReviewComment from "./review-comment.svg";
 import icSocialYoutube from "./social-youtube.svg";
 import icCheck from "./c-check.svg";
 import icFlagPoint from "./flag-points.svg";
+import icBackward from "./backward-10.svg";
+import icForward from "./forward-10.svg";
+import icPlay from "./button-play.svg";
+import icPause from "./button-pause.svg";
+import icShareScreen from "./device-connection.svg";
+import icFullScreen from "./arrows-maximize.svg";
 
 const Icons = {
   icFlagvi,
@@ -124,6 +130,12 @@ const Icons = {
   icSocialYoutube,
   icCheck,
   icFlagPoint,
+  icBackward,
+  icForward,
+  icPlay,
+  icPause,
+  icShareScreen,
+  icFullScreen,
 };
 
 interface IconSvgProps {
