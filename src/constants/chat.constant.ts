@@ -29,3 +29,10 @@ export enum EnumMediaTypeFile {
   Audio = "audio",
   Gif = "gif",
 }
+
+export enum PaymentMethod {
+  VNPay = "VNPay",
+  SmartBanking = "SmartBanking",
+  NotChoose = "NotChoose",
+  Init = "Init",
+}
