@@ -122,6 +122,8 @@ PODS:
   - nanopb/decode (2.30909.1)
   - nanopb/encode (2.30909.1)
   - PromisesObjC (2.3.1)
+  - PromisesSwift (2.3.1):
+    - PromisesObjC (= 2.3.1)
   - RCT-Folly (2021.07.22.00):
     - boost
     - DoubleConversion
@@ -459,10 +461,11 @@ PODS:
     - React-Core
   - react-native-splash-screen (3.3.0):
     - React-Core
-  - react-native-video (5.2.1):
+  - react-native-video (6.0.0-beta.4):
     - React-Core
-    - react-native-video/Video (= 5.2.1)
-  - react-native-video/Video (5.2.1):
+    - react-native-video/Video (= 6.0.0-beta.4)
+  - react-native-video/Video (6.0.0-beta.4):
+    - PromisesSwift
     - React-Core
   - react-native-webview (13.6.4):
     - RCT-Folly (= 2021.07.22.00)
@@ -758,6 +761,7 @@ SPEC REPOS:
     - MMKVCore
     - nanopb
     - PromisesObjC
+    - PromisesSwift
     - SDWebImage
     - SDWebImageWebPCoder
     - SocketRocket
@@ -950,6 +954,7 @@ SPEC CHECKSUMS:
   MMKVCore: 31b4cb83f8266467eef20a35b6d78e409a11060d
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
+  PromisesSwift: 28dca69a9c40779916ac2d6985a0192a5cb4a265
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
   RCTRequired: a2faf4bad4e438ca37b2040cb8f7799baa065c18
   RCTTypeSafety: cb09f3e4747b6d18331a15eb05271de7441ca0b3
@@ -975,7 +980,7 @@ SPEC CHECKSUMS:
   react-native-rtmp-publisher: 50571f7db2de0555316b5d125d650c5af21e14c6
   react-native-safe-area-context: 0ee144a6170530ccc37a0fd9388e28d06f516a89
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
-  react-native-video: c26780b224543c62d5e1b2a7244a5cd1b50e8253
+  react-native-video: 6078b448c21630b0a2937436527ad54fd2a1fdd8
   react-native-webview: 121397a02eb58554c24d0c3e26acf676ff6a87d2
   React-NativeModulesApple: 482d369753b009ace05d7fb678e70a0105e68eeb
   React-perflogger: 6bd153e776e6beed54c56b0847e1220a3ff92ba5

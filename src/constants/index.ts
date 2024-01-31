@@ -40,6 +40,7 @@ export const SCREENS = {
   COURSE_CATEGORY: "CourseCategory",
   BOOK_LESSON: "BookLesson",
   CHOOSE_CLASS: "ChooseClass",
+  PAYMENT_COURES: "PaymentCoures",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

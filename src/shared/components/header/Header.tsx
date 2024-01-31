@@ -7,6 +7,7 @@ import * as NavigationService from "react-navigation-helpers";
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
 import { ViewStyle } from "react-native-size-matters";
+import { getStatusBarHeight } from "react-native-safearea-height";
 
 interface HeaderProps {
   iconNameLeft?: string;
@@ -116,6 +117,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     elevation: 1,
     shadowRadius: 5,
+    marginTop: getStatusBarHeight()
   },
   textHeader: {
     ...CommonStyle.hnSemiBold,

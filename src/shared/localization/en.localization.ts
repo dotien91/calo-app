@@ -672,5 +672,21 @@ export default {
     startDate: "Start date",
     endDate: "End date",
   },
+  payment: {
+    paymentmethod: "Payment method",
+    paymentdetail: "Payment Detail",
+    totalpayment: "Total Payment",
+    vnpay: "VNPay",
+    smartbanking: "Smart Banking",
+    formforLearning: "Form for learning",
+    class: "Class",
+    days: "Days",
+    learningtime: "Learning Time",
+    promo: "Promo",
+    errorpaymentmethod: "You haven’t chosen the payment method",
+    couresfree: "Course free",
+    completecheckout: "Complete Checkout",
+    promotion: "Promotion",
+  },
 };
 /* eslint-disable max-len */
