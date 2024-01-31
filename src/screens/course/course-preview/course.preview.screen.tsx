@@ -111,15 +111,11 @@ const CoursePreviewScreen = () => {
     }
   };
 
-  const _goBack = () => {};
   const _shareCourse = () => {};
 
   return (
     <View style={styles.container}>
-      <Header
-        iconNameRight="share-outline"
-        onPressRight={_shareCourse}
-      />
+      <Header iconNameRight="share-outline" onPressRight={_shareCourse} />
       <ScrollView
         style={CS.flex1}
         onScroll={handleScroll}

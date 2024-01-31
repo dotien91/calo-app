@@ -1,6 +1,5 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import * as NavigationService from "react-navigation-helpers";
 import { useRoute } from "@react-navigation/native";
 
 import ListReviewCourse from "./components/list.review.course";
@@ -14,9 +13,7 @@ const ReviewScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Header
-        text={translations.course.rate}
-      />
+      <Header text={translations.course.rate} />
       <ListReviewCourse type="full" _id={_id} />
     </View>
   );

@@ -51,6 +51,7 @@ import DetailTeacherScreen from "@screens/course/detail-teacher/detail.teacher.s
 import CourseRate from "@screens/course/course-rate/course.rate.screen";
 import ReviewScreen from "@screens/course/course-preview/review.screen";
 import HomeScreen from "@screens/home/home.screen";
+import CourseCreate from "@screens/course/course-create/course.create";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -148,6 +149,7 @@ const Navigation = () => {
       theme={isDarkMode ? DarkTheme : LightTheme}
     >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name={SCREENS.COURSR_CREATE} component={CourseCreate} />
         <Stack.Screen
           name={SCREENS.COURSE_LIST}
           component={renderTabNavigation}

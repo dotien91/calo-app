@@ -423,6 +423,10 @@ export default {
     certifications: "Certifications",
     more: "More",
     previewThisCourse: "Preview this course",
+    title: "Title",
+    longDescription: "Long description",
+    startTime: "Start time",
+    endTime: "End time",
   },
   seeAll: "See all",
   settings: {

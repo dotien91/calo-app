@@ -42,8 +42,8 @@ const CourseItem = ({
   const styles = useMemo(() => createStyles(theme), [theme]);
 
   const openPreviewCourse = () => {
-    NavigationService.navigate(SCREENS.COURSE_DETAIL, {course_id: _id})
-  }
+    NavigationService.navigate(SCREENS.COURSE_DETAIL, { course_id: _id });
+  };
 
   const renderInfo = () => {
     return (
