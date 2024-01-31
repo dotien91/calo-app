@@ -142,9 +142,7 @@ const CoursePreviewScreen = () => {
       >
         <HeaderCourse data={data} />
         {!data?.is_join && <BuyButton data={data} type="full" />}
-        {/* {data?.is_join &&  */}
-        <EnrollNow data={data} course_id={course_id} />
-        {/* } */}
+        {data?.is_join && <EnrollNow data={data} course_id={course_id} />}
         {/* <AddToCartButton data={data} type="full" /> */}
         <TabSelect />
         {tabSelected == 1 && (
