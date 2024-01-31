@@ -39,12 +39,12 @@ import MediaChatScreen from "@screens/chat/profile-chat/chat.media.screen";
 import AddUserGroupChatScreen from "@screens/chat/add-user-to-group-chat/add.user.group.chat.screen";
 import ProfileUserScreen from "@screens/profile-user/profile.screen";
 import EditProfileScreen from "@screens/profile-user/edit-profile/edit.profile.screen";
-import CourseListScreen from "@screens/course/course-list/course.list.screen";
-import CourseSearchScreen from "@screens/course/course-search/course.search.screen";
-import CourseFilterResultScreen from "@screens/course/course-filter-result/course.filter.result.screen";
+import CourseListScreen from "@screens/course-list/course-list/course.list.screen";
+import CourseSearchScreen from "@screens/course-list/course-search/course.search.screen";
+import CourseFilterResultScreen from "@screens/course-list/course-filter-result/course.filter.result.screen";
 import BookLessonScreen from "@screens/purchase/book-lesson/book.lesson.screen";
 import ChooseClassScreen from "@screens/purchase/choose-class/choose.class.screen";
-import CourseCategoryDetailScreen from "@screens/course/course-filter-result/course.filter.result.screen";
+import CourseCategoryDetailScreen from "@screens/course-list/course-filter-result/course.filter.result.screen";
 import PaymentCoures from "@screens/payment-coures/payment.coures";
 
 // ? If you want to use stack or tab or both

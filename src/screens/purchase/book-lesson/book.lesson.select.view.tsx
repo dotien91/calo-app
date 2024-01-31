@@ -9,7 +9,7 @@ import { exampleData, daysOfWeek } from "constants/course.constant";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { translations } from "@localization";
 import CS from "@theme/styles";
-import { getLabelHourLesson } from "@screens/course/course.helper";
+import { getLabelHourLesson } from "@screens/course-list/course.helper";
 import IconBtn from "@shared-components/button/IconBtn";
 import { palette } from "@theme/themes";
 
