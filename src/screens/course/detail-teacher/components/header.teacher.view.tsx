@@ -19,7 +19,6 @@ interface HeaderDetailTeacherProps {
 }
 
 const HeaderDetailTeacher = ({ data }: HeaderDetailTeacherProps) => {
-  console.log("dataHeqader...", data);
   const _openLinkingFB = () => {
     Linking.openURL(data?.links[0].facebook);
   };
@@ -52,12 +51,12 @@ const HeaderDetailTeacher = ({ data }: HeaderDetailTeacherProps) => {
 
       {data?.links.length > 0 && (
         <View style={styles.viewCenter}>
-          {data?.links[0].facebook && (
+          {data?.links[0].facebook?.trim() !== "" && (
             <TouchableOpacity onPress={_openLinkingFB} style={styles.viewIcon}>
               <IconSvg name="icFacebook" size={32} color={palette.blue} />
             </TouchableOpacity>
           )}
-          {data?.links[0].youtube && (
+          {data?.links[0].youtube?.trim() !== "" && (
             <TouchableOpacity
               onPress={_openLinkingYoutube}
               style={styles.viewIcon}
@@ -65,7 +64,7 @@ const HeaderDetailTeacher = ({ data }: HeaderDetailTeacherProps) => {
               <IconSvg name="icSocialYoutube" size={32} />
             </TouchableOpacity>
           )}
-          {data?.links[0].website && (
+          {data?.links[0].website?.trim() !== "" && (
             <TouchableOpacity onPress={_openLinkingWeb} style={styles.viewIcon}>
               <IconSvg
                 name="icLink"
@@ -90,10 +89,12 @@ const styles = StyleSheet.create({
   txtFullname: {
     ...CS.hnBold,
     fontSize: 20,
+    marginTop: 8,
   },
   viewCount: {
+    marginTop: 8,
     paddingHorizontal: 20,
-    height: 80,
+    height: 52,
     ...CS.center,
     flexDirection: "row",
   },
@@ -142,9 +143,9 @@ export const PlayVideo = ({ onPress }) => {
       <Icon
         size={62}
         onPress={onPress}
-        name={"play-circle"}
+        name={"play"}
         type={IconType.Ionicons}
-        color={palette.primary}
+        color={palette.white}
       />
     </View>
   );

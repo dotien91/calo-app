@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     backgroundColor: palette.primary,
     marginHorizontal: 16,
     height: 40,
-    borderRadius: 4,
+    borderRadius: 8,
   },
   textBtn: {
     ...CS.hnSemiBold,

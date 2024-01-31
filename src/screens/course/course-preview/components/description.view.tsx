@@ -4,6 +4,7 @@ import { View, StyleSheet, Text } from "react-native";
 import CS from "@theme/styles";
 import { translations } from "@localization";
 import { ICourseItem } from "models/course.model";
+import { palette } from "@theme/themes";
 
 interface DescriptionViewProps {
   data?: ICourseItem;
@@ -23,15 +24,15 @@ export default memo(DescriptionView);
 const styles = StyleSheet.create({
   container: {
     // marginHorizontal: 16,
-    marginTop: 8,
-    overflow: "hidden",
+    marginTop: 20,
   },
   paragraph: {
     ...CS.hnMedium,
     fontSize: 20,
   },
   txtDes: {
-    ...CS.hnMedium,
-    fontSize: 16,
+    ...CS.flex1,
+    ...CS.hnRegular,
+    color: palette.textOpacity8,
   },
 });

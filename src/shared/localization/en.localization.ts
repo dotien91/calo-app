@@ -422,6 +422,7 @@ export default {
     updateReview: "Update review",
     certifications: "Certifications",
     more: "More",
+    previewThisCourse: "Preview this course",
   },
   seeAll: "See all",
   settings: {

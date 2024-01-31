@@ -23,7 +23,9 @@ const AuthorView = ({ data }: AuthorViewProps) => {
 
   const IconText = ({ nameIcon, text }: { nameIcon: string; text: string }) => {
     return (
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
+      <View
+        style={{ flexDirection: "row", alignItems: "center", marginTop: 8 }}
+      >
         <IconSvg name={nameIcon} size={24} color={palette.textOpacity6} />
         <Text style={[styles.txtBodyContent, { marginLeft: 8 }]}>{text}</Text>
       </View>
@@ -38,13 +40,13 @@ const AuthorView = ({ data }: AuthorViewProps) => {
       <Text style={styles.txtSubTitle}>
         {data?.user_id?.display_name || ""}
       </Text>
-      <Text style={styles.txtBodyContent}>
+      <Text style={[styles.txtBodyContent, { marginTop: 8 }]}>
         {translations.course.instructor}
       </Text>
-      <View style={{ flexDirection: "row" }}>
+      <View style={{ flexDirection: "row", marginTop: 8 }}>
         <Avatar
           sourceUri={{ uri: data?.avatar?.media_thumbnail }}
-          style={{ width: 88, height: 88, borderRadius: 44 }}
+          style={{ width: 88, height: 88, borderRadius: 44, marginTop: 8 }}
         />
         <View style={{ marginLeft: 8, justifyContent: "space-between" }}>
           <IconText
@@ -83,17 +85,18 @@ export default React.memo(AuthorView);
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 16,
-    marginTop: 8,
+    marginTop: 20,
   },
 
   txtContentTitle: {
-    ...CS.hnBold,
+    ...CS.hnSemiBold,
     fontSize: 24,
     lineHeight: 32,
   },
   txtSubTitle: {
     ...CS.hnSemiBold,
     lineHeight: 24,
+    marginTop: 16,
   },
   txtBodyContent: {
     ...CS.hnMedium,

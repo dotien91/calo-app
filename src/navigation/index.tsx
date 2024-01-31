@@ -110,6 +110,8 @@ const Navigation = () => {
         })}
       >
         <Tab.Screen name={SCREENS.COURSE_LIST} component={CourseListScreen} />
+        <Stack.Screen name={SCREENS.HOME} component={HomeScreen} />
+        <Stack.Screen name={SCREENS.COURSE_LIST} component={CourseListScreen} />
         <Tab.Screen name={SCREENS.CHAT} component={ListChatScreen} />
         <Tab.Screen
           name={SCREENS.NOTIFICATION}
@@ -163,6 +165,7 @@ const Navigation = () => {
           name={SCREENS.COURSE_DETAIL}
           component={CoursePreviewScreen}
         />
+        <Stack.Screen name={SCREENS.HOME} component={renderTabNavigation} />
         <Stack.Screen name={SCREENS.COURSE_RATE} component={CourseRate} />
 
         <Stack.Screen

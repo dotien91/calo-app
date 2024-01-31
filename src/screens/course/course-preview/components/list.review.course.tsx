@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Text, View, StyleSheet, FlatList } from "react-native";
-import PageScroll from "@shared-components/page-scroll/PageScroll";
 import * as NavigationService from "react-navigation-helpers";
 
 import { getListReview } from "@services/api/course.api";
@@ -18,6 +17,7 @@ import IconSvg from "assets/svg";
 import { SCREENS } from "constants";
 import eventEmitter from "@services/event-emitter";
 import useStore from "@services/zustand/store";
+import { ScrollView } from "react-native-gesture-handler";
 interface ListReviewCourseProps {
   _id: string;
   type: "full" | "top";
@@ -34,7 +34,7 @@ const ListReviewCourse = ({ _id, type, data }: ListReviewCourseProps) => {
     onEndReach,
     refreshControl,
     renderFooterComponent,
-  } = useListData<ICourseReview>({ limit: 8, course_id: _id }, getListReview);
+  } = useListData<ICourseReview>({ limit: 50, course_id: _id }, getListReview);
 
   const [reviewOfMe, setReviewOfMe] = useState<ICourseReview>();
 
@@ -97,15 +97,17 @@ const ListReviewCourse = ({ _id, type, data }: ListReviewCourseProps) => {
   }) => {
     return (
       <View
-        style={{
-          marginRight: 28,
-          width: isFull ? WINDOW_WIDTH - 32 : WINDOW_WIDTH - 60,
-          backgroundColor: palette.background2,
-          borderRadius: 8,
-          paddingHorizontal: 16,
-          paddingVertical: 12,
-          marginBottom: isFull ? 8 : 0,
-        }}
+        style={[
+          styles.viewItemReview,
+          {
+            width: isFull ? WINDOW_WIDTH - 32 : WINDOW_WIDTH - 90,
+            marginBottom: 8,
+          },
+          isFull && {
+            marginLeft: 1,
+            marginRight: 1,
+          },
+        ]}
       >
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Avatar
@@ -116,7 +118,7 @@ const ListReviewCourse = ({ _id, type, data }: ListReviewCourseProps) => {
             style={{ flex: 1, marginLeft: 8, justifyContent: "space-between" }}
           >
             <Text style={styles.nameReview}>{item.user_id.display_name}</Text>
-            <Text>{formatVNDate(item.updatedAt)}</Text>
+            <Text style={styles.txtDetail}>{formatVNDate(item.updatedAt)}</Text>
           </View>
         </View>
 
@@ -135,8 +137,10 @@ const ListReviewCourse = ({ _id, type, data }: ListReviewCourseProps) => {
   if (type === "top") {
     return (
       <View style={styles.container}>
-        <Text style={styles.txtContentTitle}>{translations.course.rate},</Text>
-        <View style={[CS.flex1, { flexDirection: "row", gap: 8 }]}>
+        <Text style={styles.txtContentTitle}>{translations.course.rate}</Text>
+        <View
+          style={[CS.flex1, { flexDirection: "row", gap: 8, marginTop: 12 }]}
+        >
           <View style={styles.viewCountReview}>
             <View style={CS.flex1}>
               <Text style={styles.txtContentTitle}>{totalCount}</Text>
@@ -153,16 +157,31 @@ const ListReviewCourse = ({ _id, type, data }: ListReviewCourseProps) => {
               </Text>
               <Text style={styles.txtDetail}>{translations.course.rate}</Text>
             </View>
-            <IconSvg size={24} name="icStarFull" color={palette.text} />
+            <IconSvg size={24} name="icStar" color={palette.text} />
           </View>
         </View>
-        <View style={{ height: 200, marginTop: 8 }}>
-          <PageScroll scrollEnabled={true} length={listData.slice(0, 3).length}>
-            {listData.slice(0, 3).map((item: ICourseReview, index: number) => {
-              return <ItemReview key={index} item={item} />;
-            })}
-          </PageScroll>
-        </View>
+        {listData.length > 0 && (
+          <View
+            style={{
+              height: 200,
+              paddingVertical: 4,
+              marginVertical: 4,
+              // backgroundColor: "red",
+            }}
+          >
+            <ScrollView
+              horizontal
+              scrollEnabled={true}
+              showsHorizontalScrollIndicator={false}
+            >
+              {listData
+                .slice(0, 3)
+                .map((item: ICourseReview, index: number) => {
+                  return <ItemReview key={index} item={item} />;
+                })}
+            </ScrollView>
+          </View>
+        )}
         {data?.is_join && !reviewOfMe ? (
           <PressableBtn style={styles.styleBtn} onPress={_gotoScreenReview}>
             <Text style={styles.seeAll}>{translations.course.rate}</Text>
@@ -214,6 +233,18 @@ const styles = StyleSheet.create({
     marginTop: 8,
     flex: 1,
   },
+  viewItemReview: {
+    marginRight: 8,
+    backgroundColor: palette.background,
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    shadowOffset: { width: 1, height: 6 },
+    shadowOpacity: 0.1,
+    elevation: 1,
+    shadowRadius: 4,
+    shadowColor: "rgba(0,0,0,0.9)",
+  },
   containerFull: {
     marginHorizontal: 16,
     marginTop: 8,
@@ -228,33 +259,34 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   txtContentTitle: {
-    ...CS.hnBold,
+    ...CS.hnSemiBold,
     fontSize: 24,
     lineHeight: 32,
   },
   txtContentTitleFull: {
-    ...CS.hnBold,
+    ...CS.hnSemiBold,
     fontSize: 24,
     lineHeight: 32,
   },
   txtDetail: {
     ...CS.hnRegular,
-    fontSize: 16,
-    lineHeight: 24,
+    fontSize: 14,
+    lineHeight: 22,
+    color: palette.textOpacity8,
   },
   nameReview: {
-    ...CS.hnBold,
+    ...CS.hnSemiBold,
     lineHeight: 24,
   },
   seeAll: {
-    ...CS.textCourse,
+    ...CS.hnSemiBold,
     color: palette.primary,
   },
   styleBtn: {
     backgroundColor: palette.background,
     borderRadius: 8,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 5,
     ...CS.center,
     borderWidth: 1,
     borderColor: palette.primary,

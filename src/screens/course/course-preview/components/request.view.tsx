@@ -12,9 +12,7 @@ interface RequestSkillViewProps {
 
 const TextRequest = ({ text }: { text: string }) => {
   return (
-    <View
-      style={{ flexDirection: "row", paddingVertical: 4, alignItems: "center" }}
-    >
+    <View style={{ flexDirection: "row", marginTop: 8 }}>
       <View
         style={{
           width: 4,
@@ -22,6 +20,7 @@ const TextRequest = ({ text }: { text: string }) => {
           marginRight: 8,
           borderRadius: 2,
           backgroundColor: palette.textOpacity6,
+          marginTop: 8,
         }}
       />
       <Text style={styles.txtRequest}>{text}</Text>
@@ -45,7 +44,7 @@ export default React.memo(RequestSkillView);
 const styles = StyleSheet.create({
   container: {
     // marginHorizontal: 16,
-    marginTop: 8,
+    marginTop: 12,
   },
   paragraph: {
     ...CS.hnMedium,
@@ -53,6 +52,7 @@ const styles = StyleSheet.create({
   },
   txtRequest: {
     ...CS.flex1,
-    ...CS.textOpacity6,
+    ...CS.hnRegular,
+    color: palette.textOpacity8,
   },
 });

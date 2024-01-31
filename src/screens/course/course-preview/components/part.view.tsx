@@ -16,6 +16,7 @@ import { getListModule } from "@services/api/course.api";
 import { ICourseModuleItem } from "models/course.model";
 import useStore from "@services/zustand/store";
 import { translations } from "@localization";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 const { width } = Dimensions.get("screen");
 interface PartViewProps {
@@ -75,9 +76,13 @@ const PartView = ({ id, hide }: PartViewProps) => {
           }}
         >
           <Text style={styles.headerText}>{section.title}</Text>
-          <Text style={styles.moreLess}>
-            {activeSections.indexOf(index) < 0 ? "+" : "-"}
-          </Text>
+          <Icon
+            size={24}
+            name={
+              activeSections.indexOf(index) >= 0 ? "chevron-up" : "chevron-down"
+            }
+            type={IconType.Ionicons}
+          />
         </Animatable.View>
       </PressableBtn>
     );
@@ -157,20 +162,21 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   headerText: {
-    ...CS.textCourse,
-  },
-  moreLess: {
-    ...CS.textCourse,
-    fontSize: 20,
-    lineHeight: 24,
+    ...CS.hnSemiBold,
   },
   viewContent: {
     flexDirection: "row",
     height: 40,
     alignItems: "center",
+    paddingVertical: 4,
   },
   paragraph: {
     ...CS.hnMedium,
+  },
+  textDetail: {
+    ...CS.hnRegular,
+    fontSize: 16,
+    lineHeight: 24,
   },
 });
 
@@ -181,7 +187,7 @@ interface LessionProps {
 const Lession = ({ data }: LessionProps) => {
   return (
     <PressableBtn style={styles.viewContent} onPress={() => console.log(data)}>
-      <Animatable.Text style={CS.textCourse}>{data.title}</Animatable.Text>
+      <Animatable.Text style={styles.textDetail}>{data.title}</Animatable.Text>
     </PressableBtn>
   );
 };

@@ -5,7 +5,7 @@ import { getBottomSpace } from "react-native-iphone-screen-helper";
 
 import HeaderCourse from "./components/header.course.preview";
 import BuyButton from "../components/buy.button";
-import AddToCartButton from "../components/add.to.cart.button";
+// import AddToCartButton from "../components/add.to.cart.button";
 import PartView from "./components/part.view";
 import DescriptionView from "./components/description.view";
 import RequestSkillView from "./components/request.view";
@@ -24,12 +24,15 @@ import eventEmitter from "@services/event-emitter";
 
 const CoursePreviewScreen = () => {
   const userData = useStore((state) => state.userData);
+  console.log(userData?._id);
   React.useEffect(() => {
     _getCourseDetail();
   }, []);
 
   const [data, setData] = useState<ICourseItem>();
   const course_id = "6583a1fc8e5e75e353a7bedf"; // tonyvu
+  // const course_id = "65b389be0f42bfed90716e2f"; // dangth
+  // const course_id = "65b386fd0f42bfed90716957"; // tonyvu
   React.useEffect(() => {
     eventEmitter.on("reload_data_preview", _getCourseDetail);
     return () => {
@@ -54,7 +57,7 @@ const CoursePreviewScreen = () => {
           flexDirection: "row",
           marginHorizontal: 16,
           height: 40,
-          marginTop: 8,
+          marginTop: 20,
         }}
       >
         <PressableBtn style={{ flex: 1 }} onPress={() => setTabSelected(1)}>
@@ -97,7 +100,7 @@ const CoursePreviewScreen = () => {
 
   const handleScroll = (event) => {
     const positionY = event.nativeEvent.contentOffset.y;
-    if (positionY > 400) {
+    if (positionY > 650) {
       setShowBuyBottom(true);
     } else {
       setShowBuyBottom(false);
@@ -124,7 +127,7 @@ const CoursePreviewScreen = () => {
       >
         <HeaderCourse data={data} />
         <BuyButton data={data} type="full" />
-        <AddToCartButton data={data} type="full" />
+        {/* <AddToCartButton data={data} type="full" /> */}
         <TabSelect />
         {tabSelected == 1 && (
           <View style={styles.tabView}>
@@ -137,7 +140,7 @@ const CoursePreviewScreen = () => {
 
         <AuthorView data={data} />
         <ListReviewCourse _id={course_id} type="top" data={data} />
-        <View style={{ height: 50 }} />
+        <View style={{ height: 70 }} />
       </ScrollView>
       <BuyBottom show={showBuyBottom} data={data} />
     </View>
@@ -155,11 +158,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   textTab: {
-    ...CS.hnSemiBold,
+    ...CS.hnMedium,
     color: palette.textOpacity6,
   },
   textTabSelected: {
-    ...CS.hnSemiBold,
+    ...CS.hnMedium,
     color: palette.primary,
   },
 });

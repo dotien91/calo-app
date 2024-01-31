@@ -62,6 +62,7 @@ const ProfileUser = (props: ProfileUserProps) => {
     refreshControl,
     _requestData,
     renderFooterComponent,
+    isFirstLoading,
     refreshing,
   } = useListData<TypedRequest>(paramsRequest, getListPost);
 

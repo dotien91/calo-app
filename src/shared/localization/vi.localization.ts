@@ -512,6 +512,7 @@ export default {
     sendReview: "Gửi đánh giá",
     updateReview: "Cập nhật đánh giá",
     certifications: "Chứng chỉ",
+    previewThisCourse: "Giới thiệu khoá học",
   },
   seeAll: "Xem tất cả",
   settings: {
