@@ -42,8 +42,8 @@ import EditProfileScreen from "@screens/profile-user/edit-profile/edit.profile.s
 import CourseListScreen from "@screens/course-list/course-list/course.list.screen";
 import CourseSearchScreen from "@screens/course-list/course-search/course.search.screen";
 import CourseFilterResultScreen from "@screens/course-list/course-filter-result/course.filter.result.screen";
-import BookLessonScreen from "@screens/purchase/book-lesson/book.lesson.screen";
-import ChooseClassScreen from "@screens/purchase/choose-class/choose.class.screen";
+import BookLessonScreen from "@screens/purchase-course/book-lesson/book.lesson.screen";
+import ChooseClassScreen from "@screens/purchase-course/choose-class/choose.class.screen";
 import CourseCategoryDetailScreen from "@screens/course-list/course-filter-result/course.filter.result.screen";
 import PaymentCoures from "@screens/payment-coures/payment.coures";
 
