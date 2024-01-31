@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Alert } from "react-native";
+import { View, Alert, TouchableOpacity } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import RNRestart from "react-native-restart"; // Import package from node modules
@@ -13,6 +13,9 @@ import DropDownItem from "@shared-components/dropdown/DropDownItem";
 import createStyles from "./setting.screen.style";
 import { useMemo, useCallback } from "use-memo-one";
 import SwitchComponent from "@shared-components/switch/Switch";
+import * as NavigationService from "react-navigation-helpers";
+import { SCREENS } from "constants";
+
 interface SettingScreenProps {}
 
 const optionsLanguage = [
@@ -86,6 +89,13 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
         setValue={setLanguageSelected}
         items={optionsLanguage}
       />
+      <TouchableOpacity
+        onPress={() => {
+          NavigationService.navigate(SCREENS.PAYMENT_COURES);
+        }}
+      >
+        <Text>navasdasd</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };

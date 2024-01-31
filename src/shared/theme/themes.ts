@@ -74,6 +74,7 @@ export const palette = {
   bgInput: "rgba(232, 235, 239, 1)",
   bgBestSeller: "rgba(255, 237, 237, 1)",
   red: "rgba(252, 53, 53, 1)",
+  btnRedPrimary: "rgba(225, 66, 66, 1)",
 };
 
 interface ExtendedTheme extends Theme {
