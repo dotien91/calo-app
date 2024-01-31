@@ -25,6 +25,7 @@ import Animated, {
 } from "react-native-reanimated";
 import Video from "react-native-video";
 import Slider from "@react-native-community/slider";
+import * as NavigationService from "react-navigation-helpers";
 
 import { palette } from "@theme/themes";
 import { HS, MHS } from "@utils/size.utils";
@@ -35,6 +36,7 @@ import {
 import CS from "@theme/styles";
 import { formatTime } from "@utils/date.utils";
 import IconSvg from "assets/svg";
+import PressableBtn from "@shared-components/button/PressableBtn";
 
 const PERCENT_DONE_VIDEO = 0.3;
 
@@ -306,6 +308,13 @@ const VideoPreview = (
     );
   };
 
+  const _goBack = () => {
+    NavigationService.goBack();
+  };
+  const _shareScreen = () => {};
+  const _shareToTV = () => {};
+  const _settingVideo = () => {};
+
   return (
     <Pressable style={[styles.container]} onPress={onPressView}>
       <Animated.View style={[styles.loading, styleVideo]}>
@@ -322,6 +331,22 @@ const VideoPreview = (
       <View style={[{ ...StyleSheet.absoluteFillObject }]}>
         {renderVideo()}
       </View>
+      <Animated.View style={[styles.headerAbs, styleAction]}>
+        <PressableBtn onPress={_goBack}>
+          <IconSvg size={24} name={"icArrowDown"} color={palette.white} />
+        </PressableBtn>
+        <View style={{ flexDirection: "row", gap: 4 }}>
+          <PressableBtn onPress={_shareScreen}>
+            <IconSvg size={24} name={"icShareScreen"} color={palette.white} />
+          </PressableBtn>
+          <PressableBtn onPress={_shareToTV}>
+            <IconSvg size={24} name={"icAirPlay"} color={palette.white} />
+          </PressableBtn>
+          <PressableBtn onPress={_settingVideo}>
+            <IconSvg size={24} name={"icSettingVideo"} color={palette.white} />
+          </PressableBtn>
+        </View>
+      </Animated.View>
 
       <Animated.View style={[styles.actionVideo, styleAction]}>
         <Animated.View
@@ -413,6 +438,18 @@ const styles = StyleSheet.create({
     ...CS.hnRegular,
     fontSize: 12,
     color: palette.white,
+  },
+  headerAbs: {
+    position: "absolute",
+    top: MHS._10,
+    left: 0,
+    right: 0,
+    zIndex: 1000,
+    height: 40,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 20,
+    justifyContent: "space-between",
   },
 
   viewSlider: {

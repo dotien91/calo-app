@@ -39,9 +39,9 @@ const CoursePreviewScreen = () => {
   const route = useRoute();
   // const course_id = route.params?.["course_id"];
   // const course_id = "65b773efb11a3c94cc62c5e2";
-  const course_id = "65b77490b11a3c94cc62c69a"; //class room
+  // const course_id = "65b77490b11a3c94cc62c69a"; //class room
 
-  // const course_id = "65c0411bb513eeff42783867" // video
+  const course_id = "65c0411bb513eeff42783867" // video
   // const course_id = "6583a1fc8e5e75e353a7bedf"; // tonyvu
   // const course_id = "65b389be0f42bfed90716e2f"; // dangth
   // const course_id = "65b386fd0f42bfed90716957"; // tonyvu
@@ -160,6 +160,8 @@ const CoursePreviewScreen = () => {
         )}
         {data?.type === "Self-learning" && (
           <PartView
+            // isJoin={data.is_join}
+            isJoin={true}
             id={course_id}
             hide={tabSelected == 1}
             onPressItem={_pressItem}

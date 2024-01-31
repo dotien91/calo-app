@@ -6,7 +6,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { Linking, StyleSheet, Text, View } from "react-native";
+import { Linking, StyleSheet, Text, View, ScrollView } from "react-native";
 import { useRoute, useNavigation, useTheme } from "@react-navigation/native";
 import { useSharedValue, withTiming } from "react-native-reanimated";
 import Orientation from "react-native-orientation-locker";
@@ -22,6 +22,8 @@ import { Device } from "@utils/device.utils";
 import PartView from "../course-preview/components/part.view";
 import { updateViewed } from "@services/api/course.api";
 import createStyles from "./course.learn.style";
+import CourseLearnAction from "./components/course.learn.action";
+import { palette } from "@theme/themes";
 
 const CourseLearnScreen = () => {
   const route: any = useRoute();
@@ -31,7 +33,7 @@ const CourseLearnScreen = () => {
   const [source, setSource] = useState(route?.params?.source);
   const [isLanscape, setIsLanscape] = useState(false);
   const styles = useMemo(() => createStyles(theme), [theme]);
-
+  const [tabSelected, setTabSelected] = useState(1);
   const detailCourse = route?.params?.detailCourse;
   const course_id = route?.params?.course_id;
   const videoRef = useRef<any>();
@@ -69,6 +71,52 @@ const CourseLearnScreen = () => {
       }
     });
   };
+  const TabSelect = () => {
+    return (
+      <View
+        style={{
+          flexDirection: "row",
+          marginHorizontal: 16,
+          height: 40,
+          marginTop: 20,
+        }}
+      >
+        <PressableBtn style={CS.flex1} onPress={() => setTabSelected(1)}>
+          <View style={{ ...CS.flex1, ...CS.center }}>
+            <Text
+              style={tabSelected == 1 ? styles.textTabSelected : styles.textTab}
+            >
+              {translations.course.Lectures}
+            </Text>
+          </View>
+          <View
+            style={{
+              height: 2,
+              backgroundColor:
+                tabSelected == 1 ? palette.primary : palette.background,
+            }}
+          ></View>
+        </PressableBtn>
+        <PressableBtn style={CS.flex1} onPress={() => setTabSelected(2)}>
+          <View style={{ ...CS.flex1, ...CS.center }}>
+            <Text
+              style={tabSelected == 2 ? styles.textTabSelected : styles.textTab}
+            >
+              {translations.course.more}
+            </Text>
+          </View>
+          <View
+            style={{
+              height: 2,
+              backgroundColor:
+                tabSelected == 2 ? palette.primary : palette.background,
+            }}
+          ></View>
+        </PressableBtn>
+      </View>
+    );
+  };
+
   const renderThumbnail = useCallback(() => {
     if (!source?.media_id?.media_url) {
       return (
@@ -188,14 +236,22 @@ const CourseLearnScreen = () => {
           renderThumbnail()
         )}
       </View>
-      <PartView
-        id={course_id}
-        onPressItem={(item: any) => {
-          console.log("item...", JSON.stringify(item));
-          setSource(item);
-        }}
-        isLearnScreen
-      />
+      <TabSelect />
+      <ScrollView style={CS.flex1}>
+        <PartView
+          hide={tabSelected == 2}
+          id={course_id}
+          onPressItem={(item: any) => {
+            console.log("item...", JSON.stringify(item));
+            setSource(item);
+          }}
+          isLearnScreen
+          isJoin
+        />
+        {tabSelected == 2 && (
+          <CourseLearnAction item={source} course_id={course_id} />
+        )}
+      </ScrollView>
     </View>
   );
 };

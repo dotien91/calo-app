@@ -19,6 +19,9 @@ interface ICurrentSort {
 export interface CourseSlice {
   fileCourseLocal: { id: string; localFile: string }[];
   addFileCourseLocal: (id: string, localFile: string) => void;
+
+  listFavourites: string[];
+  addToFavourites: (id: string) => void;
 }
 
 const createCoursePostSlice: StoreSlice<CourseSlice> = (set) => ({
@@ -36,6 +39,24 @@ const createCoursePostSlice: StoreSlice<CourseSlice> = (set) => ({
       } else {
         return {
           fileCourseLocal: [...state.fileCourseLocal],
+        };
+      }
+    });
+  },
+
+  listFavourites: [],
+  addToFavourites: (id: string) => {
+    set((state) => {
+      const index = state.listFavourites.findIndex((item) => item === id);
+      if (index < 0) {
+        console.log(1);
+        return {
+          listFavourites: [...state.listFavourites, id],
+        };
+      } else {
+        console.log(2);
+        return {
+          listFavourites: [...state.listFavourites.map((item) => item !== id)],
         };
       }
     });

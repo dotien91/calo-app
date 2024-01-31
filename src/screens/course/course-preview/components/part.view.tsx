@@ -25,9 +25,16 @@ interface PartViewProps {
   hide?: boolean;
   onPressItem?: (item: any) => void;
   isLearnScreen?: boolean;
+  isJoin: boolean;
 }
 
-const PartView = ({ id, hide, onPressItem, isLearnScreen }: PartViewProps) => {
+const PartView = ({
+  id,
+  hide,
+  onPressItem,
+  isLearnScreen,
+  isJoin,
+}: PartViewProps) => {
   const userData = useStore((state) => state.userData);
   const param = {
     auth_id: userData?._id,
@@ -105,7 +112,7 @@ const PartView = ({ id, hide, onPressItem, isLearnScreen }: PartViewProps) => {
               key={item._id}
               index={index}
               data={item}
-              pressItem={() => onPressItem && onPressItem(item)}
+              pressItem={() => isJoin && onPressItem && onPressItem(item)}
               isLearnScreen={isLearnScreen}
             />
           ))}
@@ -182,7 +189,7 @@ const Lession = ({ data, pressItem, index, isLearnScreen }: LessionProps) => {
   )?.value;
   const fileCourseLocal = useStore((state) => state.fileCourseLocal);
   const addFileCourseLocal = useStore((state) => state.addFileCourseLocal);
-  const isDownload = fileCourseLocal.filter((item) => item.id === data._id);
+  const isDownload = (fileCourseLocal || []).filter((item) => item.id === data._id);
   const _downloadFile = async () => {
     if (isDownload.length > 0) {
       console.log("isDownload...", isDownload);
