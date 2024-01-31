@@ -108,7 +108,6 @@ const CourseRate = () => {
     <TouchableWithoutFeedback onPress={_dismissKeyboard}>
       <View style={CS.safeAreaView}>
         <Header
-          iconNameLeft="arrow-back-outline"
           onPressLeft={_goBack}
           text={translations.course.rate}
         />

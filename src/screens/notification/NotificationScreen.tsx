@@ -73,7 +73,6 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
         onPressLeft={() => {
           NavigationService.navigate(SCREENS.HOME);
         }}
-        iconNameLeft="arrow-back-outline"
         text={translations.notifications.notifications}
         onPressRight={_readAll}
         textRight={translations.notifications.markAll}

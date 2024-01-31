@@ -45,7 +45,6 @@ const DetailTeacherScreen = () => {
   return (
     <View style={styles.container}>
       <Header
-        iconNameLeft="arrow-back-outline"
         onPressLeft={_goBack}
         iconNameRight="ellipsis-vertical"
         onPressRight={_showMore}

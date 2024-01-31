@@ -84,7 +84,6 @@ const ProfileUser = (props: ProfileUserProps) => {
   const HeaderProfile = () => {
     return (
       <Header
-        iconNameLeft="arrow-back-outline"
         iconNameRight="ellipsis-horizontal"
         onPressLeft={goback}
         text={userInfo?.display_name || ""}

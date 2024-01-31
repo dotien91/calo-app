@@ -27,7 +27,6 @@ const ActionMore = ({ data }: ActionMoreProps) => {
   return (
     <View style={styles.container}>
       <Header
-        iconNameLeft="arrow-back-outline"
         onPressLeft={_closeSuperModal}
         text={translations.course.more}
         style={{ paddingHorizontal: 0 }}

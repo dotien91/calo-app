@@ -12,15 +12,9 @@ const ReviewScreen = () => {
   const route = useRoute();
   const _id = route.params?.["courseId"] || "";
 
-  const _pressBack = () => {
-    NavigationService.goBack();
-  };
-
   return (
     <View style={styles.container}>
       <Header
-        iconNameLeft="arrow-back-outline"
-        onPressLeft={_pressBack}
         text={translations.course.rate}
       />
       <ListReviewCourse type="full" _id={_id} />

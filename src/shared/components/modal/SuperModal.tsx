@@ -18,7 +18,7 @@ import ListActionOfComment from "@shared-components/action-bottomsheet/ListActio
 import StickBottomModal from "@shared-components/stick-bottom/StickBottomModal";
 
 import ReportView from "./modal-inner/ReportView";
-import CourseFilterModalInnter from "@screens/course-list/components/course.filter.modal.inner";
+import CourseFilterModalInnter from "@screens/course-tab/components/course.filter.modal.inner";
 import IconBtn from "@shared-components/button/IconBtn";
 import SelectBox from "@shared-components/modal/modal-inner/SelectBox";
 import LottieComponent from "@shared-components/lottie/LottieComponent";
@@ -170,6 +170,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
           )}
           {contentModalType == EnumModalContentType.FilterTypeCourse && (
             <SelectBox {...data} />
+          )}
           {contentModalType == EnumModalContentType.MoreTeacher && (
             <ActionMore data={data} />
           )}

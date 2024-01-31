@@ -82,7 +82,6 @@ export function useListData<T>(
           isLoading: false,
           noData: !newData.length,
         }));
-        setTotalCount(res.headers["x-total-count"]);
       }
     });
   };

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, ScrollView, View, Text } from "react-native";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
 // import * as NavigationService from "react-navigation-helpers";
+import { useRoute } from "@react-navigation/native";
 
 import HeaderCourse from "./components/header.course.preview";
 import BuyButton from "../components/buy.button";
@@ -24,13 +25,16 @@ import eventEmitter from "@services/event-emitter";
 
 const CoursePreviewScreen = () => {
   const userData = useStore((state) => state.userData);
-  console.log(userData?._id);
+
   React.useEffect(() => {
     _getCourseDetail();
   }, []);
 
   const [data, setData] = useState<ICourseItem>();
-  const course_id = "6583a1fc8e5e75e353a7bedf"; // tonyvu
+  const route = useRoute();
+  const course_id = route.params?.["course_id"];
+
+  // const course_id = "6583a1fc8e5e75e353a7bedf"; // tonyvu
   // const course_id = "65b389be0f42bfed90716e2f"; // dangth
   // const course_id = "65b386fd0f42bfed90716957"; // tonyvu
   React.useEffect(() => {
@@ -113,8 +117,6 @@ const CoursePreviewScreen = () => {
   return (
     <View style={styles.container}>
       <Header
-        iconNameLeft="chevron-back-outline"
-        onPressLeft={_goBack}
         iconNameRight="share-outline"
         onPressRight={_shareCourse}
       />

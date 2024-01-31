@@ -1,9 +1,8 @@
 import React, { useMemo } from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import FastImage from "react-native-fast-image";
-
-// import * as NavigationService from "react-navigation-helpers";
+import * as NavigationService from "react-navigation-helpers";
 /**
  * ? Local Imports
  */
@@ -14,6 +13,7 @@ import CS from "@theme/styles";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { palette } from "@theme/themes";
 import Badge from "./Badge";
+import { SCREENS } from "constants";
 
 interface CourseItemProps extends ICourseItem {
   isHorizontalStyle: boolean;
@@ -21,6 +21,7 @@ interface CourseItemProps extends ICourseItem {
 }
 
 const CourseItem = ({
+  _id,
   title,
   isSliderItem,
   price,
@@ -39,6 +40,10 @@ const CourseItem = ({
   const theme = useTheme();
   // const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
+
+  const openPreviewCourse = () => {
+    NavigationService.navigate(SCREENS.COURSE_DETAIL, {course_id: _id})
+  }
 
   const renderInfo = () => {
     return (
@@ -85,14 +90,18 @@ const CourseItem = ({
 
   if (isHorizontalStyle)
     return (
-      <View style={styles.courseItemHorizontal}>
+      <TouchableOpacity
+        onPress={openPreviewCourse}
+        style={styles.courseItemHorizontal}
+      >
         {renderImg()}
         <View style={[styles.boxContent, { flex: 1 }]}>{renderInfo()}</View>
-      </View>
+      </TouchableOpacity>
     );
 
   return (
-    <View
+    <TouchableOpacity
+      onPress={openPreviewCourse}
       style={[
         styles.courseItem,
         isSliderItem && { padding: 0, width: widthImage, marginRight: 16 },
@@ -100,7 +109,7 @@ const CourseItem = ({
     >
       {renderImg()}
       {renderInfo()}
-    </View>
+    </TouchableOpacity>
   );
 };
 

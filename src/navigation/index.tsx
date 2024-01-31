@@ -39,17 +39,18 @@ import MediaChatScreen from "@screens/chat/profile-chat/chat.media.screen";
 import AddUserGroupChatScreen from "@screens/chat/add-user-to-group-chat/add.user.group.chat.screen";
 import ProfileUserScreen from "@screens/profile-user/profile.screen";
 import EditProfileScreen from "@screens/profile-user/edit-profile/edit.profile.screen";
-import CourseListScreen from "@screens/course-list/course-list/course.list.screen";
-import CourseSearchScreen from "@screens/course-list/course-search/course.search.screen";
-import CourseFilterResultScreen from "@screens/course-list/course-filter-result/course.filter.result.screen";
+import CourseListScreen from "@screens/course-tab/course-list/course.list.screen";
+import CourseSearchScreen from "@screens/course-tab/course-search/course.search.screen";
+import CourseFilterResultScreen from "@screens/course-tab/course-filter-result/course.filter.result.screen";
 import BookLessonScreen from "@screens/purchase-course/book-lesson/book.lesson.screen";
 import ChooseClassScreen from "@screens/purchase-course/choose-class/choose.class.screen";
-import CourseCategoryDetailScreen from "@screens/course-list/course-filter-result/course.filter.result.screen";
+import CourseCategoryDetailScreen from "@screens/course-tab/course-filter-result/course.filter.result.screen";
 import PaymentCoures from "@screens/payment-coures/payment.coures";
 import CoursePreviewScreen from "@screens/course/course-preview/course.preview.screen";
 import DetailTeacherScreen from "@screens/course/detail-teacher/detail.teacher.screen";
 import CourseRate from "@screens/course/course-rate/course.rate.screen";
 import ReviewScreen from "@screens/course/course-preview/review.screen";
+import HomeScreen from "@screens/home/home.screen";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -111,7 +112,7 @@ const Navigation = () => {
       >
         <Tab.Screen name={SCREENS.COURSE_LIST} component={CourseListScreen} />
         <Stack.Screen name={SCREENS.HOME} component={HomeScreen} />
-        <Stack.Screen name={SCREENS.COURSE_LIST} component={CourseListScreen} />
+
         <Tab.Screen name={SCREENS.CHAT} component={ListChatScreen} />
         <Tab.Screen
           name={SCREENS.NOTIFICATION}
@@ -172,7 +173,6 @@ const Navigation = () => {
           name={SCREENS.COURSE_SEARCH}
           component={CourseSearchScreen}
         />
-        <Stack.Screen name={SCREENS.HOME} component={renderTabNavigation} />
         <Stack.Screen
           name={SCREENS.TEACHER_DETAIL}
           component={DetailTeacherScreen}

@@ -98,7 +98,6 @@ const EditProfileScreen = () => {
     >
       <ScrollView style={CommonStyle.safeAreaView}>
         <Header
-          iconNameLeft="arrow-back-outline"
           onPressLeft={() => NavigationService.goBack()}
           text={translations.profile.editProfile}
         />
