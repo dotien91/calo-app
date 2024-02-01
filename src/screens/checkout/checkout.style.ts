@@ -1,6 +1,8 @@
 import CS from "@theme/styles";
 import { ExtendedTheme } from "@react-navigation/native";
 import { ViewStyle, StyleSheet, TextStyle } from "react-native";
+import { isIOS } from "@freakycoder/react-native-helpers";
+import { getStatusBarHeight } from "react-native-safearea-height";
 // import CS from "@theme/styles";
 
 interface Style {
@@ -39,6 +41,10 @@ interface Style {
 export default (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create<Style>({
+    container: {
+      flex: 1,
+      paddingTop: isIOS ? 0 : getStatusBarHeight(),
+    },
     styleShawdow: {
       shadowColor: "#000000",
       borderWidth: 1,
@@ -70,6 +76,8 @@ export default (theme: ExtendedTheme) => {
       height: 100,
       position: "absolute",
       bottom: 0,
+      left: 0,
+      zIndex: 1,
       width: "100%",
       flexDirection: "row",
       justifyContent: "space-between",

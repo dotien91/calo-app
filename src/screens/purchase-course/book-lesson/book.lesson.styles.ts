@@ -39,6 +39,16 @@ export default (theme: ExtendedTheme) => {
       ...CS.flexCenter,
       borderRadius: 4,
     },
+    dateBtn: {
+      padding: 4,
+      flex: 1,
+      backgroundColor: colors.grey3,
+      marginHorizontal: 3,
+      ...CS.flexCenter,
+      borderRadius: 4,
+      ...CS.borderStyle,
+      borderColor: colors.white,
+    },
     hourBtn: {
       shadowColor: "rgba(0,0,0,0.8)",
       shadowOffset: { width: 0, height: 6 },
@@ -88,6 +98,16 @@ export default (theme: ExtendedTheme) => {
     },
     hourActiveBtn: {
       backgroundColor: colors.btnInactive,
+    },
+    durationBtnActive: {
+      backgroundColor: colors.primary,
+    },
+    txtBtnActive: {
+      color: palette.white,
+    },
+    btnSelectedHour: {
+      ...CS.borderStyle,
+      borderColor: colors.primary,
     },
   });
 };

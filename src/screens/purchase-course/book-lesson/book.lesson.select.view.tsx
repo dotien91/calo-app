@@ -1,61 +1,144 @@
 import React, { useMemo, useState } from "react";
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
-import { useTheme } from "@react-navigation/native";
+import { View, Text, ScrollView } from "react-native";
+import { useTheme, useRoute } from "@react-navigation/native";
+import * as NavigationService from "react-navigation-helpers";
+
 /**
  * ? Local Imports
  */
 import createStyles from "./book.lesson.styles";
-import { exampleData, daysOfWeek } from "constants/course.constant";
+import { daysOfWeek } from "constants/course.constant";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { translations } from "@localization";
 import CS from "@theme/styles";
 import { getLabelHourLesson } from "@screens/course-tab/course.helper";
 import IconBtn from "@shared-components/button/IconBtn";
 import { palette } from "@theme/themes";
-
-const times = exampleData[0].times;
+import { getTimeAvailableTeacher } from "@services/api/course.api";
+import LoadingList from "@shared-components/loading.list.component";
+import { SCREENS } from "constants";
 
 interface BookLessonSelectViewProps {}
 
-const BookLessonSelectView: React.FC<BookLessonSelectViewProps> = () => {
+const BookLessonSelectView: React.FC<
+  BookLessonSelectViewProps
+> = () => {
   const theme = useTheme();
+  const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
+  const route = useRoute();
+  const courseData = route.params?.["courseData"];
+  const courseId = courseData._id;
+
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [duration, setDuration] = useState<number>(1);
-  const [date, setDate] = useState<number>(0);
+  const [isMaxDay, setIsMaxDay] = useState(false);
 
-  const onSelectDate = () => {
-    setDate(2);
+  const [day, setDay] = useState([
+    { day: 1, time_end: "8:00", time_start: "7:00" },
+    { day: 1, time_end: "7:00", time_start: "6:00" },
+  ]);
+  const [dateView, setDateView] = useState(1);
+
+  React.useEffect(() => {
+    getTimeAvailableTeacher(courseId).then((res) => {
+      setLoading(false);
+      if (!res.isError) {
+        setData(res.data);
+      }
+    });
+  }, []);
+
+  //hide
+  React.useEffect(() => {
+    let countDay = 0;
+    let currentDay = -1;
+    day.forEach((item) => {
+      if (item.day != currentDay) {
+        countDay += 1;
+        currentDay = item.day;
+      }
+    });
+    if (countDay >= 4) {
+      !isMaxDay && setIsMaxDay(true);
+    } else {
+      !!isMaxDay && setIsMaxDay(false);
+    }
+  }, [day]);
+
+  const goToCheckout = () => {
+    // const timePick = timeStart.map((v) => {
+    //   return {
+    //     day,
+    //     time_start: v + "" + ":00",
+    //     time_end: v + duration + ":00",
+    //   };
+    // });
+    NavigationService.navigate(SCREENS.PAYMENT_COURES, {
+      courseData,
+      timePick: day,
+      duration,
+    });
   };
 
-  const onSelectDuration = () => {
-    setDuration(2);
+  const onSelectDateView = (item) => {
+    setDateView(item.value);
   };
 
-  const onSelectHour = () => {};
+  const onSelectDuration = (item) => {
+    setDuration(item.time_duration);
+    setDay([]);
+    setIsMaxDay(false);
+  };
 
-  const renderDurationBtn = () => {
+  const onSelectTimeStart = (item, isActive) => {
+    const timePickByDay = {
+      day: dateView,
+      time_start: item.time_start + "" + ":00",
+      time_end: item.time_start + duration + ":00",
+    };
+    const timeOfCurrentDay = day.filter((_item) => _item.day == dateView);
+
+    // console.log("itemmmmm", {item, timePickByDay});
+
+    setDay((old) => {
+      if (isActive)
+        return old.filter(
+          (_item) =>
+            item.label != _item.time_start + " - " + _item.time_end ||
+            _item.day != dateView,
+        );
+      if (timeOfCurrentDay.length == 2) {
+        const indexItemNeedDelete = old
+          .map((_item) => _item.day == dateView)
+          .lastIndexOf(true);
+        return [
+          timePickByDay,
+          ...old.filter((_item, index) => index != indexItemNeedDelete),
+        ];
+      }
+      return [timePickByDay, ...old];
+    });
+  };
+
+  const renderDurationBtn = (item) => {
+    const isActive = item?.time_duration == duration;
     return (
       <PressableBtn
         onPress={() => onSelectDuration(item)}
-        style={styles.durationBtn}
+        style={[styles.durationBtn, isActive && styles.durationBtnActive]}
       >
-        <Text style={styles.txtBtn}>{item.label}</Text>
+        <Text style={[styles.txtBtn, isActive && styles.txtBtnActive]}>
+          {item.label}
+          {item?.value}
+        </Text>
       </PressableBtn>
     );
   };
 
-  const renderDateBtn = (item) => {
-    return (
-      <PressableBtn
-        onPress={() => onSelectDate(item)}
-        style={styles.durationBtn}
-      >
-        <Text style={styles.txtBtn}>{item.label}</Text>
-      </PressableBtn>
-    );
-  };
-
-  const renderSelectDuration = () => {
+  const renderSectionDuration = () => {
+    const times = data.find((item) => item.value == dateView).times;
     return (
       <View style={styles.selectBox}>
         <Text style={styles.label}>{translations.purchase.timeDuration}</Text>
@@ -66,7 +149,42 @@ const BookLessonSelectView: React.FC<BookLessonSelectViewProps> = () => {
     );
   };
 
-  const renderSelectDate = () => {
+  const renderDayBtn = (item) => {
+    const isActive = day.find((_item) => _item.day == item?.value);
+    const isSelect = item?.value == dateView;
+    const isDisabled = isMaxDay && !isActive;
+    return (
+      <PressableBtn
+        disable={isDisabled}
+        onPress={() => onSelectDateView(item, isActive)}
+        style={[
+          styles.dateBtn,
+          isActive && styles.durationBtnActive,
+          isDisabled && { opacity: 0.7 },
+          // isSelect && styles.btnSelectedHour,
+        ]}
+      >
+        <Text style={[styles.txtBtn, isActive && styles.txtBtnActive]}>
+          {item.label}
+        </Text>
+        {isSelect && (
+          <View
+            style={{
+              height: 3,
+              backgroundColor: colors.primary,
+              position: "absolute",
+              left: 0,
+              bottom: -8,
+              right: 0,
+              zIndex: 1,
+            }}
+          />
+        )}
+      </PressableBtn>
+    );
+  };
+
+  const renderSectionDate = () => {
     return (
       <View style={styles.selectBox}>
         <Text style={[styles.label, { marginBottom: 0 }]}>
@@ -74,7 +192,7 @@ const BookLessonSelectView: React.FC<BookLessonSelectViewProps> = () => {
         </Text>
         <Text style={styles.des}>{translations.purchase.chooseDayDes}</Text>
         <View style={CS.flexRear}>
-          {daysOfWeek.map((item) => renderDateBtn(item))}
+          {daysOfWeek.map((item) => renderDayBtn(item))}
         </View>
         <Text style={[styles.des, { marginTop: 8 }]}>
           {translations.purchase.timeNote}
@@ -83,9 +201,13 @@ const BookLessonSelectView: React.FC<BookLessonSelectViewProps> = () => {
     );
   };
 
-  const renderHourBtn = (item) => {
-    const isPicked = item?.is_picked;
-    const isDisabled = false;
+  const renderTimeBtn = (item) => {
+    // const isActive = false
+    const isDisabled = item?.is_picked;
+    const timeOfCurrentDay = day.filter((_item) => _item.day == dateView);
+    const isActive = timeOfCurrentDay.find(
+      (_item) => item.label == _item.time_start + " - " + _item.time_end,
+    );
     return (
       <>
         {!!item.extraLabel && (
@@ -93,8 +215,9 @@ const BookLessonSelectView: React.FC<BookLessonSelectViewProps> = () => {
             {item.extraLabel}
           </Text>
         )}
-        <TouchableOpacity
-          onPress={() => onSelectHour(item)}
+        <PressableBtn
+          disable={isDisabled}
+          onPress={() => onSelectTimeStart(item, isActive)}
           style={[styles.hourBtn, isDisabled && styles.hourActiveBtn]}
         >
           <Text style={styles.text}>{item.label}</Text>
@@ -102,44 +225,62 @@ const BookLessonSelectView: React.FC<BookLessonSelectViewProps> = () => {
             style={[
               styles.checkbox,
               isDisabled && styles.checkBoxDisable,
-              isPicked && styles.checkBoxActive,
+              isActive && styles.checkBoxActive,
             ]}
           >
-            {isPicked && (
+            {isActive && (
               <IconBtn color={palette.white} size={16} name="check" />
             )}
           </View>
-        </TouchableOpacity>
+        </PressableBtn>
       </>
     );
   };
 
-  const renderSelectHours = useMemo(() => {
-    const data = exampleData[date].times[duration].times_in_utc;
-    const dataWithLabel = getLabelHourLesson(data);
+  const renderSectionTime = () => {
+    const times = data?.find((item) => item.value == dateView)?.times || [];
+    const timesAvailable = getLabelHourLesson(
+      times?.[duration - 1]?.times_in_utc || [],
+    );
+
     return (
       <View style={styles.selectBox}>
-        {dataWithLabel.map((item) => renderHourBtn(item))}
+        {timesAvailable.map((item) => renderTimeBtn(item))}
         <Text style={styles.des}>{translations.purchase.hoursNote}</Text>
       </View>
     );
-  }, [duration, date]);
+  };
 
   const renderPurchaseBtn = () => {
+    const isActive = !!day.length;
     return (
-      <PressableBtn style={styles.btnPurchase}>
-        <Text style={styles.txtPurchaseBtn}>
+      <PressableBtn
+        onPress={goToCheckout}
+        disable={!isActive}
+        style={[
+          styles.btnPurchase,
+          !isActive && { backgroundColor: colors.btnInactive },
+        ]}
+      >
+        <Text
+          style={[
+            styles.txtPurchaseBtn,
+            !isActive && { color: colors.textOpacity4 },
+          ]}
+        >
           {translations.purchase.orderNow}
         </Text>
       </PressableBtn>
     );
   };
 
+  if (loading || !data) return <LoadingList />;
+
   return (
     <ScrollView style={styles.container}>
-      {renderSelectDuration()}
-      {renderSelectDate()}
-      {renderSelectHours}
+      {renderSectionDuration()}
+      {renderSectionDate()}
+      {renderSectionTime()}
       {renderPurchaseBtn()}
     </ScrollView>
   );

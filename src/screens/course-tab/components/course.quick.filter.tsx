@@ -34,9 +34,10 @@ const CourseQuickFilter = () => {
     });
   };
 
-  const renderItem = (item) => {
+  const renderItem = (item, key) => {
     return (
       <TouchableOpacity
+        key={key}
         onPress={() => onPressBtnFilter(item)}
         style={styles.btnFilter}
       >
@@ -57,7 +58,7 @@ const CourseQuickFilter = () => {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.wrapBtnFilter}
         >
-          {quickFilterCourse.map((item) => renderItem(item))}
+          {quickFilterCourse.map((item, index) => renderItem(item, index))}
         </ScrollView>
       </View>
     </View>

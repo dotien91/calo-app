@@ -7,7 +7,6 @@ import { useTheme } from "@react-navigation/native";
 import createStyles from "./ProfileScreen.style";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import useStore from "@services/zustand/store";
-import { USER_TOKEN, _getJson } from "@services/local-storage";
 
 interface ProfileScreenProps {}
 
@@ -35,7 +34,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
       )}
       <View style={{ padding: 20 }}>
         {isLoggedIn() && <Text>{JSON.stringify(userData)}</Text>}
-        {isLoggedIn() && <Text>token : {_getJson(USER_TOKEN)}</Text>}
+        {/* {isLoggedIn() && <Text>token : {_getJson(USER_TOKEN)}</Text>} */}
       </View>
     </View>
   );

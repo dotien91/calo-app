@@ -14,6 +14,7 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { palette } from "@theme/themes";
 import Badge from "./Badge";
 import { SCREENS } from "constants";
+import { numberWithCommas } from "@utils/string.utils";
 
 interface CourseItemProps extends ICourseItem {
   isHorizontalStyle: boolean;
@@ -28,6 +29,7 @@ const CourseItem = ({
   rating,
   isHorizontalStyle,
   user_id,
+  media_id,
 }: CourseItemProps) => {
   let widthImage = Device.width - 32;
   if (isHorizontalStyle) {
@@ -42,15 +44,19 @@ const CourseItem = ({
   const styles = useMemo(() => createStyles(theme), [theme]);
 
   const openPreviewCourse = () => {
-    NavigationService.navigate(SCREENS.COURSE_DETAIL, {course_id: _id})
-  }
+    NavigationService.navigate(SCREENS.COURSE_DETAIL, { course_id: _id });
+  };
+
+  // const avatarUrl = () => {};
 
   const renderInfo = () => {
     return (
       <>
         <Text style={styles.courseTitle}>{title}</Text>
         <Text style={styles.courseAuthorTxt}>{user_id?.display_name}</Text>
-        <Text style={styles.coursePriceTxt}>{price || "Free"}</Text>
+        <Text style={styles.coursePriceTxt}>
+          {price ? numberWithCommas(price) + "đ" : "Free"}
+        </Text>
         <View style={[CS.flexStart, { marginBottom: 6 }]}>
           <Icon
             name="star"
@@ -79,7 +85,7 @@ const CourseItem = ({
         //   uri: media_thumbnail,
         // }}
         source={{
-          uri: "https://unsplash.it/400/400?image=1",
+          uri: media_id?.media_thumbnail,
           headers: { Authorization: "someAuthToken" },
           priority: FastImage.priority.normal,
         }}

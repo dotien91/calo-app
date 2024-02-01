@@ -39,6 +39,7 @@ const BuyBottom = ({ show, data }: BuyBottomProps) => {
       collapseView();
     }
   }, [show]);
+
   return (
     <Animated.View
       style={[

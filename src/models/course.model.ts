@@ -83,6 +83,14 @@ export interface ICourseFilterKeys {
   onlyEnglishNativeSpeakers: string;
 }
 
+export enum EnumClassType {
+  AllForms = "All forms",
+  Listening = "Listening",
+  SelfLearning = "Self-learning",
+  CallGroup = "Call group",
+  Call11 = "Call 1-1",
+}
+
 export enum EnumCourseType {
   course = "course",
   tutor = "tutor",
@@ -116,5 +124,19 @@ export interface IClass {
   rating: string;
   tutor_level: string;
   user_avatar_thumbnail: string;
+  _id: string;
+}
+
+export interface IClassRoom {
+  code: string;
+  course_calendar_ids: any[];
+  course_id: string;
+  createdAt: string;
+  end_time: string;
+  limit_member: number;
+  members: TypedUser[];
+  name: string;
+  start_time: string;
+  updatedAt: string;
   _id: string;
 }

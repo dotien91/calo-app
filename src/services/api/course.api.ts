@@ -6,7 +6,6 @@ export async function getCourseList(data) {
     urlPath: "course/list",
     data,
   }).then((response) => {
-    console.log("res courlust", { data, response });
     return response;
   });
 }
@@ -34,6 +33,16 @@ export async function getCourseClassListById(course_id: string) {
   return request({
     method: METHOD.GET,
     urlPath: "course/class/list",
+    params: { course_id },
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function getTimeAvailableTeacher(course_id: string) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "course/one-one/time-available",
     params: { course_id },
   }).then((response) => {
     return response;

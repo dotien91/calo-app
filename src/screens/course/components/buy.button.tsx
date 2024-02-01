@@ -1,6 +1,6 @@
 import { translations } from "@localization";
 import PressableBtn from "@shared-components/button/PressableBtn";
-import { ICourseItem } from "models/course.model";
+import { ICourseItem, EnumClassType } from "models/course.model";
 import * as React from "react";
 import { Text, StyleSheet } from "react-native";
 import CS from "@theme/styles";
@@ -15,10 +15,23 @@ interface BuyButtonProps {
 
 const BuyButton = ({ data, type }: BuyButtonProps) => {
   const goToBuyScreen = () => {
-    //đi đến trang mua khoá học
-    NavigationService.navigate(SCREENS.TEACHER_DETAIL);
-    console.log("data...", data);
+    const type = data?.type;
+    let screen = SCREENS.PAYMENT_COURES;
+
+    console.log("datagetTimeAvailableTeacher", data?.type);
+    if (type == EnumClassType.Call11) screen = SCREENS.BOOK_LESSON;
+    if (type == EnumClassType.CallGroup) screen = SCREENS.CHOOSE_CLASS;
+    if (type == EnumClassType.SelfLearning) {
+      alert("open inapp purchase");
+      return;
+    }
+
+    NavigationService.navigate(screen, {
+      courseId: data?._id,
+      courseData: data,
+    });
   };
+
   if (type === "full") {
     return (
       <PressableBtn onPress={goToBuyScreen} style={styles.containerFull}>
@@ -26,6 +39,7 @@ const BuyButton = ({ data, type }: BuyButtonProps) => {
       </PressableBtn>
     );
   }
+
   if (type === "wrap") {
     return (
       <PressableBtn onPress={goToBuyScreen} style={styles.containerWrap}>

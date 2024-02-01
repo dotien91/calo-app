@@ -44,8 +44,7 @@ import CourseSearchScreen from "@screens/course-tab/course-search/course.search.
 import CourseFilterResultScreen from "@screens/course-tab/course-filter-result/course.filter.result.screen";
 import BookLessonScreen from "@screens/purchase-course/book-lesson/book.lesson.screen";
 import ChooseClassScreen from "@screens/purchase-course/choose-class/choose.class.screen";
-import CourseCategoryDetailScreen from "@screens/course-tab/course-filter-result/course.filter.result.screen";
-import PaymentCoures from "@screens/payment-coures/payment.coures";
+import PaymentCoures from "@screens/checkout/checkout.screen";
 import CoursePreviewScreen from "@screens/course/course-preview/course.preview.screen";
 import DetailTeacherScreen from "@screens/course/detail-teacher/detail.teacher.screen";
 import CourseRate from "@screens/course/course-rate/course.rate.screen";

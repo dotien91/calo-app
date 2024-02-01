@@ -1,4 +1,6 @@
 import { translations } from "@localization";
+import { daysOfWeek } from "constants/course.constant";
+import lodash from "lodash";
 
 export const countNumberFilter = (params) => {
   let numberFilters = 0;
@@ -33,7 +35,6 @@ export const getLabelHourLesson = (data) => {
   return data.map((item) => {
     const label = item?.label || " ";
     const endTime = Number(label.slice(label.length - 5, label.length - 3));
-    console.log("endTimeendTimeendTime", endTime);
     if (endTime <= 12 && !hasMorningLabel) {
       hasMorningLabel = true;
       return {
@@ -61,4 +62,42 @@ export const getLabelHourLesson = (data) => {
     }
     return item;
   });
+};
+
+export const getDaysFromTimepick = (timePick) => {
+  timePick = lodash.uniqBy(timePick, "day");
+  let days = "";
+  console.log("object");
+  timePick.map((item) => {
+    const day = daysOfWeek.find((_item) => _item.value == item.day)?.label;
+    days += (days ? ", " : "") + day;
+  });
+  return days;
+};
+
+export const HHMMtoNumber = (v: string) => {
+  return Number(v.slice(0, v.length - 3));
+};
+
+export const getTimeFromTimepick = (timePick, isClassRoom = false) => {
+  let learningTime = "";
+  if (isClassRoom) {
+    timePick.course_calendars.forEach((element) => {
+      learningTime +=
+        element.time_start +
+        " - " +
+        HHMMtoNumber(element.time_start) +
+        1 +
+        ":00";
+    });
+    return;
+  }
+  learningTime =
+    timePick[0].time_start +
+    " - " +
+    timePick[0].time_end +
+    (timePick.length > 1
+      ? "; " + timePick[1].time_start + " - " + timePick[1].time_end
+      : "");
+  return learningTime;
 };

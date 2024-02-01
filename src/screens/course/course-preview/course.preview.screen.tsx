@@ -33,6 +33,8 @@ const CoursePreviewScreen = () => {
   const [data, setData] = useState<ICourseItem>();
   const route = useRoute();
   const course_id = route.params?.["course_id"];
+  // const course_id = "65b773efb11a3c94cc62c5e2"
+  // const course_id = "65b77490b11a3c94cc62c69a"; //class room
 
   // const course_id = "6583a1fc8e5e75e353a7bedf"; // tonyvu
   // const course_id = "65b389be0f42bfed90716e2f"; // dangth
@@ -47,6 +49,7 @@ const CoursePreviewScreen = () => {
   const _getCourseDetail = () => {
     getCourseDetail(course_id, params).then((res) => {
       if (!res.isError) {
+        console.log("res.datares.data", course_id, res.data);
         setData(res.data);
       }
     });
@@ -111,15 +114,11 @@ const CoursePreviewScreen = () => {
     }
   };
 
-  const _goBack = () => {};
   const _shareCourse = () => {};
 
   return (
     <View style={styles.container}>
-      <Header
-        iconNameRight="share-outline"
-        onPressRight={_shareCourse}
-      />
+      <Header iconNameRight="share-outline" onPressRight={_shareCourse} />
       <ScrollView
         style={CS.flex1}
         onScroll={handleScroll}
