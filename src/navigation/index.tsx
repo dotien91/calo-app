@@ -44,8 +44,11 @@ import CourseSearchScreen from "@screens/course-list/course-search/course.search
 import CourseFilterResultScreen from "@screens/course-list/course-filter-result/course.filter.result.screen";
 import BookLessonScreen from "@screens/purchase-course/book-lesson/book.lesson.screen";
 import ChooseClassScreen from "@screens/purchase-course/choose-class/choose.class.screen";
-import CourseCategoryDetailScreen from "@screens/course-list/course-filter-result/course.filter.result.screen";
+// import CourseCategoryDetailScreen from "@screens/course-list/course-filter-result/course.filter.result.screen";
 import PaymentCoures from "@screens/payment-coures/payment.coures";
+import AboutMe from "@screens/about-me/about.me";
+import SettingUser from "@screens/setting-user/setting.user";
+import ChangeLanguage from "@screens/change-language/change.language";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -141,12 +144,11 @@ const Navigation = () => {
       theme={isDarkMode ? DarkTheme : LightTheme}
     >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-       
         <Stack.Screen
           name={SCREENS.COURSE_LIST}
           component={renderTabNavigation}
         />
-         <Stack.Screen
+        <Stack.Screen
           name={SCREENS.CHOOSE_CLASS}
           component={ChooseClassScreen}
         />
@@ -222,6 +224,12 @@ const Navigation = () => {
           component={NewPasswordScreen}
         />
         <Stack.Screen name={SCREENS.PAYMENT_COURES} component={PaymentCoures} />
+        <Stack.Screen name={SCREENS.ABOUT_ME} component={AboutMe} />
+        <Stack.Screen name={SCREENS.SETTING_USER} component={SettingUser} />
+        <Stack.Screen
+          name={SCREENS.CHANGELANGUAGE}
+          component={ChangeLanguage}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
