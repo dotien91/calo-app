@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import { View, Text, Pressable, ViewStyle, ColorValue } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import createStyles from "./Button.style";
+import { palette } from "@theme/themes";
 
 interface ButtonProps {
   onPress: () => void;
@@ -34,6 +35,7 @@ export default function Button({
           !!backgroundColor && { backgroundColor: backgroundColor },
           { opacity: pressed ? 0.5 : 1.0 },
           style && style,
+          disabled && { backgroundColor: palette.borderColor },
         ];
       }}
       onPress={onPress}

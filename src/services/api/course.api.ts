@@ -89,10 +89,34 @@ interface IUpdateReview {
   review: string;
   rating: number;
 }
+
 export async function updateReview(data: IUpdateReview) {
   return request({
     method: METHOD.PATCH,
     urlPath: "course/update-review",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+interface ICreateCourse {
+  title: string;
+  description: string;
+  long_description: string;
+  price: string;
+  start_time: string;
+  end_time: string;
+  language: string;
+  country: string;
+  avatar: string;
+  media_id: string;
+}
+
+export async function createCourse(data: ICreateCourse) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "course/create",
     data,
   }).then((response) => {
     return response;

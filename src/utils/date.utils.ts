@@ -270,6 +270,47 @@ export const formatVNDate = (date) => {
     month < 10 ? `0${month}` : month
   }/${year}`;
 };
+export const formatTimeHHMM = (date) => {
+  const _date = new Date(date);
+  if (_date.toString() === "Invalid Date") {
+    return "";
+  }
+
+  const hourse = _date.getHours();
+  const min = _date.getMinutes();
+
+  if (min < 30) {
+    return `${hourse < 10 ? `0${hourse}` : hourse}:00`;
+  }
+
+  if (min < 60) {
+    return `${hourse < 10 ? `0${hourse}` : hourse}:30`;
+  }
+
+  return `${hourse < 10 ? `0${hourse}` : hourse}:${min < 10 ? `0${min}` : min}`;
+};
+
+export const getDayOfWeek = (day: number) => {
+  switch (day) {
+    case 0:
+      return "Sun";
+    case 1:
+      return "Mon";
+    case 2:
+      return "Tue";
+    case 3:
+      return "Wed";
+    case 4:
+      return "Thu";
+    case 5:
+      return "Fri";
+    case 6:
+      return "Sat";
+
+    default:
+      return "";
+  }
+};
 
 export const isSameMinute = (date1: string, date2: string) => {
   const _date1 = new Date(date1);

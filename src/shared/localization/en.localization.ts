@@ -427,6 +427,8 @@ export default {
     longDescription: "Long description",
     startTime: "Start time",
     endTime: "End time",
+    limitMember: "Limit member",
+    createClass: "Create class",
   },
   seeAll: "See all",
   settings: {

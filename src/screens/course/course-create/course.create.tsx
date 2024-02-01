@@ -6,9 +6,14 @@ import {
   View,
   Text,
   Image,
+  Keyboard,
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { useForm } from "react-hook-form";
+import BottomSheet, {
+  BottomSheetBackdrop,
+  BottomSheetScrollView,
+} from "@gorhom/bottom-sheet";
 
 import InputHook from "@shared-components/form/InputHookForm";
 import CS from "@theme/styles";
@@ -22,6 +27,25 @@ import { uploadMedia } from "@services/api/post";
 import { isIos } from "@helpers/device.info.helper";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { palette } from "@theme/themes";
+import { createCourse } from "@services/api/course.api";
+import { showToast } from "@helpers/super.modal.helper";
+import LoadingUpdateMedia from "./components/LoadingUpdateMedia";
+import CustomBackground from "@shared-components/CustomBackgroundBottomSheet";
+
+const listTypeCourse = [
+  {
+    value: "Call 1-1",
+    index: 1,
+  },
+  {
+    value: "Self-learning",
+    index: 2,
+  },
+  {
+    value: "Call group",
+    index: 3,
+  },
+];
 
 const CourseCreate = () => {
   const {
@@ -34,6 +58,7 @@ const CourseCreate = () => {
       description: "",
       long_description: "",
       price: "",
+      startTime: "",
     },
   });
   const theme = useTheme();
@@ -47,25 +72,71 @@ const CourseCreate = () => {
   const [idImage, setIdImage] = React.useState("");
   const [linkVideo, setLinkVideo] = React.useState("");
   const [idVideo, setIdVideo] = React.useState("");
+  const [typeCourse, setTypeCourse] = React.useState(listTypeCourse[0]);
 
   const userData = useStore((store) => store.userData);
 
+  const openListTypeCourse = () => {
+    Keyboard.dismiss();
+    setTimeout(() => {
+      refBottomSheet.current?.expand();
+    }, 300);
+  };
+
+  const refBottomSheet = React.useRef<BottomSheet>(null);
+  const snapPoints = React.useMemo(() => ["60%"], []);
+
   const onSubmit = (data) => {
-    const params = {
-      title: data.title,
-      description: data.description,
-      long_description: data.long_description,
-      price: data.price,
-      start_time: startDate?.toISOString(),
-      end_time: endDate?.toISOString(),
-      language: userData?.default_language,
-      country: userData?.country,
-      avatar: idImage,
-      media_id: idVideo,
-    };
-    setUpdating(true);
-    console.log("params...", params);
-    setUpdating(true);
+    if (!startDate || !endDate || idImage === "") {
+      if (startDate || !endDate) {
+        showToast({ type: "error", message: "Vui lòng chọn đầy đủ thời gian" });
+      }
+      if (idImage === "") {
+        showToast({ type: "error", message: "Vui lòng chọn ảnh khoá học" });
+      }
+      // language: dang khong nhan vi
+    } else {
+      if (startDate < endDate) {
+        const params = {
+          title: data.title,
+          description: data.description,
+          long_description: data.long_description,
+          price: data.price,
+          start_time: startDate?.toISOString(),
+          end_time: endDate?.toISOString(),
+          language: "en",
+          // language: userData?.default_language,
+          country: userData?.country,
+          avatar: idImage,
+          media_id: idVideo,
+          type: typeCourse.value,
+        };
+        // console.log(params);
+        setUpdating(true);
+        createCourse(params).then((res) => {
+          if (!res.isError) {
+            console.log("res.Success..", JSON.stringify(res));
+            showToast({
+              type: "success",
+              message: translations.course.createCourseSuccess,
+            });
+            setUpdating(false);
+          } else {
+            showToast({
+              type: "error",
+              message: res.message,
+            });
+            setUpdating(false);
+          }
+        });
+      } else {
+        showToast({
+          type: "error",
+          message:
+            "Thời gian bắt đầu không được lớn hơn thời gian kết thúc khoá học",
+        });
+      }
+    }
   };
   const onPressChangeImage = async () => {
     selectMedia({
@@ -232,7 +303,7 @@ const CourseCreate = () => {
           <Text style={{ ...CS.hnMedium, marginTop: 8 }}>
             Video giới thiệu khoá học
           </Text>
-          {linkVideo === "" ? (
+          {linkVideo === "" && !updatingVid ? (
             <PressableBtn onPress={onPressChangeMedia}>
               <View
                 style={{
@@ -248,10 +319,92 @@ const CourseCreate = () => {
           ) : (
             <View style={styles.viewImage}>
               <Image source={{ uri: linkVideo }} style={styles.viewImage} />
-              {updatingVid && <View style={styles.viewImageFill}></View>}
+              {updatingVid && (
+                <View style={styles.viewImageFill}>
+                  <LoadingUpdateMedia />
+                </View>
+              )}
             </View>
           )}
+          <Text style={{ ...CS.hnMedium, marginTop: 8 }}>Kiểu khoá học</Text>
+          <PressableBtn onPress={openListTypeCourse}>
+            <View
+              style={{
+                padding: 8,
+                borderWidth: 1,
+                borderColor: palette.borderColor,
+                borderRadius: 8,
+              }}
+            >
+              <Text style={CS.hnRegular}>{typeCourse.value}</Text>
+            </View>
+          </PressableBtn>
         </View>
+        {listTypeCourse.length > 0 && (
+          <BottomSheet
+            snapPoints={snapPoints}
+            index={-1}
+            enablePanDownToClose
+            ref={refBottomSheet}
+            style={{
+              borderTopLeftRadius: 16,
+              borderTopRightRadius: 16,
+              backgroundColor: colors.background,
+            }}
+            backdropComponent={(props) => (
+              <BottomSheetBackdrop
+                {...props}
+                disappearsOnIndex={-1}
+                appearsOnIndex={0}
+                pressBehavior={"close"}
+                opacity={0.1}
+              />
+            )}
+            backgroundComponent={CustomBackground}
+          >
+            <View style={[{ paddingHorizontal: 16, ...CS.flex1 }]}>
+              <Text
+                style={{
+                  ...CS.hnSemiBold,
+                  textAlign: "center",
+                  fontSize: 20,
+                  color: colors.primary,
+                }}
+              >
+                {translations.postCategory}
+              </Text>
+              <BottomSheetScrollView
+                style={{
+                  ...CS.flex1,
+                  backgroundColor: colors.background,
+                }}
+              >
+                {listTypeCourse.map((i) => (
+                  <PressableBtn
+                    key={i.index}
+                    style={
+                      i.index === typeCourse.index
+                        ? styles.categorySelected
+                        : styles.category
+                    }
+                    onPress={() => {
+                      refBottomSheet.current?.close();
+                      setTypeCourse(i);
+                    }}
+                  >
+                    <Text
+                      style={{
+                        ...CS.hnSemiBold,
+                        fontSize: 16,
+                        color: colors.primary,
+                      }}
+                    >{`${i.value}`}</Text>
+                  </PressableBtn>
+                ))}
+              </BottomSheetScrollView>
+            </View>
+          </BottomSheet>
+        )}
 
         <Button
           style={{
@@ -260,7 +413,7 @@ const CourseCreate = () => {
             backgroundColor: updating ? colors.placeholder : colors.primary,
           }}
           text={translations.course.createCourse}
-          disabled={updating}
+          disabled={updating || updatingImg || updatingVid}
           onPress={handleSubmit(onSubmit)}
         />
       </ScrollView>
@@ -274,10 +427,23 @@ const styles = StyleSheet.create({
   viewImage: {
     width: 160,
     height: 90,
+    backgroundColor: palette.placeholder,
   },
   viewImageFill: {
     ...CS.fillParent,
     ...CS.center,
     backgroundColor: palette.placeholder,
+  },
+  category: {
+    marginTop: 10,
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: palette.background,
+  },
+  categorySelected: {
+    marginTop: 10,
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: palette.highlight,
   },
 });

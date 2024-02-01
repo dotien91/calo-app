@@ -517,6 +517,8 @@ export default {
     longDescription: "Chi tiết khoá học",
     startTime: "Ngày bắt đầu",
     endTime: "Ngày kết thúc",
+    limitMember: "Học viên tối đa",
+    createClass: "Tạo lớp",
   },
   seeAll: "Xem tất cả",
   settings: {

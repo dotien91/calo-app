@@ -1,22 +1,19 @@
-import PressableBtn from "@shared-components/button/PressableBtn";
-import CS from "@theme/styles";
-import { palette } from "@theme/themes";
-import { formatVNDate } from "@utils/date.utils";
 import React, { useState } from "react";
 import { Text, ViewStyle } from "react-native";
 import DatePicker from "react-native-date-picker";
 
-interface SelectDateTimeProps {
+import PressableBtn from "@shared-components/button/PressableBtn";
+import CS from "@theme/styles";
+import { palette } from "@theme/themes";
+import { formatTimeHHMM } from "@utils/date.utils";
+
+interface SelectTimeProps {
   setTime: (time: Date) => void;
   placeholder: string;
   style: ViewStyle;
 }
 
-const SelectDateTime = ({
-  setTime,
-  placeholder,
-  style,
-}: SelectDateTimeProps) => {
+const SelectTime = ({ setTime, placeholder, style }: SelectTimeProps) => {
   const [date, setDate] = useState<Date>();
   const [open, setOpen] = useState(false);
 
@@ -44,17 +41,16 @@ const SelectDateTime = ({
             color: date ? palette.mainColor2 : palette.placeholder,
           }}
         >
-          {date ? formatVNDate(date) : placeholder}
+          {date ? formatTimeHHMM(date) : placeholder}
         </Text>
       </PressableBtn>
       <DatePicker
         modal
         open={open}
-        mode="date"
+        mode="time"
         date={date || new Date()}
-        minimumDate={new Date()}
+        minuteInterval={30}
         onConfirm={(date) => {
-          console.log("date..", date);
           setOpen(false);
           setDate(date);
           setTime(date);
@@ -67,4 +63,4 @@ const SelectDateTime = ({
   );
 };
 
-export default SelectDateTime;
+export default SelectTime;
