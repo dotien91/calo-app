@@ -41,6 +41,9 @@ export const SCREENS = {
   BOOK_LESSON: "BookLesson",
   CHOOSE_CLASS: "ChooseClass",
   PAYMENT_COURES: "PaymentCoures",
+  ABOUT_ME: "AboutMe",
+  SETTING_USER: "SettingUser",
+  CHANGELANGUAGE: "ChangeLanguage",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     elevation: 1,
     shadowRadius: 5,
-    marginTop: getStatusBarHeight()
+    marginTop: getStatusBarHeight(),
   },
   textHeader: {
     ...CommonStyle.hnSemiBold,
