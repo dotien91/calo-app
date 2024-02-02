@@ -47,7 +47,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
       title: translations.settingUser.private,
       icon: "lock-closed-outline",
       action: () => {
-        NavigationService.navigate(SCREENS.PAYMENT_COURES);
+        // NavigationService.navigate(SCREENS.PAYMENT_COURES);
       },
     },
     {

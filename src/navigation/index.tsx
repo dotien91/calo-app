@@ -54,6 +54,8 @@ import HomeScreen from "@screens/home/home.screen";
 import AboutMe from "@screens/about-me/about.me";
 import SettingUser from "@screens/setting-user/setting.user";
 import ChangeLanguage from "@screens/change-language/change.language";
+import SmartBanking from "@screens/smart-banking/smart.banking";
+import PaymentSuccess from "@screens/payment-success/payment.success";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -250,6 +252,11 @@ const Navigation = () => {
         <Stack.Screen
           name={SCREENS.CHANGELANGUAGE}
           component={ChangeLanguage}
+        />
+        <Stack.Screen name={SCREENS.SMARTBANKING} component={SmartBanking} />
+        <Stack.Screen
+          name={SCREENS.PAYMENT_SUCCESS}
+          component={PaymentSuccess}
         />
       </Stack.Navigator>
     </NavigationContainer>

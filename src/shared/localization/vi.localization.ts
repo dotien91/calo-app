@@ -1216,6 +1216,16 @@ export default {
     promotion: "Khuyến mãi",
     notePurchase:
       "Giao dịch sẽ mất ít phút để hoàn thành, khi thành công chúng tôi thông báo đến bạn",
+    paymentsuccess: "Giao dịch thành công",
+    completepayment:
+      "Khi bạn đã hoàn tất việc thanh toán của mình. Bạn chỉ cần nhấp vào nút bên dưới để tận hưởng khóa học.",
+    gomylearning: "Đi đến lớp học",
+    uploadfile: "Gửi file",
+    send: "Gửi",
+    sendPro: "Gửi thông tin giao dịch",
+    saveQRCode: "Lưu mã QR",
+    tocomplete:
+      "Để hoàn tất quá trình thanh toán, vui lòng thực hiện chuyển khoản tới số tài khoản bên dưới:",
   },
   settingUser: {
     language: "Ngôn ngữ",
