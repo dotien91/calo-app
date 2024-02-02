@@ -2,6 +2,7 @@ import { ExtendedTheme } from "@react-navigation/native";
 import { ViewStyle, StyleSheet } from "react-native";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
+// import { getStatusBarHeight } from "react-native-safearea-height";
 
 interface Style {
   container: ViewStyle;

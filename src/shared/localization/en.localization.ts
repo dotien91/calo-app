@@ -705,5 +705,27 @@ export default {
     notePurchase:
       "The transaction will take a few minutes to complete, when successful we will notify you",
   },
+  settingUser: {
+    language: "Language",
+    hightandweigh: "Height/Weight",
+    space: "Space",
+    deletecache: "Delete memory",
+    noti: "Notification",
+    hidden: "Hidden me from WhiteG",
+    block: "Block message from strangers",
+    blackList: "List Black",
+    setting: "Setting",
+    private: "Security & privacy",
+    support: "Customer support",
+    aboutus: "About us",
+  },
+  aboutUs: {
+    aboutUs: "About us",
+    termofus: "Term of us",
+    privacy: "Privacy Policy",
+    cookie: "Cookie policy",
+    return: "Return policy",
+    deleteacount: "Detete Account",
+  },
 };
 /* eslint-disable max-len */

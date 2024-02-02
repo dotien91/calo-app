@@ -50,6 +50,10 @@ import DetailTeacherScreen from "@screens/course/detail-teacher/detail.teacher.s
 import CourseRate from "@screens/course/course-rate/course.rate.screen";
 import ReviewScreen from "@screens/course/course-preview/review.screen";
 import HomeScreen from "@screens/home/home.screen";
+// import CourseCategoryDetailScreen from "@screens/course-list/course-filter-result/course.filter.result.screen";
+import AboutMe from "@screens/about-me/about.me";
+import SettingUser from "@screens/setting-user/setting.user";
+import ChangeLanguage from "@screens/change-language/change.language";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -241,6 +245,12 @@ const Navigation = () => {
           component={NewPasswordScreen}
         />
         <Stack.Screen name={SCREENS.PAYMENT_COURES} component={PaymentCoures} />
+        <Stack.Screen name={SCREENS.ABOUT_ME} component={AboutMe} />
+        <Stack.Screen name={SCREENS.SETTING_USER} component={SettingUser} />
+        <Stack.Screen
+          name={SCREENS.CHANGELANGUAGE}
+          component={ChangeLanguage}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

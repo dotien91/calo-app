@@ -1217,4 +1217,26 @@ export default {
     notePurchase:
       "Giao dịch sẽ mất ít phút để hoàn thành, khi thành công chúng tôi thông báo đến bạn",
   },
+  settingUser: {
+    language: "Ngôn ngữ",
+    hightandweigh: "Đơn vị chiều cao/cân nặng",
+    space: "Đơn vị khoảng cách",
+    deletecache: "Xoá bộ nhớ đệm",
+    noti: "Thông báo",
+    hidden: "Tạm ẩn tôi khỏi WhiteG",
+    block: "Chặn tin nhắn từ người lạ",
+    blackList: "Danh sách đen",
+    setting: "Cài đặt",
+    private: "Bảo mật & riêng tư",
+    support: "Hỗ trợ khách hàng",
+    aboutus: "Về chúng tôi",
+  },
+  aboutUs: {
+    aboutUs: "Về chúng tôi",
+    termofus: "Điều khoản sử dụng",
+    privacy: "Chính sách bảo mật",
+    cookie: "Chính sách cookie",
+    return: "Chính sách hoàn trả",
+    deleteacount: "Xoá tài khoản",
+  },
 };
