@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   KeyboardAvoidingView,
@@ -14,6 +14,7 @@ import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetScrollView,
 } from "@gorhom/bottom-sheet";
+import * as NavigationService from "react-navigation-helpers";
 
 import InputHook from "@shared-components/form/InputHookForm";
 import CS from "@theme/styles";
@@ -31,21 +32,22 @@ import { createCourse } from "@services/api/course.api";
 import { showToast } from "@helpers/super.modal.helper";
 import LoadingUpdateMedia from "./components/LoadingUpdateMedia";
 import CustomBackground from "@shared-components/CustomBackgroundBottomSheet";
+import { SCREENS } from "constants";
+import {
+  listLevel,
+  listSkill,
+  listTypeCourse,
+} from "constants/course.constant";
 
-const listTypeCourse = [
-  {
-    value: "Call 1-1",
-    index: 1,
-  },
-  {
-    value: "Self-learning",
-    index: 2,
-  },
-  {
-    value: "Call group",
-    index: 3,
-  },
-];
+interface ILevel {
+  value: string;
+  index: string | number;
+}
+
+interface ISkill {
+  value: string;
+  index: string | number;
+}
 
 const CourseCreate = () => {
   const {
@@ -73,6 +75,8 @@ const CourseCreate = () => {
   const [linkVideo, setLinkVideo] = React.useState("");
   const [idVideo, setIdVideo] = React.useState("");
   const [typeCourse, setTypeCourse] = React.useState(listTypeCourse[0]);
+  const [level, setLevel] = useState<ILevel>(listLevel[0]);
+  const [skill, setSkill] = useState<ISkill[]>([]);
 
   const userData = useStore((store) => store.userData);
 
@@ -110,8 +114,10 @@ const CourseCreate = () => {
           avatar: idImage,
           media_id: idVideo,
           type: typeCourse.value,
+          level: level.value,
+          skills: skill.map((i) => i.value),
         };
-        // console.log(params);
+        console.log(params);
         setUpdating(true);
         createCourse(params).then((res) => {
           if (!res.isError) {
@@ -120,6 +126,16 @@ const CourseCreate = () => {
               type: "success",
               message: translations.course.createCourseSuccess,
             });
+            if (typeCourse.value === "Call group") {
+              NavigationService.navigate(SCREENS.COURSR_LIST_CLASS, {
+                course_id: res.data._id,
+              });
+            }
+            if (typeCourse.value === "Call 1-1") {
+              NavigationService.navigate(SCREENS.COURSR_CREATE_CALENDAR_CALL, {
+                course_id: res.data._id,
+              });
+            }
             setUpdating(false);
           } else {
             showToast({
@@ -181,6 +197,149 @@ const CourseCreate = () => {
         }
       },
     });
+  };
+
+  const renderSelectLevel = () => {
+    const renderLevelBtn = (item: ILevel) => {
+      const _onSelectLevel = () => {
+        setLevel(item);
+      };
+      const isSeleted = level?.value === item.value;
+      return (
+        <PressableBtn
+          onPress={_onSelectLevel}
+          style={[
+            styles.durationBtn,
+            isSeleted && { backgroundColor: palette.primary },
+          ]}
+        >
+          <Text style={[styles.txtBtn]}>{item.value}</Text>
+        </PressableBtn>
+      );
+    };
+
+    return (
+      <View style={styles.selectBox}>
+        <Text style={styles.label}>{translations.course.filterLevel}</Text>
+        <View style={CS.flexRear}>
+          {listLevel.map((item) => renderLevelBtn(item))}
+        </View>
+      </View>
+    );
+  };
+
+  const renderSelectSkill = () => {
+    const renderSkillBtn = (item: ISkill) => {
+      const isSelected =
+        [...skill]?.findIndex((i) => i.value === item.value) >= 0;
+      const _onSelectSkill = () => {
+        if (isSelected) {
+          setSkill((skill) => skill?.filter((i) => i.value !== item.value));
+        } else {
+          setSkill([...skill, item]);
+        }
+      };
+      return (
+        <PressableBtn
+          onPress={_onSelectSkill}
+          style={[
+            styles.durationBtn,
+            isSelected && { backgroundColor: palette.primary },
+          ]}
+        >
+          <Text style={[styles.txtBtn]}>{item.value}</Text>
+        </PressableBtn>
+      );
+    };
+
+    return (
+      <View style={styles.selectBox}>
+        <Text style={styles.label}>{translations.course.skills}</Text>
+        <View style={CS.flexRear}>
+          {listSkill.map((item) => renderSkillBtn(item))}
+        </View>
+      </View>
+    );
+  };
+
+  const renderSelectAvatarCourse = () => {
+    return (
+      <>
+        <Text style={{ ...CS.hnMedium, marginTop: 8 }}>Ảnh khoá học</Text>
+        <PressableBtn onPress={onPressChangeImage}>
+          {linkImage === "" ? (
+            <View
+              style={{
+                padding: 8,
+                borderWidth: 1,
+                borderColor: palette.borderColor,
+                borderRadius: 8,
+              }}
+            >
+              <Text style={CS.hnRegular}>Chọn ảnh</Text>
+            </View>
+          ) : (
+            <View style={styles.viewImage}>
+              <Image source={{ uri: linkImage }} style={styles.viewImage} />
+              {updatingImg && <View style={styles.viewImageFill}></View>}
+            </View>
+          )}
+        </PressableBtn>
+      </>
+    );
+  };
+
+  const renderSelectVideo = () => {
+    return (
+      <>
+        <Text style={{ ...CS.hnMedium, marginTop: 8 }}>
+          Video giới thiệu khoá học
+        </Text>
+        {linkVideo === "" && !updatingVid ? (
+          <PressableBtn onPress={onPressChangeMedia}>
+            <View
+              style={{
+                padding: 8,
+                borderWidth: 1,
+                borderColor: palette.borderColor,
+                borderRadius: 8,
+              }}
+            >
+              <Text style={CS.hnRegular}>Chọn video</Text>
+            </View>
+          </PressableBtn>
+        ) : (
+          <View style={styles.viewImage}>
+            <Image source={{ uri: linkVideo }} style={styles.viewImage} />
+            {updatingVid && (
+              <View style={styles.viewImageFill}>
+                <LoadingUpdateMedia />
+              </View>
+            )}
+          </View>
+        )}
+      </>
+    );
+  };
+
+  const renderSelectTypeCourse = () => {
+    return (
+      <>
+        <Text style={{ ...CS.hnMedium, marginTop: 8 }}>Kiểu khoá học</Text>
+        <PressableBtn onPress={openListTypeCourse}>
+          <View
+            style={{
+              padding: 8,
+              borderWidth: 1,
+              borderColor: palette.borderColor,
+              borderRadius: 8,
+            }}
+          >
+            <Text style={CS.hnRegular}>{typeCourse.value}</Text>
+          </View>
+        </PressableBtn>
+      </>
+    );
   };
 
   return (
@@ -279,66 +438,11 @@ const CourseCreate = () => {
         </View>
 
         <View style={{ paddingHorizontal: 20 }}>
-          <Text style={{ ...CS.hnMedium, marginTop: 8 }}>Ảnh khoá học</Text>
-
-          <PressableBtn onPress={onPressChangeImage}>
-            {linkImage === "" ? (
-              <View
-                style={{
-                  padding: 8,
-                  borderWidth: 1,
-                  borderColor: palette.borderColor,
-                  borderRadius: 8,
-                }}
-              >
-                <Text style={CS.hnRegular}>Chọn ảnh</Text>
-              </View>
-            ) : (
-              <View style={styles.viewImage}>
-                <Image source={{ uri: linkImage }} style={styles.viewImage} />
-                {updatingImg && <View style={styles.viewImageFill}></View>}
-              </View>
-            )}
-          </PressableBtn>
-          <Text style={{ ...CS.hnMedium, marginTop: 8 }}>
-            Video giới thiệu khoá học
-          </Text>
-          {linkVideo === "" && !updatingVid ? (
-            <PressableBtn onPress={onPressChangeMedia}>
-              <View
-                style={{
-                  padding: 8,
-                  borderWidth: 1,
-                  borderColor: palette.borderColor,
-                  borderRadius: 8,
-                }}
-              >
-                <Text style={CS.hnRegular}>Chọn video</Text>
-              </View>
-            </PressableBtn>
-          ) : (
-            <View style={styles.viewImage}>
-              <Image source={{ uri: linkVideo }} style={styles.viewImage} />
-              {updatingVid && (
-                <View style={styles.viewImageFill}>
-                  <LoadingUpdateMedia />
-                </View>
-              )}
-            </View>
-          )}
-          <Text style={{ ...CS.hnMedium, marginTop: 8 }}>Kiểu khoá học</Text>
-          <PressableBtn onPress={openListTypeCourse}>
-            <View
-              style={{
-                padding: 8,
-                borderWidth: 1,
-                borderColor: palette.borderColor,
-                borderRadius: 8,
-              }}
-            >
-              <Text style={CS.hnRegular}>{typeCourse.value}</Text>
-            </View>
-          </PressableBtn>
+          {renderSelectAvatarCourse()}
+          {renderSelectVideo()}
+          {renderSelectTypeCourse()}
+          {renderSelectLevel()}
+          {renderSelectSkill()}
         </View>
         {listTypeCourse.length > 0 && (
           <BottomSheet
@@ -416,6 +520,7 @@ const CourseCreate = () => {
           disabled={updating || updatingImg || updatingVid}
           onPress={handleSubmit(onSubmit)}
         />
+        <View style={{ height: 80 }} />
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -445,5 +550,27 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     backgroundColor: palette.highlight,
+  },
+  label: {
+    ...CS.hnMedium,
+    color: palette.text,
+    marginBottom: 8,
+  },
+  durationBtn: {
+    padding: 4,
+    flex: 1,
+    backgroundColor: palette.background,
+    borderWidth: 1,
+    borderColor: palette.borderColor,
+    marginHorizontal: 4,
+    ...CS.flexCenter,
+    borderRadius: 4,
+  },
+  selectBox: {
+    marginBottom: 16,
+  },
+  txtBtn: {
+    ...CS.hnSemiBold,
+    color: palette.textOpacity6,
   },
 });

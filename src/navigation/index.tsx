@@ -44,15 +44,16 @@ import CourseSearchScreen from "@screens/course-tab/course-search/course.search.
 import CourseFilterResultScreen from "@screens/course-tab/course-filter-result/course.filter.result.screen";
 import BookLessonScreen from "@screens/purchase-course/book-lesson/book.lesson.screen";
 import ChooseClassScreen from "@screens/purchase-course/choose-class/choose.class.screen";
-import CourseCategoryDetailScreen from "@screens/course-tab/course-filter-result/course.filter.result.screen";
 import PaymentCoures from "@screens/payment-coures/payment.coures";
 import CoursePreviewScreen from "@screens/course/course-preview/course.preview.screen";
 import DetailTeacherScreen from "@screens/course/detail-teacher/detail.teacher.screen";
 import CourseRate from "@screens/course/course-rate/course.rate.screen";
 import ReviewScreen from "@screens/course/course-preview/review.screen";
 import HomeScreen from "@screens/home/home.screen";
-import CourseCreate from "@screens/course/course-create/course.create";
-import CourseCreateClass from "@screens/course/course-create/course.create.class";
+import CourseCreateScreen from "@screens/course/course-create/course.create.screen";
+import CourseCreateClassScreen from "@screens/course/course-create/course.create.class.screen";
+import CourseListClassScreen from "@screens/course/course-create/course.list.class.screen";
+import CreateClassCallOneScreen from "@screens/course/course-create/course.create.class.call.one.screen";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -151,13 +152,24 @@ const Navigation = () => {
     >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen
-          name={SCREENS.COURSR_CREATE_CLASS}
-          component={CourseCreateClass}
-        />
-        <Stack.Screen name={SCREENS.COURSR_CREATE} component={CourseCreate} />
-        <Stack.Screen
           name={SCREENS.COURSE_LIST}
           component={renderTabNavigation}
+        />
+        <Stack.Screen
+          name={SCREENS.COURSR_CREATE}
+          component={CourseCreateScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.COURSR_CREATE_CALENDAR_CALL}
+          component={CreateClassCallOneScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.COURSR_LIST_CLASS}
+          component={CourseListClassScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.COURSR_CREATE_CLASS}
+          component={CourseCreateClassScreen}
         />
         <Stack.Screen
           name={SCREENS.CHOOSE_CLASS}

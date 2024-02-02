@@ -1,14 +1,18 @@
+import * as React from "react";
+import { useForm } from "react-hook-form";
+import { View, ScrollView } from "react-native";
+import { useTheme, useRoute } from "@react-navigation/native";
+import * as NavigationService from "react-navigation-helpers";
+
 import { translations } from "@localization";
 import InputHook from "@shared-components/form/InputHookForm";
 import Header from "@shared-components/header/Header";
 import CS from "@theme/styles";
-import * as React from "react";
-import { useForm } from "react-hook-form";
-import { View, ScrollView } from "react-native";
 import AddCourseCalenDar from "./components/AddCourseCalendar";
 import { showToast } from "@helpers/super.modal.helper";
 import Button from "@shared-components/button/Button";
-import { useTheme } from "@react-navigation/native";
+import { createClass } from "@services/api/course.api";
+import eventEmitter from "@services/event-emitter";
 
 const CourseCreateClass = () => {
   const {
@@ -21,6 +25,8 @@ const CourseCreateClass = () => {
       limit_member: "",
     },
   });
+  const route = useRoute();
+  const course_id = route.params?.["course_id"];
 
   // truyền các trường từ màn trước sang: course_id, start_time, end_time
   const [updating, setUpdating] = React.useState<boolean>(false);
@@ -38,15 +44,28 @@ const CourseCreateClass = () => {
       });
     } else {
       const params = {
-        course_id: "123123",
+        course_id: course_id,
         course_calendars: courseCalendar,
         name: data.name_class,
-        limit_member: data.limit_member,
+        limit_member: parseInt(data.limit_member),
+        start_time: "2024-02-01T03:07:44.655Z",
+        end_time: "2024-09-10T03:07:47.000Z",
       };
       setUpdating(true);
-      setUpdating(false);
-      console.log("params...", params);
-      // setUpdating(false);
+      createClass(params).then((res) => {
+        if (!res.isError) {
+          showToast({
+            type: "success",
+            message: translations.course.createClassSuccess,
+          });
+          eventEmitter.emit("refresh_list_class");
+          setUpdating(false);
+          NavigationService.goBack();
+        } else {
+          showToast({ type: "error", message: res.message });
+          setUpdating(false);
+        }
+      });
     }
   };
 
@@ -102,7 +121,7 @@ const CourseCreateClass = () => {
               marginTop: 16,
               backgroundColor: updating ? colors.placeholder : colors.primary,
             }}
-            text={translations.course.createCourse}
+            text={translations.course.createClass}
             disabled={updating}
             onPress={handleSubmit(onSubmit)}
           />

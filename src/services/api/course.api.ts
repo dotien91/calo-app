@@ -122,3 +122,46 @@ export async function createCourse(data: ICreateCourse) {
     return response;
   });
 }
+
+interface CourseAddType {
+  time_duration: number;
+  day: number;
+  time_start: string;
+}
+
+interface ICreateClass {
+  course_id: string;
+  course_calendars: CourseAddType[];
+  name: string;
+  limit_member: number;
+}
+
+export async function createClass(data: ICreateClass) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "course/class/create",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function getListClassOfCourse(params) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "course/class/list",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function createTimeAvailableTeacher(data) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "course/one-one/teacher/create",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}

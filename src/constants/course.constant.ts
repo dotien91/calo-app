@@ -671,3 +671,167 @@ export const exampleData = [
     ],
   },
 ];
+
+export const listTypeCourse = [
+  {
+    value: "Call 1-1",
+    index: 1,
+  },
+  {
+    value: "Self-learning",
+    index: 2,
+  },
+  {
+    value: "Call group",
+    index: 3,
+  },
+];
+
+export const listLevel = [
+  { value: "4+", index: 1 },
+  { value: "5+", index: 2 },
+  { value: "6+", index: 3 },
+  { value: "7+", index: 4 },
+  { value: "8+", index: 5 },
+  { value: "9", index: 6 },
+];
+
+export const listSkill = [
+  { value: "Listening", index: 1 },
+  { value: "Reading", index: 2 },
+  { value: "Writing", index: 3 },
+  { value: "Speaking", index: 4 },
+];
+
+export const timesInUtc = [
+  {
+    label: "0:00 - 1:00",
+    is_picked: false,
+    time_start: "0:00",
+  },
+  {
+    label: "1:00 - 2:00",
+    is_picked: false,
+    time_start: "1:00",
+  },
+  {
+    label: "2:00 - 3:00",
+    is_picked: false,
+    time_start: "2:00",
+  },
+  {
+    label: "3:00 - 4:00",
+    is_picked: false,
+    time_start: "3:00",
+  },
+  {
+    label: "4:00 - 5:00",
+    is_picked: false,
+    time_start: "4:00",
+  },
+  {
+    label: "5:00 - 6:00",
+    is_picked: false,
+    time_start: "05:00",
+  },
+  {
+    label: "6:00 - 7:00",
+    is_picked: false,
+    time_start: "6:00",
+  },
+  {
+    label: "7:00 - 8:00",
+    is_picked: false,
+    time_start: "7:00",
+  },
+  {
+    label: "8:00 - 9:00",
+    is_picked: false,
+    time_start: "8:00",
+  },
+  {
+    label: "9:00 - 10:00",
+    is_picked: false,
+    time_start: "9:00",
+  },
+  {
+    label: "10:00 - 11:00",
+    is_picked: false,
+    time_start: "10:00",
+  },
+  {
+    label: "11:00 - 12:00",
+    is_picked: false,
+    time_start: "11:00",
+  },
+  {
+    label: "12:00 - 13:00",
+    is_picked: false,
+    time_start: "12:00",
+  },
+  {
+    label: "13:00 - 14:00",
+    is_picked: false,
+    time_start: "13:00",
+  },
+  {
+    label: "14:00 - 15:00",
+    is_picked: false,
+    time_start: "14:00",
+  },
+  {
+    label: "15:00 - 16:00",
+    is_picked: false,
+    time_start: "15:00",
+  },
+  {
+    label: "16:00 - 17:00",
+    is_picked: false,
+    time_start: "16:00",
+  },
+  {
+    label: "17:00 - 18:00",
+    is_picked: false,
+    time_start: "17:00",
+  },
+  {
+    label: "18:00 - 19:00",
+    is_picked: false,
+    time_start: "18:00",
+  },
+  {
+    label: "19:00 - 20:00",
+    is_picked: false,
+    time_start: "19:00",
+  },
+  {
+    label: "20:00 - 21:00",
+    is_picked: false,
+    time_start: "20:00",
+  },
+  {
+    label: "21:00 - 22:00",
+    is_picked: false,
+    time_start: "21:00",
+  },
+  {
+    label: "22:00 - 23:00",
+    is_picked: false,
+    time_start: "22:00",
+  },
+  {
+    label: "23:00 - 24:00",
+    is_picked: false,
+    time_start: "23:00",
+  },
+];
+
+export const timeFullWeek = [
+  { value: 0, label: "Sun", times: timesInUtc },
+  { value: 1, label: "Mon", times: timesInUtc },
+  { value: 2, label: "Tue", times: timesInUtc },
+  { value: 3, label: "Wed", times: timesInUtc },
+  { value: 4, label: "Thu", times: timesInUtc },
+  { value: 5, label: "Fri", times: timesInUtc },
+  { value: 6, label: "Sat", times: timesInUtc },
+];

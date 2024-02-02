@@ -33,7 +33,7 @@ export const getLabelHourLesson = (data) => {
   return data.map((item) => {
     const label = item?.label || " ";
     const endTime = Number(label.slice(label.length - 5, label.length - 3));
-    console.log("endTimeendTimeendTime", endTime);
+    // console.log("endTimeendTimeendTime", endTime);
     if (endTime <= 12 && !hasMorningLabel) {
       hasMorningLabel = true;
       return {

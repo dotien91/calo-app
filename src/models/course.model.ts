@@ -118,3 +118,18 @@ export interface IClass {
   user_avatar_thumbnail: string;
   _id: string;
 }
+
+export interface IItemTimeOfClass {
+  _id: string;
+  time_duration: number;
+  day: 1;
+  time_start: string;
+  time_end: string;
+  course_type: string;
+}
+
+export interface IItemClass {
+  _id: string;
+  course_id: string;
+  course_calendar_ids: IItemTimeOfClass[];
+}

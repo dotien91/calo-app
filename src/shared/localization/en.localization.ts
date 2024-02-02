@@ -429,6 +429,7 @@ export default {
     endTime: "End time",
     limitMember: "Limit member",
     createClass: "Create class",
+    createClassSuccess: "Create class success",
   },
   seeAll: "See all",
   settings: {
