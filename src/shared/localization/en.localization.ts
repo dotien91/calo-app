@@ -704,6 +704,16 @@ export default {
     promotion: "Promotion",
     notePurchase:
       "The transaction will take a few minutes to complete, when successful we will notify you",
+    paymentsuccess: "Payment Success",
+    completepayment:
+      "When you have completed your payment. You just need to click the button below to enjoy the course.",
+    gomylearning: "Go to my learning",
+    uploadfile: "Upload file",
+    send: "Send",
+    sendPro: "Send provemment",
+    saveQRCode: "Save QR code",
+    tocomplete:
+      "To complete the payment process, please make a transfer to the account number below:",
   },
   settingUser: {
     language: "Language",

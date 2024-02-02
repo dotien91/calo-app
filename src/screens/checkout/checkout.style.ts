@@ -36,6 +36,7 @@ interface Style {
   styleMarginVerticalpaymentMethod: TextStyle;
   styleTextErrorPaymentMethod: TextStyle;
   styleTextAddcode: TextStyle;
+  container: ViewStyle;
 }
 
 export default (theme: ExtendedTheme) => {
@@ -46,7 +47,7 @@ export default (theme: ExtendedTheme) => {
       paddingTop: isIOS ? 0 : getStatusBarHeight(),
     },
     styleShawdow: {
-      shadowColor: "#000000",
+      shadowColor: colors.white,
       borderWidth: 1,
       borderColor: colors.white,
       shadowOffset: {
@@ -60,9 +61,8 @@ export default (theme: ExtendedTheme) => {
       backgroundColor: colors.white,
     },
     styleViewProMo: {
+      ...CS.row,
       height: 56,
-      flexDirection: "row",
-      alignItems: "center",
       marginHorizontal: 16,
       justifyContent: "space-between",
     },
@@ -73,29 +73,26 @@ export default (theme: ExtendedTheme) => {
       marginVertical: 8,
     },
     styleViewComplete: {
+      ...CS.row,
       height: 100,
       position: "absolute",
       bottom: 0,
       left: 0,
       zIndex: 1,
       width: "100%",
-      flexDirection: "row",
       justifyContent: "space-between",
-      alignItems: "center",
     },
     styleViewItemPayment: {
-      flexDirection: "row",
+      ...CS.row,
       justifyContent: "space-between",
       marginHorizontal: 16,
       height: 56,
-      alignItems: "center",
     },
     styleViewItemFormTime: {
+      ...CS.row,
       marginHorizontal: 16,
-      flexDirection: "row",
       justifyContent: "space-between",
       height: 56,
-      alignItems: "center",
       borderBottomWidth: 1,
     },
     styleViewCustomRadioButtom: {
@@ -106,11 +103,10 @@ export default (theme: ExtendedTheme) => {
       ...CS.center,
     },
     styleViewItemPaymentDetail: {
-      flexDirection: "row",
+      ...CS.row,
       justifyContent: "space-between",
       marginHorizontal: 16,
       height: 56,
-      alignItems: "center",
     },
     styleButtonComplete: {
       marginRight: 16,
