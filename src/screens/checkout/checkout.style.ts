@@ -222,5 +222,11 @@ export default (theme: ExtendedTheme) => {
       textDecorationLine: "underline",
       marginRight: 16,
     },
+    note: {
+      margin: 12,
+      ...CS.hnMedium,
+      color: colors.info,
+      marginLeft: 16,
+    },
   });
 };

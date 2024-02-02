@@ -21,6 +21,7 @@ export const palette = {
   borderColor: "rgba(0, 53, 128, 0.2)",
   borderColorDark: "#333942",
   danger: "rgb(208, 2, 27)",
+  info: "#f77816",
   title: "rgb(102, 102, 102)",
   separator: "rgb(194, 194, 195)",
   highlight: "rgb(199, 198, 203)",

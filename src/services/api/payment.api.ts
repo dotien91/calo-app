@@ -14,3 +14,32 @@ export async function createVnpayUrl() {
     return response;
   });
 }
+
+export async function getOrderDetail(id: string) {
+  return request({
+    method: METHOD.GET,
+    urlPath: `order/detail-order/${id}`,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function addMemberToClass(data) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "course/class/add-member",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function addStudentTimepick(data) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "course/one-one/student-create",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}

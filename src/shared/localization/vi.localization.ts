@@ -1214,5 +1214,7 @@ export default {
     couresfree: "Khoá học miễn phí",
     completecheckout: "Hoàn tất thanh toán",
     promotion: "Khuyến mãi",
+    notePurchase:
+      "Giao dịch sẽ mất ít phút để hoàn thành, khi thành công chúng tôi thông báo đến bạn",
   },
 };

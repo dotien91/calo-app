@@ -20,9 +20,7 @@ import { SCREENS } from "constants";
 
 interface BookLessonSelectViewProps {}
 
-const BookLessonSelectView: React.FC<
-  BookLessonSelectViewProps
-> = () => {
+const BookLessonSelectView: React.FC<BookLessonSelectViewProps> = () => {
   const theme = useTheme();
   const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
@@ -30,7 +28,7 @@ const BookLessonSelectView: React.FC<
   const courseData = route.params?.["courseData"];
   const courseId = courseData._id;
 
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [duration, setDuration] = useState<number>(1);
   const [isMaxDay, setIsMaxDay] = useState(false);
@@ -49,6 +47,8 @@ const BookLessonSelectView: React.FC<
       }
     });
   }, []);
+
+  console.log("datadatadata", data);
 
   //hide
   React.useEffect(() => {
@@ -274,7 +274,7 @@ const BookLessonSelectView: React.FC<
     );
   };
 
-  if (loading || !data) return <LoadingList />;
+  if (loading || !data?.length) return <LoadingList />;
 
   return (
     <ScrollView style={styles.container}>

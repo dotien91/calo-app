@@ -33,7 +33,7 @@ const CoursePreviewScreen = () => {
   const [data, setData] = useState<ICourseItem>();
   const route = useRoute();
   const course_id = route.params?.["course_id"];
-  // const course_id = "65b773efb11a3c94cc62c5e2"
+  // const course_id = "65b773efb11a3c94cc62c5e2";
   // const course_id = "65b77490b11a3c94cc62c69a"; //class room
 
   // const course_id = "6583a1fc8e5e75e353a7bedf"; // tonyvu

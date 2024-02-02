@@ -92,6 +92,9 @@ export const getTimeFromTimepick = (timePick, isClassRoom = false) => {
     });
     return;
   }
+
+  console.log("timePicktimePick", timePick);
+  return "  ";
   learningTime =
     timePick[0].time_start +
     " - " +

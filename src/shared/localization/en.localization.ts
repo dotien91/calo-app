@@ -702,6 +702,8 @@ export default {
     couresfree: "Course free",
     completecheckout: "Complete Checkout",
     promotion: "Promotion",
+    notePurchase:
+      "The transaction will take a few minutes to complete, when successful we will notify you",
   },
 };
 /* eslint-disable max-len */

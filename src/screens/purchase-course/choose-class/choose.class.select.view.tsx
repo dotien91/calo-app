@@ -108,6 +108,7 @@ const ChooseClassSelectView: React.FC<ChooseClassSelectViewProps> = ({
       start_time: selectedClass?.start_time,
       limit_member: selectedClass?.limit_member,
       course_calendars: selectedClass?.course_calendar_ids,
+      _id: selectedClass?._id,
     };
     NavigationService.navigate(SCREENS.PAYMENT_COURES, {
       courseData,
