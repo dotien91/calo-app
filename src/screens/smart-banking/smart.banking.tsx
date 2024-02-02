@@ -44,11 +44,7 @@ const SmartBanking = () => {
         </Text>
         <View style={styles.styleViewCopyNumberBank}>
           <Text style={styles.styleTextNumberBank}>0123456789</Text>
-          <TouchableOpacity
-            onPress={() => {
-              copyToClipboard();
-            }}
-          >
+          <TouchableOpacity onPress={copyToClipboard}>
             <Image
               style={{ height: 15.3, width: 13.79 }}
               source={require("assets/images/CopyIcon.png")}
