@@ -48,16 +48,16 @@ const CourseFilterModalInnter = ({
   const listCourseFilterParams = useStore(
     (state) => state.listCourseFilterParams,
   );
-
   const setListCourseFilterParams = useStore(
     (state) => state.setListCourseFilterParams,
   );
+  const courseSearchHistory = useStore((state) => state.courseSearchHistory);
 
   const [paramsRequest, setParamsRequest] = React.useState(
     listCourseFilterParams,
   );
   const { isLoading, totalCount } = useListSearch<ICourseItem>(
-    paramsRequest,
+    { ...paramsRequest, search: courseSearchHistory },
     isCourseType ? getCourseList : getListTutor,
   );
 

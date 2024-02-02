@@ -33,10 +33,7 @@ const BookLessonSelectView: React.FC<BookLessonSelectViewProps> = () => {
   const [duration, setDuration] = useState<number>(1);
   const [isMaxDay, setIsMaxDay] = useState(false);
 
-  const [day, setDay] = useState([
-    { day: 1, time_end: "8:00", time_start: "7:00" },
-    { day: 1, time_end: "7:00", time_start: "6:00" },
-  ]);
+  const [day, setDay] = useState([]);
   const [dateView, setDateView] = useState(1);
 
   React.useEffect(() => {

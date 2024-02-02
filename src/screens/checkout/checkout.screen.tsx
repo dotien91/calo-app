@@ -11,18 +11,14 @@ import {
   Image,
   SafeAreaView,
 } from "react-native";
+import * as NavigationService from "react-navigation-helpers";
 
 import Header from "@shared-components/header/Header";
 // import FastImage from "react-native-fast-image";
 import { PaymentMethod } from "constants/chat.constant";
 import { translations } from "@localization";
 import { numberWithCommas } from "@utils/string.utils";
-import {
-  addMemberToClass,
-  addStudentTimepick,
-  createVnpayUrl,
-  getOrderDetail,
-} from "@services/api/payment.api";
+import { createVnpayUrl, getOrderDetail } from "@services/api/payment.api";
 import {
   EnumModalContentType,
   EnumStyleModalType,
@@ -38,6 +34,7 @@ import {
 import CS from "@theme/styles";
 import useAppStateCheck from "@helpers/hooks/useAppStateCheck";
 import useStore from "@services/zustand/store";
+import { SCREENS } from "constants";
 
 const CheckoutScreen = () => {
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(
@@ -62,6 +59,19 @@ const CheckoutScreen = () => {
   React.useEffect(() => {
     console.log("tradeId || appStateStatus", tradeId, appStateStatus);
     if (!tradeId || appStateStatus != "active") return;
+    getOrderDetail(tradeId).then((res) => {
+      if (!res.isError) {
+        if (res.data.status == "success") {
+          //alert success
+          callbackPaymentSuccess();
+          return;
+          clearInterval(intervalCheckPaymentSuccess);
+        }
+      } else {
+        //failed
+      }
+    });
+
     const intervalCheckPaymentSuccess = setInterval(() => {
       if (countCheckPaymentSuccess.current == 3) {
         clearInterval(intervalCheckPaymentSuccess);
@@ -83,23 +93,13 @@ const CheckoutScreen = () => {
     }, 5000);
     return () => {
       if (intervalCheckPaymentSuccess)
-        clearInterval(intervalCheckPaymentSuccess);
+        !!intervalCheckPaymentSuccess &&
+          clearInterval(intervalCheckPaymentSuccess);
     };
   }, [tradeId, appStateStatus]);
 
   const callbackPaymentSuccess = () => {
-    if (isClassCourse) {
-      addMemberToClass({
-        class_id: timePick._id,
-        user_id: userData._id,
-      }).then((res) => {
-        console.log("addMemberToClass", res);
-      });
-    } else {
-      addStudentTimepick(timePick).then((res) => {
-        console.log("addStudentTimepick", res);
-      });
-    }
+    NavigationService.navigate(SCREENS.PAYMENT_SUCCESS);
   };
 
   const learningTime = getTimeFromTimepick(timePick, isClassCourse);
@@ -355,10 +355,28 @@ const CheckoutScreen = () => {
   const handleVnpayMethod = () => {
     countCheckPaymentSuccess.current = 0;
     setTradeId("");
+    let dataPayload = null;
+    if (!isClassCourse) {
+      dataPayload = {
+        user_id: userData._id,
+        course_id: courseData._id,
+        time_pick: timePick,
+      };
+    } else {
+      dataPayload = timePick;
+    }
+    const data = {
+      plan_id: "65b320bf08783f8ceaedf35a",
+      payment_method: "vn_pay",
+      amount_of_package: "1",
+      payload: {
+        type: isClassCourse ? "class" : "oneone",
+        data: dataPayload,
+      },
+    };
 
-    createVnpayUrl().then(async (res) => {
+    createVnpayUrl(data).then(async (res) => {
       closeSuperModal();
-      console.log("resresresres", res);
       if (!res.isError) {
         const url = res.data.redirect_url;
         Linking.openURL(url);
@@ -385,6 +403,7 @@ const CheckoutScreen = () => {
         });
         handleVnpayMethod();
       } else {
+        NavigationService.navigate(SCREENS.SMARTBANKING);
         //smart banking
       }
     } else {

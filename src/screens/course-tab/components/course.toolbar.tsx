@@ -65,7 +65,7 @@ const CourseToolbar = () => {
   };
 
   const openSearchCourse = () => {
-    NavigationService.navigate(SCREENS.COURSE_SEARCH);
+    NavigationService.navigate(SCREENS.COURSE_CATEGORY);
   };
 
   return (

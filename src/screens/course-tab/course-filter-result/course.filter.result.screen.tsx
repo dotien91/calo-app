@@ -14,14 +14,17 @@ import { TabView, SceneMap, TabBar } from "react-native-tab-view";
  * ? Local Imports
  */
 import createStyles from "../course.style";
-import { EnumCourseType, ICourseItem } from "models/course.model";
+import {
+  EnumCourseType,
+  EnumSearchType,
+  ICourseItem,
+} from "models/course.model";
 import CourseItem from "../components/course.item";
 import { getCourseList, getListTutor } from "@services/api/course.api";
 import LoadingList from "@shared-components/loading.list.component";
 import EmptyResultView from "@shared-components/empty.data.component";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";
-import Header from "@shared-components/header/Header";
 import CS from "@theme/styles";
 import IconBtn from "@shared-components/button/IconBtn";
 import {
@@ -38,13 +41,18 @@ import {
 } from "@helpers/super.modal.helper";
 import { countNumberFilter } from "../course.helper";
 import TutorItem from "../components/tutor.item";
+import SearchInputWithFilter from "@shared-components/search-input-with-filter.tsx/search.input.with.filter";
+import { getListPost } from "@services/api/post";
+import ItemPost from "@screens/post/components/post-item/post.detail.item";
 
-const FirstRoute = () => <ListSearch />;
-const SecondRoute = () => <ListSearch isTeacherTab />;
+const FirstRoute = () => <ListSearch type={EnumSearchType.course} />;
+const SecondRoute = () => <ListSearch type={EnumSearchType.tutor} />;
+const ThirdRoute = () => <ListSearch type={EnumSearchType.post} />;
 
 const renderScene = SceneMap({
   first: FirstRoute,
   second: SecondRoute,
+  third: ThirdRoute,
 });
 
 interface CourseFilterResultScreenProps {}
@@ -74,6 +82,7 @@ const CourseFilterResultScreen: React.FC<
   const [routes] = React.useState([
     { key: "first", title: "Course" },
     { key: "second", title: "Teacher" },
+    { key: "third", title: "Post" },
   ]);
 
   //clear params after unmount
@@ -107,8 +116,6 @@ const CourseFilterResultScreen: React.FC<
       {...props}
       indicatorStyle={{
         backgroundColor: colors.primary,
-        width: 50,
-        left: "18%",
       }}
       renderLabel={({ route, focused }) => (
         <Text
@@ -145,17 +152,20 @@ const CourseFilterResultScreen: React.FC<
     });
   };
 
-  const headerTitle = defaultParams?.title || "Kỹ năng nghe";
+  const _onSubmitEditing = () => {};
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Header
-        customStyle={{ shadowOpacity: 0, margin: 0 }}
-        iconNameRight="sliders"
-        onPressRight={openFilterCourseModal}
-        text={headerTitle}
+      <SearchInputWithFilter
+        onSubmitEditing={_onSubmitEditing}
+        showBackBtn={true}
+        // setTxtSearch={setTxtSearch}
+        onPressFilter={openFilterCourseModal}
+        showFilter={index == 0 || index == 1}
         badge={countFilters}
       />
+
+      {/* </Header> */}
       <TabView
         renderTabBar={renderTabBar}
         navigationState={{ index, routes }}
@@ -167,15 +177,14 @@ const CourseFilterResultScreen: React.FC<
   );
 };
 
-const ListSearch = React.memo(({ isTeacherTab }: { isTeacherTab: true }) => {
+const ListSearch = React.memo(({ type }: { type: string }) => {
   const route = useRoute();
   const defaultParams = route.params?.["defaultParams"] || {};
+  const courseSearchHistory = useStore((state) => state.courseSearchHistory);
 
-  console.log("defaultParamsdefaultParams", defaultParams);
   const theme = useTheme();
   // const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
-
   const courseCurrentSort = useStore((state) => state.courseCurrentSort);
   const listCourseFilterParams = useStore(
     (state) => state.listCourseFilterParams,
@@ -189,34 +198,39 @@ const ListSearch = React.memo(({ isTeacherTab }: { isTeacherTab: true }) => {
       ...defaultParams,
       ...listCourseFilterParams,
       limit: "5",
+      search: courseSearchHistory,
     };
-  }, [courseCurrentSort, listCourseFilterParams]);
+  }, [courseCurrentSort, listCourseFilterParams, courseSearchHistory]);
 
-  if (isTeacherTab) {
-    console.log("paramRequestparamRequest", paramRequest);
-  }
+  let requestData = getCourseList;
+  if (type == EnumSearchType.tutor) requestData = getListTutor;
+  if (type == EnumSearchType.post) requestData = getListPost;
 
   const { listData, isLoading, totalCount, onEndReach, renderFooterComponent } =
-    useListSearch<ICourseItem>(
-      paramRequest,
-      isTeacherTab ? getListTutor : getCourseList,
-    );
+    useListSearch<ICourseItem>(paramRequest, requestData);
 
   const openSortModal = useCallback(() => {
     showSuperModal({
       contentModalType: EnumModalContentType.FilterTypeCourse,
       styleModalType: EnumStyleModalType.Bottom,
       data: {
-        options: isTeacherTab ? sortTutorSelectData : sortCourseSelectData,
+        options:
+          type == EnumSearchType.tutor
+            ? sortTutorSelectData
+            : sortCourseSelectData,
         defaultItem: courseCurrentSort,
-        title: isTeacherTab ? "Sort tutor by" : "Sort course by",
+        title:
+          type == EnumSearchType.tutor ? "Sort tutor by" : "Sort course by",
         callback: setCourseCurrentSort,
       },
     });
   }, [courseCurrentSort]);
 
   const renderItem = ({ item }: { item: ICourseItem }, index: number) => {
-    if (isTeacherTab) return <TutorItem {...item} key={index} />;
+    if (type == EnumSearchType.post)
+      return <ItemPost data={item} key={index} />;
+    if (type == EnumSearchType.tutor)
+      return <TutorItem {...item} key={index} />;
     return <CourseItem {...item} key={index} />;
   };
 

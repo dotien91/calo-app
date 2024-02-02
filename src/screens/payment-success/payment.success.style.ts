@@ -41,6 +41,7 @@ export default (theme: ExtendedTheme) => {
     styleViewMain: {
       alignItems: "center",
       marginHorizontal: 16,
+      marginTop: 30,
     },
   });
 };

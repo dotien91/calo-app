@@ -26,8 +26,8 @@ export interface CourseSlice {
   setCourseCurrentSort: (params: ICurrentSort) => void;
   courseCurrentType: ICurrentSort;
   setCourseCurrentType: (params: ICurrentSort) => void;
-  courseSearchHistory: string[];
-  setCourseSearcgHistory: (v: string[]) => void;
+  courseSearchHistory: string;
+  setCourseSearchHistory: (v: string) => void;
 }
 
 const createCourseSlice: StoreSlice<CourseSlice> = (set) => ({
@@ -40,8 +40,8 @@ const createCourseSlice: StoreSlice<CourseSlice> = (set) => ({
   setCourseCurrentSort: (v: ICurrentSort) => set({ courseCurrentSort: v }),
   courseCurrentType: { id: "course", name: "Course" },
   setCourseCurrentType: (v: ICurrentSort) => set({ courseCurrentType: v }),
-  courseSearchHistory: [],
-  setCourseSearcgHistory: (v: string[]) => set({ courseSearchHistory: v }),
+  courseSearchHistory: "",
+  setCourseSearchHistory: (v: string) => set({ courseSearchHistory: v }),
 });
 
 export default createCourseSlice;

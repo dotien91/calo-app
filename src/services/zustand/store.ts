@@ -68,6 +68,7 @@ const useStore = create<StoreState>()(
                 "listCourseFilterParams",
                 "courseCurrentSort",
                 "courseCurrentType",
+                "courseSearchHistory",
               ].includes(key),
           ),
         ),

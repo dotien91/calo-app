@@ -1,6 +1,12 @@
 import React, { useMemo } from "react";
 import { useTheme } from "@react-navigation/native";
-import { Text, TouchableOpacity, View, Dimensions } from "react-native";
+import {
+  Text,
+  TouchableOpacity,
+  View,
+  Dimensions,
+  SafeAreaView,
+} from "react-native";
 import LottieView from "lottie-react-native";
 
 import { translations } from "@localization";
@@ -13,8 +19,12 @@ const PaymentSuccess = () => {
 
   const widthScreen = Dimensions.get("window").width;
 
+  const openMyCourse = () => {
+    // NavigationService.navigate(SCREENS.MY_COURSE)
+  };
+
   return (
-    <View style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }}>
       <Header />
       <View style={styles.styleViewMain}>
         <LottieView
@@ -34,13 +44,16 @@ const PaymentSuccess = () => {
         <Text style={styles.styleTextWhencomplete}>
           {translations.payment.completepayment}
         </Text>
-        <TouchableOpacity style={styles.styleButtonGoMyLearning}>
+        <TouchableOpacity
+          onPress={openMyCourse}
+          style={styles.styleButtonGoMyLearning}
+        >
           <Text style={styles.styleTextGomyLearning}>
             {translations.payment.gomylearning}
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 export default PaymentSuccess;

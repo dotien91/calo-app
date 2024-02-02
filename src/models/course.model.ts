@@ -113,6 +113,12 @@ export enum EnumTutorFilter {
   levelOfTutor = "levelOfTutor",
 }
 
+export enum EnumSearchType {
+  tutor = "tutor",
+  post = "post",
+  course = "course",
+}
+
 export interface IClass {
   bio: string;
   certificates: string;

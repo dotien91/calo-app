@@ -1,14 +1,18 @@
 import React, { useState, useMemo } from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  SafeAreaView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import Clipboard from "@react-native-community/clipboard";
-import * as NavigationService from "react-navigation-helpers";
 
 import { useTheme } from "@react-navigation/native";
 import { translations } from "@localization";
 import createStyles from "./smart.banking.style";
 import Header from "@shared-components/header/Header";
 import { selectMedia } from "@helpers/file.helper";
-import { SCREENS } from "constants";
 
 const SmartBanking = () => {
   const [fileImage, setfileImage] = useState("");
@@ -32,11 +36,11 @@ const SmartBanking = () => {
   };
 
   const actionSend = () => {
-    NavigationService.navigate(SCREENS.PAYMENT_SUCCESS);
+    // NavigationService.navigate(SCREENS.PAYMENT_SUCCESS);
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }}>
       <Header text="Smart Banking" />
       <View style={{ marginHorizontal: 16, alignItems: "center" }}>
         <Text numberOfLines={2} style={styles.styleTextToComplete}>
@@ -97,7 +101,7 @@ const SmartBanking = () => {
           </TouchableOpacity>
         )}
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 export default SmartBanking;

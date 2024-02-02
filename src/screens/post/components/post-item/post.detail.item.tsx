@@ -11,6 +11,11 @@ import CommonStyle from "@theme/styles";
 import HeaderPostItem from "@screens/home/components/post-item/header.post.item";
 import AvatarPost from "@screens/home/components/post-item/avatar.post";
 import LikeSharePostItem from "@screens/home/components/post-item/like.share.post.item";
+import {
+  EnumModalContentType,
+  EnumStyleModalType,
+  showSuperModal,
+} from "@helpers/super.modal.helper";
 
 const SIZE_AVATAR = 30;
 const FONT_SIZE = 16;
@@ -22,7 +27,7 @@ interface ItemPostProps {
   pressImageVideo: (index: number) => void;
 }
 
-const ItemPost = ({ data, pressComment, pressImageVideo }: ItemPostProps) => {
+const ItemPost = ({ data, pressComment }: ItemPostProps) => {
   const theme = useTheme();
   const { colors } = theme;
   const styles = React.useMemo(() => createStyles(theme), [theme]);
@@ -82,6 +87,22 @@ const ItemPost = ({ data, pressComment, pressImageVideo }: ItemPostProps) => {
     );
   };
 
+  const showImageVideo = (index: number) => {
+    const listMedia = data?.attach_files.filter(
+      (i: any) =>
+        i.media_mime_type.includes("image") ||
+        i.media_mime_type.includes("video"),
+    );
+    showSuperModal({
+      contentModalType: EnumModalContentType.Library,
+      styleModalType: EnumStyleModalType.Middle,
+      data: {
+        listMedia,
+        indexMedia: index,
+      },
+    });
+  };
+
   const ListFile = useMemo(() => {
     const listFile = data?.attach_files || [];
     const listMedia = listFile.filter(
@@ -96,7 +117,7 @@ const ItemPost = ({ data, pressComment, pressImageVideo }: ItemPostProps) => {
           return (
             <TouchableOpacity
               key={index}
-              onPress={() => pressImageVideo(index)}
+              onPress={() => showImageVideo(index)}
               style={styles.image11}
             >
               <Image

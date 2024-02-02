@@ -26,6 +26,9 @@ import CS from "@theme/styles";
 import { useListSearch } from "@helpers/hooks/useListSearch";
 import { SCREENS } from "constants";
 import TutorItem from "../components/tutor.item";
+import { getListPost } from "@services/api/post";
+import { TypedPost } from "shared/models";
+import ItemPost from "@screens/post/components/post-item/post.detail.item";
 
 interface CourseSearchScreenProps {}
 
@@ -40,6 +43,7 @@ const CourseSearchScreen: React.FC<CourseSearchScreenProps> = () => {
   const [routes] = React.useState([
     { key: "first", title: "Course" },
     { key: "second", title: "Teacher" },
+    { key: "third", title: "Post" },
   ]);
 
   const renderTabBar = (props) => (
@@ -47,8 +51,6 @@ const CourseSearchScreen: React.FC<CourseSearchScreenProps> = () => {
       {...props}
       indicatorStyle={{
         backgroundColor: colors.primary,
-        width: 50,
-        left: "18%",
       }}
       renderLabel={({ route, focused }) => (
         <Text
@@ -75,9 +77,15 @@ const CourseSearchScreen: React.FC<CourseSearchScreenProps> = () => {
     [txtSearch],
   );
 
+  const ThirdRoute = React.useCallback(
+    () => <ListPost txtSearch={txtSearch} />,
+    [txtSearch],
+  );
+
   const renderScene2 = SceneMap({
     first: FirstRoute,
     second: SecondRoute,
+    third: ThirdRoute,
   });
 
   const _onSubmitEditing = (v) => {
@@ -85,7 +93,6 @@ const CourseSearchScreen: React.FC<CourseSearchScreenProps> = () => {
       defaultParams: { search: v, title: "Kết quả cho từ khoá: " + v },
     });
   };
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <SearchInput
@@ -116,6 +123,41 @@ const ListSearch = React.memo(({ txtSearch, isTeacherTab }) => {
   const renderItem = (item: ICourseItem, index: number) => {
     if (isTeacherTab) return <TutorItem {...item.item} key={index} />;
     return <CourseItem {...item.item} key={index} />;
+  };
+
+  return (
+    <View style={{ flex: 1, paddingTop: 16 }}>
+      {isLoading && <LoadingList />}
+      {!listData?.length && !isLoading && (
+        <EmptyResultView
+          title={translations.noResult}
+          lottieJson={lotieNoResult}
+        />
+      )}
+      <FlatList
+        data={listData}
+        renderItem={renderItem}
+        onEndReachedThreshold={0}
+        onEndReached={onEndReach}
+        removeClippedSubviews={true}
+        keyExtractor={(item) => item?._id + ""}
+        ListFooterComponent={renderFooterComponent()}
+      />
+    </View>
+  );
+});
+
+const ListPost = React.memo(({ txtSearch }) => {
+  console.log("txtSearchtxtSearch", txtSearch);
+  const { listData, isLoading, onEndReach, renderFooterComponent } =
+    useListSearch<TypedPost>(
+      { limit: "5", search: txtSearch },
+      getListPost,
+      [],
+    );
+
+  const renderItem = ({ item }: { item: TypedPost }, index: number) => {
+    return <ItemPost data={item} key={index} />;
   };
 
   return (
