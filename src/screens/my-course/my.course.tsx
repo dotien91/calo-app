@@ -8,6 +8,7 @@ import { getCourseList } from "@services/api/course.api";
 import { useListData } from "@helpers/hooks/useListData";
 import { ICourseItem } from "models/course.model";
 import LoadingItem from "@shared-components/loading.item";
+import useStore from "@services/zustand/store";
 import CourseItem from "@screens/course-tab/components/course.item";
 
 const MyCourse = () => {
@@ -16,13 +17,14 @@ const MyCourse = () => {
   // const styles = useMemo(() => createStyles(theme), [theme]);
   const [index, setIndex] = React.useState(0);
   const layout = useWindowDimensions();
+  const userData = useStore((state) => state.userData);
   const [routes] = React.useState([
     { key: "first", title: "Improgess" },
     { key: "second", title: "Complete" },
   ]);
 
   const { listData, isLoading } = useListData<ICourseItem>(
-    { limit: "5" },
+    { limit: "5", user_id: userData?._id },
     getCourseList,
   );
 

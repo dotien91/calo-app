@@ -22,6 +22,7 @@ interface TypedRequestParams {
   limit: string;
   search?: string;
   page?: number;
+  user_id?: string;
 }
 
 interface TypedStateListData<T> {
