@@ -48,19 +48,29 @@ const BlackList = () => {
     );
   };
 
-  console.log("listData", listData);
   return (
     <View style={{ flex: 1 }}>
       <Header text="Danh sach den"></Header>
-      <FlatList
-        data={listData}
-        renderItem={renderItemSelected}
-        scrollEventThrottle={16}
-        onEndReachedThreshold={0}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        removeClippedSubviews={true}
-      />
+      {listData.length > 0 ? (
+        <FlatList
+          data={listData}
+          renderItem={renderItemSelected}
+          scrollEventThrottle={16}
+          onEndReachedThreshold={0}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          removeClippedSubviews={true}
+        />
+      ) : (
+        <View
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
+          <Image
+            style={{ height: 152, width: 192, marginBottom: 50 }}
+            source={require("assets/images/emptyIcon.png")}
+          ></Image>
+        </View>
+      )}
     </View>
   );
 };
