@@ -8,10 +8,12 @@ import {
   SafeAreaView,
 } from "react-native";
 import LottieView from "lottie-react-native";
+import * as NavigationService from "react-navigation-helpers";
 
 import { translations } from "@localization";
 import Header from "@shared-components/header/Header";
 import createStyles from "./payment.success.style";
+import { SCREENS } from "constants";
 
 const PaymentSuccess = () => {
   const theme = useTheme();
@@ -20,7 +22,9 @@ const PaymentSuccess = () => {
   const widthScreen = Dimensions.get("window").width;
 
   const openMyCourse = () => {
-    // NavigationService.navigate(SCREENS.MY_COURSE)
+    NavigationService.navigate(SCREENS.HOME)
+    NavigationService.navigate(SCREENS.MY_COURES)
+
   };
 
   return (

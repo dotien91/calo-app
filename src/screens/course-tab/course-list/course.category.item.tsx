@@ -21,7 +21,7 @@ const CourseCategoryItem: React.FC<CourseCategoryItemProps> = () => {
   const renderItem = (item: ICourseItem, index: number) => {
     return <CourseItem isSliderItem {...item.item} key={index} />;
   };
-
+return null
   return (
     <View>
       <CourseCategoryTitle title={"Recommend"} onPress={() => {}} />

@@ -38,3 +38,14 @@ export async function addStudentTimepick(data) {
     return response;
   });
 }
+
+
+export async function updateUserOrder(data) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "order/user-update",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}

@@ -352,7 +352,8 @@ const CheckoutScreen = () => {
     );
   };
 
-  const handleVnpayMethod = () => {
+  const createOrder = () => {
+    const isVnPayMethod = PaymentMethod.VNPay == paymentMethod;
     countCheckPaymentSuccess.current = 0;
     setTradeId("");
     let dataPayload = null;
@@ -367,7 +368,7 @@ const CheckoutScreen = () => {
     }
     const data = {
       plan_id: "65b320bf08783f8ceaedf35a",
-      payment_method: "vn_pay",
+      payment_method: isVnPayMethod ? "vn_pay" : "smart_banking",
       amount_of_package: "1",
       payload: {
         type: isClassCourse ? "class" : "oneone",
@@ -378,10 +379,17 @@ const CheckoutScreen = () => {
     createVnpayUrl(data).then(async (res) => {
       closeSuperModal();
       if (!res.isError) {
-        const url = res.data.redirect_url;
-        Linking.openURL(url);
+        const url = res.data?.redirect_url;
         const tradeId = res.data._id;
-        setTradeId(tradeId);
+        if (isVnPayMethod) {
+          Linking.openURL(url);
+          setTradeId(tradeId);
+        } else {
+          console.log("tradeIdtradeIdtradeId", tradeId);
+          NavigationService.navigate(SCREENS.SMARTBANKING, {
+            tradeId,
+          });
+        }
       } else {
         showToast({
           type: "error",
@@ -395,17 +403,16 @@ const CheckoutScreen = () => {
       paymentMethod == PaymentMethod.SmartBanking ||
       paymentMethod == PaymentMethod.VNPay
     ) {
-      console.log("");
-      if (paymentMethod == PaymentMethod.VNPay) {
-        showSuperModal({
-          contentModalType: EnumModalContentType.Loading,
-          styleModalType: EnumStyleModalType.Middle,
-        });
-        handleVnpayMethod();
-      } else {
-        NavigationService.navigate(SCREENS.SMARTBANKING);
-        //smart banking
-      }
+      // if (paymentMethod == PaymentMethod.VNPay) {
+      showSuperModal({
+        contentModalType: EnumModalContentType.Loading,
+        styleModalType: EnumStyleModalType.Middle,
+      });
+      createOrder();
+      // } else {
+      //   // NavigationService.navigate(SCREENS.SMARTBANKING);
+      //   //smart banking
+      // }
     } else {
       setPaymentMethod(PaymentMethod.NotChoose);
     }

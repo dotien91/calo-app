@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, Text, View, useWindowDimensions } from "react-native";
+import { FlatList, SafeAreaView, Text, View, useWindowDimensions } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import Header from "@shared-components/header/Header";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
@@ -24,7 +24,7 @@ const MyCourse = () => {
   ]);
 
   const { listData, isLoading } = useListData<ICourseItem>(
-    { limit: "5", user_id: userData?._id },
+    { limit: "5", auth_id: userData?._id },
     getCourseList,
   );
 
@@ -84,7 +84,7 @@ const MyCourse = () => {
   );
 
   return (
-    <View style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }}>
       <Header text="My Course" />
       <TabView
         style={{ flex: 1 }}
@@ -94,7 +94,7 @@ const MyCourse = () => {
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 export default MyCourse;

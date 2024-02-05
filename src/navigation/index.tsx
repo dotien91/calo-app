@@ -128,7 +128,7 @@ const Navigation = () => {
           },
         })}
       >
-        <Stack.Screen name={SCREENS.HOME} component={HomeScreen} />
+        <Tab.Screen name={SCREENS.HOME} component={HomeScreen} />
         <Tab.Screen name={SCREENS.COURSE_LIST} component={CourseListScreen} />
 
         <Tab.Screen name={SCREENS.CHAT} component={ListChatScreen} />
@@ -136,8 +136,8 @@ const Navigation = () => {
           name={SCREENS.NOTIFICATION}
           component={NotificationScreen}
         /> */}
-        <Tab.Screen name={SCREENS.PROFILE} component={ProfileScreen} />
-        <Tab.Screen name={SCREENS.SETTING} component={SettingScreen} />
+        <Tab.Screen name={SCREENS.PROFILE} component={SettingScreen} />
+        {/* <Tab.Screen name={SCREENS.SETTING} component={SettingScreen} /> */}
       </Tab.Navigator>
     );
   };
@@ -295,13 +295,13 @@ const Navigation = () => {
           component={ChangeLanguage}
         />
         <Stack.Screen name={SCREENS.SMARTBANKING} component={SmartBanking} />
+        <Stack.Screen name={SCREENS.CALL_PAGE} component={CallPageScreen} />
+        <Stack.Screen name={SCREENS.IN_COMING_CALL} component={InComingCall} />
+        <Stack.Screen name={SCREENS.MY_COURES} component={MyCourse} />
         <Stack.Screen
           name={SCREENS.PAYMENT_SUCCESS}
           component={PaymentSuccess}
         />
-        <Stack.Screen name={SCREENS.CALL_PAGE} component={CallPageScreen} />
-        <Stack.Screen name={SCREENS.IN_COMING_CALL} component={InComingCall} />
-        <Stack.Screen name={SCREENS.MY_COURES} component={MyCourse} />
       </Stack.Navigator>
     </NavigationContainer>
   );

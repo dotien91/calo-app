@@ -10,7 +10,7 @@ import getPath from "@flyerhq/react-native-android-uri-path";
 const { width } = Dimensions.get("screen");
 const isIos = Platform.OS === "ios";
 
-export function useUploadFile(initData?: any[]) {
+export function useUploadFile(initData?: any[], selectionLimit=30) {
   const [listFile, setListFile] = React.useState<any[]>(initData || []);
   const [isUpLoadingFile, setIsUpLoadingFile] = React.useState(false);
   const [listFileLocal, setListFileLocal] = React.useState<any[]>(
@@ -33,7 +33,7 @@ export function useUploadFile(initData?: any[]) {
   const onSelectPicture = async () => {
     setIsUpLoadingFile(true);
     selectMedia({
-      config: { mediaType: "photo", selectionLimit: 30 },
+      config: { mediaType: "photo", selectionLimit: selectionLimit || 30 },
       callback: async (images: any) => {
         if (!images?.[0]) {
           return;
@@ -69,8 +69,6 @@ export function useUploadFile(initData?: any[]) {
   };
 
   const renderFile = React.useCallback(() => {
-    // console.log("listFile...", listFile);
-    // console.log("listFileLocal...", listFileLocal);
     return (
       <View style={styles.viewImage}>
         {listFileLocal.slice(0, 4).map((item: any, index: number) => {
@@ -112,6 +110,7 @@ export function useUploadFile(initData?: any[]) {
       </View>
     );
   }, [listFileLocal, listFile]); // eslint-disable-line react-hooks/exhaustive-deps
+  
   const onRemove = ({ uri, _id }: { uri: string; _id: string }) => {
     setListFileLocal(listFileLocal.filter((i) => i.uri !== uri));
     if (listFile?.length) {

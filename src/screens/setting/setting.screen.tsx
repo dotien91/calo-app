@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { View, TouchableOpacity, Text } from "react-native";
+import { View, TouchableOpacity, Text, SafeAreaView } from "react-native";
 import { useTheme } from "@react-navigation/native";
 /**
  * ? Local Imports
@@ -12,6 +12,7 @@ import Avatar from "@shared-components/user/Avatar";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import createStyles from "./setting.screen.style";
 import { translations } from "@localization";
+import useStore from "@services/zustand/store";
 
 interface SettingScreenProps {}
 
@@ -20,6 +21,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
   const { colors } = theme;
 
   const styles = useMemo(() => createStyles(theme), [theme]);
+  const userData = useStore(state => state.userData)
   // const isDarkMode = useStore((state) => state.isDarkMode);
   // const setDarkMode = useStore((state) => state.setDarkMode);
 
@@ -94,7 +96,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: colors.white }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
       <Header text="Setting"></Header>
       <View style={{ alignItems: "center", backgroundColor: colors.white }}>
         <Avatar
@@ -134,7 +136,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
           Logout
         </Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 

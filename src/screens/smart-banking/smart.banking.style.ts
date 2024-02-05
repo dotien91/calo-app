@@ -74,6 +74,7 @@ export default (theme: ExtendedTheme) => {
       backgroundColor: colors.grey2,
       borderRadius: 8,
       marginBottom: 8,
+      marginHorizontal: 20,
     },
     styleBtnUploadFile: {
       ...CS.row,

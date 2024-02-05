@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from "react";
 import {
+  ActivityIndicator,
   Image,
   SafeAreaView,
   Text,
@@ -7,22 +8,36 @@ import {
   View,
 } from "react-native";
 import Clipboard from "@react-native-community/clipboard";
+import { useTheme, useRoute } from "@react-navigation/native";
 
-import { useTheme } from "@react-navigation/native";
 import { translations } from "@localization";
 import createStyles from "./smart.banking.style";
 import Header from "@shared-components/header/Header";
 import { selectMedia } from "@helpers/file.helper";
+import { useUploadFile } from "@helpers/hooks/useUploadFile";
+import { updateUserOrder } from "@services/api/payment.api";
+import {
+  EnumModalContentType,
+  EnumStyleModalType,
+  closeSuperModal,
+  showSuperModal,
+  showToast,
+} from "@helpers/super.modal.helper";
 
 const SmartBanking = () => {
   const [fileImage, setfileImage] = useState("");
   const theme = useTheme();
   // const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
+  const route = useRoute();
+  const tradeId = route.params?.["tradeId"];
 
   const copyToClipboard = () => {
     Clipboard.setString("adasds");
   };
+
+  const { onSelectPicture, isUpLoadingFile, listFileLocal, listFile } =
+    useUploadFile([], 1);
 
   const selectImage = () => {
     selectMedia({
@@ -36,6 +51,31 @@ const SmartBanking = () => {
   };
 
   const actionSend = () => {
+    console.log("listFilelistFilelistFile", listFile)
+    const data = {
+      _id: tradeId,
+      status: "processing",
+      media_id: listFile[listFile.length-1]._id,
+    };
+    showSuperModal({
+      contentModalType: EnumModalContentType.Loading,
+      styleModalType: EnumStyleModalType.Middle,
+    });
+    updateUserOrder(data).then((res) => {
+      closeSuperModal();
+      if (!res.isError) {
+        showToast({
+          type: "success",
+          message: "Gửi ảnh thành công",
+        });
+      } else {
+        showToast({
+          type: "error",
+        });
+      }
+    });
+
+    console.log("dataaaa", data);
     // NavigationService.navigate(SCREENS.PAYMENT_SUCCESS);
   };
 
@@ -71,16 +111,16 @@ const SmartBanking = () => {
         <Text style={styles.styleTextSendProvement}>
           {translations.payment.sendPro}
         </Text>
-        {fileImage ? (
-          <View style={styles.styleViewImageSelected}>
+        {listFile.length ? (
+          <TouchableOpacity onPress={onSelectPicture} style={styles.styleViewImageSelected}>
             <Image
               style={{ height: 20, width: 20, marginRight: 8 }}
               source={require("assets/images/iconMedia.png")}
             />
-            <Text>{fileImage}</Text>
-          </View>
+            <Text numberOfLines={1}>{listFile[0]?.uri}</Text>
+          </TouchableOpacity>
         ) : null}
-        {fileImage ? (
+        {listFile.length ? (
           <TouchableOpacity onPress={actionSend} style={styles.styleBtnSend}>
             <Text style={styles.styleTextSend}>
               {translations.payment.send}
@@ -88,9 +128,14 @@ const SmartBanking = () => {
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
-            onPress={selectImage}
-            style={styles.styleBtnUploadFile}
+            disabled={isUpLoadingFile}
+            onPress={onSelectPicture}
+            style={[
+              styles.styleBtnUploadFile,
+              isUpLoadingFile && { opacity: 0.5 },
+            ]}
           >
+            {isUpLoadingFile ? <ActivityIndicator size={"small"}/> : <>
             <Image
               style={{ height: 12, width: 12, marginRight: 16 }}
               source={require("assets/images/plus.png")}
@@ -98,6 +143,7 @@ const SmartBanking = () => {
             <Text style={styles.styleTextHadPaid}>
               {translations.payment.uploadfile}
             </Text>
+            </>}
           </TouchableOpacity>
         )}
       </View>
