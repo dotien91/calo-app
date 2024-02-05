@@ -14,6 +14,8 @@ import { translations } from "@localization";
 import GoBackButton from "@screens/auth/components/GoBackButton";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { SCREENS } from "constants";
+import { PERMISSION } from "@screens/call/utils";
+import { grantPermission } from "@screens/call/permission.helper";
 
 interface ChatHeaderProps {
   messages: any;
@@ -39,6 +41,22 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ messages, roomDetail }) => {
     });
   };
 
+  const handleOpenCallPage = async (callType: string) => {
+    alert(2)
+    // NavigationService.push(SCREENS.CALL_PAGE);
+    // console.log(PERMISSION.permissionMedia, "PERMISSION.permissionMedia");
+    const grantedPermission = grantPermission(PERMISSION.permissionMedia);
+    const res = await grantedPermission(true, true);
+    console.log("resresres", res);
+    if (!res) {
+      return;
+    }
+    NavigationService.navigate(SCREENS.CALL_PAGE, {
+      item: roomDetail,
+      type: callType,
+    });
+  };
+
   return (
     <View style={styles.wrapHeader}>
       <View style={styles.headerLeft}>
@@ -58,9 +76,13 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ messages, roomDetail }) => {
         <ActionBtn
           icon="phone"
           color={colors.black}
+          callback={() => handleOpenCallPage("audio_call")}
           customStyle={{ backgroundColor: colors.white }}
         />
-        <ActionBtn icon="video" />
+        <ActionBtn
+          icon="video"
+          callback={() => handleOpenCallPage("video_call")}
+        />
       </View>
     </View>
   );

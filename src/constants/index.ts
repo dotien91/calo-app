@@ -51,6 +51,8 @@ export const SCREENS = {
   SMARTBANKING: "SmartBanking",
   PAYMENT_SUCCESS: "PaymentSuccess",
   COURSE_LEARN_VIDEO_SCREEN: "CourseLearnVideoScreen",
+  CALL_PAGE: "Call",
+  IN_COMING_CALL: "InComingCall",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

@@ -4,15 +4,18 @@ import React, {
   useImperativeHandle,
   useRef,
 } from "react";
-import { View } from "react-native";
 import { io } from "socket.io-client";
 import { _getJson, USER_TOKEN } from "@services/local-storage";
 import useStore from "@services/zustand/store";
+import { Alert, Platform, View } from "react-native";
 const URL_CHAT_SOCKET = "https://socket.api-v2.ieltshunter.io/socket";
+import * as NavigationService from "react-navigation-helpers";
+import { SCREENS } from "constants";
+import { translations } from "@localization";
 
 export interface TypedSocket {
   disconnect: () => void;
-  on: (topic: string, callback: () => void) => void;
+  on: (topic: string, callback: (data: any) => void) => void;
   emit: (topic: string, callback: string) => void;
   off: (topic: string, callback?: () => void) => void;
 }
@@ -61,7 +64,8 @@ const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
         rejectUnauthorized: false,
       })
         .on("connect", onConnected)
-        .on("disconnect", onDisconnect);
+        .on("disconnect", onDisconnect)
+        .on("makeCall", makeCall);
     }
   };
 
@@ -71,6 +75,42 @@ const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
 
   const onConnected = () => {
     console.log("onConnected");
+  };
+
+  /**
+   * @author Tony Vu
+   * @param receiveData
+   * @returns
+   */
+  const makeCall = (receiveData: any) => {
+    if (Platform.OS == "ios") {
+      return;
+    }
+    try {
+      const data = JSON.parse(receiveData);
+      const currentRoute =
+        NavigationService?.navigationRef?.current?.getCurrentRoute();
+      if (
+        data?.to_user?._id === userData?._id &&
+        currentRoute?.name === "InComingCall"
+      ) {
+        NavigationService.goBack();
+        return;
+      }
+
+      if (userData?._id == data?.from_user?._id) {
+        return;
+      }
+
+      if (
+        currentRoute?.name !== "Call" &&
+        currentRoute?.name !== "InComingCall"
+      ) {
+        NavigationService.navigate(SCREENS.IN_COMING_CALL, { data: data });
+      }
+    } catch (error) {
+      Alert.alert(translations.somethingWentWrong);
+    }
   };
 
   const stopSocket = () => {

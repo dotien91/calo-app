@@ -57,6 +57,8 @@ import ChangeLanguage from "@screens/change-language/change.language";
 import SmartBanking from "@screens/smart-banking/smart.banking";
 import PaymentSuccess from "@screens/payment-success/payment.success";
 import CourseLearnScreen from "@screens/course/course-learn-video/course.learn.video.screen";
+import InComingCall from "@screens/call/in.coming.call";
+import CallPageScreen from "@screens/call/call.page.screen";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -263,6 +265,8 @@ const Navigation = () => {
           name={SCREENS.PAYMENT_SUCCESS}
           component={PaymentSuccess}
         />
+         <Stack.Screen name={SCREENS.CALL_PAGE} component={CallPageScreen} />
+        <Stack.Screen name={SCREENS.IN_COMING_CALL} component={InComingCall} />
       </Stack.Navigator>
     </NavigationContainer>
   );
