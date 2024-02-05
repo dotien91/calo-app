@@ -9,7 +9,7 @@ interface IconType {
   color?: string;
   size?: number;
   customStyle: ViewStyle;
-  onPress: () => void;
+  onPress?: () => void;
 }
 
 // eslint-disable-next-line react/display-name

@@ -18,6 +18,7 @@ import { SCREENS } from "constants";
 import eventEmitter from "@services/event-emitter";
 import useStore from "@services/zustand/store";
 import { ScrollView } from "react-native-gesture-handler";
+import ListStarReview from "./list.star.review";
 interface ListReviewCourseProps {
   _id: string;
   type: "full" | "top";
@@ -46,6 +47,7 @@ const ListReviewCourse = ({ _id, type, data }: ListReviewCourseProps) => {
     getListReview(param).then((res) => {
       if (!res.isError) {
         if (res.data.length == 1) {
+          console.log("review of me", res.data[0]);
           setReviewOfMe(res.data[0]);
         }
       }
@@ -138,6 +140,19 @@ const ListReviewCourse = ({ _id, type, data }: ListReviewCourseProps) => {
     return (
       <View style={styles.container}>
         <Text style={styles.txtContentTitle}>{translations.course.rate}</Text>
+        <View style={{ flexDirection: "row" }}></View>
+        {data?.is_join && !reviewOfMe ? (
+          <PressableBtn style={styles.styleBtn} onPress={_gotoScreenReview}>
+            <Text style={styles.seeAll}>{translations.course.rate}</Text>
+          </PressableBtn>
+        ) : null}
+        {data?.is_join && reviewOfMe ? (
+          <PressableBtn style={styles.styleBtn} onPress={_gotoEditReview}>
+            <Text style={styles.seeAll}>
+              {translations.course.updateReview}
+            </Text>
+          </PressableBtn>
+        ) : null}
         <View
           style={[CS.flex1, { flexDirection: "row", gap: 8, marginTop: 12 }]}
         >
@@ -182,18 +197,7 @@ const ListReviewCourse = ({ _id, type, data }: ListReviewCourseProps) => {
             </ScrollView>
           </View>
         )}
-        {data?.is_join && !reviewOfMe ? (
-          <PressableBtn style={styles.styleBtn} onPress={_gotoScreenReview}>
-            <Text style={styles.seeAll}>{translations.course.rate}</Text>
-          </PressableBtn>
-        ) : null}
-        {data?.is_join && reviewOfMe ? (
-          <PressableBtn style={styles.styleBtn} onPress={_gotoEditReview}>
-            <Text style={styles.seeAll}>
-              {translations.course.updateReview}
-            </Text>
-          </PressableBtn>
-        ) : null}
+
         {listData.length > 0 && (
           <PressableBtn style={styles.styleBtn} onPress={_gotoFullReview}>
             <Text style={styles.seeAll}>{translations.seeAll}</Text>
@@ -208,6 +212,7 @@ const ListReviewCourse = ({ _id, type, data }: ListReviewCourseProps) => {
       <Text style={styles.txtContentTitleFull}>
         {translations.course.rate} , {totalCount}
       </Text>
+      <ListStarReview data={listData} />
       <FlatList
         data={listData}
         renderItem={renderItem}

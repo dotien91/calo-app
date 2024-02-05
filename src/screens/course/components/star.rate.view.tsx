@@ -9,7 +9,7 @@ interface StarRateProps {
 }
 const starColor = "#FFA347";
 
-const StarRate = ({ number, size, style }: StarRateProps) => {
+const StarRateView = ({ number, size, style }: StarRateProps) => {
   return (
     <View style={[{ flexDirection: "row" }, style]}>
       <IconSvg
@@ -41,4 +41,4 @@ const StarRate = ({ number, size, style }: StarRateProps) => {
   );
 };
 
-export default StarRate;
+export default StarRateView;
