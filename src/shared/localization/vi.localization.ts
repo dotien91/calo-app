@@ -1260,4 +1260,13 @@ export default {
     return: "Chính sách hoàn trả",
     deleteacount: "Xoá tài khoản",
   },
+  call: {
+    inComingCall: "Cuộc gọi đến...",
+    titleCamera: "Cần truy cập vào quyền camera trên máy của bạn",
+    messageCamera:
+      "Để gọi cho người khác, chúng tôi cần truy cập vào camera của bạn.",
+    titleMic: "Cần quyền truy cập microphone",
+    messageMic:
+      "Để gọi điện thoại cho người khác, chúng tôi cần quyền truy cập vào microphone của bạn.",
+  }
 };

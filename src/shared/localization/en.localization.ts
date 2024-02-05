@@ -748,5 +748,12 @@ export default {
     return: "Return policy",
     deleteacount: "Detete Account",
   },
+  call: {
+    inComingCall: "Incoming Call...",
+    titleCamera: "Need permission to access camera",
+    messageCamera: "To call others, we need permission to access your camera.",
+    titleMic: "Need permission to access microphone",
+    messageMic: "To call others, we need permission to access your microphone.",
+  }
 };
 /* eslint-disable max-len */
