@@ -56,6 +56,9 @@ import SettingUser from "@screens/setting-user/setting.user";
 import ChangeLanguage from "@screens/change-language/change.language";
 import SmartBanking from "@screens/smart-banking/smart.banking";
 import PaymentSuccess from "@screens/payment-success/payment.success";
+// import CourseCategoryDetailScreen from "@screens/course-list/course-filter-result/course.filter.result.screen";
+// import PaymentCoures from "@screens/payment-coures/payment.coures";
+import MyCourse from "@screens/my-course/my.course";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -258,6 +261,7 @@ const Navigation = () => {
           name={SCREENS.PAYMENT_SUCCESS}
           component={PaymentSuccess}
         />
+        <Stack.Screen name={SCREENS.MY_COURES} component={MyCourse} />
       </Stack.Navigator>
     </NavigationContainer>
   );
