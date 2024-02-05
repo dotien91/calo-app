@@ -58,6 +58,8 @@ import SmartBanking from "@screens/smart-banking/smart.banking";
 import PaymentSuccess from "@screens/payment-success/payment.success";
 // import CourseCategoryDetailScreen from "@screens/course-list/course-filter-result/course.filter.result.screen";
 // import PaymentCoures from "@screens/payment-coures/payment.coures";
+// import CourseCategoryDetailScreen from "@screens/course-list/course-filter-result/course.filter.result.screen";
+// import PaymentCoures from "@screens/payment-coures/payment.coures";
 import MyCourse from "@screens/my-course/my.course";
 
 // ? If you want to use stack or tab or both

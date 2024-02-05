@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { FlatList, Text, View, useWindowDimensions } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import Header from "@shared-components/header/Header";
@@ -14,9 +14,9 @@ const MyCourse = () => {
   const theme = useTheme();
   const { colors } = theme;
   // const styles = useMemo(() => createStyles(theme), [theme]);
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = React.useState(0);
   const layout = useWindowDimensions();
-  const [routes] = useState([
+  const [routes] = React.useState([
     { key: "first", title: "Improgess" },
     { key: "second", title: "Complete" },
   ]);
