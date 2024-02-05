@@ -98,6 +98,7 @@ interface IUpdateReview {
   review: string;
   rating: number;
 }
+
 export async function updateReview(data: IUpdateReview) {
   return request({
     method: METHOD.PATCH,
@@ -117,10 +118,116 @@ export async function getTimeAvailable(params) {
     return response;
   });
 }
+
+interface ICreateCourse {
+  title: string;
+  description: string;
+  long_description: string;
+  price: string;
+  start_time: string;
+  end_time: string;
+  language: string;
+  country: string;
+  avatar: string;
+  media_id: string;
+}
+
+export async function createCourse(data: ICreateCourse) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "course/create",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+interface CourseAddType {
+  time_duration: number;
+  day: number;
+  time_start: string;
+}
+
+interface ICreateClass {
+  course_id: string;
+  course_calendars: CourseAddType[];
+  name: string;
+  limit_member: number;
+}
+
+export async function createClass(data: ICreateClass) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "course/class/create",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function getListClassOfCourse(params) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "course/class/list",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}
 export async function updateViewed(data: { module_id: string }) {
   return request({
     method: METHOD.POST,
     urlPath: "course/view",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function createTimeAvailableTeacher(data) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "course/one-one/teacher/create",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+export async function updateTimeAvailableTeacher(data) {
+  return request({
+    method: METHOD.PATCH,
+    urlPath: "course/one-one/teacher/update",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function _getTimeAvailableTeacher(params) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "course/one-one/teacher",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function addViewToCourse(data: ICreateCourse) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "course/view",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+
+export async function addModuleToCourse(data: ICreateCourse) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "course/create-module",
     data,
   }).then((response) => {
     return response;

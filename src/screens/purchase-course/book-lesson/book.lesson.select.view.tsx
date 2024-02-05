@@ -14,7 +14,7 @@ import CS from "@theme/styles";
 import { getLabelHourLesson } from "@screens/course-tab/course.helper";
 import IconBtn from "@shared-components/button/IconBtn";
 import { palette } from "@theme/themes";
-import { getTimeAvailableTeacher } from "@services/api/course.api";
+import { getTimeAvailable } from "@services/api/course.api";
 import { SCREENS } from "constants";
 
 interface BookLessonSelectViewProps {}
@@ -36,7 +36,7 @@ const BookLessonSelectView: React.FC<BookLessonSelectViewProps> = () => {
   const [dateView, setDateView] = useState(1);
 
   React.useEffect(() => {
-    getTimeAvailableTeacher(courseId).then((res) => {
+    getTimeAvailable(courseId).then((res) => {
       setLoading(false);
       if (!res.isError) {
         setData(res.data);

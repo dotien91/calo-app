@@ -296,10 +296,30 @@ export const formatVNDate = (date) => {
     month < 10 ? `0${month}` : month
   }/${year}`;
 };
+
 export const formatTime = (time: number) => {
   const minute = Math.floor(time / 60);
   const sec = Math.floor(time % 60);
   return `${minute}:${sec < 10 ? "0" : ""}${sec}`;
+}
+  export const formatTimeHHMM = (date) => {
+  const _date = new Date(date);
+  if (_date.toString() === "Invalid Date") {
+    return "";
+  }
+
+  const hourse = _date.getHours();
+  const min = _date.getMinutes();
+
+  if (min < 30) {
+    return `${hourse < 10 ? `0${hourse}` : hourse}:00`;
+  }
+
+  if (min < 60) {
+    return `${hourse < 10 ? `0${hourse}` : hourse}:30`;
+  }
+
+  return `${hourse < 10 ? `0${hourse}` : hourse}:${min < 10 ? `0${min}` : min}`;
 };
 
 export const isSameMinute = (date1: string, date2: string) => {

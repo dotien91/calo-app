@@ -63,6 +63,12 @@ import CallPageScreen from "@screens/call/call.page.screen";
 // import CourseCategoryDetailScreen from "@screens/course-list/course-filter-result/course.filter.result.screen";
 // import PaymentCoures from "@screens/payment-coures/payment.coures";
 import MyCourse from "@screens/my-course/my.course";
+import CourseCreateScreen from "@screens/course/course-create/course.create.screen";
+import CourseCreateClassScreen from "@screens/course/course-create/course.create.class.screen";
+import CourseListClassScreen from "@screens/course/course-create/course.list.class.screen";
+import CreateClassCallOneScreen from "@screens/course/course-create/course.create.class.call.one.screen";
+import CourseListVideoScreen from "@screens/course/course-create/course.list.video.screen";
+import CourseAddModuleScreen from "@screens/course/course-create/course.add.module.screen";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -163,6 +169,30 @@ const Navigation = () => {
         <Stack.Screen
           name={SCREENS.COURSE_LIST}
           component={renderTabNavigation}
+        />
+        <Stack.Screen
+          name={SCREENS.COURSR_CREATE}
+          component={CourseCreateScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.COURSE_LIST_MODULE}
+          component={CourseListVideoScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.COURSE_ADD_MODULE}
+          component={CourseAddModuleScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.COURSR_CREATE_CALENDAR_CALL}
+          component={CreateClassCallOneScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.COURSR_LIST_CLASS}
+          component={CourseListClassScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.COURSR_CREATE_CLASS}
+          component={CourseCreateClassScreen}
         />
         <Stack.Screen
           name={SCREENS.CHOOSE_CLASS}

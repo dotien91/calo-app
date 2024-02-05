@@ -19,6 +19,7 @@ interface InputPropsType {
   type: "text" | "number" | "email" | "password";
   defaultValue: string | number;
   placeholder: string;
+  keyboardType?: "default" | "numeric";
 }
 
 interface InputHookProps {
@@ -66,6 +67,14 @@ const InputHook: React.FC<InputHookProps> = ({
           !!viewStyle && viewStyle,
           errorTxt ? { borderColor: palette.danger } : {},
           !!noBorder && { borderWidth: 0 },
+          multiline
+            ? {
+                height: 100,
+                alignItems: "flex-start",
+                justifyContent: "flex-start",
+                paddingTop: 8,
+              }
+            : {},
         ]}
       >
         {!!iconLeft && iconLeft}
@@ -79,7 +88,11 @@ const InputHook: React.FC<InputHookProps> = ({
               multiline={multiline}
               onChangeText={(value) => onChange(value)}
               value={value}
-              style={[styles.input, !!customStyle && customStyle]}
+              style={[
+                styles.input,
+                !!customStyle && customStyle,
+                multiline && { flex: 1, textAlignVertical: "top" },
+              ]}
               secureTextEntry={isPassword}
               placeholderTextColor={palette.placeholder}
               maxLength={maxLength}

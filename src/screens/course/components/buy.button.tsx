@@ -17,8 +17,6 @@ const BuyButton = ({ data, type }: BuyButtonProps) => {
   const goToBuyScreen = () => {
     const type = data?.type;
     let screen = SCREENS.PAYMENT_COURES;
-
-    console.log("datagetTimeAvailableTeacher", data?.type);
     if (type == EnumClassType.Call11) screen = SCREENS.BOOK_LESSON;
     if (type == EnumClassType.CallGroup) screen = SCREENS.CHOOSE_CLASS;
     if (type == EnumClassType.SelfLearning) {

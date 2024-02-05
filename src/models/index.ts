@@ -121,6 +121,7 @@ export interface TypedUser {
   is_validate_phone?: boolean;
   is_verify_email?: boolean;
   phone_number: string;
+  default_language?: string;
 }
 
 export interface TypedFollowUser {

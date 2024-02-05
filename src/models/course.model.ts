@@ -159,3 +159,18 @@ export interface TypedModule {
   media_id: TypedMedia;
   is_view: boolean;
 }
+
+export interface IItemTimeOfClass {
+  _id: string;
+  time_duration: number;
+  day: 1;
+  time_start: string;
+  time_end: string;
+  course_type: string;
+}
+
+export interface IItemClass {
+  _id: string;
+  course_id: string;
+  course_calendar_ids: IItemTimeOfClass[];
+}
