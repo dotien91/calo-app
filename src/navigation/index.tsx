@@ -153,10 +153,10 @@ const Navigation = () => {
       theme={isDarkMode ? DarkTheme : LightTheme}
     >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen
+        {/* <Stack.Screen
           name={SCREENS.COURSE_LIST}
           component={renderTabNavigation}
-        />
+        /> */}
         <Stack.Screen
           name={SCREENS.COURSR_CREATE}
           component={CourseCreateScreen}

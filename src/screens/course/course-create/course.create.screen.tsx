@@ -5,7 +5,6 @@ import {
   ScrollView,
   View,
   Text,
-  Image,
   Keyboard,
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
@@ -23,14 +22,10 @@ import { translations } from "@localization";
 import Button from "@shared-components/button/Button";
 import DatePickerLocal from "./components/dataPicker";
 import useStore from "@services/zustand/store";
-import { selectMedia } from "@helpers/file.helper";
-import { uploadMedia } from "@services/api/post";
-import { isIos } from "@helpers/device.info.helper";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { palette } from "@theme/themes";
 import { createCourse } from "@services/api/course.api";
 import { showToast } from "@helpers/super.modal.helper";
-import LoadingUpdateMedia from "./components/LoadingUpdateMedia";
 import CustomBackground from "@shared-components/CustomBackgroundBottomSheet";
 import { SCREENS } from "constants";
 import {
@@ -38,6 +33,8 @@ import {
   listSkill,
   listTypeCourse,
 } from "constants/course.constant";
+import SelectVideoHook from "./components/select.video";
+import SelectImageHook from "./components/select.image";
 
 interface ILevel {
   value: string;
@@ -66,17 +63,16 @@ const CourseCreate = () => {
   const theme = useTheme();
   const { colors } = theme;
   const [updating, setUpdating] = React.useState(false);
-  const [updatingVid, setUpdatingVid] = React.useState(false);
-  const [updatingImg, setUpdatingImg] = React.useState(false);
   const [startDate, setStartDate] = React.useState<Date>();
   const [endDate, setEndDate] = React.useState<Date>();
-  const [linkImage, setLinkImage] = React.useState("");
-  const [idImage, setIdImage] = React.useState("");
-  const [linkVideo, setLinkVideo] = React.useState("");
-  const [idVideo, setIdVideo] = React.useState("");
   const [typeCourse, setTypeCourse] = React.useState(listTypeCourse[0]);
   const [level, setLevel] = useState<ILevel>(listLevel[0]);
   const [skill, setSkill] = useState<ISkill[]>([]);
+  const { idVideo, renderSelectVideo, updatingVid } = SelectVideoHook();
+  const { idImage, renderSelectImage, updatingImg } = SelectImageHook({
+    width: 1600,
+    height: 900,
+  });
 
   const userData = useStore((store) => store.userData);
 
@@ -159,50 +155,27 @@ const CourseCreate = () => {
       }
     }
   };
-  const onPressChangeImage = async () => {
-    selectMedia({
-      config: { mediaType: "photo", cropping: true, width: 1600, height: 900 },
-      callback: async (image) => {
-        const uri = isIos() ? image.path?.replace("file://", "") : image.path;
-        setUpdatingImg(true);
-        setLinkImage(uri);
-        const res = await uploadMedia({
-          name: image?.filename || image.path?.split("/")?.reverse()?.[0] || "",
-          uri: uri,
-          type: image.mime,
-        });
-        if (res?.[0]?.callback?._id) {
-          setIdImage(res[0]?.callback?._id);
-          setUpdatingImg(false);
-        } else {
-          setUpdatingImg(false);
-        }
-      },
-    });
-  };
-
-  const onPressChangeMedia = async () => {
-    selectMedia({
-      config: { mediaType: "video" },
-      callback: async (image) => {
-        const uri = isIos() ? image.path?.replace("file://", "") : image.path;
-        setUpdatingVid(true);
-
-        const res = await uploadMedia({
-          name: image?.filename || image.path?.split("/")?.reverse()?.[0] || "",
-          uri: uri,
-          type: image.mime,
-        });
-        if (res?.[0]?.callback?._id) {
-          setIdVideo(res[0]?.callback?._id);
-          setLinkVideo(res?.[0]?.callback?.media_thumbnail);
-          setUpdatingVid(false);
-        } else {
-          setUpdatingVid(false);
-        }
-      },
-    });
-  };
+  // const onPressChangeImage = async () => {
+  //   selectMedia({
+  //     config: { mediaType: "photo", cropping: true, width: 1600, height: 900 },
+  //     callback: async (image) => {
+  //       const uri = isIos() ? image.path?.replace("file://", "") : image.path;
+  //       setUpdatingImg(true);
+  //       setLinkImage(uri);
+  //       const res = await uploadMedia({
+  //         name: image?.filename || image.path?.split("/")?.reverse()?.[0] || "",
+  //         uri: uri,
+  //         type: image.mime,
+  //       });
+  //       if (res?.[0]?.callback?._id) {
+  //         setIdImage(res[0]?.callback?._id);
+  //         setUpdatingImg(false);
+  //       } else {
+  //         setUpdatingImg(false);
+  //       }
+  //     },
+  //   });
+  // };
 
   const renderSelectLevel = () => {
     const renderLevelBtn = (item: ILevel) => {
@@ -267,65 +240,32 @@ const CourseCreate = () => {
     );
   };
 
-  const renderSelectAvatarCourse = () => {
-    return (
-      <>
-        <Text style={{ ...CS.hnMedium, marginTop: 8 }}>Ảnh khoá học</Text>
-        <PressableBtn onPress={onPressChangeImage}>
-          {linkImage === "" ? (
-            <View
-              style={{
-                padding: 8,
-                borderWidth: 1,
-                borderColor: palette.borderColor,
-                borderRadius: 8,
-              }}
-            >
-              <Text style={CS.hnRegular}>Chọn ảnh</Text>
-            </View>
-          ) : (
-            <View style={styles.viewImage}>
-              <Image source={{ uri: linkImage }} style={styles.viewImage} />
-              {updatingImg && <View style={styles.viewImageFill}></View>}
-            </View>
-          )}
-        </PressableBtn>
-      </>
-    );
-  };
-
-  const renderSelectVideo = () => {
-    return (
-      <>
-        <Text style={{ ...CS.hnMedium, marginTop: 8 }}>
-          Video giới thiệu khoá học
-        </Text>
-        {linkVideo === "" && !updatingVid ? (
-          <PressableBtn onPress={onPressChangeMedia}>
-            <View
-              style={{
-                padding: 8,
-                borderWidth: 1,
-                borderColor: palette.borderColor,
-                borderRadius: 8,
-              }}
-            >
-              <Text style={CS.hnRegular}>Chọn video</Text>
-            </View>
-          </PressableBtn>
-        ) : (
-          <View style={styles.viewImage}>
-            <Image source={{ uri: linkVideo }} style={styles.viewImage} />
-            {updatingVid && (
-              <View style={styles.viewImageFill}>
-                <LoadingUpdateMedia />
-              </View>
-            )}
-          </View>
-        )}
-      </>
-    );
-  };
+  // const renderSelectAvatarCourse = () => {
+  //   return (
+  //     <>
+  //       <Text style={{ ...CS.hnMedium, marginTop: 8 }}>Ảnh khoá học</Text>
+  //       <PressableBtn onPress={onPressChangeImage}>
+  //         {linkImage === "" ? (
+  //           <View
+  //             style={{
+  //               padding: 8,
+  //               borderWidth: 1,
+  //               borderColor: palette.borderColor,
+  //               borderRadius: 8,
+  //             }}
+  //           >
+  //             <Text style={CS.hnRegular}>Chọn ảnh</Text>
+  //           </View>
+  //         ) : (
+  //           <View style={styles.viewImage}>
+  //             <Image source={{ uri: linkImage }} style={styles.viewImage} />
+  //             {updatingImg && <View style={styles.viewImageFill}></View>}
+  //           </View>
+  //         )}
+  //       </PressableBtn>
+  //     </>
+  //   );
+  // };
 
   const renderSelectTypeCourse = () => {
     return (
@@ -443,7 +383,12 @@ const CourseCreate = () => {
         </View>
 
         <View style={{ paddingHorizontal: 20 }}>
-          {renderSelectAvatarCourse()}
+          <Text style={{ ...CS.hnMedium, marginTop: 8 }}>Ảnh khoá học</Text>
+
+          {renderSelectImage()}
+          <Text style={{ ...CS.hnMedium, marginTop: 8 }}>
+            Video giới thiệu khoá học
+          </Text>
           {renderSelectVideo()}
           {renderSelectTypeCourse()}
           {renderSelectLevel()}
@@ -534,16 +479,6 @@ const CourseCreate = () => {
 export default CourseCreate;
 
 const styles = StyleSheet.create({
-  viewImage: {
-    width: 160,
-    height: 90,
-    backgroundColor: palette.placeholder,
-  },
-  viewImageFill: {
-    ...CS.fillParent,
-    ...CS.center,
-    backgroundColor: palette.placeholder,
-  },
   category: {
     marginTop: 10,
     padding: 10,

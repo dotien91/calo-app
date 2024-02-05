@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Text, View, ScrollView } from "react-native";
 import { useTheme, useRoute } from "@react-navigation/native";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
@@ -12,7 +12,11 @@ import createStyles from "./course.create.class.style";
 import { getLabelHourLesson } from "@screens/course-tab/course.helper";
 import Button from "@shared-components/button/Button";
 import useStore from "@services/zustand/store";
-import { createTimeAvailableTeacher } from "@services/api/course.api";
+import {
+  createTimeAvailableTeacher,
+  getTimeAvailableTeacher,
+  updateTimeAvailableTeacher,
+} from "@services/api/course.api";
 import { showToast } from "@helpers/super.modal.helper";
 
 interface ITimeSelected {
@@ -31,7 +35,37 @@ const CreateClassCallOneScreen = () => {
   const [timeSelected, setTimeSelected] = useState<ITimeSelected[]>([]);
   const [date, setDate] = useState<number>(0);
   const [updating, setUpdating] = useState(false);
+  const [updataTime, setUpdateTime] = useState(false);
   const userData = useStore((store) => store.userData);
+
+  useEffect(() => {
+    const _getTimeAvailable = () => {
+      const params = {
+        user_id: userData?._id,
+      };
+      // console.log("params...", params);
+      getTimeAvailableTeacher(params).then((res) => {
+        if (!res.isError) {
+          // console.log("res...", JSON.stringify(res.data));
+          // console.log("res...", JSON.stringify(res.data[0].time_available));
+          if (res.data[0].time_available.length > 0) {
+            setUpdateTime(true);
+            const mapTime = res.data[0].time_available.map(
+              (item: ITimeSelected) => {
+                return {
+                  day: item.day,
+                  time_start: item.time_start,
+                  duration: 1,
+                };
+              },
+            );
+            setTimeSelected(mapTime);
+          }
+        }
+      });
+    };
+    _getTimeAvailable();
+  }, []);
 
   const styles = React.useMemo(() => createStyles(theme), [theme]);
   const renderSelectDate = () => {
@@ -41,10 +75,16 @@ const CreateClassCallOneScreen = () => {
 
     const renderDateBtn = (item) => {
       const isSelect = item.value === date;
+      const daySelect =
+        timeSelected.findIndex((i) => i.day === item.value) >= 0;
       return (
         <PressableBtn
           onPress={() => onSelectDate(item)}
-          style={isSelect ? styles.durationBtnSelected : styles.durationBtn}
+          style={
+            isSelect || daySelect
+              ? styles.durationBtnSelected
+              : styles.durationBtn
+          }
         >
           <Text style={styles.txtBtn}>{item.label}</Text>
         </PressableBtn>
@@ -122,19 +162,36 @@ const CreateClassCallOneScreen = () => {
       time_available: timeSelected,
     };
     setUpdating(true);
-    createTimeAvailableTeacher(data).then((res) => {
-      console.log(res);
-      if (!res.isError) {
-        setUpdating(false);
-        showToast({
-          type: "success",
-          message: translations.course.createModuleSuccess,
-        });
-      } else {
-        setUpdating(false);
-        showToast({ type: "error", message: res.message });
-      }
-    });
+    if (updataTime) {
+      createTimeAvailableTeacher(data).then((res) => {
+        console.log(res);
+        if (!res.isError) {
+          setUpdating(false);
+          showToast({
+            type: "success",
+            message: translations.course.createModuleSuccess,
+          });
+        } else {
+          setUpdating(false);
+          showToast({ type: "error", message: res.message });
+        }
+      });
+    } else {
+      console.log("update");
+      updateTimeAvailableTeacher(data).then((res) => {
+        console.log(res);
+        if (!res.isError) {
+          setUpdating(false);
+          showToast({
+            type: "success",
+            message: translations.course.updateModuleSuccess,
+          });
+        } else {
+          setUpdating(false);
+          showToast({ type: "error", message: res.message });
+        }
+      });
+    }
   };
 
   return (

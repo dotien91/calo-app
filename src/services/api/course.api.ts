@@ -165,6 +165,25 @@ export async function createTimeAvailableTeacher(data) {
     return response;
   });
 }
+export async function updateTimeAvailableTeacher(data) {
+  return request({
+    method: METHOD.PATCH,
+    urlPath: "course/one-one/teacher/update",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function getTimeAvailableTeacher(params) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "course/one-one/teacher",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}
 
 export async function addViewToCourse(data: ICreateCourse) {
   return request({
