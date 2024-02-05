@@ -53,6 +53,11 @@ export const useUserHook = () => {
   };
 
   const logout = () => {
+    showToast({
+      type: "success",
+      message: "Logout successful"
+    })
+    NavigationService.navigate(SCREENS.HOME)
     _setJson(USER_TOKEN, "");
     setUserData(null);
     setLinkAvatar("");
@@ -70,7 +75,7 @@ export const useUserHook = () => {
           borderRadius: 8,
         }}
       >
-        <Text
+        {/* <Text
           style={{
             ...CommonStyle.hnRegular,
             fontSize: 20,
@@ -79,7 +84,7 @@ export const useUserHook = () => {
           }}
         >
           {translations.login.requireLogin}
-        </Text>
+        </Text> */}
         <TouchableOpacity
           style={CommonStyle.btnActive}
           onPress={() => {

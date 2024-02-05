@@ -13,6 +13,7 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import createStyles from "./setting.screen.style";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";
+import { useUserHook } from "@helpers/hooks/useUserHook";
 
 interface SettingScreenProps {}
 
@@ -22,6 +23,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
   const userData = useStore((state) => state.userData);
 
   const styles = useMemo(() => createStyles(theme), [theme]);
+  const { logout, isLoggedIn, renderViewRequestLogin } = useUserHook();
   // const isDarkMode = useStore((state) => state.isDarkMode);
   // const setDarkMode = useStore((state) => state.setDarkMode);
 
@@ -102,33 +104,38 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
       <Header text="Setting"></Header>
-      <View style={{ alignItems: "center", backgroundColor: colors.white }}>
-        <Avatar
-          style={{
-            width: 80,
-            height: 80,
-            borderRadius: 99,
-            marginRight: 10,
-            marginTop: 20,
-          }}
-          sourceUri={{
-            uri: userData?.user_avatars,
-          }}
-        />
-        <View style={{ flexDirection: "row", marginVertical: 16 }}>
-          <TouchableOpacity
-            onPress={editProfile}
-            style={styles.styleButtonEditProfile}
-          >
-            <Text style={styles.styleTextEditProfile}>Edit profile</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.styleButtonViewProfile}>
-            <Text style={styles.styleTextViewProfile}>View Profile</Text>
-          </TouchableOpacity>
+      {isLoggedIn() ? (
+        <View style={{ alignItems: "center", backgroundColor: colors.white }}>
+          <Avatar
+            style={{
+              width: 80,
+              height: 80,
+              borderRadius: 99,
+              marginRight: 10,
+              marginTop: 20,
+            }}
+            sourceUri={{
+              uri: userData?.user_avatar_thumbnail,
+            }}
+          />
+          <View style={{ flexDirection: "row", marginVertical: 16 }}>
+            <TouchableOpacity
+              onPress={editProfile}
+              style={styles.styleButtonEditProfile}
+            >
+              <Text style={styles.styleTextEditProfile}>Edit profile</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.styleButtonViewProfile}>
+              <Text style={styles.styleTextViewProfile}>View Profile</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      ) : (
+        renderViewRequestLogin()
+      )}
       {renderListSetting()}
-      <TouchableOpacity
+      {isLoggedIn() && <TouchableOpacity
+        onPress={logout}
         style={{
           marginHorizontal: 16,
           height: 46,
@@ -142,7 +149,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
         <Text style={{ color: colors.text, fontSize: 16, fontWeight: "600" }}>
           Logout
         </Text>
-      </TouchableOpacity>
+      </TouchableOpacity>}
     </SafeAreaView>
   );
 };
