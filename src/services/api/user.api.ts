@@ -120,6 +120,13 @@ export async function getListUser(params: { search: string }) {
     method: METHOD.GET,
     urlPath: "user/list",
     params: { display_name: params.search },
+  });
+}
+
+export async function deleteUserById(id: string) {
+  return request({
+    method: METHOD.DELETE,
+    urlPath: `user/delete/${id}`,
   }).then((response) => {
     return response;
   });

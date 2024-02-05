@@ -19,9 +19,9 @@ interface SettingScreenProps {}
 const SettingScreen: React.FC<SettingScreenProps> = () => {
   const theme = useTheme();
   const { colors } = theme;
+  const userData = useStore((state) => state.userData);
 
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const userData = useStore(state => state.userData)
   // const isDarkMode = useStore((state) => state.isDarkMode);
   // const setDarkMode = useStore((state) => state.setDarkMode);
 
@@ -95,6 +95,10 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
     );
   };
 
+  const editProfile = () => {
+    NavigationService.navigate(SCREENS.EDIT_PROFILE);
+  };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
       <Header text="Setting"></Header>
@@ -108,11 +112,14 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
             marginTop: 20,
           }}
           sourceUri={{
-            uri: "https://ropkeyarmormuseum.com/wp-content/uploads/2023/03/All-about-Roronoa-Zoro-One-Pieces-Most-beloved-Character.jpg",
+            uri: userData?.user_avatars,
           }}
         />
         <View style={{ flexDirection: "row", marginVertical: 16 }}>
-          <TouchableOpacity style={styles.styleButtonEditProfile}>
+          <TouchableOpacity
+            onPress={editProfile}
+            style={styles.styleButtonEditProfile}
+          >
             <Text style={styles.styleTextEditProfile}>Edit profile</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.styleButtonViewProfile}>
