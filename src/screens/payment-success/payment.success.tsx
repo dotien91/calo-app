@@ -22,9 +22,8 @@ const PaymentSuccess = () => {
   const widthScreen = Dimensions.get("window").width;
 
   const openMyCourse = () => {
-    NavigationService.navigate(SCREENS.HOME)
-    NavigationService.navigate(SCREENS.MY_COURES)
-
+    NavigationService.navigate(SCREENS.HOME);
+    NavigationService.navigate(SCREENS.MY_COURES);
   };
 
   return (

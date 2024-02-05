@@ -1,7 +1,12 @@
 import React, { useEffect } from "react";
-import { FlatList, View, useWindowDimensions } from "react-native";
+import {
+  FlatList,
+  View,
+  useWindowDimensions,
+  TouchableOpacity,
+} from "react-native";
 import { TabView, SceneMap } from "react-native-tab-view";
-// import * as NavigationService from "react-navigation-helpers";
+import * as NavigationService from "react-navigation-helpers";
 /**
  * ? Local Imports
  */
@@ -16,6 +21,11 @@ import LoadingList from "@shared-components/loading.list.component";
 import CourseToolbar from "../components/course.toolbar";
 import CourseCategoryItem from "./course.category.item";
 import CourseQuickFilter from "../components/course.quick.filter";
+import { useUserHook } from "@helpers/hooks/useUserHook";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import { useTheme } from "@react-navigation/native";
+import { SCREENS } from "constants";
+
 interface CourseListScreenProps {}
 
 const renderScene = SceneMap({
@@ -37,7 +47,9 @@ const CourseListScreen: React.FC<CourseListScreenProps> = () => {
   }, [courseCurrentType, index]);
 
   const renderTabBar = () => <View />;
-
+  const { isLoggedIn } = useUserHook();
+  const theme = useTheme();
+  const { colors } = theme;
   return (
     <View style={{ flex: 1, paddingTop: getStatusBarHeight() }}>
       <CourseToolbar />
@@ -49,6 +61,30 @@ const CourseListScreen: React.FC<CourseListScreenProps> = () => {
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}
       />
+      {isLoggedIn() && (
+        <TouchableOpacity
+          style={{
+            position: "absolute",
+            width: 50,
+            height: 50,
+            backgroundColor: colors.primary,
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: 25,
+            bottom: 10,
+            right: 10,
+            zIndex: 1,
+          }}
+          onPress={() => NavigationService.push(SCREENS.COURSR_CREATE)}
+        >
+          <Icon
+            name={"add-outline"}
+            type={IconType.Ionicons}
+            size={30}
+            color={colors.white}
+          />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

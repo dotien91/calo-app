@@ -10,7 +10,7 @@ import getPath from "@flyerhq/react-native-android-uri-path";
 const { width } = Dimensions.get("screen");
 const isIos = Platform.OS === "ios";
 
-export function useUploadFile(initData?: any[], selectionLimit=30) {
+export function useUploadFile(initData?: any[], selectionLimit = 30) {
   const [listFile, setListFile] = React.useState<any[]>(initData || []);
   const [isUpLoadingFile, setIsUpLoadingFile] = React.useState(false);
   const [listFileLocal, setListFileLocal] = React.useState<any[]>(
@@ -110,7 +110,7 @@ export function useUploadFile(initData?: any[], selectionLimit=30) {
       </View>
     );
   }, [listFileLocal, listFile]); // eslint-disable-line react-hooks/exhaustive-deps
-  
+
   const onRemove = ({ uri, _id }: { uri: string; _id: string }) => {
     setListFileLocal(listFileLocal.filter((i) => i.uri !== uri));
     if (listFile?.length) {

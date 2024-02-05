@@ -39,7 +39,6 @@ export async function addStudentTimepick(data) {
   });
 }
 
-
 export async function updateUserOrder(data) {
   return request({
     method: METHOD.POST,

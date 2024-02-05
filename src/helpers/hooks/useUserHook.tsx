@@ -55,9 +55,9 @@ export const useUserHook = () => {
   const logout = () => {
     showToast({
       type: "success",
-      message: "Logout successful"
-    })
-    NavigationService.navigate(SCREENS.HOME)
+      message: "Logout successful",
+    });
+    NavigationService.navigate(SCREENS.HOME);
     _setJson(USER_TOKEN, "");
     setUserData(null);
     setLinkAvatar("");

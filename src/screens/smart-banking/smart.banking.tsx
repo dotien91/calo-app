@@ -51,11 +51,11 @@ const SmartBanking = () => {
   };
 
   const actionSend = () => {
-    console.log("listFilelistFilelistFile", listFile)
+    console.log("listFilelistFilelistFile", listFile);
     const data = {
       _id: tradeId,
       status: "processing",
-      media_id: listFile[listFile.length-1]._id,
+      media_id: listFile[listFile.length - 1]._id,
     };
     showSuperModal({
       contentModalType: EnumModalContentType.Loading,
@@ -112,7 +112,10 @@ const SmartBanking = () => {
           {translations.payment.sendPro}
         </Text>
         {listFile.length ? (
-          <TouchableOpacity onPress={onSelectPicture} style={styles.styleViewImageSelected}>
+          <TouchableOpacity
+            onPress={onSelectPicture}
+            style={styles.styleViewImageSelected}
+          >
             <Image
               style={{ height: 20, width: 20, marginRight: 8 }}
               source={require("assets/images/iconMedia.png")}
@@ -135,15 +138,19 @@ const SmartBanking = () => {
               isUpLoadingFile && { opacity: 0.5 },
             ]}
           >
-            {isUpLoadingFile ? <ActivityIndicator size={"small"}/> : <>
-            <Image
-              style={{ height: 12, width: 12, marginRight: 16 }}
-              source={require("assets/images/plus.png")}
-            />
-            <Text style={styles.styleTextHadPaid}>
-              {translations.payment.uploadfile}
-            </Text>
-            </>}
+            {isUpLoadingFile ? (
+              <ActivityIndicator size={"small"} />
+            ) : (
+              <>
+                <Image
+                  style={{ height: 12, width: 12, marginRight: 16 }}
+                  source={require("assets/images/plus.png")}
+                />
+                <Text style={styles.styleTextHadPaid}>
+                  {translations.payment.uploadfile}
+                </Text>
+              </>
+            )}
           </TouchableOpacity>
         )}
       </View>

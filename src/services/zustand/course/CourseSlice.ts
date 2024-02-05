@@ -24,7 +24,36 @@ export interface CourseSlice {
   addToFavourites: (id: string) => void;
 }
 
-const createCoursePostSlice: StoreSlice<CourseSlice> = (set) => ({
+export interface CourseSlice {
+  listCourseFilterParams: IListCourseFilterParams;
+  setListCourseFilterParams: (params: IListCourseFilterParams) => void;
+  courseFilterKeys: ICourseFilterKeys;
+  setCourseFilterKeys: (params: ICourseFilterKeys) => void;
+  courseCurrentSort: ICurrentSort;
+  setCourseCurrentSort: (params: ICurrentSort) => void;
+  courseCurrentType: ICurrentSort;
+  setCourseCurrentType: (params: ICurrentSort) => void;
+  courseSearchHistory: string;
+  setCourseSearchHistory: (v: string) => void;
+  fileCourseLocal: { id: string; localFile: string }[];
+  addFileCourseLocal: (id: string, localFile: string) => void;
+
+  listFavourites: string[];
+  addToFavourites: (id: string) => void;
+}
+
+const createCourseSlice: StoreSlice<CourseSlice> = (set) => ({
+  listCourseFilterParams: { limit: "999999999" },
+  setListCourseFilterParams: (params: IListCourseFilterParams) =>
+    set({ listCourseFilterParams: params }),
+  courseFilterKeys: courseFilterKeysDefault,
+  setCourseFilterKeys: (v: ICourseFilterKeys) => set({ courseFilterKeys: v }),
+  courseCurrentSort: { id: "", name: "" },
+  setCourseCurrentSort: (v: ICurrentSort) => set({ courseCurrentSort: v }),
+  courseCurrentType: { id: "course", name: "Course" },
+  setCourseCurrentType: (v: ICurrentSort) => set({ courseCurrentType: v }),
+  courseSearchHistory: "",
+  setCourseSearchHistory: (v: string) => set({ courseSearchHistory: v }),
   fileCourseLocal: [],
   addFileCourseLocal: (id: string, localFile: string) => {
     set((state) => {
@@ -49,45 +78,16 @@ const createCoursePostSlice: StoreSlice<CourseSlice> = (set) => ({
     set((state) => {
       const index = state.listFavourites.findIndex((item) => item === id);
       if (index < 0) {
-        console.log(1);
         return {
           listFavourites: [...state.listFavourites, id],
         };
       } else {
-        console.log(2);
         return {
           listFavourites: [...state.listFavourites.map((item) => item !== id)],
         };
       }
     });
   },
-});
-
-export interface CourseSlice {
-  listCourseFilterParams: IListCourseFilterParams;
-  setListCourseFilterParams: (params: IListCourseFilterParams) => void;
-  courseFilterKeys: ICourseFilterKeys;
-  setCourseFilterKeys: (params: ICourseFilterKeys) => void;
-  courseCurrentSort: ICurrentSort;
-  setCourseCurrentSort: (params: ICurrentSort) => void;
-  courseCurrentType: ICurrentSort;
-  setCourseCurrentType: (params: ICurrentSort) => void;
-  courseSearchHistory: string;
-  setCourseSearchHistory: (v: string) => void;
-}
-
-const createCourseSlice: StoreSlice<CourseSlice> = (set) => ({
-  listCourseFilterParams: { limit: "999999999" },
-  setListCourseFilterParams: (params: IListCourseFilterParams) =>
-    set({ listCourseFilterParams: params }),
-  courseFilterKeys: courseFilterKeysDefault,
-  setCourseFilterKeys: (v: ICourseFilterKeys) => set({ courseFilterKeys: v }),
-  courseCurrentSort: { id: "", name: "" },
-  setCourseCurrentSort: (v: ICurrentSort) => set({ courseCurrentSort: v }),
-  courseCurrentType: { id: "course", name: "Course" },
-  setCourseCurrentType: (v: ICurrentSort) => set({ courseCurrentType: v }),
-  courseSearchHistory: "",
-  setCourseSearchHistory: (v: string) => set({ courseSearchHistory: v }),
 });
 
 export default createCourseSlice;

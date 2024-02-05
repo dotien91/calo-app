@@ -524,6 +524,13 @@ export default {
     addLessonSuccess: "Thêm bài học thành công",
     addPart: "Thêm học phần",
     addPartSuccess: "Thêm học phần thành công",
+    aboutThisCourse: "Thông tin khoá học",
+    shareThisCourse: "Chia sẻ khoá học",
+    resources: "Tài liệu",
+    addCourseToFavourites: "Thêm vào danh sách yêu thích",
+    reportAPlaybackProblem: "Báo cáo sự cố",
+    enrollNow: "Vào học ngay",
+    Lectures: "Bài giảng",
   },
   seeAll: "Xem tất cả",
   settings: {
@@ -1268,5 +1275,5 @@ export default {
     titleMic: "Cần quyền truy cập microphone",
     messageMic:
       "Để gọi điện thoại cho người khác, chúng tôi cần quyền truy cập vào microphone của bạn.",
-  }
+  },
 };

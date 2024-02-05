@@ -5,6 +5,7 @@ import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
 import { getCountFollow } from "@services/api/user.api";
 import { translations } from "@localization";
+import LoadingItem from "@shared-components/loading.item";
 
 interface CountFollowProps {
   id: string;
@@ -33,7 +34,7 @@ const CountFollow = (props: CountFollowProps) => {
         style={{ justifyContent: "center", alignItems: "center", width: 60 }}
       >
         {isLoading ? (
-          <ActivityIndicator />
+          <LoadingItem />
         ) : (
           <Text
             style={{

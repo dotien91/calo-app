@@ -134,22 +134,24 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
         renderViewRequestLogin()
       )}
       {renderListSetting()}
-      {isLoggedIn() && <TouchableOpacity
-        onPress={logout}
-        style={{
-          marginHorizontal: 16,
-          height: 46,
-          backgroundColor: colors.grey1,
-          justifyContent: "center",
-          alignItems: "center",
-          marginBottom: 50,
-          borderRadius: 16,
-        }}
-      >
-        <Text style={{ color: colors.text, fontSize: 16, fontWeight: "600" }}>
-          Logout
-        </Text>
-      </TouchableOpacity>}
+      {isLoggedIn() && (
+        <TouchableOpacity
+          onPress={logout}
+          style={{
+            marginHorizontal: 16,
+            height: 46,
+            backgroundColor: colors.grey1,
+            justifyContent: "center",
+            alignItems: "center",
+            marginBottom: 50,
+            borderRadius: 16,
+          }}
+        >
+          <Text style={{ color: colors.text, fontSize: 16, fontWeight: "600" }}>
+            Logout
+          </Text>
+        </TouchableOpacity>
+      )}
     </SafeAreaView>
   );
 };

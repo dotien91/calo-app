@@ -3,6 +3,8 @@ import { ExtendedTheme } from "@react-navigation/native";
 
 import { Device } from "@utils/device.utils";
 import { HS, MHS, VS } from "@utils/size.utils";
+import CS from "@theme/styles";
+import { palette } from "@theme/themes";
 
 const createStyles = (theme: ExtendedTheme) => {
   return StyleSheet.create({
@@ -113,6 +115,17 @@ const createStyles = (theme: ExtendedTheme) => {
     viewPortrait: {
       width: "100%",
       height: "100%",
+    },
+    tabView: {
+      paddingHorizontal: 16,
+    },
+    textTab: {
+      ...CS.hnMedium,
+      color: palette.textOpacity6,
+    },
+    textTabSelected: {
+      ...CS.hnMedium,
+      color: palette.primary,
     },
   });
 };

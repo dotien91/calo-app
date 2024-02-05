@@ -43,14 +43,13 @@ const CreateClassCallOneScreen = () => {
       const params = {
         user_id: userData?._id,
       };
-      // console.log("params...", params);
       _getTimeAvailableTeacher(params).then((res) => {
         if (!res.isError) {
-          // console.log("res...", JSON.stringify(res.data));
+          console.log("res.s..", JSON.stringify(res.data));
           // console.log("res...", JSON.stringify(res.data[0].time_available));
-          if (res.data[0].time_available.length > 0) {
+          if (res.data.time_available.length > 0) {
             setUpdateTime(true);
-            const mapTime = res.data[0].time_available.map(
+            const mapTime = res.data.time_available.map(
               (item: ITimeSelected) => {
                 return {
                   day: item.day,
@@ -162,7 +161,7 @@ const CreateClassCallOneScreen = () => {
       time_available: timeSelected,
     };
     setUpdating(true);
-    if (updataTime) {
+    if (!updataTime) {
       createTimeAvailableTeacher(data).then((res) => {
         console.log(res);
         if (!res.isError) {
@@ -195,8 +194,11 @@ const CreateClassCallOneScreen = () => {
   };
 
   return (
-    <View style={[CS.safeAreaView, { marginBottom: getBottomSpace() }]}>
-      <Header text={translations.course.timeAvailable} />
+    <View style={[CS.flex1, { marginBottom: getBottomSpace() }]}>
+      <Header
+        text={translations.course.timeAvailable}
+        customStyle={{ marginTop: 0 }}
+      />
       <View style={{ paddingHorizontal: 16 }}>{renderSelectDate()}</View>
       <ScrollView
         showsVerticalScrollIndicator={false}

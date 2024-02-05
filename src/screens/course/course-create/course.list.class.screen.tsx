@@ -12,6 +12,8 @@ import { getDayOfWeek } from "@utils/date.utils";
 import { SCREENS } from "constants";
 import eventEmitter from "@services/event-emitter";
 import { IItemClass } from "models/course.model";
+import Button from "@shared-components/button/Button";
+import { translations } from "@localization";
 
 const CourseListClassScreen = () => {
   const route = useRoute();
@@ -66,8 +68,12 @@ const CourseListClassScreen = () => {
     });
   };
 
+  const _poptoTop = () => {
+    NavigationService.popToTop();
+  };
+
   return (
-    <View style={CS.safeAreaView}>
+    <View style={CS.flex1}>
       <Header
         text="Danh sách lớp học"
         iconNameRight="plus"
@@ -85,6 +91,12 @@ const CourseListClassScreen = () => {
         keyExtractor={(item) => item?._id + ""}
         refreshControl={refreshControl()}
         ListFooterComponent={renderFooterComponent()}
+      />
+
+      <Button
+        style={{ marginVertical: 8, marginHorizontal: 16 }}
+        text={translations.home.select}
+        onPress={_poptoTop}
       />
     </View>
   );

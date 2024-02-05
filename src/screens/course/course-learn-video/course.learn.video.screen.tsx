@@ -59,15 +59,12 @@ const CourseLearnScreen = () => {
   };
 
   const onPressMarkDone = (item) => {
-    console.log("done...", item);
     if (item.is_view) {
       return;
     }
     // gọi API đánh đấu đã xong video
     updateViewed({ module_id: item._id }).then((res) => {
-      console.log("res...", JSON.stringify(res));
       if (!res.isError) {
-        console.log("dda xem");
       }
     });
   };

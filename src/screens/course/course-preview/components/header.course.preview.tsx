@@ -53,7 +53,7 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
             opacity: 0.6,
             bottom: 0,
             left: 0,
-            right: 33,
+            right: 0,
             zIndex: 1,
             paddingLeft: 33,
             ...CS.center,

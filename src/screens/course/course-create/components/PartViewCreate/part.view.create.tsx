@@ -137,7 +137,9 @@ const PartViewCreate = ({ id, hide }: PartViewCreateProps) => {
             style={{ borderWidth: 1, height: 40, ...CS.center }}
             onPress={_addNewLesson}
           >
-            <Text>{translations.course.addLesson}</Text>
+            <Text style={{ ...CS.hnMedium, fontSize: 14 }}>
+              {translations.course.addLesson}
+            </Text>
           </PressableBtn>
         </Animatable.View>
       </Animatable.View>
@@ -187,7 +189,9 @@ const PartViewCreate = ({ id, hide }: PartViewCreateProps) => {
           onChange={() => {}}
         />
         <PressableBtn style={styles.viewAdd} onPress={_addNewPart}>
-          <Text>{translations.course.addModule}</Text>
+          <Text style={{ ...CS.hnMedium, fontSize: 14 }}>
+            {translations.course.addModule}
+          </Text>
         </PressableBtn>
       </View>
     );

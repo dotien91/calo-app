@@ -67,13 +67,13 @@ const TutorItem = ({
               <Text numberOfLines={2} style={styles.tutorName}>
                 {display_name}
               </Text>
-              <IconBtn
+              {/* <IconBtn
                 customStyle={styles.iconLike}
                 onPress={toggleLike}
                 // style={styles.iconLike}
                 name={"heart"}
                 color={isLike ? colors.danger : colors.text}
-              />
+              /> */}
             </View>
             <Text style={styles.lessonTxt}>50 min lesson</Text>
           </View>

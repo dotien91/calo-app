@@ -434,6 +434,14 @@ export default {
     addLessonSuccess: "Add lesson success",
     addPart: "Add part",
     addPartSuccess: "Add part success",
+    aboutThisCourse: "About this course",
+    shareThisCourse: "Share this course",
+    resources: "Resources",
+    addCourseToFavourites: "Add course to favourites",
+    reportAPlaybackProblem: "Report a playback problem",
+    wriveAReview: "Write a review",
+    enrollNow: "Enroll now",
+    Lectures: "Lectures",
   },
   seeAll: "See all",
   settings: {
@@ -754,6 +762,6 @@ export default {
     messageCamera: "To call others, we need permission to access your camera.",
     titleMic: "Need permission to access microphone",
     messageMic: "To call others, we need permission to access your microphone.",
-  }
+  },
 };
 /* eslint-disable max-len */
