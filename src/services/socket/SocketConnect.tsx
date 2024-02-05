@@ -83,9 +83,6 @@ const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
    * @returns
    */
   const makeCall = (receiveData: any) => {
-    if (Platform.OS == "ios") {
-      return;
-    }
     try {
       const data = JSON.parse(receiveData);
       const currentRoute =

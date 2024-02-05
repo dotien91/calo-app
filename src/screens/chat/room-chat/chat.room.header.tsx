@@ -42,7 +42,6 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ messages, roomDetail }) => {
   };
 
   const handleOpenCallPage = async (callType: string) => {
-    alert(2)
     // NavigationService.push(SCREENS.CALL_PAGE);
     // console.log(PERMISSION.permissionMedia, "PERMISSION.permissionMedia");
     const grantedPermission = grantPermission(PERMISSION.permissionMedia);
