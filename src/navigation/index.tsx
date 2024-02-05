@@ -54,6 +54,8 @@ import CourseCreateScreen from "@screens/course/course-create/course.create.scre
 import CourseCreateClassScreen from "@screens/course/course-create/course.create.class.screen";
 import CourseListClassScreen from "@screens/course/course-create/course.list.class.screen";
 import CreateClassCallOneScreen from "@screens/course/course-create/course.create.class.call.one.screen";
+import CourseListVideoScreen from "@screens/course/course-create/course.list.video.screen";
+import CourseAddModuleScreen from "@screens/course/course-create/course.add.module.screen";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -158,6 +160,14 @@ const Navigation = () => {
         <Stack.Screen
           name={SCREENS.COURSR_CREATE}
           component={CourseCreateScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.COURSE_LIST_MODULE}
+          component={CourseListVideoScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.COURSE_ADD_MODULE}
+          component={CourseAddModuleScreen}
         />
         <Stack.Screen
           name={SCREENS.COURSR_CREATE_CALENDAR_CALL}

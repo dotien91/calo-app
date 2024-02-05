@@ -165,3 +165,23 @@ export async function createTimeAvailableTeacher(data) {
     return response;
   });
 }
+
+export async function addViewToCourse(data: ICreateCourse) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "course/view",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function addModuleToCourse(data: ICreateCourse) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "course/create-module",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}

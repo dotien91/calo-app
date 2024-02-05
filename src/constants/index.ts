@@ -49,6 +49,9 @@ export const SCREENS = {
   COURSR_CREATE_CLASS: "CourseCreateClass",
   COURSR_LIST_CLASS: "CourseListClass",
   COURSR_CREATE_CALENDAR_CALL: "CourseCreateCalendarCall",
+  COURSE_CREATE_MODULE: "CourseCreateModule",
+  COURSE_LIST_MODULE: "CourseListModule",
+  COURSE_ADD_MODULE: "CourseAddModule",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

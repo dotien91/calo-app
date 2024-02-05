@@ -520,6 +520,10 @@ export default {
     limitMember: "Học viên tối đa",
     createClass: "Tạo lớp",
     createClassSuccess: "Tạo lớp thành công",
+    addLesson: "Thêm bài học",
+    addLessonSuccess: "Thêm bài học thành công",
+    addPart: "Thêm học phần",
+    addPartSuccess: "Thêm học phần thành công",
   },
   seeAll: "Xem tất cả",
   settings: {

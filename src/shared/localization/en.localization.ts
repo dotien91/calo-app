@@ -430,6 +430,10 @@ export default {
     limitMember: "Limit member",
     createClass: "Create class",
     createClassSuccess: "Create class success",
+    addLesson: "Add lesson",
+    addLessonSuccess: "Add lesson success",
+    addPart: "Add part",
+    addPartSuccess: "Add part success",
   },
   seeAll: "See all",
   settings: {

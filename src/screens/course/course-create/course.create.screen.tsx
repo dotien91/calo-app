@@ -136,6 +136,11 @@ const CourseCreate = () => {
                 course_id: res.data._id,
               });
             }
+            if (typeCourse.value === "Self-learning") {
+              NavigationService.navigate(SCREENS.COURSE_LIST_MODULE, {
+                course_id: res.data._id,
+              });
+            }
             setUpdating(false);
           } else {
             showToast({
