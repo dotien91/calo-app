@@ -223,7 +223,6 @@ export async function addViewToCourse(data: ICreateCourse) {
   });
 }
 
-
 export async function addModuleToCourse(data: ICreateCourse) {
   return request({
     method: METHOD.POST,

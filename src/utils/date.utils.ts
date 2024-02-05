@@ -301,8 +301,8 @@ export const formatTime = (time: number) => {
   const minute = Math.floor(time / 60);
   const sec = Math.floor(time % 60);
   return `${minute}:${sec < 10 ? "0" : ""}${sec}`;
-}
-  export const formatTimeHHMM = (date) => {
+};
+export const formatTimeHHMM = (date) => {
   const _date = new Date(date);
   if (_date.toString() === "Invalid Date") {
     return "";

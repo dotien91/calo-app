@@ -118,6 +118,7 @@ export enum EnumSearchType {
   tutor = "tutor",
   post = "post",
   course = "course",
+  user = "user",
 }
 
 export interface IClass {

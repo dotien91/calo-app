@@ -44,15 +44,19 @@ import TutorItem from "../components/tutor.item";
 import SearchInputWithFilter from "@shared-components/search-input-with-filter.tsx/search.input.with.filter";
 import { getListPost } from "@services/api/post";
 import ItemPost from "@screens/post/components/post-item/post.detail.item";
+import { getListUser } from "@services/api/user.api";
+import UserItem from "../components/user.item";
 
 const FirstRoute = () => <ListSearch type={EnumSearchType.course} />;
 const SecondRoute = () => <ListSearch type={EnumSearchType.tutor} />;
 const ThirdRoute = () => <ListSearch type={EnumSearchType.post} />;
+const FourRoute = () => <ListSearch type={EnumSearchType.user} />;
 
 const renderScene = SceneMap({
   first: FirstRoute,
   second: SecondRoute,
   third: ThirdRoute,
+  four: FourRoute,
 });
 
 interface CourseFilterResultScreenProps {}
@@ -83,6 +87,7 @@ const CourseFilterResultScreen: React.FC<
     { key: "first", title: "Course" },
     { key: "second", title: "Teacher" },
     { key: "third", title: "Post" },
+    { key: "four", title: "User" },
   ]);
 
   //clear params after unmount
@@ -205,6 +210,7 @@ const ListSearch = React.memo(({ type }: { type: string }) => {
   let requestData = getCourseList;
   if (type == EnumSearchType.tutor) requestData = getListTutor;
   if (type == EnumSearchType.post) requestData = getListPost;
+  if (type == EnumSearchType.user) requestData = getListUser;
 
   const { listData, isLoading, totalCount, onEndReach, renderFooterComponent } =
     useListSearch<ICourseItem>(paramRequest, requestData);
@@ -231,6 +237,7 @@ const ListSearch = React.memo(({ type }: { type: string }) => {
       return <ItemPost data={item} key={index} />;
     if (type == EnumSearchType.tutor)
       return <TutorItem {...item} key={index} />;
+    if (type == EnumSearchType.user) return <UserItem {...item} key={index} />;
     return <CourseItem {...item} key={index} />;
   };
 
@@ -241,17 +248,19 @@ const ListSearch = React.memo(({ type }: { type: string }) => {
         <Text style={styles.txtCountResult}>
           {totalCount} {translations.results}
         </Text>
-        <TouchableOpacity onPress={openSortModal} style={CS.flexEnd}>
-          <Text style={CS.hnSemiBold}>{translations.sort_by_relevance} </Text>
-          <IconBtn name="align-right" />
-        </TouchableOpacity>
+        {type !== EnumSearchType.user && (
+          <TouchableOpacity onPress={openSortModal} style={CS.flexEnd}>
+            <Text style={CS.hnSemiBold}>{translations.sort_by_relevance} </Text>
+            <IconBtn name="align-right" />
+          </TouchableOpacity>
+        )}
       </View>
     );
   };
 
   return (
     <View>
-      {isLoading && <LoadingList />}
+      {isLoading && <LoadingList numberItem={3} />}
       {!listData?.length && !isLoading && (
         <EmptyResultView
           title={translations.noResult}
