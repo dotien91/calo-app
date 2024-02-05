@@ -7,35 +7,49 @@ import createStyles from "./about.me.style";
 import { translations } from "@localization";
 import { deleteUserById } from "@services/api/user.api";
 import useStore from "@services/zustand/store";
+import {
+  EnumModalContentType,
+  EnumStyleModalType,
+  showSuperModal,
+  showToast,
+} from "@helpers/super.modal.helper";
+import { useUserHook } from "@helpers/hooks/useUserHook";
 
 const AboutMe = () => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
 
   const userData = useStore((state) => state.userData);
+  const { logout } = useUserHook();
 
   const listAboutme = [
     {
+      showItemisLogin: false,
       title: translations.aboutUs.aboutUs,
       action: () => {},
     },
     {
+      showItemisLogin: false,
       title: translations.aboutUs.termofus,
       action: () => {},
     },
     {
+      showItemisLogin: false,
       title: translations.aboutUs.privacy,
       action: () => {},
     },
     {
+      showItemisLogin: false,
       title: translations.aboutUs.cookie,
       action: () => {},
     },
     {
+      showItemisLogin: false,
       title: translations.aboutUs.return,
       action: () => {},
     },
     {
+      showItemisLogin: true,
       title: translations.aboutUs.deleteacount,
       action: () => {
         deleteUser();
@@ -44,12 +58,30 @@ const AboutMe = () => {
   ];
 
   const deleteUser = () => {
+    showSuperModal({
+      contentModalType: EnumModalContentType.Confirm,
+      styleModalType: EnumStyleModalType.Middle,
+      data: {
+        title: "Bạn có muốn xoá tài khoản",
+        cb: () => deleteAccount(),
+      },
+    });
+  };
+
+  const deleteAccount = () => {
     deleteUserById(userData?._id)
-      .then((res) => {
-        console.log("res", res);
+      .then(() => {
+        logout();
+        showToast({
+          type: "success",
+          message: "Xoá tài khoản thành công",
+        });
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        showToast({
+          type: "error",
+          message: "Xoá tài khoản thất bại",
+        });
       });
   };
 
@@ -57,19 +89,35 @@ const AboutMe = () => {
     return (
       <View style={{ flex: 1 }}>
         {listAboutme.map((item, index) => {
-          return (
-            <TouchableOpacity
-              onPress={item.action}
-              style={styles.styleItemButtonAboutUs}
-              key={index}
-            >
-              <Text style={styles.styleTextTitleItem}>{item.title}</Text>
-              <Icon
-                name="chevron-forward-outline"
-                type={IconType.Ionicons}
-              ></Icon>
-            </TouchableOpacity>
-          );
+          if (item.showItemisLogin === false) {
+            return (
+              <TouchableOpacity
+                onPress={item.action}
+                style={styles.styleItemButtonAboutUs}
+                key={index}
+              >
+                <Text style={styles.styleTextTitleItem}>{item.title}</Text>
+                <Icon
+                  name="chevron-forward-outline"
+                  type={IconType.Ionicons}
+                ></Icon>
+              </TouchableOpacity>
+            );
+          } else if (item.showItemisLogin === true && userData?._id) {
+            return (
+              <TouchableOpacity
+                onPress={item.action}
+                style={styles.styleItemButtonAboutUs}
+                key={index}
+              >
+                <Text style={styles.styleTextTitleItem}>{item.title}</Text>
+                <Icon
+                  name="chevron-forward-outline"
+                  type={IconType.Ionicons}
+                ></Icon>
+              </TouchableOpacity>
+            );
+          }
         })}
       </View>
     );
