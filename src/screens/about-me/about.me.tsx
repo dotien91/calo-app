@@ -5,10 +5,15 @@ import Header from "@shared-components/header/Header";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import createStyles from "./about.me.style";
 import { translations } from "@localization";
+import { deleteUserById } from "@services/api/user.api";
+import useStore from "@services/zustand/store";
 
 const AboutMe = () => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
+
+  const userData = useStore((state) => state.userData);
+
   const listAboutme = [
     {
       title: translations.aboutUs.aboutUs,
@@ -32,9 +37,21 @@ const AboutMe = () => {
     },
     {
       title: translations.aboutUs.deleteacount,
-      action: () => {},
+      action: () => {
+        deleteUser();
+      },
     },
   ];
+
+  const deleteUser = () => {
+    deleteUserById(userData?._id)
+      .then((res) => {
+        console.log("res", res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const renderAboutMe = () => {
     return (
