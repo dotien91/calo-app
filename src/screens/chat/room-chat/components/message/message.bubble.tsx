@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
   time: {
     textAlign: "left",
     fontSize: 16,
-    color: palette.grey2,
+    color: palette.textOpacity4,
   },
   timeContainer: {
     marginLeft: 0,

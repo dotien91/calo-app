@@ -26,7 +26,8 @@ const CourseLearnAction = ({ item, course_id }: CourseLearnActionProps) => {
   const [isLike, setIsLike] = React.useState(false);
 
   React.useEffect(() => {
-    const like = (listFavourites || []).findIndex((item) => item === course_id) > 0;
+    const like =
+      (listFavourites || []).findIndex((item) => item === course_id) > 0;
     setIsLike(like);
   }, [listFavourites]);
 

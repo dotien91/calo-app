@@ -100,13 +100,7 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
   };
 
   if (isLoading) {
-    return (
-      <>
-        <LoadingList />
-        <LoadingList />
-        <LoadingList />
-      </>
-    );
+    return <LoadingList numberItem={7} />;
   }
 
   const renderEmpty = () => {

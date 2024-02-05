@@ -41,7 +41,7 @@ const CoursePreviewScreen = () => {
   // const course_id = "65b773efb11a3c94cc62c5e2";
   // const course_id = "65b77490b11a3c94cc62c69a"; //class room
 
-  const course_id = "65c0411bb513eeff42783867" // video
+  const course_id = "65c0411bb513eeff42783867"; // video
   // const course_id = "6583a1fc8e5e75e353a7bedf"; // tonyvu
   // const course_id = "65b389be0f42bfed90716e2f"; // dangth
   // const course_id = "65b386fd0f42bfed90716957"; // tonyvu
@@ -134,7 +134,7 @@ const CoursePreviewScreen = () => {
     <View style={styles.container}>
       <Header iconNameRight="share-outline" onPressRight={_shareCourse} />
       <ScrollView
-        style={CS.flex1}
+        contentContainerStyle={{ paddingBottom: 60 }}
         onScroll={handleScroll}
         scrollEventThrottle={100}
         showsVerticalScrollIndicator={false}

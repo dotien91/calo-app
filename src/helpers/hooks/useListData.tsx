@@ -1,8 +1,10 @@
 import React, { useCallback, useRef, useState } from "react";
-import { ActivityIndicator, RefreshControl, View } from "react-native";
+import { RefreshControl, View } from "react-native";
+import useDeepCompareEffect from "use-deep-compare-effect";
+
 import { palette } from "@theme/themes";
 import lodash from "lodash";
-import useDeepCompareEffect from "use-deep-compare-effect";
+import LoadingList from "@shared-components/loading.list.component";
 // onEndReach: (info?: { distanceFromEnd: number }) => void;
 // refreshControl: () => JSX.Element;
 // renderFooterComponent: () => JSX.Element;
@@ -22,6 +24,7 @@ interface TypedRequestParams {
   limit: string;
   search?: string;
   page?: number;
+  user_id?: string;
 }
 
 interface TypedStateListData<T> {
@@ -140,11 +143,7 @@ export function useListData<T>(
 
   const renderFooterComponent = () => {
     if (!isLoadMore) return <View />;
-    return (
-      <View style={{ padding: 10, flex: 1, marginTop: 20 }}>
-        <ActivityIndicator color={palette.grey2} />
-      </View>
-    );
+    return <LoadingList numberItem={1} />;
   };
 
   return {

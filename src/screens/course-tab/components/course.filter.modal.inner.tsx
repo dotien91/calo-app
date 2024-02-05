@@ -73,7 +73,10 @@ const CourseFilterModalInnter = ({
     defaultValues: {
       types: listCourseFilterParams?.[EnumCourseFilter.types] || [],
       skills: listCourseFilterParams?.[EnumCourseFilter.skills] || [],
-      price: [0, 1e9],
+      price: [
+        listCourseFilterParams?.["min_price"] || 0,
+        listCourseFilterParams?.["max_price"] || 1e9,
+      ],
       levels: listCourseFilterParams?.[EnumCourseFilter.levels] || [],
       onlyEnglishNativeSpeakers: false,
       timeAvailable: [],

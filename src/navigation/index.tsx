@@ -12,7 +12,6 @@ import { DarkTheme, LightTheme, palette } from "@theme/themes";
 // ? Screens
 import DetailScreen from "@screens/detail/DetailScreen";
 import ProfileScreen from "@screens/profile/ProfileScreen";
-import NotificationScreen from "@screens/notification/NotificationScreen";
 import useStore from "@services/zustand/store";
 import IntroScreen from "@screens/welcome/intro/intro.screen";
 import ChooseLanguageScreen from "@screens/welcome/choose-language/choose.language.screen";
@@ -59,6 +58,11 @@ import PaymentSuccess from "@screens/payment-success/payment.success";
 import CourseLearnScreen from "@screens/course/course-learn-video/course.learn.video.screen";
 import InComingCall from "@screens/call/in.coming.call";
 import CallPageScreen from "@screens/call/call.page.screen";
+// import CourseCategoryDetailScreen from "@screens/course-list/course-filter-result/course.filter.result.screen";
+// import PaymentCoures from "@screens/payment-coures/payment.coures";
+// import CourseCategoryDetailScreen from "@screens/course-list/course-filter-result/course.filter.result.screen";
+// import PaymentCoures from "@screens/payment-coures/payment.coures";
+import MyCourse from "@screens/my-course/my.course";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -81,7 +85,7 @@ const Navigation = () => {
     let iconName = "home";
     switch (route.name) {
       case SCREENS.COURSE_LIST:
-        iconName = focused ? "home" : "home";
+        iconName = focused ? "book" : "book";
         break;
       case SCREENS.CHAT:
         iconName = focused ? "message-square" : "message-square";
@@ -118,14 +122,14 @@ const Navigation = () => {
           },
         })}
       >
-        <Tab.Screen name={SCREENS.COURSE_LIST} component={CourseListScreen} />
         <Stack.Screen name={SCREENS.HOME} component={HomeScreen} />
+        <Tab.Screen name={SCREENS.COURSE_LIST} component={CourseListScreen} />
 
         <Tab.Screen name={SCREENS.CHAT} component={ListChatScreen} />
-        <Tab.Screen
+        {/* <Tab.Screen
           name={SCREENS.NOTIFICATION}
           component={NotificationScreen}
-        />
+        /> */}
         <Tab.Screen name={SCREENS.PROFILE} component={ProfileScreen} />
         <Tab.Screen name={SCREENS.SETTING} component={SettingScreen} />
       </Tab.Navigator>
@@ -265,8 +269,9 @@ const Navigation = () => {
           name={SCREENS.PAYMENT_SUCCESS}
           component={PaymentSuccess}
         />
-         <Stack.Screen name={SCREENS.CALL_PAGE} component={CallPageScreen} />
+        <Stack.Screen name={SCREENS.CALL_PAGE} component={CallPageScreen} />
         <Stack.Screen name={SCREENS.IN_COMING_CALL} component={InComingCall} />
+        <Stack.Screen name={SCREENS.MY_COURES} component={MyCourse} />
       </Stack.Navigator>
     </NavigationContainer>
   );

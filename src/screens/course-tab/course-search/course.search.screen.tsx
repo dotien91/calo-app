@@ -127,7 +127,7 @@ const ListSearch = React.memo(({ txtSearch, isTeacherTab }) => {
 
   return (
     <View style={{ flex: 1, paddingTop: 16 }}>
-      {isLoading && <LoadingList />}
+      {isLoading && <LoadingList numberItem={3} />}
       {!listData?.length && !isLoading && (
         <EmptyResultView
           title={translations.noResult}
@@ -181,4 +181,39 @@ const ListPost = React.memo(({ txtSearch }) => {
     </View>
   );
 });
+
+// const ListUser = React.memo(({ txtSearch }) => {
+//   console.log("txtSearchtxtSearch", txtSearch);
+//   const { listData, isLoading, onEndReach, renderFooterComponent } =
+//     useListSearch<TypedPost>(
+//       { limit: "5", search: txtSearch },
+//       getListPost,
+//       [],
+//     );
+
+//   const renderItem = ({ item }: { item: TypedPost }, index: number) => {
+//     return <ItemPost data={item} key={index} />;
+//   };
+
+//   return (
+//     <View style={{ flex: 1, paddingTop: 16 }}>
+//       {isLoading && <LoadingList />}
+//       {!listData?.length && !isLoading && (
+//         <EmptyResultView
+//           title={translations.noResult}
+//           lottieJson={lotieNoResult}
+//         />
+//       )}
+//       <FlatList
+//         data={listData}
+//         renderItem={renderItem}
+//         onEndReachedThreshold={0}
+//         onEndReached={onEndReach}
+//         removeClippedSubviews={true}
+//         keyExtractor={(item) => item?._id + ""}
+//         ListFooterComponent={renderFooterComponent()}
+//       />
+//     </View>
+//   );
+// });
 export default CourseSearchScreen;

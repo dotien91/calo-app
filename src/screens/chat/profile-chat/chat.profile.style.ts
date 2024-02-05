@@ -46,10 +46,15 @@ export default (theme: ExtendedTheme) => {
     },
     menu: {
       ...CommonStyle.flexStart,
+      marginBottom: 8,
+    },
+    menuIcon: {
+      marginRight: 4,
     },
     titleSection: {
       ...CommonStyle.hnBold,
       fontSize: 18,
+      marginBottom: 4,
     },
     iconArrow: {
       position: "absolute",

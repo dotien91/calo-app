@@ -7,7 +7,7 @@ import React, {
 import { io } from "socket.io-client";
 import { _getJson, USER_TOKEN } from "@services/local-storage";
 import useStore from "@services/zustand/store";
-import { Alert, Platform, View } from "react-native";
+import { Alert, View } from "react-native";
 const URL_CHAT_SOCKET = "https://socket.api-v2.ieltshunter.io/socket";
 import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "constants";

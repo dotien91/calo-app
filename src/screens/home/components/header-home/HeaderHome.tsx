@@ -57,7 +57,7 @@ const HeaderHome = () => {
   }, [linkAvatar]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const goToSearchScreen = () => {
-    NavigationService.navigate(SCREENS.SEARCH);
+    NavigationService.navigate(SCREENS.COURSE_CATEGORY);
   };
 
   const goToChatScreen = () => {

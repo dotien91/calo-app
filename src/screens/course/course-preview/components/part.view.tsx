@@ -189,7 +189,9 @@ const Lession = ({ data, pressItem, index, isLearnScreen }: LessionProps) => {
   )?.value;
   const fileCourseLocal = useStore((state) => state.fileCourseLocal);
   const addFileCourseLocal = useStore((state) => state.addFileCourseLocal);
-  const isDownload = (fileCourseLocal || []).filter((item) => item.id === data._id);
+  const isDownload = (fileCourseLocal || []).filter(
+    (item) => item.id === data._id,
+  );
   const _downloadFile = async () => {
     if (isDownload.length > 0) {
       console.log("isDownload...", isDownload);

@@ -40,5 +40,6 @@ const styles = StyleSheet.create({
     ...CommonStyle.hnRegular,
     fontSize: 16,
     paddingLeft: 18,
+    flex: 1,
   },
 });

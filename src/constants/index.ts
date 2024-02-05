@@ -35,7 +35,7 @@ export const SCREENS = {
   PROFILE_GROUP_CHAT: "ProfileGroupChat",
   PROFILE_CURRENT_USER: "ProfileCurentUser",
   EDIT_PROFILE: "EditProfile",
-  COURSE_LIST: "CourseList",
+  COURSE_LIST: "Course",
   COURSE_SEARCH: "CourseSearch",
   COURSE_CATEGORY: "CourseCategory",
   BOOK_LESSON: "BookLesson",
@@ -53,6 +53,7 @@ export const SCREENS = {
   COURSE_LEARN_VIDEO_SCREEN: "CourseLearnVideoScreen",
   CALL_PAGE: "Call",
   IN_COMING_CALL: "InComingCall",
+  MY_COURES: "MyCoures",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

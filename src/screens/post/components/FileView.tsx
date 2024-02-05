@@ -135,7 +135,7 @@ const FileViewComponent = ({
             alignItems: "center",
           }}
         >
-          <ActivityIndicator size={"large"} color={colors.mainColor2} />
+          <ActivityIndicator size={"small"} color={colors.mainColor2} />
         </View>
       )}
       {error && (

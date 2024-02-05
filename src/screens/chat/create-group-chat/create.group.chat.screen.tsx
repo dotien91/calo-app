@@ -29,6 +29,7 @@ import {
 } from "@helpers/super.modal.helper";
 import eventEmitter from "@services/event-emitter";
 import { TypedFollowUser } from "shared/models";
+import { palette } from "@theme/themes";
 
 interface CreateGroupChatScreenProps {}
 
@@ -142,13 +143,27 @@ const CreateGroupChatScreen: React.FC<CreateGroupChatScreenProps> = () => {
     const partnerId = item.partner_id;
     return (
       <TouchableOpacity onPress={() => toggleItem(item)} key={index}>
-        <Icon
-          style={{ position: "absolute", right: 1, top: 1, zIndex: 2 }}
-          type={IconType.Ionicons}
-          name={"close-circle"}
-          color={colors.white}
-          size={24}
-        />
+        <View
+          style={{
+            position: "absolute",
+            right: -4,
+            top: -4,
+            zIndex: 1,
+            width: 20,
+            height: 20,
+            borderRadius: 99,
+            backgroundColor: palette.black,
+            ...CommonStyle.flexCenter,
+          }}
+        >
+          <Icon
+            type={IconType.Feather}
+            name={"x"}
+            color={colors.white}
+            size={16}
+          />
+        </View>
+
         <Avatar
           style={{
             width: 54,

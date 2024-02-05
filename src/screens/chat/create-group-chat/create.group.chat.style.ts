@@ -26,6 +26,7 @@ export default (theme: ExtendedTheme) => {
       color: colors.mainColor2,
       fontSize: 16,
       marginLeft: 10,
+      flex: 1,
       alignSelf: "flex-start",
       // width: '100%'
     },

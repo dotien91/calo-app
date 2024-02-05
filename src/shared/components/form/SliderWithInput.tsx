@@ -8,6 +8,7 @@ import MultiSlider from "@ptomasroos/react-native-multi-slider";
  */
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
+// import { numberWithCommas } from "@utils/string.utils";
 
 interface SliderWithInputType {
   defaultValue: number[];
@@ -65,6 +66,15 @@ const SliderWithInput = React.memo(
           values={[Number(value[0]) || 0, Number(value[1]) || 1e9]}
           containerStyle={{ marginHorizontal: 16, marginBottom: 8 }}
           onValuesChangeFinish={onChangeSlider}
+          trackStyle={{ backgroundColor: "rgba(246, 248, 250, 1)" }}
+          selectedStyle={{ backgroundColor: palette.primary }}
+          markerStyle={{
+            ...CS.borderStyle,
+            borderWidth: 2,
+            width: 20,
+            height: 20,
+            borderColor: palette.primary,
+          }}
         />
         <View style={{ ...CS.flexRear }}>
           <TextInput

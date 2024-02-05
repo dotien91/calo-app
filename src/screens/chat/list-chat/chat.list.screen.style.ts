@@ -29,11 +29,11 @@ export default (theme: ExtendedTheme) => {
     timeTxt: {
       ...CommonStyle.hnRegular,
       fontSize: 16,
-      color: colors.grey2,
+      color: colors.textOpacity4,
     },
     lastMessageTxt: {
       ...CommonStyle.hnBold,
-      color: colors.grey2,
+      // color: colors.grey2,
       fontSize: 16,
     },
     listFriend: {

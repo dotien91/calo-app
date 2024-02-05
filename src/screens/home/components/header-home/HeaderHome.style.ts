@@ -23,6 +23,7 @@ export default (theme: ExtendedTheme) => {
       paddingHorizontal: 10,
       gap: 10,
       alignItems: "center",
+      borderRadius: 99,
     },
   });
 };

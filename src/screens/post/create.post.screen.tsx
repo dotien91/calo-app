@@ -58,6 +58,7 @@ export default function PostScreen() {
     onSelectPicture,
     onSelectVideo,
     listFile,
+    listFileLocal,
     renderFile,
     isUpLoadingFile,
   } = useUploadFile(
@@ -231,8 +232,8 @@ export default function PostScreen() {
   };
 
   const visiblePost = useMemo(() => {
-    return !!description.trim() || !!listFile?.length;
-  }, [listFile, description]);
+    return !!description.trim() || !!listFileLocal?.length;
+  }, [listFileLocal, description]);
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>

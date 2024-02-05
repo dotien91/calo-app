@@ -1,8 +1,8 @@
 import React, { useCallback, useRef, useState } from "react";
-import { ActivityIndicator, View } from "react-native";
-import { palette } from "@theme/themes";
+import { View } from "react-native";
 import lodash from "lodash";
 import useDeepCompareEffect from "use-deep-compare-effect";
+import LoadingList from "@shared-components/loading.list.component";
 
 interface TypedUseListSearch<T> {
   listData: T[];
@@ -132,11 +132,7 @@ export function useListSearch<T>(
 
   const renderFooterComponent = () => {
     if (!isLoadMore) return <View />;
-    return (
-      <View style={{ padding: 10, flex: 1, marginTop: 20 }}>
-        <ActivityIndicator color={palette.grey2} />
-      </View>
-    );
+    return <LoadingList />;
   };
 
   const a = 1;

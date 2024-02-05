@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
   },
   closeIcon: {
     position: "absolute",
-    left: 14,
+    right: 14,
     top: 24,
     zIndex: 1,
   },

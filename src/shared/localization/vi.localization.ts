@@ -465,7 +465,7 @@ export default {
     skills: "Kỹ năng",
     filterSpeaker: "Giáo viên bản địa",
     viewResult: (text: string) =>
-      text != 0 ? "Xem" + text + " khoá học" : "Không tìm thấy kết quả",
+      text != 0 ? "Xem " + text + " khoá học" : "Không tìm thấy kết quả",
     viewResultTutor: (text: string) =>
       text != 0 ? "Xem " + text + " giáo viên" : "Không tìm thấy kết quả",
     priceCourse: "Giá khoá học",

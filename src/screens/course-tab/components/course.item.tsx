@@ -55,7 +55,7 @@ const CourseItem = ({
         <Text style={styles.courseTitle}>{title}</Text>
         <Text style={styles.courseAuthorTxt}>{user_id?.display_name}</Text>
         <Text style={styles.coursePriceTxt}>
-          {price ? numberWithCommas(price) + "đ" : "Free"}
+          {price ? numberWithCommas(price) + " đ" : "Free"}
         </Text>
         <View style={[CS.flexStart, { marginBottom: 6 }]}>
           <Icon
@@ -65,7 +65,9 @@ const CourseItem = ({
             color={palette.gold}
             style={{ marginRight: 3 }}
           />
-          <Text style={styles.courseRatingTxt}>{rating}</Text>
+          <Text style={styles.courseRatingTxt}>
+            {(rating + "" || "").slice(0, 3)}
+          </Text>
         </View>
         <Badge title="best-seller" />
       </>
