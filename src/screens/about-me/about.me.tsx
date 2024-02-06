@@ -14,6 +14,7 @@ import {
   showToast,
 } from "@helpers/super.modal.helper";
 import { useUserHook } from "@helpers/hooks/useUserHook";
+import CS from "@theme/styles";
 
 const AboutMe = () => {
   const theme = useTheme();
@@ -124,7 +125,7 @@ const AboutMe = () => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ ...CS.safeAreaView }}>
       <Header text="About me" />
       {renderAboutMe()}
     </View>

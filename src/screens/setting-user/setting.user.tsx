@@ -8,6 +8,7 @@ import createStyles from "./setting.user.style";
 import { translations } from "@localization";
 import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "constants";
+import CS from "@theme/styles";
 
 const SettingUser = () => {
   const theme = useTheme();
@@ -129,7 +130,7 @@ const SettingUser = () => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ ...CS.safeAreaView }}>
       <Header text="Setting" />
       {renderSettingUser()}
     </View>

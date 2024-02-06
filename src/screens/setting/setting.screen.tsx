@@ -57,7 +57,11 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
     {
       title: translations.settingUser.support,
       icon: "people-circle-outline",
-      action: () => {},
+      action: () => {
+        NavigationService.navigate(SCREENS.CHAT_ROOM, {
+          id: "6588f14e8d8b13bb432f7d2f",
+        });
+      },
     },
     {
       title: translations.settingUser.aboutus,

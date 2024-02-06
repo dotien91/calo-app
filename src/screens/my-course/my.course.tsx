@@ -1,5 +1,11 @@
 import React from "react";
-import { FlatList, SafeAreaView, Text, View, useWindowDimensions } from "react-native";
+import {
+  FlatList,
+  SafeAreaView,
+  Text,
+  View,
+  useWindowDimensions,
+} from "react-native";
 import { useTheme } from "@react-navigation/native";
 import Header from "@shared-components/header/Header";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
@@ -84,7 +90,7 @@ const MyCourse = () => {
   );
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ ...CS.safeAreaView }}>
       <Header text="My Course" />
       <TabView
         style={{ flex: 1 }}
@@ -94,7 +100,7 @@ const MyCourse = () => {
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 export default MyCourse;
