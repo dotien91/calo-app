@@ -119,7 +119,7 @@ export async function getListUser(params: { search: string }) {
   return request({
     method: METHOD.GET,
     urlPath: "user/list",
-    params: { display_name: params.search },
+    params: { ...params, display_name: params?.search || "" },
   });
 }
 

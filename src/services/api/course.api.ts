@@ -23,7 +23,7 @@ export async function getListTutor(data) {
   return request({
     method: METHOD.POST,
     urlPath: "course/list-tutor",
-    data,
+    data: {...data, display_name: data?.search || ""},
   }).then((response) => {
     return response;
   });
