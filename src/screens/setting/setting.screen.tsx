@@ -20,6 +20,7 @@ import createStyles from "./setting.screen.style";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";
 import { useUserHook } from "@helpers/hooks/useUserHook";
+import CS from "@theme/styles";
 
 interface SettingScreenProps {}
 
@@ -130,7 +131,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
+    <View style={{ ...CS.safeAreaView, backgroundColor: colors.white }}>
       <Header text="Setting"></Header>
       {isLoggedIn() ? (
         <View style={{ alignItems: "center", backgroundColor: colors.white }}>
@@ -185,7 +186,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
           </Text>
         </TouchableOpacity>
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 
