@@ -16,6 +16,7 @@ interface Style {
   checkbox: ViewStyle;
   checkBoxDisable: ViewStyle;
   checkBoxActive: ViewStyle;
+  txtClass: TextStyle;
 }
 
 export default (theme: ExtendedTheme) => {
@@ -107,6 +108,10 @@ export default (theme: ExtendedTheme) => {
     },
     hourActiveBtn: {
       backgroundColor: colors.btnInactive,
+    },
+    txtClass: {
+      ...CS.hnRegular,
+      fontSize: 14,
     },
   });
 };

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, ActivityIndicator } from "react-native";
+import { Text, View } from "react-native";
 
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";

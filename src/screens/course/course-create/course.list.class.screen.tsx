@@ -48,13 +48,13 @@ const CourseListClassScreen = () => {
   const renderItem = ({ item, index }) => {
     return (
       <View key={index} style={styles.viewItem}>
-        <Text>{item.name}</Text>
+        <Text style={styles.txtClass}>{item.name}</Text>
         {item.course_calendar_ids.map((i) => {
           return (
             <View key={i._id} style={{ flexDirection: "row" }}>
-              <Text>{`${i.time_start}-${i.time_end} ${getDayOfWeek(
-                i.day,
-              )}`}</Text>
+              <Text style={styles.txtClass}>{`${i.time_start}-${
+                i.time_end
+              } ${getDayOfWeek(i.day)}`}</Text>
             </View>
           );
         })}
@@ -112,5 +112,9 @@ const styles = StyleSheet.create({
     marginTop: 8,
     borderWidth: 1,
     borderRadius: 8,
+  },
+  txtClass: {
+    ...CS.hnRegular,
+    fontSize: 14,
   },
 });

@@ -97,9 +97,11 @@ const AddCourseCalenDar = () => {
                 paddingHorizontal: 16,
               }}
             >
-              <Text>day: {getDayOfWeek(item.day)}</Text>
-              <Text>duration: {item.time_duration} h</Text>
-              <Text>time start: {item.time_start}</Text>
+              <Text style={styles.txtClass}>day: {getDayOfWeek(item.day)}</Text>
+              <Text style={styles.txtClass}>
+                duration: {item.time_duration} h
+              </Text>
+              <Text style={styles.txtClass}>time start: {item.time_start}</Text>
               <PressableBtn
                 onPress={_clearItem}
                 style={{
