@@ -27,10 +27,11 @@ import BookLessonSelectView from "../components/book-lesson/book.lesson.select.v
 import ChooseClassSelectView from "../components/choose-class/choose.class.select.view";
 import EnrollNow from "../components/EnrollNow";
 import { SCREENS } from "constants";
+import EditButton from "../components/edit.button";
 
 const CoursePreviewScreen = () => {
   const userData = useStore((state) => state.userData);
-
+  const [isLoading, setIsLoading] = useState(true);
   React.useEffect(() => {
     _getCourseDetail();
   }, []);
@@ -51,10 +52,12 @@ const CoursePreviewScreen = () => {
       eventEmitter.off("reload_data_preview", _getCourseDetail);
     };
   });
+  console.log(isLoading);
   const params = { auth_id: userData?._id };
   const _getCourseDetail = () => {
     getCourseDetail(course_id, params).then((res) => {
       if (!res.isError) {
+        setIsLoading(false);
         console.log("res.datares.data", course_id, res.data);
         setData(res.data);
       }
@@ -141,8 +144,13 @@ const CoursePreviewScreen = () => {
         nestedScrollEnabled={true}
       >
         <HeaderCourse data={data} />
-        {!data?.is_join && <BuyButton data={data} type="full" />}
+        {!data?.is_join && !(data?.user_id._id === userData?._id) && (
+          <BuyButton data={data} type="full" />
+        )}
         {data?.is_join && <EnrollNow data={data} course_id={course_id} />}
+        {data?.user_id._id === userData?._id && (
+          <EditButton data={data} type="full" />
+        )}
         {/* <AddToCartButton data={data} type="full" /> */}
         <TabSelect />
         {tabSelected == 1 && (

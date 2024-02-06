@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Text, View, ScrollView } from "react-native";
-import { useTheme, useRoute } from "@react-navigation/native";
+import { useTheme } from "@react-navigation/native";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
+import * as NavigationService from "react-navigation-helpers";
 
 import Header from "@shared-components/header/Header";
 import PressableBtn from "@shared-components/button/PressableBtn";
@@ -28,9 +29,9 @@ interface ITimeSelected {
 const CreateClassCallOneScreen = () => {
   const theme = useTheme();
   const { colors } = theme;
-  const route = useRoute();
+  // const route = useRoute();
 
-  const course_id = route.params?.["course_id"];
+  // const course_id = route.params?.["course_id"];
 
   const [timeSelected, setTimeSelected] = useState<ITimeSelected[]>([]);
   const [date, setDate] = useState<number>(0);
@@ -45,8 +46,7 @@ const CreateClassCallOneScreen = () => {
       };
       _getTimeAvailableTeacher(params).then((res) => {
         if (!res.isError) {
-          console.log("res.s..", JSON.stringify(res.data));
-          // console.log("res...", JSON.stringify(res.data[0].time_available));
+          // console.log("res.s..", JSON.stringify(res.data));
           if (res.data.time_available.length > 0) {
             setUpdateTime(true);
             const mapTime = res.data.time_available.map(
@@ -86,6 +86,19 @@ const CreateClassCallOneScreen = () => {
           }
         >
           <Text style={styles.txtBtn}>{item.label}</Text>
+          {isSelect && (
+            <View
+              style={{
+                height: 3,
+                backgroundColor: colors.primary,
+                position: "absolute",
+                left: 0,
+                bottom: -8,
+                right: 0,
+                zIndex: 1,
+              }}
+            />
+          )}
         </PressableBtn>
       );
     };
@@ -156,7 +169,6 @@ const CreateClassCallOneScreen = () => {
 
   const _submitTime = () => {
     const data = {
-      course_id: course_id,
       user_id: userData?._id,
       time_available: timeSelected,
     };
@@ -170,13 +182,13 @@ const CreateClassCallOneScreen = () => {
             type: "success",
             message: translations.course.createModuleSuccess,
           });
+          NavigationService.popToTop();
         } else {
           setUpdating(false);
           showToast({ type: "error", message: res.message });
         }
       });
     } else {
-      console.log("update");
       updateTimeAvailableTeacher(data).then((res) => {
         console.log(res);
         if (!res.isError) {
@@ -185,6 +197,7 @@ const CreateClassCallOneScreen = () => {
             type: "success",
             message: translations.course.updateModuleSuccess,
           });
+          NavigationService.popToTop();
         } else {
           setUpdating(false);
           showToast({ type: "error", message: res.message });
@@ -194,11 +207,8 @@ const CreateClassCallOneScreen = () => {
   };
 
   return (
-    <View style={[CS.flex1, { marginBottom: getBottomSpace() }]}>
-      <Header
-        text={translations.course.timeAvailable}
-        customStyle={{ marginTop: 0 }}
-      />
+    <View style={[CS.safeAreaView, { marginBottom: getBottomSpace() }]}>
+      <Header text={translations.course.timeAvailable} />
       <View style={{ paddingHorizontal: 16 }}>{renderSelectDate()}</View>
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -211,6 +221,7 @@ const CreateClassCallOneScreen = () => {
           marginHorizontal: 16,
           marginTop: 8,
           backgroundColor: updating ? colors.placeholder : colors.primary,
+          marginBottom: 8,
         }}
         text={translations.save}
         disabled={updating}

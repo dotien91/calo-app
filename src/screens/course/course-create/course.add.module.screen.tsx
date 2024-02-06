@@ -1,33 +1,65 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TextInput } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import { useRoute } from "@react-navigation/native";
 
 import Button from "@shared-components/button/Button";
-import { showToast } from "@helpers/super.modal.helper";
+import {
+  closeSuperModal,
+  showSuperModal,
+  showToast,
+} from "@helpers/super.modal.helper";
 import { translations } from "@localization";
 import { palette } from "@theme/themes";
 import SelectVideoHook from "./components/select.video";
 import CS from "@theme/styles";
 import Header from "@shared-components/header/Header";
-import { addModuleToCourse } from "@services/api/course.api";
+import { addModuleToCourse, updateModule } from "@services/api/course.api";
 import eventEmitter from "@services/event-emitter";
 
 const CourseAddModuleScreen = () => {
   const route = useRoute();
   const course_id = route.params?.["course_id"];
   const parent_id = route.params?.["parent_id"];
+  const data = route.params?.["data"];
   const [title, setTitle] = useState("");
-  const { idVideo, renderSelectVideo, updatingVid } = SelectVideoHook();
+  const [idUpdate, setIdUpdate] = useState("");
+  const { idVideo, renderSelectVideo, updatingVid } = SelectVideoHook({
+    id: data?.media_id?._id || "",
+    link: data?.media_id?.media_thumbnail || "",
+  });
   const [creating, setCreating] = useState(false);
+  const submitPostStatus = React.useRef("");
 
+  useEffect(() => {
+    if (data) {
+      setTitle(data.title);
+      setIdUpdate(data._id);
+    }
+  }, [data]);
+
+  React.useEffect(() => {
+    if (
+      submitPostStatus.current == "waitUploadFile" &&
+      !updatingVid &&
+      idVideo !== ""
+    ) {
+      submitPostStatus.current = "";
+      _createPart();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [updatingVid, idVideo]);
   const _createPart = () => {
     if (parent_id) {
+      if (submitPostStatus.current == "waitUploadFile") return;
+      showSuperModal({
+        contentModalType: "loading",
+        styleModalType: "middle",
+      });
       if (updatingVid) {
-        showToast({
-          type: "info",
-          message: "Video đang được tải lên vui lòng đợi thử lại sau",
-        });
+        //await upload file done
+        submitPostStatus.current = "waitUploadFile";
+        return;
       } else {
         if (idVideo) {
           const dataPost = {
@@ -37,21 +69,42 @@ const CourseAddModuleScreen = () => {
             type: "video",
             title: title,
           };
-          // tạo lesson
           setCreating(true);
-          addModuleToCourse(dataPost).then((res) => {
-            setCreating(false);
-            if (!res.isError) {
-              showToast({
-                type: "success",
-                message: translations.course.createModuleSuccess,
-              });
-              eventEmitter.emit("reload_part_view");
-              NavigationService.goBack();
-            } else {
-              showToast({ type: "error", message: res.message });
-            }
-          });
+          if (idUpdate !== "") {
+            dataPost._id = idUpdate;
+            updateModule(dataPost).then((res) => {
+              setCreating(false);
+              if (!res.isError) {
+                closeSuperModal();
+                showToast({
+                  type: "success",
+                  message: translations.course.updateModuleSuccess,
+                });
+                eventEmitter.emit("reload_part_view");
+                NavigationService.goBack();
+              } else {
+                showToast({ type: "error", message: res.message });
+                closeSuperModal();
+              }
+            });
+          } else {
+            // tạo lesson
+            addModuleToCourse(dataPost).then((res) => {
+              setCreating(false);
+              if (!res.isError) {
+                closeSuperModal();
+                showToast({
+                  type: "success",
+                  message: translations.course.createModuleSuccess,
+                });
+                eventEmitter.emit("reload_part_view");
+                NavigationService.goBack();
+              } else {
+                showToast({ type: "error", message: res.message });
+                closeSuperModal();
+              }
+            });
+          }
         } else {
           showToast({ type: "info", message: "Chọn video cho khóa học" });
         }
@@ -62,19 +115,38 @@ const CourseAddModuleScreen = () => {
         title: title,
       };
       setCreating(true);
-      addModuleToCourse(dataPost).then((res) => {
-        setCreating(false);
-        if (!res.isError) {
-          showToast({
-            type: "success",
-            message: translations.course.createModuleSuccess,
-          });
-          eventEmitter.emit("reload_part_view");
-          NavigationService.goBack();
-        } else {
-          showToast({ type: "error", message: res.message });
-        }
-      });
+      if (idUpdate !== "") {
+        dataPost._id = idUpdate;
+        updateModule(dataPost).then((res) => {
+          setCreating(false);
+          if (!res.isError) {
+            closeSuperModal();
+            showToast({
+              type: "success",
+              message: translations.course.updateModuleSuccess,
+            });
+            eventEmitter.emit("reload_part_view");
+            NavigationService.goBack();
+          } else {
+            showToast({ type: "error", message: res.message });
+            closeSuperModal();
+          }
+        });
+      } else {
+        addModuleToCourse(dataPost).then((res) => {
+          setCreating(false);
+          if (!res.isError) {
+            showToast({
+              type: "success",
+              message: translations.course.createModuleSuccess,
+            });
+            eventEmitter.emit("reload_part_view");
+            NavigationService.goBack();
+          } else {
+            showToast({ type: "error", message: res.message });
+          }
+        });
+      }
       // tạo Part
     }
   };

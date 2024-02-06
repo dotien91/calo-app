@@ -171,7 +171,7 @@ const Navigation = () => {
           component={renderTabNavigation}
         />
         <Stack.Screen
-          name={SCREENS.COURSR_CREATE}
+          name={SCREENS.COURSE_CREATE}
           component={CourseCreateScreen}
         />
         <Stack.Screen
@@ -183,15 +183,15 @@ const Navigation = () => {
           component={CourseAddModuleScreen}
         />
         <Stack.Screen
-          name={SCREENS.COURSR_CREATE_CALENDAR_CALL}
+          name={SCREENS.COURSE_CREATE_CALENDAR_CALL}
           component={CreateClassCallOneScreen}
         />
         <Stack.Screen
-          name={SCREENS.COURSR_LIST_CLASS}
+          name={SCREENS.COURSE_LIST_CLASS}
           component={CourseListClassScreen}
         />
         <Stack.Screen
-          name={SCREENS.COURSR_CREATE_CLASS}
+          name={SCREENS.COURSE_CREATE_CLASS}
           component={CourseCreateClassScreen}
         />
         <Stack.Screen

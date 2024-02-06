@@ -75,7 +75,7 @@ const CourseListScreen: React.FC<CourseListScreenProps> = () => {
             right: 10,
             zIndex: 1,
           }}
-          onPress={() => NavigationService.push(SCREENS.COURSR_CREATE)}
+          onPress={() => NavigationService.push(SCREENS.COURSE_CREATE)}
         >
           <Icon
             name={"add-outline"}

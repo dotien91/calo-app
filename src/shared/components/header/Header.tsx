@@ -12,9 +12,6 @@ import * as NavigationService from "react-navigation-helpers";
 
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
-import { getStatusBarHeight } from "react-native-safearea-height";
-import { isIos } from "@utils/device.ui.utils";
-
 interface HeaderProps {
   iconNameLeft?: string;
   iconNameRight?: string;

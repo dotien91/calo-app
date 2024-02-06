@@ -23,7 +23,7 @@ export async function getListTutor(data) {
   return request({
     method: METHOD.POST,
     urlPath: "course/list-tutor",
-    data: {...data, display_name: data?.search || ""},
+    data: { ...data, display_name: data?.search || "" },
   }).then((response) => {
     return response;
   });
@@ -142,6 +142,16 @@ export async function createCourse(data: ICreateCourse) {
   });
 }
 
+export async function updateCourse(data: ICreateCourse) {
+  return request({
+    method: METHOD.PATCH,
+    urlPath: "course/update",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
 interface CourseAddType {
   time_duration: number;
   day: number;
@@ -228,6 +238,43 @@ export async function addModuleToCourse(data: ICreateCourse) {
     method: METHOD.POST,
     urlPath: "course/create-module",
     data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function deleteClass(id: string) {
+  return request({
+    method: METHOD.DELETE,
+    urlPath: `course/class/delete/${id}`,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function deleteCourse(id: string) {
+  return request({
+    method: METHOD.DELETE,
+    urlPath: `/course/delete/${id}`,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function updateModule(data) {
+  return request({
+    method: METHOD.PATCH,
+    urlPath: "course/update-module",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function deleteModule(id: string) {
+  return request({
+    method: METHOD.DELETE,
+    urlPath: `course/delete-module/${id}`,
   }).then((response) => {
     return response;
   });

@@ -7,6 +7,8 @@ import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import { ICourseItem } from "models/course.model";
 import { View } from "react-native-animatable";
+import EditButton from "@screens/course/components/edit.button";
+import useStore from "@services/zustand/store";
 
 interface BuyBottomProps {
   show: boolean;
@@ -15,7 +17,10 @@ interface BuyBottomProps {
 
 const BuyBottom = ({ show, data }: BuyBottomProps) => {
   const animationHeight = useRef(new Animated.Value(-90)).current;
-
+  const userData = useStore((state) => state.userData);
+  const isTeacher = userData?._id === data?.user_id._id;
+  console.log("idUser", userData?._id);
+  console.log("idTeacher", data?.user_id._id);
   const collapseView = () => {
     Animated.timing(animationHeight, {
       duration: 300,
@@ -60,7 +65,12 @@ const BuyBottom = ({ show, data }: BuyBottomProps) => {
           <Text style={styles.textPriceOld}>{formatPrice(data?.price)}</Text>
         </View>
       ) : null}
-      {show && <BuyButton type="wrap" data={data} />}
+      {show &&
+        (isTeacher ? (
+          <EditButton type="wrap" data={data} />
+        ) : (
+          <BuyButton type="wrap" data={data} />
+        ))}
     </Animated.View>
   );
 };

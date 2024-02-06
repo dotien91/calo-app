@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 
 import { selectMedia } from "@helpers/file.helper";
@@ -9,11 +9,31 @@ import { palette } from "@theme/themes";
 import CS from "@theme/styles";
 import { translations } from "@localization";
 import LoadingUpdateMedia from "./LoadingUpdateMedia";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
-const SelectVideoHook = () => {
+interface SelectVideoHookProps {
+  link?: string;
+  id?: string;
+}
+
+const SelectVideoHook = ({ link, id }: SelectVideoHookProps) => {
   const [linkVideo, setLinkVideo] = React.useState("");
   const [updatingVid, setUpdatingVid] = React.useState(false);
   const [idVideo, setIdVideo] = React.useState("");
+
+  useEffect(() => {
+    if (link) {
+      setLinkVideo(link);
+    }
+    if (id) {
+      setIdVideo(id);
+    }
+  }, [link, id]);
+
+  const deleteVideo = () => {
+    setIdVideo("");
+    setLinkVideo("");
+  };
 
   const onPressChangeMedia = async () => {
     selectMedia({
@@ -62,6 +82,14 @@ const SelectVideoHook = () => {
                 <LoadingUpdateMedia />
               </View>
             )}
+            <View style={styles.deleteViceo}>
+              <Icon
+                name="close-outline"
+                type={IconType.Ionicons}
+                size={25}
+                onPress={deleteVideo}
+              />
+            </View>
           </View>
         )}
       </>
@@ -87,5 +115,11 @@ const styles = StyleSheet.create({
     ...CS.fillParent,
     ...CS.center,
     backgroundColor: palette.placeholder,
+  },
+  deleteViceo: {
+    position: "absolute",
+    top: 8,
+    right: 8,
+    zIndex: 5,
   },
 });
