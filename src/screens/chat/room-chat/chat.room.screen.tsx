@@ -24,14 +24,13 @@ import { translations } from "@localization";
 import EmptyResultView from "@shared-components/empty.data.component";
 import createStyles from "./chat.room.screen.style";
 import LoadingList from "@shared-components/loading.list.component";
-import { useFooBar } from "@services/zustand/chat.media.store";
+
 interface ChatRoomScreenProps {}
 
 const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
   const userData = useStore((state) => state.userData);
   const theme = useTheme();
   const styles = React.useMemo(() => createStyles(theme), [theme]);
-  const { foo, bar } = useFooBar();
 
   const [txtSearch, setTxtSearch] = React.useState("");
   const setSearchModeChat = useStore((state) => state.setSearchModeChat);

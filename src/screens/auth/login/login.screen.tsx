@@ -20,7 +20,6 @@ export default function LoginScreen() {
   const { colors } = theme;
 
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const pressApple = () => {};
   const pressMail = () => {
     NavigationService.push(SCREENS.LOGIN_WITH_EMAIL);
   };

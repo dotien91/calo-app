@@ -32,16 +32,16 @@ const SliderWithInput = React.memo(
       onChange([e[0] + "", e[1] + ""]);
     };
 
-    const onChangeText = useCallback(
-      (v, type) => {
-        if (type == "min") {
-          onChange([v, value[1]]);
-        } else {
-          onChange([value[0], v]);
-        }
-      },
-      [value],
-    );
+    // const onChangeText = useCallback(
+    //   (v, type) => {
+    //     if (type == "min") {
+    //       onChange([v, value[1]]);
+    //     } else {
+    //       onChange([value[0], v]);
+    //     }
+    //   },
+    //   [value],
+    // );
 
     const errotTxt = useMemo(() => {
       const max = Number(value[1]);

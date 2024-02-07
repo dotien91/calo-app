@@ -62,7 +62,7 @@ const useStore = create<StoreState>()(
               ![
                 "searchFriendTxt",
                 "listPostDelete",
-                "currentMediaIds",
+                // "currentMediaIds",
                 "currentChatList",
                 "courseFilterKeys",
                 "listCourseFilterParams",

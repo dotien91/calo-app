@@ -29,8 +29,10 @@ export const useChatHistory = (txtSearch: string, searchModeChat: boolean) => {
   const [roomDetail, setRoomDetail] = useState();
   const [isTyping, setIsTyping] = useState(false);
   const [isLoadmore, setIsLoadmore] = useState(false);
-  const setCurrentMediaIds = useStore((state) => state.setCurrentMediaIds);
   const setSearchModeChat = useStore((state) => state.setSearchModeChat);
+  const updateCurrentMediaIds = useStore(
+    (state) => state.updateCurrentMediaIds,
+  );
   const [loading, setLoading] = useState(false);
 
   const pageNumber = useRef(1);
@@ -190,7 +192,8 @@ export const useChatHistory = (txtSearch: string, searchModeChat: boolean) => {
         console.log("itemitemitem", currentItem);
         return ids.concat(currentItem.media_ids);
       }, []);
-    setCurrentMediaIds(mediaIds);
+    // setCurrentMediaIds(mediaIds);
+    updateCurrentMediaIds({ data: mediaIds, id: chatRoomId });
     console.log("mediaIdsmediaIdsmediaIds", mediaIds);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
