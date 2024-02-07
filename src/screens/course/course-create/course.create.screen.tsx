@@ -510,7 +510,7 @@ const CourseCreate = () => {
               ? translations.course.updateCourse
               : translations.course.createCourse
           }
-          disabled={updating || updatingImg || updatingVid}
+          disabled={updating || updatingVid}
           onPress={handleSubmit(onSubmit)}
         />
         <View style={{ height: 80 }} />
