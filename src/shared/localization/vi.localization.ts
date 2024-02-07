@@ -546,6 +546,7 @@ export default {
     deleteModuleDes: "Bạn có chắc chắn muốn xoá bài học học này không?",
     typeCourse: "Kiểu khoá học",
     videoReviewCourse: "Video giới thiệu khoá học",
+    requiredTitle: "Tiêu đề không được để trống",
   },
   seeAll: "Xem tất cả",
   settings: {
@@ -643,6 +644,7 @@ export default {
   },
   profile: {
     editProfile: "Sửa hồ sơ",
+    saveProfile: "Lưu hồ sơ",
     profile: "Hồ sơ",
     account: "Tài khoản",
     notifications: "Thông báo",

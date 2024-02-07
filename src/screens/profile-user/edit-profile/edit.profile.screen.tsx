@@ -22,9 +22,11 @@ import useStore from "@services/zustand/store";
 import { updateProfile } from "@services/api/user.api";
 import { showToast } from "@helpers/super.modal.helper";
 import eventEmitter from "@services/event-emitter";
+import { getBottomSpace } from "react-native-iphone-screen-helper";
 
 const EditProfileScreen = () => {
   const userData = useStore((store) => store.userData);
+  console.log("userData...", userData);
   const theme = useTheme();
   const { colors } = theme;
   const setUserData = useStore((store) => store.setUserData);
@@ -96,7 +98,10 @@ const EditProfileScreen = () => {
       style={{ flex: 1 }}
       behavior={isIos() ? "height" : undefined}
     >
-      <ScrollView style={CommonStyle.safeAreaView}>
+      <ScrollView
+        style={[CommonStyle.safeAreaView, { marginBottom: getBottomSpace() }]}
+        showsVerticalScrollIndicator={false}
+      >
         <Header
           onPressLeft={() => NavigationService.goBack()}
           text={translations.profile.editProfile}
@@ -118,6 +123,7 @@ const EditProfileScreen = () => {
           }}
           errorTxt={errors.fullname?.message}
           maxLength={32}
+          showPlaceholder
         />
 
         <InputHook
@@ -140,6 +146,7 @@ const EditProfileScreen = () => {
             },
           }}
           errorTxt={errors.email?.message}
+          showPlaceholder
         />
 
         <InputHook
@@ -153,6 +160,8 @@ const EditProfileScreen = () => {
           control={control}
           rules={{}}
           errorTxt={errors.description?.message}
+          showPlaceholder
+          multiline
         />
 
         <InputHook
@@ -167,6 +176,8 @@ const EditProfileScreen = () => {
           rules={{}}
           maxLength={256}
           errorTxt={errors.bio?.message}
+          showPlaceholder
+          multiline
         />
 
         <InputHook
@@ -185,6 +196,7 @@ const EditProfileScreen = () => {
             },
           }}
           errorTxt={errors.phoneNumber?.message}
+          showPlaceholder
         />
 
         <InputHook
@@ -197,6 +209,7 @@ const EditProfileScreen = () => {
           }}
           control={control}
           rules={{}}
+          showPlaceholder
         />
 
         <InputHook
@@ -215,6 +228,7 @@ const EditProfileScreen = () => {
             },
           }}
           errorTxt={errors.facebook?.message}
+          showPlaceholder
         />
 
         <InputHook
@@ -233,6 +247,7 @@ const EditProfileScreen = () => {
             },
           }}
           errorTxt={errors.website?.message}
+          showPlaceholder
         />
 
         <InputHook
@@ -252,6 +267,7 @@ const EditProfileScreen = () => {
           }}
           maxLength={100}
           errorTxt={errors.youtube?.message}
+          showPlaceholder
         />
 
         <Button
@@ -260,7 +276,7 @@ const EditProfileScreen = () => {
             marginTop: 16,
             backgroundColor: updating ? colors.placeholder : colors.primary,
           }}
-          text={translations.confirm}
+          text={translations.profile.saveProfile}
           disabled={updating}
           onPress={handleSubmit(onSubmit)}
         />

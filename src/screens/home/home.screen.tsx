@@ -16,6 +16,7 @@ import ListPost from "./list.post";
 
 import CommonStyle from "@theme/styles";
 import { useUserHook } from "@helpers/hooks/useUserHook";
+import useStore from "@services/zustand/store";
 
 interface HomeScreenProps {}
 
@@ -34,6 +35,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
   const { isLoggedIn } = useUserHook();
 
   const layout = useWindowDimensions();
+  const userData = useStore((state) => state.userData);
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
@@ -76,7 +78,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}
       />
-      {isLoggedIn() && (
+      {isLoggedIn() && userData?._id && (
         <TouchableOpacity
           style={{
             position: "absolute",

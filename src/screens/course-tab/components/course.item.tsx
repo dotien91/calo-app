@@ -30,6 +30,7 @@ const CourseItem = ({
   isHorizontalStyle,
   user_id,
   media_id,
+  avatar,
 }: CourseItemProps) => {
   let widthImage = Device.width - 32;
   if (isHorizontalStyle) {
@@ -87,7 +88,7 @@ const CourseItem = ({
         //   uri: media_thumbnail,
         // }}
         source={{
-          uri: media_id?.media_thumbnail,
+          uri: media_id?.media_thumbnail || avatar?.media_thumbnail,
           headers: { Authorization: "someAuthToken" },
           priority: FastImage.priority.normal,
         }}

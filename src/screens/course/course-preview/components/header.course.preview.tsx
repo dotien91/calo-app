@@ -12,6 +12,7 @@ import { formatVNDate } from "@utils/date.utils";
 import StarRate from "@screens/course/components/star.rate.view";
 import IconSvg from "assets/svg";
 import { SCREENS } from "constants";
+import { WindowWidth } from "@freakycoder/react-native-helpers";
 
 interface HeaderCourseProps {
   data?: ICourseItem;
@@ -30,7 +31,7 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
     <View style={styles.container}>
       <View
         style={{
-          height: 256,
+          height: (WindowWidth / 16) * 9,
           ...CS.center,
           marginHorizontal: -16,
           // marginTop: 20,
@@ -38,13 +39,16 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
       >
         <Image
           style={{
-            height: 256,
+            height: (WindowWidth / 16) * 9,
             width: "100%",
             marginHorizontal: -16,
           }}
-          source={{ uri: data?.media_id.media_thumbnail }}
+          source={{
+            uri:
+              data?.media_id?.media_thumbnail || data?.avatar?.media_thumbnail,
+          }}
         />
-        <PlayVideo onPress={_playVideo} />
+        {data?.media_id?.media_thumbnail && <PlayVideo onPress={_playVideo} />}
         <View
           style={{
             position: "absolute",
@@ -69,7 +73,7 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
       <View
         style={{ flexDirection: "row", alignItems: "center", marginTop: 16 }}
       >
-        <StarRate number={data?.rating} size={16} />
+        <StarRate number={data?.rating || 0} size={16} />
         {data?.rating > 0 && (
           <Text style={[styles.txtcount, { marginTop: 0, marginLeft: 4 }]}>
             {data?.rating.toFixed(2)}

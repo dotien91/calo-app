@@ -157,6 +157,7 @@ export enum EnumRole {
   Mentor = "mentor",
   User = "user",
   Admin = "admin",
+  Teacher = "teacher",
 }
 
 export enum EnumTheme {

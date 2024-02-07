@@ -27,6 +27,8 @@ const CourseAddModuleScreen = () => {
   const { idVideo, renderSelectVideo, updatingVid } = SelectVideoHook({
     id: data?.media_id?._id || "",
     link: data?.media_id?.media_thumbnail || "",
+    placeholder: translations.post.addVideo,
+    type: "video",
   });
   const [creating, setCreating] = useState(false);
   const submitPostStatus = React.useRef("");
@@ -50,6 +52,10 @@ const CourseAddModuleScreen = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updatingVid, idVideo]);
   const _createPart = () => {
+    if (title.trim() === "") {
+      showToast({ type: "error", message: translations.course.requiredTitle });
+      return;
+    }
     if (parent_id) {
       if (submitPostStatus.current == "waitUploadFile") return;
       showSuperModal({
