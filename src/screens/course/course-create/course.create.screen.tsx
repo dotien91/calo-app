@@ -111,14 +111,14 @@ const CourseCreate = () => {
 
   const onSubmit = (data) => {
     console.log("idvideo...", idVideo);
-    if (!startDate || !endDate || (idImage === "" && idVideo === "")) {
+    if (!startDate || !endDate || idVideo === "") {
       if (startDate || !endDate) {
         showToast({
           type: "error",
           message: translations.course.warningSelectTime,
         });
       }
-      if (idImage === "" && idVideo === "") {
+      if (idVideo === "") {
         showToast({
           type: "error",
           message: translations.course.warningSelectImage,
