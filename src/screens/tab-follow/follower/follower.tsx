@@ -21,7 +21,7 @@ const Follower = () => {
     const data = {
       partner_id: partner_id,
     };
-    postFollow(data).then((res) => {
+    postFollow(data).then(() => {
       _requestData();
     });
   };
@@ -53,7 +53,7 @@ const Follower = () => {
             <Text
               numberOfLines={2}
               style={{
-                maxWidth: 240,
+                maxWidth: 220,
                 fontSize: 16,
                 fontWeight: "600",
                 color: colors.text,
@@ -63,7 +63,7 @@ const Follower = () => {
             </Text>
             <Text
               style={{
-                maxWidth: 240,
+                maxWidth: 220,
                 fontSize: 16,
                 fontWeight: "400",
                 color: colors.textOpacity8,
@@ -77,7 +77,9 @@ const Follower = () => {
         <TouchableOpacity
           style={{ backgroundColor: colors.btnRedPrimary, borderRadius: 8 }}
           onPress={() => {
-            followAction(item.partner_id?._id);
+            if (!item.is_follow) {
+              followAction(item.partner_id?._id);
+            }
           }}
         >
           <Text
@@ -89,7 +91,7 @@ const Follower = () => {
               fontWeight: "400",
             }}
           >
-            Follow back
+            {item.is_follow ? "Friend" : "Follow Back"}
           </Text>
         </TouchableOpacity>
       </View>

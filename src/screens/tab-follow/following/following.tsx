@@ -53,7 +53,7 @@ const Following = () => {
             <Text
               numberOfLines={2}
               style={{
-                maxWidth: 240,
+                maxWidth: 220,
                 fontSize: 16,
                 fontWeight: "600",
                 color: colors.text,

@@ -5,7 +5,7 @@ import * as NavigationService from "react-navigation-helpers";
 import { useTheme } from "@react-navigation/native";
 
 import { useListData } from "@helpers/hooks/useListData";
-import useStore from "@services/zustand/store";
+// import useStore from "@services/zustand/store";
 import Avatar from "@shared-components/user/Avatar";
 import { getListFriend } from "@services/api/chat.api";
 import { TypedUser } from "models";
@@ -14,8 +14,8 @@ import { SCREENS } from "constants";
 const Friend = () => {
   const theme = useTheme();
   const { colors } = theme;
-  const userData = useStore((state) => state.userData);
-  const { listData, isLoading, onEndReach } = useListData<TypedUser>(
+  // const userData = useStore((state) => state.userData);
+  const { listData, onEndReach } = useListData<TypedUser>(
     { limit: "5" },
     getListFriend,
   );
@@ -36,6 +36,7 @@ const Friend = () => {
   }) => {
     return (
       <View
+        key={index}
         style={{
           flexDirection: "row",
           justifyContent: "space-between",
@@ -53,7 +54,7 @@ const Friend = () => {
             <Text
               numberOfLines={2}
               style={{
-                maxWidth: 250,
+                maxWidth: 220,
                 fontSize: 16,
                 fontWeight: "600",
                 color: colors.text,
