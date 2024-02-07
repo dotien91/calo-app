@@ -458,6 +458,7 @@ export default {
     deleteModuleDes: "Are you sure you want to delete this module?",
     typeCourse: "Type of course",
     videoReviewCourse: "Video review course",
+    requiredTitle: "Title is required",
   },
   seeAll: "See all",
   settings: {
@@ -522,6 +523,7 @@ export default {
   },
   profile: {
     editProfile: "Edit Profile",
+    saveProfile: "Save profile",
     profile: "Profile",
     account: "Account",
     notifications: "Notifications",

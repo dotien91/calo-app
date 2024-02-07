@@ -72,10 +72,12 @@ const CourseCreate = () => {
   const [typeCourse, setTypeCourse] = React.useState(listTypeCourse[0].value);
   const [level, setLevel] = useState<string>(listLevel[0].value);
   const [skill, setSkill] = useState<string[]>([]);
-  const { idVideo, renderSelectVideo, updatingVid } = SelectVideoHook({
-    id: data?.media_id?._id,
-    link: data?.media_id.media_thumbnail,
-  });
+  const { idVideo, renderSelectVideo, updatingVid, typeMedia } =
+    SelectVideoHook({
+      id: data?.media_id?._id,
+      link: data?.media_id.media_thumbnail,
+      typeM: data?.media_id ? "video" : "image",
+    });
   // const { idImage, renderSelectImage, updatingImg } = SelectImageHook({
   //   width: 1600,
   //   height: 900,
@@ -110,7 +112,7 @@ const CourseCreate = () => {
   const snapPoints = React.useMemo(() => ["60%"], []);
 
   const onSubmit = (data) => {
-    console.log("idvideo...", idVideo);
+    console.log("idvideo...", typeMedia);
     if (!startDate || !endDate || idVideo === "") {
       if (startDate || !endDate) {
         showToast({
@@ -138,11 +140,17 @@ const CourseCreate = () => {
           // language: userData?.default_language,
           country: userData?.country,
           // avatar: idImage,
-          media_id: idVideo,
+          // media_id: idVideo,
           type: typeCourse,
           level: level,
           skills: skill,
         };
+        if (typeMedia.startsWith("video")) {
+          params.media_id = idVideo;
+        }
+        if (typeMedia.startsWith("image")) {
+          params.avatar = idVideo;
+        }
         if (course_id) {
           params._id = course_id;
         }
@@ -319,7 +327,7 @@ const CourseCreate = () => {
 
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>
-      <ScrollView style={CS.safeAreaView}>
+      <ScrollView showsVerticalScrollIndicator={false} style={CS.safeAreaView}>
         <Header
           text={
             course_id
@@ -327,6 +335,8 @@ const CourseCreate = () => {
               : translations.course.createCourse
           }
         />
+        {renderSelectVideo()}
+
         <InputHook
           name="title"
           customStyle={CS.flex1}
@@ -344,6 +354,7 @@ const CourseCreate = () => {
           }}
           errorTxt={errors.title?.message}
           maxLength={32}
+          showPlaceholder
         />
         <InputHook
           name="description"
@@ -362,6 +373,7 @@ const CourseCreate = () => {
           }}
           errorTxt={errors.description?.message}
           maxLength={32}
+          showPlaceholder
         />
         <InputHook
           name="long_description"
@@ -381,6 +393,7 @@ const CourseCreate = () => {
           multiline
           errorTxt={errors.long_description?.message}
           maxLength={500}
+          showPlaceholder
         />
         <InputHook
           name="price"
@@ -400,7 +413,12 @@ const CourseCreate = () => {
           }}
           errorTxt={errors.price?.message}
           maxLength={500}
+          showPlaceholder
         />
+        <Text style={styles.textTitle}>
+          {translations.course.timeAvailable}
+        </Text>
+
         <View style={{ paddingHorizontal: 20, flexDirection: "row", gap: 8 }}>
           <DatePickerLocal
             style={{ flex: 1 }}
@@ -424,10 +442,9 @@ const CourseCreate = () => {
           {/* <Text style={{ ...CS.hnMedium, marginTop: 8 }}>Ảnh khoá học</Text>
 
           {renderSelectImage()} */}
-          <Text style={{ ...CS.hnMedium, marginTop: 8 }}>
+          {/* <Text style={{ ...CS.hnMedium, marginTop: 8 }}>
             {translations.course.videoReviewCourse}
-          </Text>
-          {renderSelectVideo()}
+          </Text> */}
           {renderSelectTypeCourse()}
           {renderSelectLevel()}
           {renderSelectSkill()}
@@ -555,5 +572,9 @@ const styles = StyleSheet.create({
   txtBtn: {
     ...CS.hnSemiBold,
     color: palette.textOpacity6,
+  },
+  textTitle: {
+    ...CS.hnMedium,
+    marginHorizontal: 20,
   },
 });

@@ -36,6 +36,7 @@ interface InputHookProps {
   noBorder?: boolean;
   multiline?: boolean;
   maxLength?: number;
+  showPlaceholder?: boolean;
 }
 
 // eslint-disable-next-line react/display-name
@@ -53,13 +54,22 @@ const InputHook: React.FC<InputHookProps> = ({
   noBorder,
   multiline = false,
   maxLength = 500,
+  showPlaceholder,
 }) => {
   const refInput = useRef<TextInput>(null);
   const _forcusInput = () => {
     refInput.current?.focus();
   };
   return (
-    <View style={styles.wrapper}>
+    <View
+      style={[
+        styles.wrapper,
+        showPlaceholder ? { minHeight: 84, marginTop: 8 } : {},
+      ]}
+    >
+      {showPlaceholder && (
+        <Text style={styles.textTitle}>{inputProps.placeholder}</Text>
+      )}
       <Pressable
         onPress={_forcusInput}
         style={[
@@ -117,7 +127,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   viewBorder: {
-    marginTop: 16,
+    marginTop: 8,
     marginHorizontal: 20,
     paddingHorizontal: 20,
     height: 48,
@@ -138,5 +148,9 @@ const styles = StyleSheet.create({
     color: palette.danger,
     paddingHorizontal: 40,
     marginTop: 4,
+  },
+  textTitle: {
+    ...CommonStyle.hnMedium,
+    marginHorizontal: 20,
   },
 });

@@ -36,6 +36,7 @@ const renderScene = SceneMap({
 const CourseListScreen: React.FC<CourseListScreenProps> = () => {
   const courseCurrentType = useStore((state) => state.courseCurrentType);
   const layout = useWindowDimensions();
+  const userData = useStore((state) => state.userData);
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([{ key: "first" }, { key: "second" }]);
@@ -61,7 +62,7 @@ const CourseListScreen: React.FC<CourseListScreenProps> = () => {
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}
       />
-      {isLoggedIn() && (
+      {isLoggedIn() && userData?.user_role === "teacher" && (
         <TouchableOpacity
           style={{
             position: "absolute",

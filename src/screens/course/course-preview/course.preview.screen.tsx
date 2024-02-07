@@ -56,6 +56,7 @@ const CoursePreviewScreen = () => {
   const params = { auth_id: userData?._id };
   const _getCourseDetail = () => {
     getCourseDetail(course_id, params).then((res) => {
+      console.log("detail...", JSON.stringify(res, null, 2));
       if (!res.isError) {
         setIsLoading(false);
         console.log("res.datares.data", course_id, res.data);
