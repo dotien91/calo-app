@@ -94,7 +94,7 @@ export const useChatHistory = (txtSearch: string) => {
   };
 
   const loadMoreMessage = () => {
-    if (isLoadmore) return;
+    if (isFetching.current || noMoredata.current) return;
     setIsLoadmore(true);
     _getChatHistory();
   };
@@ -181,8 +181,13 @@ export const useChatHistory = (txtSearch: string) => {
   useEffect(() => {
     const mediaIds = [...messages]
       .reverse()
-      .reduce((ids, currentItem) => ids.concat(currentItem.media_ids), []);
+      .filter((item) => !item?.text)
+      .reduce((ids, currentItem) => {
+        console.log("itemitemitem", currentItem);
+        return ids.concat(currentItem.media_ids);
+      }, []);
     setCurrentMediaIds(mediaIds);
+    console.log("mediaIdsmediaIdsmediaIds", mediaIds);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 
@@ -235,5 +240,6 @@ export const useChatHistory = (txtSearch: string) => {
     isCloseToTop,
     roomDetail,
     isEmptyMessage,
+    isLoadmore,
   };
 };

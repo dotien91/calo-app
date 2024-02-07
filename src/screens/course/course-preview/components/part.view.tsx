@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Text, View, StyleSheet, Dimensions } from "react-native";
 import * as Animatable from "react-native-animatable";
-import FileViewer from "react-native-file-viewer";
+import * as FileViewer from "react-native-file-viewer";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import RNFS from "react-native-fs";
 

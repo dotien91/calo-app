@@ -24,6 +24,7 @@ import CommonStyle from "@theme/styles";
 import { translations } from "@localization";
 import EmptyResultView from "@shared-components/empty.data.component";
 import createStyles from "./chat.room.screen.style";
+import LoadingList from "@shared-components/loading.list.component";
 
 interface ChatRoomScreenProps {}
 
@@ -35,6 +36,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
   const [txtSearch, setTxtSearch] = React.useState("");
   const setSearchModeChat = useStore((state) => state.setSearchModeChat);
   const searchModeChat = useStore((state) => state.searchModeChat);
+  const giftedChatRef = useRef(null);
 
   const recordModalRef = useRef(null);
   const userSendMessage = {
@@ -53,6 +55,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
     isCloseToTop,
     roomDetail,
     isEmptyMessage,
+    isLoadmore,
   } = useChatHistory(txtSearch);
 
   const {
@@ -119,6 +122,14 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
     const giftedMessages = GiftedChat.append(messages, message);
     emitSocket("typingToServer", "room_" + chatRoomId);
     setMessages(giftedMessages);
+
+    //scroll to new message
+    setTimeout(() => {
+      giftedChatRef.current?._listRef?._scrollRef?.scrollTo({
+        y: 0,
+        animated: true,
+      });
+    }, 700);
     sendChatMessage(text, [], giftedMessages);
   };
 
@@ -168,14 +179,39 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
     );
   };
 
+  const renderSearchView = () => {
+    return (
+      <>
+        {searchModeChat && !messages.length && (
+          <View style={{ ...CommonStyle.flexCenter, padding: 12, flex: 1 }}>
+            <Text style={CommonStyle.hnMedium}>{translations.noResult}</Text>
+          </View>
+        )}
+        {searchModeChat && (
+          <SearchInput
+            onCancel={cancelSearchMode}
+            setTxtSearch={setTxtSearch}
+            txtSearch={txtSearch}
+            showCancelBtn={true}
+          />
+        )}
+      </>
+    );
+  };
+
+  const renderHeaderChat = () => {
+    if (!isLoadmore) return null;
+    return <LoadingList />;
+  };
+
   return (
     <SafeAreaView
       style={{ flex: 1, paddingTop: getStatusBarHeight(), paddingBottom: 8 }}
     >
       <ChatHeader roomDetail={roomDetail} messages={messages} />
       {_renderChatEmpty()}
-
       <GiftedChat
+        messageContainerRef={(ref) => (giftedChatRef.current = ref)}
         messages={messages}
         user={{
           _id: userData?._id,
@@ -184,6 +220,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
         renderMessage={renderMessage}
         showAvatarForEveryMessage={true}
         listViewProps={{
+          ListFooterComponent: renderHeaderChat,
           scrollEventThrottle: 400,
           onScroll: ({ nativeEvent }) => {
             if (isCloseToTop(nativeEvent)) {
@@ -194,19 +231,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
         renderInputToolbar={renderInputToolbar}
       />
 
-      {searchModeChat && !messages.length && (
-        <View style={{ ...CommonStyle.flexCenter, padding: 12, flex: 1 }}>
-          <Text style={CommonStyle.hnMedium}>{translations.noResult}</Text>
-        </View>
-      )}
-      {searchModeChat && (
-        <SearchInput
-          onCancel={cancelSearchMode}
-          setTxtSearch={setTxtSearch}
-          txtSearch={txtSearch}
-          showCancelBtn={true}
-        />
-      )}
+      {renderSearchView()}
       <RecordModal uploadRecord={uploadRecord} ref={recordModalRef} />
     </SafeAreaView>
   );

@@ -65,6 +65,7 @@ const CourseLearnScreen = () => {
     // gọi API đánh đấu đã xong video
     updateViewed({ module_id: item._id }).then((res) => {
       if (!res.isError) {
+        //
       }
     });
   };

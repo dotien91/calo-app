@@ -3,7 +3,6 @@ import {
   Text,
   TouchableWithoutFeedback,
   Keyboard,
-  Pressable,
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
@@ -31,11 +30,15 @@ import {
   showToast,
 } from "@helpers/super.modal.helper";
 import { useUserHook } from "@helpers/hooks/useUserHook";
+import GoogleLoginButton from "@shared-components/button/GoogleLoginButton";
+import AppleLoginButton from "@shared-components/button/AppleLoginButton";
+import FBLoginButton from "@shared-components/button/FBLoginButton";
+import { SCREENS } from "constants";
 
-interface ButtonSocialProps {
-  onPress: () => void;
-  IconSocial: React.JSX.Element;
-}
+// interface ButtonSocialProps {
+//   onPress: () => void;
+//   IconSocial: React.JSX.Element;
+// }
 
 export default function SignUpScreen() {
   const theme = useTheme();
@@ -94,30 +97,8 @@ export default function SignUpScreen() {
     });
   };
 
-  const pressGoogle = () => {};
-  const pressFacebook = () => {};
-  const pressApple = () => {};
   const pressLoginNow = () => {
-    NavigationService.popToTop();
-  };
-
-  const ButtonSocial = ({ onPress, IconSocial }: ButtonSocialProps) => {
-    return (
-      <Pressable
-        onPress={onPress}
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          borderColor: colors.mainColor2,
-          height: 48,
-          borderWidth: 1,
-          borderRadius: 10,
-        }}
-      >
-        {IconSocial}
-      </Pressable>
-    );
+    NavigationService.navigate(SCREENS.LOGIN_WITH_EMAIL);
   };
 
   return (
@@ -226,18 +207,9 @@ export default function SignUpScreen() {
             />
             <OrView />
             <View style={styles.viewSocial}>
-              <ButtonSocial
-                IconSocial={<IconSvg name="icGoogle" />}
-                onPress={pressGoogle}
-              />
-              <ButtonSocial
-                IconSocial={<IconSvg name="icApple" color={colors.black} />}
-                onPress={pressApple}
-              />
-              <ButtonSocial
-                IconSocial={<IconSvg name="icFacebook" color="#1877F2" />}
-                onPress={pressFacebook}
-              />
+              <GoogleLoginButton />
+              <AppleLoginButton />
+              <FBLoginButton />
             </View>
             <ViewTermPolicy style={{ paddingHorizontal: 20, marginTop: 36 }} />
             <Text style={styles.textRegister}>

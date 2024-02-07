@@ -11,7 +11,6 @@ import { SCREENS } from "constants";
 import { DarkTheme, LightTheme, palette } from "@theme/themes";
 // ? Screens
 import DetailScreen from "@screens/detail/DetailScreen";
-import ProfileScreen from "@screens/profile/ProfileScreen";
 import useStore from "@services/zustand/store";
 import IntroScreen from "@screens/welcome/intro/intro.screen";
 import ChooseLanguageScreen from "@screens/welcome/choose-language/choose.language.screen";

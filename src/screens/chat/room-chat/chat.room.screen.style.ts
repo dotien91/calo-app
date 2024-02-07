@@ -116,6 +116,7 @@ export default (theme: ExtendedTheme) => {
       borderBottomWidth: 1,
       borderColor: colors.borderColor2,
       width: "100%",
+      height: 66,
     },
     headerLeft: {
       ...CommonStyle.flexStart,

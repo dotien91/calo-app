@@ -33,12 +33,13 @@ import { ILoginWithPass } from "models";
 import GoogleLoginButton from "@shared-components/button/GoogleLoginButton";
 import FBLoginButton from "@shared-components/button/FBLoginButton";
 import { useUserHook } from "@helpers/hooks/useUserHook";
+import AppleLoginButton from "@shared-components/button/AppleLoginButton";
 // import { regexMail } from "constants/regex.constant";
 
-interface ButtonSocialProps {
-  onPress: () => void;
-  IconSocial: React.JSX.Element;
-}
+// interface ButtonSocialProps {
+//   onPress: () => void;
+//   IconSocial: React.JSX.Element;
+// }
 
 export default function LoginWithEmailScreen() {
   const theme = useTheme();
@@ -86,29 +87,10 @@ export default function LoginWithEmailScreen() {
     // loginWithPass
   };
 
-  const pressApple = () => {};
   const pressRegister = () => {
     NavigationService.push(SCREENS.SIGN_UP);
   };
 
-  const ButtonSocial = ({ onPress, IconSocial }: ButtonSocialProps) => {
-    return (
-      <Pressable
-        onPress={onPress}
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          borderColor: colors.mainColor2,
-          height: 48,
-          borderWidth: 1,
-          borderRadius: 10,
-        }}
-      >
-        {IconSocial}
-      </Pressable>
-    );
-  };
 
   const pressForgotPassword = () => {
     NavigationService.push(SCREENS.FORGOT_PASSWORD);
@@ -206,10 +188,7 @@ export default function LoginWithEmailScreen() {
             <OrView />
             <View style={styles.viewSocial}>
               <GoogleLoginButton />
-              <ButtonSocial
-                IconSocial={<IconSvg name="icApple" color={colors.black} />}
-                onPress={pressApple}
-              />
+              <AppleLoginButton />
               <FBLoginButton />
             </View>
             <ViewTermPolicy style={{ paddingHorizontal: 20, marginTop: 36 }} />

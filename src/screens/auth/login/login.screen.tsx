@@ -13,6 +13,7 @@ import { SCREENS } from "constants";
 import { translations } from "@localization";
 import GoogleLoginButton from "@shared-components/button/GoogleLoginButton";
 import FBLoginButton from "@shared-components/button/FBLoginButton";
+import AppleLoginButton from "@shared-components/button/AppleLoginButton";
 
 export default function LoginScreen() {
   const theme = useTheme();
@@ -32,14 +33,7 @@ export default function LoginScreen() {
       <Text style={styles.textHeader}>{translations.welcomeBack}</Text>
       <GoogleLoginButton showText={true} />
       <FBLoginButton showText={true} />
-      <Button
-        style={styles.buttonMargin}
-        onPress={pressApple}
-        textColor={colors.white}
-        backgroundColor={colors.black}
-        SvgSo={<IconSvg name="icApple" size={16} color={colors.white} />}
-        text={translations.signInWith + " Apple"}
-      />
+      <AppleLoginButton showText={true} />
       <OrView />
       <Button
         style={styles.buttonMargin}

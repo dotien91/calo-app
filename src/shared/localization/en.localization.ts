@@ -301,6 +301,7 @@ export default {
       "You have never talked to anyone. Try starting a conversation with",
     typeMessage: "Type a message...",
     lastSeen: "Last seen: ",
+    desRecord: "Tap the microphone icon to start recording",
   },
   keyboard: {
     writeSomething: "Write something",
@@ -655,7 +656,7 @@ export default {
   },
   noResult: "No result found!",
   results: "results",
-  sort_by_relevance: "Sort by relevance",
+  sort_by_relevance: "Sort by",
   startChat: "Start a conversation!",
   startChatDesc:
     "Send a friendly message asking about their learning journey or discussing a common interest to start an interesting conversation.",

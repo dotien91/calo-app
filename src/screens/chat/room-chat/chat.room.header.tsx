@@ -28,8 +28,8 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ messages, roomDetail }) => {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const route = useRoute();
   const partnerName = route.params?.["partner_name"];
-  // const isGroup = route.params?.["isGroup"];
-  const isGroup = roomDetail?.chat_room_id?.room_type == "group";
+  const isGroup =
+    route.params?.["isGroup"] || roomDetail?.chat_room_id?.room_type == "group";
   const readAt = messages?.[0]?.read_at;
 
   const time = getFormatDayMessage(readAt, "HH:mm", "DD/MM");
@@ -58,7 +58,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ messages, roomDetail }) => {
 
   return (
     <View style={styles.wrapHeader}>
-      <View style={styles.headerLeft}>
+      <View style={[styles.headerLeft, isGroup && { flex: 0.85 }]}>
         <GoBackButton />
         <TouchableOpacity style={styles.roomInfo} onPress={goToProfileChat}>
           <Text numberOfLines={1} style={styles.txtNamePartner}>
@@ -71,18 +71,20 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ messages, roomDetail }) => {
           )}
         </TouchableOpacity>
       </View>
-      <View style={[CommonStyle.flexEnd, styles.headerRight]}>
-        <ActionBtn
-          icon="phone"
-          color={colors.black}
-          callback={() => handleOpenCallPage("audio_call")}
-          customStyle={{ backgroundColor: colors.white }}
-        />
-        <ActionBtn
-          icon="video"
-          callback={() => handleOpenCallPage("video_call")}
-        />
-      </View>
+      {!isGroup ? (
+        <View style={[CommonStyle.flexEnd, styles.headerRight]}>
+          <ActionBtn
+            icon="phone"
+            color={colors.black}
+            callback={() => handleOpenCallPage("audio_call")}
+            customStyle={{ backgroundColor: colors.white }}
+          />
+          <ActionBtn
+            icon="video"
+            callback={() => handleOpenCallPage("video_call")}
+          />
+        </View>
+      ) : null}
     </View>
   );
 };

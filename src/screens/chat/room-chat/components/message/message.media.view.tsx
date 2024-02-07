@@ -23,18 +23,27 @@ import {
 } from "@helpers/super.modal.helper";
 import { EnumMessageStatus } from "constants/chat.constant";
 import { palette } from "@theme/themes";
+import { ViewStyle } from "react-native-size-matters";
 
 interface IMediasView {
   data: TypedChatMediaLocal[];
   fromProfileChat: boolean;
   status?: string;
+  customStyleBox?: ViewStyle;
+  width: number;
 }
 const IMG_WIDTH = 76;
 const IMG_HEIGHT = 76;
 const VIDEO_WIDTH = 115;
 const VIDEO_HEIGHT = 67;
 
-const MessageMediaView = ({ data, fromProfileChat, status }: IMediasView) => {
+const MessageMediaView = ({
+  data,
+  fromProfileChat,
+  status,
+  width,
+  customStyleBox,
+}: IMediasView) => {
   const currentMediaIds = useStore((state) => state.currentMediaIds);
 
   const openMediaModal = (item: TypedChatMediaLocal) => {
@@ -58,6 +67,7 @@ const MessageMediaView = ({ data, fromProfileChat, status }: IMediasView) => {
   };
 
   const renderItem = (item: TypedChatMediaLocal, index: number) => {
+    if (!item) return null;
     const renderStatus = () => {
       if (status != EnumMessageStatus.Pending) return null;
       return (
@@ -71,13 +81,13 @@ const MessageMediaView = ({ data, fromProfileChat, status }: IMediasView) => {
 
     if (item.media_type.includes("image")) {
       return (
-        <TouchableOpacity onPress={() => openMediaModal(item)}>
+        <TouchableOpacity key={index} onPress={() => openMediaModal(item)}>
           <FastImage
             key={index}
             source={{ uri: item.media_url }}
             style={{
-              width: IMG_WIDTH,
-              height: IMG_HEIGHT,
+              width: width || IMG_WIDTH,
+              height: width || IMG_HEIGHT,
             }}
             resizeMode="cover"
           />
@@ -87,13 +97,14 @@ const MessageMediaView = ({ data, fromProfileChat, status }: IMediasView) => {
     if (item.media_type?.includes("video")) {
       return (
         <TouchableOpacity
-          style={{ width: 115, height: 67 }}
+          key={index}
+          style={{ width: width || 115, height: width || 67 }}
           onPress={() => openMediaModal(item)}
         >
           <VideoPlayer
             mediaUrl={item.media_url}
-            width={VIDEO_WIDTH}
-            height={VIDEO_HEIGHT}
+            width={width || VIDEO_WIDTH}
+            height={width || VIDEO_HEIGHT}
             resizeMode="cover"
             pressable={false}
             mediaThumbail={item?.media_thumbnail}
@@ -108,6 +119,7 @@ const MessageMediaView = ({ data, fromProfileChat, status }: IMediasView) => {
     ) {
       return (
         <View
+          key={index}
           style={{
             width: IMG_WIDTH,
             height: IMG_HEIGHT,
@@ -128,6 +140,7 @@ const MessageMediaView = ({ data, fromProfileChat, status }: IMediasView) => {
     if (item.media_type == "audio/mpeg" || item.media_type == "file") {
       return (
         <MessageAudio
+          key={index}
           isMyMessage={true}
           itemAudio={item}
           // onLongPress={onLongPressMediaMessage}
@@ -138,7 +151,7 @@ const MessageMediaView = ({ data, fromProfileChat, status }: IMediasView) => {
   };
 
   return (
-    <View style={styles.box}>
+    <View style={customStyleBox ? customStyleBox : styles.box}>
       {data.map((item, index) => (
         <View key={index} style={styles.boxItem}>
           {renderItem(item, index)}

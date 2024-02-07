@@ -16,7 +16,7 @@ interface BtnProps {
   showText: boolean | true;
 }
 
-const FBLoginButton = ({ showText }: BtnProps) => {
+const AppleLoginButton = ({ showText }: BtnProps) => {
   const { handleLogin } = useUserHook();
 
   const _onPress = async () => {
@@ -69,7 +69,7 @@ const FBLoginButton = ({ showText }: BtnProps) => {
         style={styles.iconBtn}
         onPress={_onPress}
         backgroundColor={"transparent"}
-        SvgSo={<IconSvg name="icFacebook" color="#1877F2" size={20} />}
+        SvgSo={<IconSvg name="icAppleBlack" size={20} />}
       />
     );
   }
@@ -79,9 +79,9 @@ const FBLoginButton = ({ showText }: BtnProps) => {
       style={styles.btn}
       onPress={_onPress}
       textColor={palette.white}
-      backgroundColor={"#1877F2"}
-      SvgSo={<IconSvg name="icFacebook" size={16} />}
-      text={translations.continueWith("Facebook")}
+      backgroundColor={palette.black}
+      SvgSo={<IconSvg name="icApple" size={16} color="#fff" />}
+      text={translations.continueWith("Apple")}
     />
   );
 };
@@ -90,7 +90,6 @@ const styles = StyleSheet.create({
   btn: {
     paddingHorizontal: 20,
     marginHorizontal: 20,
-    marginBottom: 12,
   },
   iconBtn: {
     flex: 1,
@@ -103,4 +102,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FBLoginButton;
+export default AppleLoginButton;

@@ -107,9 +107,7 @@ class RecordView extends React.PureComponent<any, State> {
     return (
       <View style={styles.container}>
         <View>
-          <Text style={styles.titleTxt}>
-            Chạm vào biểu tượng micro để bắt đầu ghi âm
-          </Text>
+          <Text style={styles.titleTxt}>{translations.chat.desRecord}</Text>
           <Text style={styles.txtRecordCounter}>{this.state.recordTime}</Text>
           <View style={styles.viewRecorder}>
             <View style={styles.recordBtnWrapper}>
@@ -123,29 +121,35 @@ class RecordView extends React.PureComponent<any, State> {
               >
                 <Icon
                   type={IconType.Ionicons}
-                  name={isRecording ? "mic-circle" : "mic"}
+                  name={"mic"}
                   size={60}
                   color={isRecording ? palette.primary : palette.mainColor2}
                 />
               </TouchableOpacity>
             </View>
-            {isRecording && (
+            {isRecording ? (
               <View style={styles.wrapBtn}>
-                <Button
-                  title={translations.audio.pause}
-                  onPress={this.onPauseRecord}
-                />
+                {!this.state.pause && (
+                  <Button
+                    title={translations.audio.pause}
+                    onPress={this.onPauseRecord}
+                  />
+                )}
                 <View style={{ width: 10 }} />
-                <Button
-                  title={translations.audio.resume}
-                  onPress={this.onResumeRecord}
-                />
+                {!!this.state.pause && (
+                  <Button
+                    title={translations.audio.resume}
+                    onPress={this.onResumeRecord}
+                  />
+                )}
                 <View style={{ width: 10 }} />
                 <Button
                   title={translations.audio.send}
                   onPress={this.onStopRecord}
                 />
               </View>
+            ) : (
+              <View style={{ height: 36 }} />
             )}
           </View>
         </View>
@@ -188,6 +192,7 @@ class RecordView extends React.PureComponent<any, State> {
   };
 
   private onPauseRecord = async (): Promise<void> => {
+    this.setState({ pause: true });
     this.isRecording = false;
     try {
       const r = await this.audioRecorderPlayer.pauseRecorder();
@@ -198,6 +203,8 @@ class RecordView extends React.PureComponent<any, State> {
   };
 
   private onResumeRecord = async (): Promise<void> => {
+    this.setState({ pause: false });
+
     this.isRecording = true;
     await this.audioRecorderPlayer.resumeRecorder();
   };
