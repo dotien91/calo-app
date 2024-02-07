@@ -63,11 +63,7 @@ const CourseLearnScreen = () => {
       return;
     }
     // gọi API đánh đấu đã xong video
-    updateViewed({ module_id: item._id }).then((res) => {
-      if (!res.isError) {
-        //
-      }
-    });
+    updateViewed({ module_id: item._id });
   };
   const TabSelect = () => {
     return (

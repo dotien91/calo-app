@@ -27,6 +27,8 @@ const CourseCreateClass = () => {
   });
   const route = useRoute();
   const course_id = route.params?.["course_id"];
+  const start_time = route.params?.["start_time"];
+  const end_time = route.params?.["end_time"];
 
   // truyền các trường từ màn trước sang: course_id, start_time, end_time
   const [updating, setUpdating] = React.useState<boolean>(false);
@@ -48,8 +50,8 @@ const CourseCreateClass = () => {
         course_calendars: courseCalendar,
         name: data.name_class,
         limit_member: parseInt(data.limit_member),
-        start_time: "2024-02-01T03:07:44.655Z",
-        end_time: "2024-09-10T03:07:47.000Z",
+        start_time: start_time,
+        end_time: end_time,
       };
       setUpdating(true);
       createClass(params).then((res) => {

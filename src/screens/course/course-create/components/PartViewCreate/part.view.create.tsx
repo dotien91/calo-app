@@ -14,12 +14,18 @@ import Accordion from "react-native-collapsible/Accordion";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
-import { getListModule } from "@services/api/course.api";
+import { deleteModule, getListModule } from "@services/api/course.api";
 import { ICourseModuleItem } from "models/course.model";
 import useStore from "@services/zustand/store";
 import { translations } from "@localization";
 import { SCREENS } from "constants";
 import eventEmitter from "@services/event-emitter";
+import {
+  EnumModalContentType,
+  EnumStyleModalType,
+  showSuperModal,
+  showToast,
+} from "@helpers/super.modal.helper";
 
 const { width } = Dimensions.get("screen");
 interface PartViewCreateProps {
@@ -60,13 +66,42 @@ const PartViewCreate = ({ id, hide }: PartViewCreateProps) => {
     _getListModule();
   }, [id]);
 
+  const callAPIDeleteModule = (id: string) => {
+    deleteModule(id).then((res) => {
+      if (!res.isError) {
+        showToast({
+          type: "success",
+          message: translations.course.deleteClassSuccess,
+        });
+        _getListModule();
+      } else {
+        showToast({
+          type: "error",
+          message: res.message,
+        });
+      }
+    });
+  };
+
   const _renderHeader = (section: ICourseModuleItem, index: number) => {
-    // const _showActionPart = () => {
-    //   showSuperModal({
-    //     contentModalType: EnumModalContentType.PostAction,
-    //     styleModalType: EnumStyleModalType.Bottom,
-    //   });
-    // };
+    console.log(section);
+
+    const deletePart = () => {
+      showSuperModal({
+        contentModalType: EnumModalContentType.Confirm,
+        styleModalType: EnumStyleModalType.Middle,
+        data: {
+          title: translations.course.deleteModuleDes,
+          cb: () => callAPIDeleteModule(section._id),
+        },
+      });
+    };
+    const editPart = () => {
+      NavigationService.navigate(SCREENS.COURSE_ADD_MODULE, {
+        course_id: id,
+        data: section,
+      });
+    };
     return (
       <PressableBtn onPress={() => _updateSections(index)}>
         <Animatable.View
@@ -83,6 +118,18 @@ const PartViewCreate = ({ id, hide }: PartViewCreateProps) => {
           <Text style={styles.headerText}>{section.title}</Text>
           <View style={{ flexDirection: "row" }}>
             <Icon
+              onPress={editPart}
+              size={24}
+              name={"create-outline"}
+              type={IconType.Ionicons}
+            />
+            <Icon
+              onPress={deletePart}
+              size={24}
+              name={"trash-outline"}
+              type={IconType.Ionicons}
+            />
+            <Icon
               size={24}
               name={
                 activeSections.indexOf(index) >= 0
@@ -91,12 +138,6 @@ const PartViewCreate = ({ id, hide }: PartViewCreateProps) => {
               }
               type={IconType.Ionicons}
             />
-            {/* <Icon
-              onPress={_showActionPart}
-              size={24}
-              name={"more"}
-              type={IconType.Ionicons}
-            /> */}
           </View>
         </Animatable.View>
       </PressableBtn>
@@ -130,9 +171,16 @@ const PartViewCreate = ({ id, hide }: PartViewCreateProps) => {
           easing="ease-out"
           animation={isActive ? "zoomIn" : "zoomOut"}
         >
-          {section.children?.map((item) => (
-            <Lesson key={item._id} data={item} />
-          ))}
+          {section.children?.map((item) => {
+            return (
+              <Lesson
+                key={item._id}
+                data={item}
+                id={id}
+                parent_id={section._id}
+              />
+            );
+          })}
           <PressableBtn
             style={{ borderWidth: 1, height: 40, ...CS.center }}
             onPress={_addNewLesson}
@@ -232,12 +280,74 @@ const styles = StyleSheet.create({
 
 interface LessonProps {
   data: any;
+  id: string;
+  parent_id: string;
 }
 
-const Lesson = ({ data }: LessonProps) => {
+const Lesson = ({ data, id, parent_id }: LessonProps) => {
+  const callAPIDeleteModule = (id: string) => {
+    deleteModule(id).then((res) => {
+      if (!res.isError) {
+        showToast({
+          type: "success",
+          message: translations.course.deleteClassSuccess,
+        });
+        eventEmitter.emit("reload_part_view");
+      } else {
+        showToast({
+          type: "error",
+          message: res.message,
+        });
+      }
+    });
+  };
+  const deletePart = () => {
+    showSuperModal({
+      contentModalType: EnumModalContentType.Confirm,
+      styleModalType: EnumStyleModalType.Middle,
+      data: {
+        title: translations.course.deleteModuleDes,
+        cb: () => callAPIDeleteModule(data._id),
+      },
+    });
+  };
+  const viewVideo = () => {
+    NavigationService.navigate(SCREENS.COURSE_LEARN_VIDEO_SCREEN, {
+      source: data,
+      course_id: id,
+    });
+  };
+
+  const editPart = () => {
+    NavigationService.navigate(SCREENS.COURSE_ADD_MODULE, {
+      course_id: id,
+      parent_id: parent_id,
+      data: data,
+    });
+  };
   return (
     <PressableBtn style={styles.viewContent} onPress={() => console.log(data)}>
-      <Animatable.Text style={styles.textDetail}>{data.title}</Animatable.Text>
+      <Animatable.Text style={[styles.textDetail, { flex: 1 }]}>
+        {data.title}
+      </Animatable.Text>
+      <Icon
+        onPress={editPart}
+        size={24}
+        name={"create-outline"}
+        type={IconType.Ionicons}
+      />
+      <Icon
+        onPress={deletePart}
+        size={24}
+        name={"trash-outline"}
+        type={IconType.Ionicons}
+      />
+      <Icon
+        onPress={viewVideo}
+        size={24}
+        name={"play-circle-outline"}
+        type={IconType.Ionicons}
+      />
     </PressableBtn>
   );
 };

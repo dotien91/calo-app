@@ -33,7 +33,7 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
           height: 256,
           ...CS.center,
           marginHorizontal: -16,
-          marginTop: 20,
+          // marginTop: 20,
         }}
       >
         <Image

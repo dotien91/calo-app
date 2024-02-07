@@ -10,12 +10,14 @@ interface SelectDateTimeProps {
   setTime: (time: Date) => void;
   placeholder: string;
   style: ViewStyle;
+  timeDefault?: Date;
 }
 
 const SelectDateTime = ({
   setTime,
   placeholder,
   style,
+  timeDefault,
 }: SelectDateTimeProps) => {
   const [date, setDate] = useState<Date>();
   const [open, setOpen] = useState(false);
@@ -44,7 +46,11 @@ const SelectDateTime = ({
             color: date ? palette.mainColor2 : palette.placeholder,
           }}
         >
-          {date ? formatVNDate(date) : placeholder}
+          {date
+            ? formatVNDate(date)
+            : timeDefault
+            ? formatVNDate(timeDefault)
+            : placeholder}
         </Text>
       </PressableBtn>
       <DatePicker
