@@ -26,6 +26,8 @@ const Follower = () => {
     });
   };
 
+  console.log("list data", JSON.stringify(listData, null, 2));
+
   const renderItemSelected = ({
     item,
     index,
@@ -77,7 +79,7 @@ const Follower = () => {
         <TouchableOpacity
           style={{ backgroundColor: colors.btnRedPrimary, borderRadius: 8 }}
           onPress={() => {
-            if (!item.is_follow) {
+            if (item.match_status != 1) {
               followAction(item.partner_id?._id);
             }
           }}
@@ -91,7 +93,7 @@ const Follower = () => {
               fontWeight: "400",
             }}
           >
-            {item.is_follow ? "Friend" : "Follow Back"}
+            {item.match_status === 1 ? "Friend" : "Follow Back"}
           </Text>
         </TouchableOpacity>
       </View>
