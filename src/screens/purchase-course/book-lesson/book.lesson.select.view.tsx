@@ -28,7 +28,7 @@ const BookLessonSelectView: React.FC<BookLessonSelectViewProps> = () => {
   const courseId = courseData._id;
 
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [duration, setDuration] = useState<number>(1);
   const [isMaxDay, setIsMaxDay] = useState(false);
 
@@ -37,7 +37,7 @@ const BookLessonSelectView: React.FC<BookLessonSelectViewProps> = () => {
 
   React.useEffect(() => {
     getTimeAvailable(courseId).then((res) => {
-      setLoading(false);
+      // setLoading(false);
       if (!res.isError) {
         setData(res.data);
       }

@@ -116,12 +116,7 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
       <View style={{ height: 12 }} />
       <ListFriend />
       <View style={{ height: 8 }} />
-      {isLoading && (
-        <>
-          <LoadingList />
-          <LoadingList />
-        </>
-      )}
+      {isLoading && <LoadingList numberItem={3} />}
       {noData && (
         <EmptyResultView
           title={translations.noNewMessageTittle}

@@ -221,7 +221,7 @@ export function useUploadFile(initData?: any[], selectionLimit = 30) {
     }
   };
 
-  const uploadRecord = async (recordPaths: string) => {
+  const uploadRecord = React.useCallback(async (recordPaths: string) => {
     const recordLocalData = [
       {
         uri: (!isIos ? "file://" : "") + getPath(recordPaths || ""),
@@ -245,7 +245,7 @@ export function useUploadFile(initData?: any[], selectionLimit = 30) {
       }));
       setListFile(data);
     }
-  };
+  }, []);
 
   React.useEffect(() => {
     if (listFile?.length) {

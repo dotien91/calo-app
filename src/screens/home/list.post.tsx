@@ -99,6 +99,14 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
     }, 200);
   };
 
+  if (!isLoggedIn() && isFollowingPost) {
+    return (
+      <View style={{ ...CommonStyle.flex1, ...CommonStyle.center }}>
+        {renderViewRequestLogin()}
+      </View>
+    );
+  }
+
   if (isLoading) {
     return <LoadingList numberItem={7} />;
   }
@@ -122,14 +130,6 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
       </View>
     );
   };
-
-  if (!isLoggedIn && isFollowingPost) {
-    return (
-      <View style={{ ...CommonStyle.flex1, ...CommonStyle.center }}>
-        {renderViewRequestLogin()}
-      </View>
-    );
-  }
 
   const getListData = () => {
     if (id) return listData;

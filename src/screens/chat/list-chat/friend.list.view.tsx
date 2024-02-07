@@ -11,6 +11,7 @@ import Avatar from "@shared-components/user/Avatar";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "constants";
+import LoadingList from "@shared-components/loading.list.component";
 
 interface ListFriendProps {}
 
@@ -18,12 +19,14 @@ const ListFriend: React.FC<ListFriendProps> = () => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const [listFriend, setListFriend] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getListFriend().then((res) => {
       if (!res.isError) {
         setListFriend(res.data);
       }
+      setLoading(false);
     });
   }, []);
 
@@ -69,6 +72,7 @@ const ListFriend: React.FC<ListFriendProps> = () => {
 
   return (
     <View style={{}}>
+      {loading && <LoadingList />}
       <FlatList
         horizontal={true}
         data={listFriend}

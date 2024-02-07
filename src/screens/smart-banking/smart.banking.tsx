@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useMemo } from "react";
 import {
   ActivityIndicator,
   Image,
@@ -13,7 +13,6 @@ import { useTheme, useRoute } from "@react-navigation/native";
 import { translations } from "@localization";
 import createStyles from "./smart.banking.style";
 import Header from "@shared-components/header/Header";
-import { selectMedia } from "@helpers/file.helper";
 import { useUploadFile } from "@helpers/hooks/useUploadFile";
 import { updateUserOrder } from "@services/api/payment.api";
 import {
@@ -25,7 +24,6 @@ import {
 } from "@helpers/super.modal.helper";
 
 const SmartBanking = () => {
-  const [fileImage, setfileImage] = useState("");
   const theme = useTheme();
   // const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
@@ -36,19 +34,7 @@ const SmartBanking = () => {
     Clipboard.setString("adasds");
   };
 
-  const { onSelectPicture, isUpLoadingFile, listFileLocal, listFile } =
-    useUploadFile([], 1);
-
-  const selectImage = () => {
-    selectMedia({
-      config: { mediaType: "photo", selectionLimit: 1 },
-      callback: async (image) => {
-        setfileImage(
-          image?.filename || image.path?.split("/")?.reverse()?.[0] || "",
-        );
-      },
-    });
-  };
+  const { onSelectPicture, isUpLoadingFile, listFile } = useUploadFile([], 1);
 
   const actionSend = () => {
     console.log("listFilelistFilelistFile", listFile);

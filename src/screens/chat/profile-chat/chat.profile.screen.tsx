@@ -22,11 +22,13 @@ import {
 } from "@helpers/super.modal.helper";
 import useStore from "@services/zustand/store";
 import IconBtn from "@shared-components/button/IconBtn";
-import GoBackButton from "@screens/auth/components/GoBackButton";
 import { blockUser } from "@services/api/post";
 import MessageMediaView from "../room-chat/components/message/message.media.view";
 import { Device } from "@utils/device.ui.utils";
 import eventEmitter from "@services/event-emitter";
+import Header from "@shared-components/header/Header";
+
+const widthMedia = (Device.width - 3 * 8 - 24) / 4;
 
 const profileChatMenu = [
   {
@@ -94,7 +96,7 @@ const profileGroupChatMenu = [
   },
 ];
 
-const numberItemsMediaShow = Math.floor((Device.width - 24 - 76) / 76);
+const numberItemsMediaShow = 4;
 
 interface ProfileChatScreenProps {}
 
@@ -299,9 +301,23 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
       <TouchableOpacity onPress={openMediaChatScreen} style={styles.section}>
         <Text style={styles.titleSection}>{item.title}</Text>
         <View style={styles.wrapMedia}>
-          <MessageMediaView fromProfileChat data={mediaIdsShow} />
+          <MessageMediaView
+            width={widthMedia}
+            height={widthMedia}
+            fromProfileChat
+            data={mediaIdsShow}
+            customStyleBox={{
+              flex: 1,
+              ...CommonStyle.flexRear,
+            }}
+          />
           {mediaIds.length > numberItemsMediaShow && (
-            <View style={styles.viewMoreMedia}>
+            <View
+              style={[
+                styles.viewMoreMedia,
+                { width: widthMedia, height: widthMedia },
+              ]}
+            >
               <Text style={styles.txtViewMoreMedia}>
                 + {mediaIds.length - numberItemsMediaShow}
               </Text>
@@ -314,7 +330,7 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
 
   const renderMembers = (item) => {
     return (
-      <TouchableOpacity onPress={openMediaChatScreen} style={styles.section}>
+      <View style={styles.section}>
         <Text style={styles.titleSection}>{item.title}</Text>
         <View>
           {group_partners.map((item, index) => (
@@ -338,7 +354,7 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
             </View>
           ))}
         </View>
-      </TouchableOpacity>
+      </View>
     );
   };
 
@@ -355,10 +371,8 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <View style={[CommonStyle.flexStart, styles.headerLeft]}>
-          <GoBackButton customStyle={styles.backBtn} />
-        </View>
+      <Header />
+      <ScrollView contentContainerStyle={{ paddingTop: 16 }}>
         {renderTop()}
         {(isGroup ? profileGroupChatMenu : profileChatMenu).map((item) =>
           renderSection(item),

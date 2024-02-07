@@ -24,13 +24,13 @@ const TutorItem = ({
   educations,
 }: TutorItemProps) => {
   const theme = useTheme();
-  const { colors } = theme;
+  // const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const [isLike, setIsLike] = React.useState(false);
+  // const [isLike, setIsLike] = React.useState(false);
 
-  const toggleLike = () => {
-    setIsLike((old) => !old);
-  };
+  // const toggleLike = () => {
+  //   setIsLike((old) => !old);
+  // };
 
   const objectToString = (data) => {
     return Object.keys(data)

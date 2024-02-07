@@ -371,6 +371,7 @@ export default {
     imageError: "Phát hiện ảnh lỗi. Vui lòng thử lại",
     typeMessage: "Nhập tin nhắn...",
     lastSeen: "Lần cuối xem: ",
+    desRecord: "Chạm vào biểu tượng micro để bắt đầu ghi âm",
   },
   keyboard: {
     writeSomething: "Nhập tin nhắn",
@@ -1177,7 +1178,7 @@ export default {
     introduceDiamond: "Một loại tiền ảo dùng như tiền mua hàng",
   },
   results: "kết quả",
-  sort_by_relevance: "Sắp xếp theo tiêu chí",
+  sort_by_relevance: "Sắp xếp",
   noResult: "Không tìm thấy kết quả",
   startChat: "Bắt đầu cuộc trò chuyện!",
   startDesc:

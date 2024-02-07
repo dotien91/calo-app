@@ -67,11 +67,14 @@ export default (theme: ExtendedTheme) => {
     viewMoreMedia: {
       width: 76,
       height: 76,
-      ...CommonStyle.borderStyle,
-      borderWidth: 2,
+      // ...CommonStyle.borderStyle,
+      // borderWidth: 2,
       borderRadius: 10,
       ...CommonStyle.flexCenter,
-      backgroundColor: colors.grey1,
+      backgroundColor: colors.lightOverlay,
+      position: "absolute",
+      right: 0,
+      top: 0,
     },
     txtViewMoreMedia: {
       ...CommonStyle.hnBold,

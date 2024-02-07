@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
+import RNRestart from "react-native-restart"; // Import package from node modules
 
 import useStore from "@services/zustand/store";
 import { getCurrentUser } from "@services/api/user.api";
@@ -62,6 +63,7 @@ export const useUserHook = () => {
     setUserData(null);
     setLinkAvatar("");
     initListFollow([]);
+    RNRestart.restart();
   };
 
   const renderViewRequestLogin = () => {
@@ -75,7 +77,7 @@ export const useUserHook = () => {
           borderRadius: 8,
         }}
       >
-        {/* <Text
+        <Text
           style={{
             ...CommonStyle.hnRegular,
             fontSize: 20,
@@ -84,7 +86,7 @@ export const useUserHook = () => {
           }}
         >
           {translations.login.requireLogin}
-        </Text> */}
+        </Text>
         <TouchableOpacity
           style={CommonStyle.btnActive}
           onPress={() => {

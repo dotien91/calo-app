@@ -277,7 +277,7 @@ export const styles = StyleSheet.create({
   },
   clearBtn: {
     position: "absolute",
-    right: 0,
+    left: 0,
     top: 20,
     zIndex: 1,
   },

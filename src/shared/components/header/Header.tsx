@@ -12,6 +12,7 @@ import * as NavigationService from "react-navigation-helpers";
 
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
+
 interface HeaderProps {
   iconNameLeft?: string;
   iconNameRight?: string;
