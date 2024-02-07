@@ -75,7 +75,7 @@ const CourseFilterModalInnter = ({
       skills: listCourseFilterParams?.[EnumCourseFilter.skills] || [],
       price: [
         listCourseFilterParams?.["min_price"] || 0,
-        listCourseFilterParams?.["max_price"] || 1e9,
+        listCourseFilterParams?.["max_price"] || 1e8,
       ],
       levels: listCourseFilterParams?.[EnumCourseFilter.levels] || [],
       onlyEnglishNativeSpeakers: false,
@@ -153,9 +153,9 @@ const CourseFilterModalInnter = ({
               control={control}
               render={({ field: { onChange, value } }) => (
                 <SliderWithInput
-                  value={value || [0, 1e9]}
+                  value={value || [0, 1e8]}
                   onChange={onChange}
-                  defaultValue={[0, 1e9]}
+                  defaultValue={[0, 1e8]}
                   setError={setError}
                   clearErrors={clearErrors}
                 />
@@ -200,7 +200,7 @@ const CourseFilterModalInnter = ({
     reset({
       types: params?.types || [],
       skills: params?.skills || [],
-      price: [0, 1e9],
+      price: [0, 1e7],
       levels: params?.levels || [],
       onlyEnglishNativeSpeakers: false,
     });
@@ -277,7 +277,7 @@ export const styles = StyleSheet.create({
   },
   clearBtn: {
     position: "absolute",
-    left: 0,
+    right: 0,
     top: 20,
     zIndex: 1,
   },

@@ -3,7 +3,6 @@ import {
   Text,
   TouchableWithoutFeedback,
   Keyboard,
-  Pressable,
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
@@ -90,7 +89,6 @@ export default function LoginWithEmailScreen() {
   const pressRegister = () => {
     NavigationService.push(SCREENS.SIGN_UP);
   };
-
 
   const pressForgotPassword = () => {
     NavigationService.push(SCREENS.FORGOT_PASSWORD);

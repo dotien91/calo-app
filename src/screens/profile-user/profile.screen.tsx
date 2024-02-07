@@ -246,6 +246,7 @@ const ProfileUser = (props: ProfileUserProps) => {
         <EmptyResultView
           title={translations.post.emptyListSave}
           icon="document-text-outline"
+          showLottie={false}
         />
       </View>
     );
@@ -263,6 +264,7 @@ const ProfileUser = (props: ProfileUserProps) => {
         <EmptyResultView
           title={translations.post.emptyPost}
           icon="document-text-outline"
+          showLottie={false}
         />
       </View>
     );

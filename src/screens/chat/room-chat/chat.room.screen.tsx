@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, Platform } from "react";
-import { SafeAreaView, View, Text } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import { GiftedChat } from "react-native-gifted-chat";
 import emojiUtils from "emoji-utils";
 import uuid from "react-native-uuid";
@@ -20,18 +20,18 @@ import { useChatHistory } from "@helpers/hooks/useChatHistory";
 import { useUploadFile } from "@helpers/hooks/useUploadFile";
 import { getStatusBarHeight } from "react-native-safearea-height";
 import SearchInput from "../../../shared/components/search-input.tsx/search.input";
-import CommonStyle from "@theme/styles";
 import { translations } from "@localization";
 import EmptyResultView from "@shared-components/empty.data.component";
 import createStyles from "./chat.room.screen.style";
 import LoadingList from "@shared-components/loading.list.component";
-
+import { useFooBar } from "@services/zustand/chat.media.store";
 interface ChatRoomScreenProps {}
 
 const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
   const userData = useStore((state) => state.userData);
   const theme = useTheme();
   const styles = React.useMemo(() => createStyles(theme), [theme]);
+  const { foo, bar } = useFooBar();
 
   const [txtSearch, setTxtSearch] = React.useState("");
   const setSearchModeChat = useStore((state) => state.setSearchModeChat);
@@ -56,7 +56,8 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
     roomDetail,
     isEmptyMessage,
     isLoadmore,
-  } = useChatHistory(txtSearch);
+    loading,
+  } = useChatHistory(txtSearch, searchModeChat);
 
   const {
     uploadRecord,
@@ -182,10 +183,9 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
   const renderSearchView = () => {
     return (
       <>
-        {searchModeChat && !messages.length && (
-          <View style={{ ...CommonStyle.flexCenter, padding: 12, flex: 1 }}>
-            <Text style={CommonStyle.hnMedium}>{translations.noResult}</Text>
-          </View>
+        {/* {loading && <LoadingList numberItem={3} />} */}
+        {!loading && searchModeChat && !messages.length && (
+          <EmptyResultView title={translations.noResult} />
         )}
         {searchModeChat && (
           <SearchInput
@@ -202,6 +202,11 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
   const renderHeaderChat = () => {
     if (!isLoadmore) return null;
     return <LoadingList />;
+  };
+
+  const renderTopChat = () => {
+    if (!loading) return null;
+    return <LoadingList numberItem={3} />;
   };
 
   return (
@@ -221,6 +226,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
         showAvatarForEveryMessage={true}
         listViewProps={{
           ListFooterComponent: renderHeaderChat,
+          ListHeaderComponent: renderTopChat,
           scrollEventThrottle: 400,
           onScroll: ({ nativeEvent }) => {
             if (isCloseToTop(nativeEvent)) {

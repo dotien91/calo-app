@@ -83,6 +83,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
         <EmptyResultView
           title={translations.notifications.emptyNotification}
           icon="document-text-outline"
+          showLottie={false}
         />
       )}
       <FlatList

@@ -8,6 +8,8 @@ import MultiSlider from "@ptomasroos/react-native-multi-slider";
  */
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
+import { Device } from "@utils/device.ui.utils";
+import { numberWithCommas } from "@utils/string.utils";
 // import { numberWithCommas } from "@utils/string.utils";
 
 interface SliderWithInputType {
@@ -59,42 +61,44 @@ const SliderWithInput = React.memo(
     return (
       <View style={{ flex: 1 }}>
         <MultiSlider
-          max={1e9}
+          max={1e8}
           min={0}
           step={1e4}
           enabledTwo
-          values={[Number(value[0]) || 0, Number(value[1]) || 1e9]}
+          values={[Number(value[0]) || 0, Number(value[1]) || 1e8]}
           containerStyle={{ marginHorizontal: 16, marginBottom: 8 }}
           onValuesChangeFinish={onChangeSlider}
           trackStyle={{ backgroundColor: "rgba(246, 248, 250, 1)" }}
+          sliderLength={Device.width - 60}
           selectedStyle={{ backgroundColor: palette.primary }}
           markerStyle={{
             ...CS.borderStyle,
             borderWidth: 2,
             width: 20,
             height: 20,
+            backgroundColor: palette.white,
             borderColor: palette.primary,
           }}
         />
         <View style={{ ...CS.flexRear }}>
           <TextInput
-            defaultValue={defaultValue[0] + ""}
+            defaultValue={defaultValue[0] + " đ"}
             style={styles.input}
             placeholderTextColor={palette.placeholder}
             placeholder="Minimum"
             keyboardType="numeric"
-            value={value[0]}
-            onChangeText={(v) => onChangeText(v, "min")}
+            value={numberWithCommas(value[0]) + " đ"}
+            // onChangeText={(v) => onChangeText(v, "min")}
           />
           <View style={{ width: 16 }} />
           <TextInput
-            defaultValue={defaultValue[1] + ""}
+            defaultValue={defaultValue[1] + " đ"}
             placeholderTextColor={palette.placeholder}
             style={styles.input}
             placeholder="Maximum"
             keyboardType="numeric"
-            value={value[1]}
-            onChangeText={(v) => onChangeText(v, "max")}
+            value={numberWithCommas(value[1]) + " đ"}
+            // onChangeText={(v) => onChangeText(v, "max")}
           />
         </View>
         {errotTxt && (

@@ -5,12 +5,15 @@ import { View, Text } from "react-native";
 import CommonStyle from "@theme/styles";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { palette } from "@theme/themes";
+import lotieNoResult from "assets/lotties/no-result.json";
+import { Device } from "@utils/device.ui.utils";
 
 interface IEmptyResultView {
   title?: string;
   desc?: string;
   icon?: string;
   lottieJson?: string;
+  showLottie?: boolean;
 }
 
 const EmptyResultView = ({
@@ -18,6 +21,7 @@ const EmptyResultView = ({
   desc,
   icon,
   lottieJson,
+  showLottie = true,
 }: IEmptyResultView) => {
   return (
     <View
@@ -26,6 +30,7 @@ const EmptyResultView = ({
         alignItems: "center",
         paddingHorizontal: 40,
         marginTop: 16,
+        minHeight: Device.height / 2,
       }}
     >
       {!!icon && (
@@ -37,9 +42,9 @@ const EmptyResultView = ({
           style={{ marginBottom: 16 }}
         />
       )}
-      {!!lottieJson && (
+      {showLottie && (
         <AnimatedLottieView
-          source={lottieJson}
+          source={lottieJson || lotieNoResult}
           style={{ width: 60, height: 60, marginBottom: 10 }}
           loop
           speed={1.5}

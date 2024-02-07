@@ -337,6 +337,7 @@ const PostDetail = (props: PostDetailProps) => {
           title={translations.post.emptyComment}
           desc={translations.post.emptyCommentDes}
           icon="chatbubbles-outline"
+          showLottie={false}
         />
       </View>
     );

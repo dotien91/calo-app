@@ -18,7 +18,7 @@ import { EnumMessageStatus } from "constants/chat.constant";
 
 const limit = 20;
 
-export const useChatHistory = (txtSearch: string) => {
+export const useChatHistory = (txtSearch: string, searchModeChat: boolean) => {
   const route = useRoute();
   const [chatRoomId, setChatRoomId] = useState(route.params?.["id"]);
 
@@ -31,6 +31,7 @@ export const useChatHistory = (txtSearch: string) => {
   const [isLoadmore, setIsLoadmore] = useState(false);
   const setCurrentMediaIds = useStore((state) => state.setCurrentMediaIds);
   const setSearchModeChat = useStore((state) => state.setSearchModeChat);
+  const [loading, setLoading] = useState(false);
 
   const pageNumber = useRef(1);
   const isFetching = useRef(false);
@@ -46,6 +47,7 @@ export const useChatHistory = (txtSearch: string) => {
 
   const _getChatHistory = () => {
     if (isFetching.current || noMoredata.current) return;
+    const showLoading = searchModeChat || !messages.length;
     isFetching.current = true;
     const params = {
       id: chatRoomId,
@@ -54,8 +56,10 @@ export const useChatHistory = (txtSearch: string) => {
       order_by: "DESC",
       search: txtSearch,
     };
+    if (showLoading) setLoading(true);
     getChatHistory(params).then((res) => {
       isFetching.current = false;
+      if (showLoading) setLoading(false);
       if (!res.isError) {
         setIsLoadmore(false);
         pageNumber.current = pageNumber.current + 1;
@@ -241,5 +245,6 @@ export const useChatHistory = (txtSearch: string) => {
     roomDetail,
     isEmptyMessage,
     isLoadmore,
+    loading,
   };
 };

@@ -126,6 +126,7 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
           title={translations.post.emptyPostTitle}
           desc={translations.post.emptyPostDes}
           icon="document-text-outline"
+          showLottie={false}
         />
       </View>
     );
