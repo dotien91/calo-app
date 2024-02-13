@@ -770,6 +770,7 @@ export default {
     private: "Security & privacy",
     support: "Customer support",
     aboutus: "About us",
+    mycouse: "My Course",
   },
   aboutUs: {
     aboutUs: "About us",

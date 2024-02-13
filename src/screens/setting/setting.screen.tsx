@@ -1,5 +1,11 @@
 import React, { useMemo } from "react";
-import { View, TouchableOpacity, Text, SafeAreaView } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  SafeAreaView,
+  Image,
+} from "react-native";
 import { useTheme } from "@react-navigation/native";
 /**
  * ? Local Imports
@@ -36,14 +42,26 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
 
   const listSetting = [
     {
+      title: translations.settingUser.mycouse,
+      icon: require("assets/images/book.png"),
+      action: () => {
+        NavigationService.navigate(SCREENS.MY_COURES);
+      },
+    },
+    {
       title: translations.settingUser.blackList,
+<<<<<<< HEAD
       icon: "person-remove-outline",
       action: () => {
         NavigationService.navigate(SCREENS.BLACK_LIST);
       },
+=======
+      icon: require("assets/images/blacklisticon.png"),
+      action: () => {},
+>>>>>>> 2e60093 (feat: fix conflict)
     },
     {
-      icon: "cog-outline",
+      icon: require("assets/images/settingicon.png"),
       title: translations.settingUser.setting,
       action: () => {
         NavigationService.navigate(SCREENS.SETTING_USER);
@@ -51,23 +69,21 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
     },
     {
       title: translations.settingUser.private,
-      icon: "lock-closed-outline",
+      icon: require("assets/images/securityicon.png"),
       action: () => {
         NavigationService.navigate(SCREENS.MY_COURES);
       },
     },
     {
       title: translations.settingUser.support,
-      icon: "people-circle-outline",
-      action: () => {
-        NavigationService.navigate(SCREENS.CHAT_ROOM, {
-          id: "6588f14e8d8b13bb432f7d2f",
-        });
-      },
+      icon: require("assets/images/supporticon.png"),
+      action: () => { NavigationService.navigate(SCREENS.CHAT_ROOM, {
+        id: "6588f14e8d8b13bb432f7d2f",
+      });},
     },
     {
       title: translations.settingUser.aboutus,
-      icon: "information-outline",
+      icon: require("assets/images/aboutusicon.png"),
       action: () => {
         NavigationService.navigate(SCREENS.ABOUT_ME);
       },
@@ -92,11 +108,10 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
               key={index}
             >
               <View style={styles.styleViewItemTitle}>
-                <Icon
-                  style={{ marginRight: 5 }}
-                  name={item.icon}
-                  type={IconType.Ionicons}
-                ></Icon>
+                <Image
+                  style={{ height: 20, width: 20, marginRight: 8 }}
+                  source={item.icon}
+                ></Image>
                 <Text style={styles.styleTextItemTitle}>{item.title}</Text>
               </View>
               <Icon

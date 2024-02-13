@@ -42,27 +42,27 @@ const SettingUser = () => {
         NavigationService.navigate(SCREENS.CHANGELANGUAGE);
       },
     },
-    {
-      title: translations.settingUser.hightandweigh,
-      detail: "cm/kg",
-      action: () => {
-        console.log("asd");
-      },
-    },
-    {
-      title: translations.settingUser.space,
-      detail: "km",
-      action: () => {
-        console.log("asd");
-      },
-    },
-    {
-      title: translations.settingUser.deletecache,
-      detail: " ",
-      action: () => {
-        console.log("asd");
-      },
-    },
+    // {
+    //   title: translations.settingUser.hightandweigh,
+    //   detail: "cm/kg",
+    //   action: () => {
+    //     console.log("asd");
+    //   },
+    // },
+    // {
+    //   title: translations.settingUser.space,
+    //   detail: "km",
+    //   action: () => {
+    //     console.log("asd");
+    //   },
+    // },
+    // {
+    //   title: translations.settingUser.deletecache,
+    //   detail: " ",
+    //   action: () => {
+    //     console.log("asd");
+    //   },
+    // },
     {
       title: translations.settingUser.noti,
       action: () => {},

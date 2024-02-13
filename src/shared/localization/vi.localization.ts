@@ -1282,6 +1282,7 @@ export default {
     private: "Bảo mật & riêng tư",
     support: "Hỗ trợ khách hàng",
     aboutus: "Về chúng tôi",
+    mycouse: "Khoá học của tôi",
   },
   aboutUs: {
     aboutUs: "Về chúng tôi",
