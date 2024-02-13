@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { useTheme } from "@react-navigation/native";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Linking, Text, TouchableOpacity, View } from "react-native";
+
 import Header from "@shared-components/header/Header";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import createStyles from "./about.me.style";
@@ -27,27 +28,37 @@ const AboutMe = () => {
     {
       showItemisLogin: false,
       title: translations.aboutUs.aboutUs,
-      action: () => {},
+      action: () => {
+        OpenURLButton("https://docs.ieltshunter.io/");
+      },
     },
     {
       showItemisLogin: false,
       title: translations.aboutUs.termofus,
-      action: () => {},
+      action: () => {
+        OpenURLButton("https://docs.ieltshunter.io/");
+      },
     },
     {
       showItemisLogin: false,
       title: translations.aboutUs.privacy,
-      action: () => {},
+      action: () => {
+        OpenURLButton("https://docs.ieltshunter.io/");
+      },
     },
     {
       showItemisLogin: false,
       title: translations.aboutUs.cookie,
-      action: () => {},
+      action: () => {
+        OpenURLButton("https://docs.ieltshunter.io/");
+      },
     },
     {
       showItemisLogin: false,
       title: translations.aboutUs.return,
-      action: () => {},
+      action: () => {
+        OpenURLButton("https://docs.ieltshunter.io/");
+      },
     },
     {
       showItemisLogin: true,
@@ -84,6 +95,10 @@ const AboutMe = () => {
           message: "Xoá tài khoản thất bại",
         });
       });
+  };
+
+  const OpenURLButton = (url: string) => {
+    Linking.openURL(url);
   };
 
   const renderAboutMe = () => {

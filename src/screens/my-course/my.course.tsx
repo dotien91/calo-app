@@ -1,5 +1,10 @@
 import React from "react";
-import { FlatList, Text, View, useWindowDimensions } from "react-native";
+import {
+  FlatList,
+  Text,
+  View,
+  useWindowDimensions,
+} from "react-native";
 import { useTheme } from "@react-navigation/native";
 import Header from "@shared-components/header/Header";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
