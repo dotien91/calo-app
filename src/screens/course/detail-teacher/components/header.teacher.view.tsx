@@ -1,9 +1,3 @@
-import { translations } from "@localization";
-import Avatar from "@shared-components/user/Avatar";
-import CS from "@theme/styles";
-import { palette } from "@theme/themes";
-import IconSvg from "assets/svg";
-import { TypedUser } from "models";
 import * as React from "react";
 import {
   Text,
@@ -13,6 +7,14 @@ import {
   Linking,
 } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
+
+import { translations } from "@localization";
+import SkeletonPlaceholder from "@shared-components/skeleton";
+import Avatar from "@shared-components/user/Avatar";
+import CS from "@theme/styles";
+import { palette } from "@theme/themes";
+import IconSvg from "assets/svg";
+import { TypedUser } from "models";
 
 interface HeaderDetailTeacherProps {
   data?: TypedUser;
@@ -28,12 +30,31 @@ const HeaderDetailTeacher = ({ data }: HeaderDetailTeacherProps) => {
   const _openLinkingWeb = () => {
     Linking.openURL(data?.links[0].website);
   };
+
+  if (!data?._id) {
+    return (
+      <View style={styles.container}>
+        <View style={CS.center}>
+          <SkeletonPlaceholder>
+            <View style={styles.avatar} />
+          </SkeletonPlaceholder>
+        </View>
+        <SkeletonPlaceholder>
+          <View style={styles.txtFullname} />
+          <View style={styles.txtFullname} />
+          <View style={styles.txtFullname} />
+          <View style={styles.txtFullname} />
+        </SkeletonPlaceholder>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <View style={CS.center}>
         <Avatar
           sourceUri={{ uri: data?.user_avatar_thumbnail }}
-          style={{ width: 96, height: 96, borderRadius: 48 }}
+          style={styles.avatar}
         />
         <Text style={styles.txtFullname}>{data?.display_name}</Text>
       </View>
@@ -49,33 +70,42 @@ const HeaderDetailTeacher = ({ data }: HeaderDetailTeacherProps) => {
         </View>
       </View>
 
-      {data?.links.length > 0 && (
-        <View style={styles.viewCenter}>
-          {data?.links[0].facebook?.trim() !== "" && (
-            <TouchableOpacity onPress={_openLinkingFB} style={styles.viewIcon}>
-              <IconSvg name="icFacebook" size={32} color={palette.blue} />
-            </TouchableOpacity>
-          )}
-          {data?.links[0].youtube?.trim() !== "" && (
-            <TouchableOpacity
-              onPress={_openLinkingYoutube}
-              style={styles.viewIcon}
-            >
-              <IconSvg name="icSocialYoutube" size={32} />
-            </TouchableOpacity>
-          )}
-          {data?.links[0].website?.trim() !== "" && (
-            <TouchableOpacity onPress={_openLinkingWeb} style={styles.viewIcon}>
-              <IconSvg
-                name="icLink"
-                size={24}
-                rotate={45}
-                color={palette.text}
-              />
-            </TouchableOpacity>
-          )}
-        </View>
-      )}
+      {data?._id &&
+        (data?.links[0].facebook?.trim() !== "" ||
+          data?.links[0].facebook?.trim() !== "" ||
+          data?.links[0].facebook?.trim() !== "") && (
+          <View style={styles.viewCenter}>
+            {data?.links[0].facebook?.trim() !== "" && (
+              <TouchableOpacity
+                onPress={_openLinkingFB}
+                style={styles.viewIcon}
+              >
+                <IconSvg name="icFacebook" size={32} color={palette.blue} />
+              </TouchableOpacity>
+            )}
+            {data?.links[0].youtube?.trim() !== "" && (
+              <TouchableOpacity
+                onPress={_openLinkingYoutube}
+                style={styles.viewIcon}
+              >
+                <IconSvg name="icSocialYoutube" size={32} />
+              </TouchableOpacity>
+            )}
+            {data?.links[0].website?.trim() !== "" && (
+              <TouchableOpacity
+                onPress={_openLinkingWeb}
+                style={styles.viewIcon}
+              >
+                <IconSvg
+                  name="icLink"
+                  size={24}
+                  rotate={45}
+                  color={palette.text}
+                />
+              </TouchableOpacity>
+            )}
+          </View>
+        )}
     </View>
   );
 };
@@ -90,6 +120,7 @@ const styles = StyleSheet.create({
     ...CS.hnBold,
     fontSize: 20,
     marginTop: 8,
+    minHeight: 24,
   },
   viewCount: {
     marginTop: 8,
@@ -97,10 +128,13 @@ const styles = StyleSheet.create({
     height: 52,
     ...CS.center,
     flexDirection: "row",
+    gap: 8,
   },
   itemCount: {
     paddingHorizontal: 20,
     ...CS.center,
+    minHeight: 50,
+    minWidth: 60,
   },
   textCount: {
     ...CS.hnBold,
@@ -127,6 +161,11 @@ const styles = StyleSheet.create({
     ...CS.center,
     flexDirection: "row",
     gap: 16,
+  },
+  avatar: {
+    width: 96,
+    height: 96,
+    borderRadius: 48,
   },
 });
 

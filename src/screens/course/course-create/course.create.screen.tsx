@@ -14,6 +14,7 @@ import BottomSheet, {
   BottomSheetScrollView,
 } from "@gorhom/bottom-sheet";
 import * as NavigationService from "react-navigation-helpers";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 import InputHook from "@shared-components/form/InputHookForm";
 import CS from "@theme/styles";
@@ -109,7 +110,7 @@ const CourseCreate = () => {
   };
 
   const refBottomSheet = React.useRef<BottomSheet>(null);
-  const snapPoints = React.useMemo(() => ["60%"], []);
+  const snapPoints = React.useMemo(() => [300], []);
 
   const onSubmit = (data) => {
     console.log("idvideo...", typeMedia);
@@ -246,16 +247,18 @@ const CourseCreate = () => {
       const _onSelectLevel = () => {
         setLevel(item.value);
       };
-      const isSeleted = level === item.value;
+      const isSelected = level === item.value;
       return (
         <PressableBtn
           onPress={_onSelectLevel}
           style={[
             styles.durationBtn,
-            isSeleted && { backgroundColor: palette.primary },
+            isSelected && { backgroundColor: palette.primary },
           ]}
         >
-          <Text style={[styles.txtBtn]}>{item.value}</Text>
+          <Text style={[styles.txtBtn, isSelected && { color: palette.white }]}>
+            {item.value}
+          </Text>
         </PressableBtn>
       );
     };
@@ -263,7 +266,7 @@ const CourseCreate = () => {
     return (
       <View style={styles.selectBox}>
         <Text style={styles.label}>{translations.course.filterLevel}</Text>
-        <View style={CS.flexRear}>
+        <View style={[CS.flexRear, { gap: 8 }]}>
           {listLevel.map((item) => renderLevelBtn(item))}
         </View>
       </View>
@@ -288,7 +291,9 @@ const CourseCreate = () => {
             isSelected && { backgroundColor: palette.primary },
           ]}
         >
-          <Text style={[styles.txtBtn]}>{item.value}</Text>
+          <Text style={[styles.txtBtn, isSelected && { color: palette.white }]}>
+            {item.value}
+          </Text>
         </PressableBtn>
       );
     };
@@ -296,7 +301,7 @@ const CourseCreate = () => {
     return (
       <View style={styles.selectBox}>
         <Text style={styles.label}>{translations.course.skills}</Text>
-        <View style={CS.flexRear}>
+        <View style={[CS.flexRear, { gap: 8 }]}>
           {listSkill.map((item) => renderSkillBtn(item))}
         </View>
       </View>
@@ -306,7 +311,7 @@ const CourseCreate = () => {
   const renderSelectTypeCourse = () => {
     return (
       <>
-        <Text style={{ ...CS.hnMedium, marginTop: 8 }}>
+        <Text style={{ ...CS.hnMedium, marginVertical: 8 }}>
           {translations.course.typeCourse}
         </Text>
         <PressableBtn onPress={openListTypeCourse}>
@@ -316,9 +321,11 @@ const CourseCreate = () => {
               borderWidth: 1,
               borderColor: palette.borderColor,
               borderRadius: 8,
+              ...CS.row,
             }}
           >
-            <Text style={CS.hnRegular}>{typeCourse}</Text>
+            <Text style={[CS.hnRegular, { flex: 1 }]}>{typeCourse}</Text>
+            <Icon size={24} name={"chevron-down"} type={IconType.Ionicons} />
           </View>
         </PressableBtn>
       </>
@@ -353,7 +360,7 @@ const CourseCreate = () => {
             },
           }}
           errorTxt={errors.title?.message}
-          maxLength={32}
+          maxLength={100}
           showPlaceholder
         />
         <InputHook
@@ -372,7 +379,8 @@ const CourseCreate = () => {
             },
           }}
           errorTxt={errors.description?.message}
-          maxLength={32}
+          maxLength={500}
+          multiline
           showPlaceholder
         />
         <InputHook
@@ -449,75 +457,10 @@ const CourseCreate = () => {
           {renderSelectLevel()}
           {renderSelectSkill()}
         </View>
-        {listTypeCourse.length > 0 && (
-          <BottomSheet
-            snapPoints={snapPoints}
-            index={-1}
-            enablePanDownToClose
-            ref={refBottomSheet}
-            style={{
-              borderTopLeftRadius: 16,
-              borderTopRightRadius: 16,
-              backgroundColor: colors.background,
-            }}
-            backdropComponent={(props) => (
-              <BottomSheetBackdrop
-                {...props}
-                disappearsOnIndex={-1}
-                appearsOnIndex={0}
-                pressBehavior={"close"}
-                opacity={0.1}
-              />
-            )}
-            backgroundComponent={CustomBackground}
-          >
-            <View style={[{ paddingHorizontal: 16, ...CS.flex1 }]}>
-              <Text
-                style={{
-                  ...CS.hnSemiBold,
-                  textAlign: "center",
-                  fontSize: 20,
-                  color: colors.primary,
-                }}
-              >
-                {translations.postCategory}
-              </Text>
-              <BottomSheetScrollView
-                style={{
-                  ...CS.flex1,
-                  backgroundColor: colors.background,
-                }}
-              >
-                {listTypeCourse.map((i) => (
-                  <PressableBtn
-                    key={i.index}
-                    style={
-                      i.value === typeCourse
-                        ? styles.categorySelected
-                        : styles.category
-                    }
-                    onPress={() => {
-                      refBottomSheet.current?.close();
-                      setTypeCourse(i.value);
-                    }}
-                  >
-                    <Text
-                      style={{
-                        ...CS.hnSemiBold,
-                        fontSize: 16,
-                        color: colors.primary,
-                      }}
-                    >{`${i.value}`}</Text>
-                  </PressableBtn>
-                ))}
-              </BottomSheetScrollView>
-            </View>
-          </BottomSheet>
-        )}
 
         <Button
           style={{
-            marginHorizontal: 16,
+            marginHorizontal: 20,
             marginTop: 16,
             backgroundColor: updating ? colors.placeholder : colors.primary,
             zIndex: -1,
@@ -532,6 +475,71 @@ const CourseCreate = () => {
         />
         <View style={{ height: 80 }} />
       </ScrollView>
+      {listTypeCourse.length > 0 && (
+        <BottomSheet
+          snapPoints={snapPoints}
+          index={-1}
+          enablePanDownToClose
+          ref={refBottomSheet}
+          style={{
+            borderTopLeftRadius: 16,
+            borderTopRightRadius: 16,
+            backgroundColor: colors.background,
+          }}
+          backdropComponent={(props) => (
+            <BottomSheetBackdrop
+              {...props}
+              disappearsOnIndex={-1}
+              appearsOnIndex={0}
+              pressBehavior={"close"}
+              opacity={0.1}
+            />
+          )}
+          backgroundComponent={CustomBackground}
+        >
+          <View style={[{ paddingHorizontal: 16, ...CS.flex1 }]}>
+            <Text
+              style={{
+                ...CS.hnSemiBold,
+                textAlign: "center",
+                fontSize: 20,
+                color: colors.primary,
+              }}
+            >
+              {translations.course.typeCourse}
+            </Text>
+            <BottomSheetScrollView
+              style={{
+                ...CS.flex1,
+                backgroundColor: colors.background,
+              }}
+            >
+              {listTypeCourse.map((i) => (
+                <PressableBtn
+                  key={i.index}
+                  style={
+                    i.value === typeCourse
+                      ? styles.categorySelected
+                      : styles.category
+                  }
+                  onPress={() => {
+                    refBottomSheet.current?.close();
+                    setTypeCourse(i.value);
+                  }}
+                >
+                  <Text
+                    style={{
+                      ...CS.hnSemiBold,
+                      fontSize: 16,
+                      color: colors.primary,
+                    }}
+                  >{`${i.value}`}</Text>
+                </PressableBtn>
+              ))}
+            </BottomSheetScrollView>
+          </View>
+        </BottomSheet>
+      )}
     </KeyboardAvoidingView>
   );
 };
@@ -562,12 +570,12 @@ const styles = StyleSheet.create({
     backgroundColor: palette.background,
     borderWidth: 1,
     borderColor: palette.borderColor,
-    marginHorizontal: 4,
+    // marginHorizontal: 4,
     ...CS.flexCenter,
     borderRadius: 4,
   },
   selectBox: {
-    marginBottom: 16,
+    marginTop: 8,
   },
   txtBtn: {
     ...CS.hnSemiBold,

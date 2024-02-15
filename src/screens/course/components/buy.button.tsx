@@ -1,11 +1,12 @@
+import * as React from "react";
+import { Text, StyleSheet } from "react-native";
+import * as NavigationService from "react-navigation-helpers";
+
 import { translations } from "@localization";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { ICourseItem, EnumClassType } from "models/course.model";
-import * as React from "react";
-import { Text, StyleSheet } from "react-native";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
-import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "constants";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import { showWarningLogin } from "@helpers/super.modal.helper";
@@ -36,6 +37,9 @@ const BuyButton = ({ data, type }: BuyButtonProps) => {
       courseData: data,
     });
   };
+  if (!data?._id) {
+    return null;
+  }
 
   if (type === "full") {
     return (

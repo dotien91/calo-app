@@ -21,7 +21,7 @@ const LikeSharePostItem = ({ data, pressComment }: LikeSharePostItemProps) => {
   const styles = React.useMemo(() => createStyles(theme), [theme]);
 
   const _sharePost = () => {
-    sharePost(data.post_slug);
+    sharePost(data._id);
   };
   return (
     <View style={styles.containerLikeShare}>

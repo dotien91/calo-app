@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet, Image } from "react-native";
+import { Text, View, StyleSheet, Image, Pressable } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
 import { ICourseItem } from "models/course.model";
@@ -13,19 +13,78 @@ import StarRate from "@screens/course/components/star.rate.view";
 import IconSvg from "assets/svg";
 import { SCREENS } from "constants";
 import { WindowWidth } from "@freakycoder/react-native-helpers";
+import SkeletonPlaceholder from "@shared-components/skeleton";
+import {
+  EnumModalContentType,
+  EnumStyleModalType,
+  showSuperModal,
+} from "@helpers/super.modal.helper";
+import { formatLanguage } from "@utils/string.utils";
 
 interface HeaderCourseProps {
   data?: ICourseItem;
 }
 
 const HeaderCourse = ({ data }: HeaderCourseProps) => {
-  const _playVideo = () => {};
+  const _playVideo = () => {
+    if (data?.media_id) {
+      showSuperModal({
+        contentModalType: EnumModalContentType.Library,
+        styleModalType: EnumStyleModalType.Middle,
+        data: {
+          listMedia: [data.media_id],
+          index: 0,
+        },
+      });
+    } else {
+      if (data?.avatar) {
+        showSuperModal({
+          contentModalType: EnumModalContentType.Library,
+          styleModalType: EnumStyleModalType.Middle,
+          data: {
+            listMedia: [data.avatar],
+            index: 0,
+          },
+        });
+      }
+    }
+  };
 
   const _gotoDetailTeacher = () => {
     NavigationService.navigate(SCREENS.TEACHER_DETAIL, {
       idTeacher: data?.user_id?._id,
     });
   };
+
+  if (!data?._id) {
+    return (
+      <View>
+        <SkeletonPlaceholder>
+          <View
+            style={{
+              height: (WindowWidth / 16) * 9,
+              ...CS.center,
+              marginHorizontal: -16,
+            }}
+          />
+        </SkeletonPlaceholder>
+        <View style={{ marginHorizontal: 16 }}>
+          <SkeletonPlaceholder>
+            <View style={styles.textTitle} />
+            <View style={styles.textDescription} />
+            <View style={{ height: 40, width: 150, marginTop: 10 }} />
+            <View style={styles.txtcount} />
+            <View style={styles.textCreateBy} />
+            <View style={styles.textCreateBy} />
+            <View style={styles.textCreateBy} />
+            <View style={styles.textCreateBy} />
+            <View style={styles.textCreateBy} />
+          </SkeletonPlaceholder>
+        </View>
+      </View>
+    );
+  }
+  console.log(JSON.stringify(data, null, 2));
 
   return (
     <View style={styles.container}>
@@ -49,24 +108,35 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
           }}
         />
         {data?.media_id?.media_thumbnail && <PlayVideo onPress={_playVideo} />}
-        <View
-          style={{
-            position: "absolute",
-            height: 60,
-            backgroundColor: palette.black,
-            opacity: 0.6,
-            bottom: 0,
-            left: 0,
-            right: 0,
-            zIndex: 1,
-            paddingLeft: 33,
-            ...CS.center,
-          }}
-        >
-          <Text style={{ ...CS.hnMedium, color: palette.white }}>
-            {translations.course.previewThisCourse}
-          </Text>
-        </View>
+        {data?.media_id?.media_thumbnail && (
+          <View
+            style={{
+              position: "absolute",
+              height: 60,
+              backgroundColor: palette.black,
+              opacity: 0.6,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              zIndex: 1,
+              paddingLeft: 33,
+              ...CS.center,
+            }}
+          >
+            <Text style={{ ...CS.hnMedium, color: palette.white }}>
+              {translations.course.watchIntro}
+            </Text>
+          </View>
+        )}
+        {!data?.media_id && (
+          <Pressable
+            onPress={_playVideo}
+            style={{
+              ...CS.fillParent,
+              ...CS.center,
+            }}
+          ></Pressable>
+        )}
       </View>
       <Text style={styles.textTitle}>{data?.title}</Text>
       <Text style={styles.textDescription}>{data?.description}</Text>
@@ -117,7 +187,7 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
 
       <View style={styles.viewUpdate}>
         <IconSvg name="icCC" size={20} color={palette.textOpacity8} />
-        <Text style={styles.txtUpdate}>{data?.language}</Text>
+        <Text style={styles.txtUpdate}>{formatLanguage(data?.language)}</Text>
       </View>
       {data?.promotion == 0 ? (
         <View style={styles.viewPrice}>
@@ -152,6 +222,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     lineHeight: 32,
     marginTop: 16,
+    minHeight: 32,
   },
   viewUpdate: {
     flexDirection: "row",
@@ -164,16 +235,19 @@ const styles = StyleSheet.create({
     lineHeight: 16,
     textAlignVertical: "center",
     marginTop: 8,
+    minHeight: 16,
   },
   textDescription: {
     ...CS.hnMedium,
     marginTop: 8,
     lineHeight: 24,
+    minHeight: 24,
   },
   textCreateBy: {
     ...CS.hnMedium,
     color: palette.textOpacity8,
     marginTop: 8,
+    minHeight: 20,
   },
   textAuthor: {
     color: palette.primary,
