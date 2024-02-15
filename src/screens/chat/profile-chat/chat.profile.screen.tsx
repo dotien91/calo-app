@@ -311,7 +311,7 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
             data={mediaIdsShow}
             customStyleBox={{
               flex: 1,
-              ...CommonStyle.flexRear,
+              ...CommonStyle.flexStart,
             }}
           />
           {mediaIds.length > numberItemsMediaShow && (

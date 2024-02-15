@@ -52,7 +52,6 @@ const ListActionOfComment = ({ data }: ListActionOfComment) => {
 
   const showWarrningDelete = () => {
     //close bottomsheet
-    closeSuperModal();
     showSuperModal({
       contentModalType: EnumModalContentType.Confirm,
       styleModalType: EnumStyleModalType.Middle,
@@ -99,7 +98,7 @@ const ListActionOfComment = ({ data }: ListActionOfComment) => {
   const openReport = () => {
     showSuperModal({
       contentModalType: EnumModalContentType.Report,
-      styleModalType: EnumStyleModalType.Middle,
+      styleModalType: EnumStyleModalType.Bottom,
       data: {
         report_type: "comment",
         partner_id: data?.user_id?._id,
@@ -139,6 +138,7 @@ const styles = StyleSheet.create({
   container: {
     ...CommonStyle.flex1,
     paddingBottom: getBottomSpace(),
+    marginTop: 40,
   },
 });
 export default ListActionOfComment;

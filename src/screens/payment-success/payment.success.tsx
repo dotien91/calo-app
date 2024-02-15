@@ -11,7 +11,6 @@ import LottieView from "lottie-react-native";
 import * as NavigationService from "react-navigation-helpers";
 
 import { translations } from "@localization";
-import Header from "@shared-components/header/Header";
 import createStyles from "./payment.success.style";
 import { SCREENS } from "constants";
 import CS from "@theme/styles";

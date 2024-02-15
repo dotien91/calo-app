@@ -1,5 +1,5 @@
 import React from "react";
-import { useWindowDimensions, StyleSheet, ViewStyle } from "react-native";
+import { StyleSheet, ViewStyle } from "react-native";
 import Modal, { ModalProps } from "react-native-modal";
 
 interface IStickBottomModalProps extends ModalProps {
@@ -9,23 +9,15 @@ interface IStickBottomModalProps extends ModalProps {
 
 /**Modal stick at of page */
 export default function StickBottomModal({
-  heightPercent,
   children,
-  style,
   backdropOpacity,
   ...restProps
 }: IStickBottomModalProps) {
-  const { height, width } = useWindowDimensions();
-
   return (
     <Modal
       {...restProps}
       backdropOpacity={backdropOpacity || 0.5}
-      style={[
-        style,
-        styles.modal,
-        { minHeight: height * (heightPercent || 0.1), width },
-      ]}
+      style={styles.modal}
     >
       {/* {typeof header === "string" ? (
         <View style={styles.headerWrap}>
@@ -56,12 +48,7 @@ interface Style {
 
 const styles = StyleSheet.create<Style>({
   modal: {
-    position: "absolute",
-    bottom: 0,
     margin: 0,
-    zIndex: 1,
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
-    backgroundColor: "red",
+    padding: 0,
   },
 });

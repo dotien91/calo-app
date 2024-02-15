@@ -1,10 +1,9 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { SafeAreaView } from "react-native";
-import { useTheme, useRoute } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
 /**
  * ? Local Imports
  */
-import createStyles from "../purchase.style";
 import Header from "@shared-components/header/Header";
 import { translations } from "@localization";
 import { getCourseClassListById } from "@services/api/course.api";
@@ -15,8 +14,6 @@ import CS from "@theme/styles";
 interface ChooseClassScreenProps {}
 
 const ChooseClassScreen: React.FC<ChooseClassScreenProps> = () => {
-  const theme = useTheme();
-  const styles = useMemo(() => createStyles(theme), [theme]);
   const [classData, setClassData] = React.useState(null);
   const route = useRoute();
   const courseData = route.params?.["courseData"];

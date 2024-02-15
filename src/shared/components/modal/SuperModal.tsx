@@ -130,12 +130,18 @@ const SuperModal: React.FC<SuperModalProps> = () => {
     );
   };
 
+  console.log(
+    "contentModalTypecontentModalTypecontentModalType",
+    contentModalType == EnumModalContentType.Report,
+  );
+
   if (styleModalType == EnumStyleModalType.Bottom) {
     return (
       <StickBottomModal
         isVisible={true}
         onBackdropPress={closeModal}
-        onPressClose={closeModal}
+        swipeDirection={["down"]}
+        onSwipeComplete={closeModal}
       >
         <View style={styles.bottomInner}>
           <IconBtn
@@ -184,7 +190,6 @@ const SuperModal: React.FC<SuperModalProps> = () => {
       <Modal
         isVisible={true}
         onBackdropPress={closeModal}
-        onSwipeComplete={closeModal}
         onBackButtonPress={closeModal}
         useNativeDriver={true}
         style={getStyleModal()}
@@ -208,12 +213,16 @@ const styles = StyleSheet.create({
     ...CommonStyle.flexCenter,
   },
   bottomInner: {
-    ...CommonStyle.flex1,
+    // ...CommonStyle.flex1,
     backgroundColor: palette.white,
     paddingHorizontal: 16,
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     paddingVertical: 16,
+    position: "absolute",
+    left: 0,
+    bottom: 0,
+    right: 0,
   },
   modalMedia: {
     ...CommonStyle.flexCenter,

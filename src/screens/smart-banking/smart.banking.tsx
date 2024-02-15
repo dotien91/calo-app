@@ -70,7 +70,7 @@ const SmartBanking = () => {
 
   const goBackHome = () => {
     NavigationService.navigate(SCREENS.COURSE_LIST);
-  }
+  };
 
   const copyToClipboard = () => {
     Clipboard.setString("adasds");
@@ -183,7 +183,7 @@ const SmartBanking = () => {
             )}
           </TouchableOpacity>
         )}
-        <View style={{height: 12}} />
+        <View style={{ height: 12 }} />
         <TouchableOpacity onPress={goBackHome} style={styles.styleBtnSend}>
           <Text style={styles.styleTextSend}>{translations.goBackHome}</Text>
         </TouchableOpacity>

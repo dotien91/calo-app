@@ -161,6 +161,7 @@ const styles = StyleSheet.create({
   container: {
     ...CommonStyle.flex1,
     paddingBottom: getBottomSpace(),
+    marginTop: 40,
   },
 });
 

@@ -270,7 +270,7 @@ const BookLessonSelectView: React.FC<BookLessonSelectViewProps> = () => {
     );
   };
 
-  if (!data?.length) return null
+  if (!data?.length) return null;
 
   return (
     <ScrollView style={styles.container}>

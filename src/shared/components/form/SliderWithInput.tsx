@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useMemo } from "react";
 import { View, StyleSheet, TextInput, Text } from "react-native";
 // import { useTheme } from "@react-navigation/native";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";

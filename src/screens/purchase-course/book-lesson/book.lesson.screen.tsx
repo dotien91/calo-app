@@ -1,10 +1,8 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { SafeAreaView } from "react-native";
-import { useTheme } from "@react-navigation/native";
 /**
  * ? Local Imports
  */
-import createStyles from "../purchase.style";
 import Header from "@shared-components/header/Header";
 import BookLessonSelectView from "./book.lesson.select.view";
 import { translations } from "@localization";
@@ -13,8 +11,6 @@ import CS from "@theme/styles";
 interface BookLessonScreenProps {}
 
 const BookLessonScreen: React.FC<BookLessonScreenProps> = () => {
-  const theme = useTheme();
-  const styles = useMemo(() => createStyles(theme), [theme]);
 
   return (
     <SafeAreaView style={CS.safeAreaView}>

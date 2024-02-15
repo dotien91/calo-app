@@ -50,6 +50,7 @@ export default ActionMore;
 const styles = StyleSheet.create({
   container: {
     marginBottom: getBottomSpace(),
+    marginTop: 40,
   },
   viewItem: {
     flexDirection: "row",
