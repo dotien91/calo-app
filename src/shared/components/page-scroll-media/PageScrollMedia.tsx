@@ -67,7 +67,7 @@ const PagerScrollMedia = ({
         <View key={index} style={styles.viewBackground}>
           <VideoPlayer
             mediaUrl={item?.media_url}
-            height={heightMedia}
+            height={Dimensions.get("window").height}
             width={width}
             resizeMode="contain"
             autoPlay={true}
@@ -104,7 +104,7 @@ const PagerScrollMedia = ({
         <Image
           style={{ height: 50, width: 50 }}
           source={{ uri: item?.media_url }}
-          resizeMode="contain"
+          resizeMode="cover"
         ></Image>
       </TouchableOpacity>
     );
@@ -135,6 +135,12 @@ const PagerScrollMedia = ({
     if (index * 50 + 5 - 50 / 2 > Dimensions.get("window").width / 2) {
       caroselRef?.current?.scrollToOffset({
         offset: index * (50 + 10) - Dimensions.get("window").width / 2 + 50 / 2,
+        animated: true,
+      });
+    }
+    if (index * 50 + 5 - 50 / 2 < Dimensions.get("window").width / 2) {
+      caroselRef?.current?.scrollToOffset({
+        offset: 0,
         animated: true,
       });
     }
