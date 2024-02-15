@@ -42,6 +42,7 @@ export default {
   sendingError: "An error occurred!",
   createPassSuccess: "Create new password success!",
   loginSuccess: "Login success!",
+  goBackHome: "Go back home",
   error: {
     unknown: "Unknow error!",
     invalidPhoneEmail: "Phone/Email invalid",
@@ -384,7 +385,7 @@ export default {
     price_high: "Price: highest first",
     rating: "Highest rating",
     newest: "Sort by newest",
-    teacher: "Teacher",
+    teacher: "Tutor",
     lastUpdate: "Last update",
     buyNow: "Buy now",
     addToCart: "Add to cart",

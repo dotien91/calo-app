@@ -66,7 +66,6 @@ const CheckoutScreen = () => {
       }
       countCheckPaymentSuccess.current += 1;
       getOrderDetail(tradeId).then((res) => {
-        console.log("ressssss", res);
         if (!res.isError) {
           if (res.data.status == "success") {
             //alert success
@@ -80,8 +79,7 @@ const CheckoutScreen = () => {
     }, 3000);
     return () => {
       if (intervalCheckPaymentSuccess)
-        !!intervalCheckPaymentSuccess &&
-          clearInterval(intervalCheckPaymentSuccess);
+        clearInterval(intervalCheckPaymentSuccess);
     };
   }, [tradeId, appStateStatus]);
 
@@ -364,7 +362,7 @@ const CheckoutScreen = () => {
     };
 
     createVnpayUrl(data).then(async (res) => {
-      console.log("createVnpayUrl res", res)
+      console.log("createVnpayUrl res", res);
       closeSuperModal();
       if (!res.isError) {
         const url = res.data?.redirect_url;

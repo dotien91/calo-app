@@ -15,6 +15,7 @@ export default (theme: ExtendedTheme) => {
       flex: 1,
       backgroundColor: colors.background,
       paddingHorizontal: 16,
+      ...CS.safeAreaView,
     },
     classBox: {
       borderRadius: 8,

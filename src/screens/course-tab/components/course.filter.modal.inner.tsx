@@ -200,7 +200,7 @@ const CourseFilterModalInnter = ({
     reset({
       types: params?.types || [],
       skills: params?.skills || [],
-      price: [0, 1e7],
+      price: [0, 1e8],
       levels: params?.levels || [],
       onlyEnglishNativeSpeakers: false,
     });

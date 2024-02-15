@@ -42,6 +42,7 @@ export default {
   startNow: "Bắt đầu",
   createPassSuccess: "Tạo mật khẩu mới thành công!",
   loginSuccess: "Đăng nhập thành công!",
+  goBackHome: "Quay về trang chủ",
   error: {
     unknown: "Có lỗi không xác định xảy ra!",
     invalidPhoneEmail: "SĐT/Email không hợp lệ",

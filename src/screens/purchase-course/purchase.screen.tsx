@@ -11,7 +11,6 @@ interface PurchaseScreenProps {}
 const PurchaseScreen: React.FC<PurchaseScreenProps> = () => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
-
   return <View style={styles.container}></View>;
 };
 

@@ -14,6 +14,7 @@ import { translations } from "@localization";
 import Header from "@shared-components/header/Header";
 import createStyles from "./payment.success.style";
 import { SCREENS } from "constants";
+import CS from "@theme/styles";
 
 const PaymentSuccess = () => {
   const theme = useTheme();
@@ -27,8 +28,7 @@ const PaymentSuccess = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Header />
+    <SafeAreaView style={{ flex: 1, ...CS.flexCenter }}>
       <View style={styles.styleViewMain}>
         <LottieView
           style={{

@@ -87,7 +87,7 @@ const SliderWithInput = React.memo(
             placeholderTextColor={palette.placeholder}
             placeholder="Minimum"
             keyboardType="numeric"
-            value={numberWithCommas(value[0]) + " đ"}
+            value={numberWithCommas(value[0])}
             // onChangeText={(v) => onChangeText(v, "min")}
           />
           <View style={{ width: 16 }} />
@@ -97,7 +97,7 @@ const SliderWithInput = React.memo(
             style={styles.input}
             placeholder="Maximum"
             keyboardType="numeric"
-            value={numberWithCommas(value[1]) + " đ"}
+            value={numberWithCommas(value[1])}
             // onChangeText={(v) => onChangeText(v, "max")}
           />
         </View>
@@ -114,6 +114,7 @@ const SliderWithInput = React.memo(
 export const styles = StyleSheet.create({
   input: {
     height: 32,
+    paddingVertical: 0,
     paddingHorizontal: 16,
     ...CS.borderStyle,
     borderRadius: 4,

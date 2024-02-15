@@ -85,7 +85,7 @@ const CourseFilterResultScreen: React.FC<
   const _index = React.useRef(index);
   const [routes] = React.useState([
     { key: "first", title: "Course" },
-    { key: "second", title: "Teacher" },
+    { key: "second", title: "Tutor" },
     { key: "third", title: "Post" },
     { key: "four", title: "User" },
   ]);
@@ -126,7 +126,7 @@ const CourseFilterResultScreen: React.FC<
         <Text
           style={{
             ...CS.hnBold,
-            fontSize: 16,
+            fontSize: 14,
             color: focused ? colors.primary : colors.text,
             margin: 8,
           }}

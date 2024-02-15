@@ -9,7 +9,7 @@ export default (theme: ExtendedTheme) => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      paddingTop: getStatusBarHeight(),
+      paddingTop: getStatusBarHeight() + 16,
     },
     listChat: {
       paddingBottom: 12,

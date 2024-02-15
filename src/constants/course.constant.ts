@@ -22,7 +22,7 @@ export const filterCourseKeys = [
     ],
   },
   {
-    name: "skills",
+    name: "Skills",
     id: "skills",
     keyFilters: [
       {

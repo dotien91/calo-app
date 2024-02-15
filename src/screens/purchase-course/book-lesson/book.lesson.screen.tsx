@@ -8,6 +8,7 @@ import createStyles from "../purchase.style";
 import Header from "@shared-components/header/Header";
 import BookLessonSelectView from "./book.lesson.select.view";
 import { translations } from "@localization";
+import CS from "@theme/styles";
 
 interface BookLessonScreenProps {}
 
@@ -16,7 +17,7 @@ const BookLessonScreen: React.FC<BookLessonScreenProps> = () => {
   const styles = useMemo(() => createStyles(theme), [theme]);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={CS.safeAreaView}>
       <Header text={translations.purchase.headerBookLesson} />
       <BookLessonSelectView />
     </SafeAreaView>

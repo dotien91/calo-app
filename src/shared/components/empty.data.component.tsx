@@ -42,7 +42,7 @@ const EmptyResultView = ({
           style={{ marginBottom: 16 }}
         />
       )}
-      {showLottie && (
+      {!icon && showLottie && (
         <AnimatedLottieView
           source={lottieJson || lotieNoResult}
           style={{ width: 60, height: 60, marginBottom: 10 }}

@@ -39,9 +39,10 @@ export default (theme: ExtendedTheme) => {
       marginVertical: 16,
     },
     styleViewMain: {
+      flex: 1,
       alignItems: "center",
-      marginHorizontal: 16,
-      marginTop: 30,
+      padding: 30,
+      marginTop: -50,
     },
   });
 };

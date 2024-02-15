@@ -22,6 +22,7 @@ interface HeaderProps {
   textRight?: string;
   customStyle: ViewStyle;
   badge: number;
+  hideBackBtn?: boolean;
 }
 
 const Header = ({
@@ -33,6 +34,7 @@ const Header = ({
   textRight,
   customStyle,
   badge,
+  hideBackBtn = false
 }: HeaderProps) => {
   const theme = useTheme();
   const { colors } = theme;
@@ -46,13 +48,13 @@ const Header = ({
 
   return (
     <View style={[styles.container, customStyle && customStyle]}>
-      <Icon
+      {!hideBackBtn && <Icon
         onPress={_onPressLeft}
         name={iconNameLeft || "chevron-left"}
         type={IconType.Feather}
         size={25}
         color={colors.text}
-      />
+      />}
       <Text
         numberOfLines={1}
         style={[

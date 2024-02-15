@@ -14,7 +14,7 @@ export default (theme: ExtendedTheme) => {
       flex: 1,
       backgroundColor: colors.background,
       paddingHorizontal: 16,
-      marginTop: 12,
+      ...CS.safeAreaView,
     },
     label: {
       ...CS.hnMedium,

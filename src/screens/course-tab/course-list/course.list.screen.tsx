@@ -123,7 +123,7 @@ const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
         keyExtractor={(item) => item?._id + ""}
         ListFooterComponent={renderFooterComponent()}
       />
-      {isLoading && <LoadingList />}
+      {isLoading && <LoadingList numberItem={10} />}
     </>
   );
 });

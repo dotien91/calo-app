@@ -16,6 +16,7 @@ export default (theme: ExtendedTheme) => {
     },
     searchInput: {
       paddingLeft: 40,
+      paddingVertical: 0,
       color: colors.textOpacity4,
       flex: 1,
     },

@@ -14,7 +14,7 @@ export const countNumberFilter = (params) => {
     if (v == "onlyEnglishNativeSpeakers" && !!item) {
       numberFilters += 1;
     }
-    if (v == "max_price" && Number(item) < 1e9 && !countedPrice) {
+    if (v == "max_price" && Number(item) < 1e8 && !countedPrice) {
       countedPrice = true;
       numberFilters += 1;
     }

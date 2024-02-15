@@ -10,6 +10,7 @@ import { translations } from "@localization";
 import { getCourseClassListById } from "@services/api/course.api";
 import ChooseClassSelectView from "./choose.class.select.view";
 import LoadingList from "@shared-components/loading.list.component";
+import CS from "@theme/styles";
 
 interface ChooseClassScreenProps {}
 
@@ -28,8 +29,9 @@ const ChooseClassScreen: React.FC<ChooseClassScreenProps> = () => {
       }
     });
   }, []);
+
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={CS.safeAreaView}>
       <Header text={translations.purchase.headerChooseClass} />
       {!classData && <LoadingList />}
       {!!classData && (
