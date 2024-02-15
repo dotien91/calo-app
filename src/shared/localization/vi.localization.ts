@@ -252,6 +252,9 @@ export default {
     forgotPasswordSuccess:
       "Gửi email thành công, vui lòng kiểm tra email của bạn!",
     requireLogin: "Bạn cần đăng nhập để sử dựng chức năng này",
+    bylogin: "Bằng cách đăng nhập hoặc đăng ký, bạn đồng ý với chúng tôi",
+    term: "Điều khoản và điều kiện",
+    police: "Chính sách bảo mật",
   },
   validate: {
     emailInvalid: "Email không tồn tại",

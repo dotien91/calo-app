@@ -236,6 +236,9 @@ export default {
     forgotPasswordSuccess:
       "Successfully sent an email, please check your email!",
     requireLogin: "You need login for using this feature",
+    bylogin: "By login or signing up, you're agree to our",
+    term: "Terms & Conditions",
+    police: "Privacy Policy",
   },
   validate: {
     emailInvalid: "Email is invalid",
