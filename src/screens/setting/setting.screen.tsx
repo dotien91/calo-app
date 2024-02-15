@@ -1,11 +1,5 @@
 import React, { useMemo } from "react";
-import {
-  View,
-  TouchableOpacity,
-  Text,
-  SafeAreaView,
-  Image,
-} from "react-native";
+import { View, TouchableOpacity, Text, Image } from "react-native";
 import { useTheme } from "@react-navigation/native";
 /**
  * ? Local Imports
