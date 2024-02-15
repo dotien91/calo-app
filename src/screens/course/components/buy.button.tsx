@@ -7,6 +7,8 @@ import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "constants";
+import { useUserHook } from "@helpers/hooks/useUserHook";
+import { showWarningLogin } from "@helpers/super.modal.helper";
 
 interface BuyButtonProps {
   data?: ICourseItem;
@@ -14,7 +16,12 @@ interface BuyButtonProps {
 }
 
 const BuyButton = ({ data, type }: BuyButtonProps) => {
+  const { isLoggedIn } = useUserHook();
   const goToBuyScreen = () => {
+    if (!isLoggedIn()) {
+      showWarningLogin();
+      return;
+    }
     const type = data?.type;
     let screen = SCREENS.PAYMENT_COURES;
     if (type == EnumClassType.Call11) screen = SCREENS.BOOK_LESSON;

@@ -41,7 +41,7 @@ export default function Button({
       onPress={onPress}
     >
       {!!SvgSo && SvgSo}
-      {!!SvgSo && <View style={{ width: 10 }} />}
+      {!!SvgSo && !!text && <View style={{ width: 10 }} />}
       <Text style={[styles.textButton, !!textColor && { color: textColor }]}>
         {text}
       </Text>

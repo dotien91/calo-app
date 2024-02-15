@@ -55,25 +55,12 @@ const CheckoutScreen = () => {
   const { appStateStatus } = useAppStateCheck();
   const userData = useStore((state) => state.userData);
 
-  console.log("timepick", timePick);
   React.useEffect(() => {
     console.log("tradeId || appStateStatus", tradeId, appStateStatus);
     if (!tradeId || appStateStatus != "active") return;
-    getOrderDetail(tradeId).then((res) => {
-      if (!res.isError) {
-        if (res.data.status == "success") {
-          //alert success
-          callbackPaymentSuccess();
-          return;
-          clearInterval(intervalCheckPaymentSuccess);
-        }
-      } else {
-        //failed
-      }
-    });
-
+    //check payment success 4 times
     const intervalCheckPaymentSuccess = setInterval(() => {
-      if (countCheckPaymentSuccess.current == 3) {
+      if (countCheckPaymentSuccess.current == 4) {
         clearInterval(intervalCheckPaymentSuccess);
         return;
       }
@@ -90,7 +77,7 @@ const CheckoutScreen = () => {
           //failed
         }
       });
-    }, 5000);
+    }, 3000);
     return () => {
       if (intervalCheckPaymentSuccess)
         !!intervalCheckPaymentSuccess &&
@@ -377,6 +364,7 @@ const CheckoutScreen = () => {
     };
 
     createVnpayUrl(data).then(async (res) => {
+      console.log("createVnpayUrl res", res)
       closeSuperModal();
       if (!res.isError) {
         const url = res.data?.redirect_url;
