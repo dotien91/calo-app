@@ -6,6 +6,7 @@ import {
   Pressable,
   TouchableOpacity,
   Image,
+  FlatList,
 } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { getStatusBarHeight } from "@freakycoder/react-native-helpers";
@@ -16,9 +17,6 @@ import VideoPlayer from "@shared-components/video.player.component";
 import ImageLoad from "@screens/post/components/ImageLoad";
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
-import PageScroll, {
-  PagerScrollRef,
-} from "@shared-components/page-scroll/PageScroll";
 import { TypedMedia } from "shared/models";
 
 const { width } = Dimensions.get("screen");
@@ -26,24 +24,61 @@ const { width } = Dimensions.get("screen");
 interface PagerScrollMediaProps {
   listMedia: TypedMedia[];
   closeModal: () => void;
-  index: number;
+  indexMedia: number;
 }
 
 const PagerScrollMedia = ({
   listMedia,
   closeModal,
-  index,
+  indexMedia,
 }: PagerScrollMediaProps) => {
-  const scrollViewRef = React.useRef<PagerScrollRef>(null);
+  const scrollViewRef = React.useRef(null);
   const caroselRef = React.useRef(null);
-  const [indexImg, setIndexImg] = React.useState(0);
-  React.useEffect(() => {
-    setTimeout(() => {
-      scrollViewRef.current?.scrollToIndex(index);
-    }, 1);
-  }, [index]);
+  const [indexImg, setIndexImg] = React.useState(indexMedia);
 
-  const renderItemListImage = ({
+  const renderItem = ({ item, index }: { item: any; index: number }) => {
+    if ((item?.media_type || "").includes("image")) {
+      return (
+        <View
+          key={index}
+          style={{
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "black",
+          }}
+        >
+          <ImageLoad
+            source={{ uri: item?.media_url }}
+            style={[
+              styles.image,
+              {
+                height: Dimensions.get("window").height,
+                width: Dimensions.get("window").width,
+              },
+            ]}
+            resizeMode="contain"
+          />
+        </View>
+      );
+    }
+    if ((item?.media_type || "").includes("video")) {
+      return (
+        <View key={index} style={styles.viewBackground}>
+          <VideoPlayer
+            mediaUrl={item?.media_url}
+            height={heightMedia}
+            width={width}
+            resizeMode="contain"
+            autoPlay={true}
+          />
+        </View>
+      );
+    }
+    return null;
+  };
+
+  const renderItemChildrenView = ({
     item,
     index,
   }: {
@@ -51,64 +86,59 @@ const PagerScrollMedia = ({
     index: number;
   }) => {
     return (
-      <View key={index}>
+      <TouchableOpacity
+        onPress={() => {
+          scrollToIndex(index);
+        }}
+        key={index}
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "black",
+          paddingHorizontal: 5,
+          borderWidth: 1,
+          borderColor: index === indexImg ? "white" : "black",
+        }}
+      >
         <Image
-          style={{ height: 50, width: 30 }}
+          style={{ height: 50, width: 50 }}
           source={{ uri: item?.media_url }}
+          resizeMode="contain"
         ></Image>
-      </View>
+      </TouchableOpacity>
     );
   };
 
-  const scrollLeftIcon = () => {
-    scrollViewRef.current?.scrollToLeft();
-    caroselRef.current?.snapToItem(indexImg - 1);
-    setIndexImg(indexImg - 1);
-    if (indexImg <= 1) {
-      setIndexImg(0);
-      scrollViewRef.current?.scrollToIndex(0);
+  React.useEffect(() => {
+    if (indexMedia != 0) {
+      scrollChildrenToIndex(indexMedia);
+      scrollToIndex(indexMedia);
     }
+  }, []);
+
+  const scrollToIndex = (index: number) => {
+    setIndexImg(index);
+    scrollViewRef?.current?.scrollToOffset({
+      offset: index * Dimensions.get("window").width,
+      animated: true,
+    });
   };
 
-  const scrollRight = () => {
-    scrollViewRef.current?.scrollToRight();
-    caroselRef.current?.snapToItem(indexImg + 1);
-    setIndexImg(indexImg + 1);
-    if (indexImg >= listMedia.length - 1) {
-      setIndexImg(listMedia.length - 1);
+  const scrollChildrenToIndex = (index: number) => {
+    if (index * 50 > Dimensions.get("window").width) {
+      caroselRef?.current?.scrollToOffset({
+        offset: index * 50,
+        animated: true,
+      });
+    }
+    if (index * 50 + 5 - 50 / 2 > Dimensions.get("window").width / 2) {
+      caroselRef?.current?.scrollToOffset({
+        offset: index * (50 + 10) - Dimensions.get("window").width / 2 + 50 / 2,
+        animated: true,
+      });
     }
   };
-
-  // const panResponder = React.useRef(
-  //   PanResponder.create({
-  //     onStartShouldSetPanResponder: () => true,
-  //     onPanResponderMove: (event, gestureState) => {
-  //       // Check if the user is swiping down
-  //       // goc giua 2 vecto A(x0, y0), B(moveX, moveY)
-
-  //       const hesogoc = (gestureState.moveY - gestureState.y0)/(gestureState.moveX - gestureState.x0)
-  //       // Y0 = hesogoc*X0 + b => hesogoc*x0 - y0 + b = 0 => vecto(hesogoc - 1)
-  //                                                         //=> vecto(0, 1)
-  //       // const b = hesogoc*gestureState.x0 - gestureState.y0
-  //       // pt dt = y = hesogoc* x + b => hesogoc*x -y + b = 0 => vecto A(hesogoc, -y0)
-  //       // pt dt Oy = la x = 0 => vecto B(0 ,1)
-  //       // cosA = x.x1 + y.y1 / can(x^2 + y^2).can(x^2+ y^2)
-  //       const cosX = (1) / Math.sqrt(hesogoc*hesogoc)
-
-  //       console.log("Math.cos(cosX)", cosX)
-  //       if (-0.5 < cosX || cosX < 0.5 ) {
-  //         // Perform actions as the user swipes down
-  //         // closeModal()
-
-  //         console.log('Swiping down...', gestureState.dy, "Swiping down..." ,gestureState.dx);
-  //       }
-  //     },
-  //     onPanResponderRelease: () => {
-  //       // closeModal()
-
-  //     },
-  //   })
-  // ).current;
 
   return (
     //{...panResponder.panHandlers}
@@ -124,94 +154,25 @@ const PagerScrollMedia = ({
         </Pressable>
       </View>
 
-      <PageScroll
+      <FlatList
         ref={scrollViewRef}
-        scrollEnabled={true}
-        length={listMedia.length}
-      >
-        {listMedia.map((item, index) => {
-          const media_width = width;
-          const media_height = item?.media_meta?.find(
-            (i) => i.key === "height",
-          )?.value;
-          const heightMedia =
-            media_width && media_height
-              ? width / (Number(media_width) / Number(media_height))
-              : width;
-          if ((item?.media_type || "").includes("image")) {
-            return (
-              <View
-                key={index}
-                style={{
-                  flex: 1,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  backgroundColor: "black",
-                }}
-              >
-                <ImageLoad
-                  source={{ uri: item?.media_url }}
-                  style={[
-                    styles.image,
-                    { height: heightMedia, width: media_width },
-                  ]}
-                  resizeMode="contain"
-                />
-              </View>
-            );
-          }
-          if ((item?.media_type || "").includes("video")) {
-            return (
-              <View key={index} style={styles.viewBackground}>
-                <VideoPlayer
-                  mediaUrl={item?.media_url}
-                  height={heightMedia}
-                  width={width}
-                  resizeMode="contain"
-                  autoPlay={true}
-                />
-              </View>
-            );
-          }
-          return null;
-        })}
-      </PageScroll>
-      <TouchableOpacity
-        onPress={scrollLeftIcon}
-        style={{
-          width: 20,
-          height: 30,
-          position: "absolute",
-          left: 0,
-          top: Dimensions.get("window").height / 2,
-          backgroundColor: "grey",
-          alignItems: "center",
-          justifyContent: "center",
+        data={listMedia}
+        renderItem={renderItem}
+        pagingEnabled
+        horizontal
+        onMomentumScrollEnd={(ev) => {
+          setIndexImg(
+            Math.round(
+              ev.nativeEvent.contentOffset.x / Dimensions.get("window").width,
+            ),
+          );
+          scrollChildrenToIndex(
+            Math.round(
+              ev.nativeEvent.contentOffset.x / Dimensions.get("window").width,
+            ),
+          );
         }}
-      >
-        <Image
-          style={{ height: 20, width: 20 }}
-          source={require("assets/images/arrow-left.png")}
-        ></Image>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={scrollRight}
-        style={{
-          width: 20,
-          height: 30,
-          position: "absolute",
-          right: 0,
-          top: Dimensions.get("window").height / 2,
-          backgroundColor: "grey",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Image
-          style={{ height: 20, width: 20 }}
-          source={require("assets/images/arrow-right.png")}
-        ></Image>
-      </TouchableOpacity>
+      ></FlatList>
       <View
         style={{
           width: "100%",
@@ -221,13 +182,12 @@ const PagerScrollMedia = ({
           alignItems: "center",
         }}
       >
-        {/* <Carousel
+        <FlatList
           ref={caroselRef}
           data={listMedia}
-          renderItem={renderItemListImage}
-          sliderWidth={70}
-          itemWidth={30}
-        /> */}
+          renderItem={renderItemChildrenView}
+          horizontal
+        ></FlatList>
       </View>
     </View>
   );
