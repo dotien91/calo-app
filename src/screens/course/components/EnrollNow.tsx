@@ -4,7 +4,7 @@ import * as NavigationService from "react-navigation-helpers";
 
 import { translations } from "@localization";
 import PressableBtn from "@shared-components/button/PressableBtn";
-import { ICourseItem } from "models/course.model";
+import { EnumClassType, ICourseItem } from "models/course.model";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import { SCREENS } from "constants";
@@ -16,11 +16,13 @@ interface EnrollNowProps {
 
 const EnrollNow = ({ data, course_id }: EnrollNowProps) => {
   const _goToListVideo = () => {
-    //đi đến trang xem khoá học
-    NavigationService.navigate(SCREENS.COURSE_LEARN_VIDEO_SCREEN, {
-      course_id: course_id,
-    });
-    console.log("data...", data);
+    if (data.type == EnumClassType.SelfLearning) {
+      NavigationService.navigate(SCREENS.COURSE_LEARN_VIDEO_SCREEN, {
+        course_id: course_id,
+      });
+    } else {
+      console.log("Dataaaaa", data);
+    }
   };
   return (
     <PressableBtn onPress={_goToListVideo} style={styles.containerFull}>

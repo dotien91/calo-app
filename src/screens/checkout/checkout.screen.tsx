@@ -49,6 +49,8 @@ const CheckoutScreen = () => {
   const duration = route.params?.["duration"];
   const type = courseData.type;
   const isClassCourse = type == EnumClassType.CallGroup;
+  const isVideoCourse = type == EnumClassType.SelfLearning;
+
   const countCheckPaymentSuccess = React.useRef(0);
 
   const [tradeId, setTradeId] = useState("");
@@ -66,6 +68,7 @@ const CheckoutScreen = () => {
       }
       countCheckPaymentSuccess.current += 1;
       getOrderDetail(tradeId).then((res) => {
+        console.log("getOrderDetail", res);
         if (!res.isError) {
           if (res.data.status == "success") {
             //alert success
@@ -76,7 +79,7 @@ const CheckoutScreen = () => {
           //failed
         }
       });
-    }, 3000);
+    }, 2000);
     return () => {
       if (intervalCheckPaymentSuccess)
         clearInterval(intervalCheckPaymentSuccess);
@@ -86,33 +89,38 @@ const CheckoutScreen = () => {
   const callbackPaymentSuccess = () => {
     NavigationService.navigate(SCREENS.PAYMENT_SUCCESS);
   };
+  let listFormTime = [];
+  let learningTime = "";
+  let days = "";
 
-  const learningTime = getTimeFromTimepick(timePick, isClassCourse);
+  if (!isVideoCourse) {
+    learningTime = getTimeFromTimepick(timePick, isClassCourse);
 
-  const days = getDaysFromTimepick(timePick?.course_calendars || [...timePick]);
+    days = getDaysFromTimepick(timePick?.course_calendars || [...timePick]);
 
-  const listFormTime = [
-    {
-      title: translations.payment.formforLearning,
-      value: courseData.title,
-    },
-    {
-      title: translations.purchase.timeDuration,
-      value: duration + " hour",
-    },
-    {
-      title: translations.payment.class,
-      value: isClassCourse ? "01" : "",
-    },
-    {
-      title: translations.payment.days,
-      value: days,
-    },
-    {
-      title: translations.payment.learningtime,
-      value: learningTime,
-    },
-  ];
+    listFormTime = [
+      {
+        title: translations.payment.formforLearning,
+        value: courseData.title,
+      },
+      {
+        title: translations.purchase.timeDuration,
+        value: duration + " hour",
+      },
+      {
+        title: translations.payment.class,
+        value: isClassCourse ? "01" : "",
+      },
+      {
+        title: translations.payment.days,
+        value: days,
+      },
+      {
+        title: translations.payment.learningtime,
+        value: learningTime,
+      },
+    ];
+  }
 
   const renderViewCoures = () => {
     return (
@@ -349,20 +357,26 @@ const CheckoutScreen = () => {
         time_pick: timePick,
       };
     } else {
-      dataPayload = timePick;
+      dataPayload = {
+        class_id: timePick._id,
+        user_id: userData._id,
+      };
     }
+
     const data = {
-      plan_id: "65b320bf08783f8ceaedf35a",
+      plan_id: courseData.plan_id,
       payment_method: isVnPayMethod ? "vn_pay" : "smart_banking",
       amount_of_package: "1",
-      payload: {
-        type: isClassCourse ? "class" : "oneone",
-        data: dataPayload,
-      },
+      payload: isVideoCourse
+        ? {}
+        : {
+            type: isClassCourse ? "class" : "oneone",
+            data: dataPayload,
+          },
     };
 
     createVnpayUrl(data).then(async (res) => {
-      console.log("createVnpayUrl res", res);
+      console.log("createVnpayUrl res", { timePick, res, data });
       closeSuperModal();
       if (!res.isError) {
         const url = res.data?.redirect_url;

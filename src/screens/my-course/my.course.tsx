@@ -33,13 +33,17 @@ const MyCourse = () => {
     second: () => <View></View>,
   });
 
+  const dataFilter = React.useMemo(() => {
+    return listData.filter((item) => item.is_join);
+  }, [listData]);
+
   const renderListImprogess = () => {
     {
       isLoading && <LoadingItem />;
     }
     return (
       <FlatList
-        data={listData}
+        data={dataFilter}
         renderItem={renderItemSelected}
         onEndReachedThreshold={0}
         showsHorizontalScrollIndicator={false}
