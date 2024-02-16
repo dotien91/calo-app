@@ -22,7 +22,7 @@ const ItemBottomSheet = ({ onPress, nameIcon, text }: ItemBottomSheetProps) => {
         type={IconType.Ionicons}
         color={colors.text}
       />
-      <Text style={[styles.textButton, { color: colors.text }]}>{text}</Text>
+      <Text numberOfLines={1} style={[styles.textButton, { color: colors.text }]}>{text}</Text>
     </Pressable>
   );
 };
