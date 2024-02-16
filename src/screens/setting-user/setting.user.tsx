@@ -71,22 +71,22 @@ const SettingUser = () => {
         setisEnabledNoti(!isEnabledNoti);
       },
     },
-    {
-      title: translations.settingUser.hidden,
-      action: () => {},
-      state: isEnabledHidden,
-      changeState: () => {
-        setisEnabledHidden(!isEnabledHidden);
-      },
-    },
-    {
-      title: translations.settingUser.block,
-      action: () => {},
-      state: isEnabledBlock,
-      changeState: () => {
-        setisEnabledBlock(!isEnabledBlock);
-      },
-    },
+    // {
+    //   title: translations.settingUser.hidden,
+    //   action: () => {},
+    //   state: isEnabledHidden,
+    //   changeState: () => {
+    //     setisEnabledHidden(!isEnabledHidden);
+    //   },
+    // },
+    // {
+    //   title: translations.settingUser.block,
+    //   action: () => {},
+    //   state: isEnabledBlock,
+    //   changeState: () => {
+    //     setisEnabledBlock(!isEnabledBlock);
+    //   },
+    // },
   ];
 
   const renderSettingUser = () => {
