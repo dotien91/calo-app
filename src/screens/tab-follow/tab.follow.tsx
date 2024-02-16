@@ -1,15 +1,9 @@
 import React from "react";
-import { FlatList, Text, View, useWindowDimensions } from "react-native";
+import { Text, View, useWindowDimensions } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import Header from "@shared-components/header/Header";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import CS from "@theme/styles";
-import { getCourseList } from "@services/api/course.api";
-import { useListData } from "@helpers/hooks/useListData";
-import { ICourseItem } from "models/course.model";
-import LoadingItem from "@shared-components/loading.item";
-import useStore from "@services/zustand/store";
-import CourseItem from "@screens/course-tab/components/course.item";
 import Friend from "./friend/friend";
 import Follower from "./follower/follower";
 import Following from "./following/following";
@@ -20,49 +14,17 @@ const TabFollow = () => {
   // const styles = useMemo(() => createStyles(theme), [theme]);
   const [index, setIndex] = React.useState(0);
   const layout = useWindowDimensions();
-  const userData = useStore((state) => state.userData);
   const [routes] = React.useState([
     { key: "first", title: "Follower" },
     { key: "second", title: "Following" },
     { key: "third", title: "Friend" },
   ]);
 
-  const { listData, isLoading } = useListData<ICourseItem>(
-    { limit: "5", auth_id: userData?._id },
-    getCourseList,
-  );
-
   const renderScene = SceneMap({
     first: () => <Follower></Follower>,
     second: () => <Following></Following>,
     third: () => <Friend></Friend>,
   });
-
-  const renderListImprogess = () => {
-    {
-      isLoading && <LoadingItem />;
-    }
-    return (
-      <FlatList
-        data={listData}
-        renderItem={renderItemSelected}
-        onEndReachedThreshold={0}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        removeClippedSubviews={true}
-      />
-    );
-  };
-
-  const renderItemSelected = ({
-    item,
-    index,
-  }: {
-    item: ICourseItem;
-    index: number;
-  }) => {
-    return <CourseItem {...item} key={index} />;
-  };
 
   const renderTabBar = (props) => (
     <TabBar

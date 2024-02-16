@@ -6,22 +6,23 @@ import useStore from "@services/zustand/store";
 import Avatar from "@shared-components/user/Avatar";
 import { TypedUser } from "models";
 import { getListFollower, postFollow } from "@services/api/user.api";
+import { useTheme } from "@react-navigation/native";
 
 const Follower = () => {
+  const theme = useTheme();
+  const { colors } = theme;
   const userData = useStore((state) => state.userData);
   const { listData, _requestData, onEndReach } = useListData<TypedUser>(
     { limit: "10", user_id: userData?._id },
     getListFollower,
   );
 
-  console.log("userId", userData?._id);
   const followAction = (partner_id: string) => {
     const data = {
       partner_id: partner_id,
     };
     postFollow(data).then((res) => {
       _requestData();
-      console.log("postFollow", JSON.stringify(res, null, 2));
     });
   };
 
@@ -34,6 +35,7 @@ const Follower = () => {
   }) => {
     return (
       <View
+        key={index}
         style={{
           flexDirection: "row",
           justifyContent: "space-between",
@@ -48,19 +50,47 @@ const Follower = () => {
             sourceUri={{ uri: item?.partner_id?.user_avatar }}
           ></Avatar>
           <View style={{ marginLeft: 8 }}>
-            <Text numberOfLines={2} style={{ maxWidth: 240 }}>
+            <Text
+              numberOfLines={2}
+              style={{
+                maxWidth: 240,
+                fontSize: 16,
+                fontWeight: "600",
+                color: colors.text,
+              }}
+            >
               {item?.partner_id?.display_name}
             </Text>
-            <Text>{item?.partner_id?.description}</Text>
+            <Text
+              style={{
+                maxWidth: 240,
+                fontSize: 16,
+                fontWeight: "400",
+                color: colors.textOpacity8,
+              }}
+            >
+              {item?.partner_id?.description}
+            </Text>
             {/* <Text>dasdas</Text> */}
           </View>
         </View>
         <TouchableOpacity
+          style={{ backgroundColor: colors.btnRedPrimary, borderRadius: 8 }}
           onPress={() => {
             followAction(item.partner_id?._id);
           }}
         >
-          <Text>Follow back</Text>
+          <Text
+            style={{
+              marginHorizontal: 16,
+              marginVertical: 9,
+              color: colors.white,
+              fontSize: 14,
+              fontWeight: "400",
+            }}
+          >
+            Follow back
+          </Text>
         </TouchableOpacity>
       </View>
     );

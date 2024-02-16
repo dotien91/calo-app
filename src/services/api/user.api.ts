@@ -140,7 +140,7 @@ export async function deleteUserById(id: string) {
 export async function getListFollower(params: any) {
   return request({
     method: METHOD.GET,
-    urlPath: `user/list/followers`,
+    urlPath: "user/list/followers",
     params,
   }).then((response) => {
     return response;
@@ -150,7 +150,7 @@ export async function getListFollower(params: any) {
 export async function getListFollowing(params: any) {
   return request({
     method: METHOD.GET,
-    urlPath: `user/list/following`,
+    urlPath: "user/list/following",
     params,
   }).then((response) => {
     return response;
@@ -161,6 +161,16 @@ export async function postFollow(data: any) {
   return request({
     method: METHOD.POST,
     urlPath: "user/follow",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function postunFollow(data: any) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "user/un-follow",
     data,
   }).then((response) => {
     return response;
