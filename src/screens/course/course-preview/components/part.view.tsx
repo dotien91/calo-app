@@ -26,6 +26,7 @@ interface PartViewProps {
   onPressItem?: (item: any) => void;
   isLearnScreen?: boolean;
   isJoin: boolean;
+  itemSelected?: any;
 }
 
 const PartView = ({
@@ -34,6 +35,7 @@ const PartView = ({
   onPressItem,
   isLearnScreen,
   isJoin,
+  itemSelected,
 }: PartViewProps) => {
   const userData = useStore((state) => state.userData);
   const param = {
@@ -112,6 +114,7 @@ const PartView = ({
               key={item._id}
               index={index}
               data={item}
+              itemSelected={itemSelected}
               pressItem={() => isJoin && onPressItem && onPressItem(item)}
               isLearnScreen={isLearnScreen}
             />
@@ -181,9 +184,16 @@ interface LessionProps {
   pressItem: () => void;
   index: number;
   isLearnScreen?: boolean;
+  itemSelected?: any;
 }
 
-const Lession = ({ data, pressItem, index, isLearnScreen }: LessionProps) => {
+const Lession = ({
+  data,
+  pressItem,
+  index,
+  isLearnScreen,
+  itemSelected,
+}: LessionProps) => {
   const media_duration = data.media_id.media_meta.find(
     (i) => i.key === "duration",
   )?.value;
@@ -192,6 +202,7 @@ const Lession = ({ data, pressItem, index, isLearnScreen }: LessionProps) => {
   const isDownload = (fileCourseLocal || []).filter(
     (item) => item.id === data._id,
   );
+  const isSelected = data?._id === itemSelected?._id;
   const _downloadFile = async () => {
     if (isDownload.length > 0) {
       console.log("isDownload...", isDownload);
@@ -210,7 +221,13 @@ const Lession = ({ data, pressItem, index, isLearnScreen }: LessionProps) => {
   };
 
   return (
-    <PressableBtn style={styles.viewContent} onPress={pressItem}>
+    <PressableBtn
+      style={[
+        styles.viewContent,
+        isSelected && { backgroundColor: palette.background2 },
+      ]}
+      onPress={pressItem}
+    >
       <View
         style={{
           width: 32,

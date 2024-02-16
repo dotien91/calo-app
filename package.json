@@ -90,7 +90,7 @@
     "react-native-toast-message": "^2.1.10",
     "react-native-uuid": "^2.0.1",
     "react-native-vector-icons": "^10.0.0",
-    "react-native-video": "6.0.0-beta.4",
+    "react-native-video": "6.0.0-b-alpha.8",
     "react-native-webrtc": "^118.0.1",
     "react-native-webview": "^13.6.3",
     "react-navigation-helpers": "^2.3.1",
