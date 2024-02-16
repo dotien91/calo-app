@@ -1272,6 +1272,7 @@ export default {
     saveQRCode: "Lưu mã QR",
     tocomplete:
       "Để hoàn tất quá trình thanh toán, vui lòng thực hiện chuyển khoản tới số tài khoản bên dưới:",
+    content: "Nội dung chuyển khoản",
   },
   settingUser: {
     language: "Ngôn ngữ",

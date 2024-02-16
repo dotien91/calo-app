@@ -2,7 +2,6 @@ import React, { useState, useMemo, useEffect } from "react";
 import {
   ActivityIndicator,
   Image,
-  SafeAreaView,
   Text,
   TouchableOpacity,
   View,
@@ -28,6 +27,7 @@ import {
   showToast,
 } from "@helpers/super.modal.helper";
 import { SCREENS } from "constants";
+import CS from "@theme/styles";
 
 const SmartBanking = () => {
   // const [fileImage, setfileImage] = useState("");
@@ -78,8 +78,8 @@ const SmartBanking = () => {
   };
 
   const [qrcode, setqeCode] = useState("");
-  const copyToClipboard = () => {
-    Clipboard.setString("adasds");
+  const copyToClipboard = (text: string) => {
+    Clipboard.setString(text);
   };
 
   const { onSelectPicture, isUpLoadingFile, listFileLocal, listFile } =
@@ -97,7 +97,6 @@ const SmartBanking = () => {
   // };
 
   const actionSend = () => {
-    console.log("listFilelistFilelistFile", listFile);
     const data = {
       _id: tradeId,
       status: "processing",
@@ -123,14 +122,11 @@ const SmartBanking = () => {
         });
       }
     });
-
-    console.log("dataaaa", data);
-    // NavigationService.navigate(SCREENS.PAYMENT_SUCCESS);
   };
 
   useEffect(() => {
     getData();
-  });
+  }, []);
 
   const getData = () => {
     getQRcode()
@@ -144,7 +140,7 @@ const SmartBanking = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ ...CS.safeAreaView }}>
       <Header text="Smart Banking" />
       <View style={{ marginHorizontal: 16, alignItems: "center" }}>
         <Text numberOfLines={2} style={styles.styleTextToComplete}>
@@ -154,7 +150,11 @@ const SmartBanking = () => {
           <Text style={styles.styleTextNumberBank}>
             {qrcode?.config?.option_content[0]?.value}
           </Text>
-          <TouchableOpacity onPress={copyToClipboard}>
+          <TouchableOpacity
+            onPress={() => {
+              copyToClipboard(qrcode?.config?.option_content[0]?.value);
+            }}
+          >
             <Image
               style={{ height: 15.3, width: 13.79 }}
               source={require("assets/images/CopyIcon.png")}
@@ -165,6 +165,21 @@ const SmartBanking = () => {
         <Text numberOfLines={2} style={styles.styleTextNameBank}>
           {qrcode?.config?.option_content[1]?.value}
         </Text>
+
+        <TouchableOpacity
+          style={{ flexDirection: "row", justifyContent: "center" }}
+          onPress={() => {
+            copyToClipboard("ilelts hunter");
+          }}
+        >
+          <Text numberOfLines={2} style={styles.styleTextNameBank}>
+            {translations.payment.content}: ilelts hunter
+          </Text>
+          <Image
+            style={{ height: 15.3, width: 13.79, marginLeft: 5 }}
+            source={require("assets/images/CopyIcon.png")}
+          ></Image>
+        </TouchableOpacity>
         <View style={{ marginBottom: 16 }}>
           <Image
             style={{ height: 180, width: 180, marginBottom: 4 }}
@@ -224,7 +239,7 @@ const SmartBanking = () => {
           <Text style={styles.styleTextSend}>{translations.goBackHome}</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 export default SmartBanking;

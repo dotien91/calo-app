@@ -760,6 +760,7 @@ export default {
     saveQRCode: "Save QR code",
     tocomplete:
       "To complete the payment process, please make a transfer to the account number below:",
+    content: "Content tranfer",
   },
   settingUser: {
     language: "Language",

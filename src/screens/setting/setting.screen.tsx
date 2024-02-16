@@ -61,7 +61,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
       title: translations.settingUser.private,
       icon: require("assets/images/securityicon.png"),
       action: () => {
-        NavigationService.navigate(SCREENS.MY_COURES);
+        NavigationService.navigate(SCREENS.SMARTBANKING);
       },
     },
     {
