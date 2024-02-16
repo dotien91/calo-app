@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
-import RNRestart from "react-native-restart"; // Import package from node modules
+// Import package from node modules
 
 import useStore from "@services/zustand/store";
 import { getCurrentUser } from "@services/api/user.api";
@@ -29,11 +29,12 @@ export const useUserHook = () => {
   const handleLogin = (token: string) => {
     _setJson(USER_TOKEN, token);
     getCurrentUser().then((res) => {
+      console.log("rrrrrr", res);
       if (!res.isError) {
         setUserData(res.data);
         setLinkAvatar(res.data.user_avatar_thumbnail);
         initListFollow(res.data.follow_users);
-        NavigationService.push(SCREENS.HOME);
+        NavigationService.navigate(SCREENS.HOME);
         showToast({
           type: "success",
           message: "Đăng nhập thành công!",
@@ -63,7 +64,7 @@ export const useUserHook = () => {
     setUserData(null);
     setLinkAvatar("");
     initListFollow([]);
-    RNRestart.restart();
+    // RNRestart.restart();
   };
 
   const renderViewRequestLogin = () => {

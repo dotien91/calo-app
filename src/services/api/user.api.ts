@@ -1,3 +1,4 @@
+import { USER_TOKEN, _setJson } from "@services/local-storage";
 import request, { METHOD } from "./api";
 import {
   ILoginWithSocialType,
@@ -18,6 +19,7 @@ export async function getCurrentUser() {
 }
 
 export async function loginWithGoogle(data: ILoginWithSocialType) {
+  _setJson(USER_TOKEN, "");
   return request({
     method: METHOD.POST,
     urlPath: "user/login/google",
@@ -28,11 +30,14 @@ export async function loginWithGoogle(data: ILoginWithSocialType) {
 }
 
 export async function loginWithFB(data: ILoginWithSocialType) {
+  _setJson(USER_TOKEN, "");
+
   return request({
     method: METHOD.POST,
     urlPath: "user/login/facebook",
     data,
   }).then((response) => {
+    console.log("responseresponseresponse fb", { response, data });
     return response;
   });
 }

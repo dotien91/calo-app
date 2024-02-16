@@ -5,7 +5,11 @@ import Button from "@shared-components/button/Button";
 import IconSvg from "assets/svg";
 import { translations } from "@localization";
 import { palette } from "@theme/themes";
-import { closeSuperModal, showSuperModal } from "@helpers/super.modal.helper";
+import {
+  closeSuperModal,
+  showSuperModal,
+  showToast,
+} from "@helpers/super.modal.helper";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { getDeviceInfo } from "@helpers/device.info.helper";
 import { AccessToken, LoginManager } from "react-native-fbsdk-next";
@@ -37,9 +41,15 @@ const FBLoginButton = ({ showText }: BtnProps) => {
                   ...getDeviceInfo(),
                 };
                 loginWithFB(paramsLogin).then((res) => {
+                  console.log("paramsLoginparamsLogin", { res, paramsLogin });
                   if (!res.isError) {
                     const user_token = res.headers["x-authorization"];
                     handleLogin(user_token);
+                  } else {
+                    showToast({
+                      type: "error",
+                      ...res,
+                    });
                   }
                 });
               } else {
