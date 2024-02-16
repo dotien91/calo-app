@@ -4,6 +4,8 @@ import {
   View,
   useWindowDimensions,
   TouchableOpacity,
+  Text,
+  Image,
 } from "react-native";
 import { TabView, SceneMap } from "react-native-tab-view";
 import * as NavigationService from "react-navigation-helpers";
@@ -25,6 +27,7 @@ import { useUserHook } from "@helpers/hooks/useUserHook";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { useTheme } from "@react-navigation/native";
 import { SCREENS } from "constants";
+import CourseItemProgessbar from "../components/course.item.progessbar";
 
 interface CourseListScreenProps {}
 
@@ -91,6 +94,9 @@ const CourseListScreen: React.FC<CourseListScreenProps> = () => {
 };
 
 const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
+  const theme = useTheme();
+  const { colors } = theme;
+
   const { isLoading, listData, onEndReach, renderFooterComponent } =
     useListData<ICourseItem>(
       { limit: "4", sort_by: "createdAt", order_by: "DESC" },
@@ -102,17 +108,78 @@ const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
     return <TutorItem {...item} key={index} />;
   };
 
-  const renderHeader = React.useMemo(() => {
+  const renderHeader = () => {
     return (
-      <>
+      <View style={{ flex: 1 }}>
         {isTabCourse && <CourseCategoryItem />}
+        <View style={{ flex: 1, marginLeft: 16 }}>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginRight: 16,
+              marginBottom: 8,
+            }}
+          >
+            <Text
+              style={{ fontSize: 16, fontWeight: "600", color: colors.text }}
+            >
+              My course
+            </Text>
+            <TouchableOpacity
+              onPress={() => {
+                NavigationService.navigate(SCREENS.MY_COURES);
+              }}
+              style={{ flexDirection: "row", alignItems: "center" }}
+            >
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontWeight: "600",
+                  color: colors.textOpacity8,
+                  marginRight: 8,
+                }}
+              >
+                See all
+              </Text>
+              <Image
+                style={{ width: 8, height: 18 }}
+                source={require("assets/images/arrow-right.png")}
+              ></Image>
+            </TouchableOpacity>
+          </View>
+          <FlatList
+            data={listData}
+            renderItem={renderItemMyCourse}
+            horizontal
+            style={{ flex: 1 }}
+            showsHorizontalScrollIndicator={false}
+          />
+        </View>
         <CourseQuickFilter isTabCourse={isTabCourse} />
-      </>
+      </View>
     );
-  }, [isTabCourse]);
+  };
+
+  const renderItemMyCourse = ({
+    item,
+    index,
+  }: {
+    item: any;
+    index: number;
+  }) => {
+    console.log("item, index", item, index);
+    return (
+      <CourseItemProgessbar
+        isSliderItem
+        {...item}
+        key={index}
+      ></CourseItemProgessbar>
+    );
+  };
 
   return (
-    <>
+    <View style={{ flex: 1 }}>
       <FlatList
         ListHeaderComponent={renderHeader}
         data={listData}
@@ -124,7 +191,7 @@ const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
         ListFooterComponent={renderFooterComponent()}
       />
       {isLoading && <LoadingList numberItem={10} />}
-    </>
+    </View>
   );
 });
 

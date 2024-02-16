@@ -315,11 +315,17 @@ const PostDetail = (props: PostDetailProps) => {
 
   const renderItem = ({ item }: { item: TypedComment }) => {
     return (
-      <ItemComment
-        data={item}
-        // key={index}
-        onPressReply={() => pressReply(item)}
-      />
+      <View>
+        {listData.length > 0 ? (
+          <ItemComment
+            data={item}
+            // key={index}
+            onPressReply={() => pressReply(item)}
+          />
+        ) : (
+          renderEmpty()
+        )}
+      </View>
     );
   };
 
@@ -384,7 +390,7 @@ const PostDetail = (props: PostDetailProps) => {
               keyExtractor={(item) => item?._id + ""}
               refreshControl={refreshControl()}
               ListFooterComponent={renderFooterComponent()}
-              ListEmptyComponent={renderEmpty()}
+              // ListEmptyComponent={renderEmpty()}
             />
           </View>
         </ScrollView>
