@@ -1,12 +1,14 @@
+import * as React from "react";
+import { Text, View, StyleSheet } from "react-native";
+
 import { translations } from "@localization";
 import TextViewCollapsed from "@screens/course/components/text.view.collapsed";
+import SkeletonPlaceholder from "@shared-components/skeleton";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import { formatVNDate } from "@utils/date.utils";
 import IconSvg from "assets/svg";
 import { TypedUser } from "models";
-import * as React from "react";
-import { Text, View, StyleSheet } from "react-native";
 
 interface AboutTeacherProps {
   data?: TypedUser;
@@ -18,10 +20,24 @@ interface CertificatesProps {
   name: string;
 }
 
-const text = `I am an IELTS and TOEFL specialist who has developed courses for international exams for 15 years. I have won awards from IELTS Hunter for being a top instructor, and my courses have been IELTS Hunter's best-sellers for years. I have lived and taught in multiple countries, including China, Brazil, The Ivory Coast, Kazakhstan, and Georgia, which means that I understand teaching international students. This experience provides me with a true insight into the needs and viewpoints of all of my international students. By taking this course, you will master the strategies and tactics to score well above the score you need.
-In addition to having a CELTA ESL Certificate, I earned Law and Psychology degrees from reputable universities. My courses are delivered with practical, easily applicable strategies that lead to extremely high scores.`;
+const text = "";
 
 const AboutTeacher = ({ data }: AboutTeacherProps) => {
+  if (!data?._id) {
+    return (
+      <View style={styles.container}>
+        <SkeletonPlaceholder>
+          <View style={styles.textTitle}></View>
+          <View style={styles.textTitle}></View>
+          <View style={styles.textTitle}></View>
+          <View style={styles.textTitle}></View>
+          <View style={styles.textTitle}></View>
+          <View style={styles.textTitle}></View>
+        </SkeletonPlaceholder>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.textTitle}>{translations.aboutMe}</Text>
@@ -59,6 +75,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     lineHeight: 28,
     marginTop: 16,
+    minHeight: 28,
   },
 
   viewCer: {

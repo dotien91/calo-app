@@ -28,6 +28,7 @@ import ChooseClassSelectView from "../components/choose-class/choose.class.selec
 import EnrollNow from "../components/EnrollNow";
 import { SCREENS } from "constants";
 import EditButton from "../components/edit.button";
+import { shareCourse } from "@utils/share.utils";
 
 const CoursePreviewScreen = () => {
   const userData = useStore((state) => state.userData);
@@ -124,10 +125,13 @@ const CoursePreviewScreen = () => {
     }
   };
 
-  const _shareCourse = () => {};
+  const _shareCourse = () => {
+    if (data?._id) {
+      shareCourse(data._id);
+    }
+  };
 
   const _pressItem = (item) => {
-    console.log("item...", item);
     NavigationService.navigate(SCREENS.COURSE_LEARN_VIDEO_SCREEN, {
       source: item,
       course_id: course_id,
@@ -136,7 +140,7 @@ const CoursePreviewScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Header iconNameRight="share-outline" onPressRight={_shareCourse} />
+      <Header iconNameRight="share" onPressRight={_shareCourse} />
       <ScrollView
         contentContainerStyle={{ paddingBottom: 60 }}
         onScroll={handleScroll}
@@ -149,11 +153,11 @@ const CoursePreviewScreen = () => {
           <BuyButton data={data} type="full" />
         )}
         {data?.is_join && <EnrollNow data={data} course_id={course_id} />}
-        {data?.user_id._id === userData?._id && (
+        {data?.user_id._id && data?.user_id._id === userData?._id && (
           <EditButton data={data} type="full" />
         )}
         {/* <AddToCartButton data={data} type="full" /> */}
-        <TabSelect />
+        {data?._id && <TabSelect />}
         {tabSelected == 1 && (
           <View style={styles.tabView}>
             {/* <LessionContentView data={data} /> */}
@@ -169,8 +173,8 @@ const CoursePreviewScreen = () => {
         )}
         {data?.type === "Self-learning" && (
           <PartView
-            // isJoin={data.is_join}
-            isJoin={true}
+            isJoin={data.is_join}
+            // isJoin={true}
             id={course_id}
             hide={tabSelected == 1}
             onPressItem={_pressItem}

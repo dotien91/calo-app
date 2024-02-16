@@ -1,8 +1,7 @@
 /* eslint-disable camelcase */
 import React, { useEffect, useState } from "react";
-import { Keyboard, SafeAreaView, Text, View, TextInput } from "react-native";
+import { Keyboard, Text, View, TextInput } from "react-native";
 import { useTheme } from "@react-navigation/native";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import * as NavigationService from "react-navigation-helpers";
 
 import { translations } from "@localization";
@@ -11,6 +10,7 @@ import useStore from "@services/zustand/store";
 import CommonStyle from "@theme/styles";
 import { showToast } from "@helpers/super.modal.helper";
 import PressableBtn from "@shared-components/button/PressableBtn";
+import Header from "@shared-components/header/Header";
 
 interface EditCommentProps {
   route: any;
@@ -55,13 +55,13 @@ const EditComment = (props: EditCommentProps) => {
     }
   };
   return (
-    <SafeAreaView
+    <View
       style={{
-        ...CommonStyle.flex1,
+        ...CommonStyle.safeAreaView,
         backgroundColor: colors.background,
       }}
     >
-      <View
+      {/* <View
         style={{
           justifyContent: "space-between",
           flexDirection: "row",
@@ -75,11 +75,12 @@ const EditComment = (props: EditCommentProps) => {
           size={24}
           color={colors.text}
         />
-        <Text style={{ color: colors.text }}>
+        <Text style={{ ...CS.hnSemiBold, color: colors.text }}>
           {translations.edit} {translations.comment}
         </Text>
         <View style={{ width: 24 }} />
-      </View>
+      </View> */}
+      <Header text={`${translations.edit} ${translations.comment}`} />
       <View
         style={{
           flexDirection: "row",
@@ -138,7 +139,7 @@ const EditComment = (props: EditCommentProps) => {
           </Text>
         </PressableBtn>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

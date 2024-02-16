@@ -401,7 +401,7 @@ export default {
     newCourse: "Khóa học mới",
     createCourse: "Tạo khoá học",
     updateCourse: "Cập nhật khóa học",
-    uploadCoverImageOrVideo: "Tải lên ảnh nền hoặc video",
+    uploadCoverImageOrVideo: "Tải lên video/ảnh giới thiệu khoá học",
     uploadCoverImage: "Tải lên ảnh nền",
     addCourse: "Thêm khóa học",
     courseName: "Tên khóa học",
@@ -427,7 +427,7 @@ export default {
     courseContent: "Nội dung khoá học",
     requestSkills: "Kỹ năng cần có",
     information: "Thông tin",
-    instructor: "Người hướng dẫn",
+    instructor: "Giáo viên",
     titleModule: "Tiêu đề mô-đun",
     updateModule: "Cập nhật mô-đun",
     updateModuleSuccess: "Cập nhật thành công",
@@ -515,6 +515,7 @@ export default {
     updateReview: "Cập nhật đánh giá",
     certifications: "Chứng chỉ",
     previewThisCourse: "Giới thiệu khoá học",
+    watchIntro: "Xem video giới thiệu",
     title: "Tiêu đề",
     longDescription: "Chi tiết khoá học",
     startTime: "Ngày bắt đầu",
@@ -1295,4 +1296,6 @@ export default {
     messageMic:
       "Để gọi điện thoại cho người khác, chúng tôi cần quyền truy cập vào microphone của bạn.",
   },
+  en: "Tiếng Anh",
+  vi: "Tiếng Việt",
 };

@@ -15,6 +15,8 @@ import {
   showSuperModal,
 } from "@helpers/super.modal.helper";
 import { useRoute } from "@react-navigation/native";
+import useStore from "@services/zustand/store";
+import { shareProfile } from "@utils/share.utils";
 
 const DetailTeacherScreen = () => {
   const route = useRoute();
@@ -22,6 +24,9 @@ const DetailTeacherScreen = () => {
   const _goBack = () => {
     NavigationService.goBack();
   };
+  const userData = useStore((state) => state.userData);
+  const isMe = idTeacher === userData?._id;
+
   const [data, setData] = useState<TypedUser | null>();
 
   const _getUserById = (id: string) => {
@@ -31,11 +36,15 @@ const DetailTeacherScreen = () => {
   };
 
   const _showMore = () => {
-    showSuperModal({
-      styleModalType: EnumStyleModalType.Bottom,
-      contentModalType: EnumModalContentType.MoreTeacher,
-      data: data,
-    });
+    if (isMe) {
+      shareProfile(idTeacher);
+    } else {
+      showSuperModal({
+        styleModalType: EnumStyleModalType.Bottom,
+        contentModalType: EnumModalContentType.MoreTeacher,
+        data: data,
+      });
+    }
   };
 
   useEffect(() => {
@@ -46,7 +55,7 @@ const DetailTeacherScreen = () => {
     <View style={styles.container}>
       <Header
         onPressLeft={_goBack}
-        iconNameRight="ellipsis-vertical"
+        iconNameRight={isMe ? "share" : "more-vertical"}
         onPressRight={_showMore}
       />
       <ScrollView style={CS.flex1}>

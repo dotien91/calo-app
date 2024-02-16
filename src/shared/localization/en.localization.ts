@@ -326,7 +326,7 @@ export default {
     newCourse: "New Course",
     createCourse: "Create Course",
     updateCourse: "Update Course",
-    uploadCoverImageOrVideo: "Upload cover image or video",
+    uploadCoverImageOrVideo: "Upload an introductory photo or video",
     uploadCoverImage: "Upload cover image",
     addCourse: "Add Course",
     courseName: "Course Name",
@@ -369,10 +369,8 @@ export default {
     requireLevel: "Require level",
     requireLevelDes: "SORRY YOU ARE NOT LEVEL ENOUGH TO OPEN THIS COURSE",
     emptyCourse: "There are no courses available",
-    teacher: "Giáo viên",
     typeLearning: "Kiểu học tập",
     formLearning: "Hình thức học",
-    skills: "Kỹ năng",
     filterSpeaker: "Giáo viên bản địa",
     viewResult: (text: string) =>
       text != "0" ? "View " + text + " courses" : "No result find",
@@ -425,6 +423,7 @@ export default {
     certifications: "Certifications",
     more: "More",
     previewThisCourse: "Preview this course",
+    watchIntro: "Watch the introductory video",
     title: "Title",
     longDescription: "Long description",
     startTime: "Start time",
@@ -782,5 +781,7 @@ export default {
     titleMic: "Need permission to access microphone",
     messageMic: "To call others, we need permission to access your microphone.",
   },
+  en: "English",
+  vi: "Vietnamese",
 };
 /* eslint-disable max-len */

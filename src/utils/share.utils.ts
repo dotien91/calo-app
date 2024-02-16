@@ -1,13 +1,14 @@
 /* eslint-disable camelcase */
 
-import { BASEURL } from "@services/api/api";
+import { translations } from "@localization";
 import Share from "react-native-share";
+
+const BASEURL = "https://ieltshunter.io";
 
 export const sharePost = (post_slug: string) => {
   const shareOptions = {
-    title: "post_slug",
-    message: "Simple share with message",
-    url: `${BASEURL}/post-detail${post_slug}`,
+    title: translations.post.share,
+    url: `${BASEURL}/post/detail/${post_slug}`,
   };
   Share.open(shareOptions)
     .then((res) => {
@@ -19,10 +20,10 @@ export const sharePost = (post_slug: string) => {
 };
 
 export const shareProfile = (profileId: string) => {
+  console.log("profileId", profileId);
   const shareOptions = {
-    title: "post_slug",
-    message: "Simple share with message",
-    url: `${BASEURL}/profile?id=${profileId}`,
+    title: translations.profile.shareProfile,
+    url: `${BASEURL}/user/detail/${profileId}`,
   };
   Share.open(shareOptions)
     .then((res) => {
@@ -34,9 +35,8 @@ export const shareProfile = (profileId: string) => {
 };
 export const shareCourse = (courseId: string) => {
   const shareOptions = {
-    title: "share course",
-    message: "Simple share with message",
-    url: `${BASEURL}/profile?id=${courseId}`,
+    title: translations.course.shareThisCourse,
+    url: `${BASEURL}/course/detail/${courseId}`,
   };
   Share.open(shareOptions)
     .then((res) => {

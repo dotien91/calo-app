@@ -1,6 +1,3 @@
-import { translations } from "@localization";
-import CS from "@theme/styles";
-import { palette } from "@theme/themes";
 import React, { useEffect, useRef, useState } from "react";
 import {
   Text,
@@ -12,8 +9,12 @@ import {
 } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
+import { translations } from "@localization";
+import CS from "@theme/styles";
+import { palette } from "@theme/themes";
+
 interface TextViewCollapsedProps {
-  text?: string;
+  text: string;
   styleText?: TextStyle;
 }
 
@@ -22,8 +23,8 @@ const TextViewCollapsed = ({
   styleText = {},
 }: TextViewCollapsedProps) => {
   const [collapsed, setCollapsed] = useState(true);
-  const [maxLines, setMaxLines] = useState(2);
-  const animationHeight = useRef(new Animated.Value(0)).current;
+  const [maxLines, setMaxLines] = useState(3);
+  const animationHeight = useRef(new Animated.Value(80)).current;
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
