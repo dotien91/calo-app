@@ -9,6 +9,7 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
@@ -369,6 +370,7 @@ const PostDetail = (props: PostDetailProps) => {
           />
           <View style={CommonStyle.flex1}>
             <FlatList
+              style={{ height: Dimensions.get("window").height }}
               nestedScrollEnabled
               data={listData.filter(
                 (item) => listCommentDelete.indexOf(item._id) < 0,

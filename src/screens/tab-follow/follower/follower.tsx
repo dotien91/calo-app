@@ -1,5 +1,6 @@
 import React from "react";
 import { View, FlatList, Text, TouchableOpacity } from "react-native";
+import * as NavigationService from "react-navigation-helpers";
 
 import { useListData } from "@helpers/hooks/useListData";
 import useStore from "@services/zustand/store";
@@ -17,6 +18,7 @@ import {
   EnumStyleModalType,
   showSuperModal,
 } from "@helpers/super.modal.helper";
+import { SCREENS } from "constants";
 
 const Follower = () => {
   const theme = useTheme();
@@ -48,8 +50,6 @@ const Follower = () => {
     });
   };
 
-  console.log("listData", JSON.stringify(listData, null, 2));
-
   const removeFollower = (partnerid: string) => {
     const data = {
       user_ids: [partnerid],
@@ -77,7 +77,14 @@ const Follower = () => {
           marginBottom: 16,
         }}
       >
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <TouchableOpacity
+          onPress={() => {
+            NavigationService.push(SCREENS.PROFILE_CURRENT_USER, {
+              _id: item?.partner_id?._id,
+            });
+          }}
+          style={{ flexDirection: "row", alignItems: "center" }}
+        >
           <Avatar
             style={{ height: 56, width: 56, borderRadius: 28 }}
             sourceUri={{ uri: item?.partner_id?.user_avatar }}
@@ -106,7 +113,7 @@ const Follower = () => {
             </Text>
             {/* <Text>dasdas</Text> */}
           </View>
-        </View>
+        </TouchableOpacity>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <TouchableOpacity
             style={{ backgroundColor: colors.btnRedPrimary, borderRadius: 8 }}

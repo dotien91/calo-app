@@ -100,5 +100,10 @@ export default (theme: ExtendedTheme) => {
       backgroundColor: colors.grey2,
       ...CS.flexCenter,
     },
+    textNoReview: {
+      ...CS.hnRegular,
+      fontSize: 14,
+      colors: colors.textOpacity8,
+    },
   });
 };

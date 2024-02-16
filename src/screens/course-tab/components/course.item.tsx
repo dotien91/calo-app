@@ -15,6 +15,7 @@ import { palette } from "@theme/themes";
 import Badge from "./Badge";
 import { SCREENS } from "constants";
 import { numberWithCommas } from "@utils/string.utils";
+import { translations } from "@localization";
 
 interface CourseItemProps extends ICourseItem {
   isHorizontalStyle: boolean;
@@ -41,7 +42,7 @@ const CourseItem = ({
   if (isSliderItem) {
     widthImage = widthImage - 40;
   }
-  const heightImage = widthImage / 2.4;
+  const heightImage = widthImage / 1.7777;
   const theme = useTheme();
   // const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
@@ -60,19 +61,25 @@ const CourseItem = ({
         <Text style={styles.coursePriceTxt}>
           {price ? numberWithCommas(price) + " đ" : "Free"}
         </Text>
-        <View style={[CS.flexStart, { marginBottom: 6 }]}>
-          <Icon
-            name="star"
-            type={IconType.Feather}
-            size={16}
-            color={palette.gold}
-            style={{ marginRight: 3 }}
-          />
-          <Text style={styles.courseRatingTxt}>
-            {(rating + "" || "").slice(0, 3)}
+        {rating ? (
+          <View style={[CS.flexStart, { marginBottom: 6 }]}>
+            <Icon
+              name="star"
+              type={IconType.Ionicons}
+              size={16}
+              color={palette.gold}
+              style={{ marginRight: 3 }}
+            />
+            <Text style={styles.courseRatingTxt}>
+              {(rating + "" || "").slice(0, 3)}
+            </Text>
+          </View>
+        ) : (
+          <Text style={styles.textNoReview}>
+            {translations.course.noreview}
           </Text>
-        </View>
-        <Badge title="best-seller" />
+        )}
+        <Badge title="BEST-SELLER" />
       </>
     );
   };

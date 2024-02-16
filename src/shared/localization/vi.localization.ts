@@ -50,7 +50,7 @@ export default {
     invalidPhone: "Phone không hợp lệ",
     invalidLink: "Link không hợp lệ",
     invalidYoutube: "Kênh youtube không hợp lệ",
-    invalidFacebook: "Link Youtube không hợp lệ",
+    invalidFacebook: "Link Facebook không hợp lệ",
     minLengthPass: "Mật khẩu phải ít nhất 6 kí tự",
     passDoesNotMatch: "Mật khẩu xác nhận không trùng khớp",
     errorPatternPass:
