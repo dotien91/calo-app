@@ -40,7 +40,6 @@ export const useLiveChatHistory = ({
       page: pageNumber.current,
       order_by: "DESC",
     };
-
     getChatLiveHistory(params).then((res) => {
       isFetching.current = false;
       if (!res.isError) {
@@ -95,11 +94,11 @@ export const useLiveChatHistory = ({
   };
 
   const updateViewNumber = (data) => {
-    // console.log("onsocket updateViewNumber", JSON.parse(data))
     if (!data) return;
     data = JSON.parse(data);
     const viewNumber = data?.livestream_id?.view_number;
-    if (viewNumber > 0) return;
+    if (!viewNumber) return;
+    console.log("onsocket updateViewNumber", viewNumber);
     setViewNumber(viewNumber);
   };
 
@@ -128,6 +127,10 @@ export const useLiveChatHistory = ({
     setMessages((old) => [newMessage, ...old]);
   };
 
+  const clearData = () => {
+    setViewNumber(0);
+  };
+
   useEffect(() => {
     if (!liveStreamId) return;
     _getChatHistory();
@@ -146,6 +149,7 @@ export const useLiveChatHistory = ({
       // offSocket("emojiToClient", emojiToClient); //reaction update
       offSocket("leaveRoomToClient", leaveRoomToClient); //viewer leave live
       offSocket("livestreamEndToClient", livestreamEndToClient); //pulisher end livestream
+      clearData();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [liveStreamId]);

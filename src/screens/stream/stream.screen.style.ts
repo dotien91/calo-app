@@ -52,7 +52,7 @@ export default (theme: ExtendedTheme) => {
       position: "absolite",
       left: 30,
       width: Device.width - 60,
-      top: 100,
+      top: 120,
       height: 40,
       zIndex: 1,
       // paddingVertical: 8,

@@ -14,15 +14,17 @@ const LiveBadge = ({ customStyle }: { customStyle: ViewStyle }) => {
         <View style={styles.dot} />
         <Text style={styles.title}>LIVE</Text>
       </View>
-      <View style={styles.viewCountBox}>
-        <Icon
-          type={IconType.Ionicons}
-          color={palette.white}
-          name={"eye"}
-          size={18}
-        />
-        <Text style={styles.viewCountTxt}>{viewNumber ? viewNumber : ""}</Text>
-      </View>
+      {!!viewNumber && (
+        <View style={styles.viewCountBox}>
+          <Icon
+            type={IconType.Ionicons}
+            color={palette.white}
+            name={"eye"}
+            size={18}
+          />
+          <Text style={styles.viewCountTxt}>{viewNumber}</Text>
+        </View>
+      )}
     </>
   );
 };

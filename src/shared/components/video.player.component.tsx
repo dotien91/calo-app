@@ -16,6 +16,7 @@ interface IVideoPlayer {
   pressable: boolean;
   autoPlay: boolean;
   repeat: boolean;
+  onPress: () => void;
 }
 
 const VideoPlayer = ({
@@ -25,6 +26,7 @@ const VideoPlayer = ({
   height,
   pressable = true,
   autoPlay,
+  onPress,
   ...res
 }: IVideoPlayer) => {
   const refVideo = useRef<Video>();
@@ -39,6 +41,10 @@ const VideoPlayer = ({
   }, []);
 
   const switchPause = useCallback(() => {
+    if (onPress) {
+      onPress();
+      return;
+    }
     setPause((old) => !old);
   }, []);
 

@@ -86,6 +86,9 @@ export async function getListLiveStream() {
   return request({
     method: METHOD.GET,
     urlPath: "livestream/list",
+    params: {
+      livestream_status: "live",
+    },
   }).then((response) => {
     return response;
   });

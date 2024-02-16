@@ -51,11 +51,16 @@ export const useLiveStream = ({
     });
   };
 
+  const endLiveStream = () => {
+    setLiveData(null);
+    setViewNumber(0);
+  };
+
   useEffect(() => {
     if (!!isPublisher || !liveStreamId) return;
     _getLiveStreamDetail();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [liveStreamId]);
 
-  return { _createLiveStream, loading, liveData };
+  return { _createLiveStream, loading, liveData, endLiveStream };
 };

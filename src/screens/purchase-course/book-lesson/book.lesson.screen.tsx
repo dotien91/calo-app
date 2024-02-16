@@ -11,7 +11,6 @@ import CS from "@theme/styles";
 interface BookLessonScreenProps {}
 
 const BookLessonScreen: React.FC<BookLessonScreenProps> = () => {
-
   return (
     <SafeAreaView style={CS.safeAreaView}>
       <Header text={translations.purchase.headerBookLesson} />

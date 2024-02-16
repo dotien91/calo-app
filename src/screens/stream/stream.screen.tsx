@@ -1,6 +1,12 @@
 import React, { useRef, useMemo, useEffect } from "react";
 
-import { View, KeyboardAvoidingView, Platform } from "react-native";
+import {
+  View,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableOpacity,
+  Text,
+} from "react-native";
 import RTMPPublisher, {
   RTMPPublisherRefProps,
   StreamState,
@@ -18,7 +24,6 @@ import { useLiveStream } from "./hooks/useLiveStream";
 import { translations } from "@localization";
 import ChatView from "./stream.chat.list.view";
 import * as NavigationService from "react-navigation-helpers";
-import { SCREENS } from "constants";
 import {
   EnumModalContentType,
   EnumStyleModalType,
@@ -30,6 +35,8 @@ import { requestPermission } from "@helpers/permission.helper";
 import { PERMISSION } from "constants/system.constant";
 import { RESULTS } from "react-native-permissions";
 import useAppStateCheck from "@helpers/hooks/useAppStateCheck";
+import CS from "@theme/styles";
+import { palette } from "@theme/themes";
 
 function App() {
   const publisherRef = useRef<RTMPPublisherRefProps>(null);
@@ -203,12 +210,16 @@ function App() {
   const closeLiveStream = () => {
     // updateLivestream("end");
     // publisherRef.current && publisherRef.current.stopStream();
-    NavigationService.navigate(SCREENS.HOME);
+    // NavigationService.navigate(SCREENS.HOME);
+    NavigationService.popToTop();
+    // endLiveStream()
   };
 
   const onShouldCloseLive = () => {
     if (!isStreaming) {
-      NavigationService.navigate(SCREENS.HOME);
+      // NavigationService.navigate(SCREENS.HOME);
+      NavigationService.popToTop();
+      // endLiveStream()
     } else {
       showPopupCloseLive();
     }
@@ -242,19 +253,43 @@ function App() {
     >
       <View style={styles.container}>
         {renderInput()}
-        <IconBtn
-          name="x"
-          color={colors.white}
-          customStyle={{
-            position: "absolute",
-            top: 60,
-            right: 20,
-            zIndex: 1,
-            backgroundColor: colors.blackOverlay,
-          }}
-          onPress={onShouldCloseLive}
-          size={30}
-        />
+        {isStreaming ? (
+          <TouchableOpacity
+            style={{
+              position: "absolute",
+              top: 60,
+              right: 20,
+              zIndex: 1,
+              backgroundColor: palette.red,
+              paddingHorizontal: 8,
+              paddingVertical: 4,
+              borderRadius: 4,
+            }}
+          >
+            <Text
+              style={{
+                ...CS.hnBold,
+                color: palette.white,
+              }}
+            >
+              {translations.event.end}
+            </Text>
+          </TouchableOpacity>
+        ) : (
+          <IconBtn
+            name="x"
+            color={colors.white}
+            customStyle={{
+              position: "absolute",
+              top: 60,
+              right: 20,
+              zIndex: 1,
+              backgroundColor: colors.blackOverlay,
+            }}
+            onPress={onShouldCloseLive}
+            size={25}
+          />
+        )}
         {!isStreaming && (
           <IconBtn
             name="camera"
@@ -267,7 +302,7 @@ function App() {
               backgroundColor: colors.blackOverlay,
             }}
             onPress={handleSwitchCamera}
-            size={30}
+            size={25}
           />
         )}
         {permissionGranted && show && (
@@ -290,18 +325,6 @@ function App() {
 
         {!isStreaming && (
           <View style={styles.footer_container}>
-            {/* <View style={styles.mute_container}>
-          {isMuted ? (
-            <Button type="circle" title="🔇" onPress={handleUnmute} />
-          ) : (
-            <Button type="circle" title="🔈" onPress={handleMute} />
-          )}
-        </View> */}
-            {/* <LottieView
-          // lottieJson={reactionLottie}
-          lottieJson={require('../../assets/lotties/bell.json')}
-          style={{width: 60, height: 150}}
-        /> */}
             <View
               style={[styles.stream_container, loading && { opacity: 0.7 }]}
             >
@@ -313,34 +336,8 @@ function App() {
                 disabled={loading}
               />
             </View>
-            {/* <View style={styles.controller_container}>
-          <Button type="circle" title="📷" onPress={handleSwitchCamera} />
-          {(Platform.OS === 'ios' || hasBluetoothDevice) && (
-            <Button
-              type="circle"
-              title="🎙"
-              onPress={handleToggleMicrophoneModal}
-            />
-          )}
-        </View> */}
           </View>
         )}
-        {/* <View
-        style={{
-          left: 0,
-          top: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: "green",
-          position: "absolute",
-          // zIndex: -1,
-        }}
-      /> */}
-        {/* <MicrophoneSelectModal
-        onSelect={handleMicrophoneSelect}
-        visible={microphoneModalVisibility}
-        onClose={handleToggleMicrophoneModal}
-      /> */}
       </View>
     </KeyboardAvoidingView>
   );
