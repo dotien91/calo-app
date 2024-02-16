@@ -136,7 +136,12 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
             >
               <Text style={styles.styleTextEditProfile}>Edit profile</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.styleButtonViewProfile}>
+            <TouchableOpacity
+              onPress={() => {
+                NavigationService.navigate(SCREENS.TAB_FOLLOW);
+              }}
+              style={styles.styleButtonViewProfile}
+            >
               <Text style={styles.styleTextViewProfile}>View Profile</Text>
             </TouchableOpacity>
           </View>
