@@ -9,7 +9,6 @@ import {
 import * as NavigationService from "react-navigation-helpers";
 import { useTheme } from "@react-navigation/native";
 import { Tabs, MaterialTabBar } from "react-native-collapsible-tab-view";
-import LottieView from "lottie-react-native";
 
 import useStore from "@services/zustand/store";
 import CommonStyle from "@theme/styles";
@@ -18,7 +17,10 @@ import { translations } from "@localization";
 import CountFollow from "./count-follow/CountFollow";
 import { getUserById } from "@services/api/user.api";
 import ListPost from "@screens/home/list.post";
-import { getBottomSpace } from "react-native-iphone-screen-helper";
+import {
+  getBottomSpace,
+  getStatusBarHeight,
+} from "react-native-iphone-screen-helper";
 import { SCREENS } from "constants";
 import { getListPost } from "@services/api/post";
 import eventEmitter from "@services/event-emitter";
@@ -31,6 +33,7 @@ import FollowBtn from "@screens/home/components/follow-btn/FollowBtn";
 import EmptyResultView from "@shared-components/empty.data.component";
 import { shareProfile } from "@utils/share.utils";
 import AvatarProfile from "./avatar.profile";
+import SkeletonPlaceholder from "@shared-components/skeleton";
 
 interface ProfileUserProps {
   route: any;
@@ -64,6 +67,7 @@ const ProfileUser = (props: ProfileUserProps) => {
     renderFooterComponent,
     isFirstLoading,
     refreshing,
+    totalCount,
   } = useListData<TypedRequest>(paramsRequest, getListPost);
 
   useEffect(() => {
@@ -77,17 +81,14 @@ const ProfileUser = (props: ProfileUserProps) => {
     _getUserById(_id);
   }, [userData]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const goback = () => {
-    NavigationService.goBack();
-  };
-
   const HeaderProfile = () => {
     return (
-      <Header
-        iconNameRight="ellipsis-horizontal"
-        onPressLeft={goback}
-        text={userInfo?.display_name || ""}
-      />
+      <View style={{ zIndex: 1 }}>
+        <Header
+          // iconNameRight="more-horizontal"
+          text={userInfo?.display_name || ""}
+        />
+      </View>
     );
   };
 
@@ -126,6 +127,9 @@ const ProfileUser = (props: ProfileUserProps) => {
   const gotoEditProfile = () => {
     NavigationService.push(SCREENS.EDIT_PROFILE);
   };
+  const gotoEditBio = () => {
+    NavigationService.push(SCREENS.EDIT_PROFILE, { bio: true });
+  };
 
   const _shareProfile = () => {
     shareProfile(userInfo?._id);
@@ -133,6 +137,15 @@ const ProfileUser = (props: ProfileUserProps) => {
 
   const ListAction = () => {
     const isUserLogin = userData?._id === userInfo?._id;
+    if (!userInfo) {
+      return (
+        <View style={styles.listAction}>
+          <SkeletonPlaceholder>
+            <View style={{ height: 40, width: 200 }} />
+          </SkeletonPlaceholder>
+        </View>
+      );
+    }
     if (!userData || !isUserLogin) {
       return (
         <View style={styles.listAction}>
@@ -168,19 +181,22 @@ const ProfileUser = (props: ProfileUserProps) => {
           paddingBottom: 24,
         }}
       >
-        <Text style={{ textAlign: "center" }}>{text}</Text>
+        <Text style={{ ...CommonStyle.hnRegular, textAlign: "center" }}>
+          {text}
+        </Text>
         {userData && isUserLogin && text.trim() === "" && (
-          <View
+          <TouchableOpacity
             style={{
               paddingHorizontal: 8,
               backgroundColor: palette.background2,
               borderRadius: 8,
             }}
+            onPress={gotoEditBio}
           >
             <Text style={{ ...CommonStyle.hnRegular, fontSize: 12 }}>
               + Add bio
             </Text>
-          </View>
+          </TouchableOpacity>
         )}
       </View>
     );
@@ -196,26 +212,11 @@ const ProfileUser = (props: ProfileUserProps) => {
   const renderHeader = () => {
     return (
       <View>
-        <HeaderProfile />
-        {!userInfo ? (
-          <View style={{ height: 300 }}>
-            <LottieView
-              style={CommonStyle.flex1}
-              resizeMode="cover"
-              source={require("./lottie/lottie_profile.json")}
-              autoPlay
-              loop
-            />
-          </View>
-        ) : (
-          <View>
-            <AvatarProfile userInfo={userInfo} />
-            <CountFollow id={_id} />
-            <ListAction />
-            <Bio text={userInfo?.bio || ""} />
-            <View style={{ height: 1, backgroundColor: palette.borderColor }} />
-          </View>
-        )}
+        <AvatarProfile userInfo={userInfo} />
+        <CountFollow id={_id} postCount={totalCount} />
+        <ListAction />
+        <Bio text={userInfo?.bio || ""} />
+        <View style={{ height: 1, backgroundColor: palette.borderColor }} />
       </View>
     );
   };
@@ -235,44 +236,38 @@ const ProfileUser = (props: ProfileUserProps) => {
 
   const renderEmpty = () => {
     return (
-      <View
-        style={{
-          ...CommonStyle.flex1,
-          backgroundColor: colors.background,
-          paddingVertical: 40,
-          minHeight: 300,
-        }}
-      >
-        <EmptyResultView
-          title={translations.post.emptyListSave}
-          icon="document-text-outline"
-          showLottie={false}
-        />
-      </View>
+      <EmptyResultView
+        title={translations.post.emptyListSave}
+        icon="document-text-outline"
+        showLottie={false}
+      />
     );
   };
   const renderEmptyPostOfMe = () => {
     return (
-      <View
-        style={{
-          ...CommonStyle.flex1,
-          backgroundColor: colors.background,
-          paddingVertical: 40,
-          minHeight: 300,
-        }}
-      >
-        <EmptyResultView
-          title={translations.post.emptyPost}
-          icon="document-text-outline"
-          showLottie={false}
-        />
-      </View>
+      <EmptyResultView
+        title={translations.post.emptyPost}
+        icon="document-text-outline"
+        showLottie={false}
+      />
     );
   };
 
   if (userData?._id === userInfo?._id) {
     return (
       <View style={styles.container}>
+        <View
+          style={{
+            height: getStatusBarHeight(),
+            position: "absolute",
+            zIndex: 1,
+            top: -getStatusBarHeight(),
+            left: 0,
+            right: 0,
+            backgroundColor: colors.background,
+          }}
+        />
+        <HeaderProfile />
         <Tabs.Container renderHeader={renderHeader} renderTabBar={renderTabBar}>
           <Tabs.Tab
             name={translations.post.posts}
@@ -292,6 +287,7 @@ const ProfileUser = (props: ProfileUserProps) => {
                 keyExtractor={(item) => item?._id + ""}
                 refreshControl={refreshControl()}
                 ListFooterComponent={renderFooterComponent()}
+                ListEmptyComponent={renderEmptyPostOfMe()}
                 refreshing={refreshing}
               />
             )}
@@ -300,19 +296,22 @@ const ProfileUser = (props: ProfileUserProps) => {
             name={translations.post.listPostSave}
             label={translations.post.listPostSave}
           >
-            <Tabs.FlatList
-              data={listPostSave}
-              renderItem={renderItemSave}
-              scrollEventThrottle={16}
-              onEndReachedThreshold={0}
-              onEndReached={onEndReach}
-              showsVerticalScrollIndicator={false}
-              removeClippedSubviews={true}
-              keyExtractor={(item) => item?._id + ""}
-              refreshControl={refreshControl()}
-              ListFooterComponent={renderFooterComponent()}
-              ListEmptyComponent={renderEmpty}
-            />
+            {listPostSave.length > 0 ? (
+              <Tabs.FlatList
+                data={listPostSave}
+                renderItem={renderItemSave}
+                scrollEventThrottle={16}
+                onEndReachedThreshold={0}
+                onEndReached={onEndReach}
+                showsVerticalScrollIndicator={false}
+                removeClippedSubviews={true}
+                keyExtractor={(item) => item?._id + ""}
+                refreshControl={refreshControl()}
+                ListFooterComponent={renderFooterComponent()}
+              />
+            ) : (
+              <Tabs.ScrollView>{renderEmpty()}</Tabs.ScrollView>
+            )}
           </Tabs.Tab>
         </Tabs.Container>
       </View>
@@ -326,26 +325,13 @@ const ProfileUser = (props: ProfileUserProps) => {
         style={CommonStyle.flex1}
         showsVerticalScrollIndicator={false}
       >
-        {!userInfo ? (
-          <View style={{ height: 300 }}>
-            <LottieView
-              style={CommonStyle.flex1}
-              resizeMode="cover"
-              source={require("./lottie/lottie_profile.json")}
-              autoPlay
-              loop
-            />
-          </View>
-        ) : (
-          <View>
-            <AvatarProfile userInfo={userInfo} />
-            <CountFollow id={_id} />
-            <ListAction />
-            <Bio text={userInfo?.bio || ""} />
-            <View style={{ height: 1, backgroundColor: palette.borderColor }} />
-          </View>
-        )}
-
+        <View>
+          <AvatarProfile userInfo={userInfo} />
+          <CountFollow id={_id} postCount={totalCount} />
+          <ListAction />
+          <Bio text={userInfo?.bio || ""} />
+          <View style={{ height: 1, backgroundColor: palette.borderColor }} />
+        </View>
         <ListPost isFollowingPost={false} id={_id} />
       </ScrollView>
     </View>

@@ -17,11 +17,11 @@ interface HeaderProps {
   iconNameLeft?: string;
   iconNameRight?: string;
   text?: string;
-  onPressLeft: () => void;
+  onPressLeft?: () => void;
   onPressRight?: () => void;
   textRight?: string;
-  customStyle: ViewStyle;
-  badge: number;
+  customStyle?: ViewStyle;
+  badge?: number;
   hideBackBtn?: boolean;
 }
 
