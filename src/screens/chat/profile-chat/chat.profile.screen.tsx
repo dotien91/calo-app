@@ -353,7 +353,12 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
                   marginRight: 6,
                 }}
               />
-              <Text style={CommonStyle.hnRegular}>{item.display_name}</Text>
+              <Text
+                numberOfLines={1}
+                style={{ ...CommonStyle.hnRegular, flex: 1 }}
+              >
+                {item.display_name}
+              </Text>
             </View>
           ))}
         </View>

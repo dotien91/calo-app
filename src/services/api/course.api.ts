@@ -1,6 +1,7 @@
 import request, { METHOD } from "./api";
 
 export async function getCourseList(data) {
+  console.log("datadatadata", data);
   return request({
     method: METHOD.POST,
     urlPath: "course/list",
@@ -277,6 +278,19 @@ export async function deleteModule(id: string) {
   return request({
     method: METHOD.DELETE,
     urlPath: `course/delete-module/${id}`,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function getCourseRoom(params: {
+  user_id: string;
+  course_id: string;
+}) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "course/room",
+    params,
   }).then((response) => {
     return response;
   });
