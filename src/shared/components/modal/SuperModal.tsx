@@ -23,7 +23,8 @@ import IconBtn from "@shared-components/button/IconBtn";
 import SelectBox from "@shared-components/modal/modal-inner/SelectBox";
 import LottieComponent from "@shared-components/lottie/LottieComponent";
 import ActionMore from "@screens/course/detail-teacher/components/ActionMore";
-
+import ChatRoomScreen from "@screens/chat/room-chat/chat.room.class.video";
+import ListUser from "./modal-inner/ListUser";
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
 // using normal one.
@@ -136,6 +137,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
   );
 
   if (styleModalType == EnumStyleModalType.Bottom) {
+    console.log("dataaa", data);
     return (
       <StickBottomModal
         isVisible={true}
@@ -179,6 +181,12 @@ const SuperModal: React.FC<SuperModalProps> = () => {
           )}
           {contentModalType == EnumModalContentType.MoreTeacher && (
             <ActionMore data={data} />
+          )}
+          {contentModalType == EnumModalContentType.ChatRoom && (
+            <ChatRoomScreen {...data} />
+          )}
+          {contentModalType == EnumModalContentType.ListUser && (
+            <ListUser {...data} />
           )}
         </View>
       </StickBottomModal>

@@ -40,6 +40,8 @@ export interface CourseSlice {
 
   listFavourites: string[];
   addToFavourites: (id: string) => void;
+  listParticipants: any[];
+  setListParticipants: (v: any[]) => void;
 }
 
 const createCourseSlice: StoreSlice<CourseSlice> = (set) => ({
@@ -88,6 +90,8 @@ const createCourseSlice: StoreSlice<CourseSlice> = (set) => ({
       }
     });
   },
+  listParticipants: [],
+  setListParticipants: (v: any[]) => set({ listParticipants: v }),
 });
 
 export default createCourseSlice;

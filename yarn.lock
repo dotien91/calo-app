@@ -6911,6 +6911,11 @@ react-native-keep-awake@^4.0.0:
   resolved "https://registry.yarnpkg.com/react-native-keep-awake/-/react-native-keep-awake-4.0.0.tgz#d89fdc3fb60b3cffa979ef37dc5816196df998a2"
   integrity sha512-0Fotox+eLXQooeibVs3P60yASYUWjtRw9MZNmbuHt5UZQrgUrAKsE4jm7gTr4tPU1m1RkwGzcgUFpcOkh/ec7g==
 
+react-native-janus@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-janus/-/react-native-janus-0.0.1.tgz#701f0244b4b23ccff2d8b11d7739149209728092"
+  integrity sha512-FAXuUzdWunSR5dHzsWZmEw17ggqW1rbrAJpnxzbsZ/B/g9XO7cSIAjLmGxSe8mxGLCiqYX1gvuRAuPn2T6o2vg==
+
 react-native-lightbox-v2@0.9.0:
   version "0.9.0"
   resolved "https://registry.yarnpkg.com/react-native-lightbox-v2/-/react-native-lightbox-v2-0.9.0.tgz#b97be4d892ebb959069c451948b11da390bc46d8"
@@ -7123,6 +7128,15 @@ react-native-video@6.0.0-alpha.8:
     deprecated-react-native-prop-types "^2.2.0"
     keymirror "^0.1.1"
     prop-types "^15.7.2"
+
+react-native-webrtc@^118.0.1:
+  version "118.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-webrtc/-/react-native-webrtc-118.0.1.tgz#150f74f8b2acf2f528b28e42f58443c6568cfe48"
+  integrity sha512-gjbBIV/0VyplavbOsQw9mpVJ4WHTEYZzi4PN7Oz18p2Ucsc5yEVUhtN5NQep8w6VDH1DNzuXXBPq5uJq9uqbMA==
+  dependencies:
+    base64-js "1.5.1"
+    debug "4.3.4"
+    event-target-shim "6.0.2"
 
 react-native-webrtc@^118.0.1:
   version "118.0.1"

@@ -14,7 +14,7 @@ interface IconType {
 
 // eslint-disable-next-line react/display-name
 const IconBtn = React.forwardRef(
-  ({ name, color, size, customStyle, onPress }: IconType) => {
+  ({ name, color, size, customStyle, onPress }: IconType, children) => {
     if (!name) return null;
     if (!onPress)
       return (
@@ -42,6 +42,7 @@ const IconBtn = React.forwardRef(
             style={{ color }}
           />
         )}
+        {!!children && children}
       </TouchableOpacity>
     );
   },

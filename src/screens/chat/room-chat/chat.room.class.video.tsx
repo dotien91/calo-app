@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, Platform } from "react";
-import { SafeAreaView, View } from "react-native";
+import { SafeAreaView, View, Text } from "react-native";
 import { GiftedChat } from "react-native-gifted-chat";
 import emojiUtils from "emoji-utils";
 import uuid from "react-native-uuid";
@@ -12,32 +12,31 @@ import { IMediaUpload, TypedMessageGiftedChat } from "models/chat.model";
 import MessageItem from "./components/message/message.item";
 import { emitSocket } from "@helpers/socket.helper";
 import useStore from "@services/zustand/store";
-import ChatHeader from "./chat.room.header";
-import RecordModal from "./components/audio/RecordModal";
 import InputToolbar from "./components/form/InputToolbar";
 import { EnumMessageStatus } from "constants/chat.constant";
-import { useChatHistory } from "@helpers/hooks/useChatHistory";
 import { useUploadFile } from "@helpers/hooks/useUploadFile";
 import { getStatusBarHeight } from "react-native-safearea-height";
-import SearchInput from "../../../shared/components/search-input.tsx/search.input";
+import CommonStyle from "@theme/styles";
 import { translations } from "@localization";
 import EmptyResultView from "@shared-components/empty.data.component";
 import createStyles from "./chat.room.screen.style";
-import LoadingList from "@shared-components/loading.list.component";
+import { useChatVideoCall } from "@helpers/hooks/useChatVideoCall";
+import { Device } from "@utils/device.ui.utils";
 
 interface ChatRoomScreenProps {
   id?: string;
 }
 
-const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
+const ChatRoomScreen: React.FC<ChatRoomScreenProps> = ({
+  id,
+}: ChatRoomScreenProps) => {
   const userData = useStore((state) => state.userData);
   const theme = useTheme();
   const styles = React.useMemo(() => createStyles(theme), [theme]);
 
-  const [txtSearch, setTxtSearch] = React.useState("");
-  const setSearchModeChat = useStore((state) => state.setSearchModeChat);
+  // const [txtSearch, setTxtSearch] = React.useState("");
+  // const setSearchModeChat = useStore((state) => state.setSearchModeChat);
   const searchModeChat = useStore((state) => state.searchModeChat);
-  const giftedChatRef = useRef(null);
 
   const recordModalRef = useRef(null);
   const userSendMessage = {
@@ -45,7 +44,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
     name: userData?.display_name,
     avatar: userData?.user_avatar,
   };
-
+  console.log("idididid", id);
   const {
     setMessages,
     messages,
@@ -54,14 +53,12 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
     sendChatMessage,
     loadMoreMessage,
     isCloseToTop,
-    roomDetail,
+    // roomDetail,
     isEmptyMessage,
-    isLoadmore,
-    loading,
-  } = useChatHistory(txtSearch, searchModeChat);
-
+  } = useChatVideoCall("", id);
+  console.log("messagesmessagesmessages", messages);
   const {
-    uploadRecord,
+    // uploadRecord,
     listFile,
     setListFile,
     listFileLocal,
@@ -70,10 +67,6 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
     onSelectVideo,
   } = useUploadFile();
 
-  const cancelSearchMode = () => {
-    setTxtSearch("");
-    setSearchModeChat(false);
-  };
   //append local media file
   useEffect(() => {
     if (!listFileLocal?.length) return;
@@ -124,14 +117,6 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
     const giftedMessages = GiftedChat.append(messages, message);
     emitSocket("typingToServer", "room_" + chatRoomId);
     setMessages(giftedMessages);
-
-    //scroll to new message
-    setTimeout(() => {
-      giftedChatRef.current?._listRef?._scrollRef?.scrollTo({
-        y: 0,
-        animated: true,
-      });
-    }, 700);
     sendChatMessage(text, [], giftedMessages);
   };
 
@@ -181,43 +166,18 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
     );
   };
 
-  const renderSearchView = () => {
-    return (
-      <>
-        {/* {loading && <LoadingList numberItem={3} />} */}
-        {!loading && searchModeChat && !messages.length && (
-          <EmptyResultView title={translations.noResult} />
-        )}
-        {searchModeChat && (
-          <SearchInput
-            onCancel={cancelSearchMode}
-            setTxtSearch={setTxtSearch}
-            txtSearch={txtSearch}
-            showCancelBtn={true}
-          />
-        )}
-      </>
-    );
-  };
-
-  const renderHeaderChat = () => {
-    if (!isLoadmore) return null;
-    return <LoadingList />;
-  };
-
-  const renderTopChat = () => {
-    if (!loading) return null;
-    return <LoadingList numberItem={3} />;
-  };
-
   return (
     <SafeAreaView
-      style={{ flex: 1, paddingTop: getStatusBarHeight(), paddingBottom: 8 }}
+      style={{
+        flex: 1,
+        paddingTop: getStatusBarHeight(),
+        paddingBottom: 8,
+        minHeight: Device.height / (3 / 2),
+      }}
     >
-      <ChatHeader roomDetail={roomDetail} messages={messages} />
       {_renderChatEmpty()}
+
       <GiftedChat
-        messageContainerRef={(ref) => (giftedChatRef.current = ref)}
         messages={messages}
         user={{
           _id: userData?._id,
@@ -226,8 +186,6 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
         renderMessage={renderMessage}
         showAvatarForEveryMessage={true}
         listViewProps={{
-          ListFooterComponent: renderHeaderChat,
-          ListHeaderComponent: renderTopChat,
           scrollEventThrottle: 400,
           onScroll: ({ nativeEvent }) => {
             if (isCloseToTop(nativeEvent)) {
@@ -238,8 +196,20 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
         renderInputToolbar={renderInputToolbar}
       />
 
-      {renderSearchView()}
-      <RecordModal uploadRecord={uploadRecord} ref={recordModalRef} />
+      {searchModeChat && !messages.length && (
+        <View style={{ ...CommonStyle.flexCenter, padding: 12, flex: 1 }}>
+          <Text style={CommonStyle.hnMedium}>{translations.noResult}</Text>
+        </View>
+      )}
+      {/* {searchModeChat && (
+        <SearchInput
+          onCancel={cancelSearchMode}
+          setTxtSearch={setTxtSearch}
+          txtSearch={txtSearch}
+          showCancelBtn={true}
+        />
+      )} */}
+      {/* <RecordModal uploadRecord={uploadRecord} ref={recordModalRef} /> */}
     </SafeAreaView>
   );
 };

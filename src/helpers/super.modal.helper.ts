@@ -16,6 +16,8 @@ export enum EnumModalContentType {
   FilterTypeCourse = "filter-type-course",
   SelectBox = "select-box",
   MoreTeacher = "more-teacher",
+  ChatRoom = "chat-room",
+  ListUser = "list-user",
 }
 
 export enum EnumStyleModalType {
