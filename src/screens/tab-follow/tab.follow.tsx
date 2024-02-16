@@ -21,9 +21,9 @@ const TabFollow = () => {
   ]);
 
   const renderScene = SceneMap({
-    first: () => <Follower></Follower>,
-    second: () => <Following></Following>,
-    third: () => <Friend></Friend>,
+    first: Follower,
+    second: Following,
+    third: Friend,
   });
 
   const renderTabBar = (props) => (
