@@ -1,51 +1,68 @@
-import React, { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import React, { memo, useEffect, useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
 
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
 import { getCountFollow } from "@services/api/user.api";
 import { translations } from "@localization";
-import LoadingItem from "@shared-components/loading.item";
+import SkeletonPlaceholder from "@shared-components/skeleton";
+import { WINDOW_WIDTH } from "@gorhom/bottom-sheet";
 
 interface CountFollowProps {
   id: string;
+  postCount: string | number;
+}
+interface CountFolowType {
+  following?: string | number;
+  followers?: string | number;
 }
 
-const CountFollow = (props: CountFollowProps) => {
-  const [countFollow, setCountFollow] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
+const CountFollow = ({ id, postCount }: CountFollowProps) => {
+  const [countFollow, setCountFollow] = useState<CountFolowType>({});
   const _getUserInfo = (id: string) => {
-    setIsLoading(true);
     getCountFollow({ user_id: id }).then((res) => {
-      setIsLoading(false);
       setCountFollow(res.data);
     });
   };
 
   useEffect(() => {
-    if (props.id) {
-      _getUserInfo(props.id);
+    if (id) {
+      _getUserInfo(id);
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [id]);
 
-  const ItemFollow = ({ title, des }: { title: string; des: string }) => {
+  const ItemFollow = ({
+    title,
+    des,
+  }: {
+    title: string | number;
+    des: string;
+  }) => {
+    if (!countFollow?.following) {
+      return (
+        <View style={styles.container}>
+          <SkeletonPlaceholder>
+            <View style={{ width: WINDOW_WIDTH / 4, height: 60 }} />
+          </SkeletonPlaceholder>
+        </View>
+      );
+    }
     return (
       <View
-        style={{ justifyContent: "center", alignItems: "center", width: 60 }}
+        style={{
+          ...CommonStyle.center,
+          width: WINDOW_WIDTH / 4,
+        }}
       >
-        {isLoading ? (
-          <LoadingItem />
-        ) : (
-          <Text
-            style={{
-              ...CommonStyle.hnBold,
-              fontSize: 20,
-              color: palette.mainColor2,
-            }}
-          >
-            {title}
-          </Text>
-        )}
+        <Text
+          style={{
+            ...CommonStyle.hnBold,
+            fontSize: 20,
+            color: palette.mainColor2,
+          }}
+        >
+          {title}
+        </Text>
         <Text
           style={{
             ...CommonStyle.hnRegular,
@@ -60,26 +77,41 @@ const CountFollow = (props: CountFollowProps) => {
     );
   };
 
+  if (!countFollow?.following || !postCount) {
+    return (
+      <View style={styles.container}>
+        <SkeletonPlaceholder>
+          <View style={{ width: (WINDOW_WIDTH * 3) / 4, height: 60 }} />
+        </SkeletonPlaceholder>
+      </View>
+    );
+  }
+
   return (
-    <View
-      style={{
-        flexDirection: "row",
-        gap: 12,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <View style={styles.container}>
       <ItemFollow title={countFollow?.following} des={translations.following} />
       <View
         style={{ height: 14, width: 1, backgroundColor: palette.placeholder }}
       />
-      <ItemFollow title={countFollow?.followers} des={translations.follower} />
+      <ItemFollow
+        title={countFollow?.followers || 0}
+        des={translations.follower}
+      />
       <View
         style={{ height: 14, width: 1, backgroundColor: palette.placeholder }}
       />
-      <ItemFollow title={"20"} des={translations.post.posts} />
+      <ItemFollow title={postCount} des={translations.post.posts} />
     </View>
   );
 };
 
-export default CountFollow;
+const styles = StyleSheet.create({
+  container: {
+    ...CommonStyle.row,
+    ...CommonStyle.center,
+    gap: 12,
+    minHeight: 60,
+  },
+});
+
+export default memo(CountFollow);

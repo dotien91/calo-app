@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { KeyboardAvoidingView, ScrollView } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
-import { useTheme } from "@react-navigation/native";
+import { useTheme, useRoute } from "@react-navigation/native";
 import { useForm } from "react-hook-form";
 
 import Header from "@shared-components/header/Header";
@@ -26,15 +26,18 @@ import { getBottomSpace } from "react-native-iphone-screen-helper";
 
 const EditProfileScreen = () => {
   const userData = useStore((store) => store.userData);
-  console.log("userData...", userData);
+  // console.log("userData...", userData);
   const theme = useTheme();
   const { colors } = theme;
   const setUserData = useStore((store) => store.setUserData);
   const [updating, setUpdating] = useState(false);
+  const route = useRoute();
+  const bio = route.params?.["bio"];
   const {
     control,
     handleSubmit,
     formState: { errors },
+    setFocus,
   } = useForm({
     defaultValues: {
       fullname: userData?.display_name,
@@ -48,6 +51,14 @@ const EditProfileScreen = () => {
       youtube: userData?.links?.[0]?.youtube || "",
     },
   });
+
+  useEffect(() => {
+    if (bio) {
+      setFocus("bio");
+    } else {
+      setFocus("fullname");
+    }
+  }, [bio, setFocus]);
 
   const onSubmit = (data) => {
     const params = {
@@ -95,18 +106,19 @@ const EditProfileScreen = () => {
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1 }}
+      style={{ ...CommonStyle.safeAreaView }}
       behavior={isIos() ? "height" : undefined}
     >
+      <Header
+        onPressLeft={() => NavigationService.goBack()}
+        text={translations.profile.editProfile}
+      />
       <ScrollView
-        style={[CommonStyle.safeAreaView, { marginBottom: getBottomSpace() }]}
+        style={[CommonStyle.flex1, { marginBottom: getBottomSpace() }]}
         showsVerticalScrollIndicator={false}
       >
-        <Header
-          onPressLeft={() => NavigationService.goBack()}
-          text={translations.profile.editProfile}
-        />
         <InputHook
+          setFocus={setFocus}
           name="fullname"
           customStyle={CommonStyle.flex1}
           inputProps={{
@@ -127,6 +139,7 @@ const EditProfileScreen = () => {
         />
 
         <InputHook
+          setFocus={setFocus}
           name="email"
           customStyle={CommonStyle.flex1}
           inputProps={{
@@ -150,6 +163,7 @@ const EditProfileScreen = () => {
         />
 
         <InputHook
+          setFocus={setFocus}
           name="description"
           customStyle={CommonStyle.flex1}
           inputProps={{
@@ -165,6 +179,7 @@ const EditProfileScreen = () => {
         />
 
         <InputHook
+          setFocus={setFocus}
           name="bio"
           customStyle={CommonStyle.flex1}
           inputProps={{
@@ -181,6 +196,7 @@ const EditProfileScreen = () => {
         />
 
         <InputHook
+          setFocus={setFocus}
           name="phoneNumber"
           customStyle={CommonStyle.flex1}
           inputProps={{
@@ -200,6 +216,7 @@ const EditProfileScreen = () => {
         />
 
         <InputHook
+          setFocus={setFocus}
           name="address"
           customStyle={CommonStyle.flex1}
           inputProps={{
@@ -213,6 +230,7 @@ const EditProfileScreen = () => {
         />
 
         <InputHook
+          setFocus={setFocus}
           name="facebook"
           customStyle={CommonStyle.flex1}
           inputProps={{
@@ -232,6 +250,7 @@ const EditProfileScreen = () => {
         />
 
         <InputHook
+          setFocus={setFocus}
           name="website"
           customStyle={CommonStyle.flex1}
           inputProps={{
@@ -251,6 +270,7 @@ const EditProfileScreen = () => {
         />
 
         <InputHook
+          setFocus={setFocus}
           name="youtube"
           customStyle={CommonStyle.flex1}
           inputProps={{

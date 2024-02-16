@@ -37,6 +37,7 @@ interface InputHookProps {
   multiline?: boolean;
   maxLength?: number;
   showPlaceholder?: boolean;
+  setFocus?: any;
 }
 
 // eslint-disable-next-line react/display-name
@@ -55,10 +56,15 @@ const InputHook: React.FC<InputHookProps> = ({
   multiline = false,
   maxLength = 500,
   showPlaceholder,
+  setFocus,
 }) => {
   const refInput = useRef<TextInput>(null);
   const _forcusInput = () => {
-    refInput.current?.focus();
+    if (setFocus) {
+      setFocus(name);
+    } else {
+      refInput.current?.focus();
+    }
   };
   return (
     <View
@@ -91,10 +97,10 @@ const InputHook: React.FC<InputHookProps> = ({
         <Controller
           control={control}
           rules={rules}
-          render={({ field: { onChange, value } }) => (
+          render={({ field: { ref, onChange, value } }) => (
             <TextInput
               {...inputProps}
-              ref={refInput}
+              ref={ref || refInput}
               multiline={multiline}
               onChangeText={(value) => onChange(value)}
               value={value}

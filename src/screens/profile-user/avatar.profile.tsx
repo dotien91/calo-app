@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { View, StyleSheet, Image, ActivityIndicator } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
@@ -14,9 +14,10 @@ import { isIos } from "@helpers/device.info.helper";
 import { updateProfile } from "@services/api/user.api";
 import { showToast } from "@helpers/super.modal.helper";
 import { translations } from "@localization";
+import SkeletonPlaceholder from "@shared-components/skeleton";
 
 interface UploadAvatarProps {
-  userInfo: TypedUser;
+  userInfo: TypedUser | null;
 }
 
 const AvatarProfile = ({ userInfo }: UploadAvatarProps) => {
@@ -34,6 +35,7 @@ const AvatarProfile = ({ userInfo }: UploadAvatarProps) => {
   }, [userInfo]);
 
   const onPressChangeAvatar = async () => {
+    if (updateing) return;
     selectMedia({
       config: { mediaType: "photo", cropping: true, width: 400, height: 400 },
       callback: async (image) => {
@@ -72,14 +74,18 @@ const AvatarProfile = ({ userInfo }: UploadAvatarProps) => {
     });
   };
 
+  if (!userInfo?._id) {
+    return (
+      <View style={styles.container}>
+        <SkeletonPlaceholder>
+          <View style={styles.viewAvatar} />
+        </SkeletonPlaceholder>
+      </View>
+    );
+  }
+
   return (
-    <View
-      style={{
-        ...CommonStyle.center,
-        width: "100%",
-        paddingVertical: 26,
-      }}
-    >
+    <View style={styles.container}>
       <View style={{ ...styles.viewAvatar, ...CommonStyle.center }}>
         <Image
           style={styles.viewAvatar}
@@ -116,10 +122,19 @@ const AvatarProfile = ({ userInfo }: UploadAvatarProps) => {
   );
 };
 
-export default AvatarProfile;
+export default memo(AvatarProfile);
 
 const styles = StyleSheet.create({
-  viewAvatar: { width: 86, height: 86, borderRadius: 30 },
+  container: {
+    ...CommonStyle.center,
+    width: "100%",
+    paddingVertical: 26,
+  },
+  viewAvatar: {
+    width: 86,
+    height: 86,
+    borderRadius: 30,
+  },
   viewCamera: {
     position: "absolute",
     bottom: 0,
