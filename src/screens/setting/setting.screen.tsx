@@ -51,15 +51,10 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
     },
     {
       title: translations.settingUser.blackList,
-<<<<<<< HEAD
-      icon: "person-remove-outline",
+      icon: require("assets/images/blacklisticon.png"),
       action: () => {
         NavigationService.navigate(SCREENS.BLACK_LIST);
       },
-=======
-      icon: require("assets/images/blacklisticon.png"),
-      action: () => {},
->>>>>>> 2e60093 (feat: fix conflict)
     },
     {
       icon: require("assets/images/settingicon.png"),
@@ -78,9 +73,11 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
     {
       title: translations.settingUser.support,
       icon: require("assets/images/supporticon.png"),
-      action: () => { NavigationService.navigate(SCREENS.CHAT_ROOM, {
-        id: "6588f14e8d8b13bb432f7d2f",
-      });},
+      action: () => {
+        NavigationService.navigate(SCREENS.CHAT_ROOM, {
+          id: "6588f14e8d8b13bb432f7d2f",
+        });
+      },
     },
     {
       title: translations.settingUser.aboutus,

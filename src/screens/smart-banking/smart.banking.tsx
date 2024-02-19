@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import {
   ActivityIndicator,
   Image,
@@ -15,7 +15,7 @@ import { translations } from "@localization";
 import createStyles from "./smart.banking.style";
 import Header from "@shared-components/header/Header";
 import { useUploadFile } from "@helpers/hooks/useUploadFile";
-import { getOrderDetail, updateUserOrder } from "@services/api/payment.api";
+import { getOrderDetail, updateUserOrder, getQRcode } from "@services/api/payment.api";
 import {
   EnumModalContentType,
   EnumStyleModalType,
@@ -26,6 +26,7 @@ import {
 import { SCREENS } from "constants";
 
 const SmartBanking = () => {
+  // const [fileImage, setfileImage] = useState("");
   const theme = useTheme();
   // const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
@@ -72,11 +73,24 @@ const SmartBanking = () => {
     NavigationService.navigate(SCREENS.COURSE_LIST);
   };
 
+  const [qrcode, setqeCode] = useState("");
   const copyToClipboard = () => {
     Clipboard.setString("adasds");
   };
 
-  const { onSelectPicture, isUpLoadingFile, listFile } = useUploadFile([], 1);
+  const { onSelectPicture, isUpLoadingFile, listFileLocal, listFile } =
+    useUploadFile([], 1);
+
+  // const selectImage = () => {
+  //   selectMedia({
+  //     config: { mediaType: "photo", selectionLimit: 1 },
+  //     callback: async (image) => {
+  //       setfileImage(
+  //         image?.filename || image.path?.split("/")?.reverse()?.[0] || "",
+  //       );
+  //     },
+  //   });
+  // };
 
   const actionSend = () => {
     console.log("listFilelistFilelistFile", listFile);
@@ -101,12 +115,28 @@ const SmartBanking = () => {
       } else {
         showToast({
           type: "error",
+          message: "",
         });
       }
     });
 
     console.log("dataaaa", data);
     // NavigationService.navigate(SCREENS.PAYMENT_SUCCESS);
+  };
+
+  useEffect(() => {
+    getData();
+  });
+
+  const getData = () => {
+    getQRcode()
+      .then((res: any) => {
+        console.log("json", JSON.stringify(res, null, 2));
+        setqeCode(res.data);
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -117,7 +147,9 @@ const SmartBanking = () => {
           {translations.payment.tocomplete}
         </Text>
         <View style={styles.styleViewCopyNumberBank}>
-          <Text style={styles.styleTextNumberBank}>0123456789</Text>
+          <Text style={styles.styleTextNumberBank}>
+            {qrcode?.config?.option_content[0]?.value}
+          </Text>
           <TouchableOpacity onPress={copyToClipboard}>
             <Image
               style={{ height: 15.3, width: 13.79 }}
@@ -127,12 +159,12 @@ const SmartBanking = () => {
         </View>
         <Text style={styles.styleTextName}>NGUYEN VAN A</Text>
         <Text numberOfLines={2} style={styles.styleTextNameBank}>
-          Ngân hàng Thương mại cổ phần Đầu tư và Phát triển Việt Nam (BIDV)
+          {qrcode?.config?.option_content[1]?.value}
         </Text>
         <View style={{ marginBottom: 16 }}>
           <Image
             style={{ height: 180, width: 180, marginBottom: 4 }}
-            source={require("assets/images/QRcode.png")}
+            source={{ uri: qrcode?.config?.data_content }}
           ></Image>
           <Text style={styles.styleTextSaveQRcode}>
             {translations.payment.saveQRCode}
