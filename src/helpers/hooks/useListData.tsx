@@ -63,7 +63,7 @@ export function useListData<T>(
     if (stateListData.nextPage > 1 && showRefreshing) setRefreshing(true);
     // setIsLoading(true);
     requestData({ page: "1", ...params }).then((res: any) => {
-      console.log("resssssss", res);
+      // console.log("resssssss", res);
       const newData = res.data;
       // setIsLoading(false);
       if (!res.isError && lodash.isArray(newData)) {

@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, ViewStyle } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import FastImage from "react-native-fast-image";
 import * as NavigationService from "react-navigation-helpers";
@@ -19,6 +19,7 @@ import { numberWithCommas } from "@utils/string.utils";
 interface CourseItemProps extends ICourseItem {
   isHorizontalStyle: boolean;
   isSliderItem: boolean;
+  style?: ViewStyle;
 }
 
 const CourseItem = ({
@@ -31,6 +32,7 @@ const CourseItem = ({
   user_id,
   media_id,
   avatar,
+  style,
 }: CourseItemProps) => {
   let widthImage = Device.width - 32;
   if (isHorizontalStyle) {
@@ -114,6 +116,7 @@ const CourseItem = ({
       style={[
         styles.courseItem,
         isSliderItem && { padding: 0, width: widthImage, marginRight: 16 },
+        style ? style : {},
       ]}
     >
       {renderImg()}

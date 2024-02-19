@@ -34,14 +34,11 @@ export async function uploadFile(file: MediaAsset) {
   newForm.append("file[]", file);
   return request({
     method: METHOD.POST,
-    url: `${UPLOAD_URL}/upload-file?callback=${BASEURL}media/create`,
+    url: `${UPLOAD_URL}upload-file?callback=${BASEURL}media/create`,
     data: newForm,
     customHeader: { "Content-Type": "multipart/form-data" },
   }).then((response) => {
-    if (Array.isArray(response.data)) {
-      return response.data;
-    }
-    return [];
+    return response;
   });
 }
 

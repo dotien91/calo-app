@@ -16,11 +16,13 @@ import CS from "@theme/styles";
 import Header from "@shared-components/header/Header";
 import { addModuleToCourse, updateModule } from "@services/api/course.api";
 import eventEmitter from "@services/event-emitter";
+import SelectFileHook from "./components/select.file";
 
 const CourseAddModuleScreen = () => {
   const route = useRoute();
   const course_id = route.params?.["course_id"];
   const parent_id = route.params?.["parent_id"];
+  const type = route.params?.["type"];
   const data = route.params?.["data"];
   const [title, setTitle] = useState("");
   const [idUpdate, setIdUpdate] = useState("");
@@ -29,6 +31,11 @@ const CourseAddModuleScreen = () => {
     link: data?.media_id?.media_thumbnail || "",
     placeholder: translations.post.addVideo,
     type: "video",
+  });
+  const { idFile, renderSelectFile, updatingFile } = SelectFileHook({
+    id: data?.media_id?._id || "",
+    link: data?.media_id?.media_file_name || "",
+    placeholder: translations.home.file,
   });
   const [creating, setCreating] = useState(false);
   const submitPostStatus = React.useRef("");
@@ -43,14 +50,13 @@ const CourseAddModuleScreen = () => {
   React.useEffect(() => {
     if (
       submitPostStatus.current == "waitUploadFile" &&
-      !updatingVid &&
-      idVideo !== ""
+      ((!updatingVid && idVideo !== "") || (!updatingFile && idFile !== ""))
     ) {
       submitPostStatus.current = "";
       _createPart();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [updatingVid, idVideo]);
+  }, [updatingVid, idVideo, idFile, updatingFile]);
   const _createPart = () => {
     if (title.trim() === "") {
       showToast({ type: "error", message: translations.course.requiredTitle });
@@ -67,12 +73,12 @@ const CourseAddModuleScreen = () => {
         submitPostStatus.current = "waitUploadFile";
         return;
       } else {
-        if (idVideo) {
+        if (idVideo || idFile) {
           const dataPost = {
             course_id: course_id,
             parent_id: parent_id,
-            media_id: idVideo,
-            type: "video",
+            media_id: idVideo || idFile,
+            type: type === "file" ? "file" : "video",
             title: title,
           };
           setCreating(true);
@@ -87,6 +93,7 @@ const CourseAddModuleScreen = () => {
                   message: translations.course.updateModuleSuccess,
                 });
                 eventEmitter.emit("reload_part_view");
+                eventEmitter.emit("reload_data_preview");
                 NavigationService.goBack();
               } else {
                 showToast({ type: "error", message: res.message });
@@ -104,6 +111,7 @@ const CourseAddModuleScreen = () => {
                   message: translations.course.createModuleSuccess,
                 });
                 eventEmitter.emit("reload_part_view");
+                eventEmitter.emit("reload_data_preview");
                 NavigationService.goBack();
               } else {
                 showToast({ type: "error", message: res.message });
@@ -112,7 +120,11 @@ const CourseAddModuleScreen = () => {
             });
           }
         } else {
-          showToast({ type: "info", message: "Chọn video cho khóa học" });
+          showToast({
+            type: "info",
+            message:
+              type === "file" ? "Chọn tệp đính kèm" : "Chọn video cho khóa học",
+          });
         }
       }
     } else {
@@ -132,6 +144,7 @@ const CourseAddModuleScreen = () => {
               message: translations.course.updateModuleSuccess,
             });
             eventEmitter.emit("reload_part_view");
+            eventEmitter.emit("reload_data_preview");
             NavigationService.goBack();
           } else {
             showToast({ type: "error", message: res.message });
@@ -147,6 +160,7 @@ const CourseAddModuleScreen = () => {
               message: translations.course.createModuleSuccess,
             });
             eventEmitter.emit("reload_part_view");
+            eventEmitter.emit("reload_data_preview");
             NavigationService.goBack();
           } else {
             showToast({ type: "error", message: res.message });
@@ -181,13 +195,18 @@ const CourseAddModuleScreen = () => {
           }}
         />
         {parent_id && <Text>{translations.course.chooseFile}</Text>}
-        {parent_id && renderSelectVideo()}
+        {parent_id &&
+          (type === "file" ? renderSelectFile() : renderSelectVideo())}
         <Button
           style={{ marginTop: 8 }}
           onPress={_createPart}
           text={
             parent_id
-              ? translations.course.addLesson
+              ? data?._id
+                ? translations.course.updateLesson
+                : translations.course.addLesson
+              : data?._id
+              ? translations.course.updateModule
               : translations.course.addModule
           }
           disabled={creating}

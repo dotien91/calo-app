@@ -34,6 +34,9 @@ import EmptyResultView from "@shared-components/empty.data.component";
 import { shareProfile } from "@utils/share.utils";
 import AvatarProfile from "./avatar.profile";
 import SkeletonPlaceholder from "@shared-components/skeleton";
+import { getCourseList } from "@services/api/course.api";
+import CourseItem from "@screens/course-tab/components/course.item";
+import LoadingItem from "@shared-components/loading.item";
 
 interface ProfileUserProps {
   route: any;
@@ -58,6 +61,10 @@ const ProfileUser = (props: ProfileUserProps) => {
     auth_id: userData?._id || "",
     user_id: _id,
   };
+  const paramsRequestCourse = {
+    limit: "10",
+    user_id: _id,
+  };
 
   const {
     listData,
@@ -69,7 +76,17 @@ const ProfileUser = (props: ProfileUserProps) => {
     refreshing,
     totalCount,
   } = useListData<TypedRequest>(paramsRequest, getListPost);
+  const {
+    listData: listDataCourse,
+    onEndReach: onEndReachCourse,
+    refreshControl: refreshControlCourse,
+    renderFooterComponent: renderFooterComponentCourse,
+    isFirstLoading: isFirstLoadingCourse,
+    refreshing: refreshingCourse,
+  } = useListData<TypedRequest>(paramsRequestCourse, getCourseList);
+  // const scrollY = useCurrentTabScrollY();
 
+  console.log("listDataCourse", JSON.stringify(listDataCourse, null, 2));
   useEffect(() => {
     eventEmitter.on("reload_list_post", _requestData);
     return () => {
@@ -169,7 +186,6 @@ const ProfileUser = (props: ProfileUserProps) => {
       </View>
     );
   };
-
   const Bio = ({ text }: { text: string }) => {
     const isUserLogin = userData?._id === userInfo?._id;
     return (
@@ -207,6 +223,16 @@ const ProfileUser = (props: ProfileUserProps) => {
   };
   const renderItemSave = ({ item }: { item: TypedPost }) => {
     return <ItemPost data={item} />;
+  };
+
+  const renderItemCourse = ({ item, index }) => {
+    return (
+      <CourseItem
+        {...item}
+        key={index}
+        style={index == 0 ? { marginTop: 8 } : {}}
+      />
+    );
   };
 
   const renderHeader = () => {
@@ -252,7 +278,17 @@ const ProfileUser = (props: ProfileUserProps) => {
       />
     );
   };
+  const renderEmptyCourseOfMe = () => {
+    return (
+      <EmptyResultView
+        title={translations.course.emptyCourse}
+        icon="document-text-outline"
+        showLottie={false}
+      />
+    );
+  };
 
+  // console.log("top, height,,,", scrollY);
   if (userData?._id === userInfo?._id) {
     return (
       <View style={styles.container}>
@@ -268,15 +304,22 @@ const ProfileUser = (props: ProfileUserProps) => {
           }}
         />
         <HeaderProfile />
-        <Tabs.Container renderHeader={renderHeader} renderTabBar={renderTabBar}>
+        <Tabs.Container
+          lazy
+          renderHeader={renderHeader}
+          headerHeight={500}
+          renderTabBar={renderTabBar}
+          allowHeaderOverscroll
+        >
           <Tabs.Tab
             name={translations.post.posts}
             label={translations.post.posts}
           >
             {isFirstLoading ? (
-              renderEmptyPostOfMe()
+              LoadingItem()
             ) : (
               <Tabs.FlatList
+                scrollToOverflowEnabled
                 data={listData}
                 renderItem={renderItem}
                 scrollEventThrottle={16}
@@ -292,12 +335,39 @@ const ProfileUser = (props: ProfileUserProps) => {
               />
             )}
           </Tabs.Tab>
+          {userData?.user_role === "teacher" ? (
+            <Tabs.Tab
+              name={translations.course.course}
+              label={translations.course.course}
+            >
+              {isFirstLoadingCourse ? (
+                LoadingItem()
+              ) : (
+                <Tabs.FlatList
+                  scrollToOverflowEnabled
+                  data={listDataCourse}
+                  renderItem={renderItemCourse}
+                  scrollEventThrottle={16}
+                  onEndReachedThreshold={0}
+                  onEndReached={onEndReachCourse}
+                  showsVerticalScrollIndicator={false}
+                  removeClippedSubviews={true}
+                  keyExtractor={(item) => item?._id + ""}
+                  refreshControl={refreshControlCourse()}
+                  ListFooterComponent={renderFooterComponentCourse()}
+                  ListEmptyComponent={renderEmptyCourseOfMe()}
+                  refreshing={refreshingCourse}
+                />
+              )}
+            </Tabs.Tab>
+          ) : null}
           <Tabs.Tab
             name={translations.post.listPostSave}
             label={translations.post.listPostSave}
           >
             {listPostSave.length > 0 ? (
               <Tabs.FlatList
+                scrollToOverflowEnabled
                 data={listPostSave}
                 renderItem={renderItemSave}
                 scrollEventThrottle={16}

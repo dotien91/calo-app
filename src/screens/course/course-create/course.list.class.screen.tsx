@@ -153,7 +153,7 @@ const CourseListClassScreen = () => {
   };
 
   const _poptoTop = () => {
-    NavigationService.popToTop();
+    NavigationService.goBack();
   };
 
   return (

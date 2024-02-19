@@ -18,6 +18,7 @@ import { formatTime } from "@utils/date.utils";
 import IconSvg from "assets/svg";
 import { downloadFileToPath } from "@helpers/file.helper";
 import { translations } from "@localization";
+import eventEmitter from "@services/event-emitter";
 
 const { width } = Dimensions.get("screen");
 interface PartViewProps {
@@ -47,8 +48,8 @@ const PartView = ({
   const [activeSections, setActiveSections] = React.useState<number[]>([0]);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
-  const _getListModule = async () => {
-    getListModule(param).then(async (res) => {
+  const _getListModule = () => {
+    getListModule(param).then((res) => {
       if (!res.isError) {
         setIsLoading(false);
         setSectionList(res.data);
@@ -62,6 +63,12 @@ const PartView = ({
   React.useEffect(() => {
     _getListModule();
   }, [id]);
+  React.useEffect(() => {
+    eventEmitter.on("reload_data_preview", _getListModule);
+    return () => {
+      eventEmitter.off("reload_data_preview", _getListModule);
+    };
+  });
 
   const _renderHeader = (section: ICourseModuleItem, index: number) => {
     return (

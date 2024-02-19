@@ -14,7 +14,7 @@ const CourseListVideoScreen = () => {
   const course_id = route.params?.["course_id"];
 
   const _pressSuccess = () => {
-    NavigationService.popToTop();
+    NavigationService.goBack();
   };
 
   return (

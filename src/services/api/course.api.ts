@@ -7,6 +7,7 @@ export async function getCourseList(data) {
     urlPath: "course/list",
     data,
   }).then((response) => {
+    console.log("listdata...", response);
     return response;
   });
 }

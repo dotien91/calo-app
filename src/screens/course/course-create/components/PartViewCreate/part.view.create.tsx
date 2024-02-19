@@ -78,6 +78,7 @@ const PartViewCreate = ({ id, hide }: PartViewCreateProps) => {
           type: "success",
           message: translations.course.deleteClassSuccess,
         });
+        eventEmitter.emit("reload_data_preview");
         _getListModule();
       } else {
         showToast({
@@ -160,9 +161,17 @@ const PartViewCreate = ({ id, hide }: PartViewCreateProps) => {
   ) => {
     const _addNewLesson = () => {
       // chuyển đến trang thêm bài học truyền xuống part_id, course_id
-      NavigationService.navigate(SCREENS.COURSE_ADD_MODULE, {
-        course_id: id,
-        parent_id: section._id,
+      // NavigationService.navigate(SCREENS.COURSE_ADD_MODULE, {
+      //   course_id: id,
+      //   parent_id: section._id,
+      // });
+      showSuperModal({
+        contentModalType: EnumModalContentType.AddLesson,
+        styleModalType: EnumStyleModalType.Bottom,
+        data: {
+          course_id: id,
+          parent_id: section._id,
+        },
       });
       // console.log("id: ", id, "moduleId....", section._id);
     };
@@ -323,6 +332,7 @@ const Lesson = ({ data, id, parent_id }: LessonProps) => {
           message: translations.course.deleteClassSuccess,
         });
         eventEmitter.emit("reload_part_view");
+        eventEmitter.emit("reload_data_preview");
       } else {
         showToast({
           type: "error",
@@ -352,11 +362,12 @@ const Lesson = ({ data, id, parent_id }: LessonProps) => {
     NavigationService.navigate(SCREENS.COURSE_ADD_MODULE, {
       course_id: id,
       parent_id: parent_id,
+      type: data.type,
       data: data,
     });
   };
   return (
-    <PressableBtn style={styles.viewContent} onPress={() => console.log(data)}>
+    <PressableBtn style={styles.viewContent} onPress={viewVideo}>
       <Animatable.Text style={[styles.textDetail, { flex: 1 }]}>
         {data.title}
       </Animatable.Text>
@@ -375,7 +386,7 @@ const Lesson = ({ data, id, parent_id }: LessonProps) => {
       <Icon
         onPress={viewVideo}
         size={24}
-        name={"play-circle-outline"}
+        name={data.type === "file" ? "document-outline" : "play-circle-outline"}
         type={IconType.Ionicons}
       />
     </PressableBtn>

@@ -18,6 +18,7 @@ export enum EnumModalContentType {
   MoreTeacher = "more-teacher",
   ChatRoom = "chat-room",
   ListUser = "list-user",
+  AddLesson = "add-lesson",
 }
 
 export enum EnumStyleModalType {

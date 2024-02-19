@@ -31,7 +31,6 @@ const SelectVideoHook = ({
   const [updatingVid, setUpdatingVid] = React.useState(false);
   const [idVideo, setIdVideo] = React.useState("");
   const [typeMedia, setTypeMedia] = useState("");
-  console.log("typeM..", typeM);
 
   useEffect(() => {
     if (link) {

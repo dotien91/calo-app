@@ -28,13 +28,13 @@ import { palette } from "@theme/themes";
 import { createCourse, updateCourse } from "@services/api/course.api";
 import { showToast } from "@helpers/super.modal.helper";
 import CustomBackground from "@shared-components/CustomBackgroundBottomSheet";
-import { SCREENS } from "constants";
 import {
   listLevel,
   listSkill,
   listTypeCourse,
 } from "constants/course.constant";
 import SelectVideoHook from "./components/select.video";
+import eventEmitter from "@services/event-emitter";
 // import SelectImageHook from "./components/select.image";
 
 interface ILevel {
@@ -65,7 +65,7 @@ const CourseCreate = () => {
   const route = useRoute();
   const data = route.params?.["data"];
   const course_id = route.params?.["course_id"];
-  console.log("data.public_status...", data.public_status);
+  console.log("data.public_status...", data?.public_status);
   const theme = useTheme();
   const { colors } = theme;
   const [updating, setUpdating] = React.useState(false);
@@ -76,8 +76,8 @@ const CourseCreate = () => {
   const [skill, setSkill] = useState<string[]>([]);
   const { idVideo, renderSelectVideo, updatingVid, typeMedia } =
     SelectVideoHook({
-      id: data?.media_id?._id,
-      link: data?.media_id.media_thumbnail,
+      id: data?.media_id?._id || data?.avatar?._id,
+      link: data?.media_id?.media_thumbnail || data?.avatar?.media_thumbnail,
       typeM: data?.media_id ? "video" : "image",
     });
   // const { idImage, renderSelectImage, updatingImg } = SelectImageHook({
@@ -130,7 +130,7 @@ const CourseCreate = () => {
       if (idVideo === "") {
         showToast({
           type: "error",
-          message: translations.course.warningSelectImage,
+          message: translations.course.warningUploadCoverImageOrVideo,
         });
       }
     } else {
@@ -147,7 +147,7 @@ const CourseCreate = () => {
           country: userData?.country,
           // avatar: idImage,
           // media_id: idVideo,
-          public_status: data.public_status || "draft",
+          public_status: data?.public_status || "draft",
           type: typeCourse,
           level: level,
           skills: skill,
@@ -172,26 +172,29 @@ const CourseCreate = () => {
                 type: "success",
                 message: translations.course.updateModuleSuccess,
               });
-              if (typeCourse === "Call group") {
-                NavigationService.navigate(SCREENS.COURSE_LIST_CLASS, {
-                  course_id: course_id,
-                  start_time: startDate?.toISOString(),
-                  end_time: endDate?.toISOString(),
-                });
-              }
-              if (typeCourse === "Call 1-1") {
-                NavigationService.navigate(
-                  SCREENS.COURSE_CREATE_CALENDAR_CALL,
-                  {
-                    course_id: course_id,
-                  },
-                );
-              }
-              if (typeCourse === "Self-learning") {
-                NavigationService.navigate(SCREENS.COURSE_LIST_MODULE, {
-                  course_id: course_id,
-                });
-              }
+              // if (typeCourse === "Call group") {
+              //   NavigationService.navigate(SCREENS.COURSE_LIST_CLASS, {
+              //     course_id: course_id,
+              //     start_time: startDate?.toISOString(),
+              //     end_time: endDate?.toISOString(),
+              //   });
+              // }
+              // if (typeCourse === "Call 1-1") {
+              //   NavigationService.navigate(
+              //     SCREENS.COURSE_CREATE_CALENDAR_CALL,
+              //     {
+              //       course_id: course_id,
+              //     },
+              //   );
+              // }
+              // if (typeCourse === "Self-learning") {
+              //   NavigationService.navigate(SCREENS.COURSE_LIST_MODULE, {
+              //     course_id: course_id,
+              //   });
+              // }
+              eventEmitter.emit("reload_data_preview");
+
+              NavigationService.goBack();
               setUpdating(false);
             } else {
               showToast({
@@ -209,26 +212,27 @@ const CourseCreate = () => {
                 type: "success",
                 message: translations.course.createCourseSuccess,
               });
-              if (typeCourse === "Call group") {
-                NavigationService.navigate(SCREENS.COURSE_LIST_CLASS, {
-                  course_id: res.data._id,
-                  start_time: startDate?.toISOString(),
-                  end_time: endDate?.toISOString(),
-                });
-              }
-              if (typeCourse === "Call 1-1") {
-                NavigationService.navigate(
-                  SCREENS.COURSE_CREATE_CALENDAR_CALL,
-                  {
-                    course_id: res.data._id,
-                  },
-                );
-              }
-              if (typeCourse === "Self-learning") {
-                NavigationService.navigate(SCREENS.COURSE_LIST_MODULE, {
-                  course_id: res.data._id,
-                });
-              }
+              // if (typeCourse === "Call group") {
+              //   NavigationService.navigate(SCREENS.COURSE_LIST_CLASS, {
+              //     course_id: res.data._id,
+              //     start_time: startDate?.toISOString(),
+              //     end_time: endDate?.toISOString(),
+              //   });
+              // }
+              // if (typeCourse === "Call 1-1") {
+              //   NavigationService.navigate(
+              //     SCREENS.COURSE_CREATE_CALENDAR_CALL,
+              //     {
+              //       course_id: res.data._id,
+              //     },
+              //   );
+              // }
+              // if (typeCourse === "Self-learning") {
+              //   NavigationService.navigate(SCREENS.COURSE_LIST_MODULE, {
+              //     course_id: res.data._id,
+              //   });
+              // }
+              NavigationService.goBack();
               setUpdating(false);
             } else {
               showToast({
