@@ -189,6 +189,17 @@ export async function ignoreFollower(data: any) {
     method: METHOD.POST,
     urlPath: "user/ignore-follower",
     data,
+  })
+  .then((response) => {
+    return response;
+  });
+}
+
+export async function postUnBlockUser(data: any) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "user/un-block",
+    data,
   }).then((response) => {
     return response;
   });
