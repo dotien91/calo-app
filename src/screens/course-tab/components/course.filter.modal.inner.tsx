@@ -90,7 +90,7 @@ const CourseFilterModalInnter = ({
     const maxPrice =
       Number(watch(EnumCourseFilter.price)?.[1]) > 0
         ? watch(EnumCourseFilter.price)?.[1]
-        : 1e5 + "";
+        : 1e8 + "";
     let newParamsRequest = {};
     if (courseType == EnumCourseType.course) {
       newParamsRequest = {
@@ -198,10 +198,10 @@ const CourseFilterModalInnter = ({
   const onClear = () => {
     setParamsRequest(listCourseFilterParams);
     reset({
-      types: params?.types || [],
-      skills: params?.skills || [],
+      types: [],
+      skills: [],
       price: [0, 1e8],
-      levels: params?.levels || [],
+      levels: [],
       onlyEnglishNativeSpeakers: false,
     });
     resetField("skills");

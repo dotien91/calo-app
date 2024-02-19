@@ -10,15 +10,10 @@ interface IStickBottomModalProps extends ModalProps {
 /**Modal stick at of page */
 export default function StickBottomModal({
   children,
-  backdropOpacity,
   ...restProps
 }: IStickBottomModalProps) {
   return (
-    <Modal
-      {...restProps}
-      backdropOpacity={backdropOpacity || 0.5}
-      style={styles.modal}
-    >
+    <Modal {...restProps} style={styles.modal}>
       {/* {typeof header === "string" ? (
         <View style={styles.headerWrap}>
           <Text style={styles.headerText}>{header}</Text>

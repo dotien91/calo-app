@@ -21,7 +21,7 @@ interface IMultiCheckbox {
 }
 
 export const MultiCheckBox = React.memo(
-  ({ defaultValue, onChange, items, value }: IMultiCheckbox) => {
+  ({ onChange, items, value }: IMultiCheckbox) => {
     const useFlexOne = items.length < 4;
     const onToggle = (item) => {
       const isActive = !!value.find((v) => lodash.isEqual(v, item.id));
@@ -34,7 +34,7 @@ export const MultiCheckBox = React.memo(
 
     const renderFilterBtn = (item) => {
       const isActive = !!value.find((v) => lodash.isEqual(v, item.id));
-      const isDisabled = !!defaultValue.find((v) => lodash.isEqual(v, item.id));
+      // const isDisabled = !!defaultValue.find((v) => lodash.isEqual(v, item.id));
       return (
         <TouchableOpacity
           onPress={() => onToggle(item)}
@@ -42,9 +42,9 @@ export const MultiCheckBox = React.memo(
             styles.btnFilter,
             isActive && styles.btnFilterActive,
             useFlexOne && { flex: 1, ...CS.flexCenter },
-            isDisabled && { opacity: 0.5 },
+            // isDisabled && { opacity: 0.5 },
           ]}
-          disabled={isDisabled}
+          // disabled={isDisabled}
         >
           <Text style={[styles.txtFilter, isActive && styles.txtFilterActive]}>
             {item.name}

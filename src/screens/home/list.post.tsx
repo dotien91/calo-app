@@ -19,7 +19,6 @@ import { useUserHook } from "@helpers/hooks/useUserHook";
 import EmptyResultView from "@shared-components/empty.data.component";
 import { TypedPost } from "shared/models";
 import LoadingList from "@shared-components/loading.list.component";
-
 interface ListPostProps {
   isFollowingPost: boolean;
   id?: string;
