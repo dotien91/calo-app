@@ -468,6 +468,7 @@ export default {
     requiredTitle: "Title is required",
     publicCourse: "Public course",
     noreview: "Zero review",
+    selectModal: "Select",
   },
   seeAll: "See all",
   settings: {

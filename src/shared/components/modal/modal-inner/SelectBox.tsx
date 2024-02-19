@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
+import { View, TouchableOpacity, Text, StyleSheet, Image } from "react-native";
 /**
  * ? Local Imports
  */
@@ -13,6 +13,7 @@ interface IItem {
   id: string;
   _id?: string;
   order_by?: string;
+  iconImg: string;
 }
 
 interface SelectBoxProps {
@@ -49,6 +50,12 @@ const SelectBox = ({
         style={[styles.item, isLastitem && { borderBottomWidth: 0 }]}
       >
         <View style={CS.flexStart}>
+          {item.iconImg && (
+            <Image
+              source={item.iconImg}
+              style={{ height: 30, width: 30 }}
+            ></Image>
+          )}
           {!!item.icon && (
             <Icon
               name={item.icon}

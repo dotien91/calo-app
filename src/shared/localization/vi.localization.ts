@@ -486,7 +486,7 @@ export default {
     lastUpdate: "Lần cập nhật gần đây nhất",
     buyNow: "Mua ngay",
     addToCart: "Thêm vào giỏ hàng",
-    filter: "Locj",
+    filter: "Lọc",
     formOfLearn: "Kiểu học",
     allForms: "Tất cả",
     callOneVsOne: "Học 1-1",
@@ -558,6 +558,7 @@ export default {
     videoReviewCourse: "Video giới thiệu khoá học",
     requiredTitle: "Tiêu đề không được để trống",
     noreview: "Chưa có đánh giá",
+    selectModal: "Lựa chọn",
   },
   seeAll: "Xem tất cả",
   settings: {
