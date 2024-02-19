@@ -38,7 +38,9 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
     {
       title: translations.settingUser.blackList,
       icon: "person-remove-outline",
-      action: () => {},
+      action: () => {
+        NavigationService.navigate(SCREENS.BLACK_LIST);
+      },
     },
     {
       icon: "cog-outline",

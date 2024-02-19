@@ -132,6 +132,13 @@ export async function deleteUserById(id: string) {
   return request({
     method: METHOD.DELETE,
     urlPath: `user/delete/${id}`,
+  });
+}
+
+export async function getListBlock() {
+  return request({
+    method: METHOD.GET,
+    urlPath: "user/block-list",
   }).then((response) => {
     return response;
   });

@@ -70,6 +70,7 @@ import CourseListVideoScreen from "@screens/course/course-create/course.list.vid
 import CourseAddModuleScreen from "@screens/course/course-create/course.add.module.screen";
 import CallClassScreen from "@screens/call-class/call.class.screen";
 import TabFollow from "@screens/tab-follow/tab.follow";
+import BlackList from "@screens/black-list/black.list";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -309,6 +310,7 @@ const Navigation = () => {
           component={PaymentSuccess}
         />
         <Stack.Screen name={SCREENS.TAB_FOLLOW} component={TabFollow} />
+        <Stack.Screen name={SCREENS.BLACK_LIST} component={BlackList} />
       </Stack.Navigator>
     </NavigationContainer>
   );
