@@ -71,7 +71,7 @@ const AuthorView = ({ data }: AuthorViewProps) => {
       </Text> */}
       <View style={{ flexDirection: "row", marginTop: 8 }}>
         <Avatar
-          sourceUri={{ uri: data?.avatar?.media_thumbnail }}
+          sourceUri={{ uri: data?.user_id?.user_avatar_thumbnail }}
           style={styles.viewAvatar}
         />
         <View style={{ marginLeft: 8, justifyContent: "space-between" }}>

@@ -459,6 +459,7 @@ export default {
     typeCourse: "Type of course",
     videoReviewCourse: "Video review course",
     requiredTitle: "Title is required",
+    publicCourse: "Public course",
   },
   seeAll: "See all",
   settings: {

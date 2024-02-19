@@ -121,16 +121,18 @@ export async function getTimeAvailable(params) {
 }
 
 interface ICreateCourse {
-  title: string;
-  description: string;
-  long_description: string;
-  price: string;
-  start_time: string;
-  end_time: string;
-  language: string;
-  country: string;
-  avatar: string;
-  media_id: string;
+  _id: string;
+  title?: string;
+  description?: string;
+  long_description?: string;
+  price?: string;
+  start_time?: string;
+  end_time?: string;
+  language?: string;
+  country?: string;
+  avatar?: string;
+  media_id?: string;
+  public_status: string;
 }
 
 export async function createCourse(data: ICreateCourse) {

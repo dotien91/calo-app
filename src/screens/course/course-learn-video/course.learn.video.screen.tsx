@@ -239,6 +239,7 @@ const CourseLearnScreen = () => {
             console.log("item...", JSON.stringify(item));
             setSource(item);
           }}
+          itemSelected={source}
           isLearnScreen
           isJoin
         />

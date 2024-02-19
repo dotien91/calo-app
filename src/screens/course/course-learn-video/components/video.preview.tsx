@@ -80,7 +80,7 @@ const VideoPreview = (
       pausedRef.current = false;
       aniPause.value = withTiming(0, { duration: 0 });
       duration.current = 0;
-      videoRef.current.setNativeProps({
+      videoRef.current?.setNativeProps({
         paused: true,
       });
       isDoneCourse.current = false;

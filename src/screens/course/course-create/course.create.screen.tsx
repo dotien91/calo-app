@@ -65,6 +65,7 @@ const CourseCreate = () => {
   const route = useRoute();
   const data = route.params?.["data"];
   const course_id = route.params?.["course_id"];
+  console.log("data.public_status...", data.public_status);
   const theme = useTheme();
   const { colors } = theme;
   const [updating, setUpdating] = React.useState(false);
@@ -112,7 +113,12 @@ const CourseCreate = () => {
   const refBottomSheet = React.useRef<BottomSheet>(null);
   const snapPoints = React.useMemo(() => [300], []);
 
-  const onSubmit = (data) => {
+  const onSubmit = (dataHook: {
+    title: string;
+    description: string;
+    long_description: string;
+    price: string | number;
+  }) => {
     console.log("idvideo...", typeMedia);
     if (!startDate || !endDate || idVideo === "") {
       if (startDate || !endDate) {
@@ -127,14 +133,13 @@ const CourseCreate = () => {
           message: translations.course.warningSelectImage,
         });
       }
-      // language: dang khong nhan vi
     } else {
       if (startDate < endDate) {
         const params = {
-          title: data.title,
-          description: data.description,
-          long_description: data.long_description,
-          price: data.price,
+          title: dataHook.title,
+          description: dataHook.description,
+          long_description: dataHook.long_description,
+          price: dataHook.price,
           start_time: startDate?.toISOString(),
           end_time: endDate?.toISOString(),
           language: "en",
@@ -142,6 +147,7 @@ const CourseCreate = () => {
           country: userData?.country,
           // avatar: idImage,
           // media_id: idVideo,
+          public_status: data.public_status || "draft",
           type: typeCourse,
           level: level,
           skills: skill,

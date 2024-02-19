@@ -7125,10 +7125,14 @@ react-native-uuid@^2.0.1:
     prop-types "^15.7.2"
     yargs "^16.1.1"
 
-react-native-video@6.0.0-beta.4:
-  version "6.0.0-beta.4"
-  resolved "https://registry.yarnpkg.com/react-native-video/-/react-native-video-6.0.0-beta.4.tgz#8cce40d4b610ea058ddda68631328f1ff96ec759"
-  integrity sha512-kQgOiDkhURoisfW3Z8faIIkuYWp4y5galWszBPh332Ms6SY2KtKe+a611slvTJ9LM3xPCiOtnnaIHBhvab44bQ==
+react-native-video@6.0.0-b-alpha.8:
+  version "6.0.0-alpha.8"
+  resolved "https://registry.yarnpkg.com/react-native-video/-/react-native-video-6.0.0-alpha.8.tgz#9981c84dbef81cfe861bb80d0cdc4551335b6443"
+  integrity sha512-PLv9eUtgReblotIS2KKWIA7UCtDsJcrcqYmYOgyozhwSMdEoGL5aAdhdu0X6PXRDCHJNdXSDYL01Wj7VY0eLvA==
+  dependencies:
+    deprecated-react-native-prop-types "^2.2.0"
+    keymirror "^0.1.1"
+    prop-types "^15.7.2"
 
 react-native-webrtc@^118.0.1:
   version "118.0.1"
