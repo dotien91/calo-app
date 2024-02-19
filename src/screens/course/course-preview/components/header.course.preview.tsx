@@ -149,7 +149,19 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
       <View
         style={{ flexDirection: "row", alignItems: "center", marginTop: 16 }}
       >
-        <StarRate number={data?.rating || 0} size={16} />
+        {data?.rating > 0 ? (
+          <StarRate number={data?.rating} size={16} />
+        ) : (
+          <Text
+            style={{
+              fontSize: 14,
+              fontWeight: "400",
+              color: palette.textOpacity8,
+            }}
+          >
+            {translations.course.noreview}
+          </Text>
+        )}
         {data?.rating > 0 && (
           <Text style={[styles.txtcount, { marginTop: 0, marginLeft: 4 }]}>
             {data?.rating.toFixed(2)}

@@ -283,10 +283,12 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
           }}
         >
           <Text
+            numberOfLines={2}
             style={{
               ...CommonStyle.hnBold,
               fontSize: FONT_SIZE,
               color: colors.mainColor2,
+              maxWidth: 220,
             }}
           >
             {data?.user_id?.display_name}

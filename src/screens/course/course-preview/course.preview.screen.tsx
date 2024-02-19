@@ -214,7 +214,8 @@ const CoursePreviewScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Header iconNameRight="share" onPressRight={_shareCourse} />
+      {/* <Header iconNameRight="share-outline" onPressRight={_shareCourse} /> */}
+      <Header />
       <ScrollView
         contentContainerStyle={{ paddingBottom: 60 }}
         onScroll={handleScroll}

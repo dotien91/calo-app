@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { getStatusBarHeight } from "@freakycoder/react-native-helpers";
-import Carousel from "react-native-snap-carousel";
 
 /* eslint-disable camelcase */
 
@@ -222,13 +221,13 @@ const PagerScrollMedia = ({
           alignItems: "center",
         }}
       >
-        <Carousel
+        {/* <Carousel
           ref={caroselRef}
           data={listMedia}
           renderItem={renderItemListImage}
           sliderWidth={70}
           itemWidth={30}
-        />
+        /> */}
       </View>
     </View>
   );

@@ -467,6 +467,7 @@ export default {
     videoReviewCourse: "Video review course",
     requiredTitle: "Title is required",
     publicCourse: "Public course",
+    noreview: "Zero review",
   },
   seeAll: "See all",
   settings: {

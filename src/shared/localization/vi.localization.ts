@@ -97,8 +97,8 @@ export default {
   blockedUser: "Bạn đã chặn trang cá nhân của :username",
   commentAs: "Bình luận dưới tên",
   replying: "Phản hồi",
-  reply: "phản hồi",
-  like: "thích",
+  reply: "Phản hồi",
+  like: "Thích",
   comment: "bình luận",
   delete: "Xóa",
   edit: "Chỉnh sửa",
@@ -557,6 +557,7 @@ export default {
     typeCourse: "Kiểu khoá học",
     videoReviewCourse: "Video giới thiệu khoá học",
     requiredTitle: "Tiêu đề không được để trống",
+    noreview: "Chưa có đánh giá",
   },
   seeAll: "Xem tất cả",
   settings: {
