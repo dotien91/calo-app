@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FlatList,
   View,
@@ -96,7 +96,8 @@ const CourseListScreen: React.FC<CourseListScreenProps> = () => {
 const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
   const theme = useTheme();
   const { colors } = theme;
-
+  const userData = useStore((state) => state.userData);
+  const [listMyCourse, setlistMyCourse] = useState([]);
   const { isLoading, listData, onEndReach, renderFooterComponent } =
     useListData<ICourseItem>(
       { limit: "4", sort_by: "createdAt", order_by: "DESC" },
@@ -107,6 +108,23 @@ const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
     if (isTabCourse) return <CourseItem {...item} key={index} />;
     return <TutorItem {...item} key={index} />;
   };
+
+  const getDataMyCourse = () => {
+    const data = {
+      user_id: userData?._id,
+    };
+    console.log("OKE ass");
+    getCourseList(data).then((res: any) => {
+      console.log("OKE", JSON.stringify(res, null, 2));
+      setlistMyCourse(res.data);
+    });
+  };
+
+  console.log("userData?._id", userData?._id);
+
+  useEffect(() => {
+    getDataMyCourse();
+  }, []);
 
   const renderHeader = () => {
     return (
@@ -149,7 +167,7 @@ const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
             </TouchableOpacity>
           </View>
           <FlatList
-            data={listData}
+            data={listMyCourse}
             renderItem={renderItemMyCourse}
             horizontal
             style={{ flex: 1 }}

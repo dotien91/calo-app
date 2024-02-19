@@ -125,8 +125,8 @@ const Follower = () => {
           >
             <Text
               style={{
-                marginHorizontal: 16,
-                marginVertical: 9,
+                marginHorizontal: 8,
+                marginVertical: 4,
                 color: colors.white,
                 fontSize: 14,
                 fontWeight: "400",

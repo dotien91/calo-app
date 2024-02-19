@@ -91,8 +91,8 @@ const Following = () => {
           >
             <Text
               style={{
-                marginHorizontal: 16,
-                marginVertical: 9,
+                marginHorizontal: 8,
+                marginVertical: 4,
                 color: colors.text,
                 fontSize: 14,
                 fontWeight: "400",

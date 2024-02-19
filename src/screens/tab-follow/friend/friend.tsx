@@ -81,14 +81,14 @@ const Friend = () => {
         >
           <Text
             style={{
-              marginHorizontal: 16,
-              marginVertical: 9,
+              marginHorizontal: 8,
+              marginVertical: 4,
               fontSize: 16,
               fontWeight: "400",
               color: colors.text,
             }}
           >
-            message
+            Message
           </Text>
         </TouchableOpacity>
       </View>

@@ -189,8 +189,7 @@ export async function ignoreFollower(data: any) {
     method: METHOD.POST,
     urlPath: "user/ignore-follower",
     data,
-  })
-  .then((response) => {
+  }).then((response) => {
     return response;
   });
 }
