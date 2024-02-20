@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import { useTheme, useRoute } from "@react-navigation/native";
 import { Tabs, MaterialTabBar } from "react-native-collapsible-tab-view";
@@ -12,6 +12,8 @@ import Following from "./following/following";
 // import Avatar from "@shared-components/user/Avatar";
 import CS from "@theme/styles";
 import useStore from "@services/zustand/store";
+import { getCountFollow } from "@services/api/user.api";
+import LoadingList from "@shared-components/loading.list.component";
 
 const TabFollow = () => {
   const theme = useTheme();
@@ -21,55 +23,19 @@ const TabFollow = () => {
 
   // const styles = useMemo(() => createStyles(theme), [theme]);
   const [index, setIndex] = React.useState(route?.params?.relationship);
-  // const layout = useWindowDimensions();
+  const [countFollow, setCountFollow] = useState<CountFolowType>({});
+  const [isLoading, setisLoaing] = useState(true);
 
-  // const [routes] = React.useState([
-  //   { key: "first", title: `Follower ${route?.params?.countFollow?.followers}` },
-  //   { key: "second", title: `Following ${route?.params?.countFollow?.following}` },
-  //   { key: "third", title: `Friend ${route?.params?.countFollow?.friends}` },
-  // ]);
+  const _getUserInfo = (id: string) => {
+    getCountFollow({ user_id: id }).then((res) => {
+      setCountFollow(res.data);
+      setisLoaing(false);
+    });
+  };
 
-  // const FirstRoute = ;
-  // const SecondRoute = ;
-  // const ThirdRoute = ;
-
-  // const renderScene = SceneMap({
-  //   first: () => <Follower id={route?.params?.id} />,
-  //   second: () => <Following id={route?.params?.id} />,
-  //   third: () => <Friend id={route?.params?.id} />,
-  // });
-
-  // const renderTabBar = (props) => (
-  //   <TabBar
-  //     {...props}
-  //     indicatorStyle={{
-  //       backgroundColor: colors.primary,
-  //       width: layout.width / 3,
-  //       left: 0,
-  //     }}
-  //     renderLabel={({ route, focused }) => (
-  //       <Text
-  //         style={{
-  //           ...CS.hnMedium,
-  //           fontSize: 16,
-  //           color: focused ? colors.primary : colors.textOpacity6,
-  //           margin: 8,
-  //         }}
-  //       >
-  //         {route.title}
-  //       </Text>
-  //     )}
-  //     style={{ backgroundColor: colors.background }}
-  //   />
-  // );
-
-  // const renderHeader = () => {
-  //   return (
-  //     <View>
-
-  //     </View>
-  //   );
-  // };
+  useEffect(() => {
+    _getUserInfo(route?.params?.id);
+  }, [countFollow]);
 
   const renderTabBar = (props) => {
     return (
@@ -97,30 +63,31 @@ const TabFollow = () => {
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}
       /> */}
-      <Tabs.Container initialTabName="Follow" renderTabBar={renderTabBar}>
-        {userData?._id === route?.params?.id ? (
+      {isLoading ? (
+        <LoadingList></LoadingList>
+      ) : (
+        <Tabs.Container initialTabName="Follow" renderTabBar={renderTabBar}>
+          {userData?._id === route?.params?.id ? (
+            <Tabs.Tab name={"Friend"} label={`Friend ${countFollow?.friends}`}>
+              <Friend id={route?.params?.id}></Friend>
+            </Tabs.Tab>
+          ) : null}
+
           <Tabs.Tab
-            name={"Friend"}
-            label={`Friend ${route?.params?.countFollow?.friends}`}
+            name={"Follow"}
+            label={`Follower ${countFollow?.followers}`}
           >
-            <Friend id={route?.params?.id}></Friend>
+            <Follower id={route?.params?.id}></Follower>
           </Tabs.Tab>
-        ) : null}
 
-        <Tabs.Tab
-          name={"Follow"}
-          label={`Follower ${route?.params?.countFollow?.followers}`}
-        >
-          <Follower id={route?.params?.id}></Follower>
-        </Tabs.Tab>
-
-        <Tabs.Tab
-          name={"Following"}
-          label={`Following ${route?.params?.countFollow?.following}`}
-        >
-          <Following id={route?.params?.id}></Following>
-        </Tabs.Tab>
-      </Tabs.Container>
+          <Tabs.Tab
+            name={"Following"}
+            label={`Following ${countFollow?.following}`}
+          >
+            <Following id={route?.params?.id}></Following>
+          </Tabs.Tab>
+        </Tabs.Container>
+      )}
     </View>
   );
 };

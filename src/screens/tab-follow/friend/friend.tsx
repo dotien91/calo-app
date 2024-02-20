@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, FlatList, Text, TouchableOpacity } from "react-native";
 import moment from "moment";
 import * as NavigationService from "react-navigation-helpers";
@@ -11,15 +11,14 @@ import { getListFriend } from "@services/api/chat.api";
 import { TypedUser } from "models";
 import { SCREENS } from "constants";
 import LoadingList from "@shared-components/loading.list.component";
+import eventEmitter from "@services/event-emitter";
 
 const Friend = ({ id }: { id: string }) => {
   const theme = useTheme();
   const { colors } = theme;
   // const userData = useStore((state) => state.userData);
-  const { listData, onEndReach, isLoading } = useListData<TypedUser>(
-    { limit: 10, user_id: id },
-    getListFriend,
-  );
+  const { listData, onEndReach, isLoading, _requestData } =
+    useListData<TypedUser>({ limit: 10, user_id: id }, getListFriend);
 
   const navigateMess = (item: TypedUser) => {
     NavigationService.navigate(SCREENS.CHAT_ROOM, {
@@ -27,6 +26,20 @@ const Friend = ({ id }: { id: string }) => {
       partner_name: item?.partner_id.display_name,
     });
   };
+
+  const onRefresh = () => {
+    console.log("refresad");
+    _requestData(false);
+  };
+
+  useEffect(() => {
+    eventEmitter.on("reloadTabFriendAndFollowing", onRefresh);
+    eventEmitter.on("reloadTabFriendAndFollower", onRefresh);
+    return () => {
+      eventEmitter.off("reloadTabFriendAndFollowing", onRefresh);
+      eventEmitter.off("reloadTabFriendAndFollower", onRefresh);
+    };
+  });
 
   const renderItemSelected = ({
     item,
@@ -113,4 +126,4 @@ const Friend = ({ id }: { id: string }) => {
     </View>
   );
 };
-export default React.memo(Friend);
+export default Friend;

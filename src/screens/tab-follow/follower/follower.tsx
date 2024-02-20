@@ -24,7 +24,9 @@ import { SCREENS } from "constants";
 import LoadingList from "@shared-components/loading.list.component";
 import { translations } from "@localization";
 import _ from "lodash";
-const Follower = ({ id }: { id: string }) => {
+import eventEmitter from "@services/event-emitter";
+
+const Follower = ({ id }) => {
   const theme = useTheme();
   const { colors } = theme;
   const userData = useStore((state) => state.userData);
@@ -50,6 +52,7 @@ const Follower = ({ id }: { id: string }) => {
     };
     postFollow(data).then(() => {
       _requestData();
+      eventEmitter.emit("reloadTabFriendAndFollowing");
     });
   };
 
@@ -242,4 +245,4 @@ const Follower = ({ id }: { id: string }) => {
     </View>
   );
 };
-export default React.memo(Follower);
+export default Follower;

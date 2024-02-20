@@ -40,14 +40,6 @@ const CountFollow = ({ id, postCount }: CountFollowProps) => {
     }
   }, [id]);
 
-  // useEffect(()=>{
-  //   eventEmitter.on("followAction",_getUserInfo )
-  //   console.log("useEffect followAction")
-  //   return () => {
-  //     eventEmitter.off("followAction", _getUserInfo);
-  //   };
-  // },)
-
   const ItemFollow = ({
     title,
     des,

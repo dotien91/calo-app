@@ -18,7 +18,7 @@ import { showToast } from "@helpers/super.modal.helper";
 import { translations } from "@localization";
 import LoadingList from "@shared-components/loading.list.component";
 import eventEmitter from "@services/event-emitter";
-const Following = ({ id }: { id: string }) => {
+const Following = ({ id }) => {
   const theme = useTheme();
   const { colors } = theme;
   const userData = useStore((state) => state.userData);
@@ -33,9 +33,8 @@ const Following = ({ id }: { id: string }) => {
     setListData,
     isLoading,
     renderFooterComponent,
+    _requestData,
   } = useListData<TypedUser>(paramsRequest, getListFollowing);
-
-  // console.log("list data", JSON.stringify(listData, null,2))
 
   const followAction = (item: string) => {
     const listNewdata = listData.map((item: any) => item);
@@ -44,7 +43,6 @@ const Following = ({ id }: { id: string }) => {
     dataToChange.is_follow = dataToChange.is_follow === false ? true : false;
     listNewdata[likeNeedToChangeIdx] = dataToChange;
     setListData(listNewdata);
-    eventEmitter.emit("followAction");
     const data = {
       partner_id: item?.partner_id?._id,
     };
@@ -54,9 +52,11 @@ const Following = ({ id }: { id: string }) => {
           type: "success",
           message: translations.unfollow + " " + item?.partner_id?.display_name,
         });
+        eventEmitter.emit("reloadTabFriendAndFollower");
       });
     } else {
       postFollow(data).then(() => {
+        eventEmitter.emit("reloadTabFriendAndFollower");
         showToast({
           type: "success",
           message: translations.follow + " " + item?.partner_id?.display_name,
@@ -65,14 +65,19 @@ const Following = ({ id }: { id: string }) => {
     }
   };
 
-  //: newitem.theSame === true && newitem.is_follow === true // userid != id
-  // ? translations.unfollow
-  // : newitem.theSame === false && newitem.is_follow === false
-  //   ? translations.follow
-  //   : translations.follow
+  const onRefresh = () => {
+    _requestData(false);
+  };
+
+  useEffect(() => {
+    eventEmitter.on("reloadTabFriendAndFollowing", onRefresh);
+
+    return () => {
+      eventEmitter.off("reloadTabFriendAndFollowing", onRefresh);
+    };
+  });
 
   const followActionInProfileOrtherPeople = (item: string) => {
-    eventEmitter.emit("followAction");
     const listNewdata = listFollow.map((item: any) => item);
     if (check_arr(item, listFollow)) {
       // find index list data
@@ -281,4 +286,4 @@ const Following = ({ id }: { id: string }) => {
     </View>
   );
 };
-export default React.memo(Following);
+export default Following;
