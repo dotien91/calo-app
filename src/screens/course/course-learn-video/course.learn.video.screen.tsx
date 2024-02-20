@@ -27,6 +27,7 @@ import CourseLearnAction from "./components/course.learn.action";
 import { palette } from "@theme/themes";
 import Header from "@shared-components/header/Header";
 import useStore from "@services/zustand/store";
+import eventEmitter from "@services/event-emitter";
 
 const CourseLearnScreen = () => {
   const route: any = useRoute();
@@ -68,7 +69,11 @@ const CourseLearnScreen = () => {
       return;
     }
     // gọi API đánh đấu đã xong video
-    updateViewed({ module_id: item._id });
+    updateViewed({ module_id: item._id }).then((res) => {
+      if (!res.isError) {
+        eventEmitter.emit("reload_data_preview");
+      }
+    });
   };
   const TabSelect = () => {
     return (

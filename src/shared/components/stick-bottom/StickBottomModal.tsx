@@ -10,6 +10,7 @@ interface IStickBottomModalProps extends ModalProps {
 /**Modal stick at of page */
 export default function StickBottomModal({
   children,
+  backdropOpacity,
   ...restProps
 }: IStickBottomModalProps) {
   return (

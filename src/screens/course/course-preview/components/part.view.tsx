@@ -227,7 +227,7 @@ const Lession = ({
     <PressableBtn
       style={[
         styles.viewContent,
-        isSelected && { backgroundColor: palette.background2 },
+        isSelected && { backgroundColor: palette.background2, borderRadius: 8 },
       ]}
       onPress={pressItem}
     >
