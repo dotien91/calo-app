@@ -12,7 +12,7 @@ import {
 } from "@helpers/super.modal.helper";
 import CommonStyle from "@theme/styles";
 
-import PagerScrollMedia from "@shared-components/page-scroll-media/PageScrollMedia";
+import ImageSlideShow from "@shared-components/image-slideshow/ImageSlideshow";
 import ListActionOfPost from "@shared-components/action-bottomsheet/ListActionOfPost";
 import ListActionOfComment from "@shared-components/action-bottomsheet/ListActionOfComment";
 import StickBottomModal from "@shared-components/stick-bottom/StickBottomModal";
@@ -25,6 +25,7 @@ import LottieComponent from "@shared-components/lottie/LottieComponent";
 import ActionMore from "@screens/course/detail-teacher/components/ActionMore";
 import ChatRoomScreen from "@screens/chat/room-chat/chat.room.class.video";
 import ListUser from "./modal-inner/ListUser";
+import PopupCreateLesson from "@screens/course/course-create/components/PartViewCreate/popup.create.lesson";
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
 // using normal one.
@@ -131,11 +132,6 @@ const SuperModal: React.FC<SuperModalProps> = () => {
     );
   };
 
-  console.log(
-    "contentModalTypecontentModalTypecontentModalType",
-    contentModalType == EnumModalContentType.Report,
-  );
-
   if (styleModalType == EnumStyleModalType.Bottom) {
     console.log("dataaa", data);
     return (
@@ -188,6 +184,9 @@ const SuperModal: React.FC<SuperModalProps> = () => {
           {contentModalType == EnumModalContentType.ListUser && (
             <ListUser {...data} />
           )}
+          {contentModalType == EnumModalContentType.AddLesson && (
+            <PopupCreateLesson {...data} />
+          )}
         </View>
       </StickBottomModal>
     );
@@ -198,8 +197,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
       <Modal
         isVisible={true}
         onBackdropPress={closeModal}
-        onBackButtonPress={closeModal}
-        useNativeDriver={true}
+        propagateSwipe={true}
         style={getStyleModal()}
         backdropOpacity={
           contentModalType == EnumModalContentType.Loading ? 0.1 : 0.6
@@ -209,7 +207,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
           renderConfirmView()}
         {contentModalType == EnumModalContentType.Loading && renderLoading()}
         {contentModalType == EnumModalContentType.Library && (
-          <PagerScrollMedia {...data} closeModal={closeModal} />
+          <ImageSlideShow {...data} closeModal={closeModal} />
         )}
       </Modal>
     );

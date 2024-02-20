@@ -152,7 +152,13 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
         lineHeight: Platform.OS === "android" ? 34 : 30,
       };
     }
-    return <MessageItem {...props} messageTextStyle={messageTextStyle} />;
+    return (
+      <MessageItem
+        chatRoomId={chatRoomId}
+        {...props}
+        messageTextStyle={messageTextStyle}
+      />
+    );
   };
 
   const _renderChatEmpty = () => {

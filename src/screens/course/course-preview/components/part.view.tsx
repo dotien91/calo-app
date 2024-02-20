@@ -18,6 +18,7 @@ import { formatTime } from "@utils/date.utils";
 import IconSvg from "assets/svg";
 import { downloadFileToPath } from "@helpers/file.helper";
 import { translations } from "@localization";
+import eventEmitter from "@services/event-emitter";
 
 const { width } = Dimensions.get("screen");
 interface PartViewProps {
@@ -26,6 +27,7 @@ interface PartViewProps {
   onPressItem?: (item: any) => void;
   isLearnScreen?: boolean;
   isJoin: boolean;
+  itemSelected?: any;
 }
 
 const PartView = ({
@@ -34,6 +36,7 @@ const PartView = ({
   onPressItem,
   isLearnScreen,
   isJoin,
+  itemSelected,
 }: PartViewProps) => {
   const userData = useStore((state) => state.userData);
   const param = {
@@ -45,8 +48,8 @@ const PartView = ({
   const [activeSections, setActiveSections] = React.useState<number[]>([0]);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
-  const _getListModule = async () => {
-    getListModule(param).then(async (res) => {
+  const _getListModule = () => {
+    getListModule(param).then((res) => {
       if (!res.isError) {
         setIsLoading(false);
         setSectionList(res.data);
@@ -60,6 +63,12 @@ const PartView = ({
   React.useEffect(() => {
     _getListModule();
   }, [id]);
+  React.useEffect(() => {
+    eventEmitter.on("reload_data_preview", _getListModule);
+    return () => {
+      eventEmitter.off("reload_data_preview", _getListModule);
+    };
+  });
 
   const _renderHeader = (section: ICourseModuleItem, index: number) => {
     return (
@@ -112,6 +121,7 @@ const PartView = ({
               key={item._id}
               index={index}
               data={item}
+              itemSelected={itemSelected}
               pressItem={() => isJoin && onPressItem && onPressItem(item)}
               isLearnScreen={isLearnScreen}
             />
@@ -181,9 +191,16 @@ interface LessionProps {
   pressItem: () => void;
   index: number;
   isLearnScreen?: boolean;
+  itemSelected?: any;
 }
 
-const Lession = ({ data, pressItem, index, isLearnScreen }: LessionProps) => {
+const Lession = ({
+  data,
+  pressItem,
+  index,
+  isLearnScreen,
+  itemSelected,
+}: LessionProps) => {
   const media_duration = data.media_id.media_meta.find(
     (i) => i.key === "duration",
   )?.value;
@@ -192,6 +209,7 @@ const Lession = ({ data, pressItem, index, isLearnScreen }: LessionProps) => {
   const isDownload = (fileCourseLocal || []).filter(
     (item) => item.id === data._id,
   );
+  const isSelected = data?._id === itemSelected?._id;
   const _downloadFile = async () => {
     if (isDownload.length > 0) {
       console.log("isDownload...", isDownload);
@@ -210,7 +228,13 @@ const Lession = ({ data, pressItem, index, isLearnScreen }: LessionProps) => {
   };
 
   return (
-    <PressableBtn style={styles.viewContent} onPress={pressItem}>
+    <PressableBtn
+      style={[
+        styles.viewContent,
+        isSelected && { backgroundColor: palette.background2 },
+      ]}
+      onPress={pressItem}
+    >
       <View
         style={{
           width: 32,

@@ -182,7 +182,7 @@ const CreateClassCallOneScreen = () => {
             type: "success",
             message: translations.course.createModuleSuccess,
           });
-          NavigationService.popToTop();
+          NavigationService.goBack();
         } else {
           setUpdating(false);
           showToast({ type: "error", message: res.message });
@@ -197,7 +197,7 @@ const CreateClassCallOneScreen = () => {
             type: "success",
             message: translations.course.updateModuleSuccess,
           });
-          NavigationService.popToTop();
+          NavigationService.goBack();
         } else {
           setUpdating(false);
           showToast({ type: "error", message: res.message });

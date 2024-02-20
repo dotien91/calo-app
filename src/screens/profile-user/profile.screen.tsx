@@ -8,7 +8,14 @@ import {
 } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import { useTheme } from "@react-navigation/native";
-import { Tabs, MaterialTabBar } from "react-native-collapsible-tab-view";
+import { CollapsibleHeaderTabView } from "react-native-tab-view-collapsible-header";
+import { SceneMap, TabBar } from "react-native-tab-view";
+import { WindowWidth } from "@freakycoder/react-native-helpers";
+import {
+  getBottomSpace,
+  getStatusBarHeight,
+} from "react-native-iphone-screen-helper";
+import { HFlatList } from "react-native-head-tab-view";
 
 import useStore from "@services/zustand/store";
 import CommonStyle from "@theme/styles";
@@ -17,10 +24,6 @@ import { translations } from "@localization";
 import CountFollow from "./count-follow/CountFollow";
 import { getUserById } from "@services/api/user.api";
 import ListPost from "@screens/home/list.post";
-import {
-  getBottomSpace,
-  getStatusBarHeight,
-} from "react-native-iphone-screen-helper";
 import { SCREENS } from "constants";
 import { getListPost } from "@services/api/post";
 import eventEmitter from "@services/event-emitter";
@@ -34,14 +37,158 @@ import EmptyResultView from "@shared-components/empty.data.component";
 import { shareProfile } from "@utils/share.utils";
 import AvatarProfile from "./avatar.profile";
 import SkeletonPlaceholder from "@shared-components/skeleton";
-
+import { getCourseList } from "@services/api/course.api";
+import CourseItem from "@screens/course-tab/components/course.item";
+import LoadingItem from "@shared-components/loading.item";
+const initialLayout = WindowWidth;
 interface ProfileUserProps {
   route: any;
 }
 
+const FirstRoute = () => {
+  const userData = useStore((store) => store.userData);
+
+  const paramsRequest = {
+    limit: 5,
+    auth_id: userData?._id || "",
+    user_id: userData?._id,
+  };
+  const {
+    listData,
+    onEndReach,
+    refreshControl,
+    renderFooterComponent,
+    _requestData,
+    isFirstLoading,
+    refreshing,
+  } = useListData<TypedRequest>(paramsRequest, getListPost);
+  useEffect(() => {
+    eventEmitter.on("reload_list_post", _requestData);
+    return () => {
+      eventEmitter.off("reload_list_post", _requestData);
+    };
+  }, []);
+
+  const renderItem = ({ item }: { item: TypedPost }) => {
+    return <ItemPost data={item} isProfile={true} />;
+  };
+
+  const renderEmptyPostOfMe = () => {
+    return (
+      <EmptyResultView
+        title={translations.post.emptyPost}
+        icon="document-text-outline"
+        showLottie={false}
+      />
+    );
+  };
+  if (isFirstLoading) {
+    return <LoadingItem />;
+  }
+  return (
+    <HFlatList
+      index={0}
+      scrollToOverflowEnabled
+      data={listData}
+      renderItem={renderItem}
+      scrollEventThrottle={16}
+      onEndReachedThreshold={0}
+      onEndReached={onEndReach}
+      showsVerticalScrollIndicator={false}
+      removeClippedSubviews={true}
+      keyExtractor={(item) => item?._id + ""}
+      refreshControl={refreshControl()}
+      ListFooterComponent={renderFooterComponent()}
+      ListEmptyComponent={renderEmptyPostOfMe()}
+      refreshing={refreshing}
+    />
+  );
+};
+
+const SecondRoute = () => {
+  const userData = useStore((store) => store.userData);
+
+  const paramsRequest = {
+    limit: "10",
+    user_id: userData?._id,
+  };
+  const {
+    listData,
+    onEndReach,
+    refreshControl,
+    renderFooterComponent,
+    refreshing,
+  } = useListData<TypedRequest>(paramsRequest, getCourseList);
+  const renderEmptyCourseOfMe = () => {
+    return (
+      <EmptyResultView
+        title={translations.course.emptyCourse}
+        icon="document-text-outline"
+        showLottie={false}
+      />
+    );
+  };
+  const renderItemCourse = ({ item, index }) => {
+    return (
+      <CourseItem
+        {...item}
+        key={index}
+        style={index == 0 ? { marginTop: 8 } : {}}
+      />
+    );
+  };
+  return (
+    <HFlatList
+      index={1}
+      scrollToOverflowEnabled
+      data={listData}
+      renderItem={renderItemCourse}
+      scrollEventThrottle={16}
+      onEndReachedThreshold={0}
+      onEndReached={onEndReach}
+      showsVerticalScrollIndicator={false}
+      removeClippedSubviews={true}
+      keyExtractor={(item) => item?._id + ""}
+      refreshControl={refreshControl()}
+      ListFooterComponent={renderFooterComponent()}
+      ListEmptyComponent={renderEmptyCourseOfMe()}
+      refreshing={refreshing}
+    />
+  );
+};
+const ThirdRoute = () => {
+  const listPostSave = useStore((store) => store.listPostSave);
+
+  const renderEmpty = () => {
+    return (
+      <EmptyResultView
+        title={translations.post.emptyListSave}
+        icon="document-text-outline"
+        showLottie={false}
+      />
+    );
+  };
+  const renderItemSave = ({ item }: { item: TypedPost }) => {
+    return <ItemPost data={item} />;
+  };
+  return (
+    <HFlatList
+      index={2}
+      scrollToOverflowEnabled
+      data={listPostSave}
+      renderItem={renderItemSave}
+      scrollEventThrottle={16}
+      onEndReachedThreshold={0}
+      showsVerticalScrollIndicator={false}
+      removeClippedSubviews={true}
+      keyExtractor={(item) => item?._id + ""}
+      ListEmptyComponent={renderEmpty}
+    />
+  );
+};
+
 const ProfileUser = (props: ProfileUserProps) => {
   const userData = useStore((store) => store.userData);
-  const listPostSave = useStore((store) => store.listPostSave);
   const _id = props.route?.params?._id || userData?._id;
   const theme = useTheme();
   const { colors } = theme;
@@ -59,27 +206,11 @@ const ProfileUser = (props: ProfileUserProps) => {
     user_id: _id,
   };
 
-  const {
-    listData,
-    onEndReach,
-    refreshControl,
-    _requestData,
-    renderFooterComponent,
-    isFirstLoading,
-    refreshing,
-    totalCount,
-  } = useListData<TypedRequest>(paramsRequest, getListPost);
-
-  useEffect(() => {
-    eventEmitter.on("reload_list_post", _requestData);
-    return () => {
-      eventEmitter.off("reload_list_post", _requestData);
-    };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  const { totalCount } = useListData<TypedRequest>(paramsRequest, getListPost);
 
   useEffect(() => {
     _getUserById(_id);
-  }, [userData]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [userData]);
 
   const HeaderProfile = () => {
     return (
@@ -136,7 +267,7 @@ const ProfileUser = (props: ProfileUserProps) => {
   };
 
   const ListAction = () => {
-    const isUserLogin = userData?._id === userInfo?._id;
+    const isUserLogin = userData?._id === _id;
     if (!userInfo) {
       return (
         <View style={styles.listAction}>
@@ -169,7 +300,6 @@ const ProfileUser = (props: ProfileUserProps) => {
       </View>
     );
   };
-
   const Bio = ({ text }: { text: string }) => {
     const isUserLogin = userData?._id === userInfo?._id;
     return (
@@ -202,13 +332,6 @@ const ProfileUser = (props: ProfileUserProps) => {
     );
   };
 
-  const renderItem = ({ item }: { item: TypedPost }) => {
-    return <ItemPost data={item} isProfile={_id?.length > 0} />;
-  };
-  const renderItemSave = ({ item }: { item: TypedPost }) => {
-    return <ItemPost data={item} />;
-  };
-
   const renderHeader = () => {
     return (
       <View>
@@ -221,37 +344,39 @@ const ProfileUser = (props: ProfileUserProps) => {
     );
   };
 
-  const renderTabBar = (props) => {
-    return (
-      <MaterialTabBar
-        {...props}
-        indicatorStyle={{
-          backgroundColor: colors.primary,
-        }}
-        activeColor={colors.primary}
-        labelStyle={{ ...CommonStyle.hnBold }}
-      />
-    );
-  };
+  const renderTabBar = (props) => (
+    <TabBar
+      {...props}
+      indicatorStyle={{
+        backgroundColor: colors.primary,
+      }}
+      renderLabel={({ route, focused }) => (
+        <Text
+          style={{
+            ...CommonStyle.hnBold,
+            fontSize: 14,
+            color: focused ? colors.primary : colors.text,
+            margin: 8,
+          }}
+        >
+          {route.title}
+        </Text>
+      )}
+      style={{ backgroundColor: colors.background }}
+    />
+  );
 
-  const renderEmpty = () => {
-    return (
-      <EmptyResultView
-        title={translations.post.emptyListSave}
-        icon="document-text-outline"
-        showLottie={false}
-      />
-    );
-  };
-  const renderEmptyPostOfMe = () => {
-    return (
-      <EmptyResultView
-        title={translations.post.emptyPost}
-        icon="document-text-outline"
-        showLottie={false}
-      />
-    );
-  };
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: "first", title: translations.post.posts },
+    { key: "second", title: translations.course.course },
+    { key: "third", title: translations.post.listPostSave },
+  ]);
+  const renderScene = SceneMap({
+    first: FirstRoute,
+    second: SecondRoute,
+    third: ThirdRoute,
+  });
 
   if (userData?._id === userInfo?._id) {
     return (
@@ -268,52 +393,15 @@ const ProfileUser = (props: ProfileUserProps) => {
           }}
         />
         <HeaderProfile />
-        <Tabs.Container renderHeader={renderHeader} renderTabBar={renderTabBar}>
-          <Tabs.Tab
-            name={translations.post.posts}
-            label={translations.post.posts}
-          >
-            {isFirstLoading ? (
-              renderEmptyPostOfMe()
-            ) : (
-              <Tabs.FlatList
-                data={listData}
-                renderItem={renderItem}
-                scrollEventThrottle={16}
-                onEndReachedThreshold={0}
-                onEndReached={onEndReach}
-                showsVerticalScrollIndicator={false}
-                removeClippedSubviews={true}
-                keyExtractor={(item) => item?._id + ""}
-                refreshControl={refreshControl()}
-                ListFooterComponent={renderFooterComponent()}
-                ListEmptyComponent={renderEmptyPostOfMe()}
-                refreshing={refreshing}
-              />
-            )}
-          </Tabs.Tab>
-          <Tabs.Tab
-            name={translations.post.listPostSave}
-            label={translations.post.listPostSave}
-          >
-            {listPostSave.length > 0 ? (
-              <Tabs.FlatList
-                data={listPostSave}
-                renderItem={renderItemSave}
-                scrollEventThrottle={16}
-                onEndReachedThreshold={0}
-                onEndReached={onEndReach}
-                showsVerticalScrollIndicator={false}
-                removeClippedSubviews={true}
-                keyExtractor={(item) => item?._id + ""}
-                refreshControl={refreshControl()}
-                ListFooterComponent={renderFooterComponent()}
-              />
-            ) : (
-              <Tabs.ScrollView>{renderEmpty()}</Tabs.ScrollView>
-            )}
-          </Tabs.Tab>
-        </Tabs.Container>
+
+        <CollapsibleHeaderTabView
+          renderScrollHeader={renderHeader}
+          navigationState={{ index, routes }}
+          renderScene={renderScene}
+          onIndexChange={setIndex}
+          initialLayout={initialLayout}
+          renderTabBar={renderTabBar}
+        />
       </View>
     );
   }

@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { View, SafeAreaView, Text, useWindowDimensions } from "react-native";
-import { useTheme } from "@react-navigation/native";
+import { useTheme, useRoute } from "@react-navigation/native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 
 /**
@@ -22,8 +22,13 @@ const MediaChatScreen: React.FC<MediaChatScreenProps> = () => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const { colors } = theme;
+  const route = useRoute();
+  const roomDetail = route.params?.["roomDetail"];
+
   const currentMediaIds = useStore((state) => state.currentMediaIds);
-  const mediaIds = currentMediaIds;
+  const mediaIds =
+    currentMediaIds.find((item) => item.id == roomDetail.chat_room_id._id)
+      ?.data || [];
 
   const files = mediaIds.filter(
     (item) => item.media_mime_type == EnumMediaChat.Audio,

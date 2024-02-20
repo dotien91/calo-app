@@ -124,7 +124,7 @@ const Navigation = () => {
           tabBarActiveTintColor: palette.primary,
           tabBarInactiveTintColor: "gray",
           tabBarStyle: {
-            borderTopWidth: 0,
+            borderTopColor: palette.borderColor,
             backgroundColor: isDarkMode ? palette.black : palette.white,
           },
         })}

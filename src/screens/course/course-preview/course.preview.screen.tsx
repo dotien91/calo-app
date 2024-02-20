@@ -15,7 +15,11 @@ import AuthorView from "./components/author.view";
 import ListReviewCourse from "./components/list.review.course";
 import CS from "@theme/styles";
 import { EnumClassType, ICourseItem } from "models/course.model";
-import { getCourseDetail, getCourseRoom } from "@services/api/course.api";
+import {
+  getCourseDetail,
+  getCourseRoom,
+  updateCourse,
+} from "@services/api/course.api";
 import BuyBottom from "./components/buy.bottom.view";
 import Header from "@shared-components/header/Header";
 import { palette } from "@theme/themes";
@@ -29,6 +33,8 @@ import EnrollNow from "../components/EnrollNow";
 import { SCREENS } from "constants";
 import EditButton from "../components/edit.button";
 import { shareCourse } from "@utils/share.utils";
+import Button from "@shared-components/button/Button";
+import { showToast } from "@helpers/super.modal.helper";
 
 const CoursePreviewScreen = () => {
   const userData = useStore((state) => state.userData);
@@ -155,6 +161,50 @@ const CoursePreviewScreen = () => {
       course_id: course_id,
     });
   };
+  const _gotoEdit = () => {
+    if (data?.type === "Call group") {
+      NavigationService.navigate(SCREENS.COURSE_LIST_CLASS, {
+        course_id: course_id,
+        start_time: data.start_time,
+        end_time: data.end_time,
+      });
+    }
+    if (data?.type === "Call 1-1") {
+      NavigationService.navigate(SCREENS.COURSE_CREATE_CALENDAR_CALL, {
+        course_id: course_id,
+      });
+    }
+    if (data?.type === "Self-learning") {
+      NavigationService.navigate(SCREENS.COURSE_LIST_MODULE, {
+        course_id: course_id,
+      });
+    }
+  };
+
+  const getStringType = (type: string) => {
+    switch (type) {
+      case "Call group":
+        return translations.course.listClass;
+      case "Call 1-1":
+        return translations.course.timeAvailable;
+      case "Self-learning":
+        return translations.course.courseContent;
+      default:
+        return "";
+    }
+  };
+
+  const _updateToReview = () => {
+    const params = { _id: course_id, public_status: "pending" };
+    updateCourse(params).then((res) => {
+      if (!res.isError) {
+        showToast({ type: "success", message: "update success" });
+        _getCourseDetail();
+      } else {
+        showToast({ type: "error", message: res.mesage });
+      }
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -178,7 +228,35 @@ const CoursePreviewScreen = () => {
           />
         )}
         {data?.user_id._id && data?.user_id._id === userData?._id && (
-          <EditButton data={data} type="full" />
+          <>
+            <EditButton data={data} type="full" />
+            <Button
+              text={`${translations.edit} ${getStringType(
+                data.type,
+              ).toLocaleLowerCase()}`}
+              onPress={_gotoEdit}
+              style={{
+                backgroundColor: palette.primary,
+                marginTop: 8,
+                marginHorizontal: 16,
+                paddingVertical: 0,
+                height: 40,
+              }}
+            />
+            {data.public_status === "draft" && (
+              <Button
+                text={`${translations.course.publicCourse}`}
+                onPress={_updateToReview}
+                style={{
+                  backgroundColor: palette.primary,
+                  marginTop: 8,
+                  marginHorizontal: 16,
+                  paddingVertical: 0,
+                  height: 40,
+                }}
+              />
+            )}
+          </>
         )}
         {/* <AddToCartButton data={data} type="full" /> */}
         {data?._id && <TabSelect />}

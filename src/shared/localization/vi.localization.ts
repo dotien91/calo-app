@@ -402,6 +402,8 @@ export default {
     createCourse: "Tạo khoá học",
     updateCourse: "Cập nhật khóa học",
     uploadCoverImageOrVideo: "Tải lên video/ảnh giới thiệu khoá học",
+    warningUploadCoverImageOrVideo:
+      "Vui lòng chọn video/ảnh giới thiệu khoá học",
     uploadCoverImage: "Tải lên ảnh nền",
     addCourse: "Thêm khóa học",
     courseName: "Tên khóa học",
@@ -525,6 +527,7 @@ export default {
     listClass: "Danh sách lớp học",
     createClassSuccess: "Tạo lớp thành công",
     addLesson: "Thêm bài học",
+    updateLesson: "Cập nhật bài học",
     addLessonSuccess: "Thêm bài học thành công",
     addPart: "Thêm học phần",
     addPartSuccess: "Thêm học phần thành công",

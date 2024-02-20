@@ -327,6 +327,8 @@ export default {
     createCourse: "Create Course",
     updateCourse: "Update Course",
     uploadCoverImageOrVideo: "Upload an introductory photo or video",
+    warningUploadCoverImageOrVideo:
+      "Please select a video/photo introducing the course",
     uploadCoverImage: "Upload cover image",
     addCourse: "Add Course",
     courseName: "Course Name",
@@ -433,6 +435,7 @@ export default {
     listClass: "List class",
     createClassSuccess: "Create class success",
     addLesson: "Add lesson",
+    updateLesson: "Update lesson",
     addLessonSuccess: "Add lesson success",
     addPart: "Add part",
     addPartSuccess: "Add part success",
@@ -459,6 +462,7 @@ export default {
     typeCourse: "Type of course",
     videoReviewCourse: "Video review course",
     requiredTitle: "Title is required",
+    publicCourse: "Public course",
   },
   seeAll: "See all",
   settings: {

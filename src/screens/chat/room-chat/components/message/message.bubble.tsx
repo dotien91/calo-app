@@ -40,6 +40,7 @@ interface IBubble {
   containerToNextStyle: ViewStyle;
   containerToPreviousStyle: ViewStyle;
   textStyle: ViewStyle;
+  chatRoomId: string;
 }
 
 const Bubble = (props: IBubble) => {
@@ -57,6 +58,7 @@ const Bubble = (props: IBubble) => {
     renderTicks,
     // renderMessageImage,
     tickStyle,
+    chatRoomId,
   } = props;
 
   const _onLongPress = () => {
@@ -124,7 +126,11 @@ const Bubble = (props: IBubble) => {
     const mediaIds = props.currentMessage.media_ids;
     if (!mediaIds?.length) return null;
     return (
-      <MessageMediaView data={mediaIds} status={props.currentMessage.status} />
+      <MessageMediaView
+        chatRoomId={chatRoomId}
+        data={mediaIds}
+        status={props.currentMessage.status}
+      />
     );
   };
 

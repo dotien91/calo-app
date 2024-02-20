@@ -31,6 +31,7 @@ interface IMediasView {
   status?: string;
   customStyleBox?: ViewStyle;
   width: number;
+  chatRoomId: string;
 }
 const IMG_WIDTH = 76;
 const IMG_HEIGHT = 76;
@@ -43,24 +44,25 @@ const MessageMediaView = ({
   status,
   width,
   customStyleBox,
+  chatRoomId,
 }: IMediasView) => {
   const currentMediaIds = useStore((state) => state.currentMediaIds);
-
   const openMediaModal = (item: TypedChatMediaLocal) => {
-    const listMedia = currentMediaIds.filter(
+    const currentMediaData =
+      currentMediaIds.find((item) => item.id == chatRoomId)?.data || [];
+    const listMedia = currentMediaData.filter(
       (i: TypedDataMediaChatHistory) =>
         (i?.media_mime_type || "").includes("image") ||
         (i?.media_mime_type || "").includes("video"),
     );
-    const index = listMedia.findIndex(
+    const index = (data || listMedia).findIndex(
       (_item: TypedDataMediaChatHistory) => _item.media_url == item.media_url,
     );
-    console.log("indexindex", index);
     showSuperModal({
       contentModalType: EnumModalContentType.Library,
       styleModalType: EnumStyleModalType.Middle,
       data: {
-        listMedia,
+        listMedia: data || listMedia,
         index,
       },
     });

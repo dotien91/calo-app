@@ -177,7 +177,7 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
   };
 
   const openMediaChatScreen = () => {
-    NavigationService.navigate(SCREENS.MEDIA_CHAT_SCREEN);
+    NavigationService.navigate(SCREENS.MEDIA_CHAT_SCREEN, { roomDetail });
   };
 
   const leaveGroup = () => {

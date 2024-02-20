@@ -152,7 +152,7 @@ const CourseFilterResultScreen: React.FC<
       styleModalType: EnumStyleModalType.Bottom,
       data: {
         courseType: index == 0 ? EnumCourseType.course : EnumCourseType.tutor,
-        params: defaultParams,
+        // params: defaultParams,
       },
     });
   };

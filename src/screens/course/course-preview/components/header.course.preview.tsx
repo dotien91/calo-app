@@ -139,6 +139,12 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
         )}
       </View>
       <Text style={styles.textTitle}>{data?.title}</Text>
+      {(data?.public_status === "draft" ||
+        data?.public_status === "pending") && (
+        <Text style={{ ...CS.hnRegular, fontSize: 12 }}>
+          {`(${data?.public_status})`}
+        </Text>
+      )}
       <Text style={styles.textDescription}>{data?.description}</Text>
       <View
         style={{ flexDirection: "row", alignItems: "center", marginTop: 16 }}

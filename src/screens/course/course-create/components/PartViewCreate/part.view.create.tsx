@@ -45,12 +45,17 @@ const PartViewCreate = ({ id, hide }: PartViewCreateProps) => {
   const [activeSections, setActiveSections] = React.useState<number[]>([0]);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
-  const _getListModule = async () => {
-    getListModule(param).then(async (res) => {
+  const _getListModule = () => {
+    getListModule(param).then((res) => {
       if (!res.isError) {
         const data: ICourseModuleItem[] = res.data;
         setIsLoading(false);
         setSectionList(data);
+        const arr = [];
+        for (let index = 0; index < data.length; index++) {
+          arr.push(index);
+        }
+        setActiveSections(arr);
       }
     });
   };
@@ -73,6 +78,7 @@ const PartViewCreate = ({ id, hide }: PartViewCreateProps) => {
           type: "success",
           message: translations.course.deleteClassSuccess,
         });
+        eventEmitter.emit("reload_data_preview");
         _getListModule();
       } else {
         showToast({
@@ -113,6 +119,10 @@ const PartViewCreate = ({ id, hide }: PartViewCreateProps) => {
             alignItems: "center",
             justifyContent: "space-between",
             width: width - 32,
+            marginTop: 8,
+            borderWidth: 1,
+            borderColor: palette.borderColor,
+            paddingHorizontal: 8,
           }}
         >
           <Text style={styles.headerText}>{section.title}</Text>
@@ -151,9 +161,17 @@ const PartViewCreate = ({ id, hide }: PartViewCreateProps) => {
   ) => {
     const _addNewLesson = () => {
       // chuyển đến trang thêm bài học truyền xuống part_id, course_id
-      NavigationService.navigate(SCREENS.COURSE_ADD_MODULE, {
-        course_id: id,
-        parent_id: section._id,
+      // NavigationService.navigate(SCREENS.COURSE_ADD_MODULE, {
+      //   course_id: id,
+      //   parent_id: section._id,
+      // });
+      showSuperModal({
+        contentModalType: EnumModalContentType.AddLesson,
+        styleModalType: EnumStyleModalType.Bottom,
+        data: {
+          course_id: id,
+          parent_id: section._id,
+        },
       });
       // console.log("id: ", id, "moduleId....", section._id);
     };
@@ -163,6 +181,10 @@ const PartViewCreate = ({ id, hide }: PartViewCreateProps) => {
         transition="backgroundColor"
         style={{
           backgroundColor: palette.background,
+          borderWidth: 1,
+          borderColor: palette.borderColor,
+          paddingHorizontal: 8,
+          paddingBottom: 8,
         }}
       >
         <Animatable.View
@@ -182,10 +204,17 @@ const PartViewCreate = ({ id, hide }: PartViewCreateProps) => {
             );
           })}
           <PressableBtn
-            style={{ borderWidth: 1, height: 40, ...CS.center }}
+            style={{ height: 40, ...CS.center, marginTop: 8 }}
             onPress={_addNewLesson}
           >
-            <Text style={{ ...CS.hnMedium, fontSize: 14 }}>
+            <Text
+              style={{
+                ...CS.hnMedium,
+                fontSize: 14,
+                color: palette.primary,
+                textDecorationLine: "underline",
+              }}
+            >
               {translations.course.addLesson}
             </Text>
           </PressableBtn>
@@ -237,7 +266,14 @@ const PartViewCreate = ({ id, hide }: PartViewCreateProps) => {
           onChange={() => {}}
         />
         <PressableBtn style={styles.viewAdd} onPress={_addNewPart}>
-          <Text style={{ ...CS.hnMedium, fontSize: 14 }}>
+          <Text
+            style={{
+              ...CS.hnMedium,
+              fontSize: 14,
+              color: palette.primary,
+              textDecorationLine: "underline",
+            }}
+          >
             {translations.course.addModule}
           </Text>
         </PressableBtn>
@@ -273,8 +309,11 @@ const styles = StyleSheet.create({
   viewAdd: {
     ...CS.center,
     borderWidth: 1,
-    height: 40,
+    borderRadius: 8,
+    borderColor: palette.primary,
+    height: 80,
     marginTop: 8,
+    borderStyle: "dashed",
   },
 });
 
@@ -293,6 +332,7 @@ const Lesson = ({ data, id, parent_id }: LessonProps) => {
           message: translations.course.deleteClassSuccess,
         });
         eventEmitter.emit("reload_part_view");
+        eventEmitter.emit("reload_data_preview");
       } else {
         showToast({
           type: "error",
@@ -318,20 +358,21 @@ const Lesson = ({ data, id, parent_id }: LessonProps) => {
     });
   };
 
-  const editPart = () => {
+  const editLesson = () => {
     NavigationService.navigate(SCREENS.COURSE_ADD_MODULE, {
       course_id: id,
       parent_id: parent_id,
+      type: data.type,
       data: data,
     });
   };
   return (
-    <PressableBtn style={styles.viewContent} onPress={() => console.log(data)}>
+    <PressableBtn style={styles.viewContent} onPress={viewVideo}>
       <Animatable.Text style={[styles.textDetail, { flex: 1 }]}>
         {data.title}
       </Animatable.Text>
       <Icon
-        onPress={editPart}
+        onPress={editLesson}
         size={24}
         name={"create-outline"}
         type={IconType.Ionicons}
@@ -345,7 +386,7 @@ const Lesson = ({ data, id, parent_id }: LessonProps) => {
       <Icon
         onPress={viewVideo}
         size={24}
-        name={"play-circle-outline"}
+        name={data.type === "file" ? "document-outline" : "play-circle-outline"}
         type={IconType.Ionicons}
       />
     </PressableBtn>
