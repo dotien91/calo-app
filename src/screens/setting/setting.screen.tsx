@@ -96,7 +96,10 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
           return (
             <TouchableOpacity
               onPress={item.action}
-              style={styles.styleItemNaviSetting}
+              style={[
+                styles.styleItemNaviSetting,
+                { borderBottomWidth: 1, borderColor: colors.grey2 },
+              ]}
               key={index}
             >
               <View style={styles.styleViewItemTitle}>
@@ -117,28 +120,56 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
     );
   };
 
-  const editProfile = () => {
-    NavigationService.navigate(SCREENS.EDIT_PROFILE);
-  };
+  // const editProfile = () => {
+  //   NavigationService.navigate(SCREENS.EDIT_PROFILE);
+  // };
 
   return (
     <View style={{ ...CS.safeAreaView, backgroundColor: colors.white }}>
       <Header text="Setting"></Header>
       {isLoggedIn() ? (
         <View style={{ alignItems: "center", backgroundColor: colors.white }}>
-          <Avatar
+          <TouchableOpacity
+            onPress={() => {
+              NavigationService.navigate(SCREENS.PROFILE_CURRENT_USER, {
+                _id: userData?._id,
+              });
+            }}
+          >
+            <Avatar
+              style={{
+                width: 80,
+                height: 80,
+                borderRadius: 99,
+                marginRight: 10,
+                marginTop: 20,
+              }}
+              sourceUri={{
+                uri: userData?.user_avatar_thumbnail,
+              }}
+            />
+          </TouchableOpacity>
+          <Text
             style={{
-              width: 80,
-              height: 80,
-              borderRadius: 99,
-              marginRight: 10,
-              marginTop: 20,
+              fontSize: 16,
+              color: colors.text,
+              fontWeight: "600",
+              marginTop: 5,
             }}
-            sourceUri={{
-              uri: userData?.user_avatar_thumbnail,
+          >
+            {userData?.display_name}
+          </Text>
+          <Text
+            style={{
+              fontSize: 16,
+              color: colors.btnRedPrimary,
+              fontWeight: "600",
+              marginTop: 5,
             }}
-          />
-          <View style={{ flexDirection: "row", marginVertical: 16 }}>
+          >
+            {userData?.description}
+          </Text>
+          {/* <View style={{ flexDirection: "row", marginVertical: 16 }}>
             <TouchableOpacity
               onPress={editProfile}
               style={styles.styleButtonEditProfile}
@@ -153,7 +184,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
             >
               <Text style={styles.styleTextViewProfile}>View Profile</Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
       ) : (
         renderViewRequestLogin()

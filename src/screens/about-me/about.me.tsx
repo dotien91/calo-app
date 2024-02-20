@@ -20,6 +20,7 @@ import CS from "@theme/styles";
 const AboutMe = () => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
+  const { colors } = theme;
 
   const userData = useStore((state) => state.userData);
   const { logout } = useUserHook();
@@ -109,7 +110,10 @@ const AboutMe = () => {
             return (
               <TouchableOpacity
                 onPress={item.action}
-                style={styles.styleItemButtonAboutUs}
+                style={[
+                  styles.styleItemButtonAboutUs,
+                  { borderBottomWidth: 1, borderColor: colors.grey2 },
+                ]}
                 key={index}
               >
                 <Text style={styles.styleTextTitleItem}>{item.title}</Text>
@@ -123,7 +127,10 @@ const AboutMe = () => {
             return (
               <TouchableOpacity
                 onPress={item.action}
-                style={styles.styleItemButtonAboutUs}
+                style={[
+                  styles.styleItemButtonAboutUs,
+                  { borderBottomWidth: 1, borderColor: colors.grey2 },
+                ]}
                 key={index}
               >
                 <Text style={styles.styleTextTitleItem}>{item.title}</Text>
@@ -141,7 +148,7 @@ const AboutMe = () => {
 
   return (
     <View style={{ ...CS.safeAreaView }}>
-      <Header text="About me" />
+      <Header text="About us" />
       {renderAboutMe()}
     </View>
   );

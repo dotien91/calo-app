@@ -15,14 +15,13 @@ import {
   showSuperModal,
   showToast,
 } from "@helpers/super.modal.helper";
+import LoadingList from "@shared-components/loading.list.component";
 
 const BlackList = () => {
   const theme = useTheme();
   const { colors } = theme;
-  const { listData, _requestData } = useListData<TypedUser>(
-    { limit: "5" },
-    getListBlock,
-  );
+  const { listData, _requestData, isLoading, isFirstLoading } =
+    useListData<TypedUser>({ limit: "5" }, getListBlock);
   const renderItemSelected = ({
     item,
     index,
@@ -70,7 +69,16 @@ const BlackList = () => {
             showModalMoti(item?.partner_id?._id);
           }}
         >
-          <Text>UnBlock</Text>
+          <Text
+            style={{
+              fontSize: 12,
+              color: colors.textOpacity6,
+              fontWeight: "400",
+              textDecorationLine: "underline",
+            }}
+          >
+            UnBlock
+          </Text>
         </TouchableOpacity>
       </View>
     );
@@ -107,29 +115,32 @@ const BlackList = () => {
     });
   };
 
+  const renderEmpty = () => {
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <Image
+          style={{ height: 152, width: 192, marginBottom: 50 }}
+          source={require("assets/images/emptyIcon.png")}
+        ></Image>
+      </View>
+    );
+  };
+
   return (
     <View style={{ ...CS.safeAreaView }}>
       <Header text="Danh sách đen"></Header>
-      {listData.length > 0 ? (
-        <FlatList
-          data={listData}
-          renderItem={renderItemSelected}
-          scrollEventThrottle={16}
-          onEndReachedThreshold={0}
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-          removeClippedSubviews={true}
-        />
-      ) : (
-        <View
-          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-        >
-          <Image
-            style={{ height: 152, width: 192, marginBottom: 50 }}
-            source={require("assets/images/emptyIcon.png")}
-          ></Image>
-        </View>
-      )}
+      {isLoading && <LoadingList />}
+      {!listData?.length && !isFirstLoading && !isLoading && renderEmpty()}
+      <FlatList
+        data={listData}
+        renderItem={renderItemSelected}
+        scrollEventThrottle={16}
+        onEndReachedThreshold={0}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        removeClippedSubviews={true}
+        // ListEmptyComponent={renderEmpty}
+      />
     </View>
   );
 };

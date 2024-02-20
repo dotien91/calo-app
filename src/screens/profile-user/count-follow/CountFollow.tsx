@@ -108,6 +108,8 @@ const CountFollow = ({ id, postCount }: CountFollowProps) => {
         onPress={() => {
           NavigationService.navigate(SCREENS.TAB_FOLLOW, {
             relationship: EnumTypeRelationship.Following,
+            countFollow: countFollow,
+            id: id,
           });
         }}
       >
@@ -123,6 +125,8 @@ const CountFollow = ({ id, postCount }: CountFollowProps) => {
         onPress={() => {
           NavigationService.navigate(SCREENS.TAB_FOLLOW, {
             relationship: EnumTypeRelationship.Follower,
+            countFollow: countFollow,
+            id: id,
           });
         }}
       >

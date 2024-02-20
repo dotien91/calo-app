@@ -10,13 +10,14 @@ import Avatar from "@shared-components/user/Avatar";
 import { getListFriend } from "@services/api/chat.api";
 import { TypedUser } from "models";
 import { SCREENS } from "constants";
+import LoadingList from "@shared-components/loading.list.component";
 
-const Friend = () => {
+const Friend = ({ id }: { id: string }) => {
   const theme = useTheme();
   const { colors } = theme;
   // const userData = useStore((state) => state.userData);
-  const { listData, onEndReach } = useListData<TypedUser>(
-    { limit: "5" },
+  const { listData, onEndReach, isLoading } = useListData<TypedUser>(
+    { limit: 10, user_id: id },
     getListFriend,
   );
 
@@ -96,12 +97,14 @@ const Friend = () => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, marginTop: 60 }}>
+      {isLoading && <LoadingList />}
       <FlatList
         style={{ marginTop: 8 }}
         data={listData}
         renderItem={renderItemSelected}
         onEndReachedThreshold={0}
+        scrollEventThrottle={16}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         removeClippedSubviews={true}

@@ -11,13 +11,13 @@ import * as Progress from "react-native-progress";
 import createStyles from "./course.component.style";
 import { ICourseItem } from "models/course.model";
 import { Device } from "@utils/device.ui.utils";
-import CS from "@theme/styles";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
-import { palette } from "@theme/themes";
-import Badge from "./Badge";
+// import CS from "@theme/styles";
+// import Icon, { IconType } from "react-native-dynamic-vector-icons";
+// import { palette } from "@theme/themes";
+// import Badge from "./Badge";
 import { SCREENS } from "constants";
-import { numberWithCommas } from "@utils/string.utils";
-import { translations } from "@localization";
+// import { numberWithCommas } from "@utils/string.utils";
+// import { translations } from "@localization";
 
 interface CourseItemProps extends ICourseItem {
   isHorizontalStyle: boolean;

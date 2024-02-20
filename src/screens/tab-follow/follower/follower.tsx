@@ -10,6 +10,7 @@ import {
   getListFollower,
   ignoreFollower,
   postFollow,
+  postunFollow,
 } from "@services/api/user.api";
 import { useTheme } from "@react-navigation/native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
@@ -17,17 +18,31 @@ import {
   EnumModalContentType,
   EnumStyleModalType,
   showSuperModal,
+  showToast,
 } from "@helpers/super.modal.helper";
 import { SCREENS } from "constants";
-
-const Follower = () => {
+import LoadingList from "@shared-components/loading.list.component";
+import { translations } from "@localization";
+import _ from "lodash";
+const Follower = ({ id }: { id: string }) => {
   const theme = useTheme();
   const { colors } = theme;
   const userData = useStore((state) => state.userData);
-  const { listData, _requestData, onEndReach } = useListData<TypedUser>(
-    { limit: "10", user_id: userData?._id },
-    getListFollower,
-  );
+  const paramsRequest = {
+    limit: 10,
+  };
+  if (id) {
+    paramsRequest.user_id = id;
+  }
+
+  const {
+    listData,
+    _requestData,
+    onEndReach,
+    renderFooterComponent,
+    isLoading,
+    setListData,
+  } = useListData<TypedUser>(paramsRequest, getListFollower);
 
   const followAction = (partner_id: string) => {
     const data = {
@@ -36,6 +51,35 @@ const Follower = () => {
     postFollow(data).then(() => {
       _requestData();
     });
+  };
+
+  const followActionOther = (item: any) => {
+    const listNewdata = listData.map((item: any) => item);
+    const likeNeedToChangeIdx = _.findIndex(listNewdata, { _id: item?._id });
+    const dataToChange = {
+      ...listNewdata[likeNeedToChangeIdx],
+      didFollow: item.didFollow ? false : true,
+    };
+    listNewdata[likeNeedToChangeIdx] = dataToChange;
+    setListData(listNewdata);
+    const data = {
+      partner_id: item?.partner_id._id,
+    };
+    if (item?.didFollow) {
+      postunFollow(data).then(() => {
+        showToast({
+          type: "success",
+          message: translations.unfollow + " " + item?.partner_id?.display_name,
+        });
+      });
+    } else {
+      postFollow(data).then(() => {
+        showToast({
+          type: "success",
+          message: translations.follow + " " + item?.partner_id?.display_name,
+        });
+      });
+    }
   };
 
   const showModalHozi = (partid: string) => {
@@ -118,8 +162,17 @@ const Follower = () => {
           <TouchableOpacity
             style={{ backgroundColor: colors.btnRedPrimary, borderRadius: 8 }}
             onPress={() => {
-              if (item.match_status != 1) {
-                followAction(item.partner_id?._id);
+              if (userData?._id === id) {
+                if (item.match_status != 1) {
+                  followAction(item.partner_id?._id);
+                } else {
+                  NavigationService.navigate(SCREENS.CHAT_ROOM, {
+                    partner_id: item?.partner_id._id,
+                    partner_name: item?.partner_id.display_name,
+                  });
+                }
+              } else {
+                followActionOther(item);
               }
             }}
           >
@@ -132,29 +185,37 @@ const Follower = () => {
                 fontWeight: "400",
               }}
             >
-              {item.match_status === 1 ? "Friend" : "Follow Back"}
+              {userData?._id === id
+                ? item.match_status === 1
+                  ? "Friend"
+                  : "Follow Back"
+                : item?.didFollow
+                ? "UnFollow"
+                : "Follow"}
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              showModalHozi(item?.partner_id?._id);
-            }}
-            style={{ paddingRight: 5, marginLeft: 2 }}
-          >
-            <Icon
-              style={{ height: 16, width: 19 }}
-              name="ellipsis-horizontal-outline"
-              type={IconType.Ionicons}
-            ></Icon>
-          </TouchableOpacity>
+          {userData?._id === id ? (
+            <TouchableOpacity
+              onPress={() => {
+                showModalHozi(item?.partner_id?._id);
+              }}
+              style={{ paddingRight: 5, marginLeft: 2 }}
+            >
+              <Icon
+                style={{ height: 16, width: 19 }}
+                name="ellipsis-horizontal-outline"
+                type={IconType.Ionicons}
+              ></Icon>
+            </TouchableOpacity>
+          ) : null}
         </View>
       </View>
     );
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      <FlatList
+    <View style={{ flex: 1, marginTop: 60 }}>
+      {/* <FlatList
         style={{ marginTop: 8 }}
         data={listData}
         renderItem={renderItemSelected}
@@ -164,6 +225,19 @@ const Follower = () => {
         onEndReached={onEndReach}
         scrollEventThrottle={16}
         removeClippedSubviews={true}
+      /> */}
+      {isLoading && <LoadingList />}
+      <FlatList
+        data={listData}
+        renderItem={renderItemSelected}
+        scrollEventThrottle={16}
+        onEndReachedThreshold={0}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        removeClippedSubviews={true}
+        onEndReached={onEndReach}
+        keyExtractor={(item) => item?.partner_id?._id + ""}
+        ListFooterComponent={renderFooterComponent()}
       />
     </View>
   );
