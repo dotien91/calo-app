@@ -367,11 +367,22 @@ const ProfileUser = (props: ProfileUserProps) => {
   );
 
   const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
+  const [routes, setRoute] = React.useState([
     { key: "first", title: translations.post.posts },
-    { key: "second", title: translations.course.course },
+    // { key: "second", title: translations.course.course },
     { key: "third", title: translations.post.listPostSave },
   ]);
+
+  useEffect(() => {
+    if (userData?.user_role === "teacher") {
+      setRoute([
+        { key: "first", title: translations.post.posts },
+        { key: "second", title: translations.course.course },
+        { key: "third", title: translations.post.listPostSave },
+      ]);
+    }
+  }, [userData?._id]);
+
   const renderScene = SceneMap({
     first: FirstRoute,
     second: SecondRoute,

@@ -369,6 +369,7 @@ export default {
     parts: "parts",
     lectures: "lectures",
     requireLevel: "Require level",
+    selectVideoModule: "Choose a lesson to get started",
     requireLevelDes: "SORRY YOU ARE NOT LEVEL ENOUGH TO OPEN THIS COURSE",
     emptyCourse: "There are no courses available",
     typeLearning: "Kiểu học tập",

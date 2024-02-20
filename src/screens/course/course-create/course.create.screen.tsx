@@ -26,7 +26,13 @@ import useStore from "@services/zustand/store";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { palette } from "@theme/themes";
 import { createCourse, updateCourse } from "@services/api/course.api";
-import { showToast } from "@helpers/super.modal.helper";
+import {
+  EnumModalContentType,
+  EnumStyleModalType,
+  closeSuperModal,
+  showSuperModal,
+  showToast,
+} from "@helpers/super.modal.helper";
 import CustomBackground from "@shared-components/CustomBackgroundBottomSheet";
 import {
   listLevel,
@@ -35,6 +41,7 @@ import {
 } from "constants/course.constant";
 import SelectVideoHook from "./components/select.video";
 import eventEmitter from "@services/event-emitter";
+import { SCREENS } from "constants";
 // import SelectImageHook from "./components/select.image";
 
 interface ILevel {
@@ -163,6 +170,10 @@ const CourseCreate = () => {
         }
         console.log(params);
         setUpdating(true);
+        showSuperModal({
+          styleModalType: EnumStyleModalType.Middle,
+          contentModalType: EnumModalContentType.Loading,
+        });
         if (course_id) {
           console.log(params);
           updateCourse(params).then((res) => {
@@ -172,35 +183,18 @@ const CourseCreate = () => {
                 type: "success",
                 message: translations.course.updateModuleSuccess,
               });
-              // if (typeCourse === "Call group") {
-              //   NavigationService.navigate(SCREENS.COURSE_LIST_CLASS, {
-              //     course_id: course_id,
-              //     start_time: startDate?.toISOString(),
-              //     end_time: endDate?.toISOString(),
-              //   });
-              // }
-              // if (typeCourse === "Call 1-1") {
-              //   NavigationService.navigate(
-              //     SCREENS.COURSE_CREATE_CALENDAR_CALL,
-              //     {
-              //       course_id: course_id,
-              //     },
-              //   );
-              // }
-              // if (typeCourse === "Self-learning") {
-              //   NavigationService.navigate(SCREENS.COURSE_LIST_MODULE, {
-              //     course_id: course_id,
-              //   });
-              // }
+              closeSuperModal();
               eventEmitter.emit("reload_data_preview");
-
-              NavigationService.goBack();
+              NavigationService.navigate(SCREENS.COURSE_DETAIL, {
+                course_id: course_id,
+              });
               setUpdating(false);
             } else {
               showToast({
                 type: "error",
                 message: res.message,
               });
+              closeSuperModal();
               setUpdating(false);
             }
           });
@@ -212,34 +206,18 @@ const CourseCreate = () => {
                 type: "success",
                 message: translations.course.createCourseSuccess,
               });
-              // if (typeCourse === "Call group") {
-              //   NavigationService.navigate(SCREENS.COURSE_LIST_CLASS, {
-              //     course_id: res.data._id,
-              //     start_time: startDate?.toISOString(),
-              //     end_time: endDate?.toISOString(),
-              //   });
-              // }
-              // if (typeCourse === "Call 1-1") {
-              //   NavigationService.navigate(
-              //     SCREENS.COURSE_CREATE_CALENDAR_CALL,
-              //     {
-              //       course_id: res.data._id,
-              //     },
-              //   );
-              // }
-              // if (typeCourse === "Self-learning") {
-              //   NavigationService.navigate(SCREENS.COURSE_LIST_MODULE, {
-              //     course_id: res.data._id,
-              //   });
-              // }
-              NavigationService.goBack();
+              NavigationService.navigate(SCREENS.COURSE_DETAIL, {
+                course_id: res?.data?._id,
+              });
               setUpdating(false);
+              closeSuperModal();
             } else {
               showToast({
                 type: "error",
                 message: res.message,
               });
               setUpdating(false);
+              closeSuperModal();
             }
           });
         }

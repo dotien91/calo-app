@@ -26,7 +26,6 @@ interface PartViewProps {
   hide?: boolean;
   onPressItem?: (item: any) => void;
   isLearnScreen?: boolean;
-  isJoin: boolean;
   itemSelected?: any;
 }
 
@@ -35,7 +34,6 @@ const PartView = ({
   hide,
   onPressItem,
   isLearnScreen,
-  isJoin,
   itemSelected,
 }: PartViewProps) => {
   const userData = useStore((state) => state.userData);
@@ -122,7 +120,7 @@ const PartView = ({
               index={index}
               data={item}
               itemSelected={itemSelected}
-              pressItem={() => isJoin && onPressItem && onPressItem(item)}
+              pressItem={() => onPressItem && onPressItem(item)}
               isLearnScreen={isLearnScreen}
             />
           ))}
@@ -201,9 +199,8 @@ const Lession = ({
   isLearnScreen,
   itemSelected,
 }: LessionProps) => {
-  const media_duration = data.media_id.media_meta.find(
-    (i) => i.key === "duration",
-  )?.value;
+  const media_duration =
+    data?.media_id?.media_meta?.find((i) => i.key === "duration")?.value || 0;
   const fileCourseLocal = useStore((state) => state.fileCourseLocal);
   const addFileCourseLocal = useStore((state) => state.addFileCourseLocal);
   const isDownload = (fileCourseLocal || []).filter(
@@ -212,7 +209,6 @@ const Lession = ({
   const isSelected = data?._id === itemSelected?._id;
   const _downloadFile = async () => {
     if (isDownload.length > 0) {
-      console.log("isDownload...", isDownload);
       FileViewer.open(isDownload[0].localFile);
     } else {
       data.media_id.media_url, data._id;
@@ -279,7 +275,7 @@ const Lession = ({
             ...CS.center,
           }}
           onPress={() => {
-            _downloadFile(data.media_id.media_url, data._id);
+            _downloadFile();
           }}
         >
           {isDownload.length == 0 ? (

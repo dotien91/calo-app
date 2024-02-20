@@ -156,10 +156,16 @@ const CoursePreviewScreen = () => {
   };
 
   const _pressItem = (item) => {
-    NavigationService.navigate(SCREENS.COURSE_LEARN_VIDEO_SCREEN, {
-      source: item,
-      course_id: course_id,
-    });
+    if (
+      data?.is_join ||
+      (data?.user_id._id && data?.user_id._id === userData?._id)
+    ) {
+      NavigationService.navigate(SCREENS.COURSE_LEARN_VIDEO_SCREEN, {
+        source: item,
+        course_id: course_id,
+        isTeacher: data?.user_id._id && data?.user_id._id === userData?._id,
+      });
+    }
   };
   const _gotoEdit = () => {
     if (data?.type === "Call group") {
@@ -275,7 +281,6 @@ const CoursePreviewScreen = () => {
         )}
         {data?.type === EnumClassType.SelfLearning && (
           <PartView
-            isJoin={data.is_join}
             // isJoin={true}
             id={course_id}
             hide={tabSelected == 1}

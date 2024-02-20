@@ -355,6 +355,7 @@ const Lesson = ({ data, id, parent_id }: LessonProps) => {
     NavigationService.navigate(SCREENS.COURSE_LEARN_VIDEO_SCREEN, {
       source: data,
       course_id: id,
+      isTeacher: true,
     });
   };
 

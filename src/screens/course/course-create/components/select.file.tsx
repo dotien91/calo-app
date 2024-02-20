@@ -141,5 +141,6 @@ const styles = StyleSheet.create({
     ...CS.fillParent,
     ...CS.center,
     backgroundColor: palette.placeholder,
+    borderRadius: 8,
   },
 });
