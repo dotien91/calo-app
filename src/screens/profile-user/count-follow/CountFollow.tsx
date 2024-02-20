@@ -84,7 +84,13 @@ const CountFollow = ({ id, postCount }: CountFollowProps) => {
     return (
       <View style={styles.container}>
         <SkeletonPlaceholder>
-          <View style={{ width: (WINDOW_WIDTH * 3) / 4, height: 60 }} />
+          <View
+            style={{
+              width: (WINDOW_WIDTH * 3) / 4,
+              height: 60,
+              borderRadius: 8,
+            }}
+          />
         </SkeletonPlaceholder>
       </View>
     );

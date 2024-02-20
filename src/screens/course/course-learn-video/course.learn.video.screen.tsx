@@ -28,6 +28,7 @@ import { palette } from "@theme/themes";
 import Header from "@shared-components/header/Header";
 import useStore from "@services/zustand/store";
 import eventEmitter from "@services/event-emitter";
+import { getBottomSpace } from "react-native-iphone-screen-helper";
 
 const CourseLearnScreen = () => {
   const route: any = useRoute();
@@ -245,10 +246,13 @@ const CourseLearnScreen = () => {
     <View
       style={[
         styles.container,
-        !isLanscape && { marginTop: getStatusBarHeight() },
+        !isLanscape && {
+          marginTop: getStatusBarHeight(),
+          marginBottom: getBottomSpace(),
+        },
       ]}
     >
-      <Header text={detailCourse?.title} />
+      {!isLanscape && <Header text={detailCourse?.title} />}
       <View
         style={[
           styles.styleVideo,

@@ -272,7 +272,7 @@ const ProfileUser = (props: ProfileUserProps) => {
       return (
         <View style={styles.listAction}>
           <SkeletonPlaceholder>
-            <View style={{ height: 40, width: 200 }} />
+            <View style={{ height: 40, width: 200, borderRadius: 8 }} />
           </SkeletonPlaceholder>
         </View>
       );
