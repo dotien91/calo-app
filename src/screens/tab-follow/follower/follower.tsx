@@ -5,7 +5,11 @@ import { useListData } from "@helpers/hooks/useListData";
 import useStore from "@services/zustand/store";
 import Avatar from "@shared-components/user/Avatar";
 import { TypedUser } from "models";
-import { getListFollower, postFollow } from "@services/api/user.api";
+import {
+  getListFollower,
+  ignoreFollower,
+  postFollow,
+} from "@services/api/user.api";
 import { useTheme } from "@react-navigation/native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import {
@@ -32,20 +36,27 @@ const Follower = () => {
     });
   };
 
-  const showModalHozi = () => {
+  const showModalHozi = (partid: string) => {
     showSuperModal({
       contentModalType: EnumModalContentType.Confirm,
       styleModalType: EnumStyleModalType.Bottom,
       data: {
         title: "Remove this follower",
         nameAction: "Remove",
-        cb: removeFollower,
+        cb: () => removeFollower(partid),
       },
     });
   };
 
-  const removeFollower = () => {
-    console.log("dasdsdas");
+  console.log("listData", JSON.stringify(listData, null, 2));
+
+  const removeFollower = (partnerid: string) => {
+    const data = {
+      user_ids: [partnerid],
+    };
+    ignoreFollower(data).then(() => {
+      _requestData();
+    });
   };
 
   const renderItemSelected = ({
@@ -118,7 +129,9 @@ const Follower = () => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={showModalHozi}
+            onPress={() => {
+              showModalHozi(item?.partner_id?._id);
+            }}
             style={{ paddingRight: 5, marginLeft: 2 }}
           >
             <Icon

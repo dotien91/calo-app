@@ -176,3 +176,13 @@ export async function postunFollow(data: any) {
     return response;
   });
 }
+
+export async function ignoreFollower(data: any) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "user/ignore-follower",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
