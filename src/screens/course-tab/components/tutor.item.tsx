@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import { useTheme } from "@react-navigation/native";
 
 // import * as NavigationService from "react-navigation-helpers";
@@ -105,7 +105,18 @@ const TutorItem = ({
           }}
           sourceUri={{ uri: user_avatar_thumbnail }}
         />
-        <IconBtn customStyle={styles.iconFlag} name={"flag"} />
+        {/* <IconBtn customStyle={styles.iconFlag} name={"flag"} /> */}
+        <Image
+          style={{
+            height: 20,
+            width: 20,
+            borderRadius: 10,
+            position: "absolute",
+            bottom: 0,
+            right: 5,
+          }}
+          source={require("assets/images/vnflat.png")}
+        ></Image>
       </View>
     );
   };
