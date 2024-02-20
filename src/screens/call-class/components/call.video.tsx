@@ -10,7 +10,7 @@ import defaultAvatar from "@assets/images/default_avatar.jpg";
 const CallVideo = ({ data, style, isTeacher, ...res }) => {
   const hasVideo = !!data.stream._tracks.find((_item) => _item?.kind == "video")
     ?._enabled;
-  console.log("datadatadata", hasVideo);
+  console.log("datadatadata", data);
 
   if (isTeacher && !hasVideo)
     return (
@@ -37,7 +37,7 @@ const CallVideo = ({ data, style, isTeacher, ...res }) => {
         />
       </View>
     );
-
+  console.log("data.stream.getVideoTracks()", data.stream.getVideoTracks());
   if (!hasVideo)
     return (
       <Image

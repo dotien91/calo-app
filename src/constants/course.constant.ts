@@ -274,7 +274,7 @@ export const sortCourseSelectData = [
     id: "newest",
     sort_by: "createdAt",
     name: "Sort by newest",
-    order_by: "ASC",
+    order_by: "DESC",
   },
 ];
 

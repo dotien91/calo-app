@@ -19,15 +19,9 @@ const MicView = ({ isMe, stream, publisher, showName }) => {
   const [talking, setTalking] = useState(true);
 
   React.useEffect(() => {
-    console.log(
-      "mic check",
-      JSON.stringify(listParticipants.map((item) => item.talking)),
-    );
-
     const isTalking = !!listParticipants.find(
       (item) => item.id == publisher?.id,
     )?.talking;
-
     setTalking(isTalking);
   }, [listParticipants]);
 
@@ -81,7 +75,7 @@ const MicView = ({ isMe, stream, publisher, showName }) => {
       <IconBtn
         color={!enableMic ? palette.danger : palette.white}
         name={enableMic ? "mic" : "mic-off"}
-        size={talking ? 30 : 14}
+        size={14}
         customStyle={{ marginRight: 4 }}
       />
       {showName && (

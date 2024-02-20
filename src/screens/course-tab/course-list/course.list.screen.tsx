@@ -93,7 +93,7 @@ const CourseListScreen: React.FC<CourseListScreenProps> = () => {
 const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
   const { isLoading, listData, onEndReach, renderFooterComponent } =
     useListData<ICourseItem>(
-      { limit: "4" },
+      { limit: "4", sort_by: "createdAt", order_by: "DESC" },
       !isTabCourse ? getListTutor : getCourseList,
     );
 

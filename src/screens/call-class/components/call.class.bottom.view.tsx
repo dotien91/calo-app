@@ -7,18 +7,20 @@ import PressableBtn from "@shared-components/button/PressableBtn";
 import IconBtn from "@shared-components/button/IconBtn";
 import { Device } from "@utils/device.ui.utils";
 import { palette } from "@theme/themes";
-import { getListFriend, viewRoom } from "@services/api/chat.api";
+import { viewRoom } from "@services/api/chat.api";
 import {
   EnumModalContentType,
   EnumStyleModalType,
   showSuperModal,
 } from "@helpers/super.modal.helper";
+import { getListMemberCourse } from "@services/api/course.api";
 
 const ClassRoomBottomView = ({
   publishers,
   toggleMute,
   toggleVideo,
   config,
+  courseData,
 }) => {
   const chatRoomId = "65a60bc04d12aaf61259976b";
   const theme = useTheme();
@@ -27,39 +29,26 @@ const ClassRoomBottomView = ({
   const [roomDetail, setRoomDetail] = useState(null);
   const [listMember, setListMember] = useState([]);
 
-  const addUserToRoomChat = () => {
-    // const data = {
-    //   role: "user",
-    //   chat_type: "group",
-    //   user_id: userData._id,
-    //   chat_room_id: chatRoomId,
-    //   user_permission: "write",
-    // };
-    // addUserToRoom(data).then((res) => {
-    //   console.log("ressss add user", res);
-    //   if (!res.isError) {
-    //     // add group success
-    //   }
-    // });
-  };
-
-  const getListUser = () => {
-    getListFriend({}).then((res) => {
+  const _getListMemberCourse = () => {
+    console.log("courseDatacourseData", courseData);
+    getListMemberCourse({
+      auth_id: courseData.user_id._id,
+      course_id: courseData._id,
+    }).then((res) => {
       if (!res.isError) {
-        setListMember(res.data);
+        setListMember(res.data.map((item) => item.user_id));
       }
-      console.log("ressssss", res);
+      console.log("getListMemberCourse", res);
     });
   };
 
   useEffect(() => {
-    getListUser();
+    _getListMemberCourse();
     viewRoom({ id: chatRoomId }).then((res) => {
       if (!res.isError) {
         setRoomDetail(res.data);
       }
     });
-    addUserToRoomChat();
   }, []);
 
   const openListMemberModal = () => {
@@ -82,6 +71,7 @@ const ClassRoomBottomView = ({
       },
     });
   };
+
   return (
     <View
       style={{
@@ -204,6 +194,7 @@ const ClassRoomBottomView = ({
               right: Device.width / 8 - 18,
               ...CS.borderStyle,
               borderColor: palette.white,
+              zIndex: 1,
             }}
           >
             <Text
@@ -212,8 +203,9 @@ const ClassRoomBottomView = ({
                 fontSize: 10,
                 color: palette.white,
               }}
-            ></Text>
-            {roomDetail?.read_count}
+            >
+              {roomDetail?.read_count}
+            </Text>
           </View>
         )}
         <IconBtn name="message-square" color={colors.white} />

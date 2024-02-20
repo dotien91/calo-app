@@ -5,6 +5,8 @@ import { _getJson, USER_TOKEN } from "@services/local-storage";
 
 export const BASEURL = "https://api.edu-like.exam24h.com/api/";
 export const UPLOAD_URL = "https://media.exam24h.com/";
+// const tokenTeacher =
+// "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mzg4MzEzMzQsImRhdGEiOnsiX2lkIjoiNjU5ZTU5ZDExNzc1YWJiZDZkOTlkMGIzIiwia2V5IjoiNTRhZjQxZGUxZTljNmNhZTFlYmI0ZjQ3NmI4NDg2ZmMiLCJzaWduYXR1cmUiOiIxY2Y2ODMwNWJkOTAyMjEyMDY1MTU3ODQyZWQ1ZTZjNiIsInNlc3Npb24iOiI2NWMzNDI2NjU1MDVmYjI3OGNiYjE5ZDgifSwiaWF0IjoxNzA3Mjk1MzM0fQ.ckhT-GeS2WVJTDEbQjU-ItSznb3aUAZ1GihSWSDmW2g";
 
 export const METHOD = {
   GET: "GET",
@@ -37,7 +39,7 @@ apiClient.interceptors.request.use(
     // const userToken =
     // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzcwODQyMDQsImRhdGEiOnsiX2lkIjoiNjU5MGVmNzEzZjlhMDQ2OGM4MjkwZWI5Iiwia2V5IjoiYTI0MTcxYzcxYjNjMjViZWI0OTQzMTQ1NjQyZjJmNTciLCJzaWduYXR1cmUiOiI4ZTJmODFmZjY1NmRjMjUyYzZhNmVlZGFkN2U3ZTc3OCIsInNlc3Npb24iOiI2NWE4OTlhY2JkYzcwYmJiN2U4YjE1MDgifSwiaWF0IjoxNzA1NTQ4MjA0fQ.DrEymcugAraXnGcu-KdKtBF44QpJE_rZlaxA9V-ZXtg";
     // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQ1OTAxNTEsImRhdGEiOnsiX2lkIjoiNjU4MjVkY2RmYjQyMmU4NmEyMDBlN2ZiIiwia2V5IjoiMjZjNGVkODZmM2RjOTUxN2JlYWViY2UxNTQzMmE0NWUiLCJzaWduYXR1cmUiOiJjNGI1NDEzMGQ0MjNhYzc2ZDA1MjYzODAzMWNhYzBmNyIsInNlc3Npb24iOiI2NTgyOGI0NzhmZTc2YzllMzE0YmM1YmQifSwiaWF0IjoxNzAzMDU0MTUxfQ.CsNtK6PcYGCW0hLfZrvAvxWoihVG9GkkyyMQmz6Oopg";
-    console.log("userTokenuserToken", userToken);
+
     if (userToken) config.headers["X-Authorization"] = userToken;
     return config;
   },

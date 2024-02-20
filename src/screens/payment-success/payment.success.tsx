@@ -14,6 +14,7 @@ import { translations } from "@localization";
 import createStyles from "./payment.success.style";
 import { SCREENS } from "constants";
 import CS from "@theme/styles";
+import eventEmitter from "@services/event-emitter";
 
 const PaymentSuccess = () => {
   const theme = useTheme();
@@ -22,6 +23,7 @@ const PaymentSuccess = () => {
   const widthScreen = Dimensions.get("window").width;
 
   const openMyCourse = () => {
+    eventEmitter.emit("reload_data_preview");
     NavigationService.navigate(SCREENS.HOME);
     NavigationService.navigate(SCREENS.MY_COURES);
   };

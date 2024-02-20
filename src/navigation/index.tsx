@@ -167,11 +167,15 @@ const Navigation = () => {
       theme={isDarkMode ? DarkTheme : LightTheme}
     >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {renderStackIntro()}
+
         <Stack.Screen
           name={SCREENS.COURSE_LIST}
           component={renderTabNavigation}
         />
         <Stack.Screen name={SCREENS.CALL_CLASS} component={CallClassScreen} />
+
+        <Stack.Screen name={SCREENS.MY_COURES} component={MyCourse} />
 
         <Stack.Screen
           name={SCREENS.COURSE_CREATE}
@@ -206,7 +210,6 @@ const Navigation = () => {
           name={SCREENS.COURSE_CATEGORY}
           component={CourseFilterResultScreen}
         />
-        {renderStackIntro()}
         <Stack.Screen
           name={SCREENS.COURSE_DETAIL}
           component={CoursePreviewScreen}
@@ -300,7 +303,6 @@ const Navigation = () => {
         <Stack.Screen name={SCREENS.SMARTBANKING} component={SmartBanking} />
         <Stack.Screen name={SCREENS.CALL_PAGE} component={CallPageScreen} />
         <Stack.Screen name={SCREENS.IN_COMING_CALL} component={InComingCall} />
-        <Stack.Screen name={SCREENS.MY_COURES} component={MyCourse} />
         <Stack.Screen
           name={SCREENS.PAYMENT_SUCCESS}
           component={PaymentSuccess}

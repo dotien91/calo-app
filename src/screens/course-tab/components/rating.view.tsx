@@ -31,7 +31,6 @@ const RatingView: React.FC<RatingViewProps> = ({ rating }: RatingViewProps) => {
       />
     );
   };
-
   return (
     <View style={styles.ratingBox}>{listStar.map((i) => renderStar(i))}</View>
   );

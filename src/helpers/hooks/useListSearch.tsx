@@ -15,6 +15,7 @@ interface TypedUseListSearch<T> {
   renderFooterComponent: () => JSX.Element;
   setListData: (newListData: T[]) => void;
   _requestData: (v: boolean) => void;
+  totalCount: number;
 }
 
 interface TypedRequestParams {

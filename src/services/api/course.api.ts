@@ -293,3 +293,26 @@ export async function getCourseRoom(params: {
     return response;
   });
 }
+
+export async function getListMemberCourse(params: {
+  auth_id: string;
+  course_id: string;
+}) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "course/list-member",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function getMyCourse(data: { user_id: string; auth_id: string }) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "course/my-course",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}

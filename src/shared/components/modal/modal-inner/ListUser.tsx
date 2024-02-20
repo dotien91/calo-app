@@ -6,6 +6,7 @@ import {
   StyleSheet,
   ScrollView,
 } from "react-native";
+import * as NavigationService from "react-navigation-helpers";
 /**
  * ? Local Imports
  */
@@ -13,6 +14,9 @@ import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import Avatar from "@shared-components/user/Avatar";
 import { TypedUser } from "shared/models";
+import { translations } from "@localization";
+import { SCREENS } from "constants";
+import { closeSuperModal } from "@helpers/super.modal.helper";
 
 interface ListUserProps {
   listUser: TypedUser;
@@ -20,7 +24,12 @@ interface ListUserProps {
 }
 
 const ListUser = ({ listUser, title }: ListUserProps) => {
-  const _onPress = () => {};
+  const _onPress = (item) => {
+    closeSuperModal();
+    NavigationService.push(SCREENS.PROFILE_CURRENT_USER, {
+      _id: item?._id,
+    });
+  };
   const renderItem = (item: TypedUser, index: number) => {
     console.log("itemitemitem", item);
     return (
@@ -36,13 +45,13 @@ const ListUser = ({ listUser, title }: ListUserProps) => {
             borderRadius: 99,
             marginRight: 12,
           }}
-          sourceUri={{ uri: item.partner_id.user_avatar_thumbnail }}
+          sourceUri={{ uri: item?.user_avatar }}
         />
         <View style={{ flex: 1 }}>
           <Text numberOfLines={1} style={styles.checkBoxLabel}>
-            {item.partner_id.display_name}
+            {item?.display_name}
           </Text>
-          <Text style={styles.position}>Member</Text>
+          <Text style={styles.position}>{translations.settings.members}</Text>
         </View>
       </TouchableOpacity>
     );

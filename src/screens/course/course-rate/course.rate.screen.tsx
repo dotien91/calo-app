@@ -108,7 +108,7 @@ const CourseRate = () => {
     <TouchableWithoutFeedback onPress={_dismissKeyboard}>
       <View style={CS.safeAreaView}>
         <Header onPressLeft={_goBack} text={translations.course.rate} />
-        <View style={{ paddingHorizontal: 16, alignItems: "center" }}>
+        <View style={{ padding: 16, alignItems: "center" }}>
           {renderStarRate()}
         </View>
         <View

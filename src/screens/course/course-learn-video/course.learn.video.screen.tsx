@@ -24,6 +24,7 @@ import { updateViewed } from "@services/api/course.api";
 import createStyles from "./course.learn.style";
 import CourseLearnAction from "./components/course.learn.action";
 import { palette } from "@theme/themes";
+import Header from "@shared-components/header/Header";
 
 const CourseLearnScreen = () => {
   const route: any = useRoute();
@@ -34,8 +35,8 @@ const CourseLearnScreen = () => {
   const [isLanscape, setIsLanscape] = useState(false);
   const styles = useMemo(() => createStyles(theme), [theme]);
   const [tabSelected, setTabSelected] = useState(1);
-  const detailCourse = route?.params?.detailCourse;
-  const course_id = route?.params?.course_id;
+  const detailCourse = route?.params?.courseData;
+  const course_id = route?.params?.courseId;
   const videoRef = useRef<any>();
 
   useLayoutEffect(() => {
@@ -209,6 +210,7 @@ const CourseLearnScreen = () => {
       </View>
     );
   }, [source?.media_id?._id]);
+
   return (
     <View
       style={[
@@ -216,6 +218,7 @@ const CourseLearnScreen = () => {
         !isLanscape && { marginTop: getStatusBarHeight() },
       ]}
     >
+      <Header text={detailCourse?.title} />
       <View
         style={[
           styles.styleVideo,

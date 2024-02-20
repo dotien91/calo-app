@@ -14,8 +14,8 @@ import RequestSkillView from "./components/request.view";
 import AuthorView from "./components/author.view";
 import ListReviewCourse from "./components/list.review.course";
 import CS from "@theme/styles";
-import { ICourseItem } from "models/course.model";
-import { getCourseDetail } from "@services/api/course.api";
+import { EnumClassType, ICourseItem } from "models/course.model";
+import { getCourseDetail, getCourseRoom } from "@services/api/course.api";
 import BuyBottom from "./components/buy.bottom.view";
 import Header from "@shared-components/header/Header";
 import { palette } from "@theme/themes";
@@ -32,12 +32,14 @@ import { shareCourse } from "@utils/share.utils";
 
 const CoursePreviewScreen = () => {
   const userData = useStore((state) => state.userData);
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
   React.useEffect(() => {
     _getCourseDetail();
+    _getCourseRoom();
   }, []);
 
   const [data, setData] = useState<ICourseItem>();
+  const [courseRoom, setCourseRoom] = useState();
   const route = useRoute();
   const course_id = route.params?.["course_id"];
   // const course_id = "65b773efb11a3c94cc62c5e2";
@@ -53,15 +55,31 @@ const CoursePreviewScreen = () => {
       eventEmitter.off("reload_data_preview", _getCourseDetail);
     };
   });
-  console.log(isLoading);
+  // console.log(isLoading);
   const params = { auth_id: userData?._id };
   const _getCourseDetail = () => {
     getCourseDetail(course_id, params).then((res) => {
-      console.log("detail...", JSON.stringify(res, null, 2));
       if (!res.isError) {
-        setIsLoading(false);
-        console.log("res.datares.data", course_id, res.data);
+        // setIsLoading(false);
         setData(res.data);
+      }
+    });
+  };
+
+  const _getCourseRoom = () => {
+    getCourseRoom({ course_id, user_id: userData?._id }).then((res) => {
+      console.log("getCourseRoom...", res, {
+        course_id,
+        user_id: userData?._id,
+      });
+
+      if (!res.isError) {
+        const data = res.data;
+        //eslint-disable-next-line
+        const roomId = (data?.redirect_url || "").match(/[^\/]+$/)?.[0];
+        setCourseRoom({
+          roomId,
+        });
       }
     });
   };
@@ -150,9 +168,15 @@ const CoursePreviewScreen = () => {
       >
         <HeaderCourse data={data} />
         {!data?.is_join && !(data?.user_id._id === userData?._id) && (
-          <BuyButton data={data} type="full" />
+          <BuyButton courseRoom={courseRoom} data={data} type="full" />
         )}
-        {data?.is_join && <EnrollNow data={data} course_id={course_id} />}
+        {data?.is_join && (
+          <EnrollNow
+            courseRoom={courseRoom}
+            data={data}
+            course_id={course_id}
+          />
+        )}
         {data?.user_id._id && data?.user_id._id === userData?._id && (
           <EditButton data={data} type="full" />
         )}
@@ -165,13 +189,13 @@ const CoursePreviewScreen = () => {
             <DescriptionView data={data} />
           </View>
         )}
-        {data?.type === "Call 1-1" && tabSelected !== 1 && (
+        {data?.type === EnumClassType.Call11 && tabSelected !== 1 && (
           <BookLessonSelectView course_id={course_id} />
         )}
-        {data?.type === "Call group" && tabSelected !== 1 && (
+        {data?.type === EnumClassType.CallGroup && tabSelected !== 1 && (
           <ChooseClassSelectView course_id={course_id} />
         )}
-        {data?.type === "Self-learning" && (
+        {data?.type === EnumClassType.SelfLearning && (
           <PartView
             isJoin={data.is_join}
             // isJoin={true}
@@ -185,7 +209,7 @@ const CoursePreviewScreen = () => {
         <ListReviewCourse _id={course_id} type="top" data={data} />
         <View style={{ height: 70 }} />
       </ScrollView>
-      <BuyBottom show={showBuyBottom} data={data} />
+      <BuyBottom courseRoom={courseRoom} show={showBuyBottom} data={data} />
     </View>
   );
 };

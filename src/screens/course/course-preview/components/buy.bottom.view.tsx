@@ -15,7 +15,7 @@ interface BuyBottomProps {
   data?: ICourseItem;
 }
 
-const BuyBottom = ({ show, data }: BuyBottomProps) => {
+const BuyBottom = ({ show, data, courseRoom }: BuyBottomProps) => {
   const animationHeight = useRef(new Animated.Value(-90)).current;
   const userData = useStore((state) => state.userData);
   const isTeacher = userData?._id === data?.user_id._id;
@@ -69,7 +69,7 @@ const BuyBottom = ({ show, data }: BuyBottomProps) => {
         (isTeacher ? (
           <EditButton type="wrap" data={data} />
         ) : (
-          <BuyButton type="wrap" data={data} />
+          <BuyButton courseRoom={courseRoom} type="wrap" data={data} />
         ))}
     </Animated.View>
   );

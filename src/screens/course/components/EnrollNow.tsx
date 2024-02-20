@@ -12,16 +12,23 @@ import { SCREENS } from "constants";
 interface EnrollNowProps {
   data?: ICourseItem;
   course_id?: string;
+  courseRoom: any;
 }
 
-const EnrollNow = ({ data, course_id }: EnrollNowProps) => {
+const EnrollNow = ({ data, course_id, courseRoom }: EnrollNowProps) => {
   const _goToListVideo = () => {
     if (data.type == EnumClassType.SelfLearning) {
       NavigationService.navigate(SCREENS.COURSE_LEARN_VIDEO_SCREEN, {
         course_id: course_id,
+        courseData: data,
       });
     } else {
       console.log("Dataaaaa", data);
+      NavigationService.navigate(SCREENS.CALL_CLASS, {
+        course_id: course_id,
+        courseData: data,
+        courseRoom,
+      });
     }
   };
   return (
@@ -41,6 +48,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     height: 40,
     borderRadius: 8,
+    paddingHorizontal: 12,
   },
   textBtn: {
     ...CS.hnSemiBold,

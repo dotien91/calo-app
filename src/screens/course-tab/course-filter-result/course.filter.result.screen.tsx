@@ -232,10 +232,6 @@ const ListSearch = React.memo(({ type }: { type: string }) => {
     });
   }, [courseCurrentSort]);
 
-  if (type == EnumSearchType.post) {
-    console.log("listDatalistDatalistData", { courseSearchHistory, listData });
-  }
-
   const renderItem = ({ item }: { item: ICourseItem }, index: number) => {
     if (type == EnumSearchType.post)
       return <ItemPost data={item} key={index} />;

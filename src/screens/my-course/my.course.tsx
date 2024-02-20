@@ -4,7 +4,7 @@ import { useTheme } from "@react-navigation/native";
 import Header from "@shared-components/header/Header";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import CS from "@theme/styles";
-import { getCourseList } from "@services/api/course.api";
+import { getMyCourse } from "@services/api/course.api";
 import { useListData } from "@helpers/hooks/useListData";
 import { ICourseItem } from "models/course.model";
 import LoadingItem from "@shared-components/loading.item";
@@ -24,32 +24,33 @@ const MyCourse = () => {
   ]);
 
   const { listData, isLoading } = useListData<ICourseItem>(
-    { limit: "5", auth_id: userData?._id },
-    getCourseList,
+    { auth_id: userData?._id, order_by: "DESC", sort_by: "createdAt" },
+    getMyCourse,
   );
+
+  console.log("listData", {
+    listData,
+    a: { limit: "51", auth_id: userData?._id },
+  });
 
   const renderScene = SceneMap({
     first: () => <View style={{ marginTop: 20 }}>{renderListImprogess()}</View>,
     second: () => <View></View>,
   });
 
-  const dataFilter = React.useMemo(() => {
-    return listData.filter((item) => item.is_join);
-  }, [listData]);
-
   const renderListImprogess = () => {
-    {
-      isLoading && <LoadingItem />;
-    }
     return (
-      <FlatList
-        data={dataFilter}
-        renderItem={renderItemSelected}
-        onEndReachedThreshold={0}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        removeClippedSubviews={true}
-      />
+      <>
+        {isLoading && <LoadingItem />}
+        <FlatList
+          data={listData}
+          renderItem={renderItemSelected}
+          onEndReachedThreshold={0}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          removeClippedSubviews={true}
+        />
+      </>
     );
   };
 

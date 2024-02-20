@@ -9,13 +9,14 @@ import {
 import React, { useState, useEffect } from "react";
 import {
   Dimensions,
-  StatusBar,
   StyleSheet,
   View,
   SafeAreaView,
+  StatusBar,
 } from "react-native";
 import { Janus, JanusVideoRoomPlugin } from "react-native-janus";
 import lodash from "lodash";
+import { useRoute } from "@react-navigation/native";
 
 import CS from "@theme/styles";
 import { getStatusBarHeight } from "react-native-safearea-height";
@@ -28,10 +29,16 @@ import {
   EnumStyleModalType,
   showSuperModal,
 } from "@helpers/super.modal.helper";
-import ClassRoomTopView from "./components/call.class.top.view";
-import ClassRoomBottomView from "./components/call.class.bottom.view";
 import MicView from "./components/mic.view";
 import CallVideo from "./components/call.video";
+import useStore from "@services/zustand/store";
+import { SERVER } from "constants/class.room.constant";
+import { EnumRole } from "constants/system.constant";
+import { ScrollView } from "react-native-gesture-handler";
+// import Video from "./service/video";
+import { useClassRoom } from "./useClassRoom";
+import ClassRoomTopView from "./components/call.class.top.view";
+import ClassRoomBottomView from "./components/call.class.bottom.view";
 
 Janus.setDependencies({
   RTCPeerConnection,
@@ -41,10 +48,15 @@ Janus.setDependencies({
 });
 
 const CallClassScreen = () => {
+  const userData = useStore((state) => state.userData);
   const [publishers, setPulishers] = useState([]);
   const videoRoom = React.useRef(null);
   const janus = React.useRef(null);
   const stream = React.useRef(null);
+  const route = useRoute();
+  const roomId =
+    route.params?.["courseRoom"]?.roomId || "65c0ab03d7d7ab3a76de4b5b";
+  const courseData = route.params?.["courseData"];
 
   const isVideoOneOne = false;
   const intervalGetPar = React.useRef(null);
@@ -53,6 +65,14 @@ const CallClassScreen = () => {
     video: true,
     front: true,
   });
+  const isTeacherRole = userData?.user_role == EnumRole.Teacher;
+  // const peerConnection = React.useRef(null);
+  console.log("userData", userData);
+
+  //create room
+  useClassRoom({ roomId });
+
+  const setListParticipants = useStore((state) => state.setListParticipants);
 
   const hasTeacher = () => {
     return !!publishers.find((item) => !!item?.isTeacher);
@@ -74,7 +94,6 @@ const CallClassScreen = () => {
 
   useEffect(() => {
     StatusBar.setBarStyle("dark-content");
-
     StatusBar.setBackgroundColor("rgba(0,0,0,0)");
     StatusBar.setTranslucent(true);
     getMediaStream();
@@ -84,14 +103,17 @@ const CallClassScreen = () => {
     };
   }, []);
 
-  const receivePublisher = async (publisher) => {
+  const receivePublisher = async (publisher, event) => {
+    console.log("object===", {
+      publisher,
+      event,
+    });
     const _videoRoom = videoRoom.current;
     try {
       const videoRoom = new JanusVideoRoomPlugin(janus.current);
-      videoRoom.setRoomID("65c1b1d27e85c8767a84e584");
+      videoRoom.setRoomID(roomId);
       videoRoom.setOnStreamListener((stream) => {
-        console.log("streamstreamstream", stream);
-
+        console.log("event=====", event);
         setPulishers((state) => {
           const newPublsher = [
             ...state,
@@ -101,9 +123,12 @@ const CallClassScreen = () => {
             },
           ].map((item) => ({
             ...item,
-            isTeacher: isTeacher(item.publisher?.displayName || ""),
+            isTeacher: item.publisher
+              ? isTeacher(item.publisher?.displayName || "")
+              : isTeacher(
+                  userData?.display_name + (isTeacherRole ? "_teacher_ih" : ""),
+                ),
           }));
-          console.log("newPublshernewPublsher", newPublsher);
           return lodash.uniqBy(newPublsher, "stream._reactTag");
         });
       });
@@ -124,7 +149,7 @@ const CallClassScreen = () => {
         ),
       );
     } catch (e) {
-      console.error(e);
+      // console.error(e);
     }
   };
 
@@ -141,22 +166,19 @@ const CallClassScreen = () => {
           stream: stream,
         },
       ]);
-
-      janus.current = new Janus("wss://janus.socket.exam24h.com");
-
+      janus.current = new Janus(SERVER);
       await janus.current.init();
       videoRoom.current = new JanusVideoRoomPlugin(janus.current);
-      videoRoom.current.setRoomID("65c1b1d27e85c8767a84e584");
-      videoRoom.current.setDisplayName("test mobile");
+      videoRoom.current.setRoomID(roomId);
+      videoRoom.current.setDisplayName(
+        userData?.display_name + (isTeacherRole ? "_teacher_ih" : ""),
+      );
       videoRoom.current.setOnPublishersListener((publishers) => {
-        console.log("publisherspublishers", publishers);
         for (let i = 0; i < publishers.length; i++) {
           receivePublisher(publishers[i]);
         }
       });
       videoRoom.current.setOnPublisherJoinedListener((publisher) => {
-        console.log("setOnPublisherJoinedListener");
-
         receivePublisher(publisher);
       });
       videoRoom.current.setOnPublisherLeftListener((publisherID) => {
@@ -165,23 +187,19 @@ const CallClassScreen = () => {
       videoRoom.current.setOnWebRTCUpListener(async () => {
         console.log("setOnWebRTCUpListener");
       });
-
       await videoRoom.current.createPeer();
       await videoRoom.current.connect();
       await videoRoom.current.join();
-
       await videoRoom.current.publish(stream);
       closeSuperModal();
-      // intervalGetPar.current = setInterval(() => {
-      //   videoRoom.current.getParticipants().then(res => {
-      //     const data = res?.plugindata?.data?.participants || []
-      //     console.log("datadatadatadata", JSON.stringify(data))
-      //     setListParticipants(data)
-      //   })
-
-      // }, 1000)
+      intervalGetPar.current = setInterval(() => {
+        videoRoom.current.getParticipants().then((res) => {
+          const data = res?.plugindata?.data?.participants || [];
+          setListParticipants(data);
+        });
+      }, 2000);
     } catch (e) {
-      console.error("main", JSON.stringify(e));
+      console.error("main init janus", e);
     }
   };
 
@@ -200,7 +218,7 @@ const CallClassScreen = () => {
     }
 
     stream.current = await mediaDevices.getUserMedia({
-      audio: mute,
+      audio: true,
       video: {
         facingMode: isFront ? "user" : "environment",
       },
@@ -230,6 +248,41 @@ const CallClassScreen = () => {
       };
     }
     console.log("data student", data);
+    if (!hasTeacher())
+      return (
+        <ScrollView>
+          <View style={{ ...CS.flexStart, flexWrap: "wrap" }}>
+            {data.map((item, index) => {
+              return (
+                <View
+                  key={item?.stream?._id || index}
+                  style={{
+                    width: Device.width / 2,
+                    height: width / 0.8,
+                    // ...CS.borderStyle,
+                  }}
+                >
+                  <CallVideo
+                    style={{
+                      flex: 1,
+                      width,
+                      height: width / 0.8,
+                      // borderRadius: 8,
+                      // marginHorizontal: 8,
+                      overflow: "hidden",
+                    }}
+                    objectFit={"cover"}
+                    streamURL={item.stream.toURL() || ""}
+                    zOrder={3}
+                    data={item}
+                  />
+                  <MicView showName={!hasTeacher()} {...item} />
+                </View>
+              );
+            })}
+          </View>
+        </ScrollView>
+      );
     return (
       <>
         {data.slice(0, 4).map((item, index) => {
@@ -339,6 +392,7 @@ const CallClassScreen = () => {
         alignItems: "flex-start",
       }}
     >
+      {/* <Video /> */}
       <ClassRoomTopView switchCamera={switchCamera} />
       <ClassRoomBottomView
         config={config}
@@ -346,6 +400,7 @@ const CallClassScreen = () => {
         toggleMute={toggleMute}
         toggleVideo={toggleVideo}
         switchCamera={switchCamera}
+        courseData={courseData}
       />
       {renderMyVideo()}
 

@@ -18,6 +18,8 @@ export default function StickBottomModal({
       {...restProps}
       backdropOpacity={backdropOpacity || 0.5}
       style={styles.modal}
+      animationIn={"slideInUp"}
+      animationInTiming={200}
     >
       {/* {typeof header === "string" ? (
         <View style={styles.headerWrap}>
