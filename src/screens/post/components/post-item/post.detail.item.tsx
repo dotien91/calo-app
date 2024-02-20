@@ -98,7 +98,7 @@ const ItemPost = ({ data, pressComment }: ItemPostProps) => {
       styleModalType: EnumStyleModalType.Middle,
       data: {
         listMedia,
-        indexMedia: index,
+        index,
       },
     });
   };

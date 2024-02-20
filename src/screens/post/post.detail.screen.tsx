@@ -275,7 +275,7 @@ const PostDetail = (props: PostDetailProps) => {
       styleModalType: EnumStyleModalType.Middle,
       data: {
         listMedia,
-        indexMedia: index,
+        index,
       },
     });
   };

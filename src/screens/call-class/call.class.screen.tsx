@@ -327,7 +327,6 @@ const CallClassScreen = () => {
       />
     );
   };
-
   return (
     <SafeAreaView
       style={{

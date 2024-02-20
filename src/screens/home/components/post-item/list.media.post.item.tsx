@@ -32,6 +32,7 @@ const ListFile = ({ listFile, sizeImage2 }: ListFileProps) => {
   const styles = React.useMemo(() => createStyles(theme), [theme]);
 
   const showImageVideo = (index: number) => {
+    console.log("indexxxx", index)
     //gọi supermodal hiển thị danh sách image, video
     // truyền vào danh sách
     const listMedia = listFile.filter(
@@ -44,7 +45,7 @@ const ListFile = ({ listFile, sizeImage2 }: ListFileProps) => {
       styleModalType: EnumStyleModalType.Middle,
       data: {
         listMedia,
-        indexMedia: index,
+        index,
       },
     });
   };

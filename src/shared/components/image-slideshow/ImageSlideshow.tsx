@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, StyleSheet, Pressable, Animated } from "react-native";
+import { View, StyleSheet, Pressable, Animated, Text } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { getStatusBarHeight } from "@freakycoder/react-native-helpers";
 import SwiperFlatList from "react-native-swiper-flatlist";
@@ -16,7 +16,11 @@ interface ImageSlideShowProps {
   index: number;
 }
 
-const ImageSlideShow = ({ listMedia, closeModal }: ImageSlideShowProps) => {
+const ImageSlideShow = ({
+  listMedia,
+  closeModal,
+  index,
+}: ImageSlideShowProps) => {
   const [disabledScrollView, setDisabledScrollView] = React.useState(false);
 
   const _setDisabledScrollView = React.useCallback(() => {
@@ -76,9 +80,10 @@ const ImageSlideShow = ({ listMedia, closeModal }: ImageSlideShowProps) => {
           />
         </Pressable>
       </View>
+      <Text style={{color: 'white'}}>{index}</Text>
       <SwiperFlatList
         disableGesture={disabledScrollView}
-        index={0}
+        index={index}
         data={listMedia}
         renderItem={renderItem}
         style={{ backgroundColor: "transparent" }}
