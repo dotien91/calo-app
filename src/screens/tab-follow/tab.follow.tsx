@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View, useWindowDimensions } from "react-native";
-import { useTheme } from "@react-navigation/native";
+import { useTheme, useRoute } from "@react-navigation/native";
+
 import Header from "@shared-components/header/Header";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import CS from "@theme/styles";
@@ -11,8 +12,9 @@ import Following from "./following/following";
 const TabFollow = () => {
   const theme = useTheme();
   const { colors } = theme;
+  const route = useRoute();
   // const styles = useMemo(() => createStyles(theme), [theme]);
-  const [index, setIndex] = React.useState(0);
+  const [index, setIndex] = React.useState(route?.params?.relationship);
   const layout = useWindowDimensions();
   const [routes] = React.useState([
     { key: "first", title: "Follower" },

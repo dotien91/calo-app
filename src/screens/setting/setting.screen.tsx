@@ -138,7 +138,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                NavigationService.navigate(SCREENS.TAB_FOLLOW);
+                // NavigationService.navigate(SCREENS.TAB_FOLLOW);
               }}
               style={styles.styleButtonViewProfile}
             >

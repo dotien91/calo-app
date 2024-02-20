@@ -132,6 +132,44 @@ const SuperModal: React.FC<SuperModalProps> = () => {
     );
   };
 
+  console.log(
+    "contentModalTypecontentModalTypecontentModalType",
+    contentModalType == EnumModalContentType.Report,
+  );
+
+  const renderConfirmViewBottom = () => {
+    return (
+      <View style={styles.modalInner}>
+        <Text style={styles.title}>{data?.title}</Text>
+        <View style={CommonStyle.flexRear}>
+          <TouchableOpacity
+            onPress={() => {
+              if (data.cb) {
+                data.cb();
+                closeModal();
+              }
+            }}
+            style={{
+              backgroundColor: palette.btnRedPrimary,
+              height: 48,
+              width: "100%",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: 10,
+              borderRadius: 12,
+            }}
+          >
+            <Text
+              style={{ color: palette.white, fontSize: 16, fontWeight: "600" }}
+            >
+              {data?.nameAction}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  };
+
   if (styleModalType == EnumStyleModalType.Bottom) {
     console.log("dataaa", data);
     return (
@@ -187,6 +225,8 @@ const SuperModal: React.FC<SuperModalProps> = () => {
           {contentModalType == EnumModalContentType.AddLesson && (
             <PopupCreateLesson {...data} />
           )}
+          {contentModalType == EnumModalContentType.Confirm &&
+            renderConfirmViewBottom()}
         </View>
       </StickBottomModal>
     );

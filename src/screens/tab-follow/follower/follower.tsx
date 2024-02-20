@@ -7,6 +7,12 @@ import Avatar from "@shared-components/user/Avatar";
 import { TypedUser } from "models";
 import { getListFollower, postFollow } from "@services/api/user.api";
 import { useTheme } from "@react-navigation/native";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import {
+  EnumModalContentType,
+  EnumStyleModalType,
+  showSuperModal,
+} from "@helpers/super.modal.helper";
 
 const Follower = () => {
   const theme = useTheme();
@@ -26,7 +32,21 @@ const Follower = () => {
     });
   };
 
-  console.log("list data", JSON.stringify(listData, null, 2));
+  const showModalHozi = () => {
+    showSuperModal({
+      contentModalType: EnumModalContentType.Confirm,
+      styleModalType: EnumStyleModalType.Bottom,
+      data: {
+        title: "Remove this follower",
+        nameAction: "Remove",
+        cb: removeFollower,
+      },
+    });
+  };
+
+  const removeFollower = () => {
+    console.log("dasdsdas");
+  };
 
   const renderItemSelected = ({
     item,
@@ -76,26 +96,38 @@ const Follower = () => {
             {/* <Text>dasdas</Text> */}
           </View>
         </View>
-        <TouchableOpacity
-          style={{ backgroundColor: colors.btnRedPrimary, borderRadius: 8 }}
-          onPress={() => {
-            if (item.match_status != 1) {
-              followAction(item.partner_id?._id);
-            }
-          }}
-        >
-          <Text
-            style={{
-              marginHorizontal: 16,
-              marginVertical: 9,
-              color: colors.white,
-              fontSize: 14,
-              fontWeight: "400",
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <TouchableOpacity
+            style={{ backgroundColor: colors.btnRedPrimary, borderRadius: 8 }}
+            onPress={() => {
+              if (item.match_status != 1) {
+                followAction(item.partner_id?._id);
+              }
             }}
           >
-            {item.match_status === 1 ? "Friend" : "Follow Back"}
-          </Text>
-        </TouchableOpacity>
+            <Text
+              style={{
+                marginHorizontal: 16,
+                marginVertical: 9,
+                color: colors.white,
+                fontSize: 14,
+                fontWeight: "400",
+              }}
+            >
+              {item.match_status === 1 ? "Friend" : "Follow Back"}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={showModalHozi}
+            style={{ paddingRight: 5, marginLeft: 2 }}
+          >
+            <Icon
+              style={{ height: 16, width: 19 }}
+              name="ellipsis-horizontal-outline"
+              type={IconType.Ionicons}
+            ></Icon>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   };
