@@ -1,6 +1,12 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  TextInput,
+} from "react-native";
 import Modal from "react-native-modal";
 
 import eventEmitter from "@services/event-emitter";
@@ -51,6 +57,8 @@ const SuperModal: React.FC<SuperModalProps> = () => {
   const [contentModalType, setContentModalType] =
     useState<EnumModalContentType>();
 
+  const [textValue, setTextValue] = useState();
+
   useEffect(() => {
     eventEmitter.on("show_super_modal", showModal);
     eventEmitter.on("close_super_modal", closeModal);
@@ -68,6 +76,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
     setStyleModalType(styleModalType);
     setContentModalType(contentModalType);
     setData(data);
+    setTextValue(data?.initNameGroup);
   };
 
   const closeModal = () => {
@@ -136,6 +145,45 @@ const SuperModal: React.FC<SuperModalProps> = () => {
     "contentModalTypecontentModalTypecontentModalType",
     contentModalType == EnumModalContentType.Report,
   );
+  const renderInputView = () => {
+    return (
+      <View style={styles.modalInner}>
+        <Text style={styles.title}>{data?.title}</Text>
+        <TextInput
+          onChangeText={(text) => setTextValue(text)}
+          placeholder="Nhập tên của nhóm"
+          style={{
+            borderWidth: 1,
+            borderColor: "black",
+            borderRadius: 8,
+            marginVertical: 5,
+          }}
+          value={textValue}
+        />
+        <View style={CommonStyle.flexRear}>
+          <TouchableOpacity
+            style={[styles.btnStyle, { flex: 1 }]}
+            onPress={closeModal}
+          >
+            <Text style={styles.txtBtn}>Cancel</Text>
+          </TouchableOpacity>
+          <View style={{ width: 10 }} />
+          <TouchableOpacity
+            style={[
+              styles.btnStyle,
+              { backgroundColor: palette.danger, flex: 1 },
+            ]}
+            onPress={() => {
+              if (data.cb) data.cb(textValue);
+              closeModal();
+            }}
+          >
+            <Text style={styles.txtBtn}>Ok</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  };
 
   const renderConfirmViewBottom = () => {
     return (
@@ -249,6 +297,8 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         {contentModalType == EnumModalContentType.Library && (
           <ImageSlideShow {...data} closeModal={closeModal} />
         )}
+        {contentModalType == EnumModalContentType.TextInput &&
+          renderInputView()}
       </Modal>
     );
   }

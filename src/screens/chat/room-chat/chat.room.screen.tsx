@@ -240,6 +240,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
               loadMoreMessage();
             }
           },
+          showsVerticalScrollIndicator: false,
         }}
         renderInputToolbar={renderInputToolbar}
       />
