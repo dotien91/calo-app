@@ -10,7 +10,7 @@ import Follower from "./follower/follower";
 import Following from "./following/following";
 // import Icon, { IconType } from "react-native-dynamic-vector-icons";
 // import Avatar from "@shared-components/user/Avatar";
-import CommonStyle from "@theme/styles";
+import CS from "@theme/styles";
 import useStore from "@services/zustand/store";
 
 const TabFollow = () => {
@@ -80,7 +80,7 @@ const TabFollow = () => {
           backgroundColor: colors.primary,
         }}
         activeColor={colors.primary}
-        labelStyle={{ ...CommonStyle.hnMedium }}
+        labelStyle={{ ...CS.hnMedium }}
         // inactiveColor={colors.black}
       />
     );
