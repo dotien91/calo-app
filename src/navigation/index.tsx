@@ -71,6 +71,7 @@ import CourseAddModuleScreen from "@screens/course/course-create/course.add.modu
 import CallClassScreen from "@screens/call-class/call.class.screen";
 import TabFollow from "@screens/tab-follow/tab.follow";
 import BlackList from "@screens/black-list/black.list";
+import PrivateSetting from "@screens/private.setting/private.setting";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -311,6 +312,10 @@ const Navigation = () => {
         />
         <Stack.Screen name={SCREENS.TAB_FOLLOW} component={TabFollow} />
         <Stack.Screen name={SCREENS.BLACK_LIST} component={BlackList} />
+        <Stack.Screen
+          name={SCREENS.PRIVATESETTING}
+          component={PrivateSetting}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

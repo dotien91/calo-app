@@ -1,12 +1,6 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  TextInput,
-} from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import Modal from "react-native-modal";
 
 import eventEmitter from "@services/event-emitter";
@@ -32,6 +26,8 @@ import ActionMore from "@screens/course/detail-teacher/components/ActionMore";
 import ChatRoomScreen from "@screens/chat/room-chat/chat.room.class.video";
 import ListUser from "./modal-inner/ListUser";
 import PopupCreateLesson from "@screens/course/course-create/components/PartViewCreate/popup.create.lesson";
+import ConfirmViewBottom from "@shared-components/comfirm-view-bottom/comfirm.view.bottom";
+import InputViewModal from "@shared-components/input-modal/input.modal";
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
 // using normal one.
@@ -141,83 +137,6 @@ const SuperModal: React.FC<SuperModalProps> = () => {
     );
   };
 
-  console.log(
-    "contentModalTypecontentModalTypecontentModalType",
-    contentModalType == EnumModalContentType.Report,
-  );
-  const renderInputView = () => {
-    return (
-      <View style={styles.modalInner}>
-        <Text style={styles.title}>{data?.title}</Text>
-        <TextInput
-          onChangeText={(text) => setTextValue(text)}
-          placeholder="Nhập tên của nhóm"
-          style={{
-            borderWidth: 1,
-            borderColor: "black",
-            borderRadius: 8,
-            marginVertical: 5,
-          }}
-          value={textValue}
-        />
-        <View style={CommonStyle.flexRear}>
-          <TouchableOpacity
-            style={[styles.btnStyle, { flex: 1 }]}
-            onPress={closeModal}
-          >
-            <Text style={styles.txtBtn}>Cancel</Text>
-          </TouchableOpacity>
-          <View style={{ width: 10 }} />
-          <TouchableOpacity
-            style={[
-              styles.btnStyle,
-              { backgroundColor: palette.danger, flex: 1 },
-            ]}
-            onPress={() => {
-              if (data.cb) data.cb(textValue);
-              closeModal();
-            }}
-          >
-            <Text style={styles.txtBtn}>Ok</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
-  };
-
-  const renderConfirmViewBottom = () => {
-    return (
-      <View style={styles.modalInner}>
-        <Text style={styles.title}>{data?.title}</Text>
-        <View style={CommonStyle.flexRear}>
-          <TouchableOpacity
-            onPress={() => {
-              if (data.cb) {
-                data.cb();
-                closeModal();
-              }
-            }}
-            style={{
-              backgroundColor: palette.btnRedPrimary,
-              height: 48,
-              width: "100%",
-              alignItems: "center",
-              justifyContent: "center",
-              marginTop: 10,
-              borderRadius: 12,
-            }}
-          >
-            <Text
-              style={{ color: palette.white, fontSize: 16, fontWeight: "600" }}
-            >
-              {data?.nameAction}
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
-  };
-
   if (styleModalType == EnumStyleModalType.Bottom) {
     console.log("dataaa", data);
     return (
@@ -273,8 +192,9 @@ const SuperModal: React.FC<SuperModalProps> = () => {
           {contentModalType == EnumModalContentType.AddLesson && (
             <PopupCreateLesson {...data} />
           )}
-          {contentModalType == EnumModalContentType.Confirm &&
-            renderConfirmViewBottom()}
+          {contentModalType == EnumModalContentType.Confirm && (
+            <ConfirmViewBottom {...data} closeModal={closeModal} />
+          )}
         </View>
       </StickBottomModal>
     );
@@ -297,8 +217,14 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         {contentModalType == EnumModalContentType.Library && (
           <ImageSlideShow {...data} closeModal={closeModal} />
         )}
-        {contentModalType == EnumModalContentType.TextInput &&
-          renderInputView()}
+        {contentModalType == EnumModalContentType.TextInput && (
+          <InputViewModal
+            {...data}
+            closeModal={closeModal}
+            setTextValue={setTextValue}
+            textValue={textValue}
+          ></InputViewModal>
+        )}
       </Modal>
     );
   }

@@ -404,13 +404,25 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
   };
 
   const changeNameGroupAction = (value: string) => {
+    console.log("dasdasdasd");
     const data = {
       _id: chat_room_id._id,
       room_name: value,
     };
-    changeNameGroup(data).then(() => {
-      eventEmitter.emit("ChangeNameGroup");
-      NavigationService.pop(2);
+    changeNameGroup(data).then((res: any) => {
+      if (!res.isError) {
+        eventEmitter.emit("ChangeNameGroup");
+        NavigationService.pop(2);
+        showToast({
+          type: "success",
+          message: "Đổi nhóm thành công",
+        });
+      } else {
+        showToast({
+          type: "error",
+          message: "Đổi nhóm thất bại",
+        });
+      }
     });
   };
 

@@ -160,7 +160,7 @@ const Follower = ({ id }: { id: string }) => {
         </TouchableOpacity>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <TouchableOpacity
-            style={{ backgroundColor: colors.btnRedPrimary, borderRadius: 8 }}
+            style={{ backgroundColor: colors.btnRedPrimary, borderRadius: 4 }}
             onPress={() => {
               if (userData?._id === id) {
                 if (item.match_status != 1) {
@@ -187,14 +187,14 @@ const Follower = ({ id }: { id: string }) => {
             >
               {userData?._id === id
                 ? item.match_status === 1
-                  ? "Friend"
+                  ? "Message"
                   : "Follow Back"
                 : item?.didFollow
                 ? "UnFollow"
                 : "Follow"}
             </Text>
           </TouchableOpacity>
-          {userData?._id === id ? (
+          {userData?._id === id && item?.match_status != 1 ? (
             <TouchableOpacity
               onPress={() => {
                 showModalHozi(item?.partner_id?._id);

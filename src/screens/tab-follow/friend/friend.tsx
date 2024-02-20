@@ -75,7 +75,7 @@ const Friend = ({ id }: { id: string }) => {
           </View>
         </View>
         <TouchableOpacity
-          style={{ backgroundColor: colors.grey2, borderRadius: 8 }}
+          style={{ backgroundColor: colors.grey2, borderRadius: 4 }}
           onPress={() => {
             navigateMess(item);
           }}

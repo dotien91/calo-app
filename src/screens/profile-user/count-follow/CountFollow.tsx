@@ -13,6 +13,7 @@ import { isNumber } from "lodash";
 // import LoadingItem from "@shared-components/loading.item";
 // import LoadingItem from "@shared-components/loading.item";
 import { EnumTypeRelationship } from "constants/profile.constant";
+import eventEmitter from "@services/event-emitter";
 
 interface CountFollowProps {
   id: string;
@@ -38,6 +39,14 @@ const CountFollow = ({ id, postCount }: CountFollowProps) => {
       _getUserInfo(id);
     }
   }, [id]);
+
+  // useEffect(()=>{
+  //   eventEmitter.on("followAction",_getUserInfo )
+  //   console.log("useEffect followAction")
+  //   return () => {
+  //     eventEmitter.off("followAction", _getUserInfo);
+  //   };
+  // },)
 
   const ItemFollow = ({
     title,

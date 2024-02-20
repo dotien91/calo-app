@@ -88,6 +88,7 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
     return () => {
       offSocket("msgToUser", msgToUser);
       eventEmitter.off("refresh_list_chat", onRefresh);
+      eventEmitter.off("ChangeNameGroup", onRefresh);
     };
   });
 

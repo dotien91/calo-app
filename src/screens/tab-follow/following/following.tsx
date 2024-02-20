@@ -17,6 +17,7 @@ import _ from "lodash";
 import { showToast } from "@helpers/super.modal.helper";
 import { translations } from "@localization";
 import LoadingList from "@shared-components/loading.list.component";
+import eventEmitter from "@services/event-emitter";
 const Following = ({ id }: { id: string }) => {
   const theme = useTheme();
   const { colors } = theme;
@@ -43,6 +44,7 @@ const Following = ({ id }: { id: string }) => {
     dataToChange.is_follow = dataToChange.is_follow === false ? true : false;
     listNewdata[likeNeedToChangeIdx] = dataToChange;
     setListData(listNewdata);
+    eventEmitter.emit("followAction");
     const data = {
       partner_id: item?.partner_id?._id,
     };
@@ -70,6 +72,7 @@ const Following = ({ id }: { id: string }) => {
   //   : translations.follow
 
   const followActionInProfileOrtherPeople = (item: string) => {
+    eventEmitter.emit("followAction");
     const listNewdata = listFollow.map((item: any) => item);
     if (check_arr(item, listFollow)) {
       // find index list data
@@ -212,7 +215,7 @@ const Following = ({ id }: { id: string }) => {
         </TouchableOpacity>
         <View>
           <TouchableOpacity
-            style={{ backgroundColor: colors.grey2, borderRadius: 8 }}
+            style={{ backgroundColor: colors.grey2, borderRadius: 4 }}
             onPress={() => {
               if (userData?._id === id) {
                 followAction(newitem);

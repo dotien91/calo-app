@@ -16,6 +16,7 @@ import {
   showToast,
 } from "@helpers/super.modal.helper";
 import LoadingList from "@shared-components/loading.list.component";
+import moment from "moment";
 
 const BlackList = () => {
   const theme = useTheme();
@@ -29,12 +30,13 @@ const BlackList = () => {
     item: any;
     index: number;
   }) => {
+    console.log(JSON.stringify(item, null, 2));
     return (
       <View
         key={index}
         style={{
           flexDirection: "row",
-          justifyContent: "space-between",
+          // justifyContent: "space-between",
           marginHorizontal: 16,
           alignItems: "center",
         }}
@@ -48,38 +50,53 @@ const BlackList = () => {
           }}
         >
           <Avatar
-            style={{ height: 50, width: 50, borderRadius: 25 }}
+            style={{ height: 40, width: 40, borderRadius: 20 }}
             sourceUri={{ uri: item?.partner_id?.user_avatar }}
           />
-          <Text
-            numberOfLines={2}
-            style={{
-              marginLeft: 8,
-              fontSize: 16,
-              fontWeight: "600",
-              color: colors.text,
-              maxWidth: 250,
-            }}
-          >
-            {item?.partner_id?.display_name}
-          </Text>
         </View>
-        <TouchableOpacity
-          onPress={() => {
-            showModalMoti(item?.partner_id?._id);
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            flex: 1,
+            borderBottomWidth: 1,
+            borderBottomColor: colors.grey2,
+            alignItems: "center",
+            paddingVertical: 8,
+            marginHorizontal: 8,
           }}
         >
-          <Text
-            style={{
-              fontSize: 12,
-              color: colors.textOpacity6,
-              fontWeight: "400",
-              textDecorationLine: "underline",
+          <View style={{ flexDirection: "column" }}>
+            <Text
+              numberOfLines={2}
+              style={{
+                fontSize: 16,
+                fontWeight: "600",
+                color: colors.text,
+                maxWidth: 250,
+              }}
+            >
+              {item?.partner_id?.display_name}
+            </Text>
+            <Text>{moment(item.createdAt).format("HH:mm")}</Text>
+          </View>
+          <TouchableOpacity
+            onPress={() => {
+              showModalMoti(item?.partner_id?._id);
             }}
           >
-            UnBlock
-          </Text>
-        </TouchableOpacity>
+            <Text
+              style={{
+                fontSize: 12,
+                color: colors.textOpacity6,
+                fontWeight: "400",
+                textDecorationLine: "underline",
+              }}
+            >
+              UnBlock
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   };

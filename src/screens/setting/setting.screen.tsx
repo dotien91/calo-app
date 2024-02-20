@@ -61,7 +61,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
       title: translations.settingUser.private,
       icon: require("assets/images/securityicon.png"),
       action: () => {
-        // NavigationService.navigate(SCREENS.SMARTBANKING);
+        NavigationService.navigate(SCREENS.PRIVATESETTING);
       },
     },
     {
@@ -91,7 +91,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
 
   const renderListSetting = () => {
     return (
-      <View style={{ backgroundColor: colors.white, flex: 1 }}>
+      <View style={{ backgroundColor: colors.white, flex: 1, marginTop: 20 }}>
         {listSetting.map((item, index) => {
           return (
             <TouchableOpacity
@@ -120,55 +120,77 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
     );
   };
 
-  // const editProfile = () => {
-  //   NavigationService.navigate(SCREENS.EDIT_PROFILE);
-  // };
+  const editProfile = () => {
+    NavigationService.navigate(SCREENS.EDIT_PROFILE);
+  };
 
   return (
     <View style={{ ...CS.safeAreaView, backgroundColor: colors.white }}>
       <Header text="Setting"></Header>
       {isLoggedIn() ? (
         <View style={{ alignItems: "center", backgroundColor: colors.white }}>
-          <TouchableOpacity
-            onPress={() => {
-              NavigationService.navigate(SCREENS.PROFILE_CURRENT_USER, {
-                _id: userData?._id,
-              });
-            }}
-          >
-            <Avatar
+          <View style={{ marginTop: 16 }}>
+            <TouchableOpacity
+              onPress={() => {
+                NavigationService.navigate(SCREENS.PROFILE_CURRENT_USER, {
+                  _id: userData?._id,
+                });
+              }}
+            >
+              <Avatar
+                style={{
+                  width: 64,
+                  height: 64,
+                  borderRadius: 99,
+                  // marginRight: 10,
+                  // marginTop: 20,
+                }}
+                sourceUri={{
+                  uri: userData?.user_avatar_thumbnail,
+                }}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={editProfile}
               style={{
-                width: 80,
-                height: 80,
-                borderRadius: 99,
-                marginRight: 10,
-                marginTop: 20,
+                position: "absolute",
+                bottom: -4,
+                right: -4,
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: colors.white,
+                borderRadius: 16,
               }}
-              sourceUri={{
-                uri: userData?.user_avatar_thumbnail,
-              }}
-            />
-          </TouchableOpacity>
+            >
+              <Icon
+                style={{ padding: 3 }}
+                name="edit-3"
+                type={IconType.Feather}
+              ></Icon>
+            </TouchableOpacity>
+          </View>
           <Text
             style={{
               fontSize: 16,
               color: colors.text,
               fontWeight: "600",
-              marginTop: 5,
+              marginTop: 8,
             }}
           >
             {userData?.display_name}
           </Text>
-          <Text
-            style={{
-              fontSize: 16,
-              color: colors.btnRedPrimary,
-              fontWeight: "600",
-              marginTop: 5,
-            }}
-          >
-            {userData?.description}
-          </Text>
+          <TouchableOpacity>
+            <Text
+              style={{
+                fontSize: 16,
+                color: colors.btnRedPrimary,
+                fontWeight: "600",
+                marginTop: 5,
+              }}
+            >
+              Become a tutor
+            </Text>
+          </TouchableOpacity>
           {/* <View style={{ flexDirection: "row", marginVertical: 16 }}>
             <TouchableOpacity
               onPress={editProfile}
@@ -196,15 +218,15 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
           style={{
             marginHorizontal: 16,
             height: 46,
-            backgroundColor: colors.grey1,
+            backgroundColor: colors.grey3,
             justifyContent: "center",
             alignItems: "center",
             marginBottom: 50,
-            borderRadius: 16,
+            borderRadius: 8,
           }}
         >
           <Text style={{ color: colors.text, fontSize: 16, fontWeight: "600" }}>
-            Logout
+            Sign Out
           </Text>
         </TouchableOpacity>
       )}
