@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useMemo } from "react";
-import { Text, TouchableOpacity, View,StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
 import { SCREENS } from "constants";
@@ -10,7 +10,8 @@ import { translations } from "@localization";
 import SkeletonPlaceholder from "@shared-components/skeleton";
 import { WINDOW_WIDTH } from "@gorhom/bottom-sheet";
 import { isNumber } from "lodash";
-import LoadingItem from "@shared-components/loading.item";
+// import LoadingItem from "@shared-components/loading.item";
+// import LoadingItem from "@shared-components/loading.item";
 import { EnumTypeRelationship } from "constants/profile.constant";
 
 interface CountFollowProps {
