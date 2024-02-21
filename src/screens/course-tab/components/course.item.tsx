@@ -17,24 +17,20 @@ import { SCREENS } from "constants";
 import { numberWithCommas } from "@utils/string.utils";
 import { translations } from "@localization";
 
-interface CourseItemProps extends ICourseItem {
-  isHorizontalStyle: boolean;
-  isSliderItem: boolean;
+interface CourseItemProps {
+  isHorizontalStyle?: boolean;
+  isSliderItem?: boolean;
   style?: ViewStyle;
+  data: ICourseItem;
 }
 
 const CourseItem = ({
-  _id,
-  title,
   isSliderItem,
-  price,
-  rating,
   isHorizontalStyle,
-  user_id,
-  media_id,
-  avatar,
   style,
+  data,
 }: CourseItemProps) => {
+  const { _id, title, price, rating, user_id, media_id, avatar } = data;
   let widthImage = Device.width - 32;
   if (isHorizontalStyle) {
     widthImage = widthImage / 1.5;
@@ -48,7 +44,10 @@ const CourseItem = ({
   const styles = useMemo(() => createStyles(theme), [theme]);
 
   const openPreviewCourse = () => {
-    NavigationService.navigate(SCREENS.COURSE_DETAIL, { course_id: _id });
+    NavigationService.navigate(SCREENS.COURSE_DETAIL, {
+      course_id: _id,
+      dataCourse: data,
+    });
   };
 
   // const avatarUrl = () => {};

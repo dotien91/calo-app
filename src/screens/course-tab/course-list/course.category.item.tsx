@@ -19,9 +19,9 @@ const CourseCategoryItem: React.FC<CourseCategoryItemProps> = () => {
     useListData<ICourseItem>({ limit: "5" }, getCourseList);
 
   const renderItem = (item: ICourseItem, index: number) => {
-    return <CourseItem isSliderItem {...item.item} key={index} />;
+    return <CourseItem isSliderItem data={item.item} key={index} />;
   };
-  return null;
+  // return null;
   return (
     <View>
       <CourseCategoryTitle title={"Recommend"} onPress={() => {}} />

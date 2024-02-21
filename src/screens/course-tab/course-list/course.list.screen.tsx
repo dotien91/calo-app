@@ -105,7 +105,7 @@ const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
     );
 
   const renderItem = ({ item }: { item: ICourseItem }, index: number) => {
-    if (isTabCourse) return <CourseItem {...item} key={index} />;
+    if (isTabCourse) return <CourseItem data={item} key={index} />;
     return <TutorItem {...item} key={index} />;
   };
 

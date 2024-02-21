@@ -61,7 +61,7 @@ const MyCourse = () => {
     item: ICourseItem;
     index: number;
   }) => {
-    return <CourseItem {...item} key={index} />;
+    return <CourseItem data={item} key={index} />;
   };
 
   const renderTabBar = (props) => (

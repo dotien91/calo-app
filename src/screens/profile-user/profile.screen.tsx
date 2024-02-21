@@ -131,7 +131,7 @@ const SecondRoute = () => {
   const renderItemCourse = ({ item, index }) => {
     return (
       <CourseItem
-        {...item}
+        data={item}
         key={index}
         style={index == 0 ? { marginTop: 8 } : {}}
       />
