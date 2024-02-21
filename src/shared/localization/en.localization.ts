@@ -236,6 +236,9 @@ export default {
     forgotPasswordSuccess:
       "Successfully sent an email, please check your email!",
     requireLogin: "You need login for using this feature",
+    bylogin: "By login or signing up, you're agree to our",
+    term: "Terms & Conditions",
+    police: "Privacy Policy",
   },
   validate: {
     emailInvalid: "Email is invalid",
@@ -464,6 +467,8 @@ export default {
     videoReviewCourse: "Video review course",
     requiredTitle: "Title is required",
     publicCourse: "Public course",
+    noreview: "Zero review",
+    selectModal: "Select",
   },
   seeAll: "See all",
   settings: {
@@ -756,6 +761,7 @@ export default {
     saveQRCode: "Save QR code",
     tocomplete:
       "To complete the payment process, please make a transfer to the account number below:",
+    content: "Content tranfer",
   },
   settingUser: {
     language: "Language",
@@ -770,6 +776,7 @@ export default {
     private: "Security & privacy",
     support: "Customer support",
     aboutus: "About us",
+    mycouse: "My Course",
   },
   aboutUs: {
     aboutUs: "About us",

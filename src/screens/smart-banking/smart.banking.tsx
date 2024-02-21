@@ -1,8 +1,7 @@
-import React, { useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import {
   ActivityIndicator,
   Image,
-  SafeAreaView,
   Text,
   TouchableOpacity,
   View,
@@ -15,7 +14,11 @@ import { translations } from "@localization";
 import createStyles from "./smart.banking.style";
 import Header from "@shared-components/header/Header";
 import { useUploadFile } from "@helpers/hooks/useUploadFile";
-import { getOrderDetail, updateUserOrder } from "@services/api/payment.api";
+import {
+  getOrderDetail,
+  updateUserOrder,
+  getQRcode,
+} from "@services/api/payment.api";
 import {
   EnumModalContentType,
   EnumStyleModalType,
@@ -24,8 +27,10 @@ import {
   showToast,
 } from "@helpers/super.modal.helper";
 import { SCREENS } from "constants";
+import CS from "@theme/styles";
 
 const SmartBanking = () => {
+  // const [fileImage, setfileImage] = useState("");
   const theme = useTheme();
   // const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
@@ -72,14 +77,25 @@ const SmartBanking = () => {
     NavigationService.navigate(SCREENS.COURSE_LIST);
   };
 
-  const copyToClipboard = () => {
-    Clipboard.setString("adasds");
+  const [qrcode, setqeCode] = useState("");
+  const copyToClipboard = (text: string) => {
+    Clipboard.setString(text);
   };
 
   const { onSelectPicture, isUpLoadingFile, listFile } = useUploadFile([], 1);
 
+  // const selectImage = () => {
+  //   selectMedia({
+  //     config: { mediaType: "photo", selectionLimit: 1 },
+  //     callback: async (image) => {
+  //       setfileImage(
+  //         image?.filename || image.path?.split("/")?.reverse()?.[0] || "",
+  //       );
+  //     },
+  //   });
+  // };
+
   const actionSend = () => {
-    console.log("listFilelistFilelistFile", listFile);
     const data = {
       _id: tradeId,
       status: "processing",
@@ -101,24 +117,43 @@ const SmartBanking = () => {
       } else {
         showToast({
           type: "error",
+          message: "",
         });
       }
     });
+  };
 
-    console.log("dataaaa", data);
-    // NavigationService.navigate(SCREENS.PAYMENT_SUCCESS);
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = () => {
+    getQRcode()
+      .then((res: any) => {
+        console.log("json", JSON.stringify(res, null, 2));
+        setqeCode(res.data);
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ ...CS.safeAreaView }}>
       <Header text="Smart Banking" />
       <View style={{ marginHorizontal: 16, alignItems: "center" }}>
         <Text numberOfLines={2} style={styles.styleTextToComplete}>
           {translations.payment.tocomplete}
         </Text>
         <View style={styles.styleViewCopyNumberBank}>
-          <Text style={styles.styleTextNumberBank}>0123456789</Text>
-          <TouchableOpacity onPress={copyToClipboard}>
+          <Text style={styles.styleTextNumberBank}>
+            {qrcode?.config?.option_content[0]?.value}
+          </Text>
+          <TouchableOpacity
+            onPress={() => {
+              copyToClipboard(qrcode?.config?.option_content[0]?.value);
+            }}
+          >
             <Image
               style={{ height: 15.3, width: 13.79 }}
               source={require("assets/images/CopyIcon.png")}
@@ -127,12 +162,27 @@ const SmartBanking = () => {
         </View>
         <Text style={styles.styleTextName}>NGUYEN VAN A</Text>
         <Text numberOfLines={2} style={styles.styleTextNameBank}>
-          Ngân hàng Thương mại cổ phần Đầu tư và Phát triển Việt Nam (BIDV)
+          {qrcode?.config?.option_content[1]?.value}
         </Text>
+
+        <TouchableOpacity
+          style={{ flexDirection: "row", justifyContent: "center" }}
+          onPress={() => {
+            copyToClipboard("ilelts hunter");
+          }}
+        >
+          <Text numberOfLines={2} style={styles.styleTextNameBank}>
+            {translations.payment.content}: ilelts hunter
+          </Text>
+          <Image
+            style={{ height: 15.3, width: 13.79, marginLeft: 5 }}
+            source={require("assets/images/CopyIcon.png")}
+          ></Image>
+        </TouchableOpacity>
         <View style={{ marginBottom: 16 }}>
           <Image
             style={{ height: 180, width: 180, marginBottom: 4 }}
-            source={require("assets/images/QRcode.png")}
+            source={{ uri: qrcode?.config?.data_content }}
           ></Image>
           <Text style={styles.styleTextSaveQRcode}>
             {translations.payment.saveQRCode}
@@ -188,7 +238,7 @@ const SmartBanking = () => {
           <Text style={styles.styleTextSend}>{translations.goBackHome}</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 export default SmartBanking;

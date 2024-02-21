@@ -1,8 +1,9 @@
 import React from "react";
-import { Text, View, ViewStyle } from "react-native";
+import { Text, View, ViewStyle, Linking } from "react-native";
 import { useTheme } from "@react-navigation/native";
 
 import CommonStyle from "@theme/styles";
+import { translations } from "@localization";
 
 interface TermPolicyViewProps {
   style: ViewStyle;
@@ -11,9 +12,13 @@ interface TermPolicyViewProps {
 const TermPolicyView = ({ style }: TermPolicyViewProps) => {
   const theme = useTheme();
   const { colors } = theme;
-  const pressPolicy = () => {};
+  const pressPolicy = () => {
+    Linking.openURL("https://docs.ieltshunter.io/privacy-policy");
+  };
 
-  const pressTerms = () => {};
+  const pressTerms = () => {
+    Linking.openURL("https://docs.ieltshunter.io/terms-and-conditions");
+  };
   return (
     <View style={style}>
       <Text
@@ -26,7 +31,8 @@ const TermPolicyView = ({ style }: TermPolicyViewProps) => {
           },
         ]}
       >
-        {"By login or signing up, you're agree to our"}
+        {/* {"By login or signing up, you're agree to our"} */}
+        {translations.login.bylogin}
       </Text>
       <Text
         style={[
@@ -36,11 +42,11 @@ const TermPolicyView = ({ style }: TermPolicyViewProps) => {
       >
         <Text onPress={pressTerms} style={{ color: colors.primary }}>
           {" "}
-          Terms & Conditions
+          {translations.login.term}
         </Text>{" "}
-        and{" "}
+        {translations.login.and}{" "}
         <Text onPress={pressPolicy} style={{ color: colors.primary }}>
-          Privacy Policy
+          {translations.login.police}
         </Text>
       </Text>
     </View>

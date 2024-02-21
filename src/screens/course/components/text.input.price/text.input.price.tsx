@@ -34,7 +34,7 @@ const TextInputPrice = ({ priceInput, setPriceInput }) => {
           style={{
             ...CS.hnMedium,
             fontSize: 14,
-            flex: 1.
+            flex: 1,
           }}
           placeholder="Nhập tiền..."
           delimiter="."

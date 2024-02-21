@@ -44,6 +44,13 @@ export async function updateUserOrder(data) {
     method: METHOD.POST,
     urlPath: "order/user-update",
     data,
+  });
+}
+
+export async function getQRcode() {
+  return request({
+    method: METHOD.GET,
+    urlPath: "config/list/qr_code",
   }).then((response) => {
     return response;
   });

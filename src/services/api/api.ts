@@ -1,7 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import lodash from "lodash";
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { _getJson, USER_TOKEN } from "@services/local-storage";
 
 export const BASEURL = "https://api.edu-like.exam24h.com/api/";
 export const UPLOAD_URL = "https://media.exam24h.com/";
@@ -33,13 +32,12 @@ export const apiClient = axios.create({
 // Add a request interceptor
 apiClient.interceptors.request.use(
   function (config) {
-    const userToken = _getJson(USER_TOKEN);
+    // const userToken = _getJson(USER_TOKEN);
 
     // fake token for chat feature
-    // const userToken =
-    // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzcwODQyMDQsImRhdGEiOnsiX2lkIjoiNjU5MGVmNzEzZjlhMDQ2OGM4MjkwZWI5Iiwia2V5IjoiYTI0MTcxYzcxYjNjMjViZWI0OTQzMTQ1NjQyZjJmNTciLCJzaWduYXR1cmUiOiI4ZTJmODFmZjY1NmRjMjUyYzZhNmVlZGFkN2U3ZTc3OCIsInNlc3Npb24iOiI2NWE4OTlhY2JkYzcwYmJiN2U4YjE1MDgifSwiaWF0IjoxNzA1NTQ4MjA0fQ.DrEymcugAraXnGcu-KdKtBF44QpJE_rZlaxA9V-ZXtg";
+    const userToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mzk1OTA3NDIsImRhdGEiOnsiX2lkIjoiNjU4NTQ2MGFkZmRlNWE0MzNjOTg2YzY3Iiwia2V5IjoiMjQzMzJhMDZhNmY5MjJhOWM4MmY3MzhjN2U1ZDY5OTYiLCJzaWduYXR1cmUiOiJjZWQ0NTFkZDEwYmMyZTM2ZmVjZjIyN2UyYzNiY2ZiOSIsInNlc3Npb24iOiI2NWNlZDhkNTU1MDVmYjI3OGNjNmE3YTUifSwiaWF0IjoxNzA4MDU0NzQyfQ._-du9ni1QDzFBG3NKiKmp-kRIr_Ja524UoZbBZlG04g";
     // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQ1OTAxNTEsImRhdGEiOnsiX2lkIjoiNjU4MjVkY2RmYjQyMmU4NmEyMDBlN2ZiIiwia2V5IjoiMjZjNGVkODZmM2RjOTUxN2JlYWViY2UxNTQzMmE0NWUiLCJzaWduYXR1cmUiOiJjNGI1NDEzMGQ0MjNhYzc2ZDA1MjYzODAzMWNhYzBmNyIsInNlc3Npb24iOiI2NTgyOGI0NzhmZTc2YzllMzE0YmM1YmQifSwiaWF0IjoxNzAzMDU0MTUxfQ.CsNtK6PcYGCW0hLfZrvAvxWoihVG9GkkyyMQmz6Oopg";
-
     if (userToken) config.headers["X-Authorization"] = userToken;
     return config;
   },

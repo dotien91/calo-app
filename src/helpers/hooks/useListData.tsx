@@ -25,6 +25,7 @@ interface TypedRequestParams {
   search?: string;
   page?: number;
   user_id?: string;
+  order_by?: string;
 }
 
 interface TypedStateListData<T> {

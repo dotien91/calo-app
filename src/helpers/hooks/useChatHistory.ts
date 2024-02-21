@@ -194,7 +194,6 @@ export const useChatHistory = (txtSearch: string, searchModeChat: boolean) => {
       }, []);
     // setCurrentMediaIds(mediaIds);
     updateCurrentMediaIds({ data: mediaIds, id: chatRoomId });
-    console.log("mediaIdsmediaIdsmediaIds", mediaIds);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 

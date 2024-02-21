@@ -32,7 +32,6 @@ import ChooseClassSelectView from "../components/choose-class/choose.class.selec
 import EnrollNow from "../components/EnrollNow";
 import { SCREENS } from "constants";
 import EditButton from "../components/edit.button";
-import { shareCourse } from "@utils/share.utils";
 import Button from "@shared-components/button/Button";
 import { showToast } from "@helpers/super.modal.helper";
 
@@ -150,11 +149,11 @@ const CoursePreviewScreen = () => {
     }
   };
 
-  const _shareCourse = () => {
-    if (data?._id) {
-      shareCourse(data._id);
-    }
-  };
+  // const _shareCourse = () => {
+  //   if (data?._id) {
+  //     shareCourse(data._id);
+  //   }
+  // };
 
   const _pressItem = (item) => {
     if (
@@ -215,7 +214,8 @@ const CoursePreviewScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Header iconNameRight="share" onPressRight={_shareCourse} />
+      {/* <Header iconNameRight="share-outline" onPressRight={_shareCourse} /> */}
+      <Header />
       <ScrollView
         contentContainerStyle={{ paddingBottom: 60 }}
         onScroll={handleScroll}

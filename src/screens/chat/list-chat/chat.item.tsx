@@ -71,9 +71,12 @@ const ChatItem = ({
           }}
           resizeMode="cover"
           style={{
-            width: avatarSize / 2,
-            height: avatarSize / 2,
-            borderRadius: 20,
+            width: 100 / 2,
+            height: 100 / 2,
+            borderRadius: 25,
+            position: "absolute",
+            bottom: -10,
+            left: 10,
           }}
         />
         <Avatar
@@ -82,9 +85,9 @@ const ChatItem = ({
           }}
           resizeMode="cover"
           style={{
-            width: avatarSize / 2,
-            height: avatarSize / 2,
-            borderRadius: 20,
+            width: 100 / 2,
+            height: 100 / 2,
+            borderRadius: 25,
           }}
         />
       </View>

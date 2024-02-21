@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useMemo } from "react";
 import { useTheme } from "@react-navigation/native";
 import { Text, TouchableOpacity, View, Switch } from "react-native";
 import Header from "@shared-components/header/Header";
@@ -14,9 +14,9 @@ const SettingUser = () => {
   const theme = useTheme();
   const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const [isEnabledNoti, setisEnabledNoti] = useState(false);
-  const [isEnabledHidden, setisEnabledHidden] = useState(false);
-  const [isEnabledBlock, setisEnabledBlock] = useState(false);
+  // const [isEnabledNoti, setisEnabledNoti] = useState(false);
+  // const [isEnabledHidden, setisEnabledHidden] = useState(false);
+  // const [isEnabledBlock, setisEnabledBlock] = useState(false);
 
   // const [languageSelected, setLanguageSelected] = useState(
   //   useStore((state) => state.language),
@@ -42,51 +42,30 @@ const SettingUser = () => {
         NavigationService.navigate(SCREENS.CHANGELANGUAGE);
       },
     },
-    {
-      title: translations.settingUser.hightandweigh,
-      detail: "cm/kg",
-      action: () => {
-        console.log("asd");
-      },
-    },
-    {
-      title: translations.settingUser.space,
-      detail: "km",
-      action: () => {
-        console.log("asd");
-      },
-    },
-    {
-      title: translations.settingUser.deletecache,
-      detail: " ",
-      action: () => {
-        console.log("asd");
-      },
-    },
-    {
-      title: translations.settingUser.noti,
-      action: () => {},
-      state: isEnabledNoti,
-      changeState: () => {
-        setisEnabledNoti(!isEnabledNoti);
-      },
-    },
-    {
-      title: translations.settingUser.hidden,
-      action: () => {},
-      state: isEnabledHidden,
-      changeState: () => {
-        setisEnabledHidden(!isEnabledHidden);
-      },
-    },
-    {
-      title: translations.settingUser.block,
-      action: () => {},
-      state: isEnabledBlock,
-      changeState: () => {
-        setisEnabledBlock(!isEnabledBlock);
-      },
-    },
+    // {
+    //   title: translations.settingUser.noti,
+    //   action: () => {},
+    //   state: isEnabledNoti,
+    //   changeState: () => {
+    //     setisEnabledNoti(!isEnabledNoti);
+    //   },
+    // },
+    // {
+    //   title: translations.settingUser.hidden,
+    //   action: () => {},
+    //   state: isEnabledHidden,
+    //   changeState: () => {
+    //     setisEnabledHidden(!isEnabledHidden);
+    //   },
+    // },
+    // {
+    //   title: translations.settingUser.block,
+    //   action: () => {},
+    //   state: isEnabledBlock,
+    //   changeState: () => {
+    //     setisEnabledBlock(!isEnabledBlock);
+    //   },
+    // },
   ];
 
   const renderSettingUser = () => {

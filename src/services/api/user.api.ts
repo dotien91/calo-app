@@ -132,6 +132,73 @@ export async function deleteUserById(id: string) {
   return request({
     method: METHOD.DELETE,
     urlPath: `user/delete/${id}`,
+  });
+}
+
+export async function getListBlock() {
+  return request({
+    method: METHOD.GET,
+    urlPath: "user/block-list",
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function getListFollower(params: any) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "user/list/followers",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function getListFollowing(params: any) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "user/list/following",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function postFollow(data: any) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "user/follow",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function postunFollow(data: any) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "user/un-follow",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function ignoreFollower(data: any) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "user/ignore-follower",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function postUnBlockUser(data: any) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "user/un-block",
+    data,
   }).then((response) => {
     return response;
   });

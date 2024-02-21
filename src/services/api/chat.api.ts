@@ -93,3 +93,13 @@ export async function viewRoom(params: { id: string }) {
     return response;
   });
 }
+
+export async function changeNameGroup(data: any) {
+  return request({
+    method: METHOD.PATCH,
+    urlPath: "chat-room/update-room",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}

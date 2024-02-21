@@ -7,7 +7,7 @@ import * as NavigationService from "react-navigation-helpers";
  * ? Local Imports
  */
 import createStyles from "./chat.profile.style";
-import { leaveRoom } from "@services/api/chat.api";
+import { changeNameGroup, leaveRoom } from "@services/api/chat.api";
 import { translations } from "@localization";
 import Avatar from "@shared-components/user/Avatar";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
@@ -114,7 +114,6 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
   const mediaIds =
     currentMediaIds.find((item) => item.id == chat_room_id._id)?.data || [];
 
-  console.log("mediaIdsmediaIds", mediaIds);
   const mediaIdsShow = mediaIds.slice(0, numberItemsMediaShow);
   const userData = useStore((state) => state.userData);
   const setSearchModeChat = useStore((state) => state.setSearchModeChat);
@@ -331,6 +330,8 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
     );
   };
 
+  console.log("room detail", JSON.stringify(roomDetail, null, 2));
+
   const renderMembers = (item) => {
     return (
       <View style={styles.section}>
@@ -373,8 +374,68 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
       <View style={styles.section}>
         <Text style={styles.titleSection}>{item.title}</Text>
         <View>{item.data.map((_item) => renderMenu(_item))}</View>
+        {(roomDetail?.chat_room_id?.room_private === 1 &&
+          roomDetail?.user_id === userData?._id) ||
+        roomDetail?.chat_room_id?.room_private === 0
+          ? renderChangeNameGroup()
+          : null}
       </View>
     );
+  };
+
+  const renderChangeNameGroup = () => {
+    return (
+      <TouchableOpacity style={styles.menu} onPress={showModalChangeNameGroup}>
+        <IconBtn
+          name={"rotate-cw"}
+          color={colors.mainColor2}
+          customStyle={styles.menuIcon}
+          size={20}
+        />
+        <Text style={CommonStyle.hnRegular}>Đổi tên nhóm</Text>
+        <IconBtn
+          name={"chevron-right"}
+          color={colors.mainColor2}
+          customStyle={styles.iconArrow}
+          size={20}
+        />
+      </TouchableOpacity>
+    );
+  };
+
+  const changeNameGroupAction = (value: string) => {
+    console.log("dasdasdasd");
+    const data = {
+      _id: chat_room_id._id,
+      room_name: value,
+    };
+    changeNameGroup(data).then((res: any) => {
+      if (!res.isError) {
+        eventEmitter.emit("ChangeNameGroup");
+        NavigationService.pop(2);
+        showToast({
+          type: "success",
+          message: "Đổi nhóm thành công",
+        });
+      } else {
+        showToast({
+          type: "error",
+          message: "Đổi nhóm thất bại",
+        });
+      }
+    });
+  };
+
+  const showModalChangeNameGroup = () => {
+    showSuperModal({
+      contentModalType: EnumModalContentType.TextInput,
+      styleModalType: EnumStyleModalType.Middle,
+      data: {
+        title: "Nhập tên của nhóm",
+        cb: (value) => changeNameGroupAction(value),
+        initNameGroup: chat_room_id?.room_name || roomDetail?.room_title,
+      },
+    });
   };
 
   return (

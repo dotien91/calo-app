@@ -26,6 +26,8 @@ import ActionMore from "@screens/course/detail-teacher/components/ActionMore";
 import ChatRoomClass from "@screens/chat/room-chat/chat.room.class.video";
 import ListUser from "./modal-inner/ListUser";
 import PopupCreateLesson from "@screens/course/course-create/components/PartViewCreate/popup.create.lesson";
+import ConfirmViewBottom from "@shared-components/comfirm-view-bottom/comfirm.view.bottom";
+import InputViewModal from "@shared-components/input-modal/input.modal";
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
 // using normal one.
@@ -51,6 +53,8 @@ const SuperModal: React.FC<SuperModalProps> = () => {
   const [contentModalType, setContentModalType] =
     useState<EnumModalContentType>();
 
+  const [textValue, setTextValue] = useState();
+
   useEffect(() => {
     eventEmitter.on("show_super_modal", showModal);
     eventEmitter.on("close_super_modal", closeModal);
@@ -68,6 +72,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
     setStyleModalType(styleModalType);
     setContentModalType(contentModalType);
     setData(data);
+    setTextValue(data?.initNameGroup);
   };
 
   const closeModal = () => {
@@ -187,6 +192,9 @@ const SuperModal: React.FC<SuperModalProps> = () => {
           {contentModalType == EnumModalContentType.AddLesson && (
             <PopupCreateLesson {...data} />
           )}
+          {contentModalType == EnumModalContentType.Confirm && (
+            <ConfirmViewBottom {...data} closeModal={closeModal} />
+          )}
         </View>
       </StickBottomModal>
     );
@@ -208,6 +216,14 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         {contentModalType == EnumModalContentType.Loading && renderLoading()}
         {contentModalType == EnumModalContentType.Library && (
           <ImageSlideShow {...data} closeModal={closeModal} />
+        )}
+        {contentModalType == EnumModalContentType.TextInput && (
+          <InputViewModal
+            {...data}
+            closeModal={closeModal}
+            setTextValue={setTextValue}
+            textValue={textValue}
+          ></InputViewModal>
         )}
       </Modal>
     );
