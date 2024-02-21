@@ -201,7 +201,8 @@ const Lession = ({
   isLearnScreen,
   itemSelected,
 }: LessionProps) => {
-  const media_duration = data.media_id.media_meta.find(
+  console.log("datadata", data?.media_id?.media_meta)
+  const media_duration = (data?.media_id?.media_meta || []).find(
     (i) => i.key === "duration",
   )?.value;
   const fileCourseLocal = useStore((state) => state.fileCourseLocal);

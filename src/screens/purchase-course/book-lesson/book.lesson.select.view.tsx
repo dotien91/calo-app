@@ -26,7 +26,7 @@ const BookLessonSelectView: React.FC<BookLessonSelectViewProps> = () => {
   const route = useRoute();
   const courseData = route.params?.["courseData"];
   const courseId = courseData._id;
-
+console.log("getTimeAvailablegetTimeAvailable", courseId)
   const [data, setData] = useState([]);
   // const [loading, setLoading] = useState(true);
   const [duration, setDuration] = useState<number>(1);
@@ -36,8 +36,9 @@ const BookLessonSelectView: React.FC<BookLessonSelectViewProps> = () => {
   const [dateView, setDateView] = useState(1);
 
   React.useEffect(() => {
-    getTimeAvailable(courseId).then((res) => {
+    getTimeAvailable({course_id: courseId}).then((res) => {
       // setLoading(false);
+      console.log("resresres", res)
       if (!res.isError) {
         setData(res.data);
       }
