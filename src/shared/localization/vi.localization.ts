@@ -998,6 +998,23 @@ export default {
     pleaseGoToWebsiteToWithdraw:
       "Vui lòng đăng nhập vào web để có thể gửi form rút tiền",
   },
+  coupon: {
+    coupon: "Mã giảm giá",
+    couponMyCourse: "Mã giảm giá cho khoá học của tôi",
+    createCoupon: "Thêm mới mã giảm giá",
+    updateCoupon: "Cập nhật mã giảm giá",
+    saveCoupon: "Lưu mã giảm giá",
+    add: "Thêm mới",
+    update: "Cập nhật",
+    save: "Lưu",
+    title: "Tên mã giảm giá",
+    description: "Chi tiết mã giảm giá",
+    promotion: "Phần trăm giảm giá",
+    addCouponSuccess: "Thêm mới mã giảm giá thành công!",
+    addCouponFailed:
+      "Thêm mới mã giảm giá không thành công! Vui lòng thử lại sau.",
+    listCouponForMyCourse: "Danh sách mã giảm giá cho khoá học của tôi",
+  },
   gift: {
     gift: "Quà tặng",
     noGift: "Chưa có phần quà nào",
