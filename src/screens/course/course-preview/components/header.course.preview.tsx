@@ -169,9 +169,11 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
         )}
       </View>
       <View>
-        <Text
-          style={styles.txtcount}
-        >{`${data?.user_id.rating_count} ${translations.course.rate}/${data?.user_id.member_count} ${translations.course.student}`}</Text>
+        <Text style={styles.txtcount}>{`${data?.user_id?.rating_count || 0} ${
+          translations.course.rate
+        }/${data?.user_id?.member_count || 0} ${
+          translations.course.student
+        }`}</Text>
       </View>
       <Text style={styles.textCreateBy}>
         {translations.course.teacher}:{" "}
@@ -207,16 +209,17 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
         <IconSvg name="icCC" size={20} color={palette.textOpacity8} />
         <Text style={styles.txtUpdate}>{formatLanguage(data?.language)}</Text>
       </View>
-      {data?.promotion == 0 ? (
-        <View style={styles.viewPrice}>
-          <Text style={styles.textPrice}>{formatPrice(data?.price)}</Text>
-        </View>
-      ) : (
+      {data?.promotion > 0 ? (
         <View style={styles.viewPrice}>
           <Text style={styles.textPrice}>
+            {data?.promotion || 1}
             {formatPrice(data?.price - (data?.price * data?.promotion) / 100)}
           </Text>
           <Text style={styles.textPriceOld}>{formatPrice(data?.price)}</Text>
+        </View>
+      ) : (
+        <View style={styles.viewPrice}>
+          <Text style={styles.textPrice}>{formatPrice(data?.price)}</Text>
         </View>
       )}
       {data?.promotion && data.promotion > 0 ? (

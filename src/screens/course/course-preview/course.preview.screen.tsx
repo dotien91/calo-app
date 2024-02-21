@@ -47,6 +47,7 @@ const CoursePreviewScreen = () => {
   const [courseRoom, setCourseRoom] = useState();
   const route = useRoute();
   const course_id = route.params?.["course_id"];
+  const dataCourse = route.params?.["dataCourse"];
   // const course_id = "65b773efb11a3c94cc62c5e2";
   // const course_id = "65b77490b11a3c94cc62c69a"; //class room
 
@@ -60,6 +61,11 @@ const CoursePreviewScreen = () => {
       eventEmitter.off("reload_data_preview", _getCourseDetail);
     };
   });
+  React.useEffect(() => {
+    if (dataCourse) {
+      setData(dataCourse);
+    }
+  }, [dataCourse]);
   // console.log(isLoading);
   const params = { auth_id: userData?._id };
   const _getCourseDetail = () => {

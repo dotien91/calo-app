@@ -238,7 +238,7 @@ const ListSearch = React.memo(({ type }: { type: string }) => {
     if (type == EnumSearchType.tutor)
       return <TutorItem {...item} key={index} />;
     if (type == EnumSearchType.user) return <UserItem {...item} key={index} />;
-    return <CourseItem {...item} key={index} />;
+    return <CourseItem data={item} key={index} />;
   };
 
   const renderHeader = () => {
