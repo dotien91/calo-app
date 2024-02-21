@@ -194,7 +194,11 @@ const CourseAddModuleScreen = () => {
             borderRadius: 8,
           }}
         />
-        {parent_id && <Text>{translations.course.chooseFile}</Text>}
+        {parent_id && (
+          <Text style={{ ...CS.hnRegular, marginTop: 8, marginBottom: 8 }}>
+            {translations.course.chooseFile}
+          </Text>
+        )}
         {parent_id &&
           (type === "file" ? renderSelectFile() : renderSelectVideo())}
         <Button

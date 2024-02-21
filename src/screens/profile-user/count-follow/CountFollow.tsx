@@ -7,6 +7,7 @@ import { getCountFollow } from "@services/api/user.api";
 import { translations } from "@localization";
 import SkeletonPlaceholder from "@shared-components/skeleton";
 import { WINDOW_WIDTH } from "@gorhom/bottom-sheet";
+import { isNumber } from "lodash";
 
 interface CountFollowProps {
   id: string;
@@ -22,8 +23,10 @@ const CountFollow = ({ id, postCount }: CountFollowProps) => {
   const _getUserInfo = (id: string) => {
     getCountFollow({ user_id: id }).then((res) => {
       setCountFollow(res.data);
+      console.log("res.data...", res.data);
     });
   };
+  console.log("id", id, "postCount", postCount);
 
   useEffect(() => {
     if (id) {
@@ -38,15 +41,15 @@ const CountFollow = ({ id, postCount }: CountFollowProps) => {
     title: string | number;
     des: string;
   }) => {
-    if (!countFollow?.following) {
-      return (
-        <View style={styles.container}>
-          <SkeletonPlaceholder>
-            <View style={{ width: WINDOW_WIDTH / 4, height: 60 }} />
-          </SkeletonPlaceholder>
-        </View>
-      );
-    }
+    // if (!countFollow?.following) {
+    //   return (
+    //     <View style={styles.container}>
+    //       <SkeletonPlaceholder>
+    //         <View style={{ width: WINDOW_WIDTH / 4, height: 60 }} />
+    //       </SkeletonPlaceholder>
+    //     </View>
+    //   );
+    // }
     return (
       <View
         style={{
@@ -77,11 +80,17 @@ const CountFollow = ({ id, postCount }: CountFollowProps) => {
     );
   };
 
-  if (!countFollow?.following || !postCount) {
+  if (!isNumber(countFollow?.following) || !postCount) {
     return (
       <View style={styles.container}>
         <SkeletonPlaceholder>
-          <View style={{ width: (WINDOW_WIDTH * 3) / 4, height: 60 }} />
+          <View
+            style={{
+              width: (WINDOW_WIDTH * 3) / 4,
+              height: 60,
+              borderRadius: 8,
+            }}
+          />
         </SkeletonPlaceholder>
       </View>
     );

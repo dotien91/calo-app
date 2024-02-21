@@ -463,6 +463,7 @@ export default {
     notificationPublicCourse: "Bạn chắc chắn muốn công khai khoá học này?",
     publicCourseSuccess: "Công khai khoá học thành công",
     noModuleInCourse: "Chưa có bài học nào",
+    selectVideoModule: "Chọn bài học để bắt đầu",
     teacher: "Giáo viên",
     typeLearning: "Kiểu học tập",
     formLearning: "Hình thức học",

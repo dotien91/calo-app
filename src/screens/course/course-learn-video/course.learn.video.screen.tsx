@@ -11,6 +11,7 @@ import { useRoute, useNavigation, useTheme } from "@react-navigation/native";
 import { useSharedValue, withTiming } from "react-native-reanimated";
 import Orientation from "react-native-orientation-locker";
 import { getStatusBarHeight } from "react-native-safearea-height";
+import * as FileViewer from "react-native-file-viewer";
 
 import VideoPreview from "./components/video.preview";
 import ImageLoad from "@shared-components/image-load/ImageLoad";
@@ -25,6 +26,9 @@ import createStyles from "./course.learn.style";
 import CourseLearnAction from "./components/course.learn.action";
 import { palette } from "@theme/themes";
 import Header from "@shared-components/header/Header";
+import useStore from "@services/zustand/store";
+import eventEmitter from "@services/event-emitter";
+import { getBottomSpace } from "react-native-iphone-screen-helper";
 
 const CourseLearnScreen = () => {
   const route: any = useRoute();
@@ -35,9 +39,11 @@ const CourseLearnScreen = () => {
   const [isLanscape, setIsLanscape] = useState(false);
   const styles = useMemo(() => createStyles(theme), [theme]);
   const [tabSelected, setTabSelected] = useState(1);
-  const detailCourse = route?.params?.courseData;
-  const course_id = route?.params?.courseId;
+  const detailCourse = route?.params?.detailCourse;
+  const course_id = route?.params?.course_id;
+  const isTeacher = route?.params?.isTeacher || false;
   const videoRef = useRef<any>();
+  const { colors } = theme;
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -64,7 +70,11 @@ const CourseLearnScreen = () => {
       return;
     }
     // gọi API đánh đấu đã xong video
-    updateViewed({ module_id: item._id });
+    updateViewed({ module_id: item._id }).then((res) => {
+      if (!res.isError) {
+        eventEmitter.emit("reload_data_preview");
+      }
+    });
   };
   const TabSelect = () => {
     return (
@@ -122,8 +132,8 @@ const CourseLearnScreen = () => {
             alignItems: "center",
           }}
         >
-          <Text style={CS.hnSemiBold}>
-            {translations.course.noModuleInCourse}
+          <Text style={{ ...CS.hnSemiBold, color: colors.primary }}>
+            {translations.course.selectVideoModule}
           </Text>
         </View>
       );
@@ -193,7 +203,9 @@ const CourseLearnScreen = () => {
           alignItems: "center",
         }}
       >
-        <Text style={CS.hnSemiBold}>{source?.media_id?.media_file_name}</Text>
+        <Text style={{ ...CS.hnSemiBold, color: colors.primary }}>
+          {source?.media_id?.media_file_name}
+        </Text>
         <PressableBtn
           style={{
             marginTop: VS._10,
@@ -205,20 +217,42 @@ const CourseLearnScreen = () => {
             Linking.openURL(source.media_id?.media_url).catch(console.log);
           }}
         >
-          <Text style={CS.hnSemiBold}>{translations.course.openWebsite}</Text>
+          <Text style={{ ...CS.hnSemiBold, color: colors.primary }}>
+            {translations.course.openWebsite}
+          </Text>
         </PressableBtn>
       </View>
     );
   }, [source?.media_id?._id]);
 
+  const fileCourseLocal = useStore((state) => state.fileCourseLocal);
+
+  const onPressItem = (item: any) => {
+    if (item.type === "video") {
+      setSource(item);
+    } else {
+      const isDownload = (fileCourseLocal || []).filter(
+        (data) => item._id === data.id,
+      );
+      if (isTeacher) {
+        setSource(item);
+      }
+      if (isDownload.length > 0) {
+        FileViewer.open(isDownload[0].localFile);
+      }
+    }
+  };
   return (
     <View
       style={[
         styles.container,
-        !isLanscape && { marginTop: getStatusBarHeight() },
+        !isLanscape && {
+          marginTop: getStatusBarHeight(),
+          marginBottom: getBottomSpace(),
+        },
       ]}
     >
-      <Header text={detailCourse?.title} />
+      {!isLanscape && <Header text={detailCourse?.title} />}
       <View
         style={[
           styles.styleVideo,
@@ -238,13 +272,9 @@ const CourseLearnScreen = () => {
         <PartView
           hide={tabSelected == 2}
           id={course_id}
-          onPressItem={(item: any) => {
-            console.log("item...", JSON.stringify(item));
-            setSource(item);
-          }}
+          onPressItem={onPressItem}
           itemSelected={source}
           isLearnScreen
-          isJoin
         />
         {tabSelected == 2 && (
           <CourseLearnAction item={source} course_id={course_id} />
