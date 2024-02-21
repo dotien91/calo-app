@@ -61,9 +61,14 @@ const CheckoutScreen = () => {
   React.useEffect(() => {
     console.log("tradeId || appStateStatus", tradeId, appStateStatus);
     if (!tradeId || appStateStatus != "active") return;
+    showSuperModal({
+      contentModalType: EnumModalContentType.Loading,
+      styleModalType: EnumStyleModalType.Middle,
+    })
     //check payment success 4 times
     const intervalCheckPaymentSuccess = setInterval(() => {
       if (countCheckPaymentSuccess.current == 4) {
+        closeSuperModal()
         clearInterval(intervalCheckPaymentSuccess);
         return;
       }
@@ -74,6 +79,7 @@ const CheckoutScreen = () => {
           if (res.data.status == "success") {
             //alert success
             callbackPaymentSuccess();
+            closeSuperModal()
             clearInterval(intervalCheckPaymentSuccess);
           }
         } else {
@@ -83,6 +89,7 @@ const CheckoutScreen = () => {
     }, 2000);
     return () => {
       if (intervalCheckPaymentSuccess)
+        closeSuperModal()
         clearInterval(intervalCheckPaymentSuccess);
     };
   }, [tradeId, appStateStatus]);
