@@ -21,8 +21,8 @@ const ClassRoomBottomView = ({
   toggleVideo,
   config,
   courseData,
+  chatRoomId,
 }) => {
-  const chatRoomId = "65a60bc04d12aaf61259976b";
   const theme = useTheme();
   const { colors } = theme;
   const { mute, video } = config;
@@ -30,7 +30,6 @@ const ClassRoomBottomView = ({
   const [listMember, setListMember] = useState([]);
 
   const _getListMemberCourse = () => {
-    console.log("courseDatacourseData", courseData);
     getListMemberCourse({
       auth_id: courseData.user_id._id,
       course_id: courseData._id,
@@ -38,7 +37,6 @@ const ClassRoomBottomView = ({
       if (!res.isError) {
         setListMember(res.data.map((item) => item.user_id));
       }
-      console.log("getListMemberCourse", res);
     });
   };
 

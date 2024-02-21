@@ -35,6 +35,7 @@ import CS from "@theme/styles";
 import useAppStateCheck from "@helpers/hooks/useAppStateCheck";
 import useStore from "@services/zustand/store";
 import { SCREENS } from "constants";
+import ImageLoad from "@shared-components/image-load/ImageLoad";
 
 const CheckoutScreen = () => {
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(
@@ -125,9 +126,10 @@ const CheckoutScreen = () => {
   const renderViewCoures = () => {
     return (
       <View style={[styles.styleViewCoures, styles.styleShawdow]}>
-        <Image
+        <ImageLoad
+          isAvatar={false}
           source={{
-            uri: courseData?.media_id.media_thumbnail,
+            uri: courseData?.media_id?.media_thumbnail,
           }}
           style={{
             width: 80,
@@ -364,17 +366,16 @@ const CheckoutScreen = () => {
     }
 
     const data = {
-      plan_id: courseData.plan_id,
       payment_method: isVnPayMethod ? "vn_pay" : "smart_banking",
-      amount_of_package: "1",
-      payload: isVideoCourse
-        ? {}
-        : {
-            type: isClassCourse ? "class" : "oneone",
-            data: dataPayload,
-          },
+      plan_objects: [
+        {
+          amount_of_package: "1",
+          plan_id: courseData.plan_id,
+          type: "course",
+          payload: dataPayload,
+        },
+      ],
     };
-
     createVnpayUrl(data).then(async (res) => {
       console.log("createVnpayUrl res", { timePick, res, data });
       closeSuperModal();

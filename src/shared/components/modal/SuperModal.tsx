@@ -23,7 +23,7 @@ import IconBtn from "@shared-components/button/IconBtn";
 import SelectBox from "@shared-components/modal/modal-inner/SelectBox";
 import LottieComponent from "@shared-components/lottie/LottieComponent";
 import ActionMore from "@screens/course/detail-teacher/components/ActionMore";
-import ChatRoomScreen from "@screens/chat/room-chat/chat.room.class.video";
+import ChatRoomClass from "@screens/chat/room-chat/chat.room.class.video";
 import ListUser from "./modal-inner/ListUser";
 import PopupCreateLesson from "@screens/course/course-create/components/PartViewCreate/popup.create.lesson";
 // Super modal help you create a modal with a title, a content and a button
@@ -179,7 +179,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
             <ActionMore data={data} />
           )}
           {contentModalType == EnumModalContentType.ChatRoom && (
-            <ChatRoomScreen {...data} />
+            <ChatRoomClass {...data} />
           )}
           {contentModalType == EnumModalContentType.ListUser && (
             <ListUser {...data} />

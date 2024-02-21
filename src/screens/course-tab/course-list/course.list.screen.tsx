@@ -17,7 +17,6 @@ import { getCourseList, getListTutor } from "@services/api/course.api";
 import useStore from "@services/zustand/store";
 import TutorItem from "../components/tutor.item";
 import { getStatusBarHeight } from "react-native-safearea-height";
-import LoadingList from "@shared-components/loading.list.component";
 import CourseToolbar from "../components/course.toolbar";
 import CourseCategoryItem from "./course.category.item";
 import CourseQuickFilter from "../components/course.quick.filter";
@@ -25,6 +24,7 @@ import { useUserHook } from "@helpers/hooks/useUserHook";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { useTheme } from "@react-navigation/native";
 import { SCREENS } from "constants";
+import LoadingItem from "@shared-components/loading.item";
 
 interface CourseListScreenProps {}
 
@@ -123,7 +123,7 @@ const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
         keyExtractor={(item) => item?._id + ""}
         ListFooterComponent={renderFooterComponent()}
       />
-      {isLoading && <LoadingList numberItem={10} />}
+      {isLoading && <LoadingItem numberItem={3} />}
     </>
   );
 });

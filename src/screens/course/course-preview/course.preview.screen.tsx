@@ -85,6 +85,7 @@ const CoursePreviewScreen = () => {
         const roomId = (data?.redirect_url || "").match(/[^\/]+$/)?.[0];
         setCourseRoom({
           roomId,
+          chatRoomId: data?.chat_room_id,
         });
       }
     });
