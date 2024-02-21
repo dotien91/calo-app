@@ -26,15 +26,15 @@ const TextInputPrice = ({ priceInput, setPriceInput }) => {
         marginHorizontal: 20,
         borderColor: colors.borderColor,
         borderRadius: 8,
+        padding: 12,
       }}
     >
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <CurrencyInput
           style={{
-            marginLeft: 16,
             ...CS.hnMedium,
             fontSize: 14,
-            minWidth: 200,
+            flex: 1.
           }}
           placeholder="Nhập tiền..."
           delimiter="."
