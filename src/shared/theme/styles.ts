@@ -67,6 +67,12 @@ const CS = StyleSheet.create({
     right: 0,
     zIndex: 1,
   },
+  txtLink: {
+    fontFamily: font.outfit.regular,
+    fontSize: 16,
+    color: palette.link,
+    textDecorationLine: "underline",
+  },
   hnRegular: {
     fontFamily: font.outfit.regular,
     color: palette.text,

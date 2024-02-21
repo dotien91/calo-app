@@ -114,7 +114,7 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
   const mediaIds =
     currentMediaIds.find((item) => item.id == chat_room_id._id)?.data || [];
 
-  const mediaIdsShow = mediaIds.slice(0, numberItemsMediaShow);
+  const mediaIdsShow = mediaIds.reverse().slice(mediaIds, numberItemsMediaShow);
   const userData = useStore((state) => state.userData);
   const setSearchModeChat = useStore((state) => state.setSearchModeChat);
 

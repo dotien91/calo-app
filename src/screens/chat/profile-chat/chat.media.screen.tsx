@@ -8,12 +8,10 @@ import { TabView, SceneMap, TabBar } from "react-native-tab-view";
  */
 import createStyles from "./chat.profile.style";
 
-import { EnumMediaChat } from "models/chat.model";
 import { ScrollView } from "react-native-gesture-handler";
 import CommonStyle from "@theme/styles";
 import useStore from "@services/zustand/store";
 import GoBackButton from "@screens/auth/components/GoBackButton";
-import MessageAudio from "../room-chat/components/audio/MessageAudio";
 import MessageMediaView from "../room-chat/components/message/message.media.view";
 
 interface MediaChatScreenProps {}
@@ -30,11 +28,20 @@ const MediaChatScreen: React.FC<MediaChatScreenProps> = () => {
     currentMediaIds.find((item) => item.id == roomDetail.chat_room_id._id)
       ?.data || [];
 
+  console.log(
+    "mediaIdsmediaIds",
+    mediaIds.map((item) => item.media_mime_type),
+  );
+
   const files = mediaIds.filter(
-    (item) => item.media_mime_type == EnumMediaChat.Audio,
+    (item) =>
+      !item.media_mime_type.includes("image") &&
+      !item.media_mime_type.includes("video"),
   );
   const medias = mediaIds.filter(
-    (item) => item.media_mime_type == EnumMediaChat.Image,
+    (item) =>
+      item.media_mime_type.includes("image") ||
+      item.media_mime_type.includes("video"),
   );
 
   const layout = useWindowDimensions();
@@ -48,27 +55,15 @@ const MediaChatScreen: React.FC<MediaChatScreenProps> = () => {
   const renderMedia = () => {
     return (
       <ScrollView contentContainerStyle={{ padding: 12 }}>
-        <MessageMediaView data={medias} />
+        <MessageMediaView data={medias} fromMediaScreen={true} />
       </ScrollView>
-    );
-  };
-
-  const renderFile = (item) => {
-    return (
-      <View style={CommonStyle.flex1}>
-        <MessageAudio
-          isMyMessage={true}
-          itemAudio={item}
-          // onLongPress={onLongPressMediaMessage}
-        />
-      </View>
     );
   };
 
   const renderFiles = () => {
     return (
       <ScrollView contentContainerStyle={{ padding: 12, maxWidth: 250 }}>
-        {files.map((item) => renderFile(item))}
+        <MessageMediaView data={files} fromMediaScreen={true} />
       </ScrollView>
     );
   };

@@ -1,11 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import {
-  ActivityIndicator,
-  Image,
-  Pressable,
-  StyleSheet,
-  View,
-} from "react-native";
+import { ActivityIndicator, Image, StyleSheet, View } from "react-native";
 import Sound from "react-native-sound";
 
 import { HS, MHS } from "@utils/size.utils";
@@ -23,14 +17,16 @@ import Animated, {
 } from "react-native-reanimated";
 import { palette } from "@theme/themes";
 import CommonStyle from "@theme/styles";
+import PressableBtn from "@shared-components/button/PressableBtn";
 
 interface TypedMessageAudioProps {
   itemAudio: TypedDataMediaChatHistory;
   // isMyMessage: boolean;
   onLongPress?: () => void;
+  disabled?: boolean;
 }
 
-const MessageAudio = ({ itemAudio }: TypedMessageAudioProps) => {
+const MessageAudio = ({ itemAudio, disabled }: TypedMessageAudioProps) => {
   const { media_status } = itemAudio;
   const media_url = itemAudio.media_url || itemAudio.uri;
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -98,7 +94,11 @@ const MessageAudio = ({ itemAudio }: TypedMessageAudioProps) => {
   });
 
   return (
-    <Pressable style={styles.container} onPress={onPlaySound}>
+    <PressableBtn
+      disabled={disabled}
+      style={[styles.container, { opacity: disabled ? 0.5 : 1 }]}
+      onPress={onPlaySound}
+    >
       <View
         style={[
           styles.btnPlayPause,
@@ -158,13 +158,13 @@ const MessageAudio = ({ itemAudio }: TypedMessageAudioProps) => {
           />
         </Animated.View>
       </View>
-    </Pressable>
+    </PressableBtn>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     flexDirection: "row",
     borderRadius: 10,
     alignItems: "center",

@@ -264,7 +264,7 @@ const PostDetail = (props: PostDetailProps) => {
   };
 
   const [isForcus, setIsForcus] = useState(false);
-
+  console.log("datadata", data);
   const showImageVideo = (index: number) => {
     const listMedia = data?.attach_files.filter(
       (i: any) =>

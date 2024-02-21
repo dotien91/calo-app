@@ -9,7 +9,7 @@ const LoadingList = ({
 }: // hideAvatar = false,
 {
   numberItem?: number;
-  hideAvatar: boolean;
+  hideAvatar?: boolean;
 }) => {
   const array = Array.from(Array(numberItem - 1).keys());
 
