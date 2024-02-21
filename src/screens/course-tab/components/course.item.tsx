@@ -30,7 +30,8 @@ const CourseItem = ({
   style,
   data,
 }: CourseItemProps) => {
-  const { _id, title, price, rating, user_id, media_id, avatar } = data;
+  const { _id, title, price, rating, user_id, media_id, avatar, is_join } =
+    data;
   let widthImage = Device.width - 32;
   if (isHorizontalStyle) {
     widthImage = widthImage / 1.5;
@@ -53,6 +54,14 @@ const CourseItem = ({
   // const avatarUrl = () => {};
 
   const renderInfo = () => {
+    if (is_join)
+      return (
+        <>
+          <Text style={styles.courseTitle}>{title}</Text>
+          <Text style={styles.courseAuthorTxt}>{user_id?.display_name}</Text>
+        </>
+      );
+
     return (
       <>
         <Text style={styles.courseTitle}>{title}</Text>

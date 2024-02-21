@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   FlatList,
   View,
   useWindowDimensions,
   TouchableOpacity,
-  Text,
-  Image,
 } from "react-native";
 import { TabView, SceneMap } from "react-native-tab-view";
 import * as NavigationService from "react-navigation-helpers";
@@ -27,7 +25,7 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { useTheme } from "@react-navigation/native";
 import { SCREENS } from "constants";
 import LoadingItem from "@shared-components/loading.item";
-import CourseItemProgessbar from "../components/course.item.progessbar";
+// import CourseItemProgessbar from "../components/course.item.progessbar";
 
 interface CourseListScreenProps {}
 
@@ -94,10 +92,10 @@ const CourseListScreen: React.FC<CourseListScreenProps> = () => {
 };
 
 const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
-  const theme = useTheme();
-  const { colors } = theme;
+  // const theme = useTheme();
+  // const { colors } = theme;
   const userData = useStore((state) => state.userData);
-  const [listMyCourse, setlistMyCourse] = useState([]);
+  // const [listMyCourse, setlistMyCourse] = useState([]);
   const { isLoading, listData, onEndReach, renderFooterComponent } =
     useListData<ICourseItem>(
       { limit: "4", sort_by: "createdAt", order_by: "DESC" },
@@ -116,7 +114,7 @@ const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
     console.log("OKE ass");
     getCourseList(data).then((res: any) => {
       console.log("OKE", JSON.stringify(res, null, 2));
-      setlistMyCourse(res.data);
+      // setlistMyCourse(res.data);
     });
   };
 
@@ -130,7 +128,7 @@ const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
     return (
       <View style={{ flex: 1 }}>
         {isTabCourse && <CourseCategoryItem />}
-        <View style={{ flex: 1, marginLeft: 16 }}>
+        {/* <View style={{ flex: 1, marginLeft: 16 }}>
           <View
             style={{
               flexDirection: "row",
@@ -173,28 +171,28 @@ const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
             style={{ flex: 1 }}
             showsHorizontalScrollIndicator={false}
           />
-        </View>
+        </View> */}
         <CourseQuickFilter isTabCourse={isTabCourse} />
       </View>
     );
   };
 
-  const renderItemMyCourse = ({
-    item,
-    index,
-  }: {
-    item: any;
-    index: number;
-  }) => {
-    console.log("item, index", item, index);
-    return (
-      <CourseItemProgessbar
-        isSliderItem
-        {...item}
-        key={index}
-      ></CourseItemProgessbar>
-    );
-  };
+  // const renderItemMyCourse = ({
+  //   item,
+  //   index,
+  // }: {
+  //   item: any;
+  //   index: number;
+  // }) => {
+  //   console.log("item, index", item, index);
+  //   return (
+  //     <CourseItemProgessbar
+  //       isSliderItem
+  //       {...item}
+  //       key={index}
+  //     ></CourseItemProgessbar>
+  //   );
+  // };
 
   return (
     <View style={{ flex: 1 }}>

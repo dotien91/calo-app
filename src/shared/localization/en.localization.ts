@@ -469,6 +469,8 @@ export default {
     publicCourse: "Public course",
     noreview: "Zero review",
     selectModal: "Select",
+    myCourse: "My course",
+    recommendCourse: "Recommend course",
   },
   seeAll: "See all",
   settings: {

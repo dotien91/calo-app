@@ -559,6 +559,8 @@ export default {
     requiredTitle: "Tiêu đề không được để trống",
     noreview: "Chưa có đánh giá",
     selectModal: "Lựa chọn",
+    myCourse: "Khoá học của tôi",
+    recommendCourse: "Khoá học gợi ý",
   },
   seeAll: "Xem tất cả",
   settings: {
