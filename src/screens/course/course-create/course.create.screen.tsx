@@ -43,7 +43,7 @@ import SelectVideoHook from "./components/select.video";
 import eventEmitter from "@services/event-emitter";
 import { SCREENS } from "constants";
 // import SelectImageHook from "./components/select.image";
-
+import TextInputPrice from "../components/text.input.price/text.input.price";
 interface ILevel {
   value: string;
   index: string | number;
@@ -81,6 +81,7 @@ const CourseCreate = () => {
   const [typeCourse, setTypeCourse] = React.useState(listTypeCourse[0].value);
   const [level, setLevel] = useState<string>(listLevel[0].value);
   const [skill, setSkill] = useState<string[]>([]);
+  const [priceInput, setPriceInput] = useState("");
   const { idVideo, renderSelectVideo, updatingVid, typeMedia } =
     SelectVideoHook({
       id: data?.media_id?._id || data?.avatar?._id,
@@ -391,26 +392,22 @@ const CourseCreate = () => {
           maxLength={500}
           showPlaceholder
         />
-        <InputHook
-          name="price"
-          customStyle={CS.flex1}
-          inputProps={{
-            type: "number",
-            defaultValue: "",
-            placeholder: translations.course.priceCourse,
-            keyboardType: "numeric",
+        <Text
+          style={{
+            ...CS.hnMedium,
+            color: colors.text,
+            marginLeft: 20,
+            marginVertical: 8,
           }}
-          control={control}
-          rules={{
-            required: {
-              value: true,
-              message: translations.required,
-            },
-          }}
-          errorTxt={errors.price?.message}
-          maxLength={500}
-          showPlaceholder
-        />
+        >
+          Số tiền
+        </Text>
+
+        <TextInputPrice
+          setPriceInput={setPriceInput}
+          priceInput={priceInput}
+        ></TextInputPrice>
+
         <Text style={styles.textTitle}>
           {translations.course.timeAvailable}
         </Text>
