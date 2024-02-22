@@ -69,6 +69,8 @@ import CreateClassCallOneScreen from "@screens/course/course-create/course.creat
 import CourseListVideoScreen from "@screens/course/course-create/course.list.video.screen";
 import CourseAddModuleScreen from "@screens/course/course-create/course.add.module.screen";
 import CallClassScreen from "@screens/call-class/call.class.screen";
+import ListCouponForMyCourse from "@screens/coupon/coupon.list";
+import CouponCreateScreen from "@screens/coupon/coupon.create";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -232,6 +234,14 @@ const Navigation = () => {
         <Stack.Screen
           name={SCREENS.COURSE_LIST_RATE}
           component={ReviewScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.COUPON_LIST}
+          component={ListCouponForMyCourse}
+        />
+        <Stack.Screen
+          name={SCREENS.COUPON_CREATE}
+          component={CouponCreateScreen}
         />
 
         <Stack.Screen

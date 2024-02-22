@@ -44,6 +44,8 @@ import icBook from "./book.svg";
 import icBookFull from "./book-full.svg";
 import icCourse from "./course.svg";
 import icDiscovery from "./discovery.svg";
+import icDiscountValue from "./ic-discount-value.svg";
+import icDiscountPercent from "./ic-discount-percent.svg";
 import icGraduate from "./graduate.svg";
 import icProfile from "./profile.svg";
 import icReview from "./review.svg";
@@ -114,6 +116,8 @@ const Icons = {
   icBookFull,
   icCourse,
   icDiscovery,
+  icDiscountValue,
+  icDiscountPercent,
   icGraduate,
   icProfile,
   icReview,

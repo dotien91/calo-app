@@ -1014,6 +1014,14 @@ export default {
     addCouponFailed:
       "Thêm mới mã giảm giá không thành công! Vui lòng thử lại sau.",
     listCouponForMyCourse: "Danh sách mã giảm giá cho khoá học của tôi",
+    percentage: "Theo %",
+    value: "Mức giảm",
+    warningCoupon: "Giá trị giảm không hợp lệ",
+    period: "Khoảng thời gian",
+    type: "Loại giảm giá",
+    deleteCouponSuccess: "Xoá mã giảm giá thành công!",
+    deleteCouponFaild: "Xoá mã giảm giá thất bại! Vui lòng thử lại",
+    warningDeleteCoupon: "Bạn có thật sự muốn xoá mã giảm giá này không?",
   },
   gift: {
     gift: "Quà tặng",

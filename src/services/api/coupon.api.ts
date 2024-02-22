@@ -79,3 +79,12 @@ export async function UpdateCoupon(data: CouponType) {
     return response;
   });
 }
+
+export async function DeleteCoupon(id: string) {
+  return request({
+    method: METHOD.DELETE,
+    urlPath: `coupon/delete/${id}`,
+  }).then((response) => {
+    return response;
+  });
+}

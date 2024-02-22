@@ -1,6 +1,6 @@
 // Input.js
 
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import {
   View,
   Text,
@@ -38,6 +38,7 @@ interface InputHookProps {
   maxLength?: number;
   showPlaceholder?: boolean;
   setFocus?: any;
+  countLength?: boolean;
 }
 
 // eslint-disable-next-line react/display-name
@@ -57,6 +58,7 @@ const InputHook: React.FC<InputHookProps> = ({
   maxLength = 500,
   showPlaceholder,
   setFocus,
+  countLength,
 }) => {
   const refInput = useRef<TextInput>(null);
   const _forcusInput = () => {
@@ -66,6 +68,7 @@ const InputHook: React.FC<InputHookProps> = ({
       refInput.current?.focus();
     }
   };
+  const [length, setLength] = useState("");
   return (
     <View
       style={[
@@ -74,7 +77,18 @@ const InputHook: React.FC<InputHookProps> = ({
       ]}
     >
       {showPlaceholder && (
-        <Text style={styles.textTitle}>{inputProps.placeholder}</Text>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            paddingHorizontal: 20,
+          }}
+        >
+          <Text style={styles.textTitle}>{inputProps.placeholder}</Text>
+          {countLength && (
+            <Text style={styles.textCount}>{`${length}/${maxLength}`}</Text>
+          )}
+        </View>
       )}
       <Pressable
         onPress={_forcusInput}
@@ -97,23 +111,28 @@ const InputHook: React.FC<InputHookProps> = ({
         <Controller
           control={control}
           rules={rules}
-          render={({ field: { ref, onChange, value } }) => (
-            <TextInput
-              {...inputProps}
-              ref={ref || refInput}
-              multiline={multiline}
-              onChangeText={(value) => onChange(value)}
-              value={value}
-              style={[
-                styles.input,
-                !!customStyle && customStyle,
-                multiline && { flex: 1, textAlignVertical: "top" },
-              ]}
-              secureTextEntry={isPassword}
-              placeholderTextColor={palette.placeholder}
-              maxLength={maxLength}
-            />
-          )}
+          render={({ field: { ref, onChange, value } }) => {
+            setLength(value.length);
+            return (
+              <TextInput
+                {...inputProps}
+                ref={ref || refInput}
+                multiline={multiline}
+                onChangeText={(value) => {
+                  onChange(value);
+                }}
+                value={value}
+                style={[
+                  styles.input,
+                  !!customStyle && customStyle,
+                  multiline && { flex: 1, textAlignVertical: "top" },
+                ]}
+                secureTextEntry={isPassword}
+                placeholderTextColor={palette.placeholder}
+                maxLength={maxLength}
+              />
+            );
+          }}
           name={name}
         />
         {!!iconRight && iconRight}
@@ -152,11 +171,13 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: palette.danger,
-    paddingHorizontal: 40,
+    paddingHorizontal: 20,
     marginTop: 4,
   },
   textTitle: {
     ...CommonStyle.hnMedium,
-    marginHorizontal: 20,
+  },
+  textCount: {
+    ...CommonStyle.hnRegular,
   },
 });

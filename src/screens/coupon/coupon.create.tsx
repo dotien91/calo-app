@@ -1,7 +1,7 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import { Text, View, StyleSheet, ScrollView } from "react-native";
-import { useTheme } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { View, StyleSheet, ScrollView, Text, Pressable } from "react-native";
+import { useTheme, useRoute } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
 
@@ -13,78 +13,136 @@ import {
   showToast,
 } from "@helpers/super.modal.helper";
 import { translations } from "@localization";
-import { CreateNewCoupon } from "@services/api/coupon.api";
+import { CreateNewCoupon, UpdateCoupon } from "@services/api/coupon.api";
 import eventEmitter from "@services/event-emitter";
 import Button from "@shared-components/button/Button";
 import InputHook from "@shared-components/form/InputHookForm";
 import Header from "@shared-components/header/Header";
 import CS from "@theme/styles";
+import { palette } from "@theme/themes";
+import DateTimePickerLocal from "./components/DateTimePickerLocal";
 
-interface CouponCreateScreenProps {
-  data?: any;
-}
+const listTypeCoupon = [
+  {
+    id: 1,
+    type: "percentage",
+    value: translations.coupon.percentage,
+  },
+  {
+    id: 2,
+    type: "value",
+    value: translations.coupon.value,
+  },
+];
 
-const CouponCreateScreen = ({ data }: CouponCreateScreenProps) => {
+const CouponCreateScreen = () => {
   const theme = useTheme();
   const { colors } = theme;
+  const route = useRoute();
+  const data = route.params?.["data"];
+  const [typeCoupon, setTypeCoupon] = useState(listTypeCoupon[0]);
+  // const [startDate, setStartDate] = React.useState<Date>();
+  // const [endDate, setEndDate] = React.useState<Date>();
+  useEffect(() => {
+    if (data) {
+      console.log("param data..", data);
+      setValue("title", data.title);
+      setValue("description", data.description);
+      setValue("promotion", data.promotion.toString());
+      setValue("promotion_type", data.promotion_type);
+      setTypeCoupon(listTypeCoupon.find((i) => i.type === data.promotion_type));
+      setValue("start_date", data.availableAt);
+      setValue("end_date", data.expired);
+    }
+  }, [data]);
   const {
     control,
     handleSubmit,
     formState: { errors },
     setFocus,
+    setValue,
   } = useForm({
     defaultValues: {
       title: "",
       description: "",
       promotion: "",
       payment_method: "all",
-      promotion_type: "percentage",
+      promotion_type: "",
       type: "product",
       visible: "product",
+      start_date: "",
+      end_date: "",
     },
   });
 
-  const onSubmit = (data) => {
-    const params = {
-      title: data.title,
-      description: data.description,
-      promotion: Number(data.promotion),
-      payment_method: data.payment_method,
-      promotion_type: data.promotion_type,
-      type: data.type,
-      visible: data.visible,
-    };
-    console.log(params);
-    // call api create coupon
-    CreateNewCoupon(params).then((res) => {
-      console.log(res);
-      if (!res.isError) {
-        showToast({
-          type: "success",
-          message: translations.coupon.addCouponSuccess,
-        });
-        console.log("id coupon...", res);
-        eventEmitter.emit("refresh_list_coupon");
-        NavigationService.goBack();
-        closeSuperModal();
-      } else {
-        showToast({
-          type: "error",
-          message: translations.coupon.addCouponFailed,
-        });
-        closeSuperModal();
-      }
-    });
-
-    showSuperModal({
-      contentModalType: EnumModalContentType.Loading,
-      styleModalType: EnumStyleModalType.Middle,
-    });
+  const navigateWithResponse = (res) => {
+    console.log(res);
+    if (!res.isError) {
+      showToast({
+        type: "success",
+        message: translations.coupon.addCouponSuccess,
+      });
+      eventEmitter.emit("refresh_list_coupon");
+      NavigationService.goBack();
+      closeSuperModal();
+    } else {
+      showToast({
+        type: "error",
+        message: res.message,
+      });
+      closeSuperModal();
+    }
   };
 
+  const onSubmit = (dataInput) => {
+    const params = {
+      title: dataInput.title,
+      description: dataInput.description,
+      promotion: Number(dataInput.promotion),
+      payment_method: dataInput.payment_method,
+      promotion_type: typeCoupon.type,
+      type: dataInput.type,
+      visible: dataInput.visible,
+      availableAt: dataInput.start_date,
+      expired: dataInput.end_date,
+    };
+    // if (startDate) {
+    //   params.availableAt = startDate;
+    // }
+    // if (endDate) {
+    //   params.expired = endDate;
+    // }
+    console.log(params);
+    // call api create coupon
+    if (data?._id) {
+      showSuperModal({
+        contentModalType: EnumModalContentType.Loading,
+        styleModalType: EnumStyleModalType.Middle,
+      });
+      console.log("update");
+
+      params._id = data._id;
+      console.log(params);
+      UpdateCoupon(params).then(navigateWithResponse);
+    } else {
+      showSuperModal({
+        contentModalType: EnumModalContentType.Loading,
+        styleModalType: EnumStyleModalType.Middle,
+      });
+      CreateNewCoupon(params).then(navigateWithResponse);
+    }
+  };
   return (
     <View style={styles.container}>
-      <Header text={translations.coupon.createCoupon} />
+      <Header
+        text={
+          data?._id
+            ? `${
+                translations.coupon.update
+              } ${translations.coupon.coupon.toLocaleLowerCase()}`
+            : translations.coupon.createCoupon
+        }
+      />
       <ScrollView
         style={[CS.flex1, { marginBottom: getBottomSpace() }]}
         showsVerticalScrollIndicator={false}
@@ -108,6 +166,7 @@ const CouponCreateScreen = ({ data }: CouponCreateScreenProps) => {
           errorTxt={errors.title?.message}
           maxLength={32}
           showPlaceholder
+          countLength
         />
         <InputHook
           setFocus={setFocus}
@@ -129,6 +188,33 @@ const CouponCreateScreen = ({ data }: CouponCreateScreenProps) => {
           maxLength={32}
           showPlaceholder
         />
+        <View style={{ marginVertical: 8, paddingHorizontal: 20 }}>
+          <Text style={styles.textTitle}>{translations.coupon.type}</Text>
+        </View>
+        <View style={{ flexDirection: "row", paddingHorizontal: 20, gap: 8 }}>
+          {listTypeCoupon.map((item, index) => {
+            const isSelect = item.id === typeCoupon.id;
+            return (
+              <Pressable
+                key={index}
+                style={{
+                  flex: 1,
+                  ...CS.center,
+                  flexDirection: "row",
+                  borderRadius: 8,
+                  height: 30,
+                  gap: 8,
+                }}
+                onPress={() => setTypeCoupon(item)}
+              >
+                <View style={styles.borderRadius}>
+                  {isSelect && <View style={styles.radiusSelect} />}
+                </View>
+                <Text>{item.value}</Text>
+              </Pressable>
+            );
+          })}
+        </View>
         <InputHook
           setFocus={setFocus}
           name="promotion"
@@ -136,7 +222,10 @@ const CouponCreateScreen = ({ data }: CouponCreateScreenProps) => {
           inputProps={{
             type: "text",
             defaultValue: "",
-            placeholder: translations.coupon.promotion,
+            placeholder:
+              typeCoupon.type === "percentage"
+                ? translations.coupon.promotion
+                : translations.coupon.value,
             keyboardType: "numeric",
           }}
           control={control}
@@ -146,8 +235,10 @@ const CouponCreateScreen = ({ data }: CouponCreateScreenProps) => {
               message: translations.required,
             },
             validate: (val: string) => {
-              if (Number(val) > 100) {
-                return translations.coupon.add;
+              if (typeCoupon.type === "percentage") {
+                if (Number(val || 0) > 100 || Number(val || 0) < 0) {
+                  return translations.coupon.warningCoupon;
+                }
               }
             },
           }}
@@ -155,13 +246,70 @@ const CouponCreateScreen = ({ data }: CouponCreateScreenProps) => {
           maxLength={32}
           showPlaceholder
         />
+        <View style={{ marginVertical: 8, paddingHorizontal: 20 }}>
+          <Text style={styles.textTitle}>{translations.coupon.period}</Text>
+        </View>
+        <View style={{ paddingHorizontal: 20 }}>
+          <Controller
+            control={control}
+            rules={{
+              required: {
+                value: true,
+                message: translations.required,
+              },
+            }}
+            render={({ field: { onChange, value } }) => {
+              const setTime = (time: Date) => {
+                onChange(time);
+              };
+              return (
+                <DateTimePickerLocal
+                  style={{ flex: 1 }}
+                  placeholder={translations.course.startTime}
+                  setTime={setTime}
+                  timeDefault={value}
+                  txtWarning={errors.start_date?.message}
+                />
+              );
+            }}
+            name={"start_date"}
+          />
+
+          <Controller
+            control={control}
+            rules={{
+              required: {
+                value: true,
+                message: translations.required,
+              },
+            }}
+            render={({ field: { onChange, value } }) => {
+              const setTime = (time: Date) => {
+                onChange(time);
+              };
+              return (
+                <DateTimePickerLocal
+                  style={{ flex: 1 }}
+                  placeholder={translations.course.endTime}
+                  setTime={setTime}
+                  timeDefault={value}
+                  txtWarning={errors.end_date?.message}
+                />
+              );
+            }}
+            name={"end_date"}
+          />
+        </View>
+
         <Button
           style={{
             marginHorizontal: 16,
             marginTop: 16,
             backgroundColor: colors.primary,
           }}
-          text={translations.coupon.add}
+          text={
+            data?._id ? translations.coupon.update : translations.coupon.add
+          }
           disabled={false}
           onPress={handleSubmit(onSubmit)}
         />
@@ -176,5 +324,22 @@ const styles = StyleSheet.create({
   container: {
     ...CS.safeAreaView,
     marginBottom: getBottomSpace(),
+  },
+  textTitle: {
+    ...CS.hnMedium,
+  },
+  radiusSelect: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: palette.primary,
+  },
+  borderRadius: {
+    width: 20,
+    height: 20,
+    ...CS.center,
+    borderRadius: 15,
+    borderWidth: 2,
+    borderColor: palette.primary,
   },
 });

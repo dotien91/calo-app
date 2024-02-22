@@ -4,11 +4,7 @@ import * as NavigationService from "react-navigation-helpers";
 
 import { useListData } from "@helpers/hooks/useListData";
 import { translations } from "@localization";
-import {
-  CouponType,
-  getListCoupon,
-  CouponByUser,
-} from "@services/api/coupon.api";
+import { CouponType, getListCoupon } from "@services/api/coupon.api";
 import Header from "@shared-components/header/Header";
 import ItemCoupon from "./components/item.coupon";
 import LoadingList from "@shared-components/loading.list.component";
@@ -17,9 +13,7 @@ import useStore from "@services/zustand/store";
 import { SCREENS } from "constants";
 import eventEmitter from "@services/event-emitter";
 
-interface ListCouponForMyCourseProps {}
-
-const ListCouponForMyCourse = (props: ListCouponForMyCourseProps) => {
+const ListCouponForMyCourse = () => {
   const userData = useStore((state) => state.userData);
   console.log("userData...", userData?._id);
   const {
@@ -36,9 +30,6 @@ const ListCouponForMyCourse = (props: ListCouponForMyCourseProps) => {
       user_id: userData?._id,
     },
     getListCoupon,
-
-    // { limit: "10" },
-    // CouponByUser,
   );
 
   const renderItem = ({ item, index }: { item: CouponType; index: number }) => {

@@ -77,6 +77,13 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
         NavigationService.navigate(SCREENS.MY_COURES);
       },
     },
+    {
+      title: "Mã giảm giá",
+      icon: "ticket-outline",
+      action: () => {
+        NavigationService.navigate(SCREENS.COUPON_LIST);
+      },
+    },
   ];
 
   const renderListSetting = () => {
