@@ -18,11 +18,17 @@ import IconBtn from "@shared-components/button/IconBtn";
 import PieChartCommon from "@shared-components/pie-chart/pie.chart";
 import IconSvg from "assets/svg";
 import TaskItemCommon from "@shared-components/task-item/task.item";
+// import { useListData } from "@helpers/hooks/useListData";
+// import { getListTask } from "@services/api/task.api";
 
 const SettingProfileScreen = () => {
   const theme = useTheme();
   const { colors } = theme;
   const userData = useStore((state) => state.userData);
+
+  // const {
+  //   listData,
+  // } = useListData({ limit: 5 }, getListTask);
 
   const listrenderPointCoin = [
     {
