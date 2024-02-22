@@ -2,6 +2,7 @@ import React from "react";
 import { View } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import IconSvg from "assets/svg";
+import { ActionTypeTask } from "constants/task.constant";
 
 const TaskIcon = ({ item, customStyle }) => {
   const theme = useTheme();
@@ -9,7 +10,7 @@ const TaskIcon = ({ item, customStyle }) => {
 
   return (
     <View style={customStyle}>
-      {item.typeTask === "Buy" && (
+      {item.action_type === ActionTypeTask.BUY && (
         <View
           style={{
             borderRadius: 12,
@@ -27,7 +28,7 @@ const TaskIcon = ({ item, customStyle }) => {
           ></IconSvg>
         </View>
       )}
-      {item.typeTask === "Comment" && (
+      {item.action_type === ActionTypeTask.COMMENT && (
         <View
           style={{
             borderRadius: 12,
@@ -45,7 +46,7 @@ const TaskIcon = ({ item, customStyle }) => {
           ></IconSvg>
         </View>
       )}
-      {item.typeTask === "Like" && (
+      {item.action_type === ActionTypeTask.LIKE && (
         <View
           style={{
             borderRadius: 12,
@@ -59,7 +60,7 @@ const TaskIcon = ({ item, customStyle }) => {
           <IconSvg name={"icLike"} color={colors.white} size={15}></IconSvg>
         </View>
       )}
-      {item.typeTask === "Post" && (
+      {item.action_type === ActionTypeTask.POST && (
         <View
           style={{
             borderRadius: 12,
@@ -73,7 +74,7 @@ const TaskIcon = ({ item, customStyle }) => {
           <IconSvg name={"icupLoad"} color={colors.white} size={15}></IconSvg>
         </View>
       )}
-      {item.typeTask === "Practive" && (
+      {item.action_type === ActionTypeTask.COMPLETE && (
         <View
           style={{
             borderRadius: 12,

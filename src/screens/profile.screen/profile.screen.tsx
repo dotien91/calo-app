@@ -19,17 +19,15 @@ import PieChartCommon from "@shared-components/pie-chart/pie.chart";
 import IconSvg from "assets/svg";
 import TaskItemCommon from "@shared-components/task-item/task.item";
 import { translations } from "@localization";
-// import { useListData } from "@helpers/hooks/useListData";
-// import { getListTask } from "@services/api/task.api";
+import { useListData } from "@helpers/hooks/useListData";
+import { getListRedeemMissionTask } from "@services/api/task.api";
 
 const SettingProfileScreen = () => {
   const theme = useTheme();
   const { colors } = theme;
   const userData = useStore((state) => state.userData);
 
-  // const {
-  //   listData,
-  // } = useListData({ limit: 5 }, getListTask);
+  const { listData } = useListData({ limit: 5 }, getListRedeemMissionTask);
 
   const listrenderPointCoin = [
     {
@@ -66,40 +64,6 @@ const SettingProfileScreen = () => {
       percentage: 40,
       color: colors.greenChart,
       title: "Listening",
-    },
-  ];
-
-  const dataTask = [
-    {
-      typeTask: "Like",
-      title: "Like commend",
-      decs: "Like a post in Community",
-      coinNum: 1,
-    },
-    {
-      typeTask: "Comment",
-      title: "Like commend",
-      decs: "Like a post in Community",
-      coinNum: 10,
-    },
-    {
-      typeTask: "Buy",
-      title: "Like commend",
-      decs: "Like a post in Community",
-      coinNum: 5,
-    },
-    {
-      typeTask: "Post",
-      title:
-        "Like commend Like commend Like commend Like commend Like commend Like commend",
-      decs: "Like a post in Community",
-      coinNum: 20,
-    },
-    {
-      typeTask: "Practive",
-      title: "Like commend",
-      decs: "Like a post in Community",
-      coinNum: 20,
     },
   ];
 
@@ -298,7 +262,7 @@ const SettingProfileScreen = () => {
             borderRadius: 8,
           }}
         >
-          {dataTask.map((item, index) => {
+          {listData.map((item, index) => {
             return <TaskItemCommon key={index} item={item}></TaskItemCommon>;
           })}
         </View>

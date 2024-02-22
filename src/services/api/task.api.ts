@@ -9,3 +9,13 @@ export async function getListTask(params) {
     return response;
   });
 }
+
+export async function getListRedeemMissionTask(params) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "redeem/mission/list",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}

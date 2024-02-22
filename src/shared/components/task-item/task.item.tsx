@@ -8,20 +8,22 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import IconSvg from "assets/svg";
 import TaskIcon from "@shared-components/task-icon/task.icon";
 import { SCREENS } from "constants";
+import { ActionTypeTask } from "constants/task.constant";
 
 const TaskItemCommon = ({ item }) => {
+  console.log("item TaskItemCommon ", JSON.stringify(item, null, 2));
   const theme = useTheme();
   const { colors } = theme;
 
   const onClickItemTask = (item) => {
-    switch (item.typeTask) {
-      case "Like":
+    switch (item.action_type) {
+      case ActionTypeTask.LIKE:
         NavigationService.navigate(SCREENS.HOME);
         break;
-      case "Comment":
+      case ActionTypeTask.COMMENT:
         NavigationService.navigate(SCREENS.HOME);
         break;
-      case "Post":
+      case ActionTypeTask.POST:
         NavigationService.navigate(SCREENS.POST_SCREEN);
         break;
 
@@ -63,7 +65,7 @@ const TaskItemCommon = ({ item }) => {
           <Text
             style={{ ...CS.hnMedium, fontSize: 12, color: colors.textOpacity6 }}
           >
-            {item.decs}
+            {item.status === "done" ? "Complete" : "Not complete"}
           </Text>
         </View>
         <View
@@ -75,7 +77,7 @@ const TaskItemCommon = ({ item }) => {
           }}
         >
           <Text style={{ ...CS.hnSemiBold, fontSize: 16, color: colors.text }}>
-            {item.coinNum}
+            {item.point}
           </Text>
           <IconSvg
             style={{ marginLeft: 6 }}
