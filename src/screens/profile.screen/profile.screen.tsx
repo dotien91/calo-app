@@ -18,6 +18,7 @@ import IconBtn from "@shared-components/button/IconBtn";
 import PieChartCommon from "@shared-components/pie-chart/pie.chart";
 import IconSvg from "assets/svg";
 import TaskItemCommon from "@shared-components/task-item/task.item";
+import { translations } from "@localization";
 // import { useListData } from "@helpers/hooks/useListData";
 // import { getListTask } from "@services/api/task.api";
 
@@ -240,7 +241,7 @@ const SettingProfileScreen = () => {
             marginVertical: 32,
           }}
         >
-          Your IELTS Score
+          {translations.task.yourscore}
         </Text>
         <PieChartCommon sections={data}></PieChartCommon>
         <View style={{ flexDirection: "row", marginTop: 32, marginLeft: 20 }}>
@@ -252,7 +253,7 @@ const SettingProfileScreen = () => {
               marginRight: 4,
             }}
           >
-            POWERED BY
+            {translations.task.powered}
           </Text>
           <IconSvg name="logoIeltsHunter" width={32} height={18} />
         </View>
@@ -316,7 +317,7 @@ const SettingProfileScreen = () => {
             marginVertical: 16,
           }}
         >
-          InviteFriend
+          {translations.task.inviteFriend}
         </Text>
         <View
           style={{

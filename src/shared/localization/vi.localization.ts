@@ -1312,4 +1312,9 @@ export default {
   },
   en: "Tiếng Anh",
   vi: "Tiếng Việt",
+  task: {
+    inviteFriend: "Mời bạn bè",
+    yourscore: "Điểm của bạn",
+    powered: "Được hỗ trợ",
+  },
 };
