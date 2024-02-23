@@ -1316,5 +1316,8 @@ export default {
     inviteFriend: "Mời bạn bè",
     yourscore: "Điểm của bạn",
     powered: "Được hỗ trợ",
+    mycode: "Mã của tôi",
+    level: "Cấp độ",
+    task: "Nhiệm vụ",
   },
 };

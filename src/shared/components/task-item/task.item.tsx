@@ -11,7 +11,6 @@ import { SCREENS } from "constants";
 import { ActionTypeTask } from "constants/task.constant";
 
 const TaskItemCommon = ({ item }) => {
-  console.log("item TaskItemCommon ", JSON.stringify(item, null, 2));
   const theme = useTheme();
   const { colors } = theme;
 
@@ -26,7 +25,18 @@ const TaskItemCommon = ({ item }) => {
       case ActionTypeTask.POST:
         NavigationService.navigate(SCREENS.POST_SCREEN);
         break;
-
+      case ActionTypeTask.COMPLETE:
+        NavigationService.navigate(SCREENS.MY_COURES);
+        break;
+      case ActionTypeTask.WATCH:
+        NavigationService.navigate(SCREENS.MY_COURES);
+        break;
+      case ActionTypeTask.BUY:
+        NavigationService.navigate(SCREENS.COURSE_LIST);
+        break;
+      case ActionTypeTask.JOIN:
+        NavigationService.navigate(SCREENS.COURSE_LIST);
+        break;
       default:
         break;
     }

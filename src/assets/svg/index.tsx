@@ -76,6 +76,8 @@ import icupLoad from "./upload.svg";
 import icCommentTask from "./comment.svg";
 import iconBuyTask from "./buycourse.svg";
 import iconPen from "./pen.svg";
+import iconBookNote from "./bookNote.svg";
+import iconFriends from "./friends.svg";
 
 const Icons = {
   icFlagvi,
@@ -154,6 +156,8 @@ const Icons = {
   icCommentTask,
   iconBuyTask,
   iconPen,
+  iconBookNote,
+  iconFriends,
 };
 
 interface IconSvgProps {
