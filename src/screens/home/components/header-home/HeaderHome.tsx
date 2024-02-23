@@ -94,4 +94,4 @@ const HeaderHome = () => {
   );
 };
 
-export default React.memo(HeaderHome);
+export default HeaderHome;
