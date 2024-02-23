@@ -798,5 +798,13 @@ export default {
   },
   en: "English",
   vi: "Vietnamese",
+  task: {
+    inviteFriend: "Invite a friend",
+    yourscore: "Your IELTS Score",
+    powered: "POWERED BY",
+    mycode: "My Code",
+    level: "Level",
+    task: "Tasks",
+  },
 };
 /* eslint-disable max-len */

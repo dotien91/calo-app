@@ -122,6 +122,10 @@ export interface TypedUser {
   is_verify_email?: boolean;
   phone_number: string;
   default_language?: string;
+  point?: number;
+  level?: number;
+  invitation_code?: string;
+  current_coin?: number;
 }
 
 export interface TypedFollowUser {
