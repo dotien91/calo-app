@@ -79,6 +79,10 @@ export const palette = {
   btnRedPrimary: "rgba(225, 66, 66, 1)",
   link: "#0044CC",
   lightBlue: "rgba(53, 174, 255, 1)",
+  backgroundColorGrey: "rgba(246, 248, 250, 1)",
+  blueChart: "rgba(53, 174, 255, 1)",
+  greenChart: "rgba(43, 196, 86, 1)",
+  yellowComment: "rgba(255, 192, 117, 1)",
 };
 
 interface ExtendedTheme extends Theme {
