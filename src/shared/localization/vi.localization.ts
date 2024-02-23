@@ -43,6 +43,7 @@ export default {
   createPassSuccess: "Tạo mật khẩu mới thành công!",
   loginSuccess: "Đăng nhập thành công!",
   goBackHome: "Quay về trang chủ",
+  next: "Tiếp theo",
   error: {
     unknown: "Có lỗi không xác định xảy ra!",
     invalidPhoneEmail: "SĐT/Email không hợp lệ",
@@ -442,7 +443,7 @@ export default {
     media: "Ảnh & Video",
     chooseFile: "Chọn tệp",
     downloadDocument: "Tải tài liệu",
-    openWebsite: "Mở Website",
+    openWebsite: "Mở tài liệu",
     editModule: "Chỉnh sửa bài học và học phần",
     consistsOf: "Bao gồm",
     parts: "phần",

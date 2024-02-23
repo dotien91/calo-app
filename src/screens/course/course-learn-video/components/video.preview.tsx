@@ -26,6 +26,7 @@ import Animated, {
 import Video from "react-native-video";
 import Slider from "@react-native-community/slider";
 import * as NavigationService from "react-navigation-helpers";
+import LottieView from "lottie-react-native";
 
 import { palette } from "@theme/themes";
 import { HS, MHS } from "@utils/size.utils";
@@ -37,8 +38,10 @@ import CS from "@theme/styles";
 import { formatTime } from "@utils/date.utils";
 import IconSvg from "assets/svg";
 import PressableBtn from "@shared-components/button/PressableBtn";
+import useStore from "@services/zustand/store";
+import { translations } from "@localization";
 
-const PERCENT_DONE_VIDEO = 0.3;
+const PERCENT_DONE_VIDEO = 0.5;
 
 const VideoPreview = (
   {
@@ -51,6 +54,11 @@ const VideoPreview = (
     changeOrientation = false,
     markDoneCourse = () => {},
     thumbnail = "",
+    // courseData,
+    courseId,
+    currentProgressData,
+    source,
+    setSource,
   },
   ref: any,
 ) => {
@@ -69,8 +77,11 @@ const VideoPreview = (
   const countTimeoutDone = useRef(0);
   const isDoneCourse = useRef(false);
   const [timeAlive, setTimeAlive] = useState(0);
+  const updateWatchingVideos = useStore((state) => state.updateWatchingVideos);
+  const [showPreview, setShowPreview] = useState(false);
 
   useEffect(() => {
+    // if (showPreview) setShowPreview(false);
     if (firstTime.current) {
       firstTime.current = false;
     } else {
@@ -86,13 +97,21 @@ const VideoPreview = (
       isDoneCourse.current = false;
       setReady(false);
     }
+    return () => {
+      const data = {
+        id: courseId,
+        progress: currentTime.current,
+        url,
+      };
+      updateWatchingVideos(data);
+    };
   }, [url]);
 
   useEffect(() => {
     if (!ready) {
       setTimeout(() => {
         setReady(true);
-      }, 500);
+      }, 0);
     }
   }, [ready]);
 
@@ -102,6 +121,7 @@ const VideoPreview = (
         paused: true,
       });
     },
+    setShowPreview: setShowPreview,
   }));
 
   const styleVideo = useAnimatedStyle(() => {
@@ -117,7 +137,7 @@ const VideoPreview = (
   const onProgress = (data: any) => {
     loadDone.value = true;
     onProgressWatchVideo();
-
+    // console.log("duration.current", data)
     if (duration.current === 0 && data.duration > 0) {
       duration.current = Number(data.duration / 1000);
       sliderRef.current?.setNativeProps({
@@ -275,13 +295,16 @@ const VideoPreview = (
       !isDoneCourse.current
     ) {
       isDoneCourse.current = true;
-      console.log("call done course");
       markDoneCourse?.();
     }
   };
 
+  const _showPreview = () => {
+    setShowPreview(true);
+  };
+
   const renderVideo = () => {
-    if (!ready) {
+    if (!ready || showPreview) {
       return null;
     }
     return (
@@ -291,7 +314,8 @@ const VideoPreview = (
         resizeMode={isLanscapeVideo ? "contain" : "cover"}
         source={{ uri: url }}
         onLoad={(data) => {
-          console.log("onLoad Video", data);
+          currentProgressData?.progress &&
+            videoRef.current?.seek(currentProgressData?.progress);
           loadDone.value = true;
           duration.current = data.duration;
           sliderRef.current?.setNativeProps({
@@ -302,7 +326,7 @@ const VideoPreview = (
           }
         }}
         onProgress={onProgress}
-        onEnded={(data: any) => console.log("onEnded", data)}
+        onEnd={_showPreview}
         repeat={repeat}
       />
     );
@@ -314,9 +338,19 @@ const VideoPreview = (
   const _shareScreen = () => {};
   const _shareToTV = () => {};
   const _settingVideo = () => {};
-
   return (
-    <Pressable style={[styles.container]} onPress={onPressView}>
+    <Pressable
+      disabled={showPreview}
+      style={[styles.container]}
+      onPress={onPressView}
+    >
+      {showPreview && (
+        <PreviewNextLesson
+          setSource={setSource}
+          setShowPreview={setShowPreview}
+          source={source}
+        />
+      )}
       <Animated.View style={[styles.loading, styleVideo]}>
         {thumbnail ? (
           <FastImage
@@ -325,10 +359,10 @@ const VideoPreview = (
           />
         ) : null}
 
-        <ActivityIndicator size={"large"} color={palette.textMain} />
+        <ActivityIndicator size={"large"} color={palette.white} />
       </Animated.View>
 
-      <View style={[{ ...StyleSheet.absoluteFillObject }]}>
+      <View style={[{ ...StyleSheet.absoluteFillObject, zIndex: 0 }]}>
         {renderVideo()}
       </View>
       <Animated.View style={[styles.headerAbs, styleAction]}>
@@ -426,6 +460,99 @@ const VideoPreview = (
   );
 };
 
+const PreviewNextLesson = React.memo(({ source, setSource }) => {
+  const listVideoCourse = useStore((state) => state.listVideoCourse);
+  const currentIndex = listVideoCourse.findIndex(
+    (item) => item._id == source._id,
+  );
+  const nextLesson = listVideoCourse?.[currentIndex + 1];
+  const [speed, setSpeed] = useState(0.7);
+
+  const goNextLesson = () => {
+    setSource(nextLesson);
+  };
+
+  useEffect(() => {
+    if (speed == 0) return;
+    const tmp = setTimeout(() => {
+      setSpeed(0);
+      setSource(nextLesson);
+    }, 3500);
+    return () => {
+      !!tmp && clearTimeout(tmp);
+    };
+  }, [speed]);
+
+  const hide = () => {
+    setSpeed(0);
+  };
+
+  if (!nextLesson) return null;
+  return (
+    <View
+      style={{
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: palette.blackOverlay,
+        position: "absolute",
+        left: 0,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 101,
+        ...CS.flexCenter,
+      }}
+    >
+      <View>
+        <Text
+          style={{
+            ...CS.hnRegular,
+            fontSize: 14,
+            color: palette.white,
+            textAlign: "center",
+          }}
+        >
+          {translations.next}
+        </Text>
+        <Text
+          style={{
+            ...CS.hnRegular,
+            fontSize: 14,
+            color: palette.white,
+            textAlign: "center",
+          }}
+        >
+          {nextLesson?.title}
+        </Text>
+        <PressableBtn onPress={goNextLesson} style={{ marginTop: 12 }}>
+          <LottieView
+            speed={speed}
+            style={{
+              height: 50,
+              width: 50,
+              aspectRatio: 3,
+            }}
+            source={require("assets/lotties/next.json")}
+            autoPlay
+            resizeMode="contain"
+          />
+        </PressableBtn>
+        <PressableBtn onPress={hide} style={{ marginTop: 12 }}>
+          <Text
+            style={{
+              ...CS.hnRegular,
+              fontSize: 14,
+              color: palette.white,
+              textAlign: "center",
+            }}
+          >
+            {translations?.cancel}
+          </Text>
+        </PressableBtn>
+      </View>
+    </View>
+  );
+});
+
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
@@ -487,4 +614,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default forwardRef(VideoPreview);
+export default React.memo(forwardRef(VideoPreview));

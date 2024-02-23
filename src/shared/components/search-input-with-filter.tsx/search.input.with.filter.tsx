@@ -146,7 +146,7 @@ const SearchInputWithFilter: React.FC<ISearchInput> = ({
             name={"sliders"}
           />
         )}
-        {!!badge && (
+        {!!badge && showFilter && (
           <TouchableOpacity onPress={onPressFilter} style={styles.badge}>
             <Text style={styles.txtBadge}>{badge}</Text>
           </TouchableOpacity>

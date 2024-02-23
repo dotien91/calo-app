@@ -7,7 +7,7 @@ import * as NavigationService from "react-navigation-helpers";
  * ? Local Imports
  */
 import createStyles from "./course.component.style";
-import { ICourseItem } from "models/course.model";
+import { EnumClassType, ICourseItem } from "models/course.model";
 import { Device } from "@utils/device.ui.utils";
 import CS from "@theme/styles";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
@@ -16,6 +16,7 @@ import Badge from "./Badge";
 import { SCREENS } from "constants";
 import { numberWithCommas } from "@utils/string.utils";
 import { translations } from "@localization";
+import CourseProgressBar from "./course.progress.bar";
 
 interface CourseItemProps {
   isHorizontalStyle?: boolean;
@@ -30,8 +31,17 @@ const CourseItem = ({
   style,
   data,
 }: CourseItemProps) => {
-  const { _id, title, price, rating, user_id, media_id, avatar, is_join } =
-    data;
+  const {
+    _id,
+    title,
+    price,
+    rating,
+    user_id,
+    media_id,
+    avatar,
+    is_join,
+    type,
+  } = data;
   let widthImage = Device.width - 32;
   if (isHorizontalStyle) {
     widthImage = widthImage / 1.5;
@@ -43,12 +53,24 @@ const CourseItem = ({
   const theme = useTheme();
   // const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
-
+  const isCourseVideo = EnumClassType.SelfLearning == type;
   const openPreviewCourse = () => {
+    if (is_join && data.type == EnumClassType.SelfLearning) {
+      NavigationService.navigate(SCREENS.COURSE_LEARN_VIDEO_SCREEN, {
+        course_id: _id,
+        courseData: data,
+      });
+      return;
+    }
     NavigationService.navigate(SCREENS.COURSE_DETAIL, {
       course_id: _id,
       dataCourse: data,
     });
+  };
+
+  const moduleViewedData = {
+    module_child_count: data?.module_child_count,
+    module_view_count: data?.module_view?.length,
   };
 
   // const avatarUrl = () => {};
@@ -59,6 +81,13 @@ const CourseItem = ({
         <>
           <Text style={styles.courseTitle}>{title}</Text>
           <Text style={styles.courseAuthorTxt}>{user_id?.display_name}</Text>
+          {isCourseVideo && (
+            <CourseProgressBar
+              dataFromApi={moduleViewedData}
+              isSliderItem={isSliderItem}
+              id={_id}
+            />
+          )}
         </>
       );
 
@@ -87,6 +116,7 @@ const CourseItem = ({
             {translations.course.noreview}
           </Text>
         )}
+        <View style={{ height: 6 }} />
         <Badge title="BEST-SELLER" />
       </>
     );

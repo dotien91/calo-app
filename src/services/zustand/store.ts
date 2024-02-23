@@ -69,6 +69,7 @@ const useStore = create<StoreState>()(
                 "courseCurrentSort",
                 "courseCurrentType",
                 "courseSearchHistory",
+                "setListVideoCourse",
               ].includes(key),
           ),
         ),

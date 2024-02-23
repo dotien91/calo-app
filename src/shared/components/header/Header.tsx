@@ -76,7 +76,7 @@ const Header = ({
             color={colors.text}
           />
         )}
-        {!!badge && (
+        {!!badge && !!iconNameRight && (
           <TouchableOpacity onPress={onPressRight} style={styles.badge}>
             <Text style={styles.txtBadge}>{badge}</Text>
           </TouchableOpacity>
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 16,
-    marginBottom: 6,
+    marginBottom: 12,
     gap: 8,
     backgroundColor: palette.white,
     shadowColor: "rgba(0,0,0,0.8)",

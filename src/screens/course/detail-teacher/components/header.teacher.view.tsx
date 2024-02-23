@@ -21,14 +21,18 @@ interface HeaderDetailTeacherProps {
 }
 
 const HeaderDetailTeacher = ({ data }: HeaderDetailTeacherProps) => {
+  const linkFb = (data?.links[0]?.facebook || "").trim();
+  const linkYoutube = (data?.links[0]?.youtube || "").trim();
+  const linkWebsite = (data?.links[0]?.website || "").trim();
+
   const _openLinkingFB = () => {
-    Linking.openURL(data?.links[0].facebook);
+    Linking.openURL(linkFb);
   };
   const _openLinkingYoutube = () => {
-    Linking.openURL(data?.links[0].youtube);
+    Linking.openURL(linkYoutube);
   };
   const _openLinkingWeb = () => {
-    Linking.openURL(data?.links[0].website);
+    Linking.openURL(linkWebsite);
   };
 
   if (!data?._id) {
@@ -71,11 +75,9 @@ const HeaderDetailTeacher = ({ data }: HeaderDetailTeacherProps) => {
       </View>
 
       {data?._id &&
-        (data?.links[0].facebook?.trim() !== "" ||
-          data?.links[0].facebook?.trim() !== "" ||
-          data?.links[0].facebook?.trim() !== "") && (
+        (linkFb !== "" || linkWebsite !== "" || linkYoutube !== "") && (
           <View style={styles.viewCenter}>
-            {data?.links[0].facebook?.trim() !== "" && (
+            {linkFb !== "" && (
               <TouchableOpacity
                 onPress={_openLinkingFB}
                 style={styles.viewIcon}
@@ -83,7 +85,7 @@ const HeaderDetailTeacher = ({ data }: HeaderDetailTeacherProps) => {
                 <IconSvg name="icFacebook" size={32} color={palette.blue} />
               </TouchableOpacity>
             )}
-            {data?.links[0].youtube?.trim() !== "" && (
+            {linkYoutube !== "" && (
               <TouchableOpacity
                 onPress={_openLinkingYoutube}
                 style={styles.viewIcon}
@@ -91,7 +93,7 @@ const HeaderDetailTeacher = ({ data }: HeaderDetailTeacherProps) => {
                 <IconSvg name="icSocialYoutube" size={32} />
               </TouchableOpacity>
             )}
-            {data?.links[0].website?.trim() !== "" && (
+            {linkWebsite !== "" && (
               <TouchableOpacity
                 onPress={_openLinkingWeb}
                 style={styles.viewIcon}

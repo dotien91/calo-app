@@ -61,11 +61,13 @@ const CoursePreviewScreen = () => {
       eventEmitter.off("reload_data_preview", _getCourseDetail);
     };
   });
+
   React.useEffect(() => {
     if (dataCourse) {
       setData(dataCourse);
     }
   }, [dataCourse]);
+
   // console.log(isLoading);
   const params = { auth_id: userData?._id };
   const _getCourseDetail = () => {
@@ -104,7 +106,7 @@ const CoursePreviewScreen = () => {
         style={{
           flexDirection: "row",
           marginHorizontal: 16,
-          height: 40,
+          height: 48,
           marginTop: 20,
         }}
       >
@@ -221,7 +223,7 @@ const CoursePreviewScreen = () => {
   return (
     <View style={styles.container}>
       {/* <Header iconNameRight="share-outline" onPressRight={_shareCourse} /> */}
-      <Header />
+      <Header customStyle={{ marginBottom: 0 }} text={data?.title} />
       <ScrollView
         contentContainerStyle={{ paddingBottom: 60 }}
         onScroll={handleScroll}

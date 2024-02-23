@@ -38,7 +38,7 @@ export const palette = {
   grey: "#eceeef",
   blue: "#0a86cf",
   orange: "#ea7a16",
-  green: "#60d140",
+  green: "rgba(43, 196, 86, 1)",
   timeColor: "rgba(22, 28, 36, 0.64)",
   Transparent: "#00000000",
   backgroundMain: "#FA8072",
@@ -78,6 +78,7 @@ export const palette = {
   red: "rgba(252, 53, 53, 1)",
   btnRedPrimary: "rgba(225, 66, 66, 1)",
   link: "#0044CC",
+  lightBlue: "rgba(53, 174, 255, 1)",
 };
 
 interface ExtendedTheme extends Theme {

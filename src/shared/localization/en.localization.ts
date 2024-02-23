@@ -43,6 +43,7 @@ export default {
   createPassSuccess: "Create new password success!",
   loginSuccess: "Login success!",
   goBackHome: "Go back home",
+  next: "Next",
   error: {
     unknown: "Unknow error!",
     invalidPhoneEmail: "Phone/Email invalid",
@@ -366,7 +367,7 @@ export default {
     media: "Media",
     chooseFile: "Choose File",
     downloadDocument: "Download Document",
-    openWebsite: "Open Website",
+    openWebsite: "Open document",
     editModule: "Edit Module",
     consistsOf: "Consists of",
     parts: "parts",

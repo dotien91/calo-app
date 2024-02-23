@@ -145,7 +145,7 @@ export default (theme: ExtendedTheme) => {
       flex: 1,
       // transform: [{ scaleY: isIOS ? -1: 1 }],
       ...CommonStyle.flexCenter,
-      alignItems: "flex-end",
+      marginTop: "30%",
     },
   });
 };
