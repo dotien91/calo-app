@@ -2,9 +2,8 @@
 /*eslint no-unsafe-optional-chaining: "error"*/
 
 import React, { useEffect, useRef, useState } from "react";
-import { View } from "react-native";
+import { FlatList, View } from "react-native";
 import { useTheme } from "@react-navigation/native";
-import { HFlatList } from "react-native-head-tab-view";
 
 import ItemPost from "./components/post-item/post.item";
 import { getListLiveStream } from "@services/api/stream.api";
@@ -144,8 +143,7 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
         backgroundColor: colors.background,
       }}
     >
-      <HFlatList
-        index={isFollowingPost ? 1 : 0}
+      <FlatList
         ref={listRef}
         data={getListData()}
         renderItem={renderItem}

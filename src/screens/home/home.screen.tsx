@@ -8,8 +8,7 @@ import {
 import { useTheme } from "@react-navigation/native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import * as NavigationService from "react-navigation-helpers";
-import { SceneMap, TabBar } from "react-native-tab-view";
-import { CollapsibleHeaderTabView } from "react-native-tab-view-collapsible-header";
+import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 
 import HeaderHome from "./components/header-home/HeaderHome";
 import { SCREENS } from "constants";
@@ -63,13 +62,13 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
           {route.title}
         </Text>
       )}
-      style={{ backgroundColor: colors.background, height: 50 }}
+      style={{ backgroundColor: colors.background }}
     />
   );
 
   return (
     <View style={CommonStyle.safeAreaView}>
-      {/* <HeaderHome />
+      <HeaderHome />
       <TabView
         style={CommonStyle.flex1}
         renderTabBar={renderTabBar}
@@ -77,14 +76,6 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
         renderScene={renderScene}
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}
-      /> */}
-      <CollapsibleHeaderTabView
-        renderScrollHeader={HeaderHome}
-        navigationState={{ index, routes }}
-        renderScene={renderScene}
-        onIndexChange={setIndex}
-        initialLayout={{ width: layout.width }}
-        renderTabBar={renderTabBar}
       />
       {isLoggedIn() && userData?._id && (
         <TouchableOpacity
