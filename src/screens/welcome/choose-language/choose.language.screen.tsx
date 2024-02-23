@@ -45,7 +45,7 @@ export default function ChooseLanguageScreen() {
     translations.setLanguage(selected);
     setLanguage(selected);
 
-    NavigationService.replace(SCREENS.LOGINWELCOME);
+    NavigationService.navigate(SCREENS.HOME);
   };
 
   const ItemLanguage = ({ item }: { item: TypeItemLanguage }) => {
@@ -89,7 +89,7 @@ export default function ChooseLanguageScreen() {
             })}
           </View>
           <Button
-            style={{ paddingHorizontal: 20 }}
+            style={{ paddingHorizontal: 20, marginHorizontal: 20 }}
             onPress={handleKeepGoing}
             text="Keep going"
           />
