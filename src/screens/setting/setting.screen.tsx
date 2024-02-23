@@ -80,6 +80,13 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
         NavigationService.navigate(SCREENS.ABOUT_ME);
       },
     },
+    {
+      title: "Khoá học đã mua",
+      icon: "book",
+      action: () => {
+        NavigationService.navigate(SCREENS.SETTINGPROFILESCREEN);
+      },
+    },
   ];
 
   const renderListSetting = () => {

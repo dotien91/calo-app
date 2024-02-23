@@ -73,6 +73,7 @@ import TabFollow from "@screens/tab-follow/tab.follow";
 import BlackList from "@screens/black-list/black.list";
 import PrivateSetting from "@screens/private.setting/private.setting";
 import { _getJson } from "@services/local-storage";
+import SettingProfileScreen from "@screens/profile.screen/profile.screen";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -316,6 +317,10 @@ const Navigation = () => {
         <Stack.Screen
           name={SCREENS.PRIVATESETTING}
           component={PrivateSetting}
+        />
+        <Stack.Screen
+          name={SCREENS.SETTINGPROFILESCREEN}
+          component={SettingProfileScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
