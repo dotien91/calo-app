@@ -70,6 +70,7 @@ import icPause from "./button-pause.svg";
 import icShareScreen from "./device-connection.svg";
 import icFullScreen from "./arrows-maximize.svg";
 import icAppleBlack from "./social-apple-black.svg";
+import icCheckbox from "./Checkbox.svg";
 
 const Icons = {
   icFlagvi,
@@ -142,6 +143,7 @@ const Icons = {
   icShareScreen,
   icFullScreen,
   icAppleBlack,
+  icCheckbox,
 };
 
 interface IconSvgProps {

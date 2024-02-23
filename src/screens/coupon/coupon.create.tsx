@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { View, StyleSheet, ScrollView, Text, Pressable } from "react-native";
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  Text,
+  Pressable,
+  Modal,
+} from "react-native";
 import { useTheme, useRoute } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
@@ -21,6 +28,13 @@ import Header from "@shared-components/header/Header";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import DateTimePickerLocal from "./components/DateTimePickerLocal";
+import ListCourseSelect from "./components/list.course.select";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import PressableBtn from "@shared-components/button/PressableBtn";
+import { useListData } from "@helpers/hooks/useListData";
+import { TypedCourse } from "shared/models";
+import { getCourseList } from "@services/api/course.api";
+import useStore from "@services/zustand/store";
 
 const listTypeCoupon = [
   {
@@ -36,13 +50,28 @@ const listTypeCoupon = [
 ];
 
 const CouponCreateScreen = () => {
+  const userData = useStore((store) => store.userData);
   const theme = useTheme();
   const { colors } = theme;
   const route = useRoute();
   const data = route.params?.["data"];
   const [typeCoupon, setTypeCoupon] = useState(listTypeCoupon[0]);
+  const [showModal, setShowModal] = useState(false);
+  const [itemSelected, setItemSelected] = useState<string[]>([]);
   // const [startDate, setStartDate] = React.useState<Date>();
   // const [endDate, setEndDate] = React.useState<Date>();
+
+  const paramsRequest = {
+    limit: "10",
+    user_id: userData?._id,
+  };
+  const {
+    listData,
+    onEndReach,
+    refreshControl,
+    renderFooterComponent,
+    refreshing,
+  } = useListData<TypedCourse>(paramsRequest, getCourseList);
   useEffect(() => {
     if (data) {
       console.log("param data..", data);
@@ -168,6 +197,22 @@ const CouponCreateScreen = () => {
           showPlaceholder
           countLength
         />
+        <PressableBtn
+          onPress={() => setShowModal(!showModal)}
+          style={{
+            ...CS.row,
+            marginVertical: 8,
+            paddingHorizontal: 20,
+            justifyContent: "space-between",
+          }}
+        >
+          <Text style={styles.textTitle}>{translations.coupon.add}</Text>
+          <Icon
+            name="chevron-forward-outline"
+            type={IconType.Ionicons}
+            size={20}
+          />
+        </PressableBtn>
         <InputHook
           setFocus={setFocus}
           name="description"
@@ -314,6 +359,20 @@ const CouponCreateScreen = () => {
           onPress={handleSubmit(onSubmit)}
         />
       </ScrollView>
+      <Modal visible={showModal}>
+        <ListCourseSelect
+          itemSelected={itemSelected}
+          setItemSelected={setItemSelected}
+          hideModal={() => {
+            setShowModal(false);
+          }}
+          listData={listData}
+          onEndReach={onEndReach}
+          refreshControl={refreshControl}
+          renderFooterComponent={renderFooterComponent}
+          refreshing={refreshing}
+        />
+      </Modal>
     </View>
   );
 };
