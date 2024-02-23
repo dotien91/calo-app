@@ -20,6 +20,8 @@ export enum EnumModalContentType {
   ListUser = "list-user",
   AddLesson = "add-lesson",
   FilterAffiliate = "filter-affiliate",
+  TextInput = "text-input",
+  SearchBank = "search-bank",
 }
 
 export enum EnumStyleModalType {

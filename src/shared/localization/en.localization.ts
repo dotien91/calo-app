@@ -43,6 +43,8 @@ export default {
   createPassSuccess: "Create new password success!",
   loginSuccess: "Login success!",
   goBackHome: "Go back home",
+  next: "Next",
+  other: "Other",
   error: {
     unknown: "Unknow error!",
     invalidPhoneEmail: "Phone/Email invalid",
@@ -809,5 +811,21 @@ export default {
   },
   en: "English",
   vi: "Vietnamese",
+  withDraw: {
+    header: "Withdraw",
+    your_money: "Your money",
+    withdraw_amount: "Withdraw amount",
+    min_withdraw_des: "Minimum amount for withdrawal is 100.000đ",
+    bank_des: "Unlimited time for free cashout",
+    add_bank: "Add bank",
+    bank_title: "Bank Account",
+    card_number: "Card/Account number",
+    card_number_placeholder: "Enter Card/Account number",
+    card_name: "Card/Account holder name",
+    card_number_error: "Please input your bank account number (4 to 14 digits)",
+    search_bank: "Search bank",
+    choose_bank: "Choose bank",
+    bank_acc: "Bank account",
+  },
 };
 /* eslint-disable max-len */

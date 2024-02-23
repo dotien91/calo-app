@@ -2,6 +2,7 @@ import { ExtendedTheme } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 
 import CommonStyle from "@theme/styles";
+import { palette } from "@theme/themes";
 
 export default (theme: ExtendedTheme) => {
   const { colors } = theme;
@@ -12,16 +13,16 @@ export default (theme: ExtendedTheme) => {
       borderRadius: 8,
       flex: 1,
       height: 32,
-      backgroundColor: colors.bgInput,
+      backgroundColor: palette.bgInput2,
     },
     searchInput: {
       paddingLeft: 40,
       paddingVertical: 0,
       color: colors.textOpacity4,
       flex: 1,
+      fontSize: 14,
     },
     iconSearch: {
-      color: colors.textOpacity6,
       position: "absolute",
       left: 12,
       top: 6,

@@ -70,6 +70,9 @@ import CourseListVideoScreen from "@screens/course/course-create/course.list.vid
 import CourseAddModuleScreen from "@screens/course/course-create/course.add.module.screen";
 import CallClassScreen from "@screens/call-class/call.class.screen";
 import AffiliatePage from "@screens/affiliate/affiliate.screen";
+import WithdrawScreen from "@screens/withdraw/withdraw.screen";
+import BankListScreen from "@screens/withdraw/bank.list.screen";
+import AddBankScreen from "@screens/withdraw/add.bank.screen";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -159,6 +162,16 @@ const Navigation = () => {
     );
   };
 
+  const renderBanksStack = () => {
+    return (
+      <>
+        <Stack.Screen name={SCREENS.BANK_LIST} component={BankListScreen} />
+        <Stack.Screen name={SCREENS.WITHDRAW} component={WithdrawScreen} />
+        <Stack.Screen name={SCREENS.ADD_BANK} component={AddBankScreen} />
+      </>
+    );
+  };
+
   return (
     <NavigationContainer
       ref={navigationRef}
@@ -174,6 +187,7 @@ const Navigation = () => {
           name={SCREENS.COURSE_LIST}
           component={renderTabNavigation}
         />
+        {renderBanksStack()}
         <Stack.Screen name={SCREENS.CALL_CLASS} component={CallClassScreen} />
 
         <Stack.Screen name={SCREENS.MY_COURES} component={MyCourse} />

@@ -27,6 +27,7 @@ import ChatRoomScreen from "@screens/chat/room-chat/chat.room.class.video";
 import ListUser from "./modal-inner/ListUser";
 import PopupCreateLesson from "@screens/course/course-create/components/PartViewCreate/popup.create.lesson";
 import FilterAffiliate from "@screens/affiliate/components/FilterAffiliate";
+import ListBank from "./modal-inner/ListBank";
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
 // using normal one.
@@ -139,8 +140,8 @@ const SuperModal: React.FC<SuperModalProps> = () => {
       <StickBottomModal
         isVisible={true}
         onBackdropPress={closeModal}
-        swipeDirection={["down"]}
-        onSwipeComplete={closeModal}
+        // swipeDirection={["down"]}
+        // onSwipeComplete={closeModal}
       >
         <View style={styles.bottomInner}>
           <IconBtn
@@ -190,6 +191,9 @@ const SuperModal: React.FC<SuperModalProps> = () => {
           )}
           {contentModalType == EnumModalContentType.FilterAffiliate && (
             <FilterAffiliate data={data} />
+          )}
+          {contentModalType == EnumModalContentType.SearchBank && (
+            <ListBank {...data} closeModal={closeModal} />
           )}
         </View>
       </StickBottomModal>

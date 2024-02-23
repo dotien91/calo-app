@@ -7,7 +7,9 @@ import createPostSlice, { PostSlice } from "@services/zustand/post/PostSlice";
 import createCourseSlice, {
   CourseSlice,
 } from "@services/zustand/course/CourseSlice";
-
+import createPaymentSlice, {
+  PaymentSlice,
+} from "@services/zustand/payment/PaymentSlice";
 import createNotificationSlice, {
   NotificationSlice,
 } from "@services/zustand/notification/NotificationSlice";
@@ -22,6 +24,7 @@ export type StoreState = AppSlice &
   ChatSlice &
   CourseSlice &
   SavePostSlice &
+  PaymentSlice &
   NotificationSlice;
 export type StoreSlice<T> = (
   set: StoreApi<StoreState>["setState"],
@@ -51,6 +54,7 @@ const useStore = create<StoreState>()(
       ...createSavePostSlice(set, get),
       ...createCourseSlice(set, get),
       ...createNotificationSlice(set, get),
+      ...createPaymentSlice(set, get),
     }),
     {
       name: "store",

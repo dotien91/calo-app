@@ -19,7 +19,7 @@ export const palette = {
   button: "#1c1e21",
   shadow: "#757575",
   text: "#161C24",
-  borderColor: "rgba(0, 53, 128, 0.2)",
+  borderColor: "rgba(240, 243, 246, 1)",
   borderColorDark: "#333942",
   danger: "rgb(208, 2, 27)",
   info: "#f77816",
@@ -76,9 +76,13 @@ export const palette = {
   textOpacity4: "rgba(22, 28, 36, 0.4)",
   gold: "rgba(255, 163, 71, 1)",
   bgInput: "rgba(232, 235, 239, 1)",
+  bgInput2: "rgba(240, 243, 246, 1)",
   bgBestSeller: "rgba(255, 237, 237, 1)",
   red: "rgba(252, 53, 53, 1)",
   btnRedPrimary: "rgba(225, 66, 66, 1)",
+  link: "#0044CC",
+  lightBlue: "rgba(53, 174, 255, 1)",
+  borderInput: "rgba(0, 53, 128, 0.2)",
 };
 
 interface ExtendedTheme extends Theme {

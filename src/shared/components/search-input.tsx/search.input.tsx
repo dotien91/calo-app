@@ -1,5 +1,11 @@
 import React, { useMemo, useRef, useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ViewStyle,
+} from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { debounce } from "lodash";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
@@ -9,7 +15,6 @@ import * as NavigationService from "react-navigation-helpers";
  * ? Local Imports
  */
 import createStyles from "./search.input.style";
-import { TextInput } from "react-native-gesture-handler";
 import { translations } from "@localization";
 import CommonStyle from "@theme/styles";
 import IconBtn from "@shared-components/button/IconBtn";
@@ -17,12 +22,14 @@ import IconBtn from "@shared-components/button/IconBtn";
 interface ISearchInput {
   txtSearch: string;
   setTxtSearch?: (text: string) => void;
-  onCancel: () => void;
-  showBackBtn: boolean;
-  autoFocus: boolean;
+  onCancel?: () => void;
+  showBackBtn?: boolean;
+  autoFocus?: boolean;
   onPressInput?: () => void;
   showCancelBtn: boolean;
   onSubmitEditing?: () => void;
+  placeholder?: string;
+  customStyle?: ViewStyle;
 }
 
 const SearchInput: React.FC<ISearchInput> = ({
@@ -33,6 +40,8 @@ const SearchInput: React.FC<ISearchInput> = ({
   onCancel,
   showCancelBtn = false,
   onSubmitEditing,
+  placeholder,
+  customStyle,
 }) => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
@@ -78,7 +87,7 @@ const SearchInput: React.FC<ISearchInput> = ({
   };
 
   return (
-    <View style={styles.box}>
+    <View style={[styles.box, !!customStyle && customStyle]}>
       {showBackBtn && (
         <IconBtn
           size={28}
@@ -93,7 +102,7 @@ const SearchInput: React.FC<ISearchInput> = ({
           name={"search"}
           type={IconType.Ionicons}
           size={20}
-          color={colors.mainColor2}
+          color={colors.textOpacity4}
           style={styles.iconSearch}
         />
         <View
@@ -105,7 +114,7 @@ const SearchInput: React.FC<ISearchInput> = ({
             ref={inputSearchRef}
             style={styles.searchInput}
             placeholderTextColor={colors.textOpacity4}
-            placeholder={translations.search}
+            placeholder={placeholder || translations.search}
             value={txt}
             onChangeText={(v) => {
               setTxt(v);
