@@ -1,12 +1,13 @@
 import React, { useMemo } from "react";
 import { View, Text, Dimensions } from "react-native";
 import { useTheme } from "@react-navigation/native";
+import * as NavigationService from "react-navigation-helpers";
 
 import Button from "@shared-components/button/Button";
 import createStyles from "./welcome.screen.style";
 import IconSvg from "assets/svg";
 import { translations } from "@localization";
-import useStore from "@services/zustand/store";
+import { SCREENS } from "constants";
 
 const { width } = Dimensions.get("window");
 const heightSvg = (width / 375) * 457;
@@ -14,10 +15,9 @@ const heightSvg = (width / 375) * 457;
 export default function WelcomeScreen() {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const setIsFirstOpenApp = useStore((state) => state.setIsFirstOpenApp);
 
   const handleStartNow = () => {
-    setIsFirstOpenApp(false);
+    NavigationService.navigate(SCREENS.HOME);
   };
 
   return (

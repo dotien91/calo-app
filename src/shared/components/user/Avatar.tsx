@@ -25,6 +25,7 @@ const Avatar = ({ style, sourceUri, resizeMode, onPress }: IAvatar) => {
       ) : (
         <Image source={defaultAvatar} style={style} resizeMode={resizeMode} />
       )}
+      {/* <View style={{...StyleSheet.absoluteFill, ...style, ...CS.borderStyle}} /> */}
     </Component>
   );
 };

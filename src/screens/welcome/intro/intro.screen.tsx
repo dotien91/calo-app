@@ -7,6 +7,7 @@ import * as NavigationService from "react-navigation-helpers";
 import Button from "@shared-components/button/Button";
 import createStyles from "./intro.screen.style";
 import { SCREENS } from "constants";
+import { _setJson } from "@services/local-storage";
 
 export default function IntroScreen() {
   const theme = useTheme();
@@ -14,6 +15,7 @@ export default function IntroScreen() {
 
   const handleStartNow = () => {
     NavigationService.replace(SCREENS.CHOOSE_LANGUAGE);
+    _setJson("is_first_open_app", true);
   };
 
   return (

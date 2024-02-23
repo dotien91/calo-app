@@ -125,7 +125,6 @@ const createCourseSlice: StoreSlice<CourseSlice> = (set, get) => ({
   _progressLearningData: [],
   _updateProgressLearningData: (data: IProgressLearningItem) => {
     const { _progressLearningData } = get();
-    console.log("set. =====progress percent", { _progressLearningData, data });
     set(() => ({
       _progressLearningData: [
         data,

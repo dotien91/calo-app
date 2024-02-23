@@ -202,7 +202,7 @@ const ListSearch = React.memo(({ type }: { type: string }) => {
       ...courseCurrentSort,
       ...defaultParams,
       ...listCourseFilterParams,
-      limit: "5",
+      limit: type == EnumSearchType.user ? "8" : "5",
       search: courseSearchHistory,
     };
   }, [courseCurrentSort, listCourseFilterParams, courseSearchHistory]);

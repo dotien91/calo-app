@@ -72,6 +72,7 @@ import CallClassScreen from "@screens/call-class/call.class.screen";
 import TabFollow from "@screens/tab-follow/tab.follow";
 import BlackList from "@screens/black-list/black.list";
 import PrivateSetting from "@screens/private.setting/private.setting";
+import { _getJson } from "@services/local-storage";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -79,8 +80,8 @@ const Stack = createStackNavigator();
 
 const Navigation = () => {
   const isDarkMode = useStore((state) => state.isDarkMode);
-  const isFirstOpenApp = useStore((state) => state.isFirstOpenApp);
-
+  // const isFirstOpenApp = useStore((state) => state.isFirstOpenApp);
+  const isFirstOpenApp = _getJson("is_first_open_app") == null ? true : false;
   React.useEffect((): any => {
     return () => (isReadyRef.current = false);
   }, []);
