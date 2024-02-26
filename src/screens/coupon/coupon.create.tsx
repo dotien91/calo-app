@@ -39,6 +39,7 @@ import {
   updateCourse,
 } from "@services/api/course.api";
 import useStore from "@services/zustand/store";
+import { TextInput } from "react-native-gesture-handler";
 
 const listTypeCoupon = [
   {
@@ -311,37 +312,42 @@ const CouponCreateScreen = () => {
             );
           })}
         </View>
-        <InputHook
-          setFocus={setFocus}
-          name="promotion"
-          customStyle={CS.flex1}
-          inputProps={{
-            type: "text",
-            defaultValue: "",
-            placeholder:
-              typeCoupon.type === "percentage"
-                ? translations.coupon.promotion
-                : translations.coupon.value,
-            keyboardType: "numeric",
-          }}
-          control={control}
-          rules={{
-            required: {
-              value: true,
-              message: translations.required,
-            },
-            validate: (val: string) => {
-              if (typeCoupon.type === "percentage") {
-                if (Number(val || 0) > 100 || Number(val || 0) < 0) {
-                  return translations.coupon.warningCoupon;
-                }
-              }
-            },
-          }}
-          errorTxt={errors.promotion?.message}
-          maxLength={32}
-          showPlaceholder
-        />
+        <View style={styles.viewReduce}>
+          <Text style={styles.textTitle}>
+            {translations.coupon.reductionLevel}
+          </Text>
+          <View style={styles.viewInputReduce}>
+            <Text style={styles.textReduce}>
+              {typeCoupon.type === "percentage" ? "%" : "VNĐ"}
+            </Text>
+            <Controller
+              control={control}
+              rules={{
+                required: {
+                  value: true,
+                  message: translations.required,
+                },
+              }}
+              render={({ field: { onChange, value } }) => {
+                const setTime = (time: string) => {
+                  onChange(time);
+                };
+                return (
+                  <TextInput
+                    style={{ flex: 1, ...CS.hnRegular }}
+                    placeholder={"0"}
+                    onChangeText={setTime}
+                    value={value}
+                    textAlign="center"
+                  />
+                );
+              }}
+              name={"promotion"}
+            />
+            <Text style={styles.textReduce}>{translations.coupon.reduce}</Text>
+          </View>
+        </View>
+
         <View style={{ marginVertical: 8, paddingHorizontal: 20 }}>
           <Text style={styles.textTitle}>{translations.coupon.period}</Text>
         </View>
@@ -453,5 +459,29 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     borderWidth: 2,
     borderColor: palette.primary,
+  },
+  textReduce: {
+    ...CS.hnRegular,
+    fontSize: 14,
+    color: palette.textOpacity6,
+    width: 50,
+    textAlign: "center",
+  },
+  viewReduce: {
+    paddingHorizontal: 20,
+    ...CS.row,
+    justifyContent: "space-between",
+    gap: 16,
+    marginTop: 8,
+  },
+  viewInputReduce: {
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: palette.borderColor,
+    flex: 1,
+    height: 40,
+    paddingHorizontal: 8,
+    gap: 8,
+    ...CS.row,
   },
 });

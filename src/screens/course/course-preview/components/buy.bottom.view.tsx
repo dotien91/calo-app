@@ -70,7 +70,7 @@ const BuyBottom = ({ show, data, courseRoom }: BuyBottomProps) => {
       new Date(data?.coupon_id?.expired) > new Date() ? (
         <View style={[CS.flex1, { justifyContent: "center" }]}>
           <Text style={styles.textPrice}>
-            {data?.coupon_id?.promotion_type === "promotion_type"
+            {data?.coupon_id?.promotion_type === "percentage"
               ? formatPrice(
                   data?.price -
                     (data?.price * data?.coupon_id?.promotion) / 100,

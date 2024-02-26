@@ -214,7 +214,7 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
       ) : (
         <View style={styles.viewPrice}>
           <Text style={styles.textPrice}>
-            {data?.coupon_id?.promotion_type === "promotion_type"
+            {data?.coupon_id?.promotion_type === "percentage"
               ? formatPrice(
                   data?.price -
                     (data?.price * data?.coupon_id?.promotion) / 100,

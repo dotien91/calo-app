@@ -1031,6 +1031,8 @@ export default {
     choose: "Đã chọn",
     chooseProduct: "Chọn sản phẩm",
     applyForProduct: "Áp dụng cho sản phẩm",
+    reduce: "Giảm",
+    reductionLevel: "Mức giảm",
   },
   gift: {
     gift: "Quà tặng",

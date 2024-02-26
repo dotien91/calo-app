@@ -629,6 +629,8 @@ export default {
     choose: "Choose",
     chooseProduct: "Choose product",
     applyForProduct: "Apply for product",
+    reduce: "Reduce",
+    reductionLevel: "Reduction level",
   },
   event: {
     addEvent: "Add Event",
