@@ -200,28 +200,58 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
         new Date(data?.coupon_id?.availableAt) > new Date()) ||
       (data?.coupon_id?.availableAt &&
         new Date(data?.coupon_id?.expired) < new Date()) ? (
-        <View style={styles.viewPrice}>
+        <View>
           <Text style={styles.textPrice}>{formatPrice(data?.price)}</Text>
           {data?.coupon_id?.availableAt &&
             new Date(data?.coupon_id?.availableAt) > new Date() && (
-              <Text style={styles.txtUpdate}>{`(${
-                translations.course.discountEntry
-              } ${formatFullDate(
-                new Date(data?.coupon_id.availableAt),
-              )})`}</Text>
+              <Text
+                style={[
+                  styles.txtUpdate,
+                  { color: palette.primary, marginLeft: 0 },
+                ]}
+              >
+                <Text
+                  style={{ ...CS.hnBold, fontSize: 14, color: palette.primary }}
+                >
+                  Flash sale
+                </Text>
+                {` ${translations.course.discountEntry.toLocaleLowerCase()} ${formatFullDate(
+                  new Date(data?.coupon_id.availableAt),
+                )}`}
+              </Text>
             )}
         </View>
       ) : (
-        <View style={styles.viewPrice}>
-          <Text style={styles.textPrice}>
-            {data?.coupon_id?.promotion_type === "percentage"
-              ? formatPrice(
-                  data?.price -
-                    (data?.price * data?.coupon_id?.promotion) / 100,
-                )
-              : formatPrice(data?.price - data?.coupon_id?.promotion)}
-          </Text>
-          <Text style={styles.textPriceOld}>{formatPrice(data?.price)}</Text>
+        <View>
+          <View style={styles.viewPrice}>
+            <Text style={styles.textPrice}>
+              {data?.coupon_id?.promotion_type === "percentage"
+                ? formatPrice(
+                    data?.price -
+                      (data?.price * data?.coupon_id?.promotion) / 100,
+                  )
+                : formatPrice(data?.price - data?.coupon_id?.promotion)}
+            </Text>
+            <Text style={styles.textPriceOld}>{formatPrice(data?.price)}</Text>
+          </View>
+          {data?.coupon_id?.expired &&
+            new Date(data?.coupon_id?.expired) > new Date() && (
+              <Text
+                style={[
+                  styles.txtUpdate,
+                  { color: palette.primary, marginLeft: 0 },
+                ]}
+              >
+                <Text
+                  style={{ ...CS.hnBold, fontSize: 14, color: palette.primary }}
+                >
+                  Flash sale
+                </Text>
+                {` ${translations.course.endAt.toLocaleLowerCase()} ${formatFullDate(
+                  new Date(data?.coupon_id.expired),
+                )}`}
+              </Text>
+            )}
         </View>
       )}
       {data?.promotion && data.promotion > 0 ? (

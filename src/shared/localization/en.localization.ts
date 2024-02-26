@@ -464,7 +464,8 @@ export default {
     videoReviewCourse: "Video review course",
     requiredTitle: "Title is required",
     publicCourse: "Public course",
-    discountEntry: "Discount entry at",
+    discountEntry: "start at",
+    endAt: "end at",
   },
   seeAll: "See all",
   settings: {

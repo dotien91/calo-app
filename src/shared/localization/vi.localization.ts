@@ -554,7 +554,8 @@ export default {
     typeCourse: "Kiểu khoá học",
     videoReviewCourse: "Video giới thiệu khoá học",
     requiredTitle: "Tiêu đề không được để trống",
-    discountEntry: "Giảm giá vào lúc",
+    discountEntry: "Bắt đầu lúc",
+    endAt: "Kết thúc lúc",
   },
   seeAll: "Xem tất cả",
   settings: {
