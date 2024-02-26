@@ -103,9 +103,9 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    namespace "com.ieltshunter"
+    namespace "com.ikigroup.ieltshunter"
     defaultConfig {
-        applicationId 'com.ieltshunter'
+        applicationId 'com.ikigroup.ieltshunter'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

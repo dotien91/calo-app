@@ -1,4 +1,4 @@
-package com.ieltshunter;
+package com.ikigroup.ieltshunter;
 
 
 import com.facebook.react.ReactActivity;
@@ -23,7 +23,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "Ielts Hunter";
+    return "IELTS Hunter";
   }
 
   /**
