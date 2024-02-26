@@ -3,6 +3,7 @@ import { View, Text, Pressable, ViewStyle, ColorValue } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import createStyles from "./Button.style";
 import { palette } from "@theme/themes";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 interface ButtonProps {
   onPress: () => void;
@@ -12,6 +13,8 @@ interface ButtonProps {
   textColor?: ColorValue;
   SvgSo?: React.JSX.Element;
   disabled: boolean;
+  type?: string;
+  iconName?: string;
 }
 
 export default function Button({
@@ -21,10 +24,29 @@ export default function Button({
   backgroundColor,
   textColor,
   SvgSo,
+  iconName,
   disabled,
+  type,
 }: ButtonProps) {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
+  const hasIcon = !!SvgSo || !!iconName;
+  const colorIcon = () => {
+    switch (type) {
+      case "primary":
+        return palette.primary;
+        break;
+      case "outline":
+        return palette.white;
+        break;
+      case "disabled":
+        return palette.textOpacity4;
+        break;
+      default:
+        return palette.text;
+        break;
+    }
+  };
 
   return (
     <Pressable
@@ -33,16 +55,35 @@ export default function Button({
         return [
           styles.viewButton,
           !!backgroundColor && { backgroundColor: backgroundColor },
-          { opacity: pressed ? 0.5 : 1.0 },
+          { opacity: pressed ? 0.8 : 1.0 },
           style && style,
           disabled && { backgroundColor: palette.borderColor },
+          type == "primary" && styles.btnPrimary,
+          type == "outline" && styles.btnOutline,
+          type == "disabled" && styles.btnDisabled,
         ];
       }}
       onPress={onPress}
     >
       {!!SvgSo && SvgSo}
-      {!!SvgSo && !!text && <View style={{ width: 10 }} />}
-      <Text style={[styles.textButton, !!textColor && { color: textColor }]}>
+      {!!iconName && (
+        <Icon
+          type={IconType.Feather}
+          name={iconName}
+          size={20}
+          color={colorIcon()}
+        />
+      )}
+      {hasIcon && !!text && <View style={{ width: 8 }} />}
+      <Text
+        style={[
+          styles.textButton,
+          !!textColor && { color: textColor },
+          type == "primary" && styles.txtBtnPrimary,
+          type == "outline" && styles.txtBtnOutline,
+          type == "disabled" && styles.txtBtnDisabled,
+        ]}
+      >
         {text}
       </Text>
     </Pressable>
