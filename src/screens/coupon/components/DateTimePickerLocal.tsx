@@ -1,11 +1,12 @@
-import PressableBtn from "@shared-components/button/PressableBtn";
-import CS from "@theme/styles";
-import { palette } from "@theme/themes";
-import { formatFullDate } from "@utils/date.utils";
 import React, { useState } from "react";
 import { Text, View, ViewStyle } from "react-native";
 import DatePicker from "react-native-date-picker";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
+
+import PressableBtn from "@shared-components/button/PressableBtn";
+import CS from "@theme/styles";
+import { palette } from "@theme/themes";
+import { formatFullDate } from "@utils/date.utils";
 
 interface DateTimePickerLocalProps {
   setTime: (time: Date) => void;
@@ -20,7 +21,6 @@ const DateTimePickerLocal = ({
   placeholder,
   style,
   timeDefault,
-  txtWarning,
 }: DateTimePickerLocalProps) => {
   const [date, setDate] = useState<Date>();
   const [open, setOpen] = useState(false);

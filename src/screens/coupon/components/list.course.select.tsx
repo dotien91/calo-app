@@ -1,5 +1,12 @@
-import { translations } from "@localization";
+import * as React from "react";
+import { View, StyleSheet, FlatList, Text, TextInput } from "react-native";
+import FastImage from "react-native-fast-image";
+import { getBottomSpace } from "react-native-iphone-screen-helper";
 import { useTheme } from "@react-navigation/native";
+import { debounce } from "lodash";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
+
+import { translations } from "@localization";
 import Button from "@shared-components/button/Button";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import Header from "@shared-components/header/Header";
@@ -7,10 +14,6 @@ import formatMoney from "@shared-components/input-money/format.money";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import IconSvg from "assets/svg";
-import * as React from "react";
-import { View, StyleSheet, FlatList, Text } from "react-native";
-import FastImage from "react-native-fast-image";
-import { getBottomSpace } from "react-native-iphone-screen-helper";
 import { TypedCourse } from "shared/models";
 
 interface ListCourseSelectProps {
@@ -22,6 +25,7 @@ interface ListCourseSelectProps {
   refreshControl: any;
   renderFooterComponent: any;
   refreshing: any;
+  setSearch: (text: string) => void;
 }
 
 const ListCourseSelect = ({
@@ -33,10 +37,12 @@ const ListCourseSelect = ({
   refreshControl,
   renderFooterComponent,
   refreshing,
+  setSearch,
 }: ListCourseSelectProps) => {
   // goij API lay danh sach lop
   const theme = useTheme();
   const { colors } = theme;
+  const [txt, setTxt] = React.useState("");
 
   const addItem = (id: string) => {
     setItemSelected([...itemSelected, id]);
@@ -44,7 +50,6 @@ const ListCourseSelect = ({
   const deleteItem = (id: string) => {
     setItemSelected([...itemSelected.filter((i) => i !== id)]);
   };
-  // const [itemSelected, setItemSelected] = React.useState<string[]>([]);
 
   const renderItemCourse = ({
     item,
@@ -55,13 +60,12 @@ const ListCourseSelect = ({
   }) => {
     const isSeleted =
       itemSelected.filter((items) => items === item._id).length > 0;
-    console.log("isSeleted", isSeleted);
     return (
       <PressableBtn
         key={index}
         style={{
-          ...CS.row,
-          height: 90,
+          flexDirection: "row",
+          minHeight: 90,
           marginTop: 8,
           paddingHorizontal: 16,
           gap: 10,
@@ -83,7 +87,7 @@ const ListCourseSelect = ({
             <IconSvg name="icCheckbox" size={22} color={palette.primary} />
           )}
         </View>
-        <View style={{ width: 80, height: 80, borderRadius: 4 }}>
+        <View style={styles.viewImage}>
           <FastImage
             source={{
               uri:
@@ -92,25 +96,63 @@ const ListCourseSelect = ({
               headers: { Authorization: "someAuthToken" },
               priority: FastImage.priority.normal,
             }}
-            style={{ width: 80, height: 80, borderRadius: 4 }}
+            style={styles.viewImage}
           />
         </View>
 
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, gap: 4 }}>
           <Text numberOfLines={1} style={CS.hnSemiBold}>
             {item.title}
           </Text>
           <Text numberOfLines={2} style={CS.hnSemiBold}>
             {item.description}
           </Text>
-          <Text style={CS.hnRegular}>{`${formatMoney(item.price)} đ`}</Text>
+          <Text
+            style={{ ...CS.hnRegular, color: colors.textOpacity8 }}
+          >{`${formatMoney(item.price)} đ`}</Text>
         </View>
       </PressableBtn>
     );
   };
+
+  const _onSearch = (v: string) => {
+    setSearch(v);
+  };
+
+  const onSearchDebounce = React.useCallback(debounce(_onSearch, 1000), []);
+
   return (
     <View style={styles.container}>
-      <Header text="Chọn khoá học" hideBackBtn />
+      <Header text="Chọn khoá học" onPressLeft={hideModal} />
+      <View
+        style={{
+          ...CS.row,
+          marginHorizontal: 16,
+          paddingHorizontal: 16,
+          borderRadius: 8,
+          height: 40,
+          gap: 8,
+          backgroundColor: colors.btnInactive2,
+        }}
+      >
+        <Icon
+          name={"search"}
+          type={IconType.Ionicons}
+          size={20}
+          color={colors.text}
+        />
+        <TextInput
+          style={{ flex: 1, ...CS.hnRegular }}
+          placeholderTextColor={colors.textOpacity4}
+          placeholder={translations.search}
+          value={txt}
+          onChangeText={(v) => {
+            setTxt(v);
+            onSearchDebounce(v);
+          }}
+          autoFocus={true}
+        />
+      </View>
       <FlatList
         scrollToOverflowEnabled
         data={listData}
@@ -125,16 +167,28 @@ const ListCourseSelect = ({
         ListFooterComponent={renderFooterComponent()}
         refreshing={refreshing}
       />
-      <Button
+      <View
         style={{
-          marginHorizontal: 16,
-          marginTop: 16,
-          backgroundColor: colors.primary,
+          ...CS.row,
+          marginTop: 8,
+          justifyContent: "space-between",
+          marginLeft: 16,
         }}
-        text={translations.post.save}
-        disabled={false}
-        onPress={hideModal}
-      />
+      >
+        <Text style={{ ...CS.hnRegular }}>
+          <Text style={{ color: colors.primary }}>{itemSelected.length}</Text>{" "}
+          {translations.coupon.choose}
+        </Text>
+        <Button
+          style={{
+            marginHorizontal: 16,
+            backgroundColor: colors.primary,
+          }}
+          text={translations.coupon.add}
+          disabled={false}
+          onPress={hideModal}
+        />
+      </View>
     </View>
   );
 };
@@ -145,5 +199,10 @@ const styles = StyleSheet.create({
   container: {
     ...CS.safeAreaView,
     marginBottom: getBottomSpace(),
+  },
+  viewImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 4,
   },
 });

@@ -11,6 +11,7 @@ import {
 import { useTheme, useRoute } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 import {
   EnumModalContentType,
@@ -29,11 +30,14 @@ import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import DateTimePickerLocal from "./components/DateTimePickerLocal";
 import ListCourseSelect from "./components/list.course.select";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { useListData } from "@helpers/hooks/useListData";
 import { TypedCourse } from "shared/models";
-import { getCourseList } from "@services/api/course.api";
+import {
+  getCourseList,
+  getCourseSale,
+  updateCourse,
+} from "@services/api/course.api";
 import useStore from "@services/zustand/store";
 
 const listTypeCoupon = [
@@ -58,12 +62,13 @@ const CouponCreateScreen = () => {
   const [typeCoupon, setTypeCoupon] = useState(listTypeCoupon[0]);
   const [showModal, setShowModal] = useState(false);
   const [itemSelected, setItemSelected] = useState<string[]>([]);
-  // const [startDate, setStartDate] = React.useState<Date>();
-  // const [endDate, setEndDate] = React.useState<Date>();
+  const [listCourse, setListCourse] = useState<string[]>([]);
+  const [search, setSearch] = useState<string>();
 
   const paramsRequest = {
     limit: "10",
     user_id: userData?._id,
+    search: search,
   };
   const {
     listData,
@@ -72,9 +77,26 @@ const CouponCreateScreen = () => {
     renderFooterComponent,
     refreshing,
   } = useListData<TypedCourse>(paramsRequest, getCourseList);
+
+  const _getCourseSale = (params) => {
+    getCourseSale(params).then((res) => {
+      if (!res.isError) {
+        const data = res.data;
+        const listCourseId = [];
+        for (let index = 0; index < data.length; index++) {
+          const element = data[index];
+          listCourseId.push(element._id);
+        }
+        setItemSelected(listCourseId);
+        setListCourse(listCourseId);
+      } else {
+        console.log(res.message);
+      }
+    });
+  };
+
   useEffect(() => {
     if (data) {
-      console.log("param data..", data);
       setValue("title", data.title);
       setValue("description", data.description);
       setValue("promotion", data.promotion.toString());
@@ -82,6 +104,8 @@ const CouponCreateScreen = () => {
       setTypeCoupon(listTypeCoupon.find((i) => i.type === data.promotion_type));
       setValue("start_date", data.availableAt);
       setValue("end_date", data.expired);
+      paramsRequest.coupon_id = data._id;
+      _getCourseSale(paramsRequest);
     }
   }, [data]);
   const {
@@ -105,11 +129,36 @@ const CouponCreateScreen = () => {
   });
 
   const navigateWithResponse = (res) => {
-    console.log(res);
+    // console.log(res);
     if (!res.isError) {
+      if (itemSelected.length > 0) {
+        for (let index = 0; index < itemSelected.length; index++) {
+          const element = itemSelected[index];
+          const params = {
+            _id: element,
+            coupon_id: res.data._id,
+          };
+          updateCourse(params);
+        }
+      }
+      if (listCourse.length > 0) {
+        const data = listCourse.filter(function (el) {
+          return itemSelected.indexOf(el) < 0;
+        });
+        for (let index = 0; index < data.length; index++) {
+          const element = data[index];
+          const params = {
+            _id: element,
+            coupon_id: null,
+          };
+          updateCourse(params);
+        }
+      }
       showToast({
         type: "success",
-        message: translations.coupon.addCouponSuccess,
+        message: data?._id
+          ? translations.coupon.updateCouponSuccess
+          : translations.coupon.addCouponSuccess,
       });
       eventEmitter.emit("refresh_list_coupon");
       NavigationService.goBack();
@@ -135,23 +184,16 @@ const CouponCreateScreen = () => {
       availableAt: dataInput.start_date,
       expired: dataInput.end_date,
     };
-    // if (startDate) {
-    //   params.availableAt = startDate;
-    // }
-    // if (endDate) {
-    //   params.expired = endDate;
-    // }
-    console.log(params);
+
+    // console.log(params);
     // call api create coupon
     if (data?._id) {
       showSuperModal({
         contentModalType: EnumModalContentType.Loading,
         styleModalType: EnumStyleModalType.Middle,
       });
-      console.log("update");
-
       params._id = data._id;
-      console.log(params);
+      // console.log(params);
       UpdateCoupon(params).then(navigateWithResponse);
     } else {
       showSuperModal({
@@ -206,12 +248,21 @@ const CouponCreateScreen = () => {
             justifyContent: "space-between",
           }}
         >
-          <Text style={styles.textTitle}>{translations.coupon.add}</Text>
-          <Icon
-            name="chevron-forward-outline"
-            type={IconType.Ionicons}
-            size={20}
-          />
+          <Text style={styles.textTitle}>
+            {translations.coupon.applyForProduct}
+          </Text>
+          <View style={CS.row}>
+            <Text style={styles.textTitle}>
+              {itemSelected.length > 0
+                ? `${itemSelected.length} ${translations.coupon.choose}`
+                : translations.coupon.chooseProduct}
+            </Text>
+            <Icon
+              name="chevron-forward-outline"
+              type={IconType.Ionicons}
+              size={20}
+            />
+          </View>
         </PressableBtn>
         <InputHook
           setFocus={setFocus}
@@ -361,6 +412,8 @@ const CouponCreateScreen = () => {
       </ScrollView>
       <Modal visible={showModal}>
         <ListCourseSelect
+          search={search}
+          setSearch={setSearch}
           itemSelected={itemSelected}
           setItemSelected={setItemSelected}
           hideModal={() => {

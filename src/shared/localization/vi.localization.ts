@@ -554,6 +554,7 @@ export default {
     typeCourse: "Kiểu khoá học",
     videoReviewCourse: "Video giới thiệu khoá học",
     requiredTitle: "Tiêu đề không được để trống",
+    discountEntry: "Giảm giá vào lúc",
   },
   seeAll: "Xem tất cả",
   settings: {
@@ -1004,7 +1005,7 @@ export default {
     createCoupon: "Thêm mới mã giảm giá",
     updateCoupon: "Cập nhật mã giảm giá",
     saveCoupon: "Lưu mã giảm giá",
-    add: "Thêm mới",
+    add: "Thêm",
     update: "Cập nhật",
     save: "Lưu",
     title: "Tên mã giảm giá",
@@ -1013,6 +1014,10 @@ export default {
     addCouponSuccess: "Thêm mới mã giảm giá thành công!",
     addCouponFailed:
       "Thêm mới mã giảm giá không thành công! Vui lòng thử lại sau.",
+
+    updateCouponSuccess: "Cập nhật mã giảm giá thành công!",
+    updateCouponFailed:
+      "Cập nhật mã giảm giá không thành công! Vui lòng thử lại sau.",
     listCouponForMyCourse: "Danh sách mã giảm giá cho khoá học của tôi",
     percentage: "Theo %",
     value: "Mức giảm",
@@ -1022,6 +1027,10 @@ export default {
     deleteCouponSuccess: "Xoá mã giảm giá thành công!",
     deleteCouponFaild: "Xoá mã giảm giá thất bại! Vui lòng thử lại",
     warningDeleteCoupon: "Bạn có thật sự muốn xoá mã giảm giá này không?",
+    selectCourse: "Chọn khoá học",
+    choose: "Đã chọn",
+    chooseProduct: "Chọn sản phẩm",
+    applyForProduct: "Áp dụng cho sản phẩm",
   },
   gift: {
     gift: "Quà tặng",

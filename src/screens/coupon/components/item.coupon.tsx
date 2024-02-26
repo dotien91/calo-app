@@ -61,9 +61,19 @@ const ItemCoupon = ({ data }: ItemCouponProps) => {
     });
   };
   return (
-    <View style={styles.container}>
+    <PressableBtn
+      onPress={isMyCoupon && goToEditCoupon}
+      style={styles.container}
+    >
       <View style={styles.viewIconCoupon}>
-        <IconSvg name="logoIeltsHunter" size={56} />
+        <IconSvg
+          name={
+            promotion_type === "percentage"
+              ? "icDiscountPercent"
+              : "icDiscountValue"
+          }
+          size={56}
+        />
       </View>
       <View style={styles.detailPromotion}>
         <Text numberOfLines={2} style={styles.textTitle}>
@@ -78,17 +88,17 @@ const ItemCoupon = ({ data }: ItemCouponProps) => {
             : `${formatMoney(promotion)} đ`}
         </Text>
       </View>
-      {isMyCoupon && (
+      {/* {isMyCoupon && (
         <PressableBtn onPress={goToEditCoupon} style={styles.editBtn}>
           <Icon name="edit" type={IconType.Feather} size={15} />
         </PressableBtn>
-      )}
+      )} */}
       {isMyCoupon && (
         <PressableBtn onPress={deleteItem} style={styles.deleteBtn}>
           <Icon name="trash" type={IconType.Feather} size={15} />
         </PressableBtn>
       )}
-    </View>
+    </PressableBtn>
   );
 };
 
@@ -122,24 +132,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   textDescription: {
+    ...CS.hnSemiBold,
+    fontSize: 16,
+  },
+  textPromotion: {
     ...CS.hnRegular,
     fontSize: 14,
   },
-  textPromotion: {
-    ...CS.hnSemiBold,
-    fontSize: 14,
-  },
-  editBtn: {
-    position: "absolute",
-    top: 8,
-    right: 8,
-    zIndex: 1,
-    width: 30,
-    height: 30,
-    ...CS.center,
-    borderRadius: 15,
-    backgroundColor: palette.background,
-  },
+
   deleteBtn: {
     position: "absolute",
     bottom: 8,

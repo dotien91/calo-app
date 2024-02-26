@@ -53,7 +53,7 @@ export const palette = {
 
   btnNegative: "#FA8072",
   btnActive: "#E14242",
-  // btnInactive: "#E8EBEF",
+  btnInactive2: "#E8EBEF",
   btnLight: "#F5F5F5",
   btnLightSmoke: "#FA8072",
 

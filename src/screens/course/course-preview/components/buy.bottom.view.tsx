@@ -52,15 +52,30 @@ const BuyBottom = ({ show, data, courseRoom }: BuyBottomProps) => {
         { maxHeight: animationHeight, paddingVertical: show ? 8 : 0 },
       ]}
     >
-      {show && (!data?.promotion || data.promotion == 0) && (
+      {((show && data?.coupon_id == null) ||
+        (data?.coupon_id?.availableAt &&
+          new Date(data?.coupon_id?.availableAt) > new Date()) ||
+        (data?.coupon_id?.availableAt &&
+          new Date(data?.coupon_id?.expired) < new Date())) && (
         <View style={[CS.flex1, { justifyContent: "center" }]}>
           <Text style={styles.textPrice}>{formatPrice(data?.price)}</Text>
         </View>
       )}
-      {show && data?.promotion && data.promotion > 0 ? (
+      {show &&
+      data?.coupon_id &&
+      data.coupon_id.promotion > 0 &&
+      data?.coupon_id?.availableAt &&
+      new Date(data?.coupon_id?.availableAt) < new Date() &&
+      data?.coupon_id?.availableAt &&
+      new Date(data?.coupon_id?.expired) > new Date() ? (
         <View style={[CS.flex1, { justifyContent: "center" }]}>
           <Text style={styles.textPrice}>
-            {formatPrice(data?.price - (data?.price * data.promotion) / 100)}
+            {data?.coupon_id?.promotion_type === "promotion_type"
+              ? formatPrice(
+                  data?.price -
+                    (data?.price * data?.coupon_id?.promotion) / 100,
+                )
+              : formatPrice(data?.price - data?.coupon_id?.promotion)}
           </Text>
           <Text style={styles.textPriceOld}>{formatPrice(data?.price)}</Text>
         </View>

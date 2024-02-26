@@ -58,6 +58,8 @@ export interface CouponType {
   promotion_min_trigger?: number;
   visible?: string;
   user_id?: string;
+  availableAt?: string;
+  expired?: string;
 }
 
 export async function CreateNewCoupon(data: CouponType) {

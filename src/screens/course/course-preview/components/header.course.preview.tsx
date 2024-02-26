@@ -8,7 +8,7 @@ import { palette } from "@theme/themes";
 import { translations } from "@localization";
 import { formatPrice } from "@helpers/string.helper";
 import { PlayVideo } from "@screens/course/detail-teacher/components/header.teacher.view";
-import { formatVNDate } from "@utils/date.utils";
+import { formatFullDate, formatVNDate } from "@utils/date.utils";
 import StarRate from "@screens/course/components/star.rate.view";
 import IconSvg from "assets/svg";
 import { SCREENS } from "constants";
@@ -195,14 +195,31 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
         <IconSvg name="icCC" size={20} color={palette.textOpacity8} />
         <Text style={styles.txtUpdate}>{formatLanguage(data?.language)}</Text>
       </View>
-      {data?.promotion == 0 ? (
+      {data?.coupon_id == null ||
+      (data?.coupon_id?.availableAt &&
+        new Date(data?.coupon_id?.availableAt) > new Date()) ||
+      (data?.coupon_id?.availableAt &&
+        new Date(data?.coupon_id?.expired) < new Date()) ? (
         <View style={styles.viewPrice}>
           <Text style={styles.textPrice}>{formatPrice(data?.price)}</Text>
+          {data?.coupon_id?.availableAt &&
+            new Date(data?.coupon_id?.availableAt) > new Date() && (
+              <Text style={styles.txtUpdate}>{`(${
+                translations.course.discountEntry
+              } ${formatFullDate(
+                new Date(data?.coupon_id.availableAt),
+              )})`}</Text>
+            )}
         </View>
       ) : (
         <View style={styles.viewPrice}>
           <Text style={styles.textPrice}>
-            {formatPrice(data?.price - (data?.price * data?.promotion) / 100)}
+            {data?.coupon_id?.promotion_type === "promotion_type"
+              ? formatPrice(
+                  data?.price -
+                    (data?.price * data?.coupon_id?.promotion) / 100,
+                )
+              : formatPrice(data?.price - data?.coupon_id?.promotion)}
           </Text>
           <Text style={styles.textPriceOld}>{formatPrice(data?.price)}</Text>
         </View>
@@ -289,5 +306,6 @@ const styles = StyleSheet.create({
   viewPrice: {
     flexDirection: "row",
     marginTop: 20,
+    alignItems: "flex-end",
   },
 });
