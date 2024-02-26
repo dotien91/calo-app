@@ -1,10 +1,8 @@
 import * as React from "react";
-import { View, StyleSheet, FlatList, Text, TextInput } from "react-native";
+import { View, StyleSheet, FlatList, Text } from "react-native";
 import FastImage from "react-native-fast-image";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
 import { useTheme } from "@react-navigation/native";
-import { debounce } from "lodash";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 import { translations } from "@localization";
 import Button from "@shared-components/button/Button";
@@ -12,9 +10,9 @@ import PressableBtn from "@shared-components/button/PressableBtn";
 import Header from "@shared-components/header/Header";
 import formatMoney from "@shared-components/input-money/format.money";
 import CS from "@theme/styles";
-import { palette } from "@theme/themes";
-import IconSvg from "assets/svg";
 import { TypedCourse } from "shared/models";
+import SearchInput from "@shared-components/search-input.tsx/search.input";
+import CustomCheckbox from "@shared-components/form/CustomCheckbox";
 
 interface ListCourseSelectProps {
   setItemSelected: (list: string[]) => void;
@@ -42,7 +40,6 @@ const ListCourseSelect = ({
   // goij API lay danh sach lop
   const theme = useTheme();
   const { colors } = theme;
-  const [txt, setTxt] = React.useState("");
 
   const addItem = (id: string) => {
     setItemSelected([...itemSelected, id]);
@@ -68,26 +65,13 @@ const ListCourseSelect = ({
           minHeight: 90,
           marginTop: 8,
           paddingHorizontal: 16,
-          gap: 10,
         }}
         onPress={() => {
           isSeleted ? deleteItem(item._id) : addItem(item._id);
         }}
       >
-        <View
-          style={{
-            width: 20,
-            height: 20,
-            borderWidth: isSeleted ? 0 : 1,
-            borderRadius: 4,
-            borderColor: palette.borderColor,
-          }}
-        >
-          {isSeleted && (
-            <IconSvg name="icCheckbox" size={22} color={palette.primary} />
-          )}
-        </View>
-        <View style={styles.viewImage}>
+        <CustomCheckbox isSelected={isSeleted} />
+        <View style={[styles.viewImage, { marginLeft: 10, marginRight: 12 }]}>
           <FastImage
             source={{
               uri:
@@ -115,45 +99,22 @@ const ListCourseSelect = ({
     );
   };
 
-  const _onSearch = (v: string) => {
-    setSearch(v);
-  };
-
-  const onSearchDebounce = React.useCallback(debounce(_onSearch, 1000), []);
-
   return (
     <View style={styles.container}>
-      <Header text="Chọn khoá học" onPressLeft={hideModal} />
-      <View
-        style={{
-          ...CS.row,
-          marginHorizontal: 16,
-          paddingHorizontal: 16,
-          borderRadius: 8,
-          height: 40,
-          gap: 8,
-          backgroundColor: colors.btnInactive2,
+      <Header
+        text="Chọn khoá học"
+        onPressLeft={hideModal}
+        customStyle={{
+          shadowColor: colors.background,
+          marginBottom: 0,
         }}
-      >
-        <Icon
-          name={"search"}
-          type={IconType.Ionicons}
-          size={20}
-          color={colors.text}
-        />
-        <TextInput
-          style={{ flex: 1, ...CS.hnRegular }}
-          placeholderTextColor={colors.textOpacity4}
-          placeholder={translations.search}
-          value={txt}
-          onChangeText={(v) => {
-            setTxt(v);
-            onSearchDebounce(v);
-          }}
-          autoFocus={true}
-        />
+      />
+      <View style={{ backgroundColor: colors.background, paddingVertical: 8 }}>
+        <SearchInput setTxtSearch={setSearch} autoFocus />
       </View>
+
       <FlatList
+        style={{ backgroundColor: colors.background }}
         scrollToOverflowEnabled
         data={listData}
         renderItem={renderItemCourse}
@@ -172,18 +133,17 @@ const ListCourseSelect = ({
           ...CS.row,
           marginTop: 8,
           justifyContent: "space-between",
-          marginLeft: 16,
+          marginHorizontal: 16,
+          gap: 8,
         }}
       >
-        <Text style={{ ...CS.hnRegular }}>
+        <Text style={{ ...CS.hnRegular, flex: 1 }}>
           <Text style={{ color: colors.primary }}>{itemSelected.length}</Text>{" "}
           {translations.coupon.choose}
         </Text>
         <Button
-          style={{
-            marginHorizontal: 16,
-            backgroundColor: colors.primary,
-          }}
+          type={itemSelected.length > 0 ? "primary" : "disabled"}
+          style={{ flex: 1 }}
           text={translations.coupon.add}
           disabled={false}
           onPress={hideModal}

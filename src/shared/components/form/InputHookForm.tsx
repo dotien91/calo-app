@@ -39,6 +39,7 @@ interface InputHookProps {
   showPlaceholder?: boolean;
   setFocus?: any;
   countLength?: boolean;
+  textWarning?: string;
 }
 
 // eslint-disable-next-line react/display-name
@@ -59,6 +60,7 @@ const InputHook: React.FC<InputHookProps> = ({
   showPlaceholder,
   setFocus,
   countLength,
+  textWarning,
 }) => {
   const refInput = useRef<TextInput>(null);
   const _forcusInput = () => {
@@ -73,7 +75,7 @@ const InputHook: React.FC<InputHookProps> = ({
     <View
       style={[
         styles.wrapper,
-        showPlaceholder ? { minHeight: 84, marginTop: 8 } : {},
+        showPlaceholder ? { minHeight: 76, marginTop: 8 } : {},
       ]}
     >
       {showPlaceholder && (
@@ -85,9 +87,6 @@ const InputHook: React.FC<InputHookProps> = ({
           }}
         >
           <Text style={styles.textTitle}>{inputProps.placeholder}</Text>
-          {countLength && (
-            <Text style={styles.textCount}>{`${length}/${maxLength}`}</Text>
-          )}
         </View>
       )}
       <Pressable
@@ -139,6 +138,20 @@ const InputHook: React.FC<InputHookProps> = ({
       </Pressable>
 
       {errorTxt && <Text style={styles.errorText}>{errorTxt}</Text>}
+      {textWarning && (
+        <View
+          style={{
+            flexDirection: "row",
+            paddingHorizontal: 20,
+            justifyContent: "space-between",
+          }}
+        >
+          <Text style={styles.textCount}>{textWarning}</Text>
+          {countLength && (
+            <Text style={styles.textCount}>{`${length}/${maxLength}`}</Text>
+          )}
+        </View>
+      )}
     </View>
   );
 };
@@ -148,19 +161,19 @@ const styles = StyleSheet.create({
   wrapper: {
     // ...CommonStyle.mb10,
     // ...CommonStyle.flex1,
-    minHeight: 60,
+    minHeight: 48,
     width: "100%",
   },
   viewBorder: {
     marginTop: 8,
     marginHorizontal: 20,
     paddingHorizontal: 20,
-    height: 48,
+    height: 40,
     alignItems: "center",
     flexDirection: "row",
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: palette.borderColor,
+    borderColor: palette.borderColor1,
     gap: 15,
   },
   input: {
@@ -179,5 +192,7 @@ const styles = StyleSheet.create({
   },
   textCount: {
     ...CommonStyle.hnRegular,
+    fontSize: 12,
+    color: palette.textOpacity6,
   },
 });

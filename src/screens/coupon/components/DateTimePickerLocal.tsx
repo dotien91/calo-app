@@ -48,7 +48,7 @@ const DateTimePickerLocal = ({
               textAlign: "center",
               color:
                 date || timeDefault !== ""
-                  ? palette.mainColor2
+                  ? palette.textOpacity6
                   : palette.placeholder,
             }}
           >

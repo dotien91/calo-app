@@ -41,20 +41,20 @@ import {
 import useStore from "@services/zustand/store";
 import { TextInput } from "react-native-gesture-handler";
 
-const listTypeCoupon = [
-  {
-    id: 1,
-    type: "percentage",
-    value: translations.coupon.percentage,
-  },
-  {
-    id: 2,
-    type: "value",
-    value: translations.coupon.value,
-  },
-];
-
 const CouponCreateScreen = () => {
+  const listTypeCoupon = [
+    {
+      id: 2,
+      type: "value",
+      value: translations.coupon.value,
+    },
+    {
+      id: 1,
+      type: "percentage",
+      value: translations.coupon.percentage,
+    },
+  ];
+
   const userData = useStore((store) => store.userData);
   const theme = useTheme();
   const { colors } = theme;
@@ -204,6 +204,19 @@ const CouponCreateScreen = () => {
       CreateNewCoupon(params).then(navigateWithResponse);
     }
   };
+
+  const ViewLine = () => {
+    return (
+      <View
+        style={{
+          height: 1,
+          backgroundColor: colors.borderColor1,
+          marginHorizontal: 20,
+        }}
+      />
+    );
+  };
+
   return (
     <View style={styles.container}>
       <Header
@@ -216,110 +229,175 @@ const CouponCreateScreen = () => {
         }
       />
       <ScrollView
-        style={[CS.flex1, { marginBottom: getBottomSpace() }]}
+        style={[
+          CS.flex1,
+          {
+            backgroundColor: colors.background2,
+          },
+        ]}
         showsVerticalScrollIndicator={false}
       >
-        <InputHook
-          setFocus={setFocus}
-          name="title"
-          customStyle={CS.flex1}
-          inputProps={{
-            type: "text",
-            defaultValue: "",
-            placeholder: translations.coupon.title,
-          }}
-          control={control}
-          rules={{
-            required: {
-              value: true,
-              message: translations.required,
-            },
-          }}
-          errorTxt={errors.title?.message}
-          maxLength={32}
-          showPlaceholder
-          countLength
-        />
-        <PressableBtn
-          onPress={() => setShowModal(!showModal)}
-          style={{
-            ...CS.row,
-            marginVertical: 8,
-            paddingHorizontal: 20,
-            justifyContent: "space-between",
-          }}
-        >
-          <Text style={styles.textTitle}>
-            {translations.coupon.applyForProduct}
-          </Text>
-          <View style={CS.row}>
+        <View style={{ backgroundColor: colors.background }}>
+          <View style={{ backgroundColor: colors.background2, height: 10 }} />
+          <InputHook
+            textWarning={translations.coupon.notDisplay}
+            setFocus={setFocus}
+            name="title"
+            customStyle={CS.flex1}
+            inputProps={{
+              type: "text",
+              defaultValue: "",
+              placeholder: translations.coupon.coupon,
+            }}
+            control={control}
+            rules={{
+              required: {
+                value: true,
+                message: translations.required,
+              },
+            }}
+            errorTxt={errors.title?.message}
+            maxLength={40}
+            showPlaceholder
+            countLength
+          />
+          <InputHook
+            setFocus={setFocus}
+            name="description"
+            customStyle={CS.flex1}
+            inputProps={{
+              type: "text",
+              defaultValue: "",
+              placeholder: translations.coupon.description,
+            }}
+            control={control}
+            rules={{
+              required: {
+                value: true,
+                message: translations.required,
+              },
+            }}
+            errorTxt={errors.description?.message}
+            maxLength={100}
+            showPlaceholder
+          />
+          <View style={{ backgroundColor: colors.background2, height: 14 }} />
+          <PressableBtn
+            onPress={() => setShowModal(!showModal)}
+            style={{
+              ...CS.row,
+              paddingHorizontal: 20,
+              justifyContent: "space-between",
+              height: 40,
+            }}
+          >
             <Text style={styles.textTitle}>
-              {itemSelected.length > 0
-                ? `${itemSelected.length} ${translations.coupon.choose}`
-                : translations.coupon.chooseProduct}
+              {translations.coupon.applyForProduct}
             </Text>
-            <Icon
-              name="chevron-forward-outline"
-              type={IconType.Ionicons}
-              size={20}
-            />
+            <View style={CS.row}>
+              <Text style={[styles.textTitle, { color: colors.textOpacity6 }]}>
+                {itemSelected.length > 0
+                  ? `${itemSelected.length} ${translations.coupon.choose}`
+                  : translations.coupon.chooseProduct}
+              </Text>
+              <Icon
+                name="chevron-forward-outline"
+                type={IconType.Ionicons}
+                size={20}
+              />
+            </View>
+          </PressableBtn>
+          <View style={{ backgroundColor: colors.background2, height: 16 }} />
+
+          <View style={{ marginVertical: 8, paddingHorizontal: 20 }}>
+            <Text style={styles.textTitle}>{translations.coupon.type}</Text>
           </View>
-        </PressableBtn>
-        <InputHook
-          setFocus={setFocus}
-          name="description"
-          customStyle={CS.flex1}
-          inputProps={{
-            type: "text",
-            defaultValue: "",
-            placeholder: translations.coupon.description,
-          }}
-          control={control}
-          rules={{
-            required: {
-              value: true,
-              message: translations.required,
-            },
-          }}
-          errorTxt={errors.description?.message}
-          maxLength={32}
-          showPlaceholder
-        />
-        <View style={{ marginVertical: 8, paddingHorizontal: 20 }}>
-          <Text style={styles.textTitle}>{translations.coupon.type}</Text>
-        </View>
-        <View style={{ flexDirection: "row", paddingHorizontal: 20, gap: 8 }}>
-          {listTypeCoupon.map((item, index) => {
-            const isSelect = item.id === typeCoupon.id;
-            return (
-              <Pressable
-                key={index}
-                style={{
-                  flex: 1,
-                  ...CS.center,
-                  flexDirection: "row",
-                  borderRadius: 8,
-                  height: 30,
-                  gap: 8,
-                }}
-                onPress={() => setTypeCoupon(item)}
-              >
-                <View style={styles.borderRadius}>
-                  {isSelect && <View style={styles.radiusSelect} />}
-                </View>
-                <Text>{item.value}</Text>
-              </Pressable>
-            );
-          })}
-        </View>
-        <View style={styles.viewReduce}>
-          <Text style={styles.textTitle}>
-            {translations.coupon.reductionLevel}
-          </Text>
-          <View style={styles.viewInputReduce}>
-            <Text style={styles.textReduce}>
-              {typeCoupon.type === "percentage" ? "%" : "VNĐ"}
+          <ViewLine />
+          <View style={{ flexDirection: "row", paddingHorizontal: 20, gap: 8 }}>
+            {listTypeCoupon.map((item, index) => {
+              const isSelect = item.id === typeCoupon.id;
+              return (
+                <Pressable
+                  key={index}
+                  style={{
+                    flex: 1,
+                    ...CS.center,
+                    flexDirection: "row",
+                    borderRadius: 8,
+                    height: 30,
+                    gap: 8,
+                  }}
+                  onPress={() => setTypeCoupon(item)}
+                >
+                  <View style={styles.borderRadius}>
+                    {isSelect && <View style={styles.radiusSelect} />}
+                  </View>
+                  <Text>{item.value}</Text>
+                </Pressable>
+              );
+            })}
+          </View>
+          <View style={styles.viewReduce}>
+            <Text style={[styles.txtReductionLevel]}>
+              {translations.coupon.reductionLevel}
             </Text>
+            <View style={[styles.viewInputReduce, { flex: 2 }]}>
+              <Text style={styles.textReduce}>
+                {typeCoupon.type === "percentage" ? "%" : "VND"}
+              </Text>
+              <Controller
+                control={control}
+                rules={{
+                  required: {
+                    value: true,
+                    message: translations.required,
+                  },
+                  validate: (val: string) => {
+                    const va = Number(val);
+                    if (typeCoupon.type === "percentage") {
+                      if (va > 100 || va < 0) {
+                        return translations.coupon.warningCoupon;
+                      }
+                    } else {
+                      if (va < 0) {
+                        return translations.coupon.warningCoupon;
+                      }
+                    }
+                  },
+                }}
+                render={({ field: { onChange, value } }) => {
+                  const setTime = (time: string) => {
+                    onChange(time);
+                  };
+                  return (
+                    <TextInput
+                      style={{ flex: 1, ...CS.hnMedium }}
+                      placeholder={"0"}
+                      onChangeText={setTime}
+                      value={value}
+                      textAlign="center"
+                      keyboardType="numeric"
+                    />
+                  );
+                }}
+                name={"promotion"}
+              />
+              <Text style={styles.textReduce}>
+                {translations.coupon.reduce}
+              </Text>
+            </View>
+          </View>
+          {errors.promotion?.message && (
+            <Text style={styles.errorText}>{errors.promotion?.message}</Text>
+          )}
+
+          <View style={{ backgroundColor: colors.background2, height: 16 }} />
+
+          <View style={{ marginVertical: 8, paddingHorizontal: 20 }}>
+            <Text style={styles.textTitle}>{translations.coupon.period}</Text>
+          </View>
+          <ViewLine />
+          <View style={{ paddingHorizontal: 20 }}>
             <Controller
               control={control}
               rules={{
@@ -329,93 +407,62 @@ const CouponCreateScreen = () => {
                 },
               }}
               render={({ field: { onChange, value } }) => {
-                const setTime = (time: string) => {
+                const setTime = (time: Date) => {
                   onChange(time);
                 };
                 return (
-                  <TextInput
-                    style={{ flex: 1, ...CS.hnRegular }}
-                    placeholder={"0"}
-                    onChangeText={setTime}
-                    value={value}
-                    textAlign="center"
+                  <DateTimePickerLocal
+                    style={{ flex: 1 }}
+                    placeholder={translations.course.startTime}
+                    setTime={setTime}
+                    timeDefault={value}
+                    txtWarning={errors.start_date?.message}
                   />
                 );
               }}
-              name={"promotion"}
+              name={"start_date"}
             />
-            <Text style={styles.textReduce}>{translations.coupon.reduce}</Text>
+
+            <Controller
+              control={control}
+              rules={{
+                required: {
+                  value: true,
+                  message: translations.required,
+                },
+              }}
+              render={({ field: { onChange, value } }) => {
+                const setTime = (time: Date) => {
+                  onChange(time);
+                };
+                return (
+                  <DateTimePickerLocal
+                    style={{ flex: 1 }}
+                    placeholder={translations.course.endTime}
+                    setTime={setTime}
+                    timeDefault={value}
+                    txtWarning={errors.end_date?.message}
+                  />
+                );
+              }}
+              name={"end_date"}
+            />
           </View>
         </View>
-
-        <View style={{ marginVertical: 8, paddingHorizontal: 20 }}>
-          <Text style={styles.textTitle}>{translations.coupon.period}</Text>
-        </View>
-        <View style={{ paddingHorizontal: 20 }}>
-          <Controller
-            control={control}
-            rules={{
-              required: {
-                value: true,
-                message: translations.required,
-              },
-            }}
-            render={({ field: { onChange, value } }) => {
-              const setTime = (time: Date) => {
-                onChange(time);
-              };
-              return (
-                <DateTimePickerLocal
-                  style={{ flex: 1 }}
-                  placeholder={translations.course.startTime}
-                  setTime={setTime}
-                  timeDefault={value}
-                  txtWarning={errors.start_date?.message}
-                />
-              );
-            }}
-            name={"start_date"}
-          />
-
-          <Controller
-            control={control}
-            rules={{
-              required: {
-                value: true,
-                message: translations.required,
-              },
-            }}
-            render={({ field: { onChange, value } }) => {
-              const setTime = (time: Date) => {
-                onChange(time);
-              };
-              return (
-                <DateTimePickerLocal
-                  style={{ flex: 1 }}
-                  placeholder={translations.course.endTime}
-                  setTime={setTime}
-                  timeDefault={value}
-                  txtWarning={errors.end_date?.message}
-                />
-              );
-            }}
-            name={"end_date"}
-          />
-        </View>
-
-        <Button
-          style={{
-            marginHorizontal: 16,
-            marginTop: 16,
-            backgroundColor: colors.primary,
-          }}
-          text={
-            data?._id ? translations.coupon.update : translations.coupon.add
-          }
-          disabled={false}
-          onPress={handleSubmit(onSubmit)}
-        />
       </ScrollView>
+      <Button
+        style={{
+          marginHorizontal: 16,
+          backgroundColor: colors.primary,
+        }}
+        text={
+          data?._id
+            ? translations.coupon.updateCoupon
+            : translations.coupon.createCoupon
+        }
+        disabled={false}
+        onPress={handleSubmit(onSubmit)}
+      />
       <Modal visible={showModal}>
         <ListCourseSelect
           search={search}
@@ -467,21 +514,31 @@ const styles = StyleSheet.create({
     width: 50,
     textAlign: "center",
   },
+  txtReductionLevel: {
+    ...CS.hnRegular,
+    ...CS.flex1,
+    color: palette.textOpacity8,
+  },
   viewReduce: {
     paddingHorizontal: 20,
     ...CS.row,
     justifyContent: "space-between",
     gap: 16,
-    marginTop: 8,
+    marginVertical: 8,
   },
   viewInputReduce: {
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: palette.borderColor,
+    borderColor: palette.borderColor1,
     flex: 1,
     height: 40,
     paddingHorizontal: 8,
     gap: 8,
     ...CS.row,
+  },
+  errorText: {
+    color: palette.danger,
+    paddingHorizontal: 20,
+    marginTop: 4,
   },
 });

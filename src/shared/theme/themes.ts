@@ -19,6 +19,7 @@ export const palette = {
   shadow: "#757575",
   text: "#161C24",
   borderColor: "rgba(0, 53, 128, 0.2)",
+  borderColor1: "rgba(0, 53, 128, 0.08)",
   borderColorDark: "#333942",
   danger: "rgb(208, 2, 27)",
   info: "#f77816",

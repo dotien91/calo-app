@@ -618,7 +618,7 @@ export default {
     updateCouponSuccess: "Update discount code successfully",
     updateCouponFailed: "Update discount code failed",
     listCouponForMyCourse: "List coupon for my course",
-    percentage: "Percentage",
+    percentage: "Percentage (%)",
     value: "Value",
     warningCoupon: "Invalid reduced value",
     period: "Period",
@@ -632,6 +632,7 @@ export default {
     applyForProduct: "Apply for product",
     reduce: "Reduce",
     reductionLevel: "Reduction level",
+    notDisplay: "Not displayed to buyer",
   },
   event: {
     addEvent: "Add Event",

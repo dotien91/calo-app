@@ -1010,7 +1010,7 @@ export default {
     update: "Cập nhật",
     save: "Lưu",
     title: "Tên mã giảm giá",
-    description: "Chi tiết mã giảm giá",
+    description: "Mô tả",
     promotion: "Phần trăm giảm giá",
     addCouponSuccess: "Thêm mới mã giảm giá thành công!",
     addCouponFailed:
@@ -1020,7 +1020,7 @@ export default {
     updateCouponFailed:
       "Cập nhật mã giảm giá không thành công! Vui lòng thử lại sau.",
     listCouponForMyCourse: "Danh sách mã giảm giá cho khoá học của tôi",
-    percentage: "Theo %",
+    percentage: "Phần trăm (%)",
     value: "Mức giảm",
     warningCoupon: "Giá trị giảm không hợp lệ",
     period: "Khoảng thời gian",
@@ -1034,6 +1034,7 @@ export default {
     applyForProduct: "Áp dụng cho sản phẩm",
     reduce: "Giảm",
     reductionLevel: "Mức giảm",
+    notDisplay: "Không hiển thị cho người mua",
   },
   gift: {
     gift: "Quà tặng",

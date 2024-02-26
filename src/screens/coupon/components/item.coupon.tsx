@@ -26,7 +26,7 @@ interface ItemCouponProps {
 
 const ItemCoupon = ({ data }: ItemCouponProps) => {
   const userData = useStore((store) => store.userData);
-  const { description, title, promotion, promotion_type, user_id } = data;
+  const { description, promotion, promotion_type, user_id } = data;
   console.log("id coupon... ", data._id);
   const isMyCoupon = userData?._id === user_id;
   const goToEditCoupon = () => {
@@ -76,9 +76,9 @@ const ItemCoupon = ({ data }: ItemCouponProps) => {
         />
       </View>
       <View style={styles.detailPromotion}>
-        <Text numberOfLines={2} style={styles.textTitle}>
+        {/* <Text numberOfLines={2} style={styles.textTitle}>
           {title}
-        </Text>
+        </Text> */}
         <Text numberOfLines={2} style={styles.textDescription}>
           {description}
         </Text>
@@ -126,10 +126,6 @@ const styles = StyleSheet.create({
   detailPromotion: {
     marginLeft: 8,
     flex: 1,
-  },
-  textTitle: {
-    ...CS.hnSemiBold,
-    fontSize: 16,
   },
   textDescription: {
     ...CS.hnSemiBold,
