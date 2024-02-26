@@ -1,5 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, Dimensions, SafeAreaView } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  View,
+  Text,
+  FlatList,
+  Dimensions,
+  SafeAreaView,
+  Animated,
+} from "react-native";
 
 import Header from "@shared-components/header/Header";
 import { getListLeaderBoard } from "@services/api/user.api";
@@ -8,13 +15,15 @@ import CS from "@theme/styles";
 
 import Avatar from "@shared-components/user/Avatar";
 import _ from "lodash";
+import { useListDataRank } from "@helpers/hooks/useListDataRank";
 
 const LeaderBoard = () => {
   const theme = useTheme();
   const { colors } = theme;
+
+  const animationHeight = useRef(new Animated.Value(0)).current;
   // const styles = useMemo(() => createStyles(theme), [theme]);
 
-  const [listRank, setListRank] = useState([]);
   const [rankUser, setRankUser] = useState({});
   const [indexRankUser, setindexRankUser] = useState(0);
 
@@ -24,13 +33,17 @@ const LeaderBoard = () => {
   const [setIsFooterSticky, setsetIsFooterSticky] = useState(true);
   const hightScreen = Dimensions.get("window").height;
 
+  const { listData, onEndReach } = useListDataRank(
+    { limit: "100" },
+    getListLeaderBoard,
+  );
+
   const getData = () => {
     const param = {
       limit: 2000,
       // page: pageLoad,
     };
     getListLeaderBoard(param).then((res) => {
-      setListRank(res.data.other_users);
       setRankUser(res.data.user_id);
       const indexRankUser = _.findIndex(
         res.data.other_users,
@@ -46,6 +59,30 @@ const LeaderBoard = () => {
   useEffect(() => {
     getData();
   }, []);
+
+  const collapseView = () => {
+    Animated.timing(animationHeight, {
+      duration: 300,
+      toValue: 0,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const expandView = () => {
+    Animated.timing(animationHeight, {
+      duration: 300,
+      toValue: 60,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  useEffect(() => {
+    if (setIsFooterSticky) {
+      expandView();
+    } else {
+      collapseView();
+    }
+  }, [setIsFooterSticky]);
 
   const renderItem = ({ item, index }: { item: any; index: number }) => {
     return (
@@ -120,29 +157,31 @@ const LeaderBoard = () => {
         <Header text="Leader Board" />
         <View style={{ marginHorizontal: 16 }}>
           <FlatList
-            data={listRank}
+            data={listData}
             renderItem={renderItem}
             onScroll={handleScroll}
             showsVerticalScrollIndicator={false}
-            // stickyHeaderIndices={DATA.length > 0 ? [16] : [0]} // Index of the item to be pinned
-            keyExtractor={(item) => item.id}
+            onEndReached={onEndReach}
           />
         </View>
-        {setIsFooterSticky ? (
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              backgroundColor: colors.blueChart,
-              height: 64,
-              position: "absolute",
-              bottom: 20,
-              width: "100%",
-              paddingHorizontal: 16,
-              borderWidth: 1,
-              borderColor: colors.borderColor,
-            }}
-          >
+        {/* {setIsFooterSticky ? ( */}
+        <Animated.View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            backgroundColor: colors.blueChart,
+            height: 64,
+            position: "absolute",
+            bottom: 20,
+            width: "100%",
+            paddingHorizontal: 16,
+            // borderWidth: ,
+            borderColor: colors.borderColor,
+            maxHeight: animationHeight,
+            // opacity: fadeAnim,
+          }}
+        >
+          {setIsFooterSticky ? (
             <Text
               style={{
                 marginLeft: 8,
@@ -153,6 +192,8 @@ const LeaderBoard = () => {
             >
               {rankUser?.rank}
             </Text>
+          ) : null}
+          {setIsFooterSticky ? (
             <Avatar
               style={{
                 width: 46,
@@ -165,6 +206,8 @@ const LeaderBoard = () => {
               }}
               resizeMode={"cover"}
             />
+          ) : null}
+          {setIsFooterSticky ? (
             <View>
               <Text
                 style={{ ...CS.hnSemiBold, fontSize: 16, color: colors.text }}
@@ -181,8 +224,9 @@ const LeaderBoard = () => {
                 {rankUser?.country}
               </Text>
             </View>
-          </View>
-        ) : null}
+          ) : null}
+        </Animated.View>
+        {/* ) : null} */}
       </View>
     </SafeAreaView>
   );
