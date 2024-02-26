@@ -108,6 +108,7 @@ const CountFollow = ({ id, postCount }: CountFollowProps) => {
         gap: 12,
         justifyContent: "center",
         alignItems: "center",
+        marginTop: 50,
       }}
     >
       <TouchableOpacity

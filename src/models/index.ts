@@ -126,6 +126,7 @@ export interface TypedUser {
   level?: number;
   invitation_code?: string;
   current_coin?: number;
+  background_image?: string;
 }
 
 export interface TypedFollowUser {

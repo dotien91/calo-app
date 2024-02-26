@@ -72,6 +72,7 @@ export interface TypedUser {
   is_validate_phone?: boolean;
   is_verify_email?: boolean;
   official_status?: boolean;
+  background_image?: string;
 }
 
 export interface TypedPlan {

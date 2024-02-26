@@ -1,5 +1,12 @@
 import React, { memo, useEffect, useState } from "react";
-import { View, StyleSheet, Image, ActivityIndicator } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Image,
+  ActivityIndicator,
+  ViewStyle,
+  Dimensions,
+} from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 import eventEmitter from "@services/event-emitter";
@@ -18,9 +25,12 @@ import SkeletonPlaceholder from "@shared-components/skeleton";
 
 interface UploadAvatarProps {
   userInfo: TypedUser | null;
+  customStyle?: ViewStyle;
 }
 
-const AvatarProfile = ({ userInfo }: UploadAvatarProps) => {
+const AvatarProfile = ({ userInfo, customStyle }: UploadAvatarProps) => {
+  const widthScreen = Dimensions.get("window").width;
+
   const userData = useStore((store) => store.userData);
   const theme = useTheme();
   const { colors } = theme;
@@ -85,10 +95,18 @@ const AvatarProfile = ({ userInfo }: UploadAvatarProps) => {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={{ ...styles.viewAvatar, ...CommonStyle.center }}>
+    <View style={[styles.container, customStyle && customStyle]}>
+      <View style={{ ...CommonStyle.center, flex: 1 }}>
         <Image
-          style={styles.viewAvatar}
+          style={{ height: (widthScreen * 9) / 16, width: widthScreen }}
+          source={{
+            uri: userInfo?.background_image
+              ? userInfo?.background_image
+              : "https://cdn.vntrip.vn/cam-nang/wp-content/uploads/2017/08/van-mieu-quoc-tu-giam.jpg",
+          }}
+        />
+        <Image
+          style={[styles.viewAvatar, { position: "absolute", bottom: -50 }]}
           source={
             linkAvatar.trim().length > 0
               ? { uri: linkAvatar }
@@ -101,6 +119,7 @@ const AvatarProfile = ({ userInfo }: UploadAvatarProps) => {
               ...CommonStyle.fillParent,
               ...CommonStyle.center,
               zIndex: 1,
+              marginTop: 70,
             }}
           >
             <ActivityIndicator size={"small"} color={colors.text} />
@@ -128,17 +147,19 @@ const styles = StyleSheet.create({
   container: {
     ...CommonStyle.center,
     width: "100%",
-    paddingVertical: 26,
+    paddingBottom: 26,
   },
   viewAvatar: {
     width: 86,
     height: 86,
     borderRadius: 30,
+    borderWidth: 1,
+    borderColor: palette.white,
   },
   viewCamera: {
     position: "absolute",
-    bottom: 0,
-    right: -10,
+    bottom: -50,
+    right: Dimensions.get("window").width / 2 - 55,
     width: 30,
     height: 30,
     backgroundColor: palette.background2,

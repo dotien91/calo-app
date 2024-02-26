@@ -1,5 +1,12 @@
 import React from "react";
-import { Text, View, StyleSheet, Image, Pressable } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  Pressable,
+  TouchableOpacity,
+} from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
 import { ICourseItem } from "models/course.model";
@@ -20,6 +27,7 @@ import {
   showSuperModal,
 } from "@helpers/super.modal.helper";
 import { formatLanguage } from "@utils/string.utils";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 interface HeaderCourseProps {
   data?: ICourseItem;
@@ -56,6 +64,17 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
     });
   };
 
+  const moreCoursePreview = () => {
+    showSuperModal({
+      contentModalType: EnumModalContentType.Report,
+      styleModalType: EnumStyleModalType.Bottom,
+      data: {
+        report_type: "course",
+        partner_id: data?.avatar._id,
+      },
+    });
+  };
+
   if (!data?._id) {
     return (
       <View>
@@ -84,7 +103,6 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
       </View>
     );
   }
-  console.log(JSON.stringify(data, null, 2));
 
   return (
     <View style={styles.container}>
@@ -138,7 +156,23 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
           ></Pressable>
         )}
       </View>
-      <Text style={styles.textTitle}>{data?.title}</Text>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <Text style={styles.textTitle}>{data?.title}</Text>
+        <TouchableOpacity onPress={moreCoursePreview}>
+          <Icon
+            name="ellipsis-horizontal"
+            type={IconType.Ionicons}
+            size={30}
+            color={palette.text}
+          ></Icon>
+        </TouchableOpacity>
+      </View>
       {(data?.public_status === "draft" ||
         data?.public_status === "pending") && (
         <Text style={{ ...CS.hnRegular, fontSize: 12 }}>
