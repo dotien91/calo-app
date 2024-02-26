@@ -117,20 +117,22 @@ const SuperModal: React.FC<SuperModalProps> = () => {
             style={[styles.btnStyle, { flex: 1 }]}
             onPress={closeModal}
           >
-            <Text style={styles.txtBtn}>Cancel</Text>
+            <Text style={[styles.txtBtn, { color: palette.textOpacity6 }]}>
+              {data.textCancel || "Cancel"}
+            </Text>
           </TouchableOpacity>
           <View style={{ width: 10 }} />
           <TouchableOpacity
             style={[
               styles.btnStyle,
-              { backgroundColor: palette.danger, flex: 1 },
+              { backgroundColor: palette.primary, flex: 1 },
             ]}
             onPress={() => {
               if (data.cb) data.cb();
               closeModal();
             }}
           >
-            <Text style={styles.txtBtn}>Ok</Text>
+            <Text style={styles.txtBtn}>{data.textApprove || "Ok"}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -265,8 +267,8 @@ const styles = StyleSheet.create({
   btnStyle: {
     paddingVertical: 6,
     paddingHorizontal: 10,
-    backgroundColor: palette.green,
-    borderRadius: 99,
+    backgroundColor: palette.btnInactive2,
+    borderRadius: 8,
     ...CommonStyle.flexCenter,
   },
   txtBtn: {
@@ -275,17 +277,17 @@ const styles = StyleSheet.create({
     color: palette.white,
   },
   title: {
-    ...CommonStyle.hnBold,
+    ...CommonStyle.hnSemiBold,
     fontSize: 20,
     color: palette.text,
     textAlign: "center",
   },
   desc: {
     ...CommonStyle.hnRegular,
-    fontSize: 16,
+    fontSize: 14,
     color: palette.text,
     textAlign: "center",
-    marginBottom: 12,
+    marginBottom: 24,
   },
   closeIcon: {
     position: "absolute",
