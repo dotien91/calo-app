@@ -14,7 +14,9 @@ import {
   SafeAreaView,
   StatusBar,
 } from "react-native";
-import { Janus, JanusVideoRoomPlugin } from "react-native-janus";
+// import { Janus, JanusVideoRoomPlugin } from "react-native-janus";
+import { Janus, JanusVideoRoomPlugin } from "./react-native-janus";
+
 import lodash from "lodash";
 import { useRoute } from "@react-navigation/native";
 
@@ -56,6 +58,7 @@ const CallClassScreen = () => {
   const route = useRoute();
   const roomId =
     route.params?.["courseRoom"]?.roomId || "65c0ab03d7d7ab3a76de4b5b";
+  const chatRoomId = route.params?.["courseRoom"]?.chat_room_id;
   const courseData = route.params?.["courseData"];
 
   const isVideoOneOne = false;
@@ -72,7 +75,7 @@ const CallClassScreen = () => {
   //create room
   useClassRoom({ roomId });
 
-  const setListParticipants = useStore((state) => state.setListParticipants);
+  // const setListParticipants = useStore((state) => state.setListParticipants);
 
   const hasTeacher = () => {
     return !!publishers.find((item) => !!item?.isTeacher);
@@ -192,12 +195,12 @@ const CallClassScreen = () => {
       await videoRoom.current.join();
       await videoRoom.current.publish(stream);
       closeSuperModal();
-      intervalGetPar.current = setInterval(() => {
-        videoRoom.current.getParticipants().then((res) => {
-          const data = res?.plugindata?.data?.participants || [];
-          setListParticipants(data);
-        });
-      }, 2000);
+      // intervalGetPar.current = setInterval(() => {
+      //   videoRoom.current.getParticipants().then((res) => {
+      //     const data = res?.plugindata?.data?.participants || [];
+      //     setListParticipants(data);
+      //   });
+      // }, 2000);
     } catch (e) {
       console.error("main init janus", e);
     }
@@ -400,6 +403,7 @@ const CallClassScreen = () => {
         toggleVideo={toggleVideo}
         switchCamera={switchCamera}
         courseData={courseData}
+        chatRoomId={chatRoomId}
       />
       {renderMyVideo()}
 

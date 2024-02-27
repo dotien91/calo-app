@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Text, View, StyleSheet } from "react-native";
+import * as NavigationService from "react-navigation-helpers";
 
 import IconSvg from "assets/svg";
 import PressableBtn from "@shared-components/button/PressableBtn";
@@ -14,13 +15,14 @@ import {
 } from "@helpers/super.modal.helper";
 import { shareCourse } from "@utils/share.utils";
 import useStore from "@services/zustand/store";
+import { SCREENS } from "constants";
 
 interface CourseLearnActionProps {
   item: ICourseModuleItem;
   course_id: string;
 }
 
-const CourseLearnAction = ({ item, course_id }: CourseLearnActionProps) => {
+const CourseLearnAction = ({ course_id }: CourseLearnActionProps) => {
   const listFavourites = useStore((state) => state.listFavourites);
   const addToFavourites = useStore((state) => state.addToFavourites);
   const [isLike, setIsLike] = React.useState(false);
@@ -32,13 +34,15 @@ const CourseLearnAction = ({ item, course_id }: CourseLearnActionProps) => {
   }, [listFavourites]);
 
   const _onPressAboutThisCourse = () => {
-    console.log(item);
-    console.log(course_id);
+    NavigationService.navigate(SCREENS.COURSE_DETAIL, {
+      course_id,
+      // dataCourse: item,
+    });
   };
   const _onPressShareThisCourse = () => {
     shareCourse(course_id);
   };
-  const _onPressResources = () => {};
+  // const _onPressResources = () => {};
   const _onPressAddCourseToFavourites = () => {
     // add to favourites
     addToFavourites(course_id);
@@ -65,11 +69,11 @@ const CourseLearnAction = ({ item, course_id }: CourseLearnActionProps) => {
         onPress={_onPressShareThisCourse}
         iconName="icShare"
       />
-      <ItemAction
+      {/* <ItemAction
         title={translations.course.resources}
         onPress={_onPressResources}
         iconName="icFile"
-      />
+      /> */}
       <ItemAction
         title={translations.course.addCourseToFavourites}
         onPress={_onPressAddCourseToFavourites}

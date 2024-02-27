@@ -67,7 +67,7 @@ const PageScroll = (props: Props, ref: React.Ref<PagerScrollRef>) => {
   };
 
   const scrollToLeft = () => {
-    if (indexRef.current - 1 >= 0) {
+    if (indexRef.current - 1 > 0) {
       scrollViewRef.current?.scrollTo({
         y: 0,
         x: (indexRef.current - 1) * widthI,
@@ -81,7 +81,7 @@ const PageScroll = (props: Props, ref: React.Ref<PagerScrollRef>) => {
   };
 
   const scrollToRight = () => {
-    if (indexRef.current + 1 <= length) {
+    if (indexRef.current + 1 < length) {
       scrollViewRef.current?.scrollTo({
         y: 0,
         x: (indexRef.current + 1) * widthI,

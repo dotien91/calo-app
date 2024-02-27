@@ -5,6 +5,8 @@ import { requestPermission } from "./permission.helper";
 import { PERMISSION } from "../constants/system.constant";
 import { openPicker } from "react-native-image-crop-picker";
 import { launchImageLibrary } from "react-native-image-picker";
+import { Linking } from "react-native";
+import { showToast } from "./super.modal.helper";
 
 export const selectMedia = async ({ config, callback, croping = true }) => {
   const permission = await requestPermission(
@@ -281,3 +283,11 @@ export async function getBase64(file: string): Promise<string | undefined> {
     return undefined;
   }
 }
+
+export const openUrl = (url: string) => {
+  Linking.openURL(url).catch(() => {
+    showToast({
+      type: "error",
+    });
+  });
+};

@@ -43,6 +43,7 @@ export default {
   createPassSuccess: "Tạo mật khẩu mới thành công!",
   loginSuccess: "Đăng nhập thành công!",
   goBackHome: "Quay về trang chủ",
+  next: "Tiếp theo",
   error: {
     unknown: "Có lỗi không xác định xảy ra!",
     invalidPhoneEmail: "SĐT/Email không hợp lệ",
@@ -50,7 +51,7 @@ export default {
     invalidPhone: "Phone không hợp lệ",
     invalidLink: "Link không hợp lệ",
     invalidYoutube: "Kênh youtube không hợp lệ",
-    invalidFacebook: "Link Youtube không hợp lệ",
+    invalidFacebook: "Link Facebook không hợp lệ",
     minLengthPass: "Mật khẩu phải ít nhất 6 kí tự",
     passDoesNotMatch: "Mật khẩu xác nhận không trùng khớp",
     errorPatternPass:
@@ -97,8 +98,8 @@ export default {
   blockedUser: "Bạn đã chặn trang cá nhân của :username",
   commentAs: "Bình luận dưới tên",
   replying: "Phản hồi",
-  reply: "phản hồi",
-  like: "thích",
+  reply: "Phản hồi",
+  like: "Thích",
   comment: "bình luận",
   delete: "Xóa",
   edit: "Chỉnh sửa",
@@ -252,6 +253,9 @@ export default {
     forgotPasswordSuccess:
       "Gửi email thành công, vui lòng kiểm tra email của bạn!",
     requireLogin: "Bạn cần đăng nhập để sử dựng chức năng này",
+    bylogin: "Bằng cách đăng nhập hoặc đăng ký, bạn đồng ý với chúng tôi",
+    term: "Điều khoản và điều kiện",
+    police: "Chính sách bảo mật",
   },
   validate: {
     emailInvalid: "Email không tồn tại",
@@ -439,7 +443,7 @@ export default {
     media: "Ảnh & Video",
     chooseFile: "Chọn tệp",
     downloadDocument: "Tải tài liệu",
-    openWebsite: "Mở Website",
+    openWebsite: "Mở tài liệu",
     editModule: "Chỉnh sửa bài học và học phần",
     consistsOf: "Bao gồm",
     parts: "phần",
@@ -483,7 +487,7 @@ export default {
     lastUpdate: "Lần cập nhật gần đây nhất",
     buyNow: "Mua ngay",
     addToCart: "Thêm vào giỏ hàng",
-    filter: "Locj",
+    filter: "Lọc",
     formOfLearn: "Kiểu học",
     allForms: "Tất cả",
     callOneVsOne: "Học 1-1",
@@ -556,6 +560,10 @@ export default {
     requiredTitle: "Tiêu đề không được để trống",
     discountEntry: "Bắt đầu lúc",
     endAt: "Kết thúc lúc",
+    noreview: "Chưa có đánh giá",
+    selectModal: "Lựa chọn",
+    myCourse: "Khoá học của tôi",
+    recommendCourse: "Khoá học gợi ý",
   },
   seeAll: "Xem tất cả",
   settings: {
@@ -1306,6 +1314,7 @@ export default {
     saveQRCode: "Lưu mã QR",
     tocomplete:
       "Để hoàn tất quá trình thanh toán, vui lòng thực hiện chuyển khoản tới số tài khoản bên dưới:",
+    content: "Nội dung chuyển khoản",
   },
   settingUser: {
     language: "Ngôn ngữ",
@@ -1320,6 +1329,7 @@ export default {
     private: "Bảo mật & riêng tư",
     support: "Hỗ trợ khách hàng",
     aboutus: "Về chúng tôi",
+    mycouse: "Khoá học của tôi",
   },
   aboutUs: {
     aboutUs: "Về chúng tôi",
@@ -1340,4 +1350,12 @@ export default {
   },
   en: "Tiếng Anh",
   vi: "Tiếng Việt",
+  task: {
+    inviteFriend: "Mời bạn bè",
+    yourscore: "Điểm của bạn",
+    powered: "Được hỗ trợ",
+    mycode: "Mã của tôi",
+    level: "Cấp độ",
+    task: "Nhiệm vụ",
+  },
 };

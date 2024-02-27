@@ -9,6 +9,7 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
@@ -263,7 +264,7 @@ const PostDetail = (props: PostDetailProps) => {
   };
 
   const [isForcus, setIsForcus] = useState(false);
-
+  console.log("datadata", data);
   const showImageVideo = (index: number) => {
     const listMedia = data?.attach_files.filter(
       (i: any) =>
@@ -314,11 +315,17 @@ const PostDetail = (props: PostDetailProps) => {
 
   const renderItem = ({ item }: { item: TypedComment }) => {
     return (
-      <ItemComment
-        data={item}
-        // key={index}
-        onPressReply={() => pressReply(item)}
-      />
+      <View>
+        {listData.length > 0 ? (
+          <ItemComment
+            data={item}
+            // key={index}
+            onPressReply={() => pressReply(item)}
+          />
+        ) : (
+          renderEmpty()
+        )}
+      </View>
     );
   };
 
@@ -369,6 +376,7 @@ const PostDetail = (props: PostDetailProps) => {
           />
           <View style={CommonStyle.flex1}>
             <FlatList
+              style={{ height: Dimensions.get("window").height }}
               nestedScrollEnabled
               data={listData.filter(
                 (item) => listCommentDelete.indexOf(item._id) < 0,
@@ -382,7 +390,7 @@ const PostDetail = (props: PostDetailProps) => {
               keyExtractor={(item) => item?._id + ""}
               refreshControl={refreshControl()}
               ListFooterComponent={renderFooterComponent()}
-              ListEmptyComponent={renderEmpty()}
+              // ListEmptyComponent={renderEmpty()}
             />
           </View>
         </ScrollView>

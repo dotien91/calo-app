@@ -4,11 +4,11 @@ import {
   StyleSheet,
   View,
   ActivityIndicator,
+  Text,
 } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import FastImage from "react-native-fast-image";
 
-import CommonStyle from "@theme/styles";
 import {
   TypedChatMediaLocal,
   TypedDataMediaChatHistory,
@@ -24,6 +24,10 @@ import {
 import { EnumMessageStatus } from "constants/chat.constant";
 import { palette } from "@theme/themes";
 import { ViewStyle } from "react-native-size-matters";
+import { openUrl } from "@helpers/file.helper";
+import CS from "@theme/styles";
+import PressableBtn from "@shared-components/button/PressableBtn";
+import { Device } from "@utils/device.ui.utils";
 
 interface IMediasView {
   data: TypedChatMediaLocal[];
@@ -32,6 +36,7 @@ interface IMediasView {
   customStyleBox?: ViewStyle;
   width: number;
   chatRoomId: string;
+  fromMediaScreen: boolean;
 }
 const IMG_WIDTH = 76;
 const IMG_HEIGHT = 76;
@@ -45,8 +50,12 @@ const MessageMediaView = ({
   width,
   customStyleBox,
   chatRoomId,
+  fromMediaScreen,
 }: IMediasView) => {
   const currentMediaIds = useStore((state) => state.currentMediaIds);
+  const isPending = React.useMemo(() => {
+    return status == EnumMessageStatus.Pending;
+  }, [status]);
   const openMediaModal = (item: TypedChatMediaLocal) => {
     const currentMediaData =
       currentMediaIds.find((item) => item.id == chatRoomId)?.data || [];
@@ -55,14 +64,14 @@ const MessageMediaView = ({
         (i?.media_mime_type || "").includes("image") ||
         (i?.media_mime_type || "").includes("video"),
     );
-    const index = (data || listMedia).findIndex(
+    const index = (fromMediaScreen ? data : listMedia).findIndex(
       (_item: TypedDataMediaChatHistory) => _item.media_url == item.media_url,
     );
     showSuperModal({
       contentModalType: EnumModalContentType.Library,
       styleModalType: EnumStyleModalType.Middle,
       data: {
-        listMedia: data || listMedia,
+        listMedia: fromMediaScreen ? data : listMedia,
         index,
       },
     });
@@ -70,17 +79,6 @@ const MessageMediaView = ({
 
   const renderItem = (item: TypedChatMediaLocal, index: number) => {
     if (!item) return null;
-    const renderStatus = () => {
-      if (status != EnumMessageStatus.Pending) return null;
-      return (
-        <ActivityIndicator
-          size={"small"}
-          color={palette.primary}
-          style={{ position: "absolute", right: 5, bottom: 5 }}
-        />
-      );
-    };
-
     if (item.media_type.includes("image")) {
       return (
         <TouchableOpacity key={index} onPress={() => openMediaModal(item)}>
@@ -111,8 +109,48 @@ const MessageMediaView = ({
             pressable={false}
             mediaThumbail={item?.media_thumbnail}
           />
-          {renderStatus()}
+          {isPending && (
+            <ActivityIndicator
+              size={"small"}
+              color={palette.primary}
+              style={{ position: "absolute", right: 5, bottom: 5 }}
+            />
+          )}
         </TouchableOpacity>
+      );
+    }
+    if (item.media_mime_type == "application/pdf") {
+      if (fromProfileChat) {
+        return (
+          <View
+            key={index}
+            style={{
+              width,
+              height: width,
+              ...CS.flexCenter,
+              ...CS.borderStyle,
+              borderWidth: 2,
+              borderRadius: 12,
+              overflow: "hidden",
+            }}
+          >
+            <Icon
+              type={IconType.MaterialCommunityIcons}
+              name={"file"}
+              size={40}
+            />
+          </View>
+        );
+      }
+      return (
+        <PressableBtn
+          key={index}
+          disable={isPending}
+          onPress={() => openUrl(item.media_url)}
+          style={{ width: Device.width * 0.75, opacity: isPending ? 0.5 : 1 }}
+        >
+          <Text style={CS.txtLink}>{item?.media_file_name || item?.name}</Text>
+        </PressableBtn>
       );
     }
     if (
@@ -123,11 +161,12 @@ const MessageMediaView = ({
         <View
           key={index}
           style={{
-            width: IMG_WIDTH,
-            height: IMG_HEIGHT,
-            ...CommonStyle.flexCenter,
-            ...CommonStyle.borderBottomStyle,
+            width,
+            height: width,
+            ...CS.flexCenter,
+            ...CS.borderBottomStyle,
             borderWidth: 2,
+            borderRadius: 12,
             overflow: "hidden",
           }}
         >
@@ -139,16 +178,22 @@ const MessageMediaView = ({
         </View>
       );
     }
-    if (item.media_type == "audio/mpeg" || item.media_type == "file") {
+
+    if (
+      item.media_type?.includes("audio") ||
+      item.media_mime_type?.includes("audio")
+    ) {
       return (
         <MessageAudio
           key={index}
           isMyMessage={true}
           itemAudio={item}
+          disabled={isPending}
           // onLongPress={onLongPressMediaMessage}
         />
       );
     }
+
     return null;
   };
 
@@ -165,7 +210,7 @@ const MessageMediaView = ({
 
 const styles = StyleSheet.create({
   box: {
-    ...CommonStyle.flexStart,
+    ...CS.flexStart,
     flexWrap: "wrap",
   },
   boxItem: {
@@ -173,6 +218,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     marginRight: 8,
     marginBottom: 8,
+    // flex: 1,
   },
 });
 

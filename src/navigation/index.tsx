@@ -71,6 +71,11 @@ import CourseAddModuleScreen from "@screens/course/course-create/course.add.modu
 import CallClassScreen from "@screens/call-class/call.class.screen";
 import ListCouponForMyCourse from "@screens/coupon/coupon.list";
 import CouponCreateScreen from "@screens/coupon/coupon.create";
+import TabFollow from "@screens/tab-follow/tab.follow";
+import BlackList from "@screens/black-list/black.list";
+import PrivateSetting from "@screens/private.setting/private.setting";
+import { _getJson } from "@services/local-storage";
+import SettingProfileScreen from "@screens/profile.screen/profile.screen";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -78,8 +83,8 @@ const Stack = createStackNavigator();
 
 const Navigation = () => {
   const isDarkMode = useStore((state) => state.isDarkMode);
-  const isFirstOpenApp = useStore((state) => state.isFirstOpenApp);
-
+  // const isFirstOpenApp = useStore((state) => state.isFirstOpenApp);
+  const isFirstOpenApp = _getJson("is_first_open_app") == null ? true : false;
   React.useEffect((): any => {
     return () => (isReadyRef.current = false);
   }, []);
@@ -316,6 +321,16 @@ const Navigation = () => {
         <Stack.Screen
           name={SCREENS.PAYMENT_SUCCESS}
           component={PaymentSuccess}
+        />
+        <Stack.Screen name={SCREENS.TAB_FOLLOW} component={TabFollow} />
+        <Stack.Screen name={SCREENS.BLACK_LIST} component={BlackList} />
+        <Stack.Screen
+          name={SCREENS.PRIVATESETTING}
+          component={PrivateSetting}
+        />
+        <Stack.Screen
+          name={SCREENS.SETTINGPROFILESCREEN}
+          component={SettingProfileScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

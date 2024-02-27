@@ -57,7 +57,6 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
             ...CommonStyle.hnBold,
             fontSize: 16,
             color: focused ? colors.primary : colors.text,
-            margin: 8,
           }}
         >
           {route.title}

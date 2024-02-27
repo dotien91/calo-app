@@ -116,4 +116,4 @@ const ImageLoad = (props: Props) => {
   );
 };
 
-export default ImageLoad;
+export default React.memo(ImageLoad);

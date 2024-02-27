@@ -17,7 +17,6 @@ import { getCourseList, getListTutor } from "@services/api/course.api";
 import useStore from "@services/zustand/store";
 import TutorItem from "../components/tutor.item";
 import { getStatusBarHeight } from "react-native-safearea-height";
-import LoadingList from "@shared-components/loading.list.component";
 import CourseToolbar from "../components/course.toolbar";
 import CourseCategoryItem from "./course.category.item";
 import CourseQuickFilter from "../components/course.quick.filter";
@@ -25,6 +24,8 @@ import { useUserHook } from "@helpers/hooks/useUserHook";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { useTheme } from "@react-navigation/native";
 import { SCREENS } from "constants";
+import LoadingItem from "@shared-components/loading.item";
+// import CourseItemProgessbar from "../components/course.item.progessbar";
 
 interface CourseListScreenProps {}
 
@@ -91,6 +92,10 @@ const CourseListScreen: React.FC<CourseListScreenProps> = () => {
 };
 
 const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
+  // const theme = useTheme();
+  // const { colors } = theme;
+  const userData = useStore((state) => state.userData);
+  // const [listMyCourse, setlistMyCourse] = useState([]);
   const { isLoading, listData, onEndReach, renderFooterComponent } =
     useListData<ICourseItem>(
       { limit: "4", sort_by: "createdAt", order_by: "DESC" },
@@ -98,21 +103,99 @@ const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
     );
 
   const renderItem = ({ item }: { item: ICourseItem }, index: number) => {
-    if (isTabCourse) return <CourseItem {...item} key={index} />;
+    if (isTabCourse) return <CourseItem data={item} key={index} />;
     return <TutorItem {...item} key={index} />;
   };
 
-  const renderHeader = React.useMemo(() => {
+  const getDataMyCourse = () => {
+    const data = {
+      user_id: userData?._id,
+    };
+    console.log("OKE ass");
+    getCourseList(data).then((res: any) => {
+      console.log("OKE", JSON.stringify(res, null, 2));
+      // setlistMyCourse(res.data);
+    });
+  };
+
+  console.log("userData?._id", userData?._id);
+
+  useEffect(() => {
+    getDataMyCourse();
+  }, []);
+
+  const renderHeader = () => {
     return (
-      <>
+      <View style={{ flex: 1 }}>
         {isTabCourse && <CourseCategoryItem />}
+        {/* <View style={{ flex: 1, marginLeft: 16 }}>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginRight: 16,
+              marginBottom: 8,
+            }}
+          >
+            <Text
+              style={{ fontSize: 16, fontWeight: "600", color: colors.text }}
+            >
+              My course
+            </Text>
+            <TouchableOpacity
+              onPress={() => {
+                NavigationService.navigate(SCREENS.MY_COURES);
+              }}
+              style={{ flexDirection: "row", alignItems: "center" }}
+            >
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontWeight: "600",
+                  color: colors.textOpacity8,
+                  marginRight: 8,
+                }}
+              >
+                See all
+              </Text>
+              <Image
+                style={{ width: 8, height: 18 }}
+                source={require("assets/images/arrow-right.png")}
+              ></Image>
+            </TouchableOpacity>
+          </View>
+          <FlatList
+            data={listMyCourse}
+            renderItem={renderItemMyCourse}
+            horizontal
+            style={{ flex: 1 }}
+            showsHorizontalScrollIndicator={false}
+          />
+        </View> */}
         <CourseQuickFilter isTabCourse={isTabCourse} />
-      </>
+      </View>
     );
-  }, [isTabCourse]);
+  };
+
+  // const renderItemMyCourse = ({
+  //   item,
+  //   index,
+  // }: {
+  //   item: any;
+  //   index: number;
+  // }) => {
+  //   console.log("item, index", item, index);
+  //   return (
+  //     <CourseItemProgessbar
+  //       isSliderItem
+  //       {...item}
+  //       key={index}
+  //     ></CourseItemProgessbar>
+  //   );
+  // };
 
   return (
-    <>
+    <View style={{ flex: 1 }}>
       <FlatList
         ListHeaderComponent={renderHeader}
         data={listData}
@@ -123,8 +206,8 @@ const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
         keyExtractor={(item) => item?._id + ""}
         ListFooterComponent={renderFooterComponent()}
       />
-      {isLoading && <LoadingList numberItem={10} />}
-    </>
+      {isLoading && <LoadingItem numberItem={3} />}
+    </View>
   );
 });
 

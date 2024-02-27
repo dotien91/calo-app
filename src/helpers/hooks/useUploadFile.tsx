@@ -162,7 +162,7 @@ export function useUploadFile(initData?: any[], selectionLimit = 30) {
     });
   };
 
-  const onPressFile = async () => {
+  const onSelectFile = async () => {
     try {
       const pickerResult = await pick({
         presentationStyle: "fullScreen",
@@ -179,16 +179,18 @@ export function useUploadFile(initData?: any[], selectionLimit = 30) {
         ],
       });
       setIsUpLoadingFile(true);
-
+      console.log("pickerResultpickerResult", pickerResult);
       if (pickerResult.length > 0) {
         const fileUp = pickerResult.reduce((list: any[], current) => {
           return listFile.find((i) => i.uri === current.uri)
             ? list
             : [...list, current];
         }, []);
+        console.log("fileUpfileUp", fileUp);
         const fileLocal = fileUp.map((i) => ({
           uri: isIos ? i.uri?.replace("file://", "") : i.uri,
           type: i.type,
+          name: i?.name,
         }));
         setListFileLocal((listFileLocal) => [...listFileLocal, ...fileLocal]);
         const res = await uploadMultiFile(
@@ -257,7 +259,7 @@ export function useUploadFile(initData?: any[], selectionLimit = 30) {
     listFile,
     onSelectPicture,
     onSelectVideo,
-    onPressFile,
+    onSelectFile,
     renderFile,
     isUpLoadingFile,
     uploadRecord,

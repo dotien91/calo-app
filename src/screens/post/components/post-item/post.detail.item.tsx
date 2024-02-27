@@ -7,7 +7,7 @@ import { useTheme } from "@react-navigation/native";
 
 import createStyles from "./post.detail.item.style";
 
-import CommonStyle from "@theme/styles";
+// import CommonStyle from "@theme/styles";
 import HeaderPostItem from "@screens/home/components/post-item/header.post.item";
 import AvatarPost from "@screens/home/components/post-item/avatar.post";
 import LikeSharePostItem from "@screens/home/components/post-item/like.share.post.item";
@@ -16,6 +16,9 @@ import {
   EnumStyleModalType,
   showSuperModal,
 } from "@helpers/super.modal.helper";
+import PressableBtn from "@shared-components/button/PressableBtn";
+import CS from "@theme/styles";
+import { openUrl } from "@helpers/file.helper";
 
 const SIZE_AVATAR = 30;
 const FONT_SIZE = 16;
@@ -42,7 +45,7 @@ const ItemPost = ({ data, pressComment }: ItemPostProps) => {
       return (
         <Text
           style={{
-            ...CommonStyle.hnBold,
+            ...CS.hnBold,
             fontSize: FONT_SIZE,
             color: colors.primary,
           }}
@@ -57,7 +60,7 @@ const ItemPost = ({ data, pressComment }: ItemPostProps) => {
     return (
       <Text
         style={{
-          ...CommonStyle.hnRegular,
+          ...CS.hnRegular,
           fontSize: FONT_SIZE,
           marginBottom: 4,
         }}
@@ -71,7 +74,7 @@ const ItemPost = ({ data, pressComment }: ItemPostProps) => {
     return (
       <View
         style={{
-          ...CommonStyle.fillParent,
+          ...CS.fillParent,
           zIndex: 0,
           justifyContent: "center",
           alignItems: "center",
@@ -128,6 +131,17 @@ const ItemPost = ({ data, pressComment }: ItemPostProps) => {
             </TouchableOpacity>
           );
         })}
+        {listFile.map((item: any, index: number) => {
+          return (
+            <PressableBtn
+              key={index}
+              onPress={() => openUrl(item.media_url)}
+              style={{ marginTop: 8 }}
+            >
+              <Text style={CS.txtLink}>{item?.media_file_name}</Text>
+            </PressableBtn>
+          );
+        })}
       </View>
     );
   }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -148,7 +162,7 @@ const ItemPost = ({ data, pressComment }: ItemPostProps) => {
           pressAvatar={gotoDetail}
           sizeAvatar={SIZE_AVATAR}
         />
-        <View style={{ paddingLeft: PADDING_LEFT, ...CommonStyle.flex1 }}>
+        <View style={{ paddingLeft: PADDING_LEFT, ...CS.flex1 }}>
           <HeaderPostItem data={data} onPress={gotoDetail} isDetail={true} />
           {HasTag}
           {ContentStatus}
@@ -160,4 +174,4 @@ const ItemPost = ({ data, pressComment }: ItemPostProps) => {
   );
 };
 
-export default ItemPost;
+export default React.memo(ItemPost);

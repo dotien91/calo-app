@@ -59,7 +59,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
     isLoadmore,
     loading,
   } = useChatHistory(txtSearch, searchModeChat);
-
+  console.log("messagesmessages====", messages);
   const {
     uploadRecord,
     listFile,
@@ -68,6 +68,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
     setListFileLocal,
     onSelectPicture,
     onSelectVideo,
+    onSelectFile,
   } = useUploadFile();
 
   const cancelSearchMode = () => {
@@ -183,6 +184,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
         openRecordModal={openRecordModal}
         onSelectPicture={onSelectPicture}
         onSelectVideo={onSelectVideo}
+        onSelectFile={onSelectFile}
       />
     );
   };
@@ -240,6 +242,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
               loadMoreMessage();
             }
           },
+          showsVerticalScrollIndicator: false,
         }}
         renderInputToolbar={renderInputToolbar}
       />

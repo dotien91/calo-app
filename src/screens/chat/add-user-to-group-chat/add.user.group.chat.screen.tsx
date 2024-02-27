@@ -20,6 +20,7 @@ import { SCREENS } from "constants";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import CommonStyle from "@theme/styles";
 import { showToast } from "@helpers/super.modal.helper";
+import CustomCheckbox from "@shared-components/form/CustomCheckbox";
 
 interface AddUserGroupChatScreenProps {}
 
@@ -64,15 +65,7 @@ const AddUserGroupChatScreen: React.FC<AddUserGroupChatScreenProps> = () => {
     const isCurrentMember = group_partners.find(
       (_item) => _item._id == partner_id._id,
     );
-    return (
-      <View style={styles.wrapCheckbox}>
-        <Icon
-          type={IconType.Ionicons}
-          name={"close"}
-          color={isSelected || isCurrentMember ? colors.black : colors.white}
-        />
-      </View>
-    );
+    return <CustomCheckbox isSelected={isCurrentMember || isSelected} />;
   };
 
   const renderItem = ({

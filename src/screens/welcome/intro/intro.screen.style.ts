@@ -37,6 +37,7 @@ const createStyles = (theme: ExtendedTheme) => {
     styleButton: {
       marginTop: 36,
       paddingHorizontal: 20,
+      marginHorizontal: 20,
     },
   });
 };

@@ -1,31 +1,38 @@
 import React, {
-  useCallback,
+  // useCallback,
   useEffect,
   useLayoutEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
-import { Linking, StyleSheet, Text, View, ScrollView } from "react-native";
+import {
+  Linking,
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  StatusBar,
+} from "react-native";
 import { useRoute, useNavigation, useTheme } from "@react-navigation/native";
 import { useSharedValue, withTiming } from "react-native-reanimated";
 import Orientation from "react-native-orientation-locker";
 import { getStatusBarHeight } from "react-native-safearea-height";
-import * as FileViewer from "react-native-file-viewer";
+// import * as FileViewer from "react-native-file-viewer";
 
 import VideoPreview from "./components/video.preview";
 import ImageLoad from "@shared-components/image-load/ImageLoad";
 import CS from "@theme/styles";
 import { translations } from "@localization";
 import PressableBtn from "@shared-components/button/PressableBtn";
-import { HS, MHS, VS } from "@utils/size.utils";
+import { VS } from "@utils/size.utils";
 import { Device } from "@utils/device.utils";
 import PartView from "../course-preview/components/part.view";
 import { updateViewed } from "@services/api/course.api";
 import createStyles from "./course.learn.style";
 import CourseLearnAction from "./components/course.learn.action";
 import { palette } from "@theme/themes";
-import Header from "@shared-components/header/Header";
+// import Header from "@shared-components/header/Header";
 import useStore from "@services/zustand/store";
 import eventEmitter from "@services/event-emitter";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
@@ -37,13 +44,15 @@ const CourseLearnScreen = () => {
   const theme = useTheme();
   const [source, setSource] = useState(route?.params?.source);
   const [isLanscape, setIsLanscape] = useState(false);
+  const [currentProgressData, setCurrentProgressData] = useState(null);
   const styles = useMemo(() => createStyles(theme), [theme]);
   const [tabSelected, setTabSelected] = useState(1);
-  const detailCourse = route?.params?.detailCourse;
+  const detailCourse = route?.params?.courseData;
   const course_id = route?.params?.course_id;
-  const isTeacher = route?.params?.isTeacher || false;
+  // const isTeacher = route?.params?.isTeacher || false;
   const videoRef = useRef<any>();
   const { colors } = theme;
+  const updateWatchingVideos = useStore((state) => state.updateWatchingVideos);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -52,9 +61,11 @@ const CourseLearnScreen = () => {
   }, [navigation]);
 
   useEffect(() => {
+    StatusBar.setBarStyle("light-content");
     return () => {
       showFloatButtonDailyMission.value = withTiming(1, { duration: 0 });
       Orientation.lockToPortrait();
+      StatusBar.setBarStyle("dark-content");
     };
   }, []);
 
@@ -76,14 +87,39 @@ const CourseLearnScreen = () => {
       }
     });
   };
+  //files.exam24h.com/upload/2023/12/25_1703490003885/6584fe06dfde5a43
+  const onPressItem = (item: any) => {
+    videoRef?.current?.setShowPreview(false);
+    if (item.type === "video") {
+      if (currentProgressData) setCurrentProgressData(null);
+      setSource(item);
+    } else {
+      const data = {
+        id: course_id,
+        progress: 0,
+        url: item?.media_id?.media_url,
+      };
+      setTimeout(() => {
+        updateWatchingVideos(data);
+      }, 2000);
+      // if (isTeacher) {
+      setSource(item);
+      // }
+      // const isDownload = (fileCourseLocal || []).filter(
+      //   (data) => item._id === data.id,
+      // );
+
+      // if (isDownload.length > 0) {
+      //   FileViewer.open(isDownload[0].localFile);
+      // }
+    }
+  };
   const TabSelect = () => {
     return (
       <View
         style={{
           flexDirection: "row",
-          marginHorizontal: 16,
-          height: 40,
-          marginTop: 20,
+          height: 48,
         }}
       >
         <PressableBtn style={CS.flex1} onPress={() => setTabSelected(1)}>
@@ -122,20 +158,18 @@ const CourseLearnScreen = () => {
     );
   };
 
-  const renderThumbnail = useCallback(() => {
+  const renderVideo = useMemo(() => {
     if (!source?.media_id?.media_url) {
       return (
-        <View
-          style={{
-            ...StyleSheet.absoluteFillObject,
-            justifyContent: "center",
-            alignItems: "center",
+        <ImageLoad
+          source={{
+            uri:
+              detailCourse?.media_id?.media_thumbnail ||
+              detailCourse?.media_id?.media_url,
           }}
-        >
-          <Text style={{ ...CS.hnSemiBold, color: colors.primary }}>
-            {translations.course.selectVideoModule}
-          </Text>
-        </View>
+          style={{ ...StyleSheet.absoluteFillObject }}
+          resizeMode="contain"
+        />
       );
     }
 
@@ -149,7 +183,11 @@ const CourseLearnScreen = () => {
             ref={videoRef}
             changeOrientation={true}
             thumbnail={detailCourse?.avatar?.media_thumbnail}
-          />
+            courseId={course_id}
+            currentProgressData={currentProgressData}
+            source={source}
+            setSource={onPressItem}
+          ></VideoPreview>
         );
       }
       return (
@@ -176,6 +214,10 @@ const CourseLearnScreen = () => {
           changeOrientation={true}
           markDoneCourse={() => onPressMarkDone(source)}
           thumbnail={source?.media_id?.media_thumbnail}
+          courseId={course_id}
+          currentProgressData={currentProgressData}
+          source={source}
+          setSource={onPressItem}
         />
       );
     }
@@ -199,25 +241,27 @@ const CourseLearnScreen = () => {
       <View
         style={{
           ...StyleSheet.absoluteFillObject,
-          justifyContent: "center",
-          alignItems: "center",
+          ...CS.center,
+          backgroundColor: colors.grey1,
         }}
       >
-        <Text style={{ ...CS.hnSemiBold, color: colors.primary }}>
+        <Text style={{ ...CS.hnSemiBold, color: colors.text }}>
           {source?.media_id?.media_file_name}
         </Text>
         <PressableBtn
           style={{
             marginTop: VS._10,
-            paddingHorizontal: HS._10,
-            paddingVertical: VS._4,
-            borderRadius: MHS._10,
+            paddingHorizontal: 12,
+            paddingVertical: 4,
+            borderRadius: 99,
+            backgroundColor: palette.primary,
           }}
           onPress={() => {
             Linking.openURL(source.media_id?.media_url).catch(console.log);
+            onPressMarkDone(source);
           }}
         >
-          <Text style={{ ...CS.hnSemiBold, color: colors.primary }}>
+          <Text style={{ ...CS.hnSemiBold, color: colors.white }}>
             {translations.course.openWebsite}
           </Text>
         </PressableBtn>
@@ -225,61 +269,52 @@ const CourseLearnScreen = () => {
     );
   }, [source?.media_id?._id]);
 
-  const fileCourseLocal = useStore((state) => state.fileCourseLocal);
-
-  const onPressItem = (item: any) => {
-    if (item.type === "video") {
-      setSource(item);
-    } else {
-      const isDownload = (fileCourseLocal || []).filter(
-        (data) => item._id === data.id,
-      );
-      if (isTeacher) {
-        setSource(item);
-      }
-      if (isDownload.length > 0) {
-        FileViewer.open(isDownload[0].localFile);
-      }
-    }
-  };
+  // const fileCourseLocal = useStore((state) => state.fileCourseLocal);
   return (
     <View
       style={[
         styles.container,
         !isLanscape && {
-          marginTop: getStatusBarHeight(),
+          paddingTop: getStatusBarHeight(),
           marginBottom: getBottomSpace(),
         },
       ]}
     >
-      {!isLanscape && <Header text={detailCourse?.title} />}
-      <View
-        style={[
-          styles.styleVideo,
-          { height: isLanscape ? "100%" : (Device.width / 16) * 9 },
-        ]}
-      >
-        {Device.isIos ? (
-          <View style={isLanscape ? styles.viewLanscape : styles.viewPortrait}>
-            {renderThumbnail()}
-          </View>
-        ) : (
-          renderThumbnail()
-        )}
+      <View style={{ backgroundColor: palette.white, flex: 1 }}>
+        {/* {!isLanscape && <Header text={detailCourse?.title} />} */}
+        <View
+          style={[
+            styles.styleVideo,
+            { height: isLanscape ? "100%" : (Device.width / 16) * 9 },
+          ]}
+        >
+          {Device.isIos ? (
+            <View
+              style={isLanscape ? styles.viewLanscape : styles.viewPortrait}
+            >
+              {renderVideo}
+            </View>
+          ) : (
+            renderVideo
+          )}
+        </View>
+        <TabSelect />
+        <ScrollView style={CS.flex1}>
+          <PartView
+            hide={tabSelected == 2}
+            id={course_id}
+            onPressItem={onPressItem}
+            itemSelected={source}
+            isLearnScreen
+            setCurrentProgressData={setCurrentProgressData}
+            setSource={setSource}
+            courseData={detailCourse}
+          />
+          {tabSelected == 2 && (
+            <CourseLearnAction item={source} course_id={course_id} />
+          )}
+        </ScrollView>
       </View>
-      <TabSelect />
-      <ScrollView style={CS.flex1}>
-        <PartView
-          hide={tabSelected == 2}
-          id={course_id}
-          onPressItem={onPressItem}
-          itemSelected={source}
-          isLearnScreen
-        />
-        {tabSelected == 2 && (
-          <CourseLearnAction item={source} course_id={course_id} />
-        )}
-      </ScrollView>
     </View>
   );
 };

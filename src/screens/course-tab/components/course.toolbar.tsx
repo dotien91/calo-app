@@ -18,6 +18,7 @@ import {
 } from "@helpers/super.modal.helper";
 import { SCREENS } from "constants";
 import { EnumCourseType } from "models/course.model";
+import { translations } from "@localization";
 
 // interface CourseToolbarType {}
 
@@ -55,10 +56,20 @@ const CourseToolbar = () => {
       styleModalType: EnumStyleModalType.Bottom,
       data: {
         defaultItem: courseCurrentType,
+        title: translations.course.selectModal,
         options: [
-          { name: "Course", id: EnumCourseType.course },
-          { name: "Tutor", id: EnumCourseType.tutor },
+          {
+            name: "Course",
+            id: EnumCourseType.course,
+            iconImg: require("assets/images/book.png"),
+          },
+          {
+            name: "Tutor",
+            id: EnumCourseType.tutor,
+            iconImg: require("assets/images/graduate.png"),
+          },
         ],
+
         callback: setCourseCurrentType,
       },
     });

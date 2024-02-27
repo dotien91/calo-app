@@ -149,7 +149,19 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
       <View
         style={{ flexDirection: "row", alignItems: "center", marginTop: 16 }}
       >
-        <StarRate number={data?.rating || 0} size={16} />
+        {data?.rating > 0 ? (
+          <StarRate number={data?.rating} size={16} />
+        ) : (
+          <Text
+            style={{
+              fontSize: 14,
+              fontWeight: "400",
+              color: palette.textOpacity8,
+            }}
+          >
+            {translations.course.noreview}
+          </Text>
+        )}
         {data?.rating > 0 && (
           <Text style={[styles.txtcount, { marginTop: 0, marginLeft: 4 }]}>
             {data?.rating.toFixed(2)}
@@ -157,9 +169,11 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
         )}
       </View>
       <View>
-        <Text
-          style={styles.txtcount}
-        >{`${data?.user_id.rating_count} ${translations.course.rate}/${data?.user_id.member_count} ${translations.course.student}`}</Text>
+        <Text style={styles.txtcount}>{`${data?.user_id?.rating_count || 0} ${
+          translations.course.rate
+        }/${data?.user_id?.member_count || 0} ${
+          translations.course.student
+        }`}</Text>
       </View>
       <Text style={styles.textCreateBy}>
         {translations.course.teacher}:{" "}
@@ -254,12 +268,6 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
             )}
         </View>
       )}
-      {data?.promotion && data.promotion > 0 ? (
-        <View style={{ flexDirection: "row" }}>
-          <IconSvg name="icClock" size={20} color={palette.textOpacity8} />
-          <Text style={styles.textPrice}>{`discount: ${data.promotion}`}</Text>
-        </View>
-      ) : null}
     </View>
   );
 };

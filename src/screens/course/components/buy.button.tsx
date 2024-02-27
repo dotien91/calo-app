@@ -10,7 +10,6 @@ import { palette } from "@theme/themes";
 import { SCREENS } from "constants";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import { showWarningLogin } from "@helpers/super.modal.helper";
-import EnrollNow from "@screens/course/components/EnrollNow";
 
 interface BuyButtonProps {
   data?: ICourseItem;
@@ -20,13 +19,10 @@ interface BuyButtonProps {
   };
 }
 
-const BuyButton = ({ data, type, courseRoom }: BuyButtonProps) => {
+const BuyButton = ({ data, type }: BuyButtonProps) => {
   const { isLoggedIn } = useUserHook();
   const isJoin = data?.is_join;
-  if (isJoin)
-    return (
-      <EnrollNow courseRoom={courseRoom} data={data} course_id={data?._id} />
-    );
+  console.log("datadatadata", data);
   const goToBuyScreen = () => {
     if (!isLoggedIn()) {
       showWarningLogin();
@@ -34,19 +30,10 @@ const BuyButton = ({ data, type, courseRoom }: BuyButtonProps) => {
     }
     const type = data?.type;
     let screen = SCREENS.PAYMENT_COURES;
-    if (isJoin && type != EnumClassType.SelfLearning) {
-      NavigationService.navigate(SCREENS.CALL_CLASS, {
-        courseRoom,
-        courseData: data,
-      });
-      return;
-    }
+
     if (type == EnumClassType.Call11) screen = SCREENS.BOOK_LESSON;
     if (type == EnumClassType.CallGroup) screen = SCREENS.CHOOSE_CLASS;
-    if (type == EnumClassType.SelfLearning)
-      screen = isJoin
-        ? SCREENS.COURSE_LEARN_VIDEO_SCREEN
-        : SCREENS.PAYMENT_COURES;
+    if (type == EnumClassType.SelfLearning) screen = SCREENS.PAYMENT_COURES;
 
     NavigationService.navigate(screen, {
       courseId: data?._id,

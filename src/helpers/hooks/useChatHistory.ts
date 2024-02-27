@@ -149,15 +149,24 @@ export const useChatHistory = (txtSearch: string, searchModeChat: boolean) => {
     if (mediaData.length) {
       data.media_data = JSON.stringify(mediaData);
     }
+
+    const lastMessageLocal = giftedMessages[0];
+
     sendChatToChatRoom(data).then((res) => {
       let newMessages = [];
       if (!res.isError) {
         newMessages = giftedMessages.map((item) => {
-          if (item?.status == EnumMessageStatus.Pending)
+          if (
+            item?.status == EnumMessageStatus.Pending &&
+            lastMessageLocal._id == item._id
+          ) {
             return {
               ...item,
               status: EnumMessageStatus.Send,
+              media_ids: res.data?.media_ids || [],
             };
+          }
+
           return item;
         });
       } else {
@@ -194,7 +203,6 @@ export const useChatHistory = (txtSearch: string, searchModeChat: boolean) => {
       }, []);
     // setCurrentMediaIds(mediaIds);
     updateCurrentMediaIds({ data: mediaIds, id: chatRoomId });
-    console.log("mediaIdsmediaIdsmediaIds", mediaIds);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 

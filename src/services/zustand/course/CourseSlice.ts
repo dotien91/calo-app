@@ -24,6 +24,18 @@ export interface CourseSlice {
   addToFavourites: (id: string) => void;
 }
 
+interface IWatchingVideo {
+  id: string;
+  progress: number;
+  url: string;
+}
+
+interface IProgressLearningItem {
+  id: string;
+  module_child_count: number;
+  module_view_count: number;
+}
+
 export interface CourseSlice {
   listCourseFilterParams: IListCourseFilterParams;
   setListCourseFilterParams: (params: IListCourseFilterParams) => void;
@@ -42,9 +54,13 @@ export interface CourseSlice {
   addToFavourites: (id: string) => void;
   listParticipants: any[];
   setListParticipants: (v: any[]) => void;
+  watchingVideos: IWatchingVideo[];
+  _progressLearningData: IProgressLearningItem[];
+  listVideoCourse: [];
+  setListVideoCourse: [];
 }
 
-const createCourseSlice: StoreSlice<CourseSlice> = (set) => ({
+const createCourseSlice: StoreSlice<CourseSlice> = (set, get) => ({
   listCourseFilterParams: { limit: "999999999" },
   setListCourseFilterParams: (params: IListCourseFilterParams) =>
     set({ listCourseFilterParams: params }),
@@ -92,6 +108,32 @@ const createCourseSlice: StoreSlice<CourseSlice> = (set) => ({
   },
   listParticipants: [],
   setListParticipants: (v: any[]) => set({ listParticipants: v }),
+  watchingVideos: [],
+  updateWatchingVideos: (data: IWatchingVideo) => {
+    const { watchingVideos } = get();
+    console.log("set. =====watchingVideos", {
+      watchingVideos,
+      data,
+    });
+    set(() => ({
+      watchingVideos: [
+        data,
+        ...watchingVideos.filter((_item) => _item.id != data.id),
+      ],
+    }));
+  },
+  _progressLearningData: [],
+  _updateProgressLearningData: (data: IProgressLearningItem) => {
+    const { _progressLearningData } = get();
+    set(() => ({
+      _progressLearningData: [
+        data,
+        ..._progressLearningData.filter((_item) => _item.id != data.id),
+      ],
+    }));
+  },
+  listVideoCourse: [],
+  setListVideoCourse: (v) => set({ listVideoCourse: v }),
 });
 
 export default createCourseSlice;

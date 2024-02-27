@@ -10,6 +10,7 @@ import { ICourseItem } from "models/course.model";
 import LoadingItem from "@shared-components/loading.item";
 import useStore from "@services/zustand/store";
 import CourseItem from "@screens/course-tab/components/course.item";
+import { useUserHook } from "@helpers/hooks/useUserHook";
 
 const MyCourse = () => {
   const theme = useTheme();
@@ -18,51 +19,45 @@ const MyCourse = () => {
   const [index, setIndex] = React.useState(0);
   const layout = useWindowDimensions();
   const userData = useStore((state) => state.userData);
+  const { isLoggedIn, renderViewRequestLogin } = useUserHook();
   const [routes] = React.useState([
-    { key: "first", title: "Improgess" },
+    { key: "first", title: "Inprogess" },
     { key: "second", title: "Complete" },
   ]);
 
   const { listData, isLoading } = useListData<ICourseItem>(
-    { auth_id: userData?._id, order_by: "DESC", sort_by: "createdAt" },
+    { auth_id: userData?._id, order_by: "ASC", sort_by: "createdAt" },
     getMyCourse,
   );
 
   console.log("listData", {
     listData,
-    a: { limit: "51", auth_id: userData?._id },
   });
 
   const renderScene = SceneMap({
-    first: () => <View style={{ marginTop: 20 }}>{renderListImprogess()}</View>,
-    second: () => <View></View>,
+    first: () => <ListData listData={listData} isLoading={isLoading} />,
+    second: () => (
+      <ListData listData={listData} isTabComplete isLoading={false} />
+    ),
   });
 
-  const renderListImprogess = () => {
-    return (
-      <>
-        {isLoading && <LoadingItem />}
-        <FlatList
-          data={listData}
-          renderItem={renderItemSelected}
-          onEndReachedThreshold={0}
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-          removeClippedSubviews={true}
-        />
-      </>
-    );
-  };
+  if (!isLoggedIn()) return renderViewRequestLogin();
 
-  const renderItemSelected = ({
-    item,
-    index,
-  }: {
-    item: ICourseItem;
-    index: number;
-  }) => {
-    return <CourseItem {...item} key={index} />;
-  };
+  // const renderListInprogess = () => {
+  //   return (
+  //     <>
+  //       {isLoading && <LoadingItem />}
+  //       <FlatList
+  //         data={listData}
+  //         renderItem={renderItemSelected}
+  //         onEndReachedThreshold={0}
+  //         showsHorizontalScrollIndicator={false}
+  //         showsVerticalScrollIndicator={false}
+  //         removeClippedSubviews={true}
+  //       />
+  //     </>
+  //   );
+  // };
 
   const renderTabBar = (props) => (
     <TabBar
@@ -102,4 +97,42 @@ const MyCourse = () => {
     </View>
   );
 };
+
+const ListData = React.memo(({ listData, isTabComplete, isLoading }) => {
+  const data = React.useMemo(() => {
+    return listData.filter((item) =>
+      isTabComplete
+        ? item.module_view.length > 0 &&
+          item.module_view.length == item.module_child_count
+        : item.module_view.length == 0 ||
+          item.module_view.length != item.module_child_count,
+    );
+  }, [listData]);
+
+  const renderItemSelected = ({
+    item,
+    index,
+  }: {
+    item: ICourseItem;
+    index: number;
+  }) => {
+    return <CourseItem data={item} key={index} />;
+  };
+
+  return (
+    <>
+      {isLoading && <LoadingItem />}
+      <FlatList
+        contentContainerStyle={{ marginTop: 16 }}
+        data={data}
+        renderItem={renderItemSelected}
+        onEndReachedThreshold={0}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        removeClippedSubviews={true}
+      />
+    </>
+  );
+});
+
 export default MyCourse;

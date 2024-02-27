@@ -1,6 +1,8 @@
-import React, { memo, useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
+import * as NavigationService from "react-navigation-helpers";
 
+import { SCREENS } from "constants";
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
 import { getCountFollow } from "@services/api/user.api";
@@ -8,6 +10,9 @@ import { translations } from "@localization";
 import SkeletonPlaceholder from "@shared-components/skeleton";
 import { WINDOW_WIDTH } from "@gorhom/bottom-sheet";
 import { isNumber } from "lodash";
+// import LoadingItem from "@shared-components/loading.item";
+// import LoadingItem from "@shared-components/loading.item";
+import { EnumTypeRelationship } from "constants/profile.constant";
 
 interface CountFollowProps {
   id: string;
@@ -97,15 +102,45 @@ const CountFollow = ({ id, postCount }: CountFollowProps) => {
   }
 
   return (
-    <View style={styles.container}>
-      <ItemFollow title={countFollow?.following} des={translations.following} />
+    <View
+      style={{
+        flexDirection: "row",
+        gap: 12,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <TouchableOpacity
+        onPress={() => {
+          NavigationService.navigate(SCREENS.TAB_FOLLOW, {
+            relationship: EnumTypeRelationship.Following,
+            countFollow: countFollow,
+            id: id,
+          });
+        }}
+      >
+        <ItemFollow
+          title={countFollow?.following}
+          des={translations.following}
+        />
+      </TouchableOpacity>
       <View
         style={{ height: 14, width: 1, backgroundColor: palette.placeholder }}
       />
-      <ItemFollow
-        title={countFollow?.followers || 0}
-        des={translations.follower}
-      />
+      <TouchableOpacity
+        onPress={() => {
+          NavigationService.navigate(SCREENS.TAB_FOLLOW, {
+            relationship: EnumTypeRelationship.Follower,
+            countFollow: countFollow,
+            id: id,
+          });
+        }}
+      >
+        <ItemFollow
+          title={countFollow?.followers}
+          des={translations.follower}
+        />
+      </TouchableOpacity>
       <View
         style={{ height: 14, width: 1, backgroundColor: palette.placeholder }}
       />
@@ -123,4 +158,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(CountFollow);
+export default React.memo(CountFollow);

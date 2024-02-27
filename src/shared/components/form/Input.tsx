@@ -9,6 +9,7 @@ import {
 import { palette } from "@theme/themes";
 import CommonStyle from "@theme/styles";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import PressableBtn from "@shared-components/button/PressableBtn";
 
 interface IconType {
   name: string;
@@ -19,11 +20,16 @@ interface IconType {
 interface InputPropsType extends TextInputProps {
   customStyle?: ViewStyle;
   icon?: IconType;
+  disabled?: boolean;
+  cb: (e: string) => void;
 }
 
 // eslint-disable-next-line react/display-name
 const Input = React.forwardRef(
-  ({ customStyle, icon, ...res }: InputPropsType, ref) => {
+  (
+    { customStyle, icon, disabled = false, cb, ...res }: InputPropsType,
+    ref,
+  ) => {
     const [value, setValue] = useState();
 
     useImperativeHandle(ref, () => {
@@ -35,6 +41,11 @@ const Input = React.forwardRef(
 
     const onChangeText = (e: string) => {
       setValue(e);
+      cb && cb(e);
+    };
+
+    const clearInput = () => {
+      setValue("");
     };
 
     return (
@@ -49,15 +60,25 @@ const Input = React.forwardRef(
         )}
         <TextInput
           {...res}
+          editable={!disabled}
           ref={ref}
           onChangeText={onChangeText}
           style={[
             styles.input,
             !!customStyle && customStyle,
             icon && { paddingLeft: 40 },
+            !!disabled && {
+              backgroundColor: palette.btnInactive,
+              borderWidth: 0,
+            },
           ]}
           value={value}
         />
+        {!!value && (
+          <PressableBtn style={styles.iconClose} onPress={clearInput}>
+            <Icon type={IconType.Feather} name={"x-circle"} />
+          </PressableBtn>
+        )}
       </View>
     );
   },
@@ -67,14 +88,14 @@ export default Input;
 
 const styles = StyleSheet.create({
   input: {
-    height: 40,
+    minHeight: 40,
     ...CommonStyle.hnRegular,
-    borderRadius: 6,
+    borderRadius: 8,
     color: palette.mainColor2,
     width: "100%",
-    paddingVertical: 4,
-    flex: 1,
+    paddingVertical: 0,
     paddingHorizontal: 12,
+    ...CommonStyle.borderStyle,
   },
   icon: {
     position: "absolute",
@@ -83,6 +104,12 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   wrapInput: {
-    flex: 1,
+    // flex: 1,
+  },
+  iconClose: {
+    position: "absolute",
+    right: 10,
+    top: 10,
+    color: palette.mainColor2,
   },
 });

@@ -433,4 +433,4 @@ export class ImageModalInner extends React.Component<ModalProps, State> {
   }
 }
 
-export default ImageModalInner;
+export default React.memo(ImageModalInner);

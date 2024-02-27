@@ -43,6 +43,7 @@ export default {
   createPassSuccess: "Create new password success!",
   loginSuccess: "Login success!",
   goBackHome: "Go back home",
+  next: "Next",
   error: {
     unknown: "Unknow error!",
     invalidPhoneEmail: "Phone/Email invalid",
@@ -236,6 +237,9 @@ export default {
     forgotPasswordSuccess:
       "Successfully sent an email, please check your email!",
     requireLogin: "You need login for using this feature",
+    bylogin: "By login or signing up, you're agree to our",
+    term: "Terms & Conditions",
+    police: "Privacy Policy",
   },
   validate: {
     emailInvalid: "Email is invalid",
@@ -363,7 +367,7 @@ export default {
     media: "Media",
     chooseFile: "Choose File",
     downloadDocument: "Download Document",
-    openWebsite: "Open Website",
+    openWebsite: "Open document",
     editModule: "Edit Module",
     consistsOf: "Consists of",
     parts: "parts",
@@ -466,6 +470,10 @@ export default {
     publicCourse: "Public course",
     discountEntry: "start at",
     endAt: "end at",
+    noreview: "Zero review",
+    selectModal: "Select",
+    myCourse: "My course",
+    recommendCourse: "Recommend course",
   },
   seeAll: "See all",
   settings: {
@@ -791,6 +799,7 @@ export default {
     saveQRCode: "Save QR code",
     tocomplete:
       "To complete the payment process, please make a transfer to the account number below:",
+    content: "Content tranfer",
   },
   settingUser: {
     language: "Language",
@@ -805,6 +814,7 @@ export default {
     private: "Security & privacy",
     support: "Customer support",
     aboutus: "About us",
+    mycouse: "My Course",
   },
   aboutUs: {
     aboutUs: "About us",
@@ -823,5 +833,13 @@ export default {
   },
   en: "English",
   vi: "Vietnamese",
+  task: {
+    inviteFriend: "Invite a friend",
+    yourscore: "Your IELTS Score",
+    powered: "POWERED BY",
+    mycode: "My Code",
+    level: "Level",
+    task: "Tasks",
+  },
 };
 /* eslint-disable max-len */

@@ -16,6 +16,7 @@ import IconBtn from "@shared-components/button/IconBtn";
 import { palette } from "@theme/themes";
 import { getTimeAvailable } from "@services/api/course.api";
 import { SCREENS } from "constants";
+import LoadingList from "@shared-components/loading.list.component";
 
 interface BookLessonSelectViewProps {}
 
@@ -26,21 +27,22 @@ const BookLessonSelectView: React.FC<BookLessonSelectViewProps> = () => {
   const route = useRoute();
   const courseData = route.params?.["courseData"];
   const courseId = courseData._id;
-
+  console.log("getTimeAvailablegetTimeAvailable", courseId);
   const [data, setData] = useState([]);
-  // const [loading, setLoading] = useState(true);
   const [duration, setDuration] = useState<number>(1);
   const [isMaxDay, setIsMaxDay] = useState(false);
 
   const [day, setDay] = useState([]);
   const [dateView, setDateView] = useState(1);
+  const [loading, setLoading] = useState(true);
 
   React.useEffect(() => {
-    getTimeAvailable(courseId).then((res) => {
-      // setLoading(false);
+    getTimeAvailable({ course_id: courseId }).then((res) => {
+      console.log("resresres", res);
       if (!res.isError) {
         setData(res.data);
       }
+      setLoading(false);
     });
   }, []);
 
@@ -270,6 +272,7 @@ const BookLessonSelectView: React.FC<BookLessonSelectViewProps> = () => {
     );
   };
 
+  if (loading) return <LoadingList numberItem={3} />;
   if (!data?.length) return null;
 
   return (

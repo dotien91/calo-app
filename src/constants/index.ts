@@ -64,6 +64,10 @@ export const SCREENS = {
   CALL_CLASS: "CallClass",
   COUPON_CREATE: "CouponCreate",
   COUPON_LIST: "CouponList",
+  TAB_FOLLOW: "TabFollow",
+  BLACK_LIST: "BlackList",
+  PRIVATESETTING: "PrivateSetting",
+  SETTINGPROFILESCREEN: "SettingProfileScreen",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

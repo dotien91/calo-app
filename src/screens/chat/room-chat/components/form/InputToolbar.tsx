@@ -17,6 +17,7 @@ interface InputToolbarProps {
   sendChatMessage: () => void;
   onSelectPicture?: () => void;
   onSelectVideo?: () => void;
+  onSelectFile?: () => void;
   fromLiveStream?: boolean;
 }
 
@@ -26,6 +27,7 @@ const InputToolbar: React.FC<InputToolbarProps> = ({
   onSelectPicture,
   onSelectVideo,
   fromLiveStream,
+  onSelectFile,
 }) => {
   const theme = useTheme();
   const { colors } = theme;
@@ -70,6 +72,14 @@ const InputToolbar: React.FC<InputToolbarProps> = ({
                 size={20}
                 type={IconType.Feather}
                 name="mic"
+                color={colors.black}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={onSelectFile} style={styles.btnMedia}>
+              <Icon
+                size={20}
+                type={IconType.Feather}
+                name="file"
                 color={colors.black}
               />
             </TouchableOpacity>

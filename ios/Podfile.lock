@@ -472,10 +472,10 @@ PODS:
     - React-Core
   - react-native-splash-screen (3.3.0):
     - React-Core
-  - react-native-video (6.0.0-beta.4):
+  - react-native-video (6.0.0-alpha.8):
     - React-Core
-    - react-native-video/Video (= 6.0.0-beta.4)
-  - react-native-video/Video (6.0.0-beta.4):
+    - react-native-video/Video (= 6.0.0-alpha.8)
+  - react-native-video/Video (6.0.0-alpha.8):
     - PromisesSwift
     - React-Core
   - react-native-webrtc (118.0.1):
@@ -594,6 +594,8 @@ PODS:
     - React-jsi (= 0.72.3)
     - React-logger (= 0.72.3)
     - React-perflogger (= 0.72.3)
+  - ReactNativeART (1.2.0):
+    - React
   - ReactNativeIncallManager (4.1.0):
     - React-Core
   - ReactNativeLocalization (2.3.2):
@@ -736,6 +738,7 @@ DEPENDENCIES:
   - React-runtimescheduler (from `../node_modules/react-native/ReactCommon/react/renderer/runtimescheduler`)
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - "ReactNativeART (from `../node_modules/@react-native-community/art`)"
   - ReactNativeIncallManager (from `../node_modules/react-native-incall-manager`)
   - ReactNativeLocalization (from `../node_modules/react-native-localization`)
   - RNAudioRecorderPlayer (from `../node_modules/react-native-audio-recorder-player`)
@@ -918,6 +921,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/react/utils"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  ReactNativeART:
+    :path: "../node_modules/@react-native-community/art"
   ReactNativeIncallManager:
     :path: "../node_modules/react-native-incall-manager"
   ReactNativeLocalization:
@@ -1018,7 +1023,7 @@ SPEC CHECKSUMS:
   React-Core: aaacca67f9ca54f142827e67f44bfbd815875eb6
   React-CoreModules: 32fab1d62416849a3b6dac6feff9d54e5ddc2d1e
   React-cxxreact: 37765b4975541105b2a3322a4b473417c158c869
-  React-debug: 66fe63e386478cbcb0bf721fc8ea08dcf0224235
+  React-debug: 4e10e94f1ef2627bbb88c38bf8bf790520df013b
   React-hermes: 935ae71fb3d7654e947beba8498835cd5e479707
   React-jsi: ec628dc7a15ffea969f237b0ea6d2fde212b19dd
   React-jsiexecutor: 59d1eb03af7d30b7d66589c410f13151271e8006
@@ -1039,10 +1044,10 @@ SPEC CHECKSUMS:
   react-native-safe-area-context: 0ee144a6170530ccc37a0fd9388e28d06f516a89
   react-native-slider: 33b8d190b59d4f67a541061bb91775d53d617d9d
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
-  react-native-video: 6078b448c21630b0a2937436527ad54fd2a1fdd8
+  react-native-video: 86950ad481cec184d7c9420ec3bca0c27904bbcd
   react-native-webrtc: 7adbde4b2ad20fb2b804fb11f329425c9323dccc
   react-native-webview: 121397a02eb58554c24d0c3e26acf676ff6a87d2
-  React-NativeModulesApple: 5fe4e517e3a629402ff612a9d4148e29da3c3823
+  React-NativeModulesApple: 8e143b44d3f46baa56461eaeb7b3ac46f36e5585
   React-perflogger: 6bd153e776e6beed54c56b0847e1220a3ff92ba5
   React-RCTActionSheet: c0b62af44e610e69d9a2049a682f5dba4e9dff17
   React-RCTAnimation: fe7005136b58f58871cab2f70732343b6e330d30
@@ -1056,9 +1061,10 @@ SPEC CHECKSUMS:
   React-RCTVibration: ea3a68a49873a54ced927c90923fc6932baf344a
   React-rncore: 9672a017af4a7da7495d911f0b690cbcae9dd18d
   React-runtimeexecutor: 369ae9bb3f83b65201c0c8f7d50b72280b5a1dbc
-  React-runtimescheduler: f9063b7d6149933625b722ec0d8a369f3f0c2c94
-  React-utils: da09975224815c0bc7acb77e03b24a1179f9662b
-  ReactCommon: 781e50c5558b98adc2354e35621f18b6f1796567
+  React-runtimescheduler: ee10ddffb4d72a5262ed4e93ed3782fd1625c08d
+  React-utils: 1b1b32ca0a0d54e0057f293f809c074c373ca911
+  ReactCommon: 4dca7e2a424e1ca91960385de3759c4d6b999344
+  ReactNativeART: 78edc68dd4a1e675338cd0cd113319cf3a65f2ab
   ReactNativeIncallManager: 2385505fa5dfdbbc78925e3b8d23b30ce0cde40e
   ReactNativeLocalization: fb171138cdc80d5d0d4f20243d2fc82c2b3cc48f
   RNAudioRecorderPlayer: ba0aca62cd47c6f878313fdadb0edb23ef9dbf90

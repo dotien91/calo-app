@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { useTheme } from "@react-navigation/native";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Linking, Text, TouchableOpacity, View } from "react-native";
+
 import Header from "@shared-components/header/Header";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import createStyles from "./about.me.style";
@@ -19,6 +20,7 @@ import CS from "@theme/styles";
 const AboutMe = () => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
+  const { colors } = theme;
 
   const userData = useStore((state) => state.userData);
   const { logout } = useUserHook();
@@ -27,27 +29,37 @@ const AboutMe = () => {
     {
       showItemisLogin: false,
       title: translations.aboutUs.aboutUs,
-      action: () => {},
+      action: () => {
+        OpenURLButton("https://docs.ieltshunter.io/");
+      },
     },
     {
       showItemisLogin: false,
       title: translations.aboutUs.termofus,
-      action: () => {},
+      action: () => {
+        OpenURLButton("https://docs.ieltshunter.io/");
+      },
     },
     {
       showItemisLogin: false,
       title: translations.aboutUs.privacy,
-      action: () => {},
+      action: () => {
+        OpenURLButton("https://docs.ieltshunter.io/");
+      },
     },
     {
       showItemisLogin: false,
       title: translations.aboutUs.cookie,
-      action: () => {},
+      action: () => {
+        OpenURLButton("https://docs.ieltshunter.io/");
+      },
     },
     {
       showItemisLogin: false,
       title: translations.aboutUs.return,
-      action: () => {},
+      action: () => {
+        OpenURLButton("https://docs.ieltshunter.io/");
+      },
     },
     {
       showItemisLogin: true,
@@ -86,6 +98,10 @@ const AboutMe = () => {
       });
   };
 
+  const OpenURLButton = (url: string) => {
+    Linking.openURL(url);
+  };
+
   const renderAboutMe = () => {
     return (
       <View style={{ flex: 1 }}>
@@ -94,7 +110,10 @@ const AboutMe = () => {
             return (
               <TouchableOpacity
                 onPress={item.action}
-                style={styles.styleItemButtonAboutUs}
+                style={[
+                  styles.styleItemButtonAboutUs,
+                  { borderBottomWidth: 1, borderColor: colors.grey2 },
+                ]}
                 key={index}
               >
                 <Text style={styles.styleTextTitleItem}>{item.title}</Text>
@@ -108,7 +127,10 @@ const AboutMe = () => {
             return (
               <TouchableOpacity
                 onPress={item.action}
-                style={styles.styleItemButtonAboutUs}
+                style={[
+                  styles.styleItemButtonAboutUs,
+                  { borderBottomWidth: 1, borderColor: colors.grey2 },
+                ]}
                 key={index}
               >
                 <Text style={styles.styleTextTitleItem}>{item.title}</Text>
@@ -126,7 +148,7 @@ const AboutMe = () => {
 
   return (
     <View style={{ ...CS.safeAreaView }}>
-      <Header text="About me" />
+      <Header text="About us" />
       {renderAboutMe()}
     </View>
   );

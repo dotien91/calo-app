@@ -10,7 +10,7 @@ const createStyles = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: theme.background,
+      backgroundColor: palette.black,
     },
     styleVideo: {
       width: "100%",

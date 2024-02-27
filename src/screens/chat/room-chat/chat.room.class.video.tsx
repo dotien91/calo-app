@@ -27,9 +27,10 @@ interface ChatRoomScreenProps {
   id?: string;
 }
 
-const ChatRoomScreen: React.FC<ChatRoomScreenProps> = ({
+const ChatRoomClass: React.FC<ChatRoomScreenProps> = ({
   id,
 }: ChatRoomScreenProps) => {
+  console.log("ChatRoomClassChatRoomClass", id);
   const userData = useStore((state) => state.userData);
   const theme = useTheme();
   const styles = React.useMemo(() => createStyles(theme), [theme]);
@@ -214,4 +215,4 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = ({
   );
 };
 
-export default React.memo(ChatRoomScreen);
+export default React.memo(ChatRoomClass);

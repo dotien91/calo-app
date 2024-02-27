@@ -4,7 +4,13 @@ import { View } from "react-native";
 import { HS, MHS, VS } from "@utils/size.utils";
 import SkeletonPlaceholder from "./skeleton";
 
-const LoadingList = ({ numberItem = 1 }: { numberItem?: number }) => {
+const LoadingList = ({
+  numberItem = 1,
+}: // hideAvatar = false,
+{
+  numberItem?: number;
+  hideAvatar?: boolean;
+}) => {
   const array = Array.from(Array(numberItem - 1).keys());
 
   return (

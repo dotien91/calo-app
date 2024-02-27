@@ -30,6 +30,7 @@ import {
 import eventEmitter from "@services/event-emitter";
 import { TypedFollowUser } from "shared/models";
 import { palette } from "@theme/themes";
+import CustomCheckbox from "@shared-components/form/CustomCheckbox";
 
 interface CreateGroupChatScreenProps {}
 
@@ -78,15 +79,7 @@ const CreateGroupChatScreen: React.FC<CreateGroupChatScreenProps> = () => {
         (_item) => _item._id == item.partner_id._id,
       );
     }
-    return (
-      <View style={styles.wrapCheckbox}>
-        <Icon
-          type={IconType.MaterialCommunityIcons}
-          name={"check-bold"}
-          color={isSelected || isCurrentMember ? colors.black : colors.white}
-        />
-      </View>
-    );
+    return <CustomCheckbox isSelected={isCurrentMember || isSelected} />;
   };
 
   const renderItem = ({

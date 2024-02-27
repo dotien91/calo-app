@@ -21,7 +21,6 @@ import {
 } from "models/course.model";
 import CourseItem from "../components/course.item";
 import { getCourseList, getListTutor } from "@services/api/course.api";
-import LoadingList from "@shared-components/loading.list.component";
 import EmptyResultView from "@shared-components/empty.data.component";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";
@@ -46,6 +45,7 @@ import { getListPost } from "@services/api/post";
 import ItemPost from "@screens/post/components/post-item/post.detail.item";
 import { getListUser } from "@services/api/user.api";
 import UserItem from "../components/user.item";
+import LoadingItem from "@shared-components/loading.item";
 
 const FirstRoute = () => <ListSearch type={EnumSearchType.course} />;
 const SecondRoute = () => <ListSearch type={EnumSearchType.tutor} />;
@@ -202,7 +202,7 @@ const ListSearch = React.memo(({ type }: { type: string }) => {
       ...courseCurrentSort,
       ...defaultParams,
       ...listCourseFilterParams,
-      limit: "5",
+      limit: type == EnumSearchType.user ? "8" : "5",
       search: courseSearchHistory,
     };
   }, [courseCurrentSort, listCourseFilterParams, courseSearchHistory]);
@@ -238,7 +238,7 @@ const ListSearch = React.memo(({ type }: { type: string }) => {
     if (type == EnumSearchType.tutor)
       return <TutorItem {...item} key={index} />;
     if (type == EnumSearchType.user) return <UserItem {...item} key={index} />;
-    return <CourseItem {...item} key={index} />;
+    return <CourseItem data={item} key={index} />;
   };
 
   const renderHeader = () => {
@@ -260,7 +260,7 @@ const ListSearch = React.memo(({ type }: { type: string }) => {
 
   return (
     <View>
-      {isLoading && <LoadingList numberItem={3} />}
+      {isLoading && <LoadingItem numberItem={2} />}
       {!listData?.length && !isLoading && (
         <EmptyResultView
           title={translations.noResult}

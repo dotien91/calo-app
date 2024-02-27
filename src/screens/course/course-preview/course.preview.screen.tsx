@@ -32,7 +32,6 @@ import ChooseClassSelectView from "../components/choose-class/choose.class.selec
 import EnrollNow from "../components/EnrollNow";
 import { SCREENS } from "constants";
 import EditButton from "../components/edit.button";
-import { shareCourse } from "@utils/share.utils";
 import Button from "@shared-components/button/Button";
 import { showToast } from "@helpers/super.modal.helper";
 
@@ -48,6 +47,7 @@ const CoursePreviewScreen = () => {
   const [courseRoom, setCourseRoom] = useState();
   const route = useRoute();
   const course_id = route.params?.["course_id"];
+  const dataCourse = route.params?.["dataCourse"];
   // const course_id = "65b773efb11a3c94cc62c5e2";
   // const course_id = "65b77490b11a3c94cc62c69a"; //class room
 
@@ -61,6 +61,13 @@ const CoursePreviewScreen = () => {
       eventEmitter.off("reload_data_preview", _getCourseDetail);
     };
   });
+
+  React.useEffect(() => {
+    if (dataCourse) {
+      setData(dataCourse);
+    }
+  }, [dataCourse]);
+
   // console.log(isLoading);
   const params = { auth_id: userData?._id };
   const _getCourseDetail = () => {
@@ -85,6 +92,7 @@ const CoursePreviewScreen = () => {
         const roomId = (data?.redirect_url || "").match(/[^\/]+$/)?.[0];
         setCourseRoom({
           roomId,
+          chatRoomId: data?.chat_room_id,
         });
       }
     });
@@ -98,7 +106,7 @@ const CoursePreviewScreen = () => {
         style={{
           flexDirection: "row",
           marginHorizontal: 16,
-          height: 40,
+          height: 48,
           marginTop: 20,
         }}
       >
@@ -149,11 +157,11 @@ const CoursePreviewScreen = () => {
     }
   };
 
-  const _shareCourse = () => {
-    if (data?._id) {
-      shareCourse(data._id);
-    }
-  };
+  // const _shareCourse = () => {
+  //   if (data?._id) {
+  //     shareCourse(data._id);
+  //   }
+  // };
 
   const _pressItem = (item) => {
     if (
@@ -214,7 +222,8 @@ const CoursePreviewScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Header iconNameRight="share" onPressRight={_shareCourse} />
+      {/* <Header iconNameRight="share-outline" onPressRight={_shareCourse} /> */}
+      <Header customStyle={{ marginBottom: 0 }} text={data?.title} />
       <ScrollView
         contentContainerStyle={{ paddingBottom: 60 }}
         onScroll={handleScroll}

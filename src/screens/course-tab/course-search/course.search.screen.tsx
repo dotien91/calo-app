@@ -122,7 +122,7 @@ const ListSearch = React.memo(({ txtSearch, isTeacherTab }) => {
 
   const renderItem = (item: ICourseItem, index: number) => {
     if (isTeacherTab) return <TutorItem {...item.item} key={index} />;
-    return <CourseItem {...item.item} key={index} />;
+    return <CourseItem data={item.item} key={index} />;
   };
 
   return (
