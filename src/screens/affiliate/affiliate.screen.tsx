@@ -36,6 +36,7 @@ const AffiliatePage = () => {
     (state) => state.setListCourseSelected,
   );
   const setListUserSelected = useStore((state) => state.setListUserSelected);
+  const setDateFilter = useStore((state) => state.setDateFilter);
   const date = useStore((state) => state.dateFilter);
   const listCourseSelected = useStore((state) => state.listCourseSelected);
   const listUserSelected = useStore((state) => state.listUserSelected);
@@ -50,6 +51,12 @@ const AffiliatePage = () => {
     eventEmitter.on("refresh_list_affiliate", reloadData);
     return () => {
       eventEmitter.off("refresh_list_affiliate", reloadData);
+      setListUserSelected([]);
+      setListCourseSelected([]);
+      setDateFilter({
+        from: "",
+        to: "",
+      });
     };
   }, []);
 

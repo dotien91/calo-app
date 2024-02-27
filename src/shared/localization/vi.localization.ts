@@ -937,6 +937,11 @@ export default {
     challengeHasBeenDeleeted: "Thử thách đã bị xoá",
     pleaseAddInfoStage: "Vui lòng điền đầy đủ thông tin chặng của Challenge",
   },
+  codeActivations: {
+    sortBy: "Sắp xếp theo",
+    timeLatest: "Thời gian: mới nhất",
+    priceHighest: "Giá: cao đến thấp",
+  },
   mentor: {
     user: "Người dùng",
     mentor: "Mentor",

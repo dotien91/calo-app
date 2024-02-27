@@ -528,6 +528,11 @@ export default {
     descriptionPoint:
       "This is the number of points the student will receive for each corresponding action",
   },
+  codeActivations: {
+    sortBy: "Sort by",
+    timeLatest: "Time: Latest first",
+    priceHighest: "Price: highest first",
+  },
   profile: {
     editProfile: "Edit Profile",
     saveProfile: "Save profile",

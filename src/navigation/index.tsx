@@ -73,6 +73,12 @@ import AffiliatePage from "@screens/affiliate/affiliate.screen";
 import WithdrawScreen from "@screens/withdraw/withdraw.screen";
 import BankListScreen from "@screens/withdraw/bank.list.screen";
 import AddBankScreen from "@screens/withdraw/add.bank.screen";
+// import TabFollow from "@screens/tab-follow/tab.follow";
+// import BlackList from "@screens/black-list/black.list";
+// import PrivateSetting from "@screens/private.setting/private.setting";
+// import { _getJson } from "@services/local-storage";
+// import SettingProfileScreen from "@screens/profile.screen/profile.screen";
+import CodeActivationsScreen from "@screens/code-activations/code.activations.screen";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -323,6 +329,20 @@ const Navigation = () => {
           component={PaymentSuccess}
         />
         <Stack.Screen name={SCREENS.AFFILIATE} component={AffiliatePage} />
+        {/* <Stack.Screen name={SCREENS.TAB_FOLLOW} component={TabFollow} />
+        <Stack.Screen name={SCREENS.BLACK_LIST} component={BlackList} />
+        <Stack.Screen
+          name={SCREENS.PRIVATESETTING}
+          component={PrivateSetting}
+        />
+        <Stack.Screen
+          name={SCREENS.SETTINGPROFILESCREEN}
+          component={SettingProfileScreen}
+        /> */}
+        <Stack.Screen
+          name={SCREENS.CODE_ACTIVATIONS_SCREEN}
+          component={CodeActivationsScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

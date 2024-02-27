@@ -69,6 +69,8 @@ export const SCREENS = {
   WITHDRAW: "Withdraw",
   BANK_LIST: "BankList",
   ADD_BANK: "AddBank",
+  SETTINGPROFILESCREEN: "SettingProfileScreen",
+  CODE_ACTIVATIONS_SCREEN: "CodeActivationsScreen",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

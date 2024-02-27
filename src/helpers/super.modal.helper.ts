@@ -22,6 +22,7 @@ export enum EnumModalContentType {
   FilterAffiliate = "filter-affiliate",
   TextInput = "text-input",
   SearchBank = "search-bank",
+  SelectSort = "select-sort",
 }
 
 export enum EnumStyleModalType {

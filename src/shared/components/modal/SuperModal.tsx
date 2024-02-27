@@ -28,6 +28,7 @@ import ListUser from "./modal-inner/ListUser";
 import PopupCreateLesson from "@screens/course/course-create/components/PartViewCreate/popup.create.lesson";
 import FilterAffiliate from "@screens/affiliate/components/FilterAffiliate";
 import ListBank from "./modal-inner/ListBank";
+import SelectRadioButton from "@screens/code-activations/select.radio.button";
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
 // using normal one.
@@ -194,6 +195,9 @@ const SuperModal: React.FC<SuperModalProps> = () => {
           )}
           {contentModalType == EnumModalContentType.SearchBank && (
             <ListBank {...data} closeModal={closeModal} />
+          )}
+          {contentModalType == EnumModalContentType.SelectSort && (
+            <SelectRadioButton data={data} />
           )}
         </View>
       </StickBottomModal>

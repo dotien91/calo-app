@@ -79,6 +79,13 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
         NavigationService.navigate(SCREENS.MY_COURES);
       },
     },
+    {
+      title: "Code activations",
+      icon: "book",
+      action: () => {
+        NavigationService.navigate(SCREENS.CODE_ACTIVATIONS_SCREEN);
+      },
+    },
   ];
 
   const renderListSetting = () => {
