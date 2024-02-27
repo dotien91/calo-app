@@ -837,6 +837,8 @@ export default {
     topic: "Topic",
     createWork: "Create work",
     selectClass: "Select class",
+    selectDouDate: "Select due date",
+
   }
 };
 /* eslint-disable max-len */

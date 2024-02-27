@@ -1351,5 +1351,7 @@ export default {
     topic: "Chủ đề",
     createWork: "Tạo bài tập",
     selectClass: "Chọn lớp",
+    selectDouDate: "Chọn ngày hết hạn",
+
   }
 };

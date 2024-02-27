@@ -77,6 +77,21 @@ export default (theme: ExtendedTheme) => {
       position: 'absolute',
       right: 12,
       top: 30,
+    },
+    fakeInput: {
+      ...CS.borderStyle,
+      borderRadius: 8,
+      ...CS.flexStart,
+      paddingHorizontal: 16,
+      paddingVertical: 8,
+    },
+    textFakeInput: {
+      ...CS.hnRegular,
+      color: colors.placeholder
+    },
+    fileBox: {
+      ...CS.flexStart,
+      marginBottom: 2
     }
 //     <PressableBtn onPress={gotoTaskDetail} style={styles.taskBox}>
 //     <View style={styles.taskInner}>

@@ -249,6 +249,10 @@ export function useUploadFile(initData?: any[], selectionLimit = 30) {
     }
   }, []);
 
+  const deleteFile = (_id) => {
+    setListFile(old => old.filter(item => item._id != _id))
+  }
+
   React.useEffect(() => {
     if (listFile?.length) {
       setIsUpLoadingFile(false);
@@ -266,6 +270,7 @@ export function useUploadFile(initData?: any[], selectionLimit = 30) {
     setListFile,
     setListFileLocal,
     listFileLocal,
+    deleteFile,
   };
 }
 
