@@ -27,7 +27,7 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		91170F79E29F4EB49271A420 /* SVN-Outfit-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8F08A0F0F58A4434BF0635E7 /* SVN-Outfit-Medium.ttf */; };
 		9827501159E5411D9B2A78D7 /* Montserrat-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FDBEA33FAFB247818A88F753 /* Montserrat-Italic.ttf */; };
-		982FEC52F02E4A8EB5B4C9EA /* BuildFile in Resources */ = {isa = PBXBuildFile; };
+		982FEC52F02E4A8EB5B4C9EA /* (null) in Resources */ = {isa = PBXBuildFile; };
 		9A18F8C8AF6849969945F3E1 /* SVN-Outfit-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6576E46DE6B04E22AC75D4B5 /* SVN-Outfit-Black.ttf */; };
 		9CC8B92271A446149597973B /* Montserrat-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CA1B23CC722249B2AB3DDB7B /* Montserrat-Black.ttf */; };
 		A81D902BC5E84B16AB584405 /* SVN-Outfit-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0B485689F1BC4CD684F10659 /* SVN-Outfit-Thin.ttf */; };
@@ -50,21 +50,21 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = "IELTSHunter";
+			remoteInfo = IELTSHunter;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00E356EE1AD99517003FC87E /* IELTSHunterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "IELTSHunterTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* IELTSHunterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = IELTSHunterTests.xctest; path = ieltshunterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* IELTSHunterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "IELTSHunterTests.m"; sourceTree = "<group>"; };
+		00E356F21AD99517003FC87E /* IELTSHunterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IELTSHunterTests.m; sourceTree = "<group>"; };
 		0B485689F1BC4CD684F10659 /* SVN-Outfit-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Outfit-Thin.ttf"; path = "../src/assets/fonts/Outfit/SVN-Outfit-Thin.ttf"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* IELTSHunter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IELTSHunter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = "IELTSHunter/AppDelegate.h"; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = "IELTSHunter/AppDelegate.mm"; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "IELTSHunter/Images.xcassets"; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "IELTSHunter/Info.plist"; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "IELTSHunter/main.m"; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* IELTSHunter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IELTSHunter.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = IELTSHunter/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = IELTSHunter/AppDelegate.mm; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = IELTSHunter/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = IELTSHunter/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = IELTSHunter/main.m; sourceTree = "<group>"; };
 		1588EA3539B44A3698D9C91D /* Montserrat-ThinItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-ThinItalic.ttf"; path = "../src/assets/fonts/Montserrat/Montserrat-ThinItalic.ttf"; sourceTree = "<group>"; };
 		180FB66E1F4848F58582ABCC /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-SemiBold.ttf"; path = "../src/assets/fonts/Montserrat/Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
 		226C16242B3AE2290040E0B7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -78,7 +78,7 @@
 		5709B34CF0A7D63546082F79 /* Pods-ieltshunter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ieltshunter.release.xcconfig"; path = "Target Support Files/Pods-ieltshunter/Pods-ieltshunter.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-ieltshunter-ieltshunterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ieltshunter-ieltshunterTests.debug.xcconfig"; path = "Target Support Files/Pods-ieltshunter-ieltshunterTests/Pods-ieltshunter-ieltshunterTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6576E46DE6B04E22AC75D4B5 /* SVN-Outfit-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Outfit-Black.ttf"; path = "../src/assets/fonts/Outfit/SVN-Outfit-Black.ttf"; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = "IELTSHunter/LaunchScreen.storyboard"; sourceTree = "<group>"; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = IELTSHunter/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8427C8EB1C784461B4ACAE26 /* Montserrat-SemiBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-SemiBoldItalic.ttf"; path = "../src/assets/fonts/Montserrat/Montserrat-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-ieltshunter-ieltshunterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ieltshunter-ieltshunterTests.release.xcconfig"; path = "Target Support Files/Pods-ieltshunter-ieltshunterTests/Pods-ieltshunter-ieltshunterTests.release.xcconfig"; sourceTree = "<group>"; };
 		8DEDAE9D78C9B4B1D45850C4 /* Pods_ieltshunter_ieltshunterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ieltshunter_ieltshunterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -128,7 +128,7 @@
 				00E356F21AD99517003FC87E /* IELTSHunterTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = "IELTSHunterTests";
+			path = IELTSHunterTests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -304,7 +304,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "IELTSHunter" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "ieltshunter" */;
 			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -342,7 +342,7 @@
 				59EDAA8F714D4D2FA9A131BF /* Montserrat-Bold.ttf in Resources */,
 				A905B21784944019A2F3057A /* Montserrat-BoldItalic.ttf in Resources */,
 				20858F262F7248898FF79136 /* Montserrat-ExtraBold.ttf in Resources */,
-				982FEC52F02E4A8EB5B4C9EA /* BuildFile in Resources */,
+				982FEC52F02E4A8EB5B4C9EA /* (null) in Resources */,
 				13D8A0B4A7144175BF657930 /* Montserrat-ExtraLight.ttf in Resources */,
 				023B5BBCCBA54AFEB2D78FF1 /* Montserrat-ExtraLightItalic.ttf in Resources */,
 				9827501159E5411D9B2A78D7 /* Montserrat-Italic.ttf in Resources */,
@@ -583,7 +583,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ikigroup.ieltshunter";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ikigroup.ieltshunter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ieltshunter.app/ieltshunter";
 			};
@@ -607,7 +607,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ikigroup.ieltshunter";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ikigroup.ieltshunter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ieltshunter.app/ieltshunter";
 			};
@@ -620,8 +620,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ieltshunter/ieltshunter.entitlements;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 0.1.0;
+				DEVELOPMENT_TEAM = N3W324GKBJ;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = ieltshunter/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ieltshunter;
@@ -629,14 +631,15 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ikigroup.ieltshunter";
-				PRODUCT_NAME = "IELTSHunter";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ikigroup.ieltshunter;
+				PRODUCT_NAME = IELTSHunter;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -650,22 +653,22 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ieltshunter/ieltshunter.entitlements;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 0.1.0;
+				DEVELOPMENT_TEAM = N3W324GKBJ;
 				INFOPLIST_FILE = ieltshunter/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ieltshunter;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ikigroup.ieltshunter";
-				PRODUCT_NAME = "IELTSHunter";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ikigroup.ieltshunter;
+				PRODUCT_NAME = IELTSHunter;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -848,7 +851,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "IELTSHunter" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "ieltshunter" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
