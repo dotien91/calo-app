@@ -154,12 +154,12 @@ const Navigation = () => {
     if (!isFirstOpenApp) return null;
     return (
       <>
-        <Stack.Screen name={SCREENS.INTRO} component={IntroScreen} />
-
         <Stack.Screen
           name={SCREENS.CHOOSE_LANGUAGE}
           component={ChooseLanguageScreen}
         />
+        <Stack.Screen name={SCREENS.INTRO} component={IntroScreen} />
+
         <Stack.Screen name={SCREENS.WELCOME} component={WelcomeScreen} />
       </>
     );
@@ -332,6 +332,7 @@ const Navigation = () => {
           name={SCREENS.SETTINGPROFILESCREEN}
           component={SettingProfileScreen}
         />
+        {/* <Stack.Screen name={SCREENS.INTRO} component={IntroScreen} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

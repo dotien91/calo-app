@@ -1358,4 +1358,15 @@ export default {
     level: "Cấp độ",
     task: "Nhiệm vụ",
   },
+  introwelcome: {
+    text11: "Chào mừng đến với thế giới ngôn ngữ",
+    text12:
+      "Sẵn sàng bắt tay vào cuộc phiêu lưu phong phú này? Hãy bắt đầu cuộc phiêu lưu học tập của bạn bây giờ!",
+    text21: "Tham gia cộng đồng IELTS sôi động của chúng tôi",
+    text22:
+      "Một không gian để kết nối với những người cùng học, chia sẻ hiểu biết sâu sắc và cùng nhau thúc đẩy hành trình chuẩn bị của bạn!",
+    text31: "Hình thức học tập đa dạng",
+    text32:
+      "Chọn cuộc phiêu lưu học tập của bạn: đi sâu vào các mô-đun video theo nhịp độ riêng, nhận hướng dẫn được cá nhân hóa trong các phiên 1v1 và thúc đẩy hoạt động cộng tác nhóm.",
+  },
 };

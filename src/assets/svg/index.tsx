@@ -81,8 +81,14 @@ import iconBuyTask from "./buycourse.svg";
 import iconPen from "./pen.svg";
 import iconBookNote from "./bookNote.svg";
 import iconFriends from "./friends.svg";
+import intro2 from "./welcome22.svg";
+import intro1 from "./welcome21.svg";
+import intro3 from "./welcome23.svg";
 
 const Icons = {
+  intro1,
+  intro2,
+  intro3,
   icFlagvi,
   icFlagen,
   icFlagcn,
