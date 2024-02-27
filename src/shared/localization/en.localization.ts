@@ -806,5 +806,16 @@ export default {
     level: "Level",
     task: "Tasks",
   },
+  introwelcome: {
+    text11: "Welcome to the world of language",
+    text12:
+      "Ready to embark on this enriching adventure? Let's start your learning odyssey now!",
+    text21: "Join our vibrant IELTS community",
+    text22:
+      "A space to connect with fellow learners, share insights, and boost your preparation journey together!",
+    text31: "Diverse Learning Forms",
+    text32:
+      "Choose your learning adventure: dive into self-paced video modules, receive personalized guidance in 1v1 sessions, and foster group collaboration.",
+  },
 };
 /* eslint-disable max-len */
