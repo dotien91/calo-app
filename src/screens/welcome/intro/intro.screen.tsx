@@ -78,8 +78,8 @@ export default function IntroScreen() {
       NavigationService.navigate(SCREENS.HOME);
       _setJson("is_first_open_app", true);
     } else {
-      setcurrentPage(currentPage + 1);
       const newPage = currentPage + 1;
+      setcurrentPage(newPage);
       scrollViewRef?.current?.scrollToOffset({
         offset: newPage * Dimensions.get("window").width,
         animated: true,
