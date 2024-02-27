@@ -88,7 +88,7 @@ const Header = (props: Props) => {
           <TextBase
             title={title}
             fontSize={18}
-            fontWeight="600"
+            fontWeight="700"
             style={[styles.title, styleTitle]}
             numberOfLines={1}
             ellipsizeMode="tail"

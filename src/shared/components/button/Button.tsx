@@ -56,11 +56,12 @@ export default function Button({
           styles.viewButton,
           !!backgroundColor && { backgroundColor: backgroundColor },
           { opacity: pressed ? 0.8 : 1.0 },
-          style && style,
           disabled && { backgroundColor: palette.borderColor },
           type == "primary" && styles.btnPrimary,
           type == "outline" && styles.btnOutline,
           type == "disabled" && styles.btnDisabled,
+          style && style,
+
         ];
       }}
       onPress={onPress}

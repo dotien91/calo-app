@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, StyleSheet } from "react-native";
+import { Text, StyleSheet, View } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
 import { translations } from "@localization";
@@ -31,10 +31,23 @@ const EnrollNow = ({ data, course_id, courseRoom }: EnrollNowProps) => {
       });
     }
   };
+
+  const _goToHomeWork = () => {
+    NavigationService.navigate(SCREENS.CLASSHOMEWORK, {
+      course_id: course_id,
+      courseData: data,
+    });
+  }
+
   return (
+    <View>
     <PressableBtn onPress={_goToListVideo} style={styles.containerFull}>
       <Text style={styles.textBtn}>{translations.course.enrollNow}</Text>
     </PressableBtn>
+    <PressableBtn onPress={_goToHomeWork} style={styles.containerFull}>
+      <Text style={styles.textBtn}>View homework</Text>
+    </PressableBtn>
+    </View>
   );
 };
 

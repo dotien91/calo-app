@@ -1,13 +1,11 @@
 import request, { METHOD } from "./api";
 
 export async function getCourseList(data) {
-  console.log("datadatadata", data);
   return request({
     method: METHOD.POST,
     urlPath: "course/list",
     data,
   }).then((response) => {
-    console.log("listdata...", response);
     return response;
   });
 }

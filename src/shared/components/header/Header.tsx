@@ -23,6 +23,7 @@ interface HeaderProps {
   customStyle?: ViewStyle;
   badge?: number;
   hideBackBtn?: boolean;
+  rightComponent?: JSX.Element
 }
 
 const Header = ({
@@ -35,6 +36,7 @@ const Header = ({
   customStyle,
   badge,
   hideBackBtn = false,
+  rightComponent,
 }: HeaderProps) => {
   const theme = useTheme();
   const { colors } = theme;
@@ -105,6 +107,7 @@ const Header = ({
           </Text>
         </TouchableOpacity>
       )}
+      {!!rightComponent && rightComponent()}
     </View>
   );
 };

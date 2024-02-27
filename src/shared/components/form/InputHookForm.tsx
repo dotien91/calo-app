@@ -38,6 +38,8 @@ interface InputHookProps {
   maxLength?: number;
   showPlaceholder?: boolean;
   setFocus?: any;
+  label?: string;
+
 }
 
 // eslint-disable-next-line react/display-name
@@ -57,6 +59,7 @@ const InputHook: React.FC<InputHookProps> = ({
   maxLength = 500,
   showPlaceholder,
   setFocus,
+  label
 }) => {
   const refInput = useRef<TextInput>(null);
   const _forcusInput = () => {
@@ -76,6 +79,8 @@ const InputHook: React.FC<InputHookProps> = ({
       {showPlaceholder && (
         <Text style={styles.textTitle}>{inputProps.placeholder}</Text>
       )}
+      {!!label && <Text style={styles.label}>{label}</Text>}
+
       <Pressable
         onPress={_forcusInput}
         style={[
@@ -85,11 +90,11 @@ const InputHook: React.FC<InputHookProps> = ({
           !!noBorder && { borderWidth: 0 },
           multiline
             ? {
-                height: 100,
-                alignItems: "flex-start",
-                justifyContent: "flex-start",
-                paddingTop: 8,
-              }
+              height: 100,
+              alignItems: "flex-start",
+              justifyContent: "flex-start",
+              paddingTop: 8,
+            }
             : {},
         ]}
       >
@@ -132,22 +137,27 @@ const styles = StyleSheet.create({
     minHeight: 60,
     width: "100%",
   },
+  label: {
+    fontSize: 16,
+    ...CommonStyle.hnSemiBold,
+    color: palette.text,
+  },
   viewBorder: {
     marginTop: 8,
     marginHorizontal: 20,
     paddingHorizontal: 20,
-    height: 48,
+    height: 40,
     alignItems: "center",
     flexDirection: "row",
     borderRadius: 8,
-    borderWidth: 1,
-    borderColor: palette.borderColor,
     gap: 15,
+    ...CommonStyle.borderStyle,
+
   },
   input: {
     ...CommonStyle.flex1,
     color: palette.text,
-
+    paddingVertical: 0,
     // ...CommonStyle.mb6,
   },
   errorText: {

@@ -46,7 +46,7 @@ export const useUserHook = () => {
   const getUserData = () => {
     getCurrentUser().then((res) => {
       if (!res.isError) {
-        console.log("token", _getJson(USER_TOKEN));
+        console.log("token", _getJson(USER_TOKEN), res.data);
         setUserData(res.data);
         setLinkAvatar(res.data.user_avatar_thumbnail);
         initListFollow(res.data.follow_users);

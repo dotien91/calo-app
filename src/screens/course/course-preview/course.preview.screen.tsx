@@ -208,6 +208,13 @@ const CoursePreviewScreen = () => {
     }
   };
 
+  const openHomeworkScreen = () => {
+    NavigationService.navigate(SCREENS.CLASSHOMEWORK, {
+      course_id: course_id,
+      courseData: data
+    });
+  }
+
   const _updateToReview = () => {
     const params = { _id: course_id, public_status: "pending" };
     updateCourse(params).then((res) => {
@@ -271,6 +278,18 @@ const CoursePreviewScreen = () => {
                 }}
               />
             )}
+
+            <Button
+              text={"Home work"}
+              onPress={openHomeworkScreen}
+              style={{
+                backgroundColor: palette.primary,
+                marginTop: 8,
+                marginHorizontal: 16,
+                paddingVertical: 0,
+                height: 40,
+              }}
+            />
           </>
         )}
         {/* <AddToCartButton data={data} type="full" /> */}

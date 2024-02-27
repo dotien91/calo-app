@@ -55,7 +55,6 @@ export function useListSearch<T>(
       listData: [],
       totalCount: 0,
     }));
-    console.log("courseSearchHistory", params);
     _requestData();
   }, [params]);
 
@@ -63,7 +62,6 @@ export function useListSearch<T>(
     isFetching.current = true;
     setIsLoading(true);
     requestData({ page: "1", ...params }).then((res: any) => {
-      console.log("uselist search", params);
       const newData = res.data;
       setIsLoading(false);
       if (!res.isError && lodash.isArray(newData)) {

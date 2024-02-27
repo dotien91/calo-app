@@ -11,6 +11,7 @@ export const palette = {
   background2: "#F0F0F0",
   placeholder: "rgba(22, 28, 36, 0.4)",
   placeholder2: "#737373",
+  borderColor1: "rgba(0, 53, 128, 0.08)",
   borderColor2: "#DCDBE2",
   white: "#fff",
   black: "#101214",
@@ -83,6 +84,7 @@ export const palette = {
   blueChart: "rgba(53, 174, 255, 1)",
   greenChart: "rgba(43, 196, 86, 1)",
   yellowComment: "rgba(255, 192, 117, 1)",
+  boldYellow: "#fca347",
 };
 
 interface ExtendedTheme extends Theme {

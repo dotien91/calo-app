@@ -103,17 +103,17 @@ const CS = StyleSheet.create({
   //   fontFamily: font.outfit.italic,
   // },
   borderStyle: {
-    borderColor: palette.borderColor,
+    borderColor: palette.borderColor1,
     borderStyle: "solid",
     borderWidth: 1,
   },
   borderBottomStyle: {
-    borderColor: palette.borderColor,
+    borderColor: palette.borderColor1,
     borderStyle: "solid",
     borderBottomWidth: 1,
   },
   borderTopStyle: {
-    borderColor: palette.borderColor,
+    borderColor: palette.borderColor1,
     borderStyle: "solid",
     borderTopWidth: 1,
   },

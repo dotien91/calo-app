@@ -74,6 +74,8 @@ import BlackList from "@screens/black-list/black.list";
 import PrivateSetting from "@screens/private.setting/private.setting";
 import { _getJson } from "@services/local-storage";
 import SettingProfileScreen from "@screens/profile.screen/profile.screen";
+import ClassHomeWorkScreen from "@screens/class-home-work/class.home.work.screen";
+import CreateWorkScreen from "@screens/class-home-work/create.work.screen";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -173,11 +175,19 @@ const Navigation = () => {
     >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {renderStackIntro()}
-
+        <Stack.Screen
+          name={SCREENS.CREATE_WORK}
+          component={CreateWorkScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.CLASSHOMEWORK}
+          component={ClassHomeWorkScreen}
+        />
         <Stack.Screen
           name={SCREENS.COURSE_LIST}
           component={renderTabNavigation}
         />
+
         <Stack.Screen name={SCREENS.CALL_CLASS} component={CallClassScreen} />
 
         <Stack.Screen name={SCREENS.MY_COURES} component={MyCourse} />
