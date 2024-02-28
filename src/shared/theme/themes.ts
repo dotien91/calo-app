@@ -13,6 +13,7 @@ export const palette = {
   placeholder2: "#737373",
   borderColor2: "#DCDBE2",
   white: "#fff",
+  white8: "#FFFFFFCE",
   black: "#101214",
   black6: "#1C253099",
   button: "#1c1e21",
@@ -39,6 +40,7 @@ export const palette = {
   blue: "#0a86cf",
   orange: "#ea7a16",
   green: "#60d140",
+  green2: "#2CB456",
   timeColor: "rgba(22, 28, 36, 0.64)",
   Transparent: "#00000000",
   backgroundMain: "#FA8072",
@@ -53,7 +55,7 @@ export const palette = {
 
   btnNegative: "#FA8072",
   btnActive: "#E14242",
-  // btnInactive: "#E8EBEF",
+  btnInactive: "#E8EBEF",
   btnLight: "#F5F5F5",
   btnLightSmoke: "#FA8072",
 

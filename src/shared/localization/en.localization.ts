@@ -802,6 +802,8 @@ export default {
     date: "Date",
     product: "Product",
     user: "User",
+    customer: "Customer",
+    emptyTransaction: "Empty transaction",
   },
   en: "English",
   vi: "Vietnamese",

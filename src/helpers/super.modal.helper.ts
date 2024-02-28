@@ -19,6 +19,7 @@ export enum EnumModalContentType {
   ChatRoom = "chat-room",
   ListUser = "list-user",
   AddLesson = "add-lesson",
+  FilterAffiliate = "filter-affiliate",
 }
 
 export enum EnumStyleModalType {

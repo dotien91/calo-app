@@ -26,6 +26,7 @@ import ActionMore from "@screens/course/detail-teacher/components/ActionMore";
 import ChatRoomScreen from "@screens/chat/room-chat/chat.room.class.video";
 import ListUser from "./modal-inner/ListUser";
 import PopupCreateLesson from "@screens/course/course-create/components/PartViewCreate/popup.create.lesson";
+import FilterAffiliate from "@screens/affiliate/components/FilterAffiliate";
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
 // using normal one.
@@ -186,6 +187,9 @@ const SuperModal: React.FC<SuperModalProps> = () => {
           )}
           {contentModalType == EnumModalContentType.AddLesson && (
             <PopupCreateLesson {...data} />
+          )}
+          {contentModalType == EnumModalContentType.FilterAffiliate && (
+            <FilterAffiliate data={data} />
           )}
         </View>
       </StickBottomModal>

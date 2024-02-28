@@ -29,7 +29,7 @@ export const useUserHook = () => {
   const handleLogin = (token: string) => {
     _setJson(USER_TOKEN, token);
     getCurrentUser().then((res) => {
-      console.log("rrrrrr", res);
+      console.log("rrrrrr", res.data.display_name);
       if (!res.isError) {
         setUserData(res.data);
         setLinkAvatar(res.data.user_avatar_thumbnail);
@@ -45,6 +45,7 @@ export const useUserHook = () => {
 
   const getUserData = () => {
     getCurrentUser().then((res) => {
+      console.log(123, res);
       if (!res.isError) {
         console.log("token", _getJson(USER_TOKEN));
         setUserData(res.data);
