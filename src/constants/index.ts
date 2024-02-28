@@ -68,7 +68,9 @@ export const SCREENS = {
   BLACK_LIST: "BlackList",
   PRIVATESETTING: "PrivateSetting",
   SETTINGPROFILESCREEN: "SettingProfileScreen",
-  DISCOVERSCREEN: "DiscoverScreen",
+  DISCOVERSCREEN: "Discover",
+  LEADERBOARD: "LeaderBoard",
+  SETTINGPPROFILE: "SettingProfile",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

@@ -8,6 +8,7 @@ import {
   Easing,
   TouchableOpacity,
 } from "react-native";
+import * as NavigationService from "react-navigation-helpers";
 
 import { useTheme } from "@react-navigation/native";
 import IconSvg from "assets/svg";
@@ -15,6 +16,8 @@ import Avatar from "@shared-components/user/Avatar";
 import CS from "@theme/styles";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { getListLeaderBoard } from "@services/api/user.api";
+import { translations } from "@localization";
+import { SCREENS } from "constants";
 
 const DiscoverScreen = () => {
   const screenWidth = Dimensions.get("window").width;
@@ -48,22 +51,22 @@ const DiscoverScreen = () => {
   const listFeature = [
     {
       icon: "icThreeBook",
-      title: "Study",
+      title: translations.discover.study,
       opa: first,
     },
     {
       icon: "icGradution",
-      title: "Dictionary",
+      title: translations.discover.dictionary,
       opa: second,
     },
     {
       icon: "icShop",
-      title: "Shop",
+      title: translations.discover.shop,
       opa: third,
     },
     {
       icon: "icFind",
-      title: "Find User",
+      title: translations.discover.finduser,
       opa: four,
     },
   ];
@@ -98,6 +101,10 @@ const DiscoverScreen = () => {
     ]).start();
   }, []);
 
+  const seeAllLeader = () => {
+    NavigationService.navigate(SCREENS.LEADERBOARD);
+  };
+
   const renderHeader = () => {
     return (
       <View
@@ -114,10 +121,10 @@ const DiscoverScreen = () => {
           shadowRadius: 5,
         }}
       >
-        <IconSvg name="icStudent" size={32} color={colors.gold}></IconSvg>
+        <IconSvg name="icCoin" size={32} color={colors.gold}></IconSvg>
         <View style={{ marginLeft: 8 }}>
           <Text style={{ ...CS.hnSemiBold, fontSize: 20, color: colors.text }}>
-            {rankUser?.point} Coins
+            {rankUser?.point} {translations.discover.coins}
           </Text>
           <Text
             style={{
@@ -126,7 +133,7 @@ const DiscoverScreen = () => {
               color: colors.textOpacity8,
             }}
           >
-            Level: {rankUser?.level}
+            {translations.discover.level}: {rankUser?.level}
           </Text>
         </View>
       </View>
@@ -138,13 +145,27 @@ const DiscoverScreen = () => {
       <View style={{ height: 270, marginHorizontal: 16, marginVertical: 8 }}>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Text style={{ ...CS.hnSemiBold, fontSize: 16, color: colors.text }}>
-            Leader Board
+            {translations.discover.leaderboard}
           </Text>
-          <Text
-            style={{ ...CS.hnMedium, color: colors.textOpacity6, fontSize: 14 }}
+          <TouchableOpacity
+            onPress={seeAllLeader}
+            style={{ flexDirection: "row", alignItems: "center" }}
           >
-            See all
-          </Text>
+            <Text
+              style={{
+                ...CS.hnMedium,
+                color: colors.textOpacity6,
+                fontSize: 14,
+              }}
+            >
+              {translations.seeAll}
+            </Text>
+            <Icon
+              name="chevron-forward-outline"
+              type={IconType.Ionicons}
+              color={colors.textOpacity6}
+            ></Icon>
+          </TouchableOpacity>
         </View>
         <Animated.View style={{ flex: 1, flexDirection: "row", opacity: hig }}>
           <View style={{ flex: 1 / 3, justifyContent: "flex-end" }}>
@@ -166,6 +187,26 @@ const DiscoverScreen = () => {
                 }}
                 resizeMode={"cover"}
               ></Avatar>
+              <View
+                style={{
+                  zIndex: 99,
+                  backgroundColor: colors.blueBorder,
+                  height: 20,
+                  width: 20,
+                  borderRadius: 10,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  position: "absolute",
+                  bottom: -25,
+                  right: screenWidth / 6 - 32 - 4,
+                }}
+              >
+                <Text
+                  style={{ ...CS.hnRegular, fontSize: 14, color: colors.white }}
+                >
+                  2
+                </Text>
+              </View>
             </View>
             <View
               style={{
@@ -198,7 +239,7 @@ const DiscoverScreen = () => {
                     color: colors.textOpacity8,
                   }}
                 >
-                  Points
+                  {translations.discover.poits}
                 </Text>
               </View>
             </View>
@@ -222,6 +263,7 @@ const DiscoverScreen = () => {
                 }}
                 resizeMode={"cover"}
               ></Avatar>
+
               <IconSvg
                 style={{
                   position: "absolute",
@@ -233,6 +275,26 @@ const DiscoverScreen = () => {
                 size={30}
                 color={colors.gold}
               ></IconSvg>
+              <View
+                style={{
+                  zIndex: 99,
+                  backgroundColor: colors.gold,
+                  height: 20,
+                  width: 20,
+                  borderRadius: 10,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  position: "absolute",
+                  bottom: -38,
+                  right: screenWidth / 6 - 44 - 4,
+                }}
+              >
+                <Text
+                  style={{ ...CS.hnRegular, fontSize: 14, color: colors.white }}
+                >
+                  1
+                </Text>
+              </View>
             </View>
             <View
               style={{
@@ -261,7 +323,7 @@ const DiscoverScreen = () => {
                     color: colors.textOpacity8,
                   }}
                 >
-                  Points
+                  {translations.discover.poits}
                 </Text>
               </View>
             </View>
@@ -286,6 +348,26 @@ const DiscoverScreen = () => {
                 }}
                 resizeMode={"cover"}
               ></Avatar>
+              <View
+                style={{
+                  zIndex: 99,
+                  backgroundColor: colors.green,
+                  height: 20,
+                  width: 20,
+                  borderRadius: 10,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  position: "absolute",
+                  bottom: -22,
+                  right: screenWidth / 6 - 28 - 8,
+                }}
+              >
+                <Text
+                  style={{ ...CS.hnRegular, fontSize: 14, color: colors.white }}
+                >
+                  3
+                </Text>
+              </View>
             </View>
             <View
               style={{
@@ -318,7 +400,7 @@ const DiscoverScreen = () => {
                     color: colors.textOpacity8,
                   }}
                 >
-                  Points
+                  {translations.discover.poits}
                 </Text>
               </View>
             </View>
@@ -339,7 +421,7 @@ const DiscoverScreen = () => {
             marginVertical: 8,
           }}
         >
-          Features
+          {translations.discover.feature}
         </Text>
         <View>
           {listFeature.map((item, index) => {

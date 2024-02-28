@@ -90,7 +90,7 @@ const SettingProfileScreen = () => {
   ];
 
   const onPressHeaderRight = () => {
-    NavigationService.navigate(SCREENS.PROFILE);
+    NavigationService.navigate(SCREENS.SETTINGPPROFILE);
   };
 
   const renderItemSelected = ({
