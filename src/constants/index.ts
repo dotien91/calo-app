@@ -70,6 +70,7 @@ export const SCREENS = {
   SETTINGPROFILESCREEN: "SettingProfileScreen",
   CLASSHOMEWORK: "ClassHomeWork",
   CREATE_WORK: "CreateWork",
+  DETAIL_TASK: "DetailTask",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

@@ -78,6 +78,7 @@ import { _getJson } from "@services/local-storage";
 import SettingProfileScreen from "@screens/profile.screen/profile.screen";
 import ClassHomeWorkScreen from "@screens/class-home-work/class.home.work.screen";
 import CreateWorkScreen from "@screens/class-home-work/create.work.screen";
+import DetailTaskScreen from "@screens/class-home-work/detail.task.screen";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -177,6 +178,8 @@ const Navigation = () => {
     >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {renderStackIntro()}
+        <Stack.Screen name={SCREENS.CREATE_WORK} component={CreateWorkScreen} />
+        <Stack.Screen name={SCREENS.DETAIL_TASK} component={DetailTaskScreen} />
         <Stack.Screen
           name={SCREENS.CLASSHOMEWORK}
           component={ClassHomeWorkScreen}
