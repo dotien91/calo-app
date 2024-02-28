@@ -23,7 +23,7 @@ interface HeaderProps {
   customStyle?: ViewStyle;
   badge?: number;
   hideBackBtn?: boolean;
-  rightComponent?: JSX.Element
+  rightComponent?: JSX.Element;
 }
 
 const Header = ({
@@ -68,22 +68,24 @@ const Header = ({
       >
         {text || ""}
       </Text>
-      <View style={styles.viewIcons}>
-        {iconNameRight && (
-          <Icon
-            onPress={onPressRight}
-            name={iconNameRight || "ellipsis-horizontal"}
-            type={IconType.Feather}
-            size={25}
-            color={colors.text}
-          />
-        )}
-        {!!badge && !!iconNameRight && (
-          <TouchableOpacity onPress={onPressRight} style={styles.badge}>
-            <Text style={styles.txtBadge}>{badge}</Text>
-          </TouchableOpacity>
-        )}
-      </View>
+      {!!iconNameRight && (
+        <View style={styles.viewIcons}>
+          {iconNameRight && (
+            <Icon
+              onPress={onPressRight}
+              name={iconNameRight || "ellipsis-horizontal"}
+              type={IconType.Feather}
+              size={25}
+              color={colors.text}
+            />
+          )}
+          {!!badge && !!iconNameRight && (
+            <TouchableOpacity onPress={onPressRight} style={styles.badge}>
+              <Text style={styles.txtBadge}>{badge}</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      )}
       {(!textRight || textRight?.trim() !== "") && (
         <TouchableOpacity
           onPress={onPressRight}

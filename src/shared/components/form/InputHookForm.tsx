@@ -1,6 +1,6 @@
 // Input.js
 
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import {
   View,
   Text,
@@ -39,7 +39,8 @@ interface InputHookProps {
   showPlaceholder?: boolean;
   setFocus?: any;
   label?: string;
-
+  countLength?: boolean;
+  textWarning?: string;
 }
 
 // eslint-disable-next-line react/display-name
@@ -59,7 +60,9 @@ const InputHook: React.FC<InputHookProps> = ({
   maxLength = 500,
   showPlaceholder,
   setFocus,
-  label
+  label,
+  countLength,
+  textWarning,
 }) => {
   const refInput = useRef<TextInput>(null);
   const _forcusInput = () => {
@@ -69,15 +72,24 @@ const InputHook: React.FC<InputHookProps> = ({
       refInput.current?.focus();
     }
   };
+  const [length, setLength] = useState("");
   return (
     <View
       style={[
         styles.wrapper,
-        showPlaceholder ? { minHeight: 84, marginTop: 8 } : {},
+        showPlaceholder ? { minHeight: 76, marginTop: 8 } : {},
       ]}
     >
       {showPlaceholder && (
-        <Text style={styles.textTitle}>{inputProps.placeholder}</Text>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            paddingHorizontal: 20,
+          }}
+        >
+          <Text style={styles.textTitle}>{inputProps.placeholder}</Text>
+        </View>
       )}
       {!!label && <Text style={styles.label}>{label}</Text>}
 
@@ -90,11 +102,11 @@ const InputHook: React.FC<InputHookProps> = ({
           !!noBorder && { borderWidth: 0 },
           multiline
             ? {
-              height: 100,
-              alignItems: "flex-start",
-              justifyContent: "flex-start",
-              paddingTop: 8,
-            }
+                height: 100,
+                alignItems: "flex-start",
+                justifyContent: "flex-start",
+                paddingTop: 8,
+              }
             : {},
         ]}
       >
@@ -102,29 +114,48 @@ const InputHook: React.FC<InputHookProps> = ({
         <Controller
           control={control}
           rules={rules}
-          render={({ field: { ref, onChange, value } }) => (
-            <TextInput
-              {...inputProps}
-              ref={ref || refInput}
-              multiline={multiline}
-              onChangeText={(value) => onChange(value)}
-              value={value}
-              style={[
-                styles.input,
-                !!customStyle && customStyle,
-                multiline && { flex: 1, textAlignVertical: "top" },
-              ]}
-              secureTextEntry={isPassword}
-              placeholderTextColor={palette.placeholder}
-              maxLength={maxLength}
-            />
-          )}
+          render={({ field: { ref, onChange, value } }) => {
+            setLength(value?.length || 0);
+            return (
+              <TextInput
+                {...inputProps}
+                ref={ref || refInput}
+                multiline={multiline}
+                onChangeText={(value) => {
+                  onChange(value);
+                }}
+                value={value}
+                style={[
+                  styles.input,
+                  !!customStyle && customStyle,
+                  multiline && { flex: 1, textAlignVertical: "top" },
+                ]}
+                secureTextEntry={isPassword}
+                placeholderTextColor={palette.placeholder}
+                maxLength={maxLength}
+              />
+            );
+          }}
           name={name}
         />
         {!!iconRight && iconRight}
       </Pressable>
 
       {errorTxt && <Text style={styles.errorText}>{errorTxt}</Text>}
+      {textWarning && (
+        <View
+          style={{
+            flexDirection: "row",
+            paddingHorizontal: 20,
+            justifyContent: "space-between",
+          }}
+        >
+          <Text style={styles.textCount}>{textWarning}</Text>
+          {countLength && (
+            <Text style={styles.textCount}>{`${length}/${maxLength}`}</Text>
+          )}
+        </View>
+      )}
     </View>
   );
 };
@@ -134,7 +165,7 @@ const styles = StyleSheet.create({
   wrapper: {
     // ...CommonStyle.mb10,
     // ...CommonStyle.flex1,
-    minHeight: 60,
+    minHeight: 48,
     width: "100%",
   },
   label: {
@@ -152,7 +183,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     gap: 15,
     ...CommonStyle.borderStyle,
-
   },
   input: {
     ...CommonStyle.flex1,
@@ -162,11 +192,15 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: palette.danger,
-    paddingHorizontal: 40,
+    paddingHorizontal: 12,
     marginTop: 4,
   },
   textTitle: {
     ...CommonStyle.hnMedium,
-    marginHorizontal: 20,
+  },
+  textCount: {
+    ...CommonStyle.hnRegular,
+    fontSize: 12,
+    color: palette.textOpacity6,
   },
 });

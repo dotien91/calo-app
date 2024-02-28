@@ -7,11 +7,11 @@ export default (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
     viewButton: {
-      paddingVertical: 12,
+      paddingVertical: 9,
       borderRadius: 8,
       backgroundColor: colors.mainColor2,
       ...CommonStyle.flexCenter,
-      paddingHorizontal: 30,
+      paddingHorizontal: 16,
     },
     textButton: {
       ...CommonStyle.hnSemiBold,

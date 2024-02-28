@@ -20,6 +20,7 @@ export enum EnumModalContentType {
   ListUser = "list-user",
   AddLesson = "add-lesson",
   TextInput = "text-input",
+  ListMoreAction = "list-more-action",
 }
 
 export enum EnumStyleModalType {
@@ -34,8 +35,8 @@ export interface IShowModalParams {
 }
 
 interface ToastProps {
-  type: "success" | "error" | "info";
-  message: string;
+  type?: "success" | "error" | "info";
+  message?: string;
 }
 
 // example
@@ -82,8 +83,8 @@ export const showSuperModalByType = ({
 
 export const showToast = (res: ToastProps) => {
   Toast.show({
-    type: res.type || "info",
-    text1: res.message || "Có lỗi không xác định xảy ra!",
+    type: res.type || "success",
+    text1: res.message || translations.error.unknown,
   });
 };
 

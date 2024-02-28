@@ -18,15 +18,15 @@ export default (theme: ExtendedTheme) => {
     },
     placeholderTxt: {
       ...CS.hnRegular,
-      color: colors.textOpacity4
+      color: colors.textOpacity4,
     },
     labelInput: {
       ...CS.hnSemiBold,
-      color: colors.text
+      color: colors.text,
     },
     label: {
       ...CS.hnSemiBold,
-      color: colors.text
+      color: colors.text,
     },
     labelInput: {
       ...CS.hnSemiBold,
@@ -35,7 +35,7 @@ export default (theme: ExtendedTheme) => {
     },
     text: {
       ...CS.hnRegular,
-      color: colors.text
+      color: colors.text,
     },
     text64: {
       ...CS.hnRegular,
@@ -45,12 +45,12 @@ export default (theme: ExtendedTheme) => {
     textTab: {
       ...CS.hnMedium,
       fontSize: 14,
-      color: colors.textOpacity6
+      color: colors.textOpacity6,
     },
     textTab: {
       ...CS.hnMedium,
       fontSize: 14,
-      color: colors.textOpacity6
+      color: colors.textOpacity6,
     },
     taskBox: {
       padding: 16,
@@ -61,20 +61,21 @@ export default (theme: ExtendedTheme) => {
       elevation: 1,
       shadowRadius: 5,
       ...CS.flexRear,
+      marginBottom: 12,
     },
     taskInner: {
       ...CS.flexStart,
       paddingBottom: 12,
-      ...CS.borderBottomStyle
+      ...CS.borderBottomStyle,
     },
     wrapIconTask: {
       padding: 9,
       borderRadius: 4,
       backgroundColor: colors.grey2,
-      marginRight: 12
+      marginRight: 12,
     },
     moreIcon: {
-      position: 'absolute',
+      position: "absolute",
       right: 12,
       top: 30,
     },
@@ -87,23 +88,23 @@ export default (theme: ExtendedTheme) => {
     },
     textFakeInput: {
       ...CS.hnRegular,
-      color: colors.placeholder
+      color: colors.placeholder,
     },
     fileBox: {
       ...CS.flexStart,
-      marginBottom: 2
-    }
-//     <PressableBtn onPress={gotoTaskDetail} style={styles.taskBox}>
-//     <View style={styles.taskInner}>
-//         <View style={styles.wrapIconTask}>
-//             <IconBtn name="file" />
-//         </View>
-//         <View>
-//             <Text style={styles.label}>{data.title}</Text>
-//             <Text style={styles.text64}>{data.time}</Text>
-//         </View>
-//     </View>
+      marginBottom: 2,
+    },
+    //     <PressableBtn onPress={gotoTaskDetail} style={styles.taskBox}>
+    //     <View style={styles.taskInner}>
+    //         <View style={styles.wrapIconTask}>
+    //             <IconBtn name="file" />
+    //         </View>
+    //         <View>
+    //             <Text style={styles.label}>{data.title}</Text>
+    //             <Text style={styles.text64}>{data.time}</Text>
+    //         </View>
+    //     </View>
 
-// </PressableBtn>
+    // </PressableBtn>
   });
 };

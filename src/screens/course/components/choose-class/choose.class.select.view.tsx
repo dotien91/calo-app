@@ -22,7 +22,7 @@ const ChooseClassSelectView: React.FC<ChooseClassSelectViewProps> = ({
   const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
   const [classData, setClassData] = React.useState(null);
-console.log("classDataclassData", classData)
+  console.log("classDataclassData", classData);
   React.useEffect(() => {
     getCourseClassListById(course_id).then((res) => {
       if (!res.isError) {

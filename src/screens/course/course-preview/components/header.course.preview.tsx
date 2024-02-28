@@ -1,5 +1,12 @@
 import React from "react";
-import { Text, View, StyleSheet, Image, Pressable } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  Pressable,
+  TouchableOpacity,
+} from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
 import { ICourseItem } from "models/course.model";
@@ -8,7 +15,7 @@ import { palette } from "@theme/themes";
 import { translations } from "@localization";
 import { formatPrice } from "@helpers/string.helper";
 import { PlayVideo } from "@screens/course/detail-teacher/components/header.teacher.view";
-import { formatVNDate } from "@utils/date.utils";
+import { formatFullDate, formatVNDate } from "@utils/date.utils";
 import StarRate from "@screens/course/components/star.rate.view";
 import IconSvg from "assets/svg";
 import { SCREENS } from "constants";
@@ -20,6 +27,7 @@ import {
   showSuperModal,
 } from "@helpers/super.modal.helper";
 import { formatLanguage } from "@utils/string.utils";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 interface HeaderCourseProps {
   data?: ICourseItem;
@@ -56,6 +64,17 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
     });
   };
 
+  const moreCoursePreview = () => {
+    showSuperModal({
+      contentModalType: EnumModalContentType.Report,
+      styleModalType: EnumStyleModalType.Bottom,
+      data: {
+        report_type: "course",
+        partner_id: data?.avatar._id,
+      },
+    });
+  };
+
   if (!data?._id) {
     return (
       <View>
@@ -84,7 +103,6 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
       </View>
     );
   }
-  console.log(JSON.stringify(data, null, 2));
 
   return (
     <View style={styles.container}>
@@ -138,7 +156,23 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
           ></Pressable>
         )}
       </View>
-      <Text style={styles.textTitle}>{data?.title}</Text>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <Text style={styles.textTitle}>{data?.title}</Text>
+        <TouchableOpacity onPress={moreCoursePreview}>
+          <Icon
+            name="ellipsis-horizontal"
+            type={IconType.Ionicons}
+            size={30}
+            color={palette.text}
+          ></Icon>
+        </TouchableOpacity>
+      </View>
       {(data?.public_status === "draft" ||
         data?.public_status === "pending") && (
         <Text style={{ ...CS.hnRegular, fontSize: 12 }}>
@@ -209,25 +243,65 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
         <IconSvg name="icCC" size={20} color={palette.textOpacity8} />
         <Text style={styles.txtUpdate}>{formatLanguage(data?.language)}</Text>
       </View>
-      {data?.promotion > 0 ? (
-        <View style={styles.viewPrice}>
-          <Text style={styles.textPrice}>
-            {data?.promotion || 1}
-            {formatPrice(data?.price - (data?.price * data?.promotion) / 100)}
-          </Text>
-          <Text style={styles.textPriceOld}>{formatPrice(data?.price)}</Text>
+      {data?.coupon_id == null ||
+      (data?.coupon_id?.availableAt &&
+        new Date(data?.coupon_id?.availableAt) > new Date()) ||
+      (data?.coupon_id?.availableAt &&
+        new Date(data?.coupon_id?.expired) < new Date()) ? (
+        <View>
+          <Text style={styles.textPrice}>{formatPrice(data?.price)}</Text>
+          {data?.coupon_id?.availableAt &&
+            new Date(data?.coupon_id?.availableAt) > new Date() && (
+              <Text
+                style={[
+                  styles.txtUpdate,
+                  { color: palette.primary, marginLeft: 0 },
+                ]}
+              >
+                <Text
+                  style={{ ...CS.hnBold, fontSize: 14, color: palette.primary }}
+                >
+                  Flash sale
+                </Text>
+                {` ${translations.course.discountEntry.toLocaleLowerCase()} ${formatFullDate(
+                  new Date(data?.coupon_id.availableAt),
+                )}`}
+              </Text>
+            )}
         </View>
       ) : (
-        <View style={styles.viewPrice}>
-          <Text style={styles.textPrice}>{formatPrice(data?.price)}</Text>
+        <View>
+          <View style={styles.viewPrice}>
+            <Text style={styles.textPrice}>
+              {data?.coupon_id?.promotion_type === "percentage"
+                ? formatPrice(
+                    data?.price -
+                      (data?.price * data?.coupon_id?.promotion) / 100,
+                  )
+                : formatPrice(data?.price - data?.coupon_id?.promotion)}
+            </Text>
+            <Text style={styles.textPriceOld}>{formatPrice(data?.price)}</Text>
+          </View>
+          {data?.coupon_id?.expired &&
+            new Date(data?.coupon_id?.expired) > new Date() && (
+              <Text
+                style={[
+                  styles.txtUpdate,
+                  { color: palette.primary, marginLeft: 0 },
+                ]}
+              >
+                <Text
+                  style={{ ...CS.hnBold, fontSize: 14, color: palette.primary }}
+                >
+                  Flash sale
+                </Text>
+                {` ${translations.course.endAt.toLocaleLowerCase()} ${formatFullDate(
+                  new Date(data?.coupon_id.expired),
+                )}`}
+              </Text>
+            )}
         </View>
       )}
-      {data?.promotion && data.promotion > 0 ? (
-        <View style={{ flexDirection: "row" }}>
-          <IconSvg name="icClock" size={20} color={palette.textOpacity8} />
-          <Text style={styles.textPrice}>{`discount: ${data.promotion}`}</Text>
-        </View>
-      ) : null}
     </View>
   );
 };
@@ -304,5 +378,6 @@ const styles = StyleSheet.create({
   viewPrice: {
     flexDirection: "row",
     marginTop: 20,
+    alignItems: "flex-end",
   },
 });

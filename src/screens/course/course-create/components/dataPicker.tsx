@@ -10,7 +10,8 @@ interface SelectDateTimeProps {
   setTime: (time: Date) => void;
   placeholder: string;
   style: ViewStyle;
-  timeDefault?: Date;
+  timeDefault: string;
+  warning?: boolean;
 }
 
 const SelectDateTime = ({
@@ -18,9 +19,11 @@ const SelectDateTime = ({
   placeholder,
   style,
   timeDefault,
+  warning,
 }: SelectDateTimeProps) => {
   const [date, setDate] = useState<Date>();
   const [open, setOpen] = useState(false);
+  console.log("...", timeDefault);
 
   return (
     <>
@@ -32,7 +35,7 @@ const SelectDateTime = ({
             justifyContent: "center",
             alignItems: "center",
             borderWidth: 1,
-            borderColor: palette.borderColor,
+            borderColor: warning ? palette.primary : palette.borderColor,
             marginTop: 8,
             borderRadius: 8,
           },
@@ -43,12 +46,15 @@ const SelectDateTime = ({
         <Text
           style={{
             ...CS.hnRegular,
-            color: date ? palette.mainColor2 : palette.placeholder,
+            color:
+              date || timeDefault !== ""
+                ? palette.mainColor2
+                : palette.placeholder,
           }}
         >
           {date
             ? formatVNDate(date)
-            : timeDefault
+            : timeDefault !== ""
             ? formatVNDate(timeDefault)
             : placeholder}
         </Text>
@@ -57,10 +63,9 @@ const SelectDateTime = ({
         modal
         open={open}
         mode="date"
-        date={date || new Date()}
+        date={date || timeDefault !== "" ? new Date(timeDefault) : new Date()}
         minimumDate={new Date()}
         onConfirm={(date) => {
-          console.log("date..", date);
           setOpen(false);
           setDate(date);
           setTime(date);

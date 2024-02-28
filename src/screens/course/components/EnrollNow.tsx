@@ -37,16 +37,16 @@ const EnrollNow = ({ data, course_id, courseRoom }: EnrollNowProps) => {
       course_id: course_id,
       courseData: data,
     });
-  }
+  };
 
   return (
     <View>
-    <PressableBtn onPress={_goToListVideo} style={styles.containerFull}>
-      <Text style={styles.textBtn}>{translations.course.enrollNow}</Text>
-    </PressableBtn>
-    <PressableBtn onPress={_goToHomeWork} style={styles.containerFull}>
-      <Text style={styles.textBtn}>View homework</Text>
-    </PressableBtn>
+      <PressableBtn onPress={_goToListVideo} style={styles.containerFull}>
+        <Text style={styles.textBtn}>{translations.course.enrollNow}</Text>
+      </PressableBtn>
+      <PressableBtn onPress={_goToHomeWork} style={styles.containerFull}>
+        <Text style={styles.textBtn}>View homework</Text>
+      </PressableBtn>
     </View>
   );
 };

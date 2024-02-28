@@ -558,6 +558,8 @@ export default {
     typeCourse: "Kiểu khoá học",
     videoReviewCourse: "Video giới thiệu khoá học",
     requiredTitle: "Tiêu đề không được để trống",
+    discountEntry: "Bắt đầu lúc",
+    endAt: "Kết thúc lúc",
     noreview: "Chưa có đánh giá",
     selectModal: "Lựa chọn",
     myCourse: "Khoá học của tôi",
@@ -1006,6 +1008,42 @@ export default {
     pleaseGoToWebsiteToWithdraw:
       "Vui lòng đăng nhập vào web để có thể gửi form rút tiền",
   },
+  coupon: {
+    coupon: "Mã giảm giá",
+    couponMyCourse: "Mã giảm giá cho khoá học của tôi",
+    createCoupon: "Thêm mới mã giảm giá",
+    updateCoupon: "Cập nhật mã giảm giá",
+    saveCoupon: "Lưu mã giảm giá",
+    add: "Thêm",
+    update: "Cập nhật",
+    save: "Lưu",
+    title: "Tên mã giảm giá",
+    description: "Mô tả",
+    promotion: "Phần trăm giảm giá",
+    addCouponSuccess: "Thêm mới mã giảm giá thành công!",
+    addCouponFailed:
+      "Thêm mới mã giảm giá không thành công! Vui lòng thử lại sau.",
+
+    updateCouponSuccess: "Cập nhật mã giảm giá thành công!",
+    updateCouponFailed:
+      "Cập nhật mã giảm giá không thành công! Vui lòng thử lại sau.",
+    listCouponForMyCourse: "Danh sách mã giảm giá cho khoá học của tôi",
+    percentage: "Phần trăm (%)",
+    value: "Mức giảm",
+    warningCoupon: "Giá trị giảm không hợp lệ",
+    period: "Khoảng thời gian",
+    type: "Loại giảm giá",
+    deleteCouponSuccess: "Xoá mã giảm giá thành công!",
+    deleteCouponFaild: "Xoá mã giảm giá thất bại! Vui lòng thử lại",
+    warningDeleteCoupon: "Bạn có thật sự muốn xoá mã giảm giá này không?",
+    selectCourse: "Chọn khoá học",
+    choose: "Đã chọn",
+    chooseProduct: "Chọn sản phẩm",
+    applyForProduct: "Áp dụng cho sản phẩm",
+    reduce: "Giảm",
+    reductionLevel: "Mức giảm",
+    notDisplay: "Không hiển thị cho người mua",
+  },
   gift: {
     gift: "Quà tặng",
     noGift: "Chưa có phần quà nào",
@@ -1330,7 +1368,8 @@ export default {
     yourWork: "Bài tập của bạn",
     handedIn: "Nắm giữ",
     unsubmit: "Hủy gửi",
-    unsubmitDes: "Hủy gửi để thêm hoặc thay đổi tệp đính kèm. Đừng quên gửi lại sau khi bạn hoàn thành.",
+    unsubmitDes:
+      "Hủy gửi để thêm hoặc thay đổi tệp đính kèm. Đừng quên gửi lại sau khi bạn hoàn thành.",
     removeAtt: "Xóa tài liệu đính kèm?",
     removeAttDes: "Are you sure to remove your attachment?",
     handInYourWork: "Giữ bài tập của bạn?",
@@ -1352,6 +1391,19 @@ export default {
     createWork: "Tạo bài tập",
     selectClass: "Chọn lớp",
     selectDouDate: "Chọn ngày hết hạn",
-
-  }
+    createTaskSuccess: "Tạo bài tập thành công",
+    deleteTaskSuccess: "Xóa bài tập thành công",
+    updateTaskSuccess: "Cập nhật bài tập thành công",
+  },
+  introwelcome: {
+    text11: "Chào mừng đến với thế giới ngôn ngữ",
+    text12:
+      "Sẵn sàng bắt tay vào cuộc phiêu lưu phong phú này? Hãy bắt đầu cuộc phiêu lưu học tập của bạn bây giờ!",
+    text21: "Tham gia cộng đồng IELTS sôi động của chúng tôi",
+    text22:
+      "Một không gian để kết nối với những người cùng học, chia sẻ hiểu biết sâu sắc và cùng nhau thúc đẩy hành trình chuẩn bị của bạn!",
+    text31: "Hình thức học tập đa dạng",
+    text32:
+      "Chọn cuộc phiêu lưu học tập của bạn: đi sâu vào các mô-đun video theo nhịp độ riêng, nhận hướng dẫn được cá nhân hóa trong các phiên 1v1 và thúc đẩy hoạt động cộng tác nhóm.",
+  },
 };

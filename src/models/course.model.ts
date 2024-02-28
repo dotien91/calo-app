@@ -1,3 +1,4 @@
+import { CouponType } from "@services/api/coupon.api";
 import { TypedMedia, TypedUser } from "shared/models";
 
 interface TypeUserCourse extends TypedUser {
@@ -41,6 +42,7 @@ export interface ICourseItem {
   updatedAt: string;
   promotion: number;
   is_join: boolean;
+  coupon_id?: CouponType;
 }
 
 export interface ICourseModuleItem {

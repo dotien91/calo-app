@@ -28,6 +28,7 @@ import ListUser from "./modal-inner/ListUser";
 import PopupCreateLesson from "@screens/course/course-create/components/PartViewCreate/popup.create.lesson";
 import ConfirmViewBottom from "@shared-components/comfirm-view-bottom/comfirm.view.bottom";
 import InputViewModal from "@shared-components/input-modal/input.modal";
+import ListActionInner from "./modal-inner/ListActionInner";
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
 // using normal one.
@@ -149,12 +150,14 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         onSwipeComplete={closeModal}
       >
         <View style={styles.bottomInner}>
-          <IconBtn
-            onPress={closeModal}
-            name={"x"}
-            size={32}
-            customStyle={styles.closeIcon}
-          />
+          {!data?.hideCloseIcon && (
+            <IconBtn
+              onPress={closeModal}
+              name={"x"}
+              size={32}
+              customStyle={styles.closeIcon}
+            />
+          )}
           <View
             style={{
               height: 4,
@@ -196,6 +199,9 @@ const SuperModal: React.FC<SuperModalProps> = () => {
           )}
           {contentModalType == EnumModalContentType.Confirm && (
             <ConfirmViewBottom {...data} closeModal={closeModal} />
+          )}
+          {contentModalType == EnumModalContentType.ListMoreAction && (
+            <ListActionInner {...data} closeModal={closeModal} />
           )}
         </View>
       </StickBottomModal>

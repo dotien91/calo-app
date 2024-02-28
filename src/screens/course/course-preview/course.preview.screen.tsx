@@ -211,9 +211,9 @@ const CoursePreviewScreen = () => {
   const openHomeworkScreen = () => {
     NavigationService.navigate(SCREENS.CLASSHOMEWORK, {
       course_id: course_id,
-      courseData: data
+      courseData: data,
     });
-  }
+  };
 
   const _updateToReview = () => {
     const params = { _id: course_id, public_status: "pending" };

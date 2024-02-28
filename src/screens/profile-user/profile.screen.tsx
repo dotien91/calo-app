@@ -218,6 +218,7 @@ const ProfileUser = (props: ProfileUserProps) => {
         <Header
           // iconNameRight="more-horizontal"
           text={userInfo?.display_name || ""}
+          customStyle={{ marginBottom: 0, marginTop: 0 }}
         />
       </View>
     );
@@ -425,6 +426,7 @@ const ProfileUser = (props: ProfileUserProps) => {
         showsVerticalScrollIndicator={false}
       >
         <View>
+          {/* <Image style={{height: 200, width: '100%'}} source={{uri: userInfo?.background_image ? userInfo?.background_image : "https://cdn.vntrip.vn/cam-nang/wp-content/uploads/2017/08/van-mieu-quoc-tu-giam.jpg"}}></Image> */}
           <AvatarProfile userInfo={userInfo} />
           <CountFollow id={_id} postCount={totalCount} />
           <ListAction />

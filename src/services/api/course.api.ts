@@ -131,7 +131,7 @@ interface ICreateCourse {
   country?: string;
   avatar?: string;
   media_id?: string;
-  public_status: string;
+  public_status?: string;
 }
 
 export async function createCourse(data: ICreateCourse) {
@@ -313,6 +313,69 @@ export async function getMyCourse(data: { user_id: string; auth_id: string }) {
     method: METHOD.POST,
     urlPath: "course/my-course",
     data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function getCourseSale(data) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "course/sale",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function saveCouponToUser(data) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "coupon/save",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function getListThread(params, customHeader) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "thread/list",
+    params,
+    customHeader,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function createThread(data, customHeader) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "thread/create",
+    data,
+    customHeader,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function updateThread(data, customHeader) {
+  return request({
+    method: METHOD.PATCH,
+    urlPath: "thread/update",
+    data,
+    customHeader,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function deleteThread(id, customHeader) {
+  return request({
+    method: METHOD.DELETE,
+    urlPath: `thread/delete/${id}`,
+    customHeader,
   }).then((response) => {
     return response;
   });

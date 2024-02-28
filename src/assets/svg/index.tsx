@@ -44,6 +44,8 @@ import icBook from "./book.svg";
 import icBookFull from "./book-full.svg";
 import icCourse from "./course.svg";
 import icDiscovery from "./discovery.svg";
+import icDiscountValue from "./ic-discount-value.svg";
+import icDiscountPercent from "./ic-discount-percent.svg";
 import icGraduate from "./graduate.svg";
 import icProfile from "./profile.svg";
 import icReview from "./review.svg";
@@ -68,6 +70,7 @@ import icPause from "./button-pause.svg";
 import icShareScreen from "./device-connection.svg";
 import icFullScreen from "./arrows-maximize.svg";
 import icAppleBlack from "./social-apple-black.svg";
+import icCheckbox from "./Checkbox.svg";
 import icCoin from "./coin.svg";
 import icCoinStar from "./coinStar.svg";
 import icCup from "./cup.svg";
@@ -78,8 +81,14 @@ import iconBuyTask from "./buycourse.svg";
 import iconPen from "./pen.svg";
 import iconBookNote from "./bookNote.svg";
 import iconFriends from "./friends.svg";
+import intro2 from "./welcome22.svg";
+import intro1 from "./welcome21.svg";
+import intro3 from "./welcome23.svg";
 
 const Icons = {
+  intro1,
+  intro2,
+  intro3,
   icFlagvi,
   icFlagen,
   icFlagcn,
@@ -124,6 +133,8 @@ const Icons = {
   icBookFull,
   icCourse,
   icDiscovery,
+  icDiscountValue,
+  icDiscountPercent,
   icGraduate,
   icProfile,
   icReview,
@@ -148,6 +159,7 @@ const Icons = {
   icShareScreen,
   icFullScreen,
   icAppleBlack,
+  icCheckbox,
   icCoin,
   icCoinStar,
   icCup,

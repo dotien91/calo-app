@@ -69,6 +69,8 @@ import CreateClassCallOneScreen from "@screens/course/course-create/course.creat
 import CourseListVideoScreen from "@screens/course/course-create/course.list.video.screen";
 import CourseAddModuleScreen from "@screens/course/course-create/course.add.module.screen";
 import CallClassScreen from "@screens/call-class/call.class.screen";
+import ListCouponForMyCourse from "@screens/coupon/coupon.list";
+import CouponCreateScreen from "@screens/coupon/coupon.create";
 import TabFollow from "@screens/tab-follow/tab.follow";
 import BlackList from "@screens/black-list/black.list";
 import PrivateSetting from "@screens/private.setting/private.setting";
@@ -154,12 +156,12 @@ const Navigation = () => {
     if (!isFirstOpenApp) return null;
     return (
       <>
-        <Stack.Screen name={SCREENS.INTRO} component={IntroScreen} />
-
         <Stack.Screen
           name={SCREENS.CHOOSE_LANGUAGE}
           component={ChooseLanguageScreen}
         />
+        <Stack.Screen name={SCREENS.INTRO} component={IntroScreen} />
+
         <Stack.Screen name={SCREENS.WELCOME} component={WelcomeScreen} />
       </>
     );
@@ -176,17 +178,15 @@ const Navigation = () => {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {renderStackIntro()}
         <Stack.Screen
-          name={SCREENS.CREATE_WORK}
-          component={CreateWorkScreen}
-        />
-        <Stack.Screen
           name={SCREENS.CLASSHOMEWORK}
           component={ClassHomeWorkScreen}
         />
+
         <Stack.Screen
           name={SCREENS.COURSE_LIST}
           component={renderTabNavigation}
         />
+        <Stack.Screen name={SCREENS.CREATE_WORK} component={CreateWorkScreen} />
 
         <Stack.Screen name={SCREENS.CALL_CLASS} component={CallClassScreen} />
 
@@ -247,6 +247,14 @@ const Navigation = () => {
         <Stack.Screen
           name={SCREENS.COURSE_LIST_RATE}
           component={ReviewScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.COUPON_LIST}
+          component={ListCouponForMyCourse}
+        />
+        <Stack.Screen
+          name={SCREENS.COUPON_CREATE}
+          component={CouponCreateScreen}
         />
 
         <Stack.Screen
@@ -332,6 +340,7 @@ const Navigation = () => {
           name={SCREENS.SETTINGPROFILESCREEN}
           component={SettingProfileScreen}
         />
+        {/* <Stack.Screen name={SCREENS.INTRO} component={IntroScreen} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

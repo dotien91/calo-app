@@ -45,7 +45,7 @@ export default function ChooseLanguageScreen() {
     translations.setLanguage(selected);
     setLanguage(selected);
 
-    NavigationService.navigate(SCREENS.WELCOME);
+    NavigationService.navigate(SCREENS.INTRO);
   };
 
   const ItemLanguage = ({ item }: { item: TypeItemLanguage }) => {

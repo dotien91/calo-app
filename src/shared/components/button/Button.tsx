@@ -61,7 +61,6 @@ export default function Button({
           type == "outline" && styles.btnOutline,
           type == "disabled" && styles.btnDisabled,
           style && style,
-
         ];
       }}
       onPress={onPress}

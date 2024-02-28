@@ -59,7 +59,6 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
     isLoadmore,
     loading,
   } = useChatHistory(txtSearch, searchModeChat);
-  console.log("messagesmessages====", messages);
   const {
     uploadRecord,
     listFile,
