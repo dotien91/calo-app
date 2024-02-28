@@ -76,6 +76,7 @@ import BlackList from "@screens/black-list/black.list";
 import PrivateSetting from "@screens/private.setting/private.setting";
 import { _getJson } from "@services/local-storage";
 import SettingProfileScreen from "@screens/profile.screen/profile.screen";
+import DiscoverScreen from "@screens/discover-screen/discover.screen";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -333,6 +334,10 @@ const Navigation = () => {
           component={SettingProfileScreen}
         />
         {/* <Stack.Screen name={SCREENS.INTRO} component={IntroScreen} /> */}
+        <Stack.Screen
+          name={SCREENS.DISCOVERSCREEN}
+          component={DiscoverScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

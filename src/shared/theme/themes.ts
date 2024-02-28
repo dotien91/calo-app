@@ -84,6 +84,10 @@ export const palette = {
   blueChart: "rgba(53, 174, 255, 1)",
   greenChart: "rgba(43, 196, 86, 1)",
   yellowComment: "rgba(255, 192, 117, 1)",
+  skyblue: "rgba(214, 248, 255, 1)",
+  skin: "rgba(255, 243, 218, 1)",
+  greenOpa: "rgba(232, 247, 239, 1)",
+  blueBorder: "rgba(53, 174, 255, 1)",
 };
 
 interface ExtendedTheme extends Theme {

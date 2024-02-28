@@ -84,6 +84,7 @@ import iconFriends from "./friends.svg";
 import intro2 from "./welcome22.svg";
 import intro1 from "./welcome21.svg";
 import intro3 from "./welcome23.svg";
+import icKing from "./king.svg";
 
 const Icons = {
   intro1,
@@ -170,6 +171,7 @@ const Icons = {
   iconPen,
   iconBookNote,
   iconFriends,
+  icKing,
 };
 
 interface IconSvgProps {
