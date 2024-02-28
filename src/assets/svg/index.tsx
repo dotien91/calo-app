@@ -68,6 +68,11 @@ import icPause from "./button-pause.svg";
 import icShareScreen from "./device-connection.svg";
 import icFullScreen from "./arrows-maximize.svg";
 import icAppleBlack from "./social-apple-black.svg";
+import icPoints from "./icon-points.svg";
+import icTutor from "./icon-tutor.svg";
+import icShop from "./icon-shop.svg";
+import icAffiliate from "./icon-affiliate.svg";
+import icLine from "./icon-line.svg";
 
 const Icons = {
   icFlagvi,
@@ -138,6 +143,11 @@ const Icons = {
   icShareScreen,
   icFullScreen,
   icAppleBlack,
+  icPoints,
+  icTutor,
+  icShop,
+  icAffiliate,
+  icLine,
 };
 
 interface IconSvgProps {

@@ -16,6 +16,10 @@ const flexBase: FlexStyle = {
 
 const CS = StyleSheet.create({
   flex1: { flex: 1 },
+  flex2: {
+    paddingTop: 10,
+    marginHorizontal: 16,
+  },
   row: {
     flexDirection: "row",
     alignItems: "center",

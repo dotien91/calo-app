@@ -1283,6 +1283,13 @@ export default {
     support: "Hỗ trợ khách hàng",
     aboutus: "Về chúng tôi",
   },
+  listCategory: {
+    descriptionTitle: "Hôm nay, chúng ta nên làm gì?",
+    course: "Khoá học",
+    tutor: "Gia sư",
+    shop: "Cửa hàng",
+    affiliate: "Tiếp thị liên kết",
+  },
   aboutUs: {
     aboutUs: "Về chúng tôi",
     termofus: "Điều khoản sử dụng",
@@ -1299,6 +1306,16 @@ export default {
     titleMic: "Cần quyền truy cập microphone",
     messageMic:
       "Để gọi điện thoại cho người khác, chúng tôi cần quyền truy cập vào microphone của bạn.",
+  },
+  affiliate: {
+    yourIncome: "Thu nhập của bạn",
+    withdraw: "Rút tiền",
+    today: "Hôm nay",
+    thisMonth: "Tháng này",
+    lastMonth: "Tháng trước",
+    date: "Ngày",
+    product: "Sản phẩm",
+    User: "Người dùng",
   },
   en: "Tiếng Anh",
   vi: "Tiếng Việt",

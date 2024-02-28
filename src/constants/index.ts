@@ -62,6 +62,7 @@ export const SCREENS = {
   COURSE_LIST_MODULE: "CourseListModule",
   COURSE_ADD_MODULE: "CourseAddModule",
   CALL_CLASS: "CallClass",
+  AFFILIATE: "Affiliate",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =
