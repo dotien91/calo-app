@@ -88,6 +88,7 @@ export const palette = {
   skin: "rgba(255, 243, 218, 1)",
   greenOpa: "rgba(232, 247, 239, 1)",
   blueBorder: "rgba(53, 174, 255, 1)",
+  greenText: "rgba(43, 196, 86, 1)",
 };
 
 interface ExtendedTheme extends Theme {

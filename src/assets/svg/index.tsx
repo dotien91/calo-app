@@ -85,11 +85,19 @@ import intro2 from "./welcome22.svg";
 import intro1 from "./welcome21.svg";
 import intro3 from "./welcome23.svg";
 import icKing from "./king.svg";
+import icThreeBook from "./threebook.svg";
+import icShop from "./shop.svg";
+import icFind from "./find.svg";
+import icGradution from "./gradution.svg";
 
 const Icons = {
   intro1,
   intro2,
   intro3,
+  icGradution,
+  icThreeBook,
+  icFind,
+  icShop,
   icFlagvi,
   icFlagen,
   icFlagcn,
