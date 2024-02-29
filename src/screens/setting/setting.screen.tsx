@@ -15,6 +15,7 @@ import { translations } from "@localization";
 import useStore from "@services/zustand/store";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import CS from "@theme/styles";
+import { USER_TOKEN, _setJson } from "@services/local-storage";
 
 interface SettingScreenProps {}
 
@@ -96,6 +97,12 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
     },
   ];
 
+  const hardCodeToken = () => {
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDA2NDk0OTQsImRhdGEiOnsiX2lkIjoiNjU5MGVmNzEzZjlhMDQ2OGM4MjkwZWI5Iiwia2V5IjoiYTI0MTcxYzcxYjNjMjViZWI0OTQzMTQ1NjQyZjJmNTciLCJzaWduYXR1cmUiOiI4ZTJmODFmZjY1NmRjMjUyYzZhNmVlZGFkN2U3ZTc3OCIsInNlc3Npb24iOiI2NWRmMDA5NWMzMzE1ZjhjZmMwOTk2MWUifSwiaWF0IjoxNzA5MTEzNDk0fQ.bhcKT-0CbTascOTqne8ZzXE4bSTke4EzD9hArh7rX1Y";
+    _setJson(USER_TOKEN, token);
+  };
+
   const renderListSetting = () => {
     return (
       <View style={{ backgroundColor: colors.white, flex: 1, marginTop: 20 }}>
@@ -134,6 +141,17 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
   return (
     <View style={{ ...CS.safeAreaView, backgroundColor: colors.white }}>
       <Header text="Setting"></Header>
+      <Text
+        onPress={hardCodeToken}
+        style={{
+          color: colors.text,
+          fontSize: 16,
+          fontWeight: "600",
+          textAlign: "center",
+        }}
+      >
+        hard code token
+      </Text>
       {isLoggedIn() ? (
         <View style={{ alignItems: "center", backgroundColor: colors.white }}>
           <View style={{ marginTop: 16 }}>
@@ -219,6 +237,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
         renderViewRequestLogin()
       )}
       {renderListSetting()}
+
       {isLoggedIn() && (
         <TouchableOpacity
           onPress={logout}

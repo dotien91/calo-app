@@ -15,6 +15,7 @@ interface IconType {
   name: string;
   color?: string;
   size?: number;
+  defaultValue?: string;
 }
 
 interface InputPropsType extends TextInputProps {
@@ -27,10 +28,17 @@ interface InputPropsType extends TextInputProps {
 // eslint-disable-next-line react/display-name
 const Input = React.forwardRef(
   (
-    { customStyle, icon, disabled = false, cb, ...res }: InputPropsType,
+    {
+      customStyle,
+      icon,
+      disabled = false,
+      cb,
+      defaultValue,
+      ...res
+    }: InputPropsType,
     ref,
   ) => {
-    const [value, setValue] = useState();
+    const [value, setValue] = useState(defaultValue || "");
 
     useImperativeHandle(ref, () => {
       return {
@@ -104,7 +112,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   wrapInput: {
-    // flex: 1,
+    flex: 1,
   },
   iconClose: {
     position: "absolute",

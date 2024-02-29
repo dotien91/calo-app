@@ -849,6 +849,7 @@ export default {
     detailTask: "Detail task",
     classCmt: "Class Comment",
     yourWork: "Your work",
+    addWork: "Add work",
     handedIn: "Handed in",
     unsubmit: "Unsubmit",
     unsubmitDes:
@@ -862,6 +863,7 @@ export default {
     intructions: "Intructions",
     studentWork: "Student work",
     assigned: "Assigned",
+    mark: "Input mark",
     marked: "Marked",
     acceptSub: "Accepting submissions",
     assignTitle: "Assign title",
@@ -877,6 +879,9 @@ export default {
     createTaskSuccess: "Create homework success",
     deleteTaskSuccess: "Delete homework success",
     updateTaskSuccess: "Update homework success",
+    dueDate: "Due date",
+    handedInSuccess: "Handed in success",
+    markError: "Scores must be numeric and less than 100",
   },
   introwelcome: {
     text11: "Welcome to the world of language",

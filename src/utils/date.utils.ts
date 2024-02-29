@@ -275,11 +275,9 @@ export const formatFullDate = (date) => {
   const hours = _date.getHours();
   const minutes = _date.getMinutes();
 
-  return `${year}-${month < 10 ? `0${month}` : month}-${
-    day < 10 ? `0${day}` : day
-  } ${hours < 10 ? `0${hours}` : hours}:${
+  return `${hours < 10 ? `0${hours}` : hours}:${
     minutes < 10 ? `0${minutes}` : minutes
-  }`;
+  } ${day < 10 ? `0${day}` : day}-${month < 10 ? `0${month}` : month}-${year} `;
 };
 
 export const formatVNDate = (date) => {

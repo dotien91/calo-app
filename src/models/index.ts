@@ -138,3 +138,11 @@ export interface TypedFollowUser {
   user_id: string;
   partner_id: TypedUser;
 }
+
+export enum EnumColors {
+  textOpacity4 = "textOpacity4",
+  textOpacity6 = "textOpacity6",
+  text = "text",
+  primary = "primary",
+  white = "white",
+}

@@ -380,3 +380,67 @@ export async function deleteThread(id, customHeader) {
     return response;
   });
 }
+
+export async function getDetailThread(id, customHeader) {
+  return request({
+    method: METHOD.GET,
+    urlPath: `thread/detail/${id}`,
+    customHeader,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function addCommentThread(data, customHeader) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "thread/comment/create",
+    data,
+    customHeader,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function deleteThreadComment(id, customHeader) {
+  return request({
+    method: METHOD.DELETE,
+    urlPath: `thread/comment/delete/${id}`,
+    customHeader,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function handedInTask(data, customHeader) {
+  return request({
+    method: METHOD.PATCH,
+    urlPath: "thread/comment/mark",
+    customHeader,
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function uploadUserExam(data, customHeader) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "thread/comment/upload",
+    data,
+    customHeader,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function getListCommentThread(params, customHeader) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "thread/comment/list",
+    params,
+    customHeader,
+  }).then((response) => {
+    return response;
+  });
+}

@@ -71,6 +71,7 @@ export const SCREENS = {
   CLASSHOMEWORK: "ClassHomeWork",
   CREATE_WORK: "CreateWork",
   DETAIL_TASK: "DetailTask",
+  ADD_WORK_STUDENT: "AddWorkStudent",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

@@ -53,6 +53,13 @@ interface ToastProps {
 //   data
 // })
 
+export const showLoading = () => {
+  showSuperModal({
+    contentModalType: EnumModalContentType.Loading,
+    styleModalType: EnumStyleModalType.Middle,
+  });
+};
+
 export const showSuperModal = (params: IShowModalParams) => {
   eventEmitter.emit("show_super_modal", params);
 };

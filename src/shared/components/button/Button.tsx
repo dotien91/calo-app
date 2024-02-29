@@ -31,13 +31,14 @@ export default function Button({
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const hasIcon = !!SvgSo || !!iconName;
+
   const colorIcon = () => {
     switch (type) {
       case "primary":
-        return palette.primary;
+        return palette.white;
         break;
       case "outline":
-        return palette.white;
+        return palette.primary;
         break;
       case "disabled":
         return palette.textOpacity4;
@@ -50,7 +51,7 @@ export default function Button({
 
   return (
     <Pressable
-      disabled={disabled}
+      disabled={disabled || type == "disabled"}
       style={({ pressed }) => {
         return [
           styles.viewButton,

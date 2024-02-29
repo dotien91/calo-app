@@ -35,6 +35,7 @@ import {
   showToast,
 } from "@helpers/super.modal.helper";
 import eventEmitter from "@services/event-emitter";
+import TextBase from "@shared-components/TextBase";
 // import { regexMail } from "constants/regex.constant";
 
 // interface ButtonSocialProps {
@@ -151,22 +152,25 @@ export default function CreateWorkScreen() {
     });
   };
 
-  console.log("listFile", listFile);
-
   const renderListFile = () => {
+    console.log("listFile", listFile);
+
     return (
       <View style={{ flex: 1 }}>
-        {listFile.map((item) => (
-          <View style={styles.fileBox}>
-            <IconBtn name="file" customStyle={{ marginRight: 12 }} />
-            <Text style={styles.text}>{item.name || item.media_file_name}</Text>
-            <IconBtn
-              onPress={() => deleteFile(item._id)}
-              name="x"
-              customStyle={{ position: "absolute", right: -6 }}
-            />
-          </View>
-        ))}
+        {listFile.map((item) => {
+          console.log("123", item);
+          return (
+            <View style={[styles.fileBox, { flex: 0 }]}>
+              <IconBtn name="file" customStyle={{ marginRight: 12 }} />
+              <TextBase>{item.name || item.media_file_name}</TextBase>
+              <IconBtn
+                onPress={() => deleteFile(item._id)}
+                name="x"
+                customStyle={{ position: "absolute", right: -6 }}
+              />
+            </View>
+          );
+        })}
       </View>
     );
   };

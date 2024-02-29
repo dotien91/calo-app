@@ -1,5 +1,5 @@
 import { Text, View } from "react-native";
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 import * as NavigationService from "react-navigation-helpers";
 
 import { translations } from "@localization";
@@ -17,6 +17,7 @@ import {
 import { deleteThread } from "@services/api/course.api";
 import eventEmitter from "@services/event-emitter";
 import { SCREENS } from "constants";
+import { formatFullDate } from "@utils/date.utils";
 
 interface IData {
   thread_content: string;
@@ -34,7 +35,11 @@ const TaskItem = ({ data, showMore }: TaskItemProps) => {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const { colors } = theme;
 
-  const gotoTaskDetail = () => {};
+  const gotoTaskDetail = () => {
+    NavigationService.navigate(SCREENS.DETAIL_TASK, {
+      data,
+    });
+  };
 
   const deleteTask = () => {
     deleteThread(data._id, {
@@ -79,8 +84,6 @@ const TaskItem = ({ data, showMore }: TaskItemProps) => {
     });
   };
 
-  console.log("dataaa", data);
-
   return (
     <PressableBtn onPress={gotoTaskDetail} style={styles.taskBox}>
       <View style={styles.taskInner}>
@@ -89,7 +92,7 @@ const TaskItem = ({ data, showMore }: TaskItemProps) => {
         </View>
         <View style={{ flex: 1 }}>
           <Text style={styles.label}>{data.thread_title}</Text>
-          <Text style={styles.text64}>{data.createdAt}</Text>
+          <Text style={styles.text64}>{formatFullDate(data.createdAt)}</Text>
         </View>
       </View>
       {showMore && (

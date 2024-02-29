@@ -36,6 +36,7 @@ export default (theme: ExtendedTheme) => {
     text: {
       ...CS.hnRegular,
       color: colors.text,
+      flex: 1,
     },
     text64: {
       ...CS.hnRegular,
@@ -93,6 +94,7 @@ export default (theme: ExtendedTheme) => {
     fileBox: {
       ...CS.flexStart,
       marginBottom: 2,
+      flex: 1,
     },
     //     <PressableBtn onPress={gotoTaskDetail} style={styles.taskBox}>
     //     <View style={styles.taskInner}>

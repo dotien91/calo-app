@@ -54,8 +54,6 @@ const SuperModal: React.FC<SuperModalProps> = () => {
   const [contentModalType, setContentModalType] =
     useState<EnumModalContentType>();
 
-  const [textValue, setTextValue] = useState();
-
   useEffect(() => {
     eventEmitter.on("show_super_modal", showModal);
     eventEmitter.on("close_super_modal", closeModal);
@@ -73,7 +71,6 @@ const SuperModal: React.FC<SuperModalProps> = () => {
     setStyleModalType(styleModalType);
     setContentModalType(contentModalType);
     setData(data);
-    setTextValue(data?.initNameGroup);
   };
 
   const closeModal = () => {
@@ -141,7 +138,6 @@ const SuperModal: React.FC<SuperModalProps> = () => {
   };
 
   if (styleModalType == EnumStyleModalType.Bottom) {
-    console.log("dataaa", data);
     return (
       <StickBottomModal
         isVisible={true}
@@ -203,6 +199,9 @@ const SuperModal: React.FC<SuperModalProps> = () => {
           {contentModalType == EnumModalContentType.ListMoreAction && (
             <ListActionInner {...data} closeModal={closeModal} />
           )}
+          {contentModalType == EnumModalContentType.TextInput && (
+            <InputViewModal {...data} closeModal={closeModal} />
+          )}
         </View>
       </StickBottomModal>
     );
@@ -224,14 +223,6 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         {contentModalType == EnumModalContentType.Loading && renderLoading()}
         {contentModalType == EnumModalContentType.Library && (
           <ImageSlideShow {...data} closeModal={closeModal} />
-        )}
-        {contentModalType == EnumModalContentType.TextInput && (
-          <InputViewModal
-            {...data}
-            closeModal={closeModal}
-            setTextValue={setTextValue}
-            textValue={textValue}
-          ></InputViewModal>
         )}
       </Modal>
     );

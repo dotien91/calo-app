@@ -30,60 +30,6 @@ const ClassHomeWorkScreen: React.FC<ClassHomeWorkScreenProps> = () => {
   const class_id = route.params?.["classId"] || "65c09e49d7d7ab3a76dc2fd0";
   const userData = useStore((state) => state.userData);
 
-  const classData = {
-    _id: "65c09e49d7d7ab3a76dc2fd0",
-    course_id: "65c09dc4d7d7ab3a76dc2e78",
-    course_calendar_ids: [
-      {
-        _id: "65c09e49d7d7ab3a76dc2fcc",
-        time_duration: 2,
-        day: 5,
-        time_start: "16:30",
-        time_end: "18:30",
-        course_type: "class",
-        createdAt: "2024-02-05T08:37:29.817Z",
-        updatedAt: "2024-02-05T08:37:29.817Z",
-        __v: 0,
-      },
-      {
-        _id: "65c09e49d7d7ab3a76dc2fce",
-        time_duration: 2,
-        day: 6,
-        time_start: "16:30",
-        time_end: "18:30",
-        course_type: "class",
-        createdAt: "2024-02-05T08:37:29.867Z",
-        updatedAt: "2024-02-05T08:37:29.867Z",
-        __v: 0,
-      },
-    ],
-    name: "Lớp 1.3",
-    limit_member: 8,
-    start_time: "2024-02-01T03:07:44.655Z",
-    end_time: "2024-09-10T03:07:47.000Z",
-    members: [
-      {
-        official_status: false,
-        timezone: "",
-        _id: "6585460adfde5a433c986c67",
-        user_login: "ductienptit91_gmail.com",
-        user_avatar:
-          "https://files.exam24h.com/upload/2024/01/17_1705483354877/6585460adfde5a433c986c67-1705483354877-89ce30c5-17b8-49e2-b61e-f9fcc92d6c89.jpg",
-        user_avatar_thumbnail:
-          "https://files.exam24h.com/upload/2024/01/17_1705483354880/6585460adfde5a433c986c67-1705483354880-thumbnail-89ce30c5-17b8-49e2-b61e-f9fcc92d6c89.jpg",
-        display_name: "duc 1123123123 à đấyasdsdasdassd",
-        user_role: "user",
-        user_status: 1,
-        last_active: "2024-02-27T04:22:31.000Z",
-        user_active: 0,
-      },
-    ],
-    createdAt: "2024-02-05T08:37:29.919Z",
-    updatedAt: "2024-02-16T06:45:38.344Z",
-    __v: 0,
-    user_id: "6590ef713f9a0468c8290eb9",
-  };
-  // const courseData = route.params?.["courseData"]
   //token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDA1NDM5ODgsImRhdGEiOnsiX2lkIjoiNjU5MGVmNzEzZjlhMDQ2OGM4MjkwZWI5Iiwia2V5IjoiYTI0MTcxYzcxYjNjMjViZWI0OTQzMTQ1NjQyZjJmNTciLCJzaWduYXR1cmUiOiI4ZTJmODFmZjY1NmRjMjUyYzZhNmVlZGFkN2U3ZTc3OCIsInNlc3Npb24iOiI2NWRkNjQ3NDRmZjM5MGU3MjY3NzBhOWIifSwiaWF0IjoxNzA5MDA3OTg4fQ.0_rmwNcfSFzoyZXrb-RHo88mvj0ucLoQGj-QzytVEgo
   const courseData = {
     coupon_id: null,
@@ -258,9 +204,13 @@ const ClassHomeWorkScreen: React.FC<ClassHomeWorkScreenProps> = () => {
       if (!res.isError) {
         setTasks(res.data);
       }
-      console.log("rerererere", res);
+      console.log("_getListThread", res);
     });
   };
+
+  console.log(3333, {
+    class_id,
+  });
 
   React.useEffect(() => {
     _getListThread();
@@ -309,8 +259,8 @@ const ClassHomeWorkScreen: React.FC<ClassHomeWorkScreenProps> = () => {
           <Text style={styles.label}>{translations.homework.assignment}</Text>
           <View style={{ height: 4 }} />
           {loading && <LoadingList />}
-          {tasks.map((item) => (
-            <TaskItem data={item} showMore={isTeacher} />
+          {tasks.map((item, index) => (
+            <TaskItem key={index} data={item} showMore={isTeacher} />
           ))}
         </ScrollView>
         {renderCreateTaskBtn()}

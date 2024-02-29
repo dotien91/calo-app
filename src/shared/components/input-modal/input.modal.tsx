@@ -1,49 +1,42 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
+import Input from "@shared-components/form/Input";
+import { translations } from "@localization";
+import Button from "@shared-components/button/Button";
 
-const InputViewModal = ({ textValue, title, closeModal, cb, setTextValue }) => {
+const InputViewModal = ({
+  defaultValue,
+  title,
+  closeModal,
+  cb,
+  placeholder,
+}) => {
+  console.log("defaultValuedefaultValue", defaultValue);
+  const [text, setText] = React.useState(defaultValue);
+
+  const _onPress = () => {
+    if (cb) cb(text);
+    closeModal();
+  };
+
   return (
     <View style={styles.modalInner}>
       <Text style={styles.title}>{title}</Text>
-      <TextInput
-        onChangeText={(text) => setTextValue(text)}
-        placeholder="Nhập tên của nhóm"
-        style={{
-          borderWidth: 1,
-          borderColor: "black",
-          borderRadius: 8,
-          marginVertical: 5,
-        }}
-        value={textValue}
-      />
-      <View style={CommonStyle.flexRear}>
-        <TouchableOpacity
-          style={[styles.btnStyle, { flex: 1 }]}
-          onPress={closeModal}
-        >
-          <Text style={styles.txtBtn}>Cancel</Text>
-        </TouchableOpacity>
-        <View style={{ width: 10 }} />
-        <TouchableOpacity
-          style={[
-            styles.btnStyle,
-            { backgroundColor: palette.danger, flex: 1 },
-          ]}
-          onPress={() => {
-            if (cb) cb(textValue);
-            closeModal();
-          }}
-        >
-          <Text style={styles.txtBtn}>Ok</Text>
-        </TouchableOpacity>
+      <View style={[CommonStyle.flexStart, { flex: 1 }]}>
+        <Input
+          defaultValue={text}
+          cb={setText}
+          placeholder={placeholder}
+          customStyle={{ flex: 1, width: "100%" }}
+        />
+        <Button
+          style={{ marginLeft: 8 }}
+          type={(text || "").length ? "primary" : "disabled"}
+          text={translations.login.send}
+          onPress={_onPress}
+        />
       </View>
     </View>
   );
@@ -56,25 +49,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: palette.white,
     borderRadius: 6,
-    padding: 30,
+    paddingHorizontal: 16,
+    paddingBottom: 26,
     overflow: "hidden",
   },
-  btnStyle: {
-    paddingVertical: 6,
-    paddingHorizontal: 10,
-    backgroundColor: palette.green,
-    borderRadius: 99,
-    ...CommonStyle.flexCenter,
-  },
-  txtBtn: {
-    ...CommonStyle.hnSemiBold,
-    fontSize: 16,
-    color: palette.white,
-  },
   title: {
-    ...CommonStyle.hnBold,
-    fontSize: 20,
+    ...CommonStyle.hnSemiBold,
+    fontSize: 18,
     color: palette.text,
     textAlign: "center",
+    marginBottom: 12,
   },
 });

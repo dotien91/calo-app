@@ -16,6 +16,7 @@ interface EnrollNowProps {
 }
 
 const EnrollNow = ({ data, course_id, courseRoom }: EnrollNowProps) => {
+  console.log("datadata", data);
   const _goToListVideo = () => {
     if (data.type == EnumClassType.SelfLearning) {
       NavigationService.navigate(SCREENS.COURSE_LEARN_VIDEO_SCREEN, {
@@ -23,7 +24,6 @@ const EnrollNow = ({ data, course_id, courseRoom }: EnrollNowProps) => {
         courseData: data,
       });
     } else {
-      console.log("Dataaaaa", data);
       NavigationService.navigate(SCREENS.CALL_CLASS, {
         course_id: course_id,
         courseData: data,

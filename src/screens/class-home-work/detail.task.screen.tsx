@@ -1,13 +1,19 @@
 import { translations } from "@localization";
-import { useTheme } from "@react-navigation/native";
+import { useTheme, useRoute } from "@react-navigation/native";
 import Header from "@shared-components/header/Header";
 import CS from "@theme/styles";
 import * as React from "react";
-import { Text, useWindowDimensions } from "react-native";
-import { View, StyleSheet } from "react-native";
+import {
+  SafeAreaView,
+  Text,
+  useWindowDimensions,
+  View,
+  StyleSheet,
+} from "react-native";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import InstructionTab from "./tab/instruction";
 import StudentWorkTab from "./tab/student.work";
+import useStore from "@services/zustand/store";
 
 const renderScene = SceneMap({
   first: InstructionTab,
@@ -24,6 +30,12 @@ const DetailTaskScreen = () => {
     { key: "first", title: translations.homework.intructions },
     { key: "second", title: translations.homework.studentWork },
   ]);
+  const userData = useStore((state) => state.userData);
+  const route = useRoute();
+  const data = route.params?.["data"];
+  const isTeacher = () => {
+    return data.user_id._id == userData._id;
+  };
 
   const renderTabBar = (props) => (
     <TabBar
@@ -47,20 +59,27 @@ const DetailTaskScreen = () => {
   );
 
   return (
-    <View style={styles.container}>
-      <Header
-        customStyle={{ marginBottom: 0 }}
-        text={translations.homework.detailTask}
-      />
-      <TabView
-        style={CS.flex1}
-        renderTabBar={renderTabBar}
-        navigationState={{ index, routes }}
-        renderScene={renderScene}
-        onIndexChange={setIndex}
-        initialLayout={{ width: layout.width }}
-      />
-    </View>
+    <SafeAreaView style={CS.flex1}>
+      <View style={styles.container}>
+        <Header
+          customStyle={{ marginBottom: 0 }}
+          text={translations.homework.detailTask}
+        />
+
+        {isTeacher() ? (
+          <TabView
+            style={CS.flex1}
+            renderTabBar={renderTabBar}
+            navigationState={{ index, routes }}
+            renderScene={renderScene}
+            onIndexChange={setIndex}
+            initialLayout={{ width: layout.width }}
+          />
+        ) : (
+          <InstructionTab />
+        )}
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -68,6 +87,7 @@ export default DetailTaskScreen;
 
 const styles = StyleSheet.create({
   container: {
-    ...CS.safeAreaView,
+    // ...CS.safeAreaView,
+    flex: 1,
   },
 });

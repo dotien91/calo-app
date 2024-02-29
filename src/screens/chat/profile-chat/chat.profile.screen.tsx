@@ -404,12 +404,13 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
   };
 
   const changeNameGroupAction = (value: string) => {
-    console.log("dasdasdasd");
     const data = {
       _id: chat_room_id._id,
       room_name: value,
     };
     changeNameGroup(data).then((res: any) => {
+      console.log("dasdasdasd", res);
+
       if (!res.isError) {
         eventEmitter.emit("ChangeNameGroup");
         NavigationService.pop(2);
@@ -429,11 +430,12 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
   const showModalChangeNameGroup = () => {
     showSuperModal({
       contentModalType: EnumModalContentType.TextInput,
-      styleModalType: EnumStyleModalType.Middle,
+      styleModalType: EnumStyleModalType.Bottom,
       data: {
         title: "Nhập tên của nhóm",
-        cb: (value) => changeNameGroupAction(value),
-        initNameGroup: chat_room_id?.room_name || roomDetail?.room_title,
+        cb: changeNameGroupAction,
+        defaultValue: chat_room_id?.room_name || roomDetail?.room_title,
+        hideCloseIcon: true,
       },
     });
   };
