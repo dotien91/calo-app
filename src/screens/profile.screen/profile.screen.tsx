@@ -25,15 +25,14 @@ import { useListData } from "@helpers/hooks/useListData";
 import { getListRedeemMissionTask } from "@services/api/task.api";
 import createStyles from "./profile.screen.style";
 import { SCREENS } from "constants";
-import LoadingList from "@shared-components/loading.list.component";
 
 const SettingProfileScreen = () => {
   const theme = useTheme();
   const { colors } = theme;
   const userData = useStore((state) => state.userData);
 
-  const { listData, isLoading } = useListData(
-    { limit: 5 },
+  const { listData } = useListData(
+    { limit: "5" },
     getListRedeemMissionTask,
   );
   const styles = useMemo(() => createStyles(theme), [theme]);
@@ -90,7 +89,7 @@ const SettingProfileScreen = () => {
   ];
 
   const onPressHeaderRight = () => {
-    NavigationService.navigate(SCREENS.SETTINGPPROFILE);
+    NavigationService.navigate(SCREENS.SETTING);
   };
 
   const renderItemSelected = ({
@@ -292,14 +291,12 @@ const SettingProfileScreen = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <Header
         hideBackBtn
-        customStyle={{ marginTop: 20 }}
         onPressRight={onPressHeaderRight}
         iconNameRight="settings"
         text="Profile"
       />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ flex: 1, marginBottom: 20 }}>
-          {isLoading && <LoadingList />}
           {renderScrollPointCoin()}
           {renderPieChart()}
           {renderTask()}

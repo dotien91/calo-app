@@ -20,7 +20,7 @@ import { TypedNotification } from "models/notification.model";
 
 interface ProfileScreenProps {}
 
-const ProfileScreen: React.FC<ProfileScreenProps> = () => {
+const NotificationScreen: React.FC<ProfileScreenProps> = () => {
   const isFocused = useIsFocused();
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
@@ -105,4 +105,4 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
   );
 };
 
-export default ProfileScreen;
+export default NotificationScreen;

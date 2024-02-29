@@ -81,6 +81,8 @@ import DetailTaskScreen from "@screens/class-home-work/detail.task.screen";
 import AddWorkStudentScreen from "@screens/class-home-work/add.work.student.screen";
 import DiscoverScreen from "@screens/discover-screen/discover.screen";
 import LeaderBoard from "@screens/leader-board/leader.board";
+import ChatListScreen from "@screens/chat/list-chat/chat.list.screen";
+import NotificationScreen from "@screens/notification/NotificationScreen";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -111,7 +113,7 @@ const Navigation = () => {
       case SCREENS.NOTIFICATION:
         iconName = focused ? "bell" : "bell";
         break;
-      case SCREENS.PROFILE:
+      case SCREENS.SETTINGPROFILESCREEN:
         iconName = focused ? "user" : "user";
         break;
       case SCREENS.SETTING:
@@ -154,14 +156,14 @@ const Navigation = () => {
         <Tab.Screen name={SCREENS.HOME} component={HomeScreen} />
         <Tab.Screen name={SCREENS.COURSE_LIST} component={CourseListScreen} />
 
-        {/* <Tab.Screen name={SCREENS.CHAT} component={ListChatScreen} /> */}
         <Tab.Screen name={SCREENS.DISCOVERSCREEN} component={DiscoverScreen} />
-        {/* <Tab.Screen
-          name={SCREENS.NOTIFICATION}
-          component={NotificationScreen}
-        /> */}
-        <Tab.Screen name={SCREENS.PROFILE} component={SettingScreen} />
-        {/* <Tab.Screen name={SCREENS.SETTING} component={SettingScreen} /> */}
+
+        <Tab.Screen name={SCREENS.CHAT} component={ChatListScreen} />
+
+        <Tab.Screen
+          name={SCREENS.SETTINGPROFILESCREEN}
+          component={SettingProfileScreen}
+        />
       </Tab.Navigator>
     );
   };
@@ -181,6 +183,20 @@ const Navigation = () => {
     );
   };
 
+  const renderHomeworkScreens = () => {
+    <>
+      <Stack.Screen
+        name={SCREENS.ADD_WORK_STUDENT}
+        component={AddWorkStudentScreen}
+      />
+      <Stack.Screen
+        name={SCREENS.CLASSHOMEWORK}
+        component={ClassHomeWorkScreen}
+      />
+      <Stack.Screen name={SCREENS.DETAIL_TASK} component={DetailTaskScreen} />
+    </>;
+  };
+
   return (
     <NavigationContainer
       ref={navigationRef}
@@ -195,22 +211,19 @@ const Navigation = () => {
           name={SCREENS.COURSE_LIST}
           component={renderTabNavigation}
         />
-        <Stack.Screen
-          name={SCREENS.ADD_WORK_STUDENT}
-          component={AddWorkStudentScreen}
-        />
-        <Stack.Screen
-          name={SCREENS.CLASSHOMEWORK}
-          component={ClassHomeWorkScreen}
-        />
-        <Stack.Screen name={SCREENS.DETAIL_TASK} component={DetailTaskScreen} />
+
+        {renderHomeworkScreens()}
 
         <Stack.Screen name={SCREENS.CREATE_WORK} component={CreateWorkScreen} />
 
         <Stack.Screen name={SCREENS.CALL_CLASS} component={CallClassScreen} />
 
         <Stack.Screen name={SCREENS.MY_COURES} component={MyCourse} />
-
+        <Stack.Screen name={SCREENS.SETTING} component={SettingScreen} />
+        <Stack.Screen
+          name={SCREENS.NOTIFICATION}
+          component={NotificationScreen}
+        />
         <Stack.Screen
           name={SCREENS.COURSE_CREATE}
           component={CourseCreateScreen}
