@@ -377,7 +377,7 @@ const CheckoutScreen = () => {
         {
           amount_of_package: "1",
           plan_id: courseData.plan_id,
-          type: "course",
+          type: "Course",
           payload: dataPayload,
         },
       ],
