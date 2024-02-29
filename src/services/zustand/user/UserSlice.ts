@@ -12,6 +12,8 @@ export interface UserSlice {
   initListFollow: (data: string[]) => void;
   linkAvatar: string;
   setLinkAvatar: (link: string) => void;
+  showInvite: boolean;
+  setShowInvite: (bol: boolean) => void;
 }
 
 const createUserSlice: StoreSlice<UserSlice> = (set) => ({
@@ -41,6 +43,10 @@ const createUserSlice: StoreSlice<UserSlice> = (set) => ({
   linkAvatar: "",
   setLinkAvatar: (link) => {
     set({ linkAvatar: link });
+  },
+  showInvite: true,
+  setShowInvite: (bol) => {
+    set({ showInvite: bol });
   },
 });
 

@@ -1,68 +1,80 @@
-import React, { memo } from "react";
-import isEqual from "react-fast-compare";
-import { mhs } from "@utils/size.utils";
+import React, { memo, useMemo } from "react";
 
 import { Text, TextProps, TextStyle } from "react-native";
-import { palette } from "@theme/themes";
+import { useTheme } from "@react-navigation/native";
 
 interface Props extends TextProps {
   title?: string | string[];
   style?: TextStyle;
   numberOfLines?: number;
   fontSize?: number;
-  fontWeight?:
-    | "400"
-    | "normal"
-    | "bold"
-    | "100"
-    | "200"
-    | "300"
-    | "500"
-    | "600"
-    | "700"
-    | "800"
-    | "900"
-    | undefined;
+  fontWeight?: "400" | "500" | "600" | "700" | undefined;
   color?: string;
   textAlign?: "center" | "left" | "right";
+  marginBottom?: number;
 }
 
+// black: "SVN-Outfit-Black",
+// bold: "SVN-Outfit-Bold",
+// extraBold: "SVN-Outfit-ExtraBold",
+// extraLight: "MonSVN-Outfittserrat-ExtraLight",
+// light: "SVN-Outfit-Light",
+// medium: "SVN-Outfit-Medium",
+// regular: "SVN-Outfit-Regular",
+// semiBold: "SVN-Outfit-SemiBold",
+// thin: "SVN-Outfit-Thin",
+
 const TextBase = ({
-  style,
   title,
   children,
   numberOfLines,
-  fontSize = 14,
+  fontSize = 16,
   fontWeight = "400",
   textAlign = "left",
+  marginBottom = 0,
   color,
+  style,
   ...props
 }: Props) => {
-  const isBold =
-    fontWeight === "600" ||
-    fontWeight === "700" ||
-    fontWeight === "900" ||
-    fontWeight === "bold";
-  const _color = color || palette.mainColor2;
+  const theme = useTheme();
+  const { colors } = theme;
+  const _color = colors?.[color] || colors.textOpacity8;
+
+  const fontFamily = useMemo(() => {
+    switch (fontWeight) {
+      case "400":
+        return "SVN-Outfit-Regular";
+        break;
+      case "500":
+        return "SVN-Outfit-Medium";
+        break;
+      case "600":
+        return "SVN-Outfit-SemiBold";
+        break;
+      case "700":
+        return "SVN-Outfit-Bold";
+        break;
+      default:
+        return "SVN-Outfit-Regular";
+        break;
+    }
+  }, [fontWeight]);
 
   return (
     <Text
       allowFontScaling={false}
-      numberOfLines={numberOfLines}
+      numberOfLines={numberOfLines || 1}
       style={[
         {
           color: _color,
           includeFontPadding: false,
+          marginBottom: marginBottom || 0,
+          textAlign,
+          fontWeight,
+          fontFamily,
+          fontSize,
         },
-        { textAlign },
-        { fontWeight: fontWeight },
-        {
-          fontFamily: isBold ? "SVN-Outfit-Bold" : "SVN-Outfit-Regular",
-        },
-        style,
-        {
-          fontSize: mhs(style?.fontSize ? style?.fontSize : fontSize, 0.3),
-        },
+        !!style && style,
       ]}
       {...props}
     >
@@ -72,4 +84,4 @@ const TextBase = ({
   );
 };
 
-export default memo(TextBase, isEqual);
+export default memo(TextBase);

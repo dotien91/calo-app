@@ -697,6 +697,12 @@ export default {
     toJoin: "to join {channel}",
     sendInvite: "Send invite",
     getLink: "Get an invite link to share",
+    titleInvite: "Do you have any invitation code?",
+    desInvite: "Confirm your invitation code and you will receive 1000 Points",
+    enterCode: "Enter code",
+    enterCodeSuccess: "Enter referral code successfully",
+    enterCodeFaild: "The referral code is incorrect, please try again.",
+    send: "Send",
   },
   categories: {
     addCategory: "Add Category",

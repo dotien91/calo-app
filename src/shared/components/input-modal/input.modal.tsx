@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -9,20 +9,23 @@ import {
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
 
-const InputViewModal = ({ textValue, title, closeModal, cb, setTextValue }) => {
+const InputViewModal = ({ title, closeModal, cb }) => {
+  const [txtInput, settxtInput] = useState("");
   return (
     <View style={styles.modalInner}>
       <Text style={styles.title}>{title}</Text>
       <TextInput
-        onChangeText={(text) => setTextValue(text)}
+        onChangeText={(text) => settxtInput(text)}
         placeholder="Nhập tên của nhóm"
         style={{
           borderWidth: 1,
           borderColor: "black",
           borderRadius: 8,
           marginVertical: 5,
+          height: 40,
+          paddingHorizontal: 16,
         }}
-        value={textValue}
+        value={txtInput}
       />
       <View style={CommonStyle.flexRear}>
         <TouchableOpacity
@@ -38,8 +41,7 @@ const InputViewModal = ({ textValue, title, closeModal, cb, setTextValue }) => {
             { backgroundColor: palette.danger, flex: 1 },
           ]}
           onPress={() => {
-            if (cb) cb(textValue);
-            closeModal();
+            if (cb) cb(txtInput);
           }}
         >
           <Text style={styles.txtBtn}>Ok</Text>

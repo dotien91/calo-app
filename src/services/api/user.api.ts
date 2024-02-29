@@ -203,3 +203,14 @@ export async function postUnBlockUser(data: any) {
     return response;
   });
 }
+
+export async function postInvitationCode(data: any) {
+  console.log("data...", data);
+  return request({
+    method: METHOD.POST,
+    urlPath: "user/invitation-code",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
