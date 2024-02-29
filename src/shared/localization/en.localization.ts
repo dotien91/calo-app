@@ -831,6 +831,15 @@ export default {
     titleMic: "Need permission to access microphone",
     messageMic: "To call others, we need permission to access your microphone.",
   },
+  listCategory: {
+    course: "Course",
+    tutor: "Tutor",
+    shop: "Shop",
+    affiliate: "Affiliate",
+    descriptionTitle: "What should we today?",
+  },
+  recommendCourse: "Recommend course",
+  ieltsHunterLive: "IELTS Hunter Live",
   en: "English",
   vi: "Vietnamese",
   task: {

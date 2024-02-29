@@ -1348,6 +1348,15 @@ export default {
     messageMic:
       "Để gọi điện thoại cho người khác, chúng tôi cần quyền truy cập vào microphone của bạn.",
   },
+  listCategory: {
+    course: "Khoá học",
+    tutor: "Gia sư",
+    shop: "Cửa hàng",
+    affiliate: "Tiếp thị liên kết",
+    descriptionTitle: "Hôm nay chúng ta nên làm gì?",
+  },
+  recommendCourse: "Đề xuất khoá học",
+  ieltsHunterLive: "IELTS Hunter Live",
   en: "Tiếng Anh",
   vi: "Tiếng Việt",
   task: {

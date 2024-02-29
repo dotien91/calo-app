@@ -38,6 +38,10 @@ const BookLessonSelectView: React.FC<BookLessonSelectViewProps> = () => {
 
   React.useEffect(() => {
     getTimeAvailable({ course_id: courseId }).then((res) => {
+<<<<<<< HEAD
+=======
+      // setLoading(false);
+>>>>>>> 6c0b392 (feat: add screen new home)
       console.log("resresres", res);
       if (!res.isError) {
         setData(res.data);
