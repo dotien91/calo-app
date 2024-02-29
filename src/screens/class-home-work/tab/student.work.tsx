@@ -49,6 +49,7 @@ const StudentWorkTab = () => {
     NavigationService.navigate(SCREENS.ADD_WORK_STUDENT, {
       studentWork,
       data,
+      isTeacher: true,
     });
   };
 
@@ -61,7 +62,7 @@ const StudentWorkTab = () => {
   }, [detailThread]);
 
   const listSubmitted = React.useMemo(() => {
-    return detailThread?.submitted_user_ids || [];
+    return detailThread?.handed_in_user_ids || [];
   }, [detailThread]);
 
   const ItemHeader = ({ title, des }: { title: string; des: string }) => {
@@ -85,7 +86,7 @@ const StudentWorkTab = () => {
           des={translations.homework.assign}
         />
         <ItemHeader
-          title={listSubmitted.length}
+          title={listMark.length}
           des={translations.homework.marked}
         />
       </View>
@@ -94,7 +95,10 @@ const StudentWorkTab = () => {
 
   const Item = ({ isHandedIn, mark, user_id, ...res }: ItemType) => {
     return (
-      <View style={{ ...CS.row, paddingVertical: 12, gap: 8 }}>
+      <PressableBtn
+        onPress={() => openStudentWork({ isHandedIn, user_id, mark, ...res })}
+        style={{ ...CS.row, paddingVertical: 12, gap: 8 }}
+      >
         <Avatar
           style={styles.viewAvatar}
           sourceUri={{ uri: user_id.user_avatar_thumbnail }}
@@ -103,19 +107,19 @@ const StudentWorkTab = () => {
           {user_id?.display_name}
         </Text>
         {isHandedIn && (
-          <PressableBtn onPress={() => openStudentWork({ user_id, ...res })}>
+          <PressableBtn>
             <Text style={{ ...CS.hnRegular, color: colors.greenChart }}>
               {translations.homework.handedIn}
             </Text>
           </PressableBtn>
         )}
-        {mark >= 0 && (
+        {mark > 0 && (
           <Text style={{ ...CS.hnRegular, color: colors.text }}>
             {mark}
             <Text style={{ color: colors.textOpacity6 }}>/100</Text>
           </Text>
         )}
-      </View>
+      </PressableBtn>
     );
   };
 

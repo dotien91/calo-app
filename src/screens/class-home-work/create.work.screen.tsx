@@ -157,10 +157,9 @@ export default function CreateWorkScreen() {
 
     return (
       <View style={{ flex: 1 }}>
-        {listFile.map((item) => {
-          console.log("123", item);
+        {listFile.map((item, index) => {
           return (
-            <View style={[styles.fileBox, { flex: 0 }]}>
+            <View key={index} style={[styles.fileBox, { flex: 0 }]}>
               <IconBtn name="file" customStyle={{ marginRight: 12 }} />
               <TextBase>{item.name || item.media_file_name}</TextBase>
               <IconBtn

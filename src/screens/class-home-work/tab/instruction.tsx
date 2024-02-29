@@ -17,25 +17,31 @@ import { SCREENS } from "constants";
 import { getDetailThread } from "@services/api/course.api";
 import TextBase from "@shared-components/TextBase";
 import { EnumColors } from "models";
+import eventEmitter from "@services/event-emitter";
 
 const InstructionTab = () => {
   const route = useRoute();
   const data = route.params?.["data"];
   const userData = useStore((state) => state.userData);
   const [detailThread, setDetailThread] = React.useState(null);
-  console.log(111111111, data._id, {
-    "Class-ID": data.class_id,
-  });
+
   React.useEffect(() => {
+    _getDetailThread();
+    eventEmitter.on("reload_data_thread", _getDetailThread);
+    return () => {
+      eventEmitter.off("reload_data_thread", _getDetailThread);
+    };
+  }, []);
+
+  const _getDetailThread = () => {
     getDetailThread(data._id, {
       "Class-ID": data.class_id,
     }).then((res) => {
-      console.log("222222", res);
       if (!res.isError) {
         setDetailThread(res.data);
       }
     });
-  }, []);
+  };
 
   const isTeacher = () => {
     return data.user_id._id == userData._id;
@@ -91,6 +97,7 @@ const InstructionTab = () => {
       <ThreadCommentsView />
       {!isTeacher() && (
         <StudentWorkView
+          data={data}
           userData={userData}
           detailThread={detailThread}
           openAddWorkScreen={openAddWorkScreen}
@@ -100,31 +107,47 @@ const InstructionTab = () => {
   );
 };
 
-const StudentWorkView = ({ detailThread, userData, openAddWorkScreen }) => {
-  const myWork = (detailThread?.submitted_user_ids || []).find(
+const StudentWorkView = ({
+  detailThread,
+  userData,
+  openAddWorkScreen,
+  data,
+}) => {
+  let myWork = (detailThread?.handed_in_user_ids || []).find(
     (item) => item.user_id._id == userData._id,
   );
-  console.log("detailThreaddetailThread", detailThread, myWork);
+  if (!myWork)
+    myWork = (detailThread?.marked_user_ids || []).find(
+      (item) => item.user_id._id == userData._id,
+    );
+
+  console.log("detailThreaddetailThread", detailThread, myWork, userData);
+  const openMyWork = () => {
+    NavigationService.navigate(SCREENS.ADD_WORK_STUDENT, {
+      studentWork: myWork,
+      data,
+    });
+  };
+
   if (myWork)
     return (
-      <View style={styles.bottomView}>
+      <PressableBtn onPress={openMyWork} style={styles.bottomView}>
         <View style={CS.flexRear}>
           <TextBase fontWeight="600" color={EnumColors.text}>
             {translations.homework.yourWork}
           </TextBase>
-          <TextBase fontWeight="500" color={EnumColors.text}>
-            {myWork.mark > -1 ? 50 : "-"}
-            <TextBase fontWeight="500" color={EnumColors.textOpacity4}>
-              /100
+          {!!data.max_mark && (
+            <TextBase fontWeight="500" color={EnumColors.text}>
+              {myWork.mark > -1 ? myWork.mark : "-"}
+              <TextBase fontWeight="500" color={EnumColors.textOpacity4}>
+                /100
+              </TextBase>
             </TextBase>
-          </TextBase>
+          )}
         </View>
         <ScrollView contentContainerStyle={{ maxHeight: 100 }}>
-          {myWork.attach_files.map((item) => (
-            <PressableBtn
-              onPress={() => openUrl(item.media_url)}
-              style={styles.viewImage}
-            >
+          {myWork.attach_files.map((item, index) => (
+            <View key={index} style={styles.viewImage}>
               <IconSvg size={20} name="icCreatePostImage" />
               <Text style={{ ...CS.flex1, ...CS.hnRegular }}>
                 {item.media_file_name}
@@ -135,20 +158,21 @@ const StudentWorkView = ({ detailThread, userData, openAddWorkScreen }) => {
           name={"close"}
           style={{ color: colors.text }}
         /> */}
-            </PressableBtn>
+            </View>
           ))}
         </ScrollView>
-      </View>
+      </PressableBtn>
     );
 
   return (
-    <Button
-      onPress={openAddWorkScreen}
-      type={"primary"}
-      text={translations.homework.addWork}
-      iconName="plus"
-      style={styles.bottomView}
-    />
+    <View style={styles.bottomView}>
+      <Button
+        onPress={openAddWorkScreen}
+        type={"primary"}
+        text={translations.homework.addWork}
+        iconName="plus"
+      />
+    </View>
   );
 };
 

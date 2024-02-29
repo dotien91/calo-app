@@ -93,6 +93,7 @@ export default (theme: ExtendedTheme) => {
     },
     input: {
       // height: 40,
+      borderWidth: 0,
     },
     btnMedia: {
       marginRight: 12,

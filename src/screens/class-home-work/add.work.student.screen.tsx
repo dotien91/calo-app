@@ -24,16 +24,10 @@ import {
   showToast,
 } from "@helpers/super.modal.helper";
 import eventEmitter from "@services/event-emitter";
-import useStore from "@services/zustand/store";
 import ThreadCommentsView from "./thread.comments.view";
 import Input from "@shared-components/form/Input";
 import TextBase from "@shared-components/TextBase";
-// import { regexMail } from "constants/regex.constant";
-
-// interface ButtonSocialProps {
-//   onPress: () => void;
-//   IconSocial: React.JSX.Element;
-// }
+import { EnumColors } from "models";
 
 export default function AddWorkStudentScreen() {
   const theme = useTheme();
@@ -41,11 +35,10 @@ export default function AddWorkStudentScreen() {
   const route = useRoute();
   const data = route.params?.["data"];
   const studentWork = route.params?.["studentWork"];
-  const isTeacher = !!studentWork;
+  const isTeacher = route.params?.["isTeacher"];
   const [text, setText] = useState("");
   const { onSelectFile, isUpLoadingFile, listFile, deleteFile, setListFile } =
     useUploadFile([]);
-
   React.useEffect(() => {
     if (studentWork) setListFile(studentWork.attach_files);
   }, []);
@@ -66,6 +59,7 @@ export default function AddWorkStudentScreen() {
           message: translations.homework.handedInSuccess,
         });
         NavigationService.goBack();
+        eventEmitter.emit("reload_data_thread");
       } else {
         showToast({
           type: "error",
@@ -75,13 +69,13 @@ export default function AddWorkStudentScreen() {
   };
 
   const _onHandIn = () => {
+    if (!studentWork?.isHandedIn) return;
     showLoading();
     const params = {
       thread_id: data._id,
-      mark: Number(text),
+      mark: Number(text || 0),
       user_id: studentWork.user_id._id,
     };
-
     handedInTask(params, {
       "Class-ID": data.class_id,
     }).then((res) => {
@@ -120,7 +114,7 @@ export default function AddWorkStudentScreen() {
               >
                 {item.name || item.media_file_name}
               </Text>
-              {!isTeacher && (
+              {!isTeacher && !studentWork && (
                 <IconBtn
                   onPress={() => deleteFile(item._id)}
                   name="x"
@@ -137,8 +131,25 @@ export default function AddWorkStudentScreen() {
   const isValidate = React.useMemo(() => {
     return !!text?.length && Number(text) <= 100;
   }, [text]);
-
   const renderBottomView = () => {
+    if (studentWork && data.max_mark) {
+      return (
+        <View style={CS.flexRear}>
+          <TextBase fontWeight="600" color={EnumColors.text}>
+            {translations.homework.score}
+          </TextBase>
+          <TextBase fontWeight="500" color={EnumColors.text}>
+            {studentWork.mark > -1 ? studentWork.mark : "-"}
+            <TextBase fontWeight="500" color={EnumColors.textOpacity4}>
+              /100
+            </TextBase>
+          </TextBase>
+        </View>
+      );
+    }
+
+    if (studentWork) return null;
+
     return (
       <View
         style={{
@@ -224,6 +235,7 @@ export default function AddWorkStudentScreen() {
             studentId={studentWork?.user_id?._id}
             isTeacher={isTeacher}
             isPrivate
+            onHandIn={_onHandIn}
           />
 
           {renderBottomView()}

@@ -25,9 +25,17 @@ import * as React from "react";
 import { Text, View, ScrollView } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
-const ThreadCommentsView = ({ isPrivate, isTeacher, studentId }) => {
+interface IThreadCommentsView {
+  isPrivate: boolean;
+  isTeacher: boolean;
+  studentId: string;
+  onHandIn: () => void;
+}
+
+const ThreadCommentsView = ({ isPrivate, isTeacher, studentId, onHandIn }: IThreadCommentsView) => {
   const route = useRoute();
   const data = route.params?.["data"];
+  console.log("11111", data);
   const [listData, setListData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
 
@@ -64,6 +72,8 @@ const ThreadCommentsView = ({ isPrivate, isTeacher, studentId }) => {
       console.log("ress add comment", res);
       if (!res.isError) {
         getListComments();
+        //gửi điểm = 0 case task ko có max_mark khi giáo viên cmt
+        if (onHandIn && isTeacher && data?.max_mark == 0) onHandIn();
       }
     });
   };
