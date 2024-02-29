@@ -72,6 +72,9 @@ export const SCREENS = {
   CREATE_WORK: "CreateWork",
   DETAIL_TASK: "DetailTask",
   ADD_WORK_STUDENT: "AddWorkStudent",
+  DISCOVERSCREEN: "Discover",
+  LEADERBOARD: "LeaderBoard",
+  SETTINGPPROFILE: "SettingProfile",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

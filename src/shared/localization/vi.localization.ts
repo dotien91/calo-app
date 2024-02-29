@@ -1411,4 +1411,15 @@ export default {
     text32:
       "Chọn cuộc phiêu lưu học tập của bạn: đi sâu vào các mô-đun video theo nhịp độ riêng, nhận hướng dẫn được cá nhân hóa trong các phiên 1v1 và thúc đẩy hoạt động cộng tác nhóm.",
   },
+  discover: {
+    study: "Học",
+    dictionary: "Từ điển",
+    shop: "Cửa hàng",
+    finduser: "Tìm kiếm người dùng",
+    coins: "Coins",
+    level: "Cấp độ",
+    leaderboard: "Bảng xếp hạng",
+    poits: "Điểm",
+    feature: "Đặc trưng",
+  },
 };

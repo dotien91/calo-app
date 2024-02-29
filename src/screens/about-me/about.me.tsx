@@ -19,8 +19,8 @@ import CS from "@theme/styles";
 
 const AboutMe = () => {
   const theme = useTheme();
-  const styles = useMemo(() => createStyles(theme), [theme]);
   const { colors } = theme;
+  const styles = useMemo(() => createStyles(theme), [theme]);
 
   const userData = useStore((state) => state.userData);
   const { logout } = useUserHook();

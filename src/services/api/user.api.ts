@@ -203,3 +203,13 @@ export async function postUnBlockUser(data: any) {
     return response;
   });
 }
+
+export async function getListLeaderBoard(params: any) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "user/ranking",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}

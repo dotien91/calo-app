@@ -80,6 +80,8 @@ import ClassHomeWorkScreen from "@screens/class-home-work/class.home.work.screen
 import CreateWorkScreen from "@screens/class-home-work/create.work.screen";
 import DetailTaskScreen from "@screens/class-home-work/detail.task.screen";
 import AddWorkStudentScreen from "@screens/class-home-work/add.work.student.screen";
+import DiscoverScreen from "@screens/discover-screen/discover.screen";
+import LeaderBoard from "@screens/leader-board/leader.board";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -116,12 +118,22 @@ const Navigation = () => {
       case SCREENS.SETTING:
         iconName = focused ? "settings" : "settings";
         break;
+      case SCREENS.DISCOVERSCREEN:
+        iconName = focused ? "earth" : "earth";
+        break;
       default:
         iconName = focused ? "home" : "home";
         break;
     }
-    return (
+    return iconName != "earth" ? (
       <Icon name={iconName} type={IconType.Feather} size={size} color={color} />
+    ) : (
+      <Icon
+        name={iconName}
+        type={IconType.Ionicons}
+        size={size}
+        color={color}
+      />
     );
   };
 
@@ -143,7 +155,8 @@ const Navigation = () => {
         <Tab.Screen name={SCREENS.HOME} component={HomeScreen} />
         <Tab.Screen name={SCREENS.COURSE_LIST} component={CourseListScreen} />
 
-        <Tab.Screen name={SCREENS.CHAT} component={ListChatScreen} />
+        {/* <Tab.Screen name={SCREENS.CHAT} component={ListChatScreen} /> */}
+        <Tab.Screen name={SCREENS.DISCOVERSCREEN} component={DiscoverScreen} />
         {/* <Tab.Screen
           name={SCREENS.NOTIFICATION}
           component={NotificationScreen}
@@ -348,6 +361,11 @@ const Navigation = () => {
           component={SettingProfileScreen}
         />
         {/* <Stack.Screen name={SCREENS.INTRO} component={IntroScreen} /> */}
+        <Stack.Screen
+          name={SCREENS.DISCOVERSCREEN}
+          component={DiscoverScreen}
+        />
+        <Stack.Screen name={SCREENS.LEADERBOARD} component={LeaderBoard} />
       </Stack.Navigator>
     </NavigationContainer>
   );

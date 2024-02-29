@@ -894,5 +894,16 @@ export default {
     text32:
       "Choose your learning adventure: dive into self-paced video modules, receive personalized guidance in 1v1 sessions, and foster group collaboration.",
   },
+  discover: {
+    study: "Study",
+    dictionary: "Dictionary",
+    shop: "Shop",
+    finduser: "Find User",
+    coins: "Coins",
+    level: "Level",
+    leaderboard: "Leader Board",
+    poits: "Points",
+    feature: "Features",
+  },
 };
 /* eslint-disable max-len */
