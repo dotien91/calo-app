@@ -1,0 +1,68 @@
+import CustomCheckbox from "@shared-components/CustomCheckbox";
+import PressableBtn from "@shared-components/button/PressableBtn";
+import formatMoney from "@shared-components/input-money/format.money";
+import CS from "@theme/styles";
+import { palette } from "@theme/themes";
+import * as React from "react";
+import { Text, View, StyleSheet } from "react-native";
+import FastImage from "react-native-fast-image";
+import { TypedCourse } from "shared/models";
+
+interface ItemCourseSelectProps {
+  item: TypedCourse;
+  isSeleted: boolean;
+  onPressItem: () => void;
+}
+
+const ItemCourseSelect = ({
+  item,
+  isSeleted,
+  onPressItem,
+}: ItemCourseSelectProps) => {
+  return (
+    <PressableBtn
+      style={{
+        flexDirection: "row",
+        minHeight: 90,
+        marginTop: 8,
+        paddingHorizontal: 16,
+      }}
+      onPress={onPressItem}
+    >
+      <CustomCheckbox isSelected={isSeleted} />
+      <View style={[styles.viewImage, { marginLeft: 10, marginRight: 12 }]}>
+        <FastImage
+          source={{
+            uri:
+              item?.media_id?.media_thumbnail || item?.avatar?.media_thumbnail,
+            headers: { Authorization: "someAuthToken" },
+            priority: FastImage.priority.normal,
+          }}
+          style={styles.viewImage}
+        />
+      </View>
+
+      <View style={{ flex: 1, gap: 4 }}>
+        <Text numberOfLines={1} style={CS.hnSemiBold}>
+          {item.title}
+        </Text>
+        <Text numberOfLines={2} style={CS.hnSemiBold}>
+          {item.description}
+        </Text>
+        <Text
+          style={{ ...CS.hnRegular, color: palette.textOpacity8 }}
+        >{`${formatMoney(item.price)} đ`}</Text>
+      </View>
+    </PressableBtn>
+  );
+};
+
+export default ItemCourseSelect;
+
+const styles = StyleSheet.create({
+  viewImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 4,
+  },
+});

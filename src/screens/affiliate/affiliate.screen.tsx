@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   FlatList,
   ImageBackground,
@@ -15,31 +15,72 @@ import { translations } from "@localization";
 import CS from "@theme/styles";
 import ItemAffiliate from "./affiliate.item";
 import ItemSortBy from "./components/item.sortby";
-import { getListAffiliate } from "@services/api/affiliate.api";
+import {
+  getListAffiliate,
+  getListFilter,
+  getUserIncome,
+} from "@services/api/affiliate.api";
 import { useListData } from "@helpers/hooks/useListData";
 import LoadingList from "@shared-components/loading.list.component";
 import EmptyResultView from "@shared-components/empty.data.component";
-import { formatPrice } from "@helpers/string.helper";
+import { formatCoin, formatPrice } from "@helpers/string.helper";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
 import {
   EnumModalContentType,
   EnumStyleModalType,
   showSuperModal,
 } from "@helpers/super.modal.helper";
+import useStore from "@services/zustand/store";
 
 const AffiliatePage = () => {
   const theme = useTheme();
   const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
+  const [listCourse, setListCourse] = useState([]);
+  const [listUser, setListUser] = useState<any>([]);
+  const [date, setDate] = useState({
+    from: "",
+    to: "",
+  });
 
+  const [listUserSelected, setListUserSelected] = useState([]);
+  const [listCourseSelected, setListCourseSelected] = useState([]);
   //Lấy thông tin affiliate
   const { listData, isLoading, onEndReach, refreshControl } = useListData<any>(
-    { limit: "20", search: "" },
+    {
+      limit: "20",
+      search: "",
+      from: date.from,
+      to: date.to,
+      from_user_ids: listUserSelected.toString(),
+      ref_ids: listCourseSelected.toString(),
+    },
     getListAffiliate,
-    [],
+    [listUserSelected, listCourseSelected, date],
   );
 
-  console.log("listData...", listData);
+  const _getListFilter = () => {
+    const paramsRequest = {};
+    getListFilter(paramsRequest).then((res) => {
+      if (!res.isError) {
+        setListCourse(res.data.product_list);
+        setListUser(res.data.referral_user_list);
+      }
+    });
+  };
+  const _getUserIncome = () => {
+    const paramsRequest = {};
+    getUserIncome(paramsRequest).then((res) => {
+      if (!res.isError) {
+        console.log("getUserIncome...", res.data);
+      }
+    });
+  };
+
+  useEffect(() => {
+    _getListFilter();
+    _getUserIncome();
+  }, []);
 
   const ItemMonth = ({ text, price }: { text: string; price: string }) => {
     return (
@@ -136,13 +177,46 @@ const AffiliatePage = () => {
   };
 
   const renderListFilter = () => {
-    const sortByProduct = () => {};
-    const sortByUser = () => {};
-    const sortByDate = () => {
+    const showFilter = ({
+      type,
+      listFilter,
+      listSelected,
+      cb,
+    }: {
+      type: string;
+      cb?: any;
+      listFilter?: any[];
+      listSelected?: string[];
+    }) => {
       showSuperModal({
         contentModalType: EnumModalContentType.FilterAffiliate,
         styleModalType: EnumStyleModalType.Bottom,
+        data: {
+          type: type,
+          listFilter: listFilter,
+          listSelected: listSelected,
+          cb: cb,
+        },
       });
+    };
+    const sortByProduct = () => {
+      showFilter({
+        type: "product",
+        listFilter: listCourse,
+        listSelected: listCourseSelected,
+        cb: setListCourseSelected,
+      });
+    };
+    const sortByUser = () => {
+      showFilter({
+        type: "user",
+        listFilter: listUser,
+        listSelected: listUserSelected,
+        cb: setListUserSelected,
+      });
+    };
+    const sortByDate = () => {
+      showFilter({ type: "date" });
     };
     return (
       <View
@@ -165,13 +239,14 @@ const AffiliatePage = () => {
 
   const renderListDetail = () => {
     const renderItem = ({ item, index }) => {
-      console.log("item...", item);
+      const price = item.current_token - item.last_token;
+      const coin = item.current_coin - item.last_coin;
       return (
         <ItemAffiliate
           key={index}
           commission={item.commission_value}
-          fullname="Dangth"
-          price={formatPrice(item.current_token - item.last_token)}
+          fullname={item.from_user?.display_name || "system"}
+          price={price != 0 ? formatPrice(price) : formatCoin(coin)}
           title={item.note}
         />
       );
@@ -196,7 +271,7 @@ const AffiliatePage = () => {
         {isLoading && <LoadingList numberItem={3} />}
         <FlatList
           nestedScrollEnabled
-          data={[...listData, ...listData]}
+          data={listData}
           renderItem={renderItem}
           scrollEventThrottle={16}
           onEndReachedThreshold={0}

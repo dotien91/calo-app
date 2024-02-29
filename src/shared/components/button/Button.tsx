@@ -12,7 +12,7 @@ interface ButtonProps {
   backgroundColor?: ColorValue;
   textColor?: ColorValue;
   SvgSo?: React.JSX.Element;
-  disabled: boolean;
+  disabled?: boolean;
   type?: string;
   iconName?: string;
 }

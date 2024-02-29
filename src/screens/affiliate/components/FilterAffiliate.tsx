@@ -1,19 +1,54 @@
 import * as React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, FlatList } from "react-native";
 
 import DateTimePickerLocal from "./DateTimePickerLocal";
 import TextBase from "@shared-components/TextBase";
 import Button from "@shared-components/button/Button";
 import { translations } from "@localization";
 import CS from "@theme/styles";
+import ItemCourseSelect from "./ItemCourseSelect";
+import ItemUserSelect from "./ItemUserSelect";
 
+interface dataType {
+  listFilter?: any[];
+  type: string;
+  listSelectet?: string[];
+  cb: (list: any) => void;
+  pressReset: () => void;
+}
 interface FilterAffiliateProps {
-  data: any;
+  data: dataType;
 }
 
 const FilterAffiliate = ({ data }: FilterAffiliateProps) => {
   const [startTime, setStartTime] = React.useState<string | Date>("");
   const [endTime, setEndTime] = React.useState<string | Date>("");
+  const [listItemSelected, setListItemSelected] = React.useState(
+    data?.listSelectet || [],
+  );
+  const renderItem = ({ item }) => {
+    const isSeleted =
+      listItemSelected.filter((items) => items === item._id).length > 0;
+    const onPress = () => {
+      isSeleted
+        ? setListItemSelected([
+            ...listItemSelected.filter((i) => i !== item._id),
+          ])
+        : setListItemSelected([...listItemSelected, item._id]);
+    };
+    if (data.type === "product") {
+      return (
+        <ItemCourseSelect
+          isSeleted={isSeleted}
+          item={item}
+          onPressItem={onPress}
+        />
+      );
+    }
+    return (
+      <ItemUserSelect isSeleted={isSeleted} item={item} onPressItem={onPress} />
+    );
+  };
   return (
     <View style={styles.container}>
       {/* <Text>FilterAffiliate</Text> */}
@@ -46,28 +81,60 @@ const FilterAffiliate = ({ data }: FilterAffiliateProps) => {
             timeDefault={endTime}
           />
           <View style={{ ...CS.row, gap: 8, marginVertical: 8 }}>
-            <Button text="Reset" type="disabled" style={{ flex: 1 }} />
-            <Button text="Apply" type="primary" style={{ flex: 1 }} />
+            <Button
+              onPress={data.pressReset}
+              text="Reset"
+              type="disabled"
+              style={{ flex: 1 }}
+            />
+            <Button
+              onPress={() => data.pressApply(listItemSelected)}
+              text="Apply"
+              type="primary"
+              style={{ flex: 1 }}
+            />
           </View>
         </>
       )}
-      {data?.type === "date" && (
+      {data?.type === "product" && (
         <>
-          <DateTimePickerLocal
-            style={{ flex: 1 }}
-            placeholder={translations.course.startTime}
-            setTime={setStartTime}
-            timeDefault={startTime}
-          />
-          <DateTimePickerLocal
-            style={{ flex: 1 }}
-            placeholder={translations.course.endTime}
-            setTime={setEndTime}
-            timeDefault={endTime}
-          />
+          <View style={{ maxHeight: 400, minHeight: 200 }}>
+            <FlatList data={data.listFilter} renderItem={renderItem} />
+          </View>
           <View style={{ ...CS.row, gap: 8, marginVertical: 8 }}>
-            <Button text="Reset" type="disabled" style={{ flex: 1 }} />
-            <Button text="Apply" type="primary" style={{ flex: 1 }} />
+            <Button
+              onPress={data.pressReset}
+              text="Reset"
+              type="disabled"
+              style={{ flex: 1 }}
+            />
+            <Button
+              onPress={() => data.cb(listItemSelected)}
+              text="Apply"
+              type="primary"
+              style={{ flex: 1 }}
+            />
+          </View>
+        </>
+      )}
+      {data?.type === "user" && (
+        <>
+          <View style={{ maxHeight: 400, minHeight: 200 }}>
+            <FlatList data={data.listFilter} renderItem={renderItem} />
+          </View>
+          <View style={{ ...CS.row, gap: 8, marginVertical: 8 }}>
+            <Button
+              onPress={data.pressReset}
+              text="Reset"
+              type="disabled"
+              style={{ flex: 1 }}
+            />
+            <Button
+              onPress={() => data.cb(listItemSelected)}
+              text="Apply"
+              type="primary"
+              style={{ flex: 1 }}
+            />
           </View>
         </>
       )}

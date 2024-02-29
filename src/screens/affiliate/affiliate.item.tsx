@@ -8,7 +8,7 @@ import { translations } from "@localization";
 interface ItemAffiliateProps {
   linkImage?: string;
   title: string;
-  price: string;
+  price: string | number;
   commission: string;
   fullname: string;
 }
