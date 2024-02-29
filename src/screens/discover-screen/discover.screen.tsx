@@ -1,12 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
   SafeAreaView,
   Dimensions,
-  Animated,
-  Easing,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
@@ -41,65 +40,24 @@ const DiscoverScreen = () => {
     getData();
   }, []);
 
-  const first = useRef(new Animated.Value(0)).current;
-  const second = useRef(new Animated.Value(0)).current;
-  const third = useRef(new Animated.Value(0)).current;
-  const four = useRef(new Animated.Value(0)).current;
-
-  const hig = useRef(new Animated.Value(0)).current;
-
   const listFeature = [
     {
       icon: "icThreeBook",
       title: translations.discover.study,
-      opa: first,
     },
     {
       icon: "icGradution",
       title: translations.discover.dictionary,
-      opa: second,
     },
     {
       icon: "icShop",
       title: translations.discover.shop,
-      opa: third,
     },
     {
       icon: "icFind",
       title: translations.discover.finduser,
-      opa: four,
     },
   ];
-
-  useEffect(() => {
-    Animated.timing(hig, {
-      toValue: 1,
-      duration: 1200,
-      easing: Easing.ease,
-      useNativeDriver: true,
-    }).start();
-  }, []);
-
-  useEffect(() => {
-    Animated.stagger(200, [
-      Animated.timing(first, {
-        toValue: 1,
-        useNativeDriver: true,
-      }),
-      Animated.timing(second, {
-        toValue: 1,
-        useNativeDriver: true,
-      }),
-      Animated.timing(third, {
-        toValue: 1,
-        useNativeDriver: true,
-      }),
-      Animated.timing(four, {
-        toValue: 1,
-        useNativeDriver: true,
-      }),
-    ]).start();
-  }, []);
 
   const seeAllLeader = () => {
     NavigationService.navigate(SCREENS.LEADERBOARD);
@@ -167,9 +125,9 @@ const DiscoverScreen = () => {
             ></Icon>
           </TouchableOpacity>
         </View>
-        <Animated.View style={{ flex: 1, flexDirection: "row", opacity: hig }}>
+        <View style={{ flex: 1, flexDirection: "row" }}>
           <View style={{ flex: 1 / 3, justifyContent: "flex-end" }}>
-            <View>
+            <View style={{ zIndex: 1 }}>
               <Avatar
                 style={{
                   zIndex: 99,
@@ -181,6 +139,7 @@ const DiscoverScreen = () => {
                   left: screenWidth / 6 - 32 - 4,
                   borderWidth: 3,
                   borderColor: colors.blueBorder,
+                  zIndex: 1,
                 }}
                 sourceUri={{
                   uri: `${listRank[1]?.user_avatar_thumbnail}`,
@@ -245,7 +204,7 @@ const DiscoverScreen = () => {
             </View>
           </View>
           <View style={{ flex: 1 / 3, justifyContent: "flex-end" }}>
-            <View>
+            <View style={{ zIndex: 1 }}>
               <Avatar
                 style={{
                   zIndex: 99,
@@ -330,7 +289,7 @@ const DiscoverScreen = () => {
           </View>
 
           <View style={{ flex: 1 / 3, justifyContent: "flex-end" }}>
-            <View>
+            <View style={{ zIndex: 1 }}>
               <Avatar
                 style={{
                   zIndex: 99,
@@ -405,7 +364,7 @@ const DiscoverScreen = () => {
               </View>
             </View>
           </View>
-        </Animated.View>
+        </View>
       </View>
     );
   };
@@ -426,10 +385,9 @@ const DiscoverScreen = () => {
         <View>
           {listFeature.map((item, index) => {
             return (
-              <Animated.View
+              <View
                 key={index}
                 style={{
-                  opacity: item.opa,
                   backgroundColor: colors.grey2,
                   marginVertical: 4,
                   borderRadius: 8,
@@ -440,7 +398,7 @@ const DiscoverScreen = () => {
                   style={{
                     flexDirection: "row",
                     alignItems: "center",
-                    // opacity: item.opa,
+
                     justifyContent: "space-between",
                   }}
                 >
@@ -477,7 +435,7 @@ const DiscoverScreen = () => {
                     ></Icon>
                   </View>
                 </TouchableOpacity>
-              </Animated.View>
+              </View>
             );
           })}
         </View>
@@ -487,10 +445,12 @@ const DiscoverScreen = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1, paddingTop: 25 }}>
+      <View style={{ flex: 1 }}>
         {renderHeader()}
-        {renderLeaderBoard()}
-        {renderFeature()}
+        <ScrollView>
+          {renderLeaderBoard()}
+          {renderFeature()}
+        </ScrollView>
       </View>
     </SafeAreaView>
   );

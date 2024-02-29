@@ -32,7 +32,12 @@ interface IThreadCommentsView {
   onHandIn: () => void;
 }
 
-const ThreadCommentsView = ({ isPrivate, isTeacher, studentId, onHandIn }: IThreadCommentsView) => {
+const ThreadCommentsView = ({
+  isPrivate,
+  isTeacher,
+  studentId,
+  onHandIn,
+}: IThreadCommentsView) => {
   const route = useRoute();
   const data = route.params?.["data"];
   console.log("11111", data);

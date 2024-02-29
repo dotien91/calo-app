@@ -1,12 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import {
-  View,
-  Text,
-  FlatList,
-  Dimensions,
-  SafeAreaView,
-  Animated,
-} from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, FlatList, SafeAreaView } from "react-native";
 
 import Header from "@shared-components/header/Header";
 import { getListLeaderBoard } from "@services/api/user.api";
@@ -16,13 +9,11 @@ import CS from "@theme/styles";
 import Avatar from "@shared-components/user/Avatar";
 import _ from "lodash";
 import { useListDataRank } from "@helpers/hooks/useListDataRank";
+import LoadingList from "@shared-components/loading.list.component";
 
 const LeaderBoard = () => {
   const theme = useTheme();
   const { colors } = theme;
-
-  const animationHeight = useRef(new Animated.Value(0)).current;
-  // const styles = useMemo(() => createStyles(theme), [theme]);
 
   const [rankUser, setRankUser] = useState({});
   const [indexRankUser, setindexRankUser] = useState(0);
@@ -30,13 +21,8 @@ const LeaderBoard = () => {
   const HEIGHT_ITEM_LEADERBOARD = 64;
   const MARGIN_BOTTOM_ITEM = 8;
 
-  const [setIsFooterSticky, setsetIsFooterSticky] = useState(true);
-  const hightScreen = Dimensions.get("window").height;
-
-  const { listData, onEndReach } = useListDataRank(
-    { limit: "100" },
-    getListLeaderBoard,
-  );
+  const { listData, onEndReach, renderFooterComponent, isLoading } =
+    useListDataRank({ limit: "12" }, getListLeaderBoard);
 
   const getData = () => {
     const param = {
@@ -60,30 +46,6 @@ const LeaderBoard = () => {
     getData();
   }, []);
 
-  const collapseView = () => {
-    Animated.timing(animationHeight, {
-      duration: 300,
-      toValue: 0,
-      useNativeDriver: false,
-    }).start();
-  };
-
-  const expandView = () => {
-    Animated.timing(animationHeight, {
-      duration: 300,
-      toValue: 60,
-      useNativeDriver: false,
-    }).start();
-  };
-
-  useEffect(() => {
-    if (setIsFooterSticky) {
-      expandView();
-    } else {
-      collapseView();
-    }
-  }, [setIsFooterSticky]);
-
   const renderItem = ({ item, index }: { item: any; index: number }) => {
     return (
       <View
@@ -94,8 +56,9 @@ const LeaderBoard = () => {
           marginBottom: MARGIN_BOTTOM_ITEM,
           borderWidth: 1,
           borderRadius: 8,
-          borderColor: colors.borderColor,
-          backgroundColor: index === indexRankUser ? "red" : "white",
+          borderColor:
+            index === indexRankUser ? colors.primary : colors.borderColor,
+          backgroundColor: colors.white,
         }}
       >
         <Text
@@ -134,98 +97,77 @@ const LeaderBoard = () => {
     );
   };
 
-  const handleScroll = (event) => {
-    const { contentOffset } = event.nativeEvent;
-    const contenoffSetItem =
-      HEIGHT_ITEM_LEADERBOARD * indexRankUser +
-      MARGIN_BOTTOM_ITEM * indexRankUser +
-      50 +
-      20; // height header + paddingTop
-    if (
-      contentOffset.y < contenoffSetItem &&
-      contenoffSetItem < contentOffset.y + hightScreen
-    ) {
-      setsetIsFooterSticky(false);
-    } else {
-      setsetIsFooterSticky(true);
-    }
+  const _keyExtractor = (item) => {
+    return item._id;
   };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1, paddingTop: 20 }}>
+      <View style={{ flex: 1 }}>
         <Header text="Leader Board" />
-        <View style={{ marginHorizontal: 16 }}>
-          <FlatList
-            data={listData}
-            renderItem={renderItem}
-            onScroll={handleScroll}
-            showsVerticalScrollIndicator={false}
-            onEndReached={onEndReach}
-          />
-        </View>
+        {isLoading && <LoadingList numberItem={2} />}
+        <FlatList
+          data={listData}
+          renderItem={renderItem}
+          showsVerticalScrollIndicator={false}
+          onEndReached={onEndReach}
+          keyExtractor={_keyExtractor}
+          contentContainerStyle={{ marginHorizontal: 16, paddingBottom: 100 }}
+          ListFooterComponent={renderFooterComponent}
+        />
         {/* {setIsFooterSticky ? ( */}
-        <Animated.View
+        <View
           style={{
             flexDirection: "row",
             alignItems: "center",
-            backgroundColor: colors.blueChart,
-            height: 64,
+            backgroundColor: colors.white,
             position: "absolute",
-            bottom: 20,
+            bottom: 0,
             width: "100%",
-            paddingHorizontal: 16,
-            // borderWidth: ,
+            padding: 16,
             borderColor: colors.borderColor,
-            maxHeight: animationHeight,
-            // opacity: fadeAnim,
           }}
         >
-          {setIsFooterSticky ? (
+          <Text
+            style={{
+              marginLeft: 8,
+              ...CS.hnMedium,
+              fontSize: 16,
+              color: colors.textOpacity8,
+            }}
+          >
+            {rankUser?.rank}
+          </Text>
+
+          <Avatar
+            style={{
+              width: 46,
+              height: 46,
+              borderRadius: 99,
+              marginLeft: 18,
+            }}
+            sourceUri={{
+              uri: rankUser?.user_avatar_thumbnail,
+            }}
+            resizeMode={"cover"}
+          />
+          <View>
+            <Text
+              style={{ ...CS.hnSemiBold, fontSize: 16, color: colors.text }}
+            >
+              {rankUser?.display_name}
+            </Text>
             <Text
               style={{
-                marginLeft: 8,
                 ...CS.hnMedium,
-                fontSize: 16,
+                fontSize: 14,
                 color: colors.textOpacity8,
               }}
             >
-              {rankUser?.rank}
+              {rankUser?.country}
             </Text>
-          ) : null}
-          {setIsFooterSticky ? (
-            <Avatar
-              style={{
-                width: 46,
-                height: 46,
-                borderRadius: 99,
-                marginLeft: 18,
-              }}
-              sourceUri={{
-                uri: rankUser?.user_avatar_thumbnail,
-              }}
-              resizeMode={"cover"}
-            />
-          ) : null}
-          {setIsFooterSticky ? (
-            <View>
-              <Text
-                style={{ ...CS.hnSemiBold, fontSize: 16, color: colors.text }}
-              >
-                {rankUser?.display_name}
-              </Text>
-              <Text
-                style={{
-                  ...CS.hnMedium,
-                  fontSize: 14,
-                  color: colors.textOpacity8,
-                }}
-              >
-                {rankUser?.country}
-              </Text>
-            </View>
-          ) : null}
-        </Animated.View>
+          </View>
+        </View>
         {/* ) : null} */}
       </View>
     </SafeAreaView>
