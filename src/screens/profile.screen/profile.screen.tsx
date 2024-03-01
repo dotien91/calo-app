@@ -30,24 +30,22 @@ const SettingProfileScreen = () => {
   const theme = useTheme();
   const { colors } = theme;
   const userData = useStore((state) => state.userData);
+  const userInfo = useStore((state) => state.userInfo);
 
-  const { listData } = useListData(
-    { limit: "5" },
-    getListRedeemMissionTask,
-  );
+  const { listData } = useListData({ limit: "5" }, getListRedeemMissionTask);
   const styles = useMemo(() => createStyles(theme), [theme]);
 
   const listrenderPointCoin = [
+    {
+      icon: "icCoinStar",
+      title: userInfo?.point,
+    },
     {
       icon: "icCoin",
       title: userData?.current_coin,
     },
     {
       icon: "icCup",
-      title: userData?.point,
-    },
-    {
-      icon: "icCoinStar",
       title: userData?.point,
     },
   ];

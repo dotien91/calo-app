@@ -905,5 +905,12 @@ export default {
     poits: "Points",
     feature: "Features",
   },
+  gamificaiton: {
+    youEarn: "You earned ",
+    collectPoint: "Collect point",
+    levelUp: "Level up!",
+    levelUpDes:
+      "Earn more point and grow your level by doing tasks and improving your skill.",
+  },
 };
 /* eslint-disable max-len */

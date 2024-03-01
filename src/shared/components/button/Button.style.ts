@@ -1,33 +1,31 @@
 import { StyleSheet } from "react-native";
-import { ExtendedTheme } from "@react-navigation/native";
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
 
-export default (theme: ExtendedTheme) => {
-  const { colors } = theme;
+export default () => {
   return StyleSheet.create({
     viewButton: {
       paddingVertical: 9,
       borderRadius: 8,
-      backgroundColor: colors.mainColor2,
+      backgroundColor: palette.mainColor2,
       ...CommonStyle.flexCenter,
       paddingHorizontal: 16,
     },
     textButton: {
       ...CommonStyle.hnSemiBold,
-      color: colors.white,
+      color: palette.white,
       fontSize: 16,
     },
     pressableBtn: {
       padding: 12,
       borderRadius: 8,
-      backgroundColor: colors.mainColor2,
+      backgroundColor: palette.mainColor2,
     },
     btnPrimary: {
       paddingVertical: 8,
       paddingHorizontal: 16,
       ...CommonStyle.center,
-      backgroundColor: colors.primary,
+      backgroundColor: palette.primary,
     },
     txtBtnPrimary: {
       ...CommonStyle.hnSemiBold,
@@ -38,7 +36,7 @@ export default (theme: ExtendedTheme) => {
       paddingHorizontal: 16,
       ...CommonStyle.center,
       ...CommonStyle.borderStyle,
-      borderColor: colors.primary,
+      borderColor: palette.primary,
       backgroundColor: palette.white,
     },
     txtBtnOutline: {

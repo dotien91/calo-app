@@ -14,6 +14,7 @@ import { palette } from "@theme/themes";
 
 export const useUserHook = () => {
   const setUserData = useStore((state) => state.setUserData);
+  const setUserInfo = useStore((state) => state.setUserInfo);
   const setLinkAvatar = useStore((state) => state.setLinkAvatar);
   // const userData = useStore((state) => state.userData);
   const initListFollow = useStore((state) => state.initListFollow);
@@ -29,7 +30,6 @@ export const useUserHook = () => {
   const handleLogin = (token: string) => {
     _setJson(USER_TOKEN, token);
     getCurrentUser().then((res) => {
-      console.log("rrrrrr", res);
       if (!res.isError) {
         setUserData(res.data);
         setLinkAvatar(res.data.user_avatar_thumbnail);
@@ -45,9 +45,11 @@ export const useUserHook = () => {
 
   const getUserData = () => {
     getCurrentUser().then((res) => {
+      console.log("current user data", res);
       if (!res.isError) {
         console.log("token", _getJson(USER_TOKEN), res.data);
         setUserData(res.data);
+        setUserInfo(res.data);
         setLinkAvatar(res.data.user_avatar_thumbnail);
         initListFollow(res.data.follow_users);
       }

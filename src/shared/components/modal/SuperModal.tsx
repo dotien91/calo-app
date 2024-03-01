@@ -29,6 +29,8 @@ import PopupCreateLesson from "@screens/course/course-create/components/PartView
 import ConfirmViewBottom from "@shared-components/comfirm-view-bottom/comfirm.view.bottom";
 import InputViewModal from "@shared-components/input-modal/input.modal";
 import ListActionInner from "./modal-inner/ListActionInner";
+import GamificationView from "./modal-inner/GamificationView";
+import EarnPointView from "./modal-inner/EarnPointView";
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
 // using normal one.
@@ -53,6 +55,9 @@ const SuperModal: React.FC<SuperModalProps> = () => {
   const [styleModalType, setStyleModalType] = useState<EnumStyleModalType>();
   const [contentModalType, setContentModalType] =
     useState<EnumModalContentType>();
+  // const [contentModalType, setContentModalType] =
+  //   useState<EnumModalContentType>(EnumModalContentType.LottieAnimation);
+  //   const [styleModalType, setStyleModalType] = useState<EnumStyleModalType>("middle");
 
   useEffect(() => {
     eventEmitter.on("show_super_modal", showModal);
@@ -68,9 +73,9 @@ const SuperModal: React.FC<SuperModalProps> = () => {
     styleModalType,
     data,
   }: IShowModalParams) => {
+    setData(data);
     setStyleModalType(styleModalType);
     setContentModalType(contentModalType);
-    setData(data);
   };
 
   const closeModal = () => {
@@ -202,6 +207,9 @@ const SuperModal: React.FC<SuperModalProps> = () => {
           {contentModalType == EnumModalContentType.TextInput && (
             <InputViewModal {...data} closeModal={closeModal} />
           )}
+          {contentModalType == EnumModalContentType.GamificationView && (
+            <GamificationView {...data} closeModal={closeModal} />
+          )}
         </View>
       </StickBottomModal>
     );
@@ -215,9 +223,16 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         propagateSwipe={true}
         style={getStyleModal()}
         backdropOpacity={
-          contentModalType == EnumModalContentType.Loading ? 0.1 : 0.6
+          contentModalType == EnumModalContentType.LottieAnimation
+            ? 0
+            : contentModalType == EnumModalContentType.Loading
+            ? 0.1
+            : 0.6
         }
       >
+        {contentModalType == EnumModalContentType.LottieAnimation && (
+          <EarnPointView {...data} />
+        )}
         {contentModalType == EnumModalContentType.Confirm &&
           renderConfirmView()}
         {contentModalType == EnumModalContentType.Loading && renderLoading()}

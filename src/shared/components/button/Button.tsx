@@ -15,6 +15,7 @@ interface ButtonProps {
   disabled: boolean;
   type?: string;
   iconName?: string;
+  isFullWidth: boolean;
 }
 
 export default function Button({
@@ -27,9 +28,10 @@ export default function Button({
   iconName,
   disabled,
   type,
+  isFullWidth,
 }: ButtonProps) {
   const theme = useTheme();
-  const styles = useMemo(() => createStyles(theme), [theme]);
+  const styles = useMemo(() => createStyles(), [theme]);
   const hasIcon = !!SvgSo || !!iconName;
 
   const colorIcon = () => {
@@ -61,6 +63,7 @@ export default function Button({
           type == "primary" && styles.btnPrimary,
           type == "outline" && styles.btnOutline,
           type == "disabled" && styles.btnDisabled,
+          isFullWidth && { width: "100%" },
           style && style,
         ];
       }}

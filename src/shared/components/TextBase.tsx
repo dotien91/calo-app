@@ -68,6 +68,7 @@ const TextBase = ({
           includeFontPadding: false,
           textAlign,
           fontWeight,
+          lineHeight: fontSize + 8,
           fontFamily,
           fontSize,
           marginBottom,

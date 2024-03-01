@@ -5,13 +5,20 @@ import React, {
   useRef,
 } from "react";
 import { io } from "socket.io-client";
-import { _getJson, USER_TOKEN } from "@services/local-storage";
+import { _getJson, _setJson, USER_TOKEN } from "@services/local-storage";
 import useStore from "@services/zustand/store";
 import { Alert, View } from "react-native";
 const URL_CHAT_SOCKET = "https://socket.api-v2.ieltshunter.io/socket";
 import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "constants";
 import { translations } from "@localization";
+import {
+  EnumModalContentType,
+  EnumStyleModalType,
+  showSuperModal,
+} from "@helpers/super.modal.helper";
+
+const pointRequireShowAnimation = 2;
 
 export interface TypedSocket {
   disconnect: () => void;
@@ -23,6 +30,7 @@ export interface TypedSocket {
 const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
   const refSocket = useRef<any>();
   const userData = useStore((state) => state.userData);
+  const userInfo = useStore((state) => state.userInfo);
   // const { isAuthenticated, account } = useStore(state => state.user)
 
   useEffect(() => {
@@ -65,7 +73,10 @@ const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
       })
         .on("connect", onConnected)
         .on("disconnect", onDisconnect)
-        .on("makeCall", makeCall);
+        .on("makeCall", makeCall)
+        .on("cointToClient", cointToClient)
+        .on("pointToClient", pointToClient)
+        .on("redeemToClient", redeemToClient);
     }
   };
 
@@ -75,6 +86,41 @@ const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
 
   const onConnected = () => {
     console.log("onConnected");
+  };
+
+  const cointToClient = (receiveData: any) => {
+    console.log("cointToClient", receiveData);
+  };
+
+  const pointToClient = (receiveData: any) => {
+    const showFirstTimeEarnPoint = _getJson("showFirstTimeEarnPoint");
+    const currentPoint = userInfo?.point;
+    const data = JSON.parse(receiveData);
+    if (showFirstTimeEarnPoint && data?.is_level_up == "false") {
+      //show hiệu ứng khi user nhận được số point > pointRequireShowAnimation
+      if (Number(data.point) - currentPoint >= pointRequireShowAnimation) {
+        showSuperModal({
+          styleModalType: EnumStyleModalType.Middle,
+          contentModalType: EnumModalContentType.LottieAnimation,
+          data: {
+            receiveData: data,
+          },
+        });
+      }
+      return;
+    }
+    if (!showFirstTimeEarnPoint) _setJson("showFirstTimeEarnPoint", true);
+    showSuperModal({
+      styleModalType: EnumStyleModalType.Bottom,
+      contentModalType: EnumModalContentType.GamificationView,
+      data: {
+        receiveData: data,
+      },
+    });
+  };
+
+  const redeemToClient = (receiveData: any) => {
+    console.log("redeemToClient", receiveData);
   };
 
   /**

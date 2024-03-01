@@ -21,6 +21,8 @@ export enum EnumModalContentType {
   AddLesson = "add-lesson",
   TextInput = "text-input",
   ListMoreAction = "list-more-action",
+  GamificationView = "gimification-view",
+  LottieAnimation = "lottie-animation",
 }
 
 export enum EnumStyleModalType {

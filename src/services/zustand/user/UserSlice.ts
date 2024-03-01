@@ -12,11 +12,15 @@ export interface UserSlice {
   initListFollow: (data: string[]) => void;
   linkAvatar: string;
   setLinkAvatar: (link: string) => void;
+  userInfo: TypedUser | null;
+  setUserInfo: (user: TypedUser) => void;
 }
 
 const createUserSlice: StoreSlice<UserSlice> = (set) => ({
   userData: null,
   setUserData: (user: TypedUser) => set({ userData: user }),
+  userInfo: null,
+  setUserInfo: (user: TypedUser) => set({ userInfo: user }),
   userToken: null,
   setUserToken: (value: string) => set({ userToken: value }),
   resetUserData: () => set({ userData: null }),

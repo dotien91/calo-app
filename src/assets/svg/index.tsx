@@ -89,6 +89,16 @@ import icThreeBook from "./threebook.svg";
 import icShop from "./shop.svg";
 import icFind from "./find.svg";
 import icGradution from "./gradution.svg";
+import icLevel1 from "./lv1.svg";
+import icLevel2 from "./lv2.svg";
+import icLevel3 from "./lv3.svg";
+import icLevel4 from "./lv4.svg";
+import icLevel5 from "./lv5.svg";
+import icLevel6 from "./lv6.svg";
+import icLevel7 from "./lv7.svg";
+import icLevel8 from "./lv8.svg";
+import icLevel9 from "./lv9.svg";
+import icLevel10 from "./lv10.svg";
 
 const Icons = {
   intro1,
@@ -180,6 +190,16 @@ const Icons = {
   iconBookNote,
   iconFriends,
   icKing,
+  icLevel1,
+  icLevel10,
+  icLevel2,
+  icLevel3,
+  icLevel4,
+  icLevel5,
+  icLevel6,
+  icLevel7,
+  icLevel8,
+  icLevel9,
 };
 
 interface IconSvgProps {

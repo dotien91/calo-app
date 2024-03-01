@@ -1422,4 +1422,11 @@ export default {
     poits: "Điểm",
     feature: "Đặc trưng",
   },
+  gamificaiton: {
+    youEarn: "Bạn nhận được ",
+    collectPoint: "Thu thập điểm",
+    levelUp: "Thăng cấp!",
+    levelUpDes:
+      "Nhận thêm điểm và thăng cấp bằng cách làm nhiêm vụ và cải thiện các kỹ năng của bạn.",
+  },
 };

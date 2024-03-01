@@ -17,6 +17,7 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { getListLeaderBoard } from "@services/api/user.api";
 import { translations } from "@localization";
 import { SCREENS } from "constants";
+import useStore from "@services/zustand/store";
 
 const DiscoverScreen = () => {
   const screenWidth = Dimensions.get("window").width;
@@ -24,7 +25,7 @@ const DiscoverScreen = () => {
   const { colors } = theme;
 
   const [listRank, setListRank] = useState([]);
-  const [rankUser, setRankUser] = useState({});
+  const userInfo = useStore((state) => state.userInfo);
 
   const getData = () => {
     const param = {
@@ -32,7 +33,6 @@ const DiscoverScreen = () => {
     };
     getListLeaderBoard(param).then((res) => {
       setListRank(res.data.other_users);
-      setRankUser(res.data.user_id);
     });
   };
 
@@ -82,7 +82,7 @@ const DiscoverScreen = () => {
         <IconSvg name="icCoin" size={32} color={colors.gold}></IconSvg>
         <View style={{ marginLeft: 8 }}>
           <Text style={{ ...CS.hnSemiBold, fontSize: 20, color: colors.text }}>
-            {rankUser?.point} {translations.discover.coins}
+            {userInfo?.point} {translations.discover.coins}
           </Text>
           <Text
             style={{
@@ -91,7 +91,7 @@ const DiscoverScreen = () => {
               color: colors.textOpacity8,
             }}
           >
-            {translations.discover.level}: {rankUser?.level}
+            {translations.discover.level}: {userInfo?.level}
           </Text>
         </View>
       </View>
