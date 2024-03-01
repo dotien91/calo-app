@@ -6,7 +6,7 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
-import { formatFullDate } from "@utils/date.utils";
+import { formatDate } from "@utils/date.utils";
 
 interface DateTimePickerLocalProps {
   setTime: (time: Date) => void;
@@ -22,7 +22,6 @@ const DateTimePickerLocal = ({
   style,
   timeDefault,
 }: DateTimePickerLocalProps) => {
-  const [date, setDate] = useState<Date>();
   const [open, setOpen] = useState(false);
 
   return (
@@ -47,16 +46,10 @@ const DateTimePickerLocal = ({
               ...CS.hnRegular,
               textAlign: "center",
               color:
-                date || timeDefault !== ""
-                  ? palette.textOpacity6
-                  : palette.placeholder,
+                timeDefault !== "" ? palette.textOpacity6 : palette.placeholder,
             }}
           >
-            {date
-              ? formatFullDate(date)
-              : timeDefault !== ""
-              ? formatFullDate(timeDefault)
-              : placeholder}
+            {timeDefault !== "" ? formatDate(timeDefault) : placeholder}
           </Text>
           <Icon
             name="chevron-forward-outline"
@@ -68,11 +61,10 @@ const DateTimePickerLocal = ({
       <DatePicker
         modal
         open={open}
-        mode="datetime"
-        date={date || timeDefault !== "" ? new Date(timeDefault) : new Date()}
+        mode="date"
+        date={timeDefault !== "" ? new Date(timeDefault) : new Date()}
         onConfirm={(date) => {
           setOpen(false);
-          setDate(date);
           setTime(date);
         }}
         onCancel={() => {

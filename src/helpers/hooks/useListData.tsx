@@ -66,7 +66,6 @@ export function useListData<T>(
       const newData = res.data;
       // setIsLoading(false);
       if (!res.isError && lodash.isArray(newData)) {
-        console.log("res...", JSON.stringify(res));
         isFetching.current = false;
 
         let isLastPage = false;

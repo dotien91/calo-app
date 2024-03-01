@@ -5,12 +5,14 @@ import TextBase from "@shared-components/TextBase";
 import { EnumColors } from "models";
 import CS from "@theme/styles";
 import { translations } from "@localization";
+import { palette } from "@theme/themes";
 interface ItemAffiliateProps {
   linkImage?: string;
   title: string;
   price: string | number;
   commission: string;
   fullname: string;
+  refType?: string;
 }
 
 const ItemAffiliate = ({
@@ -19,6 +21,7 @@ const ItemAffiliate = ({
   price,
   commission,
   fullname,
+  refType,
 }: ItemAffiliateProps) => {
   return (
     <View style={styles.container}>
@@ -36,13 +39,15 @@ const ItemAffiliate = ({
         >
           {title}
         </TextBase>
-        <TextBase
-          fontSize={12}
-          fontWeight="400"
-          color={EnumColors.textOpacity6}
-        >
-          {price}
-        </TextBase>
+        {refType?.toLocaleLowerCase() === "course" && (
+          <TextBase
+            fontSize={12}
+            fontWeight="400"
+            color={EnumColors.textOpacity6}
+          >
+            {price}
+          </TextBase>
+        )}
         <TextBase
           fontSize={16}
           fontWeight="400"
@@ -69,6 +74,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 8,
     paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderColor: palette.borderColor2,
+    marginTop: 16,
   },
   styleImage: {
     width: 32,

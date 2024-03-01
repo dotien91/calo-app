@@ -33,8 +33,7 @@ const ItemCourseSelect = ({
       <View style={[styles.viewImage, { marginLeft: 10, marginRight: 12 }]}>
         <FastImage
           source={{
-            uri:
-              item?.media_id?.media_thumbnail || item?.avatar?.media_thumbnail,
+            uri: item?.url,
             headers: { Authorization: "someAuthToken" },
             priority: FastImage.priority.normal,
           }}
@@ -44,7 +43,7 @@ const ItemCourseSelect = ({
 
       <View style={{ flex: 1, gap: 4 }}>
         <Text numberOfLines={1} style={CS.hnSemiBold}>
-          {item.title}
+          {item.name}
         </Text>
         <Text numberOfLines={2} style={CS.hnSemiBold}>
           {item.description}

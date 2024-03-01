@@ -8,24 +8,31 @@ import { translations } from "@localization";
 import CS from "@theme/styles";
 import ItemCourseSelect from "./ItemCourseSelect";
 import ItemUserSelect from "./ItemUserSelect";
+import { closeSuperModal } from "@helpers/super.modal.helper";
+import { EnumColors } from "models";
 
 interface dataType {
   listFilter?: any[];
   type: string;
-  listSelectet?: string[];
+  listSelected?: string[];
+  date?: any;
   cb: (list: any) => void;
-  pressReset: () => void;
 }
 interface FilterAffiliateProps {
   data: dataType;
 }
 
 const FilterAffiliate = ({ data }: FilterAffiliateProps) => {
-  const [startTime, setStartTime] = React.useState<string | Date>("");
-  const [endTime, setEndTime] = React.useState<string | Date>("");
-  const [listItemSelected, setListItemSelected] = React.useState(
-    data?.listSelectet || [],
+  const [startTime, setStartTime] = React.useState<string | Date>(
+    data?.date?.from || "",
   );
+  const [endTime, setEndTime] = React.useState<string | Date>(
+    data?.date?.to || "",
+  );
+  const [listItemSelected, setListItemSelected] = React.useState(
+    data?.listSelected || [],
+  );
+  console.log("listItemSelected", data?.listSelected);
   const renderItem = ({ item }) => {
     const isSeleted =
       listItemSelected.filter((items) => items === item._id).length > 0;
@@ -49,6 +56,24 @@ const FilterAffiliate = ({ data }: FilterAffiliateProps) => {
       <ItemUserSelect isSeleted={isSeleted} item={item} onPressItem={onPress} />
     );
   };
+
+  const onPressApply = () => {
+    data.cb(listItemSelected);
+    closeSuperModal();
+  };
+  const onPressApplyDate = () => {
+    data.cb({
+      from: startTime,
+      to: endTime,
+    });
+    closeSuperModal();
+  };
+  const onPressReset = () => {
+    setListItemSelected([]);
+    data.cb([]);
+    closeSuperModal();
+  };
+
   return (
     <View style={styles.container}>
       {/* <Text>FilterAffiliate</Text> */}
@@ -57,6 +82,7 @@ const FilterAffiliate = ({ data }: FilterAffiliateProps) => {
         fontSize={20}
         fontWeight="600"
         style={{ marginTop: 10 }}
+        color={EnumColors.text}
       >{`${translations.course.sortBy} ${
         data?.type === "date"
           ? translations.affiliate.date
@@ -70,25 +96,25 @@ const FilterAffiliate = ({ data }: FilterAffiliateProps) => {
         <>
           <DateTimePickerLocal
             style={{ flex: 1 }}
-            placeholder={translations.course.startTime}
-            setTime={setStartTime}
+            placeholder={translations.affiliate.fromDate}
+            setTime={(time) => setStartTime(time)}
             timeDefault={startTime}
           />
           <DateTimePickerLocal
             style={{ flex: 1 }}
-            placeholder={translations.course.endTime}
+            placeholder={translations.affiliate.toDate}
             setTime={setEndTime}
             timeDefault={endTime}
           />
           <View style={{ ...CS.row, gap: 8, marginVertical: 8 }}>
             <Button
-              onPress={data.pressReset}
+              onPress={onPressReset}
               text="Reset"
               type="disabled"
               style={{ flex: 1 }}
             />
             <Button
-              onPress={() => data.pressApply(listItemSelected)}
+              onPress={onPressApplyDate}
               text="Apply"
               type="primary"
               style={{ flex: 1 }}
@@ -103,13 +129,13 @@ const FilterAffiliate = ({ data }: FilterAffiliateProps) => {
           </View>
           <View style={{ ...CS.row, gap: 8, marginVertical: 8 }}>
             <Button
-              onPress={data.pressReset}
+              onPress={onPressReset}
               text="Reset"
               type="disabled"
               style={{ flex: 1 }}
             />
             <Button
-              onPress={() => data.cb(listItemSelected)}
+              onPress={onPressApply}
               text="Apply"
               type="primary"
               style={{ flex: 1 }}
@@ -124,13 +150,13 @@ const FilterAffiliate = ({ data }: FilterAffiliateProps) => {
           </View>
           <View style={{ ...CS.row, gap: 8, marginVertical: 8 }}>
             <Button
-              onPress={data.pressReset}
+              onPress={onPressReset}
               text="Reset"
               type="disabled"
               style={{ flex: 1 }}
             />
             <Button
-              onPress={() => data.cb(listItemSelected)}
+              onPress={onPressApply}
               text="Apply"
               type="primary"
               style={{ flex: 1 }}

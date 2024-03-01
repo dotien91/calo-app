@@ -1318,6 +1318,8 @@ export default {
     user: "Người dùng",
     customer: "Khách hàng",
     emptyTransaction: "Danh sách giao dịch trống",
+    fromDate: "Từ ngày",
+    toDate: "Đến ngày",
   },
   en: "Tiếng Anh",
   vi: "Tiếng Việt",
