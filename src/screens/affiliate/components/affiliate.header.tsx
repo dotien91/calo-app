@@ -11,10 +11,10 @@ import { useTheme } from "@react-navigation/native";
 import TextBase from "@shared-components/TextBase";
 import { EnumColors } from "models";
 import ItemMonth from "./affiliate.item.month";
-import { useUserHook } from "@helpers/hooks/useUserHook";
 import useStore from "@services/zustand/store";
 import { formatCoin } from "@helpers/string.helper";
 import CS from "@theme/styles";
+import { SCREENS } from "constants";
 interface ItemIncomeType {
   count: number;
   total_coin: number;
@@ -35,7 +35,7 @@ const HeaderAffiliate = () => {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const [type, setType] = useState("coin");
   useEffect(() => {
-    if (userData?.user_role === "teacher") {
+    if (userData?.user_role === "teacher" || userData?.user_role === "admin") {
       setType("token");
     }
   }, [userData?.user_role]);
@@ -47,7 +47,6 @@ const HeaderAffiliate = () => {
       }
     });
   };
-  const { getUserData } = useUserHook();
 
   const switchToken = () => {
     if (type === "coin") {
@@ -59,11 +58,14 @@ const HeaderAffiliate = () => {
 
   useEffect(() => {
     _getUserIncome();
-    getUserData();
   }, []);
   const renderHeader = () => {
     const _onPressLeft = () => {
       NavigationService.goBack();
+    };
+
+    const _onPressWithdraw = () => {
+      NavigationService.navigate(SCREENS.WITHDRAW);
     };
 
     return (
@@ -114,6 +116,7 @@ const HeaderAffiliate = () => {
             style={{
               textDecorationLine: "underline",
             }}
+            onPress={_onPressWithdraw}
           >
             {translations.affiliate.withdraw}
           </TextBase>

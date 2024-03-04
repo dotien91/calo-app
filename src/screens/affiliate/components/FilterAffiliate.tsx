@@ -23,7 +23,7 @@ interface FilterAffiliateProps {
 }
 
 const FilterAffiliate = ({ data }: FilterAffiliateProps) => {
-  const [startTime, setStartTime] = React.useState<string | Date>(
+  const [startTime, setStartTime] = React.useState<string>(
     data?.date?.from || "",
   );
   const [endTime, setEndTime] = React.useState<string | Date>(
@@ -97,13 +97,13 @@ const FilterAffiliate = ({ data }: FilterAffiliateProps) => {
           <DateTimePickerLocal
             style={{ flex: 1 }}
             placeholder={translations.affiliate.fromDate}
-            setTime={(time) => setStartTime(time)}
+            setTime={(time) => setStartTime(time.toISOString())}
             timeDefault={startTime}
           />
           <DateTimePickerLocal
             style={{ flex: 1 }}
             placeholder={translations.affiliate.toDate}
-            setTime={setEndTime}
+            setTime={(time) => setEndTime(time.toISOString())}
             timeDefault={endTime}
           />
           <View style={{ ...CS.row, gap: 8, marginVertical: 8 }}>

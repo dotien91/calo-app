@@ -1,28 +1,38 @@
 import { StoreSlice } from "@zustand";
 
 interface IMyBankAcc {
-  cardNumber: string;
-  cardName: string;
-  bank: any;
-  id: string;
+  _id: string;
+  bank_account_name: string;
+  bank_name: string;
+  bank_number: any;
+  payment_method: string;
 }
 
 export interface PaymentSlice {
   myBankAccounts: IMyBankAcc[];
+  setMyBankAccount: (data: IMyBankAcc[]) => void;
+  updateMyBankAccounts: (item: IMyBankAcc, method: string) => void;
+  bankSelected?: IMyBankAcc;
+  setBankSelected: (data?: IMyBankAcc) => void;
 }
 
 const createPaymentSlice: StoreSlice<PaymentSlice> = (set, get) => ({
   myBankAccounts: [],
+  setMyBankAccount: (data: IMyBankAcc[]) => {
+    set(() => ({
+      myBankAccounts: data,
+    }));
+  },
   updateMyBankAccounts: (item, method: string) => {
     const { myBankAccounts } = get();
     let newData = [...myBankAccounts];
     if (method == "delete") {
-      newData = myBankAccounts.filter((_item) => _item.id != item.id);
+      newData = myBankAccounts.filter((_item) => _item._id != item._id);
     } else if (method == "add") {
       newData = [item, ...myBankAccounts];
     } else {
       const findIndex = myBankAccounts.findIndex(
-        (_item) => _item.id == item.id,
+        (_item) => _item._id == item._id,
       );
       console.log("findIndexfindIndex", { findIndex, item, myBankAccounts });
       newData = newData.map((item) => ({ ...item, isDefault: false }));
@@ -36,6 +46,10 @@ const createPaymentSlice: StoreSlice<PaymentSlice> = (set, get) => ({
     set(() => ({
       myBankAccounts: newData,
     }));
+  },
+  bankSelected: undefined,
+  setBankSelected: (data?: IMyBankAcc) => {
+    set({ bankSelected: data });
   },
 });
 

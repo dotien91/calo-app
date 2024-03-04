@@ -1340,5 +1340,7 @@ export default {
     search_bank: "Tìm ngân hàng",
     choose_bank: "Chọn ngân hàng",
     bank_acc: "Tài khoản ngân hàng",
+    addBankSuccess: "Thêm thẻ ngân hàng thành công",
+    addBankFaild: "Thêm thẻ ngân hàng không thành công, hoặc đã trùng trước đó",
   },
 };

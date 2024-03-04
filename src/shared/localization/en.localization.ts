@@ -826,6 +826,8 @@ export default {
     search_bank: "Search bank",
     choose_bank: "Choose bank",
     bank_acc: "Bank account",
+    addBankSuccess: "Add card success",
+    addBankFaild: "Adding a new bank card failed",
   },
 };
 /* eslint-disable max-len */

@@ -19,6 +19,9 @@ import {
 import formatMoney from "@shared-components/input-money/format.money";
 import HeaderAffiliate from "./components/affiliate.header";
 import { formatFromDateToDate } from "@utils/date.utils";
+import eventEmitter from "@services/event-emitter";
+import { useUserHook } from "@helpers/hooks/useUserHook";
+import HeaderAbsolute from "./components/headerAbsolute";
 
 const AffiliatePage = () => {
   const [listCourse, setListCourse] = useState([]);
@@ -31,19 +34,50 @@ const AffiliatePage = () => {
   const [listUserSelected, setListUserSelected] = useState([]);
   const [listCourseSelected, setListCourseSelected] = useState([]);
   //Lấy thông tin affiliate
-  const { listData, isLoading, onEndReach, refreshControl, isFirstLoading } =
-    useListData<any>(
-      {
-        limit: "20",
-        search: "",
-        from: date.from,
-        to: date.to,
-        from_user_ids: listUserSelected.toString(),
-        ref_ids: listCourseSelected.toString(),
-      },
-      getListAffiliate,
-      [],
-    );
+  const {
+    listData,
+    isLoading,
+    onEndReach,
+    refreshControl,
+    isFirstLoading,
+    _requestData,
+  } = useListData<any>(
+    {
+      order_by: "DESC",
+      // method: "plus",
+      limit: "20",
+      search: "",
+      from: date.from,
+      to: date.to,
+      from_user_ids: listUserSelected.toString(),
+      ref_ids: listCourseSelected.toString(),
+    },
+    getListAffiliate,
+    [],
+  );
+  const { getUserData } = useUserHook();
+
+  const reloadData = () => {
+    _requestData();
+    getUserData();
+  };
+  const [showHeaderAbsolute, setShowHeaderAbsolute] = useState(false);
+
+  const handleScroll = (event) => {
+    const positionY = event.nativeEvent.contentOffset.y;
+    if (positionY > 100) {
+      setShowHeaderAbsolute(true);
+    } else {
+      setShowHeaderAbsolute(false);
+    }
+  };
+
+  useEffect(() => {
+    eventEmitter.on("refresh_list_affiliate", reloadData);
+    return () => {
+      eventEmitter.off("refresh_list_affiliate", reloadData);
+    };
+  }, []);
 
   const _getListFilter = () => {
     const paramsRequest = {};
@@ -139,21 +173,33 @@ const AffiliatePage = () => {
 
   const renderListDetail = () => {
     const renderItem = ({ item, index }) => {
-      const price = item.ref_id.price || 0;
       const coin = item.current_coin - item.last_coin || 0;
       const token = item.current_token - item.last_token || 0;
-      console.log("item...", item);
+      const typeToken = item.transaction_value_type === "token";
+      const isCashOut = item.transaction_bank;
       return (
         <ItemAffiliate
+          item={item}
           linkImage={item?.ref_id?.media_id?.media_thumbnail}
           key={index}
           commission={
-            price != 0 ? formatMoney(token, { suffix: " đ" }) : formatCoin(coin)
+            typeToken
+              ? formatMoney(token, { suffix: " đ", showPositiveSign: true })
+              : formatCoin(coin) || ""
           }
           refType={item.ref_type}
-          fullname={item.from_user?.display_name || "system"}
-          price={price != 0 && formatMoney(item.ref_id.price, { suffix: " đ" })}
-          title={item.ref_id.title || item.note}
+          fullname={
+            isCashOut
+              ? translations.withDraw.header
+              : item.from_user?.display_name
+              ? `${translations.affiliate.customer}: ${item.from_user?.display_name}`
+              : "system"
+          }
+          price={
+            (typeToken && formatMoney(item?.ref_id?.price, { suffix: " đ" })) ||
+            ""
+          }
+          title={item?.ref_id?.title || item.note}
         />
       );
     };
@@ -185,7 +231,7 @@ const AffiliatePage = () => {
           onEndReached={onEndReach}
           showsVerticalScrollIndicator={false}
           removeClippedSubviews={true}
-          keyExtractor={(item) => item?.chat_room_id?._id + ""}
+          keyExtractor={(item) => item?._id + ""}
           refreshControl={refreshControl()}
           ListFooterComponent={renderFooterComponent()}
           ListEmptyComponent={renderEmpty}
@@ -196,12 +242,17 @@ const AffiliatePage = () => {
 
   return (
     <View style={CS.flex1}>
-      <ScrollView style={{ ...CS.flex1 }} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        onScroll={handleScroll}
+        style={{ ...CS.flex1 }}
+        showsVerticalScrollIndicator={false}
+      >
         <HeaderAffiliate />
         {renderListFilter()}
         {renderListDetail()}
         <View style={{ height: getBottomSpace() }}></View>
       </ScrollView>
+      <HeaderAbsolute show={showHeaderAbsolute} />
     </View>
   );
 };

@@ -4,7 +4,6 @@ import { View, StyleSheet, Image } from "react-native";
 import TextBase from "@shared-components/TextBase";
 import { EnumColors } from "models";
 import CS from "@theme/styles";
-import { translations } from "@localization";
 import { palette } from "@theme/themes";
 interface ItemAffiliateProps {
   linkImage?: string;
@@ -13,9 +12,11 @@ interface ItemAffiliateProps {
   commission: string;
   fullname: string;
   refType?: string;
+  item: any;
 }
 
 const ItemAffiliate = ({
+  item,
   linkImage,
   title,
   price,
@@ -53,15 +54,15 @@ const ItemAffiliate = ({
           fontWeight="400"
           color={EnumColors.textOpacity8}
         >
-          {`${translations.affiliate.customer}: ${fullname}`}
+          {`${fullname}`}
         </TextBase>
       </View>
       <View style={{ ...CS.center, paddingHorizontal: 8 }}>
         <TextBase
           fontSize={16}
           fontWeight="400"
-          color="green2"
-        >{`+${commission}`}</TextBase>
+          color={item?.method === "plus" ? "green2" : "primary"}
+        >{`${commission}`}</TextBase>
       </View>
     </View>
   );

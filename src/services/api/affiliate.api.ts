@@ -28,3 +28,52 @@ export async function getUserIncome(params) {
     return response;
   });
 }
+
+export async function postWithDrawal(data) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "transaction/withdrawal",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function createBank(data) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "transaction/create-bank",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function getListBank(params) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "transaction/list-bank",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function updateBank(data) {
+  return request({
+    method: METHOD.PATCH,
+    urlPath: "transaction/update-bank",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function deleteBank(id: string) {
+  return request({
+    method: METHOD.DELETE,
+    urlPath: `transaction/delete-bank/${id}`,
+  }).then((response) => {
+    return response;
+  });
+}

@@ -1,8 +1,14 @@
 import React, { useMemo } from "react";
-import { View, Text, SafeAreaView, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  TextInput,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import { useTheme, useRoute } from "@react-navigation/native";
 import FastImage from "react-native-fast-image";
-import uuid from "react-native-uuid";
 import * as NavigationService from "react-navigation-helpers";
 
 /**
@@ -18,6 +24,8 @@ import { getNameHolder } from "@services/api/bank.api";
 import { debounce } from "lodash";
 import useStore from "@services/zustand/store";
 import { SCREENS } from "constants";
+import { createBank } from "@services/api/affiliate.api";
+import { showToast } from "@helpers/super.modal.helper";
 
 interface AddBankScreenProps {}
 
@@ -29,6 +37,7 @@ const AddBankScreen: React.FC<AddBankScreenProps> = () => {
   const [name, setName] = React.useState("");
   const [disabledNameInput, setDisabledNameInput] = React.useState(false);
   const updateMyBankAccounts = useStore((state) => state.updateMyBankAccounts);
+  const setBankSelected = useStore((state) => state.setBankSelected);
   const route = useRoute();
   const bank = route.params?.["bank"];
 
@@ -66,15 +75,29 @@ const AddBankScreen: React.FC<AddBankScreenProps> = () => {
   );
 
   const addBank = () => {
-    const data = {
-      cardNumber: value,
-      cardName: name,
-      bank,
-      isDefault: true,
-      id: uuid.v4(),
+    const dataPost = {
+      payment_method: "Cash out",
+      bank_name: bank.name,
+      bank_number: value,
+      bank_account_name: name,
     };
-    updateMyBankAccounts(data, "add");
-    NavigationService.navigate(SCREENS.WITHDRAW);
+    createBank(dataPost).then((res) => {
+      if (!res.isError) {
+        dataPost._id = res?.data?._id;
+        updateMyBankAccounts(dataPost, "add");
+        setBankSelected(dataPost);
+        showToast({
+          type: "success",
+          message: translations.withDraw.addBankSuccess,
+        });
+        NavigationService.navigate(SCREENS.WITHDRAW);
+      } else {
+        showToast({
+          type: "error",
+          message: translations.withDraw.addBankFaild,
+        });
+      }
+    });
   };
 
   const validateNumber = React.useMemo(() => {
@@ -177,16 +200,21 @@ const AddBankScreen: React.FC<AddBankScreenProps> = () => {
       </View>
     );
   };
+  const _dismissKeyboard = () => {
+    Keyboard.dismiss();
+  };
   return (
-    <SafeAreaView style={styles.container}>
-      <Header text={translations.withDraw.bank_acc} />
-      <View style={{ padding: 16, paddingTop: 4, flex: 1 }}>
-        {renderBank()}
-        {renderInputNumber()}
-        {renderInputName()}
-        {renderBtn()}
-      </View>
-    </SafeAreaView>
+    <TouchableWithoutFeedback onPress={_dismissKeyboard}>
+      <SafeAreaView style={styles.container}>
+        <Header text={translations.withDraw.bank_acc} />
+        <View style={{ padding: 16, paddingTop: 4, flex: 1 }}>
+          {renderBank()}
+          {renderInputNumber()}
+          {renderInputName()}
+          {renderBtn()}
+        </View>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 };
 
