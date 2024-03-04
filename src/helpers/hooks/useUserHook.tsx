@@ -11,6 +11,7 @@ import { _setJson, _getJson, USER_TOKEN } from "@services/local-storage";
 import { translations } from "@localization";
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
+import { TypedUser } from "models";
 
 export const useUserHook = () => {
   const setUserData = useStore((state) => state.setUserData);
@@ -31,9 +32,7 @@ export const useUserHook = () => {
     _setJson(USER_TOKEN, token);
     getCurrentUser().then((res) => {
       if (!res.isError) {
-        setUserData(res.data);
-        setLinkAvatar(res.data.user_avatar_thumbnail);
-        initListFollow(res.data.follow_users);
+        initData(res.data);
         NavigationService.navigate(SCREENS.HOME);
         showToast({
           type: "success",
@@ -48,12 +47,16 @@ export const useUserHook = () => {
       console.log("current user data", res);
       if (!res.isError) {
         console.log("token", _getJson(USER_TOKEN), res.data);
-        setUserData(res.data);
-        setUserInfo(res.data);
-        setLinkAvatar(res.data.user_avatar_thumbnail);
-        initListFollow(res.data.follow_users);
+        initData(res.data);
       }
     });
+  };
+
+  const initData = (data: TypedUser) => {
+    setUserData(data);
+    setUserInfo(data);
+    setLinkAvatar(data.user_avatar_thumbnail);
+    initListFollow(data.follow_users);
   };
 
   const logout = () => {

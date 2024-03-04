@@ -1,5 +1,6 @@
 import { getUniqueId } from "react-native-device-info";
 import { Platform } from "react-native";
+import { _getJson } from "@services/local-storage";
 
 interface DeviceInfoType {
   device_uuid: string;
@@ -15,7 +16,7 @@ let deviceInfo: DeviceInfoType = {
 };
 
 export function getDeviceInfo() {
-  return deviceInfo;
+  return { ...deviceInfo, device_signature: _getJson("fcmToken") };
 }
 
 export async function setDeviceInfo() {
@@ -27,7 +28,6 @@ async function getDefaultParams() {
   const params: DeviceInfoType = {
     device_uuid: "",
     device_type: getPlatform(),
-    // device_signature: fcmToken,
   };
 
   params.device_uuid = await getUniqueId();

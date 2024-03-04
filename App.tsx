@@ -17,7 +17,7 @@ import { setDeviceInfo } from "@helpers/device.info.helper";
 import SocketConnect from "@services/socket/SocketConnect";
 import { SocketHelperRef } from "@helpers/socket.helper";
 import { useUserHook } from "@helpers/hooks/useUserHook";
-
+import useFirebase from "@helpers/useFirebase";
 LogBox.ignoreAllLogs();
 
 const App = () => {
@@ -39,6 +39,8 @@ const App = () => {
     setDeviceInfo();
   };
 
+  useFirebase();
+
   React.useEffect(() => {
     // StatusBar.setBarStyle(!isDarkMode ? "dark-content" : "light-content");
     StatusBar.setBarStyle("dark-content");
@@ -50,7 +52,7 @@ const App = () => {
     translations.setLanguage(language);
     setTimeout(() => {
       SplashScreen.hide();
-    }, 750);
+    }, 500);
   }, [isDarkMode, language]);
 
   return (

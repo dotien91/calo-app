@@ -29,6 +29,17 @@ export async function loginWithGoogle(data: ILoginWithSocialType) {
   });
 }
 
+export async function loginWithApple(data: ILoginWithSocialType) {
+  _setJson(USER_TOKEN, "");
+  return request({
+    method: METHOD.POST,
+    urlPath: "user/login/apple",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
 export async function loginWithFB(data: ILoginWithSocialType) {
   _setJson(USER_TOKEN, "");
 

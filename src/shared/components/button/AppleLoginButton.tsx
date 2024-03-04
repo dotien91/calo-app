@@ -1,15 +1,18 @@
 import React from "react";
 import { StyleSheet } from "react-native";
+import appleAuth from "@invertase/react-native-apple-authentication";
 
 import Button from "@shared-components/button/Button";
 import IconSvg from "assets/svg";
 import { translations } from "@localization";
 import { palette } from "@theme/themes";
-import { closeSuperModal, showSuperModal } from "@helpers/super.modal.helper";
-import { Toast } from "react-native-toast-message/lib/src/Toast";
-import { getDeviceInfo } from "@helpers/device.info.helper";
-import { AccessToken, LoginManager } from "react-native-fbsdk-next";
-import { loginWithFB } from "@services/api/user.api";
+import {
+  closeSuperModal,
+  showLoading,
+  showToast,
+} from "@helpers/super.modal.helper";
+import { getDeviceInfo, isAndroid } from "@helpers/device.info.helper";
+import { loginWithApple } from "@services/api/user.api";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 
 interface BtnProps {
@@ -18,48 +21,51 @@ interface BtnProps {
 
 const AppleLoginButton = ({ showText }: BtnProps) => {
   const { handleLogin } = useUserHook();
-
-  const _onPress = async () => {
-    showSuperModal({
-      contentModalType: "loading",
-      styleModalType: "middle",
-    });
+  if (isAndroid()) return null;
+  const loginApple = async () => {
+    showLoading();
     try {
-      LoginManager.logInWithPermissions().then(({ isCancelled }) => {
-        if (!isCancelled) {
-          AccessToken.getCurrentAccessToken().then(
-            async (data: AccessToken | null) => {
-              closeSuperModal();
-              if (data?.accessToken) {
-                const user_token = data?.accessToken.toString();
-                const paramsLogin = {
-                  user_token,
-                  ...getDeviceInfo(),
-                };
-                loginWithFB(paramsLogin).then((res) => {
-                  if (!res.isError) {
-                    const user_token = res.headers["x-authorization"];
-                    handleLogin(user_token);
-                  }
-                });
-              } else {
-                showToast({
-                  type: "error",
-                  ...res,
-                });
-              }
-            },
-          );
-        }
+      const appleAuthRequestResponse = await appleAuth.performRequest({
+        requestedOperation: appleAuth.Operation.LOGIN,
+        requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
       });
-    } catch (error: any) {
+      // Get User status Signup
+      const credentialState = await appleAuth.getCredentialStateForUser(
+        appleAuthRequestResponse.user,
+      );
+      // onCredentialRevoked returns a function that will remove the event listener. useEffect will call this function when the component unmounts
+      if (credentialState === appleAuth.State.AUTHORIZED) {
+        const { identityToken } = appleAuthRequestResponse;
+        if (identityToken) {
+          // if user is authenticated dispatch to server
+          //handle login
+          const paramsLogin = {
+            user_token: identityToken,
+            ...getDeviceInfo(),
+          };
+          loginWithApple(paramsLogin).then((res) => {
+            closeSuperModal();
+            if (!res.isError) {
+              const user_token = res.headers["x-authorization"];
+              handleLogin(user_token);
+            } else {
+              showToast({
+                type: "error",
+                ...res,
+              });
+            }
+          });
+        } else {
+          showToast({
+            type: "error",
+          });
+          closeSuperModal();
+          //error
+        }
+      }
+    } catch (err) {
       closeSuperModal();
-      setTimeout(() => {
-        Toast.show({
-          type: "error",
-          text1: translations.continueWith("sendingError"),
-        });
-      }, 500);
+      console.log("login errror apple", err);
     }
   };
 
@@ -77,7 +83,7 @@ const AppleLoginButton = ({ showText }: BtnProps) => {
   return (
     <Button
       style={styles.btn}
-      onPress={_onPress}
+      onPress={loginApple}
       textColor={palette.white}
       backgroundColor={palette.black}
       SvgSo={<IconSvg name="icApple" size={16} color="#fff" />}

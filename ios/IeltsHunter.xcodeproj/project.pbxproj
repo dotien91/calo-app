@@ -18,7 +18,7 @@
 		1A96821F23ACE8A5E1F64DD5 /* Pods_ieltshunter_ieltshunterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DEDAE9D78C9B4B1D45850C4 /* Pods_ieltshunter_ieltshunterTests.framework */; };
 		20858F262F7248898FF79136 /* Montserrat-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54608C581FB44DEA82C4C421 /* Montserrat-ExtraBold.ttf */; };
 		2168E85B6DEE4F6E9513DE1E /* SVN-Outfit-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 419CE8F7E95045B8AF4F6FC6 /* SVN-Outfit-Regular.ttf */; };
-		226C16252B3AE2290040E0B7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 226C16242B3AE2290040E0B7 /* GoogleService-Info.plist */; };
+		22D535662B917B6C0061A4E3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 22D535652B917B6C0061A4E3 /* GoogleService-Info.plist */; };
 		38DDAADF7ADB4B90A3D24DB6 /* Montserrat-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8427C8EB1C784461B4ACAE26 /* Montserrat-SemiBoldItalic.ttf */; };
 		487FB27D1464F73E663CD62A /* Pods_ieltshunter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F67C32AACA282DF473194AB5 /* Pods_ieltshunter.framework */; };
 		59EDAA8F714D4D2FA9A131BF /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3DA8350E378A4182B0DA00A4 /* Montserrat-Bold.ttf */; };
@@ -55,7 +55,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00E356EE1AD99517003FC87E /* IELTSHunterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = IELTSHunterTests.xctest; path = ieltshunterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* ieltshunterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ieltshunterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* IELTSHunterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IELTSHunterTests.m; sourceTree = "<group>"; };
 		0B485689F1BC4CD684F10659 /* SVN-Outfit-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Outfit-Thin.ttf"; path = "../src/assets/fonts/Outfit/SVN-Outfit-Thin.ttf"; sourceTree = "<group>"; };
@@ -67,7 +67,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = IELTSHunter/main.m; sourceTree = "<group>"; };
 		1588EA3539B44A3698D9C91D /* Montserrat-ThinItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-ThinItalic.ttf"; path = "../src/assets/fonts/Montserrat/Montserrat-ThinItalic.ttf"; sourceTree = "<group>"; };
 		180FB66E1F4848F58582ABCC /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-SemiBold.ttf"; path = "../src/assets/fonts/Montserrat/Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
-		226C16242B3AE2290040E0B7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		22D535652B917B6C0061A4E3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2731E336E20F4D9B99F02F8A /* Montserrat-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-BoldItalic.ttf"; path = "../src/assets/fonts/Montserrat/Montserrat-BoldItalic.ttf"; sourceTree = "<group>"; };
 		37364985FE7147508A69400D /* SVN-Outfit-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Outfit-SemiBold.ttf"; path = "../src/assets/fonts/Outfit/SVN-Outfit-SemiBold.ttf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-ieltshunter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ieltshunter.debug.xcconfig"; path = "Target Support Files/Pods-ieltshunter/Pods-ieltshunter.debug.xcconfig"; sourceTree = "<group>"; };
@@ -149,7 +149,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
-				226C16242B3AE2290040E0B7 /* GoogleService-Info.plist */,
+				22D535652B917B6C0061A4E3 /* GoogleService-Info.plist */,
 			);
 			name = ieltshunter;
 			sourceTree = "<group>";
@@ -224,7 +224,7 @@
 			isa = PBXGroup;
 			children = (
 				13B07F961A680F5B00A75B9A /* IELTSHunter.app */,
-				00E356EE1AD99517003FC87E /* IELTSHunterTests.xctest */,
+				00E356EE1AD99517003FC87E /* ieltshunterTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -261,7 +261,7 @@
 			);
 			name = ieltshunterTests;
 			productName = ieltshunterTests;
-			productReference = 00E356EE1AD99517003FC87E /* IELTSHunterTests.xctest */;
+			productReference = 00E356EE1AD99517003FC87E /* ieltshunterTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		13B07F861A680F5B00A75B9A /* ieltshunter */ = {
@@ -350,9 +350,9 @@
 				D680AE00B6424239B2077B4C /* Montserrat-LightItalic.ttf in Resources */,
 				B34E917512BE447AB1A9A594 /* Montserrat-Medium.ttf in Resources */,
 				DABA845C8DAB47AC9F331BEE /* Montserrat-MediumItalic.ttf in Resources */,
-				226C16252B3AE2290040E0B7 /* GoogleService-Info.plist in Resources */,
 				0A0CCDE47DBE4CC5B9A85F0D /* Montserrat-Regular.ttf in Resources */,
 				E9305D3D58854C50B0AD3BB3 /* Montserrat-SemiBold.ttf in Resources */,
+				22D535662B917B6C0061A4E3 /* GoogleService-Info.plist in Resources */,
 				38DDAADF7ADB4B90A3D24DB6 /* Montserrat-SemiBoldItalic.ttf in Resources */,
 				17058F8855FA4000B394565A /* Montserrat-Thin.ttf in Resources */,
 				EBBD31C4FFFF45388923212F /* Montserrat-ThinItalic.ttf in Resources */,
@@ -567,6 +567,9 @@
 			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-ieltshunter-ieltshunterTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = N3W324GKBJ;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -585,6 +588,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ikigroup.ieltshunter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ieltshunter.app/ieltshunter";
 			};
 			name = Debug;
@@ -621,9 +625,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ieltshunter/ieltshunter.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 0.1.0;
-				DEVELOPMENT_TEAM = N3W324GKBJ;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = N3W324GKBJ;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = ieltshunter/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ieltshunter;
@@ -640,6 +646,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ikigroup.ieltshunter;
 				PRODUCT_NAME = IELTSHunter;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "IELTS hunter dev";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -653,6 +660,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ieltshunter/ieltshunter.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 0.1.0;
 				DEVELOPMENT_TEAM = N3W324GKBJ;
 				INFOPLIST_FILE = ieltshunter/Info.plist;
@@ -669,6 +678,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ikigroup.ieltshunter;
 				PRODUCT_NAME = IELTSHunter;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

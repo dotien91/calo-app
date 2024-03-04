@@ -34,7 +34,7 @@ const SettingProfileScreen = () => {
 
   const { listData } = useListData({ limit: "5" }, getListRedeemMissionTask);
   const styles = useMemo(() => createStyles(theme), [theme]);
-
+  console.log("userInfo", userInfo);
   const listrenderPointCoin = [
     {
       icon: "icCoinStar",

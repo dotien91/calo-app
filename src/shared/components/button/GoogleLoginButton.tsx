@@ -42,7 +42,7 @@ const GoogleLoginButton = ({ showText }: BtnProps) => {
         user_token: idToken,
         ...getDeviceInfo(),
       };
-
+      console.log(11111, idToken);
       loginWithGoogle(paramsLogin).then((res) => {
         closeSuperModal();
         if (!res.isError) {
@@ -57,6 +57,7 @@ const GoogleLoginButton = ({ showText }: BtnProps) => {
         }
       });
     } catch (error: any) {
+      console.log(22222222, error);
       closeSuperModal();
       setTimeout(() => {
         Toast.show({
