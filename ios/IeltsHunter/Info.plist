@@ -40,6 +40,16 @@
 				<string>fb908606980666349</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.ikigroup.ieltshunter</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>ieltshunter</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
@@ -49,6 +59,8 @@
 	<string>6054f4c2e7bae8d01389715aea05e97b</string>
 	<key>FacebookDisplayName</key>
 	<string>ielthunter</string>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -135,8 +147,6 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>FirebaseAppDelegateProxyEnabled</key>
-    <false/>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>

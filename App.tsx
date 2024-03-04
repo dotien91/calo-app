@@ -2,6 +2,7 @@ import React from "react";
 import { StatusBar, LogBox } from "react-native";
 import Toast from "react-native-toast-message";
 import SplashScreen from "react-native-splash-screen";
+import { withIAPContext } from "react-native-iap";
 
 /**
  * ? Local Imports
@@ -18,6 +19,7 @@ import SocketConnect from "@services/socket/SocketConnect";
 import { SocketHelperRef } from "@helpers/socket.helper";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import useFirebase from "@helpers/useFirebase";
+import { useInAppPurchase } from "@helpers/hooks/useInAppPurchase";
 LogBox.ignoreAllLogs();
 
 const App = () => {
@@ -33,10 +35,12 @@ const App = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const language = useStore((state) => state.language);
+  const { initIAP } = useInAppPurchase();
 
   const initData = () => {
     getUserData();
     setDeviceInfo();
+    initIAP([], []);
   };
 
   useFirebase();
@@ -66,4 +70,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default withIAPContext(App);

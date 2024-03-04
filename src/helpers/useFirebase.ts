@@ -93,9 +93,9 @@ const useFirebase = () => {
       });
     });
 
-    messaging()
-      .subscribeToTopic("all")
-      .then(() => console.log("firebase Subscribed to topic all!"));
+    // messaging()
+    //   .subscribeToTopic("all")
+    //   .then(() => console.log("firebase Subscribed to topic all!"));
 
     messaging().onTokenRefresh((newFcmToken: string) => {
       console.log("firebase refreshFCMToken", newFcmToken);

@@ -109,7 +109,8 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "0.1.0"
+        missingDimensionStrategy "store", "play"
     }
 
     splits {
@@ -128,6 +129,12 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            storeFile file('release-keystore')
+            storePassword 'exam24h'
+            keyAlias 'exam24h'
+            keyPassword 'exam24h'
+        }
     }
     buildTypes {
         debug {
@@ -137,7 +144,7 @@ android {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
             
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
@@ -180,6 +187,9 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+    def billing_version = "5.1.0" // for today, it's the latest
+implementation "com.android.billingclient:billing:$billing_version"
+implementation project(':react-native-iap')
 //    compile project(':react-native-orientation')
 
 

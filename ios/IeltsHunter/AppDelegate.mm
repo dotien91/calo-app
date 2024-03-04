@@ -10,6 +10,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit-Swift.h>
 //feat livestream
 #import <AVFoundation/AVFoundation.h>
+#import <React/RCTLinkingManager.h>
 
 @implementation AppDelegate
 
@@ -74,7 +75,7 @@ AVAudioSession *session = AVAudioSession.sharedInstance;
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(nonnull NSURL *)url options:(nonnull NSDictionary<NSString *,id> *)options {
-  return [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url options:options] || [GIDSignIn.sharedInstance handleURL:url];
+  return [RCTLinkingManager application:application openURL:url options:options] || [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url options:options] || [GIDSignIn.sharedInstance handleURL:url];
 }
 
 
