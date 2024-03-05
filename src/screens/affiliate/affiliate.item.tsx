@@ -5,6 +5,7 @@ import TextBase from "@shared-components/TextBase";
 import { EnumColors } from "models";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
+import { translations } from "@localization";
 interface ItemAffiliateProps {
   linkImage?: string;
   title: string;
@@ -63,6 +64,13 @@ const ItemAffiliate = ({
           fontWeight="400"
           color={item?.method === "plus" ? "green2" : "primary"}
         >{`${commission}`}</TextBase>
+        <TextBase>
+          {item.method === "minus"
+            ? item.status === "processing"
+              ? translations.settings.pending
+              : translations.settings.billing
+            : ""}
+        </TextBase>
       </View>
     </View>
   );

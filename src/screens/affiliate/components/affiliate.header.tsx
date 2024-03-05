@@ -96,31 +96,34 @@ const HeaderAffiliate = () => {
             )}
           </View>
         </View>
-        <TextBase
-          fontWeight="600"
-          fontSize={24}
-          color={EnumColors.white}
-          textAlign="center"
-        >
-          {type === "coin"
-            ? formatCoin(userData?.current_coin || 0)
-            : formatMoney(userData?.current_token || 0, {
-                suffix: " đ",
-              })}
-        </TextBase>
-        {type === "token" && (
+        <View>
           <TextBase
             fontWeight="600"
+            fontSize={24}
             color={EnumColors.white}
             textAlign="center"
-            style={{
-              textDecorationLine: "underline",
-            }}
-            onPress={_onPressWithdraw}
+            style={styles.txtMoneyHeader}
           >
-            {translations.affiliate.withdraw}
+            {type === "coin"
+              ? formatCoin(userData?.current_coin || 0)
+              : formatMoney(userData?.current_token || 0, {
+                  suffix: " đ",
+                })}
           </TextBase>
-        )}
+          {type === "token" && (
+            <TextBase
+              fontWeight="600"
+              color={EnumColors.white}
+              textAlign="center"
+              style={{
+                textDecorationLine: "underline",
+              }}
+              onPress={_onPressWithdraw}
+            >
+              {translations.affiliate.withdraw}
+            </TextBase>
+          )}
+        </View>
       </ImageBackground>
     );
   };

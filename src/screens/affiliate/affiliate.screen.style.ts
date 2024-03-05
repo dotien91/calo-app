@@ -62,8 +62,13 @@ export default (theme: ExtendedTheme) => {
       alignItems: "center",
     },
     styleButton: {},
+    txtMoneyHeader: {
+      marginTop: 8,
+      marginBottom: 12,
+    },
     viewHeaderFake: {
       marginTop: getStatusBarHeight(),
+      alignItems: "center",
       height: 40,
       flexDirection: "row",
       paddingHorizontal: 16,
@@ -85,7 +90,7 @@ export default (theme: ExtendedTheme) => {
     },
     txtCommissionToday: {
       ...CS.hnSemiBold,
-      fontSize: 16,
+      fontSize: 20,
       color: colors.white,
     },
     txtMonth: {

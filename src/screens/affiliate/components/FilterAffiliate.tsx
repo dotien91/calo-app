@@ -85,11 +85,11 @@ const FilterAffiliate = ({ data }: FilterAffiliateProps) => {
         color={EnumColors.text}
       >{`${translations.course.sortBy} ${
         data?.type === "date"
-          ? translations.affiliate.date
+          ? translations.affiliate.date.toLocaleLowerCase()
           : data?.type === "product"
-          ? translations.affiliate.product
+          ? translations.affiliate.product.toLocaleLowerCase()
           : data?.type === "user"
-          ? translations.affiliate.user
+          ? translations.affiliate.user.toLocaleLowerCase()
           : ""
       }`}</TextBase>
       {data?.type === "date" && (

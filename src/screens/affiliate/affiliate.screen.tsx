@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, ScrollView, View } from "react-native";
-import { getBottomSpace } from "react-native-iphone-screen-helper";
+import { Dimensions, ScrollView, View, Text } from "react-native";
 
 import { translations } from "@localization";
 import CS from "@theme/styles";
@@ -21,55 +20,30 @@ import HeaderAffiliate from "./components/affiliate.header";
 import { formatFromDateToDate } from "@utils/date.utils";
 import eventEmitter from "@services/event-emitter";
 import { useUserHook } from "@helpers/hooks/useUserHook";
-import HeaderAbsolute from "./components/headerAbsolute";
+import { CollapsibleHeaderTabView } from "react-native-tab-view-collapsible-header";
+
+import { HFlatList } from "react-native-head-tab-view";
+import { SceneMap, TabBar } from "react-native-tab-view";
+import { palette } from "@theme/themes";
+import useStore from "@services/zustand/store";
+const initialLayout = { width: Dimensions.get("window").width };
 
 const AffiliatePage = () => {
   const [listCourse, setListCourse] = useState([]);
   const [listUser, setListUser] = useState<any>([]);
-  const [date, setDate] = useState({
-    from: "",
-    to: "",
-  });
-
-  const [listUserSelected, setListUserSelected] = useState([]);
-  const [listCourseSelected, setListCourseSelected] = useState([]);
-  //Lấy thông tin affiliate
-  const {
-    listData,
-    isLoading,
-    onEndReach,
-    refreshControl,
-    isFirstLoading,
-    _requestData,
-  } = useListData<any>(
-    {
-      order_by: "DESC",
-      // method: "plus",
-      limit: "20",
-      search: "",
-      from: date.from,
-      to: date.to,
-      from_user_ids: listUserSelected.toString(),
-      ref_ids: listCourseSelected.toString(),
-    },
-    getListAffiliate,
-    [],
+  const setDate = useStore((state) => state.setDateFilter);
+  const setListCourseSelected = useStore(
+    (state) => state.setListCourseSelected,
   );
+  const setListUserSelected = useStore((state) => state.setListUserSelected);
+  const date = useStore((state) => state.dateFilter);
+  const listCourseSelected = useStore((state) => state.listCourseSelected);
+  const listUserSelected = useStore((state) => state.listUserSelected);
+
   const { getUserData } = useUserHook();
 
   const reloadData = () => {
-    _requestData();
     getUserData();
-  };
-  const [showHeaderAbsolute, setShowHeaderAbsolute] = useState(false);
-
-  const handleScroll = (event) => {
-    const positionY = event.nativeEvent.contentOffset.y;
-    if (positionY > 100) {
-      setShowHeaderAbsolute(true);
-    } else {
-      setShowHeaderAbsolute(false);
-    }
   };
 
   useEffect(() => {
@@ -147,6 +121,7 @@ const AffiliatePage = () => {
             marginTop: 16,
             flexDirection: "row",
             gap: 8,
+            marginBottom: 8,
           }}
         >
           <ItemSortBy
@@ -171,89 +146,256 @@ const AffiliatePage = () => {
     );
   };
 
-  const renderListDetail = () => {
-    const renderItem = ({ item, index }) => {
-      const coin = item.current_coin - item.last_coin || 0;
-      const token = item.current_token - item.last_token || 0;
-      const typeToken = item.transaction_value_type === "token";
-      const isCashOut = item.transaction_bank;
-      return (
-        <ItemAffiliate
-          item={item}
-          linkImage={item?.ref_id?.media_id?.media_thumbnail}
-          key={index}
-          commission={
-            typeToken
-              ? formatMoney(token, { suffix: " đ", showPositiveSign: true })
-              : formatCoin(coin) || ""
-          }
-          refType={item.ref_type}
-          fullname={
-            isCashOut
-              ? translations.withDraw.header
-              : item.from_user?.display_name
-              ? `${translations.affiliate.customer}: ${item.from_user?.display_name}`
-              : "system"
-          }
-          price={
-            (typeToken && formatMoney(item?.ref_id?.price, { suffix: " đ" })) ||
-            ""
-          }
-          title={item?.ref_id?.title || item.note}
-        />
-      );
-    };
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: "first", title: "First" },
+    { key: "second", title: "Second" },
+  ]);
+  const renderScene = SceneMap({
+    first: FirstRoute,
+    second: SecondRoute,
+  });
 
-    const renderFooterComponent = () => {
-      if (!isLoading) return <View />;
-      return <LoadingList numberItem={1} />;
-    };
+  const renderTabBar = (props) => (
+    <TabBar
+      {...props}
+      indicatorStyle={{
+        backgroundColor: palette.primary,
+      }}
+      renderLabel={({ route, focused }) => (
+        <Text
+          style={{
+            ...CS.hnBold,
+            fontSize: 14,
+            color: focused ? palette.primary : palette.text,
+            margin: 8,
+          }}
+        >
+          {route.title}
+        </Text>
+      )}
+      style={{ backgroundColor: palette.background }}
+    />
+  );
 
-    const renderEmpty = () => {
-      return (
-        <EmptyResultView
-          desc={translations.affiliate.emptyTransaction}
-          icon="document-text-outline"
-          showLottie={false}
-        />
-      );
-    };
-
+  const HeaderAff = () => {
     return (
-      <View style={{ paddingHorizontal: 16, marginTop: 8 }}>
-        {(isLoading || isFirstLoading) && <LoadingList numberItem={3} />}
-        <FlatList
-          nestedScrollEnabled
-          data={listData}
-          renderItem={renderItem}
-          scrollEventThrottle={16}
-          onEndReachedThreshold={0}
-          onEndReached={onEndReach}
-          showsVerticalScrollIndicator={false}
-          removeClippedSubviews={true}
-          keyExtractor={(item) => item?._id + ""}
-          refreshControl={refreshControl()}
-          ListFooterComponent={renderFooterComponent()}
-          ListEmptyComponent={renderEmpty}
-        />
-      </View>
+      <>
+        <HeaderAffiliate />
+        {renderListFilter()}
+      </>
     );
   };
 
   return (
     <View style={CS.flex1}>
-      <ScrollView
-        onScroll={handleScroll}
-        style={{ ...CS.flex1 }}
-        showsVerticalScrollIndicator={false}
-      >
-        <HeaderAffiliate />
-        {renderListFilter()}
-        {renderListDetail()}
-        <View style={{ height: getBottomSpace() }}></View>
-      </ScrollView>
-      <HeaderAbsolute show={showHeaderAbsolute} />
+      <CollapsibleHeaderTabView
+        renderScrollHeader={HeaderAff}
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={initialLayout}
+        renderTabBar={renderTabBar}
+      />
     </View>
+  );
+};
+
+const renderEmpty = () => {
+  return (
+    <View style={{ height: 100 }}>
+      <EmptyResultView
+        desc={translations.affiliate.emptyTransaction}
+        icon="chatbubbles-outline"
+      />
+    </View>
+  );
+};
+
+const FirstRoute = () => {
+  const date = useStore((state) => state.dateFilter);
+  const listCourseSelected = useStore((state) => state.listCourseSelected);
+  const listUserSelected = useStore((state) => state.listUserSelected);
+
+  const {
+    listData,
+    isLoading,
+    onEndReach,
+    refreshControl,
+    _requestData,
+    isFirstLoading,
+    refreshing,
+  } = useListData<any>(
+    {
+      order_by: "DESC",
+      method: "plus",
+      limit: "20",
+      search: "",
+      from: date.from,
+      to: date.to,
+      from_user_ids: listUserSelected.toString(),
+      ref_ids: listCourseSelected.toString(),
+    },
+    getListAffiliate,
+    [],
+  );
+  useEffect(() => {
+    eventEmitter.on("refresh_list_affiliate", _requestData);
+    return () => {
+      eventEmitter.off("refresh_list_affiliate", _requestData);
+    };
+  }, []);
+
+  const renderItem = ({ item }) => {
+    const coin = item.current_coin - item.last_coin || 0;
+    const token = item.current_token - item.last_token || 0;
+    const typeToken = item.transaction_value_type === "token";
+    const isCashOut = item.transaction_bank;
+    return (
+      <ItemAffiliate
+        item={item}
+        linkImage={item?.ref_id?.media_id?.media_thumbnail}
+        commission={
+          typeToken
+            ? formatMoney(token, { suffix: " đ", showPositiveSign: true })
+            : formatCoin(coin) || ""
+        }
+        refType={item.ref_type}
+        fullname={
+          isCashOut
+            ? translations.withDraw.header
+            : item.from_user?.display_name
+            ? `${translations.affiliate.customer}: ${item.from_user?.display_name}`
+            : "system"
+        }
+        price={
+          (typeToken && formatMoney(item?.ref_id?.price, { suffix: " đ" })) ||
+          ""
+        }
+        title={item?.ref_id?.title || item.note}
+      />
+    );
+  };
+
+  const renderFooterComponent = () => {
+    if (!isLoading) return <View />;
+    return <LoadingList numberItem={1} />;
+  };
+  if (isFirstLoading) {
+    return <LoadingList numberItem={3} />;
+  }
+  return (
+    <HFlatList
+      index={0}
+      scrollToOverflowEnabled
+      contentContainerStyle={{ flex: 1 }}
+      style={{ paddingHorizontal: 16 }}
+      data={listData}
+      renderItem={renderItem}
+      scrollEventThrottle={16}
+      onEndReachedThreshold={0}
+      onEndReached={onEndReach}
+      showsVerticalScrollIndicator={false}
+      removeClippedSubviews={true}
+      keyExtractor={(item) => item?._id + ""}
+      refreshControl={refreshControl()}
+      ListFooterComponent={renderFooterComponent()}
+      ListEmptyComponent={renderEmpty()}
+      refreshing={refreshing}
+    />
+  );
+};
+
+const SecondRoute = () => {
+  const date = useStore((state) => state.dateFilter);
+  const listCourseSelected = useStore((state) => state.listCourseSelected);
+  const listUserSelected = useStore((state) => state.listUserSelected);
+  const {
+    listData,
+    isLoading,
+    onEndReach,
+    refreshControl,
+    _requestData,
+    isFirstLoading,
+    refreshing,
+  } = useListData<any>(
+    {
+      order_by: "DESC",
+      method: "minus",
+      limit: "20",
+      search: "",
+      from: date.from,
+      to: date.to,
+      from_user_ids: listUserSelected.toString(),
+      ref_ids: listCourseSelected.toString(),
+    },
+    getListAffiliate,
+    [],
+  );
+  useEffect(() => {
+    eventEmitter.on("refresh_list_affiliate", _requestData);
+    return () => {
+      eventEmitter.off("refresh_list_affiliate", _requestData);
+    };
+  }, []);
+
+  const renderItem = ({ item }) => {
+    const coin = item.current_coin - item.last_coin || 0;
+    const token = item.current_token - item.last_token || 0;
+    const typeToken = item.transaction_value_type === "token";
+    const isCashOut = item.transaction_bank;
+    return (
+      <ItemAffiliate
+        item={item}
+        linkImage={item?.ref_id?.media_id?.media_thumbnail}
+        commission={
+          typeToken
+            ? formatMoney(token, { suffix: " đ", showPositiveSign: true })
+            : formatCoin(coin) || ""
+        }
+        refType={item.ref_type}
+        fullname={
+          isCashOut
+            ? translations.withDraw.header
+            : item.from_user?.display_name
+            ? `${translations.affiliate.customer}: ${item.from_user?.display_name}`
+            : "system"
+        }
+        price={
+          (typeToken && formatMoney(item?.ref_id?.price, { suffix: " đ" })) ||
+          ""
+        }
+        title={item?.ref_id?.title || item.note}
+      />
+    );
+  };
+
+  const renderFooterComponent = () => {
+    if (!isLoading) return <View />;
+    return <LoadingList numberItem={1} />;
+  };
+  if (isFirstLoading) {
+    return <LoadingList numberItem={3} />;
+  }
+  return (
+    <HFlatList
+      index={1}
+      scrollToOverflowEnabled
+      contentContainerStyle={{ flex: 1 }}
+      style={{ paddingHorizontal: 16 }}
+      data={listData}
+      renderItem={renderItem}
+      scrollEventThrottle={16}
+      onEndReachedThreshold={0}
+      onEndReached={onEndReach}
+      showsVerticalScrollIndicator={false}
+      removeClippedSubviews={true}
+      keyExtractor={(item) => item?._id + ""}
+      refreshControl={refreshControl()}
+      ListFooterComponent={renderFooterComponent()}
+      ListEmptyComponent={renderEmpty()}
+      refreshing={refreshing}
+    />
   );
 };
 
