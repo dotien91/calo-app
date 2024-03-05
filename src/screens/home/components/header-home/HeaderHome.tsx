@@ -4,9 +4,7 @@ import { useTheme } from "@react-navigation/native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import * as NavigationService from "react-navigation-helpers";
 
-import { translations } from "@localization";
 import useStore from "@services/zustand/store";
-import CommonStyle from "@theme/styles";
 import createStyles from "./HeaderHome.style";
 import { SCREENS } from "constants";
 import PressableBtn from "@shared-components/button/PressableBtn";

@@ -156,6 +156,36 @@ const CS = StyleSheet.create({
     lineHeight: 20,
     color: palette.textOpacity6,
   },
+  textOpacity4: {
+    fontSize: 12,
+    lineHeight: 16,
+    fontFamily: font.outfit.medium,
+    color: palette.btnRedPrimary,
+  },
+  textRate: {
+    fontSize: 12,
+    lineHeight: 16,
+    fontFamily: font.outfit.medium,
+    color: palette.textOpacity6,
+  },
+  textBuy: {
+    fontSize: 12,
+    lineHeight: 16,
+    fontFamily: font.outfit.medium,
+    color: palette.whiteOverlay1,
+  },
+  txtPriceNew: {
+    fontSize: 14,
+    lineHeight: 24,
+    fontFamily: font.outfit.bold,
+    color: palette.textOpacity2,
+  },
+  txtPriceOld: {
+    fontSize: 10,
+    lineHeight: 24,
+    fontFamily: font.outfit.medium,
+    color: palette.primary,
+  },
   safeAreaView: {
     flex: 1,
     marginTop: getStatusBarHeight(),

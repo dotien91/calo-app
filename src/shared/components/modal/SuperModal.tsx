@@ -31,6 +31,7 @@ import InputViewModal from "@shared-components/input-modal/input.modal";
 import ListActionInner from "./modal-inner/ListActionInner";
 import GamificationView from "./modal-inner/GamificationView";
 import EarnPointView from "./modal-inner/EarnPointView";
+import ListCourseLiveStream from "@screens/stream/stream-modal/stream.modal.list.course";
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
 // using normal one.
@@ -48,7 +49,7 @@ import EarnPointView from "./modal-inner/EarnPointView";
 //   data
 // })
 
-interface SuperModalProps {}
+interface SuperModalProps { }
 
 const SuperModal: React.FC<SuperModalProps> = () => {
   const [data, setData] = useState();
@@ -221,7 +222,11 @@ const SuperModal: React.FC<SuperModalProps> = () => {
             <GamificationView {...data} closeModal={closeModal} />
           )}
           {contentModalType == EnumModalContentType.CustomView &&
-            data.customView()}
+            data.customView()
+          }
+          {contentModalType == EnumModalContentType.ListCourse && (
+            <ListCourseLiveStream {...data} />
+          )}
         </View>
       </StickBottomModal>
     );
@@ -238,8 +243,8 @@ const SuperModal: React.FC<SuperModalProps> = () => {
           contentModalType == EnumModalContentType.LottieAnimation
             ? 0
             : contentModalType == EnumModalContentType.Loading
-            ? 0.1
-            : 0.6
+              ? 0.1
+              : 0.6
         }
       >
         {contentModalType == EnumModalContentType.LottieAnimation && (
