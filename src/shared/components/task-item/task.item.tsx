@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
+import * as Progress from "react-native-progress";
 
 import { useTheme } from "@react-navigation/native";
 import CS from "@theme/styles";
@@ -9,6 +10,9 @@ import IconSvg from "assets/svg";
 import TaskIcon from "@shared-components/task-icon/task.icon";
 import { SCREENS } from "constants";
 import { ActionTypeTask } from "constants/task.constant";
+import { Device } from "@utils/device.ui.utils";
+
+const progressWidth = Device.width - 250;
 
 const TaskItemCommon = ({ item }) => {
   const theme = useTheme();
@@ -42,6 +46,8 @@ const TaskItemCommon = ({ item }) => {
     }
   };
 
+  const progress = item.action_counter / item.action_amount;
+
   return (
     <TouchableOpacity
       onPress={() => {
@@ -67,11 +73,43 @@ const TaskItemCommon = ({ item }) => {
               fontSize: 16,
               color: colors.text,
               maxWidth: 200,
-              marginBottom: 8,
             }}
           >
             {item.title}
           </Text>
+          {!!item?.description && (
+            <Text
+              style={{
+                ...CS.hnMedium,
+                fontSize: 12,
+                color: colors.textOpacity6,
+              }}
+            >
+              {item?.description}
+            </Text>
+          )}
+          {item.status != "done" && (
+            <View style={CS.flexRear}>
+              <Progress.Bar
+                progress={item.action_counter / item.action_amount}
+                width={progressWidth}
+                color={progress == 1 ? colors.green : colors.lightBlue}
+                unfilledColor={colors.grey3}
+                borderWidth={0}
+                height={8}
+              ></Progress.Bar>
+              <Text
+                style={{
+                  marginLeft: 16,
+                  ...CS.hnRegular,
+                  color: colors.textOpacity8,
+                  fontSize: 14,
+                }}
+              >
+                {progress * 100}%
+              </Text>
+            </View>
+          )}
           <Text
             style={{ ...CS.hnMedium, fontSize: 12, color: colors.textOpacity6 }}
           >

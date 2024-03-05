@@ -83,6 +83,7 @@ import DiscoverScreen from "@screens/discover-screen/discover.screen";
 import LeaderBoard from "@screens/leader-board/leader.board";
 import ChatListScreen from "@screens/chat/list-chat/chat.list.screen";
 import NotificationScreen from "@screens/notification/NotificationScreen";
+import TaskScreen from "@screens/profile.screen/task.screen";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -215,9 +216,8 @@ const Navigation = () => {
         {renderHomeworkScreens()}
 
         <Stack.Screen name={SCREENS.CREATE_WORK} component={CreateWorkScreen} />
-
+        <Stack.Screen name={SCREENS.TASK_SCREEN} component={TaskScreen} />
         <Stack.Screen name={SCREENS.CALL_CLASS} component={CallClassScreen} />
-
         <Stack.Screen name={SCREENS.MY_COURES} component={MyCourse} />
         <Stack.Screen name={SCREENS.SETTING} component={SettingScreen} />
         <Stack.Screen
@@ -261,7 +261,6 @@ const Navigation = () => {
           name={SCREENS.COURSE_DETAIL}
           component={CoursePreviewScreen}
         />
-        <Stack.Screen name={SCREENS.HOME} component={renderTabNavigation} />
         <Stack.Screen name={SCREENS.COURSE_RATE} component={CourseRate} />
 
         <Stack.Screen
@@ -368,10 +367,7 @@ const Navigation = () => {
           name={SCREENS.PRIVATESETTING}
           component={PrivateSetting}
         />
-        <Stack.Screen
-          name={SCREENS.SETTINGPROFILESCREEN}
-          component={SettingProfileScreen}
-        />
+
         {/* <Stack.Screen name={SCREENS.INTRO} component={IntroScreen} /> */}
         <Stack.Screen
           name={SCREENS.DISCOVERSCREEN}

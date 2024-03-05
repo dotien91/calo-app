@@ -17,15 +17,20 @@ import { getTimeAvailable } from "@services/api/course.api";
 
 interface BookLessonSelectViewProps {
   course_id: string;
+  isShow: string;
 }
 
-const BookLessonSelectView = ({ course_id }: BookLessonSelectViewProps) => {
+const BookLessonSelectView = ({
+  course_id,
+  isShow,
+}: BookLessonSelectViewProps) => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const [duration, setDuration] = useState<number>(0);
   const [date, setDate] = useState<number>(0);
   const [timeDataRes, setTimeDataRes] = useState<TypeTimeAvailableRes[]>();
   const [timeAvailable, setTimeAvailable] = useState<TimeAvailableType[]>([]);
+
   useEffect(() => {
     _getTimeAvailable();
   }, []);
@@ -35,7 +40,6 @@ const BookLessonSelectView = ({ course_id }: BookLessonSelectViewProps) => {
       course_id: course_id,
     };
     getTimeAvailable(params).then((res: any) => {
-      console.log("res...", JSON.stringify(res.data));
       if (!res.isError) {
         setTimeDataRes(res.data);
         setTimeAvailable(res.data[0].times);
@@ -128,6 +132,8 @@ const BookLessonSelectView = ({ course_id }: BookLessonSelectViewProps) => {
       </View>
     );
   };
+
+  if (!isShow) return null;
 
   return (
     <ScrollView style={styles.container}>

@@ -255,6 +255,7 @@ function App() {
         {renderInput()}
         {isStreaming ? (
           <TouchableOpacity
+            onPress={onShouldCloseLive}
             style={{
               position: "absolute",
               top: 60,

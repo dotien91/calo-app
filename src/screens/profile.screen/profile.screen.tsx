@@ -12,7 +12,7 @@ import * as NavigationService from "react-navigation-helpers";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 import Header from "@shared-components/header/Header";
-import { useTheme } from "@react-navigation/native";
+import { useTheme, useFocusEffect } from "@react-navigation/native";
 import CS from "@theme/styles";
 import Avatar from "@shared-components/user/Avatar";
 import useStore from "@services/zustand/store";
@@ -21,10 +21,10 @@ import PieChartCommon from "@shared-components/pie-chart/pie.chart";
 import IconSvg from "assets/svg";
 import TaskItemCommon from "@shared-components/task-item/task.item";
 import { translations } from "@localization";
-import { useListData } from "@helpers/hooks/useListData";
-import { getListRedeemMissionTask } from "@services/api/task.api";
+import { getListTaskByUser } from "@services/api/task.api";
 import createStyles from "./profile.screen.style";
 import { SCREENS } from "constants";
+import PressableBtn from "@shared-components/button/PressableBtn";
 
 const SettingProfileScreen = () => {
   const theme = useTheme();
@@ -32,7 +32,6 @@ const SettingProfileScreen = () => {
   const userData = useStore((state) => state.userData);
   const userInfo = useStore((state) => state.userInfo);
 
-  const { listData } = useListData({ limit: "5" }, getListRedeemMissionTask);
   const styles = useMemo(() => createStyles(theme), [theme]);
   console.log("userInfo", userInfo);
   const listrenderPointCoin = [
@@ -182,41 +181,6 @@ const SettingProfileScreen = () => {
     );
   };
 
-  const renderTask = () => {
-    return (
-      <View style={{ marginTop: 16, marginHorizontal: 16 }}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginVertical: 16,
-          }}
-        >
-          <Text style={styles.textTasks}>{translations.task.task}</Text>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Text style={styles.textSeeAll}>{translations.seeAll}</Text>
-            <Icon
-              name="chevron-forward-outline"
-              type={IconType.Ionicons}
-              color={colors.btnRedPrimary}
-              size={16}
-            ></Icon>
-          </View>
-        </View>
-        <View
-          style={{
-            backgroundColor: colors.backgroundColorGrey,
-            borderRadius: 8,
-          }}
-        >
-          {listData.map((item, index) => {
-            return <TaskItemCommon key={index} item={item}></TaskItemCommon>;
-          })}
-        </View>
-      </View>
-    );
-  };
-
   const renderInviteFriend = () => {
     return (
       <View style={{ marginHorizontal: 16 }}>
@@ -297,7 +261,7 @@ const SettingProfileScreen = () => {
         <View style={{ flex: 1, marginBottom: 20 }}>
           {renderScrollPointCoin()}
           {renderPieChart()}
-          {renderTask()}
+          <Tasks />
           {renderInviteFriend()}
           {renderListCodeActive()}
         </View>
@@ -305,4 +269,65 @@ const SettingProfileScreen = () => {
     </SafeAreaView>
   );
 };
+
+const Tasks = React.memo(() => {
+  const theme = useTheme();
+  const { colors } = theme;
+  const styles = useMemo(() => createStyles(theme), [theme]);
+
+  const onSeeAll = () => {
+    NavigationService.navigate(SCREENS.TASK_SCREEN);
+  };
+
+  const [listData, setListData] = React.useState([]);
+  useFocusEffect(
+    React.useCallback(() => {
+      getTask();
+    }, []),
+  );
+
+  const getTask = () => {
+    getListTaskByUser({ order_by: "DESC" }).then((res) => {
+      if (!res.isError) {
+        setListData((res.data?.[0]?.missions || []).reverse());
+      }
+    });
+  };
+
+  return (
+    <View style={{ marginTop: 16, marginHorizontal: 16 }}>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginVertical: 16,
+        }}
+      >
+        <Text style={styles.textTasks}>{translations.task.task}</Text>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <PressableBtn onPress={onSeeAll}>
+            <Text style={styles.textSeeAll}>{translations.seeAll}</Text>
+          </PressableBtn>
+          <Icon
+            name="chevron-forward-outline"
+            type={IconType.Ionicons}
+            color={colors.btnRedPrimary}
+            size={16}
+          ></Icon>
+        </View>
+      </View>
+      <View
+        style={{
+          backgroundColor: colors.backgroundColorGrey,
+          borderRadius: 8,
+        }}
+      >
+        {listData.slice(0, 5).map((item, index) => {
+          return <TaskItemCommon key={index} item={item}></TaskItemCommon>;
+        })}
+      </View>
+    </View>
+  );
+});
+
 export default SettingProfileScreen;

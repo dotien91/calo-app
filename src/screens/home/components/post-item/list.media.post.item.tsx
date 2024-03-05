@@ -26,7 +26,6 @@ const ListFile = ({ listFile, sizeImage2 }: ListFileProps) => {
       i.media_mime_type.includes("image") ||
       i.media_mime_type.includes("video"),
   );
-
   const theme = useTheme();
   const { colors } = theme;
   const styles = React.useMemo(() => createStyles(theme), [theme]);

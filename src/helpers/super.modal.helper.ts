@@ -23,6 +23,7 @@ export enum EnumModalContentType {
   ListMoreAction = "list-more-action",
   GamificationView = "gimification-view",
   LottieAnimation = "lottie-animation",
+  CustomView = "custom-view",
 }
 
 export enum EnumStyleModalType {

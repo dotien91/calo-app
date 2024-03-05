@@ -19,3 +19,13 @@ export async function getListRedeemMissionTask(params) {
     return response;
   });
 }
+
+export async function getListTaskByUser(params) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "redeem/user",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}

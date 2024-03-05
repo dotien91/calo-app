@@ -75,6 +75,7 @@ export const SCREENS = {
   DISCOVERSCREEN: "Discover",
   LEADERBOARD: "LeaderBoard",
   SETTINGPPROFILE: "SettingProfile",
+  TASK_SCREEN: "TaskScreen",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

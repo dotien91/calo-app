@@ -52,6 +52,7 @@ interface SuperModalProps {}
 
 const SuperModal: React.FC<SuperModalProps> = () => {
   const [data, setData] = useState();
+  const [visible, setVisible] = useState(false);
   const [styleModalType, setStyleModalType] = useState<EnumStyleModalType>();
   const [contentModalType, setContentModalType] =
     useState<EnumModalContentType>();
@@ -73,14 +74,23 @@ const SuperModal: React.FC<SuperModalProps> = () => {
     styleModalType,
     data,
   }: IShowModalParams) => {
+    setVisible(true);
     setData(data);
     setStyleModalType(styleModalType);
     setContentModalType(contentModalType);
   };
 
+  useEffect(() => {
+    if (!visible) {
+      setTimeout(() => {
+        setStyleModalType("");
+        setContentModalType("");
+      }, 1000);
+    }
+  }, [visible]);
+
   const closeModal = () => {
-    setStyleModalType("");
-    setContentModalType("");
+    setVisible(false);
   };
 
   if (!contentModalType || !styleModalType) return null;
@@ -145,7 +155,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
   if (styleModalType == EnumStyleModalType.Bottom) {
     return (
       <StickBottomModal
-        isVisible={true}
+        isVisible={visible}
         onBackdropPress={closeModal}
         swipeDirection={["down"]}
         onSwipeComplete={closeModal}
@@ -210,6 +220,8 @@ const SuperModal: React.FC<SuperModalProps> = () => {
           {contentModalType == EnumModalContentType.GamificationView && (
             <GamificationView {...data} closeModal={closeModal} />
           )}
+          {contentModalType == EnumModalContentType.CustomView &&
+            data.customView()}
         </View>
       </StickBottomModal>
     );
@@ -218,7 +230,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
   if (styleModalType == EnumStyleModalType.Middle) {
     return (
       <Modal
-        isVisible={true}
+        isVisible={visible}
         onBackdropPress={closeModal}
         propagateSwipe={true}
         style={getStyleModal()}
@@ -239,6 +251,8 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         {contentModalType == EnumModalContentType.Library && (
           <ImageSlideShow {...data} closeModal={closeModal} />
         )}
+        {contentModalType == EnumModalContentType.CustomView &&
+          data.customView()}
       </Modal>
     );
   }

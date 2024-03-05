@@ -6,6 +6,7 @@ import {
 export const navigationRef = createNavigationContainerRef();
 
 const navigate = (name, params?) => {
+  console.log("2222=====", navigationRef.isReady());
   if (navigationRef.isReady()) {
     navigationRef.navigate(name, params);
   }

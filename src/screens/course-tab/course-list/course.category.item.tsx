@@ -35,8 +35,6 @@ const CourseCategoryItem: React.FC<CourseCategoryItemProps> = () => {
     return listData.slice(0, 5);
   }, [listData]);
 
-  console.log("listDatalistData", listData);
-
   const renderItem = (item: ICourseItem, index: number) => {
     return (
       <>
@@ -64,10 +62,16 @@ const CourseCategoryItem: React.FC<CourseCategoryItemProps> = () => {
   const openMyCourse = () => {
     NavigationService.navigate(SCREENS.MY_COURES);
   };
+  console.log("asdasdasd", isLoading);
+
+  React.useEffect(() => {
+    return () => {
+      console.log("useefff");
+    };
+  }, []);
 
   if (isLoading) return <LoadingItem />;
   if (!listData.length) return null;
-
   return (
     <View>
       <CourseCategoryTitle

@@ -285,6 +285,7 @@ export async function deleteModule(id: string) {
 export async function getCourseRoom(params: {
   user_id: string;
   course_id: string;
+  class_id: string;
 }) {
   return request({
     method: METHOD.GET,

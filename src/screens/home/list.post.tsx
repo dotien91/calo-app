@@ -53,7 +53,7 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
 
   useEffect(() => {
     if (isFollowingPost) return;
-    _getListLiveStream();
+    // _getListLiveStream();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const paramsRequest = {

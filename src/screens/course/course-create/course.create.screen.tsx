@@ -102,7 +102,7 @@ const CourseCreate = () => {
       setValue("long_description", data.long_description);
       setValue("price", data.price.toString());
       setStartDate(new Date(data.start_time));
-      setEndDate(new Date(data.end_time));
+      setEndDate(data?.end_time ? new Date(data.end_time) : "");
       setTypeCourse(data.type);
       // setLevel(data?.level || "");
       setSkill(data.skills);
@@ -147,7 +147,8 @@ const CourseCreate = () => {
           title: dataHook.title,
           description: dataHook.description,
           long_description: dataHook.long_description,
-          price: dataHook.price,
+          // price: dataHook.price,
+          price: priceInput + "",
           start_time: startDate?.toISOString(),
           end_time: endDate?.toISOString(),
           language: "en",
@@ -178,7 +179,6 @@ const CourseCreate = () => {
         if (course_id) {
           console.log(params);
           updateCourse(params).then((res) => {
-            console.log("res..", JSON.stringify(res));
             if (!res.isError) {
               showToast({
                 type: "success",
@@ -296,6 +296,7 @@ const CourseCreate = () => {
       </View>
     );
   };
+  console.log("startDate", startDate, endDate);
 
   const renderSelectTypeCourse = () => {
     return (

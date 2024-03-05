@@ -63,7 +63,7 @@ const SelectDateTime = ({
         modal
         open={open}
         mode="date"
-        date={date || timeDefault !== "" ? new Date(timeDefault) : new Date()}
+        date={date || timeDefault ? new Date(date || timeDefault) : new Date()}
         minimumDate={new Date()}
         onConfirm={(date) => {
           setOpen(false);

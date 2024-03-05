@@ -94,7 +94,7 @@ const CourseListScreen: React.FC<CourseListScreenProps> = () => {
 const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
   // const theme = useTheme();
   // const { colors } = theme;
-  const userData = useStore((state) => state.userData);
+  // const userData = useStore((state) => state.userData);
   // const [listMyCourse, setlistMyCourse] = useState([]);
   const { isLoading, listData, onEndReach, renderFooterComponent } =
     useListData<ICourseItem>(
@@ -107,24 +107,20 @@ const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
     return <TutorItem {...item} key={index} />;
   };
 
-  const getDataMyCourse = () => {
-    const data = {
-      user_id: userData?._id,
-    };
-    console.log("OKE ass");
-    getCourseList(data).then((res: any) => {
-      console.log("OKE", JSON.stringify(res, null, 2));
-      // setlistMyCourse(res.data);
-    });
-  };
-
-  console.log("userData?._id", userData?._id);
+  // const getDataMyCourse = () => {
+  //   const data = {
+  //     user_id: userData?._id,
+  //   };
+  //   getCourseList(data).then((res: any) => {
+  //     // setlistMyCourse(res.data);
+  //   });
+  // };
 
   useEffect(() => {
-    getDataMyCourse();
+    // getDataMyCourse();
   }, []);
 
-  const renderHeader = () => {
+  const renderHeader = React.useCallback(() => {
     return (
       <View style={{ flex: 1 }}>
         {isTabCourse && <CourseCategoryItem />}
@@ -175,7 +171,7 @@ const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
         <CourseQuickFilter isTabCourse={isTabCourse} />
       </View>
     );
-  };
+  }, [isTabCourse]);
 
   // const renderItemMyCourse = ({
   //   item,
@@ -193,7 +189,6 @@ const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
   //     ></CourseItemProgessbar>
   //   );
   // };
-
   return (
     <View style={{ flex: 1 }}>
       <FlatList

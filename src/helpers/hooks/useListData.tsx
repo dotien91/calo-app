@@ -18,6 +18,8 @@ interface TypedUseListData<T> {
   setListData: (newListData: T[]) => void;
   _requestData: () => void;
   totalCount: number;
+  renderFooterComponent: () => void;
+  onEndReach: () => void;
 }
 
 interface TypedRequestParams {
@@ -56,6 +58,7 @@ export function useListData<T>(
   const isFetching = useRef(false);
 
   useDeepCompareEffect(() => {
+    console.log("paramsparams", params);
     _requestData(false);
   }, [params]);
 

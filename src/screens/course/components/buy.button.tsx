@@ -28,12 +28,16 @@ const BuyButton = ({ data, type }: BuyButtonProps) => {
       showWarningLogin();
       return;
     }
+    if (type == EnumClassType.SelfLearning) {
+      alert("open iap");
+      return;
+    }
+
     const type = data?.type;
     let screen = SCREENS.PAYMENT_COURES;
 
     if (type == EnumClassType.Call11) screen = SCREENS.BOOK_LESSON;
     if (type == EnumClassType.CallGroup) screen = SCREENS.CHOOSE_CLASS;
-    if (type == EnumClassType.SelfLearning) screen = SCREENS.PAYMENT_COURES;
 
     NavigationService.navigate(screen, {
       courseId: data?._id,

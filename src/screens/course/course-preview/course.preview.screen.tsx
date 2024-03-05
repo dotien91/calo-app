@@ -27,8 +27,8 @@ import PressableBtn from "@shared-components/button/PressableBtn";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";
 import eventEmitter from "@services/event-emitter";
-import BookLessonSelectView from "../components/book-lesson/book.lesson.select.view";
-import ChooseClassSelectView from "../components/choose-class/choose.class.select.view";
+import BookLessonSelectView from "../components/book-lesson/course.book.lesson.select.view";
+import ChooseClassSelectView from "../components/choose-class/course.choose.class.select.view";
 import EnrollNow from "../components/EnrollNow";
 import { SCREENS } from "constants";
 import EditButton from "../components/edit.button";
@@ -79,12 +79,15 @@ const CoursePreviewScreen = () => {
     });
   };
 
+  // 65e59aea4463ad11b713addf
+
   const _getCourseRoom = () => {
-    getCourseRoom({ course_id, user_id: userData?._id }).then((res) => {
-      console.log("getCourseRoom...", res, {
-        course_id,
-        user_id: userData?._id,
-      });
+    getCourseRoom({
+      course_id,
+      user_id: userData?._id,
+      class_id: "65e598744463ad11b7138ab5",
+    }).then((res) => {
+      console.log("getCourseRoom...", res);
 
       if (!res.isError) {
         const data = res.data;
@@ -301,12 +304,14 @@ const CoursePreviewScreen = () => {
             <DescriptionView data={data} />
           </View>
         )}
-        {data?.type === EnumClassType.Call11 && tabSelected !== 1 && (
-          <BookLessonSelectView course_id={course_id} />
-        )}
-        {data?.type === EnumClassType.CallGroup && tabSelected !== 1 && (
-          <ChooseClassSelectView course_id={course_id} />
-        )}
+        <BookLessonSelectView
+          isShow={data?.type === EnumClassType.Call11 && tabSelected !== 1}
+          course_id={course_id}
+        />
+        <ChooseClassSelectView
+          isShow={data?.type === EnumClassType.CallGroup && tabSelected !== 1}
+          course_id={course_id}
+        />
         {data?.type === EnumClassType.SelfLearning && (
           <PartView
             // isJoin={true}

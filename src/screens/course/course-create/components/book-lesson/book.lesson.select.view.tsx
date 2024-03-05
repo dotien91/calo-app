@@ -38,7 +38,6 @@ const BookLessonSelectView = ({ course_id }: BookLessonSelectViewProps) => {
       course_id: course_id,
     };
     getTimeAvailable(params).then((res: any) => {
-      console.log("res...", JSON.stringify(res.data));
       if (!res.isError) {
         setTimeDataRes(res.data);
         setTimeAvailable(res.data[0].times);

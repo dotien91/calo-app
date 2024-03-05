@@ -395,6 +395,7 @@ const DiscoverScreen = () => {
                 }}
               >
                 <TouchableOpacity
+                  onPress={() => NavigationService.navigate(SCREENS.HOME)}
                   style={{
                     flexDirection: "row",
                     alignItems: "center",

@@ -106,14 +106,21 @@ const ItemPost = ({ data, pressComment }: ItemPostProps) => {
     });
   };
 
-  const ListFile = useMemo(() => {
-    const listFile = data?.attach_files || [];
-    const listMedia = listFile.filter(
-      (i: any) =>
+  const listPdf = useMemo(() => {
+    return (data?.attach_files || []).filter((item) =>
+      item.media_mime_type.includes("file"),
+    );
+  }, [data]);
+
+  const listMedia = useMemo(() => {
+    return (data?.attach_files || []).filter(
+      (i) =>
         i.media_mime_type.includes("image") ||
         i.media_mime_type.includes("video"),
     );
+  }, [data]);
 
+  const ListFile = useMemo(() => {
     return (
       <View style={{ alignItems: "flex-end" }}>
         {listMedia.map((item: any, index: number) => {
@@ -131,7 +138,7 @@ const ItemPost = ({ data, pressComment }: ItemPostProps) => {
             </TouchableOpacity>
           );
         })}
-        {listFile.map((item: any, index: number) => {
+        {listPdf.map((item: any, index: number) => {
           return (
             <PressableBtn
               key={index}
