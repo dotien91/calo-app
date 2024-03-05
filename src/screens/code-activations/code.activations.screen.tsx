@@ -23,6 +23,7 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { ICourseItem } from "models/course.model";
 import useStore from "@services/zustand/store";
 import { SCREENS } from "constants";
+import { palette } from "@theme/themes";
 
 const CodeActivationsScreen = () => {
   const [courseCurrentSort, setCourseCurrentSort] = useState({});
@@ -134,9 +135,14 @@ const CodeActivationsScreen = () => {
   const _renderHeader = (section: TypedUser, index: number) => {
     console.log(section);
 
+    const isSelected = activeSections.indexOf(index) >= 0;
+
     return (
       <PressableBtn onPress={() => _updateSections(index)}>
-        <Animatable.View duration={300} style={styles.viewCustomer}>
+        <Animatable.View
+          duration={300}
+          style={isSelected ? styles.viewCustomerActive : styles.viewCustomer}
+        >
           <View style={[styles.viewAvatar, { backgroundColor: colors.red }]}>
             <Image
               style={styles.viewAvatar}
@@ -153,6 +159,7 @@ const CodeActivationsScreen = () => {
               activeSections.indexOf(index) >= 0 ? "chevron-up" : "chevron-down"
             }
             type={IconType.Feather}
+            color={palette.textOpacity8}
           />
         </Animatable.View>
       </PressableBtn>
