@@ -171,6 +171,8 @@ export default (theme: ExtendedTheme) => {
       ...CS.hnSemiBold,
       color: colors.primary,
       lineHeight: 24,
+      marginBottom: 8,
+      marginTop: 4,
     },
   });
 };

@@ -86,6 +86,13 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
         NavigationService.navigate(SCREENS.CODE_ACTIVATIONS_SCREEN);
       },
     },
+    // {
+    //   title: translations.affiliate.yourIncome,
+    //   icon: "person-remove-outline",
+    //   action: () => {
+    //     NavigationService.navigate(SCREENS.AFFILIATE);
+    //   },
+    // },
   ];
 
   const renderListSetting = () => {

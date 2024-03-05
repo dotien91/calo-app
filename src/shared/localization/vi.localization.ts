@@ -1347,5 +1347,7 @@ export default {
     bank_acc: "Tài khoản ngân hàng",
     addBankSuccess: "Thêm thẻ ngân hàng thành công",
     addBankFaild: "Thêm thẻ ngân hàng không thành công, hoặc đã trùng trước đó",
+    withDrawSuccess: "Đặt lệnh rút tiền về tài khoản thành công",
+    withDrawFaild: "Đặt lệnh rút tiền không thành công",
   },
 };

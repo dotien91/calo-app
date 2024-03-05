@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, ViewStyle } from "react-native";
+import { StyleSheet, Text, View, ViewStyle } from "react-native";
 import DatePicker from "react-native-date-picker";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
@@ -27,27 +27,15 @@ const DateTimePickerLocal = ({
   return (
     <>
       <PressableBtn
-        style={[
-          {
-            height: 30,
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginTop: 8,
-          },
-          style,
-        ]}
+        style={[styles.viewDateTime, style]}
         onPress={() => setOpen(true)}
       >
         <Text style={{ ...CS.hnRegular }}>{placeholder}</Text>
         <View style={{ flexDirection: "row" }}>
           <Text
-            style={{
-              ...CS.hnRegular,
-              textAlign: "center",
-              color:
-                timeDefault !== "" ? palette.textOpacity6 : palette.placeholder,
-            }}
+            style={
+              timeDefault !== "" ? styles.txtDate : styles.txtDatePlaceholder
+            }
           >
             {timeDefault !== "" ? formatDate(timeDefault) : placeholder}
           </Text>
@@ -76,3 +64,23 @@ const DateTimePickerLocal = ({
 };
 
 export default DateTimePickerLocal;
+
+const styles = StyleSheet.create({
+  viewDateTime: {
+    height: 30,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 8,
+  },
+  txtDate: {
+    ...CS.hnRegular,
+    textAlign: "center",
+    color: palette.textOpacity6,
+  },
+  txtDatePlaceholder: {
+    ...CS.hnRegular,
+    textAlign: "center",
+    color: palette.placeholder,
+  },
+});

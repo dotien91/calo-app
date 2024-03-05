@@ -19,17 +19,9 @@ const ItemUserSelect = ({
   onPressItem,
 }: ItemUserSelectProps) => {
   return (
-    <PressableBtn
-      style={{
-        flexDirection: "row",
-        paddingHorizontal: 4,
-        alignItems: "center",
-        paddingVertical: 12,
-      }}
-      onPress={onPressItem}
-    >
+    <PressableBtn style={styles.container} onPress={onPressItem}>
       <CustomCheckbox isSelected={isSeleted} />
-      <View style={[styles.viewImage, { marginLeft: 12, marginRight: 8 }]}>
+      <View style={[styles.viewImage, styles.viewMarginImage]}>
         <FastImage
           source={{
             uri: item?.user_avatar_thumbnail,
@@ -49,6 +41,16 @@ const ItemUserSelect = ({
 export default ItemUserSelect;
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    paddingHorizontal: 4,
+    alignItems: "center",
+    paddingVertical: 12,
+  },
+  viewMarginImage: {
+    marginLeft: 10,
+    marginRight: 12,
+  },
   viewImage: {
     width: 32,
     height: 32,

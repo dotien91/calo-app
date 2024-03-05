@@ -187,14 +187,14 @@ const WithdrawScreen: React.FC<WithdrawProps> = () => {
       if (!res.isError) {
         showToast({
           type: "success",
-          message: "Đặt lệnh rút tiền về tài khoản thành công",
+          message: translations.withDraw.withDrawSuccess,
         });
         eventEmitter.emit("refresh_list_affiliate");
         NavigationService.goBack();
       } else {
         showToast({
           type: "error",
-          message: "Đặt lệnh không thành công, vui lòng thử lại.",
+          message: translations.withDraw.withDrawFaild,
         });
       }
       closeSuperModal();

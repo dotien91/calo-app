@@ -833,6 +833,8 @@ export default {
     bank_acc: "Bank account",
     addBankSuccess: "Add card success",
     addBankFaild: "Adding a new bank card failed",
+    withDrawSuccess: "Placed withdrawal order to account successfully",
+    withDrawFaild: "Withdrawal order failed",
   },
 };
 /* eslint-disable max-len */
