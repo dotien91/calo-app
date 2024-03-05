@@ -95,71 +95,71 @@ const FilterAffiliate = ({ data }: FilterAffiliateProps) => {
       {data?.type === "date" && (
         <>
           <DateTimePickerLocal
-            style={{ flex: 1 }}
+            style={CS.flex1}
             placeholder={translations.affiliate.fromDate}
             setTime={(time) => setStartTime(time.toISOString())}
             timeDefault={startTime}
           />
           <DateTimePickerLocal
-            style={{ flex: 1 }}
+            style={CS.flex1}
             placeholder={translations.affiliate.toDate}
             setTime={(time) => setEndTime(time.toISOString())}
             timeDefault={endTime}
           />
-          <View style={{ ...CS.row, gap: 8, marginVertical: 8 }}>
+          <View style={styles.viewButton}>
             <Button
               onPress={onPressReset}
               text="Reset"
               type="disabled"
-              style={{ flex: 1 }}
+              style={CS.flex1}
             />
             <Button
               onPress={onPressApplyDate}
               text="Apply"
               type="primary"
-              style={{ flex: 1 }}
+              style={CS.flex1}
             />
           </View>
         </>
       )}
       {data?.type === "product" && (
         <>
-          <View style={{ maxHeight: 400, minHeight: 200 }}>
+          <View style={styles.viewFlatlist}>
             <FlatList data={data.listFilter} renderItem={renderItem} />
           </View>
-          <View style={{ ...CS.row, gap: 8, marginVertical: 8 }}>
+          <View style={styles.viewButton}>
             <Button
               onPress={onPressReset}
               text="Reset"
               type="disabled"
-              style={{ flex: 1 }}
+              style={CS.flex1}
             />
             <Button
               onPress={onPressApply}
               text="Apply"
               type="primary"
-              style={{ flex: 1 }}
+              style={CS.flex1}
             />
           </View>
         </>
       )}
       {data?.type === "user" && (
         <>
-          <View style={{ maxHeight: 400, minHeight: 200 }}>
+          <View style={styles.viewFlatlist}>
             <FlatList data={data.listFilter} renderItem={renderItem} />
           </View>
-          <View style={{ ...CS.row, gap: 8, marginVertical: 8 }}>
+          <View style={styles.viewButton}>
             <Button
               onPress={onPressReset}
               text="Reset"
               type="disabled"
-              style={{ flex: 1 }}
+              style={CS.flex1}
             />
             <Button
               onPress={onPressApply}
               text="Apply"
               type="primary"
-              style={{ flex: 1 }}
+              style={CS.flex1}
             />
           </View>
         </>
@@ -172,4 +172,13 @@ export default FilterAffiliate;
 
 const styles = StyleSheet.create({
   container: {},
+  viewButton: {
+    ...CS.row,
+    gap: 8,
+    marginVertical: 8,
+  },
+  viewFlatlist: {
+    maxHeight: 400,
+    minHeight: 200,
+  },
 });

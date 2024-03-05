@@ -21,17 +21,9 @@ const SelectRadioButton = ({ data }: SelectRadioButtonProps) => {
             <PressableBtn
               key={index}
               onPress={item.callbackAction}
-              style={{ ...CS.row, height: 40 }}
+              style={styles.viewBtn}
             >
-              <Text
-                style={{
-                  ...CS.hnRegular,
-                  flex: 1,
-                  color: palette.textOpacity8,
-                }}
-              >
-                {item.label}
-              </Text>
+              <Text style={styles.txtLabel}>{item.label}</Text>
               <View style={styles.border}>
                 {item.selected && <View style={styles.selected} />}
               </View>
@@ -68,5 +60,14 @@ const styles = StyleSheet.create({
     ...CS.hnSemiBold,
     fontSize: 20,
     color: palette.text,
+  },
+  txtLabel: {
+    ...CS.hnRegular,
+    flex: 1,
+    color: palette.textOpacity8,
+  },
+  viewBtn: {
+    ...CS.row,
+    height: 40,
   },
 });

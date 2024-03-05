@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Dimensions, ScrollView, View, Text } from "react-native";
+import { Dimensions, ScrollView, View, Text, StyleSheet } from "react-native";
 
 import { translations } from "@localization";
 import CS from "@theme/styles";
@@ -122,15 +122,7 @@ const AffiliatePage = () => {
     };
     return (
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        <View
-          style={{
-            paddingHorizontal: 16,
-            marginTop: 16,
-            flexDirection: "row",
-            gap: 8,
-            marginBottom: 8,
-          }}
-        >
+        <View style={styles.scrollHorizontal}>
           <ItemSortBy
             text={formatFromDateToDate(date)}
             textPlaceholder={translations.affiliate.date}
@@ -155,8 +147,8 @@ const AffiliatePage = () => {
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: "first", title: "First" },
-    { key: "second", title: "Second" },
+    { key: "first", title: translations.mentor.commission },
+    { key: "second", title: translations.affiliate.withdraw },
   ]);
   const renderScene = SceneMap({
     first: FirstRoute,
@@ -170,18 +162,11 @@ const AffiliatePage = () => {
         backgroundColor: palette.primary,
       }}
       renderLabel={({ route, focused }) => (
-        <Text
-          style={{
-            ...CS.hnBold,
-            fontSize: 14,
-            color: focused ? palette.primary : palette.text,
-            margin: 8,
-          }}
-        >
+        <Text style={focused ? styles.txtTabBarForcusd : styles.txtTabBar}>
           {route.title}
         </Text>
       )}
-      style={{ backgroundColor: palette.background }}
+      style={styles.viewTabBar}
     />
   );
 
@@ -295,8 +280,8 @@ const FirstRoute = () => {
     <HFlatList
       index={0}
       scrollToOverflowEnabled
-      contentContainerStyle={{ flex: 1 }}
-      style={{ paddingHorizontal: 16 }}
+      contentContainerStyle={CS.flex1}
+      style={styles.paddingFlatlist}
       data={listData}
       renderItem={renderItem}
       scrollEventThrottle={16}
@@ -347,34 +332,7 @@ const SecondRoute = () => {
   }, []);
 
   const renderItem = ({ item }) => {
-    const coin = item.current_coin - item.last_coin || 0;
-    const token = item.current_token - item.last_token || 0;
-    const typeToken = item.transaction_value_type === "token";
-    const isCashOut = item.transaction_bank;
-    return (
-      <ItemAffiliate
-        item={item}
-        linkImage={item?.ref_id?.media_id?.media_thumbnail}
-        commission={
-          typeToken
-            ? formatMoney(token, { suffix: " đ", showPositiveSign: true })
-            : formatCoin(coin) || ""
-        }
-        refType={item.ref_type}
-        fullname={
-          isCashOut
-            ? translations.withDraw.header
-            : item.from_user?.display_name
-            ? `${translations.affiliate.customer}: ${item.from_user?.display_name}`
-            : "system"
-        }
-        price={
-          (typeToken && formatMoney(item?.ref_id?.price, { suffix: " đ" })) ||
-          ""
-        }
-        title={item?.ref_id?.title || item.note}
-      />
-    );
+    return <ItemAffiliate item={item} />;
   };
 
   const renderFooterComponent = () => {
@@ -388,8 +346,8 @@ const SecondRoute = () => {
     <HFlatList
       index={1}
       scrollToOverflowEnabled
-      contentContainerStyle={{ flex: 1 }}
-      style={{ paddingHorizontal: 16 }}
+      contentContainerStyle={CS.flex1}
+      style={styles.paddingFlatlist}
       data={listData}
       renderItem={renderItem}
       scrollEventThrottle={16}
@@ -407,3 +365,31 @@ const SecondRoute = () => {
 };
 
 export default AffiliatePage;
+
+const styles = StyleSheet.create({
+  scrollHorizontal: {
+    paddingHorizontal: 16,
+    marginTop: 16,
+    flexDirection: "row",
+    gap: 8,
+    marginBottom: 8,
+  },
+  txtTabBarForcusd: {
+    ...CS.hnBold,
+    fontSize: 14,
+    color: palette.primary,
+    margin: 8,
+  },
+  txtTabBar: {
+    ...CS.hnBold,
+    fontSize: 14,
+    color: palette.text,
+    margin: 8,
+  },
+  viewTabBar: {
+    backgroundColor: palette.background,
+  },
+  paddingFlatlist: {
+    paddingHorizontal: 16,
+  },
+});

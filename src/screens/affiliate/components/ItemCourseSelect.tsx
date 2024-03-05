@@ -30,7 +30,7 @@ const ItemCourseSelect = ({
       onPress={onPressItem}
     >
       <CustomCheckbox isSelected={isSeleted} />
-      <View style={[styles.viewImage, { marginLeft: 10, marginRight: 12 }]}>
+      <View style={[styles.viewImage, styles.viewMarginImage]}>
         <FastImage
           source={{
             uri: item?.url,
@@ -41,16 +41,14 @@ const ItemCourseSelect = ({
         />
       </View>
 
-      <View style={{ flex: 1, gap: 4 }}>
+      <View style={styles.flex1}>
         <Text numberOfLines={1} style={CS.hnSemiBold}>
           {item.name}
         </Text>
         <Text numberOfLines={2} style={CS.hnSemiBold}>
           {item.description}
         </Text>
-        <Text
-          style={{ ...CS.hnRegular, color: palette.textOpacity8 }}
-        >{`${formatMoney(item.price)} đ`}</Text>
+        <Text style={styles.txtMoney}>{`${formatMoney(item.price)} đ`}</Text>
       </View>
     </PressableBtn>
   );
@@ -59,9 +57,21 @@ const ItemCourseSelect = ({
 export default ItemCourseSelect;
 
 const styles = StyleSheet.create({
+  viewMarginImage: {
+    marginLeft: 10,
+    marginRight: 12,
+  },
   viewImage: {
     width: 80,
     height: 80,
     borderRadius: 4,
+  },
+  flex1: {
+    flex: 1,
+    gap: 4,
+  },
+  txtMoney: {
+    ...CS.hnRegular,
+    color: palette.textOpacity8,
   },
 });
