@@ -134,6 +134,8 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
     });
   };
 
+  console.log(2222222, partner_id);
+
   const openUserProfile = () => {};
 
   const _blockUser = () => {
@@ -237,6 +239,7 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
     if (isGroup) return;
     NavigationService.navigate(SCREENS.PROFILE_CURRENT_USER, {
       _id: partner_id._id,
+      userInfo: partner_id,
     });
   };
 

@@ -78,7 +78,7 @@ const ImageLoad = (props: Props) => {
           source={
             isAvatar
               ? require("assets/images/default_avatar.jpg")
-              : require("assets/images/defaultCover.jpg")
+              : require("assets/images/defaultCover.png")
           }
           style={{ width: "100%", height: "100%" }}
         />

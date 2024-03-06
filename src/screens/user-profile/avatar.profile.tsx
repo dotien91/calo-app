@@ -22,6 +22,8 @@ import { updateProfile } from "@services/api/user.api";
 import { showToast } from "@helpers/super.modal.helper";
 import { translations } from "@localization";
 import SkeletonPlaceholder from "@shared-components/skeleton";
+import ImageLoad from "@shared-components/image-load/ImageLoad";
+import PressableBtn from "@shared-components/button/PressableBtn";
 
 interface UploadAvatarProps {
   userInfo: TypedUser | null;
@@ -32,17 +34,58 @@ const AvatarProfile = ({ userInfo, customStyle }: UploadAvatarProps) => {
   const widthScreen = Dimensions.get("window").width;
 
   const userData = useStore((store) => store.userData);
+  const setUserData = useStore((store) => store.setUserData);
+
   const theme = useTheme();
   const { colors } = theme;
-  const [linkAvatar, setLinkAvatar] = useState(
-    userInfo?.user_avatar_thumbnail || "",
-  );
+  const [linkAvatar, setLinkAvatar] = useState(userInfo?.user_avatar || "");
   const [updateing, setUpdating] = useState(false);
   const _setLinkAvatar = useStore((store) => store.setLinkAvatar);
 
   useEffect(() => {
-    setLinkAvatar(userInfo?.user_avatar_thumbnail || "");
+    setLinkAvatar(userInfo?.user_avatar || "");
   }, [userInfo]);
+
+  const onPressChangeCover = async () => {
+    if (updateing) return;
+    selectMedia({
+      config: { mediaType: "photo", cropping: true, width: 400, height: 400 },
+      callback: async (image) => {
+        const res = await uploadMedia({
+          name: image?.filename || image.path?.split("/")?.reverse()?.[0] || "",
+          uri: isIos() ? image.path?.replace("file://", "") : image.path,
+          type: image.mime,
+        });
+        if (res?.[0]?.callback?._id) {
+          const params = {
+            _id: userData?._id,
+            user_cover: res?.[0]?.callback?.media_url,
+          };
+          setUpdating(true);
+          setUserData({
+            ...userData,
+            user_cover: res?.[0]?.callback?.media_url,
+          });
+          updateProfile(params).then((res) => {
+            if (!res.isError) {
+              showToast({
+                type: "success",
+                message: translations.updateSuccess,
+              });
+              setUpdating(false);
+              eventEmitter.emit("reload_list_post");
+            } else {
+              showToast({
+                type: "error",
+                message: translations.somethingWentWrong,
+              });
+              setUpdating(false);
+            }
+          });
+        }
+      },
+    });
+  };
 
   const onPressChangeAvatar = async () => {
     if (updateing) return;
@@ -84,6 +127,12 @@ const AvatarProfile = ({ userInfo, customStyle }: UploadAvatarProps) => {
     });
   };
 
+  const isMe = React.useMemo(() => {
+    return userInfo?._id == userData._id;
+  }, [userInfo, userData]);
+
+  if (isMe) userInfo = userData;
+
   if (!userInfo?._id) {
     return (
       <View style={styles.container}>
@@ -94,17 +143,43 @@ const AvatarProfile = ({ userInfo, customStyle }: UploadAvatarProps) => {
     );
   }
 
+  const renderBg = () => {
+    const url = userInfo?.user_cover;
+    if (!url && !isMe)
+      return (
+        <View
+          style={{
+            height: 60,
+          }}
+        />
+      );
+    return (
+      <View>
+        <ImageLoad
+          isAvatar={false}
+          style={{ height: (widthScreen * 9) / 16, width: widthScreen }}
+          source={{
+            uri: url,
+          }}
+        />
+        {isMe && (
+          <PressableBtn onPress={onPressChangeCover} style={styles.iconCover}>
+            <Icon
+              name="camera-outline"
+              type={IconType.Ionicons}
+              color={colors.text}
+              size={25}
+            />
+          </PressableBtn>
+        )}
+      </View>
+    );
+  };
+
   return (
     <View style={[styles.container, customStyle && customStyle]}>
       <View style={{ ...CommonStyle.center, flex: 1 }}>
-        <Image
-          style={{ height: (widthScreen * 9) / 16, width: widthScreen }}
-          source={{
-            uri: userInfo?.background_image
-              ? userInfo?.background_image
-              : "https://cdn.vntrip.vn/cam-nang/wp-content/uploads/2017/08/van-mieu-quoc-tu-giam.jpg",
-          }}
-        />
+        {renderBg()}
         <Image
           style={[styles.viewAvatar, { position: "absolute", bottom: -50 }]}
           source={
@@ -165,5 +240,11 @@ const styles = StyleSheet.create({
     backgroundColor: palette.background2,
     ...CommonStyle.center,
     borderRadius: 15,
+  },
+  iconCover: {
+    position: "absolute",
+    right: 8,
+    bottom: 8,
+    zIndex: 1,
   },
 });

@@ -16,6 +16,7 @@ import {
   getStatusBarHeight,
 } from "react-native-iphone-screen-helper";
 import { HFlatList } from "react-native-head-tab-view";
+import { useRoute } from "@react-navigation/native";
 
 import useStore from "@services/zustand/store";
 import CommonStyle from "@theme/styles";
@@ -40,6 +41,7 @@ import SkeletonPlaceholder from "@shared-components/skeleton";
 import { getCourseList } from "@services/api/course.api";
 import CourseItem from "@screens/course-tab/components/course.item";
 import LoadingItem from "@shared-components/loading.item";
+
 const initialLayout = WindowWidth;
 interface ProfileUserProps {
   route: any;
@@ -191,8 +193,11 @@ const ProfileUser = (props: ProfileUserProps) => {
   const userData = useStore((store) => store.userData);
   const _id = props.route?.params?._id || userData?._id;
   const theme = useTheme();
+  const route = useRoute();
   const { colors } = theme;
-  const [userInfo, setUserInfo] = useState<TypedUser | null>(null);
+  const [userInfo, setUserInfo] = useState<TypedUser | null>(
+    route.params?.["userInfo"],
+  );
 
   const _getUserById = (id: string) => {
     getUserById(id).then((res) => {

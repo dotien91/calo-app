@@ -38,8 +38,9 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
 
   const goToProfileCurrentUser = () => {
     if (!isProfile) {
-      NavigationService.push(SCREENS.PROFILE_CURRENT_USER, {
+      NavigationService.navigate(SCREENS.PROFILE_CURRENT_USER, {
         _id: data?.user_id?._id,
+        userInfo: data.user_id,
       });
     }
   };

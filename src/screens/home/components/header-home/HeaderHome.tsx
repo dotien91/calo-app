@@ -24,6 +24,7 @@ const HeaderHome = () => {
     if (userData) {
       NavigationService.push(SCREENS.PROFILE_CURRENT_USER, {
         _id: userData._id,
+        userInfo: userData,
       });
     } else {
       NavigationService.push(SCREENS.LOGIN_PAGE);
