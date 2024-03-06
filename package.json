@@ -13,6 +13,7 @@
     "@motify/core": "0.18.0",
     "@notifee/react-native": "^7.8.2",
     "@ptomasroos/react-native-multi-slider": "^2.2.2",
+    "@react-native-clipboard/clipboard": "^1.13.2",
     "@react-native-community/art": "^1.2.0",
     "@react-native-community/checkbox": "^0.5.17",
     "@react-native-community/clipboard": "^1.5.1",

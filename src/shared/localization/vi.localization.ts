@@ -565,6 +565,7 @@ export default {
     selectModal: "Lựa chọn",
     myCourse: "Khoá học của tôi",
     recommendCourse: "Khoá học gợi ý",
+    teachingTime: "Đã dạy",
   },
   seeAll: "Xem tất cả",
   settings: {
@@ -1503,5 +1504,9 @@ export default {
     addBankFaild: "Thêm thẻ ngân hàng không thành công, hoặc đã trùng trước đó",
     withDrawSuccess: "Đặt lệnh rút tiền về tài khoản thành công",
     withDrawFaild: "Đặt lệnh rút tiền không thành công",
+  },
+  referrals: {
+    yourReferral: "Your referral",
+    viewProfile: "View profile",
   },
 };
