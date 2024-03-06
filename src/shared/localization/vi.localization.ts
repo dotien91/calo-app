@@ -1349,6 +1349,23 @@ export default {
     messageMic:
       "Để gọi điện thoại cho người khác, chúng tôi cần quyền truy cập vào microphone của bạn.",
   },
+  listCategory: {
+    course: "Khoá học",
+    tutor: "Gia sư",
+    shop: "Cửa hàng",
+    affiliate: "Tiếp thị liên kết",
+    descriptionTitle: "Hôm nay chúng ta nên làm gì?",
+  },
+  recommendCourse: "Đề xuất khoá học",
+  ieltsHunterLive: "IELTS Hunter Live",
+  nameTutor: "Khoá học của Nguyễn Trung Kiên",
+  titleLive: "Lớp viết IELTS của Nguyễn Trung Kiên",
+  titleName: "IELTS Nghe [MASTERCLASS]: Đạt Band 7+ vào năm 2024",
+  best: "Bán chạy",
+  ratings: "2.3K xếp hạng",
+  buy: "Mua",
+  priceNew: "1,500,000đ",
+  priceOld: "5,000,000đ",
   en: "Tiếng Anh",
   vi: "Tiếng Việt",
   task: {

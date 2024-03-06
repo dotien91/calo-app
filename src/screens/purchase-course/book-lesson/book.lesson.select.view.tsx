@@ -38,7 +38,6 @@ const BookLessonSelectView: React.FC<BookLessonSelectViewProps> = () => {
 
   React.useEffect(() => {
     getTimeAvailable({ course_id: courseId }).then((res) => {
-      console.log("resresres", res);
       if (!res.isError) {
         setData(res.data);
       }

@@ -86,6 +86,7 @@ import NotificationScreen from "@screens/notification/NotificationScreen";
 import TaskScreen from "@screens/profile.screen/task.screen";
 import TeacherCourse from "@screens/teacher-courses/teacher.course";
 
+
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -373,13 +374,12 @@ const Navigation = () => {
           name={SCREENS.PRIVATESETTING}
           component={PrivateSetting}
         />
-
-        {/* <Stack.Screen name={SCREENS.INTRO} component={IntroScreen} /> */}
         <Stack.Screen
           name={SCREENS.DISCOVERSCREEN}
           component={DiscoverScreen}
         />
         <Stack.Screen name={SCREENS.LEADERBOARD} component={LeaderBoard} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

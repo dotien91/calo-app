@@ -69,6 +69,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
   return (
     <View style={CommonStyle.safeAreaView}>
       <HeaderHome />
+      {/* <AboutHome /> */}
       <TabView
         style={CommonStyle.flex1}
         renderTabBar={renderTabBar}
