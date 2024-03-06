@@ -16,6 +16,8 @@ import useStore from "@services/zustand/store";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import CS from "@theme/styles";
 import { USER_TOKEN, _setJson } from "@services/local-storage";
+import IconBtn from "@shared-components/button/IconBtn";
+import useUserHelper from "@helpers/hooks/useUserHelper";
 
 interface SettingScreenProps {}
 
@@ -26,13 +28,21 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
 
   const styles = useMemo(() => createStyles(theme), [theme]);
   const { logout, isLoggedIn, renderViewRequestLogin } = useUserHook();
-
+  const { isTeacher } = useUserHelper();
   const listSetting = [
     {
-      title: translations.settingUser.mycouse,
+      title: translations.settingUser.purchaseCouse,
       icon: require("assets/images/book.png"),
       action: () => {
         NavigationService.navigate(SCREENS.MY_COURES);
+      },
+    },
+    {
+      title: translations.settingUser.mycouse,
+      id: 1,
+      iconFont: "book",
+      action: () => {
+        NavigationService.navigate(SCREENS.TEACHER_COURSES);
       },
     },
     {
@@ -73,15 +83,8 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
       },
     },
     {
-      title: "Khoá học đã mua",
-      icon: "book",
-      action: () => {
-        NavigationService.navigate(SCREENS.SETTINGPROFILESCREEN);
-      },
-    },
-    {
       title: "Mã giảm giá",
-      icon: "ticket-outline",
+      iconFont: "gift",
       action: () => {
         NavigationService.navigate(SCREENS.COUPON_LIST);
       },
@@ -99,6 +102,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
     return (
       <View style={{ backgroundColor: colors.white, flex: 1, marginTop: 20 }}>
         {listSetting.map((item, index) => {
+          if (item?.id == 1 && !isTeacher) return null;
           return (
             <TouchableOpacity
               onPress={item.action}
@@ -109,10 +113,18 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
               key={index}
             >
               <View style={styles.styleViewItemTitle}>
-                <Image
-                  style={{ height: 20, width: 20, marginRight: 8 }}
-                  source={item.icon}
-                ></Image>
+                {item.iconFont ? (
+                  <IconBtn
+                    size={20}
+                    name={item.iconFont}
+                    customStyle={{ marginRight: 8 }}
+                  />
+                ) : (
+                  <Image
+                    style={{ height: 20, width: 20, marginRight: 8 }}
+                    source={item.icon}
+                  ></Image>
+                )}
                 <Text style={styles.styleTextItemTitle}>{item.title}</Text>
               </View>
               <Icon

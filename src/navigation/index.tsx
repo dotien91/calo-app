@@ -84,6 +84,7 @@ import LeaderBoard from "@screens/leader-board/leader.board";
 import ChatListScreen from "@screens/chat/list-chat/chat.list.screen";
 import NotificationScreen from "@screens/notification/NotificationScreen";
 import TaskScreen from "@screens/profile.screen/task.screen";
+import TeacherCourse from "@screens/teacher-courses/teacher.course";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -185,17 +186,7 @@ const Navigation = () => {
   };
 
   const renderHomeworkScreens = () => {
-    <>
-      <Stack.Screen
-        name={SCREENS.ADD_WORK_STUDENT}
-        component={AddWorkStudentScreen}
-      />
-      <Stack.Screen
-        name={SCREENS.CLASSHOMEWORK}
-        component={ClassHomeWorkScreen}
-      />
-      <Stack.Screen name={SCREENS.DETAIL_TASK} component={DetailTaskScreen} />
-    </>;
+    <></>;
   };
 
   return (
@@ -208,13 +199,27 @@ const Navigation = () => {
     >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {renderStackIntro()}
+
         <Stack.Screen
           name={SCREENS.COURSE_LIST}
           component={renderTabNavigation}
         />
+        <Stack.Screen
+          name={SCREENS.CLASSHOMEWORK}
+          component={ClassHomeWorkScreen}
+        />
 
+        <Stack.Screen
+          name={SCREENS.TEACHER_COURSES}
+          component={TeacherCourse}
+        />
         {renderHomeworkScreens()}
+        <Stack.Screen
+          name={SCREENS.ADD_WORK_STUDENT}
+          component={AddWorkStudentScreen}
+        />
 
+        <Stack.Screen name={SCREENS.DETAIL_TASK} component={DetailTaskScreen} />
         <Stack.Screen name={SCREENS.CREATE_WORK} component={CreateWorkScreen} />
         <Stack.Screen name={SCREENS.TASK_SCREEN} component={TaskScreen} />
         <Stack.Screen name={SCREENS.CALL_CLASS} component={CallClassScreen} />
@@ -224,6 +229,7 @@ const Navigation = () => {
           name={SCREENS.NOTIFICATION}
           component={NotificationScreen}
         />
+
         <Stack.Screen
           name={SCREENS.COURSE_CREATE}
           component={CourseCreateScreen}

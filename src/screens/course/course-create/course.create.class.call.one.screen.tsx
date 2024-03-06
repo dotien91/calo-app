@@ -39,6 +39,26 @@ const CreateClassCallOneScreen = () => {
   const [updataTime, setUpdateTime] = useState(false);
   const userData = useStore((store) => store.userData);
 
+  const addOneHour = (timeStr) => {
+    // Split the input time string into hours and minutes
+    const [hours, minutes] = timeStr.split(":").map(Number);
+
+    // Create a new Date object with the given time
+    const time = new Date();
+    time.setHours(hours);
+    time.setMinutes(minutes);
+
+    // Add one hour
+    time.setHours(time.getHours() + 1);
+
+    // Format the result
+    const result = `${(time.getHours() + "").padStart(2, "0") + ""}:${
+      (time.getMinutes() + "").padStart(2, "0") + ""
+    }`;
+    console.log("result", result);
+    return result;
+  };
+
   useEffect(() => {
     const _getTimeAvailable = () => {
       const params = {
@@ -54,6 +74,7 @@ const CreateClassCallOneScreen = () => {
                 return {
                   day: item.day,
                   time_start: item.time_start,
+                  time_end: addOneHour(item.time_start),
                   duration: 1,
                 };
               },
@@ -124,6 +145,8 @@ const CreateClassCallOneScreen = () => {
       const timeSelect = {
         day: date,
         time_start: item.time_start,
+        time_end: addOneHour(item.time_start),
+
         duration: 1,
       };
       if (indexSelected >= 0) {

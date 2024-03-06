@@ -815,6 +815,7 @@ export default {
     support: "Customer support",
     aboutus: "About us",
     mycouse: "My Course",
+    purchaseCouse: "Purchased course",
   },
   aboutUs: {
     aboutUs: "About us",

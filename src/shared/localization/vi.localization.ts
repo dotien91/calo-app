@@ -1330,6 +1330,7 @@ export default {
     support: "Hỗ trợ khách hàng",
     aboutus: "Về chúng tôi",
     mycouse: "Khoá học của tôi",
+    purchaseCouse: "Khoá học đã mua",
   },
   aboutUs: {
     aboutUs: "Về chúng tôi",

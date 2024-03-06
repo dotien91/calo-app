@@ -18,6 +18,8 @@ const TaskItemCommon = ({ item }) => {
   const theme = useTheme();
   const { colors } = theme;
 
+  console.log("itemmmmm", item);
+
   const onClickItemTask = (item) => {
     switch (item.action_type) {
       case ActionTypeTask.LIKE:

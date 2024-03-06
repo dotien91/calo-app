@@ -189,6 +189,7 @@ const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
   //     ></CourseItemProgessbar>
   //   );
   // };
+
   return (
     <View style={{ flex: 1 }}>
       <FlatList

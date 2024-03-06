@@ -29,7 +29,7 @@ const CourseCreateClass = () => {
   const course_id = route.params?.["course_id"];
   const start_time = route.params?.["start_time"];
   const end_time = route.params?.["end_time"];
-
+  console.log(222222222, course_id);
   // truyền các trường từ màn trước sang: course_id, start_time, end_time
   const [updating, setUpdating] = React.useState<boolean>(false);
 

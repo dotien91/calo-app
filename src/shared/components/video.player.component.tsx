@@ -60,7 +60,7 @@ const VideoPlayer = ({
           type={IconType.Ionicons}
           name={"play-circle"}
           size={40}
-          color={palette.primary}
+          color={palette.white}
           style={[styles.icon, { top: height / 2 - 20 }]}
         />
       )}

@@ -17,7 +17,6 @@ import Button from "@shared-components/button/Button";
 import createStyles from "./style.class.home.work";
 import InputHook from "@shared-components/form/InputHookForm";
 import { Controller, useForm } from "react-hook-form";
-import { SCREENS } from "constants";
 import { translations } from "@localization";
 import Header from "@shared-components/header/Header";
 import RNSwitch from "@shared-components/switch/RNSwitch";
@@ -49,14 +48,11 @@ export default function CreateWorkScreen() {
   const route = useRoute();
   const defaultData = route.params?.["defaultData"];
 
-  const class_id =
-    route.params?.["classId"] ||
-    defaultData?.class_id ||
-    "65c09e49d7d7ab3a76dc2fd0";
+  const class_id = defaultData?.class_id || route.params?.["class_id"];
   const defaultListFile = (defaultData?.attach_files || []).map(
     (item) => item._id,
   );
-  console.log("defaultData", { defaultData, defaultListFile });
+  console.log("defaultData", { class_id, defaultData, defaultListFile });
   const {
     control,
     handleSubmit,
@@ -122,7 +118,7 @@ export default function CreateWorkScreen() {
           type: "success",
           message: translations.homework.updateTaskSuccess,
         });
-        NavigationService.navigate(SCREENS.CLASSHOMEWORK);
+        NavigationService.goBack();
         eventEmitter.emit("reload_data");
       } else {
         showToast({
@@ -142,7 +138,7 @@ export default function CreateWorkScreen() {
           type: "success",
           message: translations.homework.createTaskSuccess,
         });
-        NavigationService.navigate(SCREENS.CLASSHOMEWORK);
+        NavigationService.goBack();
         eventEmitter.emit("reload_data");
       } else {
         showToast({

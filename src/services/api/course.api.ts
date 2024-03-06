@@ -309,7 +309,10 @@ export async function getListMemberCourse(params: {
   });
 }
 
-export async function getMyCourse(data: { user_id: string; auth_id: string }) {
+export async function getMyCourse(data: {
+  created_user_id: string;
+  auth_id: string;
+}) {
   return request({
     method: METHOD.POST,
     urlPath: "course/my-course",

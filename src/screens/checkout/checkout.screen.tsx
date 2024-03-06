@@ -373,15 +373,20 @@ const CheckoutScreen = () => {
 
     const data = {
       payment_method: isVnPayMethod ? "vn_pay" : "smart_banking",
+      deep_link: "ieltshunter://payment",
       plan_objects: [
         {
           amount_of_package: "1",
           plan_id: courseData.plan_id,
           type: "Course",
-          payload: dataPayload,
+          payload: {
+            type: courseData.type == "Call 1-1" ? "oneone" : "class",
+            data: dataPayload,
+          },
         },
       ],
     };
+    console.log(2222222, data);
     createVnpayUrl(data).then(async (res) => {
       console.log("createVnpayUrl res", { timePick, res, data });
       closeSuperModal();

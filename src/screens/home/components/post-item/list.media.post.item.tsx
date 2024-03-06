@@ -12,6 +12,7 @@ import {
   EnumStyleModalType,
   showSuperModal,
 } from "@helpers/super.modal.helper";
+import { palette } from "@theme/themes";
 
 const BORDER_RADIUS2 = 12;
 
@@ -63,7 +64,7 @@ const ListFile = ({ listFile, sizeImage2 }: ListFileProps) => {
           size={62}
           name={"play-circle"}
           type={IconType.Ionicons}
-          color={colors.primary}
+          color={palette.white}
         />
       </View>
     );
