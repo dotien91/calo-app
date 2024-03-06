@@ -53,5 +53,37 @@ export default () => {
       ...CommonStyle.hnSemiBold,
       color: palette.textOpacity4,
     },
+    btnPrimary: {
+      paddingVertical: 8,
+      paddingHorizontal: 16,
+      ...CommonStyle.center,
+      backgroundColor: palette.primary,
+    },
+    txtBtnPrimary: {
+      ...CommonStyle.hnSemiBold,
+      color: palette.white,
+    },
+    btnOutline: {
+      paddingVertical: 8,
+      paddingHorizontal: 16,
+      ...CommonStyle.center,
+      ...CommonStyle.borderStyle,
+      borderColor: colors.primary,
+      backgroundColor: palette.white,
+    },
+    txtBtnOutline: {
+      ...CommonStyle.hnSemiBold,
+      color: palette.primary,
+    },
+    btnDisabled: {
+      paddingVertical: 8,
+      paddingHorizontal: 16,
+      ...CommonStyle.center,
+      backgroundColor: palette.btnInactive,
+    },
+    txtBtnDisabled: {
+      ...CommonStyle.hnSemiBold,
+      color: palette.textOpacity4,
+    },
   });
 };

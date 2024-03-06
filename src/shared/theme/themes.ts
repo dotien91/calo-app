@@ -14,6 +14,7 @@ export const palette = {
   borderColor1: "rgba(0, 53, 128, 0.08)",
   borderColor2: "#DCDBE2",
   white: "#fff",
+  white8: "#FFFFFFCE",
   black: "#101214",
   black6: "#1C253099",
   button: "#1c1e21",
@@ -42,6 +43,7 @@ export const palette = {
   blue: "#0a86cf",
   orange: "#ea7a16",
   green: "rgba(43, 196, 86, 1)",
+  green2: "#2BC456",
   timeColor: "rgba(22, 28, 36, 0.64)",
   Transparent: "#00000000",
   backgroundMain: "#FA8072",
@@ -71,6 +73,8 @@ export const palette = {
   grey2: "rgba(240, 243, 246, 1)",
   grey3: "rgba(232, 235, 239, 1)",
   grey1: "rgba(246, 248, 250, 1)",
+  grey4: "#F6F8FA",
+  grey5: "#EBEBEF",
   btnInactive: "rgba(0, 53, 128, 0.1)",
   textOpacity8: "rgba(22, 28, 36, 0.8)",
   textOpacity6: "rgba(22, 28, 36, 0.64)",
@@ -78,6 +82,7 @@ export const palette = {
   textOpacity2: "rgba(22, 28, 36, 0.90)",
   gold: "rgba(255, 163, 71, 1)",
   bgInput: "rgba(232, 235, 239, 1)",
+  bgInput2: "rgba(240, 243, 246, 1)",
   bgBestSeller: "rgba(255, 237, 237, 1)",
   red: "rgba(252, 53, 53, 1)",
   btnRedPrimary: "rgba(225, 66, 66, 1)",
@@ -93,6 +98,7 @@ export const palette = {
   greenOpa: "rgba(232, 247, 239, 1)",
   blueBorder: "rgba(53, 174, 255, 1)",
   greenText: "rgba(43, 196, 86, 1)",
+  borderInput: "rgba(0, 53, 128, 0.2)",
 };
 
 interface ExtendedTheme extends Theme {

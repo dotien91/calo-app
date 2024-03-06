@@ -21,7 +21,7 @@ export const addSignPrefixAndSuffix = (
   }
 };
 
-export default (input: number, options?: FormatNumberOptions) => {
+export default (input: number | undefined, options?: FormatNumberOptions) => {
   const {
     precision,
     separator = ",",
@@ -32,6 +32,9 @@ export default (input: number, options?: FormatNumberOptions) => {
     showPositiveSign,
     signPosition = "afterPrefix",
   } = options || {};
+  if (input === undefined) {
+    return "";
+  }
 
   const negative = ignoreNegative ? false : input < 0;
   const sign = negative ? "-" : showPositiveSign ? "+" : "";

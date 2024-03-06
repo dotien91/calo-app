@@ -142,6 +142,7 @@ export interface TypedFollowUser {
 export enum EnumColors {
   textOpacity4 = "textOpacity4",
   textOpacity6 = "textOpacity6",
+  textOpacity8 = "textOpacity8",
   text = "text",
   primary = "primary",
   white = "white",

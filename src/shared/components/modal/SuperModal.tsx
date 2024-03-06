@@ -32,6 +32,9 @@ import ListActionInner from "./modal-inner/ListActionInner";
 import GamificationView from "./modal-inner/GamificationView";
 import EarnPointView from "./modal-inner/EarnPointView";
 import ListCourseLiveStream from "@screens/stream/stream-modal/stream.modal.list.course";
+import FilterAffiliate from "@screens/affiliate/components/FilterAffiliate";
+import ListBank from "./modal-inner/ListBank";
+import SelectRadioButton from "@screens/code-activations/select.radio.button";
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
 // using normal one.
@@ -49,7 +52,7 @@ import ListCourseLiveStream from "@screens/stream/stream-modal/stream.modal.list
 //   data
 // })
 
-interface SuperModalProps { }
+interface SuperModalProps {}
 
 const SuperModal: React.FC<SuperModalProps> = () => {
   const [data, setData] = useState();
@@ -158,8 +161,8 @@ const SuperModal: React.FC<SuperModalProps> = () => {
       <StickBottomModal
         isVisible={visible}
         onBackdropPress={closeModal}
-        swipeDirection={["down"]}
-        onSwipeComplete={closeModal}
+        // swipeDirection={["down"]}
+        // onSwipeComplete={closeModal}
       >
         <View style={styles.bottomInner}>
           {!data?.hideCloseIcon && (
@@ -222,10 +225,18 @@ const SuperModal: React.FC<SuperModalProps> = () => {
             <GamificationView {...data} closeModal={closeModal} />
           )}
           {contentModalType == EnumModalContentType.CustomView &&
-            data.customView()
-          }
+            data.customView()}
           {contentModalType == EnumModalContentType.ListCourse && (
             <ListCourseLiveStream {...data} />
+          )}
+          {contentModalType == EnumModalContentType.FilterAffiliate && (
+            <FilterAffiliate data={data} />
+          )}
+          {contentModalType == EnumModalContentType.SearchBank && (
+            <ListBank {...data} closeModal={closeModal} />
+          )}
+          {contentModalType == EnumModalContentType.SelectSort && (
+            <SelectRadioButton data={data} />
           )}
         </View>
       </StickBottomModal>
@@ -243,8 +254,8 @@ const SuperModal: React.FC<SuperModalProps> = () => {
           contentModalType == EnumModalContentType.LottieAnimation
             ? 0
             : contentModalType == EnumModalContentType.Loading
-              ? 0.1
-              : 0.6
+            ? 0.1
+            : 0.6
         }
       >
         {contentModalType == EnumModalContentType.LottieAnimation && (

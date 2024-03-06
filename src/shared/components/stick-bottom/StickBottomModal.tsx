@@ -20,6 +20,7 @@ export default function StickBottomModal({
       style={styles.modal}
       animationIn={"slideInUp"}
       animationInTiming={200}
+      avoidKeyboard={true}
     >
       {/* {typeof header === "string" ? (
         <View style={styles.headerWrap}>

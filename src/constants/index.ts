@@ -77,6 +77,11 @@ export const SCREENS = {
   SETTINGPPROFILE: "SettingProfile",
   TASK_SCREEN: "TaskScreen",
   TEACHER_COURSES: "TeacherCourses",
+  AFFILIATE: "Affiliate",
+  WITHDRAW: "Withdraw",
+  BANK_LIST: "BankList",
+  ADD_BANK: "AddBank",
+  CODE_ACTIVATIONS_SCREEN: "CodeActivationsScreen",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

@@ -86,7 +86,6 @@ import intro1 from "./welcome21.svg";
 import intro3 from "./welcome23.svg";
 import icKing from "./king.svg";
 import icThreeBook from "./threebook.svg";
-import icShop from "./shop.svg";
 import icFind from "./find.svg";
 import icGradution from "./gradution.svg";
 import icLevel1 from "./lv1.svg";
@@ -99,6 +98,11 @@ import icLevel7 from "./lv7.svg";
 import icLevel8 from "./lv8.svg";
 import icLevel9 from "./lv9.svg";
 import icLevel10 from "./lv10.svg";
+import icPoints from "./icon-points.svg";
+import icTutor from "./icon-tutor.svg";
+import icShop from "./icon-shop.svg";
+import icAffiliate from "./icon-affiliate.svg";
+import icLine from "./icon-line.svg";
 
 const Icons = {
   intro1,
@@ -200,6 +204,10 @@ const Icons = {
   icLevel7,
   icLevel8,
   icLevel9,
+  icPoints,
+  icTutor,
+  icAffiliate,
+  icLine,
 };
 
 interface IconSvgProps {

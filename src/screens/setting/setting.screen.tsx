@@ -89,6 +89,20 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
         NavigationService.navigate(SCREENS.COUPON_LIST);
       },
     },
+    {
+      title: "Code activations",
+      icon: "book",
+      action: () => {
+        NavigationService.navigate(SCREENS.CODE_ACTIVATIONS_SCREEN);
+      },
+    },
+    // {
+    //   title: translations.affiliate.yourIncome,
+    //   icon: "person-remove-outline",
+    //   action: () => {
+    //     NavigationService.navigate(SCREENS.AFFILIATE);
+    //   },
+    // },
   ];
 
   const hardCodeToken = () => {

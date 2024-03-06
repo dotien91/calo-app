@@ -68,6 +68,7 @@ export function useListData<T>(
     // setIsLoading(true);
     requestData({ page: "1", ...params }).then((res: any) => {
       const newData = res.data;
+      console.log("reload");
       // setIsLoading(false);
       if (!res.isError && lodash.isArray(newData)) {
         isFetching.current = false;

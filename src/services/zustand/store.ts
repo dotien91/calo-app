@@ -7,10 +7,15 @@ import createPostSlice, { PostSlice } from "@services/zustand/post/PostSlice";
 import createCourseSlice, {
   CourseSlice,
 } from "@services/zustand/course/CourseSlice";
-
+import createPaymentSlice, {
+  PaymentSlice,
+} from "@services/zustand/payment/PaymentSlice";
 import createNotificationSlice, {
   NotificationSlice,
 } from "@services/zustand/notification/NotificationSlice";
+import createAffiliateSlice, {
+  AffiliateSlice,
+} from "@services/zustand/affiliate/AffiliateSlice";
 import createSavePostSlice, {
   SavePostSlice,
 } from "@services/zustand/save-post/SavePostSlice";
@@ -22,7 +27,9 @@ export type StoreState = AppSlice &
   ChatSlice &
   CourseSlice &
   SavePostSlice &
-  NotificationSlice;
+  PaymentSlice &
+  NotificationSlice &
+  AffiliateSlice;
 export type StoreSlice<T> = (
   set: StoreApi<StoreState>["setState"],
   get: StoreApi<StoreState>["getState"],
@@ -51,6 +58,8 @@ const useStore = create<StoreState>()(
       ...createSavePostSlice(set, get),
       ...createCourseSlice(set, get),
       ...createNotificationSlice(set, get),
+      ...createPaymentSlice(set, get),
+      ...createAffiliateSlice(set, get),
     }),
     {
       name: "store",

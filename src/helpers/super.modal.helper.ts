@@ -25,6 +25,9 @@ export enum EnumModalContentType {
   LottieAnimation = "lottie-animation",
   CustomView = "custom-view",
   ListCourse = "list-course",
+  FilterAffiliate = "filter-affiliate",
+  SearchBank = "search-bank",
+  SelectSort = "select-sort",
 }
 
 export enum EnumStyleModalType {

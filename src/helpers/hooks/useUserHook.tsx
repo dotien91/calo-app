@@ -36,7 +36,7 @@ export const useUserHook = () => {
         NavigationService.navigate(SCREENS.HOME);
         showToast({
           type: "success",
-          message: "Đăng nhập thành công!",
+          message: translations.loginSuccess,
         });
       }
     });

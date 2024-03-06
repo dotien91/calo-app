@@ -330,3 +330,26 @@ export const isSameMinute = (date1: string, date2: string) => {
     _date1.getYear() == _date2.getYear()
   );
 };
+
+export const formatFromDateToDate = (date) => {
+  const _dateStart = new Date(date.from);
+  const _dateEnd = new Date(date.to);
+  if (
+    _dateStart.toString() === "Invalid Date" ||
+    _dateEnd.toString() === "Invalid Date"
+  ) {
+    return "";
+  }
+  const yearStart = _dateStart.getFullYear();
+  const monthStart = _dateStart.getMonth() + 1;
+  const dayStart = _dateStart.getDate();
+  const yearEnd = _dateEnd.getFullYear();
+  const monthEnd = _dateEnd.getMonth() + 1;
+  const dayEnd = _dateEnd.getDate();
+
+  return `${yearStart}-${monthStart < 10 ? `0${monthStart}` : monthStart}-${
+    dayStart < 10 ? `0${dayStart}` : dayStart
+  } - ${yearEnd}-${monthEnd < 10 ? `0${monthEnd}` : monthEnd}-${
+    dayEnd < 10 ? `0${dayEnd}` : dayEnd
+  }`;
+};

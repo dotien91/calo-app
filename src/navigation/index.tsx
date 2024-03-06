@@ -71,8 +71,6 @@ import CallClassScreen from "@screens/call-class/call.class.screen";
 import ListCouponForMyCourse from "@screens/coupon/coupon.list";
 import CouponCreateScreen from "@screens/coupon/coupon.create";
 import TabFollow from "@screens/tab-follow/tab.follow";
-import BlackList from "@screens/black-list/black.list";
-import PrivateSetting from "@screens/private.setting/private.setting";
 import { _getJson } from "@services/local-storage";
 import SettingProfileScreen from "@screens/profile.screen/profile.screen";
 import ClassHomeWorkScreen from "@screens/class-home-work/class.home.work.screen";
@@ -80,12 +78,21 @@ import CreateWorkScreen from "@screens/class-home-work/create.work.screen";
 import DetailTaskScreen from "@screens/class-home-work/detail.task.screen";
 import AddWorkStudentScreen from "@screens/class-home-work/add.work.student.screen";
 import DiscoverScreen from "@screens/discover-screen/discover.screen";
-import LeaderBoard from "@screens/leader-board/leader.board";
 import ChatListScreen from "@screens/chat/list-chat/chat.list.screen";
 import NotificationScreen from "@screens/notification/NotificationScreen";
 import TaskScreen from "@screens/profile.screen/task.screen";
 import TeacherCourse from "@screens/teacher-courses/teacher.course";
 
+import AffiliatePage from "@screens/affiliate/affiliate.screen";
+import WithdrawScreen from "@screens/withdraw/withdraw.screen";
+import BankListScreen from "@screens/withdraw/bank.list.screen";
+import AddBankScreen from "@screens/withdraw/add.bank.screen";
+// import TabFollow from "@screens/tab-follow/tab.follow";
+// import BlackList from "@screens/black-list/black.list";
+// import PrivateSetting from "@screens/private.setting/private.setting";
+// import { _getJson } from "@services/local-storage";
+// import SettingProfileScreen from "@screens/profile.screen/profile.screen";
+import CodeActivationsScreen from "@screens/code-activations/code.activations.screen";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -186,8 +193,14 @@ const Navigation = () => {
     );
   };
 
-  const renderHomeworkScreens = () => {
-    <></>;
+  const renderBanksStack = () => {
+    return (
+      <>
+        <Stack.Screen name={SCREENS.BANK_LIST} component={BankListScreen} />
+        <Stack.Screen name={SCREENS.WITHDRAW} component={WithdrawScreen} />
+        <Stack.Screen name={SCREENS.ADD_BANK} component={AddBankScreen} />
+      </>
+    );
   };
 
   return (
@@ -209,12 +222,13 @@ const Navigation = () => {
           name={SCREENS.CLASSHOMEWORK}
           component={ClassHomeWorkScreen}
         />
+        {renderBanksStack()}
 
         <Stack.Screen
           name={SCREENS.TEACHER_COURSES}
           component={TeacherCourse}
         />
-        {renderHomeworkScreens()}
+        {/* {renderHomeworkScreens()} */}
         <Stack.Screen
           name={SCREENS.ADD_WORK_STUDENT}
           component={AddWorkStudentScreen}
@@ -369,17 +383,21 @@ const Navigation = () => {
           component={PaymentSuccess}
         />
         <Stack.Screen name={SCREENS.TAB_FOLLOW} component={TabFollow} />
+        <Stack.Screen name={SCREENS.AFFILIATE} component={AffiliatePage} />
+        {/* <Stack.Screen name={SCREENS.TAB_FOLLOW} component={TabFollow} />
         <Stack.Screen name={SCREENS.BLACK_LIST} component={BlackList} />
         <Stack.Screen
           name={SCREENS.PRIVATESETTING}
           component={PrivateSetting}
         />
         <Stack.Screen
-          name={SCREENS.DISCOVERSCREEN}
-          component={DiscoverScreen}
+          name={SCREENS.SETTINGPROFILESCREEN}
+          component={SettingProfileScreen}
+        /> */}
+        <Stack.Screen
+          name={SCREENS.CODE_ACTIVATIONS_SCREEN}
+          component={CodeActivationsScreen}
         />
-        <Stack.Screen name={SCREENS.LEADERBOARD} component={LeaderBoard} />
-
       </Stack.Navigator>
     </NavigationContainer>
   );

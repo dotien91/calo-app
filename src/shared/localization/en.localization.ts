@@ -44,6 +44,7 @@ export default {
   loginSuccess: "Login success!",
   goBackHome: "Go back home",
   next: "Next",
+  other: "Other",
   error: {
     unknown: "Unknow error!",
     invalidPhoneEmail: "Phone/Email invalid",
@@ -536,6 +537,11 @@ export default {
     descriptionPoint:
       "This is the number of points the student will receive for each corresponding action",
   },
+  codeActivations: {
+    sortBy: "Sort by",
+    timeLatest: "Time: Latest first",
+    priceHighest: "Price: highest first",
+  },
   profile: {
     editProfile: "Edit Profile",
     saveProfile: "Save profile",
@@ -817,6 +823,13 @@ export default {
     mycouse: "My Course",
     purchaseCouse: "Purchased course",
   },
+  listCategory: {
+    descriptionTitle: "What should we do today?",
+    course: "Course",
+    tutor: "Tutor",
+    shop: "Shop",
+    affiliate: "Affiliate",
+  },
   aboutUs: {
     aboutUs: "About us",
     termofus: "Term of us",
@@ -929,6 +942,42 @@ export default {
     levelUp: "Level up!",
     levelUpDes:
       "Earn more point and grow your level by doing tasks and improving your skill.",
+  },
+  affiliate: {
+    yourIncome: "Your Income",
+    withdraw: "Withdraw",
+    today: "To day",
+    thisMonth: "This month",
+    lastMonth: "Last month",
+    date: "Date",
+    product: "Product",
+    user: "User",
+    customer: "Customer",
+    emptyTransaction: "Empty transaction",
+    fromDate: "From date",
+    toDate: "To date",
+  },
+  en: "English",
+  vi: "Vietnamese",
+  withDraw: {
+    header: "Withdraw",
+    your_money: "Your money",
+    withdraw_amount: "Withdraw amount",
+    min_withdraw_des: "Minimum amount for withdrawal is 100.000đ",
+    bank_des: "Unlimited time for free cashout",
+    add_bank: "Add bank",
+    bank_title: "Bank Account",
+    card_number: "Card/Account number",
+    card_number_placeholder: "Enter Card/Account number",
+    card_name: "Card/Account holder name",
+    card_number_error: "Please input your bank account number (4 to 14 digits)",
+    search_bank: "Search bank",
+    choose_bank: "Choose bank",
+    bank_acc: "Bank account",
+    addBankSuccess: "Add card success",
+    addBankFaild: "Adding a new bank card failed",
+    withDrawSuccess: "Placed withdrawal order to account successfully",
+    withDrawFaild: "Withdrawal order failed",
   },
 };
 /* eslint-disable max-len */
