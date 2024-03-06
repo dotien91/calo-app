@@ -17,6 +17,12 @@ import ListPost from "./list.post";
 import CommonStyle from "@theme/styles";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import useStore from "@services/zustand/store";
+import {
+  EnumModalContentType,
+  EnumStyleModalType,
+  closeSuperModal,
+  showSuperModal,
+} from "@helpers/super.modal.helper";
 
 interface HomeScreenProps {}
 
@@ -65,6 +71,22 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
       style={{ backgroundColor: colors.background }}
     />
   );
+  const _showSuperModalCourse = () => {
+    showSuperModal({
+      contentModalType: EnumModalContentType.ListCourse,
+      styleModalType: EnumStyleModalType.Middle,
+      data: {
+        cb: (screen, course_id, course) => {
+          console.log(screen, course_id, course);
+          NavigationService.navigate(screen, {
+            course_id: course_id,
+            dataCourse: course,
+          });
+          closeSuperModal();
+        },
+      },
+    });
+  };
 
   return (
     <View style={CommonStyle.safeAreaView}>
@@ -92,7 +114,8 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
             right: 10,
             zIndex: 1,
           }}
-          onPress={() => NavigationService.push(SCREENS.POST_SCREEN)}
+          onPress={_showSuperModalCourse}
+          // onPress={() => NavigationService.push(SCREENS.POST_SCREEN)}
         >
           <Icon
             name={"add-outline"}

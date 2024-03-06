@@ -49,7 +49,7 @@ import ListCourseLiveStream from "@screens/stream/stream-modal/stream.modal.list
 //   data
 // })
 
-interface SuperModalProps { }
+interface SuperModalProps {}
 
 const SuperModal: React.FC<SuperModalProps> = () => {
   const [data, setData] = useState();
@@ -222,8 +222,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
             <GamificationView {...data} closeModal={closeModal} />
           )}
           {contentModalType == EnumModalContentType.CustomView &&
-            data.customView()
-          }
+            data.customView()}
           {contentModalType == EnumModalContentType.ListCourse && (
             <ListCourseLiveStream {...data} />
           )}
@@ -243,8 +242,8 @@ const SuperModal: React.FC<SuperModalProps> = () => {
           contentModalType == EnumModalContentType.LottieAnimation
             ? 0
             : contentModalType == EnumModalContentType.Loading
-              ? 0.1
-              : 0.6
+            ? 0.1
+            : 0.6
         }
       >
         {contentModalType == EnumModalContentType.LottieAnimation && (
@@ -258,6 +257,9 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         )}
         {contentModalType == EnumModalContentType.CustomView &&
           data.customView()}
+        {contentModalType == EnumModalContentType.ListCourse && (
+          <ListCourseLiveStream {...data} />
+        )}
       </Modal>
     );
   }
@@ -266,6 +268,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
 const styles = StyleSheet.create({
   modal: {
     ...CommonStyle.flexCenter,
+    backgroundColor: palette.white,
   },
   bottomInner: {
     // ...CommonStyle.flex1,

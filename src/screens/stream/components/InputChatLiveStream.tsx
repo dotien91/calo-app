@@ -22,6 +22,13 @@ import { throttle } from "lodash";
 import images from "./reaction-animation/Themes/Images";
 import { Device } from "@utils/device.utils";
 import eventEmitter from "@services/event-emitter";
+import PressableBtn from "@shared-components/button/PressableBtn";
+import {
+  EnumModalContentType,
+  EnumStyleModalType,
+  showSuperModal,
+} from "@helpers/super.modal.helper";
+import IconSvg from "assets/svg";
 
 const reactionData = [
   { type: "like", image: images.like_static, gif: images.like_gif },
@@ -64,6 +71,21 @@ const InputChatLive: React.FC<InputChatLiveProps> = ({
     const text = inputRef.current.value || "";
     sendChatMessage(text);
     inputRef.current.setValue("");
+  };
+  const _showSuperModalCourse = () => {
+    showSuperModal({
+      contentModalType: EnumModalContentType.ListCourse,
+      styleModalType: EnumStyleModalType.Bottom,
+      data: {},
+    });
+  };
+
+  const renderShop = () => {
+    return (
+      <PressableBtn onPress={_showSuperModalCourse} style={styles.imageShop}>
+        <IconSvg name="icShop" size={24} color="red" />
+      </PressableBtn>
+    );
   };
 
   const renderReaction = () => {
@@ -114,6 +136,7 @@ const InputChatLive: React.FC<InputChatLiveProps> = ({
             (isKeyboardVisible || isPublisher) && { width: Device.width - 30 },
           ]}
         >
+          {renderShop()}
           <Input
             ref={inputRef}
             placeholder={translations.chat.typeMessage}
@@ -144,7 +167,7 @@ const InputChatLive: React.FC<InputChatLiveProps> = ({
   );
 };
 
-const styles: any = StyleSheet.create({
+const styles = StyleSheet.create({
   box: {
     ...CommonStyle.flexRear,
     marginLeft: 12,
@@ -160,7 +183,7 @@ const styles: any = StyleSheet.create({
   input: {
     backgroundColor: palette.lightOverlay,
     height: 40,
-    borderRadius: 99,
+    borderRadius: 8,
     color: palette.white,
   },
   iconSend: {
@@ -176,6 +199,12 @@ const styles: any = StyleSheet.create({
   // },
   reactionBtn: {
     marginRight: 6,
+  },
+  imageShop: {
+    width: 30,
+    height: 30,
+    backgroundColor: palette.white,
+    ...CommonStyle.center,
   },
 });
 

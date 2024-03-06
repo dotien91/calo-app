@@ -29,10 +29,10 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
 
   const listSetting = [
     {
-      title: translations.settingUser.mycouse,
-      icon: require("assets/images/book.png"),
+      title: translations.settingUser.blackList,
+      icon: "person-remove-outline",
       action: () => {
-        NavigationService.navigate(SCREENS.MY_COURES);
+        NavigationService.navigate(SCREENS.LIST_COURSE);
       },
     },
     {

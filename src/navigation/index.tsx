@@ -68,7 +68,6 @@ import CreateClassCallOneScreen from "@screens/course/course-create/course.creat
 import CourseListVideoScreen from "@screens/course/course-create/course.list.video.screen";
 import CourseAddModuleScreen from "@screens/course/course-create/course.add.module.screen";
 import CallClassScreen from "@screens/call-class/call.class.screen";
-<<<<<<< HEAD
 import ListCouponForMyCourse from "@screens/coupon/coupon.list";
 import CouponCreateScreen from "@screens/coupon/coupon.create";
 import TabFollow from "@screens/tab-follow/tab.follow";
@@ -85,9 +84,7 @@ import LeaderBoard from "@screens/leader-board/leader.board";
 import ChatListScreen from "@screens/chat/list-chat/chat.list.screen";
 import NotificationScreen from "@screens/notification/NotificationScreen";
 import TaskScreen from "@screens/profile.screen/task.screen";
-=======
 import ListCourseLiveStream from "@screens/stream/stream-modal/stream.modal.list.course";
->>>>>>> 6d39f37 (feat: add card item course)
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -365,7 +362,6 @@ const Navigation = () => {
           name={SCREENS.PAYMENT_SUCCESS}
           component={PaymentSuccess}
         />
-<<<<<<< HEAD
         <Stack.Screen name={SCREENS.TAB_FOLLOW} component={TabFollow} />
         <Stack.Screen name={SCREENS.BLACK_LIST} component={BlackList} />
         <Stack.Screen
@@ -379,12 +375,10 @@ const Navigation = () => {
           component={DiscoverScreen}
         />
         <Stack.Screen name={SCREENS.LEADERBOARD} component={LeaderBoard} />
-=======
         <Stack.Screen
           name={SCREENS.LIST_COURSE}
           component={ListCourseLiveStream}
         />
->>>>>>> 6d39f37 (feat: add card item course)
       </Stack.Navigator>
     </NavigationContainer>
   );

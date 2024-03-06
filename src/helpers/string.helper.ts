@@ -81,3 +81,23 @@ export const formatPrice = (price?: number) => {
     }
   }
 };
+
+export const getPriceCourse = (item: any) => {
+  let newPrice = formatPrice(item?.price);
+  let oldPrice = formatPrice(item?.price);
+  if (item?.coupon_id == null) {
+    oldPrice = "";
+  } else {
+    if (item?.coupon_id?.promotion_type === "percentage") {
+      newPrice = formatPrice(
+        item?.price - (item?.price * item?.coupon_id?.promotion) / 100,
+      );
+    } else {
+      newPrice = formatPrice(item?.price - item?.coupon_id?.promotion);
+    }
+  }
+  return {
+    newPrice: newPrice,
+    oldPrice: oldPrice,
+  };
+};
