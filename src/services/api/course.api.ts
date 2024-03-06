@@ -309,7 +309,10 @@ export async function getListMemberCourse(params: {
   });
 }
 
-export async function getMyCourse(data: { user_id: string; auth_id: string }) {
+export async function getMyCourse(data: {
+  created_user_id: string;
+  auth_id: string;
+}) {
   return request({
     method: METHOD.POST,
     urlPath: "course/my-course",
@@ -441,6 +444,16 @@ export async function getListCommentThread(params, customHeader) {
     urlPath: "thread/comment/list",
     params,
     customHeader,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function pinShoppingLiveRequest(data) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "livestream/product",
+    data,
   }).then((response) => {
     return response;
   });

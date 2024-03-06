@@ -82,6 +82,16 @@ export async function updateLivestream(livestream_status: string, _id: string) {
   });
 }
 
+export async function updateLivestream2(data) {
+  return request({
+    method: METHOD.PATCH,
+    urlPath: "livestream/update",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
 export async function getListLiveStream() {
   return request({
     method: METHOD.GET,

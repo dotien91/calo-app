@@ -70,6 +70,7 @@ const useStore = create<StoreState>()(
                 "courseCurrentType",
                 "courseSearchHistory",
                 "setListVideoCourse",
+                "shoppingProduct",
               ].includes(key),
           ),
         ),

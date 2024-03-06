@@ -42,6 +42,7 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
 
   const _getListLiveStream = () => {
     getListLiveStream().then((res) => {
+      console.log("list live", res);
       if (!res.isError) {
         const listDataStream = res.data.filter(
           (item) => item?.livestream_status == "live",

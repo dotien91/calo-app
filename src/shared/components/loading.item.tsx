@@ -10,8 +10,8 @@ const LoadingItem = ({ numberItem = 1 }: { numberItem?: number }) => {
 
   return (
     <SkeletonPlaceholder>
-      {array.map(() => (
-        <>
+      {array.map((item) => (
+        <View key={item}>
           <View style={{ width: "100%", alignSelf: "center" }}>
             <View
               style={{
@@ -78,7 +78,7 @@ const LoadingItem = ({ numberItem = 1 }: { numberItem?: number }) => {
               />
             </View>
           </View>
-        </>
+        </View>
       ))}
     </SkeletonPlaceholder>
   );

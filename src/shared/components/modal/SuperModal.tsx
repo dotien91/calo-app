@@ -53,12 +53,12 @@ interface SuperModalProps {}
 
 const SuperModal: React.FC<SuperModalProps> = () => {
   const [data, setData] = useState();
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
   const [styleModalType, setStyleModalType] = useState<EnumStyleModalType>();
   const [contentModalType, setContentModalType] =
     useState<EnumModalContentType>();
   // const [contentModalType, setContentModalType] =
-  //   useState<EnumModalContentType>(EnumModalContentType.LottieAnimation);
+  //   useState<EnumModalContentType>(EnumModalContentType.ListCourse);
   //   const [styleModalType, setStyleModalType] = useState<EnumStyleModalType>("middle");
 
   useEffect(() => {
@@ -268,7 +268,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
 const styles = StyleSheet.create({
   modal: {
     ...CommonStyle.flexCenter,
-    backgroundColor: palette.white,
+    // backgroundColor: palette.white,
   },
   bottomInner: {
     // ...CommonStyle.flex1,

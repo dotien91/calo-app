@@ -37,6 +37,7 @@ import { RESULTS } from "react-native-permissions";
 import useAppStateCheck from "@helpers/hooks/useAppStateCheck";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
+import { SCREENS } from "constants";
 
 function App() {
   const publisherRef = useRef<RTMPPublisherRefProps>(null);
@@ -52,6 +53,8 @@ function App() {
   const { _createLiveStream, liveData, loading } = useLiveStream({
     isPublisher: true,
   });
+
+  console.log("liveDataliveData", liveData);
 
   const [show, setShow] = React.useState(true);
 
@@ -191,7 +194,11 @@ function App() {
     if (!liveData?._id) return null;
     return (
       <View style={styles.chatView}>
-        <ChatView liveStreamId={liveData._id} isPublisher={true} />
+        <ChatView
+          liveData={liveData}
+          liveStreamId={liveData._id}
+          isPublisher={true}
+        />
       </View>
     );
   };
@@ -210,8 +217,9 @@ function App() {
   const closeLiveStream = () => {
     // updateLivestream("end");
     // publisherRef.current && publisherRef.current.stopStream();
-    // NavigationService.navigate(SCREENS.HOME);
     NavigationService.popToTop();
+    NavigationService.navigate(SCREENS.HOME);
+
     // endLiveStream()
   };
 

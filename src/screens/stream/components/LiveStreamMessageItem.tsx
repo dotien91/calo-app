@@ -33,7 +33,7 @@ const LiveStreamMessageItem = ({
       <Text>
         <Text style={styles.txtName}>
           {displayName.length < 15
-            ? `${displayName}`
+            ? `${displayName} `
             : `${displayName.substring(0, 12)}...`}{" "}
         </Text>
         <Text style={styles.txt}>{chat_content}</Text>
@@ -56,9 +56,9 @@ const styles: any = StyleSheet.create({
     marginRight: 4,
   },
   txtName: {
-    ...CommonStyle.hnRegular,
+    ...CommonStyle.hnMedium,
     fontSize: 14,
-    color: palette.placeholder,
+    color: palette.white,
     width: 100,
     flex: 1,
   },

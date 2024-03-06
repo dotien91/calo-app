@@ -30,6 +30,8 @@ function App() {
     liveStreamId,
   });
 
+  console.log("liveDataliveData", liveData);
+
   React.useEffect(() => {
     requestViewStream({ livestream_id: liveStreamId });
   }, []);
@@ -60,7 +62,12 @@ function App() {
     if (!liveData?._id) return null;
     return (
       <View style={styles.chatView}>
-        <ChatView isPublisher={false} liveStreamId={liveStreamId} />
+        <ChatView
+          isTeacher={false}
+          isPublisher={false}
+          liveStreamId={liveStreamId}
+          liveData={liveData}
+        />
       </View>
     );
   };

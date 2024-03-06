@@ -16,6 +16,7 @@ interface IconType {
   color?: string;
   size?: number;
   defaultValue?: string;
+  showClearIcon: boolean;
 }
 
 interface InputPropsType extends TextInputProps {
@@ -23,6 +24,7 @@ interface InputPropsType extends TextInputProps {
   icon?: IconType;
   disabled?: boolean;
   cb: (e: string) => void;
+  showClearIcon: boolean;
 }
 
 // eslint-disable-next-line react/display-name
@@ -34,6 +36,7 @@ const Input = React.forwardRef(
       disabled = false,
       cb,
       defaultValue,
+      showClearIcon = true,
       ...res
     }: InputPropsType,
     ref,
@@ -82,7 +85,7 @@ const Input = React.forwardRef(
           ]}
           value={value}
         />
-        {!!value && (
+        {!!showClearIcon && !!value && (
           <PressableBtn style={styles.iconClose} onPress={clearInput}>
             <Icon type={IconType.Feather} name={"x-circle"} />
           </PressableBtn>

@@ -17,6 +17,7 @@ export const useLiveStream = ({
   const [liveData, setLiveData] = useState<ILiveData>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const setViewNumber = useStore((state) => state.setViewNumber);
+  const setShoppingProduct = useStore((state) => state.setShoppingProduct);
 
   const _createLiveStream = (title: string) => {
     setLoading(true);
@@ -41,6 +42,7 @@ export const useLiveStream = ({
       if (!res.isError && res.data?._id) {
         setLiveData(res.data);
         setViewNumber(res.data?.view_number || 0);
+        setShoppingProduct(res.data?.product_id);
       } else {
         showToast({
           type: "error",
