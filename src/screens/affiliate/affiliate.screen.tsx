@@ -16,7 +16,7 @@ import {
   showSuperModal,
 } from "@helpers/super.modal.helper";
 import formatMoney from "@shared-components/input-money/format.money";
-import HeaderAffiliate from "./components/affiliate.header";
+import HeaderAffiliate from "./components/affiliate.statistical.view";
 import { formatFromDateToDate } from "@utils/date.utils";
 import eventEmitter from "@services/event-emitter";
 import { useUserHook } from "@helpers/hooks/useUserHook";
@@ -26,6 +26,8 @@ import { HFlatList } from "react-native-head-tab-view";
 import { SceneMap, TabBar } from "react-native-tab-view";
 import { palette } from "@theme/themes";
 import useStore from "@services/zustand/store";
+import AffiliateHeader2 from "./components/affiliate.header";
+
 const initialLayout = { width: Dimensions.get("window").width };
 
 const AffiliatePage = () => {
@@ -64,7 +66,6 @@ const AffiliatePage = () => {
     const paramsRequest = {};
     getListFilter(paramsRequest).then((res) => {
       if (!res.isError) {
-        console.log("listFilter...", res);
         setListCourse(res.data.product_list);
         setListUser(res.data.referral_user_list);
       }
@@ -181,6 +182,8 @@ const AffiliatePage = () => {
 
   return (
     <View style={CS.flex1}>
+      <AffiliateHeader2 />
+
       <CollapsibleHeaderTabView
         renderScrollHeader={HeaderAff}
         navigationState={{ index, routes }}

@@ -213,16 +213,18 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
             </TouchableOpacity>
           </View>
           <Text
+            numberOfLines={1}
             style={{
               fontSize: 16,
               color: colors.text,
               fontWeight: "600",
               marginTop: 8,
+              paddingHorizontal: 16,
             }}
           >
             {userData?.display_name}
           </Text>
-          <TouchableOpacity>
+          {/* <TouchableOpacity>
             <Text
               style={{
                 fontSize: 16,
@@ -233,7 +235,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
             >
               Become a tutor
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           {/* <View style={{ flexDirection: "row", marginVertical: 16 }}>
             <TouchableOpacity
               onPress={editProfile}

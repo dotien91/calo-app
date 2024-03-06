@@ -89,7 +89,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
       setTimeout(() => {
         setStyleModalType("");
         setContentModalType("");
-      }, 1000);
+      }, 300);
     }
   }, [visible]);
 
