@@ -131,7 +131,7 @@ const AvatarProfile = ({ userInfo, customStyle }: UploadAvatarProps) => {
     return userInfo?._id == userData._id;
   }, [userInfo, userData]);
 
-  if (isMe) userInfo = userData;
+  if (isMe) userInfo = { ...userData };
 
   if (!userInfo?._id) {
     return (

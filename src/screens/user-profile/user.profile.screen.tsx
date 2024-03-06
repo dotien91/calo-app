@@ -7,7 +7,7 @@ import {
   ScrollView,
 } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
-import { useTheme } from "@react-navigation/native";
+import { useTheme, useRoute } from "@react-navigation/native";
 import { CollapsibleHeaderTabView } from "react-native-tab-view-collapsible-header";
 import { SceneMap, TabBar } from "react-native-tab-view";
 import { WindowWidth } from "@freakycoder/react-native-helpers";
@@ -16,7 +16,6 @@ import {
   getStatusBarHeight,
 } from "react-native-iphone-screen-helper";
 import { HFlatList } from "react-native-head-tab-view";
-import { useRoute } from "@react-navigation/native";
 
 import useStore from "@services/zustand/store";
 import CommonStyle from "@theme/styles";

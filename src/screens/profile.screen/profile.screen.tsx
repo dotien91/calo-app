@@ -111,6 +111,10 @@ const SettingProfileScreen = () => {
 
   const uploadAvatar = () => {};
 
+  const openSetting = () => {
+    NavigationService.navigate(SCREENS.SETTING);
+  };
+
   const renderScrollPointCoin = () => {
     return (
       <View>
@@ -120,7 +124,7 @@ const SettingProfileScreen = () => {
           data={listrenderPointCoin}
           renderItem={renderItemSelected}
         />
-        <View style={styles.viewInforuser}>
+        <PressableBtn onPress={openSetting} style={styles.viewInforuser}>
           <View>
             <Avatar
               style={{
@@ -169,7 +173,7 @@ const SettingProfileScreen = () => {
               </Text>
             </View>
           </View>
-        </View>
+        </PressableBtn>
       </View>
     );
   };

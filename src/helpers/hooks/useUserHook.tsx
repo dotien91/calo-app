@@ -17,6 +17,8 @@ export const useUserHook = () => {
   const setUserData = useStore((state) => state.setUserData);
   const setUserInfo = useStore((state) => state.setUserInfo);
   const setLinkAvatar = useStore((state) => state.setLinkAvatar);
+  const setUserMedia = useStore((state) => state.setUserMedia);
+
   const initListFollow = useStore((state) => state.initListFollow);
   const setShowInvite = useStore((state) => state.setShowInvite);
 
@@ -52,6 +54,10 @@ export const useUserHook = () => {
     setUserData(data);
     setUserInfo(data);
     setLinkAvatar(data.user_avatar_thumbnail);
+    setUserMedia({
+      user_avatar: data.user_avatar || "",
+      user_cover: data.user_cover || "",
+    });
     initListFollow(data.follow_users);
   };
 
@@ -64,6 +70,10 @@ export const useUserHook = () => {
     _setJson(USER_TOKEN, "");
     setUserData(null);
     setLinkAvatar("");
+    setUserMedia({
+      user_avatar: "",
+      user_cover: "",
+    });
     initListFollow([]);
     setShowInvite(true);
     // RNRestart.restart();

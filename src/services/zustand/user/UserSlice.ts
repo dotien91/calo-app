@@ -1,6 +1,11 @@
 import { StoreSlice } from "@zustand";
 import { TypedUser } from "models";
 
+interface IUserMedia {
+  user_avatar: string;
+  user_cover: string;
+}
+
 export interface UserSlice {
   userData: TypedUser | null;
   setUserData: (user: TypedUser) => void;
@@ -12,6 +17,8 @@ export interface UserSlice {
   initListFollow: (data: string[]) => void;
   linkAvatar: string;
   setLinkAvatar: (link: string) => void;
+  userMedia: IUserMedia;
+  setUserMedia: (v: IUserMedia) => void;
   userInfo: TypedUser | null;
   setUserInfo: (user: TypedUser) => void;
   showInvite: boolean;
@@ -51,6 +58,13 @@ const createUserSlice: StoreSlice<UserSlice> = (set) => ({
   showInvite: true,
   setShowInvite: (bol) => {
     set({ showInvite: bol });
+  },
+  userMedia: {
+    user_avatar: "",
+    user_cover: "",
+  },
+  setUserMedia: (v: IUserMedia) => {
+    set({ userMedia: v });
   },
 });
 
