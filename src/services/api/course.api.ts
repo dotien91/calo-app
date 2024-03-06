@@ -448,3 +448,13 @@ export async function getListCommentThread(params, customHeader) {
     return response;
   });
 }
+
+export async function pinShoppingLiveRequest(data) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "livestream/product",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}

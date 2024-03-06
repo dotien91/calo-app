@@ -25,6 +25,7 @@ export const useLiveChatHistory = ({
   const isFetching = useRef(false);
   const noMoredata = useRef(false);
   const setViewNumber = useStore((state) => state.setViewNumber);
+  const setShoppingProduct = useStore((state) => state.setShoppingProduct);
 
   useEffect(() => {
     _getChatHistory();
@@ -98,7 +99,6 @@ export const useLiveChatHistory = ({
     data = JSON.parse(data);
     const viewNumber = data?.livestream_id?.view_number;
     if (!viewNumber) return;
-    console.log("onsocket updateViewNumber", viewNumber);
     setViewNumber(viewNumber);
   };
 
@@ -143,6 +143,7 @@ export const useLiveChatHistory = ({
     emitSocket("joinLivestream", "livestream_" + liveStreamId);
 
     return () => {
+      setShoppingProduct(null);
       offSocket("livestreamToClient", msgToClient); //comment incomming
       offSocket("joinRoomToClient", joinRoomToClient); //viewer join live
       offSocket("viewToClient", updateViewNumber); // view number update

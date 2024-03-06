@@ -92,7 +92,8 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
             right: 10,
             zIndex: 1,
           }}
-          onPress={() => NavigationService.push(SCREENS.POST_SCREEN)}
+          // onPress={_showSuperModalCourse}
+          onPress={() => NavigationService.navigate(SCREENS.POST_SCREEN)}
         >
           <Icon
             name={"add-outline"}

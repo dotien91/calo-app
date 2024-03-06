@@ -82,6 +82,7 @@ export const SCREENS = {
   BANK_LIST: "BankList",
   ADD_BANK: "AddBank",
   CODE_ACTIVATIONS_SCREEN: "CodeActivationsScreen",
+  LIST_COURSE: "ListCourse",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

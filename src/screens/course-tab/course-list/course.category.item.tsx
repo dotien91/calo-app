@@ -62,13 +62,6 @@ const CourseCategoryItem: React.FC<CourseCategoryItemProps> = () => {
   const openMyCourse = () => {
     NavigationService.navigate(SCREENS.MY_COURES);
   };
-  console.log("asdasdasd", isLoading);
-
-  React.useEffect(() => {
-    return () => {
-      console.log("useefff");
-    };
-  }, []);
 
   if (isLoading) return <LoadingItem />;
   if (!listData.length) return null;

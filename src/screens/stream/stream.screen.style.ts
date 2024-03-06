@@ -65,5 +65,8 @@ export default (theme: ExtendedTheme) => {
       maxHeight: 40,
       color: colors.white,
     },
+    listChat: {
+      backgroundColor: "red",
+    },
   });
 };

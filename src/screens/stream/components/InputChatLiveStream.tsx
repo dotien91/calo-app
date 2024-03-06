@@ -22,6 +22,18 @@ import { throttle } from "lodash";
 import images from "./reaction-animation/Themes/Images";
 import { Device } from "@utils/device.utils";
 import eventEmitter from "@services/event-emitter";
+import PressableBtn from "@shared-components/button/PressableBtn";
+import {
+  EnumModalContentType,
+  EnumStyleModalType,
+  showSuperModal,
+} from "@helpers/super.modal.helper";
+import IconSvg from "assets/svg";
+import { useListData } from "@helpers/hooks/useListData";
+import { ICourseItem } from "models/course.model";
+import { getMyCourse } from "@services/api/course.api";
+import TextBase from "@shared-components/TextBase";
+import { EnumColors } from "models";
 
 const reactionData = [
   { type: "like", image: images.like_static, gif: images.like_gif },
@@ -37,12 +49,14 @@ interface InputChatLiveProps {
   sendChatMessage: () => void;
   chatRoomId: string;
   isPublisher: boolean;
+  liveData: any;
 }
 
 const InputChatLive: React.FC<InputChatLiveProps> = ({
   sendChatMessage,
   chatRoomId,
   isPublisher,
+  liveData,
 }) => {
   const inputRef = useRef(null);
 
@@ -60,10 +74,44 @@ const InputChatLive: React.FC<InputChatLiveProps> = ({
     };
   }, []);
 
+  const paramsRequest = {
+    limit: "6",
+    created_user_id: liveData?.user_id?._id,
+    // auth_id: idTeacher,
+  };
+
+  const { totalCount } = useListData<ICourseItem>(paramsRequest, getMyCourse);
+
   const onSend = () => {
     const text = inputRef.current.value || "";
     sendChatMessage(text);
     inputRef.current.setValue("");
+  };
+
+  const _showSuperModalCourse = () => {
+    showSuperModal({
+      contentModalType: EnumModalContentType.ListCourse,
+      styleModalType: EnumStyleModalType.Middle,
+      data: {
+        isTeacher: isPublisher,
+        liveData,
+      },
+    });
+  };
+
+  const renderShop = () => {
+    return (
+      <PressableBtn onPress={_showSuperModalCourse} style={styles.imageShop}>
+        <IconSvg name="icShop" size={24} color={palette.primary} />
+        {!!totalCount && (
+          <View style={styles.totalBox}>
+            <TextBase fontSize={10} color={EnumColors.white}>
+              {totalCount > 99 ? "99+" : totalCount}
+            </TextBase>
+          </View>
+        )}
+      </PressableBtn>
+    );
   };
 
   const renderReaction = () => {
@@ -104,9 +152,7 @@ const InputChatLive: React.FC<InputChatLiveProps> = ({
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
       horizontal={true}
-      // contentContainerStyle={{ flex: 1 }}
     >
-      {/* <AnimationScreen /> */}
       <View style={styles.box}>
         <View
           style={[
@@ -114,6 +160,7 @@ const InputChatLive: React.FC<InputChatLiveProps> = ({
             (isKeyboardVisible || isPublisher) && { width: Device.width - 30 },
           ]}
         >
+          {renderShop()}
           <Input
             ref={inputRef}
             placeholder={translations.chat.typeMessage}
@@ -122,6 +169,7 @@ const InputChatLive: React.FC<InputChatLiveProps> = ({
             onFocus={() => {
               setKeyboardVisible(true);
             }}
+            showClearIcon={false}
           />
           <IconBtn
             name={"send"}
@@ -144,7 +192,7 @@ const InputChatLive: React.FC<InputChatLiveProps> = ({
   );
 };
 
-const styles: any = StyleSheet.create({
+const styles = StyleSheet.create({
   box: {
     ...CommonStyle.flexRear,
     marginLeft: 12,
@@ -160,7 +208,7 @@ const styles: any = StyleSheet.create({
   input: {
     backgroundColor: palette.lightOverlay,
     height: 40,
-    borderRadius: 99,
+    borderRadius: 8,
     color: palette.white,
   },
   iconSend: {
@@ -176,6 +224,25 @@ const styles: any = StyleSheet.create({
   // },
   reactionBtn: {
     marginRight: 6,
+  },
+  imageShop: {
+    width: 30,
+    height: 30,
+    // backgroundColor: palette.white,
+    ...CommonStyle.center,
+    zIndex: 1,
+  },
+  totalBox: {
+    position: "absolute",
+    right: -10,
+    top: -10,
+    backgroundColor: palette.red,
+    paddingHorizontal: 4,
+    borderRadius: 99,
+    ...CommonStyle.borderStyle,
+    borderColor: palette.white,
+    borderWidth: 2,
+    zIndex: 1,
   },
 });
 

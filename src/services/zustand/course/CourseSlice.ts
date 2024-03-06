@@ -2,6 +2,7 @@ import { StoreSlice } from "@zustand";
 import {
   IListCourseFilterParams,
   ICourseFilterKeys,
+  ICourseItem,
 } from "models/course.model";
 
 const courseFilterKeysDefault = {
@@ -58,6 +59,8 @@ export interface CourseSlice {
   _progressLearningData: IProgressLearningItem[];
   listVideoCourse: [];
   setListVideoCourse: [];
+  shoppingProduct: ICourseItem;
+  setShoppingProduct: (v: ICourseItem) => void;
 }
 
 const createCourseSlice: StoreSlice<CourseSlice> = (set, get) => ({
@@ -134,6 +137,8 @@ const createCourseSlice: StoreSlice<CourseSlice> = (set, get) => ({
   },
   listVideoCourse: [],
   setListVideoCourse: (v) => set({ listVideoCourse: v }),
+  shoppingProduct: null,
+  setShoppingProduct: (v) => set({ shoppingProduct: v }),
 });
 
 export default createCourseSlice;

@@ -6,10 +6,10 @@ import * as NavigationService from "react-navigation-helpers";
 
 import useStore from "@services/zustand/store";
 import createStyles from "./HeaderHome.style";
-import { SCREENS } from "constants";
 import PressableBtn from "@shared-components/button/PressableBtn";
-import CommonStyle from "@theme/styles";
+import CS from "@theme/styles";
 import { translations } from "@localization";
+import { SCREENS } from "constants";
 
 const SIZE_AVATAR = 30;
 const BORDER_AVATAR = 12;
@@ -76,7 +76,7 @@ const HeaderHome = () => {
         />
         <TextInput
           onPressIn={goToSearchScreen}
-          style={[CommonStyle.flex1, { color: colors.text }]}
+          style={[CS.flex1, { color: colors.text }]}
           placeholder={translations.search}
           placeholderTextColor={colors.placeholder}
           editable={false}

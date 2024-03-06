@@ -206,6 +206,10 @@ export const useChatHistory = (txtSearch: string, searchModeChat: boolean) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 
+  const productToClient = (data) => {
+    console.log("productToClient======", data);
+  };
+
   useEffect(() => {
     if (!chatRoomId) {
       //create chat room from listfriend
@@ -222,10 +226,15 @@ export const useChatHistory = (txtSearch: string, searchModeChat: boolean) => {
     }
     getRoomDetail();
     _getChatHistory();
+    onSocket("productToClient", productToClient);
     onSocket("msgToClient", msgToClient);
+
     onSocket("typingToClient", typingToClient);
     emitSocket("joinRoom", "room_" + chatRoomId);
+
     return () => {
+      offSocket("productToClient", productToClient);
+
       offSocket("msgToClient", msgToClient);
       offSocket("typingToClient", typingToClient);
       setSearchModeChat(false);

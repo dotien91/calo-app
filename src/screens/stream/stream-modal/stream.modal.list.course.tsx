@@ -1,87 +1,202 @@
 import React from "react";
-import { Text, StyleSheet, View, Image, ScrollView } from "react-native";
+import { Text, StyleSheet, View, FlatList } from "react-native";
+import * as NavigationService from "react-navigation-helpers";
+
 import CS from "@theme/styles";
 import { translations } from "@localization";
 import { palette } from "@theme/themes";
 import IconSvg from "assets/svg";
 import PressableBtn from "@shared-components/button/PressableBtn";
+import { useListData } from "@helpers/hooks/useListData";
+import { getMyCourse, pinShoppingLiveRequest } from "@services/api/course.api";
+import { getPriceCourse } from "@helpers/string.helper";
+import { SCREENS } from "constants";
+import { ICourseItem } from "models/course.model";
+import { Device } from "@utils/device.ui.utils";
+import LoadingList from "@shared-components/loading.list.component";
+import FastImage from "react-native-fast-image";
+import { closeSuperModal } from "@helpers/super.modal.helper";
+import { emitSocket } from "@helpers/socket.helper";
+import useStore from "@services/zustand/store";
+import { updateLivestream2 } from "@services/api/stream.api";
 
-const IconText = ({ nameIcon, text }: { nameIcon: string; text: string }) => {
+const ListCourseLiveStream = ({ isTeacher, liveData }) => {
+  console.log("liveData", liveData);
+  const { user_id } = liveData;
+  const idTeacher = user_id._id;
+  const paramsRequest = {
+    limit: "6",
+    created_user_id: idTeacher,
+    // auth_id: idTeacher,
+  };
+
+  const { listData, onEndReach, isLoading, renderFooterComponent } =
+    useListData<ICourseItem>(paramsRequest, getMyCourse);
+
+  const renderItem = ({ item }) => {
+    return <Item isTeacher={isTeacher} item={item} liveData={liveData} />;
+  };
+
   return (
-    <View
-      style={{
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <IconSvg name={nameIcon} size={14} color={palette.textOpacity6} />
-      <Text style={[styles.txtBodyContent, { marginLeft: 4 }]}>{text}</Text>
+    <View style={styles.viewStyleModal}>
+      <Text style={styles.headerTitlte}>
+        {isTeacher
+          ? translations.course.courseMine
+          : translations.nameTutor(user_id.display_name)}
+      </Text>
+      {isLoading && <LoadingList numberItem={3} />}
+      <FlatList
+        data={listData}
+        renderItem={renderItem}
+        scrollEventThrottle={16}
+        onEndReachedThreshold={0}
+        onEndReached={onEndReach}
+        showsVerticalScrollIndicator={false}
+        removeClippedSubviews={true}
+        keyExtractor={(item) => item?._id}
+        initialNumToRender={6}
+        ListFooterComponent={renderFooterComponent}
+        contentContainerStyle={styles.list}
+      />
     </View>
   );
 };
 
-const renderListCourse = () => {
+const Item = React.memo(({ item, isTeacher, liveData }) => {
+  const setShoppingProduct = useStore((state) => state.setShoppingProduct);
+  const shoppingProduct = useStore((state) => state.shoppingProduct);
+  const isPin = React.useMemo(() => {
+    return item._id == shoppingProduct?._id;
+  }, [shoppingProduct]);
+
+  const _onPress = async () => {
+    if (isTeacher) {
+      // ghim khoá học khi là teacher
+      let dataRequest = {
+        product_ids: [item._id],
+        livestream_id: liveData._id,
+      };
+      if (isPin)
+        dataRequest = {
+          product_ids: [],
+          livestream_id: liveData._id,
+        };
+      setShoppingProduct(isPin ? null : item);
+      await updateLivestream2({
+        product_id: !isPin ? item?._id : null,
+        _id: liveData?._id,
+      });
+      pinShoppingLiveRequest(dataRequest);
+      emitSocket(
+        "emitProduct",
+        isPin
+          ? ""
+          : JSON.stringify({
+              payload: item,
+              room_id: `livestream_${liveData?._id}`,
+            }),
+      );
+    } else {
+      NavigationService.navigate(SCREENS.COURSE_DETAIL, {
+        course_id: item._id,
+        dataCourse: item,
+      });
+      closeSuperModal();
+    }
+  };
+
   return (
-    <View style={styles.viewCourse}>
+    <PressableBtn onPress={_onPress} style={styles.viewCourse}>
       <View style={styles.viewCard}>
         <View style={styles.viewImage}>
-          <Image
-            // source={{ uri: media_thumbnail }}
+          <FastImage
+            source={{ uri: item?.media_id?.media_thumbnail }}
             style={{
               width: 80,
               height: 80,
+              borderRadius: 6,
             }}
             resizeMode={"cover"}
           />
         </View>
         <View style={styles.viewDescription}>
           <Text numberOfLines={1} style={styles.viewTitleName}>
-            {translations.titleName}
+            {item?.title}
           </Text>
           <View style={styles.viewRate}>
             <View style={styles.viewStyleView}>
               <Text style={styles.viewTxt}>{translations.best}</Text>
             </View>
             <View style={styles.viewStyleRate}>
-              <IconText nameIcon="icStarFull" text={translations.ratings} />
+              <IconText
+                nameIcon="icStarFull"
+                text={
+                  item?.user_id?.member_count
+                    ? `${(item?.user_id?.member_count + "" || "").slice(
+                        0,
+                        3,
+                      )} ${translations.ratings}`
+                    : translations.course.noreview
+                }
+              />
             </View>
           </View>
           <View style={styles.viewStylePrice}>
             <View style={styles.viewPrice}>
-              <Text style={styles.txtPriceNew}>{translations.priceNew}</Text>
-              <Text style={styles.txtPriceOld}>{translations.priceOld}</Text>
+              <Text style={styles.txtPriceNew}>
+                {getPriceCourse(item).newPrice}
+              </Text>
+              <Text style={styles.txtPriceOld}>
+                {getPriceCourse(item).oldPrice}
+              </Text>
             </View>
             {/* <Button style={styles.viewBtnBuy} text={translations.buy} /> */}
-            <PressableBtn onPress={() => {}} style={styles.viewBtnBuy}>
-              <Text style={styles.txtBtn}>{translations.buy}</Text>
+            <PressableBtn
+              onPress={_onPress}
+              style={isPin ? styles.itemPin : styles.viewBtnBuy}
+            >
+              <Text
+                style={[
+                  styles.txtBtn,
+                  isPin && { color: palette.textOpacity6 },
+                ]}
+              >
+                {isTeacher
+                  ? isPin
+                    ? translations.unPin
+                    : translations.pin
+                  : translations.buy}
+              </Text>
             </PressableBtn>
           </View>
         </View>
       </View>
-    </View>
+    </PressableBtn>
   );
-};
+});
 
-const ListCourseLiveStream = () => {
+const IconText = ({ nameIcon, text }: { nameIcon: string; text: string }) => {
   return (
-    <View style={styles.viewStyleModal}>
-      <Text style={styles.headerTitlte}>{translations.nameTutor}</Text>
-      <ScrollView>{renderListCourse()}</ScrollView>
+    <View style={CS.flexCenter}>
+      <IconSvg name={nameIcon} size={14} color={palette.textOpacity6} />
+      <Text style={[styles.txtBodyContent, { marginLeft: 4 }]}>{text}</Text>
     </View>
   );
 };
 
 export const styles = StyleSheet.create({
+  list: {},
   viewStyleModal: {
-    flex: 1,
-    paddingTop: 42,
     marginHorizontal: 8,
-    gap: 10,
+    backgroundColor: palette.white,
+    maxHeight: Device.height / 2,
+    flex: 1,
+    borderRadius: 12,
   },
-  headerTitlte: { ...CS.hnBold, marginHorizontal: 16 },
+  headerTitlte: { ...CS.hnBold, margin: 16, fontSize: 20, marginBottom: 12 },
   viewCourse: {
     marginHorizontal: 8,
+    maxHeight: (Device.height * 2) / 3,
   },
   viewCard: {
     ...CS.row,
@@ -90,7 +205,7 @@ export const styles = StyleSheet.create({
   },
   viewImage: {
     ...CS.center,
-    backgroundColor: palette.red,
+    // backgroundColor: palette.red,
   },
   viewDescription: {
     flexDirection: "column",
@@ -146,6 +261,15 @@ export const styles = StyleSheet.create({
     width: 60,
     height: 24,
     backgroundColor: palette.primary,
+    paddingHorizontal: 0,
+    paddingVertical: 0,
+    borderRadius: 4,
+  },
+  itemPin: {
+    ...CS.center,
+    width: 60,
+    height: 24,
+    backgroundColor: palette.grey,
     paddingHorizontal: 0,
     paddingVertical: 0,
     borderRadius: 4,
