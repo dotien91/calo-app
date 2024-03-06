@@ -17,6 +17,7 @@ import ListPost from "./list.post";
 import CommonStyle from "@theme/styles";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import useStore from "@services/zustand/store";
+import AboutHome from "./components/about-home/about.home";
 
 interface HomeScreenProps {}
 
@@ -69,7 +70,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
   return (
     <View style={CommonStyle.safeAreaView}>
       <HeaderHome />
-      {/* <AboutHome /> */}
+      <AboutHome />
       <TabView
         style={CommonStyle.flex1}
         renderTabBar={renderTabBar}

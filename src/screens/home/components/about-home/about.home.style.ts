@@ -36,13 +36,13 @@ export default (theme: ExtendedTheme) => {
       color: colors.textOpacity8,
     },
     styleItemNaviCategory: {
-      ...CS.center,
-      flexDirection: "row",
+      ...CS.flexRear,
       marginHorizontal: 16,
       gap: 8,
       height: 56,
       borderRadius: 8,
       marginTop: 8,
+      paddingHorizontal: 16,
     },
     styleViewItemTitle: {
       flexDirection: "row",

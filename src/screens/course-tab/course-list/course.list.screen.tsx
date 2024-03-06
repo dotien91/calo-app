@@ -25,7 +25,6 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { useTheme } from "@react-navigation/native";
 import { SCREENS } from "constants";
 import LoadingItem from "@shared-components/loading.item";
-// import CourseItemProgessbar from "../components/course.item.progessbar";
 
 interface CourseListScreenProps {}
 
@@ -92,10 +91,6 @@ const CourseListScreen: React.FC<CourseListScreenProps> = () => {
 };
 
 const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
-  // const theme = useTheme();
-  // const { colors } = theme;
-  // const userData = useStore((state) => state.userData);
-  // const [listMyCourse, setlistMyCourse] = useState([]);
   const { isLoading, listData, onEndReach, renderFooterComponent } =
     useListData<ICourseItem>(
       { limit: "4", sort_by: "createdAt", order_by: "DESC" },
@@ -107,88 +102,14 @@ const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
     return <TutorItem {...item} key={index} />;
   };
 
-  // const getDataMyCourse = () => {
-  //   const data = {
-  //     user_id: userData?._id,
-  //   };
-  //   getCourseList(data).then((res: any) => {
-  //     // setlistMyCourse(res.data);
-  //   });
-  // };
-
-  useEffect(() => {
-    // getDataMyCourse();
-  }, []);
-
   const renderHeader = React.useCallback(() => {
     return (
       <View style={{ flex: 1 }}>
         {isTabCourse && <CourseCategoryItem />}
-        {/* <View style={{ flex: 1, marginLeft: 16 }}>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginRight: 16,
-              marginBottom: 8,
-            }}
-          >
-            <Text
-              style={{ fontSize: 16, fontWeight: "600", color: colors.text }}
-            >
-              My course
-            </Text>
-            <TouchableOpacity
-              onPress={() => {
-                NavigationService.navigate(SCREENS.MY_COURES);
-              }}
-              style={{ flexDirection: "row", alignItems: "center" }}
-            >
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontWeight: "600",
-                  color: colors.textOpacity8,
-                  marginRight: 8,
-                }}
-              >
-                See all
-              </Text>
-              <Image
-                style={{ width: 8, height: 18 }}
-                source={require("assets/images/arrow-right.png")}
-              ></Image>
-            </TouchableOpacity>
-          </View>
-          <FlatList
-            data={listMyCourse}
-            renderItem={renderItemMyCourse}
-            horizontal
-            style={{ flex: 1 }}
-            showsHorizontalScrollIndicator={false}
-          />
-        </View> */}
         <CourseQuickFilter isTabCourse={isTabCourse} />
       </View>
     );
   }, [isTabCourse]);
-
-  // const renderItemMyCourse = ({
-  //   item,
-  //   index,
-  // }: {
-  //   item: any;
-  //   index: number;
-  // }) => {
-  //   console.log("item, index", item, index);
-  //   return (
-  //     <CourseItemProgessbar
-  //       isSliderItem
-  //       {...item}
-  //       key={index}
-  //     ></CourseItemProgessbar>
-  //   );
-  // };
 
   return (
     <View style={{ flex: 1 }}>

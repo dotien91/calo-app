@@ -109,6 +109,8 @@ const SettingProfileScreen = () => {
     );
   };
 
+  const uploadAvatar = () => {};
+
   const renderScrollPointCoin = () => {
     return (
       <View>
@@ -141,9 +143,11 @@ const SettingProfileScreen = () => {
                 backgroundColor: colors.textOpacity6,
                 borderRadius: 99,
                 right: 0,
-                padding: 3,
+                padding: 4,
+                width: "auto",
+                height: "auto",
               }}
-              // onPress={handleSwitchCamera}
+              onPress={uploadAvatar}
               size={12}
             />
           </View>
@@ -159,9 +163,11 @@ const SettingProfileScreen = () => {
                 size={24}
               />
             </View>
-            <Text style={styles.textLevel}>
-              {translations.task.level} {userData?.level}
-            </Text>
+            <View style={styles.boxLevel}>
+              <Text style={styles.textLevel}>
+                {translations.task.level} {userData?.level}
+              </Text>
+            </View>
           </View>
         </View>
       </View>

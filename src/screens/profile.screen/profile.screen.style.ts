@@ -51,7 +51,7 @@ export default (theme: ExtendedTheme) => {
       marginHorizontal: 16,
       marginTop: 16,
     },
-    textLevel: {
+    boxLevel: {
       backgroundColor: colors.btnRedPrimary,
       maxWidth: 70,
       textAlign: "center",
@@ -59,6 +59,12 @@ export default (theme: ExtendedTheme) => {
       paddingVertical: 2,
       borderRadius: 4,
       paddingHorizontal: 4,
+    },
+    textLevel: {
+      textAlign: "center",
+      ...CS.hnRegular,
+      fontSize: 12,
+      color: colors.white,
     },
     textInviteFriend: {
       ...CS.hnSemiBold,
