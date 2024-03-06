@@ -795,6 +795,12 @@ export default {
     toJoin: "tham gia {channel}",
     sendInvite: "Gửi lời mời",
     getLink: "Lấy đường dẫn để chia sẻ",
+    titleInvite: "Bạn có mã giới thiệu nào không?",
+    desInvite: "Nhập mã giới thiệu và bạn sẽ nhận được 1000 Điểm",
+    enterCode: "Nhập mã",
+    enterCodeSuccess: "Nhập mã giới thiệu thành công",
+    enterCodeFaild: "Mã giới thiệu không đúng, vui lòng thử lại.",
+    send: "Gửi",
   },
   categories: {
     addCategory: "Thêm chuyên mục",

@@ -17,12 +17,8 @@ export const useUserHook = () => {
   const setUserData = useStore((state) => state.setUserData);
   const setUserInfo = useStore((state) => state.setUserInfo);
   const setLinkAvatar = useStore((state) => state.setLinkAvatar);
-  // const userData = useStore((state) => state.userData);
   const initListFollow = useStore((state) => state.initListFollow);
-
-  // const isLoggedIn = () => {
-  //   return !!_getJson(USER_TOKEN) && !!userData?._id;
-  // };
+  const setShowInvite = useStore((state) => state.setShowInvite);
 
   const isLoggedIn = () => {
     return _getJson(USER_TOKEN);
@@ -69,6 +65,7 @@ export const useUserHook = () => {
     setUserData(null);
     setLinkAvatar("");
     initListFollow([]);
+    setShowInvite(true);
     // RNRestart.restart();
   };
 
