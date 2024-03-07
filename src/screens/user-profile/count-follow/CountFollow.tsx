@@ -90,8 +90,8 @@ const CountFollow = ({ id, postCount }: CountFollowProps) => {
         }}
       >
         <ItemFollow
-          title={countFollow?.following}
-          des={translations.following || "-"}
+          title={countFollow?.following || "-"}
+          des={translations.following}
         />
       </TouchableOpacity>
       <View
@@ -107,8 +107,8 @@ const CountFollow = ({ id, postCount }: CountFollowProps) => {
         }}
       >
         <ItemFollow
-          title={countFollow?.followers}
-          des={translations.follower || "-"}
+          title={countFollow?.followers || "-"}
+          des={translations.follower}
         />
       </TouchableOpacity>
       <View

@@ -23,7 +23,7 @@ const HeaderHome = () => {
   const gotoProfile = () => {
     if (userData) {
       NavigationService.push(SCREENS.PROFILE_CURRENT_USER, {
-        _id: userData._id,
+        _id: userData?._id,
         userInfo: userData,
       });
     } else {

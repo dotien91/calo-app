@@ -310,7 +310,7 @@ const SettingProfileScreen = () => {
           onPress={() =>
             NavigationService.navigate(SCREENS.CODE_ACTIVATIONS_SCREEN)
           }
-          count={referralByMe.length}
+          count={referralByMe?.length}
         />
 
         <ItemCodeActive
@@ -325,7 +325,7 @@ const SettingProfileScreen = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={CS.container}>
       <Header
         hideBackBtn
         onPressRight={onPressHeaderRight}
