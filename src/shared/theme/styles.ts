@@ -195,6 +195,10 @@ const CS = StyleSheet.create({
     marginTop: getStatusBarHeight(),
     marginBottom: isAndroid ? getBottomSpace() : 0,
   },
+  container: {
+    flex: 1,
+    marginTop: isAndroid ? getStatusBarHeight() : 0,
+  },
 });
 
 interface Shadow {

@@ -128,7 +128,7 @@ const AvatarProfile = ({ userInfo, customStyle }: UploadAvatarProps) => {
   };
 
   const isMe = React.useMemo(() => {
-    return userInfo?._id == userData._id;
+    return userInfo?._id == userData?._id;
   }, [userInfo, userData]);
 
   if (isMe) userInfo = { ...userData };

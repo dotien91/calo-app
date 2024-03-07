@@ -12,6 +12,7 @@ import * as NavigationService from "react-navigation-helpers";
 
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
+import { isAndroid } from "@helpers/device.info.helper";
 
 interface HeaderProps {
   iconNameLeft?: string;
@@ -110,6 +111,7 @@ const Header = ({
         </TouchableOpacity>
       )}
       {!!rightComponent && rightComponent()}
+      {isAndroid() && <View style={{position: 'absolute', left: 0, top: -10, right: 0, height: 20, backgroundColor: 'white', zIndex: 1}} />}
     </View>
   );
 };
@@ -127,10 +129,10 @@ const styles = StyleSheet.create({
     gap: 8,
     backgroundColor: palette.white,
     shadowColor: "rgba(0,0,0,0.8)",
-    shadowOffset: { width: 0, height: 6 },
+    shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.1,
-    elevation: 1,
-    shadowRadius: 5,
+    elevation: 10,
+    shadowRadius: 15,
     // marginTop: isIos ? 0 : getStatusBarHeight(),
   },
   textHeader: {
