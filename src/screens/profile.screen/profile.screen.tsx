@@ -325,6 +325,8 @@ const SettingProfileScreen = () => {
         data: {
           title: translations.invite.enterCode,
           cb: sendCode,
+          icon: "icInviteCode",
+          txtBtn: translations.codeActivations.activate,
         },
       });
     }

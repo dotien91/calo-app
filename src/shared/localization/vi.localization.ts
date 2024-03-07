@@ -958,6 +958,7 @@ export default {
     header: "Kích hoạt mã",
     referrer: "Người giới thiệu",
     copyCodeSuccsess: "Sao chép mã thành công",
+    activate: "Activate",
   },
   mentor: {
     user: "Người dùng",

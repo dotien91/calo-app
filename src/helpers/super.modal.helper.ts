@@ -29,6 +29,7 @@ export enum EnumModalContentType {
   SearchBank = "search-bank",
   SelectSort = "select-sort",
   Referral = "Referral",
+  InviteCode = "invite-code",
 }
 
 export enum EnumStyleModalType {
