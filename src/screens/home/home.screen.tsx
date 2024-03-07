@@ -4,11 +4,13 @@ import {
   useWindowDimensions,
   Text,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import * as NavigationService from "react-navigation-helpers";
-import { TabView, SceneMap, TabBar } from "react-native-tab-view";
+import { SceneMap, TabBar } from "react-native-tab-view";
+import { CollapsibleHeaderTabView } from "react-native-tab-view-collapsible-header";
 
 import HeaderHome from "./components/header-home/HeaderHome";
 import { SCREENS } from "constants";
@@ -18,6 +20,8 @@ import CommonStyle from "@theme/styles";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import useStore from "@services/zustand/store";
 import AboutHome from "./components/about-home/about.home";
+
+const initialLayout = { width: Dimensions.get("window").width };
 
 interface HomeScreenProps {}
 
@@ -35,7 +39,6 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
 
   const { isLoggedIn } = useUserHook();
 
-  const layout = useWindowDimensions();
   const userData = useStore((state) => state.userData);
 
   const [index, setIndex] = React.useState(0);
@@ -70,14 +73,13 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
   return (
     <View style={CommonStyle.safeAreaView}>
       <HeaderHome />
-      <AboutHome />
-      <TabView
-        style={CommonStyle.flex1}
-        renderTabBar={renderTabBar}
+      <CollapsibleHeaderTabView
+        renderScrollHeader={AboutHome}
         navigationState={{ index, routes }}
         renderScene={renderScene}
         onIndexChange={setIndex}
-        initialLayout={{ width: layout.width }}
+        initialLayout={initialLayout}
+        renderTabBar={renderTabBar}
       />
       {isLoggedIn() && userData?._id && (
         <TouchableOpacity
