@@ -70,6 +70,7 @@ export const useUserHook = () => {
     _setJson(USER_TOKEN, "");
     setUserData(null);
     setLinkAvatar("");
+    setUserInfo(null);
     setUserMedia({
       user_avatar: "",
       user_cover: "",

@@ -32,7 +32,9 @@ const DiscoverScreen = () => {
       limit: 3,
     };
     getListLeaderBoard(param).then((res) => {
-      setListRank(res.data.other_users);
+      if (!res.isError) {
+        setListRank(res.data.other_users);
+      }
     });
   };
 
@@ -91,14 +93,17 @@ const DiscoverScreen = () => {
               color: colors.textOpacity8,
             }}
           >
-            {translations.discover.level}: {userInfo?.level}
+            {translations.discover.level}: {userInfo?.level || "-"}
           </Text>
         </View>
       </View>
     );
   };
 
+  console.log("listRanklistRank", listRank);
+
   const renderLeaderBoard = () => {
+    if (!listRank.length) return null;
     return (
       <View style={{ height: 270, marginHorizontal: 16, marginVertical: 8 }}>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
@@ -142,7 +147,7 @@ const DiscoverScreen = () => {
                   zIndex: 1,
                 }}
                 sourceUri={{
-                  uri: `${listRank[1]?.user_avatar_thumbnail}`,
+                  uri: `${listRank[1]?.user_avatar}`,
                 }}
                 resizeMode={"cover"}
               ></Avatar>
@@ -287,7 +292,6 @@ const DiscoverScreen = () => {
               </View>
             </View>
           </View>
-
           <View style={{ flex: 1 / 3, justifyContent: "flex-end" }}>
             <View style={{ zIndex: 1 }}>
               <Avatar

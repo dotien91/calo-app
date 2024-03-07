@@ -44,7 +44,7 @@ const HeaderAffiliate = () => {
 
   return (
     <ImageBackground
-      source={require("../../../assets/images/bgAffiliate.png")}
+      source={require("../../../assets/images/bgaffiliate.png")}
       style={styles.backgroundHeader}
     >
       <View style={styles.viewHeaderFake}>

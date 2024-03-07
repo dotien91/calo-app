@@ -58,7 +58,6 @@ export function useListData<T>(
   const isFetching = useRef(false);
 
   useDeepCompareEffect(() => {
-    console.log("paramsparams", params);
     _requestData(false);
   }, [params]);
 
@@ -67,9 +66,7 @@ export function useListData<T>(
     if (stateListData.nextPage > 1 && showRefreshing) setRefreshing(true);
     // setIsLoading(true);
     requestData({ page: "1", ...params }).then((res: any) => {
-      console.log("res use listdata", res);
       const newData = res.data;
-      console.log("reload");
       // setIsLoading(false);
       if (!res.isError && lodash.isArray(newData)) {
         isFetching.current = false;

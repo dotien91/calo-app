@@ -50,7 +50,7 @@ const AffiliateStatisticalView = () => {
     <View style={styles.styleViewTotalAff}>
       <View style={styles.styleTotalToday}>
         <ImageBackground
-          source={require("../../../assets/images/bgIHCAffiliate.png")}
+          source={require("../../../assets/images/bgihcaffiliate.png")}
           resizeMode="cover"
           imageStyle={{ borderRadius: 8 }}
           style={styles.styleImageBg2}
