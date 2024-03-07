@@ -1,7 +1,6 @@
 import React, { useCallback, useRef, useState } from "react";
 import { RefreshControl, View } from "react-native";
 import useDeepCompareEffect from "use-deep-compare-effect";
-
 import { palette } from "@theme/themes";
 import lodash from "lodash";
 import LoadingList from "@shared-components/loading.list.component";
@@ -52,7 +51,6 @@ export function useListData<T>(
     isLoading: true,
     noData: false,
   });
-
   const [isLoadMore, setIsLoadmore] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const isFetching = useRef(false);
@@ -66,6 +64,10 @@ export function useListData<T>(
     if (stateListData.nextPage > 1 && showRefreshing) setRefreshing(true);
     // setIsLoading(true);
     requestData({ page: "1", ...params }).then((res: any) => {
+      // console.log("res use list data", {
+      //   params,
+      //   res
+      // })
       const newData = res.data;
       // setIsLoading(false);
       if (!res.isError && lodash.isArray(newData)) {

@@ -151,7 +151,6 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
         ref={listRef}
         data={getListData()}
         renderItem={renderItem}
-        scrollEventThrottle={16}
         onEndReachedThreshold={0}
         onEndReached={onEndReach}
         showsVerticalScrollIndicator={false}
