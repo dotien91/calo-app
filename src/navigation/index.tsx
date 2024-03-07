@@ -180,7 +180,7 @@ const Navigation = () => {
   };
 
   const renderStackIntro = () => {
-    if (!isFirstOpenApp) return null;
+    // if (!isFirstOpenApp) return null;
     return (
       <>
         <Stack.Screen
@@ -216,10 +216,9 @@ const Navigation = () => {
         {renderStackIntro()}
 
         <Stack.Screen
-          name={SCREENS.COURSE_LIST}
+          name={SCREENS.HOME}
           component={renderTabNavigation}
         />
-        <Stack.Screen name={SCREENS.HOME} component={HomeScreen} />
         <Stack.Screen name={SCREENS.LEADERBOARD} component={LeaderBoard} />
         <Stack.Screen
           name={SCREENS.CLASSHOMEWORK}
