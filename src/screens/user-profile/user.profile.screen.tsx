@@ -430,14 +430,13 @@ const ProfileUser = (props: ProfileUserProps) => {
         showsVerticalScrollIndicator={false}
       >
         <View>
-          {/* <Image style={{height: 200, width: '100%'}} source={{uri: userInfo?.background_image ? userInfo?.background_image : "https://cdn.vntrip.vn/cam-nang/wp-content/uploads/2017/08/van-mieu-quoc-tu-giam.jpg"}}></Image> */}
           <AvatarProfile userInfo={userInfo} />
           <CountFollow id={_id} postCount={totalCount} />
           <ListAction />
           <Bio text={userInfo?.bio || ""} />
           <View style={{ height: 1, backgroundColor: palette.borderColor }} />
         </View>
-        <ListPost isFollowingPost={false} id={_id} />
+        <ListPost isFollowingPost={false} id={_id} isProfile />
       </ScrollView>
     </View>
   );

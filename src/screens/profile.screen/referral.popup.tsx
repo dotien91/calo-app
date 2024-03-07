@@ -54,7 +54,7 @@ const ReferralPopup = ({ data }: ReferralPopupProps) => {
             size={24}
             color={palette.textOpacity6}
           />
-          <TextBase color={EnumColors.white}>
+          <TextBase style={{ color: palette.textOpacity8 }}>
             {translations.referrals.viewProfile}
           </TextBase>
         </PressableBtn>
@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
     backgroundColor: palette.grey5,
     borderRadius: 8,
     height: 40,
+    gap: 8,
     marginTop: 16,
     ...CS.center,
     flexDirection: "row",

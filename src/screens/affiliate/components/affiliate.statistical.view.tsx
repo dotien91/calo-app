@@ -24,7 +24,6 @@ interface UserIncomeType {
 const AffiliateStatisticalView = () => {
   const [userIncome, setUserIncome] = useState<UserIncomeType>();
   const userData = useStore((state) => state.userData);
-  console.log("userData...", userData);
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const [type, setType] = useState("coin");
