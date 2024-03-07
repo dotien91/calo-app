@@ -537,11 +537,15 @@ export default {
     removeUser: "Remove User",
     descriptionPoint:
       "This is the number of points the student will receive for each corresponding action",
+    inviteDes: `You will get 4000 points for each friend who activates oyur code and earns 10000 points. Your friend will also get 1000 points as a reward.`,
   },
   codeActivations: {
     sortBy: "Sort by",
     timeLatest: "Time: Latest first",
     priceHighest: "Price: highest first",
+    header: "Code activations",
+    referrer: "Referrer",
+    copyCodeSuccsess: "Copied",
   },
   profile: {
     editProfile: "Edit Profile",
@@ -710,6 +714,8 @@ export default {
     enterCodeSuccess: "Enter referral code successfully",
     enterCodeFaild: "The referral code is incorrect, please try again.",
     send: "Send",
+    codeActivations: "Code activations",
+    emptyListInvite: "List invite is empty",
   },
   categories: {
     addCategory: "Add Category",

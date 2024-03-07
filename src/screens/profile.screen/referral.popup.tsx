@@ -45,7 +45,7 @@ const ReferralPopup = ({ data }: ReferralPopupProps) => {
         <View style={styles.viewBtn}>
           <TextBase
             style={{ color: palette.white }}
-          >{`level: ${data.level}`}</TextBase>
+          >{`${translations.gamifications.level}: ${data.level}`}</TextBase>
         </View>
         <PressableBtn onPress={gotoProfile} style={styles.viewPerson}>
           <Icon
