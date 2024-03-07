@@ -59,7 +59,7 @@ const AboutHome = () => {
     });
   };
 
-  return null
+  return null;
   return (
     <View>
       {!!userData?.display_name && (

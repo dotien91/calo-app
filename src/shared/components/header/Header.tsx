@@ -111,7 +111,19 @@ const Header = ({
         </TouchableOpacity>
       )}
       {!!rightComponent && rightComponent()}
-      {isAndroid() && <View style={{position: 'absolute', left: 0, top: -10, right: 0, height: 20, backgroundColor: 'white', zIndex: 1}} />}
+      {isAndroid() && (
+        <View
+          style={{
+            position: "absolute",
+            left: 0,
+            top: -10,
+            right: 0,
+            height: 20,
+            backgroundColor: "white",
+            zIndex: 1,
+          }}
+        />
+      )}
     </View>
   );
 };

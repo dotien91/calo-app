@@ -219,15 +219,14 @@ const Navigation = () => {
           name={SCREENS.COURSE_LIST}
           component={renderTabNavigation}
         />
-        <Stack.Screen
-          name={SCREENS.LEADERBOARD}
-          component={LeaderBoard}
-        />
+        <Stack.Screen name={SCREENS.HOME} component={HomeScreen} />
+        <Stack.Screen name={SCREENS.LEADERBOARD} component={LeaderBoard} />
         <Stack.Screen
           name={SCREENS.CLASSHOMEWORK}
           component={ClassHomeWorkScreen}
         />
         {renderBanksStack()}
+        <Stack.Screen name={SCREENS.CHAT} component={ChatListScreen} />
 
         <Stack.Screen
           name={SCREENS.TEACHER_COURSES}

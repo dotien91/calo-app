@@ -47,7 +47,7 @@ const LeaderBoard = () => {
   }, []);
 
   const renderItem = ({ item, index }: { item: any; index: number }) => {
-    console.log(22222, indexRankUser)
+    console.log(22222, indexRankUser);
     return (
       <View
         style={{

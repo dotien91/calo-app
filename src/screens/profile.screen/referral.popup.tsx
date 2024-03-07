@@ -80,14 +80,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: palette.text,
   },
-  viewClose: {
-    ...CS.center,
-    position: "absolute",
-    width: 25,
-    height: 25,
-    top: 10,
-    right: 0,
-  },
+
   styleAvatar: {
     width: 80,
     height: 80,

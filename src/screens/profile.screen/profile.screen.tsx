@@ -38,7 +38,7 @@ const SettingProfileScreen = () => {
   const theme = useTheme();
   const { colors } = theme;
   const userData = useStore((state) => state.userData);
-  const userInfo = useStore((state) => state.userInfo);
+  // const userInfo = useStore((state) => state.userInfo);
   const [referralByMe, setReferralByMe] = useState([]);
   const [referralMe, setReferralMe] = useState([]);
 

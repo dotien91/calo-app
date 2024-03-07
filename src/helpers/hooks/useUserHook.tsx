@@ -78,7 +78,7 @@ export const useUserHook = () => {
     });
     initListFollow([]);
     setShowInvite(true);
-    resetListLike()
+    resetListLike();
     // RNRestart.restart();
   };
 
