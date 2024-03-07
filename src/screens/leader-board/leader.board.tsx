@@ -47,6 +47,7 @@ const LeaderBoard = () => {
   }, []);
 
   const renderItem = ({ item, index }: { item: any; index: number }) => {
+    console.log(22222, indexRankUser)
     return (
       <View
         style={{
@@ -125,7 +126,7 @@ const LeaderBoard = () => {
             bottom: 0,
             width: "100%",
             padding: 16,
-            borderColor: colors.borderColor,
+            ...CS.borderTopStyle,
           }}
         >
           <Text
@@ -144,7 +145,7 @@ const LeaderBoard = () => {
               width: 46,
               height: 46,
               borderRadius: 99,
-              marginLeft: 18,
+              marginHorizontal: 16,
             }}
             sourceUri={{
               uri: rankUser?.user_avatar_thumbnail,

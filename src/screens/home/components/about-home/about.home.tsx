@@ -58,7 +58,8 @@ const AboutHome = () => {
       params: item.params,
     });
   };
-  return null;
+
+  return null
   return (
     <View>
       {!!userData?.display_name && (
