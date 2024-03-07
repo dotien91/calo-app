@@ -2,7 +2,7 @@
 /*eslint no-unsafe-optional-chaining: "error"*/
 
 import React, { useEffect, useRef, useState } from "react";
-import { FlatList, View } from "react-native";
+import { View } from "react-native";
 import { useTheme } from "@react-navigation/native";
 
 import ItemPost from "./components/post-item/post.item";
@@ -19,6 +19,8 @@ import { useUserHook } from "@helpers/hooks/useUserHook";
 import EmptyResultView from "@shared-components/empty.data.component";
 import { TypedPost } from "shared/models";
 import LoadingList from "@shared-components/loading.list.component";
+import { HFlatList } from "react-native-head-tab-view";
+
 interface ListPostProps {
   isFollowingPost: boolean;
   id?: string;
@@ -136,7 +138,7 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
     if (id) return listData;
     return listDataStream.concat(listData);
   };
-
+  // if (isFollowingPost) {
   return (
     <View
       style={{
@@ -144,7 +146,8 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
         backgroundColor: colors.background,
       }}
     >
-      <FlatList
+      <HFlatList
+        index={isFollowingPost ? 1 : 0}
         ref={listRef}
         data={getListData()}
         renderItem={renderItem}

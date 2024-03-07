@@ -22,7 +22,7 @@ const AvatarPost = ({ data, pressAvatar, sizeAvatar }: AvatarPostProps) => {
       }}
     >
       <Image
-        source={{ uri: data?.user_id?.user_avatar }}
+        source={{ uri: data?.user_id?.user_avatar_thumbnail }}
         style={{
           width: sizeAvatar,
           height: sizeAvatar,

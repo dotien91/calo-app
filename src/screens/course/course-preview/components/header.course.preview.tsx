@@ -166,9 +166,9 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
         <Text style={styles.textTitle}>{data?.title}</Text>
         <TouchableOpacity onPress={moreCoursePreview}>
           <Icon
-            name="ellipsis-horizontal"
+            name="flag"
             type={IconType.Ionicons}
-            size={30}
+            size={25}
             color={palette.text}
           ></Icon>
         </TouchableOpacity>

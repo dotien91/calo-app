@@ -11,37 +11,37 @@ import IconSvg from "assets/svg";
 import { SCREENS } from "constants";
 import useStore from "@services/zustand/store";
 import { EnumCourseType } from "models/course.model";
-
-const listCategory = [
-  {
-    title: translations.listCategory.course,
-    textColor: "#E14242",
-    iconColor: "#E14242",
-    icon: "icBook",
-    screen: SCREENS.COURSE_LIST,
-    color: "#FFEDED",
-    id: "course",
-  },
-  {
-    id: "tutor",
-    title: translations.listCategory.tutor,
-    textColor: "#FFA347",
-    iconColor: "#FFA347",
-    icon: "icGraduate",
-    screen: SCREENS.COURSE_LIST,
-    color: "#FFF3DA",
-  },
-  {
-    title: translations.listCategory.affiliate,
-    textColor: "#2BC456",
-    iconColor: "#2BC456",
-    icon: "icAffiliate",
-    screen: SCREENS.AFFILIATE,
-    color: "#E8F7EF",
-  },
-];
+import InviteView from "../invite-me/invite";
 
 const AboutHome = () => {
+  const listCategory = [
+    {
+      title: translations.listCategory.course,
+      textColor: "#E14242",
+      iconColor: "#E14242",
+      icon: "icBook",
+      screen: SCREENS.COURSE_LIST,
+      color: "#FFEDED",
+      id: "course",
+    },
+    {
+      id: "tutor",
+      title: translations.listCategory.tutor,
+      textColor: "#FFA347",
+      iconColor: "#FFA347",
+      icon: "icGraduate",
+      screen: SCREENS.COURSE_LIST,
+      color: "#FFF3DA",
+    },
+    {
+      title: translations.listCategory.affiliate,
+      textColor: "#2BC456",
+      iconColor: "#2BC456",
+      icon: "icAffiliate",
+      screen: SCREENS.AFFILIATE,
+      color: "#E8F7EF",
+    },
+  ];
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const setCourseCurrentType = useStore((state) => state.setCourseCurrentType);
@@ -59,7 +59,7 @@ const AboutHome = () => {
     });
   };
 
-  return null
+  // return null
   return (
     <View>
       {!!userData?.display_name && (
@@ -120,6 +120,7 @@ const AboutHome = () => {
           );
         })}
       </View>
+      <InviteView />
     </View>
   );
 };
