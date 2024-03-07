@@ -109,10 +109,6 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
     );
   }
 
-  if (isLoading) {
-    return <LoadingList numberItem={7} />;
-  }
-
   const renderEmpty = () => {
     return (
       <View
@@ -121,7 +117,6 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
           ...CommonStyle.flex1,
           backgroundColor: colors.background,
           paddingVertical: 40,
-          minHeight: 500,
         }}
       >
         <EmptyResultView
@@ -139,6 +134,13 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
     return listDataStream.concat(listData);
   };
   // if (isFollowingPost) {
+
+  const renderHeader = React.useMemo(() => {
+    if (!isLoading) return null
+    return <LoadingList numberItem={3} />
+  }, [isLoading])
+
+
   return (
     <View
       style={{
@@ -147,6 +149,7 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
       }}
     >
       <HFlatList
+        ListHeaderComponent={renderHeader}
         index={isFollowingPost ? 1 : 0}
         ref={listRef}
         data={getListData()}
