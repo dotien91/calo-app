@@ -32,7 +32,7 @@ export const useUserHook = () => {
     getCurrentUser().then((res) => {
       if (!res.isError) {
         initData(res.data);
-        NavigationService.navigate(SCREENS.HOME);
+        NavigationService.navigate(SCREENS.HOME, { screen: SCREENS.HOME });
         showToast({
           type: "success",
           message: translations.loginSuccess,

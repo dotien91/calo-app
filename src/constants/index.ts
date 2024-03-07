@@ -86,9 +86,9 @@ export const SCREENS = {
 };
 
 export const IOS_CLIENT_ID_GOOGLE =
-  "409582649419-j3ler20j0fklont9ivpeud6lmq7hkkqn.apps.googleusercontent.com";
+  "329708522429-tb80b2s4u8k8r3p2ocn5rfa5ofr78kbl.apps.googleusercontent.com";
 export const WEB_CLIENT_ID_GOOGLE =
-  "409582649419-0bojiri21udlkk2gov3fc8u4tr9i3dmm.apps.googleusercontent.com";
+  "329708522429-t56qqqgo9kasu9rqtomf1aj8al55obbo.apps.googleusercontent.com";
 
 export enum SERVICE_UNIT {
   second = "second",

@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  View,
-  useWindowDimensions,
-  Text,
-  TouchableOpacity,
-  Dimensions,
-} from "react-native";
+import { View, Text, TouchableOpacity, Dimensions } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import * as NavigationService from "react-navigation-helpers";
