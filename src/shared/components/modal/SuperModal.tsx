@@ -35,6 +35,7 @@ import ListCourseLiveStream from "@screens/stream/stream-modal/stream.modal.list
 import FilterAffiliate from "@screens/affiliate/components/FilterAffiliate";
 import ListBank from "./modal-inner/ListBank";
 import SelectRadioButton from "@screens/code-activations/select.radio.button";
+import ReferralPopup from "@screens/profile.screen/referral.popup";
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
 // using normal one.
@@ -237,6 +238,9 @@ const SuperModal: React.FC<SuperModalProps> = () => {
           )}
           {contentModalType == EnumModalContentType.SelectSort && (
             <SelectRadioButton data={data} />
+          )}
+          {contentModalType == EnumModalContentType.Referral && (
+            <ReferralPopup data={data} />
           )}
         </View>
       </StickBottomModal>

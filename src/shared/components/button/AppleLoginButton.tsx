@@ -73,7 +73,7 @@ const AppleLoginButton = ({ showText }: BtnProps) => {
     return (
       <Button
         style={styles.iconBtn}
-        onPress={_onPress}
+        onPress={loginApple}
         backgroundColor={"transparent"}
         SvgSo={<IconSvg name="icAppleBlack" size={20} />}
       />

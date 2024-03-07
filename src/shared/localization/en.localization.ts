@@ -475,6 +475,7 @@ export default {
     selectModal: "Select",
     myCourse: "My course",
     recommendCourse: "Recommend course",
+    teachingTime: "Teaching time",
   },
   seeAll: "See all",
   settings: {
@@ -986,6 +987,10 @@ export default {
     addBankFaild: "Adding a new bank card failed",
     withDrawSuccess: "Placed withdrawal order to account successfully",
     withDrawFaild: "Withdrawal order failed",
+  },
+  referrals: {
+    yourReferral: "Your referral",
+    viewProfile: "View profile",
   },
 };
 /* eslint-disable max-len */

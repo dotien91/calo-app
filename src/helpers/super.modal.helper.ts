@@ -28,6 +28,7 @@ export enum EnumModalContentType {
   FilterAffiliate = "filter-affiliate",
   SearchBank = "search-bank",
   SelectSort = "select-sort",
+  Referral = "Referral",
 }
 
 export enum EnumStyleModalType {

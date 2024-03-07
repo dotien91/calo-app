@@ -235,3 +235,21 @@ export async function postInvitationCode(data: any) {
     return response;
   });
 }
+export async function getReferralByMe(params: any) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "referral/me",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}
+export async function getReferralMe(params: any) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "referral/user",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}
