@@ -42,7 +42,7 @@ export function useListData<T>(
   params: TypedRequestParams,
   requestData: (params: TypedRequestParams) => Promise<T[]>,
   initData: T[] = [],
-  dep
+  dep,
 ): TypedUseListData<T> {
   const [stateListData, setStateListData] = useState<TypedStateListData<T>>({
     listData: initData,

@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { View, Text, Image } from "react-native";
 import { useTheme } from "@react-navigation/native";
+import * as NavigationService from "react-navigation-helpers";
 
 // import * as NavigationService from "react-navigation-helpers";
 /**
@@ -11,6 +12,8 @@ import CS from "@theme/styles";
 import { TypedUser } from "models";
 import Avatar from "@shared-components/user/Avatar";
 import IconBtn from "@shared-components/button/IconBtn";
+import PressableBtn from "@shared-components/button/PressableBtn";
+import { SCREENS } from "constants";
 
 interface TutorItemProps extends TypedUser {
   isHorizontalStyle: boolean;
@@ -22,8 +25,10 @@ const TutorItem = ({
   user_avatar_thumbnail,
   tutor_level,
   educations,
+  ...res
 }: TutorItemProps) => {
   const theme = useTheme();
+  console.log("resres", res);
   // const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
   // const [isLike, setIsLike] = React.useState(false);
@@ -31,6 +36,11 @@ const TutorItem = ({
   // const toggleLike = () => {
   //   setIsLike((old) => !old);
   // };
+  const _gotoDetailTeacher = () => {
+    NavigationService.navigate(SCREENS.TEACHER_DETAIL, {
+      idTeacher: res._id,
+    });
+  };
 
   const objectToString = (data) => {
     return Object.keys(data)
@@ -120,8 +130,11 @@ const TutorItem = ({
       </View>
     );
   };
-
-  return <View style={[styles.tutorItem]}>{renderInfo()}</View>;
+  return (
+    <PressableBtn onPress={_gotoDetailTeacher} style={[styles.tutorItem]}>
+      {renderInfo()}
+    </PressableBtn>
+  );
 };
 
 export default React.memo(TutorItem);

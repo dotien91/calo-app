@@ -29,7 +29,7 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
   const listDataRef = React.useRef([]);
   // const route = useRoute();
   // const paramsFromNavigation = route.params?.["groupData"];
-  const userData = useStore(state => state.userData)
+  const userData = useStore((state) => state.userData);
 
   const {
     listData,
@@ -40,7 +40,12 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
     _requestData,
     setListData,
     noData,
-  } = useListData<TypedGeneralRoomChat>({ limit: 6 }, getListChat, [], userData);
+  } = useListData<TypedGeneralRoomChat>(
+    { limit: 6 },
+    getListChat,
+    [],
+    userData,
+  );
 
   const onRefresh = () => {
     _requestData(false);

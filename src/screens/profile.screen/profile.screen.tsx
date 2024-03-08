@@ -46,7 +46,7 @@ const SettingProfileScreen = () => {
   const theme = useTheme();
   const { colors } = theme;
   const userData = useStore((state) => state.userData);
-  // const userInfo = useStore((state) => state.userInfo);
+  const userInfo = useStore((state) => state.userInfo);
   const setShowInvite = useStore((store) => store.setShowInvite);
   const showInvite = useStore((store) => store.showInvite);
   const [referralByMe, setReferralByMe] = useState([]);
@@ -76,7 +76,7 @@ const SettingProfileScreen = () => {
   const listrenderPointCoin = [
     {
       icon: "icCoinStar",
-      title: userData?.point,
+      title: userInfo?.point,
     },
     {
       icon: "icCoin",

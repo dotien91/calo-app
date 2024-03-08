@@ -46,7 +46,7 @@ const DiscoverScreen = () => {
     {
       icon: "icThreeBook",
       title: translations.discover.study,
-      screen: SCREENS.COURSE_LIST
+      screen: SCREENS.COURSE_LIST,
     },
     // {
     //   icon: "icGradution",
@@ -59,7 +59,7 @@ const DiscoverScreen = () => {
     {
       icon: "icFind",
       title: translations.discover.finduser,
-      screen: SCREENS.COURSE_CATEGORY
+      screen: SCREENS.COURSE_CATEGORY,
     },
   ];
 

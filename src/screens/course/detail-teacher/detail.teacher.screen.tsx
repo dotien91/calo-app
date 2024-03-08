@@ -31,6 +31,7 @@ const DetailTeacherScreen = () => {
 
   const _getUserById = (id: string) => {
     getUserById(id).then((res) => {
+      console.log("res teacher", res, id);
       setData(res.data);
     });
   };

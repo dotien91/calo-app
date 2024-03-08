@@ -65,13 +65,6 @@ const BookLessonSelectView: React.FC<BookLessonSelectViewProps> = () => {
   }, [day]);
 
   const goToCheckout = () => {
-    // const timePick = timeStart.map((v) => {
-    //   return {
-    //     day,
-    //     time_start: v + "" + ":00",
-    //     time_end: v + duration + ":00",
-    //   };
-    // });
     NavigationService.navigate(SCREENS.PAYMENT_COURES, {
       courseData,
       timePick: day,
