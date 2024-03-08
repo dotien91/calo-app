@@ -77,6 +77,7 @@ const CoursePreviewScreen = () => {
         // setIsLoading(false);
         setData(data);
         const idClass = data.classes?.[0]?._id;
+        console.log("idClassidClass", idClass);
         if (idClass) {
           _getCourseRoom(idClass);
         }
@@ -99,6 +100,7 @@ const CoursePreviewScreen = () => {
         const data = res.data;
         //eslint-disable-next-line
         const roomId = (data?.redirect_url || "").match(/[^\/]+$/)?.[0];
+        console.log("roomIdroomId", roomId);
         setCourseRoom({
           roomId,
           chatRoomId: data?.chat_room_id,

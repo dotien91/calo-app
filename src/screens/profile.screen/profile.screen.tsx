@@ -243,7 +243,7 @@ const SettingProfileScreen = () => {
                 style={{ flexDirection: "row", alignItems: "center" }}
               >
                 <Text style={styles.textInviteCode}>
-                  {userData?.invitation_code}
+                  {userData?.invitation_code || "---"}
                 </Text>
                 <Image
                   style={{ height: 15.3, width: 13.79, marginLeft: 4 }}
