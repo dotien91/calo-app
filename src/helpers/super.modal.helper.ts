@@ -45,8 +45,9 @@ export interface IShowModalParams {
 }
 
 interface ToastProps {
-  type?: "success" | "error" | "info";
+  type?: "success" | "error" | "info" | "warning";
   message?: string;
+  title?: string;
 }
 
 // example
@@ -102,6 +103,7 @@ export const showToast = (res: ToastProps) => {
   Toast.show({
     type: res.type || "success",
     text1: res.message || translations.error.unknown,
+    text2: res.title,
   });
 };
 
