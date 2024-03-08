@@ -214,10 +214,7 @@ const Navigation = () => {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {renderStackIntro()}
 
-        <Stack.Screen
-          name={SCREENS.COURSE_LIST}
-          component={renderTabNavigation}
-        />
+        <Stack.Screen name={SCREENS.HOME} component={renderTabNavigation} />
         <Stack.Screen
           name={SCREENS.CLASSHOMEWORK}
           component={ClassHomeWorkScreen}

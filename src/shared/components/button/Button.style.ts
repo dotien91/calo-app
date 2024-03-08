@@ -68,7 +68,7 @@ export default () => {
       paddingHorizontal: 16,
       ...CommonStyle.center,
       ...CommonStyle.borderStyle,
-      borderColor: colors.primary,
+      // borderColor: colors.primary,
       backgroundColor: palette.white,
     },
     txtBtnOutline: {

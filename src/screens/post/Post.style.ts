@@ -7,7 +7,10 @@ import {
 
 import CommonStyle from "@theme/styles";
 import { Device } from "@utils/device.ui.utils";
+import { palette } from "@theme/themes";
 
+const SIZE_AVATAR = 58;
+const BORDER_AVATAR = 100;
 const createStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
@@ -84,7 +87,7 @@ const createStyles = (theme: ExtendedTheme) => {
       marginTop: 10,
       padding: 10,
       borderRadius: 10,
-      backgroundColor: colors.highlight,
+      // backgroundColor: colors.highlight,
     },
     containerPostDetail: {
       ...CommonStyle.safeAreaView,
@@ -152,6 +155,103 @@ const createStyles = (theme: ExtendedTheme) => {
       borderRadius: 8,
       backgroundColor: colors.primary,
       padding: 8,
+    },
+    styleCardName: {
+      height: 72,
+      ...CommonStyle.row,
+      width: "90%",
+      marginHorizontal: 20,
+      gap: 12,
+    },
+    viewName: {
+      gap: 8,
+      justifyContent: "space-around",
+      width: "80%",
+    },
+    txtName: {
+      ...CommonStyle.hnBold,
+    },
+    txtDes: {
+      ...CommonStyle.textRate,
+    },
+    btnAction: {
+      ...CommonStyle.center,
+      height: 32,
+      width: "45%",
+      backgroundColor: colors.grey,
+      borderRadius: 4,
+    },
+    btnAdd: {
+      ...CommonStyle.center,
+      height: 72,
+      width: 72,
+      backgroundColor: colors.grey,
+      borderRadius: 8,
+    },
+    viewRenderFile: {
+      ...CommonStyle.flexStart,
+      paddingBottom: 20,
+    },
+    border: {
+      width: 20,
+      height: 20,
+      borderRadius: 12,
+      borderWidth: 2,
+      ...CommonStyle.center,
+      borderColor: colors.primary,
+    },
+    selected: {
+      width: 12,
+      height: 12,
+      borderRadius: 6,
+      backgroundColor: colors.primary,
+    },
+    txtLabel: {
+      ...CommonStyle.hnRegular,
+      flex: 1,
+      color: colors.textOpacity8,
+    },
+    viewBtn: {
+      ...CommonStyle.row,
+      height: 40,
+      gap: 10,
+    },
+    btnKey: {
+      height: 100,
+      borderTopWidth: 0.5,
+      alignItems: "center",
+      borderColor: "gray",
+    },
+    selectKey: {
+      flexDirection: "row",
+    },
+    styleViewKeyboard: {
+      ...CommonStyle.flexStart,
+      borderTopWidth: 0.5,
+      alignItems: "center",
+      borderColor: palette.borderColor1,
+    },
+    styleAvatar: {
+      width: SIZE_AVATAR,
+      height: SIZE_AVATAR,
+      borderRadius: BORDER_AVATAR,
+    },
+    stylePressableBtn: {
+      width: 40,
+      height: 40,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    stylePressableBtn1: {
+      flexDirection: "row",
+      height: 40,
+      gap: 8,
+    },
+    styleTxtPressable: {
+      paddingTop: 8,
+      width: "80%",
+      borderBottomWidth: 1,
+      borderColor: palette.grey1,
     },
   });
 };

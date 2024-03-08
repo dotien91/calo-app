@@ -7,25 +7,25 @@ import {
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
   TextInput,
+  Pressable,
 } from "react-native";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useTheme, useRoute } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 import isEqual from "react-fast-compare";
+import BottomSheet, {
+  BottomSheetBackdrop,
+  BottomSheetScrollView,
+} from "@gorhom/bottom-sheet";
 
 import IconSvg from "assets/svg";
 import createStyles from "./Post.style";
 import HeaderPost from "./components/HeaderPost";
 import CommonStyle from "@theme/styles";
-import { palette } from "@theme/themes";
 import { translations } from "@localization";
 import { TypedCategory, TypedPost } from "shared/models";
 import { isIos } from "@utils/device.ui.utils";
 import { createNewPost, getCategory, updatePost } from "@services/api/post";
-import BottomSheet, {
-  BottomSheetBackdrop,
-  BottomSheetScrollView,
-} from "@gorhom/bottom-sheet";
 import { regexLink } from "constants/regex.constant";
 import {
   closeSuperModal,
@@ -39,6 +39,8 @@ import eventEmitter from "@services/event-emitter";
 import CustomBackground from "@shared-components/CustomBackgroundBottomSheet";
 import { SCREENS } from "constants";
 import PressableBtn from "@shared-components/button/PressableBtn";
+import useStore from "@services/zustand/store";
+import Avatar from "@shared-components/user/Avatar";
 
 export default function PostScreen() {
   const theme = useTheme();
@@ -50,6 +52,29 @@ export default function PostScreen() {
   const [postCategory, setPostCategory] = useState("");
   const [link, setLink] = useState("");
   const [listCategory, setListCategory] = useState<TypedCategory[]>([]);
+  const userData = useStore((state) => state.userData);
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      () => {
+        setKeyboardVisible(true); // or some other action
+      },
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => {
+        setKeyboardVisible(false); // or some other action
+      },
+    );
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
+
   const [description, setDescription] = useState<string>(
     item.post_content || "",
   );
@@ -189,20 +214,99 @@ export default function PostScreen() {
     onPress: () => void;
   }) => {
     return (
-      <PressableBtn
-        onPress={onPress}
-        style={{
-          width: 40,
-          height: 40,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+      <PressableBtn onPress={onPress} style={styles.stylePressableBtn}>
         {icon}
       </PressableBtn>
     );
   };
 
+  const SelectComponentText = ({
+    icon,
+    text,
+    onPress,
+  }: {
+    icon: React.JSX.Element;
+    text: string;
+    onPress: () => void;
+  }) => {
+    return (
+      <PressableBtn onPress={onPress} style={styles.stylePressableBtn1}>
+        <View
+          style={{
+            ...CommonStyle.center,
+            width: 52,
+          }}
+        >
+          {icon}
+        </View>
+        <View style={styles.styleTxtPressable}>
+          <Text style={{ ...CommonStyle.hnMedium }}>{text}</Text>
+        </View>
+      </PressableBtn>
+    );
+  };
+
+  const renderKeyboard = () => {
+    return (
+      <>
+        {isKeyboardVisible ? (
+          <View style={styles.styleViewKeyboard}>
+            <SelectComponent
+              icon={
+                <IconSvg
+                  size={24}
+                  name="icCreatePostImage"
+                  color={colors.green}
+                />
+              }
+              onPress={onSelectPicture}
+            />
+            <SelectComponent
+              icon={<IconSvg size={48} name="icLive" color={colors.primary} />}
+              onPress={onPressLive}
+            />
+            <SelectComponent
+              icon={<IconSvg size={28} name="icFile" color={colors.blue} />}
+              onPress={onPressFile}
+            />
+            <SelectComponent
+              icon={<IconSvg size={20} name="icVideo" color={colors.red} />}
+              onPress={onSelectVideo}
+            />
+          </View>
+        ) : (
+          <View style={CommonStyle.center}>
+            <SelectComponentText
+              icon={
+                <IconSvg
+                  size={24}
+                  name="icCreatePostImage"
+                  color={colors.green}
+                />
+              }
+              onPress={onSelectPicture}
+              text={translations.selectImage1}
+            />
+            <SelectComponentText
+              icon={<IconSvg size={20} name="icVideo" color={colors.red} />}
+              onPress={onSelectVideo}
+              text={translations.selectVideo}
+            />
+            <SelectComponentText
+              icon={<IconSvg size={48} name="icLive" color={colors.primary} />}
+              onPress={onPressLive}
+              text={translations.selectLive}
+            />
+            <SelectComponentText
+              icon={<IconSvg size={28} name="icFile" color={colors.blue} />}
+              onPress={onPressFile}
+              text={translations.selectFile}
+            />
+          </View>
+        )}
+      </>
+    );
+  };
   const beforeValue = {
     file: (item.attach_files || []).map((i) => ({
       _id: i._id,
@@ -236,6 +340,61 @@ export default function PostScreen() {
     return !!description.trim() || !!listFileLocal?.length;
   }, [listFileLocal, description]);
 
+  const SelectRadio = ({ item, index }: any) => {
+    const selected = item._id === postCategory;
+    return (
+      <View key={index} style={styles.viewBtn}>
+        <View style={styles.border}>
+          {selected && <View style={styles.selected} />}
+        </View>
+        <Text style={styles.txtLabel}>{item.category_content}</Text>
+      </View>
+    );
+  };
+
+  const TextIcon = ({ text, nameIcon }: { text: string; nameIcon: string }) => {
+    return (
+      <View
+        style={{
+          ...CommonStyle.flexCenter,
+          gap: 8,
+        }}
+      >
+        <Text style={styles.txtDes}>{text}</Text>
+        <IconSvg name={nameIcon} size={16} />
+      </View>
+    );
+  };
+
+  const renderNameCategory = () => {
+    return (
+      <View style={styles.viewName}>
+        <Text style={styles.txtName}>{userData?.display_name || ""}</Text>
+        <PressableBtn onPress={openListCategory} style={styles.btnAction}>
+          <>
+            {postCategory ? (
+              <TextIcon
+                nameIcon="icSelectDown"
+                text={
+                  <Text style={styles.txtDes}>
+                    {listCategory.length > 0
+                      ? listCategory?.find((i) => i._id === postCategory)
+                          ?.category_content || translations.postCategory
+                      : translations.postCategory}
+                  </Text>
+                }
+              />
+            ) : (
+              <TextIcon
+                nameIcon="icSelectDown"
+                text={translations.selectCategory}
+              />
+            )}
+          </>
+        </PressableBtn>
+      </View>
+    );
+  };
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={[styles.container]}>
@@ -249,21 +408,14 @@ export default function PostScreen() {
             pressGoBack={onGoBack}
             textPost={item._id ? translations.update : translations.post.post}
           />
-          <View style={CommonStyle.flex1}>
-            <PressableBtn
-              onPress={openListCategory}
-              style={{ paddingHorizontal: 20 }}
-            >
-              <Text
-                style={{ ...CommonStyle.hnSemiBold, color: colors.primary }}
-              >
-                #
-                {listCategory.length > 0
-                  ? listCategory?.find((i) => i._id === postCategory)
-                      ?.category_content || translations.postCategory
-                  : translations.postCategory}
-              </Text>
-            </PressableBtn>
+          <View style={{ ...CommonStyle.flex1, paddingTop: 10 }}>
+            <View style={styles.styleCardName}>
+              <Avatar
+                style={styles.styleAvatar}
+                sourceUri={{ uri: userData?.user_avatar_thumbnail }}
+              />
+              {renderNameCategory()}
+            </View>
 
             <View
               style={[
@@ -291,46 +443,17 @@ export default function PostScreen() {
                 </Text>
               </View>
             )}
-            <View style={{ paddingBottom: 20 }}>{renderFile()}</View>
-            <View
-              style={{
-                flexDirection: "row",
-                height: 40,
-                borderTopWidth: 1,
-                alignItems: "center",
-                borderColor: palette.borderColor,
-              }}
-            >
-              <SelectComponent
-                icon={
-                  <IconSvg
-                    size={24}
-                    name="icCreatePostImage"
-                    color={colors.mainColor2}
-                  />
-                }
-                onPress={onSelectPicture}
-              />
-              <SelectComponent
-                icon={
-                  <IconSvg size={24} name="icFile" color={colors.mainColor2} />
-                }
-                onPress={onPressFile}
-              />
-              <SelectComponent
-                icon={
-                  <IconSvg size={24} name="icVideo" color={colors.mainColor2} />
-                }
-                onPress={onSelectVideo}
-              />
-              <View style={{ width: 10 }} />
-              <SelectComponent
-                icon={
-                  <IconSvg size={48} name="icLive" color={colors.mainColor2} />
-                }
-                onPress={onPressLive}
-              />
+            <View style={styles.viewRenderFile}>
+              {listFileLocal.length > 0 && (
+                <>
+                  {renderFile()}
+                  <Pressable style={styles.btnAdd} onPress={onSelectPicture}>
+                    <IconSvg name="icAdd" size={32} color={colors.grey} />
+                  </Pressable>
+                </>
+              )}
             </View>
+            {renderKeyboard()}
           </View>
           {listCategory.length > 0 && (
             <BottomSheet
@@ -360,7 +483,7 @@ export default function PostScreen() {
                     ...CommonStyle.hnSemiBold,
                     textAlign: "center",
                     fontSize: 20,
-                    color: colors.primary,
+                    color: colors.black,
                   }}
                 >
                   {translations.postCategory}
@@ -384,13 +507,7 @@ export default function PostScreen() {
                         setPostCategory(i._id);
                       }}
                     >
-                      <Text
-                        style={{
-                          ...CommonStyle.hnSemiBold,
-                          fontSize: 16,
-                          color: colors.primary,
-                        }}
-                      >{`#${i.category_content}`}</Text>
+                      <SelectRadio item={i} />
                     </PressableBtn>
                   ))}
                 </BottomSheetScrollView>

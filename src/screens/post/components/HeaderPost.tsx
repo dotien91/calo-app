@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import { translations } from "@localization";
-import CommonStyle from "@theme/styles";
+import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import IconSvg from "assets/svg";
 import PressableBtn from "@shared-components/button/PressableBtn";
@@ -23,7 +23,7 @@ const HeaderPost = ({
   return (
     <View style={styles.container}>
       <PressableBtn style={styles.buttonLeft} onPress={pressGoBack}>
-        <IconSvg name="icBack" />
+        <IconSvg name="icBack" size={64} />
       </PressableBtn>
       <Text style={styles.textHeader}>{translations.createPost}</Text>
       <View style={[{ ...styles.buttonLeft }, { alignItems: "flex-end" }]}>
@@ -44,12 +44,16 @@ export default HeaderPost;
 
 const styles = StyleSheet.create({
   container: {
-    height: 48,
-    flexDirection: "row",
-    paddingHorizontal: 20,
-    justifyContent: "space-between",
-    alignItems: "center",
+    ...CS.flexRear,
     width: "100%",
+    height: 48,
+    paddingHorizontal: 20,
+    backgroundColor: palette.white,
+    shadowColor: "rgba(0,0,0,0.8)",
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.1,
+    elevation: 1,
+    shadowRadius: 5,
   },
   buttonLeft: {
     height: 32,
@@ -57,34 +61,36 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   buttonRight: {
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: palette.secondColor,
-    borderRadius: 16,
+    ...CS.center,
+    width: 64,
+    height: 40,
+    backgroundColor: palette.primary,
+    borderRadius: 8,
     paddingHorizontal: 10,
     paddingVertical: 4,
   },
   buttonRightDisable: {
-    justifyContent: "center",
-    alignItems: "center",
+    ...CS.center,
+    width: 64,
+    height: 40,
     backgroundColor: palette.borderColor,
-    borderRadius: 16,
+    borderRadius: 8,
     paddingHorizontal: 10,
     paddingVertical: 4,
   },
   textHeader: {
-    ...CommonStyle.hnSemiBold,
+    ...CS.hnBold,
     fontSize: 16,
     color: palette.mainColor2,
   },
   textPost: {
-    ...CommonStyle.hnBold,
+    ...CS.hnMedium,
     fontSize: 14,
-    color: palette.primary,
+    color: palette.white,
   },
   textPostDisable: {
-    ...CommonStyle.hnBold,
+    ...CS.hnMedium,
     fontSize: 14,
-    color: palette.mainColor2,
+    color: palette.placeholder,
   },
 });

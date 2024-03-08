@@ -280,7 +280,6 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     gap: 10,
     paddingHorizontal: 14,
-    marginTop: 10,
   },
   viewFile: {
     width: (width - 32 - 30) / 4,

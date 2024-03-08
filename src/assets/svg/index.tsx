@@ -103,6 +103,9 @@ import icTutor from "./icon-tutor.svg";
 import icShop from "./icon-shop.svg";
 import icAffiliate from "./icon-affiliate.svg";
 import icLine from "./icon-line.svg";
+import icSelectDown from "./icon-selectdown.svg";
+import icAdd from "./icon-add.svg";
+import icDelete from "./icon-delete.svg";
 
 const Icons = {
   intro1,
@@ -208,6 +211,9 @@ const Icons = {
   icTutor,
   icAffiliate,
   icLine,
+  icSelectDown,
+  icAdd,
+  icDelete,
 };
 
 interface IconSvgProps {
