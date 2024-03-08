@@ -9,7 +9,7 @@ import Avatar from "@shared-components/user/Avatar";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import PressableBtn from "@shared-components/button/PressableBtn";
-import { EnumColors, TypedUser } from "models";
+import { TypedUser } from "models";
 import { SCREENS } from "constants";
 import { closeSuperModal } from "@helpers/super.modal.helper";
 

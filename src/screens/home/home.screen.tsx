@@ -68,6 +68,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
     <View style={CommonStyle.safeAreaView}>
       <HeaderHome />
       <CollapsibleHeaderTabView
+        lazy={true}
         renderScrollHeader={AboutHome}
         navigationState={{ index, routes }}
         renderScene={renderScene}

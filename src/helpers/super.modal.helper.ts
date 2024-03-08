@@ -30,6 +30,7 @@ export enum EnumModalContentType {
   SelectSort = "select-sort",
   Referral = "Referral",
   InviteCode = "invite-code",
+  TeacherClass = "teacher-class",
 }
 
 export enum EnumStyleModalType {

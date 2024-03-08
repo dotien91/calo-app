@@ -18,6 +18,7 @@ import CS from "@theme/styles";
 import { USER_TOKEN, _setJson } from "@services/local-storage";
 import IconBtn from "@shared-components/button/IconBtn";
 import useUserHelper from "@helpers/hooks/useUserHelper";
+import { openUrl } from "@helpers/file.helper";
 
 interface SettingScreenProps {}
 
@@ -29,6 +30,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const { logout, isLoggedIn, renderViewRequestLogin } = useUserHook();
   const { isTeacher } = useUserHelper();
+
   const listSetting = [
     {
       title: translations.settingUser.purchaseCouse,
@@ -91,7 +93,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
     },
     {
       title: "Code activations",
-      icon: "book",
+      iconFont: "package",
       action: () => {
         NavigationService.navigate(SCREENS.CODE_ACTIVATIONS_SCREEN);
       },
@@ -155,10 +157,10 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
       <Text
         onPress={hardCodeToken}
         style={{
-          color: colors.text,
           fontSize: 16,
           fontWeight: "600",
           textAlign: "center",
+          opacity: 0,
         }}
       >
         hard code token
@@ -217,7 +219,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
           >
             {userData?.display_name}
           </Text>
-          {/* <TouchableOpacity>
+          {!isTeacher && <TouchableOpacity onPress={() => openUrl("test")}>
             <Text
               style={{
                 fontSize: 16,
@@ -228,7 +230,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
             >
               Become a tutor
             </Text>
-          </TouchableOpacity> */}
+          </TouchableOpacity>}
           {/* <View style={{ flexDirection: "row", marginVertical: 16 }}>
             <TouchableOpacity
               onPress={editProfile}

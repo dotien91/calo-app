@@ -184,6 +184,7 @@ const AffiliatePage = () => {
     <View style={CS.flex1}>
       <AffiliateHeader2 />
       <CollapsibleHeaderTabView
+        lazy={true}
         renderScrollHeader={HeaderAff}
         navigationState={{ index, routes }}
         renderScene={renderScene}

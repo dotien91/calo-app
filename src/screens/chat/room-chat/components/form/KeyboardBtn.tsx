@@ -23,7 +23,6 @@ const KeyboardBtn: React.FC<KeyboardBtnProps> = ({
   const theme = useTheme();
   const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
-
   return (
     <TouchableOpacity
       onPress={callback}
@@ -33,7 +32,7 @@ const KeyboardBtn: React.FC<KeyboardBtnProps> = ({
         size={16}
         type={IconType.Feather}
         name={icon}
-        color={color || colors.black}
+        color={color || colors.text}
       />
     </TouchableOpacity>
   );

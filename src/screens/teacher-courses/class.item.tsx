@@ -18,35 +18,50 @@ import { palette } from "@theme/themes";
 
 const widthImage = Device.width - 32;
 
-const ClassItem = ({ item, showImage }) => {
+const ClassItem = ({ item }) => {
   const userData = useStore((state) => state.userData);
   const { courseData } = item;
+  const [courseRoom, setCourseRoom] = React.useState(null);
+
   const openVideoRoom = (item) => {
+    if (courseRoom) {
+      NavigationService.navigate(SCREENS.CALL_CLASS, {
+        courseRoom,
+        courseData: item.courseData,
+      });
+      return;
+    }
     showLoading();
-    getCourseRoom({
+    const type = item.type == EnumClassType.Call11 ? "one_one_id" : "class_id";
+    const params = {
       course_id: item.courseData._id,
       user_id: userData?._id,
-      class_id: item._id,
-    }).then((res) => {
+      [type]: item._id,
+    };
+    getCourseRoom(params).then((res) => {
       closeSuperModal();
       if (!res.isError) {
         const data = res.data;
         //eslint-disable-next-line
         const roomId = (data?.redirect_url || "").match(/[^\/]+$/)?.[0];
-        const courseRoom = {
+        setCourseRoom({
           roomId,
           chatRoomId: data?.chat_room_id,
-        };
+        });
+        console.log("courseRoomcourseRoom", courseRoom);
+
         NavigationService.navigate(SCREENS.CALL_CLASS, {
-          courseRoom,
+          courseRoom: {
+            roomId,
+            chatRoomId: data?.chat_room_id,
+          },
           courseData: item.courseData,
         });
       }
     });
   };
-  console.log("itemitem", item);
+
   const openHomework = (item) => {
-    console.log("itemcourtse data", item);
     NavigationService.navigate(SCREENS.CLASSHOMEWORK, {
       class_id: item._id,
       courseData: item.courseData,
@@ -61,6 +76,7 @@ const ClassItem = ({ item, showImage }) => {
           width: widthImage,
           height: widthImage / 2,
           marginBottom: 16,
+          borderRadius: 8,
         }}
         // source={{
         //   uri: media_thumbnail,
@@ -86,9 +102,6 @@ const ClassItem = ({ item, showImage }) => {
             {item.name}
           </TextBase>
           <TextBase numberOfLines={1} fontSize={16}>
-            {item.title}
-            {item.title}
-            {item.title}
             {item.title}
           </TextBase>
           <TextBase

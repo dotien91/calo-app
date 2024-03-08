@@ -7,7 +7,6 @@ export const countNumberFilter = (params) => {
   let countedPrice = false;
   Object.keys(params).map((v) => {
     const item = params[v];
-    console.log("itemmmmm", item);
     if (Array.isArray(item)) {
       numberFilters += item.length;
     }
@@ -28,7 +27,6 @@ export const countNumberFilter = (params) => {
 };
 
 export const getLabelHourLesson = (data) => {
-  console.log("222222", data);
   let hasMorningLabel = false;
   let hasAfternoonLabel = false;
   let hasNightLabel = false;
@@ -94,7 +92,6 @@ export const getTimeFromTimepick = (timePick, isClassRoom = false) => {
     return;
   }
 
-  console.log("timePicktimePick", timePick);
   return "  ";
   learningTime =
     timePick[0].time_start +

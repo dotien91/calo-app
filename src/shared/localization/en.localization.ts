@@ -475,6 +475,7 @@ export default {
     noreview: "Zero review",
     selectModal: "Select",
     myCourse: "My course",
+    noClass: "Empty class",
     manageClass: "Manage classes",
     recommendCourse: "Recommend course",
     teachingTime: "Teaching time",

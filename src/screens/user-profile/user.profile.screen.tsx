@@ -412,6 +412,7 @@ const ProfileUser = (props: ProfileUserProps) => {
         <HeaderProfile />
 
         <CollapsibleHeaderTabView
+          lazy={true}
           renderScrollHeader={renderHeader}
           navigationState={{ index, routes }}
           renderScene={renderScene}

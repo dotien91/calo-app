@@ -22,16 +22,21 @@ const EmptyResultView = ({
   icon,
   lottieJson,
   showLottie = true,
+  style,
 }: IEmptyResultView) => {
   return (
     <View
-      style={{
-        justifyContent: "center",
-        alignItems: "center",
-        paddingHorizontal: 40,
-        marginTop: 16,
-        minHeight: Device.height / 2,
-      }}
+      style={[
+        style
+          ? style
+          : {
+              justifyContent: "center",
+              alignItems: "center",
+              paddingHorizontal: 40,
+              marginTop: 16,
+              minHeight: Device.height / 3,
+            },
+      ]}
     >
       {!!icon && (
         <Icon

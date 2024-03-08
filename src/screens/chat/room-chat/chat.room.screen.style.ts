@@ -2,6 +2,7 @@ import { ExtendedTheme } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 
 import CommonStyle from "@theme/styles";
+import { palette } from "@theme/themes";
 
 export default (theme: ExtendedTheme) => {
   const { colors } = theme;
@@ -106,7 +107,7 @@ export default (theme: ExtendedTheme) => {
       borderWidth: 2,
       width: 42,
       height: 42,
-      backgroundColor: colors.primary,
+      backgroundColor: palette.primary,
       marginLeft: 6,
     },
     wrapHeader: {

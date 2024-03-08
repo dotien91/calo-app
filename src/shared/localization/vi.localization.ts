@@ -565,6 +565,7 @@ export default {
     noreview: "Chưa có đánh giá",
     selectModal: "Lựa chọn",
     myCourse: "Khoá học của tôi",
+    noClass: "Chưa có lớp học",
     manageClass: "Quản lí lớp học",
     recommendCourse: "Khoá học gợi ý",
     teachingTime: "Đã dạy",

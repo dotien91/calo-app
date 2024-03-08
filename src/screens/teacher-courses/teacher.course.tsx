@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, SafeAreaView, StyleSheet } from "react-native";
+import { FlatList, SafeAreaView } from "react-native";
 
 import Header from "@shared-components/header/Header";
 import CS from "@theme/styles";
@@ -57,10 +57,4 @@ const TeacherCourse = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  itemBox: {
-    paddingVertical: 16,
-    ...CS.borderBottomStyle,
-  },
-});
 export default TeacherCourse;

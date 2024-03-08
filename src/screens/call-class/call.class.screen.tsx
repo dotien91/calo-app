@@ -41,6 +41,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { useClassRoom } from "./useClassRoom";
 import ClassRoomTopView from "./components/call.class.top.view";
 import ClassRoomBottomView from "./components/call.class.bottom.view";
+import { EnumClassType } from "models/course.model";
 
 Janus.setDependencies({
   RTCPeerConnection,
@@ -56,26 +57,21 @@ const CallClassScreen = () => {
   const janus = React.useRef(null);
   const stream = React.useRef(null);
   const route = useRoute();
-  const roomId =
-    route.params?.["courseRoom"]?.roomId || "65c0ab03d7d7ab3a76de4b5b";
-  const chatRoomId = route.params?.["courseRoom"]?.chat_room_id;
+  const roomId = route.params?.["courseRoom"]?.roomId;
+  const chatRoomId = route.params?.["courseRoom"]?.chatRoomId;
   const courseData = route.params?.["courseData"];
+  const isVideoOneOne = courseData.type == EnumClassType.Call11;
 
-  const isVideoOneOne = false;
-  const intervalGetPar = React.useRef(null);
   const [config, setConfig] = useState({
     mute: false,
     video: true,
     front: true,
   });
   const isTeacherRole = userData?.user_role == EnumRole.Teacher;
-  // const peerConnection = React.useRef(null);
-  console.log("userData", userData);
+  console.log("userData", roomId);
 
   //create room
   useClassRoom({ roomId });
-
-  // const setListParticipants = useStore((state) => state.setListParticipants);
 
   const hasTeacher = () => {
     return !!publishers.find((item) => !!item?.isTeacher);
@@ -102,7 +98,6 @@ const CallClassScreen = () => {
     getMediaStream();
     return () => {
       janus.current.destroy();
-      if (intervalGetPar.current) clearInterval(intervalGetPar.current);
     };
   }, []);
 
@@ -116,7 +111,6 @@ const CallClassScreen = () => {
       const videoRoom = new JanusVideoRoomPlugin(janus.current);
       videoRoom.setRoomID(roomId);
       videoRoom.setOnStreamListener((stream) => {
-        console.log("event=====", event);
         setPulishers((state) => {
           const newPublsher = [
             ...state,
@@ -174,7 +168,7 @@ const CallClassScreen = () => {
       videoRoom.current = new JanusVideoRoomPlugin(janus.current);
       videoRoom.current.setRoomID(roomId);
       videoRoom.current.setDisplayName(
-        userData?.display_name + (isTeacherRole ? "_teacher_ih" : ""),
+        userData?.display_name + (isTeacherRole ? "_teacherih" : ""),
       );
       videoRoom.current.setOnPublishersListener((publishers) => {
         for (let i = 0; i < publishers.length; i++) {
@@ -195,12 +189,6 @@ const CallClassScreen = () => {
       await videoRoom.current.join();
       await videoRoom.current.publish(stream);
       closeSuperModal();
-      // intervalGetPar.current = setInterval(() => {
-      //   videoRoom.current.getParticipants().then((res) => {
-      //     const data = res?.plugindata?.data?.participants || [];
-      //     setListParticipants(data);
-      //   });
-      // }, 2000);
     } catch (e) {
       console.error("main init janus", e);
     }
@@ -235,9 +223,9 @@ const CallClassScreen = () => {
       setConfig((old) => ({ ...old, video: !old.video }));
     });
   };
-
+  console.log("publisherspublishers", publishers);
   const renderStudentVideo = () => {
-    if (isVideoOneOne || publishers.length < 2) return null;
+    if (isVideoOneOne || !(publishers.length > 1)) return null;
     const data = publishers.filter((item) => !item?.isTeacher);
     if (!data.length) return null;
     let width = (Device.width - 80) / 4;
@@ -330,6 +318,8 @@ const CallClassScreen = () => {
     );
   };
 
+  console.log("publisherspublishers", publishers);
+
   const getDataTeacher = () => {
     return publishers.find((item) => item?.isTeacher);
   };
@@ -359,6 +349,8 @@ const CallClassScreen = () => {
       height: Device.height + (isIOS ? 0 : 30),
       ...StyleSheet.absoluteFillObject,
     };
+
+    console.log("stylestyle", style);
     if (isVideoOneOne && dataTeacher) {
       style = {
         height: Dimensions.get("window").height,
@@ -383,6 +375,7 @@ const CallClassScreen = () => {
       />
     );
   };
+
   return (
     <SafeAreaView
       style={{
