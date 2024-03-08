@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, Platform } from "react";
-import { SafeAreaView, View, Text } from "react-native";
+import { View, Text } from "react-native";
 import { GiftedChat } from "react-native-gifted-chat";
 import emojiUtils from "emoji-utils";
 import uuid from "react-native-uuid";
-import { useTheme } from "@react-navigation/native";
 
 /**
  * ? Local Imports
@@ -19,7 +18,6 @@ import { getStatusBarHeight } from "react-native-safearea-height";
 import CommonStyle from "@theme/styles";
 import { translations } from "@localization";
 import EmptyResultView from "@shared-components/empty.data.component";
-import createStyles from "./chat.room.screen.style";
 import { useChatVideoCall } from "@helpers/hooks/useChatVideoCall";
 import { Device } from "@utils/device.ui.utils";
 
@@ -32,8 +30,6 @@ const ChatRoomClass: React.FC<ChatRoomScreenProps> = ({
 }: ChatRoomScreenProps) => {
   console.log("ChatRoomClassChatRoomClass", id);
   const userData = useStore((state) => state.userData);
-  const theme = useTheme();
-  const styles = React.useMemo(() => createStyles(theme), [theme]);
 
   // const [txtSearch, setTxtSearch] = React.useState("");
   // const setSearchModeChat = useStore((state) => state.setSearchModeChat);
@@ -145,13 +141,12 @@ const ChatRoomClass: React.FC<ChatRoomScreenProps> = ({
     if (searchModeChat) return null;
     if (!!messages.length || !isEmptyMessage) return null;
     return (
-      <View style={styles.emptyView}>
-        <EmptyResultView
-          title={translations.noNewMessageTittle}
-          desc={translations.noNewMessageDesc}
-          icon={"chatbubble-ellipses-outline"}
-        />
-      </View>
+      <EmptyResultView
+        style={[CommonStyle.center, { marginTop: 100 }]}
+        title={translations.noNewMessageTittle}
+        desc={translations.noNewMessageDesc}
+        icon={"chatbubble-ellipses-outline"}
+      />
     );
   };
 
@@ -168,12 +163,12 @@ const ChatRoomClass: React.FC<ChatRoomScreenProps> = ({
   };
 
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         paddingTop: getStatusBarHeight(),
         paddingBottom: 8,
-        minHeight: Device.height / (3 / 2),
+        height: Device.height / 1.8,
       }}
     >
       {_renderChatEmpty()}
@@ -202,16 +197,7 @@ const ChatRoomClass: React.FC<ChatRoomScreenProps> = ({
           <Text style={CommonStyle.hnMedium}>{translations.noResult}</Text>
         </View>
       )}
-      {/* {searchModeChat && (
-        <SearchInput
-          onCancel={cancelSearchMode}
-          setTxtSearch={setTxtSearch}
-          txtSearch={txtSearch}
-          showCancelBtn={true}
-        />
-      )} */}
-      {/* <RecordModal uploadRecord={uploadRecord} ref={recordModalRef} /> */}
-    </SafeAreaView>
+    </View>
   );
 };
 

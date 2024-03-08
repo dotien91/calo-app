@@ -24,6 +24,7 @@ import { ICourseItem } from "models/course.model";
 import useStore from "@services/zustand/store";
 import { SCREENS } from "constants";
 import { palette } from "@theme/themes";
+import { getReferralUserProduct } from "@services/api/user.api";
 
 const CodeActivationsScreen = () => {
   const [courseCurrentSort, setCourseCurrentSort] = useState({});
@@ -66,9 +67,22 @@ const CodeActivationsScreen = () => {
       ],
     },
   ];
+  const [sortBy, setSortBy] = useState("");
+  const getListData = () => {
+    const params = {
+      limit: "8",
+    };
+    if (sortBy && sortBy !== "") {
+      params.sort_by = sortBy;
+    }
+    getReferralUserProduct(params).then((res) => {
+      console.log("res..getReferralUserProduct...", res);
+    });
+  };
 
   useEffect(() => {
     setSectionList(listData);
+    getListData();
   }, []);
 
   const isLoading = false;

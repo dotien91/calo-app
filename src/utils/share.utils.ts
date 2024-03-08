@@ -46,3 +46,16 @@ export const shareCourse = (courseId: string) => {
       err && console.log(err);
     });
 };
+export const shareCodeInvite = (code: string) => {
+  const shareOptions = {
+    title: translations.post.share,
+    message: `${code}`,
+  };
+  Share.open(shareOptions)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      err && console.log(err);
+    });
+};

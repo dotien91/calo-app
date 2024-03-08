@@ -57,9 +57,8 @@ const CallClassScreen = () => {
   const janus = React.useRef(null);
   const stream = React.useRef(null);
   const route = useRoute();
-  const roomId =
-    route.params?.["courseRoom"]?.roomId;
-  const chatRoomId = route.params?.["courseRoom"]?.chat_room_id;
+  const roomId = route.params?.["courseRoom"]?.roomId;
+  const chatRoomId = route.params?.["courseRoom"]?.chatRoomId;
   const courseData = route.params?.["courseData"];
 
   const isVideoOneOne = courseData.type == EnumClassType.Call11;
@@ -75,8 +74,6 @@ const CallClassScreen = () => {
 
   //create room
   useClassRoom({ roomId });
-
-  // const setListParticipants = useStore((state) => state.setListParticipants);
 
   const hasTeacher = () => {
     return !!publishers.find((item) => !!item?.isTeacher);
@@ -103,7 +100,6 @@ const CallClassScreen = () => {
     getMediaStream();
     return () => {
       janus.current.destroy();
-      if (intervalGetPar.current) clearInterval(intervalGetPar.current);
     };
   }, []);
 
@@ -117,7 +113,6 @@ const CallClassScreen = () => {
       const videoRoom = new JanusVideoRoomPlugin(janus.current);
       videoRoom.setRoomID(roomId);
       videoRoom.setOnStreamListener((stream) => {
-        console.log("event=====", event);
         setPulishers((state) => {
           const newPublsher = [
             ...state,
@@ -196,12 +191,6 @@ const CallClassScreen = () => {
       await videoRoom.current.join();
       await videoRoom.current.publish(stream);
       closeSuperModal();
-      // intervalGetPar.current = setInterval(() => {
-      //   videoRoom.current.getParticipants().then((res) => {
-      //     const data = res?.plugindata?.data?.participants || [];
-      //     setListParticipants(data);
-      //   });
-      // }, 2000);
     } catch (e) {
       console.error("main init janus", e);
     }

@@ -9,6 +9,7 @@ import { ICourseItem } from "models/course.model";
 import { View } from "react-native-animatable";
 import EditButton from "@screens/course/components/edit.button";
 import useStore from "@services/zustand/store";
+import EnrollNow from "@screens/course/components/EnrollNow";
 
 interface BuyBottomProps {
   show: boolean;
@@ -19,8 +20,7 @@ const BuyBottom = ({ show, data, courseRoom }: BuyBottomProps) => {
   const animationHeight = useRef(new Animated.Value(-90)).current;
   const userData = useStore((state) => state.userData);
   const isTeacher = userData?._id === data?.user_id._id;
-  console.log("idUser", userData?._id);
-  console.log("idTeacher", data?.user_id._id);
+
   const collapseView = () => {
     Animated.timing(animationHeight, {
       duration: 300,
@@ -44,6 +44,29 @@ const BuyBottom = ({ show, data, courseRoom }: BuyBottomProps) => {
       collapseView();
     }
   }, [show]);
+
+  if (!show || isTeacher) return null;
+
+  if (data?.is_join)
+    return (
+      <Animated.View
+        style={[
+          styles.container,
+          {
+            maxHeight: animationHeight,
+            paddingVertical: show ? 8 : 0,
+            ...CS.flexRear,
+          },
+        ]}
+      >
+        <EnrollNow
+          fromBottom
+          courseRoom={courseRoom}
+          data={data}
+          course_id={data._id}
+        />
+      </Animated.View>
+    );
 
   return (
     <Animated.View

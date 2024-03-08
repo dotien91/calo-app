@@ -16,7 +16,6 @@ import {
 import { getListMemberCourse } from "@services/api/course.api";
 
 const ClassRoomBottomView = ({
-  publishers,
   toggleMute,
   toggleVideo,
   config,
@@ -61,6 +60,7 @@ const ClassRoomBottomView = ({
   };
 
   const openChatRoomModal = () => {
+    setRoomDetail((old) => ({ ...old, read_count: 0 }));
     showSuperModal({
       contentModalType: EnumModalContentType.ChatRoom,
       styleModalType: EnumStyleModalType.Bottom,
@@ -136,7 +136,7 @@ const ClassRoomBottomView = ({
         }}
       >
         <IconBtn name="user" color={colors.white}></IconBtn>
-        {!!publishers.length && (
+        {!!listMember.length && (
           <View
             style={{
               height: 16,
@@ -158,7 +158,7 @@ const ClassRoomBottomView = ({
                 color: palette.white,
               }}
             >
-              {publishers.length}
+              {listMember.length}
             </Text>
           </View>
         )}

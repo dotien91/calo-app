@@ -3,7 +3,6 @@ import {
   Text,
   View,
   StyleSheet,
-  Image,
   Pressable,
   TouchableOpacity,
 } from "react-native";
@@ -20,7 +19,6 @@ import StarRate from "@screens/course/components/star.rate.view";
 import IconSvg from "assets/svg";
 import { SCREENS } from "constants";
 import { WindowWidth } from "@freakycoder/react-native-helpers";
-import SkeletonPlaceholder from "@shared-components/skeleton";
 import {
   EnumModalContentType,
   EnumStyleModalType,
@@ -28,6 +26,8 @@ import {
 } from "@helpers/super.modal.helper";
 import { formatLanguage } from "@utils/string.utils";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import FastImage from "react-native-fast-image";
+import TextBase from "@shared-components/TextBase";
 
 interface HeaderCourseProps {
   data?: ICourseItem;
@@ -64,7 +64,7 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
     });
   };
 
-  const moreCoursePreview = () => {
+  const onReport = () => {
     showSuperModal({
       contentModalType: EnumModalContentType.Report,
       styleModalType: EnumStyleModalType.Bottom,
@@ -75,34 +75,22 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
     });
   };
 
-  if (!data?._id) {
-    return (
-      <View>
-        <SkeletonPlaceholder>
-          <View
-            style={{
-              height: (WindowWidth / 16) * 9,
-              ...CS.center,
-              marginHorizontal: -16,
-            }}
-          />
-        </SkeletonPlaceholder>
-        <View style={{ marginHorizontal: 16 }}>
-          <SkeletonPlaceholder>
-            <View style={styles.textTitle} />
-            <View style={styles.textDescription} />
-            <View style={{ height: 40, width: 150, marginTop: 10 }} />
-            <View style={styles.txtcount} />
-            <View style={styles.textCreateBy} />
-            <View style={styles.textCreateBy} />
-            <View style={styles.textCreateBy} />
-            <View style={styles.textCreateBy} />
-            <View style={styles.textCreateBy} />
-          </SkeletonPlaceholder>
-        </View>
-      </View>
-    );
-  }
+  const viewClasses = () => {
+    const classes = (data?.classes || []).map((_item) => ({
+      courseData: data,
+      ..._item,
+      title: data?.title,
+      type: data?.type,
+    }));
+    showSuperModal({
+      contentModalType: EnumModalContentType.TeacherClass,
+      styleModalType: EnumStyleModalType.Bottom,
+      data: {
+        listData: classes,
+        hideCloseIcon: true,
+      },
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -114,7 +102,7 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
           // marginTop: 20,
         }}
       >
-        <Image
+        <FastImage
           style={{
             height: (WindowWidth / 16) * 9,
             width: "100%",
@@ -164,21 +152,33 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
         }}
       >
         <Text style={styles.textTitle}>{data?.title}</Text>
-        <TouchableOpacity onPress={moreCoursePreview}>
+
+        <TouchableOpacity onPress={viewClasses}>
           <Icon
-            name="flag"
-            type={IconType.Ionicons}
+            name="more-vertical"
+            type={IconType.Feather}
             size={25}
             color={palette.text}
           ></Icon>
         </TouchableOpacity>
       </View>
+      <TouchableOpacity style={CS.flexStart} onPress={onReport}>
+        <Icon
+          name="flag"
+          type={IconType.Feather}
+          size={18}
+          color={palette.text}
+          style={{ marginRight: 4 }}
+        ></Icon>
+        <TextBase fontSize={14}>{translations.report}</TextBase>
+      </TouchableOpacity>
       {(data?.public_status === "draft" ||
         data?.public_status === "pending") && (
         <Text style={{ ...CS.hnRegular, fontSize: 12 }}>
           {`(${data?.public_status})`}
         </Text>
       )}
+
       <Text style={styles.textDescription}>{data?.description}</Text>
       <View
         style={{ flexDirection: "row", alignItems: "center", marginTop: 16 }}

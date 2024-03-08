@@ -36,6 +36,7 @@ import FilterAffiliate from "@screens/affiliate/components/FilterAffiliate";
 import ListBank from "./modal-inner/ListBank";
 import SelectRadioButton from "@screens/code-activations/select.radio.button";
 import ReferralPopup from "@screens/profile.screen/referral.popup";
+import TeacherClassModalInner from "@screens/teacher-courses/teacher.class.modal.inner";
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
 // using normal one.
@@ -241,6 +242,9 @@ const SuperModal: React.FC<SuperModalProps> = () => {
           )}
           {contentModalType == EnumModalContentType.Referral && (
             <ReferralPopup data={data} />
+          )}
+          {contentModalType == EnumModalContentType.TeacherClass && (
+            <TeacherClassModalInner {...data} />
           )}
         </View>
       </StickBottomModal>

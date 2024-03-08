@@ -2,7 +2,7 @@
 /*eslint no-unsafe-optional-chaining: "error"*/
 
 import React, { useEffect, useRef, useState } from "react";
-import { View } from "react-native";
+import { FlatList, View } from "react-native";
 import { useTheme } from "@react-navigation/native";
 
 import ItemPost from "./components/post-item/post.item";
@@ -24,9 +24,10 @@ import { HFlatList } from "react-native-head-tab-view";
 interface ListPostProps {
   isFollowingPost: boolean;
   id?: string;
+  isProfile?: boolean;
 }
 
-const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
+const ListPost = ({ isFollowingPost, id, isProfile }: ListPostProps) => {
   const listRef = useRef(null);
 
   const theme = useTheme();
@@ -66,6 +67,7 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
   };
   if (id) {
     paramsRequest.user_id = id;
+    paramsRequest.order_by = "DESC";
   }
 
   const {
@@ -135,12 +137,34 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
   };
   // if (isFollowingPost) {
 
-  const renderHeader = React.useMemo(() => {
-    if (!isLoading) return null
-    return <LoadingList numberItem={3} />
-  }, [isLoading])
-
-
+  const renderHeader = () => {
+    if (!isLoading) return null;
+    return <LoadingList numberItem={3} />;
+  };
+  if (isProfile) {
+    return (
+      <View
+        style={{
+          ...CommonStyle.flex1,
+          backgroundColor: colors.background,
+        }}
+      >
+        <FlatList
+          ref={listRef}
+          data={getListData()}
+          renderItem={renderItem}
+          onEndReachedThreshold={0}
+          onEndReached={onEndReach}
+          showsVerticalScrollIndicator={false}
+          removeClippedSubviews={true}
+          keyExtractor={(item) => item?._id + ""}
+          refreshControl={refreshControl()}
+          ListFooterComponent={renderFooterComponent()}
+          ListEmptyComponent={renderEmpty()}
+        />
+      </View>
+    );
+  }
   return (
     <View
       style={{

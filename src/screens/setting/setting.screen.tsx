@@ -29,17 +29,17 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const { logout, isLoggedIn, renderViewRequestLogin } = useUserHook();
   const { isTeacher } = useUserHelper();
-  console.log(2222, isTeacher)
+  console.log(2222, isTeacher);
   const listSetting = [
     {
       title: translations.settingUser.purchaseCouse,
       icon: require("assets/images/book.png"),
       action: () => {
-        NavigationService.navigate(SCREENS.LIST_COURSE);
+        NavigationService.navigate(SCREENS.MY_COURES);
       },
     },
     {
-      title: translations.settingUser.mycouse,
+      title: translations.course.manageClass,
       id: 1,
       iconFont: "book",
       action: () => {
@@ -156,10 +156,10 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
       <Text
         onPress={hardCodeToken}
         style={{
-          color: colors.text,
           fontSize: 16,
           fontWeight: "600",
           textAlign: "center",
+          opacity: 0,
         }}
       >
         hard code token

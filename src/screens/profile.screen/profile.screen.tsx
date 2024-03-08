@@ -26,21 +26,32 @@ import { getListTaskByUser } from "@services/api/task.api";
 import createStyles from "./profile.screen.style";
 import { SCREENS } from "constants";
 import PressableBtn from "@shared-components/button/PressableBtn";
-import { getReferralByMe, getReferralMe } from "@services/api/user.api";
+import {
+  getReferralByMe,
+  getReferralMe,
+  postInvitationCode,
+} from "@services/api/user.api";
 import {
   EnumModalContentType,
   EnumStyleModalType,
+  closeSuperModal,
   showSuperModal,
+  showToast,
 } from "@helpers/super.modal.helper";
-import { formatPrice } from "@helpers/string.helper";
+import { shareCodeInvite } from "@utils/share.utils";
+import formatMoney from "@shared-components/input-money/format.money";
+import { useUserHook } from "@helpers/hooks/useUserHook";
 
 const SettingProfileScreen = () => {
   const theme = useTheme();
   const { colors } = theme;
   const userData = useStore((state) => state.userData);
   // const userInfo = useStore((state) => state.userInfo);
+  const setShowInvite = useStore((store) => store.setShowInvite);
+  const showInvite = useStore((store) => store.showInvite);
   const [referralByMe, setReferralByMe] = useState([]);
   const [referralMe, setReferralMe] = useState([]);
+  const { renderViewRequestLogin } = useUserHook();
 
   //call api:
   const params = {};
@@ -50,6 +61,7 @@ const SettingProfileScreen = () => {
       setReferralByMe(res.data);
     });
   };
+
   const _getReferralMe = () => {
     getReferralMe(params).then((res) => {
       setReferralMe(res.data);
@@ -58,10 +70,9 @@ const SettingProfileScreen = () => {
   useEffect(() => {
     _getReferralByMe();
     _getReferralMe();
-  }, []);
+  }, [userData?._id, showInvite]);
 
   const styles = useMemo(() => createStyles(theme), [theme]);
-  console.log("userData", userData);
   const listrenderPointCoin = [
     {
       icon: "icCoinStar",
@@ -69,7 +80,7 @@ const SettingProfileScreen = () => {
     },
     {
       icon: "icCoin",
-      title: formatPrice(userData?.current_token || 0),
+      title: formatMoney(userData?.current_token || 0),
     },
     // {
     //   icon: "icCup",
@@ -99,22 +110,6 @@ const SettingProfileScreen = () => {
       title: "Listening",
     },
   ];
-
-  // const listShow = [
-  //   {
-  //     icon: "iconBookNote",
-  //     title: "Code activations",
-  //     backgroundIcon: colors.lightBlue,
-  //     onPress: () =>
-  //       NavigationService.navigate(SCREENS.CODE_ACTIVATIONS_SCREEN),
-  //   },
-  //   {
-  //     icon: "iconFriends",
-  //     title: "Referrer",
-  //     backgroundIcon: colors.gold,
-  //     onPress: () => {},
-  //   },
-  // ];
 
   const onPressHeaderRight = () => {
     NavigationService.navigate(SCREENS.SETTING);
@@ -225,6 +220,14 @@ const SettingProfileScreen = () => {
   const renderInviteFriend = () => {
     const coppyClipboard = () => {
       Clipboard.setString(userData?.invitation_code || "");
+      showToast({
+        type: "success",
+        message: translations.codeActivations.copyCodeSuccsess,
+      });
+    };
+
+    const shareCode = () => {
+      shareCodeInvite(userData?.invitation_code || "");
     };
     return (
       <View style={{ marginHorizontal: 16 }}>
@@ -248,16 +251,14 @@ const SettingProfileScreen = () => {
                 ></Image>
               </PressableBtn>
             </View>
-            <TouchableOpacity style={styles.touchShare}>
+            <TouchableOpacity onPress={shareCode} style={styles.touchShare}>
               <IconSvg name="icupLoad" width={32} height={18}></IconSvg>
               <Text style={styles.textShare}>{translations.post.share}</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.viewLineInviteFriend}></View>
           <Text style={styles.textDesciption}>
-            You will get 4000 points for each friend who activates oyur code and
-            earns 10000 points. Your friend will also get 1000 points as a
-            reward.
+            {translations.settings.inviteDes}
           </Text>
         </View>
       </View>
@@ -289,33 +290,77 @@ const SettingProfileScreen = () => {
       </TouchableOpacity>
     );
   };
+  const sendCode = (txt: string) => {
+    const data = {
+      invitation_code: txt,
+    };
+    postInvitationCode(data).then((res) => {
+      if (!res.isError) {
+        setShowInvite(false);
+        closeSuperModal();
+        showToast({
+          type: "success",
+          message: translations.invite.enterCodeSuccess,
+        });
+      } else {
+        showToast({
+          type: "success",
+          message: translations.invite.enterCodeFaild,
+        });
+      }
+    });
+  };
 
   const showReferrer = () => {
-    if (referralMe.length > 0) {
+    if (referralMe?.length > 0) {
       showSuperModal({
         contentModalType: EnumModalContentType.Referral,
         styleModalType: EnumStyleModalType.Bottom,
         data: referralMe[0]?.from_user_id,
       });
+    } else {
+      showSuperModal({
+        contentModalType: EnumModalContentType.TextInput,
+        styleModalType: EnumStyleModalType.Bottom,
+        data: {
+          title: translations.invite.enterCode,
+          cb: sendCode,
+          icon: "icInviteCode",
+          txtBtn: translations.codeActivations.activate,
+        },
+      });
     }
   };
 
   const renderListCodeActive = () => {
+    const pressCodeActivations = () => {
+      if (referralByMe?.length > 0) {
+        NavigationService.navigate(SCREENS.CODE_ACTIVATIONS_SCREEN);
+      } else {
+        showToast({
+          type: "info",
+          message: translations.invite.emptyListInvite,
+        });
+      }
+    };
+
     return (
       <View style={{ marginHorizontal: 16, marginVertical: 16 }}>
         <ItemCodeActive
           icon="iconBookNote"
-          title="Code activations"
+          title={translations.codeActivations.header}
           backgroundIcon={colors.lightBlue}
-          onPress={() =>
-            NavigationService.navigate(SCREENS.CODE_ACTIVATIONS_SCREEN)
-          }
+          onPress={pressCodeActivations}
           count={referralByMe?.length}
         />
 
         <ItemCodeActive
           icon="iconFriends"
-          title="Referrer"
+          title={
+            referralMe?.length > 0
+              ? translations.codeActivations.referrer
+              : translations.invite.enterCode
+          }
           backgroundIcon={colors.gold}
           onPress={showReferrer}
           count={""}
@@ -324,13 +369,27 @@ const SettingProfileScreen = () => {
     );
   };
 
+  if (!userData?._id) {
+    return (
+      <SafeAreaView>
+        <Header
+          hideBackBtn
+          onPressRight={onPressHeaderRight}
+          iconNameRight="settings"
+          text={translations.profile.profile}
+        />
+        {renderViewRequestLogin()}
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={CS.container}>
       <Header
         hideBackBtn
         onPressRight={onPressHeaderRight}
         iconNameRight="settings"
-        text="Profile"
+        text={translations.profile.profile}
       />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ flex: 1, marginBottom: 20 }}>
@@ -339,7 +398,6 @@ const SettingProfileScreen = () => {
           <Tasks />
           {renderInviteFriend()}
           {renderListCodeActive()}
-          {/* <ReferralPopup /> */}
         </View>
       </ScrollView>
     </SafeAreaView>

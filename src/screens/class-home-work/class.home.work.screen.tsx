@@ -31,8 +31,6 @@ const ClassHomeWorkScreen: React.FC<ClassHomeWorkScreenProps> = () => {
   const courseData = route.params?.["courseData"];
   const userData = useStore((state) => state.userData);
 
-  //token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDA1NDM5ODgsImRhdGEiOnsiX2lkIjoiNjU5MGVmNzEzZjlhMDQ2OGM4MjkwZWI5Iiwia2V5IjoiYTI0MTcxYzcxYjNjMjViZWI0OTQzMTQ1NjQyZjJmNTciLCJzaWduYXR1cmUiOiI4ZTJmODFmZjY1NmRjMjUyYzZhNmVlZGFkN2U3ZTc3OCIsInNlc3Npb24iOiI2NWRkNjQ3NDRmZjM5MGU3MjY3NzBhOWIifSwiaWF0IjoxNzA5MDA3OTg4fQ.0_rmwNcfSFzoyZXrb-RHo88mvj0ucLoQGj-QzytVEgo
-
   const isTeacher = userData._id == courseData.user_id._id;
   const [tasks, setTasks] = React.useState([]);
   const [loading, setLoading] = useState(false);
@@ -99,7 +97,11 @@ const ClassHomeWorkScreen: React.FC<ClassHomeWorkScreenProps> = () => {
       <View style={styles.container}>
         <ScrollView>
           <ImageLoad
-            source={{ uri: courseData.media_id?.media_thumbnail }}
+            source={{
+              uri:
+                courseData.media_id?.media_thumbnail ||
+                courseData?.avatar?.media_thumbnail,
+            }}
             style={{
               width: Device.width - 32,
               height: (Device.width - 32) / 3,

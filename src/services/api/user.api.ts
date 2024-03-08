@@ -253,3 +253,13 @@ export async function getReferralMe(params: any) {
     return response;
   });
 }
+
+export async function getReferralUserProduct(params: any) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "referral/me/product",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}

@@ -87,7 +87,7 @@ const Input = React.forwardRef(
         />
         {!!showClearIcon && !!value && (
           <PressableBtn style={styles.iconClose} onPress={clearInput}>
-            <Icon type={IconType.Feather} name={"x-circle"} />
+            <Icon size={16} type={IconType.Ionicons} name={"close-circle"} />
           </PressableBtn>
         )}
       </View>

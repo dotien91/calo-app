@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, StyleSheet } from "react-native";
 
 import {
@@ -19,10 +19,8 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 const InviteView = () => {
   const userData = useStore((store) => store.userData);
-  console.log("userData...", userData);
   const showInvite = useStore((store) => store.showInvite);
   const setShowInvite = useStore((store) => store.setShowInvite);
-  const [txtInput, setTxtInput] = useState("");
   const sendCode = (txt: string) => {
     const data = {
       invitation_code: txt,
@@ -45,16 +43,16 @@ const InviteView = () => {
       }
     });
   };
+
   const showEnterCode = () => {
     showSuperModal({
       contentModalType: EnumModalContentType.TextInput,
-      styleModalType: EnumStyleModalType.Middle,
+      styleModalType: EnumStyleModalType.Bottom,
       data: {
-        textValue: txtInput,
         title: translations.invite.enterCode,
-        closeModal: closeSuperModal(),
         cb: sendCode,
-        setTextValue: setTxtInput,
+        icon: "icInviteCode",
+        txtBtn: translations.codeActivations.activate,
       },
     });
   };
@@ -62,7 +60,9 @@ const InviteView = () => {
     return null;
   }
 
-  const closeInviteView = () => {};
+  const closeInviteView = () => {
+    setShowInvite(false);
+  };
   return (
     <View style={styles.container}>
       <TextBase marginBottom={8} fontWeight="600">

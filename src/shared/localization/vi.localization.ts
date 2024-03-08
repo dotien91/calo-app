@@ -543,6 +543,7 @@ export default {
     addCourseToFavourites: "Thêm vào danh sách yêu thích",
     reportAPlaybackProblem: "Báo cáo sự cố",
     enrollNow: "Vào học ngay",
+    viewHomework: "Xem bài tập",
     Lectures: "Bài giảng",
     warningSelectTime: "Vui lòng chọn đầy đủ thời gian",
     warningSelectImage: "Vui lòng chọn ảnh khoá học",
@@ -564,6 +565,8 @@ export default {
     noreview: "Chưa có đánh giá",
     selectModal: "Lựa chọn",
     myCourse: "Khoá học của tôi",
+    noClass: "Chưa có lớp học",
+    manageClass: "Quản lí lớp học",
     recommendCourse: "Khoá học gợi ý",
     teachingTime: "Đã dạy",
   },
@@ -657,9 +660,7 @@ export default {
     navigationBarDes:
       "Tùy chọn 3 nút cho thanh điều dưới phía dưới (mặc định bao gồm 2 nút trang chủ và tác vụ). Tất cả các thaành viên trong kênh sẽ được tự động chuyển sang thanh điều hướng này theo cài đặt của bạn.",
     inviteDes:
-      "Hãy sao chép liên kết này và gửi lời mời tới bạn bè. Bạn sẽ nhận được :percent% tổng doanh thu tới từ số thành viên mà bạn đã mời. \n" +
-      "Đây là cơ hội tuyệt vời để bạn gia tăng thu nhập và khẳng định vị trí trong cộng đồng.\n" +
-      "Thêm một thành viên mới là bạn đang tiến gần hơn đến nguồn doanh thu khổng lồ không giới hạn.",
+      "Bạn sẽ nhận 4000 điểm cho mỗi người mà bạn giới thiệu. Người được giới thiệu sẽ nhận được 1000 điểm.",
   },
   profile: {
     editProfile: "Sửa hồ sơ",
@@ -802,6 +803,7 @@ export default {
     enterCodeSuccess: "Nhập mã giới thiệu thành công",
     enterCodeFaild: "Mã giới thiệu không đúng, vui lòng thử lại.",
     send: "Gửi",
+    emptyListInvite: "Chưa có người nhập mã của bạn",
   },
   categories: {
     addCategory: "Thêm chuyên mục",
@@ -957,6 +959,10 @@ export default {
     sortBy: "Sắp xếp theo",
     timeLatest: "Thời gian: mới nhất",
     priceHighest: "Giá: cao đến thấp",
+    header: "Kích hoạt mã",
+    referrer: "Người giới thiệu",
+    copyCodeSuccsess: "Sao chép mã thành công",
+    activate: "Activate",
   },
   mentor: {
     user: "Người dùng",
@@ -1506,7 +1512,7 @@ export default {
     withDrawFaild: "Đặt lệnh rút tiền không thành công",
   },
   referrals: {
-    yourReferral: "Your referral",
-    viewProfile: "View profile",
+    yourReferral: "Người giới thiệu",
+    viewProfile: "Xem hồ sơ",
   },
 };

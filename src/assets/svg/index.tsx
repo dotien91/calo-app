@@ -103,6 +103,7 @@ import icTutor from "./icon-tutor.svg";
 import icShop from "./icon-shop.svg";
 import icAffiliate from "./icon-affiliate.svg";
 import icLine from "./icon-line.svg";
+import icInviteCode from "./invite-code.svg";
 
 const Icons = {
   intro1,
@@ -208,6 +209,7 @@ const Icons = {
   icTutor,
   icAffiliate,
   icLine,
+  icInviteCode,
 };
 
 interface IconSvgProps {

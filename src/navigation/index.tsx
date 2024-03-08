@@ -89,7 +89,7 @@ import WithdrawScreen from "@screens/withdraw/withdraw.screen";
 import BankListScreen from "@screens/withdraw/bank.list.screen";
 import AddBankScreen from "@screens/withdraw/add.bank.screen";
 // import TabFollow from "@screens/tab-follow/tab.follow";
-// import BlackList from "@screens/black-list/black.list";
+import BlackList from "@screens/black-list/black.list";
 // import PrivateSetting from "@screens/private.setting/private.setting";
 // import { _getJson } from "@services/local-storage";
 // import SettingProfileScreen from "@screens/profile.screen/profile.screen";
@@ -384,8 +384,8 @@ const Navigation = () => {
         />
         <Stack.Screen name={SCREENS.TAB_FOLLOW} component={TabFollow} />
         <Stack.Screen name={SCREENS.AFFILIATE} component={AffiliatePage} />
-        {/* <Stack.Screen name={SCREENS.TAB_FOLLOW} component={TabFollow} />
         <Stack.Screen name={SCREENS.BLACK_LIST} component={BlackList} />
+        {/* <Stack.Screen name={SCREENS.TAB_FOLLOW} component={TabFollow} />
         <Stack.Screen
           name={SCREENS.PRIVATESETTING}
           component={PrivateSetting}
