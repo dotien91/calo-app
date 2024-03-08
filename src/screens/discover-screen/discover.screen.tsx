@@ -18,6 +18,7 @@ import { getListLeaderBoard } from "@services/api/user.api";
 import { translations } from "@localization";
 import { SCREENS } from "constants";
 import useStore from "@services/zustand/store";
+import LoadingList from "@shared-components/loading.list.component";
 
 const DiscoverScreen = () => {
   const screenWidth = Dimensions.get("window").width;
@@ -25,13 +26,17 @@ const DiscoverScreen = () => {
   const { colors } = theme;
 
   const [listRank, setListRank] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const userInfo = useStore((state) => state.userInfo);
 
   const getData = () => {
     const param = {
       limit: 3,
     };
+    setLoading(true);
     getListLeaderBoard(param).then((res) => {
+      setLoading(false);
       if (!res.isError) {
         setListRank(res.data.other_users);
       }
@@ -102,9 +107,8 @@ const DiscoverScreen = () => {
     );
   };
 
-  console.log("listRanklistRank", listRank);
-
   const renderLeaderBoard = () => {
+    if (loading) return <LoadingList numberItem={3} />;
     if (!listRank.length) return null;
     return (
       <View style={{ height: 270, marginHorizontal: 16, marginVertical: 8 }}>

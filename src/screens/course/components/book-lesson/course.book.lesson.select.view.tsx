@@ -185,10 +185,10 @@ const BookLessonSelectView = ({
   const renderTimeBtn = (item) => {
     // const isActive = false
     const isDisabled = item?.is_picked;
-    const timeOfCurrentDay = day.filter((_item) => _item.day == dateView);
-    const isActive = timeOfCurrentDay.find(
-      (_item) => item.label == _item.time_start + " - " + _item.time_end,
-    );
+    // const timeOfCurrentDay = day.filter((_item) => _item.day == dateView);
+    // const isActive = timeOfCurrentDay.find(
+    //   (_item) => item.label == _item.time_start + " - " + _item.time_end,
+    // );
     return (
       <>
         {!!item.extraLabel && (
