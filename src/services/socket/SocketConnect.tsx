@@ -31,6 +31,9 @@ const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
   const refSocket = useRef<any>();
   const userData = useStore((state) => state.userData);
   const userInfo = useStore((state) => state.userInfo);
+  const setUserInfo = useStore((state) => state.setUserInfo);
+  const pointNumber = useRef(userInfo?.point || 0);
+
   // const { isAuthenticated, account } = useStore(state => state.user)
   const setShoppingProduct = useStore((state) => state.setShoppingProduct);
 
@@ -43,6 +46,10 @@ const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData?._id]);
+
+  useEffect(() => {
+    pointNumber.current = userInfo?.point;
+  }, [userInfo?.point]);
 
   useImperativeHandle(ref, () => ({
     disconnect: () => {
@@ -108,9 +115,21 @@ const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
 
   const pointToClient = (receiveData: any) => {
     const showFirstTimeEarnPoint = _getJson("showFirstTimeEarnPoint");
-    const currentPoint = userInfo?.point;
+    const currentPoint = pointNumber.current;
     const data = JSON.parse(receiveData);
+    if (!showFirstTimeEarnPoint) {
+      showSuperModal({
+        styleModalType: EnumStyleModalType.Bottom,
+        contentModalType: EnumModalContentType.GamificationView,
+        data: {
+          receiveData: data,
+        },
+      });
+      _setJson("showFirstTimeEarnPoint", true);
+      return;
+    }
     if (showFirstTimeEarnPoint && data?.is_level_up == "false") {
+      console.log(2222, Number(data.point), currentPoint);
       //show hiệu ứng khi user nhận được số point > pointRequireShowAnimation
       if (Number(data.point) - currentPoint >= pointRequireShowAnimation) {
         showSuperModal({
@@ -120,17 +139,11 @@ const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
             receiveData: data,
           },
         });
+      } else {
+        console.log("receiveDatareceiveData", receiveData);
+        setUserInfo({ ...userInfo, point: data?.point });
       }
-      return;
     }
-    if (!showFirstTimeEarnPoint) _setJson("showFirstTimeEarnPoint", true);
-    showSuperModal({
-      styleModalType: EnumStyleModalType.Bottom,
-      contentModalType: EnumModalContentType.GamificationView,
-      data: {
-        receiveData: data,
-      },
-    });
   };
 
   const redeemToClient = (receiveData: any) => {

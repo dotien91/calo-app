@@ -160,7 +160,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
           fontSize: 16,
           fontWeight: "600",
           textAlign: "center",
-          color: "#fff"
+          color: "#fff",
         }}
       >
         hard code token
@@ -219,18 +219,20 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
           >
             {userData?.display_name}
           </Text>
-          {!isTeacher && <TouchableOpacity onPress={() => openUrl("test")}>
-            <Text
-              style={{
-                fontSize: 16,
-                color: colors.btnRedPrimary,
-                fontWeight: "600",
-                marginTop: 5,
-              }}
-            >
-              Become a tutor
-            </Text>
-          </TouchableOpacity>}
+          {!isTeacher && (
+            <TouchableOpacity onPress={() => openUrl("test")}>
+              <Text
+                style={{
+                  fontSize: 16,
+                  color: colors.btnRedPrimary,
+                  fontWeight: "600",
+                  marginTop: 5,
+                }}
+              >
+                Become a tutor
+              </Text>
+            </TouchableOpacity>
+          )}
           {/* <View style={{ flexDirection: "row", marginVertical: 16 }}>
             <TouchableOpacity
               onPress={editProfile}

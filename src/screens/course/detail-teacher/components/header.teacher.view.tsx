@@ -72,7 +72,7 @@ const HeaderDetailTeacher = ({ data }: HeaderDetailTeacherProps) => {
           <Text style={styles.textCount}>{data?.course_count}</Text>
           <Text style={styles.textDes}>{translations.course.course}</Text>
         </View>
-        {data?.taught_time && data.taught_time > 0 && (
+        {!!data?.taught_time && data.taught_time > 0 && (
           <View style={styles.itemCount}>
             <Text style={styles.textCount}>{data?.taught_time}</Text>
             <Text style={styles.textDes}>
@@ -82,7 +82,7 @@ const HeaderDetailTeacher = ({ data }: HeaderDetailTeacherProps) => {
         )}
       </View>
 
-      {data?._id &&
+      {!!data?._id &&
         (linkFb !== "" || linkWebsite !== "" || linkYoutube !== "") && (
           <View style={styles.viewCenter}>
             {linkFb !== "" && (

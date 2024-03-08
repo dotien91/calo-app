@@ -130,13 +130,15 @@ const CheckoutScreen = () => {
   }
 
   const renderViewCoures = () => {
-    console.log("courseData", courseData)
+    console.log("courseData", courseData);
     return (
       <View style={[styles.styleViewCoures, styles.styleShawdow]}>
         <ImageLoad
           isAvatar={false}
           source={{
-            uri: courseData?.media_id?.media_thumbnail || courseData?.avatar?.media_thumbnail,
+            uri:
+              courseData?.media_id?.media_thumbnail ||
+              courseData?.avatar?.media_thumbnail,
           }}
           style={{
             width: 80,

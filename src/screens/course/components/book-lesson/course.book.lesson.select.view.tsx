@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { View, Text, ScrollView } from "react-native";
 import { useTheme } from "@react-navigation/native";
 /**
@@ -11,6 +11,7 @@ import { translations } from "@localization";
 import CS from "@theme/styles";
 import { getLabelHourLesson } from "@screens/course-tab/course.helper";
 import { getTimeAvailable } from "@services/api/course.api";
+import LoadingList from "@shared-components/loading.list.component";
 
 interface BookLessonSelectViewProps {
   course_id: string;
@@ -72,35 +73,35 @@ const BookLessonSelectView = ({
     setIsMaxDay(false);
   };
 
-  const onSelectTimeStart = (item, isActive) => {
-    const timePickByDay = {
-      day: dateView,
-      time_start: item.time_start + "" + ":00",
-      time_end: item.time_start + duration + ":00",
-    };
-    const timeOfCurrentDay = day.filter((_item) => _item.day == dateView);
+  // const onSelectTimeStart = (item, isActive) => {
+  //   const timePickByDay = {
+  //     day: dateView,
+  //     time_start: item.time_start + "" + ":00",
+  //     time_end: item.time_start + duration + ":00",
+  //   };
+  //   const timeOfCurrentDay = day.filter((_item) => _item.day == dateView);
 
-    // console.log("itemmmmm", {item, timePickByDay});
+  //   // console.log("itemmmmm", {item, timePickByDay});
 
-    setDay((old) => {
-      if (isActive)
-        return old.filter(
-          (_item) =>
-            item.label != _item.time_start + " - " + _item.time_end ||
-            _item.day != dateView,
-        );
-      if (timeOfCurrentDay.length == 2) {
-        const indexItemNeedDelete = old
-          .map((_item) => _item.day == dateView)
-          .lastIndexOf(true);
-        return [
-          timePickByDay,
-          ...old.filter((_item, index) => index != indexItemNeedDelete),
-        ];
-      }
-      return [timePickByDay, ...old];
-    });
-  };
+  //   setDay((old) => {
+  //     if (isActive)
+  //       return old.filter(
+  //         (_item) =>
+  //           item.label != _item.time_start + " - " + _item.time_end ||
+  //           _item.day != dateView,
+  //       );
+  //     if (timeOfCurrentDay.length == 2) {
+  //       const indexItemNeedDelete = old
+  //         .map((_item) => _item.day == dateView)
+  //         .lastIndexOf(true);
+  //       return [
+  //         timePickByDay,
+  //         ...old.filter((_item, index) => index != indexItemNeedDelete),
+  //       ];
+  //     }
+  //     return [timePickByDay, ...old];
+  //   });
+  // };
 
   const renderDurationBtn = (item) => {
     const isActive = item?.time_duration == duration;
@@ -184,10 +185,10 @@ const BookLessonSelectView = ({
   const renderTimeBtn = (item) => {
     // const isActive = false
     const isDisabled = item?.is_picked;
-    const timeOfCurrentDay = day.filter((_item) => _item.day == dateView);
-    const isActive = timeOfCurrentDay.find(
-      (_item) => item.label == _item.time_start + " - " + _item.time_end,
-    );
+    // const timeOfCurrentDay = day.filter((_item) => _item.day == dateView);
+    // const isActive = timeOfCurrentDay.find(
+    //   (_item) => item.label == _item.time_start + " - " + _item.time_end,
+    // );
     return (
       <>
         {!!item.extraLabel && (
