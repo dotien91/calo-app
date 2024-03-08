@@ -13,6 +13,7 @@ import SuperModal from "@shared-components/modal/SuperModal";
 import SocketConnect from "@services/socket/SocketConnect";
 import { SocketHelperRef } from "@helpers/socket.helper";
 import InitView from "./InitView";
+import toastConfig from "@shared-components/toastConfig/toastconfig";
 
 LogBox.ignoreAllLogs();
 
@@ -29,7 +30,7 @@ const App = () => {
     <>
       <StatusBar backgroundColor={palette.white} />
       <Navigation />
-      <Toast />
+      <Toast config={toastConfig} />
       <SuperModal />
       <InitView />
       <SocketConnect ref={SocketHelperRef} />

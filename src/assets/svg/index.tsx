@@ -27,6 +27,9 @@ import icPdf from "./icon-pdf.svg";
 import icPlanText from "./icon-plan-text.svg";
 import icPpt from "./icon-ppt.svg";
 import icWarning from "./icon-warning.svg";
+import icSuccess from "./icon-success.svg";
+import icError from "./icon-error.svg";
+import icInfo from "./icon-info.svg";
 import icXls from "./icon-xls.svg";
 import icZip from "./icon-zip.svg";
 import icPoll from "./icon-poll.svg";
@@ -140,6 +143,9 @@ const Icons = {
   icPlanText,
   icPpt,
   icWarning,
+  icSuccess,
+  icError,
+  icInfo,
   icXls,
   icZip,
   icPoll,
