@@ -41,6 +41,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { useClassRoom } from "./useClassRoom";
 import ClassRoomTopView from "./components/call.class.top.view";
 import ClassRoomBottomView from "./components/call.class.bottom.view";
+import { EnumClassType } from "models/course.model";
 
 Janus.setDependencies({
   RTCPeerConnection,
@@ -57,11 +58,11 @@ const CallClassScreen = () => {
   const stream = React.useRef(null);
   const route = useRoute();
   const roomId =
-    route.params?.["courseRoom"]?.roomId || "65c0ab03d7d7ab3a76de4b5b";
+    route.params?.["courseRoom"]?.roomId;
   const chatRoomId = route.params?.["courseRoom"]?.chat_room_id;
   const courseData = route.params?.["courseData"];
 
-  const isVideoOneOne = false;
+  const isVideoOneOne = courseData.type == EnumClassType.Call11;
   const intervalGetPar = React.useRef(null);
   const [config, setConfig] = useState({
     mute: false,

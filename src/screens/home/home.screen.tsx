@@ -14,6 +14,7 @@ import CommonStyle from "@theme/styles";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import useStore from "@services/zustand/store";
 import AboutHome from "./components/about-home/about.home";
+import LoadingList from "@shared-components/loading.list.component";
 
 const initialLayout = { width: Dimensions.get("window").width };
 
@@ -68,6 +69,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
     <View style={CommonStyle.safeAreaView}>
       <HeaderHome />
       <CollapsibleHeaderTabView
+        lazy={true}
         renderScrollHeader={AboutHome}
         navigationState={{ index, routes }}
         renderScene={renderScene}

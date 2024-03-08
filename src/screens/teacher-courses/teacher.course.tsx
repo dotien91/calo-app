@@ -12,7 +12,7 @@ import TextBase from "@shared-components/TextBase";
 import { EnumColors } from "models";
 import Button from "@shared-components/button/Button";
 import { SCREENS } from "constants";
-import { closeSuperModal, showLoading } from "@helpers/super.modal.helper";
+import { closeSuperModal, showLoading, showSuperModal } from "@helpers/super.modal.helper";
 import { translations } from "@localization";
 import LoadingList from "@shared-components/loading.list.component";
 
@@ -43,12 +43,14 @@ const TeacherCourse = () => {
   }, [listData]);
 
   const openVideoRoom = (item) => {
-    showLoading();
-    getCourseRoom({
+    showLoading()
+    const type = item.type == EnumClassType.Call11 ? "one_one_id" : "class_id"
+    const params = {
       course_id: item.courseData._id,
       user_id: userData?._id,
-      class_id: item._id,
-    }).then((res) => {
+      [type]: item._id,
+    }
+    getCourseRoom(params).then((res) => {
       closeSuperModal();
       if (!res.isError) {
         const data = res.data;

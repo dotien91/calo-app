@@ -29,6 +29,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const { logout, isLoggedIn, renderViewRequestLogin } = useUserHook();
   const { isTeacher } = useUserHelper();
+  console.log(2222, isTeacher)
   const listSetting = [
     {
       title: translations.settingUser.purchaseCouse,
