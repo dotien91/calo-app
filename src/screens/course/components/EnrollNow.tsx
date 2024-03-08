@@ -13,12 +13,17 @@ interface EnrollNowProps {
   data?: ICourseItem;
   course_id?: string;
   courseRoom: any;
+  fromBottom: boolean;
 }
 
-const EnrollNow = ({ data, course_id, courseRoom }: EnrollNowProps) => {
-  console.log("datadata", data);
+const EnrollNow = ({
+  data,
+  course_id,
+  courseRoom,
+  fromBottom,
+}: EnrollNowProps) => {
   const _goToListVideo = () => {
-    if (data.type == EnumClassType.SelfLearning) {
+    if (data?.type == EnumClassType.SelfLearning) {
       NavigationService.navigate(SCREENS.COURSE_LEARN_VIDEO_SCREEN, {
         course_id: course_id,
         courseData: data,
@@ -40,12 +45,13 @@ const EnrollNow = ({ data, course_id, courseRoom }: EnrollNowProps) => {
   };
 
   return (
-    <View>
+    <View style={[{ marginHorizontal: 16 }, fromBottom && CS.flexRear]}>
       <PressableBtn onPress={_goToListVideo} style={styles.containerFull}>
         <Text style={styles.textBtn}>{translations.course.enrollNow}</Text>
       </PressableBtn>
-      <PressableBtn onPress={_goToHomeWork} style={styles.containerFull}>
-        <Text style={styles.textBtn}>View homework</Text>
+      {fromBottom && <View style={{ width: 12 }} />}
+      <PressableBtn onPress={_goToHomeWork} style={styles.viewHomeWorkBtn}>
+        <Text style={styles.textBtn2}>{translations.course.viewHomework}</Text>
       </PressableBtn>
     </View>
   );
@@ -58,10 +64,25 @@ const styles = StyleSheet.create({
     ...CS.center,
     marginTop: 8,
     backgroundColor: palette.primary,
-    marginHorizontal: 16,
     height: 40,
     borderRadius: 8,
     paddingHorizontal: 12,
+    flex: 1,
+  },
+  viewHomeWorkBtn: {
+    ...CS.center,
+    marginTop: 8,
+    backgroundColor: palette.white,
+    ...CS.borderStyle,
+    borderColor: palette.primary,
+    height: 40,
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    flex: 1,
+  },
+  textBtn2: {
+    ...CS.hnSemiBold,
+    color: palette.primary,
   },
   textBtn: {
     ...CS.hnSemiBold,

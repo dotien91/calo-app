@@ -37,7 +37,7 @@ import EmptyResultView from "@shared-components/empty.data.component";
 import { shareProfile } from "@utils/share.utils";
 import AvatarProfile from "./avatar.profile";
 import SkeletonPlaceholder from "@shared-components/skeleton";
-import { getCourseList } from "@services/api/course.api";
+import { getMyCourse } from "@services/api/course.api";
 import CourseItem from "@screens/course-tab/components/course.item";
 import LoadingItem from "@shared-components/loading.item";
 
@@ -92,7 +92,6 @@ const FirstRoute = () => {
       scrollToOverflowEnabled
       data={listData}
       renderItem={renderItem}
-      scrollEventThrottle={16}
       onEndReachedThreshold={0}
       onEndReached={onEndReach}
       showsVerticalScrollIndicator={false}
@@ -111,7 +110,9 @@ const SecondRoute = () => {
 
   const paramsRequest = {
     limit: "10",
-    user_id: userData?._id,
+    created_user_id: userData?._id,
+    order_by: "DESC",
+    sort_by: "createdAt",
   };
   const {
     listData,
@@ -119,7 +120,7 @@ const SecondRoute = () => {
     refreshControl,
     renderFooterComponent,
     refreshing,
-  } = useListData<TypedRequest>(paramsRequest, getCourseList);
+  } = useListData<TypedRequest>(paramsRequest, getMyCourse);
   const renderEmptyCourseOfMe = () => {
     return (
       <EmptyResultView
@@ -144,7 +145,6 @@ const SecondRoute = () => {
       scrollToOverflowEnabled
       data={listData}
       renderItem={renderItemCourse}
-      scrollEventThrottle={16}
       onEndReachedThreshold={0}
       onEndReached={onEndReach}
       showsVerticalScrollIndicator={false}
@@ -157,6 +157,7 @@ const SecondRoute = () => {
     />
   );
 };
+
 const ThirdRoute = () => {
   const listPostSave = useStore((store) => store.listPostSave);
 
@@ -421,7 +422,6 @@ const ProfileUser = (props: ProfileUserProps) => {
       </View>
     );
   }
-
   return (
     <View style={styles.container}>
       <HeaderProfile />
@@ -430,7 +430,6 @@ const ProfileUser = (props: ProfileUserProps) => {
         showsVerticalScrollIndicator={false}
       >
         <View>
-          {/* <Image style={{height: 200, width: '100%'}} source={{uri: userInfo?.background_image ? userInfo?.background_image : "https://cdn.vntrip.vn/cam-nang/wp-content/uploads/2017/08/van-mieu-quoc-tu-giam.jpg"}}></Image> */}
           <AvatarProfile userInfo={userInfo} />
           <CountFollow id={_id} postCount={totalCount} />
           <ListAction />

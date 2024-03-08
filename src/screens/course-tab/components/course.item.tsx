@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { View, Text, TouchableOpacity, ViewStyle } from "react-native";
+import { View, Text, ViewStyle } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import FastImage from "react-native-fast-image";
 import * as NavigationService from "react-navigation-helpers";
@@ -17,6 +17,7 @@ import { SCREENS } from "constants";
 import { numberWithCommas } from "@utils/string.utils";
 import { translations } from "@localization";
 import CourseProgressBar from "./course.progress.bar";
+import PressableBtn from "@shared-components/button/PressableBtn";
 
 interface CourseItemProps {
   isHorizontalStyle?: boolean;
@@ -146,17 +147,17 @@ const CourseItem = ({
 
   if (isHorizontalStyle)
     return (
-      <TouchableOpacity
+      <PressableBtn
         onPress={openPreviewCourse}
         style={styles.courseItemHorizontal}
       >
         {renderImg()}
         <View style={[styles.boxContent, { flex: 1 }]}>{renderInfo()}</View>
-      </TouchableOpacity>
+      </PressableBtn>
     );
 
   return (
-    <TouchableOpacity
+    <PressableBtn
       onPress={openPreviewCourse}
       style={[
         styles.courseItem,
@@ -166,7 +167,7 @@ const CourseItem = ({
     >
       {renderImg()}
       {renderInfo()}
-    </TouchableOpacity>
+    </PressableBtn>
   );
 };
 

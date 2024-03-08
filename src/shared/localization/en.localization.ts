@@ -452,6 +452,7 @@ export default {
     reportAPlaybackProblem: "Report a playback problem",
     wriveAReview: "Write a review",
     enrollNow: "Enroll now",
+    viewHomework: "View homework",
     Lectures: "Lectures",
     warningSelectTime: "Please select full time",
     warningSelectImage: "Please select image",
@@ -474,6 +475,7 @@ export default {
     noreview: "Zero review",
     selectModal: "Select",
     myCourse: "My course",
+    manageClass: "Manage classes",
     recommendCourse: "Recommend course",
     teachingTime: "Teaching time",
   },
@@ -537,7 +539,8 @@ export default {
     removeUser: "Remove User",
     descriptionPoint:
       "This is the number of points the student will receive for each corresponding action",
-    inviteDes: `You will get 4000 points for each friend who activates oyur code and earns 10000 points. Your friend will also get 1000 points as a reward.`,
+    inviteDes:
+      "You will get 4000 points for each friend who activates oyur code and earns 10000 points. Your friend will also get 1000 points as a reward.",
   },
   codeActivations: {
     sortBy: "Sort by",

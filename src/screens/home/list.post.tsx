@@ -135,11 +135,10 @@ const ListPost = ({ isFollowingPost, id }: ListPostProps) => {
   };
   // if (isFollowingPost) {
 
-  const renderHeader = React.useMemo(() => {
-    if (!isLoading) return null
-    return <LoadingList numberItem={3} />
-  }, [isLoading])
-
+  const renderHeader = () => {
+    if (!isLoading) return null;
+    return <LoadingList numberItem={3} />;
+  };
 
   return (
     <View

@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { Text, TouchableOpacity, View, ViewStyle } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
 import CommonStyle from "@theme/styles";
@@ -43,7 +43,6 @@ const listCategory = [
 ];
 
 const AboutHome = () => {
-
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const setCourseCurrentType = useStore((state) => state.setCourseCurrentType);
@@ -62,7 +61,7 @@ const AboutHome = () => {
   };
 
   return (
-    <View style={{backgroundColor: palette.white}}>
+    <View style={{ backgroundColor: palette.white }}>
       {!!userData?.display_name && (
         <View style={CommonStyle.flex2}>
           <Text style={styles.styleTxtText}>{translations.welcomeBack}</Text>

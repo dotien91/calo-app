@@ -34,11 +34,11 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
       title: translations.settingUser.purchaseCouse,
       icon: require("assets/images/book.png"),
       action: () => {
-        NavigationService.navigate(SCREENS.LIST_COURSE);
+        NavigationService.navigate(SCREENS.MY_COURES);
       },
     },
     {
-      title: translations.settingUser.mycouse,
+      title: translations.course.manageClass,
       id: 1,
       iconFont: "book",
       action: () => {

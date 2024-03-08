@@ -40,7 +40,6 @@ const CoursePreviewScreen = () => {
   // const [isLoading, setIsLoading] = useState(true);
   React.useEffect(() => {
     _getCourseDetail();
-    _getCourseRoom();
   }, []);
 
   const [data, setData] = useState<ICourseItem>();
@@ -72,22 +71,29 @@ const CoursePreviewScreen = () => {
   const params = { auth_id: userData?._id };
   const _getCourseDetail = () => {
     getCourseDetail(course_id, params).then((res) => {
+      console.log("course detail", res.data);
+      const data = res.data;
       if (!res.isError) {
         // setIsLoading(false);
-        setData(res.data);
+        setData(data);
+        const idClass = data.classes?.[0]?._id;
+        if (idClass) {
+          _getCourseRoom(idClass);
+        }
       }
     });
   };
 
   // 65e59aea4463ad11b713addf
 
-  const _getCourseRoom = () => {
+  const _getCourseRoom = (id: string) => {
+    const type = data?.type == EnumClassType.Call11 ? "one_one_id" : "class_id";
     getCourseRoom({
       course_id,
       user_id: userData?._id,
-      class_id: "65e598744463ad11b7138ab5",
+      [type]: id,
     }).then((res) => {
-      console.log("getCourseRoom...", res);
+      console.log("getCourseRoom...", res, params);
 
       if (!res.isError) {
         const data = res.data;
@@ -281,18 +287,6 @@ const CoursePreviewScreen = () => {
                 }}
               />
             )}
-
-            <Button
-              text={"Home work"}
-              onPress={openHomeworkScreen}
-              style={{
-                backgroundColor: palette.primary,
-                marginTop: 8,
-                marginHorizontal: 16,
-                paddingVertical: 0,
-                height: 40,
-              }}
-            />
           </>
         )}
         {/* <AddToCartButton data={data} type="full" /> */}

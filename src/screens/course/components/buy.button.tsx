@@ -19,7 +19,7 @@ interface BuyButtonProps {
   };
 }
 
-const BuyButton = ({ data, type }: BuyButtonProps) => {
+const BuyButton = ({ data, type, courseRoom }: BuyButtonProps) => {
   const { isLoggedIn } = useUserHook();
   const isJoin = data?.is_join;
   console.log("datadatadata", data);

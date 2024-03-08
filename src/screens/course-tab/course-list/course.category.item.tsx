@@ -25,7 +25,7 @@ const CourseCategoryItem: React.FC<CourseCategoryItemProps> = () => {
   const { listData, isLoading } = useListData<ICourseItem>(
     {
       auth_id: userData?._id,
-      order_by: "ASC",
+      order_by: "DESC",
       sort_by: "createdAt",
     },
     getMyCourse,
@@ -34,6 +34,8 @@ const CourseCategoryItem: React.FC<CourseCategoryItemProps> = () => {
   const data = React.useMemo(() => {
     return listData.slice(0, 5);
   }, [listData]);
+
+  console.log("listDatalistDatalistData", listData);
 
   const renderItem = (item: ICourseItem, index: number) => {
     return (

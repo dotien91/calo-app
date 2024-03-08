@@ -543,6 +543,7 @@ export default {
     addCourseToFavourites: "Thêm vào danh sách yêu thích",
     reportAPlaybackProblem: "Báo cáo sự cố",
     enrollNow: "Vào học ngay",
+    viewHomework: "Xem bài tập",
     Lectures: "Bài giảng",
     warningSelectTime: "Vui lòng chọn đầy đủ thời gian",
     warningSelectImage: "Vui lòng chọn ảnh khoá học",
@@ -564,6 +565,7 @@ export default {
     noreview: "Chưa có đánh giá",
     selectModal: "Lựa chọn",
     myCourse: "Khoá học của tôi",
+    manageClass: "Quản lí lớp học",
     recommendCourse: "Khoá học gợi ý",
     teachingTime: "Đã dạy",
   },
@@ -656,7 +658,8 @@ export default {
     customNavigationBar: "Tuỳ chỉnh thanh điều hướng",
     navigationBarDes:
       "Tùy chọn 3 nút cho thanh điều dưới phía dưới (mặc định bao gồm 2 nút trang chủ và tác vụ). Tất cả các thaành viên trong kênh sẽ được tự động chuyển sang thanh điều hướng này theo cài đặt của bạn.",
-    inviteDes: `Bạn sẽ nhận 4000 điểm cho mỗi người mà bạn giới thiệu. Người được giới thiệu sẽ nhận được 1000 điểm.`,
+    inviteDes:
+      "Bạn sẽ nhận 4000 điểm cho mỗi người mà bạn giới thiệu. Người được giới thiệu sẽ nhận được 1000 điểm.",
   },
   profile: {
     editProfile: "Sửa hồ sơ",
