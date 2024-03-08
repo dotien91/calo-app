@@ -3,6 +3,7 @@ import { blockUser, followUser, unFollowUser } from "@services/api/post";
 import { showToast } from "@helpers/super.modal.helper";
 import { translations } from "@localization";
 import { TypedPost } from "shared/models";
+import { postUnBlockUser } from "@services/api/user.api";
 
 export function useActionUser() {
   // const userData = useStore((store) => store.userData);
@@ -49,7 +50,7 @@ export function useActionUser() {
 
   const _blockUser = (id: string, display_name: string) => {
     const params = { partner_id: id };
-    blockUser(params).then((resBlock) => {
+    return blockUser(params).then((resBlock) => {
       if (!resBlock.isError) {
         showToast({
           type: "success",
@@ -62,6 +63,25 @@ export function useActionUser() {
         showToast({
           type: "error",
           ...resBlock,
+        });
+      }
+    });
+  };
+
+  const unBlockUser = (partner_id: string) => {
+    const data = {
+      partner_id: partner_id,
+    };
+    return postUnBlockUser(data).then((res) => {
+      if (!res.isError) {
+        showToast({
+          type: "success",
+          message: "UnBlock thành công",
+        });
+      } else {
+        showToast({
+          type: "error",
+          message: res.message,
         });
       }
     });
@@ -80,5 +100,6 @@ export function useActionUser() {
     _blockUser,
     _savePost,
     _deletePostSave,
+    unBlockUser,
   };
 }

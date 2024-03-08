@@ -16,17 +16,10 @@ interface TypedUseListData<T> {
   isLoading: boolean;
   setListData: (newListData: T[]) => void;
   _requestData: () => void;
-  totalCount: number;
+  initData: T[];
   renderFooterComponent: () => void;
   onEndReach: () => void;
-}
-
-interface TypedRequestParams {
-  limit: string;
-  search?: string;
-  page?: number;
-  user_id?: string;
-  order_by?: string;
+  refreshControl: any;
 }
 
 interface TypedStateListData<T> {
@@ -39,10 +32,10 @@ interface TypedStateListData<T> {
 }
 
 export function useListData<T>(
-  params: TypedRequestParams,
-  requestData: (params: TypedRequestParams) => Promise<T[]>,
+  params: any,
+  requestData: (params: any) => Promise<T[]>,
   initData: T[] = [],
-  dep,
+  dep?: any,
 ): TypedUseListData<T> {
   const [stateListData, setStateListData] = useState<TypedStateListData<T>>({
     listData: initData,

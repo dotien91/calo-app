@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
 import * as NavigationService from "react-navigation-helpers";
 
@@ -19,6 +19,10 @@ import { SCREENS } from "constants";
 import eventEmitter from "@services/event-emitter";
 import { useActionUser } from "@helpers/hooks/useActionUser";
 import { TypedPost } from "shared/models";
+import { palette } from "@theme/themes";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import PressableBtn from "@shared-components/button/PressableBtn";
+import { useUserHook } from "@helpers/hooks/useUserHook";
 
 interface TypeData extends TypedPost {
   isDetail: boolean;
@@ -31,16 +35,11 @@ const ListActionOfPost = ({ data }: ListActionOfPost) => {
   const userData = useStore((state) => state.userData);
   const listFollow = useStore((state) => state.listFollow);
   const listPostSave = useStore((state) => state.listPostSave);
-  const { _followUser, _blockUser } = useActionUser();
+  const { _followUser } = useActionUser();
 
   const pressFollowUser = () => {
     closeSuperModal();
     _followUser(data?.user_id?._id, data?.user_id?.display_name);
-  };
-
-  const pressBlockUser = () => {
-    closeSuperModal();
-    _blockUser(data?.user_id?._id, data?.user_id?.display_name);
   };
 
   const pressDeletePost = (id: string) => {
@@ -143,11 +142,8 @@ const ListActionOfPost = ({ data }: ListActionOfPost) => {
         } ${data?.user_id?.display_name}`}
         onPress={pressFollowUser}
       />
-      <ItemBottomSheet
-        nameIcon="ban-outline"
-        text={`${translations.block} ${data?.user_id?.display_name}`}
-        onPress={pressBlockUser}
-      />
+
+      <ItemBlock data={data} />
       <ItemBottomSheet
         nameIcon="flag-outline"
         text={translations.post.report}
@@ -157,11 +153,64 @@ const ListActionOfPost = ({ data }: ListActionOfPost) => {
   );
 };
 
+const ItemBlock = ({ data }) => {
+  const listBlock = useStore((state) => state.listBlock);
+  const isBlock = React.useMemo(() => {
+    return !!listBlock.find(
+      (item) => item?.partner_id?._id == data?.user_id?._id,
+    );
+  }, [listBlock, data]);
+
+  const { _blockUser, unBlockUser } = useActionUser();
+  const { initListBlock } = useUserHook();
+
+  const _onPress = async () => {
+    closeSuperModal();
+    if (isBlock) {
+      await unBlockUser(data?.user_id?._id);
+    } else {
+      await _blockUser(data?.user_id?._id, data?.user_id?.display_name);
+    }
+    initListBlock();
+  };
+
+  return (
+    <PressableBtn onPress={_onPress} style={styles.buttonFlag}>
+      <Icon
+        size={24}
+        name={"ban-outline"}
+        type={IconType.Ionicons}
+        color={palette.text}
+      />
+      <Text
+        numberOfLines={1}
+        style={[styles.textButton, { color: palette.text }]}
+      >
+        {`${isBlock ? translations.unBlockUser : translations.block} ${
+          data?.user_id?.display_name
+        }`}
+      </Text>
+    </PressableBtn>
+  );
+};
+
 const styles = StyleSheet.create({
   container: {
     ...CommonStyle.flex1,
     paddingBottom: getBottomSpace(),
     marginTop: 40,
+  },
+  buttonFlag: {
+    height: 25,
+    marginTop: 20,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  textButton: {
+    ...CommonStyle.hnRegular,
+    fontSize: 16,
+    paddingLeft: 18,
+    flex: 1,
   },
 });
 

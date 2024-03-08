@@ -4,7 +4,7 @@ import * as NavigationService from "react-navigation-helpers";
 // Import package from node modules
 
 import useStore from "@services/zustand/store";
-import { getCurrentUser } from "@services/api/user.api";
+import { getCurrentUser, getListBlock } from "@services/api/user.api";
 import { showToast } from "../super.modal.helper";
 import { SCREENS } from "constants";
 import { _setJson, _getJson, USER_TOKEN } from "@services/local-storage";
@@ -22,6 +22,7 @@ export const useUserHook = () => {
 
   const initListFollow = useStore((state) => state.initListFollow);
   const setShowInvite = useStore((state) => state.setShowInvite);
+  const updateListBlock = useStore((state) => state.updateListBlock);
 
   const isLoggedIn = () => {
     return _getJson(USER_TOKEN);
@@ -60,6 +61,15 @@ export const useUserHook = () => {
       user_cover: data.user_cover || "",
     });
     initListFollow(data.follow_users);
+    initListBlock();
+  };
+
+  const initListBlock = () => {
+    getListBlock().then((res) => {
+      if (!res.isError) {
+        updateListBlock(res.data);
+      }
+    });
   };
 
   const logout = () => {
@@ -121,5 +131,6 @@ export const useUserHook = () => {
     isLoggedIn,
     logout,
     renderViewRequestLogin,
+    initListBlock,
   };
 };

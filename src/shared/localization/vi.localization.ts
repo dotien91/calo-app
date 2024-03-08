@@ -95,6 +95,7 @@ export default {
   copy: "Sao chép",
   report: "Báo cáo",
   block: "Chặn",
+  unBlockUser: "Bỏ chặn",
   blockedDes: "Các bạn sẽ không thể nhìn thấy hoặc liên hệ với nhau",
   blockedUser: "Bạn đã chặn trang cá nhân của :username",
   commentAs: "Bình luận dưới tên",
