@@ -19,7 +19,6 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 const InviteView = () => {
   const userData = useStore((store) => store.userData);
-  console.log("userData...", userData);
   const showInvite = useStore((store) => store.showInvite);
   const setShowInvite = useStore((store) => store.setShowInvite);
   const sendCode = (txt: string) => {
@@ -52,6 +51,8 @@ const InviteView = () => {
       data: {
         title: translations.invite.enterCode,
         cb: sendCode,
+        icon: "icInviteCode",
+        txtBtn: translations.codeActivations.activate,
       },
     });
   };

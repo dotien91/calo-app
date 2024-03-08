@@ -5,6 +5,17 @@ import { palette } from "@theme/themes";
 import Input from "@shared-components/form/Input";
 import { translations } from "@localization";
 import Button from "@shared-components/button/Button";
+import IconSvg from "assets/svg";
+
+interface TypeInputViewModal {
+  defaultValue: string;
+  title: string;
+  closeModal: () => void;
+  cb: any;
+  placeholder: string;
+  icon?: string;
+  txtBtn?: string;
+}
 
 const InputViewModal = ({
   defaultValue,
@@ -12,7 +23,9 @@ const InputViewModal = ({
   closeModal,
   cb,
   placeholder,
-}) => {
+  icon,
+  txtBtn,
+}: TypeInputViewModal) => {
   console.log("defaultValuedefaultValue", defaultValue);
   const [text, setText] = React.useState(defaultValue);
 
@@ -20,6 +33,35 @@ const InputViewModal = ({
     if (cb) cb(text);
     closeModal();
   };
+  if (icon) {
+    return (
+      <View style={styles.modalInner}>
+        <IconSvg
+          name={icon}
+          color={palette.blue}
+          size={96}
+          style={styles.paddingIcon}
+        />
+        <Text style={styles.title}>{title}</Text>
+        <View style={[CommonStyle.flexStart]}>
+          <Input
+            defaultValue={text}
+            cb={setText}
+            placeholder={placeholder}
+            customStyle={{ flex: 1, width: "100%" }}
+          />
+        </View>
+        <View style={[CommonStyle.flexStart, { marginTop: 32 }]}>
+          <Button
+            style={{ flex: 1 }}
+            type={(text || "").length ? "primary" : "disabled"}
+            text={txtBtn || translations.login.send}
+            onPress={_onPress}
+          />
+        </View>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.modalInner}>
@@ -34,7 +76,7 @@ const InputViewModal = ({
         <Button
           style={{ marginLeft: 8 }}
           type={(text || "").length ? "primary" : "disabled"}
-          text={translations.login.send}
+          text={txtBtn || translations.login.send}
           onPress={_onPress}
         />
       </View>
@@ -52,6 +94,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingBottom: 26,
     overflow: "hidden",
+    ...CommonStyle.center,
   },
   title: {
     ...CommonStyle.hnSemiBold,
@@ -60,4 +103,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 12,
   },
+  paddingIcon: { marginTop: 16, marginBottom: 32 },
 });

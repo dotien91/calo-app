@@ -436,7 +436,7 @@ const ProfileUser = (props: ProfileUserProps) => {
           <Bio text={userInfo?.bio || ""} />
           <View style={{ height: 1, backgroundColor: palette.borderColor }} />
         </View>
-        <ListPost isFollowingPost={false} id={_id} />
+        <ListPost isFollowingPost={false} id={_id} isProfile />
       </ScrollView>
     </View>
   );

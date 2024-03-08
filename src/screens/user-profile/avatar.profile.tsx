@@ -43,7 +43,9 @@ const AvatarProfile = ({ userInfo, customStyle }: UploadAvatarProps) => {
   const _setLinkAvatar = useStore((store) => store.setLinkAvatar);
 
   useEffect(() => {
-    setLinkAvatar(userInfo?.user_avatar || "");
+    setLinkAvatar(
+      userInfo?.user_avatar || userInfo?.user_avatar_thumbnail || "",
+    );
   }, [userInfo]);
 
   const onPressChangeCover = async () => {

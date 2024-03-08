@@ -257,7 +257,7 @@ export async function getReferralMe(params: any) {
 export async function getReferralUserProduct(params: any) {
   return request({
     method: METHOD.GET,
-    urlPath: "referral/user/product",
+    urlPath: "referral/me/product",
     params,
   }).then((response) => {
     return response;

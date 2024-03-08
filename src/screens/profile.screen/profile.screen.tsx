@@ -325,6 +325,8 @@ const SettingProfileScreen = () => {
         data: {
           title: translations.invite.enterCode,
           cb: sendCode,
+          icon: "icInviteCode",
+          txtBtn: translations.codeActivations.activate,
         },
       });
     }
@@ -332,7 +334,7 @@ const SettingProfileScreen = () => {
 
   const renderListCodeActive = () => {
     const pressCodeActivations = () => {
-      if (referralByMe.length > 0) {
+      if (referralByMe?.length > 0) {
         NavigationService.navigate(SCREENS.CODE_ACTIVATIONS_SCREEN);
       } else {
         showToast({

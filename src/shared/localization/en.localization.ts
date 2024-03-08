@@ -549,6 +549,7 @@ export default {
     header: "Code activations",
     referrer: "Referrer",
     copyCodeSuccsess: "Copied",
+    activate: "Activate",
   },
   profile: {
     editProfile: "Edit Profile",
