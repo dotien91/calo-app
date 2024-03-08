@@ -28,12 +28,18 @@ import { formatLanguage } from "@utils/string.utils";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import FastImage from "react-native-fast-image";
 import TextBase from "@shared-components/TextBase";
+import useStore from "@services/zustand/store";
 
 interface HeaderCourseProps {
   data?: ICourseItem;
 }
 
 const HeaderCourse = ({ data }: HeaderCourseProps) => {
+
+  const userData = useStore(state => state.userData)
+  const isMine = React.useMemo(() => {
+    return data?.user_id?._id == userData?._id
+  }, [userData, data])
   const _playVideo = () => {
     if (data?.media_id) {
       showSuperModal({
@@ -153,14 +159,14 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
       >
         <Text style={styles.textTitle}>{data?.title}</Text>
 
-        <TouchableOpacity onPress={viewClasses}>
+        {isMine && <TouchableOpacity onPress={viewClasses}>
           <Icon
             name="more-vertical"
             type={IconType.Feather}
             size={25}
             color={palette.text}
           ></Icon>
-        </TouchableOpacity>
+        </TouchableOpacity>}
       </View>
       <TouchableOpacity style={CS.flexStart} onPress={onReport}>
         <Icon

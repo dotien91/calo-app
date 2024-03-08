@@ -79,7 +79,7 @@ const CoursePreviewScreen = () => {
         const idClass = data.classes?.[0]?._id;
         console.log("idClassidClass", idClass);
         if (idClass) {
-          _getCourseRoom(idClass);
+          _getCourseRoom(data, idClass);
         }
       }
     });
@@ -87,14 +87,18 @@ const CoursePreviewScreen = () => {
 
   // 65e59aea4463ad11b713addf
 
-  const _getCourseRoom = (id: string) => {
+  const _getCourseRoom = (data: ICourseItem, id: string) => {
     const type = data?.type == EnumClassType.Call11 ? "one_one_id" : "class_id";
     getCourseRoom({
       course_id,
       user_id: userData?._id,
       [type]: id,
     }).then((res) => {
-      console.log("getCourseRoom...", res, params);
+      console.log("getCourseRoom...", res, EnumClassType.Call11 == data?.type, {
+        course_id,
+        user_id: userData?._id,
+        [type]: id,
+      });
 
       if (!res.isError) {
         const data = res.data;

@@ -19,6 +19,7 @@ import { useListData } from "@helpers/hooks/useListData";
 import { TypedGeneralRoomChat, TypedUserChat } from "models/chat.model";
 import { onSocket, offSocket } from "@helpers/socket.helper";
 import { SCREENS } from "constants";
+import useStore from "@services/zustand/store";
 
 interface ListScreenProps {}
 
@@ -28,6 +29,7 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
   const listDataRef = React.useRef([]);
   // const route = useRoute();
   // const paramsFromNavigation = route.params?.["groupData"];
+  const userData = useStore(state => state.userData)
 
   const {
     listData,
@@ -38,7 +40,7 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
     _requestData,
     setListData,
     noData,
-  } = useListData<TypedGeneralRoomChat>({ limit: 6 }, getListChat);
+  } = useListData<TypedGeneralRoomChat>({ limit: 6 }, getListChat, [], userData);
 
   const onRefresh = () => {
     _requestData(false);

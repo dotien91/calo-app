@@ -42,6 +42,7 @@ export function useListData<T>(
   params: TypedRequestParams,
   requestData: (params: TypedRequestParams) => Promise<T[]>,
   initData: T[] = [],
+  dep
 ): TypedUseListData<T> {
   const [stateListData, setStateListData] = useState<TypedStateListData<T>>({
     listData: initData,
@@ -57,7 +58,7 @@ export function useListData<T>(
 
   useDeepCompareEffect(() => {
     _requestData(false);
-  }, [params]);
+  }, [params, dep]);
 
   const _requestData = (showRefreshing: boolean | true) => {
     isFetching.current = true;

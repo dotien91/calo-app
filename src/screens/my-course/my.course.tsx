@@ -102,10 +102,10 @@ const ListData = React.memo(({ listData, isTabComplete, isLoading }) => {
   const data = React.useMemo(() => {
     return listData.filter((item) =>
       isTabComplete
-        ? item.module_view.length > 0 &&
-          item.module_view.length == item.module_child_count
-        : item.module_view.length == 0 ||
-          item.module_view.length != item.module_child_count,
+        ? item.module_view?.length > 0 &&
+          item.module_view?.length == item.module_child_count
+        : item.module_view?.length == 0 ||
+          item.module_view?.length != item.module_child_count,
     );
   }, [listData]);
 

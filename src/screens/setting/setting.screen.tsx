@@ -160,7 +160,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
           fontSize: 16,
           fontWeight: "600",
           textAlign: "center",
-          opacity: 0,
+          color: "#fff"
         }}
       >
         hard code token

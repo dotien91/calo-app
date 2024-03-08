@@ -14,6 +14,7 @@ interface IEmptyResultView {
   icon?: string;
   lottieJson?: string;
   showLottie?: boolean;
+  height: number;
 }
 
 const EmptyResultView = ({
@@ -23,6 +24,7 @@ const EmptyResultView = ({
   lottieJson,
   showLottie = true,
   style,
+  height,
 }: IEmptyResultView) => {
   return (
     <View
@@ -34,7 +36,7 @@ const EmptyResultView = ({
               alignItems: "center",
               paddingHorizontal: 40,
               marginTop: 16,
-              minHeight: Device.height / 3,
+              minHeight: height || Device.height / 3,
             },
       ]}
     >

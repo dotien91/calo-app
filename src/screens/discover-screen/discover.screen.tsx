@@ -46,18 +46,20 @@ const DiscoverScreen = () => {
     {
       icon: "icThreeBook",
       title: translations.discover.study,
+      screen: SCREENS.COURSE_LIST
     },
-    {
-      icon: "icGradution",
-      title: translations.discover.dictionary,
-    },
-    {
-      icon: "icShop",
-      title: translations.discover.shop,
-    },
+    // {
+    //   icon: "icGradution",
+    //   title: translations.discover.dictionary,
+    // },
+    // {
+    //   icon: "icShop",
+    //   title: translations.discover.shop,
+    // },
     {
       icon: "icFind",
       title: translations.discover.finduser,
+      screen: SCREENS.COURSE_CATEGORY
     },
   ];
 
@@ -399,7 +401,7 @@ const DiscoverScreen = () => {
                 }}
               >
                 <TouchableOpacity
-                  onPress={() => NavigationService.navigate(SCREENS.HOME)}
+                  onPress={() => NavigationService.navigate(item.screen)}
                   style={{
                     flexDirection: "row",
                     alignItems: "center",

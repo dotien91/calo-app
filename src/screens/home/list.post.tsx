@@ -116,9 +116,7 @@ const ListPost = ({ isFollowingPost, id, isProfile }: ListPostProps) => {
       <View
         style={{
           ...CommonStyle.center,
-          ...CommonStyle.flex1,
           backgroundColor: colors.background,
-          paddingVertical: 40,
         }}
       >
         <EmptyResultView
