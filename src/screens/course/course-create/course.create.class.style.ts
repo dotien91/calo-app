@@ -7,11 +7,13 @@ interface Style {
   container: ViewStyle;
   label: TextStyle;
   text: TextStyle;
+  textSelected: TextStyle;
   des: TextStyle;
   durationBtn: ViewStyle;
   durationBtnSelected: ViewStyle;
   hourBtn: ViewStyle;
   txtBtn: TextStyle;
+  txtBtnSelected: TextStyle;
   selectBox: ViewStyle;
   checkbox: ViewStyle;
   checkBoxDisable: ViewStyle;
@@ -35,6 +37,11 @@ export default (theme: ExtendedTheme) => {
     text: {
       ...CS.hnRegular,
       color: colors.text,
+      lineHeight: 24,
+    },
+    textSelected: {
+      ...CS.hnRegular,
+      color: colors.white,
       lineHeight: 24,
     },
     des: {
@@ -73,6 +80,10 @@ export default (theme: ExtendedTheme) => {
     txtBtn: {
       ...CS.hnSemiBold,
       color: colors.textOpacity6,
+    },
+    txtBtnSelected: {
+      ...CS.hnSemiBold,
+      color: colors.white,
     },
     selectBox: {
       marginBottom: 16,

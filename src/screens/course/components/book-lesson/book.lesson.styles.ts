@@ -1,23 +1,10 @@
 import { ExtendedTheme } from "@react-navigation/native";
-import { ViewStyle, StyleSheet, TextStyle } from "react-native";
+import { ViewStyle, StyleSheet } from "react-native";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 
 interface Style {
   container: ViewStyle;
-  label: TextStyle;
-  text: TextStyle;
-  des: TextStyle;
-  durationBtn: ViewStyle;
-  hourBtn: ViewStyle;
-  txtBtn: TextStyle;
-  selectBox: ViewStyle;
-  checkbox: ViewStyle;
-  checkBoxDisable: ViewStyle;
-  checkBoxActive: ViewStyle;
-  btnPurchase: ViewStyle;
-  txtPurchaseBtn: TextStyle;
-  hourActiveBtn: TextStyle;
 }
 
 export default (theme: ExtendedTheme) => {
@@ -27,7 +14,8 @@ export default (theme: ExtendedTheme) => {
       flex: 1,
       backgroundColor: colors.background,
       paddingHorizontal: 16,
-      marginTop: 12,
+      marginTop: 16,
+      // ...CS.safeAreaView,
     },
     label: {
       ...CS.hnMedium,
@@ -47,21 +35,32 @@ export default (theme: ExtendedTheme) => {
     durationBtn: {
       padding: 4,
       flex: 1,
-      backgroundColor: colors.background,
-      borderWidth: 1,
-      borderColor: colors.borderColor,
+      backgroundColor: colors.grey3,
       marginHorizontal: 4,
       ...CS.flexCenter,
       borderRadius: 4,
     },
+    dateBtn: {
+      padding: 4,
+      flex: 1,
+      backgroundColor: colors.grey3,
+      marginHorizontal: 3,
+      ...CS.flexCenter,
+      borderRadius: 4,
+      ...CS.borderStyle,
+      borderColor: colors.white,
+    },
     hourBtn: {
+      shadowColor: "rgba(0,0,0,0.8)",
+      shadowOffset: { width: 0, height: 6 },
+      shadowOpacity: 0.1,
+      elevation: 1,
+      shadowRadius: 5,
       marginBottom: 8,
       ...CS.center,
       backgroundColor: colors.white,
       borderRadius: 4,
       paddingVertical: 2,
-      borderWidth: 1,
-      borderColor: colors.borderColor,
     },
     txtBtn: {
       ...CS.hnSemiBold,
@@ -96,10 +95,20 @@ export default (theme: ExtendedTheme) => {
     },
     txtPurchaseBtn: {
       ...CS.hnSemiBold,
-      color: colors.white,
+      color: palette.white,
     },
     hourActiveBtn: {
-      backgroundColor: palette.placeholder,
+      backgroundColor: colors.btnInactive,
+    },
+    durationBtnActive: {
+      backgroundColor: colors.primary,
+    },
+    txtBtnActive: {
+      color: palette.white,
+    },
+    btnSelectedHour: {
+      ...CS.borderStyle,
+      borderColor: colors.primary,
     },
   });
 };

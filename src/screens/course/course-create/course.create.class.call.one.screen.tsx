@@ -106,7 +106,13 @@ const CreateClassCallOneScreen = () => {
               : styles.durationBtn
           }
         >
-          <Text style={styles.txtBtn}>{item.label}</Text>
+          <Text
+            style={
+              isSelect || daySelect ? styles.txtBtnSelected : styles.txtBtn
+            }
+          >
+            {item.label}
+          </Text>
           {isSelect && (
             <View
               style={{
@@ -171,11 +177,13 @@ const CreateClassCallOneScreen = () => {
             styles.hourBtn,
             {
               backgroundColor:
-                indexSelected >= 0 ? colors.backgroundMain : colors.white,
+                indexSelected >= 0 ? colors.primary : colors.white,
             },
           ]}
         >
-          <Text style={styles.text}>{item.label}</Text>
+          <Text style={indexSelected >= 0 ? styles.textSelected : styles.text}>
+            {item.label}
+          </Text>
         </PressableBtn>
       </>
     );
