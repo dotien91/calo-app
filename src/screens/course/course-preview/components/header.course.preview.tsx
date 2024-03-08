@@ -35,11 +35,10 @@ interface HeaderCourseProps {
 }
 
 const HeaderCourse = ({ data }: HeaderCourseProps) => {
-
-  const userData = useStore(state => state.userData)
+  const userData = useStore((state) => state.userData);
   const isMine = React.useMemo(() => {
-    return data?.user_id?._id == userData?._id
-  }, [userData, data])
+    return data?.user_id?._id == userData?._id;
+  }, [userData, data]);
   const _playVideo = () => {
     if (data?.media_id) {
       showSuperModal({
@@ -97,6 +96,9 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
       },
     });
   };
+  const isVideo =
+    data?.media_id?.media_mime_type &&
+    !data?.media_id?.media_mime_type.startsWith("image");
 
   return (
     <View style={styles.container}>
@@ -119,8 +121,8 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
               data?.media_id?.media_thumbnail || data?.avatar?.media_thumbnail,
           }}
         />
-        {data?.media_id?.media_thumbnail && <PlayVideo onPress={_playVideo} />}
-        {data?.media_id?.media_thumbnail && (
+        {isVideo && <PlayVideo onPress={_playVideo} />}
+        {isVideo && (
           <View
             style={{
               position: "absolute",
@@ -159,14 +161,16 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
       >
         <Text style={styles.textTitle}>{data?.title}</Text>
 
-        {isMine && <TouchableOpacity onPress={viewClasses}>
-          <Icon
-            name="more-vertical"
-            type={IconType.Feather}
-            size={25}
-            color={palette.text}
-          ></Icon>
-        </TouchableOpacity>}
+        {isMine && (
+          <TouchableOpacity onPress={viewClasses}>
+            <Icon
+              name="more-vertical"
+              type={IconType.Feather}
+              size={25}
+              color={palette.text}
+            ></Icon>
+          </TouchableOpacity>
+        )}
       </View>
       <TouchableOpacity style={CS.flexStart} onPress={onReport}>
         <Icon
