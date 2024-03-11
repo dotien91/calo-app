@@ -9,7 +9,6 @@ import {
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 import { translations } from "@localization";
-import SkeletonPlaceholder from "@shared-components/skeleton";
 import Avatar from "@shared-components/user/Avatar";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
