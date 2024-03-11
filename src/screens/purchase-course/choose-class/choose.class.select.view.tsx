@@ -15,6 +15,9 @@ import CS from "@theme/styles";
 import IconBtn from "@shared-components/button/IconBtn";
 import { IClassRoom, ICourseItem } from "models/course.model";
 import { SCREENS } from "constants";
+import { checkUserAddToClass } from "@services/api/course.api";
+import useStore from "@services/zustand/store";
+import { showToast } from "@helpers/super.modal.helper";
 
 interface ChooseClassSelectViewProps {
   classData: IClassRoom[];
@@ -29,6 +32,7 @@ const ChooseClassSelectView: React.FC<ChooseClassSelectViewProps> = ({
   const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
   const [selectedClass, setSelectedClass] = React.useState({});
+  const userData = useStore((state) => state.userData);
 
   const onSelectedClass = (item: IClassRoom, isActive: boolean) => {
     setSelectedClass(isActive ? {} : item);
@@ -38,7 +42,6 @@ const ChooseClassSelectView: React.FC<ChooseClassSelectViewProps> = ({
     const isActive = selectedClass._id == item._id;
     const isDisabled = item.limit_member == item.members.length;
     const colorIcon = isDisabled ? colors.textOpacity4 : colors.text;
-
     return (
       <PressableBtn
         onPress={() => onSelectedClass(item, isActive)}
@@ -110,10 +113,21 @@ const ChooseClassSelectView: React.FC<ChooseClassSelectViewProps> = ({
       course_calendars: selectedClass?.course_calendar_ids,
       _id: selectedClass?._id,
     };
-    NavigationService.navigate(SCREENS.PAYMENT_COURES, {
-      courseData,
-      timePick,
-      duration: selectedClass?.course_calendar_ids?.[0]?.time_duration,
+    const dataCheck = {
+      class_id: selectedClass?._id,
+      user_id: userData?._id,
+    };
+
+    checkUserAddToClass(dataCheck).then((res) => {
+      if (!res.isError) {
+        NavigationService.navigate(SCREENS.PAYMENT_COURES, {
+          courseData,
+          timePick,
+          duration: selectedClass?.course_calendar_ids?.[0]?.time_duration,
+        });
+      } else {
+        showToast({ type: "error", message: res.message });
+      }
     });
   };
   const renderPurchaseBtn = () => {

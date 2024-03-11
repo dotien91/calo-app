@@ -13,6 +13,7 @@ import useStore from "@services/zustand/store";
 import { EnumCourseType } from "models/course.model";
 import InviteView from "../invite-me/invite";
 import { palette } from "@theme/themes";
+import ListLiveStream from "../list-livestream/list.liveStream";
 const listCategory = [
   {
     title: translations.listCategory.course,
@@ -121,6 +122,7 @@ const AboutHome = () => {
         })}
       </View>
       <InviteView />
+      <ListLiveStream />
     </View>
   );
 };

@@ -14,9 +14,11 @@ import CS from "@theme/styles";
 import { getLabelHourLesson } from "@screens/course-tab/course.helper";
 import IconBtn from "@shared-components/button/IconBtn";
 import { palette } from "@theme/themes";
-import { getTimeAvailable } from "@services/api/course.api";
+import { checkCourseOneOne, getTimeAvailable } from "@services/api/course.api";
 import { SCREENS } from "constants";
 import LoadingList from "@shared-components/loading.list.component";
+import useStore from "@services/zustand/store";
+import { showToast } from "@helpers/super.modal.helper";
 
 interface BookLessonSelectViewProps {}
 
@@ -31,7 +33,7 @@ const BookLessonSelectView: React.FC<BookLessonSelectViewProps> = () => {
   const [data, setData] = useState([]);
   const [duration, setDuration] = useState<number>(1);
   const [isMaxDay, setIsMaxDay] = useState(false);
-
+  const userData = useStore((state) => state.userData);
   const [day, setDay] = useState([]);
   const [dateView, setDateView] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -65,10 +67,23 @@ const BookLessonSelectView: React.FC<BookLessonSelectViewProps> = () => {
   }, [day]);
 
   const goToCheckout = () => {
-    NavigationService.navigate(SCREENS.PAYMENT_COURES, {
-      courseData,
-      timePick: day,
-      duration,
+    const data = {
+      user_id: userData?._id,
+      course_id: courseId,
+      time_pick: day,
+    };
+    console.log(data);
+    checkCourseOneOne(data).then((res) => {
+      console.log("res check data", res);
+      if (!res.isError) {
+        NavigationService.navigate(SCREENS.PAYMENT_COURES, {
+          courseData,
+          timePick: day,
+          duration,
+        });
+      } else {
+        showToast({ type: "warning", message: res.message });
+      }
     });
   };
 

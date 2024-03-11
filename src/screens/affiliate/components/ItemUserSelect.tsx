@@ -24,7 +24,7 @@ const ItemUserSelect = ({
       <View style={[styles.viewImage, styles.viewMarginImage]}>
         <FastImage
           source={{
-            uri: item?.user_avatar_thumbnail,
+            uri: item?.avatar,
             headers: { Authorization: "someAuthToken" },
             priority: FastImage.priority.normal,
           }}
@@ -32,7 +32,7 @@ const ItemUserSelect = ({
         />
       </View>
       <Text numberOfLines={1} style={CS.hnSemiBold}>
-        {item.display_name}
+        {item.name}
       </Text>
     </PressableBtn>
   );
