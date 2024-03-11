@@ -238,6 +238,8 @@ const ListLiveStream = ({ isListLiveStream }: ListLiveStreamProps) => {
     return null;
   }
 
+  return null
+
   return (
     <View style={styles.container}>
       <FlatList

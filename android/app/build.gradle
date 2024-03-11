@@ -192,7 +192,7 @@ dependencies {
     }
     def billing_version = "4.0.0" // for today, it's the latest
 implementation "com.android.billingclient:billing:$billing_version"
-implementation project(':react-native-iap')
+//implementation project(':react-native-iap')
 //    compile project(':react-native-orientation')
 
 

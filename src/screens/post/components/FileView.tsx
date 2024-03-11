@@ -16,7 +16,6 @@ import CommonStyle from "@theme/styles";
 import IconSvg from "assets/svg";
 import { isIos, formatBytes } from "@utils/device.ui.utils";
 import { uploadFile, uploadMedia } from "@services/api/post";
-import { palette } from "@theme/themes";
 
 interface Props {
   item: any;
@@ -155,7 +154,7 @@ const FileViewComponent = ({
         hitSlop={HIT_SLOP_EXPAND_10}
         onPress={() => onPressClear()}
       >
-        <IconSvg name="icClose" size={12} color={colors.white} />
+        <IconSvg name="icDelete" size={24} color={colors.white} />
       </Pressable>
     </View>
   );
@@ -176,13 +175,13 @@ const styles = StyleSheet.create({
     borderRadius: 99,
   },
   iconClose: {
-    backgroundColor: palette.backgroundClose,
-    width: 24,
-    height: 24,
-    borderRadius: 24,
+    // backgroundColor: palette.primary,
+    // width: 24,
+    // height: 24,
+    // borderRadius: 24,
     ...CommonStyle.flexCenter,
-    top: -10,
-    right: -10,
+    top: -8,
+    right: -8,
     position: "absolute",
   },
 });

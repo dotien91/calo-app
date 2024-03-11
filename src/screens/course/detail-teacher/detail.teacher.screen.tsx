@@ -21,17 +21,17 @@ import { shareProfile } from "@utils/share.utils";
 const DetailTeacherScreen = () => {
   const route = useRoute();
   const idTeacher = route.params?.["idTeacher"];
+
   const _goBack = () => {
     NavigationService.goBack();
   };
   const userData = useStore((state) => state.userData);
   const isMe = idTeacher === userData?._id;
 
-  const [data, setData] = useState<TypedUser | null>();
+  const [data, setData] = useState<TypedUser | null>(route.params?.["data"]);
 
   const _getUserById = (id: string) => {
     getUserById(id).then((res) => {
-      console.log("res teacher", res, id);
       setData(res.data);
     });
   };

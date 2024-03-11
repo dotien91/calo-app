@@ -23,20 +23,6 @@ interface CertificatesProps {
 const text = "";
 
 const AboutTeacher = ({ data }: AboutTeacherProps) => {
-  if (!data?._id) {
-    return (
-      <View style={styles.container}>
-        <SkeletonPlaceholder>
-          <View style={styles.textTitle}></View>
-          <View style={styles.textTitle}></View>
-          <View style={styles.textTitle}></View>
-          <View style={styles.textTitle}></View>
-          <View style={styles.textTitle}></View>
-          <View style={styles.textTitle}></View>
-        </SkeletonPlaceholder>
-      </View>
-    );
-  }
 
   return (
     <View style={styles.container}>

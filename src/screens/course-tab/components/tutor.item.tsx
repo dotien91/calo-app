@@ -36,9 +36,14 @@ const TutorItem = ({
   // const toggleLike = () => {
   //   setIsLike((old) => !old);
   // };
-  const _gotoDetailTeacher = () => {
+  const _gotoDetailTeacher = (data) => {
     NavigationService.navigate(SCREENS.TEACHER_DETAIL, {
       idTeacher: res._id,
+      data: {
+        display_name,
+        user_avatar_thumbnail,
+        ...res
+      }
     });
   };
 
