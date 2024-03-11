@@ -242,34 +242,7 @@ const FirstRoute = () => {
   }, []);
 
   const renderItem = ({ item }) => {
-    const coin = item.current_coin - item.last_coin || 0;
-    const token = item.current_token - item.last_token || 0;
-    const typeToken = item.transaction_value_type === "token";
-    const isCashOut = item.transaction_bank;
-    return (
-      <ItemAffiliate
-        item={item}
-        linkImage={item?.ref_id?.media_id?.media_thumbnail}
-        commission={
-          typeToken
-            ? formatMoney(token, { suffix: " đ", showPositiveSign: true })
-            : formatCoin(coin) || ""
-        }
-        refType={item.ref_type}
-        fullname={
-          isCashOut
-            ? translations.withDraw.header
-            : item.from_user?.display_name
-            ? `${translations.affiliate.customer}: ${item.from_user?.display_name}`
-            : "system"
-        }
-        price={
-          (typeToken && formatMoney(item?.ref_id?.price, { suffix: " đ" })) ||
-          ""
-        }
-        title={item?.ref_id?.title || item.note}
-      />
-    );
+    return <ItemAffiliate item={item} />;
   };
 
   const renderFooterComponent = () => {

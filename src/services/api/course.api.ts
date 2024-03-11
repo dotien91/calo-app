@@ -92,6 +92,29 @@ export async function createReview(data: INewReview) {
     return response;
   });
 }
+interface IcheckCourseOneOne {
+  course_id: string;
+  user_id: string;
+  time_pick: { time_end: string; day: number; time_start: string }[];
+}
+export async function checkCourseOneOne(data: IcheckCourseOneOne) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "course/one-one/student/check",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+export async function checkUserAddToClass(data) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "course/class/member/check",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
 
 interface IUpdateReview {
   _id: string;
