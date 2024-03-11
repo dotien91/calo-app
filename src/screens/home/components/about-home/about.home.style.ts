@@ -3,6 +3,7 @@ import CS from "@theme/styles";
 import { ExtendedTheme } from "@react-navigation/native";
 import { StyleSheet, TextStyle, ViewStyle } from "react-native";
 import { ScreenWidth } from "@freakycoder/react-native-helpers";
+import { palette } from "@theme/themes";
 
 interface Style {
   styleViewItemTitle: ViewStyle;
@@ -12,6 +13,9 @@ interface Style {
   styleTxtTitle: TextStyle;
   styleTxtText: TextStyle;
   styleTxtText2: TextStyle;
+  styleListLiveStream: ViewStyle;
+  styleTxtTitle1: TextStyle;
+  styleItemLiveStream: ViewStyle;
 }
 
 export default (theme: ExtendedTheme) => {
@@ -61,6 +65,19 @@ export default (theme: ExtendedTheme) => {
       height: 40,
       borderRadius: 100,
       backgroundColor: colors.black,
+    },
+    styleListLiveStream: {
+      height: 150,
+      backgroundColor: palette.background2,
+      borderRadius: 8,
+    },
+    styleItemLiveStream: {
+      position: "absolute",
+      bottom: 40,
+      paddingHorizontal: 8,
+    },
+    styleTxtTitle1: {
+      ...CS.textOpacity8,
     },
   });
 };

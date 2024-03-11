@@ -4,6 +4,7 @@ export interface ILiveData {
   ingest_endpoint?: string;
   stream_key: string;
   _id: string;
+  video_thumbnail: string;
 }
 
 export interface IUSerStream {
