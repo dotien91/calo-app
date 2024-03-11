@@ -1,7 +1,9 @@
 import React, { useMemo } from "react";
-import { View, StyleSheet, TextInput, Text } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 // import { useTheme } from "@react-navigation/native";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
+import { FakeCurrencyInput } from "react-native-currency-input";
+
 // import * as NavigationService from "react-navigation-helpers";
 /**
  * ? Local Imports
@@ -9,7 +11,6 @@ import MultiSlider from "@ptomasroos/react-native-multi-slider";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import { Device } from "@utils/device.ui.utils";
-import { numberWithCommas } from "@utils/string.utils";
 // import { numberWithCommas } from "@utils/string.utils";
 
 interface SliderWithInputType {
@@ -32,17 +33,6 @@ const SliderWithInput = React.memo(
       onChange([e[0] + "", e[1] + ""]);
     };
 
-    // const onChangeText = useCallback(
-    //   (v, type) => {
-    //     if (type == "min") {
-    //       onChange([v, value[1]]);
-    //     } else {
-    //       onChange([value[0], v]);
-    //     }
-    //   },
-    //   [value],
-    // );
-
     const errotTxt = useMemo(() => {
       const max = Number(value[1]);
       const min = Number(value[0]);
@@ -57,6 +47,17 @@ const SliderWithInput = React.memo(
       clearErrors("price");
       return false;
     }, [value]);
+
+    const onChangeText = (v: string, type: string) => {
+      if (!v) {
+        v = "0";
+      }
+      if (type == "min") {
+        onChange([v + "", value[1]]);
+      } else {
+        onChange([value[0], v + ""]);
+      }
+    };
 
     return (
       <View style={{ flex: 1 }}>
@@ -81,7 +82,7 @@ const SliderWithInput = React.memo(
           }}
         />
         <View style={{ ...CS.flexRear }}>
-          <TextInput
+          {/* <TextInput
             defaultValue={defaultValue[0] + " đ"}
             style={styles.input}
             placeholderTextColor={palette.placeholder}
@@ -89,9 +90,34 @@ const SliderWithInput = React.memo(
             keyboardType="numeric"
             value={numberWithCommas(value[0])}
             // onChangeText={(v) => onChangeText(v, "min")}
+          /> */}
+          <FakeCurrencyInput
+            value={value?.[0] || defaultValue[0] || 0}
+            onChangeValue={(v) => onChangeText(v, "min")}
+            delimiter=","
+            separator="."
+            precision={0}
+            placeholderTextColor={palette.red}
+            // style={{
+            //   color: value == 0 ? palette.textOpacity4 : palette.text,
+            // }}
+            containerStyle={styles.input}
           />
+
           <View style={{ width: 16 }} />
-          <TextInput
+          <FakeCurrencyInput
+            value={value?.[1] || defaultValue[1] || 0}
+            onChangeValue={(v) => onChangeText(v, "max")}
+            delimiter=","
+            separator="."
+            precision={0}
+            placeholderTextColor={palette.red}
+            // style={{
+            //   color: value == 0 ? palette.textOpacity4 : palette.text,
+            // }}
+            containerStyle={styles.input}
+          />
+          {/* <TextInput
             defaultValue={defaultValue[1] + " đ"}
             placeholderTextColor={palette.placeholder}
             style={styles.input}
@@ -99,7 +125,7 @@ const SliderWithInput = React.memo(
             keyboardType="numeric"
             value={numberWithCommas(value[1])}
             // onChangeText={(v) => onChangeText(v, "max")}
-          />
+          /> */}
         </View>
         {errotTxt && (
           <Text style={{ ...CS.hnRegular, fontSize: 14, color: palette.red }}>
@@ -112,12 +138,23 @@ const SliderWithInput = React.memo(
 );
 
 export const styles = StyleSheet.create({
+  // input: {
+  //   height: 32,
+  //   paddingVertical: 0,
+  //   paddingHorizontal: 16,
+  //   ...CS.borderStyle,
+  //   borderRadius: 4,
+  //   flex: 1,
+  // },
   input: {
     height: 32,
-    paddingVertical: 0,
-    paddingHorizontal: 16,
     ...CS.borderStyle,
-    borderRadius: 4,
+    borderColor: palette.borderInput,
+    paddingVertical: 0,
+    ...CS.flexStart,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    marginBottom: 8,
     flex: 1,
   },
 });

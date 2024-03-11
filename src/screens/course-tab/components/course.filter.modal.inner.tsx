@@ -207,8 +207,6 @@ const CourseFilterModalInnter = ({
     resetField("skills");
   };
 
-  console.log("renderrrr=======");
-
   return (
     <View style={styles.boxFilterDetail}>
       {renderHeader()}

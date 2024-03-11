@@ -1,4 +1,5 @@
 import { StyleSheet, View } from "react-native";
+import React from "react";
 
 import TextBase from "@shared-components/TextBase";
 import CS from "@theme/styles";
