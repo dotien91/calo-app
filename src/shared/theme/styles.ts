@@ -149,6 +149,12 @@ const CS = StyleSheet.create({
     fontFamily: font.outfit.medium,
     color: palette.text,
   },
+  textTitleStream: {
+    fontSize: 16,
+    lineHeight: 20,
+    fontFamily: font.outfit.semiBold,
+    color: palette.white,
+  },
   textOpacity8: {
     fontSize: 16,
     lineHeight: 20,
