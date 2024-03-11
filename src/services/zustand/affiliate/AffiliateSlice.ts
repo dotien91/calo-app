@@ -12,6 +12,8 @@ export interface AffiliateSlice {
   setListUserSelected: (data: string[]) => void;
   listCourseSelected: string[];
   setListCourseSelected: (data: string[]) => void;
+  type: "coin" | "token";
+  setType: (stringType: "coin" | "token") => void;
 }
 
 const createAffiliateSlice: StoreSlice<AffiliateSlice> = (set) => ({
@@ -34,6 +36,12 @@ const createAffiliateSlice: StoreSlice<AffiliateSlice> = (set) => ({
   setListCourseSelected: (data) => {
     set({
       listCourseSelected: data,
+    });
+  },
+  type: "coin",
+  setType: (stringType: "coin" | "token") => {
+    set({
+      type: stringType,
     });
   },
 });

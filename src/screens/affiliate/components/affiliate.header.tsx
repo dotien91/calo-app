@@ -1,7 +1,7 @@
 import { translations } from "@localization";
 import formatMoney from "@shared-components/input-money/format.money";
 import { palette } from "@theme/themes";
-import React, { memo, useEffect, useMemo, useState } from "react";
+import React, { memo, useEffect, useMemo } from "react";
 import { Text, View, ImageBackground } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import * as NavigationService from "react-navigation-helpers";
@@ -16,9 +16,10 @@ import { SCREENS } from "constants";
 
 const HeaderAffiliate = () => {
   const userData = useStore((state) => state.userData);
+  const type = useStore((state) => state.type);
+  const setType = useStore((state) => state.setType);
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const [type, setType] = useState("coin");
   useEffect(() => {
     if (userData?.user_role === "teacher" || userData?.user_role === "admin") {
       setType("token");
@@ -41,6 +42,9 @@ const HeaderAffiliate = () => {
     NavigationService.navigate(SCREENS.WITHDRAW);
   };
 
+  const isSwitch =
+    userData?.user_role === "teacher" || userData?.user_role === "admin";
+
   return (
     <ImageBackground
       source={require("../../../assets/images/bgaffiliate.png")}
@@ -58,7 +62,7 @@ const HeaderAffiliate = () => {
           {translations.affiliate.yourIncome}
         </Text>
         <View style={{ width: 25, ...CS.center }}>
-          {userData?.user_role === "teacher" && (
+          {isSwitch && (
             <Icon
               onPress={switchToken}
               name="swap-horizontal"

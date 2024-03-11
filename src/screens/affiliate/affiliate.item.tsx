@@ -13,13 +13,13 @@ interface ItemAffiliateProps {
 }
 
 const ItemAffiliate = ({ item }: ItemAffiliateProps) => {
-  const coin = item.current_coin - item.last_coin || 0;
-  const token = item.current_token - item.last_token || 0;
+  const transaction_value = item.transaction_value || 0;
+  // const token = item.current_token - item.last_token || 0;
   const typeToken = item.transaction_value_type === "token";
   const isCashOut = item.transaction_bank;
   const commission = typeToken
-    ? formatMoney(token, { suffix: " đ", showPositiveSign: true })
-    : formatCoin(coin) || "";
+    ? formatMoney(transaction_value, { suffix: " đ", showPositiveSign: true })
+    : formatCoin(transaction_value) || "";
   const fullname = isCashOut
     ? translations.withDraw.header
     : item.from_user?.display_name
@@ -29,7 +29,9 @@ const ItemAffiliate = ({ item }: ItemAffiliateProps) => {
   const price =
     (typeToken && formatMoney(item?.ref_id?.price, { suffix: " đ" })) || "";
   const title = item?.ref_id?.title || item.note;
-  const linkImage = item?.ref_id?.media_id?.media_thumbnail;
+  const linkImage =
+    item?.ref_id?.media_id?.media_thumbnail ||
+    item?.ref_id?.avatar?.media_thumbnail;
 
   return (
     <View style={styles.container}>
