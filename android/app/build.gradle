@@ -108,8 +108,8 @@ android {
         applicationId 'com.ikigroup.ieltshunter'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 3
-        versionName "0.1.3"
+        versionCode 4
+        versionName "0.1.4"
         missingDimensionStrategy "store", "play"
     }
 
@@ -190,8 +190,8 @@ dependencies {
     } else {
         implementation jscFlavor
     }
-    // def billing_version = "5.1.0" // for today, it's the latest
-// implementation "com.android.billingclient:billing:$billing_version"
+    def billing_version = "4.0.0" // for today, it's the latest
+implementation "com.android.billingclient:billing:$billing_version"
 implementation project(':react-native-iap')
 //    compile project(':react-native-orientation')
 

@@ -77,7 +77,7 @@ export const useInAppPurchase = () => {
   }, [initConnectionError]);
 
   const initIAP = async () => {
-    const productIds = ["coursetiertest"];
+    const productIds = ["test3"];
 
     const products = await getProducts({ skus: productIds });
     // const availablePurchases =   await getAvailablePurchases();
