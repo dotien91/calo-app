@@ -11,6 +11,7 @@ import IeltsPracticeHeader from "./ielts.practice.header";
 import TimerView from "./timer.view";
 import { useApi } from "@helpers/hooks/useApi";
 import { getDetailPractice } from "@services/api/ielts.practice.api";
+import { IDetailPractice } from "models/course.model";
 
 interface IeltsPacticeScreenProps {}
 
@@ -19,10 +20,12 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
   const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
 
-  const { data } = useApi({
+  const { data } = useApi<IDetailPractice>({
     params: { id: "65e56b58850964a4c43535df" },
     requestData: getDetailPractice,
   });
+
+  console.log(22222, data)
 
   const renderBottomComponent = () => {
     return (
