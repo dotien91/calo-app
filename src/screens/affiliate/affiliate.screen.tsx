@@ -9,13 +9,11 @@ import { getListAffiliate, getListFilter } from "@services/api/affiliate.api";
 import { useListData } from "@helpers/hooks/useListData";
 import LoadingList from "@shared-components/loading.list.component";
 import EmptyResultView from "@shared-components/empty.data.component";
-import { formatCoin } from "@helpers/string.helper";
 import {
   EnumModalContentType,
   EnumStyleModalType,
   showSuperModal,
 } from "@helpers/super.modal.helper";
-import formatMoney from "@shared-components/input-money/format.money";
 import HeaderAffiliate from "./components/affiliate.statistical.view";
 import { formatFromDateToDate } from "@utils/date.utils";
 import eventEmitter from "@services/event-emitter";
@@ -196,7 +194,10 @@ const AffiliatePage = () => {
   );
 };
 
-const renderEmpty = () => {
+const renderEmpty = ({ isLoading }: { isLoading: boolean }) => {
+  if (isLoading) {
+    return null;
+  }
   return (
     <View style={{ height: 100 }}>
       <EmptyResultView
@@ -268,7 +269,7 @@ const FirstRoute = () => {
       keyExtractor={(item) => item?._id + ""}
       refreshControl={refreshControl()}
       ListFooterComponent={renderFooterComponent()}
-      ListEmptyComponent={renderEmpty()}
+      ListEmptyComponent={renderEmpty({ isLoading: isLoading })}
       refreshing={refreshing}
     />
   );
@@ -334,7 +335,7 @@ const SecondRoute = () => {
       keyExtractor={(item) => item?._id + ""}
       refreshControl={refreshControl()}
       ListFooterComponent={renderFooterComponent()}
-      ListEmptyComponent={renderEmpty()}
+      ListEmptyComponent={renderEmpty({ isLoading: isLoading })}
       refreshing={refreshing}
     />
   );

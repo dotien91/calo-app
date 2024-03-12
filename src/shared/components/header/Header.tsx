@@ -51,15 +51,17 @@ const Header = ({
 
   return (
     <View style={[styles.container, customStyle && customStyle]}>
-      {!hideBackBtn && (
-        <Icon
-          onPress={_onPressLeft}
-          name={iconNameLeft || "chevron-left"}
-          type={IconType.Feather}
-          size={25}
-          color={colors.text}
-        />
-      )}
+      <View style={styles.viewIcons}>
+        {!hideBackBtn && (
+          <Icon
+            onPress={_onPressLeft}
+            name={iconNameLeft || "chevron-left"}
+            type={IconType.Feather}
+            size={25}
+            color={colors.text}
+          />
+        )}
+      </View>
       <Text
         numberOfLines={1}
         style={[
@@ -69,24 +71,24 @@ const Header = ({
       >
         {text || ""}
       </Text>
-      {!!iconNameRight && (
-        <View style={styles.viewIcons}>
-          {iconNameRight && (
-            <Icon
-              onPress={onPressRight}
-              name={iconNameRight || "ellipsis-horizontal"}
-              type={IconType.Feather}
-              size={25}
-              color={colors.text}
-            />
-          )}
-          {!!badge && !!iconNameRight && (
-            <TouchableOpacity onPress={onPressRight} style={styles.badge}>
-              <Text style={styles.txtBadge}>{badge}</Text>
-            </TouchableOpacity>
-          )}
-        </View>
-      )}
+      {/* {!!iconNameRight && ( */}
+      <View style={styles.viewIcons}>
+        {!!iconNameRight && (
+          <Icon
+            onPress={onPressRight}
+            name={iconNameRight || "ellipsis-horizontal"}
+            type={IconType.Feather}
+            size={25}
+            color={colors.text}
+          />
+        )}
+        {!!badge && !!iconNameRight && (
+          <TouchableOpacity onPress={onPressRight} style={styles.badge}>
+            <Text style={styles.txtBadge}>{badge}</Text>
+          </TouchableOpacity>
+        )}
+      </View>
+      {/* )} */}
       {(!textRight || textRight?.trim() !== "") && (
         <TouchableOpacity
           onPress={onPressRight}

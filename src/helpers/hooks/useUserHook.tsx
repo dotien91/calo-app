@@ -19,6 +19,7 @@ export const useUserHook = () => {
   const setLinkAvatar = useStore((state) => state.setLinkAvatar);
   const setUserMedia = useStore((state) => state.setUserMedia);
   const resetListLike = useStore((state) => state.resetListLike);
+  const setBankSelected = useStore((state) => state.setBankSelected);
 
   const initListFollow = useStore((state) => state.initListFollow);
   const setShowInvite = useStore((state) => state.setShowInvite);
@@ -89,6 +90,7 @@ export const useUserHook = () => {
     initListFollow([]);
     setShowInvite(true);
     resetListLike();
+    setBankSelected();
     // RNRestart.restart();
   };
 

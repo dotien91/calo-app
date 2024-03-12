@@ -24,9 +24,10 @@ interface UserIncomeType {
 const AffiliateStatisticalView = () => {
   const [userIncome, setUserIncome] = useState<UserIncomeType>();
   const userData = useStore((state) => state.userData);
+  const type = useStore((state) => state.type);
+  const setType = useStore((state) => state.setType);
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const [type, setType] = useState("coin");
   useEffect(() => {
     if (userData?.user_role === "teacher" || userData?.user_role === "admin") {
       setType("token");

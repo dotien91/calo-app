@@ -169,7 +169,6 @@ const CodeActivationsScreen = () => {
           from_user_ids: section?.user_id?._id.toString(),
         };
         callAPIDetailUser(params, index);
-        // console.log("getData...", getData);
       } else {
         _updateSections(index);
       }
@@ -184,15 +183,15 @@ const CodeActivationsScreen = () => {
           <View style={[styles.viewAvatar, { backgroundColor: colors.red }]}>
             <Image
               style={styles.viewAvatar}
-              source={{ uri: section.linkImage }}
+              source={{ uri: section?.user_id?.user_avatar_thumbnail }}
             />
           </View>
           <View style={CS.flex1}>
             <Text style={styles.headerText}>
-              {section?.user_id.display_name}
+              {section?.user_id?.display_name}
             </Text>
             <Text style={styles.des}>
-              {formatDate(section?.user_id.last_active)}
+              {formatDate(section?.user_id?.last_active)}
             </Text>
           </View>
           <Icon
@@ -230,7 +229,9 @@ const CodeActivationsScreen = () => {
           <Text style={styles.txtPriceCourse}>
             {data.transaction_value_type === "coin"
               ? formatCoin(data.transaction_value)
-              : formatMoney(data?.transaction_value || 0)}
+              : formatMoney(data?.transaction_value || 0, {
+                  suffix: " đ",
+                })}
           </Text>
         </View>
         {/* <View style={styles.viewPrecentage}>
