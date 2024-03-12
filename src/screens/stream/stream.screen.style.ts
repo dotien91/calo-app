@@ -80,8 +80,8 @@ export default (theme: ExtendedTheme) => {
     viewAvatarLive: {
       width: 72,
       height: 72,
-      backgroundColor: "red",
       borderRadius: 4,
+      ...CS.center,
     },
     avatarLive: {
       position: "absolute",
@@ -92,6 +92,7 @@ export default (theme: ExtendedTheme) => {
       ...CS.center,
       backgroundColor: colors.grey5,
       borderRadius: 4,
+      zIndex: 2,
     },
     viewInput: {
       ...CS.flex1,

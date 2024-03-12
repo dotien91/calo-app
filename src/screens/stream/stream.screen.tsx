@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Text,
   Image,
+  ActivityIndicator,
 } from "react-native";
 import RTMPPublisher, {
   RTMPPublisherRefProps,
@@ -17,6 +18,7 @@ import { useTheme, useRoute } from "@react-navigation/native";
 import { IconType } from "react-native-dynamic-vector-icons";
 
 import LiveBadge from "./components/LiveBadge";
+import { useUploadFile } from "@helpers/hooks/useUploadFile";
 
 import Button from "@shared-components/button/Button";
 import createStyles from "./stream.screen.style";
@@ -41,10 +43,8 @@ import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import { SCREENS } from "constants";
 import IconSvg from "assets/svg";
-import { selectMedia } from "@helpers/file.helper";
-import { uploadMedia } from "@services/api/post";
-import { isIos } from "@helpers/device.info.helper";
 import PressableBtn from "@shared-components/button/PressableBtn";
+import SkeletonPlaceholder from "@shared-components/skeleton";
 
 function App() {
   const publisherRef = useRef<RTMPPublisherRefProps>(null);
@@ -64,8 +64,6 @@ function App() {
   console.log("liveDataliveData", liveData);
 
   const [show, setShow] = React.useState(true);
-  const [idAvatar, setIdAvatar] = React.useState("");
-  const [linkAvatar, setLinkAvatar] = React.useState<string>("");
 
   const isStreaming = React.useMemo(() => !!liveData?._id, [liveData?._id]);
   const { isLoggedIn, renderViewRequestLogin } = useUserHook();
@@ -99,24 +97,8 @@ function App() {
     console.log("permissionpermissionpermission", permission);
     setPermissionGranted(permission == RESULTS.GRANTED);
   };
-  const onPressChangeAvatar = async () => {
-    selectMedia({
-      config: { mediaType: "photo", cropping: true, width: 1600, height: 900 },
-      callback: async (image) => {
-        const res = await uploadMedia({
-          name: image?.filename || image.path?.split("/")?.reverse()?.[0] || "",
-          uri: isIos() ? image.path?.replace("file://", "") : image.path,
-          type: image.mime,
-        });
-        if (res?.[0]?.callback?._id) {
-          setLinkAvatar(res?.[0]?.callback?.media_thumbnail);
-          // _setLinkAvatar(res?.[0]?.callback?.media_thumbnail);
-          setIdAvatar(res?.[0]?.callback?._id);
-        }
-      },
-    });
-  };
-
+  const { onSelectPicture, isUpLoadingFile, listFile } = useUploadFile([], 1);
+  console.log(listFile);
   useEffect(() => {
     // StatusBar.setBackgroundColor("black");
     checkPermission();
@@ -173,10 +155,10 @@ function App() {
 
   const handleStartStream = () => {
     if (permissionGranted) {
-      if (idAvatar) {
+      if (listFile.length > 0) {
         _createLiveStream(
           inputRef.current.value || translations.livestream.hello,
-          idAvatar,
+          listFile[listFile.length - 1]._id,
         );
       } else {
         showToast({
@@ -272,12 +254,29 @@ function App() {
     return (
       <View style={styles.topView}>
         <View style={[styles.viewAvatarLive, styles.shadowView]}>
-          {idAvatar === "" ? (
+          {listFile.length <= 0 ? (
             <IconSvg name="icImage" size={72} />
           ) : (
-            <Image style={styles.viewAvatarLive} source={{ uri: linkAvatar }} />
+            <Image
+              style={styles.viewAvatarLive}
+              source={{ uri: listFile[listFile.length - 1].uri }}
+            />
           )}
-          <PressableBtn onPress={onPressChangeAvatar} style={styles.avatarLive}>
+          {isUpLoadingFile && (
+            <View
+              style={[
+                styles.viewAvatarLive,
+                { position: "absolute", zIndex: 1 },
+              ]}
+            >
+              <ActivityIndicator size={"small"} />
+            </View>
+          )}
+          <PressableBtn
+            // disable={isUpLoadingFile}
+            onPress={onSelectPicture}
+            style={styles.avatarLive}
+          >
             <Text
               style={{
                 ...CS.hnRegular,
@@ -319,20 +318,6 @@ function App() {
       <View style={styles.container}>
         {renderInput()}
         {!isStreaming && (
-          // <IconBtn
-          //   name="x"
-          //   color={colors.white}
-          //   customStyle={{
-          //     position: "absolute",
-          //     top: 68,
-          //     left: 20,
-          //     zIndex: 1,
-          //     borderRadius: 20,
-          //     backgroundColor: palette.backgroundInputLive,
-          //   }}
-          //   onPress={onShouldCloseLive}
-          //   size={32}
-          // />
           <IconSvg
             style={{
               position: "absolute",
@@ -370,21 +355,6 @@ function App() {
             </Text>
           </TouchableOpacity>
         ) : (
-          // <IconBtn
-          //   name="camera-reverse"
-          //   color={colors.white}
-          //   customStyle={{
-          //     position: "absolute",
-          //     top: 68,
-          //     right: 20,
-          //     zIndex: 1,
-          //     borderRadius: 20,
-          //     backgroundColor: palette.backgroundInputLive,
-          //   }}
-          //   type={IconType.Ionicons}
-          //   onPress={handleSwitchCamera}
-          //   size={32}
-          // />
           <IconSvg
             style={{
               position: "absolute",
@@ -395,7 +365,7 @@ function App() {
             name="icCameraShadow"
             color={colors.white}
             size={32}
-            onPress={onShouldCloseLive}
+            onPress={handleSwitchCamera}
           />
         )}
         {permissionGranted && show && (
