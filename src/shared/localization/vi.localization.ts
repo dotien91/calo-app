@@ -849,6 +849,9 @@ export default {
     questionEndLivestream: "Bạn có chắc chắn kết thúc phiên livestream?",
     watch: "Xem",
     pinProduct: "Ghim sản phẩm",
+    addCover: "Chọn ảnh",
+    change: "Đổi ảnh",
+    warning: "Chọn ảnh trước khi bắt đầu live stream",
   },
   challenge: {
     suggestPickChallenge: "Tham gia các thử thách phía dưới ngay nào!",

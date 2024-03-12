@@ -1,10 +1,10 @@
 import request, { METHOD } from "./api";
 
-export async function createLiveStream(title: string) {
+export async function createLiveStream(title: string, avatar: string) {
   return request({
     method: METHOD.POST,
     urlPath: "livestream/create",
-    data: { title, livestream_status: "live" },
+    data: { title, livestream_status: "live", avatar },
   }).then((response) => {
     return response;
   });

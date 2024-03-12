@@ -17,6 +17,7 @@ interface IconType {
   size?: number;
   defaultValue?: string;
   showClearIcon: boolean;
+  type?: IconType;
 }
 
 interface InputPropsType extends TextInputProps {
@@ -64,7 +65,7 @@ const Input = React.forwardRef(
         {!!icon?.name && (
           <Icon
             name={icon.name}
-            type={IconType.Ionicons}
+            type={icon.type || IconType.Ionicons}
             size={icon.size || 20}
             style={[styles.icon, !!icon?.style && icon.style]}
           />

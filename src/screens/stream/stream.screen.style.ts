@@ -1,10 +1,13 @@
 import { ExtendedTheme } from "@react-navigation/native";
 import { ViewStyle, StyleSheet } from "react-native";
 import { Device } from "@utils/device.utils";
+import CS from "@theme/styles";
+import { ScreenHeight } from "@freakycoder/react-native-helpers";
 
 interface Style {
   container: ViewStyle;
   chatView: ViewStyle;
+  topView: ViewStyle;
 }
 
 export default (theme: ExtendedTheme) => {
@@ -24,11 +27,12 @@ export default (theme: ExtendedTheme) => {
     publisher_camera: {
       flex: 1,
       width: "100%",
-      height: "100%",
+      height: ScreenHeight,
+      position: "absolute",
     },
     footer_container: {
       position: "absolute",
-      bottom: 20,
+      bottom: 144,
       left: 0,
       right: 0,
       justifyContent: "space-between",
@@ -51,22 +55,64 @@ export default (theme: ExtendedTheme) => {
     topView: {
       position: "absolite",
       left: 30,
-      width: Device.width - 60,
-      top: 120,
-      height: 40,
+      width: Device.width - 64,
+      top: 140,
+      height: 72,
       zIndex: 1,
       // paddingVertical: 8,
       // paddingHorizontal: 8,
-      backgroundColor: colors.lightOverlay,
-      borderRadius: 99,
+      // backgroundColor: colors.lightOverlay,
+      flexDirection: "row",
+      gap: 8,
     },
     input: {
-      // backgroundColor: colors.white,
-      maxHeight: 40,
+      backgroundColor: colors.backgroundInputLive,
+      height: 72,
+      gap: 8,
       color: colors.white,
+      borderRadius: 4,
+      textAlignVertical: "top",
+      paddingTop: 12,
     },
     listChat: {
       backgroundColor: "red",
+    },
+    viewAvatarLive: {
+      width: 72,
+      height: 72,
+      backgroundColor: "red",
+      borderRadius: 4,
+    },
+    avatarLive: {
+      position: "absolute",
+      bottom: 0,
+      left: 0,
+      right: 0,
+      height: 24,
+      ...CS.center,
+      backgroundColor: colors.grey5,
+      borderRadius: 4,
+    },
+    viewInput: {
+      ...CS.flex1,
+      backgroundColor: colors.backgroundInputLive,
+      borderRadius: 4,
+    },
+    shadowView: {
+      shadowOffset: {
+        width: 0,
+        height: 4,
+      },
+      shadowOpacity: 0.3,
+      shadowRadius: 0,
+      elevation: 5,
+    },
+    shadowIcon: {
+      position: "absolute",
+      top: 68,
+      zIndex: 1,
+      borderRadius: 20,
+      backgroundColor: colors.backgroundInputLive,
     },
   });
 };
