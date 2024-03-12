@@ -4,23 +4,27 @@ import CommonStyle from "@theme/styles";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { palette } from "@theme/themes";
 
-interface IconType {
+interface IconCustomType {
   name: string;
   color?: string;
   size?: number;
   customStyle: ViewStyle;
   onPress?: () => void;
+  type?: IconType;
 }
 
 // eslint-disable-next-line react/display-name
 const IconBtn = React.forwardRef(
-  ({ name, color, size, customStyle, onPress }: IconType, children) => {
+  (
+    { name, color, size, customStyle, onPress, type }: IconCustomType,
+    children,
+  ) => {
     if (!name) return null;
     if (!onPress)
       return (
         <Icon
           name={name}
-          type={IconType.Feather}
+          type={type || IconType.Feather}
           size={size}
           style={[
             { color: color || palette.text },
@@ -37,7 +41,7 @@ const IconBtn = React.forwardRef(
         {!!name && (
           <Icon
             name={name}
-            type={IconType.Feather}
+            type={type || IconType.Feather}
             size={size}
             style={{ color }}
           />

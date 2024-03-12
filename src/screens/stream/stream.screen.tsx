@@ -6,6 +6,8 @@ import {
   Platform,
   TouchableOpacity,
   Text,
+  Image,
+  ActivityIndicator,
 } from "react-native";
 import RTMPPublisher, {
   RTMPPublisherRefProps,
@@ -13,13 +15,14 @@ import RTMPPublisher, {
   BluetoothDeviceStatuses,
 } from "react-native-rtmp-publisher";
 import { useTheme, useRoute } from "@react-navigation/native";
+import { IconType } from "react-native-dynamic-vector-icons";
 
 import LiveBadge from "./components/LiveBadge";
+import { useUploadFile } from "@helpers/hooks/useUploadFile";
 
 import Button from "@shared-components/button/Button";
 import createStyles from "./stream.screen.style";
 import Input from "@shared-components/form/Input";
-import IconBtn from "@shared-components/button/IconBtn";
 import { useLiveStream } from "./hooks/useLiveStream";
 import { translations } from "@localization";
 import ChatView from "./stream.chat.list.view";
@@ -28,6 +31,7 @@ import {
   EnumModalContentType,
   EnumStyleModalType,
   showSuperModal,
+  showToast,
 } from "@helpers/super.modal.helper";
 import { updateLivestream } from "@services/api/stream.api";
 import { useUserHook } from "@helpers/hooks/useUserHook";
@@ -38,6 +42,9 @@ import useAppStateCheck from "@helpers/hooks/useAppStateCheck";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import { SCREENS } from "constants";
+import IconSvg from "assets/svg";
+import PressableBtn from "@shared-components/button/PressableBtn";
+import SkeletonPlaceholder from "@shared-components/skeleton";
 
 function App() {
   const publisherRef = useRef<RTMPPublisherRefProps>(null);
@@ -90,13 +97,14 @@ function App() {
     console.log("permissionpermissionpermission", permission);
     setPermissionGranted(permission == RESULTS.GRANTED);
   };
-
+  const { onSelectPicture, isUpLoadingFile, listFile } = useUploadFile([], 1);
+  console.log(listFile);
   useEffect(() => {
     // StatusBar.setBackgroundColor("black");
     checkPermission();
     const txtFromPostScreen = route.params?.["titleLive"];
     if (!txtFromPostScreen) return;
-    _createLiveStream(txtFromPostScreen);
+    // _createLiveStream(txtFromPostScreen);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -147,9 +155,17 @@ function App() {
 
   const handleStartStream = () => {
     if (permissionGranted) {
-      _createLiveStream(
-        inputRef.current.value || translations.livestream.hello,
-      );
+      if (listFile.length > 0) {
+        _createLiveStream(
+          inputRef.current.value || translations.livestream.hello,
+          listFile[listFile.length - 1]._id,
+        );
+      } else {
+        showToast({
+          type: "warning",
+          message: translations.liveStream.warning,
+        });
+      }
     } else {
       checkPermission();
     }
@@ -237,17 +253,57 @@ function App() {
     if (isStreaming) return null;
     return (
       <View style={styles.topView}>
-        <Input
-          ref={inputRef}
-          placeholder={translations.livestream.inputTitle}
-          placeholderTextColor={colors.white}
-          customStyle={styles.input}
-          icon={{
-            name: "pencil-outline",
-            style: { color: colors.white },
-            size: 18,
-          }}
-        />
+        <View style={[styles.viewAvatarLive, styles.shadowView]}>
+          {listFile.length <= 0 ? (
+            <IconSvg name="icImage" size={72} />
+          ) : (
+            <Image
+              style={styles.viewAvatarLive}
+              source={{ uri: listFile[listFile.length - 1].uri }}
+            />
+          )}
+          {isUpLoadingFile && (
+            <View
+              style={[
+                styles.viewAvatarLive,
+                { position: "absolute", zIndex: 1 },
+              ]}
+            >
+              <ActivityIndicator size={"small"} />
+            </View>
+          )}
+          <PressableBtn
+            // disable={isUpLoadingFile}
+            onPress={onSelectPicture}
+            style={styles.avatarLive}
+          >
+            <Text
+              style={{
+                ...CS.hnRegular,
+                fontSize: 12,
+                color: palette.textOpacity6,
+              }}
+            >
+              {translations.liveStream.addCover}
+            </Text>
+          </PressableBtn>
+        </View>
+        <View style={[styles.viewInput, styles.shadowView]}>
+          <Input
+            ref={inputRef}
+            placeholder={translations.livestream.inputTitle}
+            placeholderTextColor={colors.white}
+            customStyle={styles.input}
+            multiline
+            showClearIcon={false}
+            icon={{
+              type: IconType.Feather,
+              name: "edit-3",
+              style: { color: colors.white },
+              size: 18,
+            }}
+          />
+        </View>
       </View>
     );
   };
@@ -261,12 +317,26 @@ function App() {
     >
       <View style={styles.container}>
         {renderInput()}
+        {!isStreaming && (
+          <IconSvg
+            style={{
+              position: "absolute",
+              top: 68,
+              left: 24,
+              zIndex: 1,
+            }}
+            name="icXShadow"
+            color={colors.white}
+            size={32}
+            onPress={onShouldCloseLive}
+          />
+        )}
         {isStreaming ? (
           <TouchableOpacity
             onPress={onShouldCloseLive}
             style={{
               position: "absolute",
-              top: 60,
+              top: 68,
               right: 20,
               zIndex: 1,
               backgroundColor: palette.red,
@@ -285,33 +355,17 @@ function App() {
             </Text>
           </TouchableOpacity>
         ) : (
-          <IconBtn
-            name="x"
-            color={colors.white}
-            customStyle={{
+          <IconSvg
+            style={{
               position: "absolute",
-              top: 60,
-              right: 20,
+              top: 68,
+              right: 24,
               zIndex: 1,
-              backgroundColor: colors.blackOverlay,
             }}
-            onPress={onShouldCloseLive}
-            size={25}
-          />
-        )}
-        {!isStreaming && (
-          <IconBtn
-            name="camera"
+            name="icCameraShadow"
             color={colors.white}
-            customStyle={{
-              position: "absolute",
-              top: 60,
-              left: 20,
-              zIndex: 1,
-              backgroundColor: colors.blackOverlay,
-            }}
+            size={32}
             onPress={handleSwitchCamera}
-            size={25}
           />
         )}
         {permissionGranted && show && (
@@ -339,9 +393,14 @@ function App() {
             >
               <Button
                 onPress={handleStartStream}
+                style={{
+                  height: 48,
+                  paddingVertical: 12,
+                  paddingHorizontal: 48,
+                }}
                 textColor={colors.white}
                 backgroundColor={colors.primary}
-                text={"GO Live"}
+                text={translations.liveStream.goLive}
                 disabled={loading}
               />
             </View>

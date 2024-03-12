@@ -19,9 +19,9 @@ export const useLiveStream = ({
   const setViewNumber = useStore((state) => state.setViewNumber);
   const setShoppingProduct = useStore((state) => state.setShoppingProduct);
 
-  const _createLiveStream = (title: string) => {
+  const _createLiveStream = (title: string, avatar: string) => {
     setLoading(true);
-    createLiveStream(title).then((res) => {
+    createLiveStream(title, avatar).then((res) => {
       setLoading(false);
 
       if (!res.isError && res.data._id) {
