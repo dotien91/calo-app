@@ -1,6 +1,9 @@
 import React, { useMemo } from "react";
-import { View, TouchableOpacity, Text, Image } from "react-native";
+import { View, TouchableOpacity, Text, Image, ScrollView } from "react-native";
 import { useTheme } from "@react-navigation/native";
+import crashlytics from '@react-native-firebase/crashlytics';
+
+
 /**
  * ? Local Imports
  */
@@ -154,6 +157,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
   return (
     <View style={{ ...CS.safeAreaView, backgroundColor: colors.white }}>
       <Header text="Setting"></Header>
+      <ScrollView>
       <Text
         onPress={hardCodeToken}
         style={{
@@ -253,26 +257,27 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
       ) : (
         renderViewRequestLogin()
       )}
-      {renderListSetting()}
+        {renderListSetting()}
 
-      {isLoggedIn() && (
-        <TouchableOpacity
-          onPress={logout}
-          style={{
-            marginHorizontal: 16,
-            height: 46,
-            backgroundColor: colors.grey3,
-            justifyContent: "center",
-            alignItems: "center",
-            marginBottom: 50,
-            borderRadius: 8,
-          }}
-        >
-          <Text style={{ color: colors.text, fontSize: 16, fontWeight: "600" }}>
-            Sign Out
-          </Text>
-        </TouchableOpacity>
-      )}
+        {isLoggedIn() && (
+          <TouchableOpacity
+            onPress={logout}
+            style={{
+              marginHorizontal: 16,
+              height: 46,
+              backgroundColor: colors.grey3,
+              justifyContent: "center",
+              alignItems: "center",
+              marginBottom: 50,
+              borderRadius: 8,
+            }}
+          >
+            <Text style={{ color: colors.text, fontSize: 16, fontWeight: "600" }}>
+              Sign Out
+            </Text>
+          </TouchableOpacity>
+        )}
+      </ScrollView>
     </View>
   );
 };

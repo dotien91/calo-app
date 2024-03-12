@@ -216,11 +216,6 @@ const ListLiveStream = ({ isListLiveStream }: ListLiveStreamProps) => {
   const _getListLiveStream = () => {
     getListLiveStream().then((res) => {
       if (!res.isError) {
-        console.log(
-          "_getListLiveStream000000000",
-          JSON.stringify(res, null, 2),
-        );
-
         // const listDataStream = res.data.filter(
         const listDataStream = fakedata.filter(
           (item) => item?.livestream_status == "live",

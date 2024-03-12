@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import {
   FlatList,
   Image,
+  Pressable,
   SafeAreaView,
   ScrollView,
   Text,
@@ -204,15 +205,19 @@ const SettingProfileScreen = () => {
     );
   };
 
+  const openHiddenPage = () => {
+    NavigationService.navigate(SCREENS.HIDDEN_PAGE);
+  }
+
   const renderPieChart = () => {
     return (
       <View style={{ marginHorizontal: 16 }}>
         <Text style={styles.textYourScore}>{translations.task.yourscore}</Text>
         <PieChartCommon sections={data}></PieChartCommon>
-        <View style={styles.viewPowered}>
+        <Pressable onLongPress={openHiddenPage} style={styles.viewPowered}>
           <Text style={styles.textPoweredBy}>{translations.task.powered}</Text>
           <IconSvg name="logoIeltsHunter" width={32} height={18} />
-        </View>
+        </Pressable>
       </View>
     );
   };
@@ -371,7 +376,7 @@ const SettingProfileScreen = () => {
 
   if (!userData?._id) {
     return (
-      <SafeAreaView>
+      <SafeAreaView style={CS.container}>
         <Header
           hideBackBtn
           onPressRight={onPressHeaderRight}

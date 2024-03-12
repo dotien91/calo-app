@@ -50,4 +50,4 @@ const InitView = () => {
   return <></>;
 };
 
-export default InitView;
+export default React.memo(InitView);

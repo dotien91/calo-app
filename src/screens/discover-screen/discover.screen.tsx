@@ -455,7 +455,7 @@ const DiscoverScreen = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={CS.safeAreaView}>
       <View style={{ flex: 1 }}>
         {renderHeader()}
         <ScrollView>

@@ -1,7 +1,9 @@
 apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+
 
 import com.android.build.OutputFile
 
@@ -191,9 +193,18 @@ dependencies {
         implementation jscFlavor
     }
     def billing_version = "4.0.0" // for today, it's the latest
-implementation "com.android.billingclient:billing:$billing_version"
-//implementation project(':react-native-iap')
-//    compile project(':react-native-orientation')
+    implementation "com.android.billingclient:billing:$billing_version"
+    // Import the BoM for the Firebase platform
+    implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
+
+    // Add the dependencies for the Crashlytics and Analytics libraries
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-crashlytics")
+    implementation("com.google.firebase:firebase-analytics")
+    
+    implementation project(':react-native-iap')
+    
+    //    compile project(':react-native-orientation')
 
 
 }
