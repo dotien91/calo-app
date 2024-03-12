@@ -74,6 +74,8 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Play using while you are learning</string>
 	<key>NSCameraUsageDescription</key>
 	<string>IeltsHunter need to take a look at your camera, to put the photo up as a social asset for other users to see</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
