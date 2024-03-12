@@ -109,7 +109,12 @@ import icLine from "./icon-line.svg";
 import icInviteCode from "./invite-code.svg";
 import icSelectDown from "./icon-selectdown.svg";
 import icAdd from "./icon-add.svg";
-import icDelete from "./icon-delete.svg";
+import icListening from "./practice-listening.svg";
+import icSpeaking from "./practice-speaking.svg";
+import icReading from "./practice-reading.svg";
+import icWriting from "./practice-writing.svg";
+import icWritingHeader from "./practice-header-writing.svg";
+import iconWriting from "./practice-ic-write.svg";
 
 const Icons = {
   intro1,
@@ -221,7 +226,13 @@ const Icons = {
   icInviteCode,
   icSelectDown,
   icAdd,
-  icDelete,
+  // icDelete,
+  icListening,
+  icSpeaking,
+  icReading,
+  icWriting,
+  icWritingHeader,
+  iconWriting,
 };
 
 interface IconSvgProps {
