@@ -1521,4 +1521,13 @@ export default {
     yourReferral: "Người giới thiệu",
     viewProfile: "Xem hồ sơ",
   },
+  ieltsPractice: {
+    praticeTest: "Thi thử",
+    writing: "Kĩ năng viết",
+    listening: "Kĩ năng nghe",
+    reading: "Kĩ năng đọc",
+    speaking: "Kĩ năng nói",
+    answers: "Câu trả lời",
+    questions: "Câu hỏi",
+  },
 };

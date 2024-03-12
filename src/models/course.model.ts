@@ -177,3 +177,13 @@ export interface IItemClass {
   course_id: string;
   course_calendar_ids: IItemTimeOfClass[];
 }
+
+export interface IDetailPractice {
+  _id: string;
+  created_user_id: TypedUser;
+  title: string;
+  description: string;
+  duration_time: number;
+  createdAt: string;
+  updatedAt: string;
+}

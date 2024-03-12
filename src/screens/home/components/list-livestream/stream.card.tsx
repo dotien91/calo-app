@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 

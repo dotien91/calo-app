@@ -1008,5 +1008,14 @@ export default {
     yourReferral: "Your referral",
     viewProfile: "View profile",
   },
+  ieltsPractice: {
+    praticeTest: "Practice test",
+    writing: "Writing",
+    listening: "Listening",
+    reading: "Reading",
+    speaking: "Speaking",
+    answers: "Answers",
+    questions: "Questions",
+  },
 };
 /* eslint-disable max-len */

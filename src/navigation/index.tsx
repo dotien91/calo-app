@@ -95,6 +95,7 @@ import BlackList from "@screens/black-list/black.list";
 // import SettingProfileScreen from "@screens/profile.screen/profile.screen";
 import CodeActivationsScreen from "@screens/code-activations/code.activations.screen";
 import HiddenPaage from "@screens/hidden-page/hidden.page";
+import IeltsPacticeScreen from "@screens/ielts-practice/ielts.practice.screen";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -215,7 +216,10 @@ const Navigation = () => {
     >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {renderStackIntro()}
-
+        <Stack.Screen
+          name={SCREENS.IELTS_PRACTICE}
+          component={IeltsPacticeScreen}
+        />
         <Stack.Screen name={SCREENS.HOME} component={renderTabNavigation} />
         <Stack.Screen name={SCREENS.LEADERBOARD} component={LeaderBoard} />
         <Stack.Screen
@@ -399,10 +403,7 @@ const Navigation = () => {
           name={SCREENS.CODE_ACTIVATIONS_SCREEN}
           component={CodeActivationsScreen}
         />
-        <Stack.Screen
-          name={SCREENS.HIDDEN_PAGE}
-          component={HiddenPaage}
-        />
+        <Stack.Screen name={SCREENS.HIDDEN_PAGE} component={HiddenPaage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

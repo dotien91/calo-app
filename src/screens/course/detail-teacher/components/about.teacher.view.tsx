@@ -3,7 +3,6 @@ import { Text, View, StyleSheet } from "react-native";
 
 import { translations } from "@localization";
 import TextViewCollapsed from "@screens/course/components/text.view.collapsed";
-import SkeletonPlaceholder from "@shared-components/skeleton";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import { formatVNDate } from "@utils/date.utils";
@@ -23,7 +22,6 @@ interface CertificatesProps {
 const text = "";
 
 const AboutTeacher = ({ data }: AboutTeacherProps) => {
-
   return (
     <View style={styles.container}>
       <Text style={styles.textTitle}>{translations.aboutMe}</Text>
