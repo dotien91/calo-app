@@ -10,6 +10,8 @@ import Avatar from "@shared-components/user/Avatar";
 import _ from "lodash";
 import { useListDataRank } from "@helpers/hooks/useListDataRank";
 import LoadingList from "@shared-components/loading.list.component";
+import { getBottomSpace } from "react-native-iphone-screen-helper";
+import { translations } from "@localization";
 
 const LeaderBoard = () => {
   const theme = useTheme();
@@ -103,9 +105,11 @@ const LeaderBoard = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView
+      style={{ ...CS.safeAreaView, marginBottom: getBottomSpace() }}
+    >
       <View style={{ flex: 1 }}>
-        <Header text="Leader Board" />
+        <Header text={translations.leaderBoard} />
         {isLoading && <LoadingList numberItem={2} />}
         <FlatList
           data={listData}

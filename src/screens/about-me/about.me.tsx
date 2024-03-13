@@ -148,7 +148,7 @@ const AboutMe = () => {
 
   return (
     <View style={{ ...CS.safeAreaView }}>
-      <Header text="About us" />
+      <Header text={translations.settingUser.aboutus} />
       {renderAboutMe()}
     </View>
   );

@@ -16,6 +16,7 @@ import {
 } from "@helpers/super.modal.helper";
 import LoadingList from "@shared-components/loading.list.component";
 import moment from "moment";
+import { translations } from "@localization";
 
 const BlackList = () => {
   const theme = useTheme();
@@ -144,7 +145,7 @@ const BlackList = () => {
 
   return (
     <View style={{ ...CS.safeAreaView }}>
-      <Header text="Danh sách đen"></Header>
+      <Header text={translations.settingUser.blackList}></Header>
       {isLoading && <LoadingList />}
       {!listData?.length && !isFirstLoading && !isLoading && renderEmpty()}
       <FlatList

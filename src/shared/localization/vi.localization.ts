@@ -168,7 +168,7 @@ export default {
   free: "Miễn phí",
   level: "Cấp độ",
   post: {
-    post: "TẠO",
+    post: "Tạo",
     posts: "Bài viết",
     createPost: "Tạo bài viết",
     category: "Chuyên mục",
@@ -570,6 +570,7 @@ export default {
     manageClass: "Quản lí lớp học",
     recommendCourse: "Khoá học gợi ý",
     teachingTime: "Đã dạy",
+    sortByTutor: "Sắp xếp theo gia sư",
   },
   seeAll: "Xem tất cả",
   settings: {
@@ -1351,14 +1352,17 @@ export default {
     aboutus: "Về chúng tôi",
     mycouse: "Khoá học của tôi",
     purchaseCouse: "Khoá học đã mua",
+    discount: "Mã giảm giá",
+    codeActivations: "Kích hoạt mã",
+    becomeATutor: "Trở thành gia sư",
   },
-  listCategory: {
-    descriptionTitle: "Hôm nay, chúng ta nên làm gì?",
-    course: "Khoá học",
-    tutor: "Gia sư",
-    shop: "Cửa hàng",
-    affiliate: "Tiếp thị liên kết",
-  },
+  // listCategory: {
+  //   descriptionTitle: "Hôm nay, chúng ta nên làm gì?",
+  //   course: "Khoá học",
+  //   tutor: "Gia sư",
+  //   shop: "Cửa hàng",
+  //   affiliate: "Tiếp thị liên kết",
+  // },
   aboutUs: {
     aboutUs: "Về chúng tôi",
     termofus: "Điều khoản sử dụng",
@@ -1402,6 +1406,10 @@ export default {
   selectFile: "Upload file",
   en: "Tiếng Anh",
   vi: "Tiếng Việt",
+  leaderBoard: "Bảng xếp hạng",
+  inprogress: "Đang học",
+  complete: "Hoàn thành",
+  signOut: "Đăng xuất",
   task: {
     inviteFriend: "Mời bạn bè",
     yourscore: "Điểm của bạn",
@@ -1409,6 +1417,12 @@ export default {
     mycode: "Mã của tôi",
     level: "Cấp độ",
     task: "Nhiệm vụ",
+    score: "Điểm",
+    listening: "Bài nghe",
+    speaking: "Bài nói",
+    reading: "Bài đọc",
+    writing: "Bài viết",
+    missions: "Nhiệm vụ",
   },
   homework: {
     header: "Danh sách bài về nhà",
@@ -1451,6 +1465,8 @@ export default {
     dueDate: "Ngày hết hạn",
     handedInSuccess: "Nộp bài thành công",
     markError: "Điểm phải là số và nhỏ hơn 100",
+    forYou: "Dành cho bạn",
+    following: "Đang theo dõi",
   },
   introwelcome: {
     text11: "Chào mừng đến với thế giới ngôn ngữ",
@@ -1497,6 +1513,7 @@ export default {
   },
   en: "Tiếng Anh",
   vi: "Tiếng Việt",
+  gotit: "Đã hiểu",
   withDraw: {
     header: "Rút tiền",
     your_money: "Số tiền của bạn",

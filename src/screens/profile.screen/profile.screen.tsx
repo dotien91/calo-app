@@ -92,22 +92,22 @@ const SettingProfileScreen = () => {
     {
       percentage: 10,
       color: colors.btnRedPrimary,
-      title: "Listening",
+      title: translations.task.listening,
     },
     {
       percentage: 20,
       color: colors.gold,
-      title: "Reading",
+      title: translations.task.speaking,
     },
     {
       percentage: 30,
       color: colors.blueChart,
-      title: "Writing",
+      title: translations.task.reading,
     },
     {
       percentage: 40,
       color: colors.greenChart,
-      title: "Listening",
+      title: translations.task.writing,
     },
   ];
 

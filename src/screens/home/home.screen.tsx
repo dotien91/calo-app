@@ -14,6 +14,7 @@ import CommonStyle from "@theme/styles";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import useStore from "@services/zustand/store";
 import AboutHome from "./components/about-home/about.home";
+import { translations } from "@localization";
 
 const initialLayout = { width: Dimensions.get("window").width };
 
@@ -37,8 +38,8 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: "first", title: "For you" },
-    { key: "second", title: "Following" },
+    { key: "first", title: translations.homework.forYou },
+    { key: "second", title: translations.homework.following },
   ]);
 
   const renderTabBar = (props) => (

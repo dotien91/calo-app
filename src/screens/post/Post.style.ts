@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 import { ExtendedTheme } from "@react-navigation/native";
 import {
   getStatusBarHeight,
@@ -9,6 +9,7 @@ import CommonStyle from "@theme/styles";
 import { Device } from "@utils/device.ui.utils";
 import { palette } from "@theme/themes";
 
+const { width } = Dimensions.get("screen");
 const SIZE_AVATAR = 58;
 const BORDER_AVATAR = 100;
 const createStyles = (theme: ExtendedTheme) => {
@@ -159,7 +160,7 @@ const createStyles = (theme: ExtendedTheme) => {
     styleCardName: {
       height: 72,
       ...CommonStyle.row,
-      width: "90%",
+      alignSelf: "flex-start",
       marginHorizontal: 20,
       gap: 12,
     },
@@ -170,6 +171,8 @@ const createStyles = (theme: ExtendedTheme) => {
     },
     txtName: {
       ...CommonStyle.hnBold,
+      lineHeight: 20,
+      color: palette.mainColor2,
     },
     txtDes: {
       ...CommonStyle.textRate,
@@ -177,14 +180,16 @@ const createStyles = (theme: ExtendedTheme) => {
     btnAction: {
       ...CommonStyle.center,
       height: 32,
-      width: "45%",
+      alignSelf: "flex-start",
       backgroundColor: colors.grey,
       borderRadius: 4,
     },
     btnAdd: {
       ...CommonStyle.center,
-      height: 72,
-      width: 72,
+      // height: 72,
+      // width: 72,
+      width: (width - 34 - 30) / 4,
+      height: (width - 34 - 30) / 4,
       backgroundColor: colors.grey,
       borderRadius: 8,
     },
@@ -244,13 +249,14 @@ const createStyles = (theme: ExtendedTheme) => {
     },
     stylePressableBtn1: {
       flexDirection: "row",
-      height: 40,
+      height: 56,
       gap: 8,
     },
     styleTxtPressable: {
-      paddingTop: 8,
+      // paddingTop: 8,
       width: "80%",
       borderBottomWidth: 1,
+      justifyContent: "center",
       borderColor: palette.grey1,
     },
   });

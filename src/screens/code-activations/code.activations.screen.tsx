@@ -268,7 +268,7 @@ const CodeActivationsScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Header text="Code activations" />
+      <Header text={translations.settingUser.codeActivations} />
       {/* {renderHeader()} */}
       <ScrollView showsVerticalScrollIndicator={false}>
         <Accordion

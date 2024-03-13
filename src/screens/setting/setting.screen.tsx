@@ -85,14 +85,14 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
       },
     },
     {
-      title: "Mã giảm giá",
+      title: translations.settingUser.discount,
       iconFont: "gift",
       action: () => {
         NavigationService.navigate(SCREENS.COUPON_LIST);
       },
     },
     {
-      title: "Code activations",
+      title: translations.settingUser.codeActivations,
       iconFont: "package",
       action: () => {
         NavigationService.navigate(SCREENS.CODE_ACTIVATIONS_SCREEN);
@@ -153,7 +153,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
 
   return (
     <View style={{ ...CS.safeAreaView, backgroundColor: colors.white }}>
-      <Header text="Setting"></Header>
+      <Header text={translations.settingUser.setting}></Header>
       <Text
         onPress={hardCodeToken}
         style={{
@@ -229,7 +229,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
                   marginTop: 5,
                 }}
               >
-                Become a tutor
+                {translations.settingUser.becomeATutor}
               </Text>
             </TouchableOpacity>
           )}
@@ -269,7 +269,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
           }}
         >
           <Text style={{ color: colors.text, fontSize: 16, fontWeight: "600" }}>
-            Sign Out
+            {translations.signOut}
           </Text>
         </TouchableOpacity>
       )}

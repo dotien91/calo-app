@@ -19,6 +19,7 @@ import { getListThread } from "@services/api/course.api";
 import eventEmitter from "@services/event-emitter";
 import LoadingList from "@shared-components/loading.list.component";
 import { SCREENS } from "constants";
+import { getBottomSpace } from "react-native-iphone-screen-helper";
 
 interface ClassHomeWorkScreenProps {}
 
@@ -92,7 +93,9 @@ const ClassHomeWorkScreen: React.FC<ClassHomeWorkScreenProps> = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView
+      style={{ ...CS.safeAreaView, marginBottom: getBottomSpace() }}
+    >
       <Header text={translations.homework.header} />
       <View style={styles.container}>
         <ScrollView>

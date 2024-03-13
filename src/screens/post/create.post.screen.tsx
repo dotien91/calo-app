@@ -254,7 +254,7 @@ export default function PostScreen() {
             <SelectComponent
               icon={
                 <IconSvg
-                  size={24}
+                  size={32}
                   name="icCreatePostImage"
                   color={colors.green}
                 />
@@ -262,15 +262,15 @@ export default function PostScreen() {
               onPress={onSelectPicture}
             />
             <SelectComponent
-              icon={<IconSvg size={48} name="icLive" color={colors.primary} />}
+              icon={<IconSvg size={32} name="icLive" color={colors.primary} />}
               onPress={onPressLive}
             />
             <SelectComponent
-              icon={<IconSvg size={28} name="icFile" color={colors.blue} />}
+              icon={<IconSvg size={32} name="icFile" color={colors.blue} />}
               onPress={onPressFile}
             />
             <SelectComponent
-              icon={<IconSvg size={20} name="icVideo" color={colors.red} />}
+              icon={<IconSvg size={22} name="icVideo" color={colors.red} />}
               onPress={onSelectVideo}
             />
           </View>
@@ -293,12 +293,12 @@ export default function PostScreen() {
               text={translations.selectVideo}
             />
             <SelectComponentText
-              icon={<IconSvg size={48} name="icLive" color={colors.primary} />}
+              icon={<IconSvg size={24} name="icLive" color={colors.primary} />}
               onPress={onPressLive}
               text={translations.selectLive}
             />
             <SelectComponentText
-              icon={<IconSvg size={28} name="icFile" color={colors.blue} />}
+              icon={<IconSvg size={24} name="icFile" color={colors.blue} />}
               onPress={onPressFile}
               text={translations.selectFile}
             />
@@ -371,7 +371,7 @@ export default function PostScreen() {
       <View style={styles.viewName}>
         <Text style={styles.txtName}>{userData?.display_name || ""}</Text>
         <PressableBtn onPress={openListCategory} style={styles.btnAction}>
-          <>
+          <View style={{ marginHorizontal: 8 }}>
             {postCategory ? (
               <TextIcon
                 nameIcon="icSelectDown"
@@ -390,7 +390,7 @@ export default function PostScreen() {
                 text={translations.selectCategory}
               />
             )}
-          </>
+          </View>
         </PressableBtn>
       </View>
     );
