@@ -1,0 +1,14 @@
+diff --git a/node_modules/react-native-head-tab-view/index.js b/node_modules/react-native-head-tab-view/index.js
+index 0f2a4b6..9acc236 100644
+--- a/node_modules/react-native-head-tab-view/index.js
++++ b/node_modules/react-native-head-tab-view/index.js
+@@ -1,7 +1,8 @@
+-import { ScrollView, FlatList, SectionList } from 'react-native'
++import { ScrollView, SectionList } from 'react-native'
+ import createCollapsibleScrollView from './createCollapsibleScrollView'
+ export { HeaderContext } from './HeaderContext'
+ export { default as GestureContainer } from './GestureContainer'
++import {FlatList} from "react-native-gesture-handler"
+ 
+ const HScrollView = createCollapsibleScrollView(ScrollView)
+ const HFlatList = createCollapsibleScrollView(FlatList)
