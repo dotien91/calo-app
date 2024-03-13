@@ -50,6 +50,7 @@ const SettingProfileScreen = () => {
   const userInfo = useStore((state) => state.userInfo);
   const setListUserRef = useStore((state) => state.setListUserRef);
   const setShowInvite = useStore((store) => store.setShowInvite);
+  // const linkAvatar = useStore((state) => state.linkAvatar);
   const showInvite = useStore((store) => store.showInvite);
   const [referralByMe, setReferralByMe] = useState([]);
   const [referralMe, setReferralMe] = useState([]);
@@ -85,16 +86,19 @@ const SettingProfileScreen = () => {
   const listrenderPointCoin = [
     {
       icon: "icCoinStar",
-      title: userInfo?.point,
+      title: userInfo?.current_coin,
+      onPress: () => NavigationService.navigate(SCREENS.AFFILIATE),
     },
     {
       icon: "icCoin",
       title: formatMoney(userData?.current_token || 0),
+      onPress: () => NavigationService.navigate(SCREENS.AFFILIATE),
     },
-    // {
-    //   icon: "icCup",
-    //   title: userData?.point,
-    // },
+    {
+      icon: "icCup",
+      title: userData?.point,
+      onPress: () => NavigationService.navigate(SCREENS.DISCOVERSCREEN),
+    },
   ];
 
   const data = [
@@ -132,7 +136,11 @@ const SettingProfileScreen = () => {
     index: number;
   }) => {
     return (
-      <View key={index} style={styles.viewItemScrollMoney}>
+      <PressableBtn
+        onPress={item.onPress}
+        key={index}
+        style={styles.viewItemScrollMoney}
+      >
         <IconSvg
           style={{ marginHorizontal: 12 }}
           name={item.icon}
@@ -140,7 +148,7 @@ const SettingProfileScreen = () => {
           size={26}
         ></IconSvg>
         <Text style={styles.textNumberMoney}>{item.title}</Text>
-      </View>
+      </PressableBtn>
     );
   };
 
