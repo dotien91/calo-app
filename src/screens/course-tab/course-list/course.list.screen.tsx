@@ -4,6 +4,7 @@ import {
   View,
   useWindowDimensions,
   TouchableOpacity,
+  Text,
 } from "react-native";
 import { TabView, SceneMap } from "react-native-tab-view";
 import * as NavigationService from "react-navigation-helpers";
@@ -25,6 +26,8 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { useTheme } from "@react-navigation/native";
 import { SCREENS } from "constants";
 import LoadingItem from "@shared-components/loading.item";
+import { translations } from "@localization";
+import CS from "@theme/styles";
 
 interface CourseListScreenProps {}
 
@@ -107,6 +110,15 @@ const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
       <View style={{ flex: 1 }}>
         {isTabCourse && <CourseCategoryItem />}
         <CourseQuickFilter isTabCourse={isTabCourse} />
+        <Text
+          style={{
+            ...CS.txtTitle,
+            paddingHorizontal: 18,
+            marginBottom: 10,
+          }}
+        >
+          {translations.course.allCourse}
+        </Text>
       </View>
     );
   }, [isTabCourse]);

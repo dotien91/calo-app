@@ -570,6 +570,7 @@ export default {
     manageClass: "Quản lí lớp học",
     recommendCourse: "Khoá học gợi ý",
     teachingTime: "Đã dạy",
+    allCourse: "Tất cả khoá học",
   },
   seeAll: "Xem tất cả",
   settings: {

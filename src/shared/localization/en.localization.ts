@@ -479,6 +479,7 @@ export default {
     manageClass: "Manage classes",
     recommendCourse: "Recommend course",
     teachingTime: "Teaching time",
+    allCourse: "All course",
   },
   seeAll: "See all",
   settings: {

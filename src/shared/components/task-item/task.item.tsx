@@ -88,7 +88,7 @@ const TaskItemCommon = ({ item }) => {
               {item?.description}
             </Text>
           )}
-          {item.status != "done" && (
+          {!!item.action_counter && item.status != "done" && (
             <View style={CS.flexRear}>
               <Progress.Bar
                 progress={item.action_counter / item.action_amount}

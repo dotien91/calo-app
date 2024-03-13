@@ -114,6 +114,7 @@ import icImage from "./icon-image.svg";
 import icXShadow from "./icon-x-shadow.svg";
 import icCameraShadow from "./icon-camera-shadow.svg";
 import icMessage from "./icon-message.svg";
+import icSlider from "./icon-slider.svg";
 
 const Icons = {
   intro1,
@@ -230,6 +231,7 @@ const Icons = {
   icXShadow,
   icCameraShadow,
   icMessage,
+  icSlider,
 };
 
 interface IconSvgProps {

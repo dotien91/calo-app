@@ -105,5 +105,14 @@ export default (theme: ExtendedTheme) => {
       fontSize: 14,
       colors: colors.textOpacity8,
     },
+    txtViewMore: {
+      ...CS.hnMedium,
+      fontSize: 14,
+      color: colors.textOpacity6,
+    },
+    viewTitle: {
+      ...CS.flexStart,
+      gap: 4,
+    },
   });
 };
