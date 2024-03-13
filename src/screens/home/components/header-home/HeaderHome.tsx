@@ -7,12 +7,14 @@ import * as NavigationService from "react-navigation-helpers";
 import useStore from "@services/zustand/store";
 import createStyles from "./HeaderHome.style";
 import PressableBtn from "@shared-components/button/PressableBtn";
-import CS from "@theme/styles";
-import { translations } from "@localization";
 import { SCREENS } from "constants";
+import TextBase from "@shared-components/TextBase";
+import formatMoney from "@shared-components/input-money/format.money";
+import IconSvg from "assets/svg";
+import { palette } from "@theme/themes";
 
-const SIZE_AVATAR = 30;
-const BORDER_AVATAR = 12;
+const SIZE_AVATAR = 40;
+const BORDER_AVATAR = 20;
 const HeaderHome = () => {
   const userData = useStore((state) => state.userData);
   const linkAvatar = useStore((state) => state.linkAvatar);
@@ -68,28 +70,26 @@ const HeaderHome = () => {
   return (
     <View style={styles.container}>
       {Avatar}
+      <View style={styles.viewCup}>
+        {userData?._id && (
+          <TextBase fontSize={20} fontWeight="600">
+            {formatMoney(userData?.point)}
+          </TextBase>
+        )}
+        {userData?._id && (
+          <IconSvg name="icCup" size={16} color={palette.yellow} />
+        )}
+      </View>
       <PressableBtn style={styles.viewInput} onPress={goToSearchScreen}>
         <Icon
           name="search-outline"
-          size={24}
+          size={20}
           type={IconType.Ionicons}
-          color={colors.text}
-        />
-        <TextInput
-          onPressIn={goToSearchScreen}
-          style={[CS.flex1, { color: colors.text }]}
-          placeholder={translations.search}
-          placeholderTextColor={colors.placeholder}
-          editable={false}
+          color={colors.textOpacity6}
         />
       </PressableBtn>
-      <TouchableOpacity onPress={goToChatScreen}>
-        <Icon
-          name="chatbubbles-outline"
-          size={24}
-          type={IconType.Ionicons}
-          color={colors.text}
-        />
+      <TouchableOpacity style={styles.viewInput} onPress={goToChatScreen}>
+        <IconSvg name="icMessage" size={20} color={colors.textOpacity6} />
       </TouchableOpacity>
     </View>
   );

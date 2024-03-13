@@ -134,3 +134,40 @@ export const getPriceCourse = (item: any) => {
     oldPrice: oldPrice,
   };
 };
+
+export const formatPriceCourse = (data) => {
+  let oldPrice = "";
+  if (data?.coupon_id) {
+    if (
+      (data?.coupon_id?.availableAt &&
+        new Date(data?.coupon_id?.availableAt) > new Date()) ||
+      (data?.coupon_id?.availableAt &&
+        new Date(data?.coupon_id?.expired) < new Date())
+    ) {
+      return {
+        newPrice: "",
+        oldPrice: formatPrice(data.price),
+      };
+    } else {
+      oldPrice = formatPrice(data.price);
+      if (data?.coupon_id?.promotion_type === "percentage") {
+        return {
+          newPrice: formatPrice(
+            data?.price - (data?.price * data?.coupon_id?.promotion) / 100,
+          ),
+          oldPrice: oldPrice,
+        };
+      } else {
+        return {
+          newPrice: formatPrice(data?.price - data?.coupon_id?.promotion),
+          oldPrice: oldPrice,
+        };
+      }
+    }
+  } else {
+    return {
+      newPrice: "",
+      oldPrice: formatPrice(data.price),
+    };
+  }
+};

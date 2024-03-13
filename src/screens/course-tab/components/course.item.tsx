@@ -18,6 +18,7 @@ import { numberWithCommas } from "@utils/string.utils";
 import { translations } from "@localization";
 import CourseProgressBar from "./course.progress.bar";
 import PressableBtn from "@shared-components/button/PressableBtn";
+import { formatPriceCourse } from "@helpers/string.helper";
 
 interface CourseItemProps {
   isHorizontalStyle?: boolean;
@@ -68,6 +69,7 @@ const CourseItem = ({
       dataCourse: data,
     });
   };
+  const priceCourse = formatPriceCourse(data);
 
   const moduleViewedData = {
     module_child_count: data?.module_child_count,
@@ -96,9 +98,22 @@ const CourseItem = ({
       <>
         <Text style={styles.courseTitle}>{title}</Text>
         <Text style={styles.courseAuthorTxt}>{user_id?.display_name}</Text>
-        <Text style={styles.coursePriceTxt}>
-          {price ? numberWithCommas(price) + " đ" : "Free"}
-        </Text>
+        <View style={styles.viewPrice}>
+          <Text style={styles.coursePriceTxt}>
+            {priceCourse.newPrice || priceCourse.oldPrice}
+          </Text>
+          {priceCourse.newPrice != "" && (
+            <Text
+              style={
+                priceCourse.newPrice == ""
+                  ? styles.coursePriceTxt
+                  : styles.coursePriceTxtOld
+              }
+            >
+              {priceCourse.oldPrice}
+            </Text>
+          )}
+        </View>
         {rating ? (
           <View style={[CS.flexStart, { marginBottom: 6 }]}>
             <Icon
@@ -118,7 +133,7 @@ const CourseItem = ({
           </Text>
         )}
         <View style={{ height: 6 }} />
-        <Badge title="BEST-SELLER" />
+        <Badge title="Best-seller" />
       </>
     );
   };

@@ -113,6 +113,7 @@ import icDelete from "./icon-delete.svg";
 import icImage from "./icon-image.svg";
 import icXShadow from "./icon-x-shadow.svg";
 import icCameraShadow from "./icon-camera-shadow.svg";
+import icMessage from "./icon-message.svg";
 
 const Icons = {
   intro1,
@@ -228,6 +229,7 @@ const Icons = {
   icImage,
   icXShadow,
   icCameraShadow,
+  icMessage,
 };
 
 interface IconSvgProps {

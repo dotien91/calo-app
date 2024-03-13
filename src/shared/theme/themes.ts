@@ -100,6 +100,7 @@ export const palette = {
   greenText: "rgba(43, 196, 86, 1)",
   borderInput: "rgba(0, 53, 128, 0.2)",
   backgroundInputLive: "rgba(0,0,0,0.5)",
+  yellow: "#FFA347",
 };
 
 interface ExtendedTheme extends Theme {

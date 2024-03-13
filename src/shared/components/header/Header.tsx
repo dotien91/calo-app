@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.1,
     elevation: 10,
-    shadowRadius: 15,
+    shadowRadius: 5,
     // marginTop: isIos ? 0 : getStatusBarHeight(),
   },
   textHeader: {

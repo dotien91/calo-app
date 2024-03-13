@@ -35,13 +35,29 @@ export default (theme: ExtendedTheme) => {
     boxContent: {
       marginLeft: 12,
     },
+    viewPrice: {
+      ...CS.row,
+      gap: 8,
+    },
     coursePriceTxt: {
       ...CS.hnSemiBold,
-      color: colors.textOpacity9,
+      color: colors.textOpacity8,
       marginRight: 3,
+    },
+    coursePriceTxtOld: {
+      ...CS.hnRegular,
+      fontSize: 14,
+      color: colors.textOpacity8,
+      marginRight: 3,
+      textDecorationLine: "line-through",
     },
     courseRatingTxt: {
       ...CS.hnSemiBold,
+      color: colors.textOpacity8,
+      fontSize: 14,
+    },
+    textNoReview: {
+      ...CS.hnRegular,
       color: colors.textOpacity8,
       fontSize: 14,
     },
