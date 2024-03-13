@@ -20,17 +20,14 @@ interface CertificatesProps {
   name: string;
 }
 
-const text = "";
-
 const AboutTeacher = ({ data }: AboutTeacherProps) => {
-
   return (
     <View style={styles.container}>
       <Text style={styles.textTitle}>{translations.aboutMe}</Text>
-      <TextViewCollapsed text={data?.bio || text} />
+      <TextViewCollapsed text={data?.bio || translations.noReferrals} />
 
       <Text style={styles.textTitle}>{translations.course.certifications}</Text>
-      {data?.certificates &&
+      {data?.certificates?.length > 0 ? (
         data?.certificates.map((item: CertificatesProps, index: number) => {
           return (
             <View key={index} style={styles.viewCer}>
@@ -45,7 +42,10 @@ const AboutTeacher = ({ data }: AboutTeacherProps) => {
               </View>
             </View>
           );
-        })}
+        })
+      ) : (
+        <TextViewCollapsed text={translations.noCertificates} />
+      )}
     </View>
   );
 };

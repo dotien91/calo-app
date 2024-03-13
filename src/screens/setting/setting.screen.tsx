@@ -1,8 +1,7 @@
 import React, { useMemo } from "react";
 import { View, TouchableOpacity, Text, Image, ScrollView } from "react-native";
 import { useTheme } from "@react-navigation/native";
-import crashlytics from '@react-native-firebase/crashlytics';
-
+import crashlytics from "@react-native-firebase/crashlytics";
 
 /**
  * ? Local Imports
@@ -29,6 +28,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
   const theme = useTheme();
   const { colors } = theme;
   const userData = useStore((state) => state.userData);
+  // const linkAvatar = useStore((state) => state.linkAvatar);
 
   const styles = useMemo(() => createStyles(theme), [theme]);
   const { logout, isLoggedIn, renderViewRequestLogin } = useUserHook();
@@ -158,86 +158,86 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
     <View style={{ ...CS.safeAreaView, backgroundColor: colors.white }}>
       <Header text="Setting"></Header>
       <ScrollView>
-      <Text
-        onPress={hardCodeToken}
-        style={{
-          fontSize: 16,
-          fontWeight: "600",
-          textAlign: "center",
-          color: "#fff",
-        }}
-      >
-        hard code token
-      </Text>
-      {isLoggedIn() ? (
-        <View style={{ alignItems: "center", backgroundColor: colors.white }}>
-          <View style={{ marginTop: 16 }}>
-            <TouchableOpacity
-              onPress={() => {
-                NavigationService.navigate(SCREENS.PROFILE_CURRENT_USER, {
-                  _id: userData?._id,
-                });
-              }}
-            >
-              <Avatar
-                style={{
-                  width: 64,
-                  height: 64,
-                  borderRadius: 99,
-                  // marginRight: 10,
-                  // marginTop: 20,
-                }}
-                sourceUri={{
-                  uri: userData?.user_avatar_thumbnail,
-                }}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={editProfile}
-              style={{
-                position: "absolute",
-                bottom: -4,
-                right: -4,
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: colors.white,
-                borderRadius: 16,
-              }}
-            >
-              <Icon
-                style={{ padding: 3 }}
-                name="edit-3"
-                type={IconType.Feather}
-              ></Icon>
-            </TouchableOpacity>
-          </View>
-          <Text
-            numberOfLines={1}
-            style={{
-              fontSize: 16,
-              color: colors.text,
-              fontWeight: "600",
-              marginTop: 8,
-              paddingHorizontal: 16,
-            }}
-          >
-            {userData?.display_name}
-          </Text>
-          {!isTeacher && (
-            <TouchableOpacity onPress={() => openUrl("test")}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  color: colors.btnRedPrimary,
-                  fontWeight: "600",
-                  marginTop: 5,
+        <Text
+          onPress={hardCodeToken}
+          style={{
+            fontSize: 16,
+            fontWeight: "600",
+            textAlign: "center",
+            color: "#fff",
+          }}
+        >
+          hard code token
+        </Text>
+        {isLoggedIn() ? (
+          <View style={{ alignItems: "center", backgroundColor: colors.white }}>
+            <View style={{ marginTop: 16 }}>
+              <TouchableOpacity
+                onPress={() => {
+                  NavigationService.navigate(SCREENS.PROFILE_CURRENT_USER, {
+                    _id: userData?._id,
+                  });
                 }}
               >
-                Become a tutor
-              </Text>
-            </TouchableOpacity>
-          )}
-          {/* <View style={{ flexDirection: "row", marginVertical: 16 }}>
+                <Avatar
+                  style={{
+                    width: 64,
+                    height: 64,
+                    borderRadius: 99,
+                    // marginRight: 10,
+                    // marginTop: 20,
+                  }}
+                  sourceUri={{
+                    uri: userData?.user_avatar_thumbnail,
+                  }}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={editProfile}
+                style={{
+                  position: "absolute",
+                  bottom: -4,
+                  right: -4,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: colors.white,
+                  borderRadius: 16,
+                }}
+              >
+                <Icon
+                  style={{ padding: 3 }}
+                  name="edit-3"
+                  type={IconType.Feather}
+                ></Icon>
+              </TouchableOpacity>
+            </View>
+            <Text
+              numberOfLines={1}
+              style={{
+                fontSize: 16,
+                color: colors.text,
+                fontWeight: "600",
+                marginTop: 8,
+                paddingHorizontal: 16,
+              }}
+            >
+              {userData?.display_name}
+            </Text>
+            {!isTeacher && (
+              <TouchableOpacity onPress={() => openUrl("test")}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: colors.btnRedPrimary,
+                    fontWeight: "600",
+                    marginTop: 5,
+                  }}
+                >
+                  Become a tutor
+                </Text>
+              </TouchableOpacity>
+            )}
+            {/* <View style={{ flexDirection: "row", marginVertical: 16 }}>
             <TouchableOpacity
               onPress={editProfile}
               style={styles.styleButtonEditProfile}
@@ -253,10 +253,10 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
               <Text style={styles.styleTextViewProfile}>View Profile</Text>
             </TouchableOpacity>
           </View> */}
-        </View>
-      ) : (
-        renderViewRequestLogin()
-      )}
+          </View>
+        ) : (
+          renderViewRequestLogin()
+        )}
         {renderListSetting()}
 
         {isLoggedIn() && (
@@ -272,7 +272,9 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
               borderRadius: 8,
             }}
           >
-            <Text style={{ color: colors.text, fontSize: 16, fontWeight: "600" }}>
+            <Text
+              style={{ color: colors.text, fontSize: 16, fontWeight: "600" }}
+            >
               Sign Out
             </Text>
           </TouchableOpacity>

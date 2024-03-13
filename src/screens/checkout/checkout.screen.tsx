@@ -108,7 +108,7 @@ const CheckoutScreen = () => {
     listFormTime = [
       {
         title: translations.payment.formforLearning,
-        value: courseData.title,
+        value: courseData.type,
       },
       {
         title: translations.purchase.timeDuration,
@@ -305,7 +305,7 @@ const CheckoutScreen = () => {
         <View style={{ justifyContent: "space-between" }}>
           <View style={styles.styleViewItemPaymentDetail}>
             <Text style={styles.styleTextTitleItemPaymentDetail}>
-              {translations.payment.couresfree}
+              {translations.payment.coursePrice}
             </Text>
             <Text style={styles.styleTextContentItemPaymentDetail}>
               {numberWithCommas(courseData.price)}

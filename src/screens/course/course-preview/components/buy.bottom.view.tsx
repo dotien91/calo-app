@@ -49,66 +49,74 @@ const BuyBottom = ({ show, data, courseRoom }: BuyBottomProps) => {
 
   if (data?.is_join)
     return (
-      <Animated.View
-        style={[
-          styles.container,
-          {
-            maxHeight: animationHeight,
-            paddingVertical: show ? 8 : 0,
-            ...CS.flexRear,
-          },
-        ]}
-      >
-        <EnrollNow
-          fromBottom
-          courseRoom={courseRoom}
-          data={data}
-          course_id={data._id}
-        />
+      <Animated.View style={styles.container}>
+        <View style={styles.viewShadow} />
+        <Animated.View
+          style={[
+            styles.viewContainer,
+            {
+              maxHeight: animationHeight,
+              paddingVertical: show ? 8 : 0,
+            },
+          ]}
+        >
+          <EnrollNow
+            fromBottom
+            courseRoom={courseRoom}
+            data={data}
+            course_id={data._id}
+          />
+        </Animated.View>
       </Animated.View>
     );
 
   return (
-    <Animated.View
-      style={[
-        styles.container,
-        { maxHeight: animationHeight, paddingVertical: show ? 8 : 0 },
-      ]}
-    >
-      {((show && data?.coupon_id == null) ||
-        (data?.coupon_id?.availableAt &&
-          new Date(data?.coupon_id?.availableAt) > new Date()) ||
-        (data?.coupon_id?.availableAt &&
-          new Date(data?.coupon_id?.expired) < new Date())) && (
-        <View style={[CS.flex1, { justifyContent: "center" }]}>
-          <Text style={styles.textPrice}>{formatPrice(data?.price)}</Text>
-        </View>
-      )}
-      {show &&
-      data?.coupon_id &&
-      data.coupon_id.promotion > 0 &&
-      data?.coupon_id?.availableAt &&
-      new Date(data?.coupon_id?.availableAt) < new Date() &&
-      data?.coupon_id?.availableAt &&
-      new Date(data?.coupon_id?.expired) > new Date() ? (
-        <View style={[CS.flex1, { justifyContent: "center" }]}>
-          <Text style={styles.textPrice}>
-            {data?.coupon_id?.promotion_type === "percentage"
-              ? formatPrice(
-                  data?.price -
-                    (data?.price * data?.coupon_id?.promotion) / 100,
-                )
-              : formatPrice(data?.price - data?.coupon_id?.promotion)}
-          </Text>
-          <Text style={styles.textPriceOld}>{formatPrice(data?.price)}</Text>
-        </View>
-      ) : null}
-      {show &&
-        (isTeacher ? (
-          <EditButton type="wrap" data={data} />
-        ) : (
-          <BuyButton courseRoom={courseRoom} type="wrap" data={data} />
-        ))}
+    <Animated.View style={styles.container}>
+      <View style={styles.viewShadow} />
+      <Animated.View
+        style={[
+          styles.viewContainer,
+          {
+            maxHeight: animationHeight,
+            paddingVertical: show ? 8 : 0,
+          },
+        ]}
+      >
+        {((show && data?.coupon_id == null) ||
+          (data?.coupon_id?.availableAt &&
+            new Date(data?.coupon_id?.availableAt) > new Date()) ||
+          (data?.coupon_id?.availableAt &&
+            new Date(data?.coupon_id?.expired) < new Date())) && (
+          <View style={[CS.flex1, { justifyContent: "center" }]}>
+            <Text style={styles.textPrice}>{formatPrice(data?.price)}</Text>
+          </View>
+        )}
+        {show &&
+        data?.coupon_id &&
+        data.coupon_id.promotion > 0 &&
+        data?.coupon_id?.availableAt &&
+        new Date(data?.coupon_id?.availableAt) < new Date() &&
+        data?.coupon_id?.availableAt &&
+        new Date(data?.coupon_id?.expired) > new Date() ? (
+          <View style={[CS.flex1, { justifyContent: "center" }]}>
+            <Text style={styles.textPrice}>
+              {data?.coupon_id?.promotion_type === "percentage"
+                ? formatPrice(
+                    data?.price -
+                      (data?.price * data?.coupon_id?.promotion) / 100,
+                  )
+                : formatPrice(data?.price - data?.coupon_id?.promotion)}
+            </Text>
+            <Text style={styles.textPriceOld}>{formatPrice(data?.price)}</Text>
+          </View>
+        ) : null}
+        {show &&
+          (isTeacher ? (
+            <EditButton type="wrap" data={data} />
+          ) : (
+            <BuyButton courseRoom={courseRoom} type="wrap" data={data} />
+          ))}
+      </Animated.View>
     </Animated.View>
   );
 };
@@ -123,14 +131,30 @@ const styles = StyleSheet.create({
     right: 0,
     zIndex: 1,
     backgroundColor: palette.background,
-    flexDirection: "row",
+    // flexDirection: "row",
+
     alignItems: "center",
+    // shadowColor: "rgba(0,0,0,0.8)",
+    // shadowOffset: { width: 0, height: 6 },
+    // shadowOpacity: 0.1,
+    // elevation: 0,
+    // shadowRadius: 2,
+  },
+  viewContainer: {
+    flexDirection: "row",
     paddingHorizontal: 16,
+    ...CS.flexRear,
+  },
+  viewShadow: {
+    height: 2,
+    width: "100%",
+    marginBottom: 1,
+    backgroundColor: palette.background,
     shadowColor: "rgba(0,0,0,0.8)",
-    shadowOffset: { width: 0, height: 6 },
+    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     elevation: 0,
-    shadowRadius: 2,
+    shadowRadius: 1,
   },
   textPrice: {
     ...CS.hnSemiBold,

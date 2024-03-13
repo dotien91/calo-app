@@ -136,6 +136,8 @@ export default {
   update: "Update",
   viewAll: "View All",
   aboutMe: "About me",
+  noReferrals: "There are no referrals yet!",
+  noCertificates: "Teachers have not updated their certificates!",
   today: "Today",
   yesterday: "Yesterday",
   tomorrow: "Tomorrow",
@@ -812,6 +814,7 @@ export default {
     promo: "Promo",
     errorpaymentmethod: "You haven’t chosen the payment method",
     couresfree: "Course free",
+    coursePrice: "Course price",
     completecheckout: "Complete Checkout",
     promotion: "Promotion",
     notePurchase:

@@ -207,7 +207,7 @@ const SettingProfileScreen = () => {
 
   const openHiddenPage = () => {
     NavigationService.navigate(SCREENS.HIDDEN_PAGE);
-  }
+  };
 
   const renderPieChart = () => {
     return (

@@ -141,6 +141,8 @@ export default {
   update: "Cập nhật",
   viewAll: "Xem tất cả",
   aboutMe: "Về tôi",
+  noReferrals: "Chưa có giới thiệu nào!",
+  noCertificates: "Giáo viên chưa cập nhật chứng chỉ!",
   today: "Hôm nay",
   yesterday: "Hôm qua",
   tomorrow: "ngày mai",
@@ -1323,6 +1325,7 @@ export default {
     promo: "Khuyến mãi",
     errorpaymentmethod: "Bạn chưa chọn phương thức thanh toán",
     couresfree: "Khoá học miễn phí",
+    coursePrice: "Giá khoá học",
     completecheckout: "Hoàn tất thanh toán",
     promotion: "Khuyến mãi",
     notePurchase:

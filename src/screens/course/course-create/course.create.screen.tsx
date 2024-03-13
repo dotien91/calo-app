@@ -6,6 +6,7 @@ import {
   View,
   Text,
   Keyboard,
+  SafeAreaView,
 } from "react-native";
 import { useTheme, useRoute } from "@react-navigation/native";
 import { useForm } from "react-hook-form";
@@ -106,6 +107,7 @@ const CourseCreate = () => {
       setTypeCourse(data.type);
       // setLevel(data?.level || "");
       setSkill(data.skills);
+      setPriceInput(data.price.toString());
     }
   }, [data]);
 
@@ -255,9 +257,11 @@ const CourseCreate = () => {
     return (
       <View style={styles.selectBox}>
         <Text style={styles.label}>{translations.course.filterLevel}</Text>
-        <View style={[CS.flexRear, { gap: 8 }]}>
-          {listLevel.map((item) => renderLevelBtn(item))}
-        </View>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <View style={[CS.flexRear, { gap: 8 }]}>
+            {listLevel.map((item) => renderLevelBtn(item))}
+          </View>
+        </ScrollView>
       </View>
     );
   };
@@ -290,9 +294,11 @@ const CourseCreate = () => {
     return (
       <View style={styles.selectBox}>
         <Text style={styles.label}>{translations.course.skills}</Text>
-        <View style={[CS.flexRear, { gap: 8 }]}>
-          {listSkill.map((item) => renderSkillBtn(item))}
-        </View>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <View style={[CS.flexRear, { gap: 8 }]}>
+            {listSkill.map((item) => renderSkillBtn(item))}
+          </View>
+        </ScrollView>
       </View>
     );
   };
@@ -324,7 +330,7 @@ const CourseCreate = () => {
 
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>
-      <ScrollView showsVerticalScrollIndicator={false} style={CS.safeAreaView}>
+      <SafeAreaView style={{ flex: 1 }}>
         <Header
           text={
             course_id
@@ -332,200 +338,202 @@ const CourseCreate = () => {
               : translations.course.createCourse
           }
         />
-        {renderSelectVideo()}
+        <ScrollView showsVerticalScrollIndicator={false} style={CS.flex1}>
+          {renderSelectVideo()}
 
-        <InputHook
-          name="title"
-          customStyle={CS.flex1}
-          inputProps={{
-            type: "text",
-            defaultValue: "",
-            placeholder: translations.course.title,
-          }}
-          control={control}
-          rules={{
-            required: {
-              value: true,
-              message: translations.required,
-            },
-          }}
-          errorTxt={errors.title?.message}
-          maxLength={100}
-          showPlaceholder
-        />
-        <InputHook
-          name="description"
-          customStyle={CS.flex1}
-          inputProps={{
-            type: "text",
-            defaultValue: "",
-            placeholder: translations.course.description,
-          }}
-          control={control}
-          rules={{
-            required: {
-              value: true,
-              message: translations.required,
-            },
-          }}
-          errorTxt={errors.description?.message}
-          maxLength={500}
-          multiline
-          showPlaceholder
-        />
-        <InputHook
-          name="long_description"
-          customStyle={CS.flex1}
-          inputProps={{
-            type: "text",
-            defaultValue: "",
-            placeholder: translations.course.longDescription,
-          }}
-          control={control}
-          rules={{
-            required: {
-              value: true,
-              message: translations.required,
-            },
-          }}
-          multiline
-          errorTxt={errors.long_description?.message}
-          maxLength={500}
-          showPlaceholder
-        />
-        <Text
-          style={{
-            ...CS.hnMedium,
-            color: colors.text,
-            marginLeft: 20,
-            marginVertical: 8,
-          }}
-        >
-          Số tiền
-        </Text>
-
-        <TextInputPrice
-          setPriceInput={setPriceInput}
-          priceInput={priceInput}
-        ></TextInputPrice>
-
-        <Text style={styles.textTitle}>
-          {translations.course.timeAvailable}
-        </Text>
-
-        <View style={{ paddingHorizontal: 20, flexDirection: "row", gap: 8 }}>
-          <DatePickerLocal
-            style={{ flex: 1 }}
-            placeholder={translations.course.startTime}
-            setTime={(time) => {
-              setStartDate(time);
+          <InputHook
+            name="title"
+            customStyle={CS.flex1}
+            inputProps={{
+              type: "text",
+              defaultValue: "",
+              placeholder: translations.course.title,
             }}
-            timeDefault={startDate}
-          />
-          <DatePickerLocal
-            style={{ flex: 1 }}
-            placeholder={translations.course.endTime}
-            setTime={(time) => {
-              setEndDate(time);
+            control={control}
+            rules={{
+              required: {
+                value: true,
+                message: translations.required,
+              },
             }}
-            timeDefault={endDate}
+            errorTxt={errors.title?.message}
+            maxLength={100}
+            showPlaceholder
           />
-        </View>
+          <InputHook
+            name="description"
+            customStyle={CS.flex1}
+            inputProps={{
+              type: "text",
+              defaultValue: "",
+              placeholder: translations.course.description,
+            }}
+            control={control}
+            rules={{
+              required: {
+                value: true,
+                message: translations.required,
+              },
+            }}
+            errorTxt={errors.description?.message}
+            maxLength={500}
+            multiline
+            showPlaceholder
+          />
+          <InputHook
+            name="long_description"
+            customStyle={CS.flex1}
+            inputProps={{
+              type: "text",
+              defaultValue: "",
+              placeholder: translations.course.longDescription,
+            }}
+            control={control}
+            rules={{
+              required: {
+                value: true,
+                message: translations.required,
+              },
+            }}
+            multiline
+            errorTxt={errors.long_description?.message}
+            maxLength={500}
+            showPlaceholder
+          />
+          <Text
+            style={{
+              ...CS.hnMedium,
+              color: colors.text,
+              marginLeft: 20,
+              marginVertical: 8,
+            }}
+          >
+            Số tiền
+          </Text>
 
-        <View style={{ paddingHorizontal: 20 }}>
-          {/* <Text style={{ ...CS.hnMedium, marginTop: 8 }}>Ảnh khoá học</Text>
+          <TextInputPrice
+            setPriceInput={setPriceInput}
+            priceInput={priceInput}
+          ></TextInputPrice>
+
+          <Text style={styles.textTitle}>
+            {translations.course.timeAvailable}
+          </Text>
+
+          <View style={{ paddingHorizontal: 20, flexDirection: "row", gap: 8 }}>
+            <DatePickerLocal
+              style={{ flex: 1 }}
+              placeholder={translations.course.startTime}
+              setTime={(time) => {
+                setStartDate(time);
+              }}
+              timeDefault={startDate}
+            />
+            <DatePickerLocal
+              style={{ flex: 1 }}
+              placeholder={translations.course.endTime}
+              setTime={(time) => {
+                setEndDate(time);
+              }}
+              timeDefault={endDate}
+            />
+          </View>
+
+          <View style={{ paddingHorizontal: 20 }}>
+            {/* <Text style={{ ...CS.hnMedium, marginTop: 8 }}>Ảnh khoá học</Text>
 
           {renderSelectImage()} */}
-          {/* <Text style={{ ...CS.hnMedium, marginTop: 8 }}>
+            {/* <Text style={{ ...CS.hnMedium, marginTop: 8 }}>
             {translations.course.videoReviewCourse}
           </Text> */}
-          {renderSelectTypeCourse()}
-          {renderSelectLevel()}
-          {renderSelectSkill()}
-        </View>
-
-        <Button
-          style={{
-            marginHorizontal: 20,
-            marginTop: 16,
-            backgroundColor: updating ? colors.placeholder : colors.primary,
-            zIndex: -1,
-          }}
-          text={
-            course_id
-              ? translations.course.updateCourse
-              : translations.course.createCourse
-          }
-          disabled={updating || updatingVid}
-          onPress={handleSubmit(onSubmit)}
-        />
-        <View style={{ height: 80 }} />
-      </ScrollView>
-      {listTypeCourse.length > 0 && (
-        <BottomSheet
-          snapPoints={snapPoints}
-          index={-1}
-          enablePanDownToClose
-          ref={refBottomSheet}
-          style={{
-            borderTopLeftRadius: 16,
-            borderTopRightRadius: 16,
-            backgroundColor: colors.background,
-          }}
-          backdropComponent={(props) => (
-            <BottomSheetBackdrop
-              {...props}
-              disappearsOnIndex={-1}
-              appearsOnIndex={0}
-              pressBehavior={"close"}
-              opacity={0.1}
-            />
-          )}
-          backgroundComponent={CustomBackground}
-        >
-          <View style={[{ paddingHorizontal: 16, ...CS.flex1 }]}>
-            <Text
-              style={{
-                ...CS.hnSemiBold,
-                textAlign: "center",
-                fontSize: 20,
-                color: colors.primary,
-              }}
-            >
-              {translations.course.typeCourse}
-            </Text>
-            <BottomSheetScrollView
-              style={{
-                ...CS.flex1,
-                backgroundColor: colors.background,
-              }}
-            >
-              {listTypeCourse.map((i) => (
-                <PressableBtn
-                  key={i.index}
-                  style={
-                    i.value === typeCourse
-                      ? styles.categorySelected
-                      : styles.category
-                  }
-                  onPress={() => {
-                    refBottomSheet.current?.close();
-                    setTypeCourse(i.value);
-                  }}
-                >
-                  <Text
-                    style={{
-                      ...CS.hnSemiBold,
-                      fontSize: 16,
-                      color: colors.primary,
-                    }}
-                  >{`${i.value}`}</Text>
-                </PressableBtn>
-              ))}
-            </BottomSheetScrollView>
+            {renderSelectTypeCourse()}
+            {renderSelectLevel()}
+            {renderSelectSkill()}
           </View>
-        </BottomSheet>
-      )}
+
+          <Button
+            style={{
+              marginHorizontal: 20,
+              marginTop: 16,
+              backgroundColor: updating ? colors.placeholder : colors.primary,
+              zIndex: -1,
+            }}
+            text={
+              course_id
+                ? translations.course.updateCourse
+                : translations.course.createCourse
+            }
+            disabled={updating || updatingVid}
+            onPress={handleSubmit(onSubmit)}
+          />
+          <View style={{ height: 80 }} />
+        </ScrollView>
+        {listTypeCourse.length > 0 && (
+          <BottomSheet
+            snapPoints={snapPoints}
+            index={-1}
+            enablePanDownToClose
+            ref={refBottomSheet}
+            style={{
+              borderTopLeftRadius: 16,
+              borderTopRightRadius: 16,
+              backgroundColor: colors.background,
+            }}
+            backdropComponent={(props) => (
+              <BottomSheetBackdrop
+                {...props}
+                disappearsOnIndex={-1}
+                appearsOnIndex={0}
+                pressBehavior={"close"}
+                opacity={0.1}
+              />
+            )}
+            backgroundComponent={CustomBackground}
+          >
+            <View style={[{ paddingHorizontal: 16, ...CS.flex1 }]}>
+              <Text
+                style={{
+                  ...CS.hnSemiBold,
+                  textAlign: "center",
+                  fontSize: 20,
+                  color: colors.primary,
+                }}
+              >
+                {translations.course.typeCourse}
+              </Text>
+              <BottomSheetScrollView
+                style={{
+                  ...CS.flex1,
+                  backgroundColor: colors.background,
+                }}
+              >
+                {listTypeCourse.map((i) => (
+                  <PressableBtn
+                    key={i.index}
+                    style={
+                      i.value === typeCourse
+                        ? styles.categorySelected
+                        : styles.category
+                    }
+                    onPress={() => {
+                      refBottomSheet.current?.close();
+                      setTypeCourse(i.value);
+                    }}
+                  >
+                    <Text
+                      style={{
+                        ...CS.hnSemiBold,
+                        fontSize: 16,
+                        color: colors.primary,
+                      }}
+                    >{`${i.value}`}</Text>
+                  </PressableBtn>
+                ))}
+              </BottomSheetScrollView>
+            </View>
+          </BottomSheet>
+        )}
+      </SafeAreaView>
     </KeyboardAvoidingView>
   );
 };
@@ -552,6 +560,8 @@ const styles = StyleSheet.create({
   },
   durationBtn: {
     padding: 4,
+    minWidth: 60,
+    paddingHorizontal: 8,
     flex: 1,
     backgroundColor: palette.background,
     borderWidth: 1,

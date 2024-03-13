@@ -102,6 +102,10 @@ const AvatarProfile = ({ userInfo, customStyle }: UploadAvatarProps) => {
         if (res?.[0]?.callback?._id) {
           setLinkAvatar(res?.[0]?.callback?.media_thumbnail);
           _setLinkAvatar(res?.[0]?.callback?.media_thumbnail);
+          setUserData({
+            ...userData,
+            user_avatar_thumbnail: res?.[0]?.callback?.media_url,
+          });
           const params = {
             _id: userData?._id,
             user_avatar: res?.[0]?.callback?.media_url,
