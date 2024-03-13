@@ -33,17 +33,7 @@ const CourseItem = ({
   style,
   data,
 }: CourseItemProps) => {
-  const {
-    _id,
-    title,
-    price,
-    rating,
-    user_id,
-    media_id,
-    avatar,
-    is_join,
-    type,
-  } = data;
+  const { _id, title, rating, user_id, media_id, avatar, is_join, type } = data;
   let widthImage = Device.width - 32;
   if (isHorizontalStyle) {
     widthImage = widthImage / 1.5;
@@ -124,7 +114,7 @@ const CourseItem = ({
               style={{ marginRight: 3 }}
             />
             <Text style={styles.courseRatingTxt}>
-              {(rating + "" || "").slice(0, 3)}
+              {`${(rating + "" || "").slice(0, 3)}`}
             </Text>
           </View>
         ) : (

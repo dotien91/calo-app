@@ -29,6 +29,7 @@ const CodeActivationsScreen = () => {
   const theme = useTheme();
   const { colors } = theme;
   const setListUserSelected = useStore((state) => state.setListUserSelected);
+  const listUserRef = useStore((state) => state.listUserRef);
 
   const styles = useMemo(() => createStyles(theme), [theme]);
   const [sectionList, setSectionList] = useState<TypedUser[]>([]);
@@ -63,23 +64,10 @@ const CodeActivationsScreen = () => {
       ],
     },
   ];
-  // const [sortBy, setSortBy] = useState("");
-  const getListData = () => {
-    const params = {
-      limit: "8",
-    };
-    if (selected != 0) {
-      params.sort_by = selected == 1 ? "time" : "price";
-    }
-    getReferralUserProduct(params).then((res) => {
-      console.log("res..getReferralUserProduct...", res);
-      setSectionList(res.data);
-    });
-  };
 
   useEffect(() => {
-    getListData();
-  }, [selected]);
+    setSectionList(listUserRef);
+  }, [listUserRef]);
 
   // const isLoading = false;
   // const totalCount = 4;
@@ -272,7 +260,7 @@ const CodeActivationsScreen = () => {
       {/* {renderHeader()} */}
       <ScrollView showsVerticalScrollIndicator={false}>
         <Accordion
-          sections={sectionList}
+          sections={listUserRef}
           activeSections={activeSections}
           renderHeader={_renderHeader}
           renderContent={_renderContent}

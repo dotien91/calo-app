@@ -7,6 +7,7 @@ import {
   Platform,
   SafeAreaView,
   ActivityIndicator,
+  ScrollView,
 } from "react-native";
 import React, { useMemo, useState } from "react";
 import { useTheme, useRoute } from "@react-navigation/native";
@@ -251,17 +252,17 @@ export default function CreateWorkScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={styles.containerScreen}>
       <Header
         text={translations.homework.createWork}
         rightComponent={renderRightHeader}
-      ></Header>
+      />
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <KeyboardAvoidingView
           style={{ flex: 1 }}
           behavior={Platform.OS === "ios" ? "height" : undefined}
         >
-          <View style={styles.container}>
+          <ScrollView style={styles.container}>
             <View style={{ marginBottom: 16 }}>
               <InputHook
                 viewStyle={{ marginHorizontal: 0 }}
@@ -309,9 +310,9 @@ export default function CreateWorkScreen() {
             {renderFileUpload()}
             {renderScoreInput()}
             {renderTimeInput()}
-          </View>
+          </ScrollView>
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
-    </SafeAreaView>
+    </View>
   );
 }

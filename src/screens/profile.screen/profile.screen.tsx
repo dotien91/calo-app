@@ -48,6 +48,7 @@ const SettingProfileScreen = () => {
   const { colors } = theme;
   const userData = useStore((state) => state.userData);
   const userInfo = useStore((state) => state.userInfo);
+  const setListUserRef = useStore((state) => state.setListUserRef);
   const setShowInvite = useStore((store) => store.setShowInvite);
   const showInvite = useStore((store) => store.showInvite);
   const [referralByMe, setReferralByMe] = useState([]);
@@ -59,7 +60,14 @@ const SettingProfileScreen = () => {
 
   const _getReferralByMe = () => {
     getReferralByMe(params).then((res) => {
-      setReferralByMe(res.data);
+      if (!res.isError) {
+        console.log("res...", res.data);
+        setReferralByMe(res.data);
+        setListUserRef(res.data);
+      } else {
+        setReferralByMe([]);
+        setListUserRef([]);
+      }
     });
   };
 

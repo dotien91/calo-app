@@ -1,4 +1,5 @@
 import { StoreSlice } from "@zustand";
+import { TypedUser } from "models";
 
 interface DateFilterType {
   from: string;
@@ -14,6 +15,8 @@ export interface AffiliateSlice {
   setListCourseSelected: (data: string[]) => void;
   type: "coin" | "token";
   setType: (stringType: "coin" | "token") => void;
+  listUserRef: TypedUser[];
+  setListUserRef: (data: TypedUser[]) => void;
 }
 
 const createAffiliateSlice: StoreSlice<AffiliateSlice> = (set) => ({
@@ -42,6 +45,12 @@ const createAffiliateSlice: StoreSlice<AffiliateSlice> = (set) => ({
   setType: (stringType: "coin" | "token") => {
     set({
       type: stringType,
+    });
+  },
+  listUserRef: [],
+  setListUserRef: (data: TypedUser[]) => {
+    set({
+      listUserRef: data,
     });
   },
 });

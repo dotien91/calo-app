@@ -69,16 +69,16 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
     });
   };
 
-  const onReport = () => {
-    showSuperModal({
-      contentModalType: EnumModalContentType.Report,
-      styleModalType: EnumStyleModalType.Bottom,
-      data: {
-        report_type: "course",
-        partner_id: data?.avatar._id,
-      },
-    });
-  };
+  // const onReport = () => {
+  //   showSuperModal({
+  //     contentModalType: EnumModalContentType.Report,
+  //     styleModalType: EnumStyleModalType.Bottom,
+  //     data: {
+  //       report_type: "course",
+  //       partner_id: data?.avatar._id,
+  //     },
+  //   });
+  // };
 
   const viewClasses = () => {
     const classes = (data?.classes || []).map((_item) => ({
@@ -172,7 +172,7 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
           </TouchableOpacity>
         )}
       </View>
-      <TouchableOpacity style={CS.flexStart} onPress={onReport}>
+      {/* <TouchableOpacity style={CS.flexStart} onPress={onReport}>
         <Icon
           name="flag"
           type={IconType.Feather}
@@ -181,7 +181,7 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
           style={{ marginRight: 4 }}
         ></Icon>
         <TextBase fontSize={14}>{translations.report}</TextBase>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       {(data?.public_status === "draft" ||
         data?.public_status === "pending") && (
         <Text style={{ ...CS.hnRegular, fontSize: 12 }}>

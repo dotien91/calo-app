@@ -11,6 +11,7 @@ import { translations } from "@localization";
 import LoadingUpdateMedia from "./LoadingUpdateMedia";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { WindowWidth } from "@freakycoder/react-native-helpers";
+import { showToast } from "@helpers/super.modal.helper";
 
 interface SelectVideoHookProps {
   link?: string;
@@ -68,6 +69,10 @@ const SelectVideoHook = ({
           setUpdatingVid(false);
         } else {
           setUpdatingVid(false);
+          showToast({
+            type: "error",
+            message: translations.course.uploadVideoFailed,
+          });
         }
       },
     });

@@ -1,6 +1,7 @@
 import { ExtendedTheme } from "@react-navigation/native";
 import { ViewStyle, StyleSheet } from "react-native";
 import CS from "@theme/styles";
+import { getBottomSpace } from "react-native-iphone-screen-helper";
 
 interface Style {
   container: ViewStyle;
@@ -11,6 +12,10 @@ interface Style {
 export default (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create<Style>({
+    containerScreen: {
+      ...CS.safeAreaView,
+      marginBottom: getBottomSpace(),
+    },
     container: {
       flex: 1,
       backgroundColor: colors.background,

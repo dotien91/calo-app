@@ -1,7 +1,8 @@
 import React, { memo, useMemo } from "react";
 
 import { Text, TextProps, TextStyle } from "react-native";
-import { useTheme } from "@react-navigation/native";
+import { palette } from "@theme/themes";
+// import { useTheme } from "@react-navigation/native";
 
 interface Props extends TextProps {
   title?: string | string[];
@@ -35,9 +36,9 @@ const TextBase = ({
   style,
   ...props
 }: Props) => {
-  const theme = useTheme();
-  const { colors } = theme;
-  const _color = colors?.[color] || colors.textOpacity8;
+  // const theme = useTheme();
+  // const { colors } = theme;
+  const _color = palette?.[color] || palette.textOpacity8;
 
   const fontFamily = useMemo(() => {
     switch (fontWeight) {

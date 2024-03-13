@@ -42,8 +42,8 @@ const TutorItem = ({
       data: {
         display_name,
         user_avatar_thumbnail,
-        ...res
-      }
+        ...res,
+      },
     });
   };
 

@@ -118,7 +118,7 @@ const Header = ({
           style={{
             position: "absolute",
             left: 0,
-            top: -10,
+            top: -20,
             right: 0,
             height: 20,
             backgroundColor: "white",

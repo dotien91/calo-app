@@ -62,30 +62,31 @@ const CourseListScreen: React.FC<CourseListScreenProps> = () => {
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}
       />
-      {isLoggedIn() && userData?.user_role === "teacher" && (
-        <TouchableOpacity
-          style={{
-            position: "absolute",
-            width: 50,
-            height: 50,
-            backgroundColor: colors.primary,
-            justifyContent: "center",
-            alignItems: "center",
-            borderRadius: 25,
-            bottom: 10,
-            right: 10,
-            zIndex: 1,
-          }}
-          onPress={() => NavigationService.push(SCREENS.COURSE_CREATE)}
-        >
-          <Icon
-            name={"add-outline"}
-            type={IconType.Ionicons}
-            size={30}
-            color={colors.white}
-          />
-        </TouchableOpacity>
-      )}
+      {(isLoggedIn() && userData?.user_role === "teacher") ||
+        (userData?.user_role === "admin" && (
+          <TouchableOpacity
+            style={{
+              position: "absolute",
+              width: 50,
+              height: 50,
+              backgroundColor: colors.primary,
+              justifyContent: "center",
+              alignItems: "center",
+              borderRadius: 25,
+              bottom: 10,
+              right: 10,
+              zIndex: 1,
+            }}
+            onPress={() => NavigationService.push(SCREENS.COURSE_CREATE)}
+          >
+            <Icon
+              name={"add-outline"}
+              type={IconType.Ionicons}
+              size={30}
+              color={colors.white}
+            />
+          </TouchableOpacity>
+        ))}
     </View>
   );
 };

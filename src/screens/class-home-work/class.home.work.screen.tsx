@@ -92,7 +92,7 @@ const ClassHomeWorkScreen: React.FC<ClassHomeWorkScreenProps> = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={styles.containerScreen}>
       <Header text={translations.homework.header} />
       <View style={styles.container}>
         <ScrollView>
@@ -118,7 +118,7 @@ const ClassHomeWorkScreen: React.FC<ClassHomeWorkScreenProps> = () => {
         </ScrollView>
         {renderCreateTaskBtn()}
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

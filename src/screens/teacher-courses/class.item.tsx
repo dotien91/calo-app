@@ -62,6 +62,7 @@ const ClassItem = ({ item }) => {
   };
 
   const openHomework = (item) => {
+    closeSuperModal();
     NavigationService.navigate(SCREENS.CLASSHOMEWORK, {
       class_id: item._id,
       courseData: item.courseData,

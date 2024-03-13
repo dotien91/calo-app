@@ -33,7 +33,12 @@ import EnrollNow from "../components/EnrollNow";
 import { SCREENS } from "constants";
 import EditButton from "../components/edit.button";
 import Button from "@shared-components/button/Button";
-import { showToast } from "@helpers/super.modal.helper";
+import {
+  EnumModalContentType,
+  EnumStyleModalType,
+  showSuperModal,
+  showToast,
+} from "@helpers/super.modal.helper";
 
 const CoursePreviewScreen = () => {
   const userData = useStore((state) => state.userData);
@@ -234,11 +239,26 @@ const CoursePreviewScreen = () => {
       }
     });
   };
+  const onReport = () => {
+    showSuperModal({
+      contentModalType: EnumModalContentType.Report,
+      styleModalType: EnumStyleModalType.Bottom,
+      data: {
+        report_type: "course",
+        partner_id: data?.avatar._id,
+      },
+    });
+  };
 
   return (
     <View style={styles.container}>
       {/* <Header iconNameRight="share-outline" onPressRight={_shareCourse} /> */}
-      <Header customStyle={{ marginBottom: 0 }} text={data?.title} />
+      <Header
+        customStyle={{ marginBottom: 0 }}
+        text={data?.title}
+        iconNameRight="flag"
+        onPressRight={onReport}
+      />
       <ScrollView
         contentContainerStyle={{ paddingBottom: 60 }}
         onScroll={handleScroll}
