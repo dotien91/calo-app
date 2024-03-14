@@ -104,6 +104,7 @@ import icShop from "./icon-shop.svg";
 import icAffiliate from "./icon-affiliate.svg";
 import icLine from "./icon-line.svg";
 import icInviteCode from "./invite-code.svg";
+import icEyeStream from "./icon-eyeStream.svg";
 
 const Icons = {
   intro1,
@@ -210,6 +211,7 @@ const Icons = {
   icAffiliate,
   icLine,
   icInviteCode,
+  icEyeStream,
 };
 
 interface IconSvgProps {
