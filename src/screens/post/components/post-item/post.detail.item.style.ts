@@ -5,7 +5,7 @@ import CommonStyle from "@theme/styles";
 const { width } = Dimensions.get("screen");
 
 const PADDING_HORIZONTAL = 16;
-const SIZE_AVATAR = 30;
+const SIZE_AVATAR = 32;
 const FONT_SIZE = 16;
 const PADDING_LEFT = 12;
 const SIZE_IMAGE = width - PADDING_HORIZONTAL * 2 - PADDING_LEFT - SIZE_AVATAR;

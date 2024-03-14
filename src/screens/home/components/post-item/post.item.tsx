@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import React, { useMemo } from "react";
-import { Dimensions, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 
@@ -17,13 +17,8 @@ import useStore from "@services/zustand/store";
 import { TypedPost } from "shared/models";
 import PressableBtn from "@shared-components/button/PressableBtn";
 
-const { width } = Dimensions.get("screen");
-const PADDING_HORIZONTAL = 16;
-const SIZE_AVATAR = 30;
+const SIZE_AVATAR = 32;
 const FONT_SIZE = 16;
-const PADDING_LEFT = 12;
-const SIZE_IMAGE1 = width - PADDING_HORIZONTAL * 2 - PADDING_LEFT - SIZE_AVATAR;
-const SIZE_IMAGE2 = (SIZE_IMAGE1 - 4) / 2;
 
 interface ItemPostProps {
   data: TypedPost;
@@ -98,21 +93,6 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
       NavigationService.push(SCREENS.POST_DETAIL, param);
     }
   };
-  // const showImageVideo = (index: number) => {
-  //   const listMedia = data.attach_files.filter(
-  //     (i: any) =>
-  //       i.media_mime_type.includes("image") ||
-  //       i.media_mime_type.includes("video"),
-  //   );
-  //   showSuperModal({
-  //     contentModalType: EnumModalContentType.Library,
-  //     styleModalType: EnumStyleModalType.Middle,
-  //     data: {
-  //       listMedia,
-  //       indexMedia: index,
-  //     },
-  //   });
-  // };
 
   return (
     <View style={styles.container}>
@@ -120,6 +100,7 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
         data={data}
         pressAvatar={goToProfileCurrentUser}
         sizeAvatar={SIZE_AVATAR}
+        showLevel
       />
       <View style={{ ...CommonStyle.flex1 }}>
         <PressableBtn
@@ -129,10 +110,7 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
           <HeaderItempost data={data} onPress={goToProfileCurrentUser} />
           {HasTag}
           {ContentStatus}
-          <ListFile
-            listFile={data?.attach_files || []}
-            sizeImage2={SIZE_IMAGE2}
-          />
+          <ListFile listFile={data?.attach_files || []} />
         </PressableBtn>
         <LikeSharePostItem data={data} pressComment={pressComment} />
       </View>

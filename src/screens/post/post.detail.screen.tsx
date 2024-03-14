@@ -244,7 +244,7 @@ const PostDetail = (props: PostDetailProps) => {
       } else {
         showToast({
           type: "error",
-          ...res,
+          ...resComment.message,
         });
       }
     });
@@ -264,7 +264,6 @@ const PostDetail = (props: PostDetailProps) => {
   };
 
   const [isForcus, setIsForcus] = useState(false);
-  console.log("datadata", data);
   const showImageVideo = (index: number) => {
     const listMedia = data?.attach_files.filter(
       (i: any) =>
@@ -280,34 +279,22 @@ const PostDetail = (props: PostDetailProps) => {
       },
     });
   };
+  const _onPressLeft = () => {
+    NavigationService.goBack();
+  };
 
   const HeaderPost = () => {
     return (
-      <View
-        style={{
-          height: 50,
-          alignItems: "center",
-          paddingHorizontal: 20,
-          flexDirection: "row",
-          backgroundColor: colors.background,
-        }}
-      >
+      <View style={styles.headerPost}>
         <Icon
-          onPress={() => NavigationService.goBack()}
-          name="arrow-back-outline"
+          onPress={_onPressLeft}
+          name={"chevron-left"}
+          type={IconType.Feather}
           size={25}
-          type={IconType.Ionicons}
           color={colors.text}
         />
-        <Text
-          style={{
-            ...CommonStyle.hnBold,
-            fontSize: 16,
-            left: 16,
-            color: colors.text,
-          }}
-        >
-          {translations.post.posts}
+        <Text style={styles.txtHeader}>
+          {translations.post.detailPost(data?.user_id?.display_name || "")}
         </Text>
       </View>
     );
@@ -317,11 +304,7 @@ const PostDetail = (props: PostDetailProps) => {
     return (
       <View>
         {listData.length > 0 ? (
-          <ItemComment
-            data={item}
-            // key={index}
-            onPressReply={() => pressReply(item)}
-          />
+          <ItemComment data={item} onPressReply={() => pressReply(item)} />
         ) : (
           renderEmpty()
         )}
@@ -331,15 +314,7 @@ const PostDetail = (props: PostDetailProps) => {
 
   const renderEmpty = () => {
     return (
-      <View
-        style={{
-          ...CommonStyle.center,
-          ...CommonStyle.flex1,
-          backgroundColor: colors.background,
-          paddingVertical: 40,
-          minHeight: 300,
-        }}
-      >
+      <View style={styles.viewEmpty}>
         <EmptyResultView
           title={translations.post.emptyComment}
           desc={translations.post.emptyCommentDes}
@@ -356,6 +331,9 @@ const PostDetail = (props: PostDetailProps) => {
     } else {
       refInput.current?.focus();
     }
+  };
+  const clearComment = () => {
+    setValue("");
   };
 
   return (
@@ -376,7 +354,7 @@ const PostDetail = (props: PostDetailProps) => {
           />
           <View style={CommonStyle.flex1}>
             <FlatList
-              style={{ height: Dimensions.get("window").height }}
+              style={styles.viewFlatList}
               nestedScrollEnabled
               data={listData.filter(
                 (item) => listCommentDelete.indexOf(item._id) < 0,
@@ -396,15 +374,7 @@ const PostDetail = (props: PostDetailProps) => {
         </ScrollView>
         <View style={{ backgroundColor: colors.background, paddingTop: 10 }}>
           {replyItem?._id && (
-            <View
-              style={{
-                paddingHorizontal: 20,
-                backgroundColor: colors.background,
-                alignItems: "center",
-                flexDirection: "row",
-                gap: 10,
-              }}
-            >
+            <View style={styles.viewReply}>
               <Text style={{ color: colors.text, fontSize: 14 }}>
                 {translations.replying}{" "}
                 <Text style={{ ...CommonStyle.hnSemiBold, fontSize: 14 }}>
@@ -419,26 +389,33 @@ const PostDetail = (props: PostDetailProps) => {
             </View>
           )}
           {userData && (
-            <View style={styles.viewCommentPostDetail}>
-              <TextInput
-                ref={refInput}
-                style={{
-                  ...CommonStyle.flex1,
-                  justifyContent: "center",
-                  paddingVertical: 10,
-                  color: colors.text,
-                  fontSize: 14,
-                }}
-                placeholder={translations.comment}
-                placeholderTextColor={colors.placeholder}
-                value={value}
-                onChangeText={setValue}
-                multiline
-                onFocus={() => setIsForcus(true)}
-                onBlur={() => setIsForcus(false)}
-              />
+            <View style={styles.viewComment}>
+              <View style={styles.viewCommentPostDetail}>
+                <TextInput
+                  ref={refInput}
+                  style={styles.inputComment}
+                  placeholder={translations.comment}
+                  placeholderTextColor={colors.placeholder}
+                  value={value}
+                  onChangeText={setValue}
+                  multiline
+                  onFocus={() => setIsForcus(true)}
+                  onBlur={() => setIsForcus(false)}
+                />
+                {trim(value) !== "" && (
+                  <TouchableOpacity
+                    style={{ paddingVertical: 8 }}
+                    onPress={clearComment}
+                  >
+                    <Icon type={IconType.Ionicons} name={"close"} size={16} />
+                  </TouchableOpacity>
+                )}
+              </View>
               {trim(value) !== "" && (
-                <TouchableOpacity onPress={sendComment}>
+                <TouchableOpacity
+                  style={{ paddingVertical: 16 }}
+                  onPress={sendComment}
+                >
                   <Icon
                     name={"send-outline"}
                     size={20}

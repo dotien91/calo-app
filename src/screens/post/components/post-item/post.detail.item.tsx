@@ -20,7 +20,7 @@ import PressableBtn from "@shared-components/button/PressableBtn";
 import CS from "@theme/styles";
 import { openUrl } from "@helpers/file.helper";
 
-const SIZE_AVATAR = 30;
+const SIZE_AVATAR = 32;
 const FONT_SIZE = 16;
 const PADDING_LEFT = 12;
 
@@ -168,6 +168,7 @@ const ItemPost = ({ data, pressComment }: ItemPostProps) => {
           data={data}
           pressAvatar={gotoDetail}
           sizeAvatar={SIZE_AVATAR}
+          showLevel
         />
         <View style={{ paddingLeft: PADDING_LEFT, ...CS.flex1 }}>
           <HeaderPostItem data={data} onPress={gotoDetail} isDetail={true} />

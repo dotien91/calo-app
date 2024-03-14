@@ -40,6 +40,7 @@ import SkeletonPlaceholder from "@shared-components/skeleton";
 import { getMyCourse } from "@services/api/course.api";
 import CourseItem from "@screens/course-tab/components/course.item";
 import LoadingItem from "@shared-components/loading.item";
+import LoadingList from "@shared-components/loading.list.component";
 
 const initialLayout = WindowWidth;
 interface ProfileUserProps {
@@ -61,6 +62,7 @@ const FirstRoute = () => {
     renderFooterComponent,
     _requestData,
     isFirstLoading,
+    isLoading,
     refreshing,
   } = useListData<TypedRequest>(paramsRequest, getListPost);
   useEffect(() => {
@@ -75,6 +77,7 @@ const FirstRoute = () => {
   };
 
   const renderEmptyPostOfMe = () => {
+    if (isLoading) return <LoadingList numberItem={3} />;
     return (
       <EmptyResultView
         title={translations.post.emptyPost}
@@ -118,10 +121,12 @@ const SecondRoute = () => {
     listData,
     onEndReach,
     refreshControl,
+    isLoading,
     renderFooterComponent,
     refreshing,
   } = useListData<TypedRequest>(paramsRequest, getMyCourse);
   const renderEmptyCourseOfMe = () => {
+    if (isLoading) return <LoadingList numberItem={3} />;
     return (
       <EmptyResultView
         title={translations.course.emptyCourse}
@@ -160,7 +165,20 @@ const SecondRoute = () => {
 
 const ThirdRoute = () => {
   const listPostSave = useStore((store) => store.listPostSave);
+  const userData = useStore((store) => store.userData);
 
+  const paramsRequest = {
+    limit: 5,
+    auth_id: userData?._id || "",
+    user_id: userData?._id || "",
+  };
+
+  const {
+    onEndReach,
+    refreshControl,
+    renderFooterComponent,
+    // refreshing,
+  } = useListData<TypedRequest>(paramsRequest, getListPost);
   const renderEmpty = () => {
     return (
       <EmptyResultView
@@ -181,10 +199,14 @@ const ThirdRoute = () => {
       renderItem={renderItemSave}
       scrollEventThrottle={16}
       onEndReachedThreshold={0}
+      onEndReached={onEndReach}
       showsVerticalScrollIndicator={false}
       removeClippedSubviews={true}
       keyExtractor={(item) => item?._id + ""}
       ListEmptyComponent={renderEmpty}
+      refreshControl={refreshControl()}
+      ListFooterComponent={renderFooterComponent()}
+      // refreshing={refreshing}
     />
   );
 };

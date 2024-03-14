@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 
 import React, { useEffect, useMemo, useState } from "react";
-import { Text, View, Image, ActivityIndicator } from "react-native";
+import { Text, View, ActivityIndicator } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { useTheme } from "@react-navigation/native";
 
@@ -22,10 +22,9 @@ import {
 import { convertLastActive } from "@utils/time.utils";
 import { TypedComment } from "shared/models";
 import PressableBtn from "@shared-components/button/PressableBtn";
+import AvatarPost from "@screens/home/components/post-item/avatar.post";
 
-const SIZE_AVATAR = 30;
-const BORDER_AVATAR = 12;
-const FONT_SIZE = 12;
+const SIZE_AVATAR = 32;
 const PADDING_LEFT = 12;
 
 interface ItemCommentProps {
@@ -71,24 +70,7 @@ const ItemReply = ({ item, onPressReplyChild, repCmtId }: ItemReplyProps) => {
   };
 
   const AvatarRep = useMemo(() => {
-    return (
-      <View
-        style={{
-          width: SIZE_AVATAR,
-          height: SIZE_AVATAR,
-          borderRadius: BORDER_AVATAR,
-        }}
-      >
-        <Image
-          source={{ uri: item?.user_id?.user_avatar_thumbnail }}
-          style={{
-            width: SIZE_AVATAR,
-            height: SIZE_AVATAR,
-            borderRadius: BORDER_AVATAR,
-          }}
-        />
-      </View>
-    );
+    return <AvatarPost data={item} sizeAvatar={SIZE_AVATAR} showLevel />;
   }, [item]);
 
   const _showStickBottom = () =>
@@ -100,42 +82,14 @@ const ItemReply = ({ item, onPressReplyChild, repCmtId }: ItemReplyProps) => {
 
   const HeaderItemComment = useMemo(() => {
     return (
-      <View style={{ flexDirection: "row", justifyContent: "center" }}>
-        <View
-          style={{
-            ...CommonStyle.flex1,
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 12,
-          }}
-        >
-          <Text
-            style={{
-              ...CommonStyle.hnBold,
-              fontSize: FONT_SIZE,
-              color: colors.mainColor2,
-            }}
-          >
-            {item?.user_id?.display_name}
-          </Text>
+      <View style={styles.containerHeader}>
+        <View style={styles.viewTxtHeader}>
+          <Text style={styles.txtHeader}>{item?.user_id?.display_name}</Text>
           {item?.user_id?.official_status && (
             <IconSvg name="icVerify" size={14} />
           )}
-          <View
-            style={{
-              width: 2,
-              height: 2,
-              borderRadius: 1,
-              backgroundColor: colors.text,
-            }}
-          />
-          <Text
-            style={{
-              ...CommonStyle.hnRegular,
-              color: colors.text,
-              fontSize: FONT_SIZE,
-            }}
-          >
+          {/* <View style={styles.viewDot} /> */}
+          <Text style={styles.txtTimeHeader}>
             {convertLastActive(item?.createdAt)}
           </Text>
         </View>
@@ -145,7 +99,7 @@ const ItemReply = ({ item, onPressReplyChild, repCmtId }: ItemReplyProps) => {
               size={20}
               name="ellipsis-vertical"
               type={IconType.Ionicons}
-              color={colors.text}
+              color={colors.textOpacity6}
             />
           </PressableBtn>
         )}
@@ -155,16 +109,8 @@ const ItemReply = ({ item, onPressReplyChild, repCmtId }: ItemReplyProps) => {
 
   const ContentStatus = useMemo(() => {
     return (
-      <View style={{ flexDirection: "row" }}>
-        <Text
-          style={{
-            ...CommonStyle.hnRegular,
-            fontSize: FONT_SIZE,
-            marginBottom: 4,
-          }}
-        >
-          {item?.content}
-        </Text>
+      <View style={styles.viewContentComment}>
+        <Text style={styles.txtContentComment}>{item?.content}</Text>
         {item.sending && (
           <ActivityIndicator
             color={colors.text}
@@ -186,32 +132,18 @@ const ItemReply = ({ item, onPressReplyChild, repCmtId }: ItemReplyProps) => {
             {likeNumber > 0 && likeNumber} {translations.like}
           </Text>
         </PressableBtn>
-        <View
-          style={{
-            width: 2,
-            height: 2,
-            borderRadius: 1,
-            backgroundColor: colors.text,
-          }}
-        />
         <PressableBtn
           onPress={() => onPressReplyChild(replyItem)}
           style={[styles.viewLike, { justifyContent: "center" }]}
         >
-          <Text style={styles.textLikeShare}>{translations.reply}</Text>
+          <Text style={styles.textReply}>{translations.reply}</Text>
         </PressableBtn>
       </View>
     );
   };
 
   return (
-    <View
-      style={{
-        flexDirection: "row",
-        width: "100%",
-        marginTop: 10,
-      }}
-    >
+    <View style={styles.containerItemRep}>
       {AvatarRep}
       <View style={{ paddingLeft: PADDING_LEFT, ...CommonStyle.flex1 }}>
         {HeaderItemComment}
@@ -240,24 +172,7 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
   }, [data, data.child]);
 
   const Avatar = useMemo(() => {
-    return (
-      <View
-        style={{
-          width: SIZE_AVATAR,
-          height: SIZE_AVATAR,
-          borderRadius: BORDER_AVATAR,
-        }}
-      >
-        <Image
-          source={{ uri: data?.user_id?.user_avatar_thumbnail }}
-          style={{
-            width: SIZE_AVATAR,
-            height: SIZE_AVATAR,
-            borderRadius: BORDER_AVATAR,
-          }}
-        />
-      </View>
-    );
+    return <AvatarPost sizeAvatar={SIZE_AVATAR} data={data} showLevel />;
   }, [data]);
   const _showStickBottom = () => {
     if (!userData) {
@@ -273,44 +188,16 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
 
   const HeaderItemComment = useMemo(() => {
     return (
-      <View style={{ flexDirection: "row", justifyContent: "center" }}>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 12,
-            ...CommonStyle.flex1,
-          }}
-        >
-          <Text
-            numberOfLines={2}
-            style={{
-              ...CommonStyle.hnBold,
-              fontSize: FONT_SIZE,
-              color: colors.mainColor2,
-              maxWidth: 220,
-            }}
-          >
+      <View style={styles.containerHeader}>
+        <View style={styles.viewTxtHeader}>
+          <Text numberOfLines={2} style={styles.txtHeader}>
             {data?.user_id?.display_name}
           </Text>
           {data?.user_id?.official_status && (
             <IconSvg name="icVerify" size={14} />
           )}
-          <View
-            style={{
-              width: 2,
-              height: 2,
-              borderRadius: 1,
-              backgroundColor: colors.text,
-            }}
-          />
-          <Text
-            style={{
-              ...CommonStyle.hnRegular,
-              color: colors.text,
-              fontSize: FONT_SIZE,
-            }}
-          >
+          {/* <View style={styles.viewDot} /> */}
+          <Text style={styles.txtTimeHeader}>
             {convertLastActive(data?.createdAt)}
           </Text>
         </View>
@@ -320,7 +207,7 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
               size={20}
               name="ellipsis-vertical"
               type={IconType.Ionicons}
-              color={colors.text}
+              color={colors.textOpacity6}
             />
           </PressableBtn>
         )}
@@ -329,16 +216,8 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
   }, [data, data.user_id]); // eslint-disable-line react-hooks/exhaustive-deps
   const ContentStatus = useMemo(() => {
     return (
-      <View style={{ flexDirection: "row" }}>
-        <Text
-          style={{
-            ...CommonStyle.hnRegular,
-            fontSize: FONT_SIZE,
-            marginBottom: 4,
-          }}
-        >
-          {data?.content}
-        </Text>
+      <View style={styles.viewContentComment}>
+        <Text style={styles.txtContentComment}>{data?.content}</Text>
         {data.sending && (
           <ActivityIndicator
             color={colors.text}
@@ -381,16 +260,7 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
             {likeNumber > 0 && likeNumber} {translations.like}
           </Text>
         </PressableBtn>
-        {data?.child_number > 0 && (
-          <View
-            style={{
-              width: 2,
-              height: 2,
-              borderRadius: 1,
-              backgroundColor: colors.text,
-            }}
-          />
-        )}
+        {/* {data?.child_number > 0 && <View style={styles.viewDot} />} */}
         {data?.child_number > 0 && (
           <PressableBtn onPress={pressCommnet} style={styles.viewLike}>
             <Text style={styles.textLikeShare}>
@@ -398,19 +268,12 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
             </Text>
           </PressableBtn>
         )}
-        <View
-          style={{
-            width: 2,
-            height: 2,
-            borderRadius: 1,
-            backgroundColor: colors.text,
-          }}
-        />
+        {/* <View style={styles.viewDot} /> */}
         <PressableBtn
           onPress={() => onPressReply(data)}
           style={[styles.viewLike, { justifyContent: "center" }]}
         >
-          <Text style={styles.textLikeShare}>{translations.reply}</Text>
+          <Text style={styles.textReply}>{translations.reply}</Text>
         </PressableBtn>
       </View>
     );
@@ -442,35 +305,3 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
 };
 
 export default React.memo(ItemComment);
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flexDirection: "row",
-//     paddingHorizontal: 16,
-//     marginBottom: 2,
-//     backgroundColor: palette.background,
-//     paddingTop: 14,
-//     paddingBottom: 4,
-//   },
-
-//   containerLikeShare: {
-//     flexDirection: "row",
-//     marginTop: 4,
-//     alignItems: "center",
-//     gap: 8,
-//   },
-//   viewLike: {
-//     flexDirection: "row",
-//     alignItems: "center",
-//   },
-//   textLikeShare: {
-//     ...CommonStyle.hnRegular,
-//     fontSize: FONT_SIZE,
-//     color: palette.text,
-//   },
-//   textLiked: {
-//     ...CommonStyle.hnRegular,
-//     fontSize: FONT_SIZE,
-//     color: palette.primary,
-//   },
-// });

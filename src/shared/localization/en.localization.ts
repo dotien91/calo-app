@@ -162,6 +162,7 @@ export default {
   post: {
     post: "POST",
     posts: "Post",
+    detailPost: (name: string) => `${name}'s post`,
     createPost: "Create Post",
     category: "Category",
     title: "Title",

@@ -172,6 +172,7 @@ export default {
   post: {
     post: "TẠO",
     posts: "Bài viết",
+    detailPost: (name: string) => `Bài viết của ${name}`,
     createPost: "Tạo bài viết",
     category: "Chuyên mục",
     title: "Tiêu đề",

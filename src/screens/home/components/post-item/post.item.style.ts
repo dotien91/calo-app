@@ -5,10 +5,10 @@ import CommonStyle from "@theme/styles";
 const { width } = Dimensions.get("screen");
 
 const PADDING_HORIZONTAL = 16;
-const SIZE_AVATAR = 30;
+const SIZE_AVATAR = 32;
 const FONT_SIZE = 16;
-const BORDER_RADIUS1 = 16;
-const BORDER_RADIUS2 = 12;
+const BORDER_RADIUS1 = 4;
+const BORDER_RADIUS2 = 4;
 const PADDING_LEFT = 12;
 const SIZE_IMAGE1 = width - PADDING_HORIZONTAL * 2 - PADDING_LEFT - SIZE_AVATAR;
 export default (theme: ExtendedTheme) => {
@@ -22,30 +22,31 @@ export default (theme: ExtendedTheme) => {
       paddingTop: 14,
       paddingBottom: 4,
     },
+    viewPlayvideo: {
+      ...CommonStyle.fillParent,
+      zIndex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+    },
     image11: {
       height: SIZE_IMAGE1,
       width: SIZE_IMAGE1,
       borderRadius: BORDER_RADIUS1,
     },
-    image12: {
-      ...CommonStyle.flex1,
-      borderTopLeftRadius: BORDER_RADIUS2,
-      borderBottomLeftRadius: BORDER_RADIUS2,
+    viewImage2: {
+      flexDirection: "row",
+      height: (SIZE_IMAGE1 - 4) / 2,
+      gap: 4,
     },
-    image22: {
-      ...CommonStyle.flex1,
-      borderTopRightRadius: BORDER_RADIUS2,
-      borderBottomRightRadius: BORDER_RADIUS2,
+    viewImage3: {
+      flexDirection: "row",
+      height: ((SIZE_IMAGE1 - 4) * 3) / 5,
+      gap: 4,
     },
-    image23: {
+    imageNormal: {
       ...CommonStyle.flex1,
-      borderTopRightRadius: BORDER_RADIUS2,
+      borderRadius: BORDER_RADIUS2,
     },
-    image33: {
-      ...CommonStyle.flex1,
-      borderBottomRightRadius: BORDER_RADIUS2,
-    },
-
     containerLikeShare: {
       flexDirection: "row",
       marginTop: 4,
@@ -62,6 +63,13 @@ export default (theme: ExtendedTheme) => {
       fontSize: FONT_SIZE,
       color: colors.text,
       marginLeft: 8,
+    },
+    viewMore: {
+      ...CommonStyle.fillParent,
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: colors.blackOverlay,
+      borderRadius: 4,
     },
   });
 };

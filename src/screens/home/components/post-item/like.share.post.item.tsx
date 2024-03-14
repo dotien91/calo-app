@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import { useTheme } from "@react-navigation/native";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 import LikeBtn from "../like-btn/LikeBtn";
 
@@ -9,6 +8,7 @@ import { TypedPost } from "shared/models";
 import createStyles from "./post.item.style";
 import { translations } from "@localization";
 import { sharePost } from "@utils/share.utils";
+import IconSvg from "assets/svg";
 
 interface LikeSharePostItemProps {
   data: TypedPost;
@@ -30,24 +30,15 @@ const LikeSharePostItem = ({ data, pressComment }: LikeSharePostItemProps) => {
         onPress={pressComment}
         style={[styles.viewLike, { justifyContent: "center" }]}
       >
-        <Icon
-          type={IconType.Ionicons}
-          size={16}
-          name="chatbubbles-outline"
-          color={colors.text}
-        />
+        <IconSvg size={16} name="icComment" color={colors.textOpacity8} />
+
         <Text style={styles.textLikeShare}>{data?.comment_number || "0"}</Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={_sharePost}
         style={[styles.viewLike, { justifyContent: "flex-end" }]}
       >
-        <Icon
-          type={IconType.Ionicons}
-          size={16}
-          name="share-social-outline"
-          color={colors.text}
-        />
+        <IconSvg size={16} name="icShare" color={colors.text} />
         <Text style={styles.textLikeShare}>{translations.post.share}</Text>
       </TouchableOpacity>
     </View>

@@ -1,13 +1,11 @@
 import { StyleSheet } from "react-native";
 import { ExtendedTheme } from "@react-navigation/native";
-import {
-  getStatusBarHeight,
-  getBottomSpace,
-} from "react-native-iphone-screen-helper";
+import { getBottomSpace } from "react-native-iphone-screen-helper";
 
 import CommonStyle from "@theme/styles";
 import { Device } from "@utils/device.ui.utils";
 import { palette } from "@theme/themes";
+import { ScreenHeight } from "@freakycoder/react-native-helpers";
 
 const SIZE_AVATAR = 58;
 const BORDER_AVATAR = 100;
@@ -15,9 +13,8 @@ const createStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
     container: {
-      ...CommonStyle.flex1,
+      ...CommonStyle.safeAreaView,
       backgroundColor: colors.background,
-      paddingTop: getStatusBarHeight(),
       marginBottom: getBottomSpace(),
       paddingBottom: 10,
     },
@@ -94,7 +91,6 @@ const createStyles = (theme: ExtendedTheme) => {
       backgroundColor: colors.background2,
     },
     viewCommentPostDetail: {
-      marginHorizontal: 20,
       alignItems: "center",
       gap: 10,
       flexDirection: "row",
@@ -104,7 +100,8 @@ const createStyles = (theme: ExtendedTheme) => {
       borderRadius: 4,
       borderWidth: 1,
       borderColor: colors.borderColor,
-      paddingHorizontal: 10,
+      paddingHorizontal: 8,
+      flex: 1,
     },
     buttonFlagPostDetail: {
       height: 25,
@@ -169,7 +166,7 @@ const createStyles = (theme: ExtendedTheme) => {
       width: "80%",
     },
     txtName: {
-      ...CommonStyle.hnBold,
+      ...CommonStyle.hnSemiBold,
     },
     txtDes: {
       ...CommonStyle.textRate,
@@ -252,6 +249,58 @@ const createStyles = (theme: ExtendedTheme) => {
       width: "80%",
       borderBottomWidth: 1,
       borderColor: palette.grey1,
+    },
+    viewComment: {
+      flexDirection: "row",
+      paddingHorizontal: 8,
+      gap: 8,
+      alignItems: "flex-end",
+    },
+    inputComment: {
+      ...CommonStyle.flex1,
+      justifyContent: "center",
+      paddingVertical: 10,
+      color: colors.text,
+      fontSize: 14,
+    },
+    viewReply: {
+      paddingHorizontal: 20,
+      backgroundColor: colors.background,
+      alignItems: "center",
+      flexDirection: "row",
+      gap: 10,
+    },
+    viewEmpty: {
+      ...CommonStyle.center,
+      ...CommonStyle.flex1,
+      backgroundColor: colors.background,
+      paddingVertical: 40,
+      minHeight: 300,
+    },
+    headerPost: {
+      height: 50,
+      alignItems: "center",
+      paddingHorizontal: 20,
+      flexDirection: "row",
+      backgroundColor: colors.background,
+      shadowColor: "rgba(0,0,0,0.8)",
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 0.1,
+      elevation: 10,
+      shadowRadius: 1,
+      marginBottom: 4,
+    },
+    txtHeader: {
+      ...CommonStyle.hnSemiBold,
+      fontSize: 16,
+      left: 16,
+      color: colors.text,
+      flex: 1,
+      textAlign: "center",
+      paddingRight: 48,
+    },
+    viewFlatList: {
+      minHeight: (ScreenHeight * 3) / 5,
     },
   });
 };

@@ -14,14 +14,11 @@ import {
 } from "@helpers/super.modal.helper";
 import { palette } from "@theme/themes";
 
-const BORDER_RADIUS2 = 12;
-
 interface ListFileProps {
   listFile: TypedMedia[];
-  sizeImage2: number;
 }
 
-const ListFile = ({ listFile, sizeImage2 }: ListFileProps) => {
+const ListFile = ({ listFile }: ListFileProps) => {
   const listMedia = listFile.filter(
     (i: any) =>
       i.media_mime_type.includes("image") ||
@@ -32,9 +29,6 @@ const ListFile = ({ listFile, sizeImage2 }: ListFileProps) => {
   const styles = React.useMemo(() => createStyles(theme), [theme]);
 
   const showImageVideo = (index: number) => {
-    console.log("indexxxx", index);
-    //gọi supermodal hiển thị danh sách image, video
-    // truyền vào danh sách
     const listMedia = listFile.filter(
       (i: any) =>
         i.media_mime_type.includes("image") ||
@@ -52,16 +46,9 @@ const ListFile = ({ listFile, sizeImage2 }: ListFileProps) => {
 
   const PlayVideo = () => {
     return (
-      <View
-        style={{
-          ...CommonStyle.fillParent,
-          zIndex: 0,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+      <View style={styles.viewPlayvideo}>
         <Icon
-          size={62}
+          size={56}
           name={"play-circle"}
           type={IconType.Ionicons}
           color={palette.white}
@@ -70,9 +57,19 @@ const ListFile = ({ listFile, sizeImage2 }: ListFileProps) => {
     );
   };
 
+  const showImage0 = () => {
+    showImageVideo(0);
+  };
+  const showImage1 = () => {
+    showImageVideo(1);
+  };
+  const showImage2 = () => {
+    showImageVideo(2);
+  };
+
   if (listMedia.length == 1) {
     return (
-      <Pressable onPress={() => showImageVideo(0)} style={styles.image11}>
+      <Pressable onPress={showImage0} style={styles.image11}>
         <Image
           style={styles.image11}
           source={{ uri: listMedia[0].media_thumbnail }}
@@ -83,17 +80,17 @@ const ListFile = ({ listFile, sizeImage2 }: ListFileProps) => {
   }
   if (listMedia.length == 2) {
     return (
-      <View style={{ flexDirection: "row", height: sizeImage2, gap: 4 }}>
-        <Pressable onPress={() => showImageVideo(0)} style={styles.image12}>
+      <View style={styles.viewImage2}>
+        <Pressable onPress={showImage0} style={styles.imageNormal}>
           <Image
-            style={styles.image12}
+            style={styles.imageNormal}
             source={{ uri: listMedia[0].media_thumbnail }}
           />
           {listMedia[0].media_mime_type.includes("video") && <PlayVideo />}
         </Pressable>
-        <Pressable onPress={() => showImageVideo(1)} style={styles.image22}>
+        <Pressable onPress={showImage1} style={styles.imageNormal}>
           <Image
-            style={styles.image22}
+            style={styles.imageNormal}
             source={{ uri: listMedia[1].media_thumbnail }}
           />
           {listMedia[1].media_mime_type.includes("video") && <PlayVideo />}
@@ -101,83 +98,36 @@ const ListFile = ({ listFile, sizeImage2 }: ListFileProps) => {
       </View>
     );
   }
-  if (listMedia.length == 3) {
+  if (listMedia.length >= 3) {
     return (
-      <View style={{ flexDirection: "row", height: sizeImage2, gap: 4 }}>
-        <Pressable onPress={() => showImageVideo(0)} style={styles.image12}>
+      <View style={styles.viewImage3}>
+        <Pressable onPress={showImage0} style={styles.imageNormal}>
           <Image
-            style={styles.image12}
+            style={styles.imageNormal}
             source={{ uri: listMedia[0].media_thumbnail }}
           />
           {listMedia[0].media_mime_type.includes("video") && <PlayVideo />}
         </Pressable>
         <View style={{ ...CommonStyle.flex1, gap: 4 }}>
-          <Pressable onPress={() => showImageVideo(1)} style={styles.image23}>
+          <Pressable onPress={showImage1} style={CommonStyle.flex1}>
             <Image
-              style={styles.image23}
+              style={styles.imageNormal}
               source={{ uri: listMedia[1].media_thumbnail }}
             />
             {listMedia[1].media_mime_type.includes("video") && <PlayVideo />}
           </Pressable>
-          <Pressable onPress={() => showImageVideo(2)} style={styles.image33}>
+          <Pressable onPress={showImage2} style={CommonStyle.flex1}>
             <Image
-              style={styles.image33}
+              style={styles.imageNormal}
               source={{ uri: listMedia[2].media_thumbnail }}
             />
-            {listMedia[2].media_mime_type.includes("video") && <PlayVideo />}
-          </Pressable>
-        </View>
-      </View>
-    );
-  }
-  if (listMedia.length > 3) {
-    return (
-      <View style={{ flexDirection: "row", height: sizeImage2, gap: 4 }}>
-        <Pressable onPress={() => showImageVideo(0)} style={styles.image12}>
-          <Image
-            style={styles.image12}
-            source={{ uri: listMedia[0].media_thumbnail }}
-          />
-          {listMedia[0].media_mime_type.includes("video") && <PlayVideo />}
-        </Pressable>
-        <View style={{ ...CommonStyle.flex1, gap: 4 }}>
-          <Pressable
-            onPress={() => showImageVideo(1)}
-            style={{ ...CommonStyle.flex1 }}
-          >
-            <Image
-              style={{
-                ...CommonStyle.flex1,
-                borderTopRightRadius: BORDER_RADIUS2,
-              }}
-              source={{ uri: listMedia[1].media_thumbnail }}
-            />
-            {listMedia[1].media_mime_type.includes("video") && <PlayVideo />}
-          </Pressable>
-          <Pressable
-            onPress={() => showImageVideo(2)}
-            style={{ ...CommonStyle.flex1 }}
-          >
-            <Image
-              style={{
-                ...CommonStyle.flex1,
-                borderBottomRightRadius: BORDER_RADIUS2,
-              }}
-              source={{ uri: listMedia[2].media_thumbnail }}
-            />
-            <View
-              style={{
-                ...CommonStyle.fillParent,
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: colors.blackOverlay,
-                borderBottomRightRadius: 12,
-              }}
-            >
-              <Text style={{ color: colors.primary }}>
-                +{listMedia.length - 3}
-              </Text>
-            </View>
+            {listMedia.length > 3 && (
+              <View style={styles.viewMore}>
+                <Text style={{ color: colors.primary }}>
+                  +{listMedia.length - 3}
+                </Text>
+              </View>
+            )}
           </Pressable>
         </View>
       </View>
