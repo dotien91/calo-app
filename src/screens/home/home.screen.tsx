@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Dimensions } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
@@ -14,6 +14,8 @@ import CommonStyle from "@theme/styles";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import useStore from "@services/zustand/store";
 import AboutHome from "./components/about-home/about.home";
+import eventEmitter from "@services/event-emitter";
+import CustomRefreshControl from "./components/refesh-controler/customRefeshControler";
 
 const initialLayout = { width: Dimensions.get("window").width };
 
@@ -63,6 +65,18 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
       style={{ backgroundColor: colors.background }}
     />
   );
+  const [refreshing, setRefreshing] = useState(false);
+  const reloadData = () => {
+    setRefreshing(true);
+    eventEmitter.emit("reload_following_post");
+    eventEmitter.emit("reload_list_post");
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 3000);
+  };
+  const renderRefreshControl = (refreshProps) => {
+    return <CustomRefreshControl {...refreshProps} />;
+  };
 
   return (
     <View style={CommonStyle.safeAreaView}>
@@ -75,6 +89,9 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
         onIndexChange={setIndex}
         initialLayout={initialLayout}
         renderTabBar={renderTabBar}
+        onStartRefresh={reloadData}
+        renderRefreshControl={renderRefreshControl}
+        isRefreshing={refreshing}
       />
       {isLoggedIn() && userData?._id && (
         <TouchableOpacity

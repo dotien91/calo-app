@@ -70,6 +70,7 @@ const CouponCreateScreen = () => {
     limit: "10",
     user_id: userData?._id,
     search: search,
+    public_status: "active",
   };
   const {
     listData,

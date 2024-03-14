@@ -77,6 +77,7 @@ const InputChatLive: React.FC<InputChatLiveProps> = ({
   const paramsRequest = {
     limit: "6",
     created_user_id: liveData?.user_id?._id,
+    public_status: "active",
     // auth_id: idTeacher,
   };
 

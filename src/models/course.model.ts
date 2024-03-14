@@ -68,8 +68,9 @@ export interface ICourseReview {
 }
 
 export interface IListCourseFilterParams {
-  limit: number;
+  limit: number | string;
   search?: string;
+  public_status?: string;
 }
 // const courseFilterKeysDefault = {
 //   levels: ["4+", "5+", "6+", "7+", "8+", "9"],

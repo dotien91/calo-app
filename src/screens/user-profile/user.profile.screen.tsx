@@ -380,7 +380,7 @@ const ProfileUser = (props: ProfileUserProps) => {
   ]);
 
   useEffect(() => {
-    if (userData?.user_role === "teacher") {
+    if (userData?.user_role === "teacher" || userData?.user_role === "admin") {
       setRoute([
         { key: "first", title: translations.post.posts },
         { key: "second", title: translations.course.course },

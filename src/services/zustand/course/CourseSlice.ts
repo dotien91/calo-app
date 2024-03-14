@@ -64,9 +64,9 @@ export interface CourseSlice {
 }
 
 const createCourseSlice: StoreSlice<CourseSlice> = (set, get) => ({
-  listCourseFilterParams: { limit: "999999999" },
+  listCourseFilterParams: { limit: "999999999", public_status: "active" },
   setListCourseFilterParams: (params: IListCourseFilterParams) =>
-    set({ listCourseFilterParams: params }),
+    set({ listCourseFilterParams: { ...params, public_status: "active" } }),
   courseFilterKeys: courseFilterKeysDefault,
   setCourseFilterKeys: (v: ICourseFilterKeys) => set({ courseFilterKeys: v }),
   courseCurrentSort: { id: "", name: "" },

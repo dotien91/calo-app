@@ -27,6 +27,7 @@ const ListCourseLiveStream = ({ isTeacher, liveData }) => {
   const paramsRequest = {
     limit: "6",
     created_user_id: idTeacher,
+    public_status: "active",
     // auth_id: idTeacher,
   };
 

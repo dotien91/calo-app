@@ -37,6 +37,7 @@ import ListBank from "./modal-inner/ListBank";
 import SelectRadioButton from "@screens/code-activations/select.radio.button";
 import ReferralPopup from "@screens/profile.screen/referral.popup";
 import TeacherClassModalInner from "@screens/teacher-courses/teacher.class.modal.inner";
+import { ScreenHeight } from "@freakycoder/react-native-helpers";
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
 // using normal one.
@@ -297,6 +298,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     paddingVertical: 16,
+    maxHeight: (ScreenHeight / 5) * 4,
     position: "absolute",
     left: 0,
     bottom: 0,

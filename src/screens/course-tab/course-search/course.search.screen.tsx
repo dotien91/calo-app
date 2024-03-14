@@ -115,7 +115,14 @@ const ListSearch = React.memo(({ txtSearch, isTeacherTab }) => {
   console.log("txtSearchtxtSearch", txtSearch);
   const { listData, isLoading, onEndReach, renderFooterComponent } =
     useListSearch<ICourseItem>(
-      { limit: "5", search: txtSearch, headerTitle: txtSearch },
+      isTeacherTab
+        ? { limit: "5", search: txtSearch, headerTitle: txtSearch }
+        : {
+            limit: "5",
+            search: txtSearch,
+            headerTitle: txtSearch,
+            public_status: "active",
+          },
       isTeacherTab ? getListTutor : getCourseList,
       [],
     );

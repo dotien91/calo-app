@@ -26,7 +26,12 @@ const MyCourse = () => {
   ]);
 
   const { listData, isLoading } = useListData<ICourseItem>(
-    { auth_id: userData?._id, order_by: "DESC", sort_by: "createdAt" },
+    {
+      auth_id: userData?._id,
+      order_by: "DESC",
+      sort_by: "createdAt",
+      // public_status: "active",
+    },
     getMyCourse,
   );
 

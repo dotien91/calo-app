@@ -13,7 +13,7 @@ const TeacherClassModalInner = ({ listData }) => {
   };
 
   return (
-    <View style={[CS.flex1, { minHeight: 100 }]}>
+    <View style={[CS.flex1, { minHeight: 100, maxHeight: "100%" }]}>
       <TextBase style={{ marginLeft: 12 }} fontWeight="600" fontSize={20}>
         {translations.course.manageClass}
       </TextBase>
@@ -21,6 +21,7 @@ const TeacherClassModalInner = ({ listData }) => {
         <EmptyResultView desc={translations.course.noClass} icon="book" />
       )}
       <FlatList
+        style={{ flex: 1 }}
         contentContainerStyle={{ paddingHorizontal: 16 }}
         data={listData}
         renderItem={renderItem}

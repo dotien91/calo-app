@@ -15,7 +15,12 @@ const TeacherCourse = () => {
   const userData = useStore((state) => state.userData);
 
   const { listData, isLoading } = useListData<ICourseItem>(
-    { created_user_id: userData?._id, order_by: "DESC", sort_by: "createdAt" },
+    {
+      created_user_id: userData?._id,
+      order_by: "DESC",
+      sort_by: "createdAt",
+      public_status: "active",
+    },
     getMyCourse,
   );
 
