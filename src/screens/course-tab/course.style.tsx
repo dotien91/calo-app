@@ -111,7 +111,8 @@ export default (theme: ExtendedTheme) => {
       color: colors.textOpacity6,
     },
     viewTitle: {
-      ...CS.flexStart,
+      ...CS.center,
+      flexDirection: "row",
       gap: 4,
     },
   });

@@ -84,13 +84,15 @@ const CourseToolbar = () => {
     <View style={styles.selectView}>
       <TouchableOpacity onPress={openSelectTypeCourseModal}>
         <View style={styles.viewTitle}>
-          <Text style={styles.txtSelect}>{courseCurrentType.name}</Text>
-          <Icon
-            name={"chevron-down"}
-            type={IconType.Feather}
-            size={20}
-            style={{ color: colors.primary, paddingTop: 5 }}
-          />
+          <Text style={styles.txtSelect}>
+            {courseCurrentType.name}
+            <Icon
+              name={"chevron-down"}
+              type={IconType.Feather}
+              size={20}
+              style={{ color: colors.primary }}
+            />
+          </Text>
         </View>
       </TouchableOpacity>
       <View style={CS.flexEnd}>
