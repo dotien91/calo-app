@@ -54,9 +54,9 @@ const ListFriend: React.FC<ListFriendProps> = () => {
       >
         <Avatar
           style={{
-            width: 64,
-            height: 64,
-            borderRadius: 20,
+            width: 48,
+            height: 48,
+            borderRadius: 24,
           }}
           sourceUri={{
             uri: partnerId?.user_avatar || partnerId?.user_avatar_thumbnail,

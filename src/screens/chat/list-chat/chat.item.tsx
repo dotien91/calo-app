@@ -11,8 +11,9 @@ import { getFormatDayMessage } from "@utils/date.utils";
 import CommonStyle from "@theme/styles";
 import { setViewRoom } from "@services/api/chat.api";
 import { SCREENS } from "constants";
+import { palette } from "@theme/themes";
 
-const avatarSize = 64;
+const avatarSize = 56;
 
 const ChatItem = ({
   read_count,
@@ -61,7 +62,7 @@ const ChatItem = ({
           width: avatarSize,
           height: avatarSize,
           marginRight: 10,
-          borderRadius: 20,
+          borderRadius: avatarSize / 2,
           ...CommonStyle.flexCenter,
         }}
       >
@@ -71,8 +72,8 @@ const ChatItem = ({
           }}
           resizeMode="cover"
           style={{
-            width: 100 / 2,
-            height: 100 / 2,
+            width: avatarSize / 2,
+            height: avatarSize / 2,
             borderRadius: 25,
             position: "absolute",
             bottom: -10,
@@ -85,8 +86,8 @@ const ChatItem = ({
           }}
           resizeMode="cover"
           style={{
-            width: 100 / 2,
-            height: 100 / 2,
+            width: avatarSize / 2,
+            height: avatarSize / 2,
             borderRadius: 25,
           }}
         />
@@ -108,25 +109,30 @@ const ChatItem = ({
             width: avatarSize,
             height: avatarSize,
             marginRight: 10,
-            borderRadius: 20,
+            borderRadius: avatarSize / 2,
           }}
         />
       )}
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, gap: 8 }}>
         <View style={CommonStyle.flexStart}>
           <Text>
             <Text numberOfLines={1} style={styles.partnerNameTxt}>
               {chat_room_id?.room_name}
             </Text>
-            <Text style={styles.timeTxt}> • {timeLastMessage}</Text>
           </Text>
         </View>
-        <Text
-          numberOfLines={1}
-          style={[styles.lastMessageTxt, !readCount && CommonStyle.hnRegular]}
-        >
-          {chat_room_id?.last_message}
-        </Text>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Text
+            numberOfLines={1}
+            style={[
+              styles.lastMessageTxt,
+              !readCount && { fontWeight: "400", color: palette.textOpacity8 },
+            ]}
+          >
+            {chat_room_id?.last_message}
+          </Text>
+          <Text style={styles.timeTxt}>{timeLastMessage}</Text>
+        </View>
       </View>
     </TouchableOpacity>
   );

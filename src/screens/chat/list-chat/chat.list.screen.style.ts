@@ -24,7 +24,7 @@ export default (theme: ExtendedTheme) => {
     partnerNameTxt: {
       ...CommonStyle.hnBold,
       fontSize: 16,
-      color: colors.mainColor2,
+      color: colors.text,
     },
     timeTxt: {
       ...CommonStyle.hnRegular,
@@ -32,9 +32,11 @@ export default (theme: ExtendedTheme) => {
       color: colors.textOpacity4,
     },
     lastMessageTxt: {
-      ...CommonStyle.hnBold,
-      // color: colors.grey2,
+      ...CommonStyle.hnMedium,
+      color: colors.text,
       fontSize: 16,
+      flex: 1,
+      textAlign: "left",
     },
     listFriend: {
       paddingLeft: 16,
@@ -46,8 +48,8 @@ export default (theme: ExtendedTheme) => {
     },
     friendNameTxt: {
       ...CommonStyle.hnRegular,
-      color: colors.mainColor2,
-      fontSize: 16,
+      color: colors.textOpacity8,
+      fontSize: 14,
       // width: '100%'
     },
     wrapSearch: {
@@ -73,7 +75,7 @@ export default (theme: ExtendedTheme) => {
       position: "absolute",
       right: 10,
       top: -10,
-      color: colors.mainColor2,
+      color: colors.text,
     },
   });
 };
