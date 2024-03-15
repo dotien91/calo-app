@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { View, TouchableOpacity, Text, Image, ScrollView } from "react-native";
 import { useTheme } from "@react-navigation/native";
-import crashlytics from "@react-native-firebase/crashlytics";
+// import crashlytics from "@react-native-firebase/crashlytics";
 
 /**
  * ? Local Imports

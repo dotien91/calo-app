@@ -27,7 +27,6 @@ import {
 import { formatLanguage } from "@utils/string.utils";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import FastImage from "react-native-fast-image";
-import TextBase from "@shared-components/TextBase";
 import useStore from "@services/zustand/store";
 
 interface HeaderCourseProps {

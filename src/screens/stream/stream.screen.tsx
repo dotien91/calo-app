@@ -44,7 +44,6 @@ import { palette } from "@theme/themes";
 import { SCREENS } from "constants";
 import IconSvg from "assets/svg";
 import PressableBtn from "@shared-components/button/PressableBtn";
-import SkeletonPlaceholder from "@shared-components/skeleton";
 
 function App() {
   const publisherRef = useRef<RTMPPublisherRefProps>(null);

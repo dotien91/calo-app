@@ -9,7 +9,6 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
-  Dimensions,
 } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
