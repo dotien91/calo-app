@@ -8,10 +8,11 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Clipboard,
 } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
-import Clipboard from "@react-native-community/clipboard";
+// import Clipboard from "@react-native-community/clipboard";
 
 import Header from "@shared-components/header/Header";
 import { useTheme, useFocusEffect } from "@react-navigation/native";

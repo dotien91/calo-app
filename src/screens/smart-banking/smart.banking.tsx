@@ -5,8 +5,9 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Clipboard,
 } from "react-native";
-import Clipboard from "@react-native-community/clipboard";
+// import Clipboard from "@react-native-community/clipboard";
 import { useTheme, useRoute } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 
