@@ -47,8 +47,6 @@ const BookLessonSelectView: React.FC<BookLessonSelectViewProps> = () => {
     });
   }, []);
 
-  console.log("datadatadata", data);
-
   //hide
   React.useEffect(() => {
     let countDay = 0;

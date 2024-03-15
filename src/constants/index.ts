@@ -85,6 +85,7 @@ export const SCREENS = {
   LIST_COURSE: "ListCourse",
   HIDDEN_PAGE: "HiddenPage",
   IELTS_PRACTICE: "IeltsPractice",
+  IELTS_READING_PRACTICE: "IeltsReadingPractice",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

@@ -23,8 +23,10 @@ interface InputPropsType extends TextInputProps {
   customStyle?: ViewStyle;
   icon?: IconType;
   disabled?: boolean;
-  cb: (e: string) => void;
+  cb: (e: string, param: any) => void;
   showClearIcon: boolean;
+  index: number;
+  extraParam?: any;
 }
 
 // eslint-disable-next-line react/display-name
@@ -37,6 +39,7 @@ const Input = React.forwardRef(
       cb,
       defaultValue,
       showClearIcon = true,
+      extraParam,
       ...res
     }: InputPropsType,
     ref,
@@ -52,7 +55,7 @@ const Input = React.forwardRef(
 
     const onChangeText = (e: string) => {
       setValue(e);
-      cb && cb(e);
+      cb && cb(e, extraParam);
     };
 
     const clearInput = () => {
@@ -70,7 +73,6 @@ const Input = React.forwardRef(
           />
         )}
         <TextInput
-          {...res}
           editable={!disabled}
           ref={ref}
           onChangeText={onChangeText}
@@ -84,8 +86,9 @@ const Input = React.forwardRef(
             },
           ]}
           value={value}
+          {...res}
         />
-        {!!showClearIcon && !!value && (
+        {!disabled && !!showClearIcon && !!value && (
           <PressableBtn style={styles.iconClose} onPress={clearInput}>
             <Icon size={16} type={IconType.Ionicons} name={"close-circle"} />
           </PressableBtn>

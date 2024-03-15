@@ -156,8 +156,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   viewIcons: {
-    width: 40,
-    height: 40,
+    width: 24,
+    height: 24,
     ...CommonStyle.center,
   },
   badge: {

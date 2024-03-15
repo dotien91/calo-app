@@ -24,7 +24,7 @@ interface TypedStateListData<T> {
 export function useApi<T>({
   params,
   requestData,
-  showError
+  showError,
 }: IParams): TypedUseApi<T> {
   const [stateListData, setStateListData] = useState<TypedStateListData<T>>({
     data: null,

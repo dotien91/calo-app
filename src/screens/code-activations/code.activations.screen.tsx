@@ -22,6 +22,8 @@ import { formatDate } from "@utils/date.utils";
 import { getListAffiliate } from "@services/api/affiliate.api";
 import formatMoney from "@shared-components/input-money/format.money";
 
+const selected = 0;
+
 const CodeActivationsScreen = () => {
   // const [courseCurrentSort, setCourseCurrentSort] = useState({});
   // const [listCourseFilterParams] = useState({});
@@ -33,7 +35,7 @@ const CodeActivationsScreen = () => {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const [sectionList, setSectionList] = useState<TypedUser[]>([]);
   const [activeSections, setActiveSections] = useState<number[]>([0]);
-  const [selected, setSelected] = useState(0);
+  // const [selected, setSelected] = useState(0);
   //fake data
   const listData = [
     {

@@ -45,6 +45,9 @@ export default {
   goBackHome: "Quay về trang chủ",
   next: "Tiếp theo",
   other: "Khác",
+  recordAudio: "Ghi âm",
+  playAudio: "Phát audio",
+  stopAudio: "Dừng audio",
   error: {
     unknown: "Có lỗi không xác định xảy ra!",
     invalidPhoneEmail: "SĐT/Email không hợp lệ",
@@ -1529,5 +1532,10 @@ export default {
     speaking: "Kĩ năng nói",
     answers: "Câu trả lời",
     questions: "Câu hỏi",
+    submitSucces: "Nộp bài thành công",
+    submit: "Nộp bài",
+    timeout: "Hết giờ!",
+    hidePassage: "Thu gọn đoạn hội thoại",
+    showPassage: "Mở rộng đoạn hội thoại",
   },
 };

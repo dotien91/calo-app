@@ -178,6 +178,13 @@ export interface IItemClass {
   course_calendar_ids: IItemTimeOfClass[];
 }
 
+export enum EnumTestType {
+  Listening = "listening",
+  Reading = "reading",
+  Writing = "writing",
+  Speaking = "speaking",
+}
+
 export interface IDetailPractice {
   _id: string;
   created_user_id: TypedUser;
@@ -186,4 +193,16 @@ export interface IDetailPractice {
   duration_time: number;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface IQuestion {
+  test_id: string;
+  parent_id: string;
+  media_id: string[];
+  title: string;
+  question: string;
+  content: string;
+  answer: string;
+  type: EnumTestType;
+  index?: boolean;
 }

@@ -45,6 +45,9 @@ export default {
   goBackHome: "Go back home",
   next: "Next",
   other: "Other",
+  recordAudio: "Record audio",
+  playAudio: "Play audio",
+  stopAudio: "Stop audio",
   error: {
     unknown: "Unknow error!",
     invalidPhoneEmail: "Phone/Email invalid",
@@ -1016,6 +1019,11 @@ export default {
     speaking: "Speaking",
     answers: "Answers",
     questions: "Questions",
+    submitSucces: "Submit success",
+    timeout: "Timeout",
+    submit: "Submit",
+    hidePassage: "Hide passage",
+    showPassage: "Show passage",
   },
 };
 /* eslint-disable max-len */

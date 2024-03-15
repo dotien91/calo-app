@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
 import CS from "@theme/styles";
@@ -10,14 +10,11 @@ import VideoPlayer from "@shared-components/video.player.component";
 import { palette } from "@theme/themes";
 import { translations } from "@localization";
 
-const { width } = Dimensions.get("screen");
+// const { width } = Dimensions.get("screen");
 
-const PADDING_HORIZONTAL = 8;
-const SIZE_AVATAR = 20;
-const BORDER_RADIUS = 8;
-const PADDING_LEFT = 8;
-const SIZE_IMAGE1 =
-  width - PADDING_HORIZONTAL * 0.5 - PADDING_LEFT - SIZE_AVATAR;
+// const PADDING_HORIZONTAL = 8;
+// const SIZE_AVATAR = 20;
+// const PADDING_LEFT = 8;
 
 const StreamCard = ({ data }: { data: IStreamItem }) => {
   const renderVideoLive = () => {
@@ -85,11 +82,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     zIndex: 2,
     gap: 10,
-  },
-  styleCover: {
-    height: SIZE_IMAGE1,
-    width: SIZE_IMAGE1,
-    borderRadius: BORDER_RADIUS,
   },
   styleTxtTitle1: {
     ...CS.textTitleStream,

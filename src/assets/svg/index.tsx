@@ -110,6 +110,8 @@ import icInviteCode from "./invite-code.svg";
 import icSelectDown from "./icon-selectdown.svg";
 import icAdd from "./icon-add.svg";
 import icDelete from "./icon-delete.svg";
+import icCircleArrowLeft from "./circle-arrow-left.svg";
+import icCircleArrowRight from "./circle-arrow-down.svg";
 
 const Icons = {
   intro1,
@@ -222,6 +224,8 @@ const Icons = {
   icSelectDown,
   icAdd,
   icDelete,
+  icCircleArrowLeft,
+  icCircleArrowRight,
 };
 
 interface IconSvgProps {

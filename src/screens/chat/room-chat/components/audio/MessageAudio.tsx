@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ActivityIndicator, Image, StyleSheet, View } from "react-native";
 import Sound from "react-native-sound";
 
@@ -18,15 +18,24 @@ import Animated, {
 import { palette } from "@theme/themes";
 import CommonStyle from "@theme/styles";
 import PressableBtn from "@shared-components/button/PressableBtn";
+import IconSvg from "assets/svg";
+import TextBase from "@shared-components/TextBase";
 
 interface TypedMessageAudioProps {
   itemAudio: TypedDataMediaChatHistory;
   // isMyMessage: boolean;
+  type?: string;
   onLongPress?: () => void;
   disabled?: boolean;
+  autoplay?: boolean;
 }
 
-const MessageAudio = ({ itemAudio, disabled }: TypedMessageAudioProps) => {
+const MessageAudio = ({
+  itemAudio,
+  disabled,
+  type,
+  autoplay,
+}: TypedMessageAudioProps) => {
   const { media_status } = itemAudio;
   const media_url = itemAudio.media_url || itemAudio.uri;
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -49,13 +58,17 @@ const MessageAudio = ({ itemAudio, disabled }: TypedMessageAudioProps) => {
         setDuration(Math.floor(refSoundPlayer.current?.getDuration() || 0));
       }
     });
-
+    if (autoplay) {
+      setTimeout(() => {
+        onPlaySound();
+      }, 3500);
+    }
     return () => {
       refSoundPlayer.current?.release();
     };
   }, [media_url]);
 
-  const onPlaySound = useCallback(() => {
+  const onPlaySound = () => {
     if (
       media_status === EnumMessageStatus.Pending ||
       media_status === EnumMessageStatus.Fail
@@ -85,13 +98,75 @@ const MessageAudio = ({ itemAudio, disabled }: TypedMessageAudioProps) => {
       setIsPlaying(!isPlaying);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isPlaying, duration, media_status]);
+  };
 
   const styleAniWave = useAnimatedStyle(() => {
     return {
-      width: interpolate(aniValue.value, [0, 1], [0, Device.width * 0.3]),
+      width: interpolate(
+        aniValue.value,
+        [0, 1],
+        [0, type == "basic" ? Device.width - 130 : Device.width * 0.3],
+      ),
     };
   });
+
+  if (type == "basic")
+    return (
+      <PressableBtn
+        disabled={disabled}
+        style={[styles.containerBasic, { opacity: disabled ? 0.5 : 1 }]}
+        onPress={onPlaySound}
+      >
+        <View style={CommonStyle.flexStart}>
+          <View style={[styles.btnPlayPauseBasic]}>
+            {media_status === EnumMessageStatus.Pending ? (
+              <ActivityIndicator size="small" color={palette.text} />
+            ) : media_status === EnumMessageStatus.Fail ? (
+              <Icon
+                size={18}
+                type={IconType.Feather}
+                name={"alert-circle-outline"}
+                color={palette.placeholder}
+              />
+            ) : isReady ? (
+              isPlaying ? (
+                <IconSvg
+                  size={18}
+                  name={"icPause"}
+                  color={palette.placeholder}
+                />
+              ) : (
+                <IconSvg
+                  size={18}
+                  name={"icPlay"}
+                  color={palette.placeholder}
+                />
+              )
+            ) : (
+              <ActivityIndicator size="small" color={palette.textLight} />
+            )}
+          </View>
+          <TextBase fontSize={12}>00:21</TextBase>
+        </View>
+        <View>
+          <View style={[styles.imageWaveBasic]} />
+
+          <Animated.View
+            style={[
+              styles.imageWaveBasic,
+              {
+                position: "absolute",
+                overflow: "hidden",
+                backgroundColor: palette.primary,
+              },
+              styleAniWave,
+            ]}
+          ></Animated.View>
+        </View>
+
+        <TextBase fontSize={12}>00:21</TextBase>
+      </PressableBtn>
+    );
 
   return (
     <PressableBtn
@@ -111,7 +186,7 @@ const MessageAudio = ({ itemAudio, disabled }: TypedMessageAudioProps) => {
           <ActivityIndicator size="small" color={palette.text} />
         ) : media_status === EnumMessageStatus.Fail ? (
           <Icon
-            size={18}
+            size={24}
             type={IconType.Ionicons}
             name={"alert-circle-outline"}
             color={palette.danger}
@@ -119,14 +194,14 @@ const MessageAudio = ({ itemAudio, disabled }: TypedMessageAudioProps) => {
         ) : isReady ? (
           isPlaying ? (
             <Icon
-              size={18}
+              size={24}
               type={IconType.Ionicons}
               name={"pause"}
               color={palette.white}
             />
           ) : (
             <Icon
-              size={18}
+              size={24}
               type={IconType.Ionicons}
               name={"play"}
               color={palette.white}
@@ -174,10 +249,26 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     marginTop: 8,
   },
+  containerBasic: {
+    height: 24,
+    width: "100%",
+    ...CommonStyle.flexRear,
+    paddingHorizontal: 16,
+    marginTop: 12,
+  },
+  btnPlayPauseBasic: {
+    marginRight: 6,
+  },
   btnPlayPause: {
     padding: 6,
     marginRight: HS._8,
     borderRadius: MHS._100,
+  },
+  imageWaveBasic: {
+    width: Device.width - 130,
+    height: 12,
+    borderRadius: 8,
+    backgroundColor: palette.grey4,
   },
   imageWave: {
     width: Device.width * 0.3,

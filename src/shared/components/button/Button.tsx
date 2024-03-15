@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { View, Text, Pressable, ViewStyle, ColorValue } from "react-native";
+import { Text, Pressable, ViewStyle, ColorValue } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import createStyles from "./Button.style";
 import { palette } from "@theme/themes";
@@ -16,6 +16,7 @@ interface ButtonProps {
   type?: string;
   iconName?: string;
   isFullWidth: boolean;
+  showRightIcon: boolean;
 }
 
 export default function Button({
@@ -28,11 +29,12 @@ export default function Button({
   iconName,
   disabled,
   type,
-  isFullWidth,
+  isFullWidth = true,
+  showRightIcon = false,
 }: ButtonProps) {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(), [theme]);
-  const hasIcon = !!SvgSo || !!iconName;
+  // const hasIcon = !!SvgSo || !!iconName;
 
   const colorIcon = () => {
     switch (type) {
@@ -44,6 +46,8 @@ export default function Button({
         break;
       case "disabled":
         return palette.textOpacity4;
+      case "viewmore":
+        return palette.primary;
         break;
       default:
         return palette.text;
@@ -63,33 +67,43 @@ export default function Button({
           type == "primary" && styles.btnPrimary,
           type == "outline" && styles.btnOutline,
           type == "disabled" && styles.btnDisabled,
-          isFullWidth && { width: "100%" },
+          type == "viewmore" && styles.btnViewmore,
+          isFullWidth ? { width: "100%" } : { alignSelf: "flex-start" },
           style && style,
         ];
       }}
       onPress={onPress}
     >
       {!!SvgSo && SvgSo}
-      {!!iconName && (
+      {!showRightIcon && !!iconName && (
         <Icon
           type={IconType.Feather}
           name={iconName}
           size={20}
           color={colorIcon()}
+          style={{ marginRight: 6 }}
         />
       )}
-      {hasIcon && !!text && <View style={{ width: 8 }} />}
       <Text
         style={[
           styles.textButton,
           !!textColor && { color: textColor },
           type == "primary" && styles.txtBtnPrimary,
-          type == "outline" && styles.txtBtnOutline,
+          (type == "outline" || type == "viewmore") && styles.txtBtnOutline,
           type == "disabled" && styles.txtBtnDisabled,
         ]}
       >
         {text}
       </Text>
+      {!!showRightIcon && !!iconName && (
+        <Icon
+          type={IconType.Feather}
+          name={iconName}
+          size={20}
+          color={colorIcon()}
+          style={{ marginLeft: 6 }}
+        />
+      )}
     </Pressable>
   );
 }

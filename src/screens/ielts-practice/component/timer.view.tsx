@@ -6,37 +6,53 @@ import { EnumColors } from "models";
 import IconBtn from "@shared-components/button/IconBtn";
 import { palette } from "@theme/themes";
 import CS from "@theme/styles";
+import { showToast } from "@helpers/super.modal.helper";
+import { translations } from "@localization";
 
 interface ITimmerView {
   duration_time: number;
+  setFinishedTime: (v: number) => void;
+  setIsTimeout: (v: boolean) => void;
 }
 
-const TimmerView = ({ duration_time }: ITimmerView) => {
-  const _hours = Math.floor(duration_time / 3600) % 24;
-  duration_time -= _hours * 3600;
+const TimmerView = ({
+  duration_time,
+  setFinishedTime,
+  setIsTimeout,
+}: ITimmerView) => {
+  const durationTimeBySeconds = React.useRef(duration_time / 1000);
+  const _hours = Math.floor(durationTimeBySeconds.current / 3600);
+  durationTimeBySeconds.current -= _hours * 3600;
 
   // calculate (and subtract) whole minutes
-  const _mins = Math.floor(duration_time / 60) % 60;
-  duration_time -= _mins * 60;
+  const _mins = Math.floor(durationTimeBySeconds.current / 60);
+  durationTimeBySeconds.current -= _mins * 60;
 
   // what's left is seconds
-  const _secs = duration_time % 60;
+  const _secs = durationTimeBySeconds.current % 60;
   const [mins, setMins] = useState(_mins);
   const [secs, setSecs] = useState(_secs);
   const [hour, setHour] = useState(_hours);
 
   useEffect(() => {
+    setFinishedTime(hour * 3600 + mins * 60 + secs);
     const timerId = setInterval(() => {
       if (secs <= 0) {
         if (mins <= 0) {
           if (hour <= 0) {
             clearInterval(timerId);
+            setIsTimeout(true);
+            showToast({
+              type: "warning",
+              message: translations.ieltsPractice.timeout,
+            });
             setHour(0);
             setMins(0);
             setSecs(0);
             //end
           } else {
             setHour((h) => h - 1);
+            setSecs(59);
             setMins(59);
           }
         } else {
@@ -51,7 +67,16 @@ const TimmerView = ({ duration_time }: ITimmerView) => {
   }, [secs, mins, hour]);
 
   return (
-    <View style={{ ...CS.flexCenter }}>
+    <View
+      style={{
+        ...CS.flexCenter,
+        alignSelf: "center",
+        position: "absolute",
+        bottom: 0,
+        left: 100,
+        right: 100,
+      }}
+    >
       <IconBtn
         customStyle={{ marginRight: 4 }}
         name="clock"
