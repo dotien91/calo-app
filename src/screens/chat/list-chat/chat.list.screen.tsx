@@ -1,5 +1,12 @@
-import React, { useMemo, useEffect } from "react";
-import { View, FlatList, SafeAreaView, Text } from "react-native";
+import React, { useMemo, useEffect, useState } from "react";
+import {
+  View,
+  FlatList,
+  SafeAreaView,
+  Text,
+  ScrollView,
+  RefreshControl,
+} from "react-native";
 import { useTheme } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 
@@ -20,6 +27,8 @@ import { TypedGeneralRoomChat, TypedUserChat } from "models/chat.model";
 import { onSocket, offSocket } from "@helpers/socket.helper";
 import { SCREENS } from "constants";
 import useStore from "@services/zustand/store";
+import ChatNotification from "./chat.notification";
+import { getListNotification } from "@services/api/notification.api";
 
 interface ListScreenProps {}
 
@@ -30,7 +39,8 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
   // const route = useRoute();
   // const paramsFromNavigation = route.params?.["groupData"];
   const userData = useStore((state) => state.userData);
-
+  const [lastNoti, setLastNoti] = useState();
+  const [refreshing, setRefreshing] = useState(false);
   const {
     listData,
     onEndReach,
@@ -47,9 +57,35 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
     userData,
   );
 
+  const getLastNotification = () => {
+    const param = {
+      limit: 1,
+      auth_id: userData?._id || "",
+      order_by: "DESC",
+    };
+    getListNotification(param).then((res) => {
+      if (!res.isError) {
+        setLastNoti(res.data[0]);
+      }
+    });
+  };
+
+  useEffect(() => {
+    getLastNotification();
+  }, []);
+
   const onRefresh = () => {
+    console.log("onRefresh");
     _requestData(false);
   };
+  const scrollToRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    getLastNotification();
+    _requestData(false);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   const msgToUser = (data: string) => {
     const newChatItem: TypedUserChat = JSON.parse(data)?.chat_room_data;
@@ -132,19 +168,28 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
           icon={"chatbubble-ellipses-outline"}
         />
       )}
-      <FlatList
-        data={listData}
-        renderItem={renderItem}
-        scrollEventThrottle={16}
-        contentContainerStyle={styles.listChat}
-        onEndReachedThreshold={0}
-        onEndReached={onEndReach}
+      <ScrollView
         showsVerticalScrollIndicator={false}
-        removeClippedSubviews={true}
-        keyExtractor={(item) => item?.chat_room_id?._id + ""}
-        refreshControl={refreshControl()}
-        ListFooterComponent={renderFooterComponent()}
-      />
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={scrollToRefresh} />
+        }
+      >
+        {lastNoti && <ChatNotification item={lastNoti} />}
+        <View style={{ height: 8 }} />
+        <FlatList
+          data={listData}
+          renderItem={renderItem}
+          scrollEventThrottle={16}
+          contentContainerStyle={styles.listChat}
+          onEndReachedThreshold={0}
+          onEndReached={onEndReach}
+          showsVerticalScrollIndicator={false}
+          removeClippedSubviews={true}
+          keyExtractor={(item) => item?.chat_room_id?._id + ""}
+          refreshControl={refreshControl()}
+          ListFooterComponent={renderFooterComponent()}
+        />
+      </ScrollView>
     </SafeAreaView>
   );
 };

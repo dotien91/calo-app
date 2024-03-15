@@ -201,7 +201,6 @@ export function getFormatDayMessage(
 export function getFormatDayNotification(
   time: Date | string,
   sameDay = "HH:mm",
-  diffYear = "DD/MM/YYYY",
 ) {
   if (!time) {
     return "";
@@ -211,12 +210,8 @@ export function getFormatDayNotification(
   return IsSameDay
     ? dayjs(time).format(sameDay)
     : IsSameYear
-    ? dayjs(time).format("DD/MM") +
-      ` ${translations.common.at} ` +
-      dayjs(time).format("HH:mm")
-    : dayjs(time).format(diffYear) +
-      ` ${translations.common.at} ` +
-      dayjs(time).format("HH:mm");
+    ? dayjs(time).format("HH:mm DD/MM")
+    : dayjs(time).format("HH:mm DD/MM/YYYY");
 }
 
 export function getDisplayDate(date: string) {

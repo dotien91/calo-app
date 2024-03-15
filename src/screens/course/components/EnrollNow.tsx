@@ -41,6 +41,7 @@ const EnrollNow = ({
     NavigationService.navigate(SCREENS.CLASSHOMEWORK, {
       course_id: course_id,
       courseData: data,
+      class_id: courseRoom.roomId,
     });
   };
 

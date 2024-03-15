@@ -94,7 +94,7 @@ const PostDetail = (props: PostDetailProps) => {
       } else {
         showToast({
           type: "error",
-          ...res,
+          message: res.message,
         });
         NavigationService.goBack();
       }

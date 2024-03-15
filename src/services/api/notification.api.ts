@@ -19,3 +19,12 @@ export async function readNotification(params) {
     return response;
   });
 }
+export async function deleteNotification(params) {
+  return request({
+    method: METHOD.DELETE,
+    urlPath: "notification/delete",
+    data: params,
+  }).then((response) => {
+    return response;
+  });
+}

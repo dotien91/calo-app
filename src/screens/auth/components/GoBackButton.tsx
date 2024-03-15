@@ -4,6 +4,7 @@ import * as NavigationService from "react-navigation-helpers";
 
 import IconSvg from "assets/svg";
 import PressableBtn from "@shared-components/button/PressableBtn";
+import { palette } from "@theme/themes";
 const GoBackButton = ({ customStyle }: { customStyle: ViewStyle }) => {
   return (
     <View
@@ -18,7 +19,7 @@ const GoBackButton = ({ customStyle }: { customStyle: ViewStyle }) => {
       ]}
     >
       <PressableBtn onPress={() => NavigationService.goBack()}>
-        <IconSvg name="icBack" size={17} />
+        <IconSvg name="icBack" size={20} color={palette.text} />
       </PressableBtn>
     </View>
   );
