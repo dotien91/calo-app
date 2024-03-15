@@ -3,7 +3,7 @@ import lodash from "lodash";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { _getJson, USER_TOKEN } from "@services/local-storage";
 
-export const BASEURL = "https://api.edu-like.exam24h.com/api/";
+export const BASEURL = "https://api.live.edu-like.exam24h.com/api/";
 export const UPLOAD_URL = "https://media.exam24h.com/";
 // const tokenTeacher =
 // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mzg4MzEzMzQsImRhdGEiOnsiX2lkIjoiNjU5ZTU5ZDExNzc1YWJiZDZkOTlkMGIzIiwia2V5IjoiNTRhZjQxZGUxZTljNmNhZTFlYmI0ZjQ3NmI4NDg2ZmMiLCJzaWduYXR1cmUiOiIxY2Y2ODMwNWJkOTAyMjEyMDY1MTU3ODQyZWQ1ZTZjNiIsInNlc3Npb24iOiI2NWMzNDI2NjU1MDVmYjI3OGNiYjE5ZDgifSwiaWF0IjoxNzA3Mjk1MzM0fQ.ckhT-GeS2WVJTDEbQjU-ItSznb3aUAZ1GihSWSDmW2g";
