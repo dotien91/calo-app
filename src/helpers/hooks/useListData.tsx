@@ -88,6 +88,7 @@ export function useListData<T>(
         setStateListData((oldState) => ({
           ...oldState,
           isLoading: false,
+          listData: [],
           noData: true,
         }));
       }
