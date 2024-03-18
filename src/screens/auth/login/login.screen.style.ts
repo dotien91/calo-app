@@ -15,6 +15,7 @@ const createStyles = (theme: ExtendedTheme) => {
       paddingTop: getStatusBarHeight(),
       marginBottom: getBottomSpace(),
       paddingBottom: 10,
+      paddingHorizontal: 20,
     },
     textHeader: {
       ...CommonStyle.hnSemiBold,
@@ -28,8 +29,7 @@ const createStyles = (theme: ExtendedTheme) => {
       paddingHorizontal: 20,
     },
     buttonMargin: {
-      margin: 16,
-      paddingHorizontal: 20,
+      marginVertical: 16,
     },
   });
 };

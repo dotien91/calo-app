@@ -93,10 +93,7 @@ const AppleLoginButton = ({ showText }: BtnProps) => {
 };
 
 const styles = StyleSheet.create({
-  btn: {
-    paddingHorizontal: 20,
-    marginHorizontal: 20,
-  },
+  btn: {},
   iconBtn: {
     flex: 1,
     justifyContent: "center",

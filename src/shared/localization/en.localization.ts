@@ -553,6 +553,7 @@ export default {
       "This is the number of points the student will receive for each corresponding action",
     inviteDes:
       "You will get 4000 points for each friend who activates oyur code and earns 10000 points. Your friend will also get 1000 points as a reward.",
+    changeLanguage: "Change Language",
   },
   codeActivations: {
     sortBy: "Sort by",

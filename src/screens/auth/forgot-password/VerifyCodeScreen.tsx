@@ -112,16 +112,17 @@ export default function VerifyCodeScreen() {
               }}
               errorTxt={errors.verifyCode?.message}
             />
-
-            <Button
-              style={styles.buttonMargin}
-              onPress={handleSubmit(onSubmit)}
-              textColor={colors.white}
-              backgroundColor={colors.primary}
-              text={translations.continue}
-            />
+            <View style={styles.paddingButton}>
+              <Button
+                style={styles.buttonMargin}
+                onPress={handleSubmit(onSubmit)}
+                textColor={colors.white}
+                backgroundColor={colors.primary}
+                text={translations.continue}
+              />
+            </View>
           </View>
-          <ViewTermPolicy style={{ paddingHorizontal: 20, marginTop: 36 }} />
+          <ViewTermPolicy style={styles.viewPolicy} />
         </View>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>

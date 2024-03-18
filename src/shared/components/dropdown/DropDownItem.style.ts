@@ -10,6 +10,7 @@ export default (theme: ExtendedTheme) => {
   return StyleSheet.create<Style>({
     container: {
       backgroundColor: colors.background,
+      marginHorizontal: 16,
     },
   });
 };

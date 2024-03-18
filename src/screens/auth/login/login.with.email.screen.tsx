@@ -158,15 +158,16 @@ export default function LoginWithEmailScreen() {
               }
               errorTxt={errors.password?.message}
             />
-
-            <Button
-              style={styles.buttonMargin}
-              onPress={handleSubmit(onSubmit)}
-              textColor={colors.white}
-              backgroundColor={colors.primary}
-              SvgSo={<IconSvg size={18} name="icMail" color={colors.white} />}
-              text={translations.continueWith("E-mail")}
-            />
+            <View style={styles.paddingButton}>
+              <Button
+                style={styles.buttonMargin}
+                onPress={handleSubmit(onSubmit)}
+                textColor={colors.white}
+                backgroundColor={colors.primary}
+                SvgSo={<IconSvg size={18} name="icMail" color={colors.white} />}
+                text={translations.continueWith("E-mail")}
+              />
+            </View>
             <View style={CommonStyle.center}>
               <Text
                 onPress={pressForgotPassword}

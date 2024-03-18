@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import FastImage from "react-native-fast-image";
 import * as NavigationService from "react-navigation-helpers";
 
 import CS from "@theme/styles";
@@ -9,7 +10,6 @@ import { palette } from "@theme/themes";
 import { translations } from "@localization";
 import IconSvg from "assets/svg";
 import PressableBtn from "@shared-components/button/PressableBtn";
-import FastImage from "react-native-fast-image";
 
 // const { width } = Dimensions.get("screen");
 
