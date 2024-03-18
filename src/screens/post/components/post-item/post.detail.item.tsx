@@ -165,7 +165,7 @@ const ItemPost = ({ data, pressComment }: ItemPostProps) => {
     >
       <View style={styles.container}>
         <AvatarPost
-          data={data}
+          data={data?.user_id}
           pressAvatar={gotoDetail}
           sizeAvatar={SIZE_AVATAR}
           showLevel

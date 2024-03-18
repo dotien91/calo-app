@@ -129,6 +129,7 @@ const ItemNotification = ({ item, pressDelete }: ItemNotificationProps) => {
           numberOfLines={2}
         >
           {item?.content} {getFormatDayNotification(item?.createdAt || "")}
+          asdasdasd
         </Text>
       </View>
       <PressableBtn onPress={_deleteNotification}>

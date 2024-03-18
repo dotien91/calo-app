@@ -70,7 +70,7 @@ const ItemReply = ({ item, onPressReplyChild, repCmtId }: ItemReplyProps) => {
   };
 
   const AvatarRep = useMemo(() => {
-    return <AvatarPost data={item} sizeAvatar={SIZE_AVATAR} showLevel />;
+    return <AvatarPost data={item?.user_id} sizeAvatar={SIZE_AVATAR} showLevel />;
   }, [item]);
 
   const _showStickBottom = () =>
@@ -172,7 +172,7 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
   }, [data, data.child]);
 
   const Avatar = useMemo(() => {
-    return <AvatarPost sizeAvatar={SIZE_AVATAR} data={data} showLevel />;
+    return <AvatarPost sizeAvatar={SIZE_AVATAR} data={data?.user_id} showLevel />;
   }, [data]);
   const _showStickBottom = () => {
     if (!userData) {
