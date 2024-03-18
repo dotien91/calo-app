@@ -7,7 +7,7 @@ import {
   useWindowDimensions,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useTheme } from "@react-navigation/native";
+import { useTheme, useRoute } from "@react-navigation/native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 // import * as NavigationService from "react-navigation-helpers";
 /**
@@ -66,9 +66,6 @@ const CourseFilterResultScreen: React.FC<
 > = () => {
   const theme = useTheme();
   const { colors } = theme;
-  // const styles = useMemo(() => createStyles(theme), [theme]);
-  // const route = useRoute();
-  // const defaultParams = route.params?.["defaultParams"] || {};
   const layout = useWindowDimensions();
 
   const courseCurrentType = useStore((state) => state.courseCurrentType);
@@ -79,8 +76,10 @@ const CourseFilterResultScreen: React.FC<
     (state) => state.listCourseFilterParams,
   );
   const setCourseCurrentSort = useStore((state) => state.setCourseCurrentSort);
-
-  const defaultIndex = courseCurrentType.id == EnumCourseType.course ? 0 : 1;
+  const route = useRoute();
+  const defaultIndex =
+    route.params?.["defaultIndex"] ||
+    (courseCurrentType.id == EnumCourseType.course ? 0 : 1);
   const [index, setIndex] = React.useState(defaultIndex);
   const _index = React.useRef(index);
   const [routes] = React.useState([
@@ -102,14 +101,8 @@ const CourseFilterResultScreen: React.FC<
   React.useEffect(() => {
     if (index != _index.current) {
       _index.current = index;
-      // setListCourseFilterParams();
     }
   }, [index]);
-
-  // React.useEffect(() => {
-  //   const params = { ...defaultParams };
-  //   delete params.title;
-  // }, [defaultParams]);
 
   const countFilters = useMemo(
     () => countNumberFilter(listCourseFilterParams),
@@ -151,7 +144,6 @@ const CourseFilterResultScreen: React.FC<
       styleModalType: EnumStyleModalType.Bottom,
       data: {
         courseType: index == 0 ? EnumCourseType.course : EnumCourseType.tutor,
-        // params: defaultParams,
       },
     });
   };
@@ -182,12 +174,9 @@ const CourseFilterResultScreen: React.FC<
 };
 
 const ListSearch = React.memo(({ type }: { type: string }) => {
-  // const route = useRoute();
-  // const defaultParams = route.params?.["defaultParams"] || {};
   const courseSearchHistory = useStore((state) => state.courseSearchHistory);
 
   const theme = useTheme();
-  // const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
   const courseCurrentSort = useStore((state) => state.courseCurrentSort);
   const listCourseFilterParams = useStore(
@@ -199,7 +188,6 @@ const ListSearch = React.memo(({ type }: { type: string }) => {
   const paramRequest = React.useMemo(() => {
     return {
       ...courseCurrentSort,
-      // ...defaultParams,
       ...listCourseFilterParams,
       limit: type == EnumSearchType.user ? "8" : "5",
       search: courseSearchHistory,

@@ -90,7 +90,6 @@ export default function AddWorkStudentScreen() {
       }
     });
   };
-
   const renderFileUpload = () => {
     return (
       <View style={{ marginBottom: 16 }}>
@@ -132,7 +131,8 @@ export default function AddWorkStudentScreen() {
     return !!text?.length && Number(text) <= 100;
   }, [text]);
   const renderBottomView = () => {
-    if (studentWork && data.max_mark) {
+    console.log(333333, studentWork, data, data.max_mark);
+    if (studentWork && data.max_mark && !studentWork?.isHandedIn) {
       return (
         <View style={CS.flexRear}>
           <TextBase fontWeight="600" color={EnumColors.text}>
@@ -147,8 +147,6 @@ export default function AddWorkStudentScreen() {
         </View>
       );
     }
-
-    if (studentWork) return null;
 
     return (
       <View

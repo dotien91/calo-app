@@ -31,7 +31,6 @@ const ClassHomeWorkScreen: React.FC<ClassHomeWorkScreenProps> = () => {
   const class_id = route.params?.["class_id"];
   const courseData = route.params?.["courseData"];
   const userData = useStore((state) => state.userData);
-
   const isTeacher = userData._id == courseData.user_id._id;
   const [tasks, setTasks] = React.useState([]);
   const [loading, setLoading] = useState(false);
@@ -40,6 +39,7 @@ const ClassHomeWorkScreen: React.FC<ClassHomeWorkScreenProps> = () => {
     getListThread(
       {
         class_id,
+        order_by: "DESC",
       },
       {
         "Class-ID": class_id,

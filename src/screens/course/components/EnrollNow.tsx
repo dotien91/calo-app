@@ -38,22 +38,29 @@ const EnrollNow = ({
   };
 
   const _goToHomeWork = () => {
+    console.log("courseRoom", data, courseRoom);
     NavigationService.navigate(SCREENS.CLASSHOMEWORK, {
       course_id: course_id,
       courseData: data,
-      class_id: courseRoom.roomId,
+      class_id: data?.classes?.[0]?._id,
     });
   };
 
   return (
     <View style={[{ marginHorizontal: 16 }, fromBottom && CS.flexRear]}>
-      <PressableBtn onPress={_goToListVideo} style={styles.containerFull}>
-        <Text style={styles.textBtn}>{translations.course.enrollNow}</Text>
-      </PressableBtn>
+      {(data?.type == EnumClassType.SelfLearning || !!courseRoom?.roomId) && (
+        <PressableBtn onPress={_goToListVideo} style={styles.containerFull}>
+          <Text style={styles.textBtn}>{translations.course.enrollNow}</Text>
+        </PressableBtn>
+      )}
       {fromBottom && <View style={{ width: 12 }} />}
-      <PressableBtn onPress={_goToHomeWork} style={styles.viewHomeWorkBtn}>
-        <Text style={styles.textBtn2}>{translations.course.viewHomework}</Text>
-      </PressableBtn>
+      {data?.type == EnumClassType.CallGroup && (
+        <PressableBtn onPress={_goToHomeWork} style={styles.viewHomeWorkBtn}>
+          <Text style={styles.textBtn2}>
+            {translations.course.viewHomework}
+          </Text>
+        </PressableBtn>
+      )}
     </View>
   );
 };

@@ -18,6 +18,7 @@ import { getDetailThread } from "@services/api/course.api";
 import TextBase from "@shared-components/TextBase";
 import { EnumColors } from "models";
 import eventEmitter from "@services/event-emitter";
+import IconBtn from "@shared-components/button/IconBtn";
 
 const InstructionTab = () => {
   const route = useRoute();
@@ -148,7 +149,7 @@ const StudentWorkView = ({
         <ScrollView contentContainerStyle={{ maxHeight: 100 }}>
           {myWork.attach_files.map((item, index) => (
             <View key={index} style={styles.viewImage}>
-              <IconSvg size={20} name="icCreatePostImage" />
+              <IconBtn name="file" />
               <Text style={{ ...CS.flex1, ...CS.hnRegular }}>
                 {item.media_file_name}
               </Text>

@@ -81,10 +81,10 @@ const CoursePreviewScreen = () => {
       if (!res.isError) {
         // setIsLoading(false);
         setData(data);
-        const idClass = data.classes?.[0]?._id;
-        console.log("idClassidClass", idClass);
-        if (idClass) {
-          _getCourseRoom(data, idClass);
+        const classId = data.classes?.[0]?._id;
+        console.log("idClassidClass", classId);
+        if (classId) {
+          _getCourseRoom(data, classId);
         }
       }
     });
@@ -113,6 +113,7 @@ const CoursePreviewScreen = () => {
         setCourseRoom({
           roomId,
           chatRoomId: data?.chat_room_id,
+          classId: id,
         });
       }
     });

@@ -107,11 +107,11 @@ const StudentWorkTab = () => {
           {user_id?.display_name}
         </Text>
         {isHandedIn && (
-          <PressableBtn>
+          <View>
             <Text style={{ ...CS.hnRegular, color: colors.greenChart }}>
               {translations.homework.handedIn}
             </Text>
-          </PressableBtn>
+          </View>
         )}
         {mark > 0 && (
           <Text style={{ ...CS.hnRegular, color: colors.text }}>
