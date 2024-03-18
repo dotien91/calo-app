@@ -165,13 +165,15 @@ export default function NewPasswordScreen() {
               }
               errorTxt={errors.reNewPassword?.message}
             />
-            <Button
-              style={styles.buttonMargin}
-              onPress={handleSubmit(onSubmit)}
-              textColor={colors.white}
-              backgroundColor={colors.primary}
-              text={translations.save}
-            />
+            <View style={styles.paddingButton}>
+              <Button
+                style={styles.buttonMargin}
+                onPress={handleSubmit(onSubmit)}
+                textColor={colors.white}
+                backgroundColor={colors.primary}
+                text={translations.save}
+              />
+            </View>
           </View>
           <ViewTermPolicy style={{ paddingHorizontal: 20, marginTop: 36 }} />
         </View>

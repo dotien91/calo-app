@@ -76,6 +76,7 @@ const InviteView = () => {
           type="primary"
           onPress={showEnterCode}
           text={translations.invite.enterCode}
+          isFullWidth={false}
         />
       </View>
       <View style={styles.viewClose}>

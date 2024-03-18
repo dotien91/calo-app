@@ -94,9 +94,7 @@ const GoogleLoginButton = ({ showText }: BtnProps) => {
 
 const styles = StyleSheet.create({
   btn: {
-    paddingHorizontal: 20,
     marginBottom: 12,
-    marginHorizontal: 20,
   },
   iconBtn: {
     flex: 1,

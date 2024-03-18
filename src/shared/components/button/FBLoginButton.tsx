@@ -98,8 +98,6 @@ const FBLoginButton = ({ showText }: BtnProps) => {
 
 const styles = StyleSheet.create({
   btn: {
-    paddingHorizontal: 20,
-    marginHorizontal: 20,
     marginBottom: 12,
   },
   iconBtn: {

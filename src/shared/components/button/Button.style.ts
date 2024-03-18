@@ -10,6 +10,7 @@ export default () => {
       backgroundColor: palette.mainColor2,
       ...CommonStyle.flexCenter,
       paddingHorizontal: 16,
+      gap: 8,
     },
     textButton: {
       ...CommonStyle.hnSemiBold,

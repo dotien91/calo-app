@@ -27,10 +27,11 @@ const createStyles = (theme: ExtendedTheme) => {
       marginTop: 30,
       paddingHorizontal: 20,
     },
-    buttonMargin: {
-      margin: 18,
-      marginTop: 16,
+    paddingButton: {
       paddingHorizontal: 20,
+    },
+    buttonMargin: {
+      marginTop: 16,
     },
     viewInput: {
       marginTop: 16,

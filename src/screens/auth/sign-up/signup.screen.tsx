@@ -197,14 +197,15 @@ export default function SignUpScreen() {
               }
               errorTxt={errors.password?.message}
             />
-
-            <Button
-              style={styles.buttonMargin}
-              onPress={handleSubmit(onSubmit)}
-              textColor={colors.white}
-              backgroundColor={colors.primary}
-              text={translations.signUp}
-            />
+            <View style={styles.paddingButton}>
+              <Button
+                style={styles.buttonMargin}
+                onPress={handleSubmit(onSubmit)}
+                textColor={colors.white}
+                backgroundColor={colors.primary}
+                text={translations.signUp}
+              />
+            </View>
             <OrView />
             <View style={styles.viewSocial}>
               <GoogleLoginButton />
