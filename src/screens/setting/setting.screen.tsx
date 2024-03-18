@@ -21,6 +21,7 @@ import { USER_TOKEN, _setJson } from "@services/local-storage";
 import IconBtn from "@shared-components/button/IconBtn";
 import useUserHelper from "@helpers/hooks/useUserHelper";
 import { openUrl } from "@helpers/file.helper";
+import { showWarningLogin } from "@helpers/super.modal.helper";
 
 interface SettingScreenProps {}
 
@@ -39,7 +40,11 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
       title: translations.settingUser.purchaseCouse,
       icon: require("assets/images/book.png"),
       action: () => {
-        NavigationService.navigate(SCREENS.MY_COURES);
+        if (userData?._id) {
+          NavigationService.navigate(SCREENS.MY_COURES);
+        } else {
+          showWarningLogin();
+        }
       },
     },
     {
@@ -91,16 +96,20 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
       title: translations.settingUser.discount,
       iconFont: "gift",
       action: () => {
-        NavigationService.navigate(SCREENS.COUPON_LIST);
+        if (userData?._id) {
+          NavigationService.navigate(SCREENS.COUPON_LIST);
+        } else {
+          showWarningLogin();
+        }
       },
     },
-    {
-      title: translations.settingUser.codeActivations,
-      iconFont: "package",
-      action: () => {
-        NavigationService.navigate(SCREENS.CODE_ACTIVATIONS_SCREEN);
-      },
-    },
+    // {
+    //   title: translations.settingUser.codeActivations,
+    //   iconFont: "package",
+    //   action: () => {
+    //     NavigationService.navigate(SCREENS.CODE_ACTIVATIONS_SCREEN);
+    //   },
+    // },
   ];
 
   const hardCodeToken = () => {

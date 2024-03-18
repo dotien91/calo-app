@@ -10,6 +10,7 @@ import ItemCourseSelect from "./ItemCourseSelect";
 import ItemUserSelect from "./ItemUserSelect";
 import { closeSuperModal } from "@helpers/super.modal.helper";
 import { EnumColors } from "models";
+import { palette } from "@theme/themes";
 
 interface dataType {
   listFilter?: any[];
@@ -32,7 +33,6 @@ const FilterAffiliate = ({ data }: FilterAffiliateProps) => {
   const [listItemSelected, setListItemSelected] = React.useState(
     data?.listSelected || [],
   );
-  console.log("listItemSelected", data?.listSelected);
   const renderItem = ({ item }) => {
     const isSeleted =
       listItemSelected.filter((items) => items === item._id).length > 0;
@@ -109,8 +109,8 @@ const FilterAffiliate = ({ data }: FilterAffiliateProps) => {
           <View style={styles.viewButton}>
             <Button
               onPress={onPressReset}
+              backgroundColor={palette.btnInactive}
               text="Reset"
-              type="disabled"
               style={CS.flex1}
             />
             <Button
@@ -130,8 +130,8 @@ const FilterAffiliate = ({ data }: FilterAffiliateProps) => {
           <View style={styles.viewButton}>
             <Button
               onPress={onPressReset}
+              backgroundColor={palette.btnInactive}
               text="Reset"
-              type="disabled"
               style={CS.flex1}
             />
             <Button
@@ -151,8 +151,8 @@ const FilterAffiliate = ({ data }: FilterAffiliateProps) => {
           <View style={styles.viewButton}>
             <Button
               onPress={onPressReset}
+              backgroundColor={palette.btnInactive}
               text="Reset"
-              type="disabled"
               style={CS.flex1}
             />
             <Button

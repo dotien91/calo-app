@@ -6,6 +6,7 @@ import { Platform, StyleSheet, Text, View, Dimensions } from "react-native";
 import { pick, types } from "react-native-document-picker";
 import { selectMedia } from "@helpers/file.helper";
 import getPath from "@flyerhq/react-native-android-uri-path";
+import { showToast } from "@helpers/super.modal.helper";
 
 const { width } = Dimensions.get("screen");
 const isIos = Platform.OS === "ios";
@@ -63,6 +64,9 @@ export function useUploadFile(initData?: any[], selectionLimit = 30) {
             _id: res[index]?.callback?._id,
           }));
           setListFile((listFile) => [...listFile, ...data]);
+        } else {
+          setListFileLocal(listFile);
+          showToast({ types: "warning", message: res.message });
         }
       },
       croping: false,
@@ -157,6 +161,9 @@ export function useUploadFile(initData?: any[], selectionLimit = 30) {
           }));
 
           setListFile((listFile) => [...listFile, ...data]);
+        } else {
+          setListFileLocal(listFile);
+          showToast({ types: "warning", message: res.message });
         }
       },
       croping: false,
