@@ -1,9 +1,10 @@
 import { getListLiveStream } from "@services/api/stream.api";
 import { palette } from "@theme/themes";
 import React, { useEffect, useRef, useState } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { Dimensions, FlatList, StyleSheet, View } from "react-native";
 import StreamCard from "./stream.card";
 import eventEmitter from "@services/event-emitter";
+import PageControl from "react-native-page-control";
 
 const fakedata = [
   {
@@ -190,6 +191,7 @@ interface ListLiveStreamProps {
 const ListLiveStream = ({ isListLiveStream }: ListLiveStreamProps) => {
   const listRef = useRef(null);
   const [listDataStream, setListDataStream] = useState([]);
+  const [currentPage, setcurrentPage] = useState(0);
 
   const renderItem = ({ item }: any) => {
     if (item?.livestream_status)
@@ -246,9 +248,25 @@ const ListLiveStream = ({ isListLiveStream }: ListLiveStreamProps) => {
         showsVerticalScrollIndicator={false}
         removeClippedSubviews={true}
         keyExtractor={(item) => item?._id + ""}
-        // refreshControl={refreshControl()}
-        // ListFooterComponent={renderFooterComponent()}
-        // ListEmptyComponent={renderEmpty()}
+        onMomentumScrollEnd={(ev) => {
+          setcurrentPage(
+            Math.round(
+              ev.nativeEvent.contentOffset.x / Dimensions.get("window").width,
+            ),
+          );
+        }}
+      />
+      <PageControl
+        style={styles.stylePageControl}
+        numberOfPages={listDataStream.length}
+        currentPage={currentPage}
+        hidesForSinglePage
+        pageIndicatorTintColor={palette.white}
+        currentPageIndicatorTintColor={palette.btnRedPrimary}
+        indicatorStyle={{ borderRadius: 5 }}
+        currentIndicatorStyle={{ borderRadius: 5, width: 24, height: 8 }}
+        indicatorSize={{ width: 8, height: 8 }}
+        onPageIndicatorPress={renderItem}
       />
     </View>
   );
@@ -260,14 +278,12 @@ const styles = StyleSheet.create({
   container: {
     marginHorizontal: 16,
     marginVertical: 8,
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowRadius: 3.05,
-    shadowOpacity: 0.17,
-    elevation: 4,
     borderRadius: 8,
-    backgroundColor: palette.white,
+    height: 180,
+  },
+  stylePageControl: {
+    position: "absolute",
+    right: 5,
+    bottom: 4,
   },
 });

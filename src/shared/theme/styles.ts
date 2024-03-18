@@ -205,6 +205,12 @@ const CS = StyleSheet.create({
     flex: 1,
     marginTop: isAndroid ? getStatusBarHeight() : 0,
   },
+  textLive: {
+    fontSize: 14,
+    lineHeight: 22,
+    fontFamily: font.outfit.medium,
+    color: palette.white,
+  },
 });
 
 interface Shadow {

@@ -1,40 +1,25 @@
 import React from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
 import CS from "@theme/styles";
 import { SCREENS } from "constants";
 import { IStreamItem } from "models/stream.model";
-import LiveBadge from "@screens/stream/components/LiveBadge";
-import VideoPlayer from "@shared-components/video.player.component";
 import { palette } from "@theme/themes";
 import { translations } from "@localization";
+import IconSvg from "assets/svg";
+import PressableBtn from "@shared-components/button/PressableBtn";
 
 const StreamCard = ({ data }: { data: IStreamItem }) => {
-  const renderVideoLive = () => {
+  const IconText = ({ nameIcon, text }: { nameIcon: string; text: string }) => {
     return (
-      <View style={styles.styleItemLiveStream}>
-        <View style={styles.viewVideo}>
-          <VideoPlayer
-            mediaThumbail={data?.user_id?.user_avatar_thumbnail}
-            resizeMode="cover"
-            width={styles.styleCover.width}
-            height={styles.styleCover.height}
-            autoPlay={false}
-            onPress={goToViewStream}
-          />
-        </View>
-        <View style={styles.viewAction}>
-          <Text style={styles.styleTxtTitle1}>{translations.titleLive}</Text>
-          <LiveBadge
-            customStyle={{
-              top: 80,
-            }}
-          />
-        </View>
+      <View style={{ ...CS.center, flexDirection: "row" }}>
+        <IconSvg name={nameIcon} size={16} color={palette.white} />
+        <Text style={[styles.txtLive, { marginHorizontal: 4 }]}>{text}</Text>
       </View>
     );
   };
+
   const goToViewStream = () => {
     NavigationService.navigate(SCREENS.VIEW_LIVE_STREAM, {
       liveStreamId: data._id,
@@ -43,9 +28,23 @@ const StreamCard = ({ data }: { data: IStreamItem }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.styleListLiveStream}>
-        <Pressable onPress={goToViewStream}>{renderVideoLive()}</Pressable>
-      </View>
+      <PressableBtn onPress={goToViewStream} style={styles.styleItemLiveStream}>
+        <Image
+          style={styles.styleCover}
+          source={{ uri: data?.user_id?.user_avatar_thumbnail }}
+        />
+        <View style={styles.viewAction}>
+          <Text style={styles.styleTxtTitle1}>{translations.titleLive}</Text>
+          <View style={styles.viewLive}>
+            <View style={styles.btnLive}>
+              <Text style={styles.txtLive}>LIVE</Text>
+            </View>
+            <View style={styles.viewEye}>
+              <IconText nameIcon="icEyeStream" text="123" />
+            </View>
+          </View>
+        </View>
+      </PressableBtn>
     </View>
   );
 };
@@ -53,34 +52,52 @@ const StreamCard = ({ data }: { data: IStreamItem }) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    marginBottom: 2,
-    backgroundColor: palette.background,
-    paddingTop: 14,
     paddingBottom: 4,
-    borderRadius: 8,
-  },
-  styleListLiveStream: {
-    height: 120,
-    borderRadius: 8,
   },
   styleItemLiveStream: {
     flexDirection: "row",
-    gap: 10,
-    borderRadius: 8,
+    gap: 4,
+    left: 1,
+    top: 1,
   },
-  viewVideo: {
-    bottom: 80,
+  styleCover: {
+    height: 178,
+    width: 328,
+    marginBottom: 16,
+    borderRadius: 10,
+    overflow: "hidden",
   },
   viewAction: {
     flexDirection: "column",
     position: "absolute",
     zIndex: 2,
     gap: 10,
+    top: 100,
+    marginLeft: 10,
   },
   styleTxtTitle1: {
     ...CS.textTitleStream,
-    top: 60,
-    left: 10,
+  },
+  viewLive: {
+    height: 24,
+    width: 100,
+    flexDirection: "row",
+    gap: 4,
+  },
+  btnLive: {
+    ...CS.center,
+    width: 40,
+    backgroundColor: palette.primary,
+    borderRadius: 4,
+  },
+  txtLive: {
+    ...CS.textLive,
+  },
+  viewEye: {
+    ...CS.center,
+    backgroundColor: palette.textOpacity6,
+    borderRadius: 4,
+    width: 60,
   },
 });
 
