@@ -575,6 +575,9 @@ export default {
     recommendCourse: "Khoá học gợi ý",
     teachingTime: "Đã dạy",
     sortByTutor: "Sắp xếp theo gia sư",
+    warningLengthRequired: "Đánh giá phải dài hơn 10 ký tự",
+    updateRateSuccess: "Cập nhật đánh giá thành công",
+    sendRateSuccess: "Gửi đánh giá thành công",
   },
   seeAll: "Xem tất cả",
   settings: {
@@ -1518,6 +1521,7 @@ export default {
     emptyTransaction: "Danh sách giao dịch trống",
     fromDate: "Từ ngày",
     toDate: "Đến ngày",
+    commission: "Hoa hồng",
   },
   en: "Tiếng Anh",
   vi: "Tiếng Việt",

@@ -7,7 +7,7 @@ import {
   ScrollView,
   RefreshControl,
 } from "react-native";
-import { useTheme } from "@react-navigation/native";
+import { useTheme, useIsFocused } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 
 /**
@@ -39,6 +39,7 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
   // const route = useRoute();
   // const paramsFromNavigation = route.params?.["groupData"];
   const userData = useStore((state) => state.userData);
+  const isFocused = useIsFocused();
   const [lastNoti, setLastNoti] = useState();
   const [refreshing, setRefreshing] = useState(false);
   const {
@@ -72,7 +73,7 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
 
   useEffect(() => {
     getLastNotification();
-  }, []);
+  }, [isFocused]);
 
   const onRefresh = () => {
     console.log("onRefresh");
@@ -160,14 +161,6 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
       <View style={{ height: 12 }} />
       <ListFriend />
       <View style={{ height: 8 }} />
-      {isLoading && <LoadingList numberItem={3} />}
-      {noData && (
-        <EmptyResultView
-          title={translations.noNewMessageTittle}
-          desc={translations.noNewMessageDesc}
-          icon={"chatbubble-ellipses-outline"}
-        />
-      )}
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={
@@ -175,6 +168,14 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
         }
       >
         {lastNoti && <ChatNotification item={lastNoti} />}
+        {isLoading && <LoadingList numberItem={3} />}
+        {noData && (
+          <EmptyResultView
+            title={translations.noNewMessageTittle}
+            desc={translations.noNewMessageDesc}
+            icon={"chatbubble-ellipses-outline"}
+          />
+        )}
         <View style={{ height: 8 }} />
         <FlatList
           data={listData}

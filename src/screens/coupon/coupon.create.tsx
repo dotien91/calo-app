@@ -34,8 +34,8 @@ import PressableBtn from "@shared-components/button/PressableBtn";
 import { useListData } from "@helpers/hooks/useListData";
 import { TypedCourse } from "shared/models";
 import {
-  getCourseList,
   getCourseSale,
+  getMyCourse,
   updateCourse,
 } from "@services/api/course.api";
 import useStore from "@services/zustand/store";
@@ -68,9 +68,9 @@ const CouponCreateScreen = () => {
 
   const paramsRequest = {
     limit: "10",
-    user_id: userData?._id,
-    search: search,
-    public_status: "active",
+    created_user_id: userData?._id,
+    order_by: "DESC",
+    sort_by: "createdAt",
   };
   const {
     listData,
@@ -78,7 +78,7 @@ const CouponCreateScreen = () => {
     refreshControl,
     renderFooterComponent,
     refreshing,
-  } = useListData<TypedCourse>(paramsRequest, getCourseList);
+  } = useListData<TypedCourse>(paramsRequest, getMyCourse);
 
   const _getCourseSale = (params) => {
     getCourseSale(params).then((res) => {

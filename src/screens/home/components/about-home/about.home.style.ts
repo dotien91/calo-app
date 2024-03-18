@@ -6,6 +6,7 @@ import { ScreenWidth } from "@freakycoder/react-native-helpers";
 import { palette } from "@theme/themes";
 
 interface Style {
+  viewHeaderStyle: ViewStyle;
   styleViewItemTitle: ViewStyle;
   styleTextItemTitle: TextStyle;
   styleItemNaviCategory: ViewStyle;
@@ -21,6 +22,10 @@ interface Style {
 export default (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create<Style>({
+    viewHeaderStyle: {
+      marginBottom: 8,
+      backgroundColor: colors.background,
+    },
     styleTxtText: {
       ...CS.hnLight,
       lineHeight: 16,

@@ -24,6 +24,7 @@ export default (theme: ExtendedTheme) => {
       minHeight: SIZE_IMAGE,
       width: SIZE_IMAGE,
       paddingVertical: 4,
+      borderRadius: 4,
     },
 
     containerLikeShare: {

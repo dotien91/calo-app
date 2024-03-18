@@ -76,7 +76,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
       icon: require("assets/images/supporticon.png"),
       action: () => {
         NavigationService.navigate(SCREENS.CHAT_ROOM, {
-          id: "6588f14e8d8b13bb432f7d2f",
+          id: "65f7b1b3a22b22d7d3dcf078",
         });
       },
     },
