@@ -33,36 +33,35 @@ const CodeActivationsScreen = () => {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const [sectionList, setSectionList] = useState<TypedUser[]>([]);
   const [activeSections, setActiveSections] = useState<number[]>([0]);
-  // const [selected, setSelected] = useState(0);
   //fake data
-  const listData = [
-    {
-      _id: "0",
-      display_name: "Dangth",
-      linkImage:
-        "https://files.exam24h.com/upload/2024/02/06_1707208375367/6590ef713f9a0468c8290eb9-1707208375367-4daab0e0-13ae-42e3-8c27-16f02c7e36f4.jpg",
-      price: 1200000,
-      children: [
-        { _id: "1", title: "khoa hoc 1", price: 1200000, percentage: 10 },
-        { _id: "2", title: "khoa hoc 2", price: 2400000, percentage: 10 },
-        { _id: "3", title: "khoa hoc 3", price: 3600000, percentage: 10 },
-        { _id: "4", title: "khoa hoc 4", price: 4800000, percentage: 10 },
-      ],
-    },
-    {
-      _id: "1",
-      display_name: "Anvv",
-      linkImage:
-        "https://files.exam24h.com/upload/2024/02/06_1707208375367/6590ef713f9a0468c8290eb9-1707208375367-4daab0e0-13ae-42e3-8c27-16f02c7e36f4.jpg",
-      price: 1300000,
-      children: [
-        { _id: "1", title: "khoa hoc 1", price: 1300000, percentage: 10 },
-        { _id: "2", title: "khoa hoc 2", price: 2600000, percentage: 10 },
-        { _id: "3", title: "khoa hoc 3", price: 3900000, percentage: 10 },
-        { _id: "4", title: "khoa hoc 4", price: 2500000, percentage: 10 },
-      ],
-    },
-  ];
+  // const listData = [
+  //   {
+  //     _id: "0",
+  //     display_name: "Dangth",
+  //     linkImage:
+  //       "https://files.exam24h.com/upload/2024/02/06_1707208375367/6590ef713f9a0468c8290eb9-1707208375367-4daab0e0-13ae-42e3-8c27-16f02c7e36f4.jpg",
+  //     price: 1200000,
+  //     children: [
+  //       { _id: "1", title: "khoa hoc 1", price: 1200000, percentage: 10 },
+  //       { _id: "2", title: "khoa hoc 2", price: 2400000, percentage: 10 },
+  //       { _id: "3", title: "khoa hoc 3", price: 3600000, percentage: 10 },
+  //       { _id: "4", title: "khoa hoc 4", price: 4800000, percentage: 10 },
+  //     ],
+  //   },
+  //   {
+  //     _id: "1",
+  //     display_name: "Anvv",
+  //     linkImage:
+  //       "https://files.exam24h.com/upload/2024/02/06_1707208375367/6590ef713f9a0468c8290eb9-1707208375367-4daab0e0-13ae-42e3-8c27-16f02c7e36f4.jpg",
+  //     price: 1300000,
+  //     children: [
+  //       { _id: "1", title: "khoa hoc 1", price: 1300000, percentage: 10 },
+  //       { _id: "2", title: "khoa hoc 2", price: 2600000, percentage: 10 },
+  //       { _id: "3", title: "khoa hoc 3", price: 3900000, percentage: 10 },
+  //       { _id: "4", title: "khoa hoc 4", price: 2500000, percentage: 10 },
+  //     ],
+  //   },
+  // ];
 
   useEffect(() => {
     setSectionList(listUserRef);
@@ -201,12 +200,13 @@ const CodeActivationsScreen = () => {
     index: number;
     data: ICourseItem;
   }) => {
+    console.log("data...", data);
     return (
       <Animatable.View duration={300} key={index} style={styles.viewCourse}>
         <View style={styles.avatarCourse}>
           <Image
             style={styles.avatarCourse}
-            source={{ uri: listData[0].linkImage }}
+            source={{ uri: data.ref_id.avatar.media_thumbnail }}
           />
         </View>
         <View style={CS.flex1}>

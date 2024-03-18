@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef } from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { useTheme, useIsFocused } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 /**
@@ -8,15 +8,16 @@ import * as NavigationService from "react-navigation-helpers";
 import ItemNotification from "./ItemNotification";
 
 import createStyles from "./NotificationScreen.style";
-import Header from "@shared-components/header/Header";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";
 import { useListData } from "@helpers/hooks/useListData";
 import { getListNotification } from "@services/api/notification.api";
 import EmptyResultView from "@shared-components/empty.data.component";
-import { SCREENS } from "constants";
 import LoadingList from "@shared-components/loading.list.component";
 import { TypedNotification } from "models/notification.model";
+import IconSvg from "assets/svg";
+import { palette } from "@theme/themes";
+import PressableBtn from "@shared-components/button/PressableBtn";
 
 interface ProfileScreenProps {}
 
@@ -25,12 +26,8 @@ const NotificationScreen: React.FC<ProfileScreenProps> = () => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const userData = useStore((state) => state.userData);
-  const setReadAllAt = useStore((state) => state.setReadAllAt);
+  // const setReadAllAt = useStore((state) => state.setReadAllAt);
   const listRef = useRef(null);
-
-  const renderItem = ({ item }: { item: TypedNotification }) => {
-    return <ItemNotification key={item._id} item={item} />;
-  };
 
   const paramsRequest = {
     limit: 20,
@@ -40,6 +37,7 @@ const NotificationScreen: React.FC<ProfileScreenProps> = () => {
 
   const {
     listData,
+    setListData,
     isFirstLoading,
     isLoading,
     onEndReach,
@@ -49,6 +47,16 @@ const NotificationScreen: React.FC<ProfileScreenProps> = () => {
     refreshing,
   } = useListData<TypedNotification>(paramsRequest, getListNotification);
 
+  const renderItem = ({ item }: { item: TypedNotification }) => {
+    const deleteItem = () => {
+      const newData = [...listData].filter((i) => i._id != item._id);
+      console.log("newData.length", newData);
+      setListData(newData);
+    };
+    return (
+      <ItemNotification key={item?._id} item={item} pressDelete={deleteItem} />
+    );
+  };
   useEffect(() => {
     if (isFocused) {
       _requestData();
@@ -62,21 +70,38 @@ const NotificationScreen: React.FC<ProfileScreenProps> = () => {
     }, 200);
   };
 
-  const _readAll = () => {
-    const date = new Date().toISOString();
-    setReadAllAt(date);
+  // const _readAll = () => {
+  //   const date = new Date().toISOString();
+  //   setReadAllAt(date);
+  // };
+  const goBack = () => {
+    NavigationService.goBack();
+  };
+
+  const headerNotification = () => {
+    return (
+      <View style={styles.viewHeader}>
+        <PressableBtn style={styles.buttonBack} onPress={goBack}>
+          <IconSvg name="icBack" size={24} color={palette.text} />
+        </PressableBtn>
+        <Text style={styles.txtheader}>
+          {translations.notifications.notifications}
+        </Text>
+      </View>
+    );
   };
 
   return (
     <View style={styles.container}>
-      <Header
+      {/* <Header
         onPressLeft={() => {
           NavigationService.navigate(SCREENS.HOME);
         }}
         text={translations.notifications.notifications}
         onPressRight={_readAll}
         textRight={translations.notifications.markAll}
-      />
+      /> */}
+      {headerNotification()}
 
       {isFirstLoading && <LoadingList />}
       {!listData?.length && !isFirstLoading && !isLoading && (
@@ -86,6 +111,7 @@ const NotificationScreen: React.FC<ProfileScreenProps> = () => {
           showLottie={false}
         />
       )}
+
       <FlatList
         ref={listRef}
         data={listData}

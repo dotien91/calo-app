@@ -15,7 +15,7 @@ interface TypedUseListData<T> {
   isFirstLoading: boolean;
   isLoading: boolean;
   setListData: (newListData: T[]) => void;
-  _requestData: () => void;
+  _requestData: (showRefreshing?: boolean) => void;
   initData: T[];
   renderFooterComponent: () => void;
   onEndReach: () => void;

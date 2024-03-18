@@ -45,6 +45,7 @@ const ClassHomeWorkScreen: React.FC<ClassHomeWorkScreenProps> = () => {
       },
     ).then((res) => {
       setLoading(false);
+      console.log("res...", res);
 
       if (!res.isError) {
         setTasks(res.data);

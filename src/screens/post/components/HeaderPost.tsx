@@ -23,7 +23,7 @@ const HeaderPost = ({
   return (
     <View style={styles.container}>
       <PressableBtn style={styles.buttonLeft} onPress={pressGoBack}>
-        <IconSvg name="icBack" size={64} />
+        <IconSvg name="icBack" size={24} color={palette.text} />
       </PressableBtn>
       <Text style={styles.textHeader}>{translations.createPost}</Text>
       <View style={[{ ...styles.buttonLeft }, { alignItems: "flex-end" }]}>
