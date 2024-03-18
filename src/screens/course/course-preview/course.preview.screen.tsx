@@ -73,10 +73,13 @@ const CoursePreviewScreen = () => {
   }, [dataCourse]);
 
   // console.log(isLoading);
-  const params = { auth_id: userData?._id };
+  const params = {};
+  if (userData?._id) {
+    params["auth_id"] = userData?._id;
+  }
   const _getCourseDetail = () => {
     getCourseDetail(course_id, params).then((res) => {
-      console.log("course detail", res.data);
+      console.log("course detail", res);
       const data = res.data;
       if (!res.isError) {
         // setIsLoading(false);

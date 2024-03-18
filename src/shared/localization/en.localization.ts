@@ -484,6 +484,9 @@ export default {
     recommendCourse: "Recommend course",
     teachingTime: "Teaching time",
     sortByTutor: "Sort tutor by",
+    warningLengthRequired: "Reviews must be longer than 10 characters",
+    updateRateSuccess: "Successful review update",
+    sendRateSuccess: "Review submitted successfully",
   },
   seeAll: "See all",
   settings: {
@@ -1005,6 +1008,7 @@ export default {
     emptyTransaction: "Empty transaction",
     fromDate: "From date",
     toDate: "To date",
+    commission: "Commission",
   },
   en: "English",
   vi: "Vietnamese",

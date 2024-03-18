@@ -129,7 +129,6 @@ const ItemNotification = ({ item, pressDelete }: ItemNotificationProps) => {
           numberOfLines={2}
         >
           {item?.content} {getFormatDayNotification(item?.createdAt || "")}
-          asdasdasd
         </Text>
       </View>
       <PressableBtn onPress={_deleteNotification}>
@@ -207,9 +206,9 @@ const styles = StyleSheet.create({
     color: palette.text,
   },
   txtContentReaded: {
-    ...CommonStyle.hnMedium,
+    ...CommonStyle.hnRegular,
     fontSize: 14,
-    color: palette.text,
+    color: palette.textOpacity8,
   },
 });
 

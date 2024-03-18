@@ -37,28 +37,28 @@ const AboutMe = () => {
       showItemisLogin: false,
       title: translations.aboutUs.termofus,
       action: () => {
-        OpenURLButton("https://docs.ieltshunter.io/");
+        OpenURLButton("https://docs.ieltshunter.io/term-and-conditions");
       },
     },
     {
       showItemisLogin: false,
       title: translations.aboutUs.privacy,
       action: () => {
-        OpenURLButton("https://docs.ieltshunter.io/");
+        OpenURLButton("https://docs.ieltshunter.io/privacy-policy");
       },
     },
     {
       showItemisLogin: false,
       title: translations.aboutUs.cookie,
       action: () => {
-        OpenURLButton("https://docs.ieltshunter.io/");
+        OpenURLButton("https://docs.ieltshunter.io/cookie");
       },
     },
     {
       showItemisLogin: false,
       title: translations.aboutUs.return,
       action: () => {
-        OpenURLButton("https://docs.ieltshunter.io/");
+        OpenURLButton("https://docs.ieltshunter.io/chinh-sach-hoan-tien");
       },
     },
     {

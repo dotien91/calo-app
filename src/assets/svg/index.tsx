@@ -115,6 +115,7 @@ import icXShadow from "./icon-x-shadow.svg";
 import icCameraShadow from "./icon-camera-shadow.svg";
 import icMessage from "./icon-message.svg";
 import icEyeStream from "./icon-eyeStream.svg";
+import icNotification from "./icon-notification.svg";
 
 const Icons = {
   intro1,
@@ -232,6 +233,7 @@ const Icons = {
   icCameraShadow,
   icMessage,
   icEyeStream,
+  icNotification,
 };
 
 interface IconSvgProps {

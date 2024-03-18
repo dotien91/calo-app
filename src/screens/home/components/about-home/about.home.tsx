@@ -12,7 +12,6 @@ import { SCREENS } from "constants";
 import useStore from "@services/zustand/store";
 import { EnumCourseType } from "models/course.model";
 import InviteView from "../invite-me/invite";
-import { palette } from "@theme/themes";
 // import ListLiveStream from "../list-livestream/list.liveStream";
 const listCategory = [
   {
@@ -62,7 +61,7 @@ const AboutHome = () => {
   };
 
   return (
-    <View style={{ backgroundColor: palette.white }}>
+    <View style={styles.viewHeaderStyle}>
       {!!userData?.display_name && (
         <View style={CommonStyle.flex2}>
           <Text style={styles.styleTxtText}>{translations.welcomeBack}</Text>

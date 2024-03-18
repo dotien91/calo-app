@@ -51,7 +51,10 @@ const CourseRate = () => {
   const _sendReview = () => {
     setDisable(true);
     if (txtReview.trim().length < 10) {
-      showToast({ type: "info", message: "Đánh giá phải dài hơn 10 ký tự" });
+      showToast({
+        type: "info",
+        message: translations.course.warningLengthRequired,
+      });
       setDisable(false);
     } else {
       const param = {
@@ -65,7 +68,10 @@ const CourseRate = () => {
       createReview(param).then((res) => {
         if (!res.isError) {
           setDisable(false);
-          showToast({ type: "success", message: "Gửi đánh giá thành công" });
+          showToast({
+            type: "success",
+            message: translations.course.sendRateSuccess,
+          });
           eventEmitter.emit("reload_data_preview");
           NavigationService.goBack();
         } else {
@@ -78,7 +84,10 @@ const CourseRate = () => {
   const _updataReview = () => {
     setDisable(true);
     if (txtReview.trim().length < 10) {
-      showToast({ type: "info", message: "Đánh giá phải dài hơn 10 ký tự" });
+      showToast({
+        type: "info",
+        message: translations.course.warningLengthRequired,
+      });
       setDisable(false);
     } else {
       const param = {
@@ -93,7 +102,7 @@ const CourseRate = () => {
           setDisable(false);
           showToast({
             type: "success",
-            message: "Cập nhật đánh giá thành công",
+            message: translations.course.updateRateSuccess,
           });
           eventEmitter.emit("reload_data_preview");
           NavigationService.goBack();

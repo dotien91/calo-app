@@ -54,7 +54,7 @@ const AvatarPost = ({
       {showLevel && (
         <View style={styles.viewLevelAbsolute}>
           <View style={styles.viewLevel}>
-            <Text style={styles.txtLevel}>{2}</Text>
+            <Text style={styles.txtLevel}>{data?.level || 1}</Text>
           </View>
         </View>
       )}
