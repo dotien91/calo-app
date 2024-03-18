@@ -36,85 +36,7 @@ interface IeltsPacticeScreenProps {}
 const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
   const route = useRoute();
   const practiceDetail = route.params?.["practiceDetail"];
-  // 65f3f2ad03ed0a373b91c077
-  // quest 65f3f63a03ed0a373b91cb6b
-  //writing
-  // const practiceDetail = {
-  //   "_id": "65efff309874e7c0debfc9fb",
-  //   "created_user_id": {
-  //     "official_status": false,
-  //     "_id": "6589231382a81d6187758f7e",
-  //     "user_login": "dong.tqt_exam24h.com",
-  //     "user_avatar": "",
-  //     "user_avatar_thumbnail": "https://api.edu-like.exam24h.com/api/animals/kraken_lg.png?color=b2ef91,fa9372",
-  //     "display_name": "Trương Quang Thành Đông",
-  //     "user_role": "teacher",
-  //     "user_status": 1,
-  //     "last_active": "2024-03-07T07:10:42.000Z",
-  //     "user_active": 0
-  //   },
-  //   "title": "IELTS Contest 2023",
-  //   "description": "This is super hard contest ever",
-  //   "duration_time": 3600000,
-  //   "createdAt": "2024-03-04T06:34:00.597Z",
-  //   "updatedAt": "2024-03-04T06:34:00.597Z",
-  //   "__v": 0,
-  //   "is_done": false,
-  //   "type": "writing",
-  // }
-
-  // listening
-  // const practiceDetail = {
-  //   "_id": "65f10958512c1d80470ec8f7",
-  //   "created_user_id": "6585460adfde5a433c986c67",
-  //   "title": "test listening",
-  //   "description": "des",
-  //   "duration_time": 20000,
-  //   "type": "listening",
-  //   "createdAt": "2024-03-13T02:03:04.873Z",
-  //   "updatedAt": "2024-03-13T02:03:04.873Z",
-  //   "__v": 0
-  // }
-
-  // const practiceDetail = {
-  //   _id: "65f2ad3a74c4ac479a529259",
-  //   created_user_id: {
-  //     _id: "659e59d11775abbd6d99d0b3",
-  //     user_login: "dangth.tobi_gmail.com",
-  //     user_avatar:
-  //       "https://files.exam24h.com/upload/2024/03/13_1710302776520/659e59d11775abbd6d99d0b3-1710302776520-IMG_0007.WEBP",
-  //     user_avatar_thumbnail:
-  //       "https://files.exam24h.com/upload/2024/03/13_1710302776524/659e59d11775abbd6d99d0b3-1710302776524-thumbnail-IMG_0007.WEBP",
-  //     display_name: "Hai Dang",
-  //     user_role: "admin",
-  //     user_status: 1,
-  //     official_status: false,
-  //     last_active: "2024-03-14T07:52:00.000Z",
-  //     user_active: 1,
-  //   },
-  //   title: "reading title",
-  //   description: "reading des",
-  //   duration_time: 60000,
-  //   type: "reading",
-  //   createdAt: "2024-03-14T07:54:34.724Z",
-  //   updatedAt: "2024-03-14T07:54:34.724Z",
-  //   __v: 0,
-  //   is_done: false,
-  // };
-
-  //speaking
-  // const practiceDetail = {
-  //   "_id": "65f160afef2161a57be00cf2",
-  //   "created_user_id": "6585460adfde5a433c986c67",
-  //   "title": "test speaking",
-  //   "description": "des speaking",
-  //   "duration_time": 0,
-  //   "type": "speaking",
-  //   "createdAt": "2024-03-13T08:15:43.191Z",
-  //   "updatedAt": "2024-03-13T08:15:43.191Z",
-  //   "__v": 0
-  // }
-
+  console.log("practiceDetail", practiceDetail);
   const isSpeaking = () => {
     return practiceDetail.type == EnumTestType.Speaking;
   };
@@ -199,7 +121,6 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
       finished_time: secs,
     };
 
-    console.log("submit", dataSubmit);
     submitTest(dataSubmit).then((res) => {
       if (!res.isError) {
         showToast({
@@ -218,7 +139,6 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
   };
 
   console.log("parentQuestion", parentQuestion);
-
   const renderBottomComponent = () => {
     const showTimer = !isSpeaking() && !!practiceDetail.duration_time;
     if (!showBackBtn && !showNextBtn && !showTimer) return null;
@@ -274,6 +194,8 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
     );
   };
 
+  console.log("parentQuestion", parentQuestion);
+
   const renderContent = () => {
     if (isLoading) return <LoadingList numberItem={2} />;
     return (
@@ -294,6 +216,7 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
 
   const renderAudio = () => {
     if (!audioUrl) return null;
+    console.log("audioUrl", audioUrl);
     return <AppSound autoplay={true} disabled={true} url={audioUrl} />;
   };
 
