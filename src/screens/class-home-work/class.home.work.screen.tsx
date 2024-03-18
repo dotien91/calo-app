@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, SafeAreaView } from "react-native";
 import { useTheme, useRoute } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 /**
@@ -19,6 +19,7 @@ import { getListThread } from "@services/api/course.api";
 import eventEmitter from "@services/event-emitter";
 import LoadingList from "@shared-components/loading.list.component";
 import { SCREENS } from "constants";
+import { getBottomSpace } from "react-native-iphone-screen-helper";
 
 interface ClassHomeWorkScreenProps {}
 
@@ -93,7 +94,9 @@ const ClassHomeWorkScreen: React.FC<ClassHomeWorkScreenProps> = () => {
   };
 
   return (
-    <View style={styles.containerScreen}>
+    <SafeAreaView
+      style={{ ...CS.safeAreaView, marginBottom: getBottomSpace() }}
+    >
       <Header text={translations.homework.header} />
       <View style={styles.container}>
         <ScrollView>
@@ -119,7 +122,7 @@ const ClassHomeWorkScreen: React.FC<ClassHomeWorkScreenProps> = () => {
         </ScrollView>
         {renderCreateTaskBtn()}
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

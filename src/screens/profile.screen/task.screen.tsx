@@ -1,15 +1,20 @@
 import React from "react";
 import { FlatList, SafeAreaView } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
+import { getBottomSpace } from "react-native-iphone-screen-helper";
 
+import CS from "@theme/styles";
 import Header from "@shared-components/header/Header";
 import TaskItemCommon from "@shared-components/task-item/task.item";
 import { getListTaskByUser } from "@services/api/task.api";
+import { translations } from "@localization";
 
 const TaskScreen = () => {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Header text="Missions" />
+    <SafeAreaView
+      style={{ ...CS.safeAreaView, marginBottom: getBottomSpace() }}
+    >
+      <Header text={translations.task.missions} />
       <Tasks />
     </SafeAreaView>
   );

@@ -110,7 +110,7 @@ const SettingUser = () => {
 
   return (
     <View style={{ ...CS.safeAreaView }}>
-      <Header text="Setting" />
+      <Header text={translations.settingUser.setting} />
       {renderSettingUser()}
     </View>
   );

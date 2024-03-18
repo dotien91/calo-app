@@ -16,6 +16,7 @@ import useStore from "@services/zustand/store";
 import AboutHome from "./components/about-home/about.home";
 import eventEmitter from "@services/event-emitter";
 import CustomRefreshControl from "./components/refesh-controler/customRefeshControler";
+import { translations } from "@localization";
 
 const initialLayout = { width: Dimensions.get("window").width };
 
@@ -39,8 +40,8 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: "first", title: "For you" },
-    { key: "second", title: "Following" },
+    { key: "first", title: translations.homework.forYou },
+    { key: "second", title: translations.homework.following },
   ]);
 
   const renderTabBar = (props) => (

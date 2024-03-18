@@ -1,6 +1,8 @@
+import { translations } from "@localization";
+
 export const filterCourseKeys = [
   {
-    name: "Form of learning",
+    name: translations.course.typeLearning,
     id: "types",
     keyFilters: [
       {
@@ -22,7 +24,7 @@ export const filterCourseKeys = [
     ],
   },
   {
-    name: "Skills",
+    name: translations.course.skills,
     id: "skills",
     keyFilters: [
       {
@@ -48,11 +50,11 @@ export const filterCourseKeys = [
     ],
   },
   {
-    name: "Price per course",
+    name: translations.course.pricePerCourse,
     id: "price",
   },
   {
-    name: "Levels of study",
+    name: translations.course.levelsOfStudy,
     id: "levels",
     keyFilters: [
       {
@@ -82,7 +84,7 @@ export const filterCourseKeys = [
     ],
   },
   {
-    name: "Only English native speakers",
+    name: translations.course.onlyEnglish,
     id: "onlyEnglishNativeSpeakers",
   },
 ];
@@ -260,20 +262,25 @@ export const sortCourseSelectData = [
   {
     id: "price_low",
     sort_by: "price",
-    name: "Price: lowest first",
+    name: translations.course.price_low,
     order_by: "ASC",
   },
   {
     id: "price_high",
     sort_by: "price",
-    name: "Price: highest first",
+    name: translations.course.price_high,
     order_by: "DESC",
   },
-  { id: "rating", sort_by: "rating", name: "Highest rating", order_by: "DESC" },
+  {
+    id: "rating",
+    sort_by: "rating",
+    name: translations.course.rating,
+    order_by: "DESC",
+  },
   {
     id: "newest",
     sort_by: "createdAt",
-    name: "Sort by newest",
+    name: translations.course.newest,
     order_by: "DESC",
   },
 ];

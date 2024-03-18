@@ -8,12 +8,13 @@ import {
   ScrollView,
 } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
-
+import { getBottomSpace } from "react-native-iphone-screen-helper";
 import { useTheme } from "@react-navigation/native";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
+
 import IconSvg from "assets/svg";
 import Avatar from "@shared-components/user/Avatar";
 import CS from "@theme/styles";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { getListLeaderBoard } from "@services/api/user.api";
 import { translations } from "@localization";
 import { SCREENS } from "constants";
@@ -455,7 +456,9 @@ const DiscoverScreen = () => {
   };
 
   return (
-    <SafeAreaView style={CS.safeAreaView}>
+    <SafeAreaView
+      style={{ ...CS.safeAreaView, marginBottom: getBottomSpace() }}
+    >
       <View style={{ flex: 1 }}>
         {renderHeader()}
         <ScrollView>

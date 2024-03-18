@@ -3,6 +3,7 @@ import { Text, View } from "react-native";
 import Pie from "react-native-pie";
 import { useTheme } from "@react-navigation/native";
 import CS from "@theme/styles";
+import { translations } from "@localization";
 
 const PieChartCommon = ({ sections }) => {
   const theme = useTheme();
@@ -27,7 +28,8 @@ const PieChartCommon = ({ sections }) => {
           }}
         >
           <Text style={{ ...CS.hnSemiBold, fontSize: 16, color: colors.text }}>
-            Score: 2.5
+            {/* Score: 2.5 */}
+            {translations.task.score}: 2.5
           </Text>
         </View>
       </View>

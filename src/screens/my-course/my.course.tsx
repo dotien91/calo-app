@@ -11,6 +11,7 @@ import LoadingItem from "@shared-components/loading.item";
 import useStore from "@services/zustand/store";
 import CourseItem from "@screens/course-tab/components/course.item";
 import { useUserHook } from "@helpers/hooks/useUserHook";
+import { translations } from "@localization";
 
 const MyCourse = () => {
   const theme = useTheme();
@@ -21,8 +22,8 @@ const MyCourse = () => {
   const userData = useStore((state) => state.userData);
   const { isLoggedIn, renderViewRequestLogin } = useUserHook();
   const [routes] = React.useState([
-    { key: "first", title: "Inprogess" },
-    { key: "second", title: "Complete" },
+    { key: "first", title: translations.inprogress },
+    { key: "second", title: translations.complete },
   ]);
 
   const { listData, isLoading } = useListData<ICourseItem>(
@@ -90,7 +91,7 @@ const MyCourse = () => {
 
   return (
     <View style={{ ...CS.safeAreaView }}>
-      <Header text="My Course" />
+      <Header text={translations.course.myCourse} />
       <TabView
         style={{ flex: 1 }}
         renderTabBar={renderTabBar}

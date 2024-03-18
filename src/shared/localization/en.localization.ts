@@ -160,7 +160,7 @@ export default {
   clear: "Clear all",
   searchForKey: "Kết quả cho từ khoá: ",
   post: {
-    post: "POST",
+    post: "Post",
     posts: "Post",
     detailPost: (name: string) => `${name}'s post`,
     createPost: "Create Post",
@@ -380,7 +380,7 @@ export default {
     selectVideoModule: "Choose a lesson to get started",
     requireLevelDes: "SORRY YOU ARE NOT LEVEL ENOUGH TO OPEN THIS COURSE",
     emptyCourse: "There are no courses available",
-    typeLearning: "Kiểu học tập",
+    typeLearning: "Form of Learning",
     formLearning: "Hình thức học",
     filterSpeaker: "Giáo viên bản địa",
     viewResult: (text: string) =>
@@ -483,6 +483,7 @@ export default {
     manageClass: "Manage classes",
     recommendCourse: "Recommend course",
     teachingTime: "Teaching time",
+    sortByTutor: "Sort tutor by",
   },
   seeAll: "See all",
   settings: {
@@ -848,14 +849,17 @@ export default {
     aboutus: "About us",
     mycouse: "My Course",
     purchaseCouse: "Purchased course",
+    discount: "Discount",
+    codeActivations: "Code activations",
+    becomeATutor: "Become a tutor",
   },
-  listCategory: {
-    descriptionTitle: "What should we do today?",
-    course: "Course",
-    tutor: "Tutor",
-    shop: "Shop",
-    affiliate: "Affiliate",
-  },
+  // listCategory: {
+  //   descriptionTitle: "What should we do today?",
+  //   course: "Course",
+  //   tutor: "Tutor",
+  //   shop: "Shop",
+  //   affiliate: "Affiliate",
+  // },
   aboutUs: {
     aboutUs: "About us",
     termofus: "Term of us",
@@ -897,6 +901,10 @@ export default {
   selectFile: "Upload file",
   en: "English",
   vi: "Vietnamese",
+  leaderBoard: "Leader Board",
+  inprogress: "Inprogress",
+  complete: "Complete",
+  signOut: "Sign Out",
   task: {
     inviteFriend: "Invite a friend",
     yourscore: "Your IELTS Score",
@@ -904,6 +912,12 @@ export default {
     mycode: "My Code",
     level: "Level",
     task: "Tasks",
+    score: "Score",
+    listening: "Listening",
+    speaking: "Speaking",
+    reading: "Reading",
+    writing: "Writing",
+    missions: "Missions",
   },
   homework: {
     header: "Task list",
@@ -946,6 +960,8 @@ export default {
     dueDate: "Due date",
     handedInSuccess: "Handed in success",
     markError: "Scores must be numeric and less than 100",
+    forYou: "For you",
+    following: "Following",
   },
   introwelcome: {
     text11: "Welcome to the world of language",
@@ -992,6 +1008,7 @@ export default {
   },
   en: "English",
   vi: "Vietnamese",
+  gotit: "Got it",
   withDraw: {
     header: "Withdraw",
     your_money: "Your money",

@@ -84,10 +84,10 @@ const CourseFilterResultScreen: React.FC<
   const [index, setIndex] = React.useState(defaultIndex);
   const _index = React.useRef(index);
   const [routes] = React.useState([
-    { key: "first", title: "Course" },
-    { key: "second", title: "Tutor" },
-    { key: "third", title: "Post" },
-    { key: "four", title: "User" },
+    { key: "first", title: translations.listCategory.course },
+    { key: "second", title: translations.listCategory.tutor },
+    { key: "third", title: translations.post.posts },
+    { key: "four", title: translations.affiliate.user },
   ]);
 
   //clear params after unmount
@@ -226,7 +226,9 @@ const ListSearch = React.memo(({ type }: { type: string }) => {
             : sortCourseSelectData,
         defaultItem: courseCurrentSort,
         title:
-          type == EnumSearchType.tutor ? "Sort tutor by" : "Sort course by",
+          type == EnumSearchType.tutor
+            ? translations.course.sortByTutor
+            : translations.course.sortByTutor,
         callback: setCourseCurrentSort,
       },
     });
