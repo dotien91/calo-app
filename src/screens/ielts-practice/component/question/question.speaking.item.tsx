@@ -9,11 +9,11 @@ import CS from "@theme/styles";
 import { EnumTestType, IQuestion } from "models/course.model";
 import { Device } from "@utils/device.ui.utils";
 import TextBase from "@shared-components/TextBase";
-import { palette } from "@theme/themes";
 import { useUploadFile } from "@helpers/hooks/useUploadFile";
 import SpeakingRecordView from "../speaking.record.view";
 import { styleHtml } from "@screens/ielts-practice/styles/html.styles";
 const width = Device.width;
+
 interface SpeakingQuestionItemProps extends IQuestion {
   isLatestItem: boolean;
   setAnsweData: (param: any) => void;
@@ -36,7 +36,7 @@ const SpeakingQuestionItem = ({
   setAnsweData,
 }: SpeakingQuestionItemProps) => {
   const { uploadRecord, listFile, isUpLoadingFile } = useUploadFile();
-  console.log(2222222, index);
+
   React.useEffect(() => {
     if (!listFile.length) return;
     setAnsweData({ index, content: listFile?.[0]?.uri });
@@ -77,9 +77,9 @@ const SpeakingQuestionItem = ({
 const styles = StyleSheet.create({
   htmlBox: {
     ...CS.flexCenter,
-    ...CS.borderStyle,
+    // ...CS.borderStyle,
     borderRadius: 10,
-    borderColor: palette.primary,
+    // borderColor: palette.primary,
   },
   box: {
     padding: 16,

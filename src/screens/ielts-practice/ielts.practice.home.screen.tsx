@@ -11,36 +11,28 @@ import IconSvg from "assets/svg";
 import { palette } from "@theme/themes";
 import { SCREENS } from "constants";
 import { EnumTestType } from "models/course.model";
+import { useUserHook } from "@helpers/hooks/useUserHook";
+import { showWarningLogin } from "@helpers/super.modal.helper";
 
 const PracticeHomeScreen = () => {
-  const ItemView = ({ iconName, title, onPress }) => {
-    return (
-      <PressableBtn onPress={onPress} style={styles.itemView}>
-        <IconSvg name={iconName} size={120} />
-        <TextBase fontSize={16} fontWeight="600" color="text">
-          {title}
-        </TextBase>
-      </PressableBtn>
-    );
-  };
-  const gotoListening = () => {
+  const { isLoggedIn } = useUserHook();
+
+  const gotoTest = (type: string) => {
+    if (!isLoggedIn()) {
+      showWarningLogin();
+      return;
+    }
     NavigationService.navigate(SCREENS.IELTS_PRACTICE_LIST, {
-      type: EnumTestType.Listening,
+      type,
     });
   };
   const gotoReading = () => {
+    if (!isLoggedIn()) {
+      showWarningLogin();
+      return;
+    }
     NavigationService.navigate(SCREENS.IELTS_PRACTICE_LIST, {
       type: EnumTestType.Reading,
-    });
-  };
-  const gotoWriting = () => {
-    NavigationService.navigate(SCREENS.IELTS_PRACTICE_LIST, {
-      type: EnumTestType.Writing,
-    });
-  };
-  const gotoSpeaking = () => {
-    NavigationService.navigate(SCREENS.IELTS_PRACTICE_LIST, {
-      type: EnumTestType.Speaking,
     });
   };
 
@@ -51,12 +43,12 @@ const PracticeHomeScreen = () => {
         <ItemView
           iconName={"icListening"}
           title={"Listening"}
-          onPress={gotoListening}
+          onPress={() => gotoTest(EnumTestType.Listening)}
         />
         <ItemView
           iconName={"icWriting"}
           title={"Writing"}
-          onPress={gotoWriting}
+          onPress={() => gotoTest(EnumTestType.Writing)}
         />
       </View>
       <View style={styles.viewGroup}>
@@ -68,10 +60,21 @@ const PracticeHomeScreen = () => {
         <ItemView
           iconName={"icSpeaking"}
           title={"Speaking"}
-          onPress={gotoSpeaking}
+          onPress={() => gotoTest(EnumTestType.Speaking)}
         />
       </View>
     </SafeAreaView>
+  );
+};
+
+const ItemView = ({ iconName, title, onPress }) => {
+  return (
+    <PressableBtn onPress={onPress} style={styles.itemView}>
+      <IconSvg name={iconName} size={120} />
+      <TextBase fontSize={16} fontWeight="600" color="text">
+        {title}
+      </TextBase>
+    </PressableBtn>
   );
 };
 

@@ -28,7 +28,6 @@ const IeltsPraticeList = () => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [data, setData] = React.useState([]);
   const [progress, setProgress] = React.useState([]);
-
   // const { data, isLoading, setData } = useApi<IDetailPractice[]>({
   //   params: { type },
   //   requestData: getListTest,
@@ -117,7 +116,7 @@ const IeltsPraticeList = () => {
     return <ItemPracticeTest item={item} />;
   };
 
-  console.log("listTestParent", listTestParent);
+  // console.log("listTestParent", listTestParent);
 
   return (
     <SafeAreaView style={CS.safeAreaView}>
@@ -154,13 +153,19 @@ const IeltsPraticeList = () => {
 };
 
 const ItemPracticeTest = React.memo(({ item }) => {
-  console.log(22222222, item);
   const openPraticeTest = (item) => {
+    if (item.type == "reading") {
+      NavigationService.navigate(SCREENS.IELTS_READING_PRACTICE, {
+        practiceDetail: item,
+      });
+      return;
+    }
     NavigationService.navigate(SCREENS.IELTS_PRACTICE, {
       practiceDetail: item,
     });
   };
   const renderTestChild = (item, index) => {
+    console.log("222222", item);
     return (
       <PressableBtn
         disable={item.is_done}

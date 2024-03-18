@@ -1,5 +1,6 @@
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+import FastImage from "react-native-fast-image";
 import * as NavigationService from "react-navigation-helpers";
 
 import CS from "@theme/styles";
@@ -35,7 +36,7 @@ const StreamCard = ({ data }: { data: IStreamItem }) => {
   return (
     <View style={styles.container}>
       <PressableBtn onPress={goToViewStream} style={styles.styleItemLiveStream}>
-        <Image
+        <FastImage
           style={styles.styleCover}
           source={{ uri: data?.user_id?.user_avatar_thumbnail }}
         />

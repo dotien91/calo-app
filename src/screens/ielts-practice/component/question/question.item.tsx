@@ -31,6 +31,8 @@ interface QuestionItemProps extends IQuestion {
 // const imagehtml =
 //   "<div><p>He said <b>WOW!</b></p><img src='https://www.google.com/images/srpr/logo4w.png'/><p>You should write at least 250 words.</p></div>";
 
+// const speakingHtml = "<menu><p>Q: Describe your education</p><p>Q: What is your are of specialization?</p><p>Q: Why did you choose to study that major?</p><p>Q: Do you like your major? Why/Why not?</p></menu>"
+
 // const abcd =
 //   "<p>cau 3</p><ul><li>A: Coffee</li><li>B: Tea</li><li>C: Milk</li></ul><p>cau 4</p><ul><li>A: Coffee</li><li>B: Tea</li><li>C: Milk</li></ul>";
 
@@ -38,16 +40,14 @@ const QuestionItem = ({
   part,
   index,
   title,
-  type,
   content,
   child,
   isTimeout,
   setAnsweData,
 }: QuestionItemProps) => {
   const isWriting = part == EnumTestType.Writing;
-  // const isReading = part == EnumTestType.Reading;
+  const isReading = part == EnumTestType.Reading;
 
-  console.log(2222, type);
   const _onChangeText = (v) => {
     setAnsweData({ index, content: v });
   };
@@ -84,7 +84,7 @@ const QuestionItem = ({
         <TextBase color="text" fontWeight="600">
           {title}
         </TextBase>
-        <HtmlView content={content} showViewMore={true} />
+        <HtmlView content={content} showViewMore={isReading} />
         {renderSelectBox()}
         {renderInput()}
       </View>
