@@ -36,7 +36,7 @@ const SpeakingQuestionItem = ({
   setAnsweData,
 }: SpeakingQuestionItemProps) => {
   const { uploadRecord, listFile, isUpLoadingFile } = useUploadFile();
-
+  console.log(2222222, index);
   React.useEffect(() => {
     if (!listFile.length) return;
     setAnsweData({ index, content: listFile?.[0]?.uri });

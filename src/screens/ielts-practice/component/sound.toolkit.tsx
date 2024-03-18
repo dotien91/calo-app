@@ -43,7 +43,6 @@ export default class AppSound extends Component<Props, State> {
   recorder: Recorder | null;
   lastSeek: number;
   _progressInterval: IntervalID;
-
   constructor(props: Props) {
     super(props);
 
@@ -83,6 +82,7 @@ export default class AppSound extends Component<Props, State> {
 
   componentWillUnmount() {
     clearInterval(this._progressInterval);
+    this.player.destroy();
   }
 
   _shouldUpdateProgressBar() {
@@ -226,10 +226,10 @@ export default class AppSound extends Component<Props, State> {
     const isReady = !this.state.playButtonDisabled;
     const disabled = this.state.playButtonDisabled;
     let progress =
-      (this.player.currentTime / this.player.duration > 0.95
+      (this.player?.currentTime / this.player?.duration > 0.95
         ? 1
-        : this.player.currentTime / this.player.duration) || 0;
-    if (this.player.currentTime <= 0) progress = 0;
+        : this.player?.currentTime / this.player?.duration) || 0;
+    if (this.player?.currentTime <= 0) progress = 0;
     return (
       <View>
         <View style={styles.box}>
@@ -252,7 +252,7 @@ export default class AppSound extends Component<Props, State> {
             ) : (
               <PressableBtn
                 onPress={() => this._playPause()}
-                disabled={this.props.disable || disabled || !isReady}
+                disable={this.props.disable || disabled || !isReady}
               >
                 <Icon
                   size={24}
@@ -264,7 +264,7 @@ export default class AppSound extends Component<Props, State> {
               </PressableBtn>
             ))}
           <TextBase fontSize={12} style={{ width: 28, textAlign: "left" }}>
-            {this.fancyTimeFormat(this.player.currentTime / 1000)}
+            {this.fancyTimeFormat(this.player?.currentTime / 1000)}
           </TextBase>
           <TextBase></TextBase>
           <Progress.Bar
@@ -281,7 +281,7 @@ export default class AppSound extends Component<Props, State> {
           ></Progress.Bar>
           <TextBase style={{ width: 28, textAlign: "right" }} fontSize={12}>
             {this.fancyTimeFormat(
-              (this.player.duration - this.player.currentTime) / 1000,
+              (this.player?.duration - this.player?.currentTime) / 1000,
             )}
           </TextBase>
         </View>

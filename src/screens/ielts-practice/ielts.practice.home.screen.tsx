@@ -1,5 +1,6 @@
 import * as React from "react";
 import { View, StyleSheet, SafeAreaView } from "react-native";
+import * as NavigationService from "react-navigation-helpers";
 
 import { translations } from "@localization";
 import TextBase from "@shared-components/TextBase";
@@ -8,10 +9,10 @@ import Header from "@shared-components/header/Header";
 import CS from "@theme/styles";
 import IconSvg from "assets/svg";
 import { palette } from "@theme/themes";
+import { SCREENS } from "constants";
+import { EnumTestType } from "models/course.model";
 
-interface PracticeHomeScreenProps {}
-
-const PracticeHomeScreen = (props: PracticeHomeScreenProps) => {
+const PracticeHomeScreen = () => {
   const ItemView = ({ iconName, title, onPress }) => {
     return (
       <PressableBtn onPress={onPress} style={styles.itemView}>
@@ -22,10 +23,26 @@ const PracticeHomeScreen = (props: PracticeHomeScreenProps) => {
       </PressableBtn>
     );
   };
-  const gotoListening = () => {};
-  const gotoReading = () => {};
-  const gotoWriting = () => {};
-  const gotoSpeaking = () => {};
+  const gotoListening = () => {
+    NavigationService.navigate(SCREENS.IELTS_PRACTICE_LIST, {
+      type: EnumTestType.Listening,
+    });
+  };
+  const gotoReading = () => {
+    NavigationService.navigate(SCREENS.IELTS_PRACTICE_LIST, {
+      type: EnumTestType.Reading,
+    });
+  };
+  const gotoWriting = () => {
+    NavigationService.navigate(SCREENS.IELTS_PRACTICE_LIST, {
+      type: EnumTestType.Writing,
+    });
+  };
+  const gotoSpeaking = () => {
+    NavigationService.navigate(SCREENS.IELTS_PRACTICE_LIST, {
+      type: EnumTestType.Speaking,
+    });
+  };
 
   return (
     <SafeAreaView style={CS.container}>

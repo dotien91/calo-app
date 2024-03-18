@@ -37,3 +37,23 @@ export async function submitTest(data: any) {
     return response;
   });
 }
+
+export async function getListTest(params: any) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "test/list",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function getAllSubmitTest(params: any) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "test/user/list",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}

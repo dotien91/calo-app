@@ -60,10 +60,18 @@ export function useApi<T>({
     });
   };
 
+  const setData = React.useCallback((data: T) => {
+    setStateListData((oldState) => ({
+      ...oldState,
+      data,
+    }));
+  }, []);
+
   return {
     data: stateListData.data,
     noData: stateListData.noData,
     isLoading: stateListData.isLoading,
     _requestData,
+    setData,
   };
 }

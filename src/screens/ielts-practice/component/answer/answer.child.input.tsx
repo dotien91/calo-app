@@ -27,19 +27,14 @@ const AnswerChildInput = ({
     setAnsweData({ index, content: v });
   };
 
-  const renderInput = ({
-    // item,
-    index,
-  }: {
-    // item: IDetailPractice;
-    index: string;
-  }) => {
+  const renderInput = ({ item, index }: { item: IDetailPractice }) => {
+    console.log(333333, item);
     return (
       <View style={{ marginBottom: 12 }}>
         <TextBase marginBottom={4}>{index + 1}</TextBase>
         <Input
           disabled={isTimeout}
-          extraParam={{ index: index + 1 }}
+          extraParam={{ index: item.index }}
           cb={_onChangeText}
         />
       </View>

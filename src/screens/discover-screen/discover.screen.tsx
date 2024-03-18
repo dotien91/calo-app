@@ -53,10 +53,11 @@ const DiscoverScreen = () => {
       title: translations.discover.study,
       screen: SCREENS.COURSE_LIST,
     },
-    // {
-    //   icon: "icGradution",
-    //   title: translations.discover.dictionary,
-    // },
+    {
+      icon: "icGradution",
+      title: translations.discover.ieltsPractice,
+      screen: SCREENS.IELTS_PRACTICE_HOME,
+    },
     // {
     //   icon: "icShop",
     //   title: translations.discover.shop,

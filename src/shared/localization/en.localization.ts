@@ -963,6 +963,7 @@ export default {
     leaderboard: "Leader Board",
     poits: "Points",
     feature: "Features",
+    ieltsPractice: "Ielts practice test",
   },
   gamificaiton: {
     youEarn: "You earned ",

@@ -248,6 +248,7 @@ export function useUploadFile(initData?: any[], selectionLimit = 30) {
         type: i.type,
         _id: res[index].callback?._id,
       }));
+      console.log(111111, data);
       setListFile(data);
     }
     setIsUpLoadingFile(false);

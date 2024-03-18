@@ -1476,6 +1476,7 @@ export default {
     leaderboard: "Bảng xếp hạng",
     poits: "Điểm",
     feature: "Đặc trưng",
+    ieltsPractice: "Thi thử ielts",
   },
   gamificaiton: {
     youEarn: "Bạn nhận được ",
