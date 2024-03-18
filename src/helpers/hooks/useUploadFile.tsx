@@ -24,6 +24,7 @@ export function useUploadFile(initData?: any[], selectionLimit = 30) {
     );
   };
   const getLinkUri = (i) => {
+    if (i.src) return i.src;
     if (isIos) {
       return i.uri?.replace("file://", "");
     }
@@ -224,6 +225,8 @@ export function useUploadFile(initData?: any[], selectionLimit = 30) {
   };
 
   const uploadRecord = React.useCallback(async (recordPaths: string) => {
+    setIsUpLoadingFile(true);
+
     const recordLocalData = [
       {
         uri: (!isIos ? "file://" : "") + getPath(recordPaths || ""),
@@ -241,12 +244,14 @@ export function useUploadFile(initData?: any[], selectionLimit = 30) {
     if (Array.isArray(res)) {
       const data = recordLocalData.map((i, index) => ({
         name: getFileName(i),
-        uri: getLinkUri(i),
+        uri: res[index]?.src,
         type: i.type,
         _id: res[index].callback?._id,
       }));
+      console.log(111111, data);
       setListFile(data);
     }
+    setIsUpLoadingFile(false);
   }, []);
 
   const deleteFile = (_id) => {

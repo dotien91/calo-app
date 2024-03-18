@@ -93,7 +93,6 @@ export default function CreateWorkScreen() {
 
     if (!usePoint) params["max_mark"] = 0;
 
-    console.log("datadata", { data, params });
     if (!defaultData) {
       //create thread
       _createThread(params);

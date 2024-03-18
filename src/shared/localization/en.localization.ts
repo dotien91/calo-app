@@ -45,6 +45,9 @@ export default {
   goBackHome: "Go back home",
   next: "Next",
   other: "Other",
+  recordAudio: "Record audio",
+  playAudio: "Play audio",
+  stopAudio: "Stop audio",
   error: {
     unknown: "Unknow error!",
     invalidPhoneEmail: "Phone/Email invalid",
@@ -987,6 +990,7 @@ export default {
     leaderboard: "Leader Board",
     poits: "Points",
     feature: "Features",
+    ieltsPractice: "Ielts practice test",
   },
   gamificaiton: {
     youEarn: "You earned ",
@@ -1036,6 +1040,20 @@ export default {
   referrals: {
     yourReferral: "Your referral",
     viewProfile: "View profile",
+  },
+  ieltsPractice: {
+    praticeTest: "Practice test",
+    writing: "Writing",
+    listening: "Listening",
+    reading: "Reading",
+    speaking: "Speaking",
+    answers: "Answers",
+    questions: "Questions",
+    submitSucces: "Submit success",
+    timeout: "Timeout",
+    submit: "Submit",
+    hidePassage: "Hide passage",
+    showPassage: "Show passage",
   },
 };
 /* eslint-disable max-len */

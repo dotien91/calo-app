@@ -147,3 +147,5 @@ export enum EnumColors {
   primary = "primary",
   white = "white",
 }
+
+export type Nullable<T> = T | null;

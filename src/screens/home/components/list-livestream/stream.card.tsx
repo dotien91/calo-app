@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
 import CS from "@theme/styles";
@@ -7,8 +7,12 @@ import { SCREENS } from "constants";
 import { IStreamItem } from "models/stream.model";
 import { palette } from "@theme/themes";
 import { translations } from "@localization";
-import IconSvg from "assets/svg";
-import PressableBtn from "@shared-components/button/PressableBtn";
+
+// const { width } = Dimensions.get("screen");
+
+// const PADDING_HORIZONTAL = 8;
+// const SIZE_AVATAR = 20;
+// const PADDING_LEFT = 8;
 
 const StreamCard = ({ data }: { data: IStreamItem }) => {
   const IconText = ({ nameIcon, text }: { nameIcon: string; text: string }) => {
@@ -72,8 +76,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     zIndex: 2,
     gap: 10,
-    top: 100,
-    marginLeft: 10,
   },
   styleTxtTitle1: {
     ...CS.textTitleStream,

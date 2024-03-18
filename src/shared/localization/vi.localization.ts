@@ -45,6 +45,9 @@ export default {
   goBackHome: "Quay về trang chủ",
   next: "Tiếp theo",
   other: "Khác",
+  recordAudio: "Ghi âm",
+  playAudio: "Phát audio",
+  stopAudio: "Dừng audio",
   error: {
     unknown: "Có lỗi không xác định xảy ra!",
     invalidPhoneEmail: "SĐT/Email không hợp lệ",
@@ -1500,6 +1503,7 @@ export default {
     leaderboard: "Bảng xếp hạng",
     poits: "Điểm",
     feature: "Đặc trưng",
+    ieltsPractice: "Thi thử ielts",
   },
   gamificaiton: {
     youEarn: "Bạn nhận được ",
@@ -1549,5 +1553,19 @@ export default {
   referrals: {
     yourReferral: "Người giới thiệu",
     viewProfile: "Xem hồ sơ",
+  },
+  ieltsPractice: {
+    praticeTest: "Thi thử",
+    writing: "Kĩ năng viết",
+    listening: "Kĩ năng nghe",
+    reading: "Kĩ năng đọc",
+    speaking: "Kĩ năng nói",
+    answers: "Câu trả lời",
+    questions: "Câu hỏi",
+    submitSucces: "Nộp bài thành công",
+    submit: "Nộp bài",
+    timeout: "Hết giờ!",
+    hidePassage: "Thu gọn đoạn hội thoại",
+    showPassage: "Mở rộng đoạn hội thoại",
   },
 };

@@ -85,5 +85,8 @@ export default () => {
       ...CommonStyle.hnSemiBold,
       color: palette.textOpacity4,
     },
+    btnViewmore: {
+      backgroundColor: palette.grey1,
+    },
   });
 };

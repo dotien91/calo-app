@@ -21,6 +21,8 @@ import { formatDate } from "@utils/date.utils";
 import { getListAffiliate } from "@services/api/affiliate.api";
 import formatMoney from "@shared-components/input-money/format.money";
 
+const selected = 0;
+
 const CodeActivationsScreen = () => {
   // const [courseCurrentSort, setCourseCurrentSort] = useState({});
   // const [listCourseFilterParams] = useState({});

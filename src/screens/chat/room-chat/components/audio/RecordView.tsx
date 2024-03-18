@@ -217,7 +217,7 @@ class RecordView extends React.PureComponent<any, State> {
     });
     this.props.uploadRecord(result);
     setTimeout(() => {
-      this.props.closeModal();
+      this.props.closeModal && this.props.closeModal();
     }, 500);
   };
 }

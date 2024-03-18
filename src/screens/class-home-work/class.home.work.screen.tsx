@@ -55,10 +55,6 @@ const ClassHomeWorkScreen: React.FC<ClassHomeWorkScreenProps> = () => {
     });
   };
 
-  console.log(3333, {
-    class_id,
-  });
-
   React.useEffect(() => {
     _getListThread();
     eventEmitter.on("reload_data", _getListThread);

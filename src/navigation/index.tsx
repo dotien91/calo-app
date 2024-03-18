@@ -82,7 +82,7 @@ import ChatListScreen from "@screens/chat/list-chat/chat.list.screen";
 import NotificationScreen from "@screens/notification/NotificationScreen";
 import TaskScreen from "@screens/profile.screen/task.screen";
 import TeacherCourse from "@screens/teacher-courses/teacher.course";
-import LeaderBoard from "@screens/leader-board/leader.board";
+// import LeaderBoard from "@screens/leader-board/leader.board";
 
 import AffiliatePage from "@screens/affiliate/affiliate.screen";
 import WithdrawScreen from "@screens/withdraw/withdraw.screen";
@@ -95,6 +95,10 @@ import BlackList from "@screens/black-list/black.list";
 // import SettingProfileScreen from "@screens/profile.screen/profile.screen";
 import CodeActivationsScreen from "@screens/code-activations/code.activations.screen";
 import HiddenPaage from "@screens/hidden-page/hidden.page";
+import IeltsPacticeScreen from "@screens/ielts-practice/ielts.practice.test.screen";
+import IeltsReadingPacticeScreen from "@screens/ielts-practice/ielts.reading.practice.test.screen";
+import PracticeHomeScreen from "@screens/ielts-practice/ielts.practice.home.screen";
+import IeltsPraticeList from "@screens/ielts-practice/ielts.practice.list";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -205,6 +209,29 @@ const Navigation = () => {
     );
   };
 
+  const renderPracticeTestStack = () => {
+    return (
+      <>
+        <Stack.Screen
+          name={SCREENS.IELTS_PRACTICE_HOME}
+          component={PracticeHomeScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.IELTS_PRACTICE_LIST}
+          component={IeltsPraticeList}
+        />
+        <Stack.Screen
+          name={SCREENS.IELTS_READING_PRACTICE}
+          component={IeltsReadingPacticeScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.IELTS_PRACTICE}
+          component={IeltsPacticeScreen}
+        />
+      </>
+    );
+  };
+
   return (
     <NavigationContainer
       ref={navigationRef}
@@ -217,12 +244,13 @@ const Navigation = () => {
         {renderStackIntro()}
 
         <Stack.Screen name={SCREENS.HOME} component={renderTabNavigation} />
-        <Stack.Screen name={SCREENS.LEADERBOARD} component={LeaderBoard} />
+        {/* <Stack.Screen name={SCREENS.LEADERBOARD} component={LeaderBoard} /> */}
         <Stack.Screen
           name={SCREENS.CLASSHOMEWORK}
           component={ClassHomeWorkScreen}
         />
         {renderBanksStack()}
+        {renderPracticeTestStack()}
         <Stack.Screen name={SCREENS.CHAT} component={ChatListScreen} />
 
         <Stack.Screen

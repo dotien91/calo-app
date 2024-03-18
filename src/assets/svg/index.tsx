@@ -116,6 +116,14 @@ import icCameraShadow from "./icon-camera-shadow.svg";
 import icMessage from "./icon-message.svg";
 import icEyeStream from "./icon-eyeStream.svg";
 import icNotification from "./icon-notification.svg";
+import icCircleArrowLeft from "./circle-arrow-left.svg";
+import icCircleArrowRight from "./circle-arrow-down.svg";
+import icListening from "./practice-listening.svg";
+import icSpeaking from "./practice-speaking.svg";
+import icReading from "./practice-reading.svg";
+import icWriting from "./practice-writing.svg";
+import icWritingHeader from "./practice-header-writing.svg";
+import iconWriting from "./practice-ic-write.svg";
 
 const Icons = {
   intro1,
@@ -234,6 +242,15 @@ const Icons = {
   icMessage,
   icEyeStream,
   icNotification,
+  icCircleArrowLeft,
+  icCircleArrowRight,
+  // icDelete,
+  icListening,
+  icSpeaking,
+  icReading,
+  icWriting,
+  icWritingHeader,
+  iconWriting,
 };
 
 interface IconSvgProps {

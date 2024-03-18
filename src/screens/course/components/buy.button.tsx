@@ -22,7 +22,6 @@ interface BuyButtonProps {
 const BuyButton = ({ data, type }: BuyButtonProps) => {
   const { isLoggedIn } = useUserHook();
   const isJoin = data?.is_join;
-  console.log("datadatadata", data);
   const goToBuyScreen = () => {
     if (!isLoggedIn()) {
       showWarningLogin();
