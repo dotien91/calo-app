@@ -14,7 +14,6 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { palette } from "@theme/themes";
 import Badge from "./Badge";
 import { SCREENS } from "constants";
-import { numberWithCommas } from "@utils/string.utils";
 import { translations } from "@localization";
 import CourseProgressBar from "./course.progress.bar";
 import PressableBtn from "@shared-components/button/PressableBtn";

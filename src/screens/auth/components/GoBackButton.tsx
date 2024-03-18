@@ -2,8 +2,7 @@ import React from "react";
 import { View, ViewStyle } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
-import IconSvg from "assets/svg";
-import PressableBtn from "@shared-components/button/PressableBtn";
+import IconBtn from "@shared-components/button/IconBtn";
 const GoBackButton = ({ customStyle }: { customStyle: ViewStyle }) => {
   return (
     <View
@@ -17,9 +16,12 @@ const GoBackButton = ({ customStyle }: { customStyle: ViewStyle }) => {
         },
       ]}
     >
-      <PressableBtn onPress={() => NavigationService.goBack()}>
-        <IconSvg name="icBack" size={17} />
-      </PressableBtn>
+      <IconBtn
+        customStyle={{ width: "auto" }}
+        size={28}
+        onPress={() => NavigationService.goBack()}
+        name="chevron-left"
+      />
     </View>
   );
 };

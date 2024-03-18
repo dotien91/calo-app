@@ -37,7 +37,7 @@ export default (theme: ExtendedTheme) => {
       borderRadius: 8,
       width: 225,
       height: 66,
-      marginHorizontal: 12,
+      marginLeft: 12,
       backgroundColor: colors.backgroundColorGrey,
       borderColor: colors.backgroundColorGrey,
     },

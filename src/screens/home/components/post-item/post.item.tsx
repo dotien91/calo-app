@@ -97,7 +97,7 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
   return (
     <View style={styles.container}>
       <AvatarPost
-        data={data}
+        data={data?.user_id}
         pressAvatar={goToProfileCurrentUser}
         sizeAvatar={SIZE_AVATAR}
         showLevel

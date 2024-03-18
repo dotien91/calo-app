@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { View, Image, TouchableOpacity, TextInput } from "react-native";
+import { View, Image, TouchableOpacity } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import * as NavigationService from "react-navigation-helpers";
@@ -17,7 +17,7 @@ const SIZE_AVATAR = 40;
 const BORDER_AVATAR = 20;
 const HeaderHome = () => {
   const userData = useStore((state) => state.userData);
-  const linkAvatar = useStore((state) => state.linkAvatar);
+  const userMedia = useStore((state) => state.userMedia);
 
   const theme = useTheme();
   const { colors } = theme;
@@ -45,8 +45,8 @@ const HeaderHome = () => {
         <Image
           // source={{ uri: userData?.user_avatar_thumbnail  }}
           source={
-            linkAvatar.trim().length > 0
-              ? { uri: linkAvatar }
+            (userMedia?.user_avatar || "").trim().length > 0
+              ? { uri: userMedia?.user_avatar }
               : require("@assets/images/default_avatar.jpg")
           }
           style={{
@@ -57,7 +57,7 @@ const HeaderHome = () => {
         />
       </PressableBtn>
     );
-  }, [linkAvatar]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [userMedia]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const goToSearchScreen = () => {
     NavigationService.navigate(SCREENS.COURSE_CATEGORY);

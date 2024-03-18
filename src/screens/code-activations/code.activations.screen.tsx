@@ -17,7 +17,6 @@ import { ICourseItem } from "models/course.model";
 import useStore from "@services/zustand/store";
 import { SCREENS } from "constants";
 import { palette } from "@theme/themes";
-import { getReferralUserProduct } from "@services/api/user.api";
 import { formatDate } from "@utils/date.utils";
 import { getListAffiliate } from "@services/api/affiliate.api";
 import formatMoney from "@shared-components/input-money/format.money";
@@ -34,7 +33,7 @@ const CodeActivationsScreen = () => {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const [sectionList, setSectionList] = useState<TypedUser[]>([]);
   const [activeSections, setActiveSections] = useState<number[]>([0]);
-  const [selected, setSelected] = useState(0);
+  // const [selected, setSelected] = useState(0);
   //fake data
   const listData = [
     {

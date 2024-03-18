@@ -1,29 +1,42 @@
 import * as React from "react";
 import { StyleSheet, View, Image, Text } from "react-native";
+import * as NavigationService from "react-navigation-helpers";
 
 import PressableBtn from "@shared-components/button/PressableBtn";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 
-import { TypedPost } from "shared/models";
+import { TypedUser } from "shared/models";
+import { SCREENS } from "constants";
 
 interface AvatarPostProps {
-  data: TypedPost;
-  pressAvatar: () => void;
+  data: TypedUser;
   sizeAvatar: number;
   showLevel?: boolean;
+  canPress?: boolean;
+  _onPress?: boolean;
 }
 
 const AvatarPost = ({
+  canPress = true,
   data,
-  pressAvatar,
   sizeAvatar,
   showLevel,
+  _onPress,
 }: AvatarPostProps) => {
   const BORDER_AVATAR = sizeAvatar / 2;
+  const Component = canPress ? PressableBtn : View;
+
+  const onPressAvatar = () => {
+    if (_onPress) return _onPress();
+    NavigationService.navigate(SCREENS.PROFILE_CURRENT_USER, {
+      _id: data?._id,
+      userInfo: data,
+    });
+  };
   return (
-    <PressableBtn
-      onPress={pressAvatar}
+    <Component
+      onPress={onPressAvatar}
       style={{
         width: sizeAvatar,
         height: sizeAvatar,
@@ -31,7 +44,7 @@ const AvatarPost = ({
       }}
     >
       <Image
-        source={{ uri: data?.user_id?.user_avatar_thumbnail }}
+        source={{ uri: data?.user_avatar || data?.user_avatar_thumbnail }}
         style={{
           width: sizeAvatar,
           height: sizeAvatar,
@@ -45,7 +58,7 @@ const AvatarPost = ({
           </View>
         </View>
       )}
-    </PressableBtn>
+    </Component>
   );
 };
 

@@ -399,10 +399,7 @@ const Navigation = () => {
           name={SCREENS.CODE_ACTIVATIONS_SCREEN}
           component={CodeActivationsScreen}
         />
-        <Stack.Screen
-          name={SCREENS.HIDDEN_PAGE}
-          component={HiddenPaage}
-        />
+        <Stack.Screen name={SCREENS.HIDDEN_PAGE} component={HiddenPaage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

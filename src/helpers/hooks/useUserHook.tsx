@@ -57,6 +57,8 @@ export const useUserHook = () => {
     setUserData(data);
     setUserInfo(data);
     setLinkAvatar(data.user_avatar_thumbnail);
+
+    console.log(222222, data.user_avatar, data.user_avatar_thumbnail);
     setUserMedia({
       user_avatar: data.user_avatar || "",
       user_cover: data.user_cover || "",

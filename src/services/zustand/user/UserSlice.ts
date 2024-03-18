@@ -2,8 +2,8 @@ import { StoreSlice } from "@zustand";
 import { TypedUser } from "models";
 
 interface IUserMedia {
-  user_avatar: string;
-  user_cover: string;
+  user_avatar?: string;
+  user_cover?: string;
 }
 
 export interface UserSlice {
@@ -70,7 +70,9 @@ const createUserSlice: StoreSlice<UserSlice> = (set) => ({
     user_cover: "",
   },
   setUserMedia: (v: IUserMedia) => {
-    set({ userMedia: v });
+    set((state) => {
+      return { userMedia: { ...state.userMedia, ...v } };
+    });
   },
 });
 

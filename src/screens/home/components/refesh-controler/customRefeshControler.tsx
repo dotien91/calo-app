@@ -1,5 +1,5 @@
 import React from "react";
-import { ActivityIndicator, StyleSheet } from "react-native";
+import { ActivityIndicator } from "react-native";
 import Animated, {
   cancelAnimation,
   useSharedValue,

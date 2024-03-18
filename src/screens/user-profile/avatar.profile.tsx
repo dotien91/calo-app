@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo } from "react";
 import {
   View,
   StyleSheet,
@@ -9,21 +9,15 @@ import {
 } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
-import eventEmitter from "@services/event-emitter";
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
 import useStore from "@services/zustand/store";
 import { TypedUser } from "shared/models";
 import { useTheme } from "@react-navigation/native";
-import { selectMedia } from "@helpers/file.helper";
-import { uploadMedia } from "@services/api/post";
-import { isIos } from "@helpers/device.info.helper";
-import { updateProfile } from "@services/api/user.api";
-import { showToast } from "@helpers/super.modal.helper";
-import { translations } from "@localization";
 import SkeletonPlaceholder from "@shared-components/skeleton";
 import ImageLoad from "@shared-components/image-load/ImageLoad";
 import PressableBtn from "@shared-components/button/PressableBtn";
+import useUserHelper from "@helpers/hooks/useUserHelper";
 
 interface UploadAvatarProps {
   userInfo: TypedUser | null;
@@ -33,111 +27,20 @@ interface UploadAvatarProps {
 const AvatarProfile = ({ userInfo, customStyle }: UploadAvatarProps) => {
   const widthScreen = Dimensions.get("window").width;
 
-  const userData = useStore((store) => store.userData);
-  const setUserData = useStore((store) => store.setUserData);
-
   const theme = useTheme();
   const { colors } = theme;
-  const [linkAvatar, setLinkAvatar] = useState(userInfo?.user_avatar || "");
-  const [updateing, setUpdating] = useState(false);
-  const _setLinkAvatar = useStore((store) => store.setLinkAvatar);
+  const userMedia = useStore((store) => store.userMedia);
 
-  useEffect(() => {
-    setLinkAvatar(
-      userInfo?.user_avatar || userInfo?.user_avatar_thumbnail || "",
-    );
-  }, [userInfo]);
+  const { changeUserMedia, isMe, loading } = useUserHelper();
 
-  const onPressChangeCover = async () => {
-    if (updateing) return;
-    selectMedia({
-      config: { mediaType: "photo", cropping: true, width: 400, height: 400 },
-      callback: async (image) => {
-        const res = await uploadMedia({
-          name: image?.filename || image.path?.split("/")?.reverse()?.[0] || "",
-          uri: isIos() ? image.path?.replace("file://", "") : image.path,
-          type: image.mime,
-        });
-        if (res?.[0]?.callback?._id) {
-          const params = {
-            _id: userData?._id,
-            user_cover: res?.[0]?.callback?.media_url,
-          };
-          setUpdating(true);
-          setUserData({
-            ...userData,
-            user_cover: res?.[0]?.callback?.media_url,
-          });
-          updateProfile(params).then((res) => {
-            if (!res.isError) {
-              showToast({
-                type: "success",
-                message: translations.updateSuccess,
-              });
-              setUpdating(false);
-              eventEmitter.emit("reload_list_post");
-            } else {
-              showToast({
-                type: "error",
-                message: translations.somethingWentWrong,
-              });
-              setUpdating(false);
-            }
-          });
-        }
-      },
-    });
-  };
+  const avatarUrl = React.useMemo(() => {
+    const data = isMe(userInfo) ? userMedia : userInfo;
+    return data?.user_avatar || data?.user_avatar_thumbnail;
+  }, [userInfo, userMedia]);
 
-  const onPressChangeAvatar = async () => {
-    if (updateing) return;
-    selectMedia({
-      config: { mediaType: "photo", cropping: true, width: 400, height: 400 },
-      callback: async (image) => {
-        const res = await uploadMedia({
-          name: image?.filename || image.path?.split("/")?.reverse()?.[0] || "",
-          uri: isIos() ? image.path?.replace("file://", "") : image.path,
-          type: image.mime,
-        });
-        if (res?.[0]?.callback?._id) {
-          setLinkAvatar(res?.[0]?.callback?.media_thumbnail);
-          _setLinkAvatar(res?.[0]?.callback?.media_thumbnail);
-          setUserData({
-            ...userData,
-            user_avatar_thumbnail: res?.[0]?.callback?.media_url,
-          });
-          const params = {
-            _id: userData?._id,
-            user_avatar: res?.[0]?.callback?.media_url,
-            user_avatar_thumbnail: res?.[0]?.callback?.media_thumbnail,
-          };
-          setUpdating(true);
-          updateProfile(params).then((res) => {
-            if (!res.isError) {
-              showToast({
-                type: "success",
-                message: translations.updateSuccess,
-              });
-              setUpdating(false);
-              eventEmitter.emit("reload_list_post");
-            } else {
-              showToast({
-                type: "error",
-                message: translations.somethingWentWrong,
-              });
-              setUpdating(false);
-            }
-          });
-        }
-      },
-    });
-  };
-
-  const isMe = React.useMemo(() => {
-    return userInfo?._id == userData?._id;
-  }, [userInfo, userData]);
-
-  if (isMe) userInfo = { ...userData };
+  const coverUrl = React.useMemo(() => {
+    return isMe(userInfo) ? userMedia?.user_cover : userInfo?.user_cover;
+  }, [userInfo, userMedia]);
 
   if (!userInfo?._id) {
     return (
@@ -150,8 +53,7 @@ const AvatarProfile = ({ userInfo, customStyle }: UploadAvatarProps) => {
   }
 
   const renderBg = () => {
-    const url = userInfo?.user_cover;
-    if (!url && !isMe)
+    if (!coverUrl && !isMe(userInfo))
       return (
         <View
           style={{
@@ -165,11 +67,14 @@ const AvatarProfile = ({ userInfo, customStyle }: UploadAvatarProps) => {
           isAvatar={false}
           style={{ height: (widthScreen * 9) / 16, width: widthScreen }}
           source={{
-            uri: url,
+            uri: coverUrl,
           }}
         />
-        {isMe && (
-          <PressableBtn onPress={onPressChangeCover} style={styles.iconCover}>
+        {isMe(userInfo) && (
+          <PressableBtn
+            onPress={() => changeUserMedia("user_cover")}
+            style={styles.iconCover}
+          >
             <Icon
               name="camera-outline"
               type={IconType.Ionicons}
@@ -189,27 +94,34 @@ const AvatarProfile = ({ userInfo, customStyle }: UploadAvatarProps) => {
         <Image
           style={[styles.viewAvatar, { position: "absolute", bottom: -50 }]}
           source={
-            linkAvatar.trim().length > 0
-              ? { uri: linkAvatar }
+            avatarUrl?.length > 0
+              ? { uri: avatarUrl }
               : require("@assets/images/default_avatar.jpg")
           }
         />
-        {updateing && (
+        {loading && (
           <View
             style={{
               ...CommonStyle.fillParent,
               ...CommonStyle.center,
               zIndex: 1,
-              marginTop: 70,
+              borderRadius: 99,
+              width: 33,
+              height: 33,
+              position: "absolute",
+              left: "50%",
+              top: "50%",
+              marginTop: -25,
+              marginLeft: -25,
             }}
           >
-            <ActivityIndicator size={"small"} color={colors.text} />
+            <ActivityIndicator size={"small"} />
           </View>
         )}
-        {userData?._id === userInfo?._id && (
+        {isMe(userInfo) && (
           <View style={styles.viewCamera}>
             <Icon
-              onPress={onPressChangeAvatar}
+              onPress={() => changeUserMedia("user_avatar")}
               name="camera-outline"
               type={IconType.Ionicons}
               color={colors.text}
@@ -252,5 +164,8 @@ const styles = StyleSheet.create({
     right: 8,
     bottom: 8,
     zIndex: 1,
+    backgroundColor: palette.white,
+    padding: 2,
+    borderRadius: 99,
   },
 });

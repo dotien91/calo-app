@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
@@ -85,11 +85,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     zIndex: 2,
     gap: 10,
-  },
-  styleCover: {
-    height: SIZE_IMAGE1,
-    width: SIZE_IMAGE1,
-    borderRadius: BORDER_RADIUS,
   },
   styleTxtTitle1: {
     ...CS.textTitleStream,

@@ -43,6 +43,7 @@ import {
 import { shareCodeInvite } from "@utils/share.utils";
 import formatMoney from "@shared-components/input-money/format.money";
 import { useUserHook } from "@helpers/hooks/useUserHook";
+import useUserHelper from "@helpers/hooks/useUserHelper";
 
 const SettingProfileScreen = () => {
   const theme = useTheme();
@@ -51,11 +52,12 @@ const SettingProfileScreen = () => {
   const userInfo = useStore((state) => state.userInfo);
   const setListUserRef = useStore((state) => state.setListUserRef);
   const setShowInvite = useStore((store) => store.setShowInvite);
-  // const linkAvatar = useStore((state) => state.linkAvatar);
+  const userMedia = useStore((state) => state.userMedia);
   const showInvite = useStore((store) => store.showInvite);
   const [referralByMe, setReferralByMe] = useState([]);
   const [referralMe, setReferralMe] = useState([]);
   const { renderViewRequestLogin } = useUserHook();
+  const { changeUserMedia } = useUserHelper();
 
   //call api:
   const params = {};
@@ -153,8 +155,6 @@ const SettingProfileScreen = () => {
     );
   };
 
-  const uploadAvatar = () => {};
-
   const openSetting = () => {
     NavigationService.navigate(SCREENS.SETTING);
   };
@@ -177,13 +177,14 @@ const SettingProfileScreen = () => {
                 borderRadius: 24,
               }}
               sourceUri={{
-                uri: userData?.user_avatar_thumbnail,
+                uri: userMedia?.user_avatar,
               }}
               resizeMode={"cover"}
             ></Avatar>
             <IconBtn
               name="camera"
               color={colors.white}
+              onPress={() => changeUserMedia("user_avatar")}
               customStyle={{
                 position: "absolute",
                 zIndex: 1,
@@ -195,7 +196,6 @@ const SettingProfileScreen = () => {
                 width: "auto",
                 height: "auto",
               }}
-              onPress={uploadAvatar}
               size={12}
             />
           </View>

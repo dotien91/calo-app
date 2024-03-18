@@ -8,7 +8,12 @@ import { launchImageLibrary } from "react-native-image-picker";
 import { Linking } from "react-native";
 import { showToast } from "./super.modal.helper";
 
-export const selectMedia = async ({ config, callback, croping = true }) => {
+export const selectMedia = async ({
+  config,
+  callback,
+  _finally,
+  croping = true,
+}) => {
   const permission = await requestPermission(
     PERMISSION.permissionLibrary,
     "photo, video",
@@ -44,7 +49,9 @@ export const selectMedia = async ({ config, callback, croping = true }) => {
         }
       })
       .catch(console.log)
-      .finally(() => {});
+      .finally(() => {
+        _finally();
+      });
     return;
   }
   launchImageLibrary({
