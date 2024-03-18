@@ -47,7 +47,14 @@ const MyCourse = () => {
     ),
   });
 
-  if (!isLoggedIn()) return renderViewRequestLogin();
+  if (!isLoggedIn()) {
+    return (
+      <View style={{ ...CS.safeAreaView }}>
+        <Header text={translations.course.myCourse} />
+        {renderViewRequestLogin()}
+      </View>
+    );
+  }
 
   // const renderListInprogess = () => {
   //   return (

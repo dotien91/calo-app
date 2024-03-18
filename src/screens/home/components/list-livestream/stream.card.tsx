@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
 import CS from "@theme/styles";
@@ -7,6 +7,8 @@ import { SCREENS } from "constants";
 import { IStreamItem } from "models/stream.model";
 import { palette } from "@theme/themes";
 import { translations } from "@localization";
+import IconSvg from "assets/svg";
+import PressableBtn from "@shared-components/button/PressableBtn";
 
 // const { width } = Dimensions.get("screen");
 

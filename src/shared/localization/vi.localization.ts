@@ -673,6 +673,7 @@ export default {
       "Tùy chọn 3 nút cho thanh điều dưới phía dưới (mặc định bao gồm 2 nút trang chủ và tác vụ). Tất cả các thaành viên trong kênh sẽ được tự động chuyển sang thanh điều hướng này theo cài đặt của bạn.",
     inviteDes:
       "Bạn sẽ nhận 4000 điểm cho mỗi người mà bạn giới thiệu. Người được giới thiệu sẽ nhận được 1000 điểm.",
+    changeLanguage: "Thay đổi ngôn ngữ",
   },
   profile: {
     editProfile: "Sửa hồ sơ",

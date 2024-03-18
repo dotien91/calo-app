@@ -5,6 +5,11 @@ import DropDownItem from "@shared-components/dropdown/DropDownItem";
 import useStore from "@services/zustand/store";
 import { translations } from "@localization";
 import RNRestart from "react-native-restart"; // Import package from node modules
+import {
+  getBottomSpace,
+  getStatusBarHeight,
+} from "react-native-iphone-screen-helper";
+import { isAndroid } from "@freakycoder/react-native-helpers";
 
 const ChangeLanguage = () => {
   const optionsLanguage = [
@@ -39,8 +44,14 @@ const ChangeLanguage = () => {
     }
   }, [languageSelected, language, setLanguage]);
   return (
-    <View style={{ flex: 1 }}>
-      <Header />
+    <View
+      style={{
+        flex: 1,
+        marginTop: getStatusBarHeight(),
+        marginBottom: isAndroid ? getBottomSpace() : 0,
+      }}
+    >
+      <Header text={translations.settings.changeLanguage} />
       <DropDownItem
         value={languageSelected}
         setValue={setLanguageSelected}
