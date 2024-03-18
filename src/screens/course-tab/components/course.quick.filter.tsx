@@ -27,10 +27,10 @@ const CourseQuickFilter = () => {
   const onPressBtnFilter = (item) => {
     setListCourseFilterParams({ [item.type]: [item.id] });
     NavigationService.navigate(SCREENS.COURSE_CATEGORY, {
-      defaultParams: {
-        title: item.name,
-        [item.type]: [item.id],
-      },
+      // defaultParams: {
+      //   title: item.name,
+      //   [item.type]: [item.id],
+      // },
     });
   };
 

@@ -12,8 +12,6 @@ import LikeSharePostItem from "./like.share.post.item";
 
 import CommonStyle from "@theme/styles";
 import { SCREENS } from "constants";
-import { showWarningLogin } from "@helpers/super.modal.helper";
-import useStore from "@services/zustand/store";
 import { TypedPost } from "shared/models";
 import PressableBtn from "@shared-components/button/PressableBtn";
 
@@ -29,7 +27,6 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
   const theme = useTheme();
   const { colors } = theme;
   const styles = React.useMemo(() => createStyles(theme), [theme]);
-  const userData = useStore((state) => state.userData);
 
   const goToProfileCurrentUser = () => {
     if (!isProfile) {
@@ -77,21 +74,14 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
     );
   }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const pressComment = () => {
-    if (!userData) {
-      showWarningLogin();
-    } else {
-      const param = { id: data._id, data: data, isComment: true };
-      NavigationService.push(SCREENS.POST_DETAIL, param);
-    }
-  };
+  const pressComment = React.useCallback(() => {
+    const param = { id: data._id, data: data, isComment: true };
+    NavigationService.navigate(SCREENS.POST_DETAIL, param);
+  }, []);
+
   const detailScreen = () => {
-    if (!userData) {
-      showWarningLogin();
-    } else {
-      const param = { id: data._id, data: data };
-      NavigationService.push(SCREENS.POST_DETAIL, param);
-    }
+    const param = { id: data._id, data: data };
+    NavigationService.push(SCREENS.POST_DETAIL, param);
   };
 
   return (

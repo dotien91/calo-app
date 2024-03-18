@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState, memo } from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import { ActivityIndicator, Pressable, StyleSheet, View } from "react-native";
 import Video from "react-native-video";
 import FastImage from "react-native-fast-image";
 
@@ -33,6 +33,7 @@ const VideoPlayer = ({
   const animationBackRef = useRef<Lottie>(null);
 
   const [pause, setPause] = useState(!autoPlay);
+  const [isPreloading, setIsPreloading] = useState(true);
 
   useEffect(() => {
     if (animationBackRef.current) {
@@ -77,12 +78,30 @@ const VideoPlayer = ({
           source={{ uri: mediaThumbail }}
         />
       )}
+      {isPreloading && (
+        <ActivityIndicator
+          animating
+          color={"white"}
+          style={{
+            flex: 1,
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            zIndex: 1,
+            marginLeft: -10,
+            marginTop: -10,
+          }}
+        />
+      )}
       <Video
         source={{ uri: mediaUrl }}
         ref={refVideo}
         paused={pause}
         style={styles.backgroundVideo}
         autoPlay={autoPlay}
+        onLoadStart={() => setIsPreloading(true)}
+        useNativeControls
+        onReadyForDisplay={() => setIsPreloading(false)}
         {...res}
       />
     </Component>

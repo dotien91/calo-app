@@ -11,6 +11,7 @@ import CommonStyle from "@theme/styles";
 import { createReport } from "@services/api/post";
 import { palette } from "@theme/themes";
 import { closeSuperModal, showToast } from "@helpers/super.modal.helper";
+import { useUserHook } from "@helpers/hooks/useUserHook";
 
 interface IReportData {
   report_type?: string;
@@ -20,6 +21,7 @@ interface IReportData {
 const ReportView = ({ report_type, partner_id }: IReportData) => {
   const [txt, setTxt] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+  const { isLoggedIn, renderViewRequestLogin } = useUserHook();
 
   const sendReport = () => {
     setLoading(true);
@@ -43,6 +45,8 @@ const ReportView = ({ report_type, partner_id }: IReportData) => {
       closeSuperModal();
     });
   };
+
+  if (!isLoggedIn()) return renderViewRequestLogin();
 
   return (
     <View style={styles.container}>

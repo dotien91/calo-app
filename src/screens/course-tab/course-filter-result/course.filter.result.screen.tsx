@@ -7,7 +7,7 @@ import {
   useWindowDimensions,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useTheme, useRoute } from "@react-navigation/native";
+import { useTheme } from "@react-navigation/native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 // import * as NavigationService from "react-navigation-helpers";
 /**
@@ -67,8 +67,8 @@ const CourseFilterResultScreen: React.FC<
   const theme = useTheme();
   const { colors } = theme;
   // const styles = useMemo(() => createStyles(theme), [theme]);
-  const route = useRoute();
-  const defaultParams = route.params?.["defaultParams"] || {};
+  // const route = useRoute();
+  // const defaultParams = route.params?.["defaultParams"] || {};
   const layout = useWindowDimensions();
 
   const courseCurrentType = useStore((state) => state.courseCurrentType);
@@ -102,14 +102,14 @@ const CourseFilterResultScreen: React.FC<
   React.useEffect(() => {
     if (index != _index.current) {
       _index.current = index;
-      setListCourseFilterParams(defaultParams);
+      // setListCourseFilterParams();
     }
   }, [index]);
 
-  React.useEffect(() => {
-    const params = { ...defaultParams };
-    delete params.title;
-  }, [defaultParams]);
+  // React.useEffect(() => {
+  //   const params = { ...defaultParams };
+  //   delete params.title;
+  // }, [defaultParams]);
 
   const countFilters = useMemo(
     () => countNumberFilter(listCourseFilterParams),
@@ -125,10 +125,9 @@ const CourseFilterResultScreen: React.FC<
       renderLabel={({ route, focused }) => (
         <Text
           style={{
-            ...CS.hnBold,
+            ...CS.hnSemiBold,
             fontSize: 14,
             color: focused ? colors.primary : colors.text,
-            margin: 8,
           }}
         >
           {route.title}
@@ -183,8 +182,8 @@ const CourseFilterResultScreen: React.FC<
 };
 
 const ListSearch = React.memo(({ type }: { type: string }) => {
-  const route = useRoute();
-  const defaultParams = route.params?.["defaultParams"] || {};
+  // const route = useRoute();
+  // const defaultParams = route.params?.["defaultParams"] || {};
   const courseSearchHistory = useStore((state) => state.courseSearchHistory);
 
   const theme = useTheme();
@@ -200,7 +199,7 @@ const ListSearch = React.memo(({ type }: { type: string }) => {
   const paramRequest = React.useMemo(() => {
     return {
       ...courseCurrentSort,
-      ...defaultParams,
+      // ...defaultParams,
       ...listCourseFilterParams,
       limit: type == EnumSearchType.user ? "8" : "5",
       search: courseSearchHistory,

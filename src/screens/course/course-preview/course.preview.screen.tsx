@@ -240,12 +240,13 @@ const CoursePreviewScreen = () => {
     });
   };
   const onReport = () => {
+    console.log(2222222, data);
     showSuperModal({
       contentModalType: EnumModalContentType.Report,
       styleModalType: EnumStyleModalType.Bottom,
       data: {
         report_type: "course",
-        partner_id: data?.avatar._id,
+        partner_id: data?.user_id?._id,
       },
     });
   };

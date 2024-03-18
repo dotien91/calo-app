@@ -1,8 +1,8 @@
 import React from "react";
-import FastImage from "react-native-fast-image";
 
 import VideoPlayer from "@shared-components/video.player.component";
 import { Device } from "@utils/device.ui.utils";
+import ImageLoad from "@shared-components/image-load/ImageLoad";
 
 interface Media {
   item: any;
@@ -20,10 +20,11 @@ const Media = ({ item }: Media) => {
 
   if ((item?.media_type || "").includes("image")) {
     return (
-      <FastImage
+      <ImageLoad
         source={{ uri: item?.media_url }}
         style={{ height: mediaHeight, width }}
         resizeMode="contain"
+        showImageDefault={false}
       />
     );
   }

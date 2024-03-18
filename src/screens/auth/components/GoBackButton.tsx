@@ -19,7 +19,7 @@ const GoBackButton = ({ customStyle }: { customStyle: ViewStyle }) => {
       ]}
     >
       <PressableBtn onPress={() => NavigationService.goBack()}>
-        <IconSvg name="icBack" size={20} color={palette.text} />
+        <IconSvg name="icBack" size={30} color={palette.text} />
       </PressableBtn>
     </View>
   );

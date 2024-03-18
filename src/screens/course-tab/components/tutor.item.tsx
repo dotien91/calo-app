@@ -23,8 +23,10 @@ interface TutorItemProps extends TypedUser {
 const TutorItem = ({
   display_name,
   user_avatar_thumbnail,
+  user_avatar,
   tutor_level,
   educations,
+  description,
   ...res
 }: TutorItemProps) => {
   const theme = useTheme();
@@ -90,12 +92,10 @@ const TutorItem = ({
                 color={isLike ? colors.danger : colors.text}
               /> */}
             </View>
-            <Text style={styles.lessonTxt}>50 min lesson</Text>
+            {/* <Text style={styles.lessonTxt}>50 min lesson</Text> */}
           </View>
         </View>
-        <Text style={styles.tutorIntro}>
-          Practice your discussion/ communication skills in a fun way!
-        </Text>
+        {!!description && <Text style={styles.tutorIntro}>{description}</Text>}
         {/* <Badge title="best-seller" /> */}
         {!!educations?.length && renderEducations()}
         {tutor_level && (
@@ -118,7 +118,7 @@ const TutorItem = ({
             borderRadius: 99,
             marginRight: 10,
           }}
-          sourceUri={{ uri: user_avatar_thumbnail }}
+          sourceUri={{ uri: user_avatar || user_avatar_thumbnail }}
         />
         {/* <IconBtn customStyle={styles.iconFlag} name={"flag"} /> */}
         <Image
