@@ -23,6 +23,7 @@ const CountFollow = ({ id, postCount }: CountFollowProps) => {
   const [countFollow, setCountFollow] = useState<CountFolowType>({});
   const _getUserInfo = (id: string) => {
     getCountFollow({ user_id: id }).then((res) => {
+      console.log("...data...", res.data);
       setCountFollow(res.data);
     });
   };
@@ -90,7 +91,7 @@ const CountFollow = ({ id, postCount }: CountFollowProps) => {
         }}
       >
         <ItemFollow
-          title={countFollow?.following || "-"}
+          title={countFollow?.following >= 0 ? countFollow?.following : "-"}
           des={translations.following}
         />
       </TouchableOpacity>
@@ -107,7 +108,7 @@ const CountFollow = ({ id, postCount }: CountFollowProps) => {
         }}
       >
         <ItemFollow
-          title={countFollow?.followers || "-"}
+          title={countFollow?.followers >= 0 ? countFollow?.followers : "-"}
           des={translations.follower}
         />
       </TouchableOpacity>

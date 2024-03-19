@@ -10,19 +10,14 @@ import { palette } from "@theme/themes";
 import { translations } from "@localization";
 import IconSvg from "assets/svg";
 import PressableBtn from "@shared-components/button/PressableBtn";
-
-// const { width } = Dimensions.get("screen");
-
-// const PADDING_HORIZONTAL = 8;
-// const SIZE_AVATAR = 20;
-// const PADDING_LEFT = 8;
+import { WindowWidth } from "@freakycoder/react-native-helpers";
 
 const StreamCard = ({ data }: { data: IStreamItem }) => {
   const IconText = ({ nameIcon, text }: { nameIcon: string; text: string }) => {
     return (
-      <View style={{ ...CS.center, flexDirection: "row" }}>
+      <View style={styles.iconText}>
         <IconSvg name={nameIcon} size={16} color={palette.white} />
-        <Text style={[styles.txtLive, { marginHorizontal: 4 }]}>{text}</Text>
+        <Text style={[styles.txtLive]}>{text}</Text>
       </View>
     );
   };
@@ -60,6 +55,12 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     paddingBottom: 4,
+    marginHorizontal: 4,
+    width: WindowWidth - 40,
+  },
+  iconText: {
+    ...CS.center,
+    flexDirection: "row",
   },
   styleItemLiveStream: {
     flexDirection: "row",
@@ -68,17 +69,22 @@ const styles = StyleSheet.create({
     top: 1,
   },
   styleCover: {
-    height: 178,
-    width: 328,
-    marginBottom: 16,
-    borderRadius: 10,
-    overflow: "hidden",
+    height: ((WindowWidth - 40) / 19) * 10,
+    width: WindowWidth - 40,
+    // marginBottom: 16,
+    borderRadius: 4,
+    // overflow: "hidden",
   },
   viewAction: {
     flexDirection: "column",
     position: "absolute",
     zIndex: 2,
     gap: 10,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
   },
   styleTxtTitle1: {
     ...CS.textTitleStream,

@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { View, TouchableOpacity, Text, Image } from "react-native";
+import { View, TouchableOpacity, Text, Image, ScrollView } from "react-native";
 import { useTheme } from "@react-navigation/native";
 // import crashlytics from "@react-native-firebase/crashlytics";
 
@@ -173,86 +173,87 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
   return (
     <View style={{ ...CS.safeAreaView, backgroundColor: colors.white }}>
       <Header text={translations.settingUser.setting}></Header>
-      <Text
-        onPress={hardCodeToken}
-        style={{
-          fontSize: 16,
-          fontWeight: "600",
-          textAlign: "center",
-          color: "#fff",
-        }}
-      >
-        hard code token
-      </Text>
-      {isLoggedIn() ? (
-        <View style={{ alignItems: "center", backgroundColor: colors.white }}>
-          <View style={{ marginTop: 16 }}>
-            <TouchableOpacity
-              onPress={() => {
-                NavigationService.navigate(SCREENS.PROFILE_CURRENT_USER, {
-                  _id: userData?._id,
-                });
-              }}
-            >
-              <Avatar
-                style={{
-                  width: 64,
-                  height: 64,
-                  borderRadius: 99,
-                  // marginRight: 10,
-                  // marginTop: 20,
-                }}
-                sourceUri={{
-                  uri: userData?.user_avatar_thumbnail,
-                }}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={editProfile}
-              style={{
-                position: "absolute",
-                bottom: -4,
-                right: -4,
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: colors.white,
-                borderRadius: 16,
-              }}
-            >
-              <Icon
-                style={{ padding: 3 }}
-                name="edit-3"
-                type={IconType.Feather}
-              ></Icon>
-            </TouchableOpacity>
-          </View>
-          <Text
-            numberOfLines={1}
-            style={{
-              fontSize: 16,
-              color: colors.text,
-              fontWeight: "600",
-              marginTop: 8,
-              paddingHorizontal: 16,
-            }}
-          >
-            {userData?.display_name}
-          </Text>
-          {!isTeacher && (
-            <TouchableOpacity onPress={() => openUrl("test")}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  color: colors.btnRedPrimary,
-                  fontWeight: "600",
-                  marginTop: 5,
+      <ScrollView style={CS.flex1}>
+        <Text
+          onPress={hardCodeToken}
+          style={{
+            fontSize: 16,
+            fontWeight: "600",
+            textAlign: "center",
+            color: "#fff",
+          }}
+        >
+          hard code token
+        </Text>
+        {isLoggedIn() ? (
+          <View style={{ alignItems: "center", backgroundColor: colors.white }}>
+            <View style={{ marginTop: 16 }}>
+              <TouchableOpacity
+                onPress={() => {
+                  NavigationService.navigate(SCREENS.PROFILE_CURRENT_USER, {
+                    _id: userData?._id,
+                  });
                 }}
               >
-                {translations.settingUser.becomeATutor}
-              </Text>
-            </TouchableOpacity>
-          )}
-          {/* <View style={{ flexDirection: "row", marginVertical: 16 }}>
+                <Avatar
+                  style={{
+                    width: 64,
+                    height: 64,
+                    borderRadius: 99,
+                    // marginRight: 10,
+                    // marginTop: 20,
+                  }}
+                  sourceUri={{
+                    uri: userData?.user_avatar_thumbnail,
+                  }}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={editProfile}
+                style={{
+                  position: "absolute",
+                  bottom: -4,
+                  right: -4,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: colors.white,
+                  borderRadius: 16,
+                }}
+              >
+                <Icon
+                  style={{ padding: 3 }}
+                  name="edit-3"
+                  type={IconType.Feather}
+                ></Icon>
+              </TouchableOpacity>
+            </View>
+            <Text
+              numberOfLines={1}
+              style={{
+                fontSize: 16,
+                color: colors.text,
+                fontWeight: "600",
+                marginTop: 8,
+                paddingHorizontal: 16,
+              }}
+            >
+              {userData?.display_name}
+            </Text>
+            {!isTeacher && (
+              <TouchableOpacity onPress={() => openUrl("test")}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: colors.btnRedPrimary,
+                    fontWeight: "600",
+                    marginTop: 5,
+                  }}
+                >
+                  {translations.settingUser.becomeATutor}
+                </Text>
+              </TouchableOpacity>
+            )}
+            {/* <View style={{ flexDirection: "row", marginVertical: 16 }}>
             <TouchableOpacity
               onPress={editProfile}
               style={styles.styleButtonEditProfile}
@@ -268,12 +269,12 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
               <Text style={styles.styleTextViewProfile}>View Profile</Text>
             </TouchableOpacity>
           </View> */}
-        </View>
-      ) : (
-        renderViewRequestLogin()
-      )}
-      {renderListSetting()}
-
+          </View>
+        ) : (
+          renderViewRequestLogin()
+        )}
+        {renderListSetting()}
+      </ScrollView>
       {isLoggedIn() && (
         <TouchableOpacity
           onPress={logout}

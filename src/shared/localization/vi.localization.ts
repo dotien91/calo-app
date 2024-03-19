@@ -1527,6 +1527,7 @@ export default {
     fromDate: "Từ ngày",
     toDate: "Đến ngày",
     commission: "Hoa hồng",
+    noTransaction: "Chưa phát sinh giao dịch",
   },
   en: "Tiếng Anh",
   vi: "Tiếng Việt",

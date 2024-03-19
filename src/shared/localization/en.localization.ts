@@ -1014,6 +1014,7 @@ export default {
     fromDate: "From date",
     toDate: "To date",
     commission: "Commission",
+    noTransaction: "No transaction has occurred",
   },
   en: "English",
   vi: "Vietnamese",

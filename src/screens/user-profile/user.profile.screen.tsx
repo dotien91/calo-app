@@ -397,7 +397,6 @@ const ProfileUser = (props: ProfileUserProps) => {
   const [index, setIndex] = React.useState(0);
   const [routes, setRoute] = React.useState([
     { key: "first", title: translations.post.posts },
-    // { key: "second", title: translations.course.course },
     { key: "third", title: translations.post.listPostSave },
   ]);
 
