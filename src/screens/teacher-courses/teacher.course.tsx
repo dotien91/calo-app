@@ -45,7 +45,7 @@ const TeacherCourse = () => {
   };
 
   return (
-    <SafeAreaView style={CS.flex1}>
+    <SafeAreaView style={CS.safeAreaView}>
       <Header text={translations.settingUser.mycouse} />
       {isLoading && <LoadingList numberItem={2} />}
       <FlatList

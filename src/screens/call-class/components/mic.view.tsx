@@ -7,21 +7,14 @@ import IconBtn from "@shared-components/button/IconBtn";
 import { palette } from "@theme/themes";
 import useStore from "@services/zustand/store";
 
-const MicView = ({ isMe, stream, publisher, showName }) => {
-  // const chatRoomId = "65a60bc04d12aaf61259976b";
-  // const theme = useTheme();
-  // const { colors } = theme;
+const MicView = ({ stream, id, isMe, name, showName }) => {
   const listParticipants = useStore((state) => state.listParticipants);
-  // const styles = useMemo(() => createStyles(theme), [theme]);
   const enableMic = !!stream._tracks.find((_item) => _item?.kind == "audio")
     ?._enabled;
-
   const [talking, setTalking] = useState(true);
 
   React.useEffect(() => {
-    const isTalking = !!listParticipants.find(
-      (item) => item.id == publisher?.id,
-    )?.talking;
+    const isTalking = !!listParticipants.find((item) => item == id);
     setTalking(isTalking);
   }, [listParticipants]);
 
@@ -35,7 +28,9 @@ const MicView = ({ isMe, stream, publisher, showName }) => {
           bottom: 6,
           zIndex: 1,
         }}
-        color={!enableMic ? palette.danger : palette.white}
+        color={
+          talking ? palette.green : !enableMic ? palette.danger : palette.white
+        }
         name={enableMic ? "mic" : "mic-off"}
         size={14}
       />
@@ -58,13 +53,13 @@ const MicView = ({ isMe, stream, publisher, showName }) => {
         <View
           style={{
             position: "absolute",
-            left: -2,
-            bottom: -2,
-            right: -2,
-            top: -2,
+            left: -3,
+            bottom: -3,
+            right: -3,
+            top: -3,
             zIndex: 2,
             ...CS.borderStyle,
-            borderWidth: 2,
+            borderWidth: 3,
             borderColor: palette.green,
             ...CS.flexStart,
             paddingHorizontal: 8,
@@ -87,7 +82,7 @@ const MicView = ({ isMe, stream, publisher, showName }) => {
             lineHeight: 22,
           }}
         >
-          {publisher?.displayName}
+          {name}
         </Text>
       )}
     </View>

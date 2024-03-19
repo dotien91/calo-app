@@ -154,17 +154,17 @@ function App() {
 
   const handleStartStream = () => {
     if (permissionGranted) {
-      if (listFile.length > 0) {
+      // if (listFile.length > 0) {
         _createLiveStream(
           inputRef.current.value || translations.livestream.hello,
-          listFile[listFile.length - 1]._id,
+          listFile[listFile.length - 1]?._id,
         );
-      } else {
-        showToast({
-          type: "warning",
-          message: translations.liveStream.warning,
-        });
-      }
+      // } else {
+      //   showToast({
+      //     type: "warning",
+      //     message: translations.liveStream.warning,
+      //   });
+      // }
     } else {
       checkPermission();
     }

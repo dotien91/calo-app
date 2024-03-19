@@ -52,6 +52,7 @@ const ClassRoomTopView = ({ switchCamera }) => {
         position: "absolute",
         left: 0,
         right: 0,
+        top: 0,
         paddingHorizontal: 16,
         zIndex: 1,
         height: 44 + getStatusBarHeight() + 16,

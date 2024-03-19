@@ -23,6 +23,9 @@ const EnrollNow = ({
   fromBottom,
 }: EnrollNowProps) => {
   const _goToListVideo = () => {
+    
+
+console.log("courseRoomcourseRoom", courseRoom)
     if (data?.type == EnumClassType.SelfLearning) {
       NavigationService.navigate(SCREENS.COURSE_LEARN_VIDEO_SCREEN, {
         course_id: course_id,

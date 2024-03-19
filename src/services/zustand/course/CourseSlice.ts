@@ -61,6 +61,8 @@ export interface CourseSlice {
   setListVideoCourse: [];
   shoppingProduct: ICourseItem;
   setShoppingProduct: (v: ICourseItem) => void;
+  currentMemberVideoRoom: [],
+  setCurrentMemberVideoRoom: (v: any) => void,
 }
 
 const createCourseSlice: StoreSlice<CourseSlice> = (set, get) => ({
@@ -111,6 +113,19 @@ const createCourseSlice: StoreSlice<CourseSlice> = (set, get) => ({
   },
   listParticipants: [],
   setListParticipants: (v: any[]) => set({ listParticipants: v }),
+  updateListParticipants: (id, method) => {
+    const { listParticipants } = get();
+    let newList = [];
+    if (method == "add") {
+      newList = [...listParticipants, id];
+    }
+    if (method == "delete") {
+      newList = listParticipants.filter((item) => item != id);
+    }
+    set(() => ({
+      listParticipants: newList,
+    }));
+  },
   watchingVideos: [],
   updateWatchingVideos: (data: IWatchingVideo) => {
     const { watchingVideos } = get();
@@ -139,6 +154,8 @@ const createCourseSlice: StoreSlice<CourseSlice> = (set, get) => ({
   setListVideoCourse: (v) => set({ listVideoCourse: v }),
   shoppingProduct: null,
   setShoppingProduct: (v) => set({ shoppingProduct: v }),
+  currentMemberVideoRoom: [],
+  setCurrentMemberVideoRoom: (v) => set({ currentMemberVideoRoom: v }),
 });
 
 export default createCourseSlice;

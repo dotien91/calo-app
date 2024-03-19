@@ -68,7 +68,6 @@ const ClassItem = ({ item }) => {
       courseData: item.courseData,
     });
   };
-
   const renderImage = () => {
     return (
       <ImageLoad
@@ -85,6 +84,7 @@ const ClassItem = ({ item }) => {
         source={{
           uri:
             courseData?.media_id?.media_thumbnail ||
+            courseData?.avatar?.media_url ||
             courseData?.user_id?.user_avatar,
           headers: { Authorization: "someAuthToken" },
           priority: FastImage.priority.normal,

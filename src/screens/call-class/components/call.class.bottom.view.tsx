@@ -14,6 +14,7 @@ import {
   showSuperModal,
 } from "@helpers/super.modal.helper";
 import { getListMemberCourse } from "@services/api/course.api";
+import useStore from "@services/zustand/store";
 
 const ClassRoomBottomView = ({
   toggleMute,
@@ -27,6 +28,7 @@ const ClassRoomBottomView = ({
   const { mute, video } = config;
   const [roomDetail, setRoomDetail] = useState(null);
   const [listMember, setListMember] = useState([]);
+  const setCurrentMemberVideoRoom = useStore(state => state.setCurrentMemberVideoRoom)
 
   const _getListMemberCourse = () => {
     getListMemberCourse({
@@ -35,6 +37,7 @@ const ClassRoomBottomView = ({
     }).then((res) => {
       if (!res.isError) {
         setListMember(res.data.map((item) => item.user_id));
+        setCurrentMemberVideoRoom(res.data.map((item) => item.user_id).concat(courseData.user_id));
       }
     });
   };
@@ -46,6 +49,9 @@ const ClassRoomBottomView = ({
         setRoomDetail(res.data);
       }
     });
+    return () => {
+      setCurrentMemberVideoRoom([])
+    }
   }, []);
 
   const openListMemberModal = () => {

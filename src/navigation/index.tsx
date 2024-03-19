@@ -67,7 +67,6 @@ import CourseListClassScreen from "@screens/course/course-create/course.list.cla
 import CreateClassCallOneScreen from "@screens/course/course-create/course.create.class.call.one.screen";
 import CourseListVideoScreen from "@screens/course/course-create/course.list.video.screen";
 import CourseAddModuleScreen from "@screens/course/course-create/course.add.module.screen";
-import CallClassScreen from "@screens/call-class/call.class.screen";
 import ListCouponForMyCourse from "@screens/coupon/coupon.list";
 import CouponCreateScreen from "@screens/coupon/coupon.create";
 import TabFollow from "@screens/tab-follow/tab.follow";
@@ -100,6 +99,7 @@ import IeltsReadingPacticeScreen from "@screens/ielts-practice/ielts.reading.pra
 import PracticeHomeScreen from "@screens/ielts-practice/ielts.practice.home.screen";
 import IeltsPraticeList from "@screens/ielts-practice/ielts.practice.list";
 
+import ClassRoomScreen from "@screens/call-class/class.room.screen";
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -252,6 +252,7 @@ const Navigation = () => {
         {renderBanksStack()}
         {renderPracticeTestStack()}
         <Stack.Screen name={SCREENS.CHAT} component={ChatListScreen} />
+        <Stack.Screen name={SCREENS.CALL_CLASS} component={ClassRoomScreen} />
 
         <Stack.Screen
           name={SCREENS.TEACHER_COURSES}
@@ -266,7 +267,6 @@ const Navigation = () => {
         <Stack.Screen name={SCREENS.DETAIL_TASK} component={DetailTaskScreen} />
         <Stack.Screen name={SCREENS.CREATE_WORK} component={CreateWorkScreen} />
         <Stack.Screen name={SCREENS.TASK_SCREEN} component={TaskScreen} />
-        <Stack.Screen name={SCREENS.CALL_CLASS} component={CallClassScreen} />
         <Stack.Screen name={SCREENS.MY_COURES} component={MyCourse} />
         <Stack.Screen name={SCREENS.SETTING} component={SettingScreen} />
         <Stack.Screen

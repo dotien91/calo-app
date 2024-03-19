@@ -58,7 +58,7 @@ const MessageMediaView = ({
   }, [status]);
   const openMediaModal = (item: TypedChatMediaLocal) => {
     const currentMediaData =
-      currentMediaIds.find((item) => item.id == chatRoomId)?.data || [];
+      currentMediaIds.find((item) => item?.id == chatRoomId)?.data || [];
     const listMedia = currentMediaData.filter(
       (i: TypedDataMediaChatHistory) =>
         (i?.media_mime_type || "").includes("image") ||

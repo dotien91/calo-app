@@ -25,7 +25,7 @@ const MediaChatScreen: React.FC<MediaChatScreenProps> = () => {
 
   const currentMediaIds = useStore((state) => state.currentMediaIds);
   const mediaIds =
-    currentMediaIds.find((item) => item.id == roomDetail.chat_room_id._id)
+    currentMediaIds.find((item) => item?.id == roomDetail.chat_room_id._id)
       ?.data || [];
 
   console.log(

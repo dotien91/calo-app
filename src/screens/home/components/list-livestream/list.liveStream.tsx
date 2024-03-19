@@ -217,7 +217,7 @@ const ListLiveStream = ({ isListLiveStream }: ListLiveStreamProps) => {
 
   const _getListLiveStream = () => {
     getListLiveStream().then((res) => {
-      console.log(2222222, res)
+      console.log(2222222, res);
       if (!res.isError) {
         // const listDataStream = res.data.filter(
         const listDataStream = fakedata.filter(

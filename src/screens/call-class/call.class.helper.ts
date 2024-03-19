@@ -1,4 +1,4 @@
-export const isTeacher = (name: string) => {
-  console.log("nameeee", name, name.includes("_teacher_ih"));
-  return name.includes("teacherih");
+export const _isTeacher = (name: string) => {
+  console.log("_isTeacher param", name)
+  return name.includes("tutor");
 };
