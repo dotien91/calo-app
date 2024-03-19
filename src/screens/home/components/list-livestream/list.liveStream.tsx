@@ -217,6 +217,7 @@ const ListLiveStream = ({ isListLiveStream }: ListLiveStreamProps) => {
 
   const _getListLiveStream = () => {
     getListLiveStream().then((res) => {
+      console.log(2222222, res)
       if (!res.isError) {
         // const listDataStream = res.data.filter(
         const listDataStream = fakedata.filter(
@@ -234,8 +235,6 @@ const ListLiveStream = ({ isListLiveStream }: ListLiveStreamProps) => {
   if (listDataStream.length == 0) {
     return null;
   }
-
-  return null;
 
   return (
     <View style={styles.container}>
