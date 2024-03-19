@@ -46,13 +46,21 @@ const ListCouponForMyCourse = () => {
       eventEmitter.off("refresh_list_coupon", onRefresh);
     };
   }, []);
+  const isAdd =
+    userData?.user_role === "teacher" || userData?.user_role === "admin";
+
+  const pressRightHeader = () => {
+    if (isAdd) {
+      NavigationService.navigate(SCREENS.COUPON_CREATE);
+    }
+  };
 
   return (
     <View style={styles.container}>
       <Header
         text={translations.coupon.listCouponForMyCourse}
-        iconNameRight="plus"
-        onPressRight={() => NavigationService.navigate(SCREENS.COUPON_CREATE)}
+        iconNameRight={isAdd ? "plus" : undefined}
+        onPressRight={pressRightHeader}
       />
       <FlatList
         data={listData}

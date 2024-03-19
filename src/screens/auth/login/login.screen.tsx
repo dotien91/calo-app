@@ -14,6 +14,7 @@ import { translations } from "@localization";
 import GoogleLoginButton from "@shared-components/button/GoogleLoginButton";
 import FBLoginButton from "@shared-components/button/FBLoginButton";
 import AppleLoginButton from "@shared-components/button/AppleLoginButton";
+import { palette } from "@theme/themes";
 
 export default function LoginScreen() {
   const theme = useTheme();
@@ -39,7 +40,7 @@ export default function LoginScreen() {
         style={styles.buttonMargin}
         onPress={pressMail}
         textColor={colors.mainColor2}
-        backgroundColor={"#DBDBDB"}
+        backgroundColor={palette.btnInactive}
         SvgSo={<IconSvg name="icMail" size={16} color={colors.mainColor2} />}
         text={translations.continueWith("E-mail")}
       />

@@ -38,6 +38,7 @@ import {
   EnumStyleModalType,
   showSuperModal,
   showToast,
+  showWarningLogin,
 } from "@helpers/super.modal.helper";
 
 const CoursePreviewScreen = () => {
@@ -244,15 +245,18 @@ const CoursePreviewScreen = () => {
     });
   };
   const onReport = () => {
-    console.log(2222222, data);
-    showSuperModal({
-      contentModalType: EnumModalContentType.Report,
-      styleModalType: EnumStyleModalType.Bottom,
-      data: {
-        report_type: "course",
-        partner_id: data?.user_id?._id,
-      },
-    });
+    if (userData?._id) {
+      showSuperModal({
+        contentModalType: EnumModalContentType.Report,
+        styleModalType: EnumStyleModalType.Bottom,
+        data: {
+          report_type: "course",
+          partner_id: data?.user_id?._id,
+        },
+      });
+    } else {
+      showWarningLogin();
+    }
   };
 
   return (

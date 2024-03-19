@@ -85,7 +85,7 @@ const GoogleLoginButton = ({ showText }: BtnProps) => {
       style={styles.btn}
       onPress={_onPress}
       textColor={palette.mainColor2}
-      backgroundColor={"#DBDBDB"}
+      backgroundColor={palette.btnInactive}
       SvgSo={<IconSvg name="icGoogle" size={16} />}
       text={translations.continueWith("Google")}
     />
