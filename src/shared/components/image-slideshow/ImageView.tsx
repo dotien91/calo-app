@@ -18,7 +18,10 @@ const Media = ({ item }: Media) => {
       ? width / (Number(media_width) / Number(media_height))
       : width;
 
-  if ((item?.media_type || "").includes("image")) {
+  if (
+    (item?.media_mime_type || "").includes("image") ||
+    (item?.media_type || "").includes("image")
+  ) {
     return (
       <ImageLoad
         source={{ uri: item?.media_url }}
@@ -28,7 +31,10 @@ const Media = ({ item }: Media) => {
       />
     );
   }
-  if ((item?.media_type || "").includes("video")) {
+  if (
+    (item?.media_mime_type || "").includes("video") ||
+    (item?.media_type || "").includes("video")
+  ) {
     return (
       <VideoPlayer
         mediaUrl={item?.media_url}

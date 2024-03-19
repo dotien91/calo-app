@@ -80,9 +80,14 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
       title: translations.settingUser.support,
       icon: require("assets/images/supporticon.png"),
       action: () => {
-        NavigationService.navigate(SCREENS.CHAT_ROOM, {
-          id: "65f7b1b3a22b22d7d3dcf078",
-        });
+        if (userData?._id) {
+          NavigationService.navigate(SCREENS.CHAT_ROOM, {
+            partner_id: "65f7b1b3a22b22d7d3dcf078",
+            partner_name: "Admin",
+          });
+        } else {
+          showWarningLogin();
+        }
       },
     },
     {

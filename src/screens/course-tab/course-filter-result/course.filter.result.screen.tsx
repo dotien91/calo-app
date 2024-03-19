@@ -42,7 +42,7 @@ import { countNumberFilter } from "../course.helper";
 import TutorItem from "../components/tutor.item";
 import SearchInputWithFilter from "@shared-components/search-input-with-filter.tsx/search.input.with.filter";
 import { getListPost } from "@services/api/post";
-import ItemPost from "@screens/post/components/post-item/post.detail.item";
+import ItemPost from "@screens/home/components/post-item/post.item";
 import { getListUser } from "@services/api/user.api";
 import UserItem from "../components/user.item";
 import LoadingItem from "@shared-components/loading.item";
