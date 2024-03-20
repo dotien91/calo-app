@@ -37,7 +37,7 @@ const ClassRoomTopView = ({ switchCamera }) => {
       contentModalType: EnumModalContentType.Confirm,
       styleModalType: EnumStyleModalType.Middle,
       data: {
-        title: "Do you want to stop video calling",
+        title: translations.event.eventConfirm,
         cb: () => NavigationService.goBack(),
       },
     });

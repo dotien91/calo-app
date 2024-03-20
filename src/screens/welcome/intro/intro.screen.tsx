@@ -45,7 +45,7 @@ export default function IntroScreen() {
   const dataScreen = [
     {
       svg: "intro1",
-      imageBottom: require("assets/images/welcome3.png"),
+      imageBottom: require("assets/images/welcome1.png"),
       opacity: third,
       styleImageTop: { height: 230, width: 335 },
       styleImageBot: { height: heightScreen - 340, width: widthScreen },
@@ -54,7 +54,7 @@ export default function IntroScreen() {
     },
     {
       svg: "intro2",
-      imageBottom: require("assets/images/welcome1.png"),
+      imageBottom: require("assets/images/welcome2.png"),
       opacity: first,
       styleImageTop: { height: 304, width: 304 },
       styleImageBot: { height: heightScreen - 340, width: widthScreen },
@@ -63,7 +63,7 @@ export default function IntroScreen() {
     },
     {
       svg: "intro3",
-      imageBottom: require("assets/images/welcome2.png"),
+      imageBottom: require("assets/images/welcome3.png"),
       opacity: second,
       styleImageTop: { height: 304, width: 304 },
       styleImageBot: { height: heightScreen - 300, width: widthScreen },
@@ -195,7 +195,7 @@ export default function IntroScreen() {
             <Text
               style={{ ...CS.hnSemiBold, fontSize: 16, color: colors.white }}
             >
-              Got it
+              {translations.gotIt}
             </Text>
           </TouchableOpacity>
         </View>
