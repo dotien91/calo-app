@@ -223,7 +223,7 @@ function App() {
       contentModalType: EnumModalContentType.Confirm,
       styleModalType: EnumStyleModalType.Middle,
       data: {
-        title: "Bạn có muốn dừng phiên livestream không?",
+        title: translations.event.eventEndLive,
         cb: closeLiveStream,
       },
     });

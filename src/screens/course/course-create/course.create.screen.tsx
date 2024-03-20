@@ -401,7 +401,7 @@ const CourseCreate = () => {
               marginVertical: 8,
             }}
           >
-            Số tiền
+            {translations.payment.coursePrice}
           </Text>
 
           <TextInputPrice
