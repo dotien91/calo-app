@@ -18,7 +18,7 @@ const SelectDateTime = ({
   setTime,
   placeholder,
   style,
-  timeDefault,
+  timeDefault = "",
   warning,
 }: SelectDateTimeProps) => {
   const [date, setDate] = useState<Date>();

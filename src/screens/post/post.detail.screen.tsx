@@ -49,6 +49,10 @@ const PostDetail = (props: PostDetailProps) => {
   const [data, setData] = useState<TypedPost>();
 
   const userData = useStore((state) => state.userData);
+  const updateListCountComments = useStore(
+    (state) => state.updateListCountComments,
+  );
+  const listCountComments = useStore((state) => state.listCountComments);
   const listCommentDelete = useStore((state) => state.listCommentDelete);
   const itemUpdate = useStore((state) => state.itemUpdate);
   const setItemUpdate = useStore((state) => state.setItemUpdate);
@@ -71,6 +75,7 @@ const PostDetail = (props: PostDetailProps) => {
     refreshControl,
     renderFooterComponent,
     setListData,
+    totalCount,
   } = useListData<TypedComment>(
     {
       community_id: id,
@@ -81,6 +86,12 @@ const PostDetail = (props: PostDetailProps) => {
     },
     getListComment,
   );
+
+  useEffect(() => {
+    if (totalCount) {
+      updateListCountComments(id, totalCount);
+    }
+  }, [totalCount]);
 
   const getData = async () => {
     showSuperModal({
@@ -112,7 +123,6 @@ const PostDetail = (props: PostDetailProps) => {
     return () => {
       setItemUpdate({});
     };
-    // getComment();
   }, [id, dataItem]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const updateListCommentReply = ({
@@ -187,6 +197,7 @@ const PostDetail = (props: PostDetailProps) => {
       parent_id: replyItem?.parent_id || replyItem?._id || null,
     };
     const _uuid = uuid.v4().toString();
+    const index = listCountComments.findIndex((item) => item._id === data?._id);
 
     const userId = {
       _id: userData?._id,
@@ -213,6 +224,7 @@ const PostDetail = (props: PostDetailProps) => {
       user_id: userId,
       sending: true,
     };
+    updateListCountComments(id, +listCountComments[index].numberComments + 1);
 
     if (replyItem?.parent_id || replyItem?._id) {
       const dataUpdate = updateListCommentReply({
@@ -346,11 +358,13 @@ const PostDetail = (props: PostDetailProps) => {
           style={CommonStyle.flex1}
           showsVerticalScrollIndicator={false}
         >
-          <ItemPost
-            data={data}
-            pressComment={_focusRepInput}
-            pressImageVideo={showImageVideo}
-          />
+          {data && (
+            <ItemPost
+              data={data}
+              pressComment={_focusRepInput}
+              pressImageVideo={showImageVideo}
+            />
+          )}
           <View style={CommonStyle.flex1}>
             <FlatList
               style={styles.viewFlatList}

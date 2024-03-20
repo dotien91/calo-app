@@ -73,7 +73,6 @@ const CourseCreate = () => {
   const route = useRoute();
   const data = route.params?.["data"];
   const course_id = route.params?.["course_id"];
-  console.log("data.public_status...", data?.public_status);
   const theme = useTheme();
   const { colors } = theme;
   const [updating, setUpdating] = React.useState(false);
@@ -96,8 +95,6 @@ const CourseCreate = () => {
 
   useEffect(() => {
     if (data) {
-      // console.log("start time... ", data.skills);
-      console.log(data.price);
       setValue("title", data.title);
       setValue("description", data.description);
       setValue("long_description", data.long_description);
@@ -129,7 +126,6 @@ const CourseCreate = () => {
     long_description: string;
     price: string | number;
   }) => {
-    console.log("idvideo...", typeMedia);
     if (!startDate || !endDate || idVideo === "") {
       if (startDate || !endDate) {
         showToast({
@@ -172,14 +168,12 @@ const CourseCreate = () => {
         if (course_id) {
           params._id = course_id;
         }
-        console.log(params);
         setUpdating(true);
         showSuperModal({
           styleModalType: EnumStyleModalType.Middle,
           contentModalType: EnumModalContentType.Loading,
         });
         if (course_id) {
-          console.log(params);
           updateCourse(params).then((res) => {
             if (!res.isError) {
               showToast({
@@ -204,7 +198,6 @@ const CourseCreate = () => {
         } else {
           createCourse(params).then((res) => {
             if (!res.isError) {
-              console.log("res.Success..", JSON.stringify(res));
               showToast({
                 type: "success",
                 message: translations.course.createCourseSuccess,
@@ -278,6 +271,7 @@ const CourseCreate = () => {
       };
       return (
         <PressableBtn
+          key={item._id}
           onPress={_onSelectSkill}
           style={[
             styles.durationBtn,
@@ -302,7 +296,6 @@ const CourseCreate = () => {
       </View>
     );
   };
-  console.log("startDate", startDate, endDate);
 
   const renderSelectTypeCourse = () => {
     return (
@@ -440,32 +433,25 @@ const CourseCreate = () => {
           </View>
 
           <View style={{ paddingHorizontal: 20 }}>
-            {/* <Text style={{ ...CS.hnMedium, marginTop: 8 }}>Ảnh khoá học</Text>
-
-          {renderSelectImage()} */}
-            {/* <Text style={{ ...CS.hnMedium, marginTop: 8 }}>
-            {translations.course.videoReviewCourse}
-          </Text> */}
             {renderSelectTypeCourse()}
             {renderSelectLevel()}
             {renderSelectSkill()}
           </View>
-
-          <Button
-            style={{
-              marginHorizontal: 20,
-              marginTop: 16,
-              backgroundColor: updating ? colors.placeholder : colors.primary,
-              zIndex: -1,
-            }}
-            text={
-              course_id
-                ? translations.course.updateCourse
-                : translations.course.createCourse
-            }
-            disabled={updating || updatingVid}
-            onPress={handleSubmit(onSubmit)}
-          />
+          <View style={styles.paddingButton}>
+            <Button
+              style={{
+                backgroundColor: updating ? colors.placeholder : colors.primary,
+                zIndex: -1,
+              }}
+              text={
+                course_id
+                  ? translations.course.updateCourse
+                  : translations.course.createCourse
+              }
+              disabled={updating || updatingVid}
+              onPress={handleSubmit(onSubmit)}
+            />
+          </View>
           <View style={{ height: 80 }} />
         </ScrollView>
         {listTypeCourse.length > 0 && (
@@ -580,5 +566,9 @@ const styles = StyleSheet.create({
   textTitle: {
     ...CS.hnMedium,
     marginHorizontal: 20,
+  },
+  paddingButton: {
+    paddingHorizontal: 16,
+    marginTop: 16,
   },
 });

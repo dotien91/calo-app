@@ -7,6 +7,7 @@ import CS from "@theme/styles";
 import { SCREENS } from "constants";
 import { closeSuperModal } from "@helpers/super.modal.helper";
 import { USER_TOKEN, _getJson } from "@services/local-storage";
+import { translations } from "@localization";
 
 interface PopupCreateLessonProps {
   course_id: string;
@@ -38,12 +39,11 @@ const PopupCreateLesson = ({
   return (
     <View style={styles.container}>
       <PressableBtn style={styles.viewAdd} onPress={_gotoAddVideo}>
-        <Text style={{ ...CS.hnRegular }}>Add video</Text>
+        <Text style={styles.txtBtn}>{translations.course.addVideo}</Text>
       </PressableBtn>
       <PressableBtn onPress={_gotoAddFile}>
-        <Text style={{ ...CS.hnRegular }}>Add file</Text>
+        <Text style={styles.txtBtn}>{translations.course.addFile}</Text>
       </PressableBtn>
-      <View style={{ height: 20 }} />
     </View>
   );
 };
@@ -52,9 +52,13 @@ export default PopupCreateLesson;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
+    marginTop: 10,
+    marginBottom: 30,
   },
   viewAdd: {
     height: 40,
+  },
+  txtBtn: {
+    ...CS.hnRegular,
   },
 });

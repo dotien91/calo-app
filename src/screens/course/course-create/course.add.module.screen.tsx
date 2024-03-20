@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput, StyleSheet } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import { useRoute } from "@react-navigation/native";
 
@@ -180,19 +180,17 @@ const CourseAddModuleScreen = () => {
             : translations.course.addModule
         }
       />
-      <View style={{ paddingHorizontal: 16 }}>
+      <View style={styles.container}>
         <TextInput
-          placeholder={translations.course.title}
+          placeholder={`${
+            parent_id
+              ? translations.course.titleLesson
+              : translations.course.titleModule
+          }`}
           onChangeText={setTitle}
           value={title}
           placeholderTextColor={palette.placeholder}
-          style={{
-            color: palette.text,
-            height: 40,
-            paddingHorizontal: 8,
-            borderWidth: 1,
-            borderRadius: 8,
-          }}
+          style={styles.input}
         />
         {parent_id && (
           <Text style={{ ...CS.hnRegular, marginTop: 8, marginBottom: 8 }}>
@@ -202,7 +200,7 @@ const CourseAddModuleScreen = () => {
         {parent_id &&
           (type === "file" ? renderSelectFile() : renderSelectVideo())}
         <Button
-          style={{ marginTop: 8 }}
+          style={styles.styleBtn}
           onPress={_createPart}
           text={
             parent_id
@@ -219,5 +217,23 @@ const CourseAddModuleScreen = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  styleBtn: {
+    marginTop: 8,
+    backgroundColor: palette.primary,
+  },
+  input: {
+    color: palette.text,
+    height: 40,
+    paddingHorizontal: 8,
+    borderWidth: 1,
+    borderColor: palette.borderColor,
+    borderRadius: 8,
+  },
+  container: {
+    paddingHorizontal: 16,
+  },
+});
 
 export default CourseAddModuleScreen;
