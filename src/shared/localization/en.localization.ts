@@ -468,7 +468,7 @@ export default {
     deleteClass: "Delete class",
     deleteClassSuccess: "Delete class successfully",
     deleteClassError: "Class deletion failed",
-    uploadVideoFailed: "Upload video failed",
+    uploadVideoFailed: "Upload image/video failed",
     deleteClassDes: "Are you sure you want to delete this class?",
     deleteModule: "Delete module",
     deleteModuleSuccess: "Delete module successfully",

@@ -128,9 +128,11 @@ const PostDetail = (props: PostDetailProps) => {
   const updateListCommentReply = ({
     parent_id,
     data,
+    isApi = false,
   }: {
     parent_id: string;
     data: TypedComment;
+    isApi: boolean;
   }) => {
     const listCmtUpdate = [...listData];
     const itemIndexParent = listCmtUpdate.find(
@@ -142,9 +144,10 @@ const PostDetail = (props: PostDetailProps) => {
       const indexChild = itemIndexParent?.child.findIndex(
         (itemChild) => itemChild.local_id === data.local_id,
       );
-      if (indexChild >= 0) {
+      if (indexChild >= 0 || isApi) {
         itemIndexParent.child[0] = data;
       } else {
+        console.log(2, isApi);
         itemIndexParent.child = [data, ...itemIndexParent.child];
       }
     }
@@ -230,6 +233,7 @@ const PostDetail = (props: PostDetailProps) => {
       const dataUpdate = updateListCommentReply({
         parent_id: replyItem.parent_id || replyItem._id,
         data: dataChild,
+        isApi: false,
       });
       setListData(dataUpdate);
     } else {
@@ -246,6 +250,7 @@ const PostDetail = (props: PostDetailProps) => {
             const dataUpdate = updateListCommentReply({
               parent_id: replyItem.parent_id || replyItem._id,
               data: { ...resComment.data, idLocal: _uuid, sending: false },
+              isApi: true,
             });
             setListData(dataUpdate);
           }, 3000);

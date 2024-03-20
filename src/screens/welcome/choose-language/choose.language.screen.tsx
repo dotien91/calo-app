@@ -88,11 +88,13 @@ export default function ChooseLanguageScreen() {
               return <ItemLanguage key={index} item={item} />;
             })}
           </View>
-          <Button
-            style={{ paddingHorizontal: 20, marginHorizontal: 20 }}
-            onPress={handleKeepGoing}
-            text={translations.keepGoing}
-          />
+          <View style={styles.paddingBtnStyle}>
+            <Button
+              style={styles.btnStyle}
+              onPress={handleKeepGoing}
+              text={translations.keepGoing}
+            />
+          </View>
         </View>
       </View>
     </TouchableWithoutFeedback>

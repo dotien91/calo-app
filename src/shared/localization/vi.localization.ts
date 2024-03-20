@@ -557,7 +557,7 @@ export default {
     deleteClass: "Xoá lớp",
     deleteClassSuccess: "Xoá lớp thành công",
     deleteClassError: "Xoá lớp thất bại",
-    uploadVideoFailed: "Tải video lên không thành công",
+    uploadVideoFailed: "Tải ảnh/video lên không thành công",
     deleteClassDes: "Bạn có chắc chắn muốn xoá lớp học này không?",
     deleteModule: "Xoá bài học",
     deleteModuleSuccess: "Xoá bài học thành công",

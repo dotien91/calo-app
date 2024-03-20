@@ -34,6 +34,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const { logout, isLoggedIn, renderViewRequestLogin } = useUserHook();
   const { isTeacher } = useUserHelper();
+  const userMedia = useStore((state) => state.userMedia);
 
   const listSetting = [
     {
@@ -203,9 +204,11 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
                     // marginRight: 10,
                     // marginTop: 20,
                   }}
-                  sourceUri={{
-                    uri: userData?.user_avatar_thumbnail,
-                  }}
+                  sourceUri={
+                    (userMedia?.user_avatar || "").trim().length > 0
+                      ? { uri: userMedia?.user_avatar }
+                      : require("@assets/images/default_avatar.jpg")
+                  }
                 />
               </TouchableOpacity>
               <TouchableOpacity

@@ -82,7 +82,7 @@ import ChatListScreen from "@screens/chat/list-chat/chat.list.screen";
 import NotificationScreen from "@screens/notification/NotificationScreen";
 import TaskScreen from "@screens/profile.screen/task.screen";
 import TeacherCourse from "@screens/teacher-courses/teacher.course";
-// import LeaderBoard from "@screens/leader-board/leader.board";
+import LeaderBoard from "@screens/leader-board/leader.board";
 
 import AffiliatePage from "@screens/affiliate/affiliate.screen";
 import WithdrawScreen from "@screens/withdraw/withdraw.screen";
@@ -244,7 +244,7 @@ const Navigation = () => {
         {renderStackIntro()}
 
         <Stack.Screen name={SCREENS.HOME} component={renderTabNavigation} />
-        {/* <Stack.Screen name={SCREENS.LEADERBOARD} component={LeaderBoard} /> */}
+        <Stack.Screen name={SCREENS.LEADERBOARD} component={LeaderBoard} />
         <Stack.Screen
           name={SCREENS.CLASSHOMEWORK}
           component={ClassHomeWorkScreen}
