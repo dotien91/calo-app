@@ -484,6 +484,7 @@ export default {
     filterSpeaker: "Giáo viên bản địa",
     viewResult: (text: string) =>
       text != 0 ? "Xem " + text + " khoá học" : "Không tìm thấy kết quả",
+    moreCouresBy: (name: string) => `Khoá học của ${name}`,
     viewResultTutor: (text: string) =>
       text != 0 ? "Xem " + text + " giáo viên" : "Không tìm thấy kết quả",
     priceCourse: "Giá khoá học",

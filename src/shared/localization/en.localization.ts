@@ -390,6 +390,7 @@ export default {
     filterSpeaker: "Giáo viên bản địa",
     viewResult: (text: string) =>
       text != "0" ? "View " + text + " courses" : "No result find",
+    moreCouresBy: (name: string) => `More course buy ${name}`,
     viewResultTutor: (text: string) =>
       text != 0 ? "View " + text + " tutors" : "No result find",
     priceCourse: "Giá khoá học",
