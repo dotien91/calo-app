@@ -14,7 +14,7 @@ const LiveBadge = ({ customStyle }: { customStyle: ViewStyle }) => {
         <View style={styles.dot} />
         <Text style={styles.title}>LIVE</Text>
       </View>
-      {!!viewNumber && (
+      {viewNumber > 0 && (
         <View style={styles.viewCountBox}>
           <Icon
             type={IconType.Ionicons}

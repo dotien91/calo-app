@@ -45,7 +45,7 @@ export default (theme: ExtendedTheme) => {
     },
     stream_container: {
       flex: 1,
-      alignItems: "center",
+      ...CS.flexCenter,
     },
     controller_container: {
       flex: 1,

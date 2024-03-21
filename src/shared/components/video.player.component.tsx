@@ -1,5 +1,11 @@
-import React, { useCallback, useEffect, useRef, useState, memo } from "react";
-import { ActivityIndicator, Pressable, StyleSheet, View } from "react-native";
+import React, { useCallback, useRef, useState, memo } from "react";
+import {
+  ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  View,
+  ViewStyle,
+} from "react-native";
 import Video from "react-native-video";
 import FastImage from "react-native-fast-image";
 
@@ -17,9 +23,11 @@ interface IVideoPlayer {
   autoPlay: boolean;
   repeat: boolean;
   onPress: () => void;
+  wrapStyle?: ViewStyle;
 }
 
 const VideoPlayer = ({
+  wrapStyle,
   mediaThumbail,
   mediaUrl,
   width,
@@ -30,16 +38,9 @@ const VideoPlayer = ({
   ...res
 }: IVideoPlayer) => {
   const refVideo = useRef<Video>();
-  const animationBackRef = useRef<Lottie>(null);
 
   const [pause, setPause] = useState(!autoPlay);
   const [isPreloading, setIsPreloading] = useState(true);
-
-  useEffect(() => {
-    if (animationBackRef.current) {
-      animationBackRef.current.play(20, 20);
-    }
-  }, []);
 
   const switchPause = useCallback(() => {
     if (onPress) {
@@ -49,11 +50,15 @@ const VideoPlayer = ({
     setPause((old) => !old);
   }, []);
 
+  const load = () => {
+    refVideo.current.seek(11);
+  }; // n
+
   const Component = pressable ? Pressable : View;
 
   return (
     <Component
-      style={{ ...styles.container, width, height }}
+      style={{ ...styles.container, width, height, ...wrapStyle }}
       onPress={switchPause}
     >
       {pause && (
@@ -99,7 +104,10 @@ const VideoPlayer = ({
         paused={pause}
         style={styles.backgroundVideo}
         autoPlay={autoPlay}
-        onLoadStart={() => setIsPreloading(true)}
+        onLoadStart={() => {
+          setIsPreloading(true);
+        }}
+        onLoad={load}
         useNativeControls
         onReadyForDisplay={() => setIsPreloading(false)}
         {...res}

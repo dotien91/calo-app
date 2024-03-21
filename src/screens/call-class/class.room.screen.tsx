@@ -55,6 +55,7 @@ const ClassRoomScreen = () => {
   const courseRoom = route.params?.["courseRoom"];
   const { roomId, chatRoomId } = courseRoom;
   const courseData = route.params?.["courseData"];
+  console.log("roomId", roomId);
 
   const isVideoOneOne = courseData?.type == EnumClassType.Call11;
   const { isTeacher } = useClassRoom();
@@ -395,7 +396,9 @@ const ClassRoomScreen = () => {
 
   const _renderMyVideo = () => {
     const publishers = getRemoteListValue;
-    if (!selfViewSrc || isTeacher || publishers.length) return null;
+    if (!selfViewSrc || publishers.length) return null;
+    console.log(333333333);
+
     return (
       <ClassRoomRtcView
         isMe

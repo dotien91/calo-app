@@ -50,7 +50,7 @@ export const selectMedia = async ({
       })
       .catch(console.log)
       .finally(() => {
-        _finally();
+        !!_finally && _finally();
       });
     return;
   }
@@ -65,7 +65,9 @@ export const selectMedia = async ({
       }
     })
     .catch(console.log)
-    .finally(() => {});
+    .finally(() => {
+      !!_finally && _finally();
+    });
 };
 
 /************************************************************************************************ *

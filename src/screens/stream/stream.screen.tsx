@@ -11,10 +11,8 @@ import {
 } from "react-native";
 import RTMPPublisher, {
   RTMPPublisherRefProps,
-  StreamState,
-  BluetoothDeviceStatuses,
 } from "react-native-rtmp-publisher";
-import { useTheme, useRoute } from "@react-navigation/native";
+import { useTheme, useRoute, useFocusEffect } from "@react-navigation/native";
 import { IconType } from "react-native-dynamic-vector-icons";
 import KeepAwake from "react-native-keep-awake";
 
@@ -32,6 +30,7 @@ import {
   EnumModalContentType,
   EnumStyleModalType,
   showSuperModal,
+  showToast,
 } from "@helpers/super.modal.helper";
 import { updateLivestream } from "@services/api/stream.api";
 import { useUserHook } from "@helpers/hooks/useUserHook";
@@ -59,8 +58,6 @@ function App() {
   const { _createLiveStream, liveData, loading } = useLiveStream({
     isPublisher: true,
   });
-
-  console.log("liveDataliveData", liveData);
 
   const [show, setShow] = React.useState(true);
 
@@ -96,7 +93,46 @@ function App() {
     console.log("permissionpermissionpermission", permission);
     setPermissionGranted(permission == RESULTS.GRANTED);
   };
-  const { onSelectPicture, isUpLoadingFile, listFile } = useUploadFile([], 1);
+
+  const showLiveStream = () => {
+    setShow(true);
+    if (isStreaming) {
+      setTimeout(() => {
+        publisherRef.current && publisherRef.current?.startStream();
+      }, 1000);
+    }
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      showLiveStream();
+    }, []),
+  );
+
+  const hideLiveStream = () => {
+    publisherRef.current && publisherRef.current?.stopStream();
+    setShow(false);
+  };
+
+  const { onSelectPicture, isUpLoadingFile, listFile } = useUploadFile([], 1, {
+    cbFinaly: showLiveStream,
+  });
+
+  const _onSelectPicture = () => {
+    setShow(false);
+    onSelectPicture();
+  };
+  // useEffect(() => {
+  //   if (isUpLoadingFile) {
+  //     setTimeout(() => {
+  //       publisherRef.current && publisherRef.current.startStream();
+  //     }, 1000);
+  //   } else {
+  //     publisherRef.current && publisherRef.current.stopStream();
+  //     setShow(false);
+  //   }
+  // }, [isUpLoadingFile])
+
   console.log(listFile);
   useEffect(() => {
     // StatusBar.setBackgroundColor("black");
@@ -122,29 +158,29 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [liveData]);
 
-  const handleOnConnectionFailed = (data: string) => {
-    console.log("Connection Failed: =====" + data);
+  const handleOnConnectionFailed = () => {
+    showToast({ type: "error" });
   };
 
-  const handleOnConnectionStarted = (data: string) => {
-    console.log("Connection Started: =====" + data);
-  };
+  // const handleOnConnectionStarted = (data: string) => {
+  //   console.log("Connection Started: =====" + data);
+  // };
 
-  const handleOnConnectionSuccess = () => {
-    console.log("Connected====");
-  };
+  // const handleOnConnectionSuccess = () => {
+  //   console.log("Connected====");
+  // };
 
   const handleOnDisconnect = () => {
-    console.log("Disconnected====");
+    showToast({ type: "error" });
   };
 
-  const handleOnNewBitrateReceived = (data: number) => {
-    console.log("New Bitrate Received: =====" + data);
-  };
+  // const handleOnNewBitrateReceived = (data: number) => {
+  //   console.log("New Bitrate Received: =====" + data);
+  // };
 
-  const handleOnStreamStateChanged = (data: StreamState) => {
-    console.log("Stream Status: =====" + data);
-  };
+  // const handleOnStreamStateChanged = (data: StreamState) => {
+  //   console.log("Stream Status: =====" + data);
+  // };
 
   // const handleUnmute = () => {
   //   publisherRef.current && publisherRef.current.unmute();
@@ -191,23 +227,23 @@ function App() {
   //     publisherRef.current.setAudioInput(selectedMicrophone);
   // };
 
-  const handleBluetoothDeviceStatusChange = (
-    status: BluetoothDeviceStatuses,
-  ) => {
-    switch (status) {
-      case BluetoothDeviceStatuses.CONNECTED: {
-        setHasBluetoothDevice(true);
-        break;
-      }
+  // const handleBluetoothDeviceStatusChange = (
+  //   status: BluetoothDeviceStatuses,
+  // ) => {
+  //   switch (status) {
+  //     case BluetoothDeviceStatuses.CONNECTED: {
+  //       setHasBluetoothDevice(true);
+  //       break;
+  //     }
 
-      case BluetoothDeviceStatuses.DISCONNECTED: {
-        setHasBluetoothDevice(false);
-        break;
-      }
-      default:
-        break;
-    }
-  };
+  //     case BluetoothDeviceStatuses.DISCONNECTED: {
+  //       setHasBluetoothDevice(false);
+  //       break;
+  //     }
+  //     default:
+  //       break;
+  //   }
+  // };
 
   const renderChatView = () => {
     if (!liveData?._id) return null;
@@ -217,6 +253,8 @@ function App() {
           liveData={liveData}
           liveStreamId={liveData._id}
           isPublisher={true}
+          hideLiveStream={hideLiveStream}
+          showLiveStream={showLiveStream}
         />
       </View>
     );
@@ -277,7 +315,7 @@ function App() {
           )}
           <PressableBtn
             // disable={isUpLoadingFile}
-            onPress={onSelectPicture}
+            onPress={_onSelectPicture}
             style={styles.avatarLive}
           >
             <Text
@@ -379,11 +417,11 @@ function App() {
             style={styles.publisher_camera}
             onDisconnect={handleOnDisconnect}
             onConnectionFailed={handleOnConnectionFailed}
-            onConnectionStarted={handleOnConnectionStarted}
-            onConnectionSuccess={handleOnConnectionSuccess}
-            onNewBitrateReceived={handleOnNewBitrateReceived}
-            onStreamStateChanged={handleOnStreamStateChanged}
-            onBluetoothDeviceStatusChanged={handleBluetoothDeviceStatusChange}
+            // onConnectionStarted={handleOnConnectionStarted}
+            // onConnectionSuccess={handleOnConnectionSuccess}
+            // onNewBitrateReceived={handleOnNewBitrateReceived}
+            // onStreamStateChanged={handleOnStreamStateChanged}
+            // onBluetoothDeviceStatusChanged={handleBluetoothDeviceStatusChange}
           />
         )}
         {isStreaming && renderChatView()}
@@ -392,7 +430,10 @@ function App() {
         {!isStreaming && (
           <View style={styles.footer_container}>
             <View
-              style={[styles.stream_container, loading && { opacity: 0.7 }]}
+              style={[
+                styles.stream_container,
+                loading && { opacity: 0.7, ...CS.flexCenter, flex: 1 },
+              ]}
             >
               <Button
                 onPress={handleStartStream}
@@ -405,6 +446,7 @@ function App() {
                 backgroundColor={colors.primary}
                 text={translations.liveStream.goLive}
                 disabled={loading}
+                isFullWidth={false}
               />
             </View>
           </View>
@@ -414,4 +456,4 @@ function App() {
   );
 }
 
-export default App;
+export default React.memo(App);

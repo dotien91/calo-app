@@ -1,23 +1,23 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import FastImage from "react-native-fast-image";
 import * as NavigationService from "react-navigation-helpers";
 
 import CS from "@theme/styles";
 import { SCREENS } from "constants";
 import { IStreamItem } from "models/stream.model";
 import { palette } from "@theme/themes";
-import { translations } from "@localization";
 import IconSvg from "assets/svg";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { WindowWidth } from "@freakycoder/react-native-helpers";
+import VideoPlayer from "@shared-components/video.player.component";
 
 const StreamCard = ({ data }: { data: IStreamItem }) => {
+  console.log("datadatadata", data);
   const IconText = ({ nameIcon, text }: { nameIcon: string; text: string }) => {
     return (
       <View style={styles.iconText}>
         <IconSvg name={nameIcon} size={16} color={palette.white} />
-        <Text style={[styles.txtLive]}>{text}</Text>
+        <Text style={[styles.txtLive]}>{" " + text}</Text>
       </View>
     );
   };
@@ -31,18 +31,33 @@ const StreamCard = ({ data }: { data: IStreamItem }) => {
   return (
     <View style={styles.container}>
       <PressableBtn onPress={goToViewStream} style={styles.styleItemLiveStream}>
-        <FastImage
+        {/* <FastImage
           style={styles.styleCover}
           source={{ uri: data?.user_id?.user_avatar_thumbnail }}
+        /> */}
+        <VideoPlayer
+          autoPlay={false}
+          wrapStyle={{
+            borderRadius: 12,
+            overflow: "hidden",
+          }}
+          onPress={goToViewStream}
+          mediaUrl={data.livestream_data?.m3u8_url}
+          // mediaUrl={
+          //   "https://live-par-2-cdn-alt.livepush.io/live/bigbuckbunnyclip/index.m3u8"
+          // }
+          resizeMode="cover"
+          width={styles.styleCover.width}
+          height={styles.styleCover.height}
         />
         <View style={styles.viewAction}>
-          <Text style={styles.styleTxtTitle1}>{translations.titleLive}</Text>
+          <Text style={styles.styleTxtTitle1}>{data?.title}</Text>
           <View style={styles.viewLive}>
             <View style={styles.btnLive}>
               <Text style={styles.txtLive}>LIVE</Text>
             </View>
             <View style={styles.viewEye}>
-              <IconText nameIcon="icEyeStream" text="123" />
+              <IconText nameIcon="icEyeStream" text={data?.view_number || 0} />
             </View>
           </View>
         </View>
@@ -67,14 +82,10 @@ const styles = StyleSheet.create({
     gap: 4,
     left: 1,
     top: 1,
+    borderRadius: 8,
+    overflow: "hidden",
   },
-  styleCover: {
-    height: ((WindowWidth - 40) / 19) * 10,
-    width: WindowWidth - 40,
-    // marginBottom: 16,
-    borderRadius: 4,
-    // overflow: "hidden",
-  },
+
   viewAction: {
     flexDirection: "column",
     position: "absolute",

@@ -69,6 +69,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
     setRefreshing(true);
     eventEmitter.emit("reload_following_post");
     eventEmitter.emit("reload_list_post");
+    eventEmitter.emit("reload_list_stream");
     setTimeout(() => {
       setRefreshing(false);
     }, 3000);

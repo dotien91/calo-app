@@ -47,6 +47,7 @@ const reactionData = [
 
 interface InputChatLiveProps {
   sendChatMessage: () => void;
+  hideLiveStream: () => void;
   chatRoomId: string;
   isPublisher: boolean;
   liveData: any;
@@ -57,6 +58,7 @@ const InputChatLive: React.FC<InputChatLiveProps> = ({
   chatRoomId,
   isPublisher,
   liveData,
+  hideLiveStream,
 }) => {
   const inputRef = useRef(null);
 
@@ -96,6 +98,7 @@ const InputChatLive: React.FC<InputChatLiveProps> = ({
       data: {
         isTeacher: isPublisher,
         liveData,
+        cbOnpressCourse: hideLiveStream,
       },
     });
   };

@@ -20,7 +20,7 @@ import { emitSocket } from "@helpers/socket.helper";
 import useStore from "@services/zustand/store";
 import { updateLivestream2 } from "@services/api/stream.api";
 
-const ListCourseLiveStream = ({ isTeacher, liveData }) => {
+const ListCourseLiveStream = ({ isTeacher, liveData, cbOnpressCourse }) => {
   console.log("liveData", liveData);
   const { user_id } = liveData;
   const idTeacher = user_id._id;
@@ -35,7 +35,14 @@ const ListCourseLiveStream = ({ isTeacher, liveData }) => {
     useListData<ICourseItem>(paramsRequest, getMyCourse);
 
   const renderItem = ({ item }) => {
-    return <Item isTeacher={isTeacher} item={item} liveData={liveData} />;
+    return (
+      <Item
+        cbOnpressCourse={cbOnpressCourse}
+        isTeacher={isTeacher}
+        item={item}
+        liveData={liveData}
+      />
+    );
   };
 
   return (
@@ -63,7 +70,7 @@ const ListCourseLiveStream = ({ isTeacher, liveData }) => {
   );
 };
 
-const Item = React.memo(({ item, isTeacher, liveData }) => {
+const Item = React.memo(({ item, isTeacher, liveData, cbOnpressCourse }) => {
   const setShoppingProduct = useStore((state) => state.setShoppingProduct);
   const shoppingProduct = useStore((state) => state.shoppingProduct);
   const isPin = React.useMemo(() => {
@@ -98,6 +105,7 @@ const Item = React.memo(({ item, isTeacher, liveData }) => {
             }),
       );
     } else {
+      cbOnpressCourse?.();
       NavigationService.navigate(SCREENS.COURSE_DETAIL, {
         course_id: item._id,
         dataCourse: item,

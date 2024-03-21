@@ -105,7 +105,7 @@ const CallVideoGroupView = React.memo(
         </View>
       );
     }
-
+    console.log("1teacherStreamteacherStream", teacherStream);
     return (
       <>
         <View
@@ -127,7 +127,7 @@ const CallVideoGroupView = React.memo(
             objectFit="cover"
             name={teacherStream?.name}
             isTeacher={true}
-            // video={video}
+            video={video}
             style={{
               width: Device.width,
               height:

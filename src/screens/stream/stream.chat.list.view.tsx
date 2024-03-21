@@ -31,12 +31,16 @@ interface ChatViewProps {
   liveStreamId: string;
   isPublisher: boolean;
   liveData: any;
+  showLiveStream: () => void;
+  hideLiveStream: () => void;
 }
 
 const ListChatLiveStream: React.FC<ChatViewProps> = ({
   liveStreamId,
   isPublisher,
   liveData,
+  showLiveStream,
+  hideLiveStream,
 }) => {
   const userData = useStore((state) => state.userData);
   const refReaction = React.useRef(null);
@@ -91,13 +95,20 @@ const ListChatLiveStream: React.FC<ChatViewProps> = ({
         onEndReached={_getChatHistory}
         // ListEmptyComponent={ListEmptyComponent}
       />
-      <ShoppingLiveProduct liveData={liveData} isTeacher={isPublisher} />
+      <ShoppingLiveProduct
+        showLiveStream={showLiveStream}
+        hideLiveStream={hideLiveStream}
+        hide
+        liveData={liveData}
+        isTeacher={isPublisher}
+      />
       <ReactionLiveStreamComponent ref={refReaction} />
       <InputChatLive
         chatRoomId={liveStreamId}
         sendChatMessage={_sendChatMessage}
         isPublisher={isPublisher}
         liveData={liveData}
+        hideLiveStream={hideLiveStream}
       />
 
       {showReactionAnimation && (
@@ -117,109 +128,112 @@ const ListChatLiveStream: React.FC<ChatViewProps> = ({
   );
 };
 
-const ShoppingLiveProduct = React.memo(({ isTeacher, liveData }) => {
-  const isPin = true;
-  const setShoppingProduct = useStore((state) => state.setShoppingProduct);
-  const shoppingProduct = useStore((state) => state.shoppingProduct);
-  if (!shoppingProduct) return null;
+const ShoppingLiveProduct = React.memo(
+  ({ isTeacher, liveData, hideLiveStream }) => {
+    const isPin = true;
+    const setShoppingProduct = useStore((state) => state.setShoppingProduct);
+    const shoppingProduct = useStore((state) => state.shoppingProduct);
+    if (!shoppingProduct) return null;
 
-  const _onPress = () => {
-    NavigationService.navigate(SCREENS.COURSE_DETAIL, {
-      course_id: shoppingProduct._id,
-      dataCourse: shoppingProduct,
-    });
-
-    console.log("isTeacher...", isTeacher);
-  };
-
-  const onClose = async () => {
-    setShoppingProduct(null);
-    if (isTeacher) {
-      const dataRequest = {
-        product_ids: [],
-        livestream_id: liveData._id,
-      };
-      await updateLivestream2({
-        product_id: null,
-        _id: liveData?._id,
+    const _onPress = () => {
+      hideLiveStream();
+      NavigationService.navigate(SCREENS.COURSE_DETAIL, {
+        course_id: shoppingProduct._id,
+        dataCourse: shoppingProduct,
       });
-      pinShoppingLiveRequest(dataRequest).then((res) => {
-        console.log("pinsh", res);
-      });
-      emitSocket("emitProduct", "");
-    }
-  };
 
-  return (
-    <PressableBtn onPress={_onPress} style={styles.viewCourse}>
-      <View style={styles.viewCard}>
-        <View style={styles.viewImage}>
-          <FastImage
-            source={{ uri: shoppingProduct?.media_id?.media_thumbnail }}
-            style={{
-              width: 80,
-              height: 80,
-              borderRadius: 6,
-            }}
-            resizeMode={"cover"}
-          />
-        </View>
-        <View style={styles.viewDescription}>
-          <Text numberOfLines={1} style={styles.viewTitleName}>
-            {shoppingProduct?.title}
-          </Text>
-          <View style={styles.viewRate}>
-            <View style={styles.viewStyleView}>
-              <Text style={styles.viewTxt}>{translations.best}</Text>
-            </View>
-            <View style={styles.viewStyleRate}>
-              <IconText
-                nameIcon="icStarFull"
-                text={
-                  shoppingProduct?.user_id?.member_count
-                    ? `${(
-                        shoppingProduct?.user_id?.member_count + "" || ""
-                      ).slice(0, 3)} ${translations.ratings}`
-                    : translations.course.noreview
-                }
-              />
-            </View>
+      console.log("isTeacher...", isTeacher);
+    };
+
+    const onClose = async () => {
+      setShoppingProduct(null);
+      if (isTeacher) {
+        const dataRequest = {
+          product_ids: [],
+          livestream_id: liveData._id,
+        };
+        await updateLivestream2({
+          product_id: null,
+          _id: liveData?._id,
+        });
+        pinShoppingLiveRequest(dataRequest).then((res) => {
+          console.log("pinsh", res);
+        });
+        emitSocket("emitProduct", "");
+      }
+    };
+
+    return (
+      <PressableBtn onPress={_onPress} style={styles.viewCourse}>
+        <View style={styles.viewCard}>
+          <View style={styles.viewImage}>
+            <FastImage
+              source={{ uri: shoppingProduct?.media_id?.media_thumbnail }}
+              style={{
+                width: 80,
+                height: 80,
+                borderRadius: 6,
+              }}
+              resizeMode={"cover"}
+            />
           </View>
-          <View style={styles.viewStylePrice}>
-            <View style={styles.viewPrice}>
-              <Text style={styles.txtPriceNew}>
-                {getPriceCourse(shoppingProduct).newPrice}
-              </Text>
-              <Text style={styles.txtPriceOld}>
-                {getPriceCourse(shoppingProduct).oldPrice}
-              </Text>
+          <View style={styles.viewDescription}>
+            <Text numberOfLines={1} style={styles.viewTitleName}>
+              {shoppingProduct?.title}
+            </Text>
+            <View style={styles.viewRate}>
+              <View style={styles.viewStyleView}>
+                <Text style={styles.viewTxt}>{translations.best}</Text>
+              </View>
+              <View style={styles.viewStyleRate}>
+                <IconText
+                  nameIcon="icStarFull"
+                  text={
+                    shoppingProduct?.user_id?.member_count
+                      ? `${(
+                          shoppingProduct?.user_id?.member_count + "" || ""
+                        ).slice(0, 3)} ${translations.ratings}`
+                      : translations.course.noreview
+                  }
+                />
+              </View>
             </View>
-            {!isTeacher && (
-              <View style={isPin ? styles.itemPin : styles.viewBtnBuy}>
-                <Text
-                  style={[
-                    styles.txtBtn,
-                    isPin && { color: palette.textOpacity6 },
-                  ]}
-                >
-                  {translations.buy}
+            <View style={styles.viewStylePrice}>
+              <View style={styles.viewPrice}>
+                <Text style={styles.txtPriceNew}>
+                  {getPriceCourse(shoppingProduct).newPrice}
+                </Text>
+                <Text style={styles.txtPriceOld}>
+                  {getPriceCourse(shoppingProduct).oldPrice}
                 </Text>
               </View>
-            )}
-            {/* <Button style={styles.viewBtnBuy} text={translations.buy} /> */}
+              {!isTeacher && (
+                <View style={isPin ? styles.itemPin : styles.viewBtnBuy}>
+                  <Text
+                    style={[
+                      styles.txtBtn,
+                      isPin && { color: palette.textOpacity6 },
+                    ]}
+                  >
+                    {translations.buy}
+                  </Text>
+                </View>
+              )}
+              {/* <Button style={styles.viewBtnBuy} text={translations.buy} /> */}
+            </View>
           </View>
         </View>
-      </View>
-      <IconBtn
-        onPress={onClose}
-        customStyle={styles.closeIcon}
-        name="x"
-        color={palette.textOpacity8}
-        size={20}
-      />
-    </PressableBtn>
-  );
-});
+        <IconBtn
+          onPress={onClose}
+          customStyle={styles.closeIcon}
+          name="x"
+          color={palette.textOpacity8}
+          size={20}
+        />
+      </PressableBtn>
+    );
+  },
+);
 
 const IconText = ({ nameIcon, text }: { nameIcon: string; text: string }) => {
   return (
@@ -246,7 +260,7 @@ export const styles = StyleSheet.create({
   listChat: {
     backgroundColor: palette.whiteOverlay,
     borderRadius: 12,
-    paddingBottom: 12,
+    paddingBottom: 20,
   },
   viewCourse: {
     marginHorizontal: 8,

@@ -22,6 +22,7 @@ import IconBtn from "@shared-components/button/IconBtn";
 import useUserHelper from "@helpers/hooks/useUserHelper";
 import { openUrl } from "@helpers/file.helper";
 import { showWarningLogin } from "@helpers/super.modal.helper";
+import PressableBtn from "@shared-components/button/PressableBtn";
 
 interface SettingScreenProps {}
 
@@ -127,15 +128,15 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
     _setJson(USER_TOKEN, token);
   };
 
-  // const hardCodeTokenTeacher = () => {
-  //   const token =
-  //     // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDEwODAwMjMsImRhdGEiOnsiX2lkIjoiNjU5ZTU5ZDExNzc1YWJiZDZkOTlkMGIzIiwia2V5IjoiNTRhZjQxZGUxZTljNmNhZTFlYmI0ZjQ3NmI4NDg2ZmMiLCJzaWduYXR1cmUiOiIxY2Y2ODMwNWJkOTAyMjEyMDY1MTU3ODQyZWQ1ZTZjNiIsInNlc3Npb24iOiI2NWU1OTI1NzI0MGU1NWFmMTgwODFkMDIifSwiaWF0IjoxNzA5NTQ0MDIzfQ.URzn57HRI_hz_BZRM7HrV8VxSo5VZGqkT4EyPFFaDjk";
-  //     // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDA2NDk0OTQsImRhdGEiOnsiX2lkIjoiNjU5MGVmNzEzZjlhMDQ2OGM4MjkwZWI5Iiwia2V5IjoiYTI0MTcxYzcxYjNjMjViZWI0OTQzMTQ1NjQyZjJmNTciLCJzaWduYXR1cmUiOiI4ZTJmODFmZjY1NmRjMjUyYzZhNmVlZGFkN2U3ZTc3OCIsInNlc3Npb24iOiI2NWRmMDA5NWMzMzE1ZjhjZmMwOTk2MWUifSwiaWF0IjoxNzA5MTEzNDk0fQ.bhcKT-0CbTascOTqne8ZzXE4bSTke4EzD9hArh7rX1Y";
-  //     //dang11
-  //     // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDIyODE4MjQsImRhdGEiOnsiX2lkIjoiNjVlYTg1ZjdiMzdiMTRkZjFmNWE2Mjc1Iiwia2V5IjoiZGQ5YjhjOTk1ODNiYjM4YWZhZGRmYTBiMWU4OTgzMTgiLCJzaWduYXR1cmUiOiI2ZGYwYjIyYWEzOWZkMmM2MzAwMDQ3MTNlNzU2ZGI4OCIsInNlc3Npb24iOiI2NWY3ZThlMDAzNzZlOGU1NzZmYmUyZGQifSwiaWF0IjoxNzEwNzQ1ODI0fQ.ADTQoZf7QfVpffj3r1lAnPa09RTw9qxfac_-BfvOTrw";
-  //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mzg4MzEzMzQsImRhdGEiOnsiX2lkIjoiNjU5ZTU5ZDExNzc1YWJiZDZkOTlkMGIzIiwia2V5IjoiNTRhZjQxZGUxZTljNmNhZTFlYmI0ZjQ3NmI4NDg2ZmMiLCJzaWduYXR1cmUiOiIxY2Y2ODMwNWJkOTAyMjEyMDY1MTU3ODQyZWQ1ZTZjNiIsInNlc3Npb24iOiI2NWMzNDI2NjU1MDVmYjI3OGNiYjE5ZDgifSwiaWF0IjoxNzA3Mjk1MzM0fQ.ckhT-GeS2WVJTDEbQjU-ItSznb3aUAZ1GihSWSDmW2g";
-  //   _setJson(USER_TOKEN, token);
-  // };
+  const hardCodeTokenTeacher = () => {
+    const token =
+      // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDEwODAwMjMsImRhdGEiOnsiX2lkIjoiNjU5ZTU5ZDExNzc1YWJiZDZkOTlkMGIzIiwia2V5IjoiNTRhZjQxZGUxZTljNmNhZTFlYmI0ZjQ3NmI4NDg2ZmMiLCJzaWduYXR1cmUiOiIxY2Y2ODMwNWJkOTAyMjEyMDY1MTU3ODQyZWQ1ZTZjNiIsInNlc3Npb24iOiI2NWU1OTI1NzI0MGU1NWFmMTgwODFkMDIifSwiaWF0IjoxNzA5NTQ0MDIzfQ.URzn57HRI_hz_BZRM7HrV8VxSo5VZGqkT4EyPFFaDjk";
+      // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDA2NDk0OTQsImRhdGEiOnsiX2lkIjoiNjU5MGVmNzEzZjlhMDQ2OGM4MjkwZWI5Iiwia2V5IjoiYTI0MTcxYzcxYjNjMjViZWI0OTQzMTQ1NjQyZjJmNTciLCJzaWduYXR1cmUiOiI4ZTJmODFmZjY1NmRjMjUyYzZhNmVlZGFkN2U3ZTc3OCIsInNlc3Npb24iOiI2NWRmMDA5NWMzMzE1ZjhjZmMwOTk2MWUifSwiaWF0IjoxNzA5MTEzNDk0fQ.bhcKT-0CbTascOTqne8ZzXE4bSTke4EzD9hArh7rX1Y";
+      //dang11
+      // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDIyODE4MjQsImRhdGEiOnsiX2lkIjoiNjVlYTg1ZjdiMzdiMTRkZjFmNWE2Mjc1Iiwia2V5IjoiZGQ5YjhjOTk1ODNiYjM4YWZhZGRmYTBiMWU4OTgzMTgiLCJzaWduYXR1cmUiOiI2ZGYwYjIyYWEzOWZkMmM2MzAwMDQ3MTNlNzU2ZGI4OCIsInNlc3Npb24iOiI2NWY3ZThlMDAzNzZlOGU1NzZmYmUyZGQifSwiaWF0IjoxNzEwNzQ1ODI0fQ.ADTQoZf7QfVpffj3r1lAnPa09RTw9qxfac_-BfvOTrw";
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mzg4MzEzMzQsImRhdGEiOnsiX2lkIjoiNjU5ZTU5ZDExNzc1YWJiZDZkOTlkMGIzIiwia2V5IjoiNTRhZjQxZGUxZTljNmNhZTFlYmI0ZjQ3NmI4NDg2ZmMiLCJzaWduYXR1cmUiOiIxY2Y2ODMwNWJkOTAyMjEyMDY1MTU3ODQyZWQ1ZTZjNiIsInNlc3Npb24iOiI2NWMzNDI2NjU1MDVmYjI3OGNiYjE5ZDgifSwiaWF0IjoxNzA3Mjk1MzM0fQ.ckhT-GeS2WVJTDEbQjU-ItSznb3aUAZ1GihSWSDmW2g";
+    _setJson(USER_TOKEN, token);
+  };
 
   const renderListSetting = () => {
     return (
@@ -185,17 +186,31 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
     <View style={CS.safeAreaView}>
       <Header text={translations.settingUser.setting}></Header>
       <ScrollView style={CS.flex1}>
-        <Text
-          onPress={hardCodeToken}
-          style={{
-            fontSize: 16,
-            fontWeight: "600",
-            textAlign: "center",
-            color: "#fff",
-          }}
-        >
-          hard code token
-        </Text>
+        <PressableBtn onPress={hardCodeToken}>
+          <Text
+            style={{
+              fontSize: 16,
+              fontWeight: "600",
+              textAlign: "center",
+              color: "#fff",
+            }}
+          >
+            hard code token
+          </Text>
+        </PressableBtn>
+
+        <PressableBtn onPress={hardCodeTokenTeacher}>
+          <Text
+            style={{
+              fontSize: 16,
+              fontWeight: "600",
+              textAlign: "center",
+              color: "#fff",
+            }}
+          >
+            hard code token
+          </Text>
+        </PressableBtn>
         {isLoggedIn() ? (
           <View style={{ alignItems: "center", backgroundColor: colors.white }}>
             <View style={{ marginTop: 16 }}>

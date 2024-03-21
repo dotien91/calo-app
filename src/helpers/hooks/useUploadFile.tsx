@@ -11,7 +11,15 @@ import { showToast } from "@helpers/super.modal.helper";
 const { width } = Dimensions.get("screen");
 const isIos = Platform.OS === "ios";
 
-export function useUploadFile(initData?: any[], selectionLimit = 30) {
+interface IExtraParams {
+  cbFinaly: () => void;
+}
+
+export function useUploadFile(
+  initData?: any[],
+  selectionLimit = 30,
+  extraParam: IExtraParams,
+) {
   const [listFile, setListFile] = React.useState<any[]>(initData || []);
   const [isUpLoadingFile, setIsUpLoadingFile] = React.useState(false);
   const [listFileLocal, setListFileLocal] = React.useState<any[]>(
@@ -68,6 +76,10 @@ export function useUploadFile(initData?: any[], selectionLimit = 30) {
           setListFileLocal(listFile);
           showToast({ types: "warning", message: res.message });
         }
+      },
+      _finally: () => {
+        extraParam?.cbFinaly?.();
+        setIsUpLoadingFile(false);
       },
       croping: false,
     });
