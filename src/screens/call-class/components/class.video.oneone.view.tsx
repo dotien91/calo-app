@@ -1,16 +1,11 @@
 import React from "react";
-import {
-  StyleSheet,
-  View,
-  Dimensions,
-} from "react-native";
+import { StyleSheet, View, Dimensions } from "react-native";
 
 // import InCallManager from 'react-native-incall-manager';
 
 // import Spinner from "react-native-loading-spinner-overlay";
 import CS from "@theme/styles";
 import { Device } from "@utils/device.ui.utils";
-import { _isTeacher } from "./call.class.helper";
 import ClassRoomRtcView from "./class.room.rtc.view";
 
 const CallVideoOneOneView = React.memo(
@@ -71,6 +66,5 @@ const CallVideoOneOneView = React.memo(
     );
   },
 );
-
 
 export default CallVideoOneOneView;

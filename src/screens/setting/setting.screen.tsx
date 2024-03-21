@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { View, TouchableOpacity, Text, Image } from "react-native";
+import { View, TouchableOpacity, Text, Image, ScrollView } from "react-native";
 import { useTheme } from "@react-navigation/native";
 // import crashlytics from "@react-native-firebase/crashlytics";
 
@@ -22,8 +22,6 @@ import IconBtn from "@shared-components/button/IconBtn";
 import useUserHelper from "@helpers/hooks/useUserHelper";
 import { openUrl } from "@helpers/file.helper";
 import { showWarningLogin } from "@helpers/super.modal.helper";
-import PressableBtn from "@shared-components/button/PressableBtn";
-import { palette } from "@theme/themes";
 
 interface SettingScreenProps {}
 
@@ -36,6 +34,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const { logout, isLoggedIn, renderViewRequestLogin } = useUserHook();
   const { isTeacher } = useUserHelper();
+  const userMedia = useStore((state) => state.userMedia);
 
   const listSetting = [
     {
@@ -82,9 +81,14 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
       title: translations.settingUser.support,
       icon: require("assets/images/supporticon.png"),
       action: () => {
-        NavigationService.navigate(SCREENS.CHAT_ROOM, {
-          id: "65f7b1b3a22b22d7d3dcf078",
-        });
+        if (userData?._id) {
+          NavigationService.navigate(SCREENS.CHAT_ROOM, {
+            partner_id: "65f7b1b3a22b22d7d3dcf078",
+            partner_name: "Admin",
+          });
+        } else {
+          showWarningLogin();
+        }
       },
     },
     {
@@ -123,15 +127,15 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
     _setJson(USER_TOKEN, token);
   };
 
-  const hardCodeTokenTeacher = () => {
-    const token =
-      // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDEwODAwMjMsImRhdGEiOnsiX2lkIjoiNjU5ZTU5ZDExNzc1YWJiZDZkOTlkMGIzIiwia2V5IjoiNTRhZjQxZGUxZTljNmNhZTFlYmI0ZjQ3NmI4NDg2ZmMiLCJzaWduYXR1cmUiOiIxY2Y2ODMwNWJkOTAyMjEyMDY1MTU3ODQyZWQ1ZTZjNiIsInNlc3Npb24iOiI2NWU1OTI1NzI0MGU1NWFmMTgwODFkMDIifSwiaWF0IjoxNzA5NTQ0MDIzfQ.URzn57HRI_hz_BZRM7HrV8VxSo5VZGqkT4EyPFFaDjk";
-      // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDA2NDk0OTQsImRhdGEiOnsiX2lkIjoiNjU5MGVmNzEzZjlhMDQ2OGM4MjkwZWI5Iiwia2V5IjoiYTI0MTcxYzcxYjNjMjViZWI0OTQzMTQ1NjQyZjJmNTciLCJzaWduYXR1cmUiOiI4ZTJmODFmZjY1NmRjMjUyYzZhNmVlZGFkN2U3ZTc3OCIsInNlc3Npb24iOiI2NWRmMDA5NWMzMzE1ZjhjZmMwOTk2MWUifSwiaWF0IjoxNzA5MTEzNDk0fQ.bhcKT-0CbTascOTqne8ZzXE4bSTke4EzD9hArh7rX1Y";
-      //dang11
-      // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDIyODE4MjQsImRhdGEiOnsiX2lkIjoiNjVlYTg1ZjdiMzdiMTRkZjFmNWE2Mjc1Iiwia2V5IjoiZGQ5YjhjOTk1ODNiYjM4YWZhZGRmYTBiMWU4OTgzMTgiLCJzaWduYXR1cmUiOiI2ZGYwYjIyYWEzOWZkMmM2MzAwMDQ3MTNlNzU2ZGI4OCIsInNlc3Npb24iOiI2NWY3ZThlMDAzNzZlOGU1NzZmYmUyZGQifSwiaWF0IjoxNzEwNzQ1ODI0fQ.ADTQoZf7QfVpffj3r1lAnPa09RTw9qxfac_-BfvOTrw";
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mzg4MzEzMzQsImRhdGEiOnsiX2lkIjoiNjU5ZTU5ZDExNzc1YWJiZDZkOTlkMGIzIiwia2V5IjoiNTRhZjQxZGUxZTljNmNhZTFlYmI0ZjQ3NmI4NDg2ZmMiLCJzaWduYXR1cmUiOiIxY2Y2ODMwNWJkOTAyMjEyMDY1MTU3ODQyZWQ1ZTZjNiIsInNlc3Npb24iOiI2NWMzNDI2NjU1MDVmYjI3OGNiYjE5ZDgifSwiaWF0IjoxNzA3Mjk1MzM0fQ.ckhT-GeS2WVJTDEbQjU-ItSznb3aUAZ1GihSWSDmW2g";
-    _setJson(USER_TOKEN, token);
-  };
+  // const hardCodeTokenTeacher = () => {
+  //   const token =
+  //     // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDEwODAwMjMsImRhdGEiOnsiX2lkIjoiNjU5ZTU5ZDExNzc1YWJiZDZkOTlkMGIzIiwia2V5IjoiNTRhZjQxZGUxZTljNmNhZTFlYmI0ZjQ3NmI4NDg2ZmMiLCJzaWduYXR1cmUiOiIxY2Y2ODMwNWJkOTAyMjEyMDY1MTU3ODQyZWQ1ZTZjNiIsInNlc3Npb24iOiI2NWU1OTI1NzI0MGU1NWFmMTgwODFkMDIifSwiaWF0IjoxNzA5NTQ0MDIzfQ.URzn57HRI_hz_BZRM7HrV8VxSo5VZGqkT4EyPFFaDjk";
+  //     // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDA2NDk0OTQsImRhdGEiOnsiX2lkIjoiNjU5MGVmNzEzZjlhMDQ2OGM4MjkwZWI5Iiwia2V5IjoiYTI0MTcxYzcxYjNjMjViZWI0OTQzMTQ1NjQyZjJmNTciLCJzaWduYXR1cmUiOiI4ZTJmODFmZjY1NmRjMjUyYzZhNmVlZGFkN2U3ZTc3OCIsInNlc3Npb24iOiI2NWRmMDA5NWMzMzE1ZjhjZmMwOTk2MWUifSwiaWF0IjoxNzA5MTEzNDk0fQ.bhcKT-0CbTascOTqne8ZzXE4bSTke4EzD9hArh7rX1Y";
+  //     //dang11
+  //     // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDIyODE4MjQsImRhdGEiOnsiX2lkIjoiNjVlYTg1ZjdiMzdiMTRkZjFmNWE2Mjc1Iiwia2V5IjoiZGQ5YjhjOTk1ODNiYjM4YWZhZGRmYTBiMWU4OTgzMTgiLCJzaWduYXR1cmUiOiI2ZGYwYjIyYWEzOWZkMmM2MzAwMDQ3MTNlNzU2ZGI4OCIsInNlc3Npb24iOiI2NWY3ZThlMDAzNzZlOGU1NzZmYmUyZGQifSwiaWF0IjoxNzEwNzQ1ODI0fQ.ADTQoZf7QfVpffj3r1lAnPa09RTw9qxfac_-BfvOTrw";
+  //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mzg4MzEzMzQsImRhdGEiOnsiX2lkIjoiNjU5ZTU5ZDExNzc1YWJiZDZkOTlkMGIzIiwia2V5IjoiNTRhZjQxZGUxZTljNmNhZTFlYmI0ZjQ3NmI4NDg2ZmMiLCJzaWduYXR1cmUiOiIxY2Y2ODMwNWJkOTAyMjEyMDY1MTU3ODQyZWQ1ZTZjNiIsInNlc3Npb24iOiI2NWMzNDI2NjU1MDVmYjI3OGNiYjE5ZDgifSwiaWF0IjoxNzA3Mjk1MzM0fQ.ckhT-GeS2WVJTDEbQjU-ItSznb3aUAZ1GihSWSDmW2g";
+  //   _setJson(USER_TOKEN, token);
+  // };
 
   const renderListSetting = () => {
     return (
@@ -180,100 +184,89 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
   return (
     <View style={CS.safeAreaView}>
       <Header text={translations.settingUser.setting}></Header>
-      <PressableBtn onPress={hardCodeToken}>
+      <ScrollView style={CS.flex1}>
         <Text
+          onPress={hardCodeToken}
           style={{
             fontSize: 16,
             fontWeight: "600",
             textAlign: "center",
-            color: palette.grey4,
+            color: "#fff",
           }}
         >
           hard code token
         </Text>
-      </PressableBtn>
-      <PressableBtn onPress={hardCodeTokenTeacher}>
-        <Text
-          style={{
-            fontSize: 16,
-            fontWeight: "600",
-            textAlign: "center",
-            color: palette.grey4,
-          }}
-        >
-          hard code token teacher
-        </Text>
-      </PressableBtn>
-
-      {isLoggedIn() ? (
-        <View style={{ alignItems: "center", backgroundColor: colors.white }}>
-          <View style={{ marginTop: 16 }}>
-            <TouchableOpacity
-              onPress={() => {
-                NavigationService.navigate(SCREENS.PROFILE_CURRENT_USER, {
-                  _id: userData?._id,
-                });
-              }}
-            >
-              <Avatar
-                style={{
-                  width: 64,
-                  height: 64,
-                  borderRadius: 99,
-                  // marginRight: 10,
-                  // marginTop: 20,
-                }}
-                sourceUri={{
-                  uri: userData?.user_avatar_thumbnail,
-                }}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={editProfile}
-              style={{
-                position: "absolute",
-                bottom: -4,
-                right: -4,
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: colors.white,
-                borderRadius: 16,
-              }}
-            >
-              <Icon
-                style={{ padding: 3 }}
-                name="edit-3"
-                type={IconType.Feather}
-              ></Icon>
-            </TouchableOpacity>
-          </View>
-          <Text
-            numberOfLines={1}
-            style={{
-              fontSize: 16,
-              color: colors.text,
-              fontWeight: "600",
-              marginTop: 8,
-              paddingHorizontal: 16,
-            }}
-          >
-            {userData?.display_name}
-          </Text>
-          {!isTeacher && (
-            <TouchableOpacity onPress={() => openUrl("test")}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  color: colors.btnRedPrimary,
-                  fontWeight: "600",
-                  marginTop: 5,
+        {isLoggedIn() ? (
+          <View style={{ alignItems: "center", backgroundColor: colors.white }}>
+            <View style={{ marginTop: 16 }}>
+              <TouchableOpacity
+                onPress={() => {
+                  NavigationService.navigate(SCREENS.PROFILE_CURRENT_USER, {
+                    _id: userData?._id,
+                  });
                 }}
               >
-                {translations.settingUser.becomeATutor}
-              </Text>
-            </TouchableOpacity>
-          )}
-          {/* <View style={{ flexDirection: "row", marginVertical: 16 }}>
+                <Avatar
+                  style={{
+                    width: 64,
+                    height: 64,
+                    borderRadius: 99,
+                    // marginRight: 10,
+                    // marginTop: 20,
+                  }}
+                  sourceUri={
+                    (userMedia?.user_avatar || "").trim().length > 0
+                      ? { uri: userMedia?.user_avatar }
+                      : require("@assets/images/default_avatar.jpg")
+                  }
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={editProfile}
+                style={{
+                  position: "absolute",
+                  bottom: -4,
+                  right: -4,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: colors.white,
+                  borderRadius: 16,
+                }}
+              >
+                <Icon
+                  style={{ padding: 3 }}
+                  name="edit-3"
+                  type={IconType.Feather}
+                ></Icon>
+              </TouchableOpacity>
+            </View>
+            <Text
+              numberOfLines={1}
+              style={{
+                fontSize: 16,
+                color: colors.text,
+                fontWeight: "600",
+                marginTop: 8,
+                paddingHorizontal: 16,
+              }}
+            >
+              {userData?.display_name}
+            </Text>
+            {!isTeacher && (
+              <TouchableOpacity onPress={() => openUrl("test")}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: colors.btnRedPrimary,
+                    fontWeight: "600",
+                    marginTop: 5,
+                  }}
+                >
+                  {translations.settingUser.becomeATutor}
+                </Text>
+              </TouchableOpacity>
+            )}
+            {/* <View style={{ flexDirection: "row", marginVertical: 16 }}>
             <TouchableOpacity
               onPress={editProfile}
               style={styles.styleButtonEditProfile}
@@ -289,12 +282,12 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
               <Text style={styles.styleTextViewProfile}>View Profile</Text>
             </TouchableOpacity>
           </View> */}
-        </View>
-      ) : (
-        renderViewRequestLogin()
-      )}
-      {renderListSetting()}
-
+          </View>
+        ) : (
+          renderViewRequestLogin()
+        )}
+        {renderListSetting()}
+      </ScrollView>
       {isLoggedIn() && (
         <TouchableOpacity
           onPress={logout}

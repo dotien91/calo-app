@@ -9,8 +9,8 @@ import {
 import * as Animatable from "react-native-animatable";
 import * as NavigationService from "react-navigation-helpers";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
-
 import Accordion from "react-native-collapsible/Accordion";
+
 import PressableBtn from "@shared-components/button/PressableBtn";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
@@ -113,20 +113,10 @@ const PartViewCreate = ({ id, hide }: PartViewCreateProps) => {
         <Animatable.View
           duration={300}
           transition="backgroundColor"
-          style={{
-            flexDirection: "row",
-            height: 40,
-            alignItems: "center",
-            justifyContent: "space-between",
-            width: width - 32,
-            marginTop: 8,
-            borderWidth: 1,
-            borderColor: palette.borderColor,
-            paddingHorizontal: 8,
-          }}
+          style={styles.viewHeaderModules}
         >
           <Text style={styles.headerText}>{section.title}</Text>
-          <View style={{ flexDirection: "row" }}>
+          <View style={CS.row}>
             <Icon
               onPress={editPart}
               size={24}
@@ -171,6 +161,7 @@ const PartViewCreate = ({ id, hide }: PartViewCreateProps) => {
         data: {
           course_id: id,
           parent_id: section._id,
+          hideCloseIcon: true,
         },
       });
       // console.log("id: ", id, "moduleId....", section._id);
@@ -179,13 +170,7 @@ const PartViewCreate = ({ id, hide }: PartViewCreateProps) => {
       <Animatable.View
         duration={300}
         transition="backgroundColor"
-        style={{
-          backgroundColor: palette.background,
-          borderWidth: 1,
-          borderColor: palette.borderColor,
-          paddingHorizontal: 8,
-          paddingBottom: 8,
-        }}
+        style={styles.viewModule}
       >
         <Animatable.View
           key={i}
@@ -203,18 +188,8 @@ const PartViewCreate = ({ id, hide }: PartViewCreateProps) => {
               />
             );
           })}
-          <PressableBtn
-            style={{ height: 40, ...CS.center, marginTop: 8 }}
-            onPress={_addNewLesson}
-          >
-            <Text
-              style={{
-                ...CS.hnMedium,
-                fontSize: 14,
-                color: palette.primary,
-                textDecorationLine: "underline",
-              }}
-            >
+          <PressableBtn style={styles.btnAddLesson} onPress={_addNewLesson}>
+            <Text style={styles.txtAddLesson}>
               {translations.course.addLesson}
             </Text>
           </PressableBtn>
@@ -266,16 +241,7 @@ const PartViewCreate = ({ id, hide }: PartViewCreateProps) => {
           onChange={() => {}}
         />
         <PressableBtn style={styles.viewAdd} onPress={_addNewPart}>
-          <Text
-            style={{
-              ...CS.hnMedium,
-              fontSize: 14,
-              color: palette.primary,
-              textDecorationLine: "underline",
-            }}
-          >
-            {translations.course.addModule}
-          </Text>
+          <Text style={styles.addModules}>{translations.course.addModule}</Text>
         </PressableBtn>
       </View>
     );
@@ -311,9 +277,43 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
     borderColor: palette.primary,
-    height: 80,
+    height: 40,
     marginTop: 8,
-    borderStyle: "dashed",
+    // borderStyle: "dashed",
+  },
+  addModules: {
+    ...CS.hnMedium,
+    color: palette.primary,
+    // textDecorationLine: "underline",
+  },
+  btnAddLesson: {
+    ...CS.center,
+    height: 40,
+    marginTop: 8,
+  },
+  viewModule: {
+    backgroundColor: palette.background,
+    borderWidth: 1,
+    borderColor: palette.borderColor,
+    paddingHorizontal: 8,
+    paddingBottom: 8,
+  },
+  viewHeaderModules: {
+    flexDirection: "row",
+    height: 40,
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: width - 32,
+    marginTop: 8,
+    borderWidth: 1,
+    borderColor: palette.borderColor,
+    paddingHorizontal: 8,
+  },
+  txtAddLesson: {
+    ...CS.hnMedium,
+    fontSize: 14,
+    color: palette.primary,
+    textDecorationLine: "underline",
   },
 });
 
@@ -369,7 +369,7 @@ const Lesson = ({ data, id, parent_id }: LessonProps) => {
   };
   return (
     <PressableBtn style={styles.viewContent} onPress={viewVideo}>
-      <Animatable.Text style={[styles.textDetail, { flex: 1 }]}>
+      <Animatable.Text style={[styles.textDetail, CS.flex1]}>
         {data.title}
       </Animatable.Text>
       <Icon

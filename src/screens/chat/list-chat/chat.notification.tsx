@@ -29,7 +29,7 @@ const ChatNotification = ({ item }: ChatNotificationProps) => {
           {translations.notifications.notifications}
         </Text>
         <Text numberOfLines={1} style={styles.txtDesReaded}>
-          {item.content}
+          {item.content || item?.title}
         </Text>
       </View>
       {read_status != 1 && <View style={styles.viewRead} />}

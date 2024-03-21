@@ -70,7 +70,7 @@ export default function ChooseLanguageScreen() {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
-        <Text style={styles.textHeader}>Choose the language</Text>
+        <Text style={styles.textHeader}>{translations.changeLanguage}</Text>
         {/* <View style={styles.viewSearch}>
           <TextInput
             placeholder="Find a language"
@@ -88,11 +88,13 @@ export default function ChooseLanguageScreen() {
               return <ItemLanguage key={index} item={item} />;
             })}
           </View>
-          <Button
-            style={{ paddingHorizontal: 20, marginHorizontal: 20 }}
-            onPress={handleKeepGoing}
-            text="Keep going"
-          />
+          <View style={styles.paddingBtnStyle}>
+            <Button
+              style={styles.btnStyle}
+              onPress={handleKeepGoing}
+              text={translations.keepGoing}
+            />
+          </View>
         </View>
       </View>
     </TouchableWithoutFeedback>

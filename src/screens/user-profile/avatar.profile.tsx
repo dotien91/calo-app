@@ -44,7 +44,7 @@ const AvatarProfile = ({ userInfo, customStyle }: UploadAvatarProps) => {
 
   if (!userInfo?._id) {
     return (
-      <View style={styles.container}>
+      <View style={styles.containerSke}>
         <SkeletonPlaceholder>
           <View style={styles.viewAvatar} />
         </SkeletonPlaceholder>
@@ -141,6 +141,11 @@ const styles = StyleSheet.create({
     ...CommonStyle.center,
     width: "100%",
     paddingBottom: 26,
+  },
+  containerSke: {
+    ...CommonStyle.center,
+    width: "100%",
+    marginTop: 26,
   },
   viewAvatar: {
     width: 86,

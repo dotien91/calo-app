@@ -32,7 +32,7 @@ const BuyBottom = ({ show, data, courseRoom }: BuyBottomProps) => {
   const expandView = () => {
     Animated.timing(animationHeight, {
       duration: 300,
-      toValue: 60,
+      toValue: 100,
       useNativeDriver: false,
     }).start();
   };
@@ -143,6 +143,7 @@ const styles = StyleSheet.create({
   viewContainer: {
     flexDirection: "row",
     paddingHorizontal: 16,
+    minHeight: 60,
     ...CS.flexRear,
   },
   viewShadow: {

@@ -1,14 +1,8 @@
 import React from "react";
-import {
-  View,
-  ScrollView,
-  Dimensions,
-} from "react-native";
-
+import { View, ScrollView, Dimensions } from "react-native";
 
 import CS from "@theme/styles";
 import { Device } from "@utils/device.ui.utils";
-import { _isTeacher } from "./call.class.helper";
 import { getStatusBarHeight } from "react-native-safearea-height";
 import { isIOS } from "@freakycoder/react-native-helpers";
 import ClassRoomRtcView from "./class.room.rtc.view";
@@ -126,7 +120,7 @@ const CallVideoGroupView = React.memo(
           }}
         >
           {/* <MicView showName={true} {...data} /> */}
-          <CallVideo
+          <ClassRoomRtcView
             isMe={isTeacher}
             key={teacherStream?.name}
             streamURL={teacherStream?.stream}

@@ -12,6 +12,9 @@ export interface PostSlice {
   addFollowing: (id: string) => void;
   listLike: { _id: string; numberLike: number; isLike: boolean }[];
   updateListLike: (_id: string, numberLike: number, isLike: boolean) => void;
+  listCountComments: { _id: string; numberComments: number }[];
+  updateListCountComments: (_id: string, numberComments: number) => void;
+  clearListCountComments: () => void;
   resetListLike: () => void;
   itemUpdate: any;
   setItemUpdate: (data: any) => void;
@@ -70,6 +73,29 @@ const createPostSlice: StoreSlice<PostSlice> = (set) => ({
   setItemUpdate: (item: any) => {
     set({ itemUpdate: item });
   },
+  listCountComments: [],
+  updateListCountComments: (_id: string, numberComments: number) => {
+    set((state) => {
+      const index = state.listCountComments.findIndex(
+        (item) => item._id === _id,
+      );
+      if (index >= 0) {
+        const listCountComments = [...state.listCountComments];
+        listCountComments[index] = { _id: _id, numberComments: numberComments };
+        return {
+          listCountComments: listCountComments,
+        };
+      } else {
+        return {
+          listCountComments: [
+            ...state.listCountComments,
+            { _id: _id, numberComments: numberComments },
+          ],
+        };
+      }
+    });
+  },
+  clearListCountComments: () => set({ listCountComments: [] }),
 });
 
 export default createPostSlice;

@@ -4,6 +4,7 @@ import {
   View,
   useWindowDimensions,
   TouchableOpacity,
+  StyleSheet,
 } from "react-native";
 import { TabView, SceneMap } from "react-native-tab-view";
 import * as NavigationService from "react-navigation-helpers";
@@ -25,6 +26,7 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { useTheme } from "@react-navigation/native";
 import { SCREENS } from "constants";
 import LoadingItem from "@shared-components/loading.item";
+import { palette } from "@theme/themes";
 
 interface CourseListScreenProps {}
 
@@ -62,21 +64,11 @@ const CourseListScreen: React.FC<CourseListScreenProps> = () => {
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}
       />
-      {(isLoggedIn() && userData?.user_role === "teacher") ||
-        (userData?.user_role === "admin" && (
+      {isLoggedIn() &&
+        (userData?.user_role === "teacher" ||
+          userData?.user_role === "admin") && (
           <TouchableOpacity
-            style={{
-              position: "absolute",
-              width: 50,
-              height: 50,
-              backgroundColor: colors.primary,
-              justifyContent: "center",
-              alignItems: "center",
-              borderRadius: 25,
-              bottom: 10,
-              right: 10,
-              zIndex: 1,
-            }}
+            style={styles.btnAdd}
             onPress={() => NavigationService.push(SCREENS.COURSE_CREATE)}
           >
             <Icon
@@ -86,7 +78,7 @@ const CourseListScreen: React.FC<CourseListScreenProps> = () => {
               color={colors.white}
             />
           </TouchableOpacity>
-        ))}
+        )}
     </View>
   );
 };
@@ -134,6 +126,21 @@ const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
       {isLoading && <LoadingItem numberItem={3} />}
     </View>
   );
+});
+
+const styles = StyleSheet.create({
+  btnAdd: {
+    position: "absolute",
+    width: 50,
+    height: 50,
+    backgroundColor: palette.primary,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 25,
+    bottom: 10,
+    right: 10,
+    zIndex: 1,
+  },
 });
 
 export default CourseListScreen;

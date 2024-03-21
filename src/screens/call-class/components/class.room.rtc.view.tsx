@@ -45,7 +45,7 @@ const ClassRoomRtcView = ({
     if (isMe) return userData?.user_avatar || userData?.user_avatar_thumbnail;
     return findData?.user_avatar || findData?.user_avatar_thumbnail;
   }, [currentMemberVideoRoom]);
-console.log("avatarUrlavatarUrl", avatarUrl, name, currentMemberVideoRoom)
+  console.log("avatarUrlavatarUrl", avatarUrl, name, currentMemberVideoRoom);
   if (!hasVideo()) {
     if (isTeacher)
       return (

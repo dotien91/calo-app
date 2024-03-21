@@ -9,7 +9,7 @@ import createStyles from "./post.item.style";
 import { translations } from "@localization";
 import { sharePost } from "@utils/share.utils";
 import IconSvg from "assets/svg";
-
+import CommentBtn from "../comment-btn/CommentBtn";
 interface LikeSharePostItemProps {
   data: TypedPost;
   pressComment: () => void;
@@ -23,17 +23,19 @@ const LikeSharePostItem = ({ data, pressComment }: LikeSharePostItemProps) => {
   const _sharePost = () => {
     sharePost(data._id);
   };
+
   return (
     <View style={styles.containerLikeShare}>
       <LikeBtn data={data} />
-      <TouchableOpacity
+      {/* <TouchableOpacity
         onPress={pressComment}
         style={[styles.viewLike, { justifyContent: "center" }]}
       >
         <IconSvg size={16} name="icComment" color={colors.textOpacity8} />
 
         <Text style={styles.textLikeShare}>{data?.comment_number || "0"}</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
+      <CommentBtn data={data} pressComment={pressComment} />
       <TouchableOpacity
         onPress={_sharePost}
         style={[styles.viewLike, { justifyContent: "flex-end" }]}

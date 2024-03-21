@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  View,
-  ScrollView,
-  Dimensions,
-  SafeAreaView,
-} from "react-native";
+import { SafeAreaView } from "react-native";
 
 import Janus from "./service/janus.mobile";
 // import InCallManager from 'react-native-incall-manager';
@@ -14,19 +8,14 @@ import Janus from "./service/janus.mobile";
 import { SERVER } from "constants/class.room.constant";
 import useStore from "@services/zustand/store";
 import { useRoute } from "@react-navigation/native";
-import CS from "@theme/styles";
-import { Device } from "@utils/device.ui.utils";
-import CallVideo from "./components/class.room.rtc.view";
-import MicView from "./components/mic.view";
 import { _isTeacher } from "./call.class.helper";
 import ClassRoomBottomView from "./components/call.class.bottom.view";
 import ClassRoomTopView from "./components/call.class.top.view";
 import { EnumClassType } from "models/course.model";
 import { useClassRoom } from "./useClassRoom";
-import { getStatusBarHeight } from "react-native-safearea-height";
-import { isIOS } from "@freakycoder/react-native-helpers";
 import CallVideoOneOneView from "./components/class.video.oneone.view";
 import CallVideoGroupView from "./components/call.video.group.view";
+import ClassRoomRtcView from "./components/class.room.rtc.view";
 
 const opaqueId = "videoroomtest-" + Janus.randomString(12);
 
@@ -408,7 +397,7 @@ const ClassRoomScreen = () => {
     const publishers = getRemoteListValue;
     if (!selfViewSrc || isTeacher || publishers.length) return null;
     return (
-      <CallVideo
+      <ClassRoomRtcView
         isMe
         key={"selfViewSrcKey"}
         streamURL={selfViewSrc}

@@ -14,7 +14,7 @@ interface IEmptyResultView {
   icon?: string;
   lottieJson?: string;
   showLottie?: boolean;
-  height: number;
+  height?: number;
 }
 
 const EmptyResultView = ({

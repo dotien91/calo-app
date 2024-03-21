@@ -12,6 +12,7 @@ import { SCREENS } from "constants";
 import useStore from "@services/zustand/store";
 import { EnumCourseType } from "models/course.model";
 import InviteView from "../invite-me/invite";
+import ListLiveStream from "../list-livestream/list.liveStream";
 // import ListLiveStream from "../list-livestream/list.liveStream";
 const listCategory = [
   {
@@ -121,7 +122,7 @@ const AboutHome = () => {
         })}
       </View>
       <InviteView />
-      {/* <ListLiveStream /> */}
+      <ListLiveStream />
     </View>
   );
 };

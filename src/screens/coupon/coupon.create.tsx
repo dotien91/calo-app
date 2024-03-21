@@ -239,7 +239,6 @@ const CouponCreateScreen = () => {
         showsVerticalScrollIndicator={false}
       >
         <View style={{ backgroundColor: colors.background }}>
-          <View style={{ backgroundColor: colors.background2, height: 10 }} />
           <InputHook
             textWarning={translations.coupon.notDisplay}
             setFocus={setFocus}
@@ -451,19 +450,20 @@ const CouponCreateScreen = () => {
           </View>
         </View>
       </ScrollView>
-      <Button
-        style={{
-          marginHorizontal: 16,
-          backgroundColor: colors.primary,
-        }}
-        text={
-          data?._id
-            ? translations.coupon.updateCoupon
-            : translations.coupon.createCoupon
-        }
-        disabled={false}
-        onPress={handleSubmit(onSubmit)}
-      />
+      <View style={{ paddingHorizontal: 16 }}>
+        <Button
+          style={{
+            backgroundColor: colors.primary,
+          }}
+          text={
+            data?._id
+              ? translations.coupon.updateCoupon
+              : translations.coupon.createCoupon
+          }
+          disabled={false}
+          onPress={handleSubmit(onSubmit)}
+        />
+      </View>
       <Modal visible={showModal}>
         <ListCourseSelect
           search={search}

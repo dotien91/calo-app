@@ -91,7 +91,7 @@ export const filterCourseKeys = [
 
 export const filterTeacherKeys = [
   {
-    name: "Form of learning",
+    name: translations.course.formLearning,
     id: "types",
     keyFilters: [
       {
@@ -113,7 +113,7 @@ export const filterTeacherKeys = [
     ],
   },
   {
-    name: "Skills",
+    name: translations.course.skills,
     id: "skills",
     keyFilters: [
       {
@@ -139,7 +139,7 @@ export const filterTeacherKeys = [
     ],
   },
   {
-    name: "Time available",
+    name: translations.course.timeAvailable,
     id: "timeAvailable",
     keyFilters: [
       {
@@ -187,11 +187,11 @@ export const filterTeacherKeys = [
     ],
   },
   {
-    name: "Only English native speakers",
+    name: translations.course.onlyEnglish,
     id: "onlyEnglishNativeSpeakers",
   },
   {
-    name: "Levels of tutor",
+    name: translations.course.levelsOfTutor,
     id: "levelOfTutor",
     keyFilters: [
       {
@@ -289,13 +289,13 @@ export const sortTutorSelectData = [
   {
     id: "level_low",
     sort_by: "levelOfTutor",
-    name: "Level: lowest first",
+    name: translations.course.level_low,
     order_by: "ASC",
   },
   {
     id: "level_high",
     sort_by: "levelOfTutor",
-    name: "Level: highest first",
+    name: translations.course.level_high,
     order_by: "DESC",
   },
 ];

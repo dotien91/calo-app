@@ -288,31 +288,23 @@ const CoursePreviewScreen = () => {
         {data?.user_id._id && data?.user_id._id === userData?._id && (
           <>
             <EditButton data={data} type="full" />
-            <Button
-              text={`${translations.edit} ${getStringType(
-                data.type,
-              ).toLocaleLowerCase()}`}
-              onPress={_gotoEdit}
-              style={{
-                backgroundColor: palette.primary,
-                marginTop: 8,
-                marginHorizontal: 16,
-                paddingVertical: 0,
-                height: 40,
-              }}
-            />
-            {data.public_status === "draft" && (
+            <View style={styles.paddingHorizontal}>
               <Button
-                text={`${translations.course.publicCourse}`}
-                onPress={_updateToReview}
-                style={{
-                  backgroundColor: palette.primary,
-                  marginTop: 8,
-                  marginHorizontal: 16,
-                  paddingVertical: 0,
-                  height: 40,
-                }}
+                text={`${translations.edit} ${getStringType(
+                  data.type,
+                ).toLocaleLowerCase()}`}
+                onPress={_gotoEdit}
+                style={styles.styleButton}
               />
+            </View>
+            {data.public_status === "draft" && (
+              <View style={styles.paddingHorizontal}>
+                <Button
+                  text={`${translations.course.publicCourse}`}
+                  onPress={_updateToReview}
+                  style={styles.styleButton}
+                />
+              </View>
             )}
           </>
         )}
@@ -368,5 +360,14 @@ const styles = StyleSheet.create({
   textTabSelected: {
     ...CS.hnMedium,
     color: palette.primary,
+  },
+  paddingHorizontal: {
+    paddingHorizontal: 16,
+  },
+  styleButton: {
+    backgroundColor: palette.primary,
+    marginTop: 8,
+    paddingVertical: 0,
+    height: 40,
   },
 });

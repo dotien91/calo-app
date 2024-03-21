@@ -9,6 +9,7 @@ import { updateProfile } from "@services/api/user.api";
 import { showToast } from "@helpers/super.modal.helper";
 import { translations } from "@localization";
 import { TypedUser } from "models";
+import eventEmitter from "@services/event-emitter";
 
 const useUserHelper = () => {
   const userData = useStore((state) => state.userData);
@@ -64,6 +65,7 @@ const useUserHelper = () => {
         showToast({
           message: translations.updateSuccess,
         });
+        eventEmitter.emit("reload_list_post");
       } else {
         showToast({
           type: "error",

@@ -66,6 +66,12 @@ const createStyles = (theme: ExtendedTheme) => {
       color: colors.mainColor2,
       marginLeft: 16,
     },
+    btnStyle: {
+      height: 40,
+    },
+    paddingBtnStyle: {
+      paddingHorizontal: 20,
+    },
   });
 };
 
