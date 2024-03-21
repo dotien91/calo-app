@@ -70,16 +70,14 @@ function App() {
   const { appStateStatus } = useAppStateCheck();
 
   useEffect(() => {
-    if (!publisherRef.current) return;
-
     if (appStateStatus == "active") {
       setShow(true);
       setTimeout(() => {
-        publisherRef.current && publisherRef.current.startStream();
+        publisherRef.current && publisherRef.current?.startStream?.();
       }, 1000);
     }
     if (appStateStatus == "background") {
-      publisherRef.current && publisherRef.current.stopStream();
+      publisherRef.current && publisherRef.current?.stopStream?.();
       setShow(false);
     }
   }, [appStateStatus]);
@@ -158,9 +156,9 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [liveData]);
 
-  const handleOnConnectionFailed = () => {
-    showToast({ type: "error" });
-  };
+  // const handleOnConnectionFailed = () => {
+  //   showToast({ type: "error" });
+  // };
 
   // const handleOnConnectionStarted = (data: string) => {
   //   console.log("Connection Started: =====" + data);
@@ -416,7 +414,7 @@ function App() {
             streamName={liveData?.livestream_data?.stream_key || ""}
             style={styles.publisher_camera}
             onDisconnect={handleOnDisconnect}
-            onConnectionFailed={handleOnConnectionFailed}
+            // onConnectionFailed={handleOnConnectionFailed}
             // onConnectionStarted={handleOnConnectionStarted}
             // onConnectionSuccess={handleOnConnectionSuccess}
             // onNewBitrateReceived={handleOnNewBitrateReceived}

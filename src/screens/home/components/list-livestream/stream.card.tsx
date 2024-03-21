@@ -47,8 +47,8 @@ const StreamCard = ({ data }: { data: IStreamItem }) => {
           //   "https://live-par-2-cdn-alt.livepush.io/live/bigbuckbunnyclip/index.m3u8"
           // }
           resizeMode="cover"
-          width={styles.styleCover.width}
-          height={styles.styleCover.height}
+          width={WindowWidth - 32}
+          height={((WindowWidth - 32) / 19) * 10}
         />
         <View style={styles.viewAction}>
           <Text style={styles.styleTxtTitle1}>{data?.title}</Text>
@@ -85,7 +85,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     overflow: "hidden",
   },
-
+  // styleCover: {
+  //   height: ((WindowWidth - 32) / 19) * 10,
+  //   width: WindowWidth - 32,
+  //   // marginBottom: 16,
+  //   // overflow: "hidden",
+  // },
   viewAction: {
     flexDirection: "column",
     position: "absolute",

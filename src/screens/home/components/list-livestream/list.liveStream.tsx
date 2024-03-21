@@ -18,7 +18,9 @@ const ListLiveStream = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      _getListLiveStream();
+      setTimeout(() => {
+        _getListLiveStream();
+      }, 1000);
     }, []),
   );
 

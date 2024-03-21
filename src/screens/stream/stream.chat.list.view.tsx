@@ -260,7 +260,8 @@ export const styles = StyleSheet.create({
   listChat: {
     backgroundColor: palette.whiteOverlay,
     borderRadius: 12,
-    paddingBottom: 20,
+    paddingBottom: 12,
+    paddingTop: 12,
   },
   viewCourse: {
     marginHorizontal: 8,
