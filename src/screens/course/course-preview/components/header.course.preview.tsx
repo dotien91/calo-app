@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  Pressable,
-  TouchableOpacity,
-} from "react-native";
+import { Text, View, StyleSheet, Pressable } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
 import { ICourseItem } from "models/course.model";
@@ -25,19 +19,17 @@ import {
   showSuperModal,
 } from "@helpers/super.modal.helper";
 import { formatLanguage } from "@utils/string.utils";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import FastImage from "react-native-fast-image";
-import useStore from "@services/zustand/store";
 
 interface HeaderCourseProps {
   data?: ICourseItem;
 }
 
 const HeaderCourse = ({ data }: HeaderCourseProps) => {
-  const userData = useStore((state) => state.userData);
-  const isMine = React.useMemo(() => {
-    return data?.user_id?._id == userData?._id;
-  }, [userData, data]);
+  // const userData = useStore((state) => state.userData);
+  // const isMine = React.useMemo(() => {
+  //   return data?.user_id?._id == userData?._id;
+  // }, [userData, data]);
   const _playVideo = () => {
     if (data?.media_id) {
       showSuperModal({
@@ -79,22 +71,22 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
   //   });
   // };
 
-  const viewClasses = () => {
-    const classes = (data?.classes || []).map((_item) => ({
-      courseData: data,
-      ..._item,
-      title: data?.title,
-      type: data?.type,
-    }));
-    showSuperModal({
-      contentModalType: EnumModalContentType.TeacherClass,
-      styleModalType: EnumStyleModalType.Bottom,
-      data: {
-        listData: classes,
-        hideCloseIcon: true,
-      },
-    });
-  };
+  // const viewClasses = () => {
+  //   const classes = (data?.classes || []).map((_item) => ({
+  //     courseData: data,
+  //     ..._item,
+  //     title: data?.title,
+  //     type: data?.type,
+  //   }));
+  //   showSuperModal({
+  //     contentModalType: EnumModalContentType.TeacherClass,
+  //     styleModalType: EnumStyleModalType.Bottom,
+  //     data: {
+  //       listData: classes,
+  //       hideCloseIcon: true,
+  //     },
+  //   });
+  // };
   const isVideo =
     data?.media_id?.media_mime_type &&
     !data?.media_id?.media_mime_type.startsWith("image");
@@ -160,7 +152,7 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
       >
         <Text style={styles.textTitle}>{data?.title}</Text>
 
-        {isMine && (
+        {/* {isMine && (
           <TouchableOpacity onPress={viewClasses}>
             <Icon
               name="more-vertical"
@@ -169,7 +161,7 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
               color={palette.text}
             ></Icon>
           </TouchableOpacity>
-        )}
+        )} */}
       </View>
       {/* <TouchableOpacity style={CS.flexStart} onPress={onReport}>
         <Icon

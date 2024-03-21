@@ -159,6 +159,7 @@ const CourseCreate = () => {
           level: level,
           skills: skill,
         };
+        // console.log(params);
         if (typeMedia.startsWith("video")) {
           params.media_id = idVideo;
         }
@@ -180,6 +181,7 @@ const CourseCreate = () => {
                 type: "success",
                 message: translations.course.updateModuleSuccess,
               });
+              eventEmitter.emit("reload_list_course");
               closeSuperModal();
               eventEmitter.emit("reload_data_preview");
               NavigationService.navigate(SCREENS.COURSE_DETAIL, {
@@ -202,6 +204,7 @@ const CourseCreate = () => {
                 type: "success",
                 message: translations.course.createCourseSuccess,
               });
+              eventEmitter.emit("reload_list_course");
               NavigationService.navigate(SCREENS.COURSE_DETAIL, {
                 course_id: res?.data?._id,
               });

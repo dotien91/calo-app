@@ -493,6 +493,10 @@ export default {
     sendRateSuccess: "Review submitted successfully",
     level_low: "Level: lowest first",
     level_high: "Level: highest first",
+    delete: "Delete course",
+    report: "Report course",
+    deleteCourseSuccess: "Course deleted successfully",
+    updateSuccess: "Update successfully",
   },
   seeAll: "See all",
   settings: {
@@ -647,6 +651,7 @@ export default {
     updateCoupon: "Update discount code",
     saveCoupon: "Save coupon",
     add: "Add",
+    applyCoupon: "Apply coupon",
     update: "Update",
     save: "Save",
     title: "Discount code name",

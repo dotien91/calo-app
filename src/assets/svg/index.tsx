@@ -124,6 +124,12 @@ import icReading from "./practice-reading.svg";
 import icWriting from "./practice-writing.svg";
 import icWritingHeader from "./practice-header-writing.svg";
 import iconWriting from "./practice-ic-write.svg";
+import iconCoupon from "./icon-coupon.svg";
+import iconEdit from "./icon-edit.svg";
+import iconGoto from "./icon-goto.svg";
+import iconPublish from "./icon-publish.svg";
+import iconRemove from "./icon-remove.svg";
+import iconFlag from "./icon-flag.svg";
 
 const Icons = {
   intro1,
@@ -251,6 +257,12 @@ const Icons = {
   icWriting,
   icWritingHeader,
   iconWriting,
+  iconCoupon,
+  iconEdit,
+  iconGoto,
+  iconPublish,
+  iconRemove,
+  iconFlag,
 };
 
 interface IconSvgProps {

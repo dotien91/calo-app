@@ -581,6 +581,10 @@ export default {
     sendRateSuccess: "Gửi đánh giá thành công",
     level_low: "Cấp độ: thấp nhất",
     level_high: "Cấp độ: cao nhất",
+    delete: "Xoá khoá học",
+    report: "Báo cáo khoá học",
+    deleteCourseSuccess: "Xoá khoá học thành công",
+    updateSuccess: "Cập nhật thành công",
   },
   seeAll: "Xem tất cả",
   settings: {
@@ -1052,6 +1056,7 @@ export default {
     updateCoupon: "Cập nhật mã giảm giá",
     saveCoupon: "Lưu mã giảm giá",
     add: "Thêm",
+    applyCoupon: "Thêm mã giảm giá",
     update: "Cập nhật",
     save: "Lưu",
     title: "Tên mã giảm giá",

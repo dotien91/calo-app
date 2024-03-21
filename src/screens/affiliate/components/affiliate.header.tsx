@@ -1,7 +1,7 @@
 import { translations } from "@localization";
 import formatMoney from "@shared-components/input-money/format.money";
 import { palette } from "@theme/themes";
-import React, { memo, useEffect, useMemo } from "react";
+import React, { memo, useMemo } from "react";
 import { Text, View, ImageBackground } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import * as NavigationService from "react-navigation-helpers";
@@ -20,11 +20,6 @@ const HeaderAffiliate = () => {
   const setType = useStore((state) => state.setType);
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
-  useEffect(() => {
-    if (userData?.user_role === "teacher" || userData?.user_role === "admin") {
-      setType("token");
-    }
-  }, [userData?.user_role]);
 
   const switchToken = () => {
     if (type === "coin") {

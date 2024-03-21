@@ -90,12 +90,14 @@ const SettingProfileScreen = () => {
     {
       icon: "icCoinStar",
       title: userInfo?.current_coin,
-      onPress: () => NavigationService.navigate(SCREENS.AFFILIATE),
+      onPress: () =>
+        NavigationService.navigate(SCREENS.AFFILIATE, { type: "coin" }),
     },
     {
       icon: "icCoin",
       title: formatMoney(userData?.current_token || 0),
-      onPress: () => NavigationService.navigate(SCREENS.AFFILIATE),
+      onPress: () =>
+        NavigationService.navigate(SCREENS.AFFILIATE, { type: "token" }),
     },
     {
       icon: "icCup",

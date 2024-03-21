@@ -123,8 +123,20 @@ const SecondRoute = () => {
     refreshControl,
     isLoading,
     renderFooterComponent,
+    _requestData,
     refreshing,
   } = useListData<TypedRequest>(paramsRequest, getMyCourse);
+
+  const reloadListCourse = () => {
+    _requestData(false);
+  };
+
+  useEffect(() => {
+    eventEmitter.on("reload_list_course", reloadListCourse);
+    return () => {
+      eventEmitter.off("reload_list_course", reloadListCourse);
+    };
+  }, []);
   const renderEmptyCourseOfMe = () => {
     if (isLoading) return <LoadingList numberItem={3} />;
     return (

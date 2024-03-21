@@ -160,17 +160,18 @@ const CourseListClassScreen = () => {
     <View style={[CS.safeAreaView, { marginBottom: getBottomSpace() }]}>
       <Header
         text={translations.course.listClass}
-        iconNameRight="plus"
-        onPressRight={_goToCreateClass}
+        // iconNameRight="plus"
+        // onPressRight={_goToCreateClass}
       />
       {isLoading && <LoadingList />}
-      {listData.length == 0 && (
+      <View style={{ paddingHorizontal: 16 }}>
         <Button
           style={{ marginVertical: 8, marginHorizontal: 16 }}
           text={translations.course.addModule}
+          type="primary"
           onPress={_goToCreateClass}
         />
-      )}
+      </View>
       <FlatList
         data={listData}
         renderItem={renderItem}
