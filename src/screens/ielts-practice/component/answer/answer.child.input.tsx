@@ -23,7 +23,6 @@ const AnswerChildInput = ({
   setAnsweData,
 }: IAnswerChildInput) => {
   const _onChangeText = (v, { index }) => {
-    console.log(2222222, index);
     setAnsweData({ index, content: v });
   };
 

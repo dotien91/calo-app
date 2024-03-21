@@ -83,7 +83,6 @@ const SoundPlayer = ({ url, disabled = false }: ISoundPlayer) => {
       // artwork: 'http://example.com/cover.png', // Load artwork from the network
       // duration: 402 // Duration in seconds
     };
-    console.log(222222, url);
     addTracks(track1);
     // await TrackPlayer.add(1][track);
     setIsReady(true);

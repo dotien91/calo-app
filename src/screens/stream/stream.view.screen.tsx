@@ -3,7 +3,7 @@ import React, { useCallback, useMemo } from "react";
 import { View, KeyboardAvoidingView, Platform } from "react-native";
 // import Orientation from 'react-native-orientation';
 import { useTheme, useRoute } from "@react-navigation/native";
-
+import KeepAwake from "react-native-keep-awake";
 import LiveBadge from "./components/LiveBadge";
 // import MicrophoneSelectModal from './components/MicrophoneSelectModal';
 
@@ -34,6 +34,10 @@ function App() {
 
   React.useEffect(() => {
     requestViewStream({ livestream_id: liveStreamId });
+    KeepAwake.activate();
+    return () => {
+      KeepAwake.deactivate();
+    };
   }, []);
 
   const isStreaming = useCallback(() => {

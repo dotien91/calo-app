@@ -165,7 +165,6 @@ const ItemPracticeTest = React.memo(({ item }) => {
     });
   };
   const renderTestChild = (item, index) => {
-    console.log("222222", item);
     return (
       <PressableBtn
         disable={item.is_done}

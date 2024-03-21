@@ -73,7 +73,6 @@ class SpeakingRecordView extends React.PureComponent<any, State> {
     prevProps: Readonly<any>,
     prevState: Readonly<State>,
   ): void {
-    // console.log(222222, prevState)
     if (prevState.recordSecs >= 1 * 60 * 1000 && !prevState.stop) {
       this.onStopRecord();
       this.setState({ stop: true });

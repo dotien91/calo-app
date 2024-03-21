@@ -11,6 +11,7 @@ import { translations } from "@localization";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import KeyboardBtn from "./KeyboardBtn";
 import Input from "@shared-components/form/Input";
+import useKeyboardListener from "@helpers/hooks/useKeyboardListener";
 
 interface InputToolbarProps {
   openRecordModal?: () => void;
@@ -34,6 +35,8 @@ const InputToolbar: React.FC<InputToolbarProps> = ({
   const styles = useMemo(() => createStyles(theme), [theme]);
   const inputRef = useRef(null);
 
+  const { isShowKeyboard } = useKeyboardListener();
+
   const _sendChatMessage = () => {
     const text = inputRef.current.value || "";
     sendChatMessage(text);
@@ -49,7 +52,7 @@ const InputToolbar: React.FC<InputToolbarProps> = ({
           placeholderTextColor={colors.placeholder2}
           customStyle={styles.input}
         />
-        {!fromLiveStream && (
+        {!isShowKeyboard && !fromLiveStream && (
           <View style={styles.wrapMediaBtn}>
             <TouchableOpacity onPress={onSelectPicture} style={styles.btnMedia}>
               <Icon

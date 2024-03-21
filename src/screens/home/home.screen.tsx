@@ -73,6 +73,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
       setRefreshing(false);
     }, 3000);
   };
+
   const renderRefreshControl = (refreshProps) => {
     return <CustomRefreshControl {...refreshProps} />;
   };

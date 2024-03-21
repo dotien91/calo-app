@@ -61,8 +61,8 @@ export interface CourseSlice {
   setListVideoCourse: [];
   shoppingProduct: ICourseItem;
   setShoppingProduct: (v: ICourseItem) => void;
-  currentMemberVideoRoom: [],
-  setCurrentMemberVideoRoom: (v: any) => void,
+  currentMemberVideoRoom: [];
+  setCurrentMemberVideoRoom: (v: any) => void;
 }
 
 const createCourseSlice: StoreSlice<CourseSlice> = (set, get) => ({

@@ -57,7 +57,6 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
     [],
     userData,
   );
-
   const getLastNotification = () => {
     const param = {
       limit: 1,

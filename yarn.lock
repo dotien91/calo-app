@@ -7636,10 +7636,10 @@ react-native-video@6.0.0-alpha.8:
     keymirror "^0.1.1"
     prop-types "^15.7.2"
 
-react-native-webrtc@^118.0.1:
-  version "118.0.1"
-  resolved "https://registry.yarnpkg.com/react-native-webrtc/-/react-native-webrtc-118.0.1.tgz#150f74f8b2acf2f528b28e42f58443c6568cfe48"
-  integrity sha512-gjbBIV/0VyplavbOsQw9mpVJ4WHTEYZzi4PN7Oz18p2Ucsc5yEVUhtN5NQep8w6VDH1DNzuXXBPq5uJq9uqbMA==
+react-native-webrtc@^118.0.3:
+  version "118.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-webrtc/-/react-native-webrtc-118.0.3.tgz#41fa4cedb25d7b6d5bfb98d64ecf22bce7dc2093"
+  integrity sha512-qw+aa4rxGJTvltmYwwHonx4Qcgk/tcoojONu/6y5nsXGctkUqo886EIBb29Jv4ssHnudDzvkxyG/xVKK2vJc7Q==
   dependencies:
     base64-js "1.5.1"
     debug "4.3.4"

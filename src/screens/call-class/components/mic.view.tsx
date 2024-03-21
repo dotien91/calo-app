@@ -7,10 +7,11 @@ import IconBtn from "@shared-components/button/IconBtn";
 import { palette } from "@theme/themes";
 import useStore from "@services/zustand/store";
 
-const MicView = ({ stream, id, isMe, name, showName }) => {
+const MicView = ({ stream, id, isMe, name, mute, showName = true }) => {
   const listParticipants = useStore((state) => state.listParticipants);
-  const enableMic = !!stream._tracks.find((_item) => _item?.kind == "audio")
-    ?._enabled;
+  const enableMic = isMe
+    ? !mute
+    : !!stream._tracks.find((_item) => _item?.kind == "audio")?._enabled;
   const [talking, setTalking] = useState(true);
 
   React.useEffect(() => {
@@ -18,7 +19,6 @@ const MicView = ({ stream, id, isMe, name, showName }) => {
     setTalking(isTalking);
   }, [listParticipants]);
 
-  if (isMe) return null;
   if (!showName)
     return (
       <IconBtn
@@ -42,7 +42,7 @@ const MicView = ({ stream, id, isMe, name, showName }) => {
         position: "absolute",
         left: 10,
         bottom: 12,
-        zIndex: 1,
+        zIndex: 33,
         backgroundColor: palette.blackOverlay,
         ...CS.flexStart,
         paddingHorizontal: 8,

@@ -22,7 +22,6 @@ export async function requestPermission(
   let status = null;
 
   status = await requestMultiple(listPermission);
-  console.log("statusstatusstatus", status);
   const permissionRequestResult: Permission[] = [];
   let isBlocked = false;
   const isNerverAskAgain = false;

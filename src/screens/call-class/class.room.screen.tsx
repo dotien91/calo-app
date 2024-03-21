@@ -5,7 +5,6 @@ import {
   ScrollView,
   Dimensions,
   SafeAreaView,
-  Text,
 } from "react-native";
 
 import Janus from "./service/janus.mobile";
@@ -17,16 +16,17 @@ import useStore from "@services/zustand/store";
 import { useRoute } from "@react-navigation/native";
 import CS from "@theme/styles";
 import { Device } from "@utils/device.ui.utils";
-import CallVideo from "./components/call.video";
+import CallVideo from "./components/class.room.rtc.view";
 import MicView from "./components/mic.view";
 import { _isTeacher } from "./call.class.helper";
 import ClassRoomBottomView from "./components/call.class.bottom.view";
 import ClassRoomTopView from "./components/call.class.top.view";
 import { EnumClassType } from "models/course.model";
 import { useClassRoom } from "./useClassRoom";
-import { isAndroid } from "@helpers/device.info.helper";
-import TextBase from "@shared-components/TextBase";
 import { getStatusBarHeight } from "react-native-safearea-height";
+import { isIOS } from "@freakycoder/react-native-helpers";
+import CallVideoOneOneView from "./components/class.video.oneone.view";
+import CallVideoGroupView from "./components/call.video.group.view";
 
 const opaqueId = "videoroomtest-" + Janus.randomString(12);
 
@@ -52,46 +52,34 @@ const ClassRoomScreen = () => {
   const [selfViewSrc, setSelfViewSrc] = useState(null);
   const [publish, setPusblish] = useState(false);
   const [remoteList, setRemoteList] = useState({});
-  const [remoteListPluginHandle, setRemoteListPluginHandle] = useState({});
+  // const [remoteListPluginHandle, setRemoteListPluginHandle] = useState({});
   const remoteListPluginHandleCurrent = React.useRef({});
   const userData = useStore((state) => state.userData);
-  const stream = React.useRef(null);
+  // const stream = React.useRef(null);
+
   const [config, setConfig] = useState({
     mute: false,
     video: true,
     front: true,
   });
-  const courseRoom = route.params?.["courseRoom"]
-  const {
-    roomId,
-    chatRoomId
-  } = courseRoom
+
+  const courseRoom = route.params?.["courseRoom"];
+  const { roomId, chatRoomId } = courseRoom;
   const courseData = route.params?.["courseData"];
-  console.log("courseData", courseData)
-  console.log("roomId", roomId, chatRoomId)
 
   const isVideoOneOne = courseData?.type == EnumClassType.Call11;
-  const { isTeacher } = useClassRoom()
+  const { isTeacher } = useClassRoom();
+
   React.useEffect(() => {
     janusStart();
     return () => {
-      // effect
       endCall();
     };
   }, []);
 
-  // React.useEffect(() => {
-  //   console.log("remoteListremoteList", remoteList);
-  // }, [listParticipants]);
-
   const updateListParticipants = useStore(
     (state) => state.updateListParticipants,
   );
-  // const listParticipants = useStore((state) => state.listParticipants);
-
-  // componentDidMount() {
-  //   // InCallManager.start({ media: 'audio' });
-  // }
 
   const toggleMute = () => {
     selfViewSrc.getAudioTracks().forEach((track: any) => {
@@ -119,7 +107,6 @@ const ClassRoomScreen = () => {
         janus.attach({
           plugin: "janus.plugin.videoroom",
           success: (pluginHandle) => {
-            console.log("new=== pluginHandle", pluginHandle, roomId);
             sfutest = pluginHandle;
             const create = {
               request: "create",
@@ -133,8 +120,7 @@ const ClassRoomScreen = () => {
             };
             sfutest.send({
               message: create,
-              success: function (data) {
-                console.log("dataaaaaaaaa sfutest.current", isTeacher);
+              success: function () {
                 const register = {
                   request: "join",
                   room: roomId,
@@ -161,28 +147,29 @@ const ClassRoomScreen = () => {
                   msg["publishers"] !== undefined &&
                   msg["publishers"] !== null
                 ) {
-                  var list = msg["publishers"];
-                  for (var f in list) {
+                  const list = msg["publishers"];
+                  for (const f in list) {
                     const id = list[f]["id"];
                     const display = list[f]["display"];
 
-                    var audio = list[f]["audio_codec"];
-                    var video = list[f]["video_codec"];
+                    const audio = list[f]["audio_codec"];
+                    const video = list[f]["video_codec"];
                     newRemoteFeed(id, display, audio, video);
                   }
                 }
               } else if (event === "destroyed") {
+                console.log("destroy");
               } else if (event === "event") {
                 if (
                   msg["publishers"] !== undefined &&
                   msg["publishers"] !== null
                 ) {
-                  var list = msg["publishers"];
-                  for (var f in list) {
+                  const list = msg["publishers"];
+                  for (const f in list) {
                     const id = list[f]["id"];
                     const display = list[f]["display"];
-                    var audio = list[f]["audio_codec"];
-                    var video = list[f]["video_codec"];
+                    const audio = list[f]["audio_codec"];
+                    const video = list[f]["video_codec"];
                     newRemoteFeed(id, display, audio, video);
                   }
                 } else if (
@@ -214,10 +201,8 @@ const ClassRoomScreen = () => {
                   // _onLeaving(numLeaving)
                   setRemoteList((old) => {
                     const newData = { ...old };
-                    if (old.hasOwnProperty(numLeaving)) {
+                    if (Object.hasOwn(old, numLeaving)) {
                       delete newData[numLeaving];
-
-                      console.log("newDatanewData", newData);
                       return newData;
                     }
                     return old;
@@ -229,10 +214,6 @@ const ClassRoomScreen = () => {
                   setTimeout(() => {
                     remoteListPluginHandleCurrent.current[numLeaving]?.detach();
                   }, 500);
-                } else if (
-                  msg["error"] !== undefined &&
-                  msg["error"] !== null
-                ) {
                 }
               } else if (event == "talking") {
                 updateListParticipants(msg.id, "add");
@@ -245,7 +226,7 @@ const ClassRoomScreen = () => {
             }
           },
           onlocalstream: (stream) => {
-            stream.current = stream;
+            // stream.current = stream;
             setSelfViewSrc(stream);
           },
           // onremotestream: (stream) => {
@@ -263,42 +244,6 @@ const ClassRoomScreen = () => {
         setPusblish(false);
       },
     });
-  };
-
-  const switchVideoType = () => {
-    sfutest.changeLocalCamera();
-  };
-
-  const toggleAudioMute = () => {
-    const muted = sfutest.isAudioMuted();
-    if (muted) {
-      sfutest.unmuteAudio();
-      // this.setState({ audioMute: false });
-    } else {
-      sfutest.muteAudio();
-      // this.setState({ audioMute: true });
-    }
-  };
-
-  const toggleVideoMute = () => {
-    const muted = sfutest.isVideoMuted();
-    if (muted) {
-      // this.setState({ videoMute: false });
-      sfutest.unmuteVideo();
-    } else {
-      // this.setState({ videoMute: true });
-      sfutest.muteVideo();
-    }
-  };
-
-  const toggleSpeaker = () => {
-    // if (this.state.speaker) {
-    //   this.setState({ speaker: false });
-    //   // InCallManager.setForceSpeakerphoneOn(false)
-    // } else {
-    //   this.setState({ speaker: true });
-    //   // InCallManager.setForceSpeakerphoneOn(true)
-    // }
   };
 
   const endCall = () => {
@@ -326,10 +271,10 @@ const ClassRoomScreen = () => {
         },
         error: (error) => {
           console.log("WebRTC error:", error);
-          if (useAudio) {
-            publishOwnFeed(false);
-          } else {
-          }
+          // if (useAudio) {
+          //   publishOwnFeed(false);
+          // } else {
+          // }
         },
       });
     } else {
@@ -352,10 +297,10 @@ const ClassRoomScreen = () => {
         remoteFeed.simulcastStarted = false;
         Janus.log(
           "Plugin attached! (" +
-          remoteFeed.getPlugin() +
-          ", id=" +
-          remoteFeed.getId() +
-          ")",
+            remoteFeed.getPlugin() +
+            ", id=" +
+            remoteFeed.getId() +
+            ")",
         );
         Janus.log("  -- This is a subscriber", pluginHandle);
         // We wait for the plugin to send us an offer
@@ -416,12 +361,12 @@ const ClassRoomScreen = () => {
           };
           return newData;
         });
-        setRemoteListPluginHandle((old) => {
-          const _newData = { ...old };
-          _newData[id] = remoteFeed;
-          remoteListPluginHandleCurrent.current = _newData;
-          return _newData;
-        });
+        // setRemoteListPluginHandle((old) => {
+        //   const _newData = { ...old };
+        //   _newData[id] = remoteFeed;
+        remoteListPluginHandleCurrent.current[id] = remoteFeed;
+        // return _newData;
+        // });
         //  _onremotestream({stream, id, display, audio, video, remoteFeed})
       },
       oncleanup: () => {
@@ -437,313 +382,52 @@ const ClassRoomScreen = () => {
       },
     });
   };
-  console.log("remoteListremoteList===", remoteList);
 
   const getRemoteListValue = React.useMemo(() => {
     return Object.keys(remoteList).map((key) => remoteList[key]);
   }, [remoteList]);
 
-  const hasTeacher = () => {
-    const listPublisher = getRemoteListValue;
-    return (
-      !!listPublisher.find((item) => !!item?.isTeacher) ||
-      isTeacher
-    );
-  };
+  const myStream = React.useMemo(() => {
+    return {
+      stream: selfViewSrc,
+      isMe: true,
+      name: userData?.display_name,
+    };
+  }, [selfViewSrc]);
 
-  console.log("hasTeacher======", hasTeacher());
-
-  const renderStudentVideo = () => {
-    const publishers = getRemoteListValue;
-
-    if (isVideoOneOne) return null;
-
-    const data = publishers.filter((item) => !item?.isTeacher);
-    console.log("data student====111111", !data.length , !isTeacher);
-
-    let width = (Device.width - 80) / 4;
-    if (!hasTeacher()) {
-      width = Device.width / 2;
-    }
-    if (!hasTeacher())
-      return (
-        <ScrollView>
-          <View style={{ ...CS.flexStart, flexWrap: "wrap" }}>
-            {renderMyVideo({
-              width: Device.width / 2,
-              height: width / 0.8,
-              // ...CS.borderStyle,
-            })}
-            {data.map((item, index) => {
-              return (
-                <View
-                  key={item?.stream?._id || index}
-                  style={{
-                    width: Device.width / 2,
-                    height: width / 0.8,
-                    // ...CS.borderStyle,
-                  }}
-                >
-                  <CallVideo
-                    style={{
-                      flex: 1,
-                      width,
-                      height: width / 0.8,
-                      // borderRadius: 8,
-                      // marginHorizontal: 8,
-                      overflow: "hidden",
-                    }}
-                    objectFit={"cover"}
-                    streamURL={item.stream}
-                    zOrder={3}
-                    name={item.name}
-                  // data={item}
-                  />
-                  <MicView
-                    stream={item.stream}
-                    style={{
-                      flex: 1,
-                      width,
-                      height: width / 0.8,
-                      // borderRadius: 8,
-                      // marginHorizontal: 8,
-                      overflow: "hidden",
-                    }}
-                    {...item}
-                    showName={!hasTeacher()}
-                    name={item.name}
-                  />
-                </View>
-              );
-            })}
-          </View>
-        </ScrollView>
-      );
-    console.log("data student====", hasTeacher(), publishers.length,);
-console.log(11111111111)
-
-    if (!hasTeacher() || (hasTeacher() && isTeacher && !data?.length)) return null;
-    return (
-      <View
-        style={{
-          position: "absolute",
-          left: 16,
-          bottom: isAndroid() ? 80 : 46,
-          zIndex: 2,
-          ...CS.flexStart,
-        }}
-        horizontal={true}
-      >
-        <ScrollView horizontal={true}>
-          <View style={CS.flexStart}>
-            {!isTeacher && <View
-              style={{
-                // position: "absolute",
-                borderRadius: 8,
-                overflow: "hidden",
-                marginRight: 8,
-                width,
-                height: width / 0.8,
-              }}
-            >
-              <CallVideo
-                resizeMode="cover"
-                video={config.video}
-                isMe={true}
-                name={userData?.display_name}
-                key={"selfViewSrcKey"}
-                streamURL={selfViewSrc}
-                style={{
-                  width: width,
-                  height: width / 0.8,
-                  flex: 1,
-                  // ...CS.borderStyle,
-                }}
-              />
-            </View>}
-            {data.map((item, index) => {
-              return (
-                <View
-                  key={item?.stream?._id || index}
-                  style={{
-                    // position: "absolute",
-                    borderRadius: 8,
-                    overflow: "hidden",
-                    marginRight: 8,
-                    width,
-                    height: width / 0.8,
-                  }}
-                >
-                  <CallVideo
-                    style={{
-                      flex: 1,
-                      width,
-                      height: width / 0.8,
-                      // borderRadius: 8,
-                      // marginHorizontal: 8,
-
-                      overflow: "hidden",
-                    }}
-                    objectFit={"cover"}
-                    streamURL={item.stream}
-                    zOrder={5}
-                    name={item.name}
-                    isMe={false}
-
-                  // data={item}
-                  />
-                  <TextBase>{item.name}</TextBase>
-                  <MicView showName={!hasTeacher()} {...item} />
-                </View>
-              );
-            })}
-          </View>
-        </ScrollView>
-      </View>
-    );
-  };
+  const getStudentStream = React.useMemo(() => {
+    let studentRemoteStream = Object.keys(remoteList)
+      .map((key) => remoteList[key])
+      .filter((item) => !item?.isTeacher);
+    if (!isTeacher)
+      studentRemoteStream = [myStream].concat(studentRemoteStream);
+    return studentRemoteStream;
+  }, [remoteList, selfViewSrc]);
 
   const _renderMyVideo = () => {
-    if (!selfViewSrc || isTeacher) return null;
     const publishers = getRemoteListValue;
-    // if (isVideoOneOne && hasTeacher()) {
-    //   return <View
-    //     style={{
-    //       position: 'absolute',
-    //       right: 16,
-    //       top: 110,
-    //       borderRadius: 8,
-    //       overflow: 'hidden',
-    //       zIndex: 1,
-    //       // ...CS.borderStyle,
-    //     }}
-    //   >
-    //     <CallVideo
-    //       isMe
-    //       key={"selfViewSrcKey"}
-    //       streamURL={selfViewSrc}
-    //       resizeMode="cover"
-    //       video={config.video}
-    //       style={{
-    //         width: 130,
-    //         height: 164,
-    //         flex: 1,
-    //         borderRadius: 8,
-    //         // ...CS.borderStyle,
-    //       }}
-    //     />
-    //   </View>
-    // }
-    if (!publishers.length || isTeacher)
-      return (
-        <View
-          style={{
-            width: Device.width,
-            height: Device.height,
-            // ...CS.borderStyle,
-          }}
-        >
-          <CallVideo
-            isMe
-            key={"selfViewSrcKey"}
-            streamURL={selfViewSrc}
-            resizeMode="cover"
-            video={config.video}
-            style={{
-              width: Device.width,
-              height: Device.height,
-              flex: 1,
-              // ...CS.borderStyle,
-            }}
-          />
-        </View>
-      );
-    return null;
-  };
-
-  const renderMyVideo = (style) => {
-    if (!selfViewSrc || isTeacher) return null;
+    if (!selfViewSrc || isTeacher || publishers.length) return null;
     return (
-      <View
-        style={{
-          width: Device.width / 2,
-          height: style.width / 0.8,
-          // ...CS.borderStyle,
-        }}
-      >
-        <CallVideo
-          isMe
-          key={"selfViewSrcKey"}
-          streamURL={selfViewSrc}
-          style={style}
-          resizeMode="cover"
-          video={config.video}
-        />
-      </View>
-    );
-  };
-
-  const renderOneOneStudent = () => {
-    let data = getRemoteListValue.find((item) => !item?.isTeacher);
-    if (!isTeacher && isVideoOneOne && !data && hasTeacher()) data = { stream: selfViewSrc, isMe: true }
-    console.log(22222211111, data)
-
-    if (!isVideoOneOne || !data?.stream) return null
-
-    return <View
-      style={{
-        position: 'absolute',
-        right: 16,
-        top: getStatusBarHeight() + 76,
-        borderRadius: 8,
-        overflow: 'hidden',
-        width: 130,
-        height: 164,
-        zIndex: 11,
-        backgroundColor: 'red'
-        // ...CS.borderStyle,
-      }}
-    >
       <CallVideo
-        isMe={data?.isMe}
+        isMe
         key={"selfViewSrcKey"}
-        streamURL={data?.stream || selfViewSrc}
-        resizeMode="cover"
-        name={data?.name}
+        streamURL={selfViewSrc}
+        objectFit="cover"
         video={config.video}
-        style={{
-          width: 130,
-          height: 164,
-          flex: 1,
-          borderRadius: 8,
-          // ...CS.borderStyle,
-        }}
       />
-      <MicView showName={true} {...data} />
-    </View>
-  }
-
-  const getDataTeacher = () => {
-    const list = getRemoteListValue;
-    console.log("getRemoteListValue2222", getRemoteListValue.length)
-    if (isTeacher) return { stream: selfViewSrc }
-    return list.find((item) => item.isTeacher);
-  };
-
-  const renderTeacher = () => {
-    let data = getDataTeacher();
-    if (!data?.stream) return null;
-console.log("datadatadata", data)
-    return (
-      <>
-        <CallVideo
-          streamURL={data?.stream}
-          isMe={false}
-          // video={config.video}
-        />
-      </>
     );
   };
+
+  const teacherStream = React.useMemo(() => {
+    if (isTeacher) {
+      return {
+        stream: selfViewSrc,
+        name: userData?.display_name,
+      };
+    } else {
+      return getRemoteListValue.find((item) => item?.isTeacher);
+    }
+  }, [isTeacher, selfViewSrc, getRemoteListValue]);
 
   return (
     <SafeAreaView
@@ -754,13 +438,25 @@ console.log("datadatadata", data)
       }}
     >
       <ClassRoomTopView switchCamera={switchCamera} />
-
-      <View style={{ flex: 1 }}>
-        {renderStudentVideo()}
-        {renderTeacher()}
-        {_renderMyVideo()}
-        {renderOneOneStudent()}
-      </View>
+      {/* {renderTeacher()} */}
+      {!!selfViewSrc && !!getRemoteListValue.length && (
+        <CallVideoOneOneView
+          publishers={getRemoteListValue}
+          video={config.video}
+          isVideoOneOne={isVideoOneOne}
+          myStream={myStream}
+        />
+      )}
+      {!isVideoOneOne && !!selfViewSrc && !!getStudentStream.length && (
+        <CallVideoGroupView
+          publishers={getStudentStream}
+          video={config.video}
+          myStream={myStream}
+          isTeacher={isTeacher}
+          teacherStream={teacherStream}
+        />
+      )}
+      {_renderMyVideo()}
       <ClassRoomBottomView
         config={config}
         publishers={getRemoteListValue}
@@ -773,6 +469,5 @@ console.log("datadatadata", data)
     </SafeAreaView>
   );
 };
-
 
 export default ClassRoomScreen;

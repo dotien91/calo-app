@@ -30,7 +30,6 @@ const TutorItem = ({
   ...res
 }: TutorItemProps) => {
   const theme = useTheme();
-  console.log("resres", res);
   // const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
   // const [isLike, setIsLike] = React.useState(false);

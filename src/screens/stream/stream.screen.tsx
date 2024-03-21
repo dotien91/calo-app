@@ -16,6 +16,7 @@ import RTMPPublisher, {
 } from "react-native-rtmp-publisher";
 import { useTheme, useRoute } from "@react-navigation/native";
 import { IconType } from "react-native-dynamic-vector-icons";
+import KeepAwake from "react-native-keep-awake";
 
 import LiveBadge from "./components/LiveBadge";
 import { useUploadFile } from "@helpers/hooks/useUploadFile";
@@ -31,7 +32,6 @@ import {
   EnumModalContentType,
   EnumStyleModalType,
   showSuperModal,
-  showToast,
 } from "@helpers/super.modal.helper";
 import { updateLivestream } from "@services/api/stream.api";
 import { useUserHook } from "@helpers/hooks/useUserHook";
@@ -101,10 +101,14 @@ function App() {
   useEffect(() => {
     // StatusBar.setBackgroundColor("black");
     checkPermission();
+    KeepAwake.activate();
     const txtFromPostScreen = route.params?.["titleLive"];
     if (!txtFromPostScreen) return;
     // _createLiveStream(txtFromPostScreen);
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => {
+      KeepAwake.deactivate();
+    };
   }, []);
 
   useEffect(() => {
@@ -155,10 +159,10 @@ function App() {
   const handleStartStream = () => {
     if (permissionGranted) {
       // if (listFile.length > 0) {
-        _createLiveStream(
-          inputRef.current.value || translations.livestream.hello,
-          listFile[listFile.length - 1]?._id,
-        );
+      _createLiveStream(
+        inputRef.current.value || translations.livestream.hello,
+        listFile[listFile.length - 1]?._id,
+      );
       // } else {
       //   showToast({
       //     type: "warning",

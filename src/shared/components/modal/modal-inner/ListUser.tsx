@@ -31,7 +31,6 @@ const ListUser = ({ listUser, title }: ListUserProps) => {
     });
   };
   const renderItem = (item: TypedUser, index: number) => {
-    console.log("itemitemitem", item);
     return (
       <TouchableOpacity
         key={index}

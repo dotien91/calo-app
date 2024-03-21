@@ -46,7 +46,6 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ messages, roomDetail }) => {
     // console.log(PERMISSION.permissionMedia, "PERMISSION.permissionMedia");
     const grantedPermission = grantPermission(PERMISSION.permissionMedia);
     const res = await grantedPermission(true, true);
-    console.log("resresres", res);
     if (!res) {
       return;
     }

@@ -198,7 +198,6 @@ export const useChatHistory = (txtSearch: string, searchModeChat: boolean) => {
       .reverse()
       .filter((item) => !item?.text)
       .reduce((ids, currentItem) => {
-        console.log("itemitemitem", currentItem);
         return ids.concat(currentItem.media_ids);
       }, []);
     // setCurrentMediaIds(mediaIds);

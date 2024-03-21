@@ -36,7 +36,6 @@ const ListBank = () => {
   }, [txtSearch]);
 
   const renderItem = ({ item }) => {
-    console.log("itemitemitem", item);
     return (
       <PressableBtn onPress={() => _onPress(item)} style={styles.item}>
         <View

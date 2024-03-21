@@ -36,8 +36,6 @@ const CourseCategoryItem: React.FC<CourseCategoryItemProps> = () => {
     return listData.slice(0, 5);
   }, [listData]);
 
-  console.log("listDatalistDatalistData", listData);
-
   const renderItem = (item: ICourseItem, index: number) => {
     return (
       <>

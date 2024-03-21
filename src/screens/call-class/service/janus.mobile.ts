@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import {
   RTCPeerConnection,
   mediaDevices,
@@ -147,7 +149,7 @@ Janus.useDefaultDependencies = function (deps) {
 
       if (options.timeout) {
         const timeout = new p(function (resolve, reject) {
-          var timerId = setTimeout(function () {
+          const timerId = setTimeout(function () {
             clearTimeout(timerId);
             return reject({
               message: "Request timed out",
@@ -366,9 +368,9 @@ Janus.init = function (options) {
     // Detect tab close: make sure we don't loose existing onbeforeunload handlers
     // (note: for iOS we need to subscribe to a different event, 'pagehide', see
     // https://gist.github.com/thehunmonkgroup/6bee8941a49b86be31a787fe8f4b8cfe)
-    const iOS = ["iPad", "iPhone", "iPod"].indexOf(navigator.platform) >= 0;
-    const eventName = iOS ? "pagehide" : "beforeunload";
-    const oldOBF = window["on" + eventName];
+    // const iOS = ["iPad", "iPhone", "iPod"].indexOf(navigator.platform) >= 0;
+    // const eventName = iOS ? "pagehide" : "beforeunload";
+    // const oldOBF = window["on" + eventName];
     // window.addEventListener(eventName, function() {
     // 	Janus.log("Closing window");
     // 	for(var s in Janus.sessions) {
@@ -441,7 +443,9 @@ Janus.init = function (options) {
     try {
       tempPc.addTransceiver("audio");
       Janus.unifiedPlan = true;
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
     tempPc.close();
     // }
     Janus.initDone = true;
@@ -523,17 +527,17 @@ function Janus(gatewayCallbacks) {
       Janus.log("Using REST API to contact Janus: " + server);
     }
   }
-  const iceServers = [
-    {
-      urls: "stun:stun.whiteg.app:3478",
-      username: "whiteg",
-      credential: "whiteg123456",
-    },
-  ];
+  // const iceServers = [
+  //   {
+  //     urls: "stun:stun.whiteg.app:3478",
+  //     username: "whiteg",
+  //     credential: "whiteg123456",
+  //   },
+  // ];
   const iceTransportPolicy = gatewayCallbacks.iceTransportPolicy;
   const bundlePolicy = gatewayCallbacks.bundlePolicy;
   // Whether IPv6 candidates should be gathered
-  const ipv6Support = gatewayCallbacks.ipv6 === true;
+  // const ipv6Support = gatewayCallbacks.ipv6 === true;
 
   // Whether we should enable the withCredentials flag for XHR requests
   let withCredentials = false;
@@ -2845,36 +2849,36 @@ function Janus(gatewayCallbacks) {
           }
           // We're going to try and use the extension for Chrome 34+, the old approach
           // for older versions of Chrome, or the experimental support in Firefox 33+
-          const callbackUserMedia = function (error, stream) {
-            pluginHandle.consentDialog(false);
-            if (error) {
-              callbacks.error(error);
-            } else {
-              streamsDone(handleId, jsep, media, callbacks, stream);
-            }
-          };
-          const getScreenMedia = function (constraints, gsmCallback, useAudio) {
-            Janus.log("Adding media constraint (screen capture)");
-            Janus.debug(constraints);
-            mediaDevices
-              .getUserMedia(constraints)
-              .then(function (stream) {
-                if (useAudio) {
-                  mediaDevices
-                    .getUserMedia({ audio: true, video: false })
-                    .then(function (audioStream) {
-                      stream.addTrack(audioStream.getAudioTracks()[0]);
-                      gsmCallback(null, stream);
-                    });
-                } else {
-                  gsmCallback(null, stream);
-                }
-              })
-              .catch(function (error) {
-                pluginHandle.consentDialog(false);
-                gsmCallback(error);
-              });
-          };
+          // const callbackUserMedia = function (error, stream) {
+          //   pluginHandle.consentDialog(false);
+          //   if (error) {
+          //     callbacks.error(error);
+          //   } else {
+          //     streamsDone(handleId, jsep, media, callbacks, stream);
+          //   }
+          // };
+          // const getScreenMedia = function (constraints, gsmCallback, useAudio) {
+          //   Janus.log("Adding media constraint (screen capture)");
+          //   Janus.debug(constraints);
+          //   mediaDevices
+          //     .getUserMedia(constraints)
+          //     .then(function (stream) {
+          //       if (useAudio) {
+          //         mediaDevices
+          //           .getUserMedia({ audio: true, video: false })
+          //           .then(function (audioStream) {
+          //             stream.addTrack(audioStream.getAudioTracks()[0]);
+          //             gsmCallback(null, stream);
+          //           });
+          //       } else {
+          //         gsmCallback(null, stream);
+          //       }
+          //     })
+          //     .catch(function (error) {
+          //       pluginHandle.consentDialog(false);
+          //       gsmCallback(error);
+          //     });
+          // };
           // if (Janus.webRTCAdapter.browserDetails.browser === "chrome") {
           //   var chromever = Janus.webRTCAdapter.browserDetails.version;
           //   var maxver = 33;
@@ -2982,10 +2986,10 @@ function Janus(gatewayCallbacks) {
                 });
 
             // Check whether a missing device is really a problem
-            const audioSend = isAudioSendEnabled(media);
-            const videoSend = isVideoSendEnabled(media);
-            const needAudioDevice = isAudioSendRequired(media);
-            const needVideoDevice = isVideoSendRequired(media);
+            // const audioSend = isAudioSendEnabled(media);
+            // const videoSend = isVideoSendEnabled(media);
+            // const needAudioDevice = isAudioSendRequired(media);
+            // const needVideoDevice = isVideoSendRequired(media);
             // if(audioSend || videoSend || needAudioDevice || needVideoDevice) {
             // 	// We need to send either audio or video
             // 	var haveAudioDevice = audioSend ? audioExist : false;
@@ -3920,10 +3924,10 @@ function Janus(gatewayCallbacks) {
         request: "listparticipants",
         room: "1234",
       }),
-      success: function (json) {
+      success: function () {
         // console.log("3333333", json);
       },
-      error: function (textStatus, errorThrown) {},
+      // error: function (textStatus, errorThrown) {},
     });
   }
 
@@ -4000,241 +4004,241 @@ function Janus(gatewayCallbacks) {
   }
 
   // Helper method to munge an SDP to enable simulcasting (Chrome only)
-  function mungeSdpForSimulcasting(sdp) {
-    // Let's munge the SDP to add the attributes for enabling simulcasting
-    // (based on https://gist.github.com/ggarber/a19b4c33510028b9c657)
-    const lines = sdp.split("\r\n");
-    let video = false;
-    const ssrc = [-1],
-      ssrc_fid = [-1];
-    let cname = null,
-      msid = null,
-      mslabel = null,
-      label = null;
-    let insertAt = -1;
-    for (let i = 0; i < lines.length; i++) {
-      const mline = lines[i].match(/m=(\w+) */);
-      if (mline) {
-        const medium = mline[1];
-        if (medium === "video") {
-          // New video m-line: make sure it's the first one
-          if (ssrc[0] < 0) {
-            video = true;
-          } else {
-            // We're done, let's add the new attributes here
-            insertAt = i;
-            break;
-          }
-        } else {
-          // New non-video m-line: do we have what we were looking for?
-          if (ssrc[0] > -1) {
-            // We're done, let's add the new attributes here
-            insertAt = i;
-            break;
-          }
-        }
-        continue;
-      }
-      if (!video) continue;
-      const sim = lines[i].match(/a=ssrc-group:SIM (\d+) (\d+) (\d+)/);
-      if (sim) {
-        Janus.warn(
-          "The SDP already contains a SIM attribute, munging will be skipped",
-        );
-        return sdp;
-      }
-      const fid = lines[i].match(/a=ssrc-group:FID (\d+) (\d+)/);
-      if (fid) {
-        ssrc[0] = fid[1];
-        ssrc_fid[0] = fid[2];
-        lines.splice(i, 1);
-        i--;
-        continue;
-      }
-      if (ssrc[0]) {
-        let match = lines[i].match("a=ssrc:" + ssrc[0] + " cname:(.+)");
-        if (match) {
-          cname = match[1];
-        }
-        match = lines[i].match("a=ssrc:" + ssrc[0] + " msid:(.+)");
-        if (match) {
-          msid = match[1];
-        }
-        match = lines[i].match("a=ssrc:" + ssrc[0] + " mslabel:(.+)");
-        if (match) {
-          mslabel = match[1];
-        }
-        match = lines[i].match("a=ssrc:" + ssrc[0] + " label:(.+)");
-        if (match) {
-          label = match[1];
-        }
-        if (lines[i].indexOf("a=ssrc:" + ssrc_fid[0]) === 0) {
-          lines.splice(i, 1);
-          i--;
-          continue;
-        }
-        if (lines[i].indexOf("a=ssrc:" + ssrc[0]) === 0) {
-          lines.splice(i, 1);
-          i--;
-          continue;
-        }
-      }
-      if (lines[i].length == 0) {
-        lines.splice(i, 1);
-        i--;
-        continue;
-      }
-    }
-    if (ssrc[0] < 0) {
-      // Couldn't find a FID attribute, let's just take the first video SSRC we find
-      insertAt = -1;
-      video = false;
-      for (let i = 0; i < lines.length; i++) {
-        const mline = lines[i].match(/m=(\w+) */);
-        if (mline) {
-          const medium = mline[1];
-          if (medium === "video") {
-            // New video m-line: make sure it's the first one
-            if (ssrc[0] < 0) {
-              video = true;
-            } else {
-              // We're done, let's add the new attributes here
-              insertAt = i;
-              break;
-            }
-          } else {
-            // New non-video m-line: do we have what we were looking for?
-            if (ssrc[0] > -1) {
-              // We're done, let's add the new attributes here
-              insertAt = i;
-              break;
-            }
-          }
-          continue;
-        }
-        if (!video) continue;
-        if (ssrc[0] < 0) {
-          const value = lines[i].match(/a=ssrc:(\d+)/);
-          if (value) {
-            ssrc[0] = value[1];
-            lines.splice(i, 1);
-            i--;
-            continue;
-          }
-        } else {
-          let match = lines[i].match("a=ssrc:" + ssrc[0] + " cname:(.+)");
-          if (match) {
-            cname = match[1];
-          }
-          match = lines[i].match("a=ssrc:" + ssrc[0] + " msid:(.+)");
-          if (match) {
-            msid = match[1];
-          }
-          match = lines[i].match("a=ssrc:" + ssrc[0] + " mslabel:(.+)");
-          if (match) {
-            mslabel = match[1];
-          }
-          match = lines[i].match("a=ssrc:" + ssrc[0] + " label:(.+)");
-          if (match) {
-            label = match[1];
-          }
-          if (lines[i].indexOf("a=ssrc:" + ssrc_fid[0]) === 0) {
-            lines.splice(i, 1);
-            i--;
-            continue;
-          }
-          if (lines[i].indexOf("a=ssrc:" + ssrc[0]) === 0) {
-            lines.splice(i, 1);
-            i--;
-            continue;
-          }
-        }
-        if (lines[i].length === 0) {
-          lines.splice(i, 1);
-          i--;
-          continue;
-        }
-      }
-    }
-    if (ssrc[0] < 0) {
-      // Still nothing, let's just return the SDP we were asked to munge
-      Janus.warn("Couldn't find the video SSRC, simulcasting NOT enabled");
-      return sdp;
-    }
-    if (insertAt < 0) {
-      // Append at the end
-      insertAt = lines.length;
-    }
-    // Generate a couple of SSRCs (for retransmissions too)
-    // Note: should we check if there are conflicts, here?
-    ssrc[1] = Math.floor(Math.random() * 0xffffffff);
-    ssrc[2] = Math.floor(Math.random() * 0xffffffff);
-    ssrc_fid[1] = Math.floor(Math.random() * 0xffffffff);
-    ssrc_fid[2] = Math.floor(Math.random() * 0xffffffff);
-    // Add attributes to the SDP
-    for (let i = 0; i < ssrc.length; i++) {
-      if (cname) {
-        lines.splice(insertAt, 0, "a=ssrc:" + ssrc[i] + " cname:" + cname);
-        insertAt++;
-      }
-      if (msid) {
-        lines.splice(insertAt, 0, "a=ssrc:" + ssrc[i] + " msid:" + msid);
-        insertAt++;
-      }
-      if (mslabel) {
-        lines.splice(insertAt, 0, "a=ssrc:" + ssrc[i] + " mslabel:" + mslabel);
-        insertAt++;
-      }
-      if (label) {
-        lines.splice(insertAt, 0, "a=ssrc:" + ssrc[i] + " label:" + label);
-        insertAt++;
-      }
-      // Add the same info for the retransmission SSRC
-      if (cname) {
-        lines.splice(insertAt, 0, "a=ssrc:" + ssrc_fid[i] + " cname:" + cname);
-        insertAt++;
-      }
-      if (msid) {
-        lines.splice(insertAt, 0, "a=ssrc:" + ssrc_fid[i] + " msid:" + msid);
-        insertAt++;
-      }
-      if (mslabel) {
-        lines.splice(
-          insertAt,
-          0,
-          "a=ssrc:" + ssrc_fid[i] + " mslabel:" + mslabel,
-        );
-        insertAt++;
-      }
-      if (label) {
-        lines.splice(insertAt, 0, "a=ssrc:" + ssrc_fid[i] + " label:" + label);
-        insertAt++;
-      }
-    }
-    lines.splice(
-      insertAt,
-      0,
-      "a=ssrc-group:FID " + ssrc[2] + " " + ssrc_fid[2],
-    );
-    lines.splice(
-      insertAt,
-      0,
-      "a=ssrc-group:FID " + ssrc[1] + " " + ssrc_fid[1],
-    );
-    lines.splice(
-      insertAt,
-      0,
-      "a=ssrc-group:FID " + ssrc[0] + " " + ssrc_fid[0],
-    );
-    lines.splice(
-      insertAt,
-      0,
-      "a=ssrc-group:SIM " + ssrc[0] + " " + ssrc[1] + " " + ssrc[2],
-    );
-    sdp = lines.join("\r\n");
-    if (!sdp.endsWith("\r\n")) sdp += "\r\n";
-    return sdp;
-  }
+  // function mungeSdpForSimulcasting(sdp) {
+  //   // Let's munge the SDP to add the attributes for enabling simulcasting
+  //   // (based on https://gist.github.com/ggarber/a19b4c33510028b9c657)
+  //   const lines = sdp.split("\r\n");
+  //   let video = false;
+  //   const ssrc = [-1],
+  //     ssrc_fid = [-1];
+  //   let cname = null,
+  //     msid = null,
+  //     mslabel = null,
+  //     label = null;
+  //   let insertAt = -1;
+  //   for (let i = 0; i < lines.length; i++) {
+  //     const mline = lines[i].match(/m=(\w+) */);
+  //     if (mline) {
+  //       const medium = mline[1];
+  //       if (medium === "video") {
+  //         // New video m-line: make sure it's the first one
+  //         if (ssrc[0] < 0) {
+  //           video = true;
+  //         } else {
+  //           // We're done, let's add the new attributes here
+  //           insertAt = i;
+  //           break;
+  //         }
+  //       } else {
+  //         // New non-video m-line: do we have what we were looking for?
+  //         if (ssrc[0] > -1) {
+  //           // We're done, let's add the new attributes here
+  //           insertAt = i;
+  //           break;
+  //         }
+  //       }
+  //       continue;
+  //     }
+  //     if (!video) continue;
+  //     const sim = lines[i].match(/a=ssrc-group:SIM (\d+) (\d+) (\d+)/);
+  //     if (sim) {
+  //       Janus.warn(
+  //         "The SDP already contains a SIM attribute, munging will be skipped",
+  //       );
+  //       return sdp;
+  //     }
+  //     const fid = lines[i].match(/a=ssrc-group:FID (\d+) (\d+)/);
+  //     if (fid) {
+  //       ssrc[0] = fid[1];
+  //       ssrc_fid[0] = fid[2];
+  //       lines.splice(i, 1);
+  //       i--;
+  //       continue;
+  //     }
+  //     if (ssrc[0]) {
+  //       let match = lines[i].match("a=ssrc:" + ssrc[0] + " cname:(.+)");
+  //       if (match) {
+  //         cname = match[1];
+  //       }
+  //       match = lines[i].match("a=ssrc:" + ssrc[0] + " msid:(.+)");
+  //       if (match) {
+  //         msid = match[1];
+  //       }
+  //       match = lines[i].match("a=ssrc:" + ssrc[0] + " mslabel:(.+)");
+  //       if (match) {
+  //         mslabel = match[1];
+  //       }
+  //       match = lines[i].match("a=ssrc:" + ssrc[0] + " label:(.+)");
+  //       if (match) {
+  //         label = match[1];
+  //       }
+  //       if (lines[i].indexOf("a=ssrc:" + ssrc_fid[0]) === 0) {
+  //         lines.splice(i, 1);
+  //         i--;
+  //         continue;
+  //       }
+  //       if (lines[i].indexOf("a=ssrc:" + ssrc[0]) === 0) {
+  //         lines.splice(i, 1);
+  //         i--;
+  //         continue;
+  //       }
+  //     }
+  //     if (lines[i].length == 0) {
+  //       lines.splice(i, 1);
+  //       i--;
+  //       continue;
+  //     }
+  //   }
+  //   if (ssrc[0] < 0) {
+  //     // Couldn't find a FID attribute, let's just take the first video SSRC we find
+  //     insertAt = -1;
+  //     video = false;
+  //     for (let i = 0; i < lines.length; i++) {
+  //       const mline = lines[i].match(/m=(\w+) */);
+  //       if (mline) {
+  //         const medium = mline[1];
+  //         if (medium === "video") {
+  //           // New video m-line: make sure it's the first one
+  //           if (ssrc[0] < 0) {
+  //             video = true;
+  //           } else {
+  //             // We're done, let's add the new attributes here
+  //             insertAt = i;
+  //             break;
+  //           }
+  //         } else {
+  //           // New non-video m-line: do we have what we were looking for?
+  //           if (ssrc[0] > -1) {
+  //             // We're done, let's add the new attributes here
+  //             insertAt = i;
+  //             break;
+  //           }
+  //         }
+  //         continue;
+  //       }
+  //       if (!video) continue;
+  //       if (ssrc[0] < 0) {
+  //         const value = lines[i].match(/a=ssrc:(\d+)/);
+  //         if (value) {
+  //           ssrc[0] = value[1];
+  //           lines.splice(i, 1);
+  //           i--;
+  //           continue;
+  //         }
+  //       } else {
+  //         let match = lines[i].match("a=ssrc:" + ssrc[0] + " cname:(.+)");
+  //         if (match) {
+  //           cname = match[1];
+  //         }
+  //         match = lines[i].match("a=ssrc:" + ssrc[0] + " msid:(.+)");
+  //         if (match) {
+  //           msid = match[1];
+  //         }
+  //         match = lines[i].match("a=ssrc:" + ssrc[0] + " mslabel:(.+)");
+  //         if (match) {
+  //           mslabel = match[1];
+  //         }
+  //         match = lines[i].match("a=ssrc:" + ssrc[0] + " label:(.+)");
+  //         if (match) {
+  //           label = match[1];
+  //         }
+  //         if (lines[i].indexOf("a=ssrc:" + ssrc_fid[0]) === 0) {
+  //           lines.splice(i, 1);
+  //           i--;
+  //           continue;
+  //         }
+  //         if (lines[i].indexOf("a=ssrc:" + ssrc[0]) === 0) {
+  //           lines.splice(i, 1);
+  //           i--;
+  //           continue;
+  //         }
+  //       }
+  //       if (lines[i].length === 0) {
+  //         lines.splice(i, 1);
+  //         i--;
+  //         continue;
+  //       }
+  //     }
+  //   }
+  //   if (ssrc[0] < 0) {
+  //     // Still nothing, let's just return the SDP we were asked to munge
+  //     Janus.warn("Couldn't find the video SSRC, simulcasting NOT enabled");
+  //     return sdp;
+  //   }
+  //   if (insertAt < 0) {
+  //     // Append at the end
+  //     insertAt = lines.length;
+  //   }
+  //   // Generate a couple of SSRCs (for retransmissions too)
+  //   // Note: should we check if there are conflicts, here?
+  //   ssrc[1] = Math.floor(Math.random() * 0xffffffff);
+  //   ssrc[2] = Math.floor(Math.random() * 0xffffffff);
+  //   ssrc_fid[1] = Math.floor(Math.random() * 0xffffffff);
+  //   ssrc_fid[2] = Math.floor(Math.random() * 0xffffffff);
+  //   // Add attributes to the SDP
+  //   for (let i = 0; i < ssrc.length; i++) {
+  //     if (cname) {
+  //       lines.splice(insertAt, 0, "a=ssrc:" + ssrc[i] + " cname:" + cname);
+  //       insertAt++;
+  //     }
+  //     if (msid) {
+  //       lines.splice(insertAt, 0, "a=ssrc:" + ssrc[i] + " msid:" + msid);
+  //       insertAt++;
+  //     }
+  //     if (mslabel) {
+  //       lines.splice(insertAt, 0, "a=ssrc:" + ssrc[i] + " mslabel:" + mslabel);
+  //       insertAt++;
+  //     }
+  //     if (label) {
+  //       lines.splice(insertAt, 0, "a=ssrc:" + ssrc[i] + " label:" + label);
+  //       insertAt++;
+  //     }
+  //     // Add the same info for the retransmission SSRC
+  //     if (cname) {
+  //       lines.splice(insertAt, 0, "a=ssrc:" + ssrc_fid[i] + " cname:" + cname);
+  //       insertAt++;
+  //     }
+  //     if (msid) {
+  //       lines.splice(insertAt, 0, "a=ssrc:" + ssrc_fid[i] + " msid:" + msid);
+  //       insertAt++;
+  //     }
+  //     if (mslabel) {
+  //       lines.splice(
+  //         insertAt,
+  //         0,
+  //         "a=ssrc:" + ssrc_fid[i] + " mslabel:" + mslabel,
+  //       );
+  //       insertAt++;
+  //     }
+  //     if (label) {
+  //       lines.splice(insertAt, 0, "a=ssrc:" + ssrc_fid[i] + " label:" + label);
+  //       insertAt++;
+  //     }
+  //   }
+  //   lines.splice(
+  //     insertAt,
+  //     0,
+  //     "a=ssrc-group:FID " + ssrc[2] + " " + ssrc_fid[2],
+  //   );
+  //   lines.splice(
+  //     insertAt,
+  //     0,
+  //     "a=ssrc-group:FID " + ssrc[1] + " " + ssrc_fid[1],
+  //   );
+  //   lines.splice(
+  //     insertAt,
+  //     0,
+  //     "a=ssrc-group:FID " + ssrc[0] + " " + ssrc_fid[0],
+  //   );
+  //   lines.splice(
+  //     insertAt,
+  //     0,
+  //     "a=ssrc-group:SIM " + ssrc[0] + " " + ssrc[1] + " " + ssrc[2],
+  //   );
+  //   sdp = lines.join("\r\n");
+  //   if (!sdp.endsWith("\r\n")) sdp += "\r\n";
+  //   return sdp;
+  // }
 
   // Helper methods to parse a media object
   function isAudioSendEnabled(media) {

@@ -57,7 +57,6 @@ const GoogleLoginButton = ({ showText }: BtnProps) => {
         }
       });
     } catch (error: any) {
-      console.log(22222222, error);
       closeSuperModal();
       setTimeout(() => {
         Toast.show({

@@ -134,8 +134,6 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
     });
   };
 
-  console.log(2222222, partner_id);
-
   const openUserProfile = () => {};
 
   const _blockUser = () => {
