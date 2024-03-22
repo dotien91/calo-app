@@ -19,6 +19,7 @@ import {
 import { SCREENS } from "constants";
 import { EnumCourseType } from "models/course.model";
 import { translations } from "@localization";
+import IconSvg from "assets/svg";
 
 // interface CourseToolbarType {}
 
@@ -82,14 +83,16 @@ const CourseToolbar = () => {
   return (
     <View style={styles.selectView}>
       <TouchableOpacity onPress={openSelectTypeCourseModal}>
-        <View style={{ ...CS.flexStart }}>
-          <Text style={styles.txtSelect}>{courseCurrentType.name}</Text>
-          <Icon
-            name={"chevron-down"}
-            type={IconType.Feather}
-            size={20}
-            style={{ color: colors.primary }}
-          />
+        <View style={styles.viewTitle}>
+          <Text style={styles.txtSelect}>
+            {courseCurrentType.name}
+            <Icon
+              name={"chevron-down"}
+              type={IconType.Feather}
+              size={20}
+              style={{ color: colors.primary }}
+            />
+          </Text>
         </View>
       </TouchableOpacity>
       <View style={CS.flexEnd}>
@@ -103,12 +106,7 @@ const CourseToolbar = () => {
         </PressableBtn>
         <View style={{ width: 16 }} />
         <PressableBtn onPress={openFilterDetailModal} style={styles.headerIcon}>
-          <Icon
-            name={"sliders"}
-            type={IconType.Feather}
-            size={20}
-            style={{ color: colors.textOpacity8 }}
-          />
+          <IconSvg name="icSlider" size={20} color={colors.textOpacity8} />
         </PressableBtn>
       </View>
     </View>

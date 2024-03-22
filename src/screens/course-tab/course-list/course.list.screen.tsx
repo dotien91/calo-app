@@ -28,6 +28,8 @@ import { SCREENS } from "constants";
 import LoadingItem from "@shared-components/loading.item";
 import { palette } from "@theme/themes";
 import eventEmitter from "@services/event-emitter";
+import { translations } from "@localization";
+import CS from "@theme/styles";
 
 interface CourseListScreenProps {}
 
@@ -123,6 +125,15 @@ const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
       <View style={{ flex: 1 }}>
         {isTabCourse && <CourseCategoryItem />}
         <CourseQuickFilter isTabCourse={isTabCourse} />
+        <Text
+          style={{
+            ...CS.txtTitle,
+            paddingHorizontal: 18,
+            marginBottom: 10,
+          }}
+        >
+          {translations.course.allCourse}
+        </Text>
       </View>
     );
   }, [isTabCourse]);

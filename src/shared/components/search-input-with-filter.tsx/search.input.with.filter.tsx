@@ -13,7 +13,7 @@ import { TextInput } from "react-native-gesture-handler";
 import { translations } from "@localization";
 import IconBtn from "@shared-components/button/IconBtn";
 import useStore from "@services/zustand/store";
-import { palette } from "@theme/themes";
+import IconSvg from "assets/svg";
 
 interface ISearchInput {
   txtSearch: string;
@@ -141,11 +141,12 @@ const SearchInputWithFilter: React.FC<ISearchInput> = ({
       </TouchableOpacity>
       <View>
         {showFilter && (
-          <IconBtn
+          <IconSvg
+            name="icSlider"
+            size={20}
+            color={colors.text}
+            style={{ marginLeft: 10 }}
             onPress={onPressFilter}
-            customStyle={{ marginLeft: 6 }}
-            name={"sliders"}
-            color={palette.text}
           />
         )}
         {!!badge && showFilter && (

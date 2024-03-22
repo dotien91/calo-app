@@ -592,6 +592,7 @@ export default {
     deleteCourseSuccess: "Xoá khoá học thành công",
     updateSuccess: "Cập nhật thành công",
     timeStartAt: "Thời gian bắt đầu",
+    allCourse: "Tất cả khoá học",
   },
   seeAll: "Xem tất cả",
   settings: {

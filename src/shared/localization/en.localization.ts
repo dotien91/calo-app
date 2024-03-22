@@ -504,6 +504,7 @@ export default {
     deleteCourseSuccess: "Course deleted successfully",
     updateSuccess: "Update successfully",
     timeStartAt: "Start at",
+    allCourse: "All course",
   },
   seeAll: "See all",
   settings: {

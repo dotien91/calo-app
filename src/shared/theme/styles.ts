@@ -196,6 +196,12 @@ const CS = StyleSheet.create({
     fontFamily: font.outfit.medium,
     color: palette.primary,
   },
+  txtTitle: {
+    fontSize: 16,
+    lineHeight: 24,
+    fontFamily: font.outfit.semiBold,
+    color: palette.textOpacity2,
+  },
   safeAreaView: {
     flex: 1,
     marginTop: getStatusBarHeight(),
