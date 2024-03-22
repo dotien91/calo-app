@@ -280,7 +280,7 @@ export async function deleteClass(id: string) {
 export async function deleteCourse(id: string) {
   return request({
     method: METHOD.DELETE,
-    urlPath: `/course/delete/${id}`,
+    urlPath: `course/delete/${id}`,
   }).then((response) => {
     return response;
   });

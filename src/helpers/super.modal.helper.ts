@@ -31,6 +31,8 @@ export enum EnumModalContentType {
   Referral = "Referral",
   InviteCode = "invite-code",
   TeacherClass = "teacher-class",
+  MoreCourse = "more-course",
+  AddCouponToCourse = "add-coupon-to-course",
 }
 
 export enum EnumStyleModalType {

@@ -38,7 +38,6 @@ import {
   EnumStyleModalType,
   showSuperModal,
   showToast,
-  showWarningLogin,
 } from "@helpers/super.modal.helper";
 
 const CoursePreviewScreen = () => {
@@ -237,26 +236,26 @@ const CoursePreviewScreen = () => {
     const params = { _id: course_id, public_status: "pending" };
     updateCourse(params).then((res) => {
       if (!res.isError) {
-        showToast({ type: "success", message: "update success" });
+        showToast({
+          type: "success",
+          message: translations.course.updateSuccess,
+        });
         _getCourseDetail();
       } else {
         showToast({ type: "error", message: res.mesage });
       }
     });
   };
-  const onReport = () => {
-    if (userData?._id) {
-      showSuperModal({
-        contentModalType: EnumModalContentType.Report,
-        styleModalType: EnumStyleModalType.Bottom,
-        data: {
-          report_type: "course",
-          partner_id: data?.user_id?._id,
-        },
-      });
-    } else {
-      showWarningLogin();
-    }
+  const pressMore = () => {
+    showSuperModal({
+      contentModalType: EnumModalContentType.MoreCourse,
+      styleModalType: EnumStyleModalType.Bottom,
+      data: {
+        dataCourse: data,
+        isTeacher: data?.user_id?._id === userData?._id,
+        hideCloseIcon: true,
+      },
+    });
   };
 
   return (
@@ -265,8 +264,8 @@ const CoursePreviewScreen = () => {
       <Header
         customStyle={{ marginBottom: 0 }}
         text={data?.title}
-        iconNameRight="flag"
-        onPressRight={onReport}
+        iconNameRight="more-vertical"
+        onPressRight={pressMore}
       />
       <ScrollView
         contentContainerStyle={{ paddingBottom: 60 }}

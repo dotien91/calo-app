@@ -243,8 +243,9 @@ export default function CreateWorkScreen() {
   const renderRightHeader = () => {
     return (
       <Button
+        isFullWidth={false}
         onPress={handleSubmit(onSubmit)}
-        style={{ paddingVertical: 6 }}
+        style={{ paddingVertical: 6, marginTop: 6 }}
         type={"primary"}
         text={translations.homework.assign}
       />

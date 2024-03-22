@@ -25,6 +25,7 @@ import { SceneMap, TabBar } from "react-native-tab-view";
 import { palette } from "@theme/themes";
 import useStore from "@services/zustand/store";
 import AffiliateHeader2 from "./components/affiliate.header";
+import { useRoute } from "@react-navigation/native";
 
 const initialLayout = { width: Dimensions.get("window").width };
 
@@ -40,6 +41,10 @@ const AffiliatePage = () => {
   const date = useStore((state) => state.dateFilter);
   const listCourseSelected = useStore((state) => state.listCourseSelected);
   const listUserSelected = useStore((state) => state.listUserSelected);
+  const userData = useStore((state) => state.userData);
+  const setType = useStore((state) => state.setType);
+  const route = useRoute();
+  const type = route?.params["type"] || undefined;
 
   const { getUserData } = useUserHook();
 
@@ -59,6 +64,18 @@ const AffiliatePage = () => {
       });
     };
   }, []);
+  useEffect(() => {
+    if (type) {
+      setType(type);
+    } else {
+      if (
+        userData?.user_role === "teacher" ||
+        userData?.user_role === "admin"
+      ) {
+        setType("token");
+      }
+    }
+  }, [userData?.user_role, type]);
 
   const _getListFilter = () => {
     const paramsRequest = {};

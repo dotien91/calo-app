@@ -27,6 +27,7 @@ import { useTheme } from "@react-navigation/native";
 import { SCREENS } from "constants";
 import LoadingItem from "@shared-components/loading.item";
 import { palette } from "@theme/themes";
+import eventEmitter from "@services/event-emitter";
 
 interface CourseListScreenProps {}
 
@@ -84,18 +85,33 @@ const CourseListScreen: React.FC<CourseListScreenProps> = () => {
 };
 
 const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
-  const { isLoading, listData, onEndReach, renderFooterComponent } =
-    useListData<ICourseItem>(
-      !isTabCourse
-        ? { limit: "4", sort_by: "createdAt", order_by: "DESC" }
-        : {
-            limit: "4",
-            sort_by: "createdAt",
-            order_by: "DESC",
-            public_status: "active",
-          },
-      !isTabCourse ? getListTutor : getCourseList,
-    );
+  const {
+    isLoading,
+    listData,
+    onEndReach,
+    renderFooterComponent,
+    _requestData,
+  } = useListData<ICourseItem>(
+    !isTabCourse
+      ? { limit: "4", sort_by: "createdAt", order_by: "DESC" }
+      : {
+          limit: "4",
+          sort_by: "createdAt",
+          order_by: "DESC",
+          public_status: "active",
+        },
+    !isTabCourse ? getListTutor : getCourseList,
+  );
+  const reloadListCourse = () => {
+    _requestData(false);
+  };
+
+  useEffect(() => {
+    eventEmitter.on("reload_list_course", reloadListCourse);
+    return () => {
+      eventEmitter.off("reload_list_course", reloadListCourse);
+    };
+  }, []);
 
   const renderItem = ({ item }: { item: ICourseItem }, index: number) => {
     if (isTabCourse) return <CourseItem data={item} key={index} />;
