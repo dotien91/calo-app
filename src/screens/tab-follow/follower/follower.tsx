@@ -19,6 +19,7 @@ import {
   EnumStyleModalType,
   showSuperModal,
   showToast,
+  showWarningLogin,
 } from "@helpers/super.modal.helper";
 import { SCREENS } from "constants";
 import LoadingList from "@shared-components/loading.list.component";
@@ -165,17 +166,21 @@ const Follower = ({ id }) => {
           <TouchableOpacity
             style={{ backgroundColor: colors.btnRedPrimary, borderRadius: 4 }}
             onPress={() => {
-              if (userData?._id === id) {
-                if (item.match_status != 1) {
-                  followAction(item.partner_id?._id);
-                } else {
-                  NavigationService.navigate(SCREENS.CHAT_ROOM, {
-                    partner_id: item?.partner_id._id,
-                    partner_name: item?.partner_id.display_name,
-                  });
-                }
+              if (!userData?._id) {
+                showWarningLogin();
               } else {
-                followActionOther(item);
+                if (userData?._id === id) {
+                  if (item.match_status != 1) {
+                    followAction(item.partner_id?._id);
+                  } else {
+                    NavigationService.navigate(SCREENS.CHAT_ROOM, {
+                      partner_id: item?.partner_id._id,
+                      partner_name: item?.partner_id.display_name,
+                    });
+                  }
+                } else {
+                  followActionOther(item);
+                }
               }
             }}
           >
@@ -190,11 +195,11 @@ const Follower = ({ id }) => {
             >
               {userData?._id === id
                 ? item.match_status === 1
-                  ? "Message"
-                  : "Follow Back"
+                  ? translations.message
+                  : translations.follow
                 : item?.didFollow
-                ? "UnFollow"
-                : "Follow"}
+                ? translations.unfollow
+                : translations.follow}
             </Text>
           </TouchableOpacity>
           {userData?._id === id && item?.match_status != 1 ? (

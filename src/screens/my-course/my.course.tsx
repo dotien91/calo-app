@@ -2,6 +2,7 @@ import React from "react";
 import {
   FlatList,
   SafeAreaView,
+  StyleSheet,
   Text,
   View,
   useWindowDimensions,
@@ -18,6 +19,8 @@ import useStore from "@services/zustand/store";
 import CourseItem from "@screens/course-tab/components/course.item";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import { translations } from "@localization";
+import EmptyResultView from "@shared-components/empty.data.component";
+import { palette } from "@theme/themes";
 
 const MyCourse = () => {
   const theme = useTheme();
@@ -62,22 +65,6 @@ const MyCourse = () => {
     );
   }
 
-  // const renderListInprogess = () => {
-  //   return (
-  //     <>
-  //       {isLoading && <LoadingItem />}
-  //       <FlatList
-  //         data={listData}
-  //         renderItem={renderItemSelected}
-  //         onEndReachedThreshold={0}
-  //         showsHorizontalScrollIndicator={false}
-  //         showsVerticalScrollIndicator={false}
-  //         removeClippedSubviews={true}
-  //       />
-  //     </>
-  //   );
-  // };
-
   const renderTabBar = (props) => (
     <TabBar
       {...props}
@@ -88,12 +75,10 @@ const MyCourse = () => {
       }}
       renderLabel={({ route, focused }) => (
         <Text
-          style={{
-            ...CS.hnBold,
-            fontSize: 16,
-            color: focused ? colors.primary : colors.text,
-            margin: 8,
-          }}
+          style={[
+            styles.txtLabel,
+            { color: focused ? colors.primary : colors.text },
+          ]}
         >
           {route.title}
         </Text>
@@ -104,7 +89,7 @@ const MyCourse = () => {
 
   return (
     <SafeAreaView style={{ ...CS.safeAreaView }}>
-      <Header text={translations.course.myCourse} />
+      <Header text={translations.settingUser.purchaseCouse} />
       <TabView
         style={{ flex: 1 }}
         renderTabBar={renderTabBar}
@@ -138,20 +123,54 @@ const ListData = React.memo(({ listData, isTabComplete, isLoading }) => {
     return <CourseItem data={item} key={index} />;
   };
 
-  return (
-    <>
-      {isLoading && <LoadingItem />}
-      <FlatList
-        contentContainerStyle={{ marginTop: 16 }}
-        data={data}
-        renderItem={renderItemSelected}
-        onEndReachedThreshold={0}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        removeClippedSubviews={true}
+  const renderEmpty = () => {
+    return (
+      <EmptyResultView
+        title={translations.course.emptyCourse}
+        // desc={isTabComplete?translations.course.emptyCourse: }
+        // showLottie={false}
+        style={styles.viewEmpty}
       />
-    </>
+    );
+  };
+  console.log(data.length);
+
+  return (
+    <View>
+      {isLoading && <LoadingItem />}
+      {data.length < 1 ? (
+        renderEmpty()
+      ) : (
+        <FlatList
+          contentContainerStyle={styles.viewFlatList}
+          data={data}
+          renderItem={renderItemSelected}
+          onEndReachedThreshold={0}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          removeClippedSubviews={true}
+        />
+      )}
+    </View>
   );
 });
 
 export default MyCourse;
+
+const styles = StyleSheet.create({
+  viewEmpty: {
+    ...CS.center,
+    ...CS.flex1,
+    backgroundColor: palette.background,
+    paddingVertical: 40,
+    minHeight: 200,
+  },
+  viewFlatList: {
+    marginTop: 16,
+  },
+  txtLabel: {
+    ...CS.hnBold,
+    fontSize: 16,
+    margin: 8,
+  },
+});

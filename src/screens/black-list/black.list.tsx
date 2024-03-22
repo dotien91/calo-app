@@ -1,11 +1,16 @@
 import React from "react";
-import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 import Header from "@shared-components/header/Header";
 import { getListBlock, postUnBlockUser } from "@services/api/user.api";
 import { useListData } from "@helpers/hooks/useListData";
 import { TypedUser } from "models";
-import { useTheme } from "@react-navigation/native";
 import CS from "@theme/styles";
 import Avatar from "@shared-components/user/Avatar";
 import {
@@ -17,12 +22,13 @@ import {
 import LoadingList from "@shared-components/loading.list.component";
 import moment from "moment";
 import { translations } from "@localization";
+import { palette } from "@theme/themes";
+import EmptyResultView from "@shared-components/empty.data.component";
 
 const BlackList = () => {
-  const theme = useTheme();
-  const { colors } = theme;
   const { listData, _requestData, isLoading, isFirstLoading } =
     useListData<TypedUser>({ limit: "5" }, getListBlock);
+
   const renderItemSelected = ({
     item,
     index,
@@ -30,52 +36,17 @@ const BlackList = () => {
     item: any;
     index: number;
   }) => {
-    console.log(JSON.stringify(item, null, 2));
     return (
-      <View
-        key={index}
-        style={{
-          flexDirection: "row",
-          // justifyContent: "space-between",
-          marginHorizontal: 16,
-          alignItems: "center",
-        }}
-      >
-        <View
-          key={index}
-          style={{
-            flexDirection: "row",
-            marginBottom: 8,
-            alignItems: "center",
-          }}
-        >
+      <View key={index} style={styles.viewItem}>
+        <View key={index} style={styles.viewAvatar}>
           <Avatar
-            style={{ height: 40, width: 40, borderRadius: 20 }}
+            style={styles.avatar}
             sourceUri={{ uri: item?.partner_id?.user_avatar }}
           />
         </View>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            flex: 1,
-            borderBottomWidth: 1,
-            borderBottomColor: colors.grey2,
-            alignItems: "center",
-            paddingVertical: 8,
-            marginHorizontal: 8,
-          }}
-        >
+        <View style={styles.viewContent}>
           <View style={{ flexDirection: "column" }}>
-            <Text
-              numberOfLines={2}
-              style={{
-                fontSize: 16,
-                fontWeight: "600",
-                color: colors.text,
-                maxWidth: 250,
-              }}
-            >
+            <Text numberOfLines={2} style={styles.txtDisplay}>
               {item?.partner_id?.display_name}
             </Text>
             <Text>{moment(item.createdAt).format("HH:mm")}</Text>
@@ -85,16 +56,7 @@ const BlackList = () => {
               showModalMoti(item?.partner_id?._id);
             }}
           >
-            <Text
-              style={{
-                fontSize: 12,
-                color: colors.textOpacity6,
-                fontWeight: "400",
-                textDecorationLine: "underline",
-              }}
-            >
-              UnBlock
-            </Text>
+            <Text style={styles.txtUnBlock}>UnBlock</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -134,12 +96,7 @@ const BlackList = () => {
 
   const renderEmpty = () => {
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Image
-          style={{ height: 152, width: 192, marginBottom: 50 }}
-          source={require("assets/images/emptyIcon.png")}
-        ></Image>
-      </View>
+      <EmptyResultView title={translations.notFound} style={styles.viewEmpty} />
     );
   };
 
@@ -161,4 +118,45 @@ const BlackList = () => {
     </View>
   );
 };
+
 export default BlackList;
+
+const styles = StyleSheet.create({
+  viewItem: {
+    marginHorizontal: 16,
+    ...CS.row,
+  },
+  viewAvatar: {
+    ...CS.row,
+    marginBottom: 8,
+  },
+  avatar: {
+    height: 40,
+    width: 40,
+    borderRadius: 20,
+  },
+  txtDisplay: {
+    ...CS.hnSemiBold,
+    color: palette.text,
+    maxWidth: 250,
+  },
+  viewContent: {
+    ...CS.row,
+    justifyContent: "space-between",
+    flex: 1,
+    borderBottomWidth: 1,
+    borderBottomColor: palette.grey2,
+    paddingVertical: 8,
+    marginHorizontal: 8,
+  },
+  txtUnBlock: {
+    fontWeight: "400",
+    fontSize: 12,
+    color: palette.textOpacity6,
+    textDecorationLine: "underline",
+  },
+  viewEmpty: {
+    height: 200,
+    ...CS.center,
+  },
+});

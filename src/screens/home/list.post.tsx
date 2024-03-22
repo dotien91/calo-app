@@ -114,10 +114,12 @@ const ListPost = ({ isFollowingPost, id, isProfile }: ListPostProps) => {
       <View
         style={{
           ...CommonStyle.flex1,
+          height: "100%",
           backgroundColor: colors.background,
         }}
       >
         <FlatList
+          scrollEnabled={false}
           ref={listRef}
           data={listData}
           renderItem={renderItem}

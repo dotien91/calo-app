@@ -1,6 +1,6 @@
 import React from "react";
 import AnimatedLottieView from "lottie-react-native";
-import { View, Text } from "react-native";
+import { View, Text, ViewStyle } from "react-native";
 
 import CommonStyle from "@theme/styles";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
@@ -15,6 +15,7 @@ interface IEmptyResultView {
   lottieJson?: string;
   showLottie?: boolean;
   height?: number;
+  style?: ViewStyle;
 }
 
 const EmptyResultView = ({

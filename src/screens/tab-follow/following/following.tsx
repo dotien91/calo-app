@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, FlatList, Text, TouchableOpacity } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
+import { useTheme } from "@react-navigation/native";
 
 import { useListData } from "@helpers/hooks/useListData";
 import useStore from "@services/zustand/store";
@@ -11,10 +12,9 @@ import {
   postFollow,
   postunFollow,
 } from "@services/api/user.api";
-import { useTheme } from "@react-navigation/native";
 import { SCREENS } from "constants";
 import _ from "lodash";
-import { showToast } from "@helpers/super.modal.helper";
+import { showToast, showWarningLogin } from "@helpers/super.modal.helper";
 import { translations } from "@localization";
 import LoadingList from "@shared-components/loading.list.component";
 import eventEmitter from "@services/event-emitter";
@@ -222,10 +222,14 @@ const Following = ({ id }) => {
           <TouchableOpacity
             style={{ backgroundColor: colors.grey2, borderRadius: 4 }}
             onPress={() => {
-              if (userData?._id === id) {
-                followAction(newitem);
+              if (!userData?._id) {
+                showWarningLogin();
               } else {
-                followActionInProfileOrtherPeople(newitem);
+                if (userData?._id === id) {
+                  followAction(newitem);
+                } else {
+                  followActionInProfileOrtherPeople(newitem);
+                }
               }
             }}
           >
@@ -239,7 +243,9 @@ const Following = ({ id }) => {
               }}
             >
               {/* {item.is_follow === true && userData?._id === id ? translations.unfollow : translations.follow} */}
-              {userData?._id === id
+              {!userData?._id
+                ? translations.follow
+                : userData?._id === id
                 ? newitem.is_follow === true
                   ? translations.unfollow
                   : translations.follow

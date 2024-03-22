@@ -281,7 +281,7 @@ const createStyles = (theme: ExtendedTheme) => {
       ...CommonStyle.flex1,
       backgroundColor: colors.background,
       paddingVertical: 40,
-      minHeight: 300,
+      minHeight: 100,
     },
     headerPost: {
       height: 50,

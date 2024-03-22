@@ -21,7 +21,7 @@ import { USER_TOKEN, _setJson } from "@services/local-storage";
 import IconBtn from "@shared-components/button/IconBtn";
 import useUserHelper from "@helpers/hooks/useUserHelper";
 import { openUrl } from "@helpers/file.helper";
-import { showWarningLogin } from "@helpers/super.modal.helper";
+import { showToast, showWarningLogin } from "@helpers/super.modal.helper";
 import PressableBtn from "@shared-components/button/PressableBtn";
 
 interface SettingScreenProps {}
@@ -54,14 +54,25 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
       id: 1,
       iconFont: "book",
       action: () => {
-        NavigationService.navigate(SCREENS.TEACHER_COURSES);
+        if (isTeacher) {
+          NavigationService.navigate(SCREENS.TEACHER_COURSES);
+        } else {
+          showToast({
+            type: "warning",
+            message: translations.setting.isNotTeacher,
+          });
+        }
       },
     },
     {
       title: translations.settingUser.blackList,
       icon: require("assets/images/blacklisticon.png"),
       action: () => {
-        NavigationService.navigate(SCREENS.BLACK_LIST);
+        if (userData?._id) {
+          NavigationService.navigate(SCREENS.BLACK_LIST);
+        } else {
+          showWarningLogin();
+        }
       },
     },
     {
@@ -118,6 +129,9 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
     //   },
     // },
   ];
+  // if(isTeacher){
+
+  // }
 
   const hardCodeToken = () => {
     const token =

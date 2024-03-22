@@ -158,7 +158,7 @@ const SecondRoute = () => {
   };
   return (
     <HFlatList
-      index={1}
+      index={2}
       scrollToOverflowEnabled
       data={listData}
       renderItem={renderItemCourse}
@@ -205,7 +205,7 @@ const ThirdRoute = () => {
   };
   return (
     <HFlatList
-      index={2}
+      index={1}
       scrollToOverflowEnabled
       data={listPostSave}
       renderItem={renderItemSave}
@@ -376,7 +376,11 @@ const ProfileUser = (props: ProfileUserProps) => {
     return (
       <View>
         <AvatarProfile userInfo={userInfo} />
-        <CountFollow id={_id} postCount={totalCount} />
+        <CountFollow
+          id={_id}
+          postCount={totalCount}
+          name={userInfo?.display_name}
+        />
         <ListAction />
         <Bio text={userInfo?.bio || ""} />
         <View style={{ height: 1, backgroundColor: palette.borderColor }} />
@@ -416,16 +420,16 @@ const ProfileUser = (props: ProfileUserProps) => {
     if (userData?.user_role === "teacher" || userData?.user_role === "admin") {
       setRoute([
         { key: "first", title: translations.post.posts },
-        { key: "second", title: translations.course.course },
         { key: "third", title: translations.post.listPostSave },
+        { key: "second", title: translations.course.course },
       ]);
     }
   }, [userData?._id]);
 
   const renderScene = SceneMap({
     first: FirstRoute,
-    second: SecondRoute,
     third: ThirdRoute,
+    second: SecondRoute,
   });
 
   if (userData?._id === userInfo?._id) {
@@ -464,7 +468,11 @@ const ProfileUser = (props: ProfileUserProps) => {
       >
         <View>
           <AvatarProfile userInfo={userInfo} />
-          <CountFollow id={_id} postCount={totalCount} />
+          <CountFollow
+            id={_id}
+            postCount={totalCount}
+            name={userInfo?.display_name}
+          />
           <ListAction />
           <Bio text={userInfo?.bio || ""} />
           <View style={{ height: 1, backgroundColor: palette.borderColor }} />

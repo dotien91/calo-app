@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 import SelectTime from "./TimePicker";
@@ -33,7 +33,6 @@ interface ItemDate {
 const times: ItemTimeType[] = [
   { time_duration: 1, label: "1 hour" },
   { time_duration: 2, label: "2 hour" },
-  { time_duration: 3, label: "3 hour" },
 ];
 
 // const AddCourseCalenDar = ({ saveCourse }: AddCourseCalenDarProps) => {
@@ -53,7 +52,7 @@ const AddCourseCalenDar = () => {
   const { colors } = theme;
   const _addCourseCalendar = () => {
     if (!durationSelected || !timeSelect || !date) {
-      showToast({ type: "error", message: "Chọn đầy đủ thông tin" });
+      showToast({ type: "error", message: translations.course.warningFull });
     } else {
       const course = {
         time_duration: durationSelected.time_duration,
@@ -75,7 +74,9 @@ const AddCourseCalenDar = () => {
   const renderListCourseCalendar = () => {
     return (
       <View>
-        <Text style={[CS.hnSemiBold, { marginTop: 8 }]}>Lịch học</Text>
+        <Text style={[CS.hnSemiBold, { marginTop: 8 }]}>
+          {translations.course.schedule}
+        </Text>
         {/* render lịch đã chọn */}
 
         {courseCalendar.map((item, index) => {
@@ -87,21 +88,16 @@ const AddCourseCalenDar = () => {
             ]);
           };
           return (
-            <View
-              key={index}
-              style={{
-                borderWidth: 1,
-                marginTop: 8,
-                borderRadius: 8,
-                paddingVertical: 8,
-                paddingHorizontal: 16,
-              }}
-            >
-              <Text style={styles.txtClass}>day: {getDayOfWeek(item.day)}</Text>
+            <View key={index} style={styles.itemAdd}>
+              <Text style={styles.txtClass}>{`${
+                translations.course.day
+              }: ${getDayOfWeek(item.day)}`}</Text>
               <Text style={styles.txtClass}>
-                duration: {item.time_duration} h
+                {`${translations.course.duration}: ${item.time_duration} h`}
               </Text>
-              <Text style={styles.txtClass}>time start: {item.time_start}</Text>
+              <Text
+                style={styles.txtClass}
+              >{`${translations.course.timeStart}: ${item.time_start}`}</Text>
               <PressableBtn
                 onPress={_clearItem}
                 style={{
@@ -151,7 +147,9 @@ const AddCourseCalenDar = () => {
             isSeleted && { backgroundColor: palette.primary },
           ]}
         >
-          <Text style={[styles.txtBtn]}>{item.label}</Text>
+          <Text style={isSeleted ? styles.txtBtnSelected : styles.txtBtn}>
+            {item.label}
+          </Text>
         </PressableBtn>
       );
     };
@@ -181,7 +179,9 @@ const AddCourseCalenDar = () => {
           onPress={() => onSelectDate(item)}
           style={isSelect ? styles.durationBtnSelected : styles.durationBtn}
         >
-          <Text style={styles.txtBtn}>{item.label}</Text>
+          <Text style={isSelect ? styles.txtBtnSelected : styles.txtBtn}>
+            {item.label}
+          </Text>
         </PressableBtn>
       );
     };
@@ -191,9 +191,11 @@ const AddCourseCalenDar = () => {
         <Text style={[styles.label, { marginBottom: 0 }]}>
           {translations.purchase.chooseDay}
         </Text>
-        <View style={CS.flexRear}>
-          {daysOfWeek.map((item) => renderDateBtn(item))}
-        </View>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <View style={CS.flexRear}>
+            {daysOfWeek.map((item) => renderDateBtn(item))}
+          </View>
+        </ScrollView>
       </View>
     );
   };
@@ -203,7 +205,7 @@ const AddCourseCalenDar = () => {
       <>
         <View style={{}}>
           <SelectTime
-            placeholder="Thời gian bắt đầu"
+            placeholder={translations.course.timeStartAt}
             setTime={setTimeSelect}
             style={{}}
           />
@@ -214,14 +216,14 @@ const AddCourseCalenDar = () => {
               style={{ height: 48, flex: 1 }}
               backgroundColor={colors.backgroundMain}
               onPress={_addCourseCalendar}
-              text="Thêm"
+              text={translations.course.add}
               disabled={false}
             />
             <Button
               style={{ height: 48, flex: 1 }}
               backgroundColor={colors.backgroundMain}
               onPress={_cancel}
-              text="Huỷ"
+              text={translations.cancel}
               disabled={false}
             />
           </View>

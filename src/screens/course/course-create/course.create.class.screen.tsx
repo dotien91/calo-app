@@ -41,7 +41,7 @@ const CourseCreateClass = () => {
     if (courseCalendar.length == 0) {
       showToast({
         type: "error",
-        message: "vui lòng chọn ít nhất một ngày trong tuần",
+        message: translations.course.selectedTime,
       });
     } else {
       const params = {
@@ -116,16 +116,16 @@ const CourseCreateClass = () => {
           {isAdding && renderViewAdd()}
         </View>
         {!isAdding && (
-          <Button
-            style={{
-              marginHorizontal: 20,
-              marginTop: 16,
-              backgroundColor: updating ? colors.placeholder : colors.primary,
-            }}
-            text={translations.course.createClass}
-            disabled={updating}
-            onPress={handleSubmit(onSubmit)}
-          />
+          <View style={{ paddingHorizontal: 20, marginTop: 16 }}>
+            <Button
+              style={{
+                backgroundColor: updating ? colors.placeholder : colors.primary,
+              }}
+              text={translations.course.createClass}
+              disabled={updating}
+              onPress={handleSubmit(onSubmit)}
+            />
+          </View>
         )}
       </ScrollView>
     </View>

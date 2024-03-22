@@ -185,8 +185,7 @@ export default {
     likeThisPost: "like this post",
     personLiked: "The person who liked",
     emptyComment: "No comments yet",
-    emptyCommentDes:
-      "Please submit your comments for this article! Kindly adhere to community guidelines when participating in discussions at IELTS Hunter.",
+    emptyCommentDes: "Start the conversation",
     emptyPost: "There are no posts yet",
     emptyPostTitle: "There is no article",
     emptyPostDes:
@@ -335,6 +334,13 @@ export default {
     createCourse: "Create Course",
     updateCourse: "Update Course",
     uploadCoverImageOrVideo: "Upload an introductory photo or video",
+    add: "Add",
+    warningFull: "Select complete information",
+    duration: "Duration",
+    timeStart: "Time start",
+    day: "Day",
+    schedule: "Schedule",
+    selectedTime: "Please choose at least one session",
     warningUploadCoverImageOrVideo:
       "Please select a video/photo introducing the course",
     uploadCoverImage: "Upload cover image",
@@ -497,6 +503,7 @@ export default {
     report: "Report course",
     deleteCourseSuccess: "Course deleted successfully",
     updateSuccess: "Update successfully",
+    timeStartAt: "Start at",
   },
   seeAll: "See all",
   settings: {

@@ -20,6 +20,8 @@ const TabFollow = () => {
   const { colors } = theme;
   const route = useRoute();
   const userData = useStore((state) => state.userData);
+  const fullName = route?.params?.name;
+  console.log(fullName);
 
   // const styles = useMemo(() => createStyles(theme), [theme]);
   const index = React.useState(route?.params?.relationship);
@@ -54,7 +56,7 @@ const TabFollow = () => {
 
   return (
     <View style={{ ...CS.safeAreaView }}>
-      <Header text="ielts" />
+      <Header text={fullName} />
       {/* <TabView
         style={{ flex: 1 }}
         renderTabBar={renderTabBar}
@@ -75,14 +77,14 @@ const TabFollow = () => {
 
           <Tabs.Tab
             name={"Follow"}
-            label={`Follower ${countFollow?.followers}`}
+            label={`Follower ${countFollow?.followers || 0}`}
           >
             <Follower id={route?.params?.id}></Follower>
           </Tabs.Tab>
 
           <Tabs.Tab
             name={"Following"}
-            label={`Following ${countFollow?.following}`}
+            label={`Following ${countFollow?.following || 0}`}
           >
             <Following id={route?.params?.id}></Following>
           </Tabs.Tab>

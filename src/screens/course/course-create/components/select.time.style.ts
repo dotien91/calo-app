@@ -2,6 +2,7 @@ import { ExtendedTheme } from "@react-navigation/native";
 import { ViewStyle, StyleSheet, TextStyle } from "react-native";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
+import { WindowWidth } from "@freakycoder/react-native-helpers";
 
 interface Style {
   container: ViewStyle;
@@ -50,6 +51,7 @@ export default (theme: ExtendedTheme) => {
       marginHorizontal: 4,
       ...CS.flexCenter,
       borderRadius: 4,
+      minWidth: WindowWidth / 8,
     },
     durationBtnSelected: {
       padding: 4,
@@ -58,6 +60,7 @@ export default (theme: ExtendedTheme) => {
       marginHorizontal: 4,
       ...CS.flexCenter,
       borderRadius: 4,
+      minWidth: WindowWidth / 8,
     },
     hourBtn: {
       shadowColor: "rgba(0,0,0,0.8)",
@@ -74,6 +77,17 @@ export default (theme: ExtendedTheme) => {
     txtBtn: {
       ...CS.hnSemiBold,
       color: colors.textOpacity6,
+    },
+    txtBtnSelected: {
+      ...CS.hnSemiBold,
+      color: colors.white,
+    },
+    itemAdd: {
+      borderWidth: 1,
+      marginTop: 8,
+      borderRadius: 8,
+      paddingVertical: 8,
+      paddingHorizontal: 16,
     },
     selectBox: {
       marginBottom: 16,

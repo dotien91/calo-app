@@ -7,9 +7,9 @@ export const numberWithCommas = (x: number) => {
 export const formatLanguage = (countryId: string) => {
   switch (countryId) {
     case "en":
-      return translations.vi;
-    case "vi":
       return translations.en;
+    case "vi":
+      return translations.vi;
     default:
       return "";
   }

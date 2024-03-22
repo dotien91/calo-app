@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, SafeAreaView } from "react-native";
+import { FlatList, SafeAreaView, StyleSheet } from "react-native";
 
 import Header from "@shared-components/header/Header";
 import CS from "@theme/styles";
@@ -10,6 +10,7 @@ import useStore from "@services/zustand/store";
 import { translations } from "@localization";
 import LoadingList from "@shared-components/loading.list.component";
 import ClassItem from "./class.item";
+import EmptyResultView from "@shared-components/empty.data.component";
 
 const TeacherCourse = () => {
   const userData = useStore((state) => state.userData);
@@ -43,13 +44,19 @@ const TeacherCourse = () => {
   const renderItem = ({ item }) => {
     return <ClassItem item={item} />;
   };
+  const renderEmpty = () => {
+    return (
+      <EmptyResultView title={translations.notFound} style={styles.viewEmpty} />
+    );
+  };
 
   return (
     <SafeAreaView style={CS.safeAreaView}>
-      <Header text={translations.settingUser.mycouse} />
+      <Header text={translations.course.manageClass} />
       {isLoading && <LoadingList numberItem={2} />}
+      {!isLoading && coursesHasClass.length == 0 && renderEmpty()}
       <FlatList
-        contentContainerStyle={{ paddingHorizontal: 16 }}
+        contentContainerStyle={styles.container}
         data={coursesHasClass}
         renderItem={renderItem}
         onEndReachedThreshold={0}
@@ -61,5 +68,15 @@ const TeacherCourse = () => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 16,
+  },
+  viewEmpty: {
+    minHeight: 200,
+    ...CS.center,
+  },
+});
 
 export default TeacherCourse;

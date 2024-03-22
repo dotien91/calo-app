@@ -100,7 +100,7 @@ const CourseListClassScreen = () => {
             <IconBtn
               name={"user"}
               color={colors.text}
-              customStyle={{ marginRight: 8 }}
+              customStyle={styles.styleIcon}
             />
             <Text style={styles.text}>
               {item.members.length + "/" + item.limit_member}
@@ -111,7 +111,7 @@ const CourseListClassScreen = () => {
             <IconBtn
               color={colors.text}
               name={"calendar"}
-              customStyle={{ marginRight: 8 }}
+              customStyle={styles.styleIcon}
             />
             <Text style={styles.text}>
               {formatVNDate(item.start_time) +
@@ -128,15 +128,12 @@ const CourseListClassScreen = () => {
           ))}
         </View>
         {member == 0 && (
-          <PressableBtn
-            onPress={_deleteClass}
-            style={{ position: "absolute", top: 8, right: 8 }}
-          >
+          <PressableBtn onPress={_deleteClass} style={styles.btnDelete}>
             <Icon
               name="close-outline"
               type={IconType.Ionicons}
               size={25}
-              color={colors.textMain}
+              color={colors.text}
             />
           </PressableBtn>
         )}
@@ -160,18 +157,19 @@ const CourseListClassScreen = () => {
     <View style={[CS.safeAreaView, { marginBottom: getBottomSpace() }]}>
       <Header
         text={translations.course.listClass}
-        // iconNameRight="plus"
-        // onPressRight={_goToCreateClass}
+        iconNameRight={listData.length > 0 ? "plus" : undefined}
+        onPressRight={_goToCreateClass}
       />
       {isLoading && <LoadingList />}
-      <View style={{ paddingHorizontal: 16 }}>
-        <Button
-          style={{ marginVertical: 8, marginHorizontal: 16 }}
-          text={translations.course.addModule}
-          type="primary"
-          onPress={_goToCreateClass}
-        />
-      </View>
+      {listData.length == 0 && (
+        <View style={styles.viewBtn}>
+          <Button
+            text={translations.course.addModule}
+            type="primary"
+            onPress={_goToCreateClass}
+          />
+        </View>
+      )}
       <FlatList
         data={listData}
         renderItem={renderItem}
@@ -186,11 +184,13 @@ const CourseListClassScreen = () => {
       />
 
       {listData.length > 0 && (
-        <Button
-          style={{ marginVertical: 8, marginHorizontal: 16 }}
-          text={translations.home.select}
-          onPress={_poptoTop}
-        />
+        <View style={styles.styleBtn}>
+          <Button
+            text={translations.home.select}
+            type="primary"
+            onPress={_poptoTop}
+          />
+        </View>
       )}
     </View>
   );
@@ -207,7 +207,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
   },
-
+  styleBtn: {
+    marginHorizontal: 16,
+    marginVertical: 8,
+  },
   numberWrap: {
     paddingVertical: 8,
     paddingHorizontal: 16,
@@ -232,5 +235,17 @@ const styles = StyleSheet.create({
     color: palette.textOpacity8,
     padding: 8,
     ...CS.borderTopStyle,
+  },
+  viewBtn: {
+    paddingHorizontal: 16,
+    marginVertical: 8,
+  },
+  btnDelete: {
+    position: "absolute",
+    top: 8,
+    right: 8,
+  },
+  styleIcon: {
+    marginRight: 8,
   },
 });

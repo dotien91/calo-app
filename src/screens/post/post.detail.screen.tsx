@@ -37,6 +37,7 @@ import EmptyResultView from "@shared-components/empty.data.component";
 import { trim } from "@helpers/string.helper";
 import uuid from "react-native-uuid";
 import { TypedComment, TypedPost } from "shared/models";
+import LoadingList from "@shared-components/loading.list.component";
 
 interface PostDetailProps {
   route: any;
@@ -75,6 +76,7 @@ const PostDetail = (props: PostDetailProps) => {
     refreshControl,
     renderFooterComponent,
     setListData,
+    isLoading,
     totalCount,
   } = useListData<TypedComment>(
     {
@@ -319,11 +321,7 @@ const PostDetail = (props: PostDetailProps) => {
   const renderItem = ({ item }: { item: TypedComment }) => {
     return (
       <View>
-        {listData.length > 0 ? (
-          <ItemComment data={item} onPressReply={() => pressReply(item)} />
-        ) : (
-          renderEmpty()
-        )}
+        <ItemComment data={item} onPressReply={() => pressReply(item)} />
       </View>
     );
   };
@@ -334,8 +332,8 @@ const PostDetail = (props: PostDetailProps) => {
         <EmptyResultView
           title={translations.post.emptyComment}
           desc={translations.post.emptyCommentDes}
-          icon="chatbubbles-outline"
           showLottie={false}
+          style={styles.viewEmpty}
         />
       </View>
     );
@@ -351,6 +349,7 @@ const PostDetail = (props: PostDetailProps) => {
   const clearComment = () => {
     setValue("");
   };
+  console.log(listData);
 
   return (
     <KeyboardAvoidingView
@@ -371,23 +370,28 @@ const PostDetail = (props: PostDetailProps) => {
             />
           )}
           <View style={CommonStyle.flex1}>
-            <FlatList
-              style={styles.viewFlatList}
-              nestedScrollEnabled
-              data={listData.filter(
-                (item) => listCommentDelete.indexOf(item._id) < 0,
-              )}
-              renderItem={renderItem}
-              scrollEventThrottle={16}
-              onEndReachedThreshold={0}
-              onEndReached={onEndReach}
-              showsVerticalScrollIndicator={false}
-              removeClippedSubviews={true}
-              keyExtractor={(item) => item?._id + ""}
-              refreshControl={refreshControl()}
-              ListFooterComponent={renderFooterComponent()}
-              // ListEmptyComponent={renderEmpty()}
-            />
+            {isLoading && <LoadingList numberItem={3} />}
+            {listData.length == 0 && !isLoading ? (
+              renderEmpty()
+            ) : (
+              <FlatList
+                style={styles.viewFlatList}
+                nestedScrollEnabled
+                data={listData.filter(
+                  (item) => listCommentDelete.indexOf(item._id) < 0,
+                )}
+                renderItem={renderItem}
+                scrollEventThrottle={16}
+                onEndReachedThreshold={0}
+                onEndReached={onEndReach}
+                showsVerticalScrollIndicator={false}
+                removeClippedSubviews={true}
+                keyExtractor={(item) => item?._id + ""}
+                refreshControl={refreshControl()}
+                ListFooterComponent={renderFooterComponent()}
+                // ListEmptyComponent={renderEmpty()}
+              />
+            )}
           </View>
         </ScrollView>
         <View style={{ backgroundColor: colors.background, paddingTop: 10 }}>

@@ -13,13 +13,14 @@ import { EnumTypeRelationship } from "constants/profile.constant";
 interface CountFollowProps {
   id: string;
   postCount: string | number;
+  name?: string;
 }
 interface CountFolowType {
   following?: string | number;
   followers?: string | number;
 }
 
-const CountFollow = ({ id, postCount }: CountFollowProps) => {
+const CountFollow = ({ id, postCount, name = "" }: CountFollowProps) => {
   const [countFollow, setCountFollow] = useState<CountFolowType>({});
   const _getUserInfo = (id: string) => {
     getCountFollow({ user_id: id }).then((res) => {
@@ -87,6 +88,7 @@ const CountFollow = ({ id, postCount }: CountFollowProps) => {
             relationship: EnumTypeRelationship.Following,
             countFollow: countFollow,
             id: id,
+            name: name,
           });
         }}
       >
@@ -104,6 +106,7 @@ const CountFollow = ({ id, postCount }: CountFollowProps) => {
             relationship: EnumTypeRelationship.Follower,
             countFollow: countFollow,
             id: id,
+            name: name,
           });
         }}
       >
