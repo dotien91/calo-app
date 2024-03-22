@@ -164,7 +164,7 @@ const CourseListClassScreen = () => {
       {listData.length == 0 && (
         <View style={styles.viewBtn}>
           <Button
-            text={translations.course.addModule}
+            text={translations.course.createClass}
             type="primary"
             onPress={_goToCreateClass}
           />

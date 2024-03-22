@@ -5,7 +5,7 @@ import { getBottomSpace } from "react-native-iphone-screen-helper";
 import CommonStyle from "@theme/styles";
 import { Device } from "@utils/device.ui.utils";
 import { palette } from "@theme/themes";
-import { ScreenHeight } from "@freakycoder/react-native-helpers";
+import { ScreenHeight, isIOS } from "@freakycoder/react-native-helpers";
 
 const { width } = Dimensions.get("screen");
 const SIZE_AVATAR = 58;
@@ -232,6 +232,8 @@ const createStyles = (theme: ExtendedTheme) => {
       borderTopWidth: 0.5,
       alignItems: "center",
       borderColor: palette.borderColor1,
+      marginBottom: isIOS ? getBottomSpace() + 30 : 0,
+      height: 40,
     },
     styleAvatar: {
       width: SIZE_AVATAR,

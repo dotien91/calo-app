@@ -17,7 +17,7 @@ import { useUserHook } from "@helpers/hooks/useUserHook";
 import EmptyResultView from "@shared-components/empty.data.component";
 import { TypedPost } from "shared/models";
 import LoadingList from "@shared-components/loading.list.component";
-import { HFlatList } from "react-native-head-tab-view";
+import { HFlatList, HScrollView } from "react-native-head-tab-view";
 
 interface ListPostProps {
   isFollowingPost: boolean;
@@ -80,9 +80,9 @@ const ListPost = ({ isFollowingPost, id, isProfile }: ListPostProps) => {
 
   if (!isLoggedIn() && isFollowingPost) {
     return (
-      <View style={{ ...CommonStyle.flex1, ...CommonStyle.center }}>
+      <HScrollView index={1} style={{ ...CommonStyle.flex1 }}>
         {renderViewRequestLogin()}
-      </View>
+      </HScrollView>
     );
   }
 

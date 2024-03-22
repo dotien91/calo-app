@@ -20,8 +20,10 @@ const limit = 20;
 
 export const useChatHistory = (txtSearch: string, searchModeChat: boolean) => {
   const route = useRoute();
-  const [chatRoomId, setChatRoomId] = useState(route.params?.["id"]);
-
+  const [chatRoomId, setChatRoomId] = useState(
+    route.params?.["id"] || route.params?.["partner_id"],
+  );
+  console.log("..id...", route.params?.["id"] || route.params?.["partner_id"]);
   const userData = useStore((state) => state.userData);
   const [messages, setMessages] = useState([]);
   const [isEmptyMessage, setIsEmptyMessage] = useState(false);

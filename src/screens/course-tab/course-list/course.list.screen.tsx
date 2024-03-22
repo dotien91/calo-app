@@ -5,6 +5,7 @@ import {
   useWindowDimensions,
   TouchableOpacity,
   StyleSheet,
+  Text,
 } from "react-native";
 import { TabView, SceneMap } from "react-native-tab-view";
 import * as NavigationService from "react-navigation-helpers";

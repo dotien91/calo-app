@@ -13,7 +13,6 @@ import useStore from "@services/zustand/store";
 import { EnumCourseType } from "models/course.model";
 import InviteView from "../invite-me/invite";
 import ListLiveStream from "../list-livestream/list.liveStream";
-import { palette } from "@theme/themes";
 import CourseView from "../list-course/list.course";
 // import ListLiveStream from "../list-livestream/list.liveStream";
 const listCategory = [

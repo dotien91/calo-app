@@ -12,6 +12,7 @@ import CS from "@theme/styles";
 import { shareProfile } from "@utils/share.utils";
 import IconSvg from "assets/svg";
 import { TypedUser } from "models";
+import { palette } from "@theme/themes";
 
 interface ActionMoreProps {
   data?: TypedUser;
@@ -41,11 +42,11 @@ const ActionMore = ({ data }: ActionMoreProps) => {
         style={{ paddingHorizontal: 0 }}
       /> */}
       <TouchableOpacity onPress={_share} style={styles.viewItem}>
-        <IconSvg name="icShare" size={25} />
+        <IconSvg name="icShare" size={25} color={palette.text} />
         <Text style={styles.text}>{translations.post.share}</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={_report} style={styles.viewItem}>
-        <IconSvg name="icFlagPoint" size={25} />
+        <IconSvg name="icFlagPoint" size={25} color={palette.text} />
         <Text style={styles.text}>{translations.report}</Text>
       </TouchableOpacity>
     </View>
@@ -57,7 +58,7 @@ export default ActionMore;
 const styles = StyleSheet.create({
   container: {
     marginBottom: getBottomSpace(),
-    marginTop: 40,
+    // marginTop: 20,
   },
   viewItem: {
     flexDirection: "row",

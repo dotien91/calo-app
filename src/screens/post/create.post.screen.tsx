@@ -54,6 +54,8 @@ export default function PostScreen() {
   const [listCategory, setListCategory] = useState<TypedCategory[]>([]);
   const userData = useStore((state) => state.userData);
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  const isTeacher =
+    userData?.user_role === "teacher" || userData?.user_role === "admin";
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -261,10 +263,14 @@ export default function PostScreen() {
               }
               onPress={onSelectPicture}
             />
-            <SelectComponent
-              icon={<IconSvg size={32} name="icLive" color={colors.primary} />}
-              onPress={onPressLive}
-            />
+            {isTeacher && (
+              <SelectComponent
+                icon={
+                  <IconSvg size={32} name="icLive" color={colors.primary} />
+                }
+                onPress={onPressLive}
+              />
+            )}
             <SelectComponent
               icon={<IconSvg size={32} name="icFile" color={colors.blue} />}
               onPress={onPressFile}
@@ -292,11 +298,15 @@ export default function PostScreen() {
               onPress={onSelectVideo}
               text={translations.selectVideo}
             />
-            <SelectComponentText
-              icon={<IconSvg size={24} name="icLive" color={colors.primary} />}
-              onPress={onPressLive}
-              text={translations.selectLive}
-            />
+            {isTeacher && (
+              <SelectComponentText
+                icon={
+                  <IconSvg size={24} name="icLive" color={colors.primary} />
+                }
+                onPress={onPressLive}
+                text={translations.selectLive}
+              />
+            )}
             <SelectComponentText
               icon={<IconSvg size={24} name="icFile" color={colors.blue} />}
               onPress={onPressFile}

@@ -50,7 +50,7 @@ const DetailTeacherScreen = () => {
       showSuperModal({
         styleModalType: EnumStyleModalType.Bottom,
         contentModalType: EnumModalContentType.MoreTeacher,
-        data: data,
+        data: { ...data, hideCloseIcon: true },
       });
     }
   };

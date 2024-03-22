@@ -67,6 +67,7 @@ const DiscoverScreen = () => {
       icon: "icFind",
       title: translations.discover.finduser,
       screen: SCREENS.COURSE_CATEGORY,
+      params: { defaultIndex: 3 },
     },
   ];
 
@@ -407,7 +408,9 @@ const DiscoverScreen = () => {
                 }}
               >
                 <TouchableOpacity
-                  onPress={() => NavigationService.navigate(item.screen)}
+                  onPress={() =>
+                    NavigationService.navigate(item.screen, item.params)
+                  }
                   style={{
                     flexDirection: "row",
                     alignItems: "center",
