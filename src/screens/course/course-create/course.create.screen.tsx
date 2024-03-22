@@ -45,6 +45,10 @@ import eventEmitter from "@services/event-emitter";
 import { SCREENS } from "constants";
 // import SelectImageHook from "./components/select.image";
 import TextInputPrice from "../components/text.input.price/text.input.price";
+import { EnumClassType } from "models/course.model";
+import { priceIds } from "constants/iap.constant";
+import DropDownItem from "@shared-components/dropdown/DropDownItem";
+
 interface ILevel {
   value: string;
   index: string | number;
@@ -174,6 +178,11 @@ const CourseCreate = () => {
           styleModalType: EnumStyleModalType.Middle,
           contentModalType: EnumModalContentType.Loading,
         });
+        if (typeCourse == EnumClassType.SelfLearning) {
+          params["price_id"] = priceIds.find(
+            (item) => item.value == priceInput,
+          )?.id;
+        }
         if (course_id) {
           updateCourse(params).then((res) => {
             if (!res.isError) {
@@ -324,6 +333,51 @@ const CourseCreate = () => {
     );
   };
 
+  const renderPrice = () => {
+    if (typeCourse == EnumClassType.SelfLearning) {
+      return (
+        <View style={{ zIndex: 2, marginVertical: 8 }}>
+          <Text
+            style={{
+              ...CS.hnMedium,
+              color: colors.text,
+              marginLeft: 20,
+              marginVertical: 8,
+            }}
+          >
+            {translations.payment.coursePrice}
+          </Text>
+
+          <DropDownItem
+            value={priceInput}
+            setValue={setPriceInput}
+            items={priceIds}
+            placeholder={translations.payment.coursePrice}
+          />
+        </View>
+      );
+    }
+    return (
+      <>
+        <Text
+          style={{
+            ...CS.hnMedium,
+            color: colors.text,
+            marginLeft: 20,
+            marginVertical: 8,
+          }}
+        >
+          {translations.payment.coursePrice}
+        </Text>
+
+        <TextInputPrice
+          setPriceInput={setPriceInput}
+          priceInput={priceInput}
+        ></TextInputPrice>
+      </>
+    );
+  };
+
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
@@ -396,21 +450,7 @@ const CourseCreate = () => {
             maxLength={500}
             showPlaceholder
           />
-          <Text
-            style={{
-              ...CS.hnMedium,
-              color: colors.text,
-              marginLeft: 20,
-              marginVertical: 8,
-            }}
-          >
-            {translations.payment.coursePrice}
-          </Text>
-
-          <TextInputPrice
-            setPriceInput={setPriceInput}
-            priceInput={priceInput}
-          ></TextInputPrice>
+          {renderPrice()}
 
           <Text style={styles.textTitle}>
             {translations.course.timeAvailable}

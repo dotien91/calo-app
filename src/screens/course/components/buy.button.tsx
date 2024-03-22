@@ -9,7 +9,14 @@ import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import { SCREENS } from "constants";
 import { useUserHook } from "@helpers/hooks/useUserHook";
-import { showWarningLogin } from "@helpers/super.modal.helper";
+import {
+  showLoading,
+  showToast,
+  showWarningLogin,
+} from "@helpers/super.modal.helper";
+import eventEmitter from "@services/event-emitter";
+import { addUserToCourseVideo } from "@services/api/course.api";
+import useStore from "@services/zustand/store";
 
 interface BuyButtonProps {
   data?: ICourseItem;
@@ -22,13 +29,47 @@ interface BuyButtonProps {
 const BuyButton = ({ data, type }: BuyButtonProps) => {
   const { isLoggedIn } = useUserHook();
   const isJoin = data?.is_join;
-  const goToBuyScreen = () => {
+  const userData = useStore((state) => state.userData);
+
+  const _addUserToCourseVideo = () => {
+    addUserToCourseVideo({
+      course_id: data?._id || "",
+      add_type: "manual",
+      user_id: userData?._id || "",
+    }).then((res) => {
+      console.log("resssss addUserToCourseVideo");
+      if (!res.isError) {
+        eventEmitter.on("reload_data_preview");
+        showToast({
+          type: "success",
+          message: translations.payment.completecheckout,
+        });
+      } else {
+        showToast({
+          type: "error",
+        });
+      }
+    });
+  };
+
+  const goToBuyScreen = async () => {
     if (!isLoggedIn()) {
       showWarningLogin();
       return;
     }
-    if (type == EnumClassType.SelfLearning) {
-      alert("open iap");
+    if (data?.type == EnumClassType.SelfLearning) {
+      if (!data?.price_id) {
+        showToast({
+          type: "warning",
+          message: "Khóa học không khả dụng",
+        });
+        return;
+      }
+      showLoading();
+      eventEmitter.emit("emit_buy_product", {
+        productId: data?.price_id,
+        cb: _addUserToCourseVideo,
+      });
       return;
     }
 

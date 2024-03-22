@@ -26,7 +26,6 @@ const BookLessonSelectView = ({
   const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
 
-  console.log("getTimeAvailablegetTimeAvailable", course_id);
   const [data, setData] = useState([]);
   const [duration, setDuration] = useState<number>(1);
   const [isMaxDay, setIsMaxDay] = useState(false);

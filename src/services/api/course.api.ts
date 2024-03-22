@@ -481,3 +481,17 @@ export async function pinShoppingLiveRequest(data) {
     return response;
   });
 }
+
+export async function addUserToCourseVideo(data: {
+  course_id: string;
+  add_type: string;
+  user_id: string;
+}) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "course/add-user",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
