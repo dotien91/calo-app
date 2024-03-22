@@ -22,6 +22,7 @@ export default function DropDownItem({
   value,
   setValue,
   items,
+  ...res
 }: DropDownItemProps) {
   const [open, setOpen] = useState(false);
   const theme = useTheme();
@@ -36,9 +37,9 @@ export default function DropDownItem({
         setOpen={setOpen}
         setValue={(e) => {
           setValue(e);
-          alert(e);
         }}
         multiple={false}
+        {...res}
       />
     </View>
   );

@@ -82,6 +82,7 @@ const CoursePreviewScreen = () => {
     getCourseDetail(course_id, params).then((res) => {
       console.log("course detail", res);
       const data = res.data;
+      data["price_id"] = "com.course.test100";
       if (!res.isError) {
         // setIsLoading(false);
         setData(data);

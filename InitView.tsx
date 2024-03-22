@@ -12,6 +12,8 @@ import { setDeviceInfo } from "@helpers/device.info.helper";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import useFirebase from "@helpers/useFirebase";
 import { useInAppPurchase } from "@helpers/hooks/useInAppPurchase";
+import { priceIds } from "constants/iap.constant";
+
 LogBox.ignoreAllLogs();
 
 const InitView = () => {
@@ -42,12 +44,13 @@ const InitView = () => {
   const initData = () => {
     getUserData();
     setDeviceInfo();
-    initIAP([], []);
+    // initIAP(["com.course.tier2"]);
+    initIAP(priceIds.map((i) => i.id));
   };
 
   useFirebase();
 
-  return <></>;
+  return null;
 };
 
 export default React.memo(InitView);

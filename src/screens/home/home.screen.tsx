@@ -79,6 +79,8 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
     return <CustomRefreshControl {...refreshProps} />;
   };
 
+  // return <IapTest />
+
   return (
     <View style={CommonStyle.safeAreaView}>
       <HeaderHome />

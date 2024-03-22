@@ -29,7 +29,6 @@ const BookLessonSelectView: React.FC<BookLessonSelectViewProps> = () => {
   const route = useRoute();
   const courseData = route.params?.["courseData"];
   const courseId = courseData._id;
-  console.log("getTimeAvailablegetTimeAvailable", courseId);
   const [data, setData] = useState([]);
   const [duration, setDuration] = useState<number>(1);
   const [isMaxDay, setIsMaxDay] = useState(false);
