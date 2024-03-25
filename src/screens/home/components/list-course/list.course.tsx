@@ -31,11 +31,15 @@ const CourseView = () => {
   };
 
   const renderItem = (item: ICourseItem, index: number) => {
-    return (
-      <>
-        <CourseItem isSliderItem data={item.item} key={index} />
-      </>
-    );
+    if (item.item?.is_join) {
+      return null;
+    } else {
+      return (
+        <>
+          <CourseItem isSliderItem data={item.item} key={index} />
+        </>
+      );
+    }
   };
 
   if (!listData.length) return null;
