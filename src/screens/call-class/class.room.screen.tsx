@@ -8,7 +8,6 @@ import Janus from "./service/janus.mobile";
 import { SERVER } from "constants/class.room.constant";
 import useStore from "@services/zustand/store";
 import { useRoute } from "@react-navigation/native";
-import { _isTeacher } from "./call.class.helper";
 import ClassRoomBottomView from "./components/call.class.bottom.view";
 import ClassRoomTopView from "./components/call.class.top.view";
 import { EnumClassType } from "models/course.model";
@@ -115,7 +114,14 @@ const ClassRoomScreen = () => {
                   request: "join",
                   room: roomId,
                   ptype: "publisher",
-                  display: userData?.display_name + (isTeacher ? "tutor" : ""),
+                  display: JSON.stringify({
+                    isTeacher,
+                    isMe: false,
+                    name: userData?.display_name,
+                    id: userData?._id,
+                    user_avatar:
+                      userData?.user_avatar || userData?.user_avatar_thumbnail,
+                  }),
                 };
                 sfutest.send({ message: register });
               },
@@ -274,6 +280,15 @@ const ClassRoomScreen = () => {
     }
   };
 
+  function isJsonString(str) {
+    try {
+      JSON.parse(str);
+    } catch (e) {
+      return false;
+    }
+    return true;
+  }
+
   const newRemoteFeed = (id, display, audio, video) => {
     console.log("displaydisplay", display);
     let remoteFeed = null;
@@ -343,14 +358,25 @@ const ClassRoomScreen = () => {
       onremotestream: (stream) => {
         setRemoteList((old) => {
           const newData = { ...old };
+          //           newData[id] = {
+          //             stream: stream,
+          //             name: display,
+          //             id,
+          //             isTeacher: _isTeacher(display),
+          //           };
+          console.log("display======", display);
+          const publisherData = isJsonString(display)
+            ? JSON.parse(display)
+            : {};
           newData[id] = {
             stream: stream,
-            name: display,
+            name: publisherData?.name,
             id,
-            isTeacher: _isTeacher(display),
+            ...publisherData,
           };
           return newData;
         });
+        // return newData;
         // setRemoteListPluginHandle((old) => {
         //   const _newData = { ...old };
         //   _newData[id] = remoteFeed;
@@ -382,6 +408,7 @@ const ClassRoomScreen = () => {
       stream: selfViewSrc,
       isMe: true,
       name: userData?.display_name,
+      ...userData,
     };
   }, [selfViewSrc]);
 
@@ -397,8 +424,6 @@ const ClassRoomScreen = () => {
   const _renderMyVideo = () => {
     const publishers = getRemoteListValue;
     if (!selfViewSrc || publishers.length) return null;
-    console.log(333333333);
-
     return (
       <ClassRoomRtcView
         isMe
@@ -406,6 +431,7 @@ const ClassRoomScreen = () => {
         streamURL={selfViewSrc}
         objectFit="cover"
         video={config.video}
+        {...userData}
       />
     );
   };
@@ -415,6 +441,8 @@ const ClassRoomScreen = () => {
       return {
         stream: selfViewSrc,
         name: userData?.display_name,
+        isTeacher,
+        ...userData,
       };
     } else {
       return getRemoteListValue.find((item) => item?.isTeacher);

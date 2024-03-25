@@ -27,7 +27,7 @@ const createChatSlice: StoreSlice<ChatSlice> = (set, get) => ({
   setSearchModeChat: (value: boolean) => set({ searchModeChat: value }),
   updateCurrentMediaIds: (item) => {
     const { currentMediaIds } = get();
-    const oldItem = currentMediaIds.find((_item) => _item.id == item.id) || {
+    const oldItem = currentMediaIds.find((_item) => _item?.id == item?.id) || {
       data: [],
     };
     const newItem = {
@@ -37,7 +37,7 @@ const createChatSlice: StoreSlice<ChatSlice> = (set, get) => ({
     set(() => ({
       currentMediaIds: [
         newItem,
-        ...currentMediaIds.filter((_item) => _item.id != item.id),
+        ...currentMediaIds.filter((_item) => _item?.id != item?.id),
       ],
     }));
   },

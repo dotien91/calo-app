@@ -37,8 +37,10 @@ const SmartBanking = () => {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const route = useRoute();
   const tradeId = route.params?.["tradeId"];
+  const short_id = route.params?.["short_id"];
   const countCheckPaymentSuccess = React.useRef(null);
   const intervalCheckPaymentSuccess = React.useRef(null);
+  const [qrcode, setqeCode] = useState();
 
   const callbackPaymentSuccess = () => {
     NavigationService.navigate(SCREENS.PAYMENT_SUCCESS);
@@ -78,7 +80,6 @@ const SmartBanking = () => {
     NavigationService.navigate(SCREENS.COURSE_LIST);
   };
 
-  const [qrcode, setqeCode] = useState("");
   const copyToClipboard = (text: string) => {
     Clipboard.setString(text);
   };
@@ -147,12 +148,10 @@ const SmartBanking = () => {
           {translations.payment.tocomplete}
         </Text>
         <View style={styles.styleViewCopyNumberBank}>
-          <Text style={styles.styleTextNumberBank}>
-            {qrcode?.config?.option_content[0]?.value}
-          </Text>
+          <Text style={styles.styleTextNumberBank}>818187777</Text>
           <TouchableOpacity
             onPress={() => {
-              copyToClipboard(qrcode?.config?.option_content[0]?.value);
+              copyToClipboard("818187777");
             }}
           >
             <Image
@@ -161,11 +160,13 @@ const SmartBanking = () => {
             ></Image>
           </TouchableOpacity>
         </View>
-        <Text style={styles.styleTextName}>NGUYEN VAN A</Text>
+        <Text style={styles.styleTextName}>CÔNG TY CỔ PHẦN IKIGROUP</Text>
         <Text numberOfLines={2} style={styles.styleTextNameBank}>
-          {qrcode?.config?.option_content[1]?.value}
+          NGÂN HÀNG MBBANK
         </Text>
-
+        <Text numberOfLines={2} style={styles.styleTextNameBank}>
+          Chi nhánh: THĂNG LONG
+        </Text>
         <TouchableOpacity
           style={{ flexDirection: "row", justifyContent: "center" }}
           onPress={() => {
@@ -173,7 +174,7 @@ const SmartBanking = () => {
           }}
         >
           <Text numberOfLines={2} style={styles.styleTextNameBank}>
-            {translations.payment.content}: ilelts hunter
+            {translations.payment.content}: IELTS {short_id}
           </Text>
           <Image
             style={{ height: 15.3, width: 13.79, marginLeft: 5 }}

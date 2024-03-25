@@ -106,6 +106,8 @@ const SuperModal: React.FC<SuperModalProps> = () => {
 
   const getStyleModal = () => {
     switch (contentModalType) {
+      case EnumModalContentType.ChatRoom:
+        return styles.chatView;
       case EnumModalContentType.Loading:
         return styles.loadingView;
         break;
@@ -289,6 +291,9 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         {contentModalType == EnumModalContentType.ListCourse && (
           <ListCourseLiveStream {...data} />
         )}
+        {contentModalType == EnumModalContentType.ChatRoom && (
+          <ChatRoomClass {...data} />
+        )}
       </Modal>
     );
   }
@@ -319,6 +324,12 @@ const styles = StyleSheet.create({
   loadingView: {
     ...CommonStyle.flex1,
     margin: 0,
+    // backgroundColor: palette.whiteOverlay
+  },
+  chatView: {
+    ...CommonStyle.flex1,
+    margin: 0,
+    minHeight: 300,
     // backgroundColor: palette.whiteOverlay
   },
   modalInner: {

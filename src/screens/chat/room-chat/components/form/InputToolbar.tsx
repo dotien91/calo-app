@@ -1,6 +1,7 @@
 import React, { useMemo, useRef } from "react";
 import { View, TouchableOpacity } from "react-native";
 import { useTheme } from "@react-navigation/native";
+import { throttle } from "lodash";
 
 /**
  * ? Local Imports
@@ -12,6 +13,7 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import KeyboardBtn from "./KeyboardBtn";
 import Input from "@shared-components/form/Input";
 import useKeyboardListener from "@helpers/hooks/useKeyboardListener";
+import { emitSocket } from "@helpers/socket.helper";
 
 interface InputToolbarProps {
   openRecordModal?: () => void;
@@ -20,6 +22,7 @@ interface InputToolbarProps {
   onSelectVideo?: () => void;
   onSelectFile?: () => void;
   fromLiveStream?: boolean;
+  chatRoomId: string;
 }
 
 const InputToolbar: React.FC<InputToolbarProps> = ({
@@ -29,6 +32,7 @@ const InputToolbar: React.FC<InputToolbarProps> = ({
   onSelectVideo,
   fromLiveStream,
   onSelectFile,
+  chatRoomId,
 }) => {
   const theme = useTheme();
   const { colors } = theme;
@@ -43,6 +47,11 @@ const InputToolbar: React.FC<InputToolbarProps> = ({
     inputRef.current.setValue("");
   };
 
+  const emitTypingToServerWithThrottle = React.useCallback(() => {
+    return null;
+    throttle(() => emitSocket("typingToServer", "room_" + chatRoomId), 5000);
+  }, [chatRoomId]);
+
   return (
     <View style={styles.wrapInputToolbar}>
       <View style={styles.wrapInput}>
@@ -51,6 +60,7 @@ const InputToolbar: React.FC<InputToolbarProps> = ({
           placeholder={translations.chat.typeMessage}
           placeholderTextColor={colors.placeholder2}
           customStyle={styles.input}
+          cb={emitTypingToServerWithThrottle}
         />
         {!isShowKeyboard && !fromLiveStream && (
           <View style={styles.wrapMediaBtn}>

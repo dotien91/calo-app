@@ -17,6 +17,7 @@ const SIZE_AVATAR = 40;
 const BORDER_AVATAR = 20;
 const HeaderHome = () => {
   const userData = useStore((state) => state.userData);
+  const userInfo = useStore((state) => state.userInfo);
   const userMedia = useStore((state) => state.userMedia);
 
   const theme = useTheme();
@@ -75,7 +76,7 @@ const HeaderHome = () => {
       <View style={styles.viewCup}>
         {userData?._id && (
           <TextBase fontSize={20} fontWeight="600">
-            {formatMoney(userData?.point)}
+            {formatMoney(userInfo?.point)}
           </TextBase>
         )}
         {userData?._id && (

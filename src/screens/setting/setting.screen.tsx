@@ -21,8 +21,15 @@ import { USER_TOKEN, _setJson } from "@services/local-storage";
 import IconBtn from "@shared-components/button/IconBtn";
 import useUserHelper from "@helpers/hooks/useUserHelper";
 import { openUrl } from "@helpers/file.helper";
-import { showToast, showWarningLogin } from "@helpers/super.modal.helper";
+import {
+  EnumModalContentType,
+  EnumStyleModalType,
+  showSuperModal,
+  showToast,
+  showWarningLogin,
+} from "@helpers/super.modal.helper";
 import PressableBtn from "@shared-components/button/PressableBtn";
+import { deleteUserById } from "@services/api/user.api";
 
 interface SettingScreenProps {}
 
@@ -54,14 +61,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
       id: 1,
       iconFont: "book",
       action: () => {
-        if (isTeacher) {
-          NavigationService.navigate(SCREENS.TEACHER_COURSES);
-        } else {
-          showToast({
-            type: "warning",
-            message: translations.setting.isNotTeacher,
-          });
-        }
+        NavigationService.navigate(SCREENS.TEACHER_COURSES);
       },
     },
     {
@@ -121,6 +121,14 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
         }
       },
     },
+    {
+      showItemisLogin: true,
+      title: translations.aboutUs.deleteacount,
+      iconFont: "trash-2",
+      action: () => {
+        deleteUser();
+      },
+    },
     // {
     //   title: translations.settingUser.codeActivations,
     //   iconFont: "package",
@@ -132,6 +140,34 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
   // if(isTeacher){
 
   // }
+
+  const deleteUser = () => {
+    showSuperModal({
+      contentModalType: EnumModalContentType.Confirm,
+      styleModalType: EnumStyleModalType.Middle,
+      data: {
+        title: "Bạn có muốn xoá tài khoản",
+        cb: () => deleteAccount(),
+      },
+    });
+  };
+
+  const deleteAccount = () => {
+    deleteUserById(userData?._id)
+      .then(() => {
+        logout();
+        showToast({
+          type: "success",
+          message: "Xoá tài khoản thành công",
+        });
+      })
+      .catch(() => {
+        showToast({
+          type: "error",
+          message: "Xoá tài khoản thất bại",
+        });
+      });
+  };
 
   const hardCodeToken = () => {
     const token =
@@ -151,12 +187,13 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mzg4MzEzMzQsImRhdGEiOnsiX2lkIjoiNjU5ZTU5ZDExNzc1YWJiZDZkOTlkMGIzIiwia2V5IjoiNTRhZjQxZGUxZTljNmNhZTFlYmI0ZjQ3NmI4NDg2ZmMiLCJzaWduYXR1cmUiOiIxY2Y2ODMwNWJkOTAyMjEyMDY1MTU3ODQyZWQ1ZTZjNiIsInNlc3Npb24iOiI2NWMzNDI2NjU1MDVmYjI3OGNiYjE5ZDgifSwiaWF0IjoxNzA3Mjk1MzM0fQ.ckhT-GeS2WVJTDEbQjU-ItSznb3aUAZ1GihSWSDmW2g";
     _setJson(USER_TOKEN, token);
   };
-
+  console.log("userData?.user_role", userData?.user_role);
   const renderListSetting = () => {
     return (
       <View style={{ backgroundColor: colors.white, flex: 1, marginTop: 20 }}>
         {listSetting.map((item, index) => {
-          // if (item?.id == 1 && !isTeacher) return null;
+          if (item?.id == 1 && !isTeacher && userData?.user_role != "admin")
+            return null;
           return (
             <TouchableOpacity
               onPress={item.action}
@@ -204,12 +241,12 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
           <Text
             style={{
               fontSize: 16,
-              fontWeight: "600",
+              fontWeight: "400",
               textAlign: "center",
-              color: "#fff",
+              color: "#dfdfdf",
             }}
           >
-            hard code token
+            hard code token student
           </Text>
         </PressableBtn>
 
@@ -217,12 +254,12 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
           <Text
             style={{
               fontSize: 16,
-              fontWeight: "600",
+              fontWeight: "400",
               textAlign: "center",
-              color: "#fff",
+              color: "#dfdfdf",
             }}
           >
-            hard code token
+            hard code token teacher
           </Text>
         </PressableBtn>
         {isLoggedIn() ? (

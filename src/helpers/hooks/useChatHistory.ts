@@ -20,10 +20,7 @@ const limit = 20;
 
 export const useChatHistory = (txtSearch: string, searchModeChat: boolean) => {
   const route = useRoute();
-  const [chatRoomId, setChatRoomId] = useState(
-    route.params?.["id"] || route.params?.["partner_id"],
-  );
-  console.log("..id...", route.params?.["id"] || route.params?.["partner_id"]);
+  const [chatRoomId, setChatRoomId] = useState(route.params?.["id"]);
   const userData = useStore((state) => state.userData);
   const [messages, setMessages] = useState([]);
   const [isEmptyMessage, setIsEmptyMessage] = useState(false);
@@ -131,6 +128,7 @@ export const useChatHistory = (txtSearch: string, searchModeChat: boolean) => {
   };
 
   const typingToClient = (data: string) => {
+    console.log("datadata", data, userData?._id);
     if (data) {
       const dataTyping = JSON.parse(data);
       if (dataTyping.user_id != userData?._id) {
@@ -205,20 +203,21 @@ export const useChatHistory = (txtSearch: string, searchModeChat: boolean) => {
     // setCurrentMediaIds(mediaIds);
     updateCurrentMediaIds({ data: mediaIds, id: chatRoomId });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [messages]);
+  }, [messages, chatRoomId]);
 
   const productToClient = (data) => {
     console.log("productToClient======", data);
   };
 
   useEffect(() => {
+    console.log("chatRoomId", chatRoomId);
     if (!chatRoomId) {
       //create chat room from listfriend
       createChatRoom({
         partner_id: partnerId,
         chat_type: "personal",
       }).then((res) => {
-        console.log("create room====", res);
+        console.log("create room====", partnerId, res);
         if (!res.isError) {
           setChatRoomId(res.data.chat_room_id._id);
         }

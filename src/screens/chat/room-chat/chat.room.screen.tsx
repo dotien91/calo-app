@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, Platform } from "react";
-import { SafeAreaView, View } from "react-native";
+import { SafeAreaView, Text, View } from "react-native";
 import { GiftedChat } from "react-native-gifted-chat";
 import emojiUtils from "emoji-utils";
 import uuid from "react-native-uuid";
@@ -10,7 +10,6 @@ import { useTheme } from "@react-navigation/native";
  */
 import { IMediaUpload, TypedMessageGiftedChat } from "models/chat.model";
 import MessageItem from "./components/message/message.item";
-import { emitSocket } from "@helpers/socket.helper";
 import useStore from "@services/zustand/store";
 import ChatHeader from "./chat.room.header";
 import RecordModal from "./components/audio/RecordModal";
@@ -122,7 +121,6 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
       status: EnumMessageStatus.Pending,
     };
     const giftedMessages = GiftedChat.append(messages, message);
-    emitSocket("typingToServer", "room_" + chatRoomId);
     setMessages(giftedMessages);
 
     //scroll to new message
@@ -184,6 +182,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
         onSelectPicture={onSelectPicture}
         onSelectVideo={onSelectVideo}
         onSelectFile={onSelectFile}
+        chatRoomId={chatRoomId}
       />
     );
   };
@@ -217,6 +216,10 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
     return <LoadingList numberItem={3} />;
   };
 
+  const renderFooter = () => {
+    return <Text>asdasd</Text>;
+  };
+
   return (
     <SafeAreaView
       style={{ flex: 1, paddingTop: getStatusBarHeight(), paddingBottom: 8 }}
@@ -229,7 +232,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
         user={{
           _id: userData?._id,
         }}
-        isTyping={isTyping}
+        isTyping={false}
         renderMessage={renderMessage}
         showAvatarForEveryMessage={true}
         listViewProps={{
@@ -244,6 +247,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
           showsVerticalScrollIndicator: false,
         }}
         renderInputToolbar={renderInputToolbar}
+        renderFooter={renderFooter}
       />
 
       {renderSearchView()}

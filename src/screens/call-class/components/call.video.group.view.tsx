@@ -22,9 +22,9 @@ const CallVideoGroupView = React.memo(
     publishers: any;
     myStream: any;
   }) => {
-    const data = React.useMemo(() => publishers?.[0], [publishers]);
+    // const data = React.useMemo(() => publishers?.[0], [publishers]);
 
-    if (!data?.stream) return null;
+    // if ((data?.length || 0) < 2 && !teacherStream?.stream) return null;
     const renderStudentVideo = (item) => {
       return (
         <View
@@ -38,7 +38,6 @@ const CallVideoGroupView = React.memo(
           }}
         >
           <ClassRoomRtcView
-            isMe={item?.isMe}
             key={item?.name}
             streamURL={item?.stream}
             objectFit="cover"
@@ -50,13 +49,14 @@ const CallVideoGroupView = React.memo(
               backgroundColor: "red",
               // ...CS.borderStyle,
             }}
+            {...item}
           />
           <MicView showName={false} {...item} />
         </View>
       );
     };
 
-    const _renderStudentVideo = (item) => {
+    const renderStudentVideoWithoutTeacher = (item) => {
       return (
         <View
           key={item.name}
@@ -64,10 +64,10 @@ const CallVideoGroupView = React.memo(
             width: widthImg,
             height: widthImg * 1.5,
             overflow: "hidden",
+            backgroundColor: "red",
           }}
         >
           <ClassRoomRtcView
-            isMe={item?.isMe}
             key={item?.name}
             streamURL={item?.stream}
             objectFit="cover"
@@ -78,13 +78,14 @@ const CallVideoGroupView = React.memo(
               height: widthImg * 1.5,
               // ...CS.borderStyle,
             }}
+            {...item}
           />
           <MicView showName={true} {...item} />
         </View>
       );
     };
 
-    if (!teacherStream) {
+    if (!teacherStream?.stream && publishers.length > 1) {
       return (
         <View
           style={{
@@ -99,68 +100,78 @@ const CallVideoGroupView = React.memo(
         >
           <ScrollView>
             <View style={{ ...CS.flexStart, flexWrap: "wrap" }}>
-              {publishers.map((publisher) => _renderStudentVideo(publisher))}
+              {publishers.map((publisher) =>
+                renderStudentVideoWithoutTeacher(publisher),
+              )}
             </View>
           </ScrollView>
         </View>
       );
     }
-    console.log("1teacherStreamteacherStream", teacherStream);
-    return (
-      <>
-        <View
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            flex: 1,
-            zIndex: 0,
-            height: Dimensions.get("screen").height - 100,
-          }}
-        >
-          {/* <MicView showName={true} {...data} /> */}
-          <ClassRoomRtcView
-            isMe={isTeacher}
-            key={teacherStream?.name}
-            streamURL={teacherStream?.stream}
-            objectFit="cover"
-            name={teacherStream?.name}
-            isTeacher={true}
-            video={video}
+    if (!!teacherStream?.stream && !!publishers.length) {
+      return (
+        <>
+          <View
             style={{
-              width: Device.width,
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              flex: 1,
+              zIndex: 0,
               height:
                 Dimensions.get("screen").height -
                 44 -
                 getStatusBarHeight() -
                 36 -
                 64 +
-                (isIOS ? 32 : 0),
-              overflow: "hidden",
-              // ...CS.borderStyle,
-            }}
-          />
-          <ScrollView
-            horizontal={true}
-            style={{
-              position: "absolute",
-              left: 4,
-              top:
-                Dimensions.get("screen").height -
-                44 -
-                getStatusBarHeight() -
-                36 -
-                64 +
-                4 +
-                (isIOS ? 32 : 0),
+                (isIOS ? 22 : 0),
             }}
           >
-            {publishers.map((publisher) => renderStudentVideo(publisher))}
-          </ScrollView>
-        </View>
-      </>
-    );
+            {/* <MicView showName={true} {...data} /> */}
+            <ClassRoomRtcView
+              key={teacherStream?.name}
+              streamURL={teacherStream?.stream}
+              objectFit="cover"
+              name={teacherStream?.name}
+              isTeacher={true}
+              video={video}
+              style={{
+                width: Device.width,
+                height:
+                  Dimensions.get("screen").height -
+                  44 -
+                  getStatusBarHeight() -
+                  36 -
+                  64 +
+                  (isIOS ? 22 : 0),
+                overflow: "hidden",
+                // ...CS.borderStyle,
+              }}
+              {...teacherStream}
+              isMe={isTeacher}
+            />
+            <ScrollView
+              horizontal={true}
+              style={{
+                position: "absolute",
+                left: 4,
+                top:
+                  Dimensions.get("screen").height -
+                  44 -
+                  getStatusBarHeight() -
+                  36 -
+                  64 +
+                  4 +
+                  (isIOS ? 22 : 0),
+              }}
+            >
+              {publishers.map((publisher) => renderStudentVideo(publisher))}
+            </ScrollView>
+          </View>
+        </>
+      );
+    }
   },
 );
 

@@ -88,10 +88,9 @@ const SettingProfileScreen = () => {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const listrenderPointCoin = [
     {
-      icon: "icCoinStar",
-      title: userInfo?.current_coin,
-      onPress: () =>
-        NavigationService.navigate(SCREENS.AFFILIATE, { type: "coin" }),
+      icon: "icCup",
+      title: userInfo?.point,
+      onPress: () => NavigationService.navigate(SCREENS.DISCOVERSCREEN),
     },
     {
       icon: "icCoin",
@@ -100,9 +99,10 @@ const SettingProfileScreen = () => {
         NavigationService.navigate(SCREENS.AFFILIATE, { type: "token" }),
     },
     {
-      icon: "icCup",
-      title: userData?.point,
-      onPress: () => NavigationService.navigate(SCREENS.DISCOVERSCREEN),
+      icon: "icCoinStar",
+      title: userInfo?.current_coin,
+      onPress: () =>
+        NavigationService.navigate(SCREENS.AFFILIATE, { type: "coin" }),
     },
   ];
 

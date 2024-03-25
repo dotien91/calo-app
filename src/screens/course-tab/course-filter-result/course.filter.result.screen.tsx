@@ -173,7 +173,7 @@ const CourseFilterResultScreen: React.FC<
   );
 };
 
-const ListSearch = React.memo(({ type }: { type: string }) => {
+const ListSearch = ({ type }: { type: string }) => {
   const courseSearchHistory = useStore((state) => state.courseSearchHistory);
 
   const theme = useTheme();
@@ -199,8 +199,14 @@ const ListSearch = React.memo(({ type }: { type: string }) => {
   if (type == EnumSearchType.post) requestData = getListPost;
   if (type == EnumSearchType.user) requestData = getListUser;
 
-  const { listData, isLoading, totalCount, onEndReach, renderFooterComponent } =
-    useListSearch<ICourseItem>(paramRequest, requestData);
+  const {
+    noData,
+    listData,
+    isLoading,
+    totalCount,
+    onEndReach,
+    renderFooterComponent,
+  } = useListSearch<ICourseItem>(paramRequest, requestData, [], type);
 
   const openSortModal = useCallback(() => {
     showSuperModal({
@@ -250,7 +256,7 @@ const ListSearch = React.memo(({ type }: { type: string }) => {
   return (
     <View>
       {isLoading && <LoadingItem numberItem={2} />}
-      {!listData?.length && !isLoading && (
+      {!listData?.length && !isLoading && noData && (
         <EmptyResultView
           title={translations.noResult}
           lottieJson={lotieNoResult}
@@ -264,11 +270,11 @@ const ListSearch = React.memo(({ type }: { type: string }) => {
         onEndReachedThreshold={0}
         onEndReached={onEndReach}
         removeClippedSubviews={true}
-        keyExtractor={(item) => item?._id + ""}
+        keyExtractor={(item) => item?._id + "" || item?.last_active}
         ListFooterComponent={renderFooterComponent()}
       />
     </View>
   );
-});
+};
 
 export default CourseFilterResultScreen;

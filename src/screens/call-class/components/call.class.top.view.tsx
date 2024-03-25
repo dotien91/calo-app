@@ -65,6 +65,8 @@ const ClassRoomTopView = ({ switchCamera }) => {
           customStyle={{ marginRight: 8 }}
           name="chevron-left"
           color={colors.white}
+          onPress={() => NavigationService.goBack()}
+          size={30}
         />
         <IconBtn
           onPress={switchCamera}

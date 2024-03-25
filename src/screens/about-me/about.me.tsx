@@ -6,14 +6,8 @@ import Header from "@shared-components/header/Header";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import createStyles from "./about.me.style";
 import { translations } from "@localization";
-import { deleteUserById } from "@services/api/user.api";
 import useStore from "@services/zustand/store";
-import {
-  EnumModalContentType,
-  EnumStyleModalType,
-  showSuperModal,
-  showToast,
-} from "@helpers/super.modal.helper";
+
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import CS from "@theme/styles";
 
@@ -61,42 +55,7 @@ const AboutMe = () => {
         OpenURLButton("https://docs.ieltshunter.io/chinh-sach-hoan-tien");
       },
     },
-    {
-      showItemisLogin: true,
-      title: translations.aboutUs.deleteacount,
-      action: () => {
-        deleteUser();
-      },
-    },
   ];
-
-  const deleteUser = () => {
-    showSuperModal({
-      contentModalType: EnumModalContentType.Confirm,
-      styleModalType: EnumStyleModalType.Middle,
-      data: {
-        title: "Bạn có muốn xoá tài khoản",
-        cb: () => deleteAccount(),
-      },
-    });
-  };
-
-  const deleteAccount = () => {
-    deleteUserById(userData?._id)
-      .then(() => {
-        logout();
-        showToast({
-          type: "success",
-          message: "Xoá tài khoản thành công",
-        });
-      })
-      .catch(() => {
-        showToast({
-          type: "error",
-          message: "Xoá tài khoản thất bại",
-        });
-      });
-  };
 
   const OpenURLButton = (url: string) => {
     Linking.openURL(url);

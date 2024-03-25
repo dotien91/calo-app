@@ -47,7 +47,6 @@ const TutorItem = ({
       },
     });
   };
-
   const objectToString = (data) => {
     return Object.keys(data)
       .map(function (key) {

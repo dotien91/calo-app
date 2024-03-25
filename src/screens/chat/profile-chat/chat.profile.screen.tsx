@@ -305,6 +305,7 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
         <Text style={styles.titleSection}>{item.title}</Text>
         <View style={styles.wrapMedia}>
           <MessageMediaView
+            disabled={true}
             width={widthMedia}
             height={widthMedia}
             fromProfileChat

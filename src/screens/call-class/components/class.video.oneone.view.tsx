@@ -28,7 +28,6 @@ const CallVideoOneOneView = React.memo(
           {/* <MicView showName={true} {...data} /> */}
           <ClassRoomRtcView
             isVideoOneOne={true}
-            isMe={true}
             key={myStream?.name}
             streamURL={myStream?.stream}
             objectFit="cover"
@@ -40,13 +39,13 @@ const CallVideoOneOneView = React.memo(
               overflow: "hidden",
               // ...CS.borderStyle,
             }}
+            {...myStream}
           />
         </View>
         <View style={CS.flex1}>
           {/* <MicView showName={true} {...data} /> */}
           <ClassRoomRtcView
             isVideoOneOne={true}
-            isMe={false}
             key={data?.name}
             streamURL={data?.stream}
             objectFit="cover"
@@ -60,6 +59,7 @@ const CallVideoOneOneView = React.memo(
 
               // ...CS.borderStyle,
             }}
+            {...data}
           />
         </View>
       </View>

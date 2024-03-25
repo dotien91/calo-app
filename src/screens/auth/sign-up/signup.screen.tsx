@@ -5,6 +5,7 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
+  SafeAreaView,
 } from "react-native";
 import React, { useMemo, useState } from "react";
 import { useTheme } from "@react-navigation/native";
@@ -18,7 +19,6 @@ import OrView from "../components/OrView";
 import InputHook from "@shared-components/form/InputHookForm";
 import { useForm } from "react-hook-form";
 import { translations } from "@localization";
-import GoBackButton from "../components/GoBackButton";
 import IconSvg from "assets/svg";
 import { regexMail, passRegex } from "constants/regex.constant";
 import { ISignUpWithEmail } from "models";
@@ -34,6 +34,7 @@ import GoogleLoginButton from "@shared-components/button/GoogleLoginButton";
 import AppleLoginButton from "@shared-components/button/AppleLoginButton";
 import FBLoginButton from "@shared-components/button/FBLoginButton";
 import { SCREENS } from "constants";
+import Header from "@shared-components/header/Header";
 
 // interface ButtonSocialProps {
 //   onPress: () => void;
@@ -102,132 +103,136 @@ export default function SignUpScreen() {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === "ios" ? "height" : undefined}
-      >
-        <View style={styles.container}>
-          <GoBackButton />
-          <View style={[{ alignItems: "center" }]}>
-            <IconSvg name="logoIeltsHunter" width={120} height={67} />
-          </View>
-          <View>
-            <Text style={styles.textHeader}>
-              {translations.createNewAccount}
-            </Text>
-
-            {/* fullname input */}
-            <InputHook
-              iconLeft={<IconSvg name="icLoginFullname" />}
-              name="fullname"
-              customStyle={CommonStyle.flex1}
-              inputProps={{
-                type: "text",
-                defaultValue: "",
-                placeholder: translations.fullname,
-              }}
-              control={control}
-              rules={{
-                required: {
-                  value: true,
-                  message: translations.required,
-                },
-              }}
-              errorTxt={errors.fullname?.message}
-            />
-
-            {/* email input */}
-            <InputHook
-              iconLeft={<IconSvg name="icMail" color={colors.mainColor2} />}
-              name="email"
-              customStyle={CommonStyle.flex1}
-              inputProps={{
-                type: "email",
-                defaultValue: "",
-                placeholder: translations.placeholderEmail,
-              }}
-              control={control}
-              rules={{
-                required: {
-                  value: true,
-                  message: translations.required,
-                },
-                pattern: {
-                  value: regexMail,
-                  message: translations.error.invalidPhoneEmail,
-                },
-              }}
-              errorTxt={errors.email?.message}
-            />
-
-            {/* pass input */}
-            <InputHook
-              iconLeft={<IconSvg name="icLock" />}
-              name="password"
-              customStyle={{}}
-              inputProps={{
-                type: "text",
-                defaultValue: "",
-                placeholder: translations.placeholderPasword,
-              }}
-              control={control}
-              rules={{
-                required: {
-                  value: true,
-                  message: translations.required,
-                },
-                minLength: {
-                  value: 8,
-                  message: translations.error.minLengthPass,
-                },
-                pattern: {
-                  value: passRegex,
-                  message: translations.error.errorPatternPass,
-                },
-              }}
-              isPassword={!showPass}
-              iconRight={
-                <IconSvg
-                  onPress={() => {
-                    setShowPass((showPass) => !showPass);
-                  }}
-                  name={showPass ? "icEye" : "icEyeCrossed"}
-                />
-              }
-              errorTxt={errors.password?.message}
-            />
-            <View style={styles.paddingButton}>
-              <Button
-                style={styles.buttonMargin}
-                onPress={handleSubmit(onSubmit)}
-                textColor={colors.white}
-                backgroundColor={colors.primary}
-                text={translations.signUp}
-              />
+    <SafeAreaView style={CommonStyle.safeAreaView}>
+      <Header />
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === "ios" ? "height" : undefined}
+        >
+          <View style={styles.container}>
+            <View style={[{ alignItems: "center" }]}>
+              <IconSvg name="logoIeltsHunter" width={120} height={67} />
             </View>
-            <OrView />
-            <View style={styles.viewSocial}>
-              <GoogleLoginButton />
-              <AppleLoginButton />
-              <FBLoginButton />
-            </View>
-            <ViewTermPolicy style={{ paddingHorizontal: 20, marginTop: 36 }} />
-            <Text style={styles.textRegister}>
-              {translations.haveAnAccount}
-              <Text
-                style={[
-                  CommonStyle.hnSemiBold,
-                  { color: colors.primary, textDecorationLine: "underline" },
-                ]}
-                onPress={pressLoginNow}
-              >
-                {translations.loginNow}
+            <View>
+              <Text style={styles.textHeader}>
+                {translations.createNewAccount}
               </Text>
-            </Text>
+
+              {/* fullname input */}
+              <InputHook
+                iconLeft={<IconSvg name="icLoginFullname" />}
+                name="fullname"
+                customStyle={CommonStyle.flex1}
+                inputProps={{
+                  type: "text",
+                  defaultValue: "",
+                  placeholder: translations.fullname,
+                }}
+                control={control}
+                rules={{
+                  required: {
+                    value: true,
+                    message: translations.required,
+                  },
+                }}
+                errorTxt={errors.fullname?.message}
+              />
+
+              {/* email input */}
+              <InputHook
+                iconLeft={<IconSvg name="icMail" color={colors.mainColor2} />}
+                name="email"
+                customStyle={CommonStyle.flex1}
+                inputProps={{
+                  type: "email",
+                  defaultValue: "",
+                  placeholder: translations.placeholderEmail,
+                }}
+                control={control}
+                rules={{
+                  required: {
+                    value: true,
+                    message: translations.required,
+                  },
+                  pattern: {
+                    value: regexMail,
+                    message: translations.error.invalidPhoneEmail,
+                  },
+                }}
+                errorTxt={errors.email?.message}
+              />
+
+              {/* pass input */}
+              <InputHook
+                iconLeft={<IconSvg name="icLock" />}
+                name="password"
+                customStyle={{}}
+                inputProps={{
+                  type: "text",
+                  defaultValue: "",
+                  placeholder: translations.placeholderPasword,
+                }}
+                control={control}
+                rules={{
+                  required: {
+                    value: true,
+                    message: translations.required,
+                  },
+                  minLength: {
+                    value: 8,
+                    message: translations.error.minLengthPass,
+                  },
+                  pattern: {
+                    value: passRegex,
+                    message: translations.error.errorPatternPass,
+                  },
+                }}
+                isPassword={!showPass}
+                iconRight={
+                  <IconSvg
+                    onPress={() => {
+                      setShowPass((showPass) => !showPass);
+                    }}
+                    name={showPass ? "icEye" : "icEyeCrossed"}
+                  />
+                }
+                errorTxt={errors.password?.message}
+              />
+              <View style={styles.paddingButton}>
+                <Button
+                  style={styles.buttonMargin}
+                  onPress={handleSubmit(onSubmit)}
+                  textColor={colors.white}
+                  backgroundColor={colors.primary}
+                  text={translations.signUp}
+                />
+              </View>
+              <OrView />
+              <View style={styles.viewSocial}>
+                <GoogleLoginButton />
+                <AppleLoginButton />
+                <FBLoginButton />
+              </View>
+              <ViewTermPolicy
+                style={{ paddingHorizontal: 20, marginTop: 36 }}
+              />
+              <Text style={styles.textRegister}>
+                {translations.haveAnAccount}
+                <Text
+                  style={[
+                    CommonStyle.hnSemiBold,
+                    { color: colors.primary, textDecorationLine: "underline" },
+                  ]}
+                  onPress={pressLoginNow}
+                >
+                  {translations.loginNow}
+                </Text>
+              </Text>
+            </View>
           </View>
-        </View>
-      </KeyboardAvoidingView>
-    </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
+    </SafeAreaView>
   );
 }

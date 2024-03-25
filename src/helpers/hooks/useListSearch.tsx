@@ -16,6 +16,7 @@ interface TypedUseListSearch<T> {
   setListData: (newListData: T[]) => void;
   _requestData: (v: boolean) => void;
   totalCount: number;
+  noData: boolean;
 }
 
 interface TypedRequestParams {
@@ -36,6 +37,7 @@ export function useListSearch<T>(
   params: TypedRequestParams,
   requestData: (params: TypedRequestParams) => Promise<T[]>,
   initData: T[] = [],
+  type,
 ): TypedUseListSearch<T> {
   const [stateListData, setStateListData] = useState<TypedStateListSearch<T>>({
     listData: initData,
@@ -50,13 +52,15 @@ export function useListSearch<T>(
   const isFetching = useRef(false);
 
   useDeepCompareEffect(() => {
-    setStateListData((oldState) => ({
-      ...oldState,
+    setStateListData(() => ({
       listData: [],
+      nextPage: 1,
+      isLastPage: false,
       totalCount: 0,
+      noData: false,
     }));
     _requestData();
-  }, [params]);
+  }, [params, setStateListData]);
 
   const _requestData = () => {
     isFetching.current = true;
@@ -79,6 +83,7 @@ export function useListSearch<T>(
           isLastPage,
           nextPage,
           listData: newData,
+          noData: !newData.length,
           totalCount: res?.headers?.["x-total-count"] || 0,
         }));
       }
@@ -122,19 +127,20 @@ export function useListSearch<T>(
     }
   }
 
-  const setListData = useCallback((newListData: T[]) => {
-    setStateListData((oldState) => ({
-      ...oldState,
-      listData: newListData,
-    }));
-  }, []);
+  const setListData = useCallback(
+    (newListData: T[]) => {
+      setStateListData((oldState) => ({
+        ...oldState,
+        listData: newListData,
+      }));
+    },
+    [setStateListData],
+  );
 
   const renderFooterComponent = () => {
     if (!isLoadMore) return <View />;
     return <LoadingList />;
   };
-
-  const a = 1;
 
   return {
     listData: stateListData.listData,
@@ -146,6 +152,7 @@ export function useListSearch<T>(
     renderFooterComponent,
     setListData,
     isLoading,
-    a,
+    totalCount: stateListData.totalCount,
+    noData: stateListData.noData,
   };
 }

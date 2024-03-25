@@ -18,12 +18,12 @@ const useFirebase = () => {
     console.log("fcmToken firebase", fcmToken);
     if (!fcmToken) {
       try {
-        const apnsToken = await messaging().getAPNSToken();
-        alert(apnsToken);
-        if (apnsToken) {
-          await messaging().setAPNSToken(apnsToken);
-        }
-        await messaging().registerDeviceForRemoteMessages();
+        // const apnsToken = await messaging().getAPNSToken();
+        // console.log("apnsTokenapnsToken", apnsToken)
+        // if (apnsToken) {
+        //   await messaging().setAPNSToken(apnsToken);
+        // }
+        // await messaging().registerDeviceForRemoteMessages();
         const token = await messaging().getToken();
         console.log("get token firebase", token);
 

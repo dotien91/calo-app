@@ -50,6 +50,7 @@ export function useListData<T>(
   const isFetching = useRef(false);
 
   useDeepCompareEffect(() => {
+    console.log("333333");
     _requestData(false);
   }, [params, dep]);
 

@@ -1,16 +1,17 @@
 import { RTCView } from "react-native-webrtc";
 import React from "react";
-import { StyleSheet, Image } from "react-native";
+import { StyleSheet, Image, View } from "react-native";
 
 import { Device } from "@utils/device.ui.utils";
 
 import defaultAvatar from "@assets/images/default_avatar.jpg";
-import useStore from "@services/zustand/store";
 import { isAndroid } from "@helpers/device.info.helper";
+import CS from "@theme/styles";
+import { TypedUser } from "shared/models";
 
 const heightDevice = isAndroid() ? Device.height + 44 : Device.height;
 
-interface IClassRoomRtcView {
+interface IClassRoomRtcView extends TypedUser {
   streamURL: string;
   isMe: boolean;
   video: boolean;
@@ -19,6 +20,8 @@ interface IClassRoomRtcView {
   resizeMode?: string;
   zOrder?: number;
   objectFit?: string;
+  isTeacher?: boolean;
+  isVideoOneOne?: boolean;
 }
 
 const ClassRoomRtcView = ({
@@ -30,66 +33,49 @@ const ClassRoomRtcView = ({
   streamURL,
   name,
   objectFit = "contain",
+  user_avatar,
+  user_avatar_thumbnail,
   ...res
 }: IClassRoomRtcView) => {
   const hasVideo = () => (isMe ? video : !!streamURL?.getVideoTracks()?.length);
-  const currentMemberVideoRoom = useStore(
-    (state) => state.currentMemberVideoRoom,
+  const avatarUrl = React.useMemo(
+    () => user_avatar || user_avatar_thumbnail,
+    [user_avatar, user_avatar_thumbnail],
   );
-  const userData = useStore((state) => state.userData);
-  const avatarUrl = React.useMemo(() => {
-    const findData = currentMemberVideoRoom.find(
-      (member) =>
-        member?.display_name == name || member?.display_name + "tutor" == name,
-    );
-    if (isMe) return userData?.user_avatar || userData?.user_avatar_thumbnail;
-    return findData?.user_avatar || findData?.user_avatar_thumbnail;
-  }, [currentMemberVideoRoom]);
+
   console.log("avatarUrlavatarUrl", hasVideo(), streamURL, name);
 
   if (!hasVideo()) {
-    if (isTeacher)
+    if (isTeacher || isVideoOneOne || !style?.width) {
       return (
-        <Image
-          source={avatarUrl ? { uri: avatarUrl } : defaultAvatar}
-          style={{
-            width: 160,
-            height: 160,
-            left: "50%",
-            top: "50%",
-            marginLeft: -(160 / 2),
-            marginTop: -(160 / 2),
-            position: "absolute",
-            zIndex: 1,
-          }}
-          resizeMode={"cover"}
-        />
+        <View style={CS.flex1}>
+          <Image
+            source={avatarUrl ? { uri: avatarUrl } : defaultAvatar}
+            style={{
+              width: 160,
+              height: 160,
+              left: "50%",
+              top: "50%",
+              marginLeft: -(160 / 2),
+              marginTop: -(160 / 2),
+              position: "absolute",
+              zIndex: 1,
+            }}
+            resizeMode={"cover"}
+          />
+        </View>
       );
-    if (isVideoOneOne)
-      return (
-        <Image
-          source={avatarUrl ? { uri: avatarUrl } : defaultAvatar}
-          style={{
-            width: 160,
-            height: 160,
-            left: "50%",
-            top: "50%",
-            marginLeft: -(160 / 2),
-            marginTop: -(160 / 2),
-            position: "absolute",
-            zIndex: 1,
-          }}
-          resizeMode={"cover"}
-        />
-      );
+    }
     return (
       <Image
         source={avatarUrl ? { uri: avatarUrl } : defaultAvatar}
         style={{
-          width: style?.width,
-          height: style?.height,
-          left: 0,
-          top: 0,
+          width: style.width,
+          height: style.height,
+          left: "50%",
+          top: "50%",
+          marginLeft: -(style.width / 2),
+          marginTop: -(style.height / 2),
           position: "absolute",
           zIndex: 1,
         }}

@@ -37,6 +37,7 @@ interface IMediasView {
   width: number;
   chatRoomId: string;
   fromMediaScreen: boolean;
+  disabled?: boolean;
 }
 const IMG_WIDTH = 76;
 const IMG_HEIGHT = 76;
@@ -51,6 +52,7 @@ const MessageMediaView = ({
   customStyleBox,
   chatRoomId,
   fromMediaScreen,
+  disabled = false,
 }: IMediasView) => {
   const currentMediaIds = useStore((state) => state.currentMediaIds);
   const isPending = React.useMemo(() => {
@@ -81,7 +83,11 @@ const MessageMediaView = ({
     if (!item) return null;
     if (item.media_type.includes("image")) {
       return (
-        <TouchableOpacity key={index} onPress={() => openMediaModal(item)}>
+        <TouchableOpacity
+          disabled={disabled}
+          key={index}
+          onPress={() => openMediaModal(item)}
+        >
           <FastImage
             key={index}
             source={{ uri: item.media_url }}
@@ -97,6 +103,7 @@ const MessageMediaView = ({
     if (item.media_type?.includes("video")) {
       return (
         <TouchableOpacity
+          disabled={disabled}
           key={index}
           style={{ width: width || 115, height: width || 67 }}
           onPress={() => openMediaModal(item)}
@@ -145,7 +152,7 @@ const MessageMediaView = ({
       return (
         <PressableBtn
           key={index}
-          disable={isPending}
+          disable={isPending || disabled}
           onPress={() => openUrl(item.media_url)}
           style={{ width: Device.width * 0.75, opacity: isPending ? 0.5 : 1 }}
         >

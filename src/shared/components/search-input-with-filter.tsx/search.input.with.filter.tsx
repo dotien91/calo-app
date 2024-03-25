@@ -14,6 +14,7 @@ import { translations } from "@localization";
 import IconBtn from "@shared-components/button/IconBtn";
 import useStore from "@services/zustand/store";
 import IconSvg from "assets/svg";
+import PressableBtn from "@shared-components/button/PressableBtn";
 
 interface ISearchInput {
   txtSearch: string;
@@ -60,7 +61,7 @@ const SearchInputWithFilter: React.FC<ISearchInput> = ({
     setCourseSearchHistory(v);
   };
 
-  const onSearchDebounce = React.useCallback(debounce(_onSearch, 1000), []);
+  const onSearchDebounce = React.useCallback(debounce(_onSearch, 400), []);
 
   const onPress = () => {
     if (onPressInput) {
@@ -141,13 +142,14 @@ const SearchInputWithFilter: React.FC<ISearchInput> = ({
       </TouchableOpacity>
       <View>
         {showFilter && (
-          <IconSvg
-            name="icSlider"
-            size={20}
-            color={colors.text}
-            style={{ marginLeft: 10 }}
-            onPress={onPressFilter}
-          />
+          <PressableBtn onPress={onPressFilter}>
+            <IconSvg
+              name="icSlider"
+              size={20}
+              color={colors.text}
+              style={{ marginLeft: 10 }}
+            />
+          </PressableBtn>
         )}
         {!!badge && showFilter && (
           <TouchableOpacity onPress={onPressFilter} style={styles.badge}>

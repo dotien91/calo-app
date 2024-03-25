@@ -403,6 +403,7 @@ const CheckoutScreen = () => {
           console.log("tradeIdtradeIdtradeId", tradeId);
           NavigationService.navigate(SCREENS.SMARTBANKING, {
             tradeId,
+            short_id: res.data?.short_id,
           });
         }
       } else {

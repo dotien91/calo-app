@@ -174,11 +174,12 @@ const ChatRoomClass: React.FC<ChatRoomScreenProps> = ({
       {_renderChatEmpty()}
 
       <GiftedChat
+        bottomOffset={Device.height / 1.8 - 150}
         messages={messages}
         user={{
           _id: userData?._id,
         }}
-        isTyping={isTyping}
+        isTyping={false}
         renderMessage={renderMessage}
         showAvatarForEveryMessage={true}
         listViewProps={{
