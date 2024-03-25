@@ -160,7 +160,6 @@ export default (theme: ExtendedTheme) => {
       width: 48,
       height: 48,
       borderRadius: 4,
-      backgroundColor: colors.blue,
     },
     txtPriceCourse: {
       ...CS.hnRegular,

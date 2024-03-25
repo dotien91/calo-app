@@ -131,6 +131,7 @@ import iconPublish from "./icon-publish.svg";
 import iconRemove from "./icon-remove.svg";
 import iconFlag from "./icon-flag.svg";
 import icSlider from "./icon-slider.svg";
+import icMoney from "./icon-money.svg";
 
 const Icons = {
   intro1,
@@ -265,6 +266,7 @@ const Icons = {
   iconRemove,
   iconFlag,
   icSlider,
+  icMoney,
 };
 
 interface IconSvgProps {

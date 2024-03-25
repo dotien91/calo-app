@@ -335,6 +335,7 @@ export default {
     updateCourse: "Update Course",
     uploadCoverImageOrVideo: "Upload an introductory photo or video",
     add: "Add",
+    warningDelete: "Are you sure you are deleting this course?",
     warningFull: "Select complete information",
     duration: "Duration",
     timeStart: "Time start",

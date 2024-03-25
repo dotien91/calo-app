@@ -91,10 +91,10 @@ const DiscoverScreen = () => {
           shadowRadius: 5,
         }}
       >
-        <IconSvg name="icCoin" size={32} color={colors.gold}></IconSvg>
+        <IconSvg name="icCoinStar" size={32} color={colors.gold}></IconSvg>
         <View style={{ marginLeft: 8 }}>
           <Text style={{ ...CS.hnSemiBold, fontSize: 20, color: colors.text }}>
-            {userInfo?.point} {translations.discover.coins}
+            {userInfo?.point} {translations.discover.poits}
           </Text>
           <Text
             style={{

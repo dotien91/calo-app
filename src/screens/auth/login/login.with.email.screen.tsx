@@ -33,6 +33,7 @@ import GoogleLoginButton from "@shared-components/button/GoogleLoginButton";
 import FBLoginButton from "@shared-components/button/FBLoginButton";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import AppleLoginButton from "@shared-components/button/AppleLoginButton";
+import { regexEmail } from "constants/regex.constant";
 // import { regexMail } from "constants/regex.constant";
 
 // interface ButtonSocialProps {
@@ -126,7 +127,7 @@ export default function LoginWithEmailScreen() {
                   value: true,
                   message: translations.required,
                 },
-                // pattern: regexMail,
+                pattern: regexEmail,
               }}
               errorTxt={errors.email?.message}
             />
@@ -146,7 +147,6 @@ export default function LoginWithEmailScreen() {
                   value: true,
                   message: translations.required,
                 },
-                // pattern: regexMail,
               }}
               iconLeft={<IconSvg name="icLock" size={18} />}
               isPassword={!showPass}

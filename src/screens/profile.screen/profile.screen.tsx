@@ -44,6 +44,7 @@ import { shareCodeInvite } from "@utils/share.utils";
 import formatMoney from "@shared-components/input-money/format.money";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import useUserHelper from "@helpers/hooks/useUserHelper";
+import { palette } from "@theme/themes";
 
 const SettingProfileScreen = () => {
   const theme = useTheme();
@@ -88,24 +89,25 @@ const SettingProfileScreen = () => {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const listrenderPointCoin = [
     {
-      icon: "icCoinStar",
-      title: userInfo?.current_coin,
-      onPress: () =>
-        NavigationService.navigate(SCREENS.AFFILIATE, { type: "coin" }),
-      end: "IHC",
-    },
-    {
-      icon: "icCoin",
-      title: formatMoney(userData?.current_token || 0),
+      icon: "icMoney",
+      title: formatMoney(userInfo?.current_token || 0),
       onPress: () =>
         NavigationService.navigate(SCREENS.AFFILIATE, { type: "token" }),
       end: "VND",
+      color: palette.colorMoney,
     },
     {
-      icon: "icCup",
-      title: userData?.point,
-      onPress: () => NavigationService.navigate(SCREENS.DISCOVERSCREEN),
+      icon: "icCoinStar",
+      title: userInfo?.point || 0,
+      onPress: () =>
+        NavigationService.navigate(SCREENS.AFFILIATE, { type: "coin" }),
       end: "Points",
+    },
+    {
+      icon: "icCoin",
+      title: userInfo?.current_coin || 0,
+      onPress: () => NavigationService.navigate(SCREENS.DISCOVERSCREEN),
+      end: "IHC",
     },
   ];
 
@@ -152,7 +154,7 @@ const SettingProfileScreen = () => {
         <IconSvg
           style={{ marginHorizontal: 12 }}
           name={item.icon}
-          color={colors.gold}
+          color={item.color || colors.gold}
           size={26}
         ></IconSvg>
         <Text

@@ -247,17 +247,17 @@ const CreateClassCallOneScreen = () => {
       >
         {renderSelectHours}
       </ScrollView>
-      <Button
-        style={{
-          marginHorizontal: 16,
-          marginTop: 8,
-          backgroundColor: updating ? colors.placeholder : colors.primary,
-          marginBottom: 8,
-        }}
-        text={translations.save}
-        disabled={updating}
-        onPress={_submitTime}
-      />
+      <View style={styles.paddingBtn}>
+        <Button
+          style={{
+            backgroundColor: updating ? colors.placeholder : colors.primary,
+            marginBottom: 8,
+          }}
+          text={translations.save}
+          disabled={updating}
+          onPress={_submitTime}
+        />
+      </View>
     </View>
   );
 };

@@ -120,13 +120,13 @@ const CodeActivationsScreen = () => {
     index: number;
     data: ICourseItem;
   }) => {
-    console.log("data...", data);
+    // console.log("data...", data);
     return (
       <Animatable.View duration={300} key={index} style={styles.viewCourse}>
         <View style={styles.avatarCourse}>
           <Image
             style={styles.avatarCourse}
-            source={{ uri: data.ref_id.avatar.media_thumbnail }}
+            source={{ uri: data?.ref_id?.avatar?.media_thumbnail }}
           />
         </View>
         <View style={CS.flex1}>

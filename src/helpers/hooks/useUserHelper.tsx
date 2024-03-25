@@ -18,6 +18,9 @@ const useUserHelper = () => {
   const isTeacher = useMemo(() => {
     return userData?.user_role == EnumRole.Teacher;
   }, [userData]);
+  const isAdmin = useMemo(() => {
+    return userData?.user_role == EnumRole.Admin;
+  }, [userData]);
 
   const isMe = useCallback(
     (data: TypedUser) => {
@@ -77,6 +80,7 @@ const useUserHelper = () => {
 
   return {
     isTeacher,
+    isAdmin,
     isMe,
     changeUserMedia,
     loading,

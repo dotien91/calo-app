@@ -60,6 +60,8 @@ const FBLoginButton = ({ showText }: BtnProps) => {
               }
             },
           );
+        } else {
+          closeSuperModal();
         }
       });
     } catch (error: any) {

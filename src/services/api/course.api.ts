@@ -9,6 +9,15 @@ export async function getCourseList(data) {
     return response;
   });
 }
+export async function getCourseSuggest(data) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "course/suggest",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
 
 export async function getCourseFilterKeys() {
   return request({

@@ -33,7 +33,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
 
   const styles = useMemo(() => createStyles(theme), [theme]);
   const { logout, isLoggedIn, renderViewRequestLogin } = useUserHook();
-  const { isTeacher } = useUserHelper();
+  const { isTeacher, isAdmin } = useUserHelper();
   const userMedia = useStore((state) => state.userMedia);
 
   const listSetting = [
@@ -53,7 +53,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
       id: 1,
       iconFont: "book",
       action: () => {
-        if (isTeacher) {
+        if (isTeacher || isAdmin) {
           NavigationService.navigate(SCREENS.TEACHER_COURSES);
         } else {
           showToast({
