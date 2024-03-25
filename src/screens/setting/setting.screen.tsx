@@ -20,7 +20,6 @@ import CS from "@theme/styles";
 import { USER_TOKEN, _setJson } from "@services/local-storage";
 import IconBtn from "@shared-components/button/IconBtn";
 import useUserHelper from "@helpers/hooks/useUserHelper";
-import { openUrl } from "@helpers/file.helper";
 import {
   EnumModalContentType,
   EnumStyleModalType,
@@ -41,7 +40,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
 
   const styles = useMemo(() => createStyles(theme), [theme]);
   const { logout, isLoggedIn, renderViewRequestLogin } = useUserHook();
-  const { isTeacher } = useUserHelper();
+  const { isTeacher, isAdmin } = useUserHelper();
   const userMedia = useStore((state) => state.userMedia);
 
   const listSetting = [
@@ -96,7 +95,9 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
         if (userData?._id) {
           NavigationService.navigate(SCREENS.CHAT_ROOM, {
             partner_id: "65f7b1b3a22b22d7d3dcf078",
+            id: "65f7b1b3a22b22d7d3dcf078",
             partner_name: "Admin",
+            isAdmin: true,
           });
         } else {
           showWarningLogin();
@@ -140,6 +141,12 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
   // if(isTeacher){
 
   // }
+  const becomeATutorial = () => {
+    NavigationService.navigate(SCREENS.WEBVIEW_SCREEN, {
+      txtHeader: translations.settingUser.becomeATutor,
+      link: "https://s0z8wixgzw0.typeform.com/to/JLHTBcrL",
+    });
+  };
 
   const deleteUser = () => {
     showSuperModal({
@@ -319,7 +326,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
               {userData?.display_name}
             </Text>
             {!isTeacher && (
-              <TouchableOpacity onPress={() => openUrl("test")}>
+              <TouchableOpacity onPress={becomeATutorial}>
                 <Text
                   style={{
                     fontSize: 16,

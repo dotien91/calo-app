@@ -45,7 +45,7 @@ const ItemReply = ({ item, onPressReplyChild, repCmtId }: ItemReplyProps) => {
   const userData = useStore((state) => state.userData);
 
   const [isLike, setIsLike] = useState<boolean>(item?.is_like);
-  const [likeNumber, setLikeNumber] = useState<number>(item?.like_number);
+  const [likeNumber, setLikeNumber] = useState<number>(item?.vote_number);
   const pressLikeCommentRep = async () => {
     if (!userData) {
       showWarningLogin();
@@ -57,7 +57,7 @@ const ItemReply = ({ item, onPressReplyChild, repCmtId }: ItemReplyProps) => {
       setIsLike((isLike) => !isLike);
       postLikeCommnent(params).then((res) => {
         if (!res.isError) {
-          setLikeNumber(res.like_number);
+          setLikeNumber(res.vote_number);
         } else {
           setIsLike(!isLike);
           showToast({
@@ -168,7 +168,7 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
 
   const [listReply, setListReply] = useState<TypedComment[]>([]);
   const [isLike, setIsLike] = useState<boolean>(data?.is_like);
-  const [likeNumber, setLikeNumber] = useState<number>(data.like_number);
+  const [likeNumber, setLikeNumber] = useState<number>(data.vote_number);
   useEffect(() => {
     setListReply(data.child || []);
   }, [data, data.child]);
@@ -243,7 +243,7 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
       setIsLike((isLike) => !isLike);
       postLikeCommnent(params).then((res) => {
         if (!res.isError) {
-          setLikeNumber(res.like_number);
+          setLikeNumber(res.vote_number);
         } else {
           setIsLike((isLike) => !isLike);
           showToast({

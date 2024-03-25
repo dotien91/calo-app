@@ -80,7 +80,7 @@ const HeaderHome = () => {
           </TextBase>
         )}
         {userData?._id && (
-          <IconSvg name="icCup" size={16} color={palette.yellow} />
+          <IconSvg name="icCoinStar" size={16} color={palette.yellow} />
         )}
       </View>
       <PressableBtn style={styles.viewInput} onPress={goToSearchScreen}>

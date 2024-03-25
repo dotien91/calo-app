@@ -8,7 +8,7 @@ import CourseItem from "@screens/course-tab/components/course.item";
 import { useListData } from "@helpers/hooks/useListData";
 import { ICourseItem } from "models/course.model";
 import useStore from "@services/zustand/store";
-import { getCourseList } from "@services/api/course.api";
+import { getCourseSuggest } from "@services/api/course.api";
 import CourseCategoryTitle from "@screens/course-tab/course-list/course.category.title";
 
 const CourseView = () => {
@@ -19,7 +19,7 @@ const CourseView = () => {
       order_by: "DESC",
       sort_by: "createdAt",
     },
-    getCourseList,
+    getCourseSuggest,
   );
 
   const data = React.useMemo(() => {
@@ -49,6 +49,7 @@ const CourseView = () => {
       />
       <FlatList
         horizontal
+        showsHorizontalScrollIndicator={false}
         data={data}
         renderItem={renderItem}
         scrollEventThrottle={16}

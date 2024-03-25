@@ -95,16 +95,24 @@ const PopupCourseDetail = ({
   const goToChat = () => {};
   const goToHomeWork = () => {};
   const _deleteCourse = () => {
-    deleteCourse(dataCourse._id).then((res) => {
-      if (!res.isError) {
-        NavigationService.goBack();
-        closeSuperModal();
-        showToast({
-          type: "success",
-          message: translations.course.deleteCourseSuccess,
-        });
-        eventEmitter.emit("reload_list_course");
-      }
+    showSuperModal({
+      contentModalType: EnumModalContentType.Confirm,
+      styleModalType: EnumStyleModalType.Middle,
+      data: {
+        title: translations.course.warningDelete,
+        cb: () =>
+          deleteCourse(dataCourse._id).then((res) => {
+            if (!res.isError) {
+              NavigationService.goBack();
+              closeSuperModal();
+              showToast({
+                type: "success",
+                message: translations.course.deleteCourseSuccess,
+              });
+              eventEmitter.emit("reload_list_course");
+            }
+          }),
+      },
     });
   };
   const reportCourse = () => {

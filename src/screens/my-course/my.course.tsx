@@ -138,7 +138,7 @@ const ListData = React.memo(({ listData, isTabComplete, isLoading }) => {
   return (
     <View>
       {isLoading && <LoadingItem />}
-      {data.length < 1 ? (
+      {!isLoading && data.length < 1 ? (
         renderEmpty()
       ) : (
         <FlatList

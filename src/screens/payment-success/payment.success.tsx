@@ -24,6 +24,7 @@ const PaymentSuccess = () => {
 
   const openMyCourse = () => {
     eventEmitter.emit("reload_data_preview");
+    eventEmitter.emit("reload_my_course");
     NavigationService.navigate(SCREENS.HOME);
     NavigationService.navigate(SCREENS.MY_COURES);
   };

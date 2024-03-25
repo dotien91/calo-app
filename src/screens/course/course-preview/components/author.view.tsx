@@ -77,7 +77,9 @@ const AuthorView = ({ data }: AuthorViewProps) => {
         <View style={{ marginLeft: 8, justifyContent: "space-between" }}>
           <IconText
             nameIcon="icRateStar"
-            text={`${data?.user_id?.rating} ${translations.course.rankTeacher}`}
+            text={`${
+              data?.user_id?.rating ? data?.user_id?.rating.toFixed(2) : 0
+            } ${translations.course.rankTeacher}`}
           />
           <IconText
             nameIcon="icReview"

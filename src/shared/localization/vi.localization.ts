@@ -402,6 +402,7 @@ export default {
     slogan: "Giáo dục là sức mạnh!",
     course: "Khóa học",
     add: "Thêm",
+    warningDelete: "Bạn muốn xoá khoá học này?",
     warningFull: "Chọn đầy đủ thông tin",
     duration: "Thời gian",
     timeStart: "Bắt đầu",

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Image, StyleSheet, Text, View } from "react-native";
 
 import { selectMedia } from "@helpers/file.helper";
 import { isIos } from "@helpers/device.info.helper";
@@ -100,6 +100,9 @@ const SelectVideoHook = ({
             {updatingVid && (
               <View style={styles.viewImageFill}>
                 <LoadingUpdateMedia />
+                <View style={styles.viewImageFill}>
+                  <ActivityIndicator size={"small"} />
+                </View>
               </View>
             )}
             <View style={styles.deleteViceo}>

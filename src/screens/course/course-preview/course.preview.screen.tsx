@@ -45,6 +45,7 @@ const CoursePreviewScreen = () => {
   // const [isLoading, setIsLoading] = useState(true);
   React.useEffect(() => {
     _getCourseDetail();
+    return () => goToListCourse();
   }, []);
 
   const [data, setData] = useState<ICourseItem>();
@@ -123,6 +124,9 @@ const CoursePreviewScreen = () => {
   };
 
   const [tabSelected, setTabSelected] = useState(1);
+  const goToListCourse = () => {
+    NavigationService.popToTop();
+  };
 
   const TabSelect = () => {
     return (
@@ -262,6 +266,7 @@ const CoursePreviewScreen = () => {
     <View style={styles.container}>
       {/* <Header iconNameRight="share-outline" onPressRight={_shareCourse} /> */}
       <Header
+        onPressLeft={goToListCourse}
         customStyle={{ marginBottom: 0 }}
         text={data?.title}
         iconNameRight="more-vertical"

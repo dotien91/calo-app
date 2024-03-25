@@ -3,7 +3,7 @@ import { SafeAreaView, Text, View } from "react-native";
 import { GiftedChat } from "react-native-gifted-chat";
 import emojiUtils from "emoji-utils";
 import uuid from "react-native-uuid";
-import { useTheme } from "@react-navigation/native";
+import { useTheme, useRoute } from "@react-navigation/native";
 
 /**
  * ? Local Imports
@@ -216,15 +216,18 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
     return <LoadingList numberItem={3} />;
   };
 
-  const renderFooter = () => {
-    return <Text>asdasd</Text>;
-  };
+  const route = useRoute();
+  const isAdmin = route.params["isAdmin"] || false;
 
   return (
     <SafeAreaView
       style={{ flex: 1, paddingTop: getStatusBarHeight(), paddingBottom: 8 }}
     >
-      <ChatHeader roomDetail={roomDetail} messages={messages} />
+      <ChatHeader
+        roomDetail={roomDetail}
+        messages={messages}
+        isAdmin={isAdmin}
+      />
       {_renderChatEmpty()}
       <GiftedChat
         messageContainerRef={(ref) => (giftedChatRef.current = ref)}
@@ -247,7 +250,6 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
           showsVerticalScrollIndicator: false,
         }}
         renderInputToolbar={renderInputToolbar}
-        renderFooter={renderFooter}
       />
 
       {renderSearchView()}

@@ -18,6 +18,7 @@ interface Style {
   checkbox: ViewStyle;
   checkBoxDisable: ViewStyle;
   checkBoxActive: ViewStyle;
+  paddingBtn: ViewStyle;
 }
 
 export default (theme: ExtendedTheme) => {
@@ -118,6 +119,10 @@ export default (theme: ExtendedTheme) => {
     },
     hourActiveBtn: {
       backgroundColor: colors.btnInactive,
+    },
+    paddingBtn: {
+      marginHorizontal: 16,
+      marginTop: 8,
     },
   });
 };

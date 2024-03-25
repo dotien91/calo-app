@@ -88,6 +88,7 @@ export const SCREENS = {
   IELTS_READING_PRACTICE: "IeltsReadingPractice",
   IELTS_PRACTICE_HOME: "PracticeHomeScreen",
   IELTS_PRACTICE_LIST: "IeltsPracticeList",
+  WEBVIEW_SCREEN: "WebviewScreen",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

@@ -31,6 +31,7 @@ import { palette } from "@theme/themes";
 import eventEmitter from "@services/event-emitter";
 import { translations } from "@localization";
 import CS from "@theme/styles";
+import CourseView from "@screens/home/components/list-course/list.course";
 
 interface CourseListScreenProps {}
 
@@ -126,6 +127,7 @@ const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
       <View style={{ flex: 1 }}>
         {isTabCourse && <CourseCategoryItem />}
         <CourseQuickFilter isTabCourse={isTabCourse} />
+        <CourseView />
         <Text
           style={{
             ...CS.txtTitle,

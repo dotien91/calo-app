@@ -20,9 +20,14 @@ import { grantPermission } from "@screens/call/permission.helper";
 interface ChatHeaderProps {
   messages: any;
   roomDetail: any;
+  isAdmin: boolean;
 }
 
-const ChatHeader: React.FC<ChatHeaderProps> = ({ messages, roomDetail }) => {
+const ChatHeader: React.FC<ChatHeaderProps> = ({
+  messages,
+  roomDetail,
+  isAdmin = false,
+}) => {
   const theme = useTheme();
   const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
@@ -34,11 +39,13 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ messages, roomDetail }) => {
 
   const time = getFormatDayMessage(readAt, "HH:mm", "DD/MM");
   const goToProfileChat = () => {
-    NavigationService.navigate(SCREENS.PROFILE_CHAT, {
-      isGroup,
-      roomDetail,
-      partner: roomDetail?.partner_id,
-    });
+    if (!isAdmin) {
+      NavigationService.navigate(SCREENS.PROFILE_CHAT, {
+        isGroup,
+        roomDetail,
+        partner: roomDetail?.partner_id,
+      });
+    }
   };
 
   const handleOpenCallPage = async (callType: string) => {
@@ -70,7 +77,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ messages, roomDetail }) => {
           )}
         </TouchableOpacity>
       </View>
-      {!isGroup ? (
+      {isGroup || isAdmin ? null : (
         <View style={[CommonStyle.flexEnd, styles.headerRight]}>
           <ActionBtn
             icon="phone"
@@ -83,7 +90,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ messages, roomDetail }) => {
             callback={() => handleOpenCallPage("video_call")}
           />
         </View>
-      ) : null}
+      )}
     </View>
   );
 };

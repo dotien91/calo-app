@@ -10,7 +10,10 @@ import {
   showSuperModal,
   showToast,
 } from "@helpers/super.modal.helper";
-import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import {
+  GoogleSignin,
+  statusCodes,
+} from "@react-native-google-signin/google-signin";
 import { IOS_CLIENT_ID_GOOGLE, WEB_CLIENT_ID_GOOGLE } from "constants";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { getDeviceInfo } from "@helpers/device.info.helper";
@@ -58,12 +61,28 @@ const GoogleLoginButton = ({ showText }: BtnProps) => {
       });
     } catch (error: any) {
       closeSuperModal();
-      setTimeout(() => {
-        Toast.show({
-          type: "error",
-          text1: translations.continueWith("sendingError"),
-        });
-      }, 500);
+      console.log(error);
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (e.g. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+        setTimeout(() => {
+          Toast.show({
+            type: "info",
+            text1: error.message,
+          });
+        }, 500);
+      } else {
+        // some other error happened
+        setTimeout(() => {
+          Toast.show({
+            type: "error",
+            text1: error.message,
+          });
+        }, 500);
+      }
     }
   };
 

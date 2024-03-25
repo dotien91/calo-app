@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FlatList, View } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 /**
@@ -17,12 +17,13 @@ import PressableBtn from "@shared-components/button/PressableBtn";
 import IconBtn from "@shared-components/button/IconBtn";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
+import eventEmitter from "@services/event-emitter";
 
 interface CourseCategoryItemProps {}
 
 const CourseCategoryItem: React.FC<CourseCategoryItemProps> = () => {
   const userData = useStore((state) => state.userData);
-  const { listData, isLoading } = useListData<ICourseItem>(
+  const { listData, isLoading, _requestData } = useListData<ICourseItem>(
     {
       auth_id: userData?._id,
       order_by: "DESC",
@@ -35,6 +36,16 @@ const CourseCategoryItem: React.FC<CourseCategoryItemProps> = () => {
   const data = React.useMemo(() => {
     return listData.slice(0, 5);
   }, [listData]);
+  const reloadData = () => {
+    _requestData(true);
+  };
+
+  useEffect(() => {
+    eventEmitter.on("reload_my_course", reloadData);
+    return () => {
+      eventEmitter.off("reload_my_course", reloadData);
+    };
+  }, []);
 
   const renderItem = (item: ICourseItem, index: number) => {
     return (

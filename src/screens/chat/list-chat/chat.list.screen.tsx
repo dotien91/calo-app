@@ -29,6 +29,9 @@ import { SCREENS } from "constants";
 import useStore from "@services/zustand/store";
 import ChatNotification from "./chat.notification";
 import { getListNotification } from "@services/api/notification.api";
+import IconSvg from "assets/svg";
+import { palette } from "@theme/themes";
+import PressableBtn from "@shared-components/button/PressableBtn";
 
 interface ListScreenProps {}
 
@@ -153,9 +156,20 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
     NavigationService.navigate(SCREENS.SEARCH_CHAT);
   };
 
+  const gotoHomeScreen = () => {
+    NavigationService.navigate(SCREENS.HOME);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.headerTitle}>{translations.navigation.messages}</Text>
+      <View style={styles.viewHeader}>
+        <PressableBtn onPress={gotoHomeScreen}>
+          <IconSvg name="icBack" size={24} color={palette.text} />
+        </PressableBtn>
+        <Text style={styles.headerTitle}>
+          {translations.navigation.messages}
+        </Text>
+      </View>
       <SearchInput onPressInput={openSearchRoom} />
       <View style={{ height: 12 }} />
       <ListFriend />
