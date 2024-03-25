@@ -44,7 +44,7 @@ const AffiliatePage = () => {
   const userData = useStore((state) => state.userData);
   const setType = useStore((state) => state.setType);
   const route = useRoute();
-  const type = route?.params["type"] || undefined;
+  const type = route?.params?.["type"] || undefined;
 
   const { getUserData } = useUserHook();
 

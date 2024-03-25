@@ -11,6 +11,10 @@ export default (theme: ExtendedTheme) => {
       flex: 1,
       paddingTop: getStatusBarHeight() + 16,
     },
+    viewHeader: {
+      ...CommonStyle.row,
+      paddingHorizontal: 16,
+    },
     listChat: {
       paddingBottom: 12,
     },
@@ -42,7 +46,8 @@ export default (theme: ExtendedTheme) => {
       paddingLeft: 16,
     },
     headerTitle: {
-      ...CommonStyle.headerTitle,
+      ...CommonStyle.hnSemiBold,
+      fontSize: 24,
       paddingHorizontal: 16,
       marginBottom: 6,
     },

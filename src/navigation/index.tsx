@@ -100,6 +100,7 @@ import PracticeHomeScreen from "@screens/ielts-practice/ielts.practice.home.scre
 import IeltsPraticeList from "@screens/ielts-practice/ielts.practice.list";
 
 import ClassRoomScreen from "@screens/call-class/class.room.screen";
+import WebviewScreen from "@screens/webview/Webview";
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -428,6 +429,7 @@ const Navigation = () => {
           component={CodeActivationsScreen}
         />
         <Stack.Screen name={SCREENS.HIDDEN_PAGE} component={HiddenPaage} />
+        <Stack.Screen name={SCREENS.WEBVIEW_SCREEN} component={WebviewScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

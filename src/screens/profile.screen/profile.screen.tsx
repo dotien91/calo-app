@@ -92,17 +92,20 @@ const SettingProfileScreen = () => {
       title: userInfo?.current_coin,
       onPress: () =>
         NavigationService.navigate(SCREENS.AFFILIATE, { type: "coin" }),
+      end: "IHC",
     },
     {
       icon: "icCoin",
       title: formatMoney(userData?.current_token || 0),
       onPress: () =>
         NavigationService.navigate(SCREENS.AFFILIATE, { type: "token" }),
+      end: "VND",
     },
     {
       icon: "icCup",
       title: userData?.point,
       onPress: () => NavigationService.navigate(SCREENS.DISCOVERSCREEN),
+      end: "Points",
     },
   ];
 
@@ -152,7 +155,9 @@ const SettingProfileScreen = () => {
           color={colors.gold}
           size={26}
         ></IconSvg>
-        <Text style={styles.textNumberMoney}>{item.title}</Text>
+        <Text
+          style={styles.textNumberMoney}
+        >{`${item.title} ${item.end}`}</Text>
       </PressableBtn>
     );
   };
