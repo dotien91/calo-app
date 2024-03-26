@@ -34,6 +34,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
   /*                               Render Methods                               */
   /* -------------------------------------------------------------------------- */
 
+  
   const { isLoggedIn } = useUserHook();
 
   const userData = useStore((state) => state.userData);

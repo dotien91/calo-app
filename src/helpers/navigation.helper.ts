@@ -5,26 +5,26 @@ import {
 
 export const navigationRef = createNavigationContainerRef();
 
-const navigate = (name, params?) => {
+export const navigate = (name, params?) => {
   console.log("2222=====", navigationRef.isReady());
   if (navigationRef.isReady()) {
     navigationRef.navigate(name, params);
   }
 };
 
-const push = (name, params?) => {
+export const push = (name, params?) => {
   if (navigationRef.isReady()) {
     navigationRef.dispatch(StackActions.push(name, params));
   }
 };
 
-const pop = (n = 1) => {
+export const pop = (n = 1) => {
   if (navigationRef.isReady()) {
     navigationRef.dispatch(StackActions.pop(n));
   }
 };
 
-const goBack = () => {
+export const goBack = () => {
   if (navigationRef.isReady()) {
     try {
       navigationRef.goBack();
@@ -34,14 +34,14 @@ const goBack = () => {
   }
 };
 
-const getRouteName = () => {
+export const getRouteName = () => {
   if (navigationRef.isReady()) {
     return navigationRef.getCurrentRoute()?.name;
   }
   return "";
 };
 
-const getActiveRouteName = (state) => {
+export const getActiveRouteName = (state) => {
   const route = state?.routes?.[state.index];
 
   if (route?.state) {
@@ -52,18 +52,8 @@ const getActiveRouteName = (state) => {
   return route?.name;
 };
 
-const replace = (name, params = {}) => {
+export const replace = (name, params = {}) => {
   if (navigationRef.isReady() && getRouteName() !== name) {
     navigationRef.dispatch(StackActions.replace(name, params));
   }
-};
-
-export default {
-  navigate,
-  getRouteName,
-  goBack,
-  getActiveRouteName,
-  replace,
-  push,
-  pop,
 };
