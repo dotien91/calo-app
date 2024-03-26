@@ -18,11 +18,7 @@ const TaskIcon = ({ item, customStyle }) => {
             backgroundColor: colors.btnRedPrimary,
           }}
         >
-          <IconSvg
-            name={"iconBuyTask"}
-            color={colors.white}
-            size={15}
-          ></IconSvg>
+          <IconSvg name={"iconBuyTask"} color={colors.white} size={15} />
         </View>
       )}
       {item.action_type === ActionTypeTask.COMMENT && (
@@ -32,11 +28,7 @@ const TaskIcon = ({ item, customStyle }) => {
             backgroundColor: colors.yellowComment,
           }}
         >
-          <IconSvg
-            name={"icCommentTask"}
-            color={colors.white}
-            size={15}
-          ></IconSvg>
+          <IconSvg name={"icCommentTask"} color={colors.white} size={15} />
         </View>
       )}
       {item.action_type === ActionTypeTask.LIKE && (
@@ -46,7 +38,7 @@ const TaskIcon = ({ item, customStyle }) => {
             backgroundColor: colors.blueChart,
           }}
         >
-          <IconSvg name={"icLike"} color={colors.white} size={15}></IconSvg>
+          <IconSvg name={"icLike"} color={colors.white} size={15} />
         </View>
       )}
       {item.action_type === ActionTypeTask.POST && (
@@ -56,7 +48,7 @@ const TaskIcon = ({ item, customStyle }) => {
             backgroundColor: colors.greenChart,
           }}
         >
-          <IconSvg name={"icupLoad"} color={colors.white} size={15}></IconSvg>
+          <IconSvg name={"icupLoad"} color={colors.white} size={15} />
         </View>
       )}
       {item.action_type === ActionTypeTask.COMPLETE && (
@@ -66,7 +58,7 @@ const TaskIcon = ({ item, customStyle }) => {
             backgroundColor: colors.greenChart,
           }}
         >
-          <IconSvg name={"iconPen"} color={colors.white} size={15}></IconSvg>
+          <IconSvg name={"iconPen"} color={colors.white} size={15} />
         </View>
       )}
       {item.action_type === ActionTypeTask.VIEW && (
@@ -76,7 +68,7 @@ const TaskIcon = ({ item, customStyle }) => {
             backgroundColor: colors.primary,
           }}
         >
-          <IconSvg name={"icYoutube"} color={colors.white} size={15}></IconSvg>
+          <IconSvg name={"icYoutube"} color={colors.white} size={15} />
         </View>
       )}
     </View>

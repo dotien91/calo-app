@@ -40,6 +40,7 @@ import TeacherClassModalInner from "@screens/teacher-courses/teacher.class.modal
 import { ScreenHeight } from "@freakycoder/react-native-helpers";
 import PopupCourseDetail from "@screens/course/course-preview/components/popup.more";
 import PopupCoupon from "@screens/course/course-preview/components/popup.coupon";
+import ReferralPopupTask from "@shared-components/task-item/task.referral.popup";
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
 // using normal one.
@@ -256,6 +257,9 @@ const SuperModal: React.FC<SuperModalProps> = () => {
           )}
           {contentModalType == EnumModalContentType.AddCouponToCourse && (
             <PopupCoupon {...data} />
+          )}
+          {contentModalType == EnumModalContentType.RefferralTask && (
+            <ReferralPopupTask data={data} />
           )}
         </View>
       </StickBottomModal>
