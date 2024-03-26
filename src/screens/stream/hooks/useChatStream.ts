@@ -84,6 +84,7 @@ export const useLiveChatHistory = ({
   };
 
   const joinRoomToClient = (data) => {
+    console.log("firstjoinRoomToClient", data)
     if (!data) return;
     data = JSON.parse(data);
     if (isMe(data)) return;

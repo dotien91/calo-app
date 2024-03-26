@@ -242,7 +242,7 @@ function App() {
   //       break;
   //   }
   // };
-
+console.log("iveData?._id", liveData?._id)
   const renderChatView = () => {
     if (!liveData?._id) return null;
     return (

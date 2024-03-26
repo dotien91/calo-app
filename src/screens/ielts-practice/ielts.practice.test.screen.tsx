@@ -120,7 +120,8 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
       answers,
       finished_time: secs,
     };
-
+    console.log("dataSubmit", dataSubmit)
+return null
     submitTest(dataSubmit).then((res) => {
       if (!res.isError) {
         showToast({
@@ -193,8 +194,6 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
       />
     );
   };
-
-  console.log("parentQuestion", parentQuestion);
 
   const renderContent = () => {
     if (isLoading) return <LoadingList numberItem={2} />;
