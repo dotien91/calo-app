@@ -55,9 +55,14 @@ const StreamCard = ({ data }: { data: IStreamItem }) => {
             <View style={styles.btnLive}>
               <Text style={styles.txtLive}>LIVE</Text>
             </View>
-            {data?.view_number > 0 && <View style={styles.viewEye}>
-              <IconText nameIcon="icEyeStream" text={data?.view_number || 0} />
-            </View>}
+            {data?.view_number > 0 && (
+              <View style={styles.viewEye}>
+                <IconText
+                  nameIcon="icEyeStream"
+                  text={data?.view_number || 0}
+                />
+              </View>
+            )}
           </View>
         </View>
       </PressableBtn>

@@ -506,6 +506,7 @@ export default {
     updateSuccess: "Update successfully",
     timeStartAt: "Start at",
     allCourse: "All course",
+    allTutor: "All tutor",
   },
   seeAll: "See all",
   settings: {
@@ -579,6 +580,7 @@ export default {
     referrer: "Referrer",
     copyCodeSuccsess: "Copied",
     activate: "Activate",
+    goTo: "Go to",
   },
   profile: {
     editProfile: "Edit Profile",
@@ -938,6 +940,7 @@ export default {
     reading: "Reading",
     writing: "Writing",
     missions: "Missions",
+    get: "Get",
   },
   homework: {
     header: "Task list",

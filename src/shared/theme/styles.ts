@@ -217,6 +217,10 @@ const CS = StyleSheet.create({
     fontFamily: font.outfit.medium,
     color: palette.white,
   },
+  txtPoint: {
+    lineHeight: 22,
+    fontFamily: font.outfit.regular,
+  },
 });
 
 interface Shadow {

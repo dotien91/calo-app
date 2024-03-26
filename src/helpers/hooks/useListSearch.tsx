@@ -37,7 +37,7 @@ export function useListSearch<T>(
   params: TypedRequestParams,
   requestData: (params: TypedRequestParams) => Promise<T[]>,
   initData: T[] = [],
-  type,
+  // type,
 ): TypedUseListSearch<T> {
   const [stateListData, setStateListData] = useState<TypedStateListSearch<T>>({
     listData: initData,

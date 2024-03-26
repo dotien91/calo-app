@@ -25,3 +25,35 @@ export const getNameHolder = (data: { bin: string; accountNumber: string }) => {
       });
   });
 };
+
+export const genQr = (data: {
+  accountNo: number;
+  accountName: string;
+  acqId: 970422;
+  amount: number;
+  addInfo: "string";
+  format: "text";
+  template: "compact";
+}) => {
+  const config = {
+    method: "post",
+    url: "https://api.vietqr.io/v2/generate",
+    headers: {
+      "x-client-id": CLIENT_ID,
+      "x-api-key": API_KEY,
+      "Content-Type": "application/json",
+    },
+    data,
+  };
+  return new Promise<void>((resolve, reject) => {
+    axios(config)
+      .then(function (response) {
+        console.log("genQr", JSON.stringify(response.data));
+        resolve(response);
+      })
+      .catch(function (error) {
+        console.log("genQr", error);
+        reject(error);
+      });
+  });
+};

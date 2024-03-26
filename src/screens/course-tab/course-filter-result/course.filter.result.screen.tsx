@@ -255,12 +255,20 @@ const ListSearch = ({ type }: { type: string }) => {
   };
 
   const renderLoading = () => {
-    if (!isLoading) return null
+    if (!isLoading) return null;
     if (type == EnumSearchType.user || type == EnumSearchType.tutor) {
-      return <View style={{marginTop: 10}}><LoadingList /></View>
+      return (
+        <View style={{ marginTop: 10 }}>
+          <LoadingList />
+        </View>
+      );
     }
-    return <View style={{marginTop: 10}}><LoadingItem /></View>
-  }
+    return (
+      <View style={{ marginTop: 10 }}>
+        <LoadingItem />
+      </View>
+    );
+  };
 
   return (
     <View>

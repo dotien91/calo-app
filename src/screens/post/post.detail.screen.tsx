@@ -49,7 +49,7 @@ const PostDetail = (props: PostDetailProps) => {
   const fromPush = props.route?.params?.fromPush;
   const isComment = props.route?.params?.isComment;
   const [data, setData] = useState<TypedPost>();
-  const scrollViewRef = React.useRef(null)
+  const scrollViewRef = React.useRef(null);
 
   const userData = useStore((state) => state.userData);
   const updateListCountComments = useStore(
@@ -79,9 +79,9 @@ const PostDetail = (props: PostDetailProps) => {
           y: v,
           animated: true,
         });
-      }, 500)
+      }, 500);
     }
-  }
+  };
 
   const {
     listData,
@@ -372,7 +372,7 @@ const PostDetail = (props: PostDetailProps) => {
       <View style={[styles.container, isForcus ? { marginBottom: 0 } : {}]}>
         <HeaderPost />
         <ScrollView
-          ref={node => scrollViewRef.current = node}
+          ref={(node) => (scrollViewRef.current = node)}
           style={CommonStyle.flex1}
           showsVerticalScrollIndicator={false}
         >
@@ -404,7 +404,7 @@ const PostDetail = (props: PostDetailProps) => {
                 keyExtractor={(item) => item?._id + ""}
                 refreshControl={refreshControl()}
                 ListFooterComponent={renderFooterComponent()}
-              // ListEmptyComponent={renderEmpty()}
+                // ListEmptyComponent={renderEmpty()}
               />
             )}
           </View>

@@ -103,7 +103,6 @@ const useFirebase = () => {
     }
   };
 
-
   const createChannel = async () => {
     const channelId = await notifee.createChannel({
       id: "default",
@@ -111,7 +110,7 @@ const useFirebase = () => {
     });
 
     notificationListener.current = messaging().onMessage((res) => {
-      currentNotiData.current = res.data
+      currentNotiData.current = res.data;
       notifee.displayNotification({
         title: res.notification?.title,
         body: res.notification?.body,
@@ -143,8 +142,14 @@ const useFirebase = () => {
       // if (isAuth) actions.setTokenFirebase(newFcmToken);
     });
 
-    notifee.onForegroundEvent(({type, detail}) => {
-      console.log("firebase onForeground event",currentNotiData.current, 2, type, detail);
+    notifee.onForegroundEvent(({ type, detail }) => {
+      console.log(
+        "firebase onForeground event",
+        currentNotiData.current,
+        2,
+        type,
+        detail,
+      );
 
       switch (type) {
         case EventType.DISMISSED:
@@ -154,7 +159,7 @@ const useFirebase = () => {
           // const { router } = detail?.notification?.data || {}
 
           // handleNotification(router, detail?.notification?.data || {})
-          _pressNotification(currentNotiData.current)
+          _pressNotification(currentNotiData.current);
           console.log(" firebase User pressed notification", detail);
           break;
       }

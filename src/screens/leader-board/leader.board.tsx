@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { View, Text, FlatList, SafeAreaView } from "react-native";
+import * as NavigationService from "react-navigation-helpers";
 
 import Header from "@shared-components/header/Header";
 import { getListLeaderBoard } from "@services/api/user.api";
@@ -12,16 +13,20 @@ import { useListDataRank } from "@helpers/hooks/useListDataRank";
 import LoadingList from "@shared-components/loading.list.component";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
 import { translations } from "@localization";
+import IconSvg from "assets/svg";
+import createStyles from "./leader.board.style";
+import PressableBtn from "@shared-components/button/PressableBtn";
+import { SCREENS } from "constants";
 
 const LeaderBoard = () => {
   const theme = useTheme();
   const { colors } = theme;
+  const styles = useMemo(() => createStyles(theme), [theme]);
 
+  const [listRank, setListRank] = useState([]);
   const [rankUser, setRankUser] = useState({});
   const [indexRankUser, setindexRankUser] = useState(0);
-
-  const HEIGHT_ITEM_LEADERBOARD = 64;
-  const MARGIN_BOTTOM_ITEM = 8;
+  const [loading, setLoading] = useState(false);
 
   const { listData, onEndReach, renderFooterComponent, isLoading } =
     useListDataRank({ limit: "12" }, getListLeaderBoard);
@@ -29,7 +34,6 @@ const LeaderBoard = () => {
   const getData = () => {
     const param = {
       limit: 2000,
-      // page: pageLoad,
     };
     getListLeaderBoard(param).then((res) => {
       setRankUser(res.data.user_id);
@@ -48,53 +52,154 @@ const LeaderBoard = () => {
     getData();
   }, []);
 
+  const getData1 = () => {
+    const param = {
+      limit: 3,
+    };
+    setLoading(true);
+    getListLeaderBoard(param).then((res) => {
+      setLoading(false);
+      if (!res.isError) {
+        setListRank(res.data.other_users);
+      }
+    });
+  };
+
+  useEffect(() => {
+    getData1();
+  }, []);
+
   const renderItem = ({ item, index }: { item: any; index: number }) => {
-    console.log(22222, indexRankUser);
+    const gotoProfile = () => {
+      NavigationService.navigate(SCREENS.PROFILE_CURRENT_USER, {
+        _id: item?._id,
+      });
+      console.log(indexRankUser, loading);
+    };
+
+    if (index >= 3) {
+      return (
+        <PressableBtn onPress={gotoProfile} style={styles.viewItem}>
+          <Text style={styles.txtRank}>{item?.rank}</Text>
+          <View style={{ zIndex: 1 }}>
+            <Avatar
+              style={styles.viewAvatar2}
+              sourceUri={{
+                uri: item?.user_avatar_thumbnail,
+              }}
+              resizeMode={"cover"}
+            />
+            <View style={styles.viewTxtLevel2}>
+              <Text style={styles.txtLevel2}> {item?.level}</Text>
+            </View>
+          </View>
+
+          <View style={{ width: "55%" }}>
+            <Text style={styles.txtName2} numberOfLines={1}>
+              {item?.display_name}
+            </Text>
+            <Text style={styles.txtPoint2}>
+              {item?.point} {translations.discover.poits}
+            </Text>
+          </View>
+        </PressableBtn>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  const renderLeaderBoard = () => {
+    // console.log("233333333333333333333", listRank);
+    // if (!rankUser.length) return null;
     return (
-      <View
-        style={{
-          height: HEIGHT_ITEM_LEADERBOARD,
-          flexDirection: "row",
-          alignItems: "center",
-          marginBottom: MARGIN_BOTTOM_ITEM,
-          borderWidth: 1,
-          borderRadius: 8,
-          borderColor:
-            index === indexRankUser ? colors.primary : colors.borderColor,
-          backgroundColor: colors.white,
-        }}
-      >
-        <Text
-          style={{
-            marginLeft: 8,
-            ...CS.hnMedium,
-            fontSize: 16,
-            color: colors.textOpacity8,
-          }}
-        >
-          {item?.rank}
-        </Text>
-        <Avatar
-          style={{
-            width: 46,
-            height: 46,
-            borderRadius: 99,
-            marginLeft: 18,
-          }}
-          sourceUri={{
-            uri: item?.user_avatar_thumbnail,
-          }}
-          resizeMode={"cover"}
-        />
-        <View style={{ marginLeft: 8 }}>
-          <Text style={{ ...CS.hnSemiBold, fontSize: 16, color: colors.text }}>
-            {item?.display_name}
-          </Text>
-          <Text
-            style={{ ...CS.hnMedium, fontSize: 14, color: colors.textOpacity8 }}
-          >
-            {item?.country}
-          </Text>
+      <View style={styles.viewTop}>
+        <View style={{ flex: 1, flexDirection: "row" }}>
+          <View style={styles.viewStyle}>
+            <View style={{ zIndex: 1 }}>
+              <Avatar
+                style={styles.avatarTop2}
+                sourceUri={{
+                  uri: `${listRank[1]?.user_avatar}`,
+                  // uri: item?.user_avatar_thumbnail,
+                }}
+                resizeMode={"cover"}
+              />
+              <View style={styles.viewTop2}>
+                <Text style={styles.txtTop}>2</Text>
+              </View>
+            </View>
+            <View style={styles.styleTop2}>
+              <View style={styles.styleVTop}>
+                <Text numberOfLines={2} style={styles.txtNameTop}>
+                  {listRank[1]?.display_name}
+                </Text>
+                <Text style={styles.txtPointTop2}>{listRank[1]?.point}</Text>
+                <Text style={styles.txtViewPoint}>
+                  {translations.discover.poits}
+                </Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.viewStyle}>
+            <View style={{ zIndex: 1 }}>
+              <Avatar
+                style={styles.avatarTop1}
+                sourceUri={{
+                  uri: `${listRank[0]?.user_avatar_thumbnail}`,
+                }}
+                resizeMode={"cover"}
+              />
+
+              <IconSvg
+                style={styles.viewIcon}
+                name="icKing"
+                size={30}
+                color={colors.gold}
+              />
+              <View style={styles.viewTop1}>
+                <Text style={styles.txtTop}>1</Text>
+              </View>
+            </View>
+            <View style={styles.viewStyleTop1}>
+              <View style={styles.styleVTop1}>
+                <Text numberOfLines={3} style={styles.txtNameTop}>
+                  {listRank[0]?.display_name}
+                </Text>
+                <Text style={styles.txtPointTop1}>{listRank[0]?.point}</Text>
+                <Text style={styles.txtViewPoint}>
+                  {translations.discover.poits}
+                </Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.viewStyle}>
+            <View style={{ zIndex: 1 }}>
+              <Avatar
+                style={styles.avatarTop3}
+                sourceUri={{
+                  uri: `${listRank[2]?.user_avatar_thumbnail}`,
+                }}
+                resizeMode={"cover"}
+              />
+              <View style={styles.viewTop3}>
+                <Text style={styles.txtTop}>3</Text>
+              </View>
+            </View>
+            <View style={styles.styleTop3}>
+              <View style={styles.styleVTop}>
+                <Text numberOfLines={1} style={styles.txtNameTop}>
+                  {listRank[2]?.display_name}
+                </Text>
+                <Text style={styles.txtPointTop3}>{listRank[2]?.point}</Text>
+                <Text style={styles.txtViewPoint}>
+                  {translations.discover.poits}
+                </Text>
+              </View>
+            </View>
+          </View>
         </View>
       </View>
     );
@@ -104,6 +209,10 @@ const LeaderBoard = () => {
     return item._id;
   };
 
+  const gotoTask = () => {
+    NavigationService.navigate(SCREENS.TASK_SCREEN);
+  };
+
   return (
     <SafeAreaView
       style={{ ...CS.safeAreaView, marginBottom: getBottomSpace() }}
@@ -111,7 +220,9 @@ const LeaderBoard = () => {
       <View style={{ flex: 1 }}>
         <Header text={translations.leaderBoard} />
         {isLoading && <LoadingList numberItem={2} />}
+        {/* {renderLeaderBoard()} */}
         <FlatList
+          ListHeaderComponent={renderLeaderBoard()}
           data={listData}
           renderItem={renderItem}
           showsVerticalScrollIndicator={false}
@@ -121,59 +232,34 @@ const LeaderBoard = () => {
           ListFooterComponent={renderFooterComponent}
         />
         {/* {setIsFooterSticky ? ( */}
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            backgroundColor: colors.white,
-            position: "absolute",
-            bottom: 0,
-            width: "100%",
-            padding: 16,
-            ...CS.borderTopStyle,
-          }}
-        >
-          <Text
-            style={{
-              marginLeft: 8,
-              ...CS.hnMedium,
-              fontSize: 16,
-              color: colors.textOpacity8,
-            }}
-          >
-            {rankUser?.rank}
-          </Text>
-
-          <Avatar
-            style={{
-              width: 46,
-              height: 46,
-              borderRadius: 99,
-              marginHorizontal: 16,
-            }}
-            sourceUri={{
-              uri: rankUser?.user_avatar_thumbnail,
-            }}
-            resizeMode={"cover"}
-          />
-          <View>
-            <Text
-              style={{ ...CS.hnSemiBold, fontSize: 16, color: colors.text }}
-            >
-              {rankUser?.display_name}
-            </Text>
-            <Text
-              style={{
-                ...CS.hnMedium,
-                fontSize: 14,
-                color: colors.textOpacity8,
-              }}
-            >
-              {rankUser?.country}
-            </Text>
+        <View style={styles.viewBtn}>
+          <View style={styles.viewItem2}>
+            <Text style={styles.txtRank}>{rankUser?.rank}</Text>
+            <View style={{ zIndex: 1 }}>
+              <Avatar
+                style={styles.viewAvatar2}
+                sourceUri={{
+                  uri: rankUser?.user_avatar_thumbnail,
+                }}
+                resizeMode={"cover"}
+              />
+              <View style={styles.viewTxtLevel2}>
+                <Text style={styles.txtLevel2}>{rankUser?.level}</Text>
+              </View>
+            </View>
+            <View style={{ width: "55%" }}>
+              <Text style={styles.txtName2} numberOfLines={1}>
+                {rankUser?.display_name}
+              </Text>
+              <Text style={styles.txtPoint2}>
+                {rankUser?.point} {translations.discover.poits}
+              </Text>
+            </View>
           </View>
+          <PressableBtn onPress={gotoTask} style={styles.styleBtn}>
+            <Text style={styles.txtBtn}>{translations.continue}</Text>
+          </PressableBtn>
         </View>
-        {/* ) : null} */}
       </View>
     </SafeAreaView>
   );

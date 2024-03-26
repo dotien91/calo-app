@@ -1,6 +1,6 @@
 import React from "react";
 import { ScrollView, StyleSheet, TextInput, View } from "react-native";
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 /**
  * ? Local Imports
@@ -11,7 +11,7 @@ import TextBase from "@shared-components/TextBase";
 import { palette } from "@theme/themes";
 import AnswerChildReading from "../answer/answer.child.reading";
 import HtmlView from "../HtmlView";
-import { isIOS } from "@freakycoder/react-native-helpers";
+// import { isIOS } from "@freakycoder/react-native-helpers";
 
 interface QuestionItemProps extends IQuestion {
   isLatestItem: boolean;
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     marginTop: 12,
     minHeight: 120,
-    paddingTop: 16
+    paddingTop: 16,
   },
   inputDisabled: {
     backgroundColor: palette.btnInactive,

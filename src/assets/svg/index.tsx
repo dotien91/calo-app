@@ -132,6 +132,7 @@ import iconRemove from "./icon-remove.svg";
 import iconFlag from "./icon-flag.svg";
 import icSlider from "./icon-slider.svg";
 import icMoney from "./icon-money.svg";
+import icYoutube from "./icon-youtube.svg";
 
 const Icons = {
   intro1,
@@ -267,6 +268,7 @@ const Icons = {
   iconFlag,
   icSlider,
   icMoney,
+  icYoutube,
 };
 
 interface IconSvgProps {

@@ -9,13 +9,12 @@ import React, { useMemo, useState } from "react";
 import { useTheme } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 
-import CommonStyle from "shared/theme/styles";
 import IconSvg from "assets/svg";
-import Button from "@shared-components/button/Button";
 import createStyles from "./choose.language.screen.style";
 import { SCREENS } from "constants";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";
+import Header from "@shared-components/header/Header";
 
 interface TypeItemLanguage {
   label: string;
@@ -27,16 +26,15 @@ export default function ChooseLanguageScreen() {
     {
       label: "English",
       value: "en",
-      flag: <IconSvg name="icFlagen" size={48} />,
+      flag: <IconSvg name="icFlagen" size={32} />,
     },
     {
       label: "Vietnamese",
       value: "vi",
-      flag: <IconSvg name="icFlagvi" size={48} />,
+      flag: <IconSvg name="icFlagvi" size={32} />,
     },
   ];
   const [selected, setSelected] = useState(useStore((state) => state.language));
-  // const [txtSearch, setTxtSearch] = useState("");
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const setLanguage = useStore((state) => state.setLanguage);
@@ -59,9 +57,11 @@ export default function ChooseLanguageScreen() {
             : styles.itemLanguageNotSelected
         }
       >
-        <View style={CommonStyle.row}>
-          {item.flag}
-          <Text style={styles.textLanguage}>{item.label}</Text>
+        <View style={styles.contentItem}>
+          <View style={styles.leftItem}>
+            {item.flag}
+            <Text style={styles.textLanguage}>{item.label}</Text>
+          </View>
         </View>
         {item.value == selected && <IconSvg name="icCheckCircleFill" />}
       </Pressable>
@@ -70,30 +70,17 @@ export default function ChooseLanguageScreen() {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
-        <Text style={styles.textHeader}>{translations.changeLanguage}</Text>
-        {/* <View style={styles.viewSearch}>
-          <TextInput
-            placeholder="Find a language"
-            style={styles.textSearch}
-            value={txtSearch}
-            onChangeText={(text) => setTxtSearch(text)}
-          />
-          <Pressable style={CommonStyle.center}>
-            <IconSvg name="icSearch" />
-          </Pressable>
-        </View> */}
+        <Header
+          text={translations.changeLanguage}
+          hideBackBtn
+          onPressRight={handleKeepGoing}
+          iconNameRight="check"
+        />
         <View style={styles.child}>
-          <View style={CommonStyle.flex1}>
+          <View style={styles.viewItem}>
             {languageList.map((item, index: number) => {
               return <ItemLanguage key={index} item={item} />;
             })}
-          </View>
-          <View style={styles.paddingBtnStyle}>
-            <Button
-              style={styles.btnStyle}
-              onPress={handleKeepGoing}
-              text={translations.keepGoing}
-            />
           </View>
         </View>
       </View>

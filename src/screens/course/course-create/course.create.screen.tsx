@@ -195,6 +195,7 @@ const CourseCreate = () => {
               eventEmitter.emit("reload_data_preview");
               NavigationService.navigate(SCREENS.COURSE_DETAIL, {
                 course_id: course_id,
+                fromScreen: "createCourse",
               });
               setUpdating(false);
             } else {
@@ -216,6 +217,7 @@ const CourseCreate = () => {
               eventEmitter.emit("reload_list_course");
               NavigationService.navigate(SCREENS.COURSE_DETAIL, {
                 course_id: res?.data?._id,
+                fromScreen: "createCourse",
               });
               setUpdating(false);
               closeSuperModal();

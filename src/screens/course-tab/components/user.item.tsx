@@ -33,8 +33,8 @@ const UserItem = ({
         display_name,
         user_avatar_thumbnail,
         _id,
-        ...res
-      }
+        ...res,
+      },
     });
   };
 

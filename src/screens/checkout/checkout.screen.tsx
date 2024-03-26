@@ -404,6 +404,7 @@ const CheckoutScreen = () => {
           NavigationService.navigate(SCREENS.SMARTBANKING, {
             tradeId,
             short_id: res.data?.short_id,
+            price: courseData.price,
           });
         }
       } else {

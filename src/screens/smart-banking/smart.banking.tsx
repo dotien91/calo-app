@@ -10,16 +10,13 @@ import {
 // import Clipboard from "@react-native-community/clipboard";
 import { useTheme, useRoute } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
+import QRCode from "react-native-qrcode-svg";
 
 import { translations } from "@localization";
 import createStyles from "./smart.banking.style";
 import Header from "@shared-components/header/Header";
 import { useUploadFile } from "@helpers/hooks/useUploadFile";
-import {
-  getOrderDetail,
-  updateUserOrder,
-  getQRcode,
-} from "@services/api/payment.api";
+import { getOrderDetail, updateUserOrder } from "@services/api/payment.api";
 import {
   EnumModalContentType,
   EnumStyleModalType,
@@ -29,6 +26,7 @@ import {
 } from "@helpers/super.modal.helper";
 import { SCREENS } from "constants";
 import CS from "@theme/styles";
+import { genQr } from "@services/api/bank.api";
 
 const SmartBanking = () => {
   // const [fileImage, setfileImage] = useState("");
@@ -38,6 +36,7 @@ const SmartBanking = () => {
   const route = useRoute();
   const tradeId = route.params?.["tradeId"];
   const short_id = route.params?.["short_id"];
+  const price = route.params?.["price"] as number;
   const countCheckPaymentSuccess = React.useRef(null);
   const intervalCheckPaymentSuccess = React.useRef(null);
   const [qrcode, setqeCode] = useState();
@@ -102,6 +101,7 @@ const SmartBanking = () => {
       _id: tradeId,
       status: "processing",
       media_id: listFile[listFile.length - 1]._id,
+      order_note: `IELTS ${short_id}`,
     };
     showSuperModal({
       contentModalType: EnumModalContentType.Loading,
@@ -130,10 +130,20 @@ const SmartBanking = () => {
   }, []);
 
   const getData = () => {
-    getQRcode()
+    const data = {
+      accountNo: 818187777,
+      accountName: "CÔNG TY CỔ PHẦN IKIGROUP",
+      acqId: 970422,
+      amount: price,
+      addInfo: `IELTS ${short_id}`,
+      format: "text",
+      template: "compact",
+    };
+    genQr(data)
       .then((res: any) => {
-        console.log("json", JSON.stringify(res, null, 2));
-        setqeCode(res.data);
+        // console.log("json", JSON.stringify(res, null, 2));
+        setqeCode(res.data.data.qrCode);
+        console.log("json", res.data.data.qrCode);
       })
       .catch((err: any) => {
         console.log(err);
@@ -170,7 +180,7 @@ const SmartBanking = () => {
         <TouchableOpacity
           style={{ flexDirection: "row", justifyContent: "center" }}
           onPress={() => {
-            copyToClipboard("ilelts hunter");
+            copyToClipboard(`IELTS ${short_id}`);
           }}
         >
           <Text numberOfLines={2} style={styles.styleTextNameBank}>
@@ -182,10 +192,11 @@ const SmartBanking = () => {
           ></Image>
         </TouchableOpacity>
         <View style={{ marginBottom: 16 }}>
-          <Image
+          {/* <Image
             style={{ height: 180, width: 180, marginBottom: 4 }}
             source={{ uri: qrcode?.config?.data_content }}
-          ></Image>
+          ></Image> */}
+          <QRCode value={qrcode} />
           <Text style={styles.styleTextSaveQRcode}>
             {translations.payment.saveQRCode}
           </Text>
