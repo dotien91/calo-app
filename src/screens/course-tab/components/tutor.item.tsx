@@ -29,6 +29,7 @@ const TutorItem = ({
   description,
   ...res
 }: TutorItemProps) => {
+  console.log(22222, tutor_level, educations, description, res);
   const theme = useTheme();
   // const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
@@ -105,7 +106,6 @@ const TutorItem = ({
       </>
     );
   };
-
   const renderImg = () => {
     return (
       <View>

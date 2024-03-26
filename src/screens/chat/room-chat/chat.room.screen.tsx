@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, Platform } from "react";
-import { SafeAreaView, Text, View } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import { GiftedChat } from "react-native-gifted-chat";
 import emojiUtils from "emoji-utils";
 import uuid from "react-native-uuid";
@@ -23,6 +23,7 @@ import { translations } from "@localization";
 import EmptyResultView from "@shared-components/empty.data.component";
 import createStyles from "./chat.room.screen.style";
 import LoadingList from "@shared-components/loading.list.component";
+import LottieView from "lottie-react-native";
 
 interface ChatRoomScreenProps {
   id?: string;
@@ -216,6 +217,25 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
     return <LoadingList numberItem={3} />;
   };
 
+  const _renderChatFooter = React.useCallback(() => {
+    if (!isTyping) return null;
+    return (
+      <LottieView
+        style={{
+          height: 15,
+          width: 20,
+          aspectRatio: 3,
+          marginLeft: 30,
+          marginBottom: 10,
+        }}
+        source={require("assets/lotties/typing.json")}
+        autoPlay
+        loop
+        resizeMode="cover"
+      />
+    );
+  }, [isTyping]);
+
   const route = useRoute();
   const isAdmin = route.params["isAdmin"] || false;
 
@@ -235,7 +255,6 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
         user={{
           _id: userData?._id,
         }}
-        isTyping={false}
         renderMessage={renderMessage}
         showAvatarForEveryMessage={true}
         listViewProps={{
@@ -250,6 +269,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
           showsVerticalScrollIndicator: false,
         }}
         renderInputToolbar={renderInputToolbar}
+        renderChatFooter={_renderChatFooter}
       />
 
       {renderSearchView()}

@@ -128,7 +128,6 @@ export const useChatHistory = (txtSearch: string, searchModeChat: boolean) => {
   };
 
   const typingToClient = (data: string) => {
-    console.log("datadata", data, userData?._id);
     if (data) {
       const dataTyping = JSON.parse(data);
       if (dataTyping.user_id != userData?._id) {
@@ -136,6 +135,14 @@ export const useChatHistory = (txtSearch: string, searchModeChat: boolean) => {
       }
     }
   };
+
+  useEffect(() => {
+    if (isTyping) {
+      setTimeout(() => {
+        setIsTyping(false);
+      }, 3000);
+    }
+  }, [isTyping]);
 
   const sendChatMessage = (
     text: string,

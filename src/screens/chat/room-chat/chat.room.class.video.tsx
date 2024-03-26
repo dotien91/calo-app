@@ -9,7 +9,6 @@ import uuid from "react-native-uuid";
  */
 import { IMediaUpload, TypedMessageGiftedChat } from "models/chat.model";
 import MessageItem from "./components/message/message.item";
-import { emitSocket } from "@helpers/socket.helper";
 import useStore from "@services/zustand/store";
 import InputToolbar from "./components/form/InputToolbar";
 import { EnumMessageStatus } from "constants/chat.constant";
@@ -20,6 +19,7 @@ import { translations } from "@localization";
 import EmptyResultView from "@shared-components/empty.data.component";
 import { useChatVideoCall } from "@helpers/hooks/useChatVideoCall";
 import { Device } from "@utils/device.ui.utils";
+import LottieView from "lottie-react-native";
 
 interface ChatRoomScreenProps {
   id?: string;
@@ -112,7 +112,6 @@ const ChatRoomClass: React.FC<ChatRoomScreenProps> = ({
       status: EnumMessageStatus.Pending,
     };
     const giftedMessages = GiftedChat.append(messages, message);
-    emitSocket("typingToServer", "room_" + chatRoomId);
     setMessages(giftedMessages);
     sendChatMessage(text, [], giftedMessages);
   };
@@ -158,9 +157,29 @@ const ChatRoomClass: React.FC<ChatRoomScreenProps> = ({
         openRecordModal={openRecordModal}
         onSelectPicture={onSelectPicture}
         onSelectVideo={onSelectVideo}
+        chatRoomId={chatRoomId}
       />
     );
   };
+
+  const _renderChatFooter = React.useCallback(() => {
+    if (!isTyping) return null;
+    return (
+      <LottieView
+        style={{
+          height: 15,
+          width: 20,
+          aspectRatio: 3,
+          marginLeft: 30,
+          marginBottom: 10,
+        }}
+        source={require("assets/lotties/typing.json")}
+        autoPlay
+        loop
+        resizeMode="cover"
+      />
+    );
+  }, [isTyping]);
 
   return (
     <View
@@ -191,6 +210,7 @@ const ChatRoomClass: React.FC<ChatRoomScreenProps> = ({
           },
         }}
         renderInputToolbar={renderInputToolbar}
+        renderChatFooter={_renderChatFooter}
       />
 
       {searchModeChat && !messages.length && (

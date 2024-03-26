@@ -1,7 +1,6 @@
 import React, { useMemo, useRef } from "react";
 import { View, TouchableOpacity } from "react-native";
 import { useTheme } from "@react-navigation/native";
-import { throttle } from "lodash";
 
 /**
  * ? Local Imports
@@ -47,9 +46,8 @@ const InputToolbar: React.FC<InputToolbarProps> = ({
     inputRef.current.setValue("");
   };
 
-  const emitTypingToServerWithThrottle = React.useCallback(() => {
-    return null;
-    throttle(() => emitSocket("typingToServer", "room_" + chatRoomId), 5000);
+  const emitTypingToServer = React.useCallback(() => {
+    emitSocket("typingToServer", "room_" + chatRoomId);
   }, [chatRoomId]);
 
   return (
@@ -60,7 +58,7 @@ const InputToolbar: React.FC<InputToolbarProps> = ({
           placeholder={translations.chat.typeMessage}
           placeholderTextColor={colors.placeholder2}
           customStyle={styles.input}
-          cb={emitTypingToServerWithThrottle}
+          onFocus={emitTypingToServer}
         />
         {!isShowKeyboard && !fromLiveStream && (
           <View style={styles.wrapMediaBtn}>

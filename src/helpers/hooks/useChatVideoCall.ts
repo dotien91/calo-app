@@ -130,6 +130,14 @@ export const useChatVideoCall = (txtSearch: string, id: string) => {
     }
   };
 
+  useEffect(() => {
+    if (isTyping) {
+      setTimeout(() => {
+        setIsTyping(false);
+      }, 3000);
+    }
+  }, [isTyping]);
+
   const sendChatMessage = (
     text: string,
     mediaData?: IMediaUpload[],

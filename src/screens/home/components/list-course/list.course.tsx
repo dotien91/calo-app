@@ -60,7 +60,6 @@ const CourseView = () => {
         initialNumToRender={2}
         onEndReachedThreshold={0}
         showsVerticalScrollIndicator={false}
-        removeClippedSubviews={true}
         keyExtractor={(item) => item?._id + ""}
       />
     </View>
