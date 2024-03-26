@@ -164,8 +164,8 @@ const ItemPost = ({ data, pressComment, scrollToCmt }: ItemPostProps) => {
         borderColor: colors.borderColor,
       }}
       onLayout={(event) => {
-        const {height} = event.nativeEvent.layout;
-        scrollToCmt(height)
+        const { height } = event.nativeEvent.layout;
+        scrollToCmt(height);
       }}
     >
       <View style={styles.container}>

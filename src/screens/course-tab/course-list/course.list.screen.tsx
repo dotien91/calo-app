@@ -135,7 +135,9 @@ const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
             marginBottom: 10,
           }}
         >
-          {translations.course.allCourse}
+          {isTabCourse
+            ? translations.course.allCourse
+            : translations.course.allTutor}
         </Text>
       </View>
     );

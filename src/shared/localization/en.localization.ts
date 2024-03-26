@@ -506,6 +506,7 @@ export default {
     updateSuccess: "Update successfully",
     timeStartAt: "Start at",
     allCourse: "All course",
+    allTutor: "All tutor",
   },
   seeAll: "See all",
   settings: {

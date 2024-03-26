@@ -53,6 +53,7 @@ const CoursePreviewScreen = () => {
   const route = useRoute();
   const course_id = route.params?.["course_id"];
   const dataCourse = route.params?.["dataCourse"];
+  const fromScreen = route.params?.["fromScreen"] || "";
   // const course_id = "65b773efb11a3c94cc62c5e2";
   // const course_id = "65b77490b11a3c94cc62c69a"; //class room
 
@@ -125,7 +126,11 @@ const CoursePreviewScreen = () => {
 
   const [tabSelected, setTabSelected] = useState(1);
   const goToListCourse = () => {
-    NavigationService.popToTop();
+    if (fromScreen === "createCourse") {
+      NavigationService.popToTop();
+    } else {
+      NavigationService.goBack();
+    }
   };
 
   const TabSelect = () => {
@@ -159,7 +164,9 @@ const CoursePreviewScreen = () => {
             <Text
               style={tabSelected == 2 ? styles.textTabSelected : styles.textTab}
             >
-              {translations.course.courseContent}
+              {data?.type === "Self-learning"
+                ? translations.course.courseContent
+                : translations.course.calendar}
             </Text>
           </View>
           <View

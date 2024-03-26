@@ -594,6 +594,7 @@ export default {
     updateSuccess: "Cập nhật thành công",
     timeStartAt: "Thời gian bắt đầu",
     allCourse: "Tất cả khoá học",
+    allTutor: "Người hướng dẫn",
   },
   seeAll: "Xem tất cả",
   settings: {

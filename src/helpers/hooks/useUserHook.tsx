@@ -79,7 +79,6 @@ export const useUserHook = () => {
       type: "success",
       message: "Logout successful",
     });
-    NavigationService.navigate(SCREENS.HOME);
     _setJson(USER_TOKEN, "");
     setUserData(null);
     setLinkAvatar("");
@@ -92,6 +91,7 @@ export const useUserHook = () => {
     setShowInvite(true);
     resetListLike();
     setBankSelected();
+    NavigationService.navigate(SCREENS.HOME);
     // RNRestart.restart();
   };
 

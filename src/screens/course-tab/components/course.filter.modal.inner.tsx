@@ -60,7 +60,7 @@ const CourseFilterModalInnter = ({
     { ...paramsRequest, search: courseSearchHistory },
     isCourseType ? getCourseList : getListTutor,
   );
-console.log("listCourseFilterParams", listCourseFilterParams)
+  console.log("listCourseFilterParams", listCourseFilterParams);
   const {
     watch,
     control,
