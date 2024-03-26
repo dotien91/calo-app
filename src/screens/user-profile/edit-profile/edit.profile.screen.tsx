@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { KeyboardAvoidingView, ScrollView } from "react-native";
+import { KeyboardAvoidingView, ScrollView, View } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import { useTheme, useRoute } from "@react-navigation/native";
 import { useForm } from "react-hook-form";
@@ -289,17 +289,16 @@ const EditProfileScreen = () => {
           errorTxt={errors.youtube?.message}
           showPlaceholder
         />
-
-        <Button
-          style={{
-            marginHorizontal: 16,
-            marginTop: 16,
-            backgroundColor: updating ? colors.placeholder : colors.primary,
-          }}
-          text={translations.profile.saveProfile}
-          disabled={updating}
-          onPress={handleSubmit(onSubmit)}
-        />
+        <View style={{ marginHorizontal: 16, marginTop: 16 }}>
+          <Button
+            style={{
+              backgroundColor: updating ? colors.placeholder : colors.primary,
+            }}
+            text={translations.profile.saveProfile}
+            disabled={updating}
+            onPress={handleSubmit(onSubmit)}
+          />
+        </View>
       </ScrollView>
     </KeyboardAvoidingView>
   );

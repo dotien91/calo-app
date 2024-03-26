@@ -8,7 +8,7 @@ interface IconCustomType {
   name: string;
   color?: string;
   size?: number;
-  customStyle: ViewStyle;
+  customStyle?: ViewStyle;
   onPress?: () => void;
   type?: IconType;
 }

@@ -120,8 +120,8 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
       answers,
       finished_time: secs,
     };
-    console.log("dataSubmit", dataSubmit)
-return null
+    console.log("dataSubmit", dataSubmit);
+    return null;
     submitTest(dataSubmit).then((res) => {
       if (!res.isError) {
         showToast({
