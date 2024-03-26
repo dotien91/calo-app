@@ -99,14 +99,14 @@ const SettingProfileScreen = () => {
     {
       icon: "icCoinStar",
       title: userInfo?.point || 0,
-      onPress: () =>
-        NavigationService.navigate(SCREENS.AFFILIATE, { type: "coin" }),
+      onPress: () => NavigationService.navigate(SCREENS.DISCOVERSCREEN),
       end: "Points",
     },
     {
       icon: "icCoin",
       title: userInfo?.current_coin || 0,
-      onPress: () => NavigationService.navigate(SCREENS.DISCOVERSCREEN),
+      onPress: () =>
+        NavigationService.navigate(SCREENS.AFFILIATE, { type: "coin" }),
       end: "IHC",
     },
   ];
