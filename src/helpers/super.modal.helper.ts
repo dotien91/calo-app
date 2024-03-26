@@ -33,6 +33,8 @@ export enum EnumModalContentType {
   TeacherClass = "teacher-class",
   MoreCourse = "more-course",
   AddCouponToCourse = "add-coupon-to-course",
+  SelectMissions = "select-missions",
+  RefferralTask = "RefferralTask",
 }
 
 export enum EnumStyleModalType {

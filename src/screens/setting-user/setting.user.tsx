@@ -37,7 +37,7 @@ const SettingUser = () => {
   const listSettingUser = [
     {
       title: translations.settingUser.language,
-      detail: language === "vi" ? "Tiếng Việt" : "Tiếng Anh",
+      detail: language === "vi" ? "Vietnamese" : "English",
       action: () => {
         NavigationService.navigate(SCREENS.CHANGELANGUAGE);
       },

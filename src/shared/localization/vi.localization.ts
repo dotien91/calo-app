@@ -995,6 +995,7 @@ export default {
     referrer: "Người giới thiệu",
     copyCodeSuccsess: "Sao chép mã thành công",
     activate: "Kích hoạt",
+    goTo: "Đi đến",
   },
   mentor: {
     user: "Người dùng",
@@ -1449,6 +1450,7 @@ export default {
     reading: "Bài đọc",
     writing: "Bài viết",
     missions: "Nhiệm vụ",
+    get: "Nhận",
   },
   homework: {
     header: "Danh sách bài về nhà",

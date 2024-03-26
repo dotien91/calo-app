@@ -42,23 +42,31 @@ const createStyles = (theme: ExtendedTheme) => {
     child: {
       ...CommonStyle.flex1,
       marginTop: 26,
-      backgroundColor: colors.background2,
+      backgroundColor: colors.white,
     },
     itemLanguageSelected: {
       ...CommonStyle.row,
-      height: 88,
+      height: 60,
       paddingLeft: 16,
       paddingRight: 24,
       justifyContent: "space-between",
       backgroundColor: "#F2FFFB",
+      borderRadius: 8,
+      marginHorizontal: 16,
+      borderWidth: 2,
+      borderColor: colors.blueChart,
     },
     itemLanguageNotSelected: {
       ...CommonStyle.row,
-      height: 88,
+      height: 60,
       paddingLeft: 16,
       paddingRight: 24,
       justifyContent: "space-between",
-      backgroundColor: colors.background2,
+      backgroundColor: colors.white,
+      borderRadius: 8,
+      marginHorizontal: 16,
+      borderWidth: 1,
+      borderColor: colors.grey3,
     },
     textLanguage: {
       ...CommonStyle.hnSemiBold,
@@ -71,6 +79,30 @@ const createStyles = (theme: ExtendedTheme) => {
     },
     paddingBtnStyle: {
       paddingHorizontal: 20,
+    },
+    btnSelect: {
+      ...CommonStyle.row,
+      borderRadius: 8,
+      marginHorizontal: 8,
+      height: 60,
+      // width: "100%",
+      // backgroundColor: colors.white,
+    },
+    contentItem: {
+      paddingLeft: 12,
+      paddingRight: 12,
+      flexDirection: "row",
+      alignItems: "center",
+      height: 52,
+      justifyContent: "space-between",
+    },
+    leftItem: {
+      flexDirection: "row",
+      alignItems: "center",
+    },
+    viewItem: {
+      ...CommonStyle.flex1,
+      gap: 10,
     },
   });
 };

@@ -184,8 +184,10 @@ const ItemPracticeTest = React.memo(({ item }) => {
           <TextBase style={{ marginRight: 2 }}>
             {item?.band_detail?.[item.type + "_point"]}
           </TextBase>
-          <TextBase style={{marginRight: 4}}>
-            {item?.status == "pending" ? translations.ieltsPractice.waittingResult : ""}
+          <TextBase style={{ marginRight: 4 }}>
+            {item?.status == "pending"
+              ? translations.ieltsPractice.waittingResult
+              : ""}
           </TextBase>
           {item.is_done && (
             <IconSvg name="icCheck" size={20} color={palette.green} />

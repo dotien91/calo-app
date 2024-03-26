@@ -8,7 +8,7 @@ import createStyles from "./about.me.style";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";
 
-import { useUserHook } from "@helpers/hooks/useUserHook";
+// import { useUserHook } from "@helpers/hooks/useUserHook";
 import CS from "@theme/styles";
 
 const AboutMe = () => {
@@ -17,7 +17,7 @@ const AboutMe = () => {
   const styles = useMemo(() => createStyles(theme), [theme]);
 
   const userData = useStore((state) => state.userData);
-  const { logout } = useUserHook();
+  // const { logout } = useUserHook();
 
   const listAboutme = [
     {

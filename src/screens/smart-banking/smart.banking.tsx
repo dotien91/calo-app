@@ -16,11 +16,7 @@ import { translations } from "@localization";
 import createStyles from "./smart.banking.style";
 import Header from "@shared-components/header/Header";
 import { useUploadFile } from "@helpers/hooks/useUploadFile";
-import {
-  getOrderDetail,
-  updateUserOrder,
-  getQRcode,
-} from "@services/api/payment.api";
+import { getOrderDetail, updateUserOrder } from "@services/api/payment.api";
 import {
   EnumModalContentType,
   EnumStyleModalType,
@@ -30,7 +26,7 @@ import {
 } from "@helpers/super.modal.helper";
 import { SCREENS } from "constants";
 import CS from "@theme/styles";
-import { genQr, getNameHolder } from "@services/api/bank.api";
+import { genQr } from "@services/api/bank.api";
 
 const SmartBanking = () => {
   // const [fileImage, setfileImage] = useState("");

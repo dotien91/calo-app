@@ -580,6 +580,7 @@ export default {
     referrer: "Referrer",
     copyCodeSuccsess: "Copied",
     activate: "Activate",
+    goTo: "Go to",
   },
   profile: {
     editProfile: "Edit Profile",
@@ -939,6 +940,7 @@ export default {
     reading: "Reading",
     writing: "Writing",
     missions: "Missions",
+    get: "Get",
   },
   homework: {
     header: "Task list",
