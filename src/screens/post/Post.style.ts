@@ -95,7 +95,6 @@ const createStyles = (theme: ExtendedTheme) => {
       alignItems: "center",
       gap: 10,
       flexDirection: "row",
-      backgroundColor: colors.background,
       maxHeight: 120,
       marginVertical: 10,
       borderRadius: 4,
@@ -266,10 +265,11 @@ const createStyles = (theme: ExtendedTheme) => {
     },
     inputComment: {
       ...CommonStyle.flex1,
+      ...CommonStyle.hnRegular,
       justifyContent: "center",
-      paddingVertical: 10,
+      paddingVertical: 0,
       color: colors.text,
-      fontSize: 14,
+      height: 33,
     },
     viewReply: {
       paddingHorizontal: 20,

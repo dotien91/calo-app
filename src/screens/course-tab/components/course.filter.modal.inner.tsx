@@ -60,7 +60,7 @@ const CourseFilterModalInnter = ({
     { ...paramsRequest, search: courseSearchHistory },
     isCourseType ? getCourseList : getListTutor,
   );
-
+console.log("listCourseFilterParams", listCourseFilterParams)
   const {
     watch,
     control,
@@ -98,7 +98,7 @@ const CourseFilterModalInnter = ({
         skills: watch(EnumCourseFilter.skills),
         min_price: watch(EnumCourseFilter.price)?.[0] + "" || "0",
         max_price: maxPrice + "",
-        level: watch(EnumCourseFilter.levels),
+        levels: watch(EnumCourseFilter.levels),
         onlyEnglishNativeSpeakers: !!watch(
           EnumCourseFilter.onlyEnglishNativeSpeakers,
         ),

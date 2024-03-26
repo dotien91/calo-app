@@ -21,6 +21,7 @@ const UserItem = ({
   display_name,
   user_avatar_thumbnail,
   _id,
+  ...res
 }: TutorItemProps) => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
@@ -28,6 +29,12 @@ const UserItem = ({
   const openProfile = () => {
     NavigationService.navigate(SCREENS.PROFILE_CURRENT_USER, {
       _id,
+      userInfo: {
+        display_name,
+        user_avatar_thumbnail,
+        _id,
+        ...res
+      }
     });
   };
 

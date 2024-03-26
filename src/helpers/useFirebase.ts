@@ -2,9 +2,12 @@ import React from "react";
 import messaging from "@react-native-firebase/messaging";
 import notifee, { EventType } from "@notifee/react-native";
 import { _getJson, _setJson } from "@services/local-storage";
+import * as NavigationService from "react-navigation-helpers";
+import { SCREENS } from "constants";
 
 const useFirebase = () => {
   const notificationListener = React.useRef(null);
+  const currentNotiData = React.useRef(null);
 
   React.useEffect(() => {
     initFirebase();
@@ -65,6 +68,42 @@ const useFirebase = () => {
     }
   };
 
+  const _pressNotification = (item) => {
+    console.log("pressItemNotification...", item?.router);
+    // const params = {
+    //   _id: item?._id,
+    //   read_status: "1",
+    // };
+    switch (item?.router) {
+      case "NAVIGATION_CHAT_ROOM":
+        NavigationService.navigate(SCREENS.CHAT_ROOM, {
+          id: item.chat_room_id,
+          partner_name: item?.title,
+        });
+        break;
+      case "NAVIGATION_LIST_NOTIFICATIONS_SCREEN": {
+        const param = { id: item?.community_id, fromPush: true };
+        return NavigationService.push(SCREENS.POST_DETAIL, param);
+      }
+      case "NAVIGATION_PURCHASE_SUCCESS_SCREEN":
+        NavigationService.navigate(SCREENS.MY_COURES);
+        break;
+      case "NAVIGATION_MESSAGE_SCREEN":
+        NavigationService.navigate(SCREENS.CHAT);
+        break;
+      case "NAVIGATION_PROFILE_SCREEN":
+      case "NAVIGATION_LIKED_SCREEN":
+        NavigationService.push(SCREENS.PROFILE_CURRENT_USER, {
+          _id: item.data_id,
+        });
+        break;
+
+      default:
+        break;
+    }
+  };
+
+
   const createChannel = async () => {
     const channelId = await notifee.createChannel({
       id: "default",
@@ -72,7 +111,7 @@ const useFirebase = () => {
     });
 
     notificationListener.current = messaging().onMessage((res) => {
-      console.log(111111, res);
+      currentNotiData.current = res.data
       notifee.displayNotification({
         title: res.notification?.title,
         body: res.notification?.body,
@@ -104,8 +143,8 @@ const useFirebase = () => {
       // if (isAuth) actions.setTokenFirebase(newFcmToken);
     });
 
-    notifee.onForegroundEvent(({ type, detail }) => {
-      console.log("firebase onForeground event", type, detail);
+    notifee.onForegroundEvent(({type, detail}) => {
+      console.log("firebase onForeground event",currentNotiData.current, 2, type, detail);
 
       switch (type) {
         case EventType.DISMISSED:
@@ -115,7 +154,7 @@ const useFirebase = () => {
           // const { router } = detail?.notification?.data || {}
 
           // handleNotification(router, detail?.notification?.data || {})
-
+          _pressNotification(currentNotiData.current)
           console.log(" firebase User pressed notification", detail);
           break;
       }

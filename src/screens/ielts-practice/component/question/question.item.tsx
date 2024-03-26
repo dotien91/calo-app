@@ -1,5 +1,6 @@
 import React from "react";
 import { ScrollView, StyleSheet, TextInput, View } from "react-native";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 /**
  * ? Local Imports
@@ -10,6 +11,7 @@ import TextBase from "@shared-components/TextBase";
 import { palette } from "@theme/themes";
 import AnswerChildReading from "../answer/answer.child.reading";
 import HtmlView from "../HtmlView";
+import { isIOS } from "@freakycoder/react-native-helpers";
 
 interface QuestionItemProps extends IQuestion {
   isLatestItem: boolean;
@@ -57,9 +59,11 @@ const QuestionItem = ({
     return (
       <View>
         <TextInput
-          editable={isTimeout}
+          editable={!isTimeout}
           onChangeText={_onChangeText}
           style={[styles.input, isTimeout && styles.inputDisabled]}
+          multiline={true}
+          numberOfLines={4}
         />
         {/* <Button isFullWidth={false} type={"outline"} text={translations.save} /> */}
       </View>
@@ -77,18 +81,19 @@ const QuestionItem = ({
       );
     return null;
   };
-
   return (
-    <ScrollView>
-      <View style={styles.box}>
-        <TextBase color="text" fontWeight="600">
-          {title}
-        </TextBase>
-        <HtmlView content={content} showViewMore={isReading} />
-        {renderSelectBox()}
-        {renderInput()}
-      </View>
-    </ScrollView>
+    <KeyboardAwareScrollView extraHeight={isWriting ? 120 : 30}>
+      <ScrollView>
+        <View style={styles.box}>
+          <TextBase color="text" fontWeight="600">
+            {title}
+          </TextBase>
+          <HtmlView content={content} showViewMore={isReading} />
+          {renderSelectBox()}
+          {renderInput()}
+        </View>
+      </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 
@@ -103,10 +108,11 @@ const styles = StyleSheet.create({
   input: {
     ...CS.borderStyle,
     borderRadius: 8,
-    minHeight: 124,
     padding: 16,
     marginBottom: 12,
     marginTop: 12,
+    minHeight: 120,
+    paddingTop: 16
   },
   inputDisabled: {
     backgroundColor: palette.btnInactive,

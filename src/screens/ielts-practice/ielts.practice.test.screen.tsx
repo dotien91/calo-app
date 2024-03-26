@@ -242,7 +242,9 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
       />
       <View style={CS.flex1}>
         {renderAudio()}
+
         {renderContent()}
+
         {isLatestitem && renderBtn()}
       </View>
     </SafeAreaView>

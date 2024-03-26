@@ -12,7 +12,6 @@ import { WindowWidth } from "@freakycoder/react-native-helpers";
 import VideoPlayer from "@shared-components/video.player.component";
 
 const StreamCard = ({ data }: { data: IStreamItem }) => {
-  console.log("datadatadata", data);
   const IconText = ({ nameIcon, text }: { nameIcon: string; text: string }) => {
     return (
       <View style={styles.iconText}>
@@ -56,9 +55,9 @@ const StreamCard = ({ data }: { data: IStreamItem }) => {
             <View style={styles.btnLive}>
               <Text style={styles.txtLive}>LIVE</Text>
             </View>
-            <View style={styles.viewEye}>
+            {data?.view_number > 0 && <View style={styles.viewEye}>
               <IconText nameIcon="icEyeStream" text={data?.view_number || 0} />
-            </View>
+            </View>}
           </View>
         </View>
       </PressableBtn>
@@ -72,6 +71,7 @@ const styles = StyleSheet.create({
     paddingBottom: 4,
     marginHorizontal: 4,
     width: WindowWidth - 40,
+    marginRight: 8,
   },
   iconText: {
     ...CS.center,

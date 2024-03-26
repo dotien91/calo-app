@@ -1575,5 +1575,6 @@ export default {
     timeout: "Hết giờ!",
     hidePassage: "Thu gọn đoạn hội thoại",
     showPassage: "Mở rộng đoạn hội thoại",
+    waittingResult: "Đợi kết quả",
   },
 };

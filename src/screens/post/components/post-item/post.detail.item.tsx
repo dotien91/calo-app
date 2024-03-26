@@ -28,9 +28,10 @@ interface ItemPostProps {
   data: any;
   pressComment: () => void;
   pressImageVideo: (index: number) => void;
+  setHeightPost: () => void;
 }
 
-const ItemPost = ({ data, pressComment }: ItemPostProps) => {
+const ItemPost = ({ data, pressComment, scrollToCmt }: ItemPostProps) => {
   const theme = useTheme();
   const { colors } = theme;
   const styles = React.useMemo(() => createStyles(theme), [theme]);
@@ -161,6 +162,10 @@ const ItemPost = ({ data, pressComment }: ItemPostProps) => {
         backgroundColor: colors.background,
         borderBottomWidth: 1,
         borderColor: colors.borderColor,
+      }}
+      onLayout={(event) => {
+        const {height} = event.nativeEvent.layout;
+        scrollToCmt(height)
       }}
     >
       <View style={styles.container}>

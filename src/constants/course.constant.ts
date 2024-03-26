@@ -79,7 +79,7 @@ export const filterCourseKeys = [
       },
       {
         name: "9",
-        id: "9+",
+        id: "9",
       },
     ],
   },

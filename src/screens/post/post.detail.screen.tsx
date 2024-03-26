@@ -46,8 +46,10 @@ interface PostDetailProps {
 const PostDetail = (props: PostDetailProps) => {
   const id = props.route?.params?.id;
   const dataItem = props.route?.params?.data;
+  const fromPush = props.route?.params?.fromPush;
   const isComment = props.route?.params?.isComment;
   const [data, setData] = useState<TypedPost>();
+  const scrollViewRef = React.useRef(null)
 
   const userData = useStore((state) => state.userData);
   const updateListCountComments = useStore(
@@ -69,6 +71,17 @@ const PostDetail = (props: PostDetailProps) => {
       refInput.current?.focus();
     }
   }, [isComment]);
+
+  const scrollToCmt = (v) => {
+    if (fromPush) {
+      setTimeout(() => {
+        scrollViewRef.current?.scrollTo({
+          y: v,
+          animated: true,
+        });
+      }, 500)
+    }
+  }
 
   const {
     listData,
@@ -359,11 +372,13 @@ const PostDetail = (props: PostDetailProps) => {
       <View style={[styles.container, isForcus ? { marginBottom: 0 } : {}]}>
         <HeaderPost />
         <ScrollView
+          ref={node => scrollViewRef.current = node}
           style={CommonStyle.flex1}
           showsVerticalScrollIndicator={false}
         >
           {data && (
             <ItemPost
+              scrollToCmt={scrollToCmt}
               data={data}
               pressComment={_focusRepInput}
               pressImageVideo={showImageVideo}
@@ -389,7 +404,7 @@ const PostDetail = (props: PostDetailProps) => {
                 keyExtractor={(item) => item?._id + ""}
                 refreshControl={refreshControl()}
                 ListFooterComponent={renderFooterComponent()}
-                // ListEmptyComponent={renderEmpty()}
+              // ListEmptyComponent={renderEmpty()}
               />
             )}
           </View>

@@ -46,6 +46,7 @@ import ItemPost from "@screens/home/components/post-item/post.item";
 import { getListUser } from "@services/api/user.api";
 import UserItem from "../components/user.item";
 import LoadingItem from "@shared-components/loading.item";
+import LoadingList from "@shared-components/loading.list.component";
 
 const FirstRoute = () => <ListSearch type={EnumSearchType.course} />;
 const SecondRoute = () => <ListSearch type={EnumSearchType.tutor} />;
@@ -253,9 +254,17 @@ const ListSearch = ({ type }: { type: string }) => {
     );
   };
 
+  const renderLoading = () => {
+    if (!isLoading) return null
+    if (type == EnumSearchType.user || type == EnumSearchType.tutor) {
+      return <View style={{marginTop: 10}}><LoadingList /></View>
+    }
+    return <View style={{marginTop: 10}}><LoadingItem /></View>
+  }
+
   return (
     <View>
-      {isLoading && <LoadingItem numberItem={2} />}
+      {renderLoading()}
       {!listData?.length && !isLoading && noData && (
         <EmptyResultView
           title={translations.noResult}

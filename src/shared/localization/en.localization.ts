@@ -1065,6 +1065,7 @@ export default {
     submit: "Submit",
     hidePassage: "Hide passage",
     showPassage: "Show passage",
+    waittingResult: "Waitting result",
   },
 };
 /* eslint-disable max-len */
