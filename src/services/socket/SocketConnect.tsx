@@ -8,8 +8,8 @@ import { io } from "socket.io-client";
 import { _getJson, _setJson, USER_TOKEN } from "@services/local-storage";
 import useStore from "@services/zustand/store";
 import { Alert, View } from "react-native";
-// const URL_CHAT_SOCKET = "https://socket.api-v2.ieltshunter.io/socket";
-const URL_CHAT_SOCKET = "https://socket.live.api.ieltshunter.io"
+const URL_CHAT_SOCKET = "https://socket.api-v2.ieltshunter.io/socket";
+// const URL_CHAT_SOCKET = "https://socket.live.api.ieltshunter.io"
 import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "constants";
 import { translations } from "@localization";
@@ -115,6 +115,7 @@ const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
   };
 
   const pointToClient = (receiveData: any) => {
+    console.log("receiveData", receiveData)
     const showFirstTimeEarnPoint = _getJson("showFirstTimeEarnPoint");
     const currentPoint = pointNumber.current;
     const data = JSON.parse(receiveData);
