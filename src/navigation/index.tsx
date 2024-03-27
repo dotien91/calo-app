@@ -2,7 +2,7 @@ import React from "react";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
-import { isReadyRef } from "react-navigation-helpers";
+import { isReadyRef, navigationRef } from "react-navigation-helpers";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 /**
  * ? Local & Shared Imports
@@ -10,7 +10,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { SCREENS } from "constants";
 import { DarkTheme, LightTheme, palette } from "@theme/themes";
 // ? Screens
-import navigationHelper, { navigationRef } from "helpers/navigation.helper";
 import DetailScreen from "@screens/detail/DetailScreen";
 import useStore from "@services/zustand/store";
 import IntroScreen from "@screens/welcome/intro/intro.screen";
@@ -110,7 +109,9 @@ const Navigation = () => {
   const isDarkMode = useStore((state) => state.isDarkMode);
   // const isFirstOpenApp = useStore((state) => state.isFirstOpenApp);
   const isFirstOpenApp = _getJson("is_first_open_app") == null ? true : false;
-  const routeNameRef = React.useRef("");
+  React.useEffect((): any => {
+    return () => (isReadyRef.current = false);
+  }, []);
 
   const renderTabIcon = (
     route: any,
@@ -233,18 +234,11 @@ const Navigation = () => {
   };
 
   return (
-    <NavigationContainer ref={navigationRef}
-    linking={{
-      prefixes: [`ieltshunter//`]
-    }}
-    onReady={() => {
-      routeNameRef.current = navigationRef.current?.getCurrentRoute()?.name || "";
-    }}
-    onStateChange={async () => {
-      const previousRouteName = routeNameRef.current;
-      const currentRouteName = navigationRef.current?.getCurrentRoute()?.name || "";
-      routeNameRef.current = currentRouteName;
-    }}
+    <NavigationContainer
+      ref={navigationRef}
+      onReady={() => {
+        isReadyRef.current = true;
+      }}
       theme={isDarkMode ? DarkTheme : LightTheme}
     >
       <Stack.Navigator screenOptions={{ headerShown: false }}>

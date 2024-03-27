@@ -13,6 +13,7 @@ import * as NavigationService from "react-navigation-helpers";
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
 import { isAndroid } from "@helpers/device.info.helper";
+import IconBtn from "@shared-components/button/IconBtn";
 
 interface HeaderProps {
   iconNameLeft?: string;
@@ -74,7 +75,7 @@ const Header = ({
       {/* {!!iconNameRight && ( */}
       <View style={styles.viewIcons}>
         {!!iconNameRight && (
-          <Icon
+          <IconBtn
             onPress={onPressRight}
             name={iconNameRight || "ellipsis-horizontal"}
             type={IconType.Feather}
