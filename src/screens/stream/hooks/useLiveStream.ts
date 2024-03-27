@@ -22,7 +22,7 @@ export const useLiveStream = ({
   const _createLiveStream = (title: string, avatar: string) => {
     setLoading(true);
     createLiveStream(title, avatar).then((res) => {
-      console.log("createLiveStream", res)
+      console.log("createLiveStream", res);
       setLoading(false);
 
       if (!res.isError && res.data._id) {

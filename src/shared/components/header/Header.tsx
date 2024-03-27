@@ -7,7 +7,7 @@ import {
   ViewStyle,
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import { IconType } from "react-native-dynamic-vector-icons";
 import * as NavigationService from "react-navigation-helpers";
 
 import CommonStyle from "@theme/styles";
@@ -54,7 +54,7 @@ const Header = ({
     <View style={[styles.container, customStyle && customStyle]}>
       <View style={styles.viewIcons}>
         {!hideBackBtn && (
-          <Icon
+          <IconBtn
             onPress={_onPressLeft}
             name={iconNameLeft || "chevron-left"}
             type={IconType.Feather}

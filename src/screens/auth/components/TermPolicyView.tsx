@@ -17,7 +17,7 @@ const TermPolicyView = ({ style }: TermPolicyViewProps) => {
   };
 
   const pressTerms = () => {
-    Linking.openURL("https://docs.ieltshunter.io/terms-and-conditions");
+    Linking.openURL("https://docs.ieltshunter.io/term-and-conditions");
   };
   return (
     <View style={style}>

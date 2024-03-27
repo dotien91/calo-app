@@ -125,11 +125,12 @@ const CoursePreviewScreen = () => {
   };
 
   const [tabSelected, setTabSelected] = useState(1);
+  const _goBack = () => {
+    NavigationService.goBack();
+  };
   const goToListCourse = () => {
     if (fromScreen === "createCourse") {
       NavigationService.popToTop();
-    } else {
-      NavigationService.goBack();
     }
   };
 
@@ -273,7 +274,7 @@ const CoursePreviewScreen = () => {
     <View style={styles.container}>
       {/* <Header iconNameRight="share-outline" onPressRight={_shareCourse} /> */}
       <Header
-        onPressLeft={goToListCourse}
+        onPressLeft={_goBack}
         customStyle={{ marginBottom: 0 }}
         text={data?.title}
         iconNameRight="more-vertical"

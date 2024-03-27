@@ -60,6 +60,7 @@ const CourseCreateClass = () => {
             message: translations.course.createClassSuccess,
           });
           eventEmitter.emit("refresh_list_class");
+          eventEmitter.emit("reload_data_preview");
           setUpdating(false);
           NavigationService.goBack();
         } else {
