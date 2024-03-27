@@ -244,7 +244,7 @@ const ListSearch = ({ type }: { type: string }) => {
         <Text style={styles.txtCountResult}>
           {totalCount} {translations.results}
         </Text>
-        {type !== EnumSearchType.user && (
+        {type !== EnumSearchType.user && type !== EnumSearchType.post && (
           <TouchableOpacity onPress={openSortModal} style={CS.flexEnd}>
             <Text style={CS.hnSemiBold}>{translations.sort_by_relevance} </Text>
             <IconBtn name="align-right" />
