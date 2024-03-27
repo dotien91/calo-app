@@ -110,7 +110,6 @@ const LeaderBoard = () => {
   };
 
   const renderLeaderBoard = () => {
-    // console.log("233333333333333333333", listRank);
     // if (!rankUser.length) return null;
     return (
       <View style={styles.viewTop}>

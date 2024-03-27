@@ -131,7 +131,6 @@ export default function AddWorkStudentScreen() {
     return !!text?.length && Number(text) <= 100;
   }, [text]);
   const renderBottomView = () => {
-    console.log(333333, studentWork, data, data.max_mark);
     if (studentWork && data.max_mark && !studentWork?.isHandedIn) {
       return (
         <View style={CS.flexRear}>

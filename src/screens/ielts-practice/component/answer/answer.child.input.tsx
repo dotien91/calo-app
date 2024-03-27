@@ -27,7 +27,6 @@ const AnswerChildInput = ({
   };
 
   const renderInput = ({ item, index }: { item: IDetailPractice }) => {
-    console.log(333333, item);
     return (
       <View style={{ marginBottom: 12 }}>
         <TextBase marginBottom={4}>{index + 1}</TextBase>
