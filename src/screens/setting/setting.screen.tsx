@@ -28,7 +28,7 @@ import {
   showWarningLogin,
 } from "@helpers/super.modal.helper";
 import { deleteUserById } from "@services/api/user.api";
-import { USER_TOKEN, _setJson } from "@services/local-storage";
+import { USER_TOKEN, _getJson, _setJson } from "@services/local-storage";
 import PressableBtn from "@shared-components/button/PressableBtn";
 
 interface SettingScreenProps {}
@@ -144,7 +144,9 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
   const becomeATutorial = () => {
     NavigationService.navigate(SCREENS.WEBVIEW_SCREEN, {
       txtHeader: translations.settingUser.becomeATutor,
-      link: "https://s0z8wixgzw0.typeform.com/to/JLHTBcrL",
+      link: `https://ieltshunter.io/become-to-tutor?auth=${_getJson(
+        USER_TOKEN,
+      )}`,
     });
   };
 
@@ -153,7 +155,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
       contentModalType: EnumModalContentType.Confirm,
       styleModalType: EnumStyleModalType.Middle,
       data: {
-        title: "Bạn có muốn xoá tài khoản",
+        title: translations.settings.deleteAccountConfirm,
         cb: () => deleteAccount(),
       },
     });
@@ -165,13 +167,13 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
         logout();
         showToast({
           type: "success",
-          message: "Xoá tài khoản thành công",
+          message: translations.settings.deleteAccountSuccess,
         });
       })
       .catch(() => {
         showToast({
           type: "error",
-          message: "Xoá tài khoản thất bại",
+          message: translations.settings.deleteAccountFaild,
         });
       });
   };

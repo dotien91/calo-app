@@ -291,9 +291,7 @@ const CoursePreviewScreen = () => {
         {!data?.is_join && !(data?.user_id._id === userData?._id) && (
           <BuyButton courseRoom={courseRoom} data={data} type="full" />
         )}
-        <TextBase>
-          {data?.price_id}
-        </TextBase>
+        <TextBase>{data?.price_id}</TextBase>
         {data?.is_join && (
           <EnrollNow
             courseRoom={courseRoom}

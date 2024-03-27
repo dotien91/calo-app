@@ -41,6 +41,7 @@ const AvatarProfile = ({ userInfo, customStyle }: UploadAvatarProps) => {
   const coverUrl = React.useMemo(() => {
     return isMe(userInfo) ? userMedia?.user_cover : userInfo?.user_cover;
   }, [userInfo, userMedia]);
+  console.log("coverUrl...", coverUrl);
 
   if (!userInfo?._id) {
     return (
@@ -53,14 +54,14 @@ const AvatarProfile = ({ userInfo, customStyle }: UploadAvatarProps) => {
   }
 
   const renderBg = () => {
-    if (!coverUrl && !isMe(userInfo))
-      return (
-        <View
-          style={{
-            height: 60,
-          }}
-        />
-      );
+    // if (!coverUrl && !isMe(userInfo))
+    //   return (
+    //     <View
+    //       style={{
+    //         height: 60,
+    //       }}
+    //     />
+    //   );
     return (
       <View>
         <ImageLoad

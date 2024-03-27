@@ -106,7 +106,7 @@ export const useChatHistory = (txtSearch: string, searchModeChat: boolean) => {
 
   const msgToClient = (data: string) => {
     let newMessage: TypedMessageGiftedChat = JSON.parse(data);
-    console.log("msgToClient", newMessage)
+    console.log("msgToClient", newMessage);
     newMessage = {
       ...newMessage,
       text: newMessage.chat_content || "",
@@ -204,7 +204,7 @@ export const useChatHistory = (txtSearch: string, searchModeChat: boolean) => {
   useEffect(() => {
     const mediaIds = [...messages]
       .reverse()
-      .filter((item) => (!item?.text && !!item?._id))
+      .filter((item) => !item?.text && !!item?._id)
       .reduce((ids, currentItem) => {
         return ids.concat(currentItem.media_ids);
       }, []);

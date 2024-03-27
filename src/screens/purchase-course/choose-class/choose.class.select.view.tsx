@@ -137,7 +137,7 @@ const ChooseClassSelectView: React.FC<ChooseClassSelectViewProps> = ({
           type: "success",
           message: translations.payment.completecheckout,
         });
-        NavigationService.navigate(SCREENS.MY_COURES)
+        NavigationService.navigate(SCREENS.MY_COURES);
       }
     });
   };

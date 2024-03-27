@@ -655,6 +655,8 @@ export default {
     soundSetting: "Thêm âm thanh của bạn",
     deleteAccount: "Xoá tài khoản",
     deleteAccountConfirm: "(!!) Bạn có muốn xoá tài khoản này không?",
+    deleteAccountSuccess: "Xoá tài khoản thành công",
+    deleteAccountFaild: "Xoá tài khoản thất bại",
     deleteAccountDes:
       "Giúp chúng tôi cải thiện dịch vụ của chúng tôi trước khi rời đi.",
     enterReason: "Điền lý do",

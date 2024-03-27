@@ -149,7 +149,7 @@ const SettingProfileScreen = () => {
       <PressableBtn
         onPress={item.onPress}
         key={index}
-        style={styles.viewItemScrollMoney}
+        style={[styles.viewItemScrollMoney, index == 0 && { marginLeft: 12 }]}
       >
         <IconSvg
           style={{ marginHorizontal: 12 }}

@@ -178,7 +178,10 @@ const CourseCreate = () => {
           styleModalType: EnumStyleModalType.Middle,
           contentModalType: EnumModalContentType.Loading,
         });
-        if (typeCourse == EnumClassType.SelfLearning || typeCourse == EnumClassType.CallGroup) {
+        if (
+          typeCourse == EnumClassType.SelfLearning ||
+          typeCourse == EnumClassType.CallGroup
+        ) {
           params["price_id"] = priceIds.find(
             (item) => item.value == priceInput,
           )?.id;

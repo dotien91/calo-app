@@ -551,6 +551,8 @@ export default {
     soundSetting: "Add signature sound",
     deleteAccount: "Delete Account",
     deleteAccountConfirm: "(!!) Are you sure you want to delete this account?",
+    deleteAccountSuccess: "Account deleted successfully",
+    deleteAccountFaild: "Account deletion failed",
     deleteAccountDes:
       "We hate to see you go... Help us improve our service by letting us know why you're decided to leave.",
     enterReason: "Enter your reason",
