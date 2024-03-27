@@ -27,6 +27,7 @@ const TextInputPrice = ({ priceInput, setPriceInput }) => {
         borderColor: colors.borderColor,
         borderRadius: 8,
         padding: 12,
+        marginBottom: 4
       }}
     >
       <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -55,7 +56,7 @@ const TextInputPrice = ({ priceInput, setPriceInput }) => {
         >
           <TouchableOpacity
             onPress={() => {
-              setPriceInput(priceInput * 10);
+              setPriceInput((priceInput || 100) * 10);
               setisShowRecommned(false);
             }}
             style={{
@@ -66,13 +67,13 @@ const TextInputPrice = ({ priceInput, setPriceInput }) => {
           >
             <Text style={{ paddingHorizontal: 8, paddingVertical: 4 }}>
               {priceInput > 0
-                ? recommendValue(priceInput * 10)
+                ? recommendValue((priceInput || 100) * 10)
                 : recommendValue(100 * 10)}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              setPriceInput(priceInput * 100);
+              setPriceInput((priceInput || 100) * 100);
               setisShowRecommned(false);
             }}
             style={{
@@ -83,13 +84,13 @@ const TextInputPrice = ({ priceInput, setPriceInput }) => {
           >
             <Text style={{ paddingHorizontal: 8, paddingVertical: 4 }}>
               {priceInput > 0
-                ? recommendValue(priceInput * 100)
+                ? recommendValue((priceInput || 100) * 100)
                 : recommendValue(100 * 100)}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              setPriceInput(priceInput * 1000);
+              setPriceInput((priceInput || 100) * 1000);
               setisShowRecommned(false);
             }}
             style={{
@@ -100,7 +101,7 @@ const TextInputPrice = ({ priceInput, setPriceInput }) => {
           >
             <Text style={{ paddingHorizontal: 8, paddingVertical: 4 }}>
               {priceInput > 0
-                ? recommendValue(priceInput * 1000)
+                ? recommendValue((priceInput || 100) * 1000)
                 : recommendValue(100 * 1000)}
             </Text>
           </TouchableOpacity>

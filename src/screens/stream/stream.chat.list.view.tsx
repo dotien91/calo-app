@@ -258,10 +258,11 @@ export const styles = StyleSheet.create({
     zIndex: 1,
   },
   listChat: {
-    backgroundColor: palette.whiteOverlay,
+    backgroundColor: 'rgba(0,0,0,0.2)',
     borderRadius: 12,
     paddingBottom: 12,
     paddingTop: 12,
+    marginHorizontal: 12,
   },
   viewCourse: {
     marginHorizontal: 8,

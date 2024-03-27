@@ -65,17 +65,20 @@ export function useUploadFile(
             type: i.type,
           })),
         );
+
+        console.log("resresresres", res)
         if (Array.isArray(res)) {
-          const data = listImage.map((i: any, index: number) => ({
-            uri: getLinkUri(i),
-            type: i.type,
-            _id: res[index]?.callback?._id,
+          const data = res.map((i: any, index: number) => ({
+            uri: i?.src,
+            type: i?.callback?.media_mime_type,
+            _id: i?.callback?._id,
           }));
           setListFile((listFile) => [...listFile, ...data]);
         } else {
           setListFileLocal(listFile);
           showToast({ types: "warning", message: res.message });
         }
+        setIsUpLoadingFile(false);
       },
       _finally: () => {
         extraParam?.cbFinaly?.();
@@ -177,6 +180,7 @@ export function useUploadFile(
           setListFileLocal(listFile);
           showToast({ types: "warning", message: res.message });
         }
+        setIsUpLoadingFile(false);
       },
       croping: false,
     });
@@ -237,6 +241,7 @@ export function useUploadFile(
           }));
           setListFile((listFile) => [...listFile, ...data]);
         }
+        setIsUpLoadingFile(false);
       }
     } catch (error) {
       console.log(error);
@@ -260,6 +265,7 @@ export function useUploadFile(
     setListFileLocal(recordLocalData);
 
     const res = await uploadMultiFile(recordLocalData);
+    setIsUpLoadingFile(false);
     if (Array.isArray(res)) {
       const data = recordLocalData.map((i, index) => ({
         name: getFileName(i),
@@ -277,11 +283,11 @@ export function useUploadFile(
     setListFile((old) => old.filter((item) => item._id != _id));
   };
 
-  React.useEffect(() => {
-    if (listFile?.length) {
-      setIsUpLoadingFile(false);
-    }
-  }, [listFile]);
+  // React.useEffect(() => {
+  //   if (listFile?.length) {
+  //     setIsUpLoadingFile(false);
+  //   }
+  // }, [listFile]);
 
   return {
     listFile,

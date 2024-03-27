@@ -24,6 +24,7 @@ interface IVideoPlayer {
   repeat: boolean;
   onPress: () => void;
   wrapStyle?: ViewStyle;
+  isStreamThumbnail?: boolean;
 }
 
 const VideoPlayer = ({
@@ -35,12 +36,22 @@ const VideoPlayer = ({
   pressable = true,
   autoPlay,
   onPress,
+  isStreamThumbnail,
   ...res
 }: IVideoPlayer) => {
   const refVideo = useRef<Video>();
 
-  const [pause, setPause] = useState(!autoPlay);
+  const [pause, setPause] = useState(!autoPlay && !isStreamThumbnail);
   const [isPreloading, setIsPreloading] = useState(true);
+  const [showThumbnail, setShowThumbnail] = useState(false)
+
+  React.useEffect(() => {
+    if (isStreamThumbnail && !isPreloading) {
+        setPause((old) => !old);
+        setShowThumbnail(false)
+    }
+
+  }, [isStreamThumbnail, isPreloading])
 
   const switchPause = useCallback(() => {
     if (onPress) {
@@ -61,7 +72,7 @@ const VideoPlayer = ({
       style={{ ...styles.container, width, height, ...wrapStyle }}
       onPress={switchPause}
     >
-      {pause && (
+      {(pause || isStreamThumbnail) && (
         <Icon
           type={IconType.Ionicons}
           name={"play-circle"}
@@ -70,7 +81,7 @@ const VideoPlayer = ({
           style={[styles.icon, { top: height / 2 - 20 }]}
         />
       )}
-      {!!mediaThumbail && (
+      {showThumbnail && !!mediaThumbail && (
         <FastImage
           style={{
             width,
@@ -83,7 +94,7 @@ const VideoPlayer = ({
           source={{ uri: mediaThumbail }}
         />
       )}
-      {isPreloading && (
+      {!isStreamThumbnail && isPreloading && (
         <ActivityIndicator
           animating
           color={"white"}
@@ -103,7 +114,7 @@ const VideoPlayer = ({
         ref={refVideo}
         paused={pause}
         style={styles.backgroundVideo}
-        autoPlay={autoPlay}
+        autoPlay={isStreamThumbnail || autoPlay}
         onLoadStart={() => {
           setIsPreloading(true);
         }}

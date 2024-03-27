@@ -62,7 +62,7 @@ export const useLiveChatHistory = ({
     sendChatToLiveRoom({
       chat_content: text,
       livestream_id: liveStreamId,
-    });
+    })
   };
 
   const isMe = (user: TypedUser) => {
@@ -76,6 +76,8 @@ export const useLiveChatHistory = ({
     if (newMessage.livestream_id != liveStreamId) {
       return;
     }
+    console.log("msgToClient", newMessage?.createBy?._id , userData?._id)
+
     //Check case message from me
     if (newMessage.createBy._id == userData?._id) {
       return;

@@ -70,17 +70,17 @@ function App() {
   const { appStateStatus } = useAppStateCheck();
 
   useEffect(() => {
-    if (appStateStatus == "active") {
+    if (appStateStatus == "active" && !show) {
       setShow(true);
       setTimeout(() => {
         publisherRef.current && publisherRef.current?.startStream?.();
       }, 1000);
     }
-    if (appStateStatus == "background") {
+    if (appStateStatus == "background" && show) {
       publisherRef.current && publisherRef.current?.stopStream?.();
       setShow(false);
     }
-  }, [appStateStatus]);
+  }, [appStateStatus, show]);
 
   const checkPermission = async () => {
     const permission = await requestPermission(
@@ -101,11 +101,11 @@ function App() {
     }
   };
 
-  useFocusEffect(
-    React.useCallback(() => {
-      showLiveStream();
-    }, []),
-  );
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     showLiveStream();
+  //   }, []),
+  // );
 
   const hideLiveStream = () => {
     publisherRef.current && publisherRef.current?.stopStream();
@@ -116,22 +116,13 @@ function App() {
     cbFinaly: showLiveStream,
   });
 
+  console.log("listFile", listFile)
+
   const _onSelectPicture = () => {
     setShow(false);
     onSelectPicture();
   };
-  // useEffect(() => {
-  //   if (isUpLoadingFile) {
-  //     setTimeout(() => {
-  //       publisherRef.current && publisherRef.current.startStream();
-  //     }, 1000);
-  //   } else {
-  //     publisherRef.current && publisherRef.current.stopStream();
-  //     setShow(false);
-  //   }
-  // }, [isUpLoadingFile])
 
-  console.log(listFile);
   useEffect(() => {
     // StatusBar.setBackgroundColor("black");
     checkPermission();
@@ -142,6 +133,10 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     return () => {
       KeepAwake.deactivate();
+      updateLivestream("end", liveData?._id);
+      publisherRef.current && publisherRef.current?.stopStream?.();
+      publisherRef.current && publisherRef.current?.mute?.();
+      setShow(false)
     };
   }, []);
 
@@ -189,7 +184,6 @@ function App() {
   //   publisherRef.current && publisherRef.current.mute();
   //   setIsMuted(true);
   // };
-
   const handleStartStream = () => {
     if (permissionGranted) {
       // if (listFile.length > 0) {
@@ -434,6 +428,7 @@ function App() {
               ]}
             >
               <Button
+                type={isUpLoadingFile ?  'disable' : 'primary'}
                 onPress={handleStartStream}
                 style={{
                   height: 48,
