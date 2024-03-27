@@ -6,9 +6,9 @@ import {
   Dimensions,
   TouchableOpacity,
   ScrollView,
+  StyleSheet,
 } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
-import { getBottomSpace } from "react-native-iphone-screen-helper";
 import { useTheme } from "@react-navigation/native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
@@ -20,6 +20,7 @@ import { translations } from "@localization";
 import { SCREENS } from "constants";
 import useStore from "@services/zustand/store";
 import LoadingList from "@shared-components/loading.list.component";
+import { palette } from "@theme/themes";
 
 const DiscoverScreen = () => {
   const screenWidth = Dimensions.get("window").width;
@@ -69,6 +70,12 @@ const DiscoverScreen = () => {
       screen: SCREENS.COURSE_CATEGORY,
       params: { defaultIndex: 3 },
     },
+    {
+      icon: "icFind",
+      title: translations.discover.findTutor,
+      screen: SCREENS.COURSE_CATEGORY,
+      params: { defaultIndex: 1 },
+    },
   ];
 
   const seeAllLeader = () => {
@@ -77,32 +84,13 @@ const DiscoverScreen = () => {
 
   const renderHeader = () => {
     return (
-      <View
-        style={{
-          height: 80,
-          flexDirection: "row",
-          alignItems: "center",
-          backgroundColor: colors.white,
-          paddingHorizontal: 16,
-          shadowColor: "rgba(0,0,0,0.8)",
-          shadowOffset: { width: 0, height: 6 },
-          shadowOpacity: 0.1,
-          elevation: 1,
-          shadowRadius: 5,
-        }}
-      >
+      <View style={styles.viewHeader}>
         <IconSvg name="icCoinStar" size={32} color={colors.gold}></IconSvg>
         <View style={{ marginLeft: 8 }}>
           <Text style={{ ...CS.hnSemiBold, fontSize: 20, color: colors.text }}>
             {userInfo?.point} {translations.discover.poits}
           </Text>
-          <Text
-            style={{
-              ...CS.hnRegular,
-              fontSize: 14,
-              color: colors.textOpacity8,
-            }}
-          >
+          <Text style={styles.txtHeader}>
             {translations.discover.level}: {userInfo?.level || "-"}
           </Text>
         </View>
@@ -153,7 +141,6 @@ const DiscoverScreen = () => {
                   left: screenWidth / 6 - 32 - 4,
                   borderWidth: 3,
                   borderColor: colors.blueBorder,
-                  zIndex: 1,
                 }}
                 sourceUri={{
                   uri: `${listRank[1]?.user_avatar}`,
@@ -460,12 +447,10 @@ const DiscoverScreen = () => {
   };
 
   return (
-    <SafeAreaView
-      style={{ ...CS.safeAreaView, marginBottom: getBottomSpace() }}
-    >
+    <SafeAreaView style={{ ...CS.safeAreaView }}>
       <View style={{ flex: 1 }}>
         {renderHeader()}
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           {renderLeaderBoard()}
           {renderFeature()}
         </ScrollView>
@@ -474,3 +459,23 @@ const DiscoverScreen = () => {
   );
 };
 export default DiscoverScreen;
+
+const styles = StyleSheet.create({
+  viewHeader: {
+    height: 80,
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: palette.white,
+    paddingHorizontal: 16,
+    shadowColor: "rgba(0,0,0,0.8)",
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.1,
+    elevation: 1,
+    shadowRadius: 5,
+  },
+  txtHeader: {
+    ...CS.hnRegular,
+    fontSize: 14,
+    color: palette.textOpacity8,
+  },
+});

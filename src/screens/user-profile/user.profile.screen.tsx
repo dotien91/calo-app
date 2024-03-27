@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Text,
   View,
   StyleSheet,
   TouchableOpacity,
-  ScrollView,
+  FlatList,
 } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import { useTheme, useRoute } from "@react-navigation/native";
@@ -23,7 +23,6 @@ import { palette } from "@theme/themes";
 import { translations } from "@localization";
 import CountFollow from "./count-follow/CountFollow";
 import { getUserById } from "@services/api/user.api";
-import ListPost from "@screens/home/list.post";
 import { SCREENS } from "constants";
 import { getListPost } from "@services/api/post";
 import eventEmitter from "@services/event-emitter";
@@ -244,9 +243,16 @@ const ProfileUser = (props: ProfileUserProps) => {
     auth_id: userData?._id || "",
     user_id: _id,
   };
+  const listRef = useRef(null);
 
-  const { totalCount } = useListData<TypedRequest>(paramsRequest, getListPost);
-
+  const {
+    listData,
+    onEndReach,
+    isLoading,
+    refreshControl,
+    renderFooterComponent,
+    totalCount,
+  } = useListData<TypedPost>(paramsRequest, getListPost, []);
   useEffect(() => {
     _getUserById(_id);
   }, [userData]);
@@ -459,26 +465,41 @@ const ProfileUser = (props: ProfileUserProps) => {
       </View>
     );
   }
+
+  const renderItem = ({ item }: any) => {
+    return <ItemPost key={item._id} data={item} isProfile={true} />;
+  };
+
+  const renderEmpty = () => {
+    if (isLoading) return null;
+    return (
+      <EmptyResultView
+        title={translations.post.emptyPostTitle}
+        desc={translations.post.emptyPostDes}
+        icon="document-text-outline"
+        showLottie={false}
+      />
+    );
+  };
+
   return (
     <View style={styles.container}>
       <HeaderProfile />
-      <ScrollView
-        style={CommonStyle.flex1}
+
+      <FlatList
+        ref={listRef}
+        ListHeaderComponent={renderHeader}
+        data={listData}
+        renderItem={renderItem}
+        onEndReachedThreshold={0}
+        onEndReached={onEndReach}
         showsVerticalScrollIndicator={false}
-      >
-        <View>
-          <AvatarProfile userInfo={userInfo} />
-          <CountFollow
-            id={_id}
-            postCount={totalCount}
-            name={userInfo?.display_name}
-          />
-          <ListAction />
-          <Bio text={userInfo?.bio || ""} />
-          <View style={{ height: 1, backgroundColor: palette.borderColor }} />
-        </View>
-        <ListPost isFollowingPost={false} id={_id} isProfile />
-      </ScrollView>
+        removeClippedSubviews={true}
+        keyExtractor={(item) => item?._id + ""}
+        refreshControl={refreshControl()}
+        ListFooterComponent={renderFooterComponent()}
+        ListEmptyComponent={renderEmpty()}
+      />
     </View>
   );
 };

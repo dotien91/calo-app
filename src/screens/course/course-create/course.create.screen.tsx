@@ -336,7 +336,10 @@ const CourseCreate = () => {
   };
 
   const renderPrice = () => {
-    if (typeCourse == EnumClassType.SelfLearning || typeCourse == EnumClassType.CallGroup) {
+    if (
+      typeCourse == EnumClassType.SelfLearning ||
+      typeCourse == EnumClassType.CallGroup
+    ) {
       return (
         <View style={{ zIndex: 2, marginVertical: 8 }}>
           <Text

@@ -77,9 +77,9 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
     },
     {
       icon: require("assets/images/settingicon.png"),
-      title: translations.settingUser.setting,
+      title: translations.settingUser.language,
       action: () => {
-        NavigationService.navigate(SCREENS.SETTING_USER);
+        NavigationService.navigate(SCREENS.CHANGELANGUAGE);
       },
     },
     {

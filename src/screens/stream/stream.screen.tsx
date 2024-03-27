@@ -116,7 +116,7 @@ function App() {
     cbFinaly: showLiveStream,
   });
 
-  console.log("listFile", listFile)
+  console.log("listFile", listFile);
 
   const _onSelectPicture = () => {
     setShow(false);
@@ -136,7 +136,7 @@ function App() {
       updateLivestream("end", liveData?._id);
       publisherRef.current && publisherRef.current?.stopStream?.();
       publisherRef.current && publisherRef.current?.mute?.();
-      setShow(false)
+      setShow(false);
     };
   }, []);
 
@@ -428,7 +428,7 @@ function App() {
               ]}
             >
               <Button
-                type={isUpLoadingFile ?  'disable' : 'primary'}
+                type={isUpLoadingFile ? "disable" : "primary"}
                 onPress={handleStartStream}
                 style={{
                   height: 48,

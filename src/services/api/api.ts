@@ -7,7 +7,6 @@ export const BASEURL = "https://api.edu-like.exam24h.com/api/";
 // export const BASEURL = "https://api.live.edu-like.exam24h.com/api/";
 export const UPLOAD_URL = "https://media.exam24h.com/";
 
-
 export const METHOD = {
   GET: "GET",
   POST: "POST",

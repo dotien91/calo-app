@@ -97,9 +97,9 @@ const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
     _requestData,
   } = useListData<ICourseItem>(
     !isTabCourse
-      ? { limit: "4", sort_by: "createdAt", order_by: "DESC" }
+      ? { limit: "10", sort_by: "createdAt", order_by: "DESC" }
       : {
-          limit: "4",
+          limit: "10",
           sort_by: "createdAt",
           order_by: "DESC",
           public_status: "active",
