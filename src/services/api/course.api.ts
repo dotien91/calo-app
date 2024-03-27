@@ -350,6 +350,7 @@ export async function getMyCourse(data: {
     urlPath: "course/my-course",
     data,
   }).then((response) => {
+    console.log("response...", response);
     return response;
   });
 }

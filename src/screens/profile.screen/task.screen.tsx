@@ -5,9 +5,9 @@ import { getBottomSpace } from "react-native-iphone-screen-helper";
 
 import CS from "@theme/styles";
 import Header from "@shared-components/header/Header";
-import TaskItemCommon from "@shared-components/task-item/task.item";
 import { getListTaskByUser } from "@services/api/task.api";
 import { translations } from "@localization";
+import TashListItem from "@shared-components/task-item/task.list.item";
 
 const TaskScreen = () => {
   return (
@@ -36,7 +36,7 @@ const Tasks = () => {
     });
   };
   const renderItem = (item, index) => {
-    return <TaskItemCommon key={index} item={item.item}></TaskItemCommon>;
+    return <TashListItem key={index} item={item.item} />;
   };
 
   return (

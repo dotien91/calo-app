@@ -5,6 +5,9 @@ import {
   Text,
   StyleSheet,
   ActivityIndicator,
+  ScrollView,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 // import { useTheme } from "@react-navigation/native";
 import { Controller, useForm } from "react-hook-form";
@@ -60,7 +63,7 @@ const CourseFilterModalInnter = ({
     { ...paramsRequest, search: courseSearchHistory },
     isCourseType ? getCourseList : getListTutor,
   );
-  console.log("listCourseFilterParams", listCourseFilterParams);
+  // console.log("listCourseFilterParams", listCourseFilterParams);
   const {
     watch,
     control,
@@ -208,34 +211,43 @@ const CourseFilterModalInnter = ({
   };
 
   return (
-    <View style={styles.boxFilterDetail}>
-      {renderHeader()}
-      <TouchableOpacity style={styles.clearBtn} onPress={onClear}>
-        <Text style={styles.clearTxt}>{translations.clear}</Text>
-      </TouchableOpacity>
-      {(isCourseType ? filterCourseKeys : filterTeacherKeys).map((item) =>
-        renderItem(item),
-      )}
-      <PressableBtn
-        onPress={closeModal}
-        disabled={hasError || isLoading}
-        style={[
-          styles.btn,
-          (hasError || isLoading) && { backgroundColor: palette.btnInactive },
-        ]}
-      >
-        {isLoading && <ActivityIndicator color={palette.textOpacity4} />}
-        <Text
-          style={[styles.txtBtn, isLoading && { color: palette.textOpacity4 }]}
-        >
-          {isLoading && translations.search}
-          {!isLoading &&
-            (isCourseType
-              ? translations.course.viewResult(totalCount)
-              : translations.course.viewResultTutor(totalCount))}
-        </Text>
-      </PressableBtn>
-    </View>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.boxFilterDetail}>
+          {renderHeader()}
+          <TouchableOpacity style={styles.clearBtn} onPress={onClear}>
+            <Text style={styles.clearTxt}>{translations.clear}</Text>
+          </TouchableOpacity>
+          {(isCourseType ? filterCourseKeys : filterTeacherKeys).map((item) =>
+            renderItem(item),
+          )}
+          <PressableBtn
+            onPress={closeModal}
+            disabled={hasError || isLoading}
+            style={[
+              styles.btn,
+              (hasError || isLoading) && {
+                backgroundColor: palette.btnInactive,
+              },
+            ]}
+          >
+            {isLoading && <ActivityIndicator color={palette.textOpacity4} />}
+            <Text
+              style={[
+                styles.txtBtn,
+                isLoading && { color: palette.textOpacity4 },
+              ]}
+            >
+              {isLoading && translations.search}
+              {!isLoading &&
+                (isCourseType
+                  ? translations.course.viewResult(totalCount)
+                  : translations.course.viewResultTutor(totalCount))}
+            </Text>
+          </PressableBtn>
+        </View>
+      </ScrollView>
+    </TouchableWithoutFeedback>
   );
 };
 

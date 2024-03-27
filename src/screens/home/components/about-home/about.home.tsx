@@ -19,7 +19,7 @@ import CourseView from "../list-course/list.course";
 const AboutHome = () => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const listCategory = [
+  const listCategorys = [
     {
       title: translations.listCategory.course,
       textColor: "#E14242",
@@ -77,7 +77,7 @@ const AboutHome = () => {
         </Text>
       </View>
       <View>
-        {listCategory.map((item, index) => {
+        {listCategorys.map((item, index) => {
           return (
             <TouchableOpacity
               onPress={() => _onPress(item)}

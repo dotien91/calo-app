@@ -39,7 +39,7 @@ const DetailTeacherScreen = () => {
 
   const _getUserById = (id: string) => {
     getUserById(id).then((res) => {
-      console.log(res);
+      // console.log("res...", res);
       setData(res.data);
     });
   };
@@ -57,7 +57,7 @@ const DetailTeacherScreen = () => {
   };
 
   const paramsRequest = {
-    limit: "4",
+    limit: "10",
     created_user_id: idTeacher,
     order_by: "DESC",
     sort_by: "createdAt",
