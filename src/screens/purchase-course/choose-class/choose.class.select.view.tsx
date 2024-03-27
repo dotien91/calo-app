@@ -143,6 +143,7 @@ const ChooseClassSelectView: React.FC<ChooseClassSelectViewProps> = ({
   };
 
   const goToCheckout = () => {
+
     showLoading();
     const dataCheck = {
       class_id: selectedClass?._id,
