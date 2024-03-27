@@ -203,11 +203,10 @@ export const useChatHistory = (txtSearch: string, searchModeChat: boolean) => {
   useEffect(() => {
     const mediaIds = [...messages]
       .reverse()
-      .filter((item) => !item?.text)
+      .filter((item) => (!item?.text && !!item?._id))
       .reduce((ids, currentItem) => {
         return ids.concat(currentItem.media_ids);
       }, []);
-    // setCurrentMediaIds(mediaIds);
     updateCurrentMediaIds({ data: mediaIds, id: chatRoomId });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages, chatRoomId]);

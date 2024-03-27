@@ -27,7 +27,6 @@ export default function DropDownItem({
   const [open, setOpen] = useState(false);
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
-
   return (
     <View style={styles.container}>
       <DropDownPicker
@@ -35,9 +34,7 @@ export default function DropDownItem({
         value={value}
         items={items}
         setOpen={setOpen}
-        setValue={(e) => {
-          setValue(e);
-        }}
+        setValue={setValue}
         multiple={false}
         {...res}
       />

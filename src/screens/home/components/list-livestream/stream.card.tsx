@@ -12,7 +12,6 @@ import { WindowWidth } from "@freakycoder/react-native-helpers";
 import VideoPlayer from "@shared-components/video.player.component";
 
 const StreamCard = ({ data }: { data: IStreamItem }) => {
-  console.log("dataaaaa", data)
   const IconText = ({ nameIcon, text }: { nameIcon: string; text: string }) => {
     return (
       <View style={styles.iconText}>
@@ -29,7 +28,6 @@ const StreamCard = ({ data }: { data: IStreamItem }) => {
   };
 
   // {"__v": 0, "_id": "66039d17a99e1771769171d8", "avatar": null, "caption": "", "cloudflare_stream_id": "", "comment_number": 0, "cookies": "", "country": "Vietnam", "createdAt": "2024-03-27T04:14:15.091Z", "hashtag_id": [], "history_media": [], "input_type": "", "language": "en", "like_number": 0, "livestream_data": {"_id": "66039d17a99e1771769171dc", "ingest_endpoint": "", "m3u8_url": "https://live.ieltshunter.io/hls/KuEoelC67ixjbTdDZejb.m3u8", "rtmp_url": "rtmp://broadcast.ieltshunter.io:1935/live", "stream_key": "KuEoelC67ixjbTdDZejb"}, "livestream_source": "", "livestream_status": "live", "media_id": null, "music_id": [], "product_id": null, "react_value": {"_id": "66039d17a99e1771769171d9", "angry_value": 0, "care_value": 0, "haha_value": 0, "like_value": 0, "love_value": 0, "sad_value": 0, "wow_value": 0}, "ready_status": "", "ref_id": null, "title": "Xin chào", "updatedAt": "2024-03-27T04:14:15.907Z", "user_id": {"_id": "659e59d11775abbd6d99d0b3", "display_name": "Hai Dang", "last_active": "2024-03-27T04:14:00.000Z", "official_status": false, "user_active": 1, "user_avatar": "https://files.exam24h.com/upload/2024/03/25_1711360057236/659e59d11775abbd6d99d0b3-1711360057235-IMG_2021.HEIC", "user_avatar_thumbnail": "https://files.exam24h.com/upload/2024/03/25_1711360057236/659e59d11775abbd6d99d0b3-1711360057235-IMG_2021.HEIC", "user_login": "dangth.tobi_gmail.com", "user_role": "admin", "user_status": 1}, "view_number": 1, "whep_data": "", "whip_data": ""}
-
 
   return (
     <View style={styles.container}>

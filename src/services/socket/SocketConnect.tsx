@@ -115,7 +115,7 @@ const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
   };
 
   const pointToClient = (receiveData: any) => {
-    console.log("receiveData", receiveData)
+    console.log("receiveData", receiveData);
     const showFirstTimeEarnPoint = _getJson("showFirstTimeEarnPoint");
     const currentPoint = pointNumber.current;
     const data = JSON.parse(receiveData);

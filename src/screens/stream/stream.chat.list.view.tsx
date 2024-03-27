@@ -258,7 +258,7 @@ export const styles = StyleSheet.create({
     zIndex: 1,
   },
   listChat: {
-    backgroundColor: 'rgba(0,0,0,0.2)',
+    backgroundColor: "rgba(0,0,0,0.2)",
     borderRadius: 12,
     paddingBottom: 12,
     paddingTop: 12,

@@ -39,6 +39,7 @@ import {
   showSuperModal,
   showToast,
 } from "@helpers/super.modal.helper";
+import TextBase from "@shared-components/TextBase";
 
 const CoursePreviewScreen = () => {
   const userData = useStore((state) => state.userData);
@@ -83,7 +84,6 @@ const CoursePreviewScreen = () => {
     getCourseDetail(course_id, params).then((res) => {
       console.log("course detail", res);
       const data = res.data;
-      data["price_id"] = "com.course.test100";
       if (!res.isError) {
         // setIsLoading(false);
         setData(data);
@@ -291,6 +291,9 @@ const CoursePreviewScreen = () => {
         {!data?.is_join && !(data?.user_id._id === userData?._id) && (
           <BuyButton courseRoom={courseRoom} data={data} type="full" />
         )}
+        <TextBase>
+          {data?.price_id}
+        </TextBase>
         {data?.is_join && (
           <EnrollNow
             courseRoom={courseRoom}

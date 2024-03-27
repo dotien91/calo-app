@@ -14,10 +14,16 @@ import { translations } from "@localization";
 import CS from "@theme/styles";
 import IconBtn from "@shared-components/button/IconBtn";
 import { IClassRoom, ICourseItem } from "models/course.model";
-import { SCREENS } from "constants";
 import { checkUserAddToClass } from "@services/api/course.api";
 import useStore from "@services/zustand/store";
-import { showToast } from "@helpers/super.modal.helper";
+import {
+  closeSuperModal,
+  showLoading,
+  showToast,
+} from "@helpers/super.modal.helper";
+import eventEmitter from "@services/event-emitter";
+import { addMemberToClass } from "@services/api/payment.api";
+import { SCREENS } from "constants";
 
 interface ChooseClassSelectViewProps {
   classData: IClassRoom[];
@@ -103,16 +109,41 @@ const ChooseClassSelectView: React.FC<ChooseClassSelectViewProps> = ({
     );
   };
 
-  const goToCheckout = () => {
-    const timePick = {
-      name: selectedClass?.name,
-      end_time: selectedClass?.end_time,
-      course_id: selectedClass?.course_id,
-      start_time: selectedClass?.start_time,
-      limit_member: selectedClass?.limit_member,
-      course_calendars: selectedClass?.course_calendar_ids,
-      _id: selectedClass?._id,
+  const handleIapPurchase = () => {
+    if (!courseData?.price_id) {
+      showToast({
+        type: "warning",
+        message: translations.payment.courseNotAvailable,
+      });
+      return;
+    }
+    eventEmitter.emit("emit_buy_product", {
+      productId: courseData?.price_id,
+      cb: _addMemberToClass,
+    });
+    return;
+  };
+
+  const _addMemberToClass = () => {
+    const dataCheck = {
+      class_id: selectedClass?._id,
+      user_id: userData._id,
     };
+
+    addMemberToClass(dataCheck).then((res) => {
+      closeSuperModal();
+      if (!res.isError) {
+        showToast({
+          type: "success",
+          message: translations.payment.completecheckout,
+        });
+        NavigationService.navigate(SCREENS.MY_COURES)
+      }
+    });
+  };
+
+  const goToCheckout = () => {
+    showLoading();
     const dataCheck = {
       class_id: selectedClass?._id,
       user_id: userData?._id,
@@ -120,12 +151,9 @@ const ChooseClassSelectView: React.FC<ChooseClassSelectViewProps> = ({
 
     checkUserAddToClass(dataCheck).then((res) => {
       if (!res.isError) {
-        NavigationService.navigate(SCREENS.PAYMENT_COURES, {
-          courseData,
-          timePick,
-          duration: selectedClass?.course_calendar_ids?.[0]?.time_duration,
-        });
+        handleIapPurchase();
       } else {
+        closeSuperModal();
         showToast({ type: "error", message: res.message });
       }
     });

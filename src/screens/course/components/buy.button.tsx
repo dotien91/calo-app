@@ -10,6 +10,7 @@ import { palette } from "@theme/themes";
 import { SCREENS } from "constants";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import {
+  closeSuperModal,
   showLoading,
   showToast,
   showWarningLogin,
@@ -37,13 +38,14 @@ const BuyButton = ({ data, type }: BuyButtonProps) => {
       add_type: "manual",
       user_id: userData?._id || "",
     }).then((res) => {
-      console.log("resssss addUserToCourseVideo");
+      closeSuperModal();
       if (!res.isError) {
         eventEmitter.on("reload_data_preview");
         showToast({
           type: "success",
           message: translations.payment.completecheckout,
         });
+        NavigationService.navigate(SCREENS.MY_COURES)
       } else {
         showToast({
           type: "error",
@@ -61,7 +63,7 @@ const BuyButton = ({ data, type }: BuyButtonProps) => {
       if (!data?.price_id) {
         showToast({
           type: "warning",
-          message: "Khóa học không khả dụng",
+          message: translations.payment.courseNotAvailable,
         });
         return;
       }

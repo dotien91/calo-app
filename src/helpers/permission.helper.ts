@@ -27,7 +27,6 @@ export async function requestPermission(
   const isNerverAskAgain = false;
 
   listPermission.map((item) => {
-    console.log("22222", item);
     if (status[item] === RESULTS.DENIED) permissionRequestResult.push(item);
     if (status[item] === RESULTS.BLOCKED) isBlocked = true;
     // if (status[item] === "never_ask_again") isNerverAskAgain = true;

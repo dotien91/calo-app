@@ -861,6 +861,7 @@ export default {
     tocomplete:
       "To complete the payment process, please make a transfer to the account number below:",
     content: "Content tranfer",
+    courseNotAvailable: "Course not available",
   },
   settingUser: {
     language: "Language",

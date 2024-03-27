@@ -24,14 +24,12 @@ export const useInAppPurchase = () => {
   const typeBuy = useRef<"subscription" | "product" | "">("");
   const callOneTime = useRef(true);
   const callback = useRef<() => void | undefined>();
-  console.log("products=======", { products });
 
   useEffect(() => {
     console.log("currentPurchasecurrentPurchase", currentPurchase);
     const checkCurrentPurchase = async () => {
       try {
         // GlobalPopupHelper.hideLoading();
-        closeSuperModal();
         if (
           (isIosStorekit2() && currentPurchase?.transactionId) ||
           (currentPurchase?.transactionReceipt && callOneTime.current)
@@ -102,9 +100,6 @@ export const useInAppPurchase = () => {
   const buyProduct = async ({ productId, cb }) => {
     callback.current = cb;
     typeBuy.current = "product";
-    if (isIOS) {
-      closeSuperModal();
-    }
     try {
       if (isIOS) {
         await requestPurchase({ sku: productId });
@@ -115,6 +110,10 @@ export const useInAppPurchase = () => {
     } catch (error) {
       closeSuperModal();
       console.log("requestPurchase error", error);
+      showToast({
+        type: "error",
+        message: error?.message,
+      });
     }
   };
 

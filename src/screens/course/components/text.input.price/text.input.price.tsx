@@ -27,7 +27,7 @@ const TextInputPrice = ({ priceInput, setPriceInput }) => {
         borderColor: colors.borderColor,
         borderRadius: 8,
         padding: 12,
-        marginBottom: 4
+        marginBottom: 4,
       }}
     >
       <View style={{ flexDirection: "row", alignItems: "center" }}>

@@ -178,7 +178,7 @@ const CourseCreate = () => {
           styleModalType: EnumStyleModalType.Middle,
           contentModalType: EnumModalContentType.Loading,
         });
-        if (typeCourse == EnumClassType.SelfLearning) {
+        if (typeCourse == EnumClassType.SelfLearning || typeCourse == EnumClassType.CallGroup) {
           params["price_id"] = priceIds.find(
             (item) => item.value == priceInput,
           )?.id;
@@ -336,7 +336,10 @@ const CourseCreate = () => {
   };
 
   const renderPrice = () => {
-    if (typeCourse == EnumClassType.SelfLearning || typeCourse == EnumClassType.CallGroup) {
+    if (
+      typeCourse == EnumClassType.SelfLearning ||
+      typeCourse == EnumClassType.CallGroup
+    ) {
       return (
         <View style={{ zIndex: 2, marginVertical: 8 }}>
           <Text
@@ -549,6 +552,7 @@ const CourseCreate = () => {
                     onPress={() => {
                       refBottomSheet.current?.close();
                       setTypeCourse(i.value);
+                      setPriceInput("");
                     }}
                   >
                     <Text
