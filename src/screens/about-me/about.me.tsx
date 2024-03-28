@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { useTheme } from "@react-navigation/native";
-import { Linking, Text, TouchableOpacity, View } from "react-native";
+import { Linking, SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 
 import Header from "@shared-components/header/Header";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
@@ -104,12 +104,11 @@ const AboutMe = () => {
       </View>
     );
   };
-
   return (
-    <View style={{ ...CS.safeAreaView }}>
+    <SafeAreaView style={CS.flex1}>
       <Header text={translations.settingUser.aboutus} />
       {renderAboutMe()}
-    </View>
+    </SafeAreaView>
   );
 };
 export default AboutMe;

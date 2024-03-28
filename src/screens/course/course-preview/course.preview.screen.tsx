@@ -39,6 +39,7 @@ import {
   showSuperModal,
   showToast,
 } from "@helpers/super.modal.helper";
+import { getStatusBarHeight } from "react-native-safearea-height";
 
 const CoursePreviewScreen = () => {
   const userData = useStore((state) => state.userData);
@@ -268,7 +269,6 @@ const CoursePreviewScreen = () => {
       },
     });
   };
-
   return (
     <SafeAreaView style={CS.safeAreaView}>
       {/* <Header iconNameRight="share-outline" onPressRight={_shareCourse} /> */}

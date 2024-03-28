@@ -237,7 +237,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
   };
 
   return (
-    <SafeAreaView style={CS.safeAreaView}>
+    <SafeAreaView style={[CS.flex1]}>
       <Header text={translations.settingUser.setting}></Header>
       <ScrollView style={CS.flex1}>
         {isLoggedIn() ? (
