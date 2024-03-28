@@ -246,7 +246,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
     <View style={CS.safeAreaView}>
       <Header text={translations.settingUser.setting}></Header>
       <ScrollView style={CS.flex1}>
-        <PressableBtn onPress={hardCodeToken}>
+        {/* <PressableBtn onPress={hardCodeToken}>
           <Text
             style={{
               fontSize: 16,
@@ -270,7 +270,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
           >
             hard code token teacher
           </Text>
-        </PressableBtn>
+        </PressableBtn> */}
         {isLoggedIn() ? (
           <View style={{ alignItems: "center", backgroundColor: colors.white }}>
             <View style={{ marginTop: 16 }}>

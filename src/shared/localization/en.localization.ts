@@ -592,6 +592,7 @@ export default {
     notifications: "Notifications",
     chat: "Chat",
     bio: "Bio",
+    addBio: "Add bio",
     address: "Address",
     phoneNumber: "Phone Number",
     socialLink: "Social Links",

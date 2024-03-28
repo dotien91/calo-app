@@ -101,6 +101,7 @@ import IeltsPraticeList from "@screens/ielts-practice/ielts.practice.list";
 
 import ClassRoomScreen from "@screens/call-class/class.room.screen";
 import WebviewScreen from "@screens/webview/Webview";
+import CourseRecommendScreen from "@screens/course/course-recommend/course.recommend";
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -246,6 +247,10 @@ const Navigation = () => {
 
         <Stack.Screen name={SCREENS.HOME} component={renderTabNavigation} />
         <Stack.Screen name={SCREENS.LEADERBOARD} component={LeaderBoard} />
+        <Stack.Screen
+          name={SCREENS.COURSE_RECOMMEND}
+          component={CourseRecommendScreen}
+        />
         <Stack.Screen
           name={SCREENS.CLASSHOMEWORK}
           component={ClassHomeWorkScreen}

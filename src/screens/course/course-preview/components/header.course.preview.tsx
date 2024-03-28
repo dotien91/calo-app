@@ -55,8 +55,8 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
   };
 
   const _gotoDetailTeacher = () => {
-    NavigationService.navigate(SCREENS.TEACHER_DETAIL, {
-      idTeacher: data?.user_id?._id,
+    NavigationService.push(SCREENS.PROFILE_CURRENT_USER, {
+      _id: data?.user_id?._id,
     });
   };
 

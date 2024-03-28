@@ -190,7 +190,10 @@ const ListSearch = ({ type }: { type: string }) => {
     return {
       ...courseCurrentSort,
       ...listCourseFilterParams,
-      limit: type == EnumSearchType.user ? "8" : "5",
+      limit:
+        type == EnumSearchType.tutor || type == EnumSearchType.user
+          ? "10"
+          : "5",
       // search: courseSearchHistory,
     };
   }, [courseCurrentSort, listCourseFilterParams, courseSearchHistory]);

@@ -27,7 +27,7 @@ const CourseView = () => {
   }, [listData]);
 
   const onSeeAll = () => {
-    NavigationService.navigate(SCREENS.COURSE_LIST);
+    NavigationService.navigate(SCREENS.COURSE_RECOMMEND);
   };
 
   const renderItem = (item: ICourseItem, index: number) => {

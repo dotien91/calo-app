@@ -699,6 +699,7 @@ export default {
     notifications: "Thông báo",
     chat: "Chat",
     bio: "Giới thiệu",
+    addBio: "Thêm giới thiệu",
     birthday: "Ngày sinh",
     address: "Địa chỉ",
     phoneNumber: "Số điện thoại",

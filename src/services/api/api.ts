@@ -3,8 +3,8 @@ import lodash from "lodash";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { _getJson, USER_TOKEN } from "@services/local-storage";
 
-// export const BASEURL = "https://api.edu-like.exam24h.com/api/";
-export const BASEURL = "https://api.live.edu-like.exam24h.com/api/";
+export const BASEURL = "https://api.edu-like.exam24h.com/api/";
+// export const BASEURL = "https://api.live.edu-like.exam24h.com/api/";
 export const UPLOAD_URL = "https://media.exam24h.com/";
 
 export const METHOD = {

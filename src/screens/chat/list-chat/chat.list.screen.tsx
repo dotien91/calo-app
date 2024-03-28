@@ -74,17 +74,20 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
   };
 
   useEffect(() => {
-    getLastNotification();
+    if (isFocused) {
+      getLastNotification();
+      eventEmitter.emit("reload_list_friend");
+    }
   }, [isFocused]);
 
   const onRefresh = () => {
-    console.log("onRefresh");
     _requestData(false);
   };
   const scrollToRefresh = React.useCallback(() => {
     setRefreshing(true);
     getLastNotification();
     _requestData(false);
+    eventEmitter.emit("reload_list_friend");
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
