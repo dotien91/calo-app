@@ -25,6 +25,11 @@ const AuthorView = ({ data }: AuthorViewProps) => {
       idTeacher: data?.user_id?._id,
     });
   };
+  // const _gotoDetailTeacher = () => {
+  //   NavigationService.push(SCREENS.PROFILE_CURRENT_USER, {
+  //     _id: data?.user_id?._id,
+  //   });
+  // };
 
   const IconText = ({ nameIcon, text }: { nameIcon: string; text: string }) => {
     return (
@@ -71,6 +76,7 @@ const AuthorView = ({ data }: AuthorViewProps) => {
       </Text> */}
       <View style={{ flexDirection: "row", marginTop: 8 }}>
         <Avatar
+          onPress={_gotoDetailTeacher}
           sourceUri={{ uri: data?.user_id?.user_avatar_thumbnail }}
           style={styles.viewAvatar}
         />

@@ -39,7 +39,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
 
   const time = getFormatDayMessage(readAt, "HH:mm", "DD/MM");
   const goToProfileChat = () => {
-    if (!isAdmin) {
+    if (!isAdmin && roomDetail) {
       NavigationService.navigate(SCREENS.PROFILE_CHAT, {
         isGroup,
         roomDetail,

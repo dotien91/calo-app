@@ -12,6 +12,8 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "constants";
 import LoadingList from "@shared-components/loading.list.component";
+import eventEmitter from "@services/event-emitter";
+import useStore from "@services/zustand/store";
 
 interface ListFriendProps {}
 
@@ -20,15 +22,29 @@ const ListFriend: React.FC<ListFriendProps> = () => {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const [listFriend, setListFriend] = useState([]);
   const [loading, setLoading] = useState(true);
+  const userData = useStore((state) => state.userData);
 
-  useEffect(() => {
-    getListFriend().then((res) => {
+  const _getListFriend = () => {
+    getListFriend({}).then((res) => {
       if (!res.isError) {
         setListFriend(res.data);
+      } else {
+        setListFriend([]);
       }
       setLoading(false);
     });
+  };
+
+  useEffect(() => {
+    eventEmitter.on("reload_list_friend", _getListFriend);
+    return () => {
+      eventEmitter.off("reload_list_friend", _getListFriend);
+    };
   }, []);
+
+  useEffect(() => {
+    _getListFriend();
+  }, [userData]);
 
   const openChatRoom = (item: any) => {
     const { partner_id } = item;
