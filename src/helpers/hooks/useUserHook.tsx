@@ -25,9 +25,9 @@ export const useUserHook = () => {
   const setShowInvite = useStore((state) => state.setShowInvite);
   const updateListBlock = useStore((state) => state.updateListBlock);
 
-  const isLoggedIn = () => {
+  const isLoggedIn = React.useCallback(() => {
     return _getJson(USER_TOKEN);
-  };
+  }, []);
 
   const handleLogin = (token: string) => {
     _setJson(USER_TOKEN, token);

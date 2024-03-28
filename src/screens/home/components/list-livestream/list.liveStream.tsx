@@ -40,7 +40,7 @@ const ListLiveStream = () => {
 
   const _getListLiveStream = () => {
     getListLiveStream().then((res) => {
-      console.log("res...", res);
+      console.log("res list livestream...", res);
       if (!res.isError) {
         const listDataStream = res.data.filter(
           // const listDataStream = fakedata.filter(
@@ -115,7 +115,7 @@ const Pagination: React.FC<PaginationProps> = ({
   );
 };
 
-export default ListLiveStream;
+export default React.memo(ListLiveStream);
 
 const styles = StyleSheet.create({
   container: {

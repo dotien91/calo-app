@@ -65,7 +65,6 @@ export function useUploadFile(
             type: i.type,
           })),
         );
-
         if (Array.isArray(res)) {
           const data = res.map((i: any) => ({
             uri: i?.src,

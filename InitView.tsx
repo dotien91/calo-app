@@ -1,6 +1,7 @@
 import React from "react";
 import { StatusBar, LogBox } from "react-native";
 import SplashScreen from "react-native-splash-screen";
+import { Settings } from "react-native-fbsdk-next";
 
 /**
  * ? Local Imports
@@ -13,6 +14,10 @@ import { useUserHook } from "@helpers/hooks/useUserHook";
 import useFirebase from "@helpers/useFirebase";
 import { useInAppPurchase } from "@helpers/hooks/useInAppPurchase";
 import { priceIds } from "constants/iap.constant";
+import { _getJson } from "@services/local-storage";
+import { ENVIRONMENT, setUrlEnv } from "constants/config.constant";
+
+Settings.setAppID("908606980666349");
 
 LogBox.ignoreAllLogs();
 
@@ -42,10 +47,18 @@ const InitView = () => {
   }, [isDarkMode, language]);
 
   const initData = () => {
+    setEnv();
     getUserData();
     setDeviceInfo();
     // initIAP(["com.course.tier2"]);
     initIAP(priceIds.map((i) => i.id));
+  };
+
+  const setEnv = () => {
+    const env =
+      _getJson("env") || (__DEV__ ? ENVIRONMENT.DEVELOP : ENVIRONMENT.PRODUCT);
+    console.log("env", env);
+    setUrlEnv(env == ENVIRONMENT.PRODUCT);
   };
 
   useFirebase();

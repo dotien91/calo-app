@@ -8,8 +8,6 @@ import { io } from "socket.io-client";
 import { _getJson, _setJson, USER_TOKEN } from "@services/local-storage";
 import useStore from "@services/zustand/store";
 import { Alert, View } from "react-native";
-// const URL_CHAT_SOCKET = "https://socket.api-v2.ieltshunter.io/socket";
-const URL_CHAT_SOCKET = "https://socket.live.api.ieltshunter.io/socket";
 import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "constants";
 import { translations } from "@localization";
@@ -18,7 +16,10 @@ import {
   EnumStyleModalType,
   showSuperModal,
 } from "@helpers/super.modal.helper";
+import { APP_URL } from "constants/config.constant";
 
+const URL_CHAT_SOCKET = APP_URL.BASEURL_SOCKET;
+console.log("URL_CHAT_SOCKET", URL_CHAT_SOCKET);
 const pointRequireShowAnimation = 2;
 
 export interface TypedSocket {

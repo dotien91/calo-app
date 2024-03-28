@@ -1,12 +1,92 @@
 import React from "react";
+import RNRestart from "react-native-restart"; // Import package from node modules
+
 import Header from "@shared-components/header/Header";
 import CS from "@theme/styles";
 import { SafeAreaView } from "react-native-safe-area-context";
-
+import { USER_TOKEN, _setJson } from "@services/local-storage";
+import Button from "@shared-components/button/Button";
+import { View } from "react-native";
+import TextBase from "@shared-components/TextBase";
+import { ENVIRONMENT, isProduction, APP_URL } from "constants/config.constant";
+import { useUserHook } from "@helpers/hooks/useUserHook";
 const HiddenPaage = () => {
+  const { logout } = useUserHook();
+  // eslint-disable-next-line import/no-extraneous-dependencies
+  const hardCodeTeacherProd = () => {
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDMwNjg3NjMsImRhdGEiOnsiX2lkIjoiNjVlYWQyZmY4MDlhMDc5ZTdkODdlNDM4Iiwia2V5IjoiOTQyNzdiYjUxYTE4ODJjNGUyOGNkYzExYmYzNzJiYmEiLCJzaWduYXR1cmUiOiI2NzM2NjU2ZjdiZGQ2MTc0NDFkOGE3MTA0MzFlNWIzMSIsInNlc3Npb24iOiI2NjAzZWFkYjI5MzNmMzg0NWMyNjhmZTMifSwiaWF0IjoxNzExNTMyNzYzfQ.7B0dgVYISuDBwQSsy-CdyU6KwzfxYhem3i9Wnx8izbY";
+    _setJson(USER_TOKEN, token);
+    setTimeout(() => {
+      RNRestart.Restart();
+    }, 1000);
+  };
+
+  const hardCodeTokenStudentDev = () => {
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDIyODE4MjQsImRhdGEiOnsiX2lkIjoiNjVlYTg1ZjdiMzdiMTRkZjFmNWE2Mjc1Iiwia2V5IjoiZGQ5YjhjOTk1ODNiYjM4YWZhZGRmYTBiMWU4OTgzMTgiLCJzaWduYXR1cmUiOiI2ZGYwYjIyYWEzOWZkMmM2MzAwMDQ3MTNlNzU2ZGI4OCIsInNlc3Npb24iOiI2NWY3ZThlMDAzNzZlOGU1NzZmYmUyZGQifSwiaWF0IjoxNzEwNzQ1ODI0fQ.ADTQoZf7QfVpffj3r1lAnPa09RTw9qxfac_-BfvOTrw";
+    _setJson(USER_TOKEN, token);
+    setTimeout(() => {
+      RNRestart.Restart();
+    }, 1000);
+  };
+
+  const hardCodeTokenTeacherDev = () => {
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mzg4MzEzMzQsImRhdGEiOnsiX2lkIjoiNjU5ZTU5ZDExNzc1YWJiZDZkOTlkMGIzIiwia2V5IjoiNTRhZjQxZGUxZTljNmNhZTFlYmI0ZjQ3NmI4NDg2ZmMiLCJzaWduYXR1cmUiOiIxY2Y2ODMwNWJkOTAyMjEyMDY1MTU3ODQyZWQ1ZTZjNiIsInNlc3Npb24iOiI2NWMzNDI2NjU1MDVmYjI3OGNiYjE5ZDgifSwiaWF0IjoxNzA3Mjk1MzM0fQ.ckhT-GeS2WVJTDEbQjU-ItSznb3aUAZ1GihSWSDmW2g";
+    _setJson(USER_TOKEN, token);
+    setTimeout(() => {
+      RNRestart.Restart();
+    }, 1000);
+  };
+
+  const switchEnv = () => {
+    logout();
+    _setJson("env", isProduction ? ENVIRONMENT.DEVELOP : ENVIRONMENT.PRODUCT);
+    setTimeout(() => {
+      RNRestart.Restart();
+    }, 1000);
+  };
+
+  console.log("APP_URLAPP_URL", APP_URL);
+
   return (
-    <SafeAreaView style={{ ...CS.safeAreaView }}>
+    <SafeAreaView style={CS.safeAreaView}>
       <Header text="Hidden Page" />
+      <View style={{ padding: 16 }}>
+        <TextBase
+          fontWeight="600"
+          fontSize={30}
+          textAlign="center"
+          marginBottom={16}
+        >
+          {isProduction ? "production env" : "dev env"}
+        </TextBase>
+        <Button
+          onPress={switchEnv}
+          style={{ marginBottom: 16 }}
+          type="primary"
+          text={"Switch to " + (!isProduction ? "production env" : "dev env")}
+        />
+        <Button
+          onPress={hardCodeTeacherProd}
+          style={{ marginBottom: 16 }}
+          type="primary"
+          text={"Hard code token teacher prod"}
+        />
+        <Button
+          onPress={hardCodeTokenTeacherDev}
+          style={{ marginBottom: 16 }}
+          type="primary"
+          text={"Hard code token teacher dev"}
+        />
+        <Button
+          onPress={hardCodeTokenStudentDev}
+          style={{ marginBottom: 16 }}
+          type="primary"
+          text={"Hard code token student dev"}
+        />
+      </View>
     </SafeAreaView>
   );
 };

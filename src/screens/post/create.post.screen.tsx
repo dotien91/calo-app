@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   TextInput,
   Pressable,
+  SafeAreaView,
 } from "react-native";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useTheme, useRoute } from "@react-navigation/native";
@@ -406,126 +407,128 @@ export default function PostScreen() {
     );
   };
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={[styles.container]}>
-        <KeyboardAvoidingView
-          style={CommonStyle.flex1}
-          behavior={isIos ? "height" : undefined}
-        >
-          <HeaderPost
-            onPressPost={onSubmit}
-            visiblePost={visiblePost}
-            pressGoBack={onGoBack}
-            textPost={item._id ? translations.update : translations.post.post}
-          />
-          <View style={{ ...CommonStyle.flex1, paddingTop: 10 }}>
-            <View style={styles.styleCardName}>
-              <Avatar
-                style={styles.styleAvatar}
-                sourceUri={{ uri: userData?.user_avatar_thumbnail }}
-              />
-              {renderNameCategory()}
-            </View>
-
-            <View
-              style={[
-                CommonStyle.flex1,
-                { alignItems: "flex-start", justifyContent: "flex-start" },
-              ]}
-            >
-              <TextInput
-                style={[styles.inputDescription]}
-                placeholder={translations.placeholderContent}
-                value={description}
-                onChangeText={setDescription}
-                multiline
-                placeholderTextColor={colors.placeholder}
-                maxLength={500}
-              />
-            </View>
-            {link != "" && (
-              <View style={styles.viewContainerLink}>
-                <View style={styles.viewIconLink}>
-                  <IconSvg name="icLink" color={colors.mainColor2} />
-                </View>
-                <Text style={styles.textLink} numberOfLines={1}>
-                  {link}
-                </Text>
-              </View>
-            )}
-            <View style={styles.viewRenderFile}>
-              {listFileLocal.length > 0 && (
-                <>
-                  {renderFile()}
-                  <Pressable style={styles.btnAdd} onPress={onSelectPicture}>
-                    <IconSvg name="icAdd" size={32} color={colors.grey} />
-                  </Pressable>
-                </>
-              )}
-            </View>
-            {renderKeyboard()}
-          </View>
-          {listCategory.length > 0 && (
-            <BottomSheet
-              snapPoints={snapPoints}
-              index={-1}
-              enablePanDownToClose
-              ref={refBottomSheet}
-              style={{
-                borderTopLeftRadius: 16,
-                borderTopRightRadius: 16,
-                backgroundColor: colors.background,
-              }}
-              backdropComponent={(props) => (
-                <BottomSheetBackdrop
-                  {...props}
-                  disappearsOnIndex={-1}
-                  appearsOnIndex={0}
-                  pressBehavior={"close"}
-                  opacity={0.1}
+    <SafeAreaView style={CommonStyle.safeAreaView}>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <View style={[styles.container]}>
+          <KeyboardAvoidingView
+            style={CommonStyle.flex1}
+            behavior={isIos ? "height" : undefined}
+          >
+            <HeaderPost
+              onPressPost={onSubmit}
+              visiblePost={visiblePost}
+              pressGoBack={onGoBack}
+              textPost={item._id ? translations.update : translations.post.post}
+            />
+            <View style={{ ...CommonStyle.flex1, paddingTop: 10 }}>
+              <View style={styles.styleCardName}>
+                <Avatar
+                  style={styles.styleAvatar}
+                  sourceUri={{ uri: userData?.user_avatar_thumbnail }}
                 />
-              )}
-              backgroundComponent={CustomBackground}
-            >
-              <View style={[{ paddingHorizontal: 16, ...CommonStyle.flex1 }]}>
-                <Text
-                  style={{
-                    ...CommonStyle.hnSemiBold,
-                    textAlign: "center",
-                    fontSize: 20,
-                    color: colors.black,
-                  }}
-                >
-                  {translations.postCategory}
-                </Text>
-                <BottomSheetScrollView
-                  style={{
-                    ...CommonStyle.flex1,
-                    backgroundColor: colors.background,
-                  }}
-                >
-                  {listCategory.map((i) => (
-                    <PressableBtn
-                      key={i._id}
-                      style={
-                        i._id === postCategory
-                          ? styles.categorySelected
-                          : styles.category
-                      }
-                      onPress={() => {
-                        refBottomSheet.current?.close();
-                        setPostCategory(i._id);
-                      }}
-                    >
-                      <SelectRadio item={i} />
-                    </PressableBtn>
-                  ))}
-                </BottomSheetScrollView>
+                {renderNameCategory()}
               </View>
-            </BottomSheet>
-          )}
-        </KeyboardAvoidingView>
-      </View>
-    </TouchableWithoutFeedback>
+
+              <View
+                style={[
+                  CommonStyle.flex1,
+                  { alignItems: "flex-start", justifyContent: "flex-start" },
+                ]}
+              >
+                <TextInput
+                  style={[styles.inputDescription]}
+                  placeholder={translations.placeholderContent}
+                  value={description}
+                  onChangeText={setDescription}
+                  multiline
+                  placeholderTextColor={colors.placeholder}
+                  maxLength={500}
+                />
+              </View>
+              {link != "" && (
+                <View style={styles.viewContainerLink}>
+                  <View style={styles.viewIconLink}>
+                    <IconSvg name="icLink" color={colors.mainColor2} />
+                  </View>
+                  <Text style={styles.textLink} numberOfLines={1}>
+                    {link}
+                  </Text>
+                </View>
+              )}
+              <View style={styles.viewRenderFile}>
+                {listFileLocal.length > 0 && (
+                  <>
+                    {renderFile()}
+                    <Pressable style={styles.btnAdd} onPress={onSelectPicture}>
+                      <IconSvg name="icAdd" size={32} color={colors.grey} />
+                    </Pressable>
+                  </>
+                )}
+              </View>
+              {renderKeyboard()}
+            </View>
+            {listCategory.length > 0 && (
+              <BottomSheet
+                snapPoints={snapPoints}
+                index={-1}
+                enablePanDownToClose
+                ref={refBottomSheet}
+                style={{
+                  borderTopLeftRadius: 16,
+                  borderTopRightRadius: 16,
+                  backgroundColor: colors.background,
+                }}
+                backdropComponent={(props) => (
+                  <BottomSheetBackdrop
+                    {...props}
+                    disappearsOnIndex={-1}
+                    appearsOnIndex={0}
+                    pressBehavior={"close"}
+                    opacity={0.1}
+                  />
+                )}
+                backgroundComponent={CustomBackground}
+              >
+                <View style={[{ paddingHorizontal: 16, ...CommonStyle.flex1 }]}>
+                  <Text
+                    style={{
+                      ...CommonStyle.hnSemiBold,
+                      textAlign: "center",
+                      fontSize: 20,
+                      color: colors.black,
+                    }}
+                  >
+                    {translations.postCategory}
+                  </Text>
+                  <BottomSheetScrollView
+                    style={{
+                      ...CommonStyle.flex1,
+                      backgroundColor: colors.background,
+                    }}
+                  >
+                    {listCategory.map((i) => (
+                      <PressableBtn
+                        key={i._id}
+                        style={
+                          i._id === postCategory
+                            ? styles.categorySelected
+                            : styles.category
+                        }
+                        onPress={() => {
+                          refBottomSheet.current?.close();
+                          setPostCategory(i._id);
+                        }}
+                      >
+                        <SelectRadio item={i} />
+                      </PressableBtn>
+                    ))}
+                  </BottomSheetScrollView>
+                </View>
+              </BottomSheet>
+            )}
+          </KeyboardAvoidingView>
+        </View>
+      </TouchableWithoutFeedback>
+    </SafeAreaView>
   );
 }

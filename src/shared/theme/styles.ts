@@ -204,8 +204,8 @@ const CS = StyleSheet.create({
   },
   safeAreaView: {
     flex: 1,
-    marginTop: getStatusBarHeight(),
     marginBottom: isAndroid ? getBottomSpace() : 0,
+    marginTop: isAndroid ? getStatusBarHeight() : 0,
   },
   container: {
     flex: 1,

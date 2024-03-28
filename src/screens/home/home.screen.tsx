@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Dimensions } from "react-native";
+import { Text, TouchableOpacity, Dimensions, SafeAreaView } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import * as NavigationService from "react-navigation-helpers";
@@ -64,6 +64,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
       style={{ backgroundColor: colors.background }}
     />
   );
+
   const [refreshing, setRefreshing] = useState(false);
   const reloadData = () => {
     setRefreshing(true);
@@ -79,14 +80,22 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
     return <CustomRefreshControl {...refreshProps} />;
   };
 
-  // return <IapTest />
+  const renderHeader = React.useCallback(() => {
+    return (
+      <>
+        <AboutHome />
+      </>
+    );
+  }, []);
 
+  // return <IapTest />
+  console.log("222222222");
   return (
-    <View style={CommonStyle.safeAreaView}>
+    <SafeAreaView style={CommonStyle.safeAreaView}>
       <HeaderHome />
       <CollapsibleHeaderTabView
         lazy={true}
-        renderScrollHeader={AboutHome}
+        renderScrollHeader={renderHeader}
         navigationState={{ index, routes }}
         renderScene={renderScene}
         onIndexChange={setIndex}
@@ -121,7 +130,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
           />
         </TouchableOpacity>
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 

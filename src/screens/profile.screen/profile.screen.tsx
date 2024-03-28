@@ -66,7 +66,6 @@ const SettingProfileScreen = () => {
   const _getReferralByMe = () => {
     getReferralByMe(params).then((res) => {
       if (!res.isError) {
-        console.log("res...", res.data);
         setReferralByMe(res.data);
         setListUserRef(res.data);
       } else {
