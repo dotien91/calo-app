@@ -388,7 +388,7 @@ const CourseCreate = () => {
 
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={CS.safeAreaView}>
         <Header
           text={
             course_id

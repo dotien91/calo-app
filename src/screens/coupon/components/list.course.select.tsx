@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, StyleSheet, FlatList, Text } from "react-native";
+import { View, StyleSheet, FlatList, Text, SafeAreaView } from "react-native";
 import FastImage from "react-native-fast-image";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
 import { useTheme } from "@react-navigation/native";
@@ -100,9 +100,9 @@ const ListCourseSelect = ({
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={CS.flex1}>
       <Header
-        text="Chọn khoá học"
+        text={translations.coupon.selectCourse}
         onPressLeft={hideModal}
         customStyle={{
           shadowColor: colors.background,
@@ -149,7 +149,7 @@ const ListCourseSelect = ({
           onPress={hideModal}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

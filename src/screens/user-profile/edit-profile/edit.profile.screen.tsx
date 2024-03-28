@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { KeyboardAvoidingView, ScrollView, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  SafeAreaView,
+  ScrollView,
+  View,
+} from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import { useTheme, useRoute } from "@react-navigation/native";
 import { useForm } from "react-hook-form";
@@ -23,6 +28,7 @@ import { updateProfile } from "@services/api/user.api";
 import { showToast } from "@helpers/super.modal.helper";
 import eventEmitter from "@services/event-emitter";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
+import CS from "@theme/styles";
 
 const EditProfileScreen = () => {
   const userData = useStore((store) => store.userData);
@@ -109,197 +115,199 @@ const EditProfileScreen = () => {
       style={{ ...CommonStyle.safeAreaView }}
       behavior={isIos() ? "height" : undefined}
     >
-      <Header
-        onPressLeft={() => NavigationService.goBack()}
-        text={translations.profile.editProfile}
-      />
-      <ScrollView
-        style={[CommonStyle.flex1, { marginBottom: getBottomSpace() }]}
-        showsVerticalScrollIndicator={false}
-      >
-        <InputHook
-          setFocus={setFocus}
-          name="fullname"
-          customStyle={CommonStyle.flex1}
-          inputProps={{
-            type: "text",
-            defaultValue: "",
-            placeholder: translations.fullname,
-          }}
-          control={control}
-          rules={{
-            required: {
-              value: true,
-              message: translations.required,
-            },
-          }}
-          errorTxt={errors.fullname?.message}
-          maxLength={32}
-          showPlaceholder
+      <SafeAreaView style={CS.safeAreaView}>
+        <Header
+          onPressLeft={() => NavigationService.goBack()}
+          text={translations.profile.editProfile}
         />
-
-        <InputHook
-          setFocus={setFocus}
-          name="email"
-          customStyle={CommonStyle.flex1}
-          inputProps={{
-            type: "email",
-            defaultValue: "",
-            placeholder: translations.placeholderEmail,
-          }}
-          control={control}
-          rules={{
-            required: {
-              value: true,
-              message: translations.required,
-            },
-            pattern: {
-              value: regexEmail,
-              message: translations.error.invalidEmail,
-            },
-          }}
-          errorTxt={errors.email?.message}
-          showPlaceholder
-        />
-
-        <InputHook
-          setFocus={setFocus}
-          name="description"
-          customStyle={CommonStyle.flex1}
-          inputProps={{
-            type: "text",
-            defaultValue: "",
-            placeholder: translations.login.description,
-          }}
-          control={control}
-          rules={{}}
-          errorTxt={errors.description?.message}
-          showPlaceholder
-          multiline
-        />
-
-        <InputHook
-          setFocus={setFocus}
-          name="bio"
-          customStyle={CommonStyle.flex1}
-          inputProps={{
-            type: "text",
-            defaultValue: "",
-            placeholder: translations.bio,
-          }}
-          control={control}
-          rules={{}}
-          maxLength={256}
-          errorTxt={errors.bio?.message}
-          showPlaceholder
-          multiline
-        />
-
-        <InputHook
-          setFocus={setFocus}
-          name="phoneNumber"
-          customStyle={CommonStyle.flex1}
-          inputProps={{
-            type: "number",
-            defaultValue: "",
-            placeholder: translations.profile.phoneNumber,
-          }}
-          control={control}
-          rules={{
-            pattern: {
-              value: phoneRegex,
-              message: translations.error.invalidPhone,
-            },
-          }}
-          errorTxt={errors.phoneNumber?.message}
-          showPlaceholder
-        />
-
-        <InputHook
-          setFocus={setFocus}
-          name="address"
-          customStyle={CommonStyle.flex1}
-          inputProps={{
-            type: "text",
-            defaultValue: "",
-            placeholder: translations.profile.address,
-          }}
-          control={control}
-          rules={{}}
-          showPlaceholder
-        />
-
-        <InputHook
-          setFocus={setFocus}
-          name="facebook"
-          customStyle={CommonStyle.flex1}
-          inputProps={{
-            type: "text",
-            defaultValue: "",
-            placeholder: "Facebook",
-          }}
-          control={control}
-          rules={{
-            pattern: {
-              value: regexFB,
-              message: translations.error.invalidFacebook,
-            },
-          }}
-          errorTxt={errors.facebook?.message}
-          showPlaceholder
-        />
-
-        <InputHook
-          setFocus={setFocus}
-          name="website"
-          customStyle={CommonStyle.flex1}
-          inputProps={{
-            type: "text",
-            defaultValue: "",
-            placeholder: "Website",
-          }}
-          control={control}
-          rules={{
-            pattern: {
-              value: regexLink,
-              message: translations.error.invalidLink,
-            },
-          }}
-          errorTxt={errors.website?.message}
-          showPlaceholder
-        />
-
-        <InputHook
-          setFocus={setFocus}
-          name="youtube"
-          customStyle={CommonStyle.flex1}
-          inputProps={{
-            type: "text",
-            defaultValue: "",
-            placeholder: "Youtube",
-          }}
-          control={control}
-          rules={{
-            pattern: {
-              value: regexYoutubeChannel,
-              message: translations.error.invalidYoutube,
-            },
-          }}
-          maxLength={100}
-          errorTxt={errors.youtube?.message}
-          showPlaceholder
-        />
-        <View style={{ marginHorizontal: 16, marginTop: 16 }}>
-          <Button
-            style={{
-              backgroundColor: updating ? colors.placeholder : colors.primary,
+        <ScrollView
+          style={[CommonStyle.flex1, { marginBottom: getBottomSpace() }]}
+          showsVerticalScrollIndicator={false}
+        >
+          <InputHook
+            setFocus={setFocus}
+            name="fullname"
+            customStyle={CommonStyle.flex1}
+            inputProps={{
+              type: "text",
+              defaultValue: "",
+              placeholder: translations.fullname,
             }}
-            text={translations.profile.saveProfile}
-            disabled={updating}
-            onPress={handleSubmit(onSubmit)}
+            control={control}
+            rules={{
+              required: {
+                value: true,
+                message: translations.required,
+              },
+            }}
+            errorTxt={errors.fullname?.message}
+            maxLength={32}
+            showPlaceholder
           />
-        </View>
-      </ScrollView>
+
+          <InputHook
+            setFocus={setFocus}
+            name="email"
+            customStyle={CommonStyle.flex1}
+            inputProps={{
+              type: "email",
+              defaultValue: "",
+              placeholder: translations.placeholderEmail,
+            }}
+            control={control}
+            rules={{
+              required: {
+                value: true,
+                message: translations.required,
+              },
+              pattern: {
+                value: regexEmail,
+                message: translations.error.invalidEmail,
+              },
+            }}
+            errorTxt={errors.email?.message}
+            showPlaceholder
+          />
+
+          <InputHook
+            setFocus={setFocus}
+            name="description"
+            customStyle={CommonStyle.flex1}
+            inputProps={{
+              type: "text",
+              defaultValue: "",
+              placeholder: translations.login.description,
+            }}
+            control={control}
+            rules={{}}
+            errorTxt={errors.description?.message}
+            showPlaceholder
+            multiline
+          />
+
+          <InputHook
+            setFocus={setFocus}
+            name="bio"
+            customStyle={CommonStyle.flex1}
+            inputProps={{
+              type: "text",
+              defaultValue: "",
+              placeholder: translations.bio,
+            }}
+            control={control}
+            rules={{}}
+            maxLength={256}
+            errorTxt={errors.bio?.message}
+            showPlaceholder
+            multiline
+          />
+
+          <InputHook
+            setFocus={setFocus}
+            name="phoneNumber"
+            customStyle={CommonStyle.flex1}
+            inputProps={{
+              type: "number",
+              defaultValue: "",
+              placeholder: translations.profile.phoneNumber,
+            }}
+            control={control}
+            rules={{
+              pattern: {
+                value: phoneRegex,
+                message: translations.error.invalidPhone,
+              },
+            }}
+            errorTxt={errors.phoneNumber?.message}
+            showPlaceholder
+          />
+
+          <InputHook
+            setFocus={setFocus}
+            name="address"
+            customStyle={CommonStyle.flex1}
+            inputProps={{
+              type: "text",
+              defaultValue: "",
+              placeholder: translations.profile.address,
+            }}
+            control={control}
+            rules={{}}
+            showPlaceholder
+          />
+
+          <InputHook
+            setFocus={setFocus}
+            name="facebook"
+            customStyle={CommonStyle.flex1}
+            inputProps={{
+              type: "text",
+              defaultValue: "",
+              placeholder: "Facebook",
+            }}
+            control={control}
+            rules={{
+              pattern: {
+                value: regexFB,
+                message: translations.error.invalidFacebook,
+              },
+            }}
+            errorTxt={errors.facebook?.message}
+            showPlaceholder
+          />
+
+          <InputHook
+            setFocus={setFocus}
+            name="website"
+            customStyle={CommonStyle.flex1}
+            inputProps={{
+              type: "text",
+              defaultValue: "",
+              placeholder: "Website",
+            }}
+            control={control}
+            rules={{
+              pattern: {
+                value: regexLink,
+                message: translations.error.invalidLink,
+              },
+            }}
+            errorTxt={errors.website?.message}
+            showPlaceholder
+          />
+
+          <InputHook
+            setFocus={setFocus}
+            name="youtube"
+            customStyle={CommonStyle.flex1}
+            inputProps={{
+              type: "text",
+              defaultValue: "",
+              placeholder: "Youtube",
+            }}
+            control={control}
+            rules={{
+              pattern: {
+                value: regexYoutubeChannel,
+                message: translations.error.invalidYoutube,
+              },
+            }}
+            maxLength={100}
+            errorTxt={errors.youtube?.message}
+            showPlaceholder
+          />
+          <View style={{ marginHorizontal: 16, marginTop: 16 }}>
+            <Button
+              style={{
+                backgroundColor: updating ? colors.placeholder : colors.primary,
+              }}
+              text={translations.profile.saveProfile}
+              disabled={updating}
+              onPress={handleSubmit(onSubmit)}
+            />
+          </View>
+        </ScrollView>
+      </SafeAreaView>
     </KeyboardAvoidingView>
   );
 };

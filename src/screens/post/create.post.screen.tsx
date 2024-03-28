@@ -407,7 +407,7 @@ export default function PostScreen() {
     );
   };
   return (
-    <SafeAreaView style={CommonStyle.safeAreaView}>
+    <SafeAreaView style={CommonStyle.flex1}>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <View style={[styles.container]}>
           <KeyboardAvoidingView

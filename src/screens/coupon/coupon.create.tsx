@@ -7,6 +7,7 @@ import {
   Text,
   Pressable,
   Modal,
+  SafeAreaView,
 } from "react-native";
 import { useTheme, useRoute } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
@@ -219,7 +220,7 @@ const CouponCreateScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header
         text={
           data?._id
@@ -480,7 +481,7 @@ const CouponCreateScreen = () => {
           refreshing={refreshing}
         />
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
+  SafeAreaView,
 } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import { useTheme, useRoute } from "@react-navigation/native";
@@ -520,7 +521,7 @@ const ProfileUser = (props: ProfileUserProps) => {
 
   if (userData?._id === userInfo?._id) {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View
           style={{
             height: getStatusBarHeight(),
@@ -542,7 +543,7 @@ const ProfileUser = (props: ProfileUserProps) => {
           initialLayout={initialLayout}
           renderTabBar={renderTabBar}
         />
-      </View>
+      </SafeAreaView>
     );
   }
 
