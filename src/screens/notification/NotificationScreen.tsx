@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef } from "react";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, SafeAreaView, Text, View } from "react-native";
 import { useTheme, useIsFocused } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 /**
@@ -18,6 +18,7 @@ import { TypedNotification } from "models/notification.model";
 import IconSvg from "assets/svg";
 import { palette } from "@theme/themes";
 import PressableBtn from "@shared-components/button/PressableBtn";
+import CS from "@theme/styles";
 
 interface ProfileScreenProps {}
 
@@ -92,7 +93,7 @@ const NotificationScreen: React.FC<ProfileScreenProps> = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={CS.safeAreaView}>
       {/* <Header
         onPressLeft={() => {
           NavigationService.navigate(SCREENS.HOME);
@@ -127,7 +128,7 @@ const NotificationScreen: React.FC<ProfileScreenProps> = () => {
         refreshing={refreshing}
         onRefresh={onRefresh}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
