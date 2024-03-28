@@ -41,10 +41,19 @@ import CourseItem from "@screens/course-tab/components/course.item";
 import LoadingItem from "@shared-components/loading.item";
 import LoadingList from "@shared-components/loading.list.component";
 import { ICourseItem } from "models/course.model";
+import { formatVNDate } from "@utils/date.utils";
+import IconSvg from "assets/svg";
+import TextViewCollapsed from "@screens/course/components/text.view.collapsed";
 
 const initialLayout = WindowWidth;
 interface ProfileUserProps {
   route: any;
+}
+
+interface CertificatesProps {
+  dateOfIssue: string;
+  isValidated: boolean;
+  name: string;
 }
 
 const FirstRoute = () => {
@@ -379,6 +388,37 @@ const ProfileUser = (props: ProfileUserProps) => {
     );
   };
 
+  const RenderCertificates = ({ userInfo }) => {
+    return (
+      <View style={{ paddingHorizontal: 16 }}>
+        <Text style={styles.textTitle}>
+          {translations.course.certifications}
+        </Text>
+        {userInfo?.certificates?.length > 0 ? (
+          userInfo?.certificates.map(
+            (item: CertificatesProps, index: number) => {
+              return (
+                <View key={index} style={styles.viewCer}>
+                  <Text style={styles.textTime}>
+                    {formatVNDate(item.dateOfIssue)}
+                  </Text>
+                  <View style={{ flexDirection: "row" }}>
+                    <Text style={styles.textCer}>{item.name}</Text>
+                    {item.isValidated && (
+                      <IconSvg name="icCheck" color={palette.green} />
+                    )}
+                  </View>
+                </View>
+              );
+            },
+          )
+        ) : (
+          <TextViewCollapsed text={translations.noCertificates} />
+        )}
+      </View>
+    );
+  };
+
   const {
     listData: listDataCourse,
     renderFooterComponent: renderFooterComponentCourse,
@@ -406,7 +446,10 @@ const ProfileUser = (props: ProfileUserProps) => {
         />
         <ListAction />
         <Bio text={userInfo?.bio || ""} />
-        {!isUserLogin && listData.length > 0 && (
+        {userInfo?.user_role === "teacher" && (
+          <RenderCertificates userInfo={userInfo} />
+        )}
+        {!isUserLogin && listDataCourse.length > 0 && (
           <View style={{ minHeight: 200 }}>
             <View style={{ paddingHorizontal: 16, marginBottom: 8 }}>
               <Text style={styles.textTitle}>
@@ -423,7 +466,6 @@ const ProfileUser = (props: ProfileUserProps) => {
               removeClippedSubviews={true}
               keyExtractor={(item) => item._id}
               ListFooterComponent={renderFooterComponentCourse()}
-              ListEmptyComponent={renderEmpty()}
             />
           </View>
         )}
@@ -574,5 +616,22 @@ const styles = StyleSheet.create({
     lineHeight: 28,
     marginTop: 16,
     minHeight: 28,
+  },
+  viewCer: {
+    marginTop: 8,
+    marginBottom: 4,
+  },
+  textTime: {
+    ...CommonStyle.hnRegular,
+    fontSize: 14,
+    lineHeight: 22,
+    color: palette.textOpacity6,
+  },
+  textCer: {
+    ...CommonStyle.hnMedium,
+    ...CommonStyle.flex1,
+    fontSize: 16,
+    lineHeight: 22,
+    color: palette.textOpacity8,
   },
 });
