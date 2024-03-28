@@ -1,6 +1,7 @@
 import React from "react";
 import {
   FlatList,
+  SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -101,7 +102,7 @@ const BlackList = () => {
   };
 
   return (
-    <View style={{ ...CS.safeAreaView }}>
+    <SafeAreaView style={{ ...CS.safeAreaView }}>
       <Header text={translations.settingUser.blackList}></Header>
       {isLoading && <LoadingList />}
       {!listData?.length && !isFirstLoading && !isLoading && renderEmpty()}
@@ -115,7 +116,7 @@ const BlackList = () => {
         removeClippedSubviews={true}
         // ListEmptyComponent={renderEmpty}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -17,14 +17,13 @@ import InputToolbar from "./components/form/InputToolbar";
 import { EnumMessageStatus } from "constants/chat.constant";
 import { useChatHistory } from "@helpers/hooks/useChatHistory";
 import { useUploadFile } from "@helpers/hooks/useUploadFile";
-import { getStatusBarHeight } from "react-native-safearea-height";
 import SearchInput from "../../../shared/components/search-input.tsx/search.input";
 import { translations } from "@localization";
 import EmptyResultView from "@shared-components/empty.data.component";
 import createStyles from "./chat.room.screen.style";
 import LoadingList from "@shared-components/loading.list.component";
 import LottieView from "lottie-react-native";
-
+import CS from "@theme/styles";
 interface ChatRoomScreenProps {
   id?: string;
 }
@@ -240,9 +239,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
   const isAdmin = route.params["isAdmin"] || false;
 
   return (
-    <SafeAreaView
-      style={{ flex: 1, paddingTop: getStatusBarHeight(), paddingBottom: 8 }}
-    >
+    <SafeAreaView style={CS.safeAreaView}>
       <ChatHeader
         roomDetail={roomDetail}
         messages={messages}

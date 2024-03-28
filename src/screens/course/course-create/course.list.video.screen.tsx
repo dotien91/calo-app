@@ -1,5 +1,5 @@
 import React from "react";
-import { View, ScrollView } from "react-native";
+import { ScrollView, SafeAreaView } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 
@@ -7,7 +7,6 @@ import CS from "@theme/styles";
 import PartViewCreate from "./components/PartViewCreate/part.view.create";
 import Header from "@shared-components/header/Header";
 import { translations } from "@localization";
-import { getBottomSpace } from "react-native-iphone-screen-helper";
 
 const CourseListVideoScreen = () => {
   const route = useRoute();
@@ -18,7 +17,7 @@ const CourseListVideoScreen = () => {
   };
 
   return (
-    <View style={[CS.safeAreaView, { marginBottom: getBottomSpace() }]}>
+    <SafeAreaView style={[CS.safeAreaView]}>
       <Header
         text={translations.course.educationProgram}
         textRight={translations.home.select}
@@ -27,7 +26,7 @@ const CourseListVideoScreen = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <PartViewCreate id={course_id} hide={false} />
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

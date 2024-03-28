@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import { View, Text, TextInput, StyleSheet, SafeAreaView } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import { useRoute } from "@react-navigation/native";
 
@@ -172,7 +172,7 @@ const CourseAddModuleScreen = () => {
   };
 
   return (
-    <View style={CS.safeAreaView}>
+    <SafeAreaView style={CS.safeAreaView}>
       <Header
         text={
           parent_id
@@ -214,7 +214,7 @@ const CourseAddModuleScreen = () => {
           disabled={creating}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

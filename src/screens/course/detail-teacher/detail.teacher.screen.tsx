@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, ScrollView, Text, FlatList, SafeAreaView } from "react-native";
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  Text,
+  FlatList,
+  SafeAreaView,
+} from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
 import HeaderDetailTeacher from "./components/header.teacher.view";
 import CS from "@theme/styles";
-import { getBottomSpace } from "react-native-iphone-screen-helper";
 import Header from "@shared-components/header/Header";
 import AboutTeacher from "./components/about.teacher.view";
 import { getUserById } from "@services/api/user.api";
@@ -125,10 +131,6 @@ const DetailTeacherScreen = () => {
 export default DetailTeacherScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    ...CS.safeAreaView,
-    paddingBottom: getBottomSpace(),
-  },
   textTitle: {
     ...CS.hnMedium,
     fontSize: 20,

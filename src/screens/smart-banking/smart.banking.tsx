@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
   Clipboard,
+  SafeAreaView,
 } from "react-native";
 // import Clipboard from "@react-native-community/clipboard";
 import { useTheme, useRoute } from "@react-navigation/native";
@@ -151,7 +152,7 @@ const SmartBanking = () => {
   };
 
   return (
-    <View style={{ ...CS.safeAreaView }}>
+    <SafeAreaView style={{ ...CS.safeAreaView }}>
       <Header text="Smart Banking" />
       <View style={{ marginHorizontal: 16, alignItems: "center" }}>
         <Text numberOfLines={2} style={styles.styleTextToComplete}>
@@ -251,7 +252,7 @@ const SmartBanking = () => {
           <Text style={styles.styleTextSend}>{translations.goBackHome}</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 export default SmartBanking;

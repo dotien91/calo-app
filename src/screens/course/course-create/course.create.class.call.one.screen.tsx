@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Text, View, ScrollView } from "react-native";
+import { Text, View, ScrollView, SafeAreaView } from "react-native";
 import { useTheme } from "@react-navigation/native";
-import { getBottomSpace } from "react-native-iphone-screen-helper";
 import * as NavigationService from "react-navigation-helpers";
 
 import Header from "@shared-components/header/Header";
@@ -238,7 +237,7 @@ const CreateClassCallOneScreen = () => {
   };
 
   return (
-    <View style={[CS.safeAreaView, { marginBottom: getBottomSpace() }]}>
+    <SafeAreaView style={[CS.safeAreaView]}>
       <Header text={translations.course.timeAvailable} />
       <View style={{ paddingHorizontal: 16 }}>{renderSelectDate()}</View>
       <ScrollView
@@ -258,7 +257,7 @@ const CreateClassCallOneScreen = () => {
           onPress={_submitTime}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

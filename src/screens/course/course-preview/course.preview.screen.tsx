@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { StyleSheet, ScrollView, View, Text, SafeAreaView } from "react-native";
-import { getBottomSpace } from "react-native-iphone-screen-helper";
 // import * as NavigationService from "react-navigation-helpers";
 import { useRoute } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
@@ -39,7 +38,6 @@ import {
   showSuperModal,
   showToast,
 } from "@helpers/super.modal.helper";
-import { getStatusBarHeight } from "react-native-safearea-height";
 
 const CoursePreviewScreen = () => {
   const userData = useStore((state) => state.userData);
@@ -358,10 +356,6 @@ const CoursePreviewScreen = () => {
 export default CoursePreviewScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    ...CS.safeAreaView,
-    marginBottom: getBottomSpace(),
-  },
   tabView: {
     paddingHorizontal: 16,
   },

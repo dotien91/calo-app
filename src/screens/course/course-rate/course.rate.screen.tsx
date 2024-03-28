@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Text,
+  SafeAreaView,
 } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
@@ -115,7 +116,7 @@ const CourseRate = () => {
   };
   return (
     <TouchableWithoutFeedback onPress={_dismissKeyboard}>
-      <View style={CS.safeAreaView}>
+      <SafeAreaView style={CS.safeAreaView}>
         <Header onPressLeft={_goBack} text={translations.course.rate} />
         <View style={{ padding: 16, alignItems: "center" }}>
           {renderStarRate()}
@@ -158,7 +159,7 @@ const CourseRate = () => {
             <Text style={styles.txtSend}>{translations.course.sendReview}</Text>
           </PressableBtn>
         )}
-      </View>
+      </SafeAreaView>
     </TouchableWithoutFeedback>
   );
 };

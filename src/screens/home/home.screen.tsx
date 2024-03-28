@@ -91,7 +91,9 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
 
   // return <IapTest />
   return (
-    <SafeAreaView style={[CommonStyle.safeAreaView, {marginTop: getStatusBarHeight()}]}>
+    <SafeAreaView
+      style={[CommonStyle.safeAreaView, { marginTop: getStatusBarHeight() }]}
+    >
       <HeaderHome />
       <CollapsibleHeaderTabView
         lazy={true}

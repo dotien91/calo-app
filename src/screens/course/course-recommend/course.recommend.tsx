@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, FlatList } from "react-native";
+import { FlatList, SafeAreaView } from "react-native";
 
 import { useListData } from "@helpers/hooks/useListData";
 import { translations } from "@localization";
@@ -27,7 +27,7 @@ const CourseRecommendScreen = () => {
     return <CourseItem data={item} key={index} />;
   };
   return (
-    <View style={CS.safeAreaView}>
+    <SafeAreaView style={CS.safeAreaView}>
       <Header text={translations.recommendCourse} />
       <FlatList
         style={CS.flex1}
@@ -42,7 +42,7 @@ const CourseRecommendScreen = () => {
         ListFooterComponent={renderFooterComponent()}
         onEndReached={onEndReach}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

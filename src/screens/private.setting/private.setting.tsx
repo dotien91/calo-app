@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { useTheme } from "@react-navigation/native";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View, SafeAreaView } from "react-native";
 
 import Header from "@shared-components/header/Header";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
@@ -108,10 +108,10 @@ const PrivateSetting = () => {
   };
 
   return (
-    <View style={{ ...CS.safeAreaView }}>
+    <SafeAreaView style={{ ...CS.safeAreaView }}>
       <Header text="Private" />
       {renderPrivateSetting()}
-    </View>
+    </SafeAreaView>
   );
 };
 export default PrivateSetting;

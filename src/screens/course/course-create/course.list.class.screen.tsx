@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Text, View, StyleSheet, FlatList } from "react-native";
+import { Text, View, StyleSheet, FlatList, SafeAreaView } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import { useRoute, useTheme } from "@react-navigation/native";
 
@@ -14,7 +14,6 @@ import eventEmitter from "@services/event-emitter";
 import { IItemClass } from "models/course.model";
 import Button from "@shared-components/button/Button";
 import { translations } from "@localization";
-import { getBottomSpace } from "react-native-iphone-screen-helper";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { palette } from "@theme/themes";
 import PressableBtn from "@shared-components/button/PressableBtn";
@@ -154,7 +153,7 @@ const CourseListClassScreen = () => {
   };
 
   return (
-    <View style={[CS.safeAreaView, { marginBottom: getBottomSpace() }]}>
+    <SafeAreaView style={[CS.safeAreaView]}>
       <Header
         text={translations.course.listClass}
         iconNameRight={listData.length > 0 ? "plus" : undefined}
@@ -192,7 +191,7 @@ const CourseListClassScreen = () => {
           />
         </View>
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 

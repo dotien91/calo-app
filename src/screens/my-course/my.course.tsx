@@ -58,10 +58,10 @@ const MyCourse = () => {
 
   if (!isLoggedIn()) {
     return (
-      <View style={{ ...CS.safeAreaView }}>
+      <SafeAreaView style={{ ...CS.safeAreaView }}>
         <Header text={translations.course.myCourse} />
         {renderViewRequestLogin()}
-      </View>
+      </SafeAreaView>
     );
   }
 

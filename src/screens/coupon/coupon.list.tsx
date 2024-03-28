@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, StyleSheet, FlatList } from "react-native";
+import { StyleSheet, FlatList, SafeAreaView } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
 import { useListData } from "@helpers/hooks/useListData";
@@ -56,7 +56,7 @@ const ListCouponForMyCourse = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header
         text={translations.coupon.listCouponForMyCourse}
         iconNameRight={isAdd ? "plus" : undefined}
@@ -72,7 +72,7 @@ const ListCouponForMyCourse = () => {
         ListFooterComponent={renderFooterComponent()}
       />
       {isLoading && <LoadingList numberItem={10} />}
-    </View>
+    </SafeAreaView>
   );
 };
 

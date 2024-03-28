@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View } from "react-native";
+import { SafeAreaView } from "react-native";
 import { useTheme, useRoute } from "@react-navigation/native";
 import { Tabs, MaterialTabBar } from "react-native-collapsible-tab-view";
 
@@ -55,7 +55,7 @@ const TabFollow = () => {
   };
 
   return (
-    <View style={{ ...CS.safeAreaView }}>
+    <SafeAreaView style={{ ...CS.safeAreaView }}>
       <Header text={fullName} />
       {/* <TabView
         style={{ flex: 1 }}
@@ -90,7 +90,7 @@ const TabFollow = () => {
           </Tabs.Tab>
         </Tabs.Container>
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 export default TabFollow;

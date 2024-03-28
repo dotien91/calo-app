@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useForm } from "react-hook-form";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, SafeAreaView } from "react-native";
 import { useTheme, useRoute } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 
@@ -72,7 +72,7 @@ const CourseCreateClass = () => {
   };
 
   return (
-    <View style={CS.safeAreaView}>
+    <SafeAreaView style={CS.safeAreaView}>
       <Header text={translations.course.createClass} />
       <ScrollView style={{ flex: 1 }}>
         <InputHook
@@ -129,7 +129,7 @@ const CourseCreateClass = () => {
           </View>
         )}
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View } from "react-native";
+import { SafeAreaView } from "react-native";
 import { WebView } from "react-native-webview";
 import { useRoute } from "@react-navigation/native";
 import Header from "@shared-components/header/Header";
@@ -28,10 +28,10 @@ const WebviewScreen = () => {
   };
 
   return (
-    <View style={CS.safeAreaView}>
+    <SafeAreaView style={CS.safeAreaView}>
       <Header text={header} />
       {renderWebView()}
-    </View>
+    </SafeAreaView>
   );
 };
 

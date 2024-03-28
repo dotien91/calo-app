@@ -206,7 +206,6 @@ const CS = StyleSheet.create({
     flex: 1,
     marginBottom: isAndroid ? getBottomSpace() : 0,
     marginTop: isAndroid ? getStatusBarHeight() : 0,
-
   },
   container: {
     flex: 1,

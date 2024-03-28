@@ -84,13 +84,13 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
         NavigationService.navigate(SCREENS.CHANGELANGUAGE);
       },
     },
-    {
-      title: translations.settingUser.private,
-      icon: require("assets/images/securityicon.png"),
-      action: () => {
-        NavigationService.navigate(SCREENS.PRIVATESETTING);
-      },
-    },
+    // {
+    //   title: translations.settingUser.private,
+    //   icon: require("assets/images/securityicon.png"),
+    //   action: () => {
+    //     NavigationService.navigate(SCREENS.PRIVATESETTING);
+    //   },
+    // },
     {
       title: translations.settingUser.support,
       icon: require("assets/images/supporticon.png"),

@@ -1,6 +1,12 @@
 import React, { useMemo } from "react";
 import { useTheme } from "@react-navigation/native";
-import { Text, TouchableOpacity, View, Switch } from "react-native";
+import {
+  Text,
+  TouchableOpacity,
+  View,
+  Switch,
+  SafeAreaView,
+} from "react-native";
 import Header from "@shared-components/header/Header";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import useStore from "@services/zustand/store";
@@ -109,10 +115,10 @@ const SettingUser = () => {
   };
 
   return (
-    <View style={{ ...CS.safeAreaView }}>
+    <SafeAreaView style={{ ...CS.safeAreaView }}>
       <Header text={translations.settingUser.setting} />
       {renderSettingUser()}
-    </View>
+    </SafeAreaView>
   );
 };
 export default SettingUser;
