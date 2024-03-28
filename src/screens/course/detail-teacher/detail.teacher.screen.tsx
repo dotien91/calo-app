@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, ScrollView, Text, FlatList } from "react-native";
+import { View, StyleSheet, ScrollView, Text, FlatList, SafeAreaView } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
 import HeaderDetailTeacher from "./components/header.teacher.view";
@@ -89,7 +89,7 @@ const DetailTeacherScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={CS.safeAreaView}>
       <Header
         onPressLeft={_goBack}
         iconNameRight={isMe ? "share" : "more-vertical"}
@@ -118,7 +118,7 @@ const DetailTeacherScreen = () => {
           refreshing={refreshing}
         />
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

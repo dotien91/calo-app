@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, ScrollView, View, Text } from "react-native";
+import { StyleSheet, ScrollView, View, Text, SafeAreaView } from "react-native";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
 // import * as NavigationService from "react-navigation-helpers";
 import { useRoute } from "@react-navigation/native";
@@ -270,7 +270,7 @@ const CoursePreviewScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={CS.safeAreaView}>
       {/* <Header iconNameRight="share-outline" onPressRight={_shareCourse} /> */}
       <Header
         onPressLeft={_goBack}
@@ -351,7 +351,7 @@ const CoursePreviewScreen = () => {
         <View style={{ height: 70 }} />
       </ScrollView>
       <BuyBottom courseRoom={courseRoom} show={showBuyBottom} data={data} />
-    </View>
+    </SafeAreaView>
   );
 };
 
