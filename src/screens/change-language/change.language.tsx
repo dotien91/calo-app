@@ -13,6 +13,7 @@ import Header from "@shared-components/header/Header";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import IconSvg from "assets/svg";
+import { updateSession } from "@services/api/notification.api";
 
 interface TypeItemLanguage {
   label: string;
@@ -53,6 +54,7 @@ const ChangeLanguage = () => {
         onPress: () => {
           setLanguage(selected);
           translations.setLanguage(selected);
+          updateSession({ picked_language: selected });
           RNRestart.Restart();
         },
       },

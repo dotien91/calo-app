@@ -15,6 +15,7 @@ import { SCREENS } from "constants";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";
 import Header from "@shared-components/header/Header";
+import { updateSession } from "@services/api/notification.api";
 
 interface TypeItemLanguage {
   label: string;
@@ -43,6 +44,7 @@ export default function ChooseLanguageScreen() {
     translations.setLanguage(selected);
     setLanguage(selected);
     NavigationService.navigate(SCREENS.INTRO);
+    updateSession({ picked_language: selected });
   };
 
   const ItemLanguage = ({ item }: { item: TypeItemLanguage }) => {
