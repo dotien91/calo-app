@@ -3,7 +3,6 @@ import { View, Text, ScrollView } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import moment from "moment";
 import lodash from "lodash";
-import * as NavigationService from "react-navigation-helpers";
 
 /**
  * ? Local Imports
@@ -22,8 +21,7 @@ import {
   showToast,
 } from "@helpers/super.modal.helper";
 import eventEmitter from "@services/event-emitter";
-import { addMemberToClass } from "@services/api/payment.api";
-import { SCREENS } from "constants";
+import { isIOS } from "@freakycoder/react-native-helpers";
 
 interface ChooseClassSelectViewProps {
   classData: IClassRoom[];
@@ -117,29 +115,32 @@ const ChooseClassSelectView: React.FC<ChooseClassSelectViewProps> = ({
       });
       return;
     }
-    eventEmitter.emit("emit_buy_product", {
-      productId: courseData?.price_id,
-      cb: _addMemberToClass,
-    });
-    return;
-  };
-
-  const _addMemberToClass = () => {
-    const dataCheck = {
-      class_id: selectedClass?._id,
+    const dataPayload = {
+      class_id: selectedClass._id,
       user_id: userData._id,
     };
 
-    addMemberToClass(dataCheck).then((res) => {
-      closeSuperModal();
-      if (!res.isError) {
-        showToast({
-          type: "success",
-          message: translations.payment.completecheckout,
-        });
-        NavigationService.navigate(SCREENS.MY_COURES);
-      }
+    const data = {
+      payment_method: isIOS ? "apple" : "google",
+      plan_objects: [
+        {
+          amount_of_package: "1",
+          plan_id: courseData.plan_id,
+          type: "Course",
+          payload: {
+            type: "class",
+            data: dataPayload,
+          },
+        },
+      ],
+    };
+
+    eventEmitter.emit("emit_buy_product", {
+      productId: courseData?.price_id,
+      // cb: _addMemberToClass,
+      data,
     });
+    return;
   };
 
   const goToCheckout = () => {
@@ -180,8 +181,6 @@ const ChooseClassSelectView: React.FC<ChooseClassSelectViewProps> = ({
       </PressableBtn>
     );
   };
-
-  console.log("classDataclassData", classData);
 
   return (
     <ScrollView style={styles.container}>
