@@ -1,3 +1,4 @@
+import { isIOS } from "@freakycoder/react-native-helpers";
 import request, { METHOD } from "./api";
 
 export async function createVnpayUrl(data) {
@@ -53,5 +54,13 @@ export async function getQRcode() {
     urlPath: "config/list/qr_code",
   }).then((response) => {
     return response;
+  });
+}
+
+export async function requestIapBackend(data) {
+  return request({
+    method: METHOD.POST,
+    urlPath: `purchase/${isIOS ? "apple" : "google"}`,
+    data,
   });
 }

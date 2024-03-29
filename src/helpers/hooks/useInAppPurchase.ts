@@ -1,5 +1,9 @@
 import { isIOS } from "@freakycoder/react-native-helpers";
+import * as NavigationService from "react-navigation-helpers";
+
 import { closeSuperModal, showToast } from "@helpers/super.modal.helper";
+import { translations } from "@localization";
+import { createVnpayUrl, requestIapBackend } from "@services/api/payment.api";
 import eventEmitter from "@services/event-emitter";
 import { useEffect, useRef } from "react";
 // setup({ storekitMode: 'STOREKIT2_MODE' })
@@ -9,6 +13,7 @@ import {
   isIosStorekit2,
   useIAP,
 } from "react-native-iap";
+import { SCREENS } from "constants";
 
 export const useInAppPurchase = () => {
   const {
@@ -22,32 +27,46 @@ export const useInAppPurchase = () => {
     requestPurchase,
   } = useIAP();
   const typeBuy = useRef<"subscription" | "product" | "">("");
-  const callOneTime = useRef(true);
   const callback = useRef<() => void | undefined>();
+  const local_order_id = useRef("");
 
   useEffect(() => {
-    console.log("currentPurchasecurrentPurchase", currentPurchase);
     const checkCurrentPurchase = async () => {
+      console.log("currentPurchasecurrentPurchase", currentPurchase);
       try {
-        // GlobalPopupHelper.hideLoading();
         if (
           (isIosStorekit2() && currentPurchase?.transactionId) ||
-          (currentPurchase?.transactionReceipt && callOneTime.current)
+          currentPurchase?.transactionReceipt
         ) {
           await finishTransaction({
             purchase: currentPurchase,
             isConsumable: isIOS || typeBuy.current === "product",
           });
-          callOneTime.current = false;
-          // logEventAnalytics("user_purchased");
-
           await getAvailablePurchases();
-          if (typeBuy.current === "subscription") {
-            // dispatch(setIsPremium(true));
-            // navigationHelper.replace(NAVIGATION_PREMIUM_SUCCESS_SCREEN);
-          }
           if (typeBuy.current === "product") {
-            callback.current?.();
+            const data = {
+              order_id: currentPurchase.transactionId,
+              local_order_id: local_order_id.current,
+              product_id: currentPurchase.productId,
+              purchase_time: currentPurchase.transactionDate + "",
+              quantity: "1",
+              purchase_token: currentPurchase.transactionReceipt,
+            };
+            requestIapBackend(data).then((res) => {
+              closeSuperModal();
+              if (!res.isError) {
+                showToast({
+                  type: "success",
+                  message: translations.payment.completecheckout,
+                });
+                NavigationService.navigate(SCREENS.MY_COURES);
+              } else {
+                showToast({
+                  message: res.message,
+                  type: "error",
+                });
+              }
+            });
           }
 
           return;
@@ -97,7 +116,21 @@ export const useInAppPurchase = () => {
     }
   };
 
-  const buyProduct = async ({ productId, cb }) => {
+  const createOrder = async (data) => {
+    return createVnpayUrl(data).then(async (res) => {
+      if (!res.isError) {
+        local_order_id.current = res.data?._id;
+        return res.data?._id;
+      } else {
+        closeSuperModal();
+        return null;
+      }
+    });
+  };
+
+  const buyProduct = async ({ productId, cb, data }) => {
+    const orderData = await createOrder(data);
+    if (!orderData) return;
     callback.current = cb;
     typeBuy.current = "product";
     try {
@@ -105,15 +138,12 @@ export const useInAppPurchase = () => {
         await requestPurchase({ sku: productId });
       } else {
         await requestPurchase({ skus: [productId] });
-        // callback.current?.()
       }
     } catch (error) {
       closeSuperModal();
-      console.log("requestPurchase error", error);
-      showToast({
-        type: "error",
-        message: error?.message,
-      });
+      // showToast({
+      //   type: "error",
+      // });
     }
   };
 

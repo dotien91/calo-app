@@ -39,8 +39,6 @@ const MyCourse = () => {
     {
       auth_id: userData?._id,
       order_by: "DESC",
-      sort_by: "createdAt",
-      // public_status: "active",
     },
     getMyCourse,
   );

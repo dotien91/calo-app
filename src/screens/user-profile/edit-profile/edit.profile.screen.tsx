@@ -28,7 +28,6 @@ import { updateProfile } from "@services/api/user.api";
 import { showToast } from "@helpers/super.modal.helper";
 import eventEmitter from "@services/event-emitter";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
-import CS from "@theme/styles";
 
 const EditProfileScreen = () => {
   const userData = useStore((store) => store.userData);
@@ -115,7 +114,7 @@ const EditProfileScreen = () => {
       style={{ ...CommonStyle.safeAreaView }}
       behavior={isIos() ? "height" : undefined}
     >
-      <SafeAreaView style={CS.safeAreaView}>
+      <SafeAreaView style={CommonStyle.safeAreaView}>
         <Header
           onPressLeft={() => NavigationService.goBack()}
           text={translations.profile.editProfile}

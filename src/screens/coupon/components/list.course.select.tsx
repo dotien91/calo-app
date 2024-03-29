@@ -156,10 +156,6 @@ const ListCourseSelect = ({
 export default ListCourseSelect;
 
 const styles = StyleSheet.create({
-  container: {
-    ...CS.safeAreaView,
-    marginBottom: getBottomSpace(),
-  },
   viewImage: {
     width: 80,
     height: 80,

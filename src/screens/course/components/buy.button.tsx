@@ -10,14 +10,12 @@ import { palette } from "@theme/themes";
 import { SCREENS } from "constants";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import {
-  closeSuperModal,
   showLoading,
   showToast,
   showWarningLogin,
 } from "@helpers/super.modal.helper";
 import eventEmitter from "@services/event-emitter";
-import { addUserToCourseVideo } from "@services/api/course.api";
-import useStore from "@services/zustand/store";
+import { isIOS } from "@freakycoder/react-native-helpers";
 
 interface BuyButtonProps {
   data?: ICourseItem;
@@ -30,29 +28,6 @@ interface BuyButtonProps {
 const BuyButton = ({ data, type }: BuyButtonProps) => {
   const { isLoggedIn } = useUserHook();
   const isJoin = data?.is_join;
-  const userData = useStore((state) => state.userData);
-
-  const _addUserToCourseVideo = () => {
-    addUserToCourseVideo({
-      course_id: data?._id || "",
-      add_type: "manual",
-      user_id: userData?._id || "",
-    }).then((res) => {
-      closeSuperModal();
-      if (!res.isError) {
-        eventEmitter.on("reload_data_preview");
-        showToast({
-          type: "success",
-          message: translations.payment.completecheckout,
-        });
-        NavigationService.navigate(SCREENS.MY_COURES);
-      } else {
-        showToast({
-          type: "error",
-        });
-      }
-    });
-  };
 
   const goToBuyScreen = async () => {
     if (!isLoggedIn()) {
@@ -68,9 +43,20 @@ const BuyButton = ({ data, type }: BuyButtonProps) => {
         return;
       }
       showLoading();
+      const _data = {
+        payment_method: isIOS ? "apple" : "google",
+        plan_objects: [
+          {
+            amount_of_package: "1",
+            plan_id: data.plan_id,
+            type: "Course",
+            payload: {},
+          },
+        ],
+      };
       eventEmitter.emit("emit_buy_product", {
         productId: data?.price_id,
-        cb: _addUserToCourseVideo,
+        data: _data,
       });
       return;
     }
