@@ -9,6 +9,7 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
+  SafeAreaView,
 } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
@@ -296,6 +297,7 @@ const PostDetail = (props: PostDetailProps) => {
 
   const [isForcus, setIsForcus] = useState(false);
   const showImageVideo = (index: number) => {
+    console.log(isForcus);
     const listMedia = data?.attach_files.filter(
       (i: any) =>
         i.media_mime_type.includes("image") ||
@@ -369,7 +371,7 @@ const PostDetail = (props: PostDetailProps) => {
       style={CommonStyle.flex1}
       behavior={isIos ? "height" : undefined}
     >
-      <View style={[styles.container, isForcus ? { marginBottom: 0 } : {}]}>
+      <SafeAreaView style={CommonStyle.safeAreaView}>
         <HeaderPost />
         <ScrollView
           ref={(node) => (scrollViewRef.current = node)}
@@ -464,7 +466,7 @@ const PostDetail = (props: PostDetailProps) => {
             </View>
           )}
         </View>
-      </View>
+      </SafeAreaView>
     </KeyboardAvoidingView>
   );
 };

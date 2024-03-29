@@ -564,7 +564,7 @@ const ProfileUser = (props: ProfileUserProps) => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={CommonStyle.safeAreaView}>
       <HeaderProfile />
 
       <FlatList
@@ -581,7 +581,7 @@ const ProfileUser = (props: ProfileUserProps) => {
         ListFooterComponent={renderFooterComponent()}
         ListEmptyComponent={renderEmpty()}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

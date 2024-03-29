@@ -245,8 +245,12 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
       {data?.coupon_id == null ||
       (data?.coupon_id?.availableAt &&
         new Date(data?.coupon_id?.availableAt) > new Date()) ||
-      (data?.coupon_id?.availableAt &&
-        new Date(data?.coupon_id?.expired) < new Date()) ? (
+      (data.type === "Self-learning" || data.type === "Call group" ? (
+        <Text style={styles.textPrice}>{formatPrice(data?.price)}</Text>
+      ) : (
+        data?.coupon_id?.availableAt &&
+        new Date(data?.coupon_id?.expired) < new Date()
+      )) ? (
         <View>
           <Text style={styles.textPrice}>{formatPrice(data?.price)}</Text>
           {data?.coupon_id?.availableAt &&

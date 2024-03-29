@@ -1,7 +1,6 @@
 import * as React from "react";
 import { View, StyleSheet, FlatList, Text, SafeAreaView } from "react-native";
 import FastImage from "react-native-fast-image";
-import { getBottomSpace } from "react-native-iphone-screen-helper";
 import { useTheme } from "@react-navigation/native";
 
 import { translations } from "@localization";

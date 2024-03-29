@@ -28,3 +28,13 @@ export async function deleteNotification(params) {
     return response;
   });
 }
+
+export async function updateSession(data) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "user/update-session",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}

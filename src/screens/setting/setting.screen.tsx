@@ -116,6 +116,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
     {
       title: translations.settingUser.discount,
       iconFont: "gift",
+      id: 2,
       action: () => {
         if (userData?._id) {
           NavigationService.navigate(SCREENS.COUPON_LIST);
@@ -186,6 +187,8 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
       <View style={{ backgroundColor: colors.white, flex: 1, marginTop: 20 }}>
         {listSetting.map((item, index) => {
           if (item?.id == 1 && !isTeacher && userData?.user_role != "admin")
+            return null;
+          if (item?.id == 2 && !isTeacher && userData?.user_role != "admin")
             return null;
           return (
             <TouchableOpacity
@@ -344,7 +347,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
         }}
         onPress={openHiddenPage}
       >
-        <TextBase>...</TextBase>
+        <TextBase>{"   "}</TextBase>
       </PressableBtn>
     </SafeAreaView>
   );
