@@ -7,6 +7,7 @@ import { pick, types } from "react-native-document-picker";
 import { selectMedia } from "@helpers/file.helper";
 import getPath from "@flyerhq/react-native-android-uri-path";
 import { showToast } from "@helpers/super.modal.helper";
+import { translations } from "@localization";
 
 const { width } = Dimensions.get("screen");
 const isIos = Platform.OS === "ios";
@@ -74,7 +75,10 @@ export function useUploadFile(
           setListFile((listFile) => [...listFile, ...data]);
         } else {
           setListFileLocal(listFile);
-          showToast({ types: "warning", message: res.message });
+          showToast({
+            type: "error",
+            message: translations.post.uploadImageFaild,
+          });
         }
         setIsUpLoadingFile(false);
       },
@@ -164,8 +168,6 @@ export function useUploadFile(
             type: i.type,
           })),
         );
-
-        console.log("resssss video", res);
         if (Array.isArray(res)) {
           const data = listVideo.map((i: any, index: number) => ({
             uri: getLinkUri(i),
@@ -176,7 +178,10 @@ export function useUploadFile(
           setListFile((listFile) => [...listFile, ...data]);
         } else {
           setListFileLocal(listFile);
-          showToast({ types: "warning", message: res.message });
+          showToast({
+            type: "error",
+            message: translations.post.uploadVideoFaild,
+          });
         }
         setIsUpLoadingFile(false);
       },
@@ -238,6 +243,11 @@ export function useUploadFile(
             _id: res[index].callback?._id,
           }));
           setListFile((listFile) => [...listFile, ...data]);
+        } else {
+          showToast({
+            type: "error",
+            message: translations.post.uploadFileFaild,
+          });
         }
         setIsUpLoadingFile(false);
       }
