@@ -59,6 +59,7 @@ const InputToolbar: React.FC<InputToolbarProps> = ({
           placeholderTextColor={colors.placeholder2}
           customStyle={styles.input}
           onFocus={emitTypingToServer}
+          showClearIcon={false}
         />
         {!isShowKeyboard && !fromLiveStream && (
           <View style={styles.wrapMediaBtn}>
