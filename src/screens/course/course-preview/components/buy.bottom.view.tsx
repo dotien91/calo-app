@@ -92,6 +92,7 @@ const BuyBottom = ({ show, data, courseRoom }: BuyBottomProps) => {
           </View>
         )}
         {show &&
+        data?.type === "Call 1-1" &&
         data?.coupon_id &&
         data.coupon_id.promotion > 0 &&
         data?.coupon_id?.availableAt &&
@@ -110,6 +111,10 @@ const BuyBottom = ({ show, data, courseRoom }: BuyBottomProps) => {
             <Text style={styles.textPriceOld}>{formatPrice(data?.price)}</Text>
           </View>
         ) : null}
+        {show &&
+          (data?.type === "Call group" || data?.type === "Self-learning") && (
+            <Text style={styles.textPriceOld}>{formatPrice(data?.price)}</Text>
+          )}
         {show &&
           (isTeacher ? (
             <EditButton type="wrap" data={data} />

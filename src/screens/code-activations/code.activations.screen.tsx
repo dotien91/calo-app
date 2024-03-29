@@ -20,6 +20,7 @@ import { palette } from "@theme/themes";
 import { formatDate } from "@utils/date.utils";
 import { getListAffiliate } from "@services/api/affiliate.api";
 import formatMoney from "@shared-components/input-money/format.money";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const CodeActivationsScreen = () => {
   // const [courseCurrentSort, setCourseCurrentSort] = useState({});
@@ -179,7 +180,7 @@ const CodeActivationsScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={CS.safeAreaView}>
       <Header text={translations.settingUser.codeActivations} />
       {/* {renderHeader()} */}
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -191,7 +192,7 @@ const CodeActivationsScreen = () => {
           keyExtractor={(item) => item._id}
         />
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -118,7 +118,12 @@ export function formatCoin(
 export const getPriceCourse = (item: any) => {
   let newPrice = formatPrice(item?.price);
   let oldPrice = formatPrice(item?.price);
-  if (item?.coupon_id == null) {
+  console.log(item?.type);
+  if (
+    item?.coupon_id == null ||
+    item?.type === "Call group" ||
+    item?.type === "Self-learning"
+  ) {
     oldPrice = "";
   } else {
     if (item?.coupon_id?.promotion_type === "percentage") {
@@ -137,6 +142,12 @@ export const getPriceCourse = (item: any) => {
 
 export const formatPriceCourse = (data) => {
   let oldPrice = "";
+  if (data.type === "Call group" || data.type === "Self-learning") {
+    return {
+      newPrice: "",
+      oldPrice: formatPrice(data.price),
+    };
+  }
   if (data?.coupon_id) {
     if (
       (data?.coupon_id?.availableAt &&
