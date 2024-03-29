@@ -74,7 +74,7 @@ export default {
   unblock: "Unblock",
   confirm: "Confirm",
   somethingWentWrong: "Something went wrong. Please try again.",
-  notFound: "Not found",
+  notFound: "Empty List",
   offlineNetwork: "You are currently offline",
   onlineNetwork: "You internet connection was restored",
   all: "All",

@@ -274,11 +274,11 @@ const Lession = React.memo(
             <IconSvg name="icFile" size={16} />
           )}
         </View>
-        <View style={{ flex: 1, height: 60, justifyContent: "center" }}>
+        <View style={{ flex: 1, minHeight: 60, justifyContent: "center" }}>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             {data.is_view && <IconSvg name="icCheckCircleFill" size={16} />}
             {data.is_view && <View style={{ width: 4 }} />}
-            <Animatable.Text style={styles.textDetail}>
+            <Animatable.Text style={styles.textDetail} numberOfLines={2}>
               {data.title}
             </Animatable.Text>
           </View>
@@ -336,7 +336,7 @@ const styles = StyleSheet.create({
   },
   viewContent: {
     flexDirection: "row",
-    height: 52,
+    minHeight: 52,
     alignItems: "center",
     paddingVertical: 4,
   },
