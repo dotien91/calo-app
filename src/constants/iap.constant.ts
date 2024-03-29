@@ -1,7 +1,7 @@
 export const priceIds = [
   { id: "com.course.tier1", label: "99,000", value: 99000 },
   { id: "com.course.tier2.", label: "199,000", value: 199000 },
-  { id: "com.course.tier3", label: "229,000", value: 229000 },
+  // { id: "com.course.tier3", label: "229,000", value: 229000 },
   { id: "com.course.tier4", label: "249,000", value: 249000 },
   { id: "com.course.tier5", label: "299,000", value: 299000 },
   { id: "com.course.tier6", label: "399,000", value: 399000 },
