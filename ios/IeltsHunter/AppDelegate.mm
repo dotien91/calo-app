@@ -11,6 +11,8 @@
 //feat livestream
 #import <AVFoundation/AVFoundation.h>
 #import <React/RCTLinkingManager.h>
+//feat codepush
+#import <CodePush/CodePush.h>
 
 @implementation AppDelegate
 
@@ -70,7 +72,7 @@ AVAudioSession *session = AVAudioSession.sharedInstance;
 #if DEBUG
   return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];
 #else
-  return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+  return [CodePush bundleURL];
 #endif
 }
 

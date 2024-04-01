@@ -144,6 +144,8 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>CodePushDeploymentKey</key>
+	<string>UVy5f07f_9AiwpbLfmvkC-tN59QHdUgTzbUk6</string>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
 		<string>com.ikigroup.ieltshunter</string>

@@ -59,7 +59,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
             color: focused ? colors.primary : colors.text,
           }}
         >
-          {route.title}
+          {route.title}2
         </Text>
       )}
       style={{ backgroundColor: colors.background }}
