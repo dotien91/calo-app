@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import {
   FlatList,
   Pressable,
@@ -31,6 +31,7 @@ import useUserHelper from "@helpers/hooks/useUserHelper";
 import { palette } from "@theme/themes";
 import ListCodeActive from "@shared-components/code-active/list.code.active";
 import InviteCode from "@shared-components/code-share/code.invite.share";
+import eventEmitter from "@services/event-emitter";
 
 const SettingProfileScreen = () => {
   const theme = useTheme();
@@ -209,33 +210,6 @@ const SettingProfileScreen = () => {
         <Text style={styles.textInviteFriend}>
           {translations.task.inviteFriend}
         </Text>
-        {/* <View style={styles.viewInviteFriend}>
-          <View style={styles.viewInviteFriendTop}>
-            <View>
-              <Text style={styles.textMyCode}>{translations.task.mycode}</Text>
-              <PressableBtn
-                onPress={coppyClipboard}
-                style={{ flexDirection: "row", alignItems: "center" }}
-              >
-                <Text style={styles.textInviteCode}>
-                  {userData?.invitation_code || "---"}
-                </Text>
-                <Image
-                  style={{ height: 15.3, width: 13.79, marginLeft: 4 }}
-                  source={require("assets/images/CopyIcon.png")}
-                ></Image>
-              </PressableBtn>
-            </View>
-            <TouchableOpacity onPress={shareCode} style={styles.touchShare}>
-              <IconSvg name="icupLoad" width={32} height={18}></IconSvg>
-              <Text style={styles.textShare}>{translations.post.share}</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.viewLineInviteFriend}></View>
-          <Text style={styles.textDesciption}>
-            {translations.settings.inviteDes}
-          </Text>
-        </View> */}
         <InviteCode />
       </View>
     );
@@ -292,6 +266,13 @@ const Tasks = React.memo(() => {
     }, []),
   );
 
+  useEffect(() => {
+    eventEmitter.on("reload_list_task", getTask);
+    return () => {
+      eventEmitter.off("reload_list_task", getTask);
+    };
+  }, []);
+
   const getTask = () => {
     getListTaskByUser({ order_by: "DESC" }).then((res) => {
       if (!res.isError) {
@@ -329,7 +310,7 @@ const Tasks = React.memo(() => {
         }}
       >
         {listData.slice(0, 5).map((item, index) => {
-          return <TaskItemCommon key={index} item={item}></TaskItemCommon>;
+          return <TaskItemCommon key={index} item={item} />;
         })}
       </View>
     </View>

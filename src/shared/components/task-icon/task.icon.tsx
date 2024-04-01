@@ -9,68 +9,44 @@ const TaskIcon = ({ item, customStyle }) => {
   const theme = useTheme();
   const { colors } = theme;
 
+  const iconType = () => {
+    switch (item.action_type) {
+      case ActionTypeTask.BUY:
+        return { backgroundColor: colors.btnRedPrimary, name: "iconBuyTask" };
+      case ActionTypeTask.COMMENT:
+        return { backgroundColor: colors.yellowComment, name: "icCommentTask" };
+      case ActionTypeTask.LIKE:
+        return { backgroundColor: colors.blueChart, name: "icLike" };
+      case ActionTypeTask.POST:
+        return { backgroundColor: colors.greenChart, name: "icupLoad" };
+      case ActionTypeTask.COMPLETE:
+        return { backgroundColor: colors.greenChart, name: "iconPen" };
+      case ActionTypeTask.VIEW:
+        return { backgroundColor: colors.primary, name: "icYoutube" };
+      case ActionTypeTask.WATCH:
+        return { backgroundColor: colors.primary, name: "icYoutube" };
+      case ActionTypeTask.JOIN:
+        return { backgroundColor: colors.primary, name: "icYoutube" };
+      case ActionTypeTask.REFERRAL:
+        return { backgroundColor: colors.greenChart, name: "iconPen" };
+      default:
+        return {
+          backgroundColor: colors.blueChart,
+          name: "icLike",
+        };
+    }
+  };
+
   return (
     <View style={customStyle}>
-      {item.action_type === ActionTypeTask.BUY && (
-        <View
-          style={{
-            ...styles.viewIcon,
-            backgroundColor: colors.btnRedPrimary,
-          }}
-        >
-          <IconSvg name={"iconBuyTask"} color={colors.white} size={15} />
-        </View>
-      )}
-      {item.action_type === ActionTypeTask.COMMENT && (
-        <View
-          style={{
-            ...styles.viewIcon,
-            backgroundColor: colors.yellowComment,
-          }}
-        >
-          <IconSvg name={"icCommentTask"} color={colors.white} size={15} />
-        </View>
-      )}
-      {item.action_type === ActionTypeTask.LIKE && (
-        <View
-          style={{
-            ...styles.viewIcon,
-            backgroundColor: colors.blueChart,
-          }}
-        >
-          <IconSvg name={"icLike"} color={colors.white} size={15} />
-        </View>
-      )}
-      {item.action_type === ActionTypeTask.POST && (
-        <View
-          style={{
-            ...styles.viewIcon,
-            backgroundColor: colors.greenChart,
-          }}
-        >
-          <IconSvg name={"icupLoad"} color={colors.white} size={15} />
-        </View>
-      )}
-      {item.action_type === ActionTypeTask.COMPLETE && (
-        <View
-          style={{
-            ...styles.viewIcon,
-            backgroundColor: colors.greenChart,
-          }}
-        >
-          <IconSvg name={"iconPen"} color={colors.white} size={15} />
-        </View>
-      )}
-      {item.action_type === ActionTypeTask.VIEW && (
-        <View
-          style={{
-            ...styles.viewIcon,
-            backgroundColor: colors.primary,
-          }}
-        >
-          <IconSvg name={"icYoutube"} color={colors.white} size={15} />
-        </View>
-      )}
+      <View
+        style={{
+          ...styles.viewIcon,
+          backgroundColor: iconType().backgroundColor,
+        }}
+      >
+        <IconSvg name={iconType().name} color={colors.white} size={15} />
+      </View>
     </View>
   );
 };

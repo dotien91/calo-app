@@ -108,17 +108,32 @@ const ReferralPopupTask = ({ data }: ReferralPopupProps) => {
         />
       </View>
 
-      <View style={styles.viewPoint}>
-        <Text style={styles.txtPoint}>
-          {translations.task.get} {data?.item.point}
-        </Text>
-        <IconSvg
-          style={{ marginLeft: 6 }}
-          name={"icCoinStar"}
-          color={palette.gold}
-          size={20}
-        />
-      </View>
+      {data?.item && data?.item.point > 0 && (
+        <View style={styles.viewPoint}>
+          <Text style={styles.txtPoint}>
+            {translations.task.get} {data?.item.point}
+          </Text>
+          <IconSvg
+            style={{ marginLeft: 6 }}
+            name={"icCoinStar"}
+            color={palette.gold}
+            size={20}
+          />
+        </View>
+      )}
+      {data?.item && data?.item.coin > 0 && (
+        <View style={styles.viewPoint}>
+          <Text style={styles.txtPoint}>
+            {translations.task.get} {data?.item.coin}
+          </Text>
+          <IconSvg
+            style={{ marginLeft: 6 }}
+            name={"icCoin"}
+            color={palette.gold}
+            size={20}
+          />
+        </View>
+      )}
       <View style={styles.viewBtn}>
         <TextBase style={{ color: palette.textOpacity8 }}>
           {data?.item.title}

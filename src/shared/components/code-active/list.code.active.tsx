@@ -21,6 +21,7 @@ import IconSvg from "assets/svg";
 import CS from "@theme/styles";
 import createStyles from "./list.code.active.style";
 import { useTheme } from "@react-navigation/native";
+import eventEmitter from "@services/event-emitter";
 
 const ListCodeActive = () => {
   const theme = useTheme();
@@ -39,6 +40,12 @@ const ListCodeActive = () => {
     });
   };
 
+  useEffect(() => {
+    eventEmitter.on("reload_referral", _getReferralByMe);
+    return () => {
+      eventEmitter.off("reload_referral", _getReferralByMe);
+    };
+  }, []);
   const _getReferralByMe = () => {
     getReferralByMe(params).then((res) => {
       if (!res.isError) {

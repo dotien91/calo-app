@@ -996,6 +996,8 @@ export default {
     writing: "Writing",
     missions: "Missions",
     get: "Get",
+    complete: "Complete",
+    notComplete: "Not complete",
   },
   homework: {
     header: "Task list",

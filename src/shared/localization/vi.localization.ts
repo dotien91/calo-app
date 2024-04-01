@@ -1506,6 +1506,8 @@ export default {
     writing: "Bài viết",
     missions: "Nhiệm vụ",
     get: "Nhận",
+    complete: "Hoàn thành",
+    notComplete: "Chưa hoàn thành",
   },
   homework: {
     header: "Danh sách bài về nhà",
