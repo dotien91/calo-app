@@ -139,6 +139,9 @@ import icSecurity from "./icon-security.svg";
 import icSetting from "./icon-setting.svg";
 import icSupport from "./icon-support.svg";
 import icTrash from "./icon-trash.svg";
+import icCommission from "./icon-commission.svg";
+import icMarkDone from "./icon-markdone.svg";
+import icNext from "./icon-next.svg";
 
 const Icons = {
   intro1,
@@ -281,6 +284,9 @@ const Icons = {
   icSetting,
   icSupport,
   icTrash,
+  icCommission,
+  icMarkDone,
+  icNext,
 };
 
 interface IconSvgProps {

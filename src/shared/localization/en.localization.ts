@@ -1038,6 +1038,16 @@ export default {
     toDate: "To date",
     commission: "Commission",
     noTransaction: "No transaction has occurred",
+    description: "Members who refer purchases are rewarded with commission (",
+    description2: "8% commission",
+    description3:
+      "). For example: If a member refers a purchase of a course priced at 1,000,000 VND → Commission received: 80,000 VND → 640",
+    whyJoin: "Why join affiliate?",
+    text1: "User referral/Referral management",
+    text2: "Revenue management",
+    text3: "Withdrawal",
+    text4: "Purchasing products/Courses",
+    totalAmount: "Total amount",
   },
   withDraw: {
     header: "Withdraw",
