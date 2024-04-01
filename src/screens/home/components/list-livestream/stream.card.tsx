@@ -26,7 +26,6 @@ const StreamCard = ({ data }: { data: IStreamItem }) => {
       liveStreamId: data._id,
     });
   };
-
   return (
     <View style={styles.container}>
       <PressableBtn onPress={goToViewStream} style={styles.styleItemLiveStream}>
@@ -49,6 +48,7 @@ const StreamCard = ({ data }: { data: IStreamItem }) => {
           width={WindowWidth - 32}
           height={((WindowWidth - 32) / 19) * 10}
           isStreamThumbnail
+          // mediaThumbail={}
         />
         <View style={styles.viewAction}>
           <Text style={styles.styleTxtTitle1}>{data?.title}</Text>

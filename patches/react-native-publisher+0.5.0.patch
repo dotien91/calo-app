@@ -1,0 +1,48 @@
+diff --git a/node_modules/react-native-publisher/ios/RTMPCreator.swift b/node_modules/react-native-publisher/ios/RTMPCreator.swift
+index 60221b2..0598197 100644
+--- a/node_modules/react-native-publisher/ios/RTMPCreator.swift
++++ b/node_modules/react-native-publisher/ios/RTMPCreator.swift
+@@ -25,7 +25,7 @@ class RTMPCreator {
+     public static var videoSettings: VideoSettingsType = VideoSettingsType(
+         width: 720,
+         height: 1280,
+-        bitrate: 3000 * 1024,
++        bitrate: 1000 * 1024,
+         audioBitrate: 128 * 1000
+     )
+     public static var cameraPosition: AVCaptureDevice.Position = .back
+@@ -59,8 +59,10 @@ class RTMPCreator {
+     }
+   
+     public static func startPublish(){
+-        connection.requireNetworkFramework = true
+-        connection.connect(_streamUrl)
++            connection.requireNetworkFramework = true
++        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
++           connection.connect(_streamUrl)
++        }
+         isStreaming = true
+     }
+     
+diff --git a/node_modules/react-native-publisher/ios/RTMPManager/RTMPView.swift b/node_modules/react-native-publisher/ios/RTMPManager/RTMPView.swift
+index d812da5..7549854 100644
+--- a/node_modules/react-native-publisher/ios/RTMPManager/RTMPView.swift
++++ b/node_modules/react-native-publisher/ios/RTMPManager/RTMPView.swift
+@@ -116,7 +116,7 @@ class RTMPView: UIView {
+     RTMPCreator.stream.attachAudio(AVCaptureDevice.default(for: .audio))
+     RTMPCreator.stream.attachCamera(AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back))
+     RTMPCreator.cameraPosition = .back
+-
++print("===========creater")
+     RTMPCreator.connection.addEventListener(.rtmpStatus, selector: #selector(statusHandler), observer: self)
+     RTMPCreator.connection.addEventListener(.ioError, selector: #selector(rtmpErrorHandler), observer: self)
+       
+@@ -152,6 +152,8 @@ class RTMPView: UIView {
+     @objc
+     private func statusHandler(_ notification: Notification){
+       let e = Event.from(notification)
++        print("eeeeeee", e)
++
+        guard let data: ASObject = e.data as? ASObject, let code: String = data["code"] as? String else {
+            return
+        }
