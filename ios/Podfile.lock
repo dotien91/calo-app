@@ -1108,7 +1108,7 @@ SPEC CHECKSUMS:
   react-native-netinfo: 8a7fd3f7130ef4ad2fb4276d5c9f8d3f28d2df3d
   react-native-orientation-locker: 4409c5b12b65f942e75449872b4f078b6f27af81
   react-native-pager-view: cf96a223846458cc7e932017636b5c6d8cc2c549
-  react-native-publisher: 38a643bad3ea0874a8c8c3e5a4389847ad51e556
+  react-native-publisher: 1d74e0ccc761b02f806c4cec8c694024cee3cdfe
   react-native-render-html: 984dfe2294163d04bf5fe25d7c9f122e60e05ebe
   react-native-restart: 7595693413fe3ca15893702f2c8306c62a708162
   react-native-safe-area-context: 0ee144a6170530ccc37a0fd9388e28d06f516a89

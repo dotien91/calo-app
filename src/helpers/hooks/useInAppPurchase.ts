@@ -30,6 +30,11 @@ export const useInAppPurchase = () => {
   const callback = useRef<() => void | undefined>();
   const local_order_id = useRef("");
 
+  console.log(
+    "products",
+    products.map((item) => item.productId),
+  );
+
   useEffect(() => {
     const checkCurrentPurchase = async () => {
       console.log("currentPurchasecurrentPurchase", currentPurchase);
@@ -45,15 +50,26 @@ export const useInAppPurchase = () => {
           await getAvailablePurchases();
           if (typeBuy.current === "product") {
             const data = {
-              order_id: currentPurchase.transactionId,
+              order_id: isIOS
+                ? currentPurchase.transactionId
+                : JSON.parse(currentPurchase?.dataAndroid)?.orderId,
               local_order_id: local_order_id.current,
               product_id: currentPurchase.productId,
               purchase_time: currentPurchase.transactionDate + "",
               quantity: "1",
-              purchase_token: currentPurchase.transactionReceipt,
+              package_name: "com.ikigroup.ieltshunter",
+              purchase_token: isIOS
+                ? currentPurchase.transactionReceipt
+                : currentPurchase.purchaseToken,
             };
+
+            console.log("datadatadata", data);
+            console.log("datadatadata========", currentPurchase);
+
             requestIapBackend(data).then((res) => {
               closeSuperModal();
+              console.log("currentPurchasecurrentPurchase");
+              // alert(JSON.stringify(data))
               if (!res.isError) {
                 showToast({
                   type: "success",
@@ -129,6 +145,7 @@ export const useInAppPurchase = () => {
   };
 
   const buyProduct = async ({ productId, cb, data }) => {
+    console.log("11111", JSON.stringify(data));
     const orderData = await createOrder(data);
     if (!orderData) return;
     callback.current = cb;

@@ -281,7 +281,7 @@ const IeltsReadingPacticeScreen = () => {
   };
 
   return (
-    <SafeAreaView style={CS.container}>
+    <SafeAreaView style={CS.safeAreaView}>
       <IeltsPracticeHeader
         text={translations.ieltsPractice.praticeTest}
         iconNameRight="info"
@@ -307,7 +307,7 @@ const styles = StyleSheet.create({
   },
   wrapBtn: {
     position: "absolute",
-    bottom: 0,
+    bottom: 16,
     right: 16,
     left: 16,
     zIndex: 1,

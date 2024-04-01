@@ -167,7 +167,6 @@ const ItemPracticeTest = React.memo(({ item }) => {
   const renderTestChild = (item, index) => {
     return (
       <PressableBtn
-        disable={item.is_done}
         onPress={() => openPraticeTest(item)}
         key={item?.id}
         style={styles.viewTask}

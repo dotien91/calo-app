@@ -14,11 +14,11 @@ import { SCREENS } from "constants";
 import { ICourseItem } from "models/course.model";
 import { Device } from "@utils/device.ui.utils";
 import LoadingList from "@shared-components/loading.list.component";
-import FastImage from "react-native-fast-image";
 import { closeSuperModal } from "@helpers/super.modal.helper";
 import { emitSocket } from "@helpers/socket.helper";
 import useStore from "@services/zustand/store";
 import { updateLivestream2 } from "@services/api/stream.api";
+import ImageLoad from "@shared-components/image-load/ImageLoad";
 
 const ListCourseLiveStream = ({ isTeacher, liveData, cbOnpressCourse }) => {
   console.log("liveData", liveData);
@@ -113,13 +113,15 @@ const Item = React.memo(({ item, isTeacher, liveData, cbOnpressCourse }) => {
       closeSuperModal();
     }
   };
-
+  console.log("itemitem", item);
   return (
     <PressableBtn onPress={_onPress} style={styles.viewCourse}>
       <View style={styles.viewCard}>
         <View style={styles.viewImage}>
-          <FastImage
-            source={{ uri: item?.media_id?.media_thumbnail }}
+          <ImageLoad
+            source={{
+              uri: item?.avatar?.media_thumbnail || item?.avatar?.media_url,
+            }}
             style={{
               width: 80,
               height: 80,

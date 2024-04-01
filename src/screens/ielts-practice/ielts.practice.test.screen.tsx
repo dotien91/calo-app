@@ -36,7 +36,6 @@ interface IeltsPacticeScreenProps {}
 const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
   const route = useRoute();
   const practiceDetail = route.params?.["practiceDetail"];
-  console.log("practiceDetail", practiceDetail);
   const isSpeaking = () => {
     return practiceDetail.type == EnumTestType.Speaking;
   };
@@ -58,6 +57,7 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
     },
     [],
   );
+  console.log("list question", data);
 
   const setFinishedTime = React.useCallback((v: number) => {
     finishedTime.current = v;
@@ -120,8 +120,6 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
       answers,
       finished_time: secs,
     };
-    console.log("dataSubmit", dataSubmit);
-    return null;
     submitTest(dataSubmit).then((res) => {
       if (!res.isError) {
         showToast({
@@ -231,9 +229,8 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
       </View>
     );
   };
-
   return (
-    <SafeAreaView style={CS.container}>
+    <SafeAreaView style={CS.safeAreaView}>
       <IeltsPracticeHeader
         text={translations.ieltsPractice.praticeTest}
         iconNameRight="info"
@@ -261,7 +258,7 @@ const styles = StyleSheet.create({
   },
   wrapBtn: {
     position: "absolute",
-    bottom: 0,
+    bottom: 16,
     right: 16,
     left: 16,
     zIndex: 1,

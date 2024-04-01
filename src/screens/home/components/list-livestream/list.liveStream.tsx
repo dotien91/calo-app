@@ -40,7 +40,6 @@ const ListLiveStream = () => {
 
   const _getListLiveStream = () => {
     getListLiveStream().then((res) => {
-      console.log("res list livestream...", res);
       if (!res.isError) {
         const listDataStream = res.data.filter(
           // const listDataStream = fakedata.filter(

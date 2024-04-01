@@ -10,7 +10,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import RTMPPublisher, { RTMPPublisherRefProps } from "react-native-publisher";
-import { useTheme, useRoute } from "@react-navigation/native";
+import { useTheme, useRoute, useFocusEffect } from "@react-navigation/native";
 import { IconType } from "react-native-dynamic-vector-icons";
 import KeepAwake from "react-native-keep-awake";
 
@@ -98,11 +98,11 @@ function App() {
     }
   };
 
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     showLiveStream();
-  //   }, []),
-  // );
+  useFocusEffect(
+    React.useCallback(() => {
+      showLiveStream();
+    }, []),
+  );
 
   const hideLiveStream = () => {
     publisherRef.current && publisherRef.current?.stopStream();

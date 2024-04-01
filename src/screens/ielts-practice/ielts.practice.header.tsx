@@ -12,7 +12,6 @@ import * as NavigationService from "react-navigation-helpers";
 
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
-import { isAndroid } from "@helpers/device.info.helper";
 
 interface HeaderProps {
   iconNameLeft?: string;
@@ -116,19 +115,6 @@ const IeltsPracticeHeader = ({
           </TouchableOpacity>
         )}
         {!!rightComponent && rightComponent()}
-        {isAndroid() && (
-          <View
-            style={{
-              position: "absolute",
-              left: 0,
-              top: -10,
-              right: 0,
-              height: 20,
-              backgroundColor: "white",
-              zIndex: 1,
-            }}
-          />
-        )}
       </View>
       {!!renderBottomComponent && renderBottomComponent()}
     </View>

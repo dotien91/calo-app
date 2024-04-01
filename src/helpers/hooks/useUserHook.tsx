@@ -45,7 +45,7 @@ export const useUserHook = () => {
 
   const getUserData = () => {
     getCurrentUser().then((res) => {
-      console.log("current user data", res);
+      // console.log("current user data", res);
       if (!res.isError) {
         console.log("token", _getJson(USER_TOKEN), res.data);
         initData(res.data);

@@ -11,7 +11,7 @@ interface Media {
 const width = Device.width;
 
 const Media = ({ item }: Media) => {
-  const media_width = item?.media_meta?.find((i) => i.key === "width")?.value;
+  const media_width = Device.width;
   const media_height = item?.media_meta?.find((i) => i.key === "height")?.value;
   const mediaHeight =
     media_width && media_height

@@ -202,6 +202,7 @@ export class ImageModalInner extends React.Component<ModalProps, State> {
       onMoveShouldSetPanResponder: () => {
         return true;
       },
+      onShouldBlockNativeResponder: () => false,
       onStartShouldSetPanResponder: (e: any, gestureState) => {
         const hasScrollableView = true;
 

@@ -168,7 +168,11 @@ const ShoppingLiveProduct = React.memo(
         <View style={styles.viewCard}>
           <View style={styles.viewImage}>
             <FastImage
-              source={{ uri: shoppingProduct?.media_id?.media_thumbnail }}
+              source={{
+                uri:
+                  shoppingProduct?.avatar?.media_thumbnail ||
+                  shoppingProduct?.avatar?.media_url,
+              }}
               style={{
                 width: 80,
                 height: 80,
@@ -253,8 +257,8 @@ const IconText = ({ nameIcon, text }: { nameIcon: string; text: string }) => {
 export const styles = StyleSheet.create({
   closeIcon: {
     position: "absolute",
-    right: 9,
-    top: 9,
+    right: 0,
+    top: 0,
     zIndex: 1,
   },
   listChat: {
@@ -269,6 +273,7 @@ export const styles = StyleSheet.create({
     maxHeight: (Device.height * 2) / 3,
     backgroundColor: palette.white,
     borderRadius: 8,
+    paddingRight: 16,
   },
   viewCard: {
     ...CS.row,
