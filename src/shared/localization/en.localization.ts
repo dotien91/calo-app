@@ -198,6 +198,9 @@ export default {
     listPostSave: "Post save",
     deleteFromSave: "Delete from save",
     emptyListSave: "Saved posts list is empty",
+    uploadFileFaild: "File upload failed. Please try again!",
+    uploadImageFaild: "Image upload failed. Please try again!",
+    uploadVideoFaild: "Video upload failed. Please try again!",
   },
   navigation: {
     dashboard: "Dashboard",

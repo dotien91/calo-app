@@ -10,6 +10,8 @@ import { View } from "react-native-animatable";
 import EditButton from "@screens/course/components/edit.button";
 import useStore from "@services/zustand/store";
 import EnrollNow from "@screens/course/components/EnrollNow";
+import { getBottomSpace } from "react-native-iphone-screen-helper";
+import { isIOS } from "@freakycoder/react-native-helpers";
 
 interface BuyBottomProps {
   show: boolean;
@@ -112,10 +114,6 @@ const BuyBottom = ({ show, data, courseRoom }: BuyBottomProps) => {
           </View>
         ) : null}
         {show &&
-          (data?.type === "Call group" || data?.type === "Self-learning") && (
-            <Text style={styles.textPriceOld}>{formatPrice(data?.price)}</Text>
-          )}
-        {show &&
           (isTeacher ? (
             <EditButton type="wrap" data={data} />
           ) : (
@@ -150,6 +148,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     minHeight: 60,
     ...CS.flexRear,
+    marginBottom: isIOS ? getBottomSpace() : 0,
   },
   viewShadow: {
     height: 2,

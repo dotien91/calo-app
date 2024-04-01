@@ -206,6 +206,9 @@ export default {
     listPostSave: "Bài viết đã lưu",
     deleteFromSave: "Xoá khỏi danh sách đã lưu",
     emptyListSave: "Danh sách bài viết đã lưu trống",
+    uploadFileFaild: "Tải file lên thất bại. Vui lòng thử lại!",
+    uploadImageFaild: "Tải ảnh lên thất bại. Vui lòng thử lại!",
+    uploadVideoFaild: "Tải video lên thất bại. Vui lòng thử lại!",
   },
   navigation: {
     dashboard: "Trang chủ",
