@@ -7,6 +7,7 @@ import { useTheme } from "@react-navigation/native";
 import createStyles from "./ProfileScreen.style";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import useStore from "@services/zustand/store";
+import { translations } from "@localization";
 
 interface ProfileScreenProps {}
 
@@ -28,7 +29,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
           }}
         >
           <Text onPress={logout} style={{ color: "white" }}>
-            Log out
+            {translations.settings.logout}
           </Text>
         </TouchableOpacity>
       )}

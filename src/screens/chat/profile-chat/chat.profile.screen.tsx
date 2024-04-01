@@ -37,32 +37,32 @@ const profileChatMenu = [
     data: [
       {
         icon: "users",
-        txt: (text) => "Create group with " + text,
+        txt: (text: string) => translations.chat.createGroup(text),
         type: "ACC-PLUS",
       },
       {
         icon: "user-plus",
-        txt: (text) => "Add " + text + " to groups",
+        txt: (text: string) => translations.chat.addToGroup(text),
         type: "ACC-GR",
       },
     ],
   },
   {
     type: "MEDIA",
-    title: "Send photo, files, links",
+    title: translations.chat.sendFiles,
   },
   {
     type: "PRIVACY",
-    title: "Privacy & support",
+    title: translations.chat.privacyAndSupport,
     data: [
       {
         icon: "lock",
-        txt: () => "Block user",
+        txt: () => translations.chat.blockUser,
         type: "BLOCK",
       },
       {
         icon: "flag",
-        txt: () => "Report",
+        txt: () => translations.chat.report,
         type: "REPORT",
       },
     ],
@@ -72,23 +72,23 @@ const profileChatMenu = [
 const profileGroupChatMenu = [
   {
     type: "GROUP_ACTION",
-    title: "Group action",
+    title: translations.chat.groupAction,
     data: [
       {
         icon: "user-plus",
-        txt: () => "Thêm thành viên",
+        txt: () => translations.chat.addMember,
         type: "ACC-PLUS",
       },
       {
         icon: "user-minus",
-        txt: () => "Rời nhóm",
+        txt: () => translations.chat.leave,
         type: "LEAVE-GR",
       },
     ],
   },
   {
     type: "MEDIA",
-    title: "Send photo, files, links",
+    title: translations.chat.sendFiles,
   },
   {
     type: "MEMBERS",
@@ -185,22 +185,21 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
       chat_room_id: chat_room_id._id,
     };
     showSuperModal({
-      contentModalType: "loading",
-      styleModalType: "middle",
+      contentModalType: EnumModalContentType.Loading,
+      styleModalType: EnumStyleModalType.Middle,
     });
     leaveRoom(data).then((res) => {
       closeSuperModal();
       if (!res.isError) {
         showToast({
           type: "success",
-          message: "Rời nhóm thành công",
+          message: translations.chat.leaveSuccess,
         });
         eventEmitter.emit("refresh_list_chat");
         NavigationService.pop(2);
       } else {
         showToast({
           type: "error",
-          message: "Có lỗi không xác định xảy ra",
         });
       }
     });
@@ -394,7 +393,9 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
           customStyle={styles.menuIcon}
           size={20}
         />
-        <Text style={CommonStyle.hnRegular}>Đổi tên nhóm</Text>
+        <Text style={CommonStyle.hnRegular}>
+          {translations.chat.renameGroup}
+        </Text>
         <IconBtn
           name={"chevron-right"}
           color={colors.mainColor2}
@@ -418,12 +419,12 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
         NavigationService.pop(2);
         showToast({
           type: "success",
-          message: "Đổi nhóm thành công",
+          message: translations.chat.renameGroupSuccess,
         });
       } else {
         showToast({
           type: "error",
-          message: "Đổi nhóm thất bại",
+          message: translations.chat.renameGroupFaild,
         });
       }
     });
@@ -434,7 +435,7 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
       contentModalType: EnumModalContentType.TextInput,
       styleModalType: EnumStyleModalType.Bottom,
       data: {
-        title: "Nhập tên của nhóm",
+        title: translations.chat.enterGroupName,
         cb: changeNameGroupAction,
         defaultValue: chat_room_id?.room_name || roomDetail?.room_title,
         hideCloseIcon: true,

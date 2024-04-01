@@ -264,7 +264,7 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
                 <Text
                   style={{ ...CS.hnBold, fontSize: 14, color: palette.primary }}
                 >
-                  Flash sale
+                  {translations.course.flashSale}
                 </Text>
                 {` ${translations.course.discountEntry.toLocaleLowerCase()} ${formatFullDate(
                   new Date(data?.coupon_id.availableAt),
@@ -296,7 +296,7 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
                 <Text
                   style={{ ...CS.hnBold, fontSize: 14, color: palette.primary }}
                 >
-                  Flash sale
+                  {translations.course.flashSale}
                 </Text>
                 {` ${translations.course.endAt.toLocaleLowerCase()} ${formatFullDate(
                   new Date(data?.coupon_id.expired),

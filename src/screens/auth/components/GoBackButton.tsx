@@ -5,7 +5,7 @@ import * as NavigationService from "react-navigation-helpers";
 import IconSvg from "assets/svg";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { palette } from "@theme/themes";
-const GoBackButton = ({ customStyle }: { customStyle: ViewStyle }) => {
+const GoBackButton = ({ customStyle }: { customStyle?: ViewStyle }) => {
   return (
     <View
       style={[

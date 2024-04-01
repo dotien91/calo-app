@@ -41,6 +41,7 @@ import { ScreenHeight } from "@freakycoder/react-native-helpers";
 import PopupCourseDetail from "@screens/course/course-preview/components/popup.more";
 import PopupCoupon from "@screens/course/course-preview/components/popup.coupon";
 import ReferralPopupTask from "@shared-components/task-item/task.referral.popup";
+import { translations } from "@localization";
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
 // using normal one.
@@ -143,7 +144,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
             onPress={closeModal}
           >
             <Text style={[styles.txtBtn, { color: palette.textOpacity6 }]}>
-              {data.textCancel || "Cancel"}
+              {data.textCancel || translations.cancel}
             </Text>
           </TouchableOpacity>
           <View style={{ width: 10 }} />
@@ -157,7 +158,9 @@ const SuperModal: React.FC<SuperModalProps> = () => {
               closeModal();
             }}
           >
-            <Text style={styles.txtBtn}>{data.textApprove || "Ok"}</Text>
+            <Text style={styles.txtBtn}>
+              {data.textApprove || translations.permissions.positive}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>

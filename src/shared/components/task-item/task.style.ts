@@ -24,6 +24,7 @@ export default (theme: ExtendedTheme) => {
     viewDes: {
       flexDirection: "row",
       justifyContent: "space-between",
+      alignItems: "center",
       borderBottomWidth: 1,
       borderColor: colors.grey2,
       flex: 1,
@@ -48,11 +49,16 @@ export default (theme: ExtendedTheme) => {
     },
     txtStatus: { ...CS.hnMedium, fontSize: 12, color: colors.textOpacity6 },
     viewPoint: {
-      flexDirection: "row",
       justifyContent: "flex-end",
       alignItems: "center",
       marginRight: 16,
     },
-    txtPoint: { ...CS.hnSemiBold, fontSize: 16, color: colors.text },
+    txtPoint: {
+      ...CS.hnSemiBold,
+      fontSize: 16,
+      color: colors.text,
+      width: 20,
+      textAlign: "right",
+    },
   });
 };

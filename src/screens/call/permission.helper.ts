@@ -1,3 +1,4 @@
+import { translations } from "@localization";
 import { Alert } from "react-native";
 import {
   checkMultiple,
@@ -26,9 +27,7 @@ export async function requestPermission(
       });
 
       if (isBlocked) {
-        Alert.alert(
-          "Permission denied. We do not have permission, maybe you eject before!",
-        );
+        Alert.alert(translations.permissions.denied);
         // GlobalPopupHelper.alertRef.current?.alert({
         // 	title: "Permission denied",
         // 	message: "We do not have permission, maybe you eject before!",

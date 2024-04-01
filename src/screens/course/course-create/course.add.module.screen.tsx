@@ -123,7 +123,9 @@ const CourseAddModuleScreen = () => {
           showToast({
             type: "info",
             message:
-              type === "file" ? "Chọn tệp đính kèm" : "Chọn video cho khóa học",
+              type === "file"
+                ? translations.course.addFileCourse
+                : translations.course.addVideoCourse,
           });
         }
       }

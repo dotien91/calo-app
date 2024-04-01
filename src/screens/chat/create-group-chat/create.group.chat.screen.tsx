@@ -23,6 +23,8 @@ import { SCREENS } from "constants";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import CommonStyle from "@theme/styles";
 import {
+  EnumModalContentType,
+  EnumStyleModalType,
   closeSuperModal,
   showSuperModal,
   showToast,
@@ -189,7 +191,7 @@ const CreateGroupChatScreen: React.FC<CreateGroupChatScreenProps> = () => {
       if (!res.isError) {
         showToast({
           type: "success",
-          message: "Thêm thành viên thành công",
+          message: translations.chat.addMemberSuccess,
         });
         eventEmitter.emit("refresh_list_chat");
         NavigationService.pop(3);
@@ -210,8 +212,8 @@ const CreateGroupChatScreen: React.FC<CreateGroupChatScreenProps> = () => {
 
   const createGroupChat = () => {
     showSuperModal({
-      contentModalType: "loading",
-      styleModalType: "middle",
+      contentModalType: EnumModalContentType.Loading,
+      styleModalType: EnumStyleModalType.Middle,
     });
     if (group_partners.length) {
       addUserToGroup();
@@ -240,7 +242,7 @@ const CreateGroupChatScreen: React.FC<CreateGroupChatScreenProps> = () => {
       if (!res.isError) {
         showToast({
           type: "success",
-          message: "Tạo nhóm thành công",
+          message: translations.chat.createGroupSuccess,
         });
         eventEmitter.emit("refresh_list_chat");
         const { chat_room_id, group_partners } = res.data;
@@ -311,7 +313,7 @@ const CreateGroupChatScreen: React.FC<CreateGroupChatScreenProps> = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.headerTitle}>Chọn thành viên</Text>
+      <Text style={styles.headerTitle}>{translations.chat.selectMember}</Text>
       <ProfileChatInput setTxtSearch={setTxtSearch} />
       <View style={{ margin: 10 }} />
       {isLoading && <LoadingList />}

@@ -15,6 +15,7 @@ import FastImage from "react-native-fast-image";
 import { Device } from "@utils/device.ui.utils";
 import ImageLoad from "@shared-components/image-load/ImageLoad";
 import { palette } from "@theme/themes";
+import { translations } from "@localization";
 
 const widthImage = Device.width - 32;
 
@@ -120,7 +121,7 @@ const ClassItem = ({ item }) => {
           <>
             <Button
               onPress={() => openHomework(item)}
-              text="Assign task"
+              text={translations.course.assignTask}
               type="outline"
               style={CS.flex1}
             />
@@ -129,7 +130,7 @@ const ClassItem = ({ item }) => {
         )}
         <Button
           onPress={() => openVideoRoom(item)}
-          text="Open video room"
+          text={translations.course.openVideoRoom}
           type="primary"
           style={CS.flex1}
         />

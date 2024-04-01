@@ -102,6 +102,7 @@ import IeltsPraticeList from "@screens/ielts-practice/ielts.practice.list";
 import ClassRoomScreen from "@screens/call-class/class.room.screen";
 import WebviewScreen from "@screens/webview/Webview";
 import CourseRecommendScreen from "@screens/course/course-recommend/course.recommend";
+import HomeAffilite from "@screens/affiliate/intro.affiliate.screen";
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -420,6 +421,7 @@ const Navigation = () => {
         <Stack.Screen name={SCREENS.TAB_FOLLOW} component={TabFollow} />
         <Stack.Screen name={SCREENS.AFFILIATE} component={AffiliatePage} />
         <Stack.Screen name={SCREENS.BLACK_LIST} component={BlackList} />
+        <Stack.Screen name={SCREENS.HOME_AFFILIATE} component={HomeAffilite} />
         {/* <Stack.Screen name={SCREENS.TAB_FOLLOW} component={TabFollow} />
         <Stack.Screen
           name={SCREENS.PRIVATESETTING}

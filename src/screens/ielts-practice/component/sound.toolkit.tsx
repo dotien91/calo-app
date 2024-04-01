@@ -22,6 +22,7 @@ import { palette } from "@theme/themes";
 import TextBase from "@shared-components/TextBase";
 import CS from "@theme/styles";
 import { Device } from "@utils/device.ui.utils";
+import { translations } from "@localization";
 
 type Props = any;
 
@@ -202,12 +203,10 @@ export default class AppSound extends Component<Props, State> {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
         {
-          title: "Microphone Permission",
-          message:
-            "ExampleApp needs access to your microphone to test react-native-audio-toolkit.",
-          buttonNeutral: "Ask Me Later",
-          buttonNegative: "Cancel",
-          buttonPositive: "OK",
+          title: translations.permissions.titleAudio,
+          message: translations.permissions.messageAudio,
+          buttonNegative: translations.permissions.negative,
+          buttonPositive: translations.permissions.positive,
         },
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {

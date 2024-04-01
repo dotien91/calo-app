@@ -20,6 +20,8 @@ import GoBackButton from "../components/GoBackButton";
 import { ILoginWithPass, ICreateNewPass } from "models";
 import { createNewPass, loginWithPass } from "@services/api/user.api";
 import {
+  EnumModalContentType,
+  EnumStyleModalType,
   closeSuperModal,
   showSuperModal,
   showToast,
@@ -52,8 +54,8 @@ export default function NewPasswordScreen() {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const onSubmit = (data: any) => {
     showSuperModal({
-      contentModalType: "loading",
-      styleModalType: "middle",
+      contentModalType: EnumModalContentType.Loading,
+      styleModalType: EnumStyleModalType.Middle,
     });
     const params: ICreateNewPass = {
       verify_code: verifyCodeRef.current,

@@ -15,6 +15,7 @@ import {
 } from "@helpers/super.modal.helper";
 import { getListMemberCourse } from "@services/api/course.api";
 import useStore from "@services/zustand/store";
+import { translations } from "@localization";
 
 const ClassRoomBottomView = ({
   toggleMute,
@@ -64,7 +65,7 @@ const ClassRoomBottomView = ({
       styleModalType: EnumStyleModalType.Bottom,
       data: {
         listUser: listMember,
-        title: "Members " + `(${listMember.length})`,
+        title: translations.course.member(listMember.length),
       },
     });
   };
@@ -179,7 +180,7 @@ const ClassRoomBottomView = ({
             color: colors.white,
           }}
         >
-          Members
+          {translations.course.member("")}
         </Text>
       </PressableBtn>
       <PressableBtn
@@ -224,7 +225,7 @@ const ClassRoomBottomView = ({
             color: colors.white,
           }}
         >
-          Chat
+          {translations.course.chat}
         </Text>
       </PressableBtn>
     </View>

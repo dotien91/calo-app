@@ -22,6 +22,8 @@ import GoBackButton from "../components/GoBackButton";
 import IconSvg from "assets/svg";
 import { verifyCode } from "@services/api/user.api";
 import {
+  EnumModalContentType,
+  EnumStyleModalType,
   closeSuperModal,
   showSuperModal,
   showToast,
@@ -48,8 +50,8 @@ export default function VerifyCodeScreen() {
 
   const onSubmit = (data: any) => {
     showSuperModal({
-      contentModalType: "loading",
-      styleModalType: "middle",
+      contentModalType: EnumModalContentType.Loading,
+      styleModalType: EnumStyleModalType.Middle,
     });
     const params: IVerifyCode = {
       user_email: emailRef.current,

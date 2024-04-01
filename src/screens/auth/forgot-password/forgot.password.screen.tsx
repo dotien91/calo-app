@@ -22,6 +22,8 @@ import GoBackButton from "../components/GoBackButton";
 import IconSvg from "assets/svg";
 import { requestNewPassWithEmail } from "@services/api/user.api";
 import {
+  EnumModalContentType,
+  EnumStyleModalType,
   closeSuperModal,
   showSuperModal,
   showToast,
@@ -54,8 +56,8 @@ export default function ForgotPasswordScreen() {
     //   return;
     // }
     showSuperModal({
-      contentModalType: "loading",
-      styleModalType: "middle",
+      contentModalType: EnumModalContentType.Loading,
+      styleModalType: EnumStyleModalType.Middle,
     });
     const params: IRequestNewPass = {
       [typePhoneOrEmail]: data.email,
