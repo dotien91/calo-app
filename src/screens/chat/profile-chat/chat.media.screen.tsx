@@ -13,6 +13,7 @@ import CommonStyle from "@theme/styles";
 import useStore from "@services/zustand/store";
 import GoBackButton from "@screens/auth/components/GoBackButton";
 import MessageMediaView from "../room-chat/components/message/message.media.view";
+import { translations } from "@localization";
 
 interface MediaChatScreenProps {}
 
@@ -108,7 +109,7 @@ const MediaChatScreen: React.FC<MediaChatScreenProps> = () => {
             fontSize: 16,
           }}
         >
-          Media, files
+          {translations.chat.mediaFile}
         </Text>
       </View>
       <TabView

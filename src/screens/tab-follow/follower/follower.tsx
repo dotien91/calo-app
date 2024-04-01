@@ -91,7 +91,7 @@ const Follower = ({ id }) => {
       contentModalType: EnumModalContentType.Confirm,
       styleModalType: EnumStyleModalType.Bottom,
       data: {
-        title: "Remove this follower",
+        title: translations.removeThisFollow,
         nameAction: "Remove",
         cb: () => removeFollower(partid),
       },

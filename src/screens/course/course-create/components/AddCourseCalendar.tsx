@@ -125,7 +125,7 @@ const AddCourseCalenDar = () => {
             onPress={_viewAddCourseCalendars}
           >
             <Text style={[CS.hnRegular, { color: colors.white }]}>
-              {"Thêm buổi học"}
+              {translations.course.addLesson}
             </Text>
           </PressableBtn>
         )}

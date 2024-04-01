@@ -14,6 +14,7 @@ import CS from "@theme/styles";
 import useStore from "@services/zustand/store";
 import { getCountFollow } from "@services/api/user.api";
 import LoadingList from "@shared-components/loading.list.component";
+import { translations } from "@localization";
 
 const TabFollow = () => {
   const theme = useTheme();
@@ -77,14 +78,14 @@ const TabFollow = () => {
 
           <Tabs.Tab
             name={"Follow"}
-            label={`Follower ${countFollow?.followers || 0}`}
+            label={`${translations.follower} ${countFollow?.followers || 0}`}
           >
             <Follower id={route?.params?.id}></Follower>
           </Tabs.Tab>
 
           <Tabs.Tab
             name={"Following"}
-            label={`Following ${countFollow?.following || 0}`}
+            label={`${translations.following} ${countFollow?.following || 0}`}
           >
             <Following id={route?.params?.id}></Following>
           </Tabs.Tab>

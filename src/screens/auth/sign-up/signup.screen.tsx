@@ -25,6 +25,8 @@ import { ISignUpWithEmail } from "models";
 import { getDeviceInfo } from "@helpers/device.info.helper";
 import { singUp } from "@services/api/user.api";
 import {
+  EnumModalContentType,
+  EnumStyleModalType,
   closeSuperModal,
   showSuperModal,
   showToast,
@@ -74,8 +76,8 @@ export default function SignUpScreen() {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const onSubmit = (data: any) => {
     showSuperModal({
-      contentModalType: "loading",
-      styleModalType: "middle",
+      contentModalType: EnumModalContentType.Loading,
+      styleModalType: EnumStyleModalType.Middle,
     });
     const params: ISignUpWithEmail = {
       full_name: data.fullname,

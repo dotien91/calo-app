@@ -40,7 +40,7 @@ const PrivateSetting = () => {
       contentModalType: EnumModalContentType.Confirm,
       styleModalType: EnumStyleModalType.Middle,
       data: {
-        title: "Bạn có muốn xoá tài khoản",
+        title: translations.settings.warningDeleteAccount,
         cb: () => deleteAccount(),
       },
     });
@@ -52,13 +52,13 @@ const PrivateSetting = () => {
         logout();
         showToast({
           type: "success",
-          message: "Xoá tài khoản thành công",
+          message: translations.settings.deleteAccountSuccess,
         });
       })
       .catch(() => {
         showToast({
           type: "error",
-          message: "Xoá tài khoản thất bại",
+          message: translations.settings.deleteAccountFaild,
         });
       });
   };
@@ -109,7 +109,7 @@ const PrivateSetting = () => {
 
   return (
     <SafeAreaView style={{ ...CS.safeAreaView }}>
-      <Header text="Private" />
+      <Header text={translations.settingUser.private} />
       {renderPrivateSetting()}
     </SafeAreaView>
   );

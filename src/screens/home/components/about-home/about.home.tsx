@@ -16,38 +16,37 @@ import ListLiveStream from "../list-livestream/list.liveStream";
 import CourseView from "../list-course/list.course";
 // import ListLiveStream from "../list-livestream/list.liveStream";
 
-const listCategorys = [
-  {
-    title: translations.listCategory.course,
-    textColor: "#E14242",
-    iconColor: "#E14242",
-    icon: "icBook",
-    screen: SCREENS.COURSE_LIST,
-    color: "#FFEDED",
-    id: "course",
-  },
-  {
-    id: "tutor",
-    title: translations.listCategory.tutor,
-    textColor: "#FFA347",
-    iconColor: "#FFA347",
-    icon: "icGraduate",
-    screen: SCREENS.COURSE_LIST,
-    color: "#FFF3DA",
-  },
-  {
-    title: translations.listCategory.affiliate,
-    textColor: "#2BC456",
-    iconColor: "#2BC456",
-    icon: "icAffiliate",
-    screen: SCREENS.AFFILIATE,
-    color: "#E8F7EF",
-  },
-];
-
 const AboutHome = () => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
+  const listCategorys = [
+    {
+      title: translations.listCategory.course,
+      textColor: "#E14242",
+      iconColor: "#E14242",
+      icon: "icBook",
+      screen: SCREENS.COURSE_LIST,
+      color: "#FFEDED",
+      id: "course",
+    },
+    {
+      id: "tutor",
+      title: translations.listCategory.tutor,
+      textColor: "#FFA347",
+      iconColor: "#FFA347",
+      icon: "icGraduate",
+      screen: SCREENS.COURSE_LIST,
+      color: "#FFF3DA",
+    },
+    {
+      title: translations.listCategory.affiliate,
+      textColor: "#2BC456",
+      iconColor: "#2BC456",
+      icon: "icAffiliate",
+      screen: SCREENS.AFFILIATE,
+      color: "#E8F7EF",
+    },
+  ];
 
   React.useEffect(() => {
     console.log("rerender");

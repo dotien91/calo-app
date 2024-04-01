@@ -110,12 +110,12 @@ const FilterAffiliate = ({ data }: FilterAffiliateProps) => {
             <Button
               onPress={onPressReset}
               backgroundColor={palette.btnInactive}
-              text="Reset"
+              text={translations.reset}
               style={CS.flex1}
             />
             <Button
               onPress={onPressApplyDate}
-              text="Apply"
+              text={translations.apply}
               type="primary"
               style={CS.flex1}
             />
@@ -131,12 +131,12 @@ const FilterAffiliate = ({ data }: FilterAffiliateProps) => {
             <Button
               onPress={onPressReset}
               backgroundColor={palette.btnInactive}
-              text="Reset"
+              text={translations.reset}
               style={CS.flex1}
             />
             <Button
               onPress={onPressApply}
-              text="Apply"
+              text={translations.apply}
               type="primary"
               style={CS.flex1}
             />
@@ -152,12 +152,12 @@ const FilterAffiliate = ({ data }: FilterAffiliateProps) => {
             <Button
               onPress={onPressReset}
               backgroundColor={palette.btnInactive}
-              text="Reset"
+              text={translations.reset}
               style={CS.flex1}
             />
             <Button
               onPress={onPressApply}
-              text="Apply"
+              text={translations.apply}
               type="primary"
               style={CS.flex1}
             />
