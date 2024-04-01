@@ -1596,6 +1596,16 @@ export default {
     toDate: "Đến ngày",
     commission: "Hoa hồng",
     noTransaction: "Chưa phát sinh giao dịch",
+    description: "Thành viên giới thiệu mua hàng được thưởng hoa hồng (",
+    description2: "8% hoa hồng",
+    description3:
+      "). Ví dụ: Nếu thành viên giới thiệu mua khóa học có giá 1.000.000 đồng → Hoa hồng nhận được: 80.000 đồng → 640",
+    whyJoin: "Tại sao nên tham gia Tiếp thị liên kết?",
+    text1: "Giới thiệu người dùng/Quản lý giới thiệu",
+    text2: "Quản lý doanh thu",
+    text3: "Rút",
+    text4: "Mua sản phẩm/Khóa học",
+    totalAmount: "Tổng số tiền",
   },
   withDraw: {
     header: "Rút tiền",
