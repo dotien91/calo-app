@@ -597,6 +597,7 @@ export default {
     listClass: "Danh sách lớp học",
     createClassSuccess: "Tạo lớp thành công",
     addLesson: "Thêm bài học",
+    moreTime: "Thêm buổi học",
     updateLesson: "Cập nhật bài học",
     addLessonSuccess: "Thêm bài học thành công",
     addVideo: "Thêm video",
@@ -1556,6 +1557,7 @@ export default {
     markError: "Điểm phải là số và nhỏ hơn 100",
     forYou: "Dành cho bạn",
     following: "Đang theo dõi",
+    emptyTask: "Chưa có bài tập nào",
   },
   introwelcome: {
     text11: "Chào mừng bạn đến với thế giới ngôn ngữ",
@@ -1614,7 +1616,10 @@ export default {
     text4: "Mua sản phẩm/Khóa học",
     totalAmount: "Tổng số tiền",
     totalCoin: "Tổng số coin",
+    emptyProduct: "Danh sách sản phẩn trống",
+    emptyUser: "Danh sách người dùng trống",
   },
+  emptyList: "Danh sách trống",
   withDraw: {
     header: "Rút tiền",
     your_money: "Số tiền của bạn",
@@ -1653,5 +1658,6 @@ export default {
     hidePassage: "Thu gọn đoạn hội thoại",
     showPassage: "Mở rộng đoạn hội thoại",
     waittingResult: "Đợi kết quả",
+    emptyPraticeTest: "Danh sách thi thử trống",
   },
 };

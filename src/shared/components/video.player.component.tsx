@@ -49,7 +49,7 @@ const VideoPlayer = ({
     if (isStreamThumbnail && !isPreloading) {
       setPause((old) => !old);
       setShowThumbnail(false);
-      alert(2);
+      // alert(2);
     }
   }, [isStreamThumbnail, isPreloading]);
 

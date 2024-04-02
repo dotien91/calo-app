@@ -125,7 +125,7 @@ const AddCourseCalenDar = () => {
             onPress={_viewAddCourseCalendars}
           >
             <Text style={[CS.hnRegular, { color: colors.white }]}>
-              {translations.course.addLesson}
+              {translations.course.moreTime}
             </Text>
           </PressableBtn>
         )}
@@ -213,14 +213,14 @@ const AddCourseCalenDar = () => {
           <SelectDate />
           <View style={[CS.row, { gap: 8 }]}>
             <Button
-              style={{ height: 48, flex: 1 }}
+              style={{ flex: 1 }}
               backgroundColor={colors.backgroundMain}
               onPress={_addCourseCalendar}
               text={translations.course.add}
               disabled={false}
             />
             <Button
-              style={{ height: 48, flex: 1 }}
+              style={{ flex: 1 }}
               backgroundColor={colors.backgroundMain}
               onPress={_cancel}
               text={translations.cancel}

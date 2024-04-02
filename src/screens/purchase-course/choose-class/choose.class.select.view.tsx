@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, SafeAreaView } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import moment from "moment";
 import lodash from "lodash";
@@ -22,6 +22,7 @@ import {
 } from "@helpers/super.modal.helper";
 import eventEmitter from "@services/event-emitter";
 import { isIOS } from "@freakycoder/react-native-helpers";
+import Button from "@shared-components/button/Button";
 
 interface ChooseClassSelectViewProps {
   classData: IClassRoom[];
@@ -162,31 +163,21 @@ const ChooseClassSelectView: React.FC<ChooseClassSelectViewProps> = ({
   const renderPurchaseBtn = () => {
     const isDisabled = lodash.isEmpty(selectedClass);
     return (
-      <PressableBtn
+      <Button
+        text={translations.purchase.orderNow}
+        type={!isDisabled ? "primary" : "disabled"}
         onPress={goToCheckout}
-        disable={isDisabled}
-        style={[
-          styles.btnPurchase,
-          isDisabled && { backgroundColor: colors.btnInactive },
-        ]}
-      >
-        <Text
-          style={[
-            styles.txtPurchaseBtn,
-            isDisabled && { color: colors.textOpacity4 },
-          ]}
-        >
-          {translations.purchase.orderNow}
-        </Text>
-      </PressableBtn>
+      />
     );
   };
 
   return (
-    <ScrollView style={styles.container}>
-      {classData.map((item, index) => renderClass(item, index))}
-      {renderPurchaseBtn()}
-    </ScrollView>
+    <SafeAreaView style={CS.safeAreaView}>
+      <ScrollView style={styles.container}>
+        {classData.map((item, index) => renderClass(item, index))}
+        {renderPurchaseBtn()}
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

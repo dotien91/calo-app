@@ -26,6 +26,7 @@ import LoadingList from "@shared-components/loading.list.component";
 import { translations } from "@localization";
 import _ from "lodash";
 import eventEmitter from "@services/event-emitter";
+import EmptyResultView from "@shared-components/empty.data.component";
 
 const Follower = ({ id }) => {
   const theme = useTheme();
@@ -221,6 +222,10 @@ const Follower = ({ id }) => {
     );
   };
 
+  const renderEmpty = () => {
+    return <EmptyResultView title={translations.emptyList} />;
+  };
+
   return (
     <View style={{ flex: 1, marginTop: 60 }}>
       {/* <FlatList
@@ -235,6 +240,7 @@ const Follower = ({ id }) => {
         removeClippedSubviews={true}
       /> */}
       {isLoading && <LoadingList />}
+      {!isLoading && listData.length === 0 && renderEmpty()}
       <FlatList
         data={listData}
         renderItem={renderItemSelected}

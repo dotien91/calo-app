@@ -20,6 +20,7 @@ import LoadingList from "@shared-components/loading.list.component";
 import useStore from "@services/zustand/store";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { SCREENS } from "constants";
+import EmptyResultView from "@shared-components/empty.data.component";
 
 const IeltsPraticeList = () => {
   const route = useRoute();
@@ -117,7 +118,11 @@ const IeltsPraticeList = () => {
   };
 
   // console.log("listTestParent", listTestParent);
-
+  const renderEmpty = () => {
+    return (
+      <EmptyResultView desc={translations.ieltsPractice.emptyPraticeTest} />
+    );
+  };
   return (
     <SafeAreaView style={CS.safeAreaView}>
       <Header
@@ -138,6 +143,7 @@ const IeltsPraticeList = () => {
         height={8}
       ></Progress.Bar>
       {isLoading && <LoadingList numberItem={2} />}
+      {!isLoading && listTestParent.length == 0 && renderEmpty()}
 
       <FlatList
         data={listTestParent}

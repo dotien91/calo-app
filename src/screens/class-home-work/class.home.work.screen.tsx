@@ -20,6 +20,7 @@ import eventEmitter from "@services/event-emitter";
 import LoadingList from "@shared-components/loading.list.component";
 import { SCREENS } from "constants";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
+import EmptyResultView from "@shared-components/empty.data.component";
 
 interface ClassHomeWorkScreenProps {}
 
@@ -88,6 +89,9 @@ const ClassHomeWorkScreen: React.FC<ClassHomeWorkScreenProps> = () => {
     );
   };
 
+  const renderEmpty = () => {
+    return <EmptyResultView desc={translations.homework.emptyTask} />;
+  };
   return (
     <SafeAreaView
       style={{ ...CS.safeAreaView, marginBottom: getBottomSpace() }}
@@ -111,6 +115,7 @@ const ClassHomeWorkScreen: React.FC<ClassHomeWorkScreenProps> = () => {
           <Text style={styles.label}>{translations.homework.assignment}</Text>
           <View style={{ height: 4 }} />
           {loading && <LoadingList />}
+          {tasks.length == 0 && !loading && renderEmpty()}
           {tasks.map((item, index) => (
             <TaskItem key={index} data={item} showMore={isTeacher} />
           ))}
