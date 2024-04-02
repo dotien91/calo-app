@@ -16,9 +16,8 @@ import {
   EnumStyleModalType,
   showSuperModal,
 } from "@helpers/super.modal.helper";
-import PressableBtn from "@shared-components/button/PressableBtn";
 import CS from "@theme/styles";
-import { openUrl } from "@helpers/file.helper";
+import ListFilePostItem from "@screens/home/components/post-item/list.file.post.item copy";
 
 const SIZE_AVATAR = 32;
 const FONT_SIZE = 16;
@@ -107,12 +106,6 @@ const ItemPost = ({ data, pressComment, scrollToCmt }: ItemPostProps) => {
     });
   };
 
-  const listPdf = useMemo(() => {
-    return (data?.attach_files || []).filter((item) =>
-      item.media_mime_type.includes("file"),
-    );
-  }, [data]);
-
   const listMedia = useMemo(() => {
     return (data?.attach_files || []).filter(
       (i) =>
@@ -137,17 +130,6 @@ const ItemPost = ({ data, pressComment, scrollToCmt }: ItemPostProps) => {
               />
               {item.media_mime_type.includes("video") && <PlayVideo />}
             </TouchableOpacity>
-          );
-        })}
-        {listPdf.map((item: any, index: number) => {
-          return (
-            <PressableBtn
-              key={index}
-              onPress={() => openUrl(item.media_url)}
-              style={{ marginTop: 8 }}
-            >
-              <Text style={CS.txtLink}>{item?.media_file_name}</Text>
-            </PressableBtn>
           );
         })}
       </View>
@@ -180,6 +162,7 @@ const ItemPost = ({ data, pressComment, scrollToCmt }: ItemPostProps) => {
           {HasTag}
           {ContentStatus}
           {ListFile}
+          <ListFilePostItem listFile={data?.attach_files || []} />
           <LikeSharePostItem data={data} pressComment={pressComment} />
         </View>
       </View>

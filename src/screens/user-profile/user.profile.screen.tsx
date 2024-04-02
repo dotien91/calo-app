@@ -432,11 +432,16 @@ const ProfileUser = (props: ProfileUserProps) => {
     },
     getMyCourse,
   );
-  const renderHeader = () => {
-    const isUserLogin = userData?._id === userInfo?._id;
-    const renderItemCourse = ({ item, index }) => {
-      return <CourseItem data={item} key={index} />;
-    };
+  const isUserLogin = React.useMemo(
+    () => userData?._id === userInfo?._id,
+    [userData, userInfo],
+  );
+
+  const renderItemCourse = React.useCallback(({ item, index }) => {
+    return <CourseItem data={item} key={index} />;
+  }, []);
+
+  const renderHeader = React.useCallback(() => {
     return (
       <View>
         <AvatarProfile userInfo={userInfo} />
@@ -473,7 +478,7 @@ const ProfileUser = (props: ProfileUserProps) => {
         <View style={{ height: 1, backgroundColor: palette.borderColor }} />
       </View>
     );
-  };
+  }, [userInfo]);
 
   const renderTabBar = (props) => (
     <TabBar

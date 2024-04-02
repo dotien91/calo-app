@@ -63,13 +63,8 @@ export const useInAppPurchase = () => {
                 : currentPurchase.purchaseToken,
             };
 
-            console.log("datadatadata", data);
-            console.log("datadatadata========", currentPurchase);
-
             requestIapBackend(data).then((res) => {
               closeSuperModal();
-              console.log("currentPurchasecurrentPurchase");
-              // alert(JSON.stringify(data))
               if (!res.isError) {
                 showToast({
                   type: "success",

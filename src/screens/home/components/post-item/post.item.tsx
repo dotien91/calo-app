@@ -14,6 +14,7 @@ import CommonStyle from "@theme/styles";
 import { SCREENS } from "constants";
 import { TypedPost } from "shared/models";
 import PressableBtn from "@shared-components/button/PressableBtn";
+import ListFilePostItem from "./list.file.post.item copy";
 
 const SIZE_AVATAR = 32;
 const FONT_SIZE = 16;
@@ -83,7 +84,6 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
     const param = { id: data._id, data: data };
     NavigationService.push(SCREENS.POST_DETAIL, param);
   };
-
   return (
     <View style={styles.container}>
       <AvatarPost
@@ -101,6 +101,7 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
           {HasTag}
           {ContentStatus}
           <ListFile listFile={data?.attach_files || []} />
+          <ListFilePostItem listFile={data?.attach_files || []} />
         </PressableBtn>
         <LikeSharePostItem data={data} pressComment={pressComment} />
       </View>

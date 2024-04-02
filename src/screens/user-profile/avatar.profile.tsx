@@ -41,7 +41,10 @@ const AvatarProfile = ({ userInfo, customStyle }: UploadAvatarProps) => {
   const coverUrl = React.useMemo(() => {
     return isMe(userInfo) ? userMedia?.user_cover : userInfo?.user_cover;
   }, [userInfo, userMedia]);
-  console.log("coverUrl...", coverUrl);
+
+  React.useEffect(() => {
+    console.log("33333333");
+  }, []);
 
   if (!userInfo?._id) {
     return (
