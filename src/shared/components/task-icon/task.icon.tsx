@@ -11,27 +11,29 @@ const TaskIcon = ({ item, customStyle }) => {
 
   const iconType = () => {
     switch (item.action_type) {
-      case ActionTypeTask.BUY:
-        return { backgroundColor: colors.btnRedPrimary, name: "iconBuyTask" };
-      case ActionTypeTask.COMMENT:
-        return { backgroundColor: colors.yellowComment, name: "icCommentTask" };
       case ActionTypeTask.LIKE:
         return { backgroundColor: colors.blueChart, name: "icLike" };
       case ActionTypeTask.POST:
         return { backgroundColor: colors.greenChart, name: "icupLoad" };
+      case ActionTypeTask.COMMENT:
+        return { backgroundColor: colors.yellowComment, name: "icCommentTask" };
+      case ActionTypeTask.REFERRAL:
+        return { backgroundColor: colors.boldYellow, name: "iconPen" };
+      case ActionTypeTask.BUY:
+        return { backgroundColor: colors.btnRedPrimary, name: "iconBuyTask" };
+      case ActionTypeTask.SHARE:
+        return { backgroundColor: colors.yellow, name: "icupLoad" };
       case ActionTypeTask.COMPLETE:
         return { backgroundColor: colors.greenChart, name: "iconPen" };
       case ActionTypeTask.VIEW:
         return { backgroundColor: colors.primary, name: "icYoutube" };
       case ActionTypeTask.WATCH:
-        return { backgroundColor: colors.primary, name: "icYoutube" };
+        return { backgroundColor: colors.yellowComment, name: "icYoutube" };
       case ActionTypeTask.JOIN:
-        return { backgroundColor: colors.primary, name: "icYoutube" };
-      case ActionTypeTask.REFERRAL:
-        return { backgroundColor: colors.greenChart, name: "iconPen" };
+        return { backgroundColor: colors.blueChart, name: "iconBuyTask" };
       default:
         return {
-          backgroundColor: colors.blueChart,
+          backgroundColor: colors.primary,
           name: "icLike",
         };
     }

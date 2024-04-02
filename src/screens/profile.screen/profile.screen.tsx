@@ -19,7 +19,6 @@ import useStore from "@services/zustand/store";
 import IconBtn from "@shared-components/button/IconBtn";
 import PieChartCommon from "@shared-components/pie-chart/pie.chart";
 import IconSvg from "assets/svg";
-import TaskItemCommon from "@shared-components/task-item/task.item";
 import { translations } from "@localization";
 import { getListTaskByUser } from "@services/api/task.api";
 import createStyles from "./profile.screen.style";
@@ -32,6 +31,7 @@ import { palette } from "@theme/themes";
 import ListCodeActive from "@shared-components/code-active/list.code.active";
 import InviteCode from "@shared-components/code-share/code.invite.share";
 import eventEmitter from "@services/event-emitter";
+import TashListItem from "@shared-components/task-item/task.list.item";
 
 const SettingProfileScreen = () => {
   const theme = useTheme();
@@ -315,7 +315,7 @@ const Tasks = React.memo(() => {
         }}
       >
         {listData.slice(0, 5).map((item, index) => {
-          return <TaskItemCommon key={index} item={item} />;
+          return <TashListItem key={index} item={item} />;
         })}
       </View>
     </View>

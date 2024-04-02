@@ -44,7 +44,17 @@ const TaskItemCommon = ({ item }) => {
       case ActionTypeTask.JOIN:
         NavigationService.navigate(SCREENS.COURSE_LIST);
         break;
+      case ActionTypeTask.REFERRAL:
+        NavigationService.navigate(SCREENS.HOME);
+        break;
+      case ActionTypeTask.VIEW:
+        NavigationService.navigate(SCREENS.MY_COURES);
+        break;
+      case ActionTypeTask.SHARE:
+        NavigationService.navigate(SCREENS.HOME);
+        break;
       default:
+        NavigationService.navigate(SCREENS.HOME);
         break;
     }
   };

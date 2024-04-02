@@ -8,6 +8,7 @@ export enum ActionTypeTask {
   REFERRAL = "referral",
   WATCH = "watch",
   VIEW = "view",
+  SHARE = "share",
 }
 
 export const levelData = {
