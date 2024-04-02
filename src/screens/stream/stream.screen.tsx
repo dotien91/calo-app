@@ -113,8 +113,6 @@ function App() {
     cbFinaly: showLiveStream,
   });
 
-  console.log("listFile", listFile);
-
   const _onSelectPicture = () => {
     setShow(false);
     onSelectPicture();

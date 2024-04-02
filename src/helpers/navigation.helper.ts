@@ -1,44 +1,23 @@
-import {
-  createNavigationContainerRef,
-  StackActions,
-} from "@react-navigation/native";
-
-export const navigationRef = createNavigationContainerRef();
+import * as NavigationService from "react-navigation-helpers";
 
 export const navigate = (name, params?) => {
-  console.log("2222=====", navigationRef.isReady());
-  if (navigationRef.isReady()) {
-    navigationRef.navigate(name, params);
-  }
+  NavigationService.navigate(name, params);
 };
 
 export const push = (name, params?) => {
-  if (navigationRef.isReady()) {
-    navigationRef.dispatch(StackActions.push(name, params));
-  }
+  NavigationService.push(name, params);
 };
 
 export const pop = (n = 1) => {
-  if (navigationRef.isReady()) {
-    navigationRef.dispatch(StackActions.pop(n));
-  }
+  NavigationService.pop(n);
 };
 
 export const goBack = () => {
-  if (navigationRef.isReady()) {
-    try {
-      navigationRef.goBack();
-    } catch (error) {
-      // console.log("goBack error", error)
-    }
-  }
+  NavigationService.goBack();
 };
 
 export const getRouteName = () => {
-  if (navigationRef.isReady()) {
-    return navigationRef.getCurrentRoute()?.name;
-  }
-  return "";
+  return NavigationService.getCurrentRoute()?.name;
 };
 
 export const getActiveRouteName = (state) => {
@@ -53,7 +32,5 @@ export const getActiveRouteName = (state) => {
 };
 
 export const replace = (name, params = {}) => {
-  if (navigationRef.isReady() && getRouteName() !== name) {
-    navigationRef.dispatch(StackActions.replace(name, params));
-  }
+  NavigationService.replace(name, params);
 };

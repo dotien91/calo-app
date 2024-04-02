@@ -8,15 +8,22 @@ import {
 } from "@services/api/stream.api";
 import { v4 as uuidv4 } from "uuid";
 import { TypedUser } from "models";
+import {
+  EnumModalContentType,
+  EnumStyleModalType,
+  showSuperModal,
+} from "@helpers/super.modal.helper";
+import { translations } from "@localization";
+import { goBack } from "react-navigation-helpers";
 
 const limit = 5;
 
 export const useLiveChatHistory = ({
   liveStreamId,
-}: // isPublisher,
-{
+  isPublisher,
+}: {
   liveStreamId: string;
-  // isPublisher: boolean;
+  isPublisher: boolean;
 }) => {
   const userData = useStore((state) => state.userData);
   const [messages, setMessages] = useState([]);
@@ -39,7 +46,7 @@ export const useLiveChatHistory = ({
       id: liveStreamId,
       limit,
       page: pageNumber.current,
-      order_by: "DESC",
+      // order_by: "DESC",
     };
     getChatLiveHistory(params).then((res) => {
       isFetching.current = false;
@@ -88,7 +95,7 @@ export const useLiveChatHistory = ({
     console.log("firstjoinRoomToClient", data);
     if (!data) return;
     data = JSON.parse(data);
-    if (isMe(data)) return;
+    if (isMe(data) || !data?.display_name) return;
     const newMessage = {
       _id: uuidv4(),
       chat_content: data.display_name + " đã tham gia livestream",
@@ -109,12 +116,23 @@ export const useLiveChatHistory = ({
   // };
 
   const livestreamEndToClient = (data: string) => {
-    // console.log("onsocket livestreamEndToClient", JSON.parse(data))
+    if (isPublisher) return;
+    console.log("onsocket livestreamEndToClient", JSON.parse(data));
     if (!data) return;
     const newMessage = {
       _id: uuidv4(),
       chat_content: "Phiên livestream đã kết thúc",
     };
+    // livestreamEnded
+    showSuperModal({
+      contentModalType: EnumModalContentType.Confirm,
+      styleModalType: EnumStyleModalType.Middle,
+      data: {
+        title: translations.liveStream.endLive,
+        hideCancelBtn: true,
+        cb: goBack,
+      },
+    });
     setMessages((old) => [newMessage, ...old]);
   };
 
@@ -133,6 +151,17 @@ export const useLiveChatHistory = ({
     setViewNumber(0);
   };
 
+  const productToClient = (receiveData: any) => {
+    setShoppingProduct(receiveData);
+  };
+
+  const _productToClient = (receiveData: any) => {
+    const data = JSON.parse(receiveData);
+    if (!data?.product_ids?.length) {
+      setShoppingProduct(null);
+    }
+  };
+
   useEffect(() => {
     if (!liveStreamId) return;
     _getChatHistory();
@@ -143,6 +172,8 @@ export const useLiveChatHistory = ({
     onSocket("leaveRoomToClient", leaveRoomToClient); //viewer leave live
     onSocket("livestreamEndToClient", livestreamEndToClient); //pulisher end livestream
     emitSocket("joinLivestream", "livestream_" + liveStreamId);
+    onSocket("livestreamProductToClient", _productToClient);
+    onSocket("productToClient", productToClient);
 
     return () => {
       setShoppingProduct(null);

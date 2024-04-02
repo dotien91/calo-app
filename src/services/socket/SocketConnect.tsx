@@ -37,7 +37,6 @@ const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
   const pointNumber = useRef(userInfo?.point || 0);
 
   // const { isAuthenticated, account } = useStore(state => state.user)
-  const setShoppingProduct = useStore((state) => state.setShoppingProduct);
 
   useEffect(() => {
     if (!_getJson(USER_TOKEN) || !userData?._id) return;
@@ -86,9 +85,7 @@ const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
         .on("makeCall", makeCall)
         // .on("cointToClient", cointToClient)
         .on("pointToClient", pointToClient)
-        .on("redeemToClient", redeemToClient)
-        .on("livestreamProductToClient", _productToClient)
-        .on("productToClient", productToClient);
+        .on("redeemToClient", redeemToClient);
     }
   };
 
@@ -103,17 +100,6 @@ const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
   // const cointToClient = (receiveData: any) => {
   //   console.log("cointToClient", receiveData);
   // };
-
-  const productToClient = (receiveData: any) => {
-    setShoppingProduct(receiveData);
-  };
-
-  const _productToClient = (receiveData: any) => {
-    const data = JSON.parse(receiveData);
-    if (!data?.product_ids?.length) {
-      setShoppingProduct(null);
-    }
-  };
 
   const pointToClient = (receiveData: any) => {
     console.log("receiveData", receiveData);

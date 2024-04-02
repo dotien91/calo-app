@@ -68,7 +68,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
   const [contentModalType, setContentModalType] =
     useState<EnumModalContentType>();
   // const [contentModalType, setContentModalType] =
-  //   useState<EnumModalContentType>(EnumModalContentType.ListCourse);
+  //   useState<EnumModalContentType>(EnumModalContentType.Confirm);
   //   const [styleModalType, setStyleModalType] = useState<EnumStyleModalType>("middle");
 
   useEffect(() => {
@@ -134,20 +134,23 @@ const SuperModal: React.FC<SuperModalProps> = () => {
   };
 
   const renderConfirmView = () => {
+    const showCancelBtn = !data?.hideCancelBtn;
     return (
       <View style={styles.modalInner}>
         <Text style={styles.title}>{data?.title}</Text>
         <Text style={styles.desc}>{data?.desc}</Text>
         <View style={CommonStyle.flexRear}>
-          <TouchableOpacity
-            style={[styles.btnStyle, { flex: 1 }]}
-            onPress={closeModal}
-          >
-            <Text style={[styles.txtBtn, { color: palette.textOpacity6 }]}>
-              {data.textCancel || translations.cancel}
-            </Text>
-          </TouchableOpacity>
-          <View style={{ width: 10 }} />
+          {showCancelBtn && (
+            <TouchableOpacity
+              style={[styles.btnStyle, { flex: 1 }]}
+              onPress={closeModal}
+            >
+              <Text style={[styles.txtBtn, { color: palette.textOpacity6 }]}>
+                {data?.textCancel || translations.cancel}
+              </Text>
+            </TouchableOpacity>
+          )}
+          {showCancelBtn && <View style={{ width: 10 }} />}
           <TouchableOpacity
             style={[
               styles.btnStyle,
@@ -159,7 +162,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
             }}
           >
             <Text style={styles.txtBtn}>
-              {data.textApprove || translations.permissions.positive}
+              {data?.textApprove || translations.permissions.positive}
             </Text>
           </TouchableOpacity>
         </View>
