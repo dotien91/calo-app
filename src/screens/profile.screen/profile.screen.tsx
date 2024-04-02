@@ -110,7 +110,7 @@ const SettingProfileScreen = () => {
       <PressableBtn
         onPress={item.onPress}
         key={index}
-        style={[styles.viewItemScrollMoney, index == 0 && { marginLeft: 12 }]}
+        style={[styles.viewItemScrollMoney]}
       >
         <IconSvg
           style={{ marginHorizontal: 12 }}
@@ -133,6 +133,7 @@ const SettingProfileScreen = () => {
     return (
       <View>
         <FlatList
+          style={{ paddingHorizontal: 16 }}
           showsHorizontalScrollIndicator={false}
           horizontal
           data={listrenderPointCoin}

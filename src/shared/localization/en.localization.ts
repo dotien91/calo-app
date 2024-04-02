@@ -508,6 +508,7 @@ export default {
     listClass: "List class",
     createClassSuccess: "Create class success",
     addLesson: "Add lesson",
+    moreTime: "Add Time",
     titleLesson: "Title lesson",
     updateLesson: "Update lesson",
     addLessonSuccess: "Add lesson success",
@@ -1046,6 +1047,7 @@ export default {
     markError: "Scores must be numeric and less than 100",
     forYou: "For you",
     following: "Following",
+    emptyTask: "Empty task",
   },
   introwelcome: {
     text11: "Welcome to the world of language",
@@ -1104,7 +1106,10 @@ export default {
     text4: "Purchasing products/Courses",
     totalAmount: "Total Amount",
     totalCoin: "Total Coin",
+    emptyProduct: "Empty Product",
+    emptyUser: "Empty user",
   },
+  emptyList: "Empty list",
   withDraw: {
     header: "Withdraw",
     your_money: "Your money",
@@ -1143,6 +1148,7 @@ export default {
     hidePassage: "Hide passage",
     showPassage: "Show passage",
     waittingResult: "Waitting result",
+    emptyPraticeTest: "Empty practice test",
   },
 };
 /* eslint-disable max-len */

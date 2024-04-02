@@ -168,7 +168,7 @@ export default function IntroScreen() {
             ),
           );
         }}
-      ></FlatList>
+      />
       <View
         style={{
           position: "absolute",

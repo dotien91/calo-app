@@ -12,6 +12,7 @@ import CS from "@theme/styles";
 import useStore from "@services/zustand/store";
 import { SCREENS } from "constants";
 import eventEmitter from "@services/event-emitter";
+import EmptyResultView from "@shared-components/empty.data.component";
 
 const ListCouponForMyCourse = () => {
   const userData = useStore((state) => state.userData);
@@ -54,6 +55,9 @@ const ListCouponForMyCourse = () => {
       NavigationService.navigate(SCREENS.COUPON_CREATE);
     }
   };
+  const renderEmpty = () => {
+    return <EmptyResultView title={translations.emptyList} />;
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -62,6 +66,7 @@ const ListCouponForMyCourse = () => {
         iconNameRight={isAdd ? "plus" : undefined}
         onPressRight={pressRightHeader}
       />
+      {!isLoading && listData?.length == 0 && renderEmpty()}
       <FlatList
         data={listData}
         renderItem={renderItem}

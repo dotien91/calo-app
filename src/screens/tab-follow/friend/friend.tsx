@@ -12,6 +12,8 @@ import { TypedUser } from "models";
 import { SCREENS } from "constants";
 import LoadingList from "@shared-components/loading.list.component";
 import eventEmitter from "@services/event-emitter";
+import EmptyResultView from "@shared-components/empty.data.component";
+import { translations } from "@localization";
 
 const Friend = ({ id }: { id: string }) => {
   const theme = useTheme();
@@ -108,10 +110,14 @@ const Friend = ({ id }: { id: string }) => {
       </View>
     );
   };
+  const renderEmpty = () => {
+    return <EmptyResultView title={translations.emptyList} />;
+  };
 
   return (
     <View style={{ flex: 1, marginTop: 60 }}>
       {isLoading && <LoadingList />}
+      {!isLoading && listData.length === 0 && renderEmpty()}
       <FlatList
         style={{ marginTop: 8 }}
         data={listData}

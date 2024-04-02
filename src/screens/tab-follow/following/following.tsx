@@ -18,6 +18,7 @@ import { showToast, showWarningLogin } from "@helpers/super.modal.helper";
 import { translations } from "@localization";
 import LoadingList from "@shared-components/loading.list.component";
 import eventEmitter from "@services/event-emitter";
+import EmptyResultView from "@shared-components/empty.data.component";
 const Following = ({ id }) => {
   const theme = useTheme();
   const { colors } = theme;
@@ -261,6 +262,10 @@ const Following = ({ id }) => {
     );
   };
 
+  const renderEmpty = () => {
+    return <EmptyResultView title={translations.emptyList} />;
+  };
+
   return (
     <View style={{ flex: 1, marginTop: 60 }}>
       {isLoading && <LoadingList />}
@@ -276,6 +281,8 @@ const Following = ({ id }) => {
         scrollEventThrottle={16}
         removeClippedSubviews={true}
       /> */}
+      {!isLoading && listData.length === 0 && renderEmpty()}
+
       <FlatList
         data={listData}
         renderItem={renderItemSelected}
