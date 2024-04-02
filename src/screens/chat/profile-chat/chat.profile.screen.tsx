@@ -113,7 +113,6 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
   const currentMediaIds = useStore((state) => state.currentMediaIds);
   const mediaIds =
     currentMediaIds.find((item) => item?.id == chat_room_id._id)?.data || [];
-  console.log("mediaIds", mediaIds);
   const mediaIdsShow = mediaIds.reverse().slice(mediaIds, numberItemsMediaShow);
   const userData = useStore((state) => state.userData);
   const setSearchModeChat = useStore((state) => state.setSearchModeChat);
@@ -375,7 +374,8 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
       <View style={styles.section}>
         <Text style={styles.titleSection}>{item.title}</Text>
         <View>{item.data.map((_item) => renderMenu(_item))}</View>
-        {(roomDetail?.chat_room_id?.room_private === 1 &&
+        {(isGroup &&
+          roomDetail?.chat_room_id?.room_private === 1 &&
           roomDetail?.user_id === userData?._id) ||
         roomDetail?.chat_room_id?.room_private === 0
           ? renderChangeNameGroup()
@@ -412,8 +412,6 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
       room_name: value,
     };
     changeNameGroup(data).then((res: any) => {
-      console.log("dasdasdasd", res);
-
       if (!res.isError) {
         eventEmitter.emit("ChangeNameGroup");
         NavigationService.pop(2);

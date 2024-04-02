@@ -176,6 +176,7 @@ const AddUserGroupChatScreen: React.FC<AddUserGroupChatScreenProps> = () => {
       user_id: partner_id._id,
       chat_room_id: _ids.toString(),
       user_permission: "write",
+      room_type: "group",
     };
     addUserToRoom(data).then((res) => {
       if (!res.isError) {
