@@ -224,6 +224,10 @@ export default {
     uploadFileFaild: "File upload failed. Please try again!",
     uploadImageFaild: "Image upload failed. Please try again!",
     uploadVideoFaild: "Video upload failed. Please try again!",
+    sharePost:
+      "Join the IELTS Hunter community today and receive rewards of up to 1000 Points.",
+    shareCode: (txt: string) =>
+      `Learn IELTS with me and win rewards. Join and get up to 10,000 Coins.Enter referral code "${txt}" to receive rewards.`,
   },
   navigation: {
     dashboard: "Dashboard",
