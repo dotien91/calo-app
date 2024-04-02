@@ -14,6 +14,7 @@ export const SCREENS = {
   VERIFY_CODE: "VerifyCode",
   NEW_PASSWORD: "NewPassword",
   HOME: "Home",
+  HOME_TAB: "HomeTab",
   SEARCH: "Search",
   NOTIFICATION: "Notification",
   PROFILE: "Profile1",
