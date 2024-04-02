@@ -487,6 +487,7 @@ export default {
     viewMore: "Xem thêm",
     hideLess: "Ẩn bớt",
     rate: "Đánh giá",
+    emptyRate: "Chưa có đánh giá",
     rankTeacher: "Xếp hạng giảng viên",
     student: "Học viên",
     courseContent: "Nội dung khoá học",

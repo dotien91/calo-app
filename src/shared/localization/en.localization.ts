@@ -412,6 +412,7 @@ export default {
     viewMore: "View More",
     hideLess: "Hide less",
     rate: "Rate",
+    emptyRate: "No reviews yet",
     rankTeacher: "Instructor ratings",
     student: "Student",
     courseContent: "Course content",
