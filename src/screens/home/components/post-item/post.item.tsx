@@ -84,7 +84,6 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
     const param = { id: data._id, data: data };
     NavigationService.push(SCREENS.POST_DETAIL, param);
   };
-  console.log("datadatadata", data);
   return (
     <View style={styles.container}>
       <AvatarPost
