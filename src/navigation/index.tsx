@@ -103,6 +103,8 @@ import ClassRoomScreen from "@screens/call-class/class.room.screen";
 import WebviewScreen from "@screens/webview/Webview";
 import CourseRecommendScreen from "@screens/course/course-recommend/course.recommend";
 import HomeAffilite from "@screens/affiliate/intro.affiliate.screen";
+import TextBase from "@shared-components/TextBase";
+import { translations } from "@localization";
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -156,12 +158,44 @@ const Navigation = () => {
       />
     );
   };
+  const renderLable = (route: any, color: any) => {
+    let label = translations.homes;
+    switch (route.name) {
+      case SCREENS.COURSE_LIST:
+        label = translations.courses;
+        break;
+      case SCREENS.CHAT:
+        label = translations.chats;
+        break;
+      case SCREENS.NOTIFICATION:
+        label = translations.notifications.notifications;
+        break;
+      case SCREENS.SETTINGPROFILESCREEN:
+        label = translations.profile.profile;
+        break;
+      case SCREENS.SETTING:
+        label = translations.setting;
+        break;
+      case SCREENS.DISCOVERSCREEN:
+        label = translations.discovers;
+        break;
+      default:
+        label = translations.homes;
+        break;
+    }
+    return (
+      <TextBase fontSize={12} style={{ color: color }}>
+        {label}
+      </TextBase>
+    );
+  };
 
   const renderTabNavigation = () => {
     return (
       <Tab.Navigator
         screenOptions={({ route }) => ({
           headerShown: false,
+          tabBarLabel: ({ color }) => renderLable(route, color),
           tabBarIcon: ({ focused, color, size }) =>
             renderTabIcon(route, focused, color, size),
           tabBarActiveTintColor: palette.primary,

@@ -10,10 +10,11 @@ import { ICourseItem } from "models/course.model";
 import useStore from "@services/zustand/store";
 import { getCourseSuggest } from "@services/api/course.api";
 import CourseCategoryTitle from "@screens/course-tab/course-list/course.category.title";
+import LoadingItem from "@shared-components/loading.item";
 
 const CourseView = () => {
   const userData = useStore((state) => state.userData);
-  const { listData } = useListData<ICourseItem>(
+  const { listData, isLoading } = useListData<ICourseItem>(
     {
       auth_id: userData?._id,
       order_by: "DESC",
@@ -42,7 +43,7 @@ const CourseView = () => {
     }
   };
 
-  if (!listData.length) return null;
+  if (!listData.length && !isLoading) return null;
 
   return (
     <View style={styles.container}>
@@ -51,6 +52,7 @@ const CourseView = () => {
         title={translations.recommendCourse}
         onPress={onSeeAll}
       />
+      {isLoading && <LoadingItem />}
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
