@@ -202,7 +202,7 @@ export default function AddWorkStudentScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={CS.safeAreaView}>
       <Header
         text={isTeacher ? data?.thread_title : translations.homework.yourWork}
       ></Header>

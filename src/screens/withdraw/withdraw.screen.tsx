@@ -229,7 +229,7 @@ const WithdrawScreen: React.FC<WithdrawProps> = () => {
 
   return (
     <TouchableWithoutFeedback onPress={_dismissKeyboard}>
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={CS.safeAreaView}>
         <Header text={translations.withDraw.header} />
         <View style={{ padding: 16, paddingTop: 4, flex: 1 }}>
           {renderYourAmount()}

@@ -205,7 +205,7 @@ const AddBankScreen: React.FC<AddBankScreenProps> = () => {
   };
   return (
     <TouchableWithoutFeedback onPress={_dismissKeyboard}>
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={CS.safeAreaView}>
         <Header text={translations.withDraw.bank_acc} />
         <View style={{ padding: 16, paddingTop: 4, flex: 1 }}>
           {renderBank()}

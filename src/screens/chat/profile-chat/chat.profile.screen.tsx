@@ -33,7 +33,7 @@ const widthMedia = (Device.width - 3 * 8 - 24) / 4;
 const profileChatMenu = [
   {
     type: "GROUP_ACTION",
-    title: "Group action",
+    title: translations.chat.groupAction,
     data: [
       {
         icon: "users",
@@ -444,7 +444,7 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={CommonStyle.safeAreaView}>
       <Header />
       <ScrollView contentContainerStyle={{ paddingTop: 16 }}>
         {renderTop()}

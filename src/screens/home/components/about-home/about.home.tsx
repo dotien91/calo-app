@@ -43,7 +43,7 @@ const AboutHome = () => {
       textColor: "#2BC456",
       iconColor: "#2BC456",
       icon: "icAffiliate",
-      screen: SCREENS.AFFILIATE,
+      screen: SCREENS.HOME_AFFILIATE,
       color: "#E8F7EF",
     },
   ];

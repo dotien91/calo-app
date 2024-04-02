@@ -37,7 +37,7 @@ const PracticeHomeScreen = () => {
   };
 
   return (
-    <SafeAreaView style={CS.container}>
+    <SafeAreaView style={CS.safeAreaView}>
       <Header text={translations.ieltsPractice.praticeTest} />
       <View style={styles.viewGroup}>
         <ItemView

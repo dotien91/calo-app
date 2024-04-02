@@ -436,7 +436,7 @@ const CheckoutScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={CS.safeAreaView}>
       <View style={{ flex: 1 }}>
         <Header text="Checkout" />
         <ScrollView

@@ -77,3 +77,13 @@ export async function deleteBank(id: string) {
     return response;
   });
 }
+
+export async function getCommission(params) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "config/list/affiliate",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}

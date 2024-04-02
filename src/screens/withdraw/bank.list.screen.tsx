@@ -176,7 +176,7 @@ const BankListScreen: React.FC<BankListProps> = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={CS.safeAreaView}>
       <Header text={translations.withDraw.bank_title} />
       <View style={{ padding: 16, paddingTop: 4, flex: 1 }}>
         {renderBanks()}

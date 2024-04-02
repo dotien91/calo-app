@@ -110,6 +110,7 @@ const FilterAffiliate = ({ data }: FilterAffiliateProps) => {
             <Button
               onPress={onPressReset}
               backgroundColor={palette.btnInactive}
+              textColor={palette.textInput}
               text={translations.reset}
               style={CS.flex1}
             />
@@ -132,6 +133,7 @@ const FilterAffiliate = ({ data }: FilterAffiliateProps) => {
               onPress={onPressReset}
               backgroundColor={palette.btnInactive}
               text={translations.reset}
+              textColor={palette.textInput}
               style={CS.flex1}
             />
             <Button
@@ -153,6 +155,7 @@ const FilterAffiliate = ({ data }: FilterAffiliateProps) => {
               onPress={onPressReset}
               backgroundColor={palette.btnInactive}
               text={translations.reset}
+              textColor={palette.textInput}
               style={CS.flex1}
             />
             <Button

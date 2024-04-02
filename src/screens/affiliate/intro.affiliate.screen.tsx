@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   ImageBackground,
   SafeAreaView,
@@ -20,6 +20,7 @@ import formatMoney from "@shared-components/input-money/format.money";
 import useStore from "@services/zustand/store";
 import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "constants";
+import { getCommission } from "@services/api/affiliate.api";
 
 const HomeAffilite = () => {
   const dataText = [
@@ -46,6 +47,27 @@ const HomeAffilite = () => {
     NavigationService.navigate(SCREENS.AFFILIATE);
   };
 
+  const userData = useStore((state) => state.userData);
+  const isShowMoney =
+    userData?.user_role === "teacher" || userData?.user_role === "admin";
+
+  const [commission, setCommission] = useState([]);
+
+  const _getCommission = () => {
+    const paramsRequest = {};
+    getCommission(paramsRequest).then((res) => {
+      if (!res.isError) {
+        console.log("commission Rate====", res.data.config.data_content);
+
+        setCommission(res.data.config.data_content);
+      }
+    });
+  };
+
+  useEffect(() => {
+    _getCommission();
+  }, []);
+
   return (
     <SafeAreaView
       style={{
@@ -62,20 +84,40 @@ const HomeAffilite = () => {
           >
             <PressableBtn onPress={handleSelect} style={styles.viewBtn}>
               <View>
-                <TextBase
-                  fontSize={14}
-                  fontWeight="400"
-                  color={EnumColors.white}
-                >
-                  {translations.affiliate.totalAmount}
-                </TextBase>
-                <TextBase
-                  fontSize={16}
-                  fontWeight="600"
-                  color={EnumColors.white}
-                >
-                  {`${formatMoney(userInfo?.current_token || 0)} VND`}
-                </TextBase>
+                {isShowMoney && (
+                  <View>
+                    <TextBase
+                      fontSize={14}
+                      // fontWeight="400"
+                      color={EnumColors.white}
+                    >
+                      {translations.affiliate.totalAmount}
+                    </TextBase>
+                    <TextBase
+                      fontSize={16}
+                      fontWeight="600"
+                      color={EnumColors.white}
+                    >
+                      {`${formatMoney(userInfo?.current_token || 0)} VND`}
+                    </TextBase>
+                  </View>
+                )}
+                <View>
+                  <TextBase
+                    fontSize={14}
+                    // fontWeight="400"
+                    color={EnumColors.white}
+                  >
+                    {translations.affiliate.totalCoin}
+                  </TextBase>
+                  <TextBase
+                    fontSize={16}
+                    fontWeight="600"
+                    color={EnumColors.white}
+                  >
+                    {`${formatMoney(userInfo?.current_coin || 0)} IHC`}
+                  </TextBase>
+                </View>
               </View>
               <IconSvg name="icNext" size={40} color={palette.white} />
             </PressableBtn>
@@ -117,7 +159,9 @@ const HomeAffilite = () => {
                 >
                   {translations.affiliate.description}
                   <TextBase fontWeight="700">
-                    {translations.affiliate.description2}
+                    {`${commission * 100}${
+                      translations.affiliate.description2
+                    }`}
                   </TextBase>
                   {translations.affiliate.description3}
                   <IconSvg name="icCoin" color={palette.gold} size={14} />
@@ -143,6 +187,8 @@ const styles = StyleSheet.create({
   styleImage: {
     height: 202,
     width: "100%",
+    justifyContent: "flex-end",
+    paddingBottom: 10,
   },
   viewCommission: {
     marginHorizontal: 16,
@@ -171,7 +217,7 @@ const styles = StyleSheet.create({
   viewBtn: {
     flexDirection: "row",
     marginHorizontal: 16,
+    alignItems: "flex-end",
     justifyContent: "space-between",
-    bottom: -140,
   },
 });
