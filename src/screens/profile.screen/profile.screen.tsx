@@ -51,6 +51,9 @@ const SettingProfileScreen = () => {
         NavigationService.navigate(SCREENS.HOME_AFFILIATE, { type: "token" }),
       end: "VND",
       color: palette.colorMoney,
+      hide: !(
+        userData?.user_role === "teacher" || userData?.user_role === "admin"
+      ),
     },
     {
       icon: "icCoinStar",
@@ -101,6 +104,8 @@ const SettingProfileScreen = () => {
     item: any;
     index: number;
   }) => {
+    console.log("item...", item);
+    if (item.hide) return null;
     return (
       <PressableBtn
         onPress={item.onPress}
