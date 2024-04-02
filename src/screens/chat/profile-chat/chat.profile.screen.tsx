@@ -27,6 +27,7 @@ import MessageMediaView from "../room-chat/components/message/message.media.view
 import { Device } from "@utils/device.ui.utils";
 import eventEmitter from "@services/event-emitter";
 import Header from "@shared-components/header/Header";
+import { navigate } from "@helpers/navigation.helper";
 
 const widthMedia = (Device.width - 3 * 8 - 24) / 4;
 
@@ -133,7 +134,14 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
     });
   };
 
-  const openUserProfile = () => {};
+  const openUserProfile = () => {
+    navigate(SCREENS.PROFILE_CURRENT_USER, {
+      _id: partner_id?._id,
+      userInfo: {
+        ...partner_id
+      },
+    });
+  };
 
   const _blockUser = () => {
     const params = { partner_id: partner._id };
