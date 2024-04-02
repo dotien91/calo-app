@@ -232,6 +232,10 @@ export default {
     uploadFileFaild: "Tải file lên thất bại. Vui lòng thử lại!",
     uploadImageFaild: "Tải ảnh lên thất bại. Vui lòng thử lại!",
     uploadVideoFaild: "Tải video lên thất bại. Vui lòng thử lại!",
+    sharePost:
+      "Tham gia cộng đồng IELTS Hunter ngay hôm nay và nhận thưởng lên tới 1000 Point",
+    shareCode: (txt: string) =>
+      `Học IELTS và nhận thưởng cùng tớ. Tham gia và nhận thưởng lên tới 10000 Coin, Nhập mã giới thiệu ${txt} để nhận thưởng`,
   },
   navigation: {
     dashboard: "Trang chủ",

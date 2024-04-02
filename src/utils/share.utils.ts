@@ -8,6 +8,7 @@ const BASEURL = "https://ieltshunter.io";
 export const sharePost = (post_slug: string) => {
   const shareOptions = {
     title: translations.post.share,
+    message: translations.post.sharePost,
     url: `${BASEURL}/post/detail/${post_slug}`,
   };
   Share.open(shareOptions)
@@ -49,7 +50,7 @@ export const shareCourse = (courseId: string) => {
 export const shareCodeInvite = (code: string) => {
   const shareOptions = {
     title: translations.post.share,
-    message: `${code}`,
+    message: translations.post.shareCode(code),
   };
   Share.open(shareOptions)
     .then((res) => {
