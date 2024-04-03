@@ -138,7 +138,7 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
     navigate(SCREENS.PROFILE_CURRENT_USER, {
       _id: partner_id?._id,
       userInfo: {
-        ...partner_id
+        ...partner_id,
       },
     });
   };

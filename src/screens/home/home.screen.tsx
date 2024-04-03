@@ -17,7 +17,6 @@ import AboutHome from "./components/about-home/about.home";
 import eventEmitter from "@services/event-emitter";
 import CustomRefreshControl from "./components/refesh-controler/customRefeshControler";
 import { translations } from "@localization";
-import { getStatusBarHeight } from "react-native-safearea-height";
 
 const initialLayout = { width: Dimensions.get("window").width };
 
@@ -91,9 +90,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
 
   // return <IapTest />
   return (
-    <SafeAreaView
-      style={[CommonStyle.safeAreaView, { marginTop: getStatusBarHeight() }]}
-    >
+    <SafeAreaView style={[CommonStyle.safeAreaView]}>
       <HeaderHome />
       <CollapsibleHeaderTabView
         lazy={true}
