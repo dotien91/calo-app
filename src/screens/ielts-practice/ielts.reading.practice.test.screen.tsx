@@ -24,11 +24,17 @@ import PressableBtn from "@shared-components/button/PressableBtn";
 import Button from "@shared-components/button/Button";
 import { palette } from "@theme/themes";
 import AnswerChildInput from "./component/answer/answer.child.input";
-import { showToast } from "@helpers/super.modal.helper";
+import {
+  EnumModalContentType,
+  EnumStyleModalType,
+  showSuperModal,
+  showToast,
+} from "@helpers/super.modal.helper";
 import QuestionSpeakingItem from "./component/question/question.speaking.item";
 import eventEmitter from "@services/event-emitter";
 import LoadingList from "@shared-components/loading.list.component";
 import AppSound from "./component/sound.toolkit";
+import lotieSuccess from "assets/lotties/success.json";
 
 const itemWidth = Device.width;
 
@@ -174,9 +180,15 @@ const IeltsReadingPacticeScreen = () => {
 
     submitTest(dataSubmit).then((res) => {
       if (!res.isError) {
-        showToast({
-          type: "success",
-          message: translations.ieltsPractice.submitSucces,
+        showSuperModal({
+          contentModalType: EnumModalContentType.Confirm,
+          styleModalType: EnumStyleModalType.Middle,
+          data: {
+            hideCancelBtn: true,
+            linkLotties: lotieSuccess,
+            title: translations.ieltsPractice.submitSucces,
+            desc: translations.ieltsPractice.desSubmitSuccess,
+          },
         });
         NavigationService.goBack();
       } else {

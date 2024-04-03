@@ -1662,6 +1662,7 @@ export default {
     answers: "Câu trả lời",
     questions: "Câu hỏi",
     submitSucces: "Nộp bài thành công",
+    desSubmitSuccess: "Kết quả sẽ có sau 5-10 phút",
     submit: "Nộp bài",
     timeout: "Hết giờ!",
     hidePassage: "Thu gọn đoạn hội thoại",
