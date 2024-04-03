@@ -258,7 +258,8 @@ const styles = StyleSheet.create({
   },
   wrapBtn: {
     position: "absolute",
-    bottom: 16,
+    bottom: 0,
+    paddingBottom: 16,
     right: 16,
     left: 16,
     zIndex: 1,
