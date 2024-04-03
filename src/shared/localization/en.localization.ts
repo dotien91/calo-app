@@ -1148,6 +1148,7 @@ export default {
     answers: "Answers",
     questions: "Questions",
     submitSucces: "Submit success",
+    desSubmitSuccess: "The results will be available in 5-10 minutes",
     timeout: "Timeout",
     submit: "Submit",
     hidePassage: "Hide passage",

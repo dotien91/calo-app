@@ -57,10 +57,16 @@ const AboutHome = () => {
 
   const _onPress = (item) => {
     if (item?.id == EnumCourseType.tutor) {
-      setCourseCurrentType({ id: EnumCourseType.tutor, name: "Tutor" });
+      setCourseCurrentType({
+        id: EnumCourseType.tutor,
+        name: translations.course.teacher,
+      });
     }
     if (item?.id == EnumCourseType.course) {
-      setCourseCurrentType({ id: EnumCourseType.course, name: "Course" });
+      setCourseCurrentType({
+        id: EnumCourseType.course,
+        name: translations.course.course,
+      });
     }
     NavigationService.navigate(item.screen, {
       params: item.params,

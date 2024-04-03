@@ -235,7 +235,7 @@ export default {
     sharePost:
       "Tham gia cộng đồng IELTS Hunter ngay hôm nay và nhận thưởng lên tới 1000 Point",
     shareCode: (txt: string) =>
-      `Học IELTS và nhận thưởng cùng tớ. Tham gia và nhận thưởng lên tới 10000 Coin, Nhập mã giới thiệu ${txt} để nhận thưởng`,
+      `Học IELTS và nhận thưởng cùng tớ. Tham gia và nhận thưởng lên tới 10000 Coin, Nhập mã giới thiệu "${txt}" để nhận thưởng`,
   },
   navigation: {
     dashboard: "Trang chủ",
@@ -590,6 +590,7 @@ export default {
     endTime: "Ngày kết thúc",
     limitMember: "Học viên tối đa",
     member: (txt: string | number) => `Học viên ${txt}`,
+    wriveAReview: "Viết đánh giá",
     chat: "Nhắn tin",
     addLession: "Thêm buổi học",
     addFileCourse: "Chọn tệp đính kèm",
@@ -897,6 +898,7 @@ export default {
     enterCodeFaild: "Mã giới thiệu không đúng, vui lòng thử lại.",
     send: "Gửi",
     emptyListInvite: "Chưa có người nhập mã của bạn",
+    codeActivations: "Kích hoạt mã",
   },
   categories: {
     addCategory: "Thêm chuyên mục",
@@ -945,6 +947,8 @@ export default {
     change: "Đổi ảnh",
     warning: "Chọn ảnh trước khi bắt đầu live stream",
   },
+  startChatDesc:
+    "Gửi một tin nhắn hỏi về hành trình học tập của họ hoặc thảo luận về một sở thích chung để bắt đầu một cuộc trò chuyện",
   challenge: {
     suggestPickChallenge: "Tham gia các thử thách phía dưới ngay nào!",
     mineChallenge: "Đang tham gia",
@@ -1658,6 +1662,7 @@ export default {
     answers: "Câu trả lời",
     questions: "Câu hỏi",
     submitSucces: "Nộp bài thành công",
+    desSubmitSuccess: "Kết quả sẽ có sau 5-10 phút",
     submit: "Nộp bài",
     timeout: "Hết giờ!",
     hidePassage: "Thu gọn đoạn hội thoại",

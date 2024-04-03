@@ -242,6 +242,11 @@ export const quickFilterCourse = [
     type: "skills",
   },
   {
+    name: translations.course.Speaking,
+    id: "Speaking",
+    type: "skills",
+  },
+  {
     name: translations.course.reading,
     id: "Reading",
     type: "skills",
@@ -249,11 +254,6 @@ export const quickFilterCourse = [
   {
     name: translations.course.writing,
     id: "Writing",
-    type: "skills",
-  },
-  {
-    name: translations.course.Speaking,
-    id: "Speaking",
     type: "skills",
   },
 ];

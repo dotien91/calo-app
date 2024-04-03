@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import Modal from "react-native-modal";
+import AnimatedLottieView from "lottie-react-native";
 
 import eventEmitter from "@services/event-emitter";
 import { palette } from "@theme/themes";
@@ -135,10 +136,22 @@ const SuperModal: React.FC<SuperModalProps> = () => {
 
   const renderConfirmView = () => {
     const showCancelBtn = !data?.hideCancelBtn;
+    const linkLotties = !!data?.linkLotties;
     return (
       <View style={styles.modalInner}>
         <Text style={styles.title}>{data?.title}</Text>
         <Text style={styles.desc}>{data?.desc}</Text>
+        <View style={styles.viewLotties}>
+          {linkLotties && (
+            <AnimatedLottieView
+              source={data?.linkLotties}
+              style={styles.lotties}
+              loop
+              speed={1.5}
+              autoPlay
+            />
+          )}
+        </View>
         <View style={CommonStyle.flexRear}>
           {showCancelBtn && (
             <TouchableOpacity
@@ -379,6 +392,15 @@ const styles = StyleSheet.create({
     left: 14,
     top: 24,
     zIndex: 1,
+  },
+  viewLotties: {
+    width: "100%",
+    ...CommonStyle.center,
+  },
+  lotties: {
+    width: 100,
+    height: 100,
+    marginBottom: 10,
   },
 });
 
