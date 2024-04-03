@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   FlatList,
   Pressable,
@@ -32,6 +32,7 @@ import ListCodeActive from "@shared-components/code-active/list.code.active";
 import InviteCode from "@shared-components/code-share/code.invite.share";
 import eventEmitter from "@services/event-emitter";
 import TashListItem from "@shared-components/task-item/task.list.item";
+import { getListScore } from "@services/api/pie.chart.api";
 
 const SettingProfileScreen = () => {
   const theme = useTheme();
@@ -70,28 +71,54 @@ const SettingProfileScreen = () => {
     },
   ];
 
-  const data = [
-    {
-      percentage: 10,
-      color: colors.btnRedPrimary,
-      title: translations.task.listening,
-    },
-    {
-      percentage: 20,
-      color: colors.gold,
-      title: translations.task.speaking,
-    },
-    {
-      percentage: 30,
-      color: colors.blueChart,
-      title: translations.task.reading,
-    },
-    {
-      percentage: 40,
-      color: colors.greenChart,
-      title: translations.task.writing,
-    },
-  ];
+  const [data, setData] = useState([]);
+  const [point, setPoint] = useState([]);
+
+  const _getListScore = () => {
+    const paramsRequest = {};
+    getListScore(paramsRequest).then((res) => {
+      if (!res.isError) {
+        const sum =
+          res.data.listening_percentage_average +
+          res.data.speaking_percentage_average +
+          res.data.reading_percentage_average +
+          res.data.writing_percentage_average;
+        setPoint(sum / 4);
+
+        const dataRes = [
+          {
+            percentage:
+              (res.data.listening_percentage_average * 100) / (sum || 1),
+            color: colors.btnRedPrimary,
+            title: translations.task.listening,
+          },
+          {
+            percentage:
+              (res.data.speaking_percentage_average * 100) / (sum || 1),
+            color: colors.gold,
+            title: translations.task.speaking,
+          },
+          {
+            percentage:
+              (res.data.reading_percentage_average * 100) / (sum || 1),
+            color: colors.blueChart,
+            title: translations.task.reading,
+          },
+          {
+            percentage:
+              (res.data.writing_percentage_average * 100) / (sum || 1),
+            color: colors.greenChart,
+            title: translations.task.writing,
+          },
+        ];
+        setData(dataRes);
+      }
+    });
+  };
+
+  useEffect(() => {
+    _getListScore();
+  }, []);
 
   const onPressHeaderRight = () => {
     NavigationService.navigate(SCREENS.SETTING);
@@ -201,7 +228,7 @@ const SettingProfileScreen = () => {
     return (
       <View style={{ marginHorizontal: 16 }}>
         <Text style={styles.textYourScore}>{translations.task.yourscore}</Text>
-        <PieChartCommon sections={data}></PieChartCommon>
+        <PieChartCommon sections={data} point={point}></PieChartCommon>
         <Pressable onLongPress={openHiddenPage} style={styles.viewPowered}>
           <Text style={styles.textPoweredBy}>{translations.task.powered}</Text>
           <IconSvg name="logoIeltsHunter" width={32} height={18} />

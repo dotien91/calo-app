@@ -1,16 +1,14 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import Pie from "react-native-pie";
-import { useTheme } from "@react-navigation/native";
 import CS from "@theme/styles";
 import { translations } from "@localization";
+import { palette } from "@theme/themes";
 
-const PieChartCommon = ({ sections }) => {
-  const theme = useTheme();
-  const { colors } = theme;
+const PieChartCommon = ({ sections, point }) => {
   return (
-    <View style={{ flexDirection: "row" }}>
-      <View style={{ width: 175, alignItems: "center" }}>
+    <View style={style.container}>
+      <View style={style.viewPie}>
         <Pie
           radius={80}
           innerRadius={50}
@@ -18,28 +16,16 @@ const PieChartCommon = ({ sections }) => {
           dividerSize={1}
           strokeCap={"butt"}
         />
-        <View
-          style={{
-            position: "absolute",
-            width: 100,
-            height: 160,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Text style={{ ...CS.hnSemiBold, fontSize: 16, color: colors.text }}>
-            {/* Score: 2.5 */}
-            {translations.task.score}: 2.5
+        <View style={style.viewScore}>
+          <Text style={style.txtScore}>
+            {translations.task.score}: {point}
           </Text>
         </View>
       </View>
-      <View style={{ flex: 1, justifyContent: "space-evenly", marginLeft: 16 }}>
+      <View style={style.viewSkillScore}>
         {sections.map((item, index) => {
           return (
-            <View
-              key={index}
-              style={{ flexDirection: "row", alignItems: "center" }}
-            >
+            <View key={index} style={CS.row}>
               <View
                 style={{
                   height: 10,
@@ -49,34 +35,9 @@ const PieChartCommon = ({ sections }) => {
                   marginRight: 16,
                 }}
               ></View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  borderBottomWidth: 1,
-                  paddingVertical: 10,
-                  borderBottomColor: colors.grey3,
-                }}
-              >
-                <Text
-                  style={{
-                    ...CS.hnRegular,
-                    color: colors.textOpacity6,
-                    fontSize: 14,
-                    minWidth: 60,
-                  }}
-                >
-                  {item.title}
-                </Text>
-                <Text
-                  style={{
-                    ...CS.hnRegular,
-                    color: colors.textOpacity6,
-                    fontSize: 14,
-                    marginLeft: 24,
-                  }}
-                >
-                  {item.percentage} %
-                </Text>
+              <View style={style.viewText}>
+                <Text style={style.styleTxt}>{item.title}</Text>
+                <Text style={style.viewPercentage}>{item.percentage} %</Text>
               </View>
             </View>
           );
@@ -86,3 +47,48 @@ const PieChartCommon = ({ sections }) => {
   );
 };
 export default PieChartCommon;
+
+const style = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+  },
+  viewPie: {
+    width: 175,
+    alignItems: "center",
+  },
+  viewScore: {
+    position: "absolute",
+    width: 100,
+    height: 160,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  txtScore: {
+    ...CS.hnSemiBold,
+    fontSize: 16,
+    color: palette.text,
+  },
+  viewSkillScore: {
+    flex: 1,
+    justifyContent: "space-evenly",
+    marginLeft: 16,
+  },
+  viewText: {
+    flexDirection: "row",
+    borderBottomWidth: 1,
+    paddingVertical: 10,
+    borderBottomColor: palette.grey3,
+  },
+  styleTxt: {
+    ...CS.hnRegular,
+    color: palette.textOpacity6,
+    fontSize: 14,
+    minWidth: 60,
+  },
+  viewPercentage: {
+    ...CS.hnRegular,
+    color: palette.textOpacity6,
+    fontSize: 14,
+    marginLeft: 24,
+  },
+});
