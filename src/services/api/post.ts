@@ -13,7 +13,7 @@ interface MediaAsset extends TypedCropImage, Asset {
 //   callback: TypedMedia;
 // }
 
-export async function uploadMedia(file: MediaAsset) {
+export async function uploadMedia(file: MediaAsset, onUploadProgress?: any) {
   const newForm = new FormData();
   newForm.append("file[]", file);
   return request({
@@ -21,6 +21,7 @@ export async function uploadMedia(file: MediaAsset) {
     url: `${UPLOAD_URL}upload-media?callback=${BASEURL}media/create`,
     data: newForm,
     customHeader: { "Content-Type": "multipart/form-data" },
+    onUploadProgress: onUploadProgress ? onUploadProgress : () => {},
   }).then((response) => {
     if (Array.isArray(response.data)) {
       return response.data;
