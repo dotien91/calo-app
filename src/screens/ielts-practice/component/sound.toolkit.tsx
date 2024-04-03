@@ -278,7 +278,7 @@ export default class AppSound extends Component<Props, State> {
             style={{ marginHorizontal: 4 }}
             useNativeDriver={true}
           ></Progress.Bar>
-          <TextBase style={{ width: 28, textAlign: "right" }} fontSize={12}>
+          <TextBase style={{ width: 33, textAlign: "right" }} fontSize={12}>
             {this.fancyTimeFormat(
               (this.player?.duration - this.player?.currentTime) / 1000,
             )}

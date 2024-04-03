@@ -41,15 +41,16 @@ interface QuestionItemProps extends IQuestion {
 const QuestionItem = ({
   part,
   index,
-  title,
+  // title,
   content,
   child,
   isTimeout,
   setAnsweData,
+  answer,
+  ...res
 }: QuestionItemProps) => {
   const isWriting = part == EnumTestType.Writing;
   const isReading = part == EnumTestType.Reading;
-
   const _onChangeText = (v) => {
     setAnsweData({ index, content: v });
   };
@@ -77,6 +78,7 @@ const QuestionItem = ({
           setAnsweData={setAnsweData}
           isTimeout={isTimeout}
           data={child}
+          answer={answer}
         />
       );
     return null;
@@ -85,9 +87,9 @@ const QuestionItem = ({
     <KeyboardAwareScrollView extraHeight={isWriting ? 120 : 30}>
       <ScrollView>
         <View style={styles.box}>
-          <TextBase color="text" fontWeight="600">
+          {/* <TextBase color="text" fontWeight="600">
             {title}
-          </TextBase>
+          </TextBase> */}
           <HtmlView content={content} showViewMore={isReading} />
           {renderSelectBox()}
           {renderInput()}

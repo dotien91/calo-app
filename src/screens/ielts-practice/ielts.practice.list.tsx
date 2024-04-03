@@ -66,7 +66,7 @@ const IeltsPraticeList = () => {
         const resData = res.data;
         const newData = listTest.map((item) => {
           const findItem = resData.find(
-            (_item) => _item.test_id._id == item._id,
+            (_item) => _item.test_id?._id == item?._id,
           );
           return {
             ...item,
