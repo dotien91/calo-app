@@ -105,6 +105,7 @@ import CourseRecommendScreen from "@screens/course/course-recommend/course.recom
 import HomeAffilite from "@screens/affiliate/intro.affiliate.screen";
 import TextBase from "@shared-components/TextBase";
 import { translations } from "@localization";
+import { getBottomSpace } from "react-native-iphone-screen-helper";
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -196,13 +197,15 @@ const Navigation = () => {
         screenOptions={({ route }) => ({
           headerShown: false,
           tabBarLabel: ({ color }) => renderLable(route, color),
-          tabBarIcon: ({ focused, color, size }) =>
-            renderTabIcon(route, focused, color, size),
+          tabBarIcon: ({ focused, color }) =>
+            renderTabIcon(route, focused, color, 24),
           tabBarActiveTintColor: palette.primary,
           tabBarInactiveTintColor: "gray",
           tabBarStyle: {
             borderTopColor: palette.borderColor,
             backgroundColor: isDarkMode ? palette.black : palette.white,
+            height: getBottomSpace() + 48,
+            marginTop: 4,
           },
         })}
       >

@@ -24,6 +24,7 @@ import createStyles from "./chat.room.screen.style";
 import LoadingList from "@shared-components/loading.list.component";
 import LottieView from "lottie-react-native";
 import CS from "@theme/styles";
+import { getBottomSpace } from "react-native-iphone-screen-helper";
 interface ChatRoomScreenProps {
   id?: string;
 }
@@ -268,6 +269,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
         renderInputToolbar={renderInputToolbar}
         renderChatFooter={_renderChatFooter}
       />
+      <View style={getBottomSpace() > 0 ? {} : { height: 8 }} />
 
       {renderSearchView()}
       <RecordModal uploadRecord={uploadRecord} ref={recordModalRef} />

@@ -88,6 +88,12 @@ const TutorItem = ({
               <Text numberOfLines={2} style={styles.tutorName}>
                 {display_name}
               </Text>
+              {tutor_level && (
+                <View style={CS.flexStart}>
+                  <IconBtn name={"book"} customStyle={{ marginRight: 12 }} />
+                  <Text style={styles.tutorInfoTxt}>IELTS {tutor_level}</Text>
+                </View>
+              )}
               {/* <IconBtn
                 customStyle={styles.iconLike}
                 onPress={toggleLike}
@@ -124,12 +130,6 @@ const TutorItem = ({
             </Text>
           )}
         </View>
-        {tutor_level && (
-          <View style={CS.flexStart}>
-            <IconBtn name={"book"} customStyle={{ marginRight: 12 }} />
-            <Text style={styles.tutorInfoTxt}>IELTS {tutor_level}</Text>
-          </View>
-        )}
       </>
     );
   };

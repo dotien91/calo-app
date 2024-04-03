@@ -134,6 +134,7 @@ const styles = StyleSheet.create({
     elevation: 10,
     shadowRadius: 15,
     paddingBottom: 8,
+    paddingTop: 8,
     // marginTop: isIos ? 0 : getStatusBarHeight(),
   },
   textHeader: {
