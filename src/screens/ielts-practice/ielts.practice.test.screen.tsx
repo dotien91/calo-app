@@ -227,6 +227,11 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
     );
   };
 
+  //id audio live 660d1d01dcdac8b948118f02
+  //id audio dev 660d1d7a96d5c03ee4c31c5e
+
+  // https://files.exam24h.com/upload/2024/04/03_1712133330878/6588f61a8d8b13bb432f8276-1712133330876-6D0E9B0D-36BB-4073-9F82-ACB5D5FE38A8.png
+  // https://files.exam24h.com/upload/2024/04/03_1712133331026/6588f61a8d8b13bb432f8276-1712133331026-783FF173-59AF-4428-8E77-657B4556C1D6.png
   const renderAudio = () => {
     if (!audioUrl) return null;
     console.log("audioUrl", audioUrl);
@@ -275,7 +280,7 @@ const styles = StyleSheet.create({
   wrapBtn: {
     position: "absolute",
     bottom: 0,
-    paddingBottom: 16,
+    paddingBottom: 8,
     right: 16,
     left: 16,
     zIndex: 1,

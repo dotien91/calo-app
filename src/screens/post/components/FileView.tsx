@@ -132,6 +132,7 @@ const FileViewComponent = ({
             backgroundColor: "rgba(0, 0, 0, 0.3)",
             justifyContent: "center",
             alignItems: "center",
+            borderRadius: 8,
           }}
         >
           <ActivityIndicator size={"small"} color={colors.mainColor2} />

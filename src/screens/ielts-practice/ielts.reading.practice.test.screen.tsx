@@ -176,8 +176,6 @@ const IeltsReadingPacticeScreen = () => {
       finished_time: secs,
     };
 
-    console.log("submit", dataSubmit);
-
     submitTest(dataSubmit).then((res) => {
       if (!res.isError) {
         showSuperModal({
@@ -319,7 +317,8 @@ const styles = StyleSheet.create({
   },
   wrapBtn: {
     position: "absolute",
-    bottom: 16,
+    bottom: 0,
+    paddingBottom: 8,
     right: 16,
     left: 16,
     zIndex: 1,
