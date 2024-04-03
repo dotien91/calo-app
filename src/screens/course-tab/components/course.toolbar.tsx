@@ -52,6 +52,7 @@ const CourseToolbar = () => {
   };
 
   const openSelectTypeCourseModal = () => {
+    console.log("openSelectTypeCourseModal...", courseCurrentType);
     showSuperModal({
       contentModalType: EnumModalContentType.FilterTypeCourse,
       styleModalType: EnumStyleModalType.Bottom,
@@ -60,14 +61,14 @@ const CourseToolbar = () => {
         title: translations.course.selectModal,
         options: [
           {
-            name: "Course",
+            name: translations.course.course,
             id: EnumCourseType.course,
-            iconImg: require("assets/images/book.png"),
+            iconSvg: "icBook",
           },
           {
-            name: "Tutor",
+            name: translations.course.teacher,
             id: EnumCourseType.tutor,
-            iconImg: require("assets/images/graduate.png"),
+            iconSvg: "icGraduate",
           },
         ],
 
@@ -85,7 +86,9 @@ const CourseToolbar = () => {
       <TouchableOpacity onPress={openSelectTypeCourseModal}>
         <View style={styles.viewTitle}>
           <Text style={styles.txtSelect}>
-            {courseCurrentType.name}
+            {courseCurrentType.id === "course"
+              ? translations.course.course
+              : translations.course.teacher}
             <Icon
               name={"chevron-down"}
               type={IconType.Feather}

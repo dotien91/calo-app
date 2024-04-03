@@ -22,7 +22,6 @@ const TabFollow = () => {
   const route = useRoute();
   const userData = useStore((state) => state.userData);
   const fullName = route?.params?.name;
-  console.log(fullName);
 
   // const styles = useMemo(() => createStyles(theme), [theme]);
   const index = React.useState(route?.params?.relationship);
@@ -58,21 +57,13 @@ const TabFollow = () => {
   return (
     <SafeAreaView style={{ ...CS.safeAreaView }}>
       <Header text={fullName} />
-      {/* <TabView
-        style={{ flex: 1 }}
-        renderTabBar={renderTabBar}
-        navigationState={{ index, routes }}
-        renderScene={renderScene}
-        onIndexChange={setIndex}
-        initialLayout={{ width: layout.width }}
-      /> */}
       {isLoading ? (
-        <LoadingList></LoadingList>
+        <LoadingList />
       ) : (
         <Tabs.Container initialTabName="Follow" renderTabBar={renderTabBar}>
           {userData?._id === route?.params?.id ? (
             <Tabs.Tab name={"Friend"} label={`Friend ${countFollow?.friends}`}>
-              <Friend id={route?.params?.id}></Friend>
+              <Friend id={route?.params?.id} />
             </Tabs.Tab>
           ) : null}
 
@@ -80,14 +71,14 @@ const TabFollow = () => {
             name={"Follow"}
             label={`${translations.follower} ${countFollow?.followers || 0}`}
           >
-            <Follower id={route?.params?.id}></Follower>
+            <Follower id={route?.params?.id} />
           </Tabs.Tab>
 
           <Tabs.Tab
             name={"Following"}
             label={`${translations.following} ${countFollow?.following || 0}`}
           >
-            <Following id={route?.params?.id}></Following>
+            <Following id={route?.params?.id} />
           </Tabs.Tab>
         </Tabs.Container>
       )}

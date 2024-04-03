@@ -434,7 +434,8 @@ const CourseCreate = () => {
               },
             }}
             errorTxt={errors.description?.message}
-            maxLength={500}
+            maxLength={250}
+            countLength
             multiline
             showPlaceholder
           />
@@ -455,10 +456,10 @@ const CourseCreate = () => {
             }}
             multiline
             errorTxt={errors.long_description?.message}
-            maxLength={500}
+            maxLength={10000}
+            countLength
             showPlaceholder
           />
-          {renderPrice()}
 
           <Text style={styles.textTitle}>
             {translations.course.timeAvailable}
@@ -485,6 +486,10 @@ const CourseCreate = () => {
 
           <View style={{ paddingHorizontal: 20 }}>
             {renderSelectTypeCourse()}
+          </View>
+
+          {renderPrice()}
+          <View style={{ paddingHorizontal: 20 }}>
             {renderSelectLevel()}
             {renderSelectSkill()}
           </View>

@@ -3,6 +3,7 @@ import React, { useMemo, useState } from "react";
 import DropDownPicker from "react-native-dropdown-picker";
 import { useTheme } from "@react-navigation/native";
 import createStyles from "./DropDownItem.style";
+import { palette } from "@theme/themes";
 
 type ItemType = {
   label: string;
@@ -37,6 +38,7 @@ export default function DropDownItem({
         setValue={setValue}
         multiple={false}
         {...res}
+        style={{ borderColor: palette.borderColor1 }}
       />
     </View>
   );
