@@ -206,6 +206,6 @@ FreakyCoder, kurayogun@gmail.com
 React Native Typescript Boilerplate is available under the MIT license. See the LICENSE file for more info.
 
 //cp android
-appcenter codepush release-react -a dev-ikigroup/IELTS-Hunter-1 -d Development -t 0.1.99
+appcenter codepush release-react -a dev-ikigroup/IELTS-Hunter-1 -d Development -t 0.1.10
 //cp ios
-appcenter codepush release-react -a dev-ikigroup/IELTS-Hunter -d Development -t 0.1.99
+appcenter codepush release-react -a dev-ikigroup/IELTS-Hunter -d Development -t 0.1.10

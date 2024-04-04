@@ -53,7 +53,7 @@ const AnswerChildInput = ({
           removeClippedSubviews={true}
           initialNumToRender={8}
           keyExtractor={(item) => item._id}
-          contentContainerStyle={{paddingBottom: 32}}
+          contentContainerStyle={{ paddingBottom: 32 }}
         />
       </View>
     </ScrollView>

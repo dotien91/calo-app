@@ -1,5 +1,5 @@
 import React from "react";
-import { View, ScrollView, Dimensions } from "react-native";
+import { View, ScrollView, Dimensions, StyleSheet } from "react-native";
 
 import CS from "@theme/styles";
 import { Device } from "@utils/device.ui.utils";
@@ -17,13 +17,12 @@ const CallVideoGroupView = React.memo(
     teacherStream,
     isTeacher,
   }: {
-    isVideoOneOne: boolean;
     video: any;
     publishers: any;
     myStream: any;
+    teacherStream: any;
   }) => {
     // const data = React.useMemo(() => publishers?.[0], [publishers]);
-
     // if ((data?.length || 0) < 2 && !teacherStream?.stream) return null;
     const renderStudentVideo = (item) => {
       return (
@@ -34,7 +33,6 @@ const CallVideoGroupView = React.memo(
             borderRadius: 8,
             overflow: "hidden",
             marginRight: 4,
-            backgroundColor: "red",
           }}
         >
           <ClassRoomRtcView
@@ -46,7 +44,6 @@ const CallVideoGroupView = React.memo(
             style={{
               width: 74,
               height: 98,
-              backgroundColor: "red",
               // ...CS.borderStyle,
             }}
             {...item}
@@ -64,7 +61,6 @@ const CallVideoGroupView = React.memo(
             width: widthImg,
             height: widthImg * 1.5,
             overflow: "hidden",
-            backgroundColor: "red",
           }}
         >
           <ClassRoomRtcView
@@ -87,17 +83,7 @@ const CallVideoGroupView = React.memo(
 
     if (!teacherStream?.stream && publishers.length > 1) {
       return (
-        <View
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            bottom: 0,
-            flex: 1,
-            zIndex: 0,
-            height: Dimensions.get("screen").height,
-          }}
-        >
+        <View style={styles.studentBox}>
           <ScrollView>
             <View style={{ ...CS.flexStart, flexWrap: "wrap" }}>
               {publishers.map((publisher) =>
@@ -111,23 +97,7 @@ const CallVideoGroupView = React.memo(
     if (!!teacherStream?.stream && !!publishers.length) {
       return (
         <>
-          <View
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              flex: 1,
-              zIndex: 0,
-              height:
-                Dimensions.get("screen").height -
-                44 -
-                getStatusBarHeight() -
-                36 -
-                64 +
-                (isIOS ? 22 : 0),
-            }}
-          >
+          <View style={styles.container}>
             {/* <MicView showName={true} {...data} /> */}
             <ClassRoomRtcView
               key={teacherStream?.name}
@@ -136,36 +106,11 @@ const CallVideoGroupView = React.memo(
               name={teacherStream?.name}
               isTeacher={true}
               video={video}
-              style={{
-                width: Device.width,
-                height:
-                  Dimensions.get("screen").height -
-                  44 -
-                  getStatusBarHeight() -
-                  36 -
-                  64 +
-                  (isIOS ? 22 : 0),
-                overflow: "hidden",
-                // ...CS.borderStyle,
-              }}
+              style={styles.teacherBox}
               {...teacherStream}
               isMe={isTeacher}
             />
-            <ScrollView
-              horizontal={true}
-              style={{
-                position: "absolute",
-                left: 4,
-                top:
-                  Dimensions.get("screen").height -
-                  44 -
-                  getStatusBarHeight() -
-                  36 -
-                  64 +
-                  4 +
-                  (isIOS ? 22 : 0),
-              }}
-            >
+            <ScrollView horizontal={true} style={styles.studentWrap}>
               {publishers.map((publisher) => renderStudentVideo(publisher))}
             </ScrollView>
           </View>
@@ -174,5 +119,56 @@ const CallVideoGroupView = React.memo(
     }
   },
 );
+
+const styles = StyleSheet.create({
+  container: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    flex: 1,
+    zIndex: 0,
+    height:
+      Dimensions.get("screen").height -
+      44 -
+      getStatusBarHeight() -
+      36 -
+      64 +
+      (isIOS ? 22 : 0),
+  },
+  studentWrap: {
+    position: "absolute",
+    left: 4,
+    top:
+      Dimensions.get("screen").height -
+      44 -
+      getStatusBarHeight() -
+      36 -
+      64 +
+      4 +
+      (isIOS ? 33 : -39),
+  },
+  teacherBox: {
+    width: Device.width,
+    height:
+      Dimensions.get("screen").height -
+      44 -
+      getStatusBarHeight() -
+      36 -
+      64 +
+      (isIOS ? 33 : -42),
+    overflow: "hidden",
+    // ...CS.borderStyle,
+  },
+  studentBox: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    bottom: 0,
+    flex: 1,
+    zIndex: 0,
+    height: Dimensions.get("screen").height,
+  },
+});
 
 export default CallVideoGroupView;

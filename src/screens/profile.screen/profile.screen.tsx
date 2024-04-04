@@ -116,9 +116,11 @@ const SettingProfileScreen = () => {
     });
   };
 
-  useEffect(() => {
-    _getListScore();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      _getListScore();
+    }, []),
+  );
 
   const onPressHeaderRight = () => {
     NavigationService.navigate(SCREENS.SETTING);
@@ -131,7 +133,6 @@ const SettingProfileScreen = () => {
     item: any;
     index: number;
   }) => {
-    console.log("item...", item);
     if (item.hide) return null;
     return (
       <PressableBtn

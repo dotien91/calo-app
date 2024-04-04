@@ -548,7 +548,7 @@ export default {
     publicCourse: "Public course",
     discountEntry: "start at",
     endAt: "end at",
-    noreview: "Zero review",
+    noreview: "0 review",
     selectModal: "Select",
     myCourse: "My course",
     noClass: "Empty class",
@@ -958,6 +958,8 @@ export default {
     deleteacount: "Detete Account",
   },
   call: {
+    mutedAll: "Muted all",
+    unMutedAll: "Unmuted all",
     inComingCall: "Incoming Call...",
     titleCamera: "Need permission to access camera",
     messageCamera: "To call others, we need permission to access your camera.",

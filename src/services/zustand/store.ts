@@ -84,6 +84,7 @@ const useStore = create<StoreState>()(
                 "listCommentDelete",
                 "listFollow",
                 "listBlock",
+                "setIsMutedAll",
               ].includes(key),
           ),
         ),

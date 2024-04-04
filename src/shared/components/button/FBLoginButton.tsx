@@ -77,8 +77,6 @@ const FBLoginButton = ({ showText }: BtnProps) => {
     }
   };
 
-  return null;
-
   if (!showText) {
     return (
       <Button

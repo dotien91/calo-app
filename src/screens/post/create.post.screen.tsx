@@ -105,7 +105,7 @@ export default function PostScreen() {
     });
   };
 
-  console.log("listFile upload", listFile)
+  console.log("listFile upload", listFile);
 
   useEffect(() => {
     getListCategory();

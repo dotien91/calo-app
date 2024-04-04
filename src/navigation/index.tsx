@@ -397,7 +397,11 @@ const Navigation = () => {
           name={SCREENS.VIEW_LIVE_STREAM}
           component={ViewStreamScreen}
         />
-        <Stack.Screen name={SCREENS.LIVE_STREAM} component={LiveStreamScreen} />
+        <Stack.Screen
+          options={{ gestureEnabled: false }}
+          name={SCREENS.LIVE_STREAM}
+          component={LiveStreamScreen}
+        />
         <Stack.Screen name={SCREENS.DETAIL}>
           {(props) => <DetailScreen {...props} />}
         </Stack.Screen>

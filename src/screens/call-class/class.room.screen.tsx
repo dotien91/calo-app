@@ -72,7 +72,7 @@ const ClassRoomScreen = () => {
 
   const toggleMute = () => {
     selfViewSrc.getAudioTracks().forEach((track: any) => {
-      track.enabled = !config.mute;
+      track.enabled = config.mute;
       setConfig((old) => ({ ...old, mute: !old.mute }));
     });
   };
@@ -400,7 +400,10 @@ const ClassRoomScreen = () => {
   };
 
   const getRemoteListValue = React.useMemo(() => {
-    return Object.keys(remoteList).map((key) => remoteList[key]);
+    return Object.keys(remoteList).map((key) => ({
+      ...remoteList[key],
+      _id: key,
+    }));
   }, [remoteList]);
 
   const myStream = React.useMemo(() => {
@@ -414,7 +417,7 @@ const ClassRoomScreen = () => {
 
   const getStudentStream = React.useMemo(() => {
     let studentRemoteStream = Object.keys(remoteList)
-      .map((key) => remoteList[key])
+      .map((key) => ({ ...remoteList[key], _id: key }))
       .filter((item) => !item?.isTeacher);
     if (!isTeacher)
       studentRemoteStream = [myStream].concat(studentRemoteStream);
