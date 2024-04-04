@@ -32,6 +32,7 @@ export const useLiveChatHistory = ({
   const isFetching = useRef(false);
   const noMoredata = useRef(false);
   const setViewNumber = useStore((state) => state.setViewNumber);
+  const setEmojiNumber = useStore((state) => state.setEmojiNumber);
   const setShoppingProduct = useStore((state) => state.setShoppingProduct);
 
   useEffect(() => {
@@ -46,7 +47,7 @@ export const useLiveChatHistory = ({
       id: liveStreamId,
       limit,
       page: pageNumber.current,
-      // order_by: "DESC",
+      order_by: "DESC",
     };
     getChatLiveHistory(params).then((res) => {
       isFetching.current = false;
@@ -88,6 +89,7 @@ export const useLiveChatHistory = ({
     if (newMessage.createBy._id == userData?._id) {
       return;
     }
+    console.log("... new message", data);
     setMessages((old) => [newMessage, ...old]);
   };
 
@@ -111,9 +113,14 @@ export const useLiveChatHistory = ({
     setViewNumber(viewNumber);
   };
 
-  // const emojiToClient = (data: string) => {
-  //   // console.log("onsocket emojiToClient", JSON.parse(data))
-  // };
+  const emojiToClient = (data) => {
+    console.log("onsocket emojiToClient...", data);
+    if (!data) return;
+    data = JSON.parse(data);
+    const likeNumber = data?.livestream_id?.like_number;
+    if (!likeNumber) return;
+    setEmojiNumber(likeNumber);
+  };
 
   const livestreamEndToClient = (data: string) => {
     if (isPublisher) return;
@@ -168,7 +175,7 @@ export const useLiveChatHistory = ({
     onSocket("livestreamToClient", msgToClient); //comment incomming
     onSocket("joinRoomToClient", joinRoomToClient); //viewer join live
     onSocket("viewToClient", updateViewNumber); // view number update
-    // onSocket("emojiToClient", emojiToClient); //reaction update
+    onSocket("emojiToClient", emojiToClient); //reaction update
     onSocket("leaveRoomToClient", leaveRoomToClient); //viewer leave live
     onSocket("livestreamEndToClient", livestreamEndToClient); //pulisher end livestream
     emitSocket("joinLivestream", "livestream_" + liveStreamId);
@@ -180,7 +187,7 @@ export const useLiveChatHistory = ({
       offSocket("livestreamToClient", msgToClient); //comment incomming
       offSocket("joinRoomToClient", joinRoomToClient); //viewer join live
       offSocket("viewToClient", updateViewNumber); // view number update
-      // offSocket("emojiToClient", emojiToClient); //reaction update
+      offSocket("emojiToClient", emojiToClient); //reaction update
       offSocket("leaveRoomToClient", leaveRoomToClient); //viewer leave live
       offSocket("livestreamEndToClient", livestreamEndToClient); //pulisher end livestream
       clearData();

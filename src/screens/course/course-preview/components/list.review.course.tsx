@@ -47,7 +47,6 @@ const ListReviewCourse = ({ _id, type, data }: ListReviewCourseProps) => {
     getListReview(param).then((res) => {
       if (!res.isError) {
         if (res.data.length == 1) {
-          console.log("review of me", res.data[0]);
           setReviewOfMe(res.data[0]);
         }
       }

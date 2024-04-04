@@ -133,7 +133,6 @@ const SettingProfileScreen = () => {
     item: any;
     index: number;
   }) => {
-    console.log("item...", item);
     if (item.hide) return null;
     return (
       <PressableBtn

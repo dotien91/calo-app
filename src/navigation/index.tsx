@@ -1,5 +1,4 @@
 import React from "react";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { isReadyRef, navigationRef } from "react-navigation-helpers";
@@ -106,6 +105,7 @@ import HomeAffilite from "@screens/affiliate/intro.affiliate.screen";
 import TextBase from "@shared-components/TextBase";
 import { translations } from "@localization";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
+import IconSvg from "assets/svg";
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -127,36 +127,31 @@ const Navigation = () => {
     let iconName = "home";
     switch (route.name) {
       case SCREENS.COURSE_LIST:
-        iconName = focused ? "book" : "book";
+        iconName = focused ? "icCourse" : "icCourse";
         break;
       case SCREENS.CHAT:
-        iconName = focused ? "message-square" : "message-square";
+        iconName = focused ? "icChat" : "icChat";
         break;
       case SCREENS.NOTIFICATION:
         iconName = focused ? "bell" : "bell";
         break;
       case SCREENS.SETTINGPROFILESCREEN:
-        iconName = focused ? "user" : "user";
+        iconName = focused ? "icProfile" : "icProfile";
         break;
       case SCREENS.SETTING:
         iconName = focused ? "settings" : "settings";
         break;
       case SCREENS.DISCOVERSCREEN:
-        iconName = focused ? "earth" : "earth";
+        iconName = focused ? "icDiscovery" : "icDiscovery";
         break;
       default:
-        iconName = focused ? "home" : "home";
+        iconName = focused ? "icHome" : "icHome";
         break;
     }
     return iconName != "earth" ? (
-      <Icon name={iconName} type={IconType.Feather} size={size} color={color} />
+      <IconSvg name={iconName} size={size} color={color} />
     ) : (
-      <Icon
-        name={iconName}
-        type={IconType.Ionicons}
-        size={size}
-        color={color}
-      />
+      <IconSvg name={iconName} size={size} color={color} />
     );
   };
   const renderLable = (route: any, color: any) => {

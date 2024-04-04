@@ -86,7 +86,7 @@ const ListChatLiveStream: React.FC<ChatViewProps> = ({
     <>
       <FlatList
         style={!isIos() ? { scaleY: -1 } : {}}
-        inverted={isIos()}
+        inverted={true}
         data={messages}
         renderItem={renderItem}
         contentContainerStyle={messages.length ? styles.listChat : {}}

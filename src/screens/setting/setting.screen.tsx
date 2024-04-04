@@ -182,7 +182,6 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
       });
   };
 
-  console.log("userData?.user_role", userData?.user_role);
   const renderListSetting = () => {
     return (
       <View style={{ backgroundColor: colors.white, flex: 1, marginTop: 20 }}>

@@ -142,6 +142,8 @@ import icTrash from "./icon-trash.svg";
 import icCommission from "./icon-commission.svg";
 import icMarkDone from "./icon-markdone.svg";
 import icNext from "./icon-next.svg";
+import icChat from "./chat.svg";
+import icHome from "./home.svg";
 
 const Icons = {
   intro1,
@@ -287,6 +289,8 @@ const Icons = {
   icCommission,
   icMarkDone,
   icNext,
+  icChat,
+  icHome,
 };
 
 interface IconSvgProps {
