@@ -17,6 +17,7 @@ import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "constants";
 import { Device } from "@utils/device.utils";
 import { requestViewStream } from "@services/api/stream.api";
+import useStore from "@services/zustand/store";
 
 function App() {
   const theme = useTheme();
@@ -29,9 +30,14 @@ function App() {
     isPublisher: false,
     liveStreamId,
   });
+  const setEmojiNumber = useStore((state) => state.setEmojiNumber);
 
   console.log("liveDataliveData", liveData);
-
+  React.useEffect(() => {
+    return () => {
+      setEmojiNumber(0);
+    };
+  }, []);
   React.useEffect(() => {
     requestViewStream({ livestream_id: liveStreamId });
     KeepAwake.activate();

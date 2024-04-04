@@ -156,6 +156,7 @@ const InputChatLive: React.FC<InputChatLiveProps> = ({
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
       horizontal={true}
+      keyboardShouldPersistTaps="handled"
     >
       <View style={styles.box}>
         <View

@@ -1,11 +1,16 @@
 import { StoreSlice } from "@zustand";
 import lodash from "lodash";
+import { TypedUser } from "models";
 
 export interface ChatSlice {
   searchFriendTxt: string;
   setSearchFriendTxt: (searchFriendTxt: string) => void;
   viewNumber: number;
   setViewNumber: (viewNumber: number) => void;
+  emojiNumber: number;
+  setEmojiNumber: (emojiNumber: number) => void;
+  userLive?: { user: TypedUser };
+  setUserLive: (user: TypedUser) => void;
   currentChatList: [];
   setCurrentChatList: (currentChatList: []) => void;
   currentMediaIds: [];
@@ -19,6 +24,10 @@ const createChatSlice: StoreSlice<ChatSlice> = (set, get) => ({
   setSearchFriendTxt: (value: string) => set({ searchFriendTxt: value }),
   viewNumber: 0,
   setViewNumber: (value: number) => set({ viewNumber: value }),
+  emojiNumber: 0,
+  setEmojiNumber: (value: number) => set({ emojiNumber: value }),
+  userLive: undefined,
+  setUserLive: (user: TypedUser) => set({ userLive: user }),
   currentChatList: [],
   setCurrentChatList: (value: []) => set({ currentChatList: value }),
   currentMediaIds: [],

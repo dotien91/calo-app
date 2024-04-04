@@ -19,6 +19,7 @@ import { emitSocket } from "@helpers/socket.helper";
 import useStore from "@services/zustand/store";
 import { updateLivestream2 } from "@services/api/stream.api";
 import ImageLoad from "@shared-components/image-load/ImageLoad";
+import EmptyResultView from "@shared-components/empty.data.component";
 
 const ListCourseLiveStream = ({ isTeacher, liveData, cbOnpressCourse }) => {
   console.log("liveData", liveData);
@@ -45,6 +46,14 @@ const ListCourseLiveStream = ({ isTeacher, liveData, cbOnpressCourse }) => {
     );
   };
 
+  const renderEmpty = () => {
+    return (
+      <View>
+        <EmptyResultView title={translations.emptyList} />
+      </View>
+    );
+  };
+
   return (
     <View style={styles.viewStyleModal}>
       <Text style={styles.headerTitlte}>
@@ -53,6 +62,7 @@ const ListCourseLiveStream = ({ isTeacher, liveData, cbOnpressCourse }) => {
           : translations.nameTutor(user_id.display_name)}
       </Text>
       {isLoading && <LoadingList numberItem={3} />}
+      {!isLoading && listData.length == 0 && renderEmpty()}
       <FlatList
         data={listData}
         renderItem={renderItem}
@@ -113,7 +123,6 @@ const Item = React.memo(({ item, isTeacher, liveData, cbOnpressCourse }) => {
       closeSuperModal();
     }
   };
-  console.log("itemitem", item);
   return (
     <PressableBtn onPress={_onPress} style={styles.viewCourse}>
       <View style={styles.viewCard}>
@@ -201,6 +210,7 @@ export const styles = StyleSheet.create({
     marginHorizontal: 8,
     backgroundColor: palette.white,
     maxHeight: Device.height / 2,
+    minHeight: Device.height / 3,
     flex: 1,
     borderRadius: 12,
   },
