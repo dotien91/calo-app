@@ -390,6 +390,7 @@ export default {
     timeStart: "Time start",
     day: "Day",
     schedule: "Schedule",
+    courseMine: "Course mine",
     selectedTime: "Please choose at least one session",
     warningUploadCoverImageOrVideo:
       "Please select a video/photo introducing the course",
@@ -842,6 +843,7 @@ export default {
     addCover: "Add cover",
     change: "Change",
     warning: "Select photos before going live",
+    likes: "likes",
   },
   noResult: "No result found!",
   results: "results",

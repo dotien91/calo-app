@@ -478,7 +478,7 @@ const ProfileUser = (props: ProfileUserProps) => {
         <View style={{ height: 1, backgroundColor: palette.borderColor }} />
       </View>
     );
-  }, [userInfo]);
+  }, [userInfo, listDataCourse]);
 
   const renderTabBar = (props) => (
     <TabBar

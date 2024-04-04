@@ -946,6 +946,7 @@ export default {
     addCover: "Chọn ảnh",
     change: "Đổi ảnh",
     warning: "Chọn ảnh trước khi bắt đầu live stream",
+    likes: "lượt thích",
   },
   startChatDesc:
     "Gửi một tin nhắn hỏi về hành trình học tập của họ hoặc thảo luận về một sở thích chung để bắt đầu một cuộc trò chuyện",
