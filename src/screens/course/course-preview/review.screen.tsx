@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native";
 import { useRoute } from "@react-navigation/native";
 
 import ListReviewCourse from "./components/list.review.course";
@@ -12,17 +12,11 @@ const ReviewScreen = () => {
   const _id = route.params?.["courseId"] || "";
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={CS.safeAreaView}>
       <Header text={translations.course.rate} />
       <ListReviewCourse type="full" _id={_id} />
-    </View>
+    </SafeAreaView>
   );
 };
 
 export default ReviewScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    ...CS.safeAreaView,
-  },
-});

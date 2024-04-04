@@ -136,7 +136,7 @@ const ShoppingLiveProduct = React.memo(
     if (!shoppingProduct) return null;
 
     const _onPress = () => {
-      hideLiveStream();
+      hideLiveStream?.();
       NavigationService.navigate(SCREENS.COURSE_DETAIL, {
         course_id: shoppingProduct._id,
         dataCourse: shoppingProduct,

@@ -90,8 +90,7 @@ export function useUploadFile(
   };
 
   const renderFile = React.useCallback(() => {
-
-    console.log("isUpLoadingFileisUpLoadingFile", isUpLoadingFile)
+    console.log("isUpLoadingFileisUpLoadingFile", isUpLoadingFile);
     return (
       <View style={styles.viewImage}>
         {listFileLocal.slice(0, 4).map((item: any, index: number) => {

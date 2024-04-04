@@ -116,9 +116,11 @@ const SettingProfileScreen = () => {
     });
   };
 
-  useEffect(() => {
-    _getListScore();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      _getListScore();
+    }, []),
+  );
 
   const onPressHeaderRight = () => {
     NavigationService.navigate(SCREENS.SETTING);

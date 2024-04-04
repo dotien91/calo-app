@@ -31,12 +31,18 @@ const AnswerChildDropdown = ({
   setAnsweData,
   answer,
 }: IAnswerChildDropdown) => {
-  console.log("@222222", answer)
+  console.log("@222222", answer);
   const _onChangeText = (v, { index }) => {
     setAnsweData({ index, content: v });
   };
 
-  const renderInput = ({ item, index }: { item: IDetailPractice, index: string }) => {
+  const renderInput = ({
+    item,
+  }: // index,
+  {
+    item: IDetailPractice;
+    index: string;
+  }) => {
     const amountOfOptions = item?.amount_of_option || 4;
     return (
       <View style={{ marginBottom: 12 }}>
@@ -57,7 +63,7 @@ const AnswerChildDropdown = ({
             setAnsweData={setAnsweData}
             extraParam={item}
             amountOfOptions={amountOfOptions}
-          // data={data?.[index]}
+            // data={data?.[index]}
           />
         ) : (
           <Input
@@ -104,30 +110,27 @@ const RadioButtons = ({
   const [selectItem, onSelectItem] = React.useState([]);
   const _onSelectItem = (item: IQuestion, isSelected) => {
     if (isSelected) {
-      onSelectItem(old => {
-
-        const newData = old.filter(_item => _item != item)
+      onSelectItem((old) => {
+        const newData = old.filter((_item) => _item != item);
         setAnsweData({
           index: extraParam?.index,
           content: newData.join(""),
         });
-        return newData
+        return newData;
       });
-
     } else {
-      onSelectItem(old => {
-        let newData = [item, ...old]
+      onSelectItem((old) => {
+        const newData = [item, ...old];
         if (newData.length > extraParam?.answer?.length) {
-          newData.pop()
+          newData.pop();
         }
         setAnsweData({
           index: extraParam?.index,
           content: newData.join(""),
         });
-        return newData
+        return newData;
       });
     }
-
   };
 
   const array = React.useMemo(() => {
@@ -137,7 +140,7 @@ const RadioButtons = ({
   }, [amountOfOptions]);
 
   const renderRadio = (item) => {
-    const isSelected = item == selectItem.find(_item => _item == item);
+    const isSelected = item == selectItem.find((_item) => _item == item);
     return (
       <CustomRadio
         key={item}

@@ -43,7 +43,7 @@ AVAudioSession *session = AVAudioSession.sharedInstance;
       SEL selector = NSSelectorFromString(@"setCategory:withOptions:error:");
       
       NSArray * optionsArray =
-          [NSArray arrayWithObjects:
+          [NSArray arrayWithObjec2ts:
             [NSNumber numberWithInteger:AVAudioSessionCategoryOptionAllowBluetooth],
             [NSNumber numberWithInteger:AVAudioSessionCategoryOptionDefaultToSpeaker], nil];
       
