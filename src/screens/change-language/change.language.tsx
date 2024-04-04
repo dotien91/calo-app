@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Alert, StyleSheet, Pressable, Text } from "react-native";
+import { View, StyleSheet, Pressable, Text } from "react-native";
 import useStore from "@services/zustand/store";
 import { translations } from "@localization";
 import RNRestart from "react-native-restart"; // Import package from node modules
@@ -14,6 +14,11 @@ import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import IconSvg from "assets/svg";
 import { updateSession } from "@services/api/notification.api";
+import {
+  EnumModalContentType,
+  EnumStyleModalType,
+  showSuperModal,
+} from "@helpers/super.modal.helper";
 
 interface TypeItemLanguage {
   label: string;
@@ -37,57 +42,26 @@ const ChangeLanguage = () => {
 
   const [selected, setSelected] = useState(useStore((state) => state.language));
 
-  const [languageSelected, setLanguageSelected] = useState(
-    useStore((state) => state.language),
-  );
   const setLanguage = useStore((state) => state.setLanguage);
-  const language = useStore((state) => state.language);
 
-  const handleAccept = () => {
-    console.log(languageSelected);
-    // translations.setLanguage(selected);
-    // setLanguage(selected);
-    // if (language != languageSelected) {
-    Alert.alert("", translations.switchLanguage, [
-      {
-        text: translations.approve,
-        onPress: () => {
-          setLanguage(selected);
-          translations.setLanguage(selected);
-          updateSession({ picked_language: selected });
-          RNRestart.Restart();
-        },
-      },
-      {
-        text: translations.cancel,
-        onPress: () => {
-          setLanguageSelected(language);
-        },
-      },
-    ]);
-    // }
+  const switchLanguage = () => {
+    setLanguage(selected);
+    translations.setLanguage(selected);
+    updateSession({ picked_language: selected });
+    RNRestart.Restart();
   };
 
-  // useEffect(() => {
-  //   if (language != languageSelected) {
-  //     Alert.alert("", translations.switchLanguage, [
-  //       {
-  //         text: translations.approve,
-  //         onPress: () => {
-  //           setLanguage(selected);
-  //           translations.setLanguage(selected);
-  //           RNRestart.Restart();
-  //         },
-  //       },
-  //       {
-  //         text: translations.cancel,
-  //         onPress: () => {
-  //           setLanguageSelected(language);
-  //         },
-  //       },
-  //     ]);
-  //   }
-  // }, [languageSelected, language, setLanguage]);
+  const handleAccept = () => {
+    showSuperModal({
+      contentModalType: EnumModalContentType.Confirm,
+      styleModalType: EnumStyleModalType.Middle,
+      data: {
+        title: translations.switchLanguage,
+        cb: switchLanguage,
+      },
+    });
+    // }
+  };
 
   const ItemLanguage = ({ item }: { item: TypeItemLanguage }) => {
     const isSelect: boolean = item.value == selected;

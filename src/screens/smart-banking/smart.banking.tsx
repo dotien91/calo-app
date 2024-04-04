@@ -114,7 +114,7 @@ const SmartBanking = () => {
       if (!res.isError) {
         showToast({
           type: "success",
-          message: "Gửi ảnh thành công",
+          message: translations.payment.sendImageSuccess,
         });
         checkPaymentSuccess();
       } else {

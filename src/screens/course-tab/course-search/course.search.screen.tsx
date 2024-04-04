@@ -90,7 +90,10 @@ const CourseSearchScreen: React.FC<CourseSearchScreenProps> = () => {
 
   const _onSubmitEditing = (v) => {
     NavigationService.navigate(SCREENS.COURSE_CATEGORY, {
-      defaultParams: { search: v, title: "Kết quả cho từ khoá: " + v },
+      defaultParams: {
+        search: v,
+        title: translations.course.titleCourseCategory + v,
+      },
     });
   };
   return (

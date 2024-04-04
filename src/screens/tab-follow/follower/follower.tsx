@@ -1,5 +1,11 @@
 import React from "react";
-import { View, FlatList, Text, TouchableOpacity } from "react-native";
+import {
+  View,
+  FlatList,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
 import { useListData } from "@helpers/hooks/useListData";
@@ -12,7 +18,6 @@ import {
   postFollow,
   postunFollow,
 } from "@services/api/user.api";
-import { useTheme } from "@react-navigation/native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import {
   EnumModalContentType,
@@ -26,10 +31,11 @@ import LoadingList from "@shared-components/loading.list.component";
 import { translations } from "@localization";
 import _ from "lodash";
 import eventEmitter from "@services/event-emitter";
+import EmptyResultView from "@shared-components/empty.data.component";
+import CS from "@theme/styles";
+import { palette } from "@theme/themes";
 
 const Follower = ({ id }) => {
-  const theme = useTheme();
-  const { colors } = theme;
   const userData = useStore((state) => state.userData);
   const paramsRequest = {
     limit: 10,
@@ -91,7 +97,7 @@ const Follower = ({ id }) => {
       contentModalType: EnumModalContentType.Confirm,
       styleModalType: EnumStyleModalType.Bottom,
       data: {
-        title: "Remove this follower",
+        title: translations.removeThisFollow,
         nameAction: "Remove",
         cb: () => removeFollower(partid),
       },
@@ -115,56 +121,32 @@ const Follower = ({ id }) => {
     index: number;
   }) => {
     return (
-      <View
-        key={index}
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginHorizontal: 16,
-          marginBottom: 16,
-        }}
-      >
+      <View key={index} style={styles.viewContainer}>
         <TouchableOpacity
           onPress={() => {
             NavigationService.push(SCREENS.PROFILE_CURRENT_USER, {
               _id: item?.partner_id?._id,
             });
           }}
-          style={{ flexDirection: "row", alignItems: "center" }}
+          style={styles.viewInfo}
         >
           <Avatar
-            style={{ height: 56, width: 56, borderRadius: 28 }}
+            style={styles.avatar}
             sourceUri={{ uri: item?.partner_id?.user_avatar }}
-          ></Avatar>
-          <View style={{ marginLeft: 8 }}>
-            <Text
-              numberOfLines={2}
-              style={{
-                maxWidth: 220,
-                fontSize: 16,
-                fontWeight: "600",
-                color: colors.text,
-              }}
-            >
+          />
+          <View style={styles.viewTxt}>
+            <Text numberOfLines={2} style={styles.txtFullname}>
               {item?.partner_id?.display_name}
             </Text>
-            <Text
-              style={{
-                maxWidth: 220,
-                fontSize: 16,
-                fontWeight: "400",
-                color: colors.textOpacity8,
-              }}
-            >
+            <Text numberOfLines={3} style={styles.txtDes}>
               {item?.partner_id?.description}
             </Text>
             {/* <Text>dasdas</Text> */}
           </View>
         </TouchableOpacity>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <View style={CS.row}>
           <TouchableOpacity
-            style={{ backgroundColor: colors.btnRedPrimary, borderRadius: 4 }}
+            style={styles.btnFollow}
             onPress={() => {
               if (!userData?._id) {
                 showWarningLogin();
@@ -184,15 +166,7 @@ const Follower = ({ id }) => {
               }
             }}
           >
-            <Text
-              style={{
-                marginHorizontal: 8,
-                marginVertical: 4,
-                color: colors.white,
-                fontSize: 14,
-                fontWeight: "400",
-              }}
-            >
+            <Text style={styles.txtFollow}>
               {userData?._id === id
                 ? item.match_status === 1
                   ? translations.message
@@ -207,10 +181,10 @@ const Follower = ({ id }) => {
               onPress={() => {
                 showModalHozi(item?.partner_id?._id);
               }}
-              style={{ paddingRight: 5, marginLeft: 2 }}
+              style={styles.viewMore}
             >
               <Icon
-                style={{ height: 16, width: 19 }}
+                style={styles.iconMore}
                 name="ellipsis-horizontal-outline"
                 type={IconType.Ionicons}
               ></Icon>
@@ -221,20 +195,14 @@ const Follower = ({ id }) => {
     );
   };
 
+  const renderEmpty = () => {
+    return <EmptyResultView title={translations.emptyList} />;
+  };
+
   return (
-    <View style={{ flex: 1, marginTop: 60 }}>
-      {/* <FlatList
-        style={{ marginTop: 8 }}
-        data={listData}
-        renderItem={renderItemSelected}
-        onEndReachedThreshold={0.1}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        onEndReached={onEndReach}
-        scrollEventThrottle={16}
-        removeClippedSubviews={true}
-      /> */}
+    <View style={styles.container}>
       {isLoading && <LoadingList />}
+      {!isLoading && listData.length === 0 && renderEmpty()}
       <FlatList
         data={listData}
         renderItem={renderItemSelected}
@@ -250,4 +218,57 @@ const Follower = ({ id }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 60,
+  },
+  avatar: {
+    height: 56,
+    width: 56,
+    borderRadius: 28,
+  },
+  viewContainer: {
+    ...CS.row,
+    justifyContent: "space-between",
+    marginHorizontal: 16,
+    marginBottom: 16,
+  },
+  viewInfo: {
+    ...CS.flex1,
+    ...CS.row,
+  },
+  btnFollow: {
+    backgroundColor: palette.btnRedPrimary,
+    borderRadius: 4,
+  },
+  txtFollow: {
+    ...CS.hnRegular,
+    marginHorizontal: 8,
+    marginVertical: 4,
+    color: palette.white,
+    fontSize: 14,
+  },
+  txtFullname: {
+    ...CS.hnSemiBold,
+    color: palette.text,
+  },
+  txtDes: {
+    ...CS.hnRegular,
+    color: palette.textOpacity8,
+  },
+  viewTxt: {
+    marginLeft: 8,
+    flex: 1,
+  },
+  viewMore: {
+    paddingRight: 5,
+    marginLeft: 2,
+  },
+  iconMore: {
+    height: 16,
+    width: 19,
+  },
+});
 export default Follower;

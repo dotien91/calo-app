@@ -15,6 +15,8 @@ import {
 } from "@helpers/super.modal.helper";
 import { getListMemberCourse } from "@services/api/course.api";
 import useStore from "@services/zustand/store";
+import { translations } from "@localization";
+import inCallManager from "react-native-incall-manager";
 
 const ClassRoomBottomView = ({
   toggleMute,
@@ -47,6 +49,7 @@ const ClassRoomBottomView = ({
   };
 
   useEffect(() => {
+    inCallManager.setSpeakerphoneOn(true);
     _getListMemberCourse();
     viewRoom({ id: chatRoomId }).then((res) => {
       if (!res.isError) {
@@ -58,13 +61,17 @@ const ClassRoomBottomView = ({
     };
   }, []);
 
+  const muteAll = () => {};
+
   const openListMemberModal = () => {
     showSuperModal({
       contentModalType: EnumModalContentType.ListUser,
       styleModalType: EnumStyleModalType.Bottom,
       data: {
         listUser: listMember,
-        title: "Members " + `(${listMember.length})`,
+        title: translations.course.member(listMember.length),
+        cb: muteAll,
+        iconTopRight: "mic",
       },
     });
   };
@@ -179,7 +186,7 @@ const ClassRoomBottomView = ({
             color: colors.white,
           }}
         >
-          Members
+          {translations.course.member("")}
         </Text>
       </PressableBtn>
       <PressableBtn
@@ -224,7 +231,7 @@ const ClassRoomBottomView = ({
             color: colors.white,
           }}
         >
-          Chat
+          {translations.course.chat}
         </Text>
       </PressableBtn>
     </View>

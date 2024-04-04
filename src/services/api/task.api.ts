@@ -26,6 +26,7 @@ export async function getListTaskByUser(params) {
     urlPath: "redeem/user",
     params,
   }).then((response) => {
+    console.log("redeem/user...", response);
     return response;
   });
 }

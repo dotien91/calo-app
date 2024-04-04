@@ -11,6 +11,7 @@ import ItemUserSelect from "./ItemUserSelect";
 import { closeSuperModal } from "@helpers/super.modal.helper";
 import { EnumColors } from "models";
 import { palette } from "@theme/themes";
+import EmptyResultView from "@shared-components/empty.data.component";
 
 interface dataType {
   listFilter?: any[];
@@ -73,6 +74,12 @@ const FilterAffiliate = ({ data }: FilterAffiliateProps) => {
     data.cb([]);
     closeSuperModal();
   };
+  const emptyProduct = () => {
+    return <EmptyResultView title={translations.affiliate.emptyProduct} />;
+  };
+  const emptyUser = () => {
+    return <EmptyResultView title={translations.affiliate.emptyUser} />;
+  };
 
   return (
     <View style={styles.container}>
@@ -110,12 +117,13 @@ const FilterAffiliate = ({ data }: FilterAffiliateProps) => {
             <Button
               onPress={onPressReset}
               backgroundColor={palette.btnInactive}
-              text="Reset"
+              textColor={palette.textInput}
+              text={translations.reset}
               style={CS.flex1}
             />
             <Button
               onPress={onPressApplyDate}
-              text="Apply"
+              text={translations.apply}
               type="primary"
               style={CS.flex1}
             />
@@ -125,18 +133,23 @@ const FilterAffiliate = ({ data }: FilterAffiliateProps) => {
       {data?.type === "product" && (
         <>
           <View style={styles.viewFlatlist}>
-            <FlatList data={data.listFilter} renderItem={renderItem} />
+            <FlatList
+              data={data.listFilter}
+              renderItem={renderItem}
+              ListEmptyComponent={emptyProduct}
+            />
           </View>
           <View style={styles.viewButton}>
             <Button
               onPress={onPressReset}
               backgroundColor={palette.btnInactive}
-              text="Reset"
+              text={translations.reset}
+              textColor={palette.textInput}
               style={CS.flex1}
             />
             <Button
               onPress={onPressApply}
-              text="Apply"
+              text={translations.apply}
               type="primary"
               style={CS.flex1}
             />
@@ -146,18 +159,23 @@ const FilterAffiliate = ({ data }: FilterAffiliateProps) => {
       {data?.type === "user" && (
         <>
           <View style={styles.viewFlatlist}>
-            <FlatList data={data.listFilter} renderItem={renderItem} />
+            <FlatList
+              data={data.listFilter}
+              renderItem={renderItem}
+              ListEmptyComponent={emptyUser}
+            />
           </View>
           <View style={styles.viewButton}>
             <Button
               onPress={onPressReset}
               backgroundColor={palette.btnInactive}
-              text="Reset"
+              text={translations.reset}
+              textColor={palette.textInput}
               style={CS.flex1}
             />
             <Button
               onPress={onPressApply}
-              text="Apply"
+              text={translations.apply}
               type="primary"
               style={CS.flex1}
             />

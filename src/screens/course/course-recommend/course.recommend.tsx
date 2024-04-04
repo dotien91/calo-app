@@ -22,10 +22,10 @@ const CourseRecommendScreen = () => {
       },
       getCourseSuggest,
     );
-
   const renderItem = ({ item, index }) => {
     return <CourseItem data={item} key={index} />;
   };
+
   return (
     <SafeAreaView style={CS.safeAreaView}>
       <Header text={translations.recommendCourse} />

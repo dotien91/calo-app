@@ -6,6 +6,8 @@ import IconSvg from "assets/svg";
 import { translations } from "@localization";
 import { palette } from "@theme/themes";
 import {
+  EnumModalContentType,
+  EnumStyleModalType,
   closeSuperModal,
   showSuperModal,
   showToast,
@@ -25,8 +27,8 @@ const FBLoginButton = ({ showText }: BtnProps) => {
 
   const _onPress = async () => {
     showSuperModal({
-      contentModalType: "loading",
-      styleModalType: "middle",
+      contentModalType: EnumModalContentType.Loading,
+      styleModalType: EnumStyleModalType.Middle,
     });
     try {
       LoginManager.logInWithPermissions().then(({ isCancelled }) => {
@@ -74,8 +76,6 @@ const FBLoginButton = ({ showText }: BtnProps) => {
       }, 500);
     }
   };
-
-  return null;
 
   if (!showText) {
     return (

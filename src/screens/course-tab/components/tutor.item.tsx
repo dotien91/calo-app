@@ -14,6 +14,9 @@ import Avatar from "@shared-components/user/Avatar";
 import IconBtn from "@shared-components/button/IconBtn";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { SCREENS } from "constants";
+import { translations } from "@localization";
+import IconSvg from "assets/svg";
+import { palette } from "@theme/themes";
 
 interface TutorItemProps extends TypedUser {
   isHorizontalStyle: boolean;
@@ -27,6 +30,9 @@ const TutorItem = ({
   tutor_level,
   educations,
   description,
+  student_count,
+  rating,
+  course_count,
   ...res
 }: TutorItemProps) => {
   const theme = useTheme();
@@ -38,13 +44,9 @@ const TutorItem = ({
   //   setIsLike((old) => !old);
   // };
   const _gotoDetailTeacher = () => {
-    NavigationService.navigate(SCREENS.TEACHER_DETAIL, {
-      idTeacher: res._id,
-      data: {
-        display_name,
-        user_avatar_thumbnail,
-        ...res,
-      },
+    NavigationService.navigate(SCREENS.PROFILE_CURRENT_USER, {
+      _id: res._id,
+      userInfo: res.user_id,
     });
   };
   const objectToString = (data) => {
@@ -78,10 +80,16 @@ const TutorItem = ({
         >
           {renderImg()}
           <View style={{ flex: 1 }}>
-            <View style={[CS.flexRear, { alignItems: "flex-start" }]}>
+            <View style={[{ alignItems: "flex-start" }]}>
               <Text numberOfLines={2} style={styles.tutorName}>
                 {display_name}
               </Text>
+              {tutor_level && (
+                <View style={CS.flexStart}>
+                  <IconBtn name={"book"} customStyle={{ marginRight: 12 }} />
+                  <Text style={styles.tutorInfoTxt}>IELTS {tutor_level}</Text>
+                </View>
+              )}
               {/* <IconBtn
                 customStyle={styles.iconLike}
                 onPress={toggleLike}
@@ -96,12 +104,28 @@ const TutorItem = ({
         {!!description && <Text style={styles.tutorIntro}>{description}</Text>}
         {/* <Badge title="best-seller" /> */}
         {!!educations?.length && renderEducations()}
-        {tutor_level && (
-          <View style={CS.flexStart}>
-            <IconBtn name={"book"} customStyle={{ marginRight: 12 }} />
-            <Text style={styles.tutorInfoTxt}>IELTS {tutor_level}</Text>
+        <View>
+          <View style={[CS.row, { gap: 8 }]}>
+            <Text
+              style={styles.tutorInfoTxt}
+            >{`${student_count} ${translations.course.student}`}</Text>
+            <View style={styles.viewDot} />
+            <Text
+              style={styles.tutorInfoTxt}
+            >{`${course_count} ${translations.course.course}`}</Text>
           </View>
-        )}
+
+          {rating > 0 ? (
+            <View style={CS.row}>
+              <Text style={styles.tutorInfoTxt}>{`${rating}`}</Text>
+              <IconSvg size={16} name="icStar" color={palette.yellow} />
+            </View>
+          ) : (
+            <Text style={styles.tutorInfoTxt}>
+              {translations.course.emptyRate}
+            </Text>
+          )}
+        </View>
       </>
     );
   };

@@ -1,17 +1,23 @@
 import React from "react";
 import RNRestart from "react-native-restart"; // Import package from node modules
+import { Clipboard, Image, View } from "react-native";
+import CodePush from "react-native-code-push";
 
 import Header from "@shared-components/header/Header";
 import CS from "@theme/styles";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { USER_TOKEN, _setJson } from "@services/local-storage";
+import { USER_TOKEN, _getJson, _setJson } from "@services/local-storage";
 import Button from "@shared-components/button/Button";
-import { View } from "react-native";
 import TextBase from "@shared-components/TextBase";
 import { ENVIRONMENT, isProduction, APP_URL } from "constants/config.constant";
 import { useUserHook } from "@helpers/hooks/useUserHook";
+import Input from "@shared-components/form/Input";
+import PressableBtn from "@shared-components/button/PressableBtn";
+import { showToast } from "@helpers/super.modal.helper";
+
 const HiddenPaage = () => {
   const { logout } = useUserHook();
+  const [codePushInfo, setCodePushInfo] = React.useState(null);
   // eslint-disable-next-line import/no-extraneous-dependencies
   const hardCodeTeacherProd = () => {
     const token =
@@ -46,6 +52,23 @@ const HiddenPaage = () => {
     setTimeout(() => {
       RNRestart.Restart();
     }, 1000);
+  };
+
+  React.useEffect(() => {
+    CodePush.getUpdateMetadata().then((metadata) => {
+      setCodePushInfo({
+        label: metadata?.label,
+        version: metadata?.appVersion,
+        description: metadata?.description,
+      });
+    });
+  }, []);
+
+  const copyToClipboard = () => {
+    Clipboard.setString(_getJson(USER_TOKEN));
+    showToast({
+      message: "Sao chép token thành công!",
+    });
   };
 
   console.log("APP_URLAPP_URL", APP_URL);
@@ -86,6 +109,27 @@ const HiddenPaage = () => {
           type="primary"
           text={"Hard code token student dev"}
         />
+        <View style={{ marginBottom: 16 }}>
+          <TextBase fontWeight="600">codepush info:</TextBase>
+          <TextBase>{JSON.stringify(codePushInfo)}</TextBase>
+        </View>
+        <View>
+          <TextBase fontWeight="600">token:</TextBase>
+          <View style={CS.flexStart}>
+            <Input value={_getJson(USER_TOKEN)} />
+
+            <PressableBtn
+              onPress={() => {
+                copyToClipboard("818187777");
+              }}
+            >
+              <Image
+                style={{ height: 15.3, width: 13.79, marginLeft: 10 }}
+                source={require("assets/images/CopyIcon.png")}
+              ></Image>
+            </PressableBtn>
+          </View>
+        </View>
       </View>
     </SafeAreaView>
   );

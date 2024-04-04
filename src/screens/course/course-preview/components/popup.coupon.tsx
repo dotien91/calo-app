@@ -13,6 +13,7 @@ import Button from "@shared-components/button/Button";
 import { closeSuperModal, showToast } from "@helpers/super.modal.helper";
 import { updateCourse } from "@services/api/course.api";
 import eventEmitter from "@services/event-emitter";
+import EmptyResultView from "@shared-components/empty.data.component";
 
 interface PopupCouponProps {
   dataCourse: ICourseItem;
@@ -23,7 +24,7 @@ const PopupCoupon = ({ dataCourse }: PopupCouponProps) => {
   // console.log("data...", dataCourse);
   const [itemSelected, setItemSelected] = React.useState<CouponType>();
 
-  const { listData, onEndReach, renderFooterComponent } =
+  const { isLoading, listData, onEndReach, renderFooterComponent } =
     useListData<CouponType>(
       {
         limit: "10",
@@ -92,9 +93,13 @@ const PopupCoupon = ({ dataCourse }: PopupCouponProps) => {
       </PressableBtn>
     );
   };
+  const renderEmpty = () => {
+    return <EmptyResultView />;
+  };
 
   return (
     <View style={styles.container}>
+      {!isLoading && listData.length == 0 && renderEmpty()}
       <FlatList
         showsVerticalScrollIndicator={false}
         data={listData}

@@ -129,6 +129,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
       showItemisLogin: true,
       title: translations.aboutUs.deleteacount,
       iconFont: "trash-2",
+      id: 3,
       action: () => {
         deleteUser();
       },
@@ -181,7 +182,6 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
       });
   };
 
-  console.log("userData?.user_role", userData?.user_role);
   const renderListSetting = () => {
     return (
       <View style={{ backgroundColor: colors.white, flex: 1, marginTop: 20 }}>
@@ -190,6 +190,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
             return null;
           if (item?.id == 2 && !isTeacher && userData?.user_role != "admin")
             return null;
+          if (item?.id == 3 && !isLoggedIn()) return null;
           return (
             <TouchableOpacity
               onPress={item.action}

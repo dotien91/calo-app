@@ -7,6 +7,7 @@ import { pick, types } from "react-native-document-picker";
 import { selectMedia } from "@helpers/file.helper";
 import getPath from "@flyerhq/react-native-android-uri-path";
 import { showToast } from "@helpers/super.modal.helper";
+import { translations } from "@localization";
 
 const { width } = Dimensions.get("screen");
 const isIos = Platform.OS === "ios";
@@ -74,31 +75,33 @@ export function useUploadFile(
           setListFile((listFile) => [...listFile, ...data]);
         } else {
           setListFileLocal(listFile);
-          showToast({ types: "warning", message: res.message });
+          showToast({
+            type: "error",
+            message: translations.post.uploadImageFaild,
+          });
         }
         setIsUpLoadingFile(false);
       },
       _finally: () => {
         extraParam?.cbFinaly?.();
-        setIsUpLoadingFile(false);
       },
       croping: false,
     });
   };
 
   const renderFile = React.useCallback(() => {
+    console.log("isUpLoadingFileisUpLoadingFile", isUpLoadingFile);
     return (
       <View style={styles.viewImage}>
         {listFileLocal.slice(0, 4).map((item: any, index: number) => {
           if (index < 3) {
-            const done = listFile.findIndex((i) => i.uri == item.uri);
             return (
               <FileViewComponent
                 style={styles.viewFile}
                 item={item}
                 key={`listFileLocal - ${index}`}
                 onPressClear={() => onRemove(item)}
-                isDone={done > -1}
+                isDone={!isUpLoadingFile}
               />
             );
           }
@@ -127,7 +130,7 @@ export function useUploadFile(
         })}
       </View>
     );
-  }, [listFileLocal, listFile]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [listFileLocal, listFile, isUpLoadingFile]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onRemove = ({ uri, _id }: { uri: string; _id: string }) => {
     setListFileLocal(listFileLocal.filter((i) => i.uri !== uri));
@@ -164,8 +167,6 @@ export function useUploadFile(
             type: i.type,
           })),
         );
-
-        console.log("resssss video", res);
         if (Array.isArray(res)) {
           const data = listVideo.map((i: any, index: number) => ({
             uri: getLinkUri(i),
@@ -176,7 +177,10 @@ export function useUploadFile(
           setListFile((listFile) => [...listFile, ...data]);
         } else {
           setListFileLocal(listFile);
-          showToast({ types: "warning", message: res.message });
+          showToast({
+            type: "error",
+            message: translations.post.uploadVideoFaild,
+          });
         }
         setIsUpLoadingFile(false);
       },
@@ -238,6 +242,11 @@ export function useUploadFile(
             _id: res[index].callback?._id,
           }));
           setListFile((listFile) => [...listFile, ...data]);
+        } else {
+          showToast({
+            type: "error",
+            message: translations.post.uploadFileFaild,
+          });
         }
         setIsUpLoadingFile(false);
       }

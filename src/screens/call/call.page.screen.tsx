@@ -615,21 +615,20 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
     return PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
       {
-        title: "Need permission to access microphone",
-        message:
-          "To run this demo we need permission to access your microphone",
-        buttonNegative: "Cancel",
-        buttonPositive: "OK",
+        title: translations.permissions.titleAudio,
+        message: translations.permissions.messageAudio,
+        buttonNegative: translations.permissions.negative,
+        buttonPositive: translations.permissions.positive,
       },
     );
   };
 
   const _requestCameraPermission = () => {
     return PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA, {
-      title: "Need permission to access camera",
-      message: "To run this demo we need permission to access your camera",
-      buttonNegative: "Cancel",
-      buttonPositive: "OK",
+      title: translations.permissions.titleCamera,
+      message: translations.permissions.messageCamera,
+      buttonNegative: translations.permissions.negative,
+      buttonPositive: translations.permissions.positive,
     });
   };
 

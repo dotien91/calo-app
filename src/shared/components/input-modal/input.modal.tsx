@@ -26,7 +26,6 @@ const InputViewModal = ({
   icon,
   txtBtn,
 }: TypeInputViewModal) => {
-  console.log("defaultValuedefaultValue", defaultValue);
   const [text, setText] = React.useState(defaultValue);
 
   const _onPress = () => {
@@ -74,6 +73,7 @@ const InputViewModal = ({
           customStyle={{ flex: 1, width: "100%" }}
         />
         <Button
+          isFullWidth={false}
           style={{ marginLeft: 8 }}
           type={(text || "").length ? "primary" : "disabled"}
           text={txtBtn || translations.login.send}

@@ -147,10 +147,10 @@ export function useListData<T>(
     />
   );
 
-  const renderFooterComponent = () => {
+  const renderFooterComponent = React.useCallback(() => {
     if (!isLoadMore) return <View />;
     return <LoadingList numberItem={1} />;
-  };
+  }, [isLoadMore]);
 
   return {
     listData: stateListData.listData,

@@ -57,7 +57,9 @@ const BlackList = () => {
               showModalMoti(item?.partner_id?._id);
             }}
           >
-            <Text style={styles.txtUnBlock}>UnBlock</Text>
+            <Text style={styles.txtUnBlock}>
+              {translations.blackList.unblock}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -69,7 +71,7 @@ const BlackList = () => {
       contentModalType: EnumModalContentType.Confirm,
       styleModalType: EnumStyleModalType.Middle,
       data: {
-        title: "Bạn có muốn unblock",
+        title: translations.blackList.warningUnblock(""),
         cb: () => unBlockUser(partner_id),
       },
     });
@@ -84,7 +86,7 @@ const BlackList = () => {
         _requestData(false);
         showToast({
           type: "success",
-          message: "UnBlock thành công",
+          message: translations.blackList.unBlockSuccess,
         });
       } else {
         showToast({

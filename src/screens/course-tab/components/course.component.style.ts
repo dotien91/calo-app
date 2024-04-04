@@ -105,5 +105,11 @@ export default (theme: ExtendedTheme) => {
       fontSize: 14,
       color: colors.textOpacity6,
     },
+    viewDot: {
+      width: 4,
+      height: 4,
+      borderRadius: 2,
+      backgroundColor: colors.textOpacity6,
+    },
   });
 };

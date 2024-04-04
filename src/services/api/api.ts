@@ -66,6 +66,7 @@ interface IRequest {
   method?: string;
   option?: RequestOption;
   customHeader?: Headers;
+  onUploadProgress?: any;
 }
 
 export default function request({
@@ -76,6 +77,7 @@ export default function request({
   method,
   option,
   customHeader,
+  onUploadProgress,
 }: IRequest) {
   return apiClient
     .request({
@@ -85,6 +87,7 @@ export default function request({
       data,
       ...option,
       headers: customHeader || headersDefault,
+      onUploadProgress: onUploadProgress ? onUploadProgress : () => {},
     })
     .catch((error) => {
       return Promise.resolve({ ...error, isError: true });

@@ -12,7 +12,6 @@ import { useForm } from "react-hook-form";
 import Header from "@shared-components/header/Header";
 import InputHook from "@shared-components/form/InputHookForm";
 
-import { isIos } from "@helpers/device.info.helper";
 import { translations } from "@localization";
 import CommonStyle from "@theme/styles";
 import {
@@ -110,10 +109,7 @@ const EditProfileScreen = () => {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={{ ...CommonStyle.safeAreaView }}
-      behavior={isIos() ? "height" : undefined}
-    >
+    <KeyboardAvoidingView style={CommonStyle.flex1}>
       <SafeAreaView style={CommonStyle.safeAreaView}>
         <Header
           onPressLeft={() => NavigationService.goBack()}

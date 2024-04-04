@@ -24,11 +24,17 @@ import PressableBtn from "@shared-components/button/PressableBtn";
 import Button from "@shared-components/button/Button";
 import { palette } from "@theme/themes";
 import AnswerChildInput from "./component/answer/answer.child.input";
-import { showToast } from "@helpers/super.modal.helper";
+import {
+  EnumModalContentType,
+  EnumStyleModalType,
+  showSuperModal,
+  showToast,
+} from "@helpers/super.modal.helper";
 import QuestionSpeakingItem from "./component/question/question.speaking.item";
 import eventEmitter from "@services/event-emitter";
 import LoadingList from "@shared-components/loading.list.component";
 import AppSound from "./component/sound.toolkit";
+import lotieSuccess from "assets/lotties/success.json";
 
 const itemWidth = Device.width;
 interface IeltsPacticeScreenProps {}
@@ -36,7 +42,6 @@ interface IeltsPacticeScreenProps {}
 const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
   const route = useRoute();
   const practiceDetail = route.params?.["practiceDetail"];
-  console.log("practiceDetail", practiceDetail);
   const isSpeaking = () => {
     return practiceDetail.type == EnumTestType.Speaking;
   };
@@ -58,6 +63,7 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
     },
     [],
   );
+  console.log("list question", data);
 
   const setFinishedTime = React.useCallback((v: number) => {
     finishedTime.current = v;
@@ -120,13 +126,21 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
       answers,
       finished_time: secs,
     };
-    console.log("dataSubmit", dataSubmit);
-    return null;
     submitTest(dataSubmit).then((res) => {
       if (!res.isError) {
-        showToast({
-          type: "success",
-          message: translations.ieltsPractice.submitSucces,
+        // showToast({
+        //   type: "success",
+        //   message: translations.ieltsPractice.submitSucces,
+        // });
+        showSuperModal({
+          contentModalType: EnumModalContentType.Confirm,
+          styleModalType: EnumStyleModalType.Middle,
+          data: {
+            hideCancelBtn: true,
+            linkLotties: lotieSuccess,
+            title: translations.ieltsPractice.submitSucces,
+            desc: translations.ieltsPractice.desSubmitSuccess,
+          },
         });
         NavigationService.goBack();
         //todo back to list test
@@ -213,6 +227,11 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
     );
   };
 
+  //id audio live 660d1d01dcdac8b948118f02
+  //id audio dev 660d1d7a96d5c03ee4c31c5e
+
+  // https://files.exam24h.com/upload/2024/04/03_1712133330878/6588f61a8d8b13bb432f8276-1712133330876-6D0E9B0D-36BB-4073-9F82-ACB5D5FE38A8.png
+  // https://files.exam24h.com/upload/2024/04/03_1712133331026/6588f61a8d8b13bb432f8276-1712133331026-783FF173-59AF-4428-8E77-657B4556C1D6.png
   const renderAudio = () => {
     if (!audioUrl) return null;
     console.log("audioUrl", audioUrl);
@@ -231,9 +250,8 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
       </View>
     );
   };
-
   return (
-    <SafeAreaView style={CS.container}>
+    <SafeAreaView style={CS.safeAreaView}>
       <IeltsPracticeHeader
         text={translations.ieltsPractice.praticeTest}
         iconNameRight="info"
@@ -262,6 +280,7 @@ const styles = StyleSheet.create({
   wrapBtn: {
     position: "absolute",
     bottom: 0,
+    paddingBottom: 8,
     right: 16,
     left: 16,
     zIndex: 1,

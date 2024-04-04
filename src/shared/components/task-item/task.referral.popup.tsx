@@ -21,26 +21,35 @@ const ReferralPopupTask = ({ data }: ReferralPopupProps) => {
       case ActionTypeTask.LIKE:
         NavigationService.navigate(SCREENS.HOME);
         break;
-      case ActionTypeTask.COMMENT:
-        NavigationService.navigate(SCREENS.HOME);
-        break;
       case ActionTypeTask.POST:
         NavigationService.navigate(SCREENS.POST_SCREEN);
         break;
+      case ActionTypeTask.COMMENT:
+        NavigationService.navigate(SCREENS.HOME);
+        break;
+      case ActionTypeTask.REFERRAL:
+        NavigationService.navigate(SCREENS.HOME);
+        break;
+      case ActionTypeTask.BUY:
+        NavigationService.navigate(SCREENS.COURSE_LIST);
+        break;
+      case ActionTypeTask.SHARE:
+        NavigationService.navigate(SCREENS.HOME);
+        break;
       case ActionTypeTask.COMPLETE:
+        NavigationService.navigate(SCREENS.MY_COURES);
+        break;
+      case ActionTypeTask.VIEW:
         NavigationService.navigate(SCREENS.MY_COURES);
         break;
       case ActionTypeTask.WATCH:
         NavigationService.navigate(SCREENS.MY_COURES);
         break;
-      case ActionTypeTask.BUY:
-        NavigationService.navigate(SCREENS.COURSE_LIST);
-        break;
       case ActionTypeTask.JOIN:
         NavigationService.navigate(SCREENS.COURSE_LIST);
         break;
       default:
-        console.log("default");
+        NavigationService.navigate(SCREENS.HOME);
         break;
     }
     closeSuperModal();
@@ -54,29 +63,23 @@ const ReferralPopupTask = ({ data }: ReferralPopupProps) => {
           color: palette.white,
           backgroundColor: palette.blueChart,
         };
+      case ActionTypeTask.POST:
+        return {
+          icon: "icupLoad",
+          color: palette.white,
+          backgroundColor: palette.greenChart,
+        };
       case ActionTypeTask.COMMENT:
         return {
           icon: "icCommentTask",
           color: palette.white,
           backgroundColor: palette.yellowComment,
         };
-      case ActionTypeTask.VIEW:
-        return {
-          icon: "icYoutube",
-          color: palette.white,
-          backgroundColor: palette.btnRedPrimary,
-        };
-      case ActionTypeTask.COMPLETE:
+      case ActionTypeTask.REFERRAL:
         return {
           icon: "iconPen",
           color: palette.white,
-          backgroundColor: palette.greenChart,
-        };
-      case ActionTypeTask.POST:
-        return {
-          icon: "icupLoad",
-          color: palette.white,
-          backgroundColor: palette.greenChart,
+          backgroundColor: palette.boldYellow,
         };
       case ActionTypeTask.BUY:
         return {
@@ -84,11 +87,41 @@ const ReferralPopupTask = ({ data }: ReferralPopupProps) => {
           color: palette.white,
           backgroundColor: palette.btnRedPrimary,
         };
+      case ActionTypeTask.SHARE:
+        return {
+          icon: "icupLoad",
+          color: palette.white,
+          backgroundColor: palette.yellow,
+        };
+      case ActionTypeTask.COMPLETE:
+        return {
+          icon: "iconPen",
+          color: palette.white,
+          backgroundColor: palette.greenChart,
+        };
+      case ActionTypeTask.VIEW:
+        return {
+          icon: "icYoutube",
+          color: palette.white,
+          backgroundColor: palette.primary,
+        };
+      case ActionTypeTask.WATCH:
+        return {
+          icon: "icYoutube",
+          color: palette.white,
+          backgroundColor: palette.yellowComment,
+        };
+      case ActionTypeTask.JOIN:
+        return {
+          icon: "iconBuyTask",
+          color: palette.white,
+          backgroundColor: palette.blueChart,
+        };
       default:
         return {
           icon: "icLike",
           color: palette.white,
-          backgroundColor: palette.blueChart,
+          backgroundColor: palette.primary,
         };
     }
   };
@@ -108,17 +141,32 @@ const ReferralPopupTask = ({ data }: ReferralPopupProps) => {
         />
       </View>
 
-      <View style={styles.viewPoint}>
-        <Text style={styles.txtPoint}>
-          {translations.task.get} {data?.item.point}
-        </Text>
-        <IconSvg
-          style={{ marginLeft: 6 }}
-          name={"icCoinStar"}
-          color={palette.gold}
-          size={20}
-        />
-      </View>
+      {data?.item && data?.item.point > 0 && (
+        <View style={styles.viewPoint}>
+          <Text style={styles.txtPoint}>
+            {translations.task.get} {data?.item.point}
+          </Text>
+          <IconSvg
+            style={{ marginLeft: 6 }}
+            name={"icCoinStar"}
+            color={palette.gold}
+            size={20}
+          />
+        </View>
+      )}
+      {data?.item && data?.item.coin > 0 && (
+        <View style={styles.viewPoint}>
+          <Text style={styles.txtPoint}>
+            {translations.task.get} {data?.item.coin}
+          </Text>
+          <IconSvg
+            style={{ marginLeft: 6 }}
+            name={"icCoin"}
+            color={palette.gold}
+            size={20}
+          />
+        </View>
+      )}
       <View style={styles.viewBtn}>
         <TextBase style={{ color: palette.textOpacity8 }}>
           {data?.item.title}

@@ -82,7 +82,7 @@ export default function PostScreen() {
     item.post_content || "",
   );
   const {
-    onPressFile,
+    onSelectFile,
     onSelectPicture,
     onSelectVideo,
     listFile,
@@ -104,6 +104,8 @@ export default function PostScreen() {
       titleLive: description,
     });
   };
+
+  console.log("listFile upload", listFile);
 
   useEffect(() => {
     getListCategory();
@@ -274,7 +276,7 @@ export default function PostScreen() {
             )}
             <SelectComponent
               icon={<IconSvg size={32} name="icFile" color={colors.blue} />}
-              onPress={onPressFile}
+              onPress={onSelectFile}
             />
             <SelectComponent
               icon={<IconSvg size={22} name="icVideo" color={colors.red} />}
@@ -310,7 +312,7 @@ export default function PostScreen() {
             )}
             <SelectComponentText
               icon={<IconSvg size={24} name="icFile" color={colors.blue} />}
-              onPress={onPressFile}
+              onPress={onSelectFile}
               text={translations.selectFile}
             />
           </View>

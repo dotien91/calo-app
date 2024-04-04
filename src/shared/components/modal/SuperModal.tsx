@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import Modal from "react-native-modal";
+import AnimatedLottieView from "lottie-react-native";
 
 import eventEmitter from "@services/event-emitter";
 import { palette } from "@theme/themes";
@@ -41,6 +42,7 @@ import { ScreenHeight } from "@freakycoder/react-native-helpers";
 import PopupCourseDetail from "@screens/course/course-preview/components/popup.more";
 import PopupCoupon from "@screens/course/course-preview/components/popup.coupon";
 import ReferralPopupTask from "@shared-components/task-item/task.referral.popup";
+import { translations } from "@localization";
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
 // using normal one.
@@ -67,7 +69,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
   const [contentModalType, setContentModalType] =
     useState<EnumModalContentType>();
   // const [contentModalType, setContentModalType] =
-  //   useState<EnumModalContentType>(EnumModalContentType.ListCourse);
+  //   useState<EnumModalContentType>(EnumModalContentType.Confirm);
   //   const [styleModalType, setStyleModalType] = useState<EnumStyleModalType>("middle");
 
   useEffect(() => {
@@ -133,20 +135,35 @@ const SuperModal: React.FC<SuperModalProps> = () => {
   };
 
   const renderConfirmView = () => {
+    const showCancelBtn = !data?.hideCancelBtn;
+    const linkLotties = !!data?.linkLotties;
     return (
       <View style={styles.modalInner}>
         <Text style={styles.title}>{data?.title}</Text>
         <Text style={styles.desc}>{data?.desc}</Text>
+        <View style={styles.viewLotties}>
+          {linkLotties && (
+            <AnimatedLottieView
+              source={data?.linkLotties}
+              style={styles.lotties}
+              loop
+              speed={1.5}
+              autoPlay
+            />
+          )}
+        </View>
         <View style={CommonStyle.flexRear}>
-          <TouchableOpacity
-            style={[styles.btnStyle, { flex: 1 }]}
-            onPress={closeModal}
-          >
-            <Text style={[styles.txtBtn, { color: palette.textOpacity6 }]}>
-              {data.textCancel || "Cancel"}
-            </Text>
-          </TouchableOpacity>
-          <View style={{ width: 10 }} />
+          {showCancelBtn && (
+            <TouchableOpacity
+              style={[styles.btnStyle, { flex: 1 }]}
+              onPress={closeModal}
+            >
+              <Text style={[styles.txtBtn, { color: palette.textOpacity6 }]}>
+                {data?.textCancel || translations.cancel}
+              </Text>
+            </TouchableOpacity>
+          )}
+          {showCancelBtn && <View style={{ width: 10 }} />}
           <TouchableOpacity
             style={[
               styles.btnStyle,
@@ -157,7 +174,9 @@ const SuperModal: React.FC<SuperModalProps> = () => {
               closeModal();
             }}
           >
-            <Text style={styles.txtBtn}>{data.textApprove || "Ok"}</Text>
+            <Text style={styles.txtBtn}>
+              {data?.textApprove || translations.permissions.positive}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -373,6 +392,15 @@ const styles = StyleSheet.create({
     left: 14,
     top: 24,
     zIndex: 1,
+  },
+  viewLotties: {
+    width: "100%",
+    ...CommonStyle.center,
+  },
+  lotties: {
+    width: 100,
+    height: 100,
+    marginBottom: 10,
   },
 });
 

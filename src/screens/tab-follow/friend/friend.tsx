@@ -1,8 +1,13 @@
 import React, { useEffect } from "react";
-import { View, FlatList, Text, TouchableOpacity } from "react-native";
+import {
+  View,
+  FlatList,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import moment from "moment";
 import * as NavigationService from "react-navigation-helpers";
-import { useTheme } from "@react-navigation/native";
 
 import { useListData } from "@helpers/hooks/useListData";
 // import useStore from "@services/zustand/store";
@@ -12,10 +17,12 @@ import { TypedUser } from "models";
 import { SCREENS } from "constants";
 import LoadingList from "@shared-components/loading.list.component";
 import eventEmitter from "@services/event-emitter";
+import EmptyResultView from "@shared-components/empty.data.component";
+import { translations } from "@localization";
+import CS from "@theme/styles";
+import { palette } from "@theme/themes";
 
 const Friend = ({ id }: { id: string }) => {
-  const theme = useTheme();
-  const { colors } = theme;
   // const userData = useStore((state) => state.userData);
   const { listData, onEndReach, isLoading, _requestData } =
     useListData<TypedUser>({ limit: 10, user_id: id }, getListFriend);
@@ -28,7 +35,6 @@ const Friend = ({ id }: { id: string }) => {
   };
 
   const onRefresh = () => {
-    console.log("refresad");
     _requestData(false);
   };
 
@@ -49,69 +55,40 @@ const Friend = ({ id }: { id: string }) => {
     index: number;
   }) => {
     return (
-      <View
-        key={index}
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginHorizontal: 16,
-          marginBottom: 16,
-        }}
-      >
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+      <View key={index} style={styles.viewContainer}>
+        <View style={styles.viewInfo}>
           <Avatar
-            style={{ height: 56, width: 56, borderRadius: 28 }}
+            style={styles.avatar}
             sourceUri={{ uri: item.partner_id?.user_avatar_thumbnail }}
-          ></Avatar>
-          <View style={{ marginLeft: 8 }}>
-            <Text
-              numberOfLines={2}
-              style={{
-                maxWidth: 220,
-                fontSize: 16,
-                fontWeight: "600",
-                color: colors.text,
-              }}
-            >
+          />
+          <View style={styles.viewTxt}>
+            <Text style={styles.txtFullname}>
               {item.partner_id?.display_name}
             </Text>
-            <Text
-              style={{
-                fontSize: 14,
-                color: colors.textOpacity8,
-                fontWeight: "400",
-              }}
-            >
+            <Text style={styles.txtDes}>
               {moment(item.partner_id?.last_active).format("HH:mm DD/MM/YY")}
             </Text>
           </View>
         </View>
         <TouchableOpacity
-          style={{ backgroundColor: colors.grey2, borderRadius: 4 }}
+          style={styles.btnFollow}
           onPress={() => {
             navigateMess(item);
           }}
         >
-          <Text
-            style={{
-              marginHorizontal: 8,
-              marginVertical: 4,
-              fontSize: 16,
-              fontWeight: "400",
-              color: colors.text,
-            }}
-          >
-            Message
-          </Text>
+          <Text style={styles.txtFollow}>{translations.message}</Text>
         </TouchableOpacity>
       </View>
     );
   };
+  const renderEmpty = () => {
+    return <EmptyResultView title={translations.emptyList} />;
+  };
 
   return (
-    <View style={{ flex: 1, marginTop: 60 }}>
+    <View style={styles.container}>
       {isLoading && <LoadingList />}
+      {!isLoading && listData.length === 0 && renderEmpty()}
       <FlatList
         style={{ marginTop: 8 }}
         data={listData}
@@ -126,4 +103,48 @@ const Friend = ({ id }: { id: string }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 60,
+  },
+  avatar: {
+    height: 56,
+    width: 56,
+    borderRadius: 28,
+  },
+  viewContainer: {
+    ...CS.row,
+    justifyContent: "space-between",
+    marginHorizontal: 16,
+    marginBottom: 16,
+  },
+  viewInfo: {
+    ...CS.flex1,
+    ...CS.row,
+  },
+  btnFollow: {
+    backgroundColor: palette.grey2,
+    borderRadius: 4,
+  },
+  txtFollow: {
+    ...CS.hnRegular,
+    marginHorizontal: 8,
+    marginVertical: 4,
+    fontSize: 14,
+  },
+  txtFullname: {
+    ...CS.hnSemiBold,
+    color: palette.text,
+  },
+  txtDes: {
+    ...CS.hnRegular,
+    color: palette.textOpacity8,
+  },
+  viewTxt: {
+    marginLeft: 8,
+    flex: 1,
+  },
+});
 export default Friend;

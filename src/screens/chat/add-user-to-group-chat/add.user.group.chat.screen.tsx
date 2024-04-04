@@ -176,12 +176,13 @@ const AddUserGroupChatScreen: React.FC<AddUserGroupChatScreenProps> = () => {
       user_id: partner_id._id,
       chat_room_id: _ids.toString(),
       user_permission: "write",
+      room_type: "group",
     };
     addUserToRoom(data).then((res) => {
       if (!res.isError) {
         showToast({
           type: "success",
-          message: "Thêm nhóm thành công",
+          message: translations.chat.createGroupSuccess,
         });
         NavigationService.pop(3);
         const data = res.data[0];
@@ -245,7 +246,7 @@ const AddUserGroupChatScreen: React.FC<AddUserGroupChatScreenProps> = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.headerTitle}>Chọn nhóm</Text>
+      <Text style={styles.headerTitle}>{translations.chat.selectGroup}</Text>
       <ProfileChatInput setTxtSearch={setTxtSearch} />
       <View style={{ margin: 10 }} />
       {isLoading && <LoadingList />}

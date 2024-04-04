@@ -1,5 +1,4 @@
 import React from "react";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { isReadyRef, navigationRef } from "react-navigation-helpers";
@@ -102,6 +101,11 @@ import IeltsPraticeList from "@screens/ielts-practice/ielts.practice.list";
 import ClassRoomScreen from "@screens/call-class/class.room.screen";
 import WebviewScreen from "@screens/webview/Webview";
 import CourseRecommendScreen from "@screens/course/course-recommend/course.recommend";
+import HomeAffilite from "@screens/affiliate/intro.affiliate.screen";
+import TextBase from "@shared-components/TextBase";
+import { translations } from "@localization";
+import { getBottomSpace } from "react-native-iphone-screen-helper";
+import IconSvg from "assets/svg";
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -123,36 +127,62 @@ const Navigation = () => {
     let iconName = "home";
     switch (route.name) {
       case SCREENS.COURSE_LIST:
-        iconName = focused ? "book" : "book";
+        iconName = focused ? "icCourse" : "icCourse";
         break;
       case SCREENS.CHAT:
-        iconName = focused ? "message-square" : "message-square";
+        iconName = focused ? "icChat" : "icChat";
         break;
       case SCREENS.NOTIFICATION:
         iconName = focused ? "bell" : "bell";
         break;
       case SCREENS.SETTINGPROFILESCREEN:
-        iconName = focused ? "user" : "user";
+        iconName = focused ? "icProfile" : "icProfile";
         break;
       case SCREENS.SETTING:
         iconName = focused ? "settings" : "settings";
         break;
       case SCREENS.DISCOVERSCREEN:
-        iconName = focused ? "earth" : "earth";
+        iconName = focused ? "icDiscovery" : "icDiscovery";
         break;
       default:
-        iconName = focused ? "home" : "home";
+        iconName = focused ? "icHome" : "icHome";
         break;
     }
     return iconName != "earth" ? (
-      <Icon name={iconName} type={IconType.Feather} size={size} color={color} />
+      <IconSvg name={iconName} size={size} color={color} />
     ) : (
-      <Icon
-        name={iconName}
-        type={IconType.Ionicons}
-        size={size}
-        color={color}
-      />
+      <IconSvg name={iconName} size={size} color={color} />
+    );
+  };
+  const renderLable = (route: any, color: any) => {
+    let label = translations.homes;
+    switch (route.name) {
+      case SCREENS.COURSE_LIST:
+        label = translations.courses;
+        break;
+      case SCREENS.CHAT:
+        label = translations.chats;
+        break;
+      case SCREENS.NOTIFICATION:
+        label = translations.notifications.notifications;
+        break;
+      case SCREENS.SETTINGPROFILESCREEN:
+        label = translations.profile.profile;
+        break;
+      case SCREENS.SETTING:
+        label = translations.setting;
+        break;
+      case SCREENS.DISCOVERSCREEN:
+        label = translations.discovers;
+        break;
+      default:
+        label = translations.homes;
+        break;
+    }
+    return (
+      <TextBase fontSize={12} style={{ color: color }}>
+        {label}
+      </TextBase>
     );
   };
 
@@ -161,13 +191,16 @@ const Navigation = () => {
       <Tab.Navigator
         screenOptions={({ route }) => ({
           headerShown: false,
-          tabBarIcon: ({ focused, color, size }) =>
-            renderTabIcon(route, focused, color, size),
+          tabBarLabel: ({ color }) => renderLable(route, color),
+          tabBarIcon: ({ focused, color }) =>
+            renderTabIcon(route, focused, color, 24),
           tabBarActiveTintColor: palette.primary,
           tabBarInactiveTintColor: "gray",
           tabBarStyle: {
             borderTopColor: palette.borderColor,
             backgroundColor: isDarkMode ? palette.black : palette.white,
+            height: getBottomSpace() + 48,
+            marginTop: 4,
           },
         })}
       >
@@ -245,7 +278,7 @@ const Navigation = () => {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {renderStackIntro()}
 
-        <Stack.Screen name={SCREENS.HOME} component={renderTabNavigation} />
+        <Stack.Screen name={SCREENS.HOME_TAB} component={renderTabNavigation} />
         <Stack.Screen name={SCREENS.LEADERBOARD} component={LeaderBoard} />
         <Stack.Screen
           name={SCREENS.COURSE_RECOMMEND}
@@ -364,7 +397,11 @@ const Navigation = () => {
           name={SCREENS.VIEW_LIVE_STREAM}
           component={ViewStreamScreen}
         />
-        <Stack.Screen name={SCREENS.LIVE_STREAM} component={LiveStreamScreen} />
+        <Stack.Screen
+          options={{ gestureEnabled: false }}
+          name={SCREENS.LIVE_STREAM}
+          component={LiveStreamScreen}
+        />
         <Stack.Screen name={SCREENS.DETAIL}>
           {(props) => <DetailScreen {...props} />}
         </Stack.Screen>
@@ -420,6 +457,7 @@ const Navigation = () => {
         <Stack.Screen name={SCREENS.TAB_FOLLOW} component={TabFollow} />
         <Stack.Screen name={SCREENS.AFFILIATE} component={AffiliatePage} />
         <Stack.Screen name={SCREENS.BLACK_LIST} component={BlackList} />
+        <Stack.Screen name={SCREENS.HOME_AFFILIATE} component={HomeAffilite} />
         {/* <Stack.Screen name={SCREENS.TAB_FOLLOW} component={TabFollow} />
         <Stack.Screen
           name={SCREENS.PRIVATESETTING}

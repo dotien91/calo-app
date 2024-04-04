@@ -163,7 +163,6 @@ const PostDetail = (props: PostDetailProps) => {
       if (indexChild >= 0 || isApi) {
         itemIndexParent.child[0] = data;
       } else {
-        console.log(2, isApi);
         itemIndexParent.child = [data, ...itemIndexParent.child];
       }
     }
@@ -361,10 +360,10 @@ const PostDetail = (props: PostDetailProps) => {
       refInput.current?.focus();
     }
   };
-  const clearComment = () => {
-    setValue("");
-  };
-  console.log(listData);
+  // const clearComment = () => {
+  //   setValue("");
+  // };
+  // console.log(listData);
 
   return (
     <KeyboardAvoidingView
@@ -441,14 +440,14 @@ const PostDetail = (props: PostDetailProps) => {
                   onFocus={() => setIsForcus(true)}
                   onBlur={() => setIsForcus(false)}
                 />
-                {trim(value) !== "" && (
+                {/* {trim(value) !== "" && (
                   <TouchableOpacity
                     style={{ paddingVertical: 8 }}
                     onPress={clearComment}
                   >
                     <Icon type={IconType.Ionicons} name={"close"} size={16} />
                   </TouchableOpacity>
-                )}
+                )} */}
               </View>
               {trim(value) !== "" && (
                 <TouchableOpacity

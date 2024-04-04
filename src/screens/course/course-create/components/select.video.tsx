@@ -12,6 +12,7 @@ import LoadingUpdateMedia from "./LoadingUpdateMedia";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { WindowWidth } from "@freakycoder/react-native-helpers";
 import { showToast } from "@helpers/super.modal.helper";
+import TextBase from "@shared-components/TextBase";
 
 interface SelectVideoHookProps {
   link?: string;
@@ -32,7 +33,7 @@ const SelectVideoHook = ({
   const [updatingVid, setUpdatingVid] = React.useState(false);
   const [idVideo, setIdVideo] = React.useState("");
   const [typeMedia, setTypeMedia] = useState("");
-
+  const [process, setProcess] = useState(0);
   useEffect(() => {
     if (link) {
       setLinkVideo(link);
@@ -51,6 +52,13 @@ const SelectVideoHook = ({
     setTypeMedia("");
   };
 
+  const onUploadProgress = function (progressEvent) {
+    const percentCompleted = Math.round(
+      (progressEvent.loaded * 100) / progressEvent.total,
+    );
+    setProcess(percentCompleted);
+  };
+
   const onPressChangeMedia = async () => {
     selectMedia({
       config: { mediaType: type },
@@ -58,15 +66,20 @@ const SelectVideoHook = ({
         const uri = isIos() ? image.path?.replace("file://", "") : image.path;
         setUpdatingVid(true);
         setTypeMedia(image.mime);
-        const res = await uploadMedia({
-          name: image?.filename || image.path?.split("/")?.reverse()?.[0] || "",
-          uri: uri,
-          type: image.mime,
-        });
+        const res = await uploadMedia(
+          {
+            name:
+              image?.filename || image.path?.split("/")?.reverse()?.[0] || "",
+            uri: uri,
+            type: image.mime,
+          },
+          onUploadProgress,
+        );
         if (res?.[0]?.callback?._id) {
           setIdVideo(res[0]?.callback?._id);
           setLinkVideo(res?.[0]?.callback?.media_thumbnail);
           setUpdatingVid(false);
+          setProcess(0);
         } else {
           setUpdatingVid(false);
           showToast({
@@ -95,13 +108,16 @@ const SelectVideoHook = ({
             </Text>
           </View>
         ) : (
-          <View style={styles.viewImage}>
+          <View>
             <Image source={{ uri: linkVideo }} style={styles.viewImage} />
             {updatingVid && (
               <View style={styles.viewImageFill}>
                 <LoadingUpdateMedia />
                 <View style={styles.viewImageFill}>
                   <ActivityIndicator size={"small"} />
+                  <TextBase fontSize={12} fontWeight="500" color="primary">
+                    {process}%
+                  </TextBase>
                 </View>
               </View>
             )}
@@ -139,6 +155,8 @@ const styles = StyleSheet.create({
     ...CS.fillParent,
     ...CS.center,
     backgroundColor: palette.placeholder,
+    ...CS.row,
+    gap: 8,
   },
   deleteViceo: {
     position: "absolute",

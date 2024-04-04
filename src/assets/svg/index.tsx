@@ -133,6 +133,17 @@ import iconFlag from "./icon-flag.svg";
 import icSlider from "./icon-slider.svg";
 import icMoney from "./icon-money.svg";
 import icYoutube from "./icon-youtube.svg";
+import icBlackList from "./icon-black-list.svg";
+import icRegistration from "./icon-registration.svg";
+import icSecurity from "./icon-security.svg";
+import icSetting from "./icon-setting.svg";
+import icSupport from "./icon-support.svg";
+import icTrash from "./icon-trash.svg";
+import icCommission from "./icon-commission.svg";
+import icMarkDone from "./icon-markdone.svg";
+import icNext from "./icon-next.svg";
+import icChat from "./chat.svg";
+import icHome from "./home.svg";
 
 const Icons = {
   intro1,
@@ -269,6 +280,17 @@ const Icons = {
   icSlider,
   icMoney,
   icYoutube,
+  icBlackList,
+  icRegistration,
+  icSecurity,
+  icSetting,
+  icSupport,
+  icTrash,
+  icCommission,
+  icMarkDone,
+  icNext,
+  icChat,
+  icHome,
 };
 
 interface IconSvgProps {

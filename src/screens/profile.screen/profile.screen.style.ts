@@ -16,9 +16,7 @@ interface Style {
   textYourScore: TextStyle;
   textMyCode: TextStyle;
   textShare: TextStyle;
-  viewItemLeftCodeActive: ViewStyle;
-  viewTitleAndNumberCodeActive: ViewStyle;
-  textTitleCodeActive: TextStyle;
+  boxLevel: ViewStyle;
   viewLineInviteFriend: ViewStyle;
   textDesciption: TextStyle;
   viewInviteFriend: ViewStyle;
@@ -108,27 +106,6 @@ export default (theme: ExtendedTheme) => {
       color: colors.textOpacity6,
     },
     textShare: { ...CS.hnSemiBold, fontSize: 16, color: colors.white },
-    viewItemLeftCodeActive: {
-      ...CS.center,
-      borderRadius: 16,
-      height: 32,
-      width: 32,
-      marginHorizontal: 16,
-    },
-    viewTitleAndNumberCodeActive: {
-      ...CS.row,
-      flex: 1,
-      justifyContent: "space-between",
-      paddingVertical: 16,
-      borderBottomWidth: 1,
-      marginRight: 16,
-      borderBottomColor: colors.grey3,
-    },
-    textTitleCodeActive: {
-      ...CS.hnSemiBold,
-      fontSize: 16,
-      color: colors.textOpacity8,
-    },
     viewLineInviteFriend: {
       height: 1,
       backgroundColor: colors.grey3,

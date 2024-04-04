@@ -44,8 +44,8 @@ const ListActionOfPost = ({ data }: ListActionOfPost) => {
 
   const pressDeletePost = (id: string) => {
     showSuperModal({
-      contentModalType: "loading",
-      styleModalType: "middle",
+      contentModalType: EnumModalContentType.Loading,
+      styleModalType: EnumStyleModalType.Middle,
     });
     deletePost(id).then((resdelete) => {
       closeSuperModal();

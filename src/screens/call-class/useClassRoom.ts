@@ -8,6 +8,7 @@ export const useClassRoom = () => {
   const userData = useStore((state) => state.userData);
   const route = useRoute();
   const courseData = route.params?.["courseData"];
+  const setIsMutedAll = useStore((state) => state.setIsMutedAll);
 
   React.useEffect(() => {
     StatusBar.setBackgroundColor("rgba(0,0,0,0)");
@@ -18,6 +19,7 @@ export const useClassRoom = () => {
       StatusBar.setBackgroundColor("white");
       StatusBar.setBarStyle("dark-content");
       KeepAwake.deactivate();
+      setIsMutedAll(false);
     };
   }, []);
 

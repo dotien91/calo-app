@@ -9,10 +9,8 @@ import {
   Image,
   ActivityIndicator,
 } from "react-native";
-import RTMPPublisher, {
-  RTMPPublisherRefProps,
-} from "react-native-rtmp-publisher";
-import { useTheme, useRoute } from "@react-navigation/native";
+import RTMPPublisher, { RTMPPublisherRefProps } from "react-native-publisher";
+import { useTheme, useRoute, useFocusEffect } from "@react-navigation/native";
 import { IconType } from "react-native-dynamic-vector-icons";
 import KeepAwake from "react-native-keep-awake";
 
@@ -30,7 +28,6 @@ import {
   EnumModalContentType,
   EnumStyleModalType,
   showSuperModal,
-  showToast,
 } from "@helpers/super.modal.helper";
 import { updateLivestream } from "@services/api/stream.api";
 import { useUserHook } from "@helpers/hooks/useUserHook";
@@ -101,11 +98,11 @@ function App() {
     }
   };
 
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     showLiveStream();
-  //   }, []),
-  // );
+  useFocusEffect(
+    React.useCallback(() => {
+      showLiveStream();
+    }, []),
+  );
 
   const hideLiveStream = () => {
     publisherRef.current && publisherRef.current?.stopStream();
@@ -116,13 +113,10 @@ function App() {
     cbFinaly: showLiveStream,
   });
 
-  console.log("listFile", listFile);
-
   const _onSelectPicture = () => {
     setShow(false);
     onSelectPicture();
   };
-
   useEffect(() => {
     // StatusBar.setBackgroundColor("black");
     checkPermission();
@@ -163,9 +157,9 @@ function App() {
   //   console.log("Connected====");
   // };
 
-  const handleOnDisconnect = () => {
-    showToast({ type: "error" });
-  };
+  // const handleOnDisconnect = () => {
+  //   showToast({ type: "error" });
+  // };
 
   // const handleOnNewBitrateReceived = (data: number) => {
   //   console.log("New Bitrate Received: =====" + data);
@@ -236,7 +230,6 @@ function App() {
   //       break;
   //   }
   // };
-  console.log("iveData?._id", liveData?._id);
   const renderChatView = () => {
     if (!liveData?._id) return null;
     return (
@@ -407,7 +400,7 @@ function App() {
             streamURL={liveData?.livestream_data?.rtmp_url || ""}
             streamName={liveData?.livestream_data?.stream_key || ""}
             style={styles.publisher_camera}
-            onDisconnect={handleOnDisconnect}
+            // onDisconnect={handleOnDisconnect}
             // onConnectionFailed={handleOnConnectionFailed}
             // onConnectionStarted={handleOnConnectionStarted}
             // onConnectionSuccess={handleOnConnectionSuccess}

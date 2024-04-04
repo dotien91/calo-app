@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, SafeAreaView } from "react-native";
 import { useTheme, useRoute } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 
@@ -19,6 +19,7 @@ import { SCREENS } from "constants";
 import LoadingList from "@shared-components/loading.list.component";
 import useStore from "@services/zustand/store";
 import { showToast } from "@helpers/super.modal.helper";
+import Button from "@shared-components/button/Button";
 
 interface BookLessonSelectViewProps {}
 
@@ -256,23 +257,11 @@ const BookLessonSelectView: React.FC<BookLessonSelectViewProps> = () => {
   const renderPurchaseBtn = () => {
     const isActive = !!day.length;
     return (
-      <PressableBtn
+      <Button
+        text={translations.purchase.orderNow}
+        type={isActive ? "primary" : "disabled"}
         onPress={goToCheckout}
-        disable={!isActive}
-        style={[
-          styles.btnPurchase,
-          !isActive && { backgroundColor: colors.btnInactive },
-        ]}
-      >
-        <Text
-          style={[
-            styles.txtPurchaseBtn,
-            !isActive && { color: colors.textOpacity4 },
-          ]}
-        >
-          {translations.purchase.orderNow}
-        </Text>
-      </PressableBtn>
+      />
     );
   };
 
@@ -280,12 +269,14 @@ const BookLessonSelectView: React.FC<BookLessonSelectViewProps> = () => {
   if (!data?.length) return null;
 
   return (
-    <ScrollView style={styles.container}>
-      {renderSectionDuration()}
-      {renderSectionDate()}
-      {renderSectionTime()}
-      {renderPurchaseBtn()}
-    </ScrollView>
+    <SafeAreaView style={CS.safeAreaView}>
+      <ScrollView style={styles.container}>
+        {renderSectionDuration()}
+        {renderSectionDate()}
+        {renderSectionTime()}
+        {renderPurchaseBtn()}
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

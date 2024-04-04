@@ -17,16 +17,19 @@ export const useLiveStream = ({
   const [liveData, setLiveData] = useState<ILiveData>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const setViewNumber = useStore((state) => state.setViewNumber);
+  const setEmojiNumber = useStore((state) => state.setEmojiNumber);
   const setShoppingProduct = useStore((state) => state.setShoppingProduct);
+  const setUserLive = useStore((state) => state.setUserLive);
 
   const _createLiveStream = (title: string, avatar: string) => {
     setLoading(true);
     createLiveStream(title, avatar).then((res) => {
-      console.log("createLiveStream", res);
       setLoading(false);
 
       if (!res.isError && res.data._id) {
         setLiveData(res.data);
+        setUserLive(res.data.user_id);
+        setEmojiNumber(res.data?.like_number || 0);
       } else {
         showToast({
           type: "error",
@@ -42,6 +45,8 @@ export const useLiveStream = ({
       setLoading(false);
       if (!res.isError && res.data?._id) {
         setLiveData(res.data);
+        setUserLive(res.data.user_id);
+        setEmojiNumber(res.data?.like_number || 0);
         setViewNumber(res.data?.view_number || 0);
         setShoppingProduct(res.data?.product_id);
       } else {

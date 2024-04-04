@@ -7,7 +7,6 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
  */
 import CS from "@theme/styles";
 import { EnumTestType, IQuestion } from "models/course.model";
-import TextBase from "@shared-components/TextBase";
 import { palette } from "@theme/themes";
 import AnswerChildReading from "../answer/answer.child.reading";
 import HtmlView from "../HtmlView";
@@ -41,15 +40,15 @@ interface QuestionItemProps extends IQuestion {
 const QuestionItem = ({
   part,
   index,
-  title,
+  // title,
   content,
   child,
   isTimeout,
   setAnsweData,
+  answer,
 }: QuestionItemProps) => {
   const isWriting = part == EnumTestType.Writing;
   const isReading = part == EnumTestType.Reading;
-
   const _onChangeText = (v) => {
     setAnsweData({ index, content: v });
   };
@@ -77,6 +76,7 @@ const QuestionItem = ({
           setAnsweData={setAnsweData}
           isTimeout={isTimeout}
           data={child}
+          answer={answer}
         />
       );
     return null;
@@ -85,9 +85,9 @@ const QuestionItem = ({
     <KeyboardAwareScrollView extraHeight={isWriting ? 120 : 30}>
       <ScrollView>
         <View style={styles.box}>
-          <TextBase color="text" fontWeight="600">
+          {/* <TextBase color="text" fontWeight="600">
             {title}
-          </TextBase>
+          </TextBase> */}
           <HtmlView content={content} showViewMore={isReading} />
           {renderSelectBox()}
           {renderInput()}

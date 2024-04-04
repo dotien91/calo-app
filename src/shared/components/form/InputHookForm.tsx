@@ -85,10 +85,14 @@ const InputHook: React.FC<InputHookProps> = ({
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
+            alignItems: "flex-end",
             paddingHorizontal: 20,
           }}
         >
           <Text style={styles.textTitle}>{inputProps.placeholder}</Text>
+          {!textWarning && countLength && (
+            <Text style={styles.textCount}>{`${length}/${maxLength}`}</Text>
+          )}
         </View>
       )}
       {!!label && <Text style={styles.label}>{label}</Text>}

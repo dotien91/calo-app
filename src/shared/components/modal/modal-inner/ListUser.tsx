@@ -17,19 +17,29 @@ import { TypedUser } from "shared/models";
 import { translations } from "@localization";
 import { SCREENS } from "constants";
 import { closeSuperModal } from "@helpers/super.modal.helper";
+import IconBtn from "@shared-components/button/IconBtn";
+import TextBase from "@shared-components/TextBase";
+import useStore from "@services/zustand/store";
+import PressableBtn from "@shared-components/button/PressableBtn";
 
 interface ListUserProps {
   listUser: TypedUser;
   title: string;
+  iconTopRight?: string;
+  cb?: () => void;
 }
 
 const ListUser = ({ listUser, title }: ListUserProps) => {
+  const setIsMutedAll = useStore((state) => state.setIsMutedAll);
+  const isMutedAll = useStore((state) => state.isMutedAll);
+
   const _onPress = (item) => {
     closeSuperModal();
     NavigationService.push(SCREENS.PROFILE_CURRENT_USER, {
       _id: item?._id,
     });
   };
+
   const renderItem = (item: TypedUser, index: number) => {
     return (
       <TouchableOpacity
@@ -56,9 +66,32 @@ const ListUser = ({ listUser, title }: ListUserProps) => {
     );
   };
 
+  const renderIconTopRight = () => {
+    return (
+      <PressableBtn
+        onPress={() => setIsMutedAll(!isMutedAll)}
+        style={styles.iconTopRight}
+      >
+        <IconBtn
+          color={isMutedAll ? palette.red : palette.text}
+          size={16}
+          name={isMutedAll ? "mic-off" : "mic"}
+        />
+        <TextBase fontWeight="500" fontSize={13}>
+          {isMutedAll
+            ? translations.call.unMutedAll
+            : translations.call.mutedAll}
+        </TextBase>
+      </PressableBtn>
+    );
+  };
+
   return (
     <View style={styles.box}>
-      <Text style={styles.headerTitlte}>{title}</Text>
+      <View>
+        <Text style={styles.headerTitlte}>{title}</Text>
+        {renderIconTopRight()}
+      </View>
       <ScrollView>
         {listUser.map((item: TypedUser, index: number) =>
           renderItem(item, index),
@@ -94,21 +127,13 @@ export const styles = StyleSheet.create({
     marginBottom: 14,
     marginTop: 12,
   },
-  // circle: {
-  //   width: 24,
-  //   height: 24,
-  //   borderRadius: 99,
-  //   ...CS.borderStyle,
-  //   borderWidth: 2,
-  //   borderColor: palette.primary,
-  //   ...CS.flexCenter,
-  // },
-  // dot: {
-  //   width: 12,
-  //   height: 12,
-  //   borderRadius: 99,
-  //   backgroundColor: palette.primary,
-  // },
+  iconTopRight: {
+    position: "absolute",
+    top: 16,
+    right: 16,
+    zIndex: 1,
+    ...CS.flexStart,
+  },
 });
 
 export default ListUser;

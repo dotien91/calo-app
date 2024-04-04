@@ -34,6 +34,7 @@ export async function getListTutor(data) {
     urlPath: "course/list-tutor",
     data: { ...data, display_name: data?.search || "" },
   }).then((response) => {
+    console.log("response list-tutor", response);
     return response;
   });
 }

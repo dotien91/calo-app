@@ -123,7 +123,7 @@ export default (theme: ExtendedTheme) => {
       borderTopLeftRadius: MHS._20,
       borderTopRightRadius: MHS._20,
       overflow: "hidden",
-      bottom: 40,
+      bottom: 60,
       position: "absolute",
       width: Device.width,
       right: 0,

@@ -43,12 +43,13 @@ const VideoPlayer = ({
 
   const [pause, setPause] = useState(!autoPlay && !isStreamThumbnail);
   const [isPreloading, setIsPreloading] = useState(true);
-  const [showThumbnail, setShowThumbnail] = useState(false);
+  const [showThumbnail, setShowThumbnail] = useState(!!mediaThumbail);
 
   React.useEffect(() => {
     if (isStreamThumbnail && !isPreloading) {
       setPause((old) => !old);
       setShowThumbnail(false);
+      // alert(2);
     }
   }, [isStreamThumbnail, isPreloading]);
 

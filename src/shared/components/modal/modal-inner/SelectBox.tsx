@@ -7,6 +7,7 @@ import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { closeSuperModal } from "@helpers/super.modal.helper";
+import IconSvg from "assets/svg";
 
 interface IItem {
   name: string;
@@ -60,6 +61,13 @@ const SelectBox = ({
             <Icon
               name={item.icon}
               type={IconType.Feather}
+              size={24}
+              style={{ color: palette.text }}
+            />
+          )}
+          {!!item.iconSvg && (
+            <IconSvg
+              name={item.iconSvg}
               size={24}
               style={{ color: palette.text }}
             />

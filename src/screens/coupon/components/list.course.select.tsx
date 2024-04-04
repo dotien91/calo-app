@@ -99,7 +99,7 @@ const ListCourseSelect = ({
   };
 
   return (
-    <SafeAreaView style={CS.flex1}>
+    <SafeAreaView style={CS.safeAreaView}>
       <Header
         text={translations.coupon.selectCourse}
         onPressLeft={hideModal}

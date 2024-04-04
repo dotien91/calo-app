@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, FlatList, Text, TouchableOpacity } from "react-native";
+import {
+  View,
+  FlatList,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import * as NavigationService from "react-navigation-helpers";
-import { useTheme } from "@react-navigation/native";
 
 import { useListData } from "@helpers/hooks/useListData";
 import useStore from "@services/zustand/store";
@@ -18,9 +23,10 @@ import { showToast, showWarningLogin } from "@helpers/super.modal.helper";
 import { translations } from "@localization";
 import LoadingList from "@shared-components/loading.list.component";
 import eventEmitter from "@services/event-emitter";
+import EmptyResultView from "@shared-components/empty.data.component";
+import { palette } from "@theme/themes";
+import CS from "@theme/styles";
 const Following = ({ id }) => {
-  const theme = useTheme();
-  const { colors } = theme;
   const userData = useStore((state) => state.userData);
   const [listFollow, setlistFollow] = useState([]);
   const paramsRequest = {
@@ -143,7 +149,6 @@ const Following = ({ id }) => {
     };
     getListFollowing(param).then((res: any) => {
       setlistFollow(res.data);
-      // console.log("setlistFollow(res.data)", JSON.stringify(res, null,2))
     });
   };
 
@@ -166,61 +171,36 @@ const Following = ({ id }) => {
         ? { ...item, theSame: true }
         : { ...item };
     return (
-      <View
-        key={index}
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginHorizontal: 16,
-          marginBottom: 16,
-          // height:400
-        }}
-      >
+      <View key={index} style={styles.viewContainer}>
         <TouchableOpacity
           onPress={() => {
             NavigationService.push(SCREENS.PROFILE_CURRENT_USER, {
               _id: newitem?.partner_id?._id,
             });
           }}
-          style={{ flexDirection: "row", alignItems: "center" }}
+          style={styles.viewInfo}
         >
           <Avatar
-            style={{ height: 56, width: 56, borderRadius: 28 }}
+            style={styles.avatar}
             sourceUri={{
               uri:
                 userData?._id != id
                   ? newitem?.partner_id?.user_avatar
                   : newitem?.partner_id?.user_avatar,
             }}
-          ></Avatar>
-          <View style={{ marginLeft: 8 }}>
-            <Text
-              numberOfLines={2}
-              style={{
-                maxWidth: 220,
-                fontSize: 16,
-                fontWeight: "600",
-                color: colors.text,
-              }}
-            >
+          />
+          <View style={styles.viewTxt}>
+            <Text numberOfLines={2} style={styles.txtFullname}>
               {newitem?.partner_id?.display_name}
             </Text>
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: "400",
-                color: colors.textOpacity8,
-              }}
-            >
+            <Text style={styles.txtDes} numberOfLines={3}>
               {newitem?.partner_id?.description}
             </Text>
-            {/* <Text>dasdas</Text> */}
           </View>
         </TouchableOpacity>
         <View>
           <TouchableOpacity
-            style={{ backgroundColor: colors.grey2, borderRadius: 4 }}
+            style={styles.btnFollow}
             onPress={() => {
               if (!userData?._id) {
                 showWarningLogin();
@@ -233,15 +213,7 @@ const Following = ({ id }) => {
               }
             }}
           >
-            <Text
-              style={{
-                marginHorizontal: 8,
-                marginVertical: 4,
-                color: colors.text,
-                fontSize: 14,
-                fontWeight: "400",
-              }}
-            >
+            <Text style={styles.txtFollow}>
               {/* {item.is_follow === true && userData?._id === id ? translations.unfollow : translations.follow} */}
               {!userData?._id
                 ? translations.follow
@@ -261,26 +233,19 @@ const Following = ({ id }) => {
     );
   };
 
+  const renderEmpty = () => {
+    return <EmptyResultView title={translations.emptyList} />;
+  };
+
   return (
-    <View style={{ flex: 1, marginTop: 60 }}>
+    <View style={styles.container}>
       {isLoading && <LoadingList />}
-      {/* <FlatList
-        style={{ marginTop: 8 }}
-        data={listData}
-        renderItem={renderItemSelected}
-        onEndReachedThreshold={0.1}
-        
-        // showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        onEndReached={onEndReach}
-        scrollEventThrottle={16}
-        removeClippedSubviews={true}
-      /> */}
+      {!isLoading && listData.length === 0 && renderEmpty()}
+
       <FlatList
         data={listData}
         renderItem={renderItemSelected}
         scrollEventThrottle={16}
-        // contentContainerStyle={styles.listChat}
         onEndReachedThreshold={0}
         // showsHorizontalScrollIndicator={true}
         showsVerticalScrollIndicator={false}
@@ -292,4 +257,50 @@ const Following = ({ id }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 60,
+  },
+  avatar: {
+    height: 56,
+    width: 56,
+    borderRadius: 28,
+  },
+  viewContainer: {
+    ...CS.row,
+    justifyContent: "space-between",
+    marginHorizontal: 16,
+    marginBottom: 16,
+    // height:400
+  },
+  viewInfo: {
+    ...CS.flex1,
+    ...CS.row,
+  },
+  btnFollow: {
+    backgroundColor: palette.grey2,
+    borderRadius: 4,
+  },
+  txtFollow: {
+    ...CS.hnRegular,
+    marginHorizontal: 8,
+    marginVertical: 4,
+    fontSize: 14,
+  },
+  txtFullname: {
+    ...CS.hnSemiBold,
+    color: palette.text,
+  },
+  txtDes: {
+    ...CS.hnRegular,
+    color: palette.textOpacity8,
+  },
+  viewTxt: {
+    marginLeft: 8,
+    flex: 1,
+  },
+});
+
 export default Following;

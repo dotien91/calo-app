@@ -59,7 +59,7 @@ const DetailTaskScreen = () => {
   );
 
   return (
-    <SafeAreaView style={CS.flex1}>
+    <SafeAreaView style={CS.safeAreaView}>
       <View style={styles.container}>
         <Header
           customStyle={{ marginBottom: 0 }}

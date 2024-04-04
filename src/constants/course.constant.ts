@@ -6,19 +6,19 @@ export const filterCourseKeys = [
     id: "types",
     keyFilters: [
       {
-        name: "All forms",
+        name: translations.course.allForms,
         id: "All forms",
       },
       {
-        name: "Call 1-1",
+        name: translations.course.callOneVsOne,
         id: "Call 1-1",
       },
       {
-        name: "Self-learning",
+        name: translations.course.salfLearning,
         id: "Self-learning",
       },
       {
-        name: "Call group",
+        name: translations.course.callGroup,
         id: "Call group",
       },
     ],
@@ -28,23 +28,23 @@ export const filterCourseKeys = [
     id: "skills",
     keyFilters: [
       {
-        name: "All skills",
+        name: translations.course.allSkills,
         id: "All skills",
       },
       {
-        name: "Listening",
+        name: translations.course.listening,
         id: "Listening",
       },
       {
-        name: "Reading",
+        name: translations.course.reading,
         id: "Reading",
       },
       {
-        name: "Writing",
+        name: translations.course.writing,
         id: "Writing",
       },
       {
-        name: "Speaking",
+        name: translations.course.Speaking,
         id: "Speaking",
       },
     ],
@@ -95,19 +95,19 @@ export const filterTeacherKeys = [
     id: "types",
     keyFilters: [
       {
-        name: "All forms",
+        name: translations.course.allForms,
         id: "All forms",
       },
       {
-        name: "Call 1-1",
+        name: translations.course.callOneVsOne,
         id: "Call 1-1",
       },
       {
-        name: "Self-learning",
+        name: translations.course.salfLearning,
         id: "Self-learning",
       },
       {
-        name: "Call group",
+        name: translations.course.callGroup,
         id: "Call group",
       },
     ],
@@ -117,23 +117,23 @@ export const filterTeacherKeys = [
     id: "skills",
     keyFilters: [
       {
-        name: "All skills",
+        name: translations.course.allSkills,
         id: "All skills",
       },
       {
-        name: "Listening",
+        name: translations.course.listening,
         id: "Listening",
       },
       {
-        name: "Reading",
+        name: translations.course.reading,
         id: "Reading",
       },
       {
-        name: "Writing",
+        name: translations.course.writing,
         id: "Writing",
       },
       {
-        name: "Speaking",
+        name: translations.course.Speaking,
         id: "Speaking",
       },
     ],
@@ -212,48 +212,48 @@ export const filterTeacherKeys = [
 
 export const quickFilterCourse = [
   {
-    name: "All forms",
+    name: translations.course.allForms,
     id: "All forms",
     type: "types",
   },
   {
-    name: "Call 1-1",
+    name: translations.course.callOneVsOne,
     id: "Call 1-1",
     type: "types",
   },
   {
-    name: "Self-learning",
+    name: translations.course.salfLearning,
     id: "Self-learning",
     type: "types",
   },
   {
-    name: "Call group",
+    name: translations.course.callGroup,
     id: "Call group",
     type: "types",
   },
   {
-    name: "All skills",
+    name: translations.course.allSkills,
     id: "All skills",
     type: "skills",
   },
   {
-    name: "Listening",
+    name: translations.course.listening,
     id: "Listening",
     type: "skills",
   },
   {
-    name: "Reading",
+    name: translations.course.Speaking,
+    id: "Speaking",
+    type: "skills",
+  },
+  {
+    name: translations.course.reading,
     id: "Reading",
     type: "skills",
   },
   {
-    name: "Writing",
+    name: translations.course.writing,
     id: "Writing",
-    type: "skills",
-  },
-  {
-    name: "Speaking",
-    id: "Speaking",
     type: "skills",
   },
 ];
