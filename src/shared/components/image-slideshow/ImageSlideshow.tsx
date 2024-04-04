@@ -9,6 +9,7 @@ import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
 import { TypedMedia } from "shared/models";
 import ImageModalInner from "./ImageModalInner";
+import { Device } from "@utils/device.utils";
 
 interface ImageSlideShowProps {
   listMedia: TypedMedia[];
@@ -95,15 +96,13 @@ export default ImageSlideShow;
 
 const styles = StyleSheet.create({
   modalInner: {
-    // backgroundColor: palette.black,
     borderRadius: 6,
-    paddingTop: getStatusBarHeight() + 10,
     flex: 1,
   },
   viewBackground: {
     ...CommonStyle.flex1,
     ...CommonStyle.center,
-    // backgroundColor: palette.green,
+    height: Device.height,
   },
   headerContainer: {
     flexDirection: "row",
@@ -111,5 +110,8 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "flex-start",
     width: "100%",
+    position: "absolute",
+    paddingTop: getStatusBarHeight() + 10,
+    zIndex: 99,
   },
 });
