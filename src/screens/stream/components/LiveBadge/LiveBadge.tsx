@@ -31,17 +31,17 @@ const LiveBadge = () => {
           >{`${emojiNumber} ${translations.liveStream.likes}`}</Text>
         </View>
       </View>
-      {viewNumber > 0 && (
-        <View style={styles.viewCountBox}>
-          <Icon
-            type={IconType.Ionicons}
-            color={palette.white}
-            name={"eye"}
-            size={18}
-          />
-          <Text style={styles.viewCountTxt}>{viewNumber}</Text>
-        </View>
-      )}
+      <View style={styles.viewCountBox}>
+        <Icon
+          type={IconType.Ionicons}
+          color={palette.white}
+          name={"eye"}
+          size={18}
+        />
+        <Text style={styles.viewCountTxt}>
+          {viewNumber > 0 ? viewNumber : 0}
+        </Text>
+      </View>
     </>
   );
 };
