@@ -1,8 +1,9 @@
 import React from "react";
+import ImageViewer from "react-native-image-zoom-viewer";
 
 import VideoPlayer from "@shared-components/video.player.component";
 import { Device } from "@utils/device.ui.utils";
-import ImageLoad from "@shared-components/image-load/ImageLoad";
+import { closeSuperModal } from "@helpers/super.modal.helper";
 
 interface Media {
   item: any;
@@ -18,16 +19,24 @@ const Media = ({ item }: Media) => {
       ? width / (Number(media_width) / Number(media_height))
       : width;
 
+  const imgRender = [
+    {
+      url: item?.media_url,
+    },
+  ];
+
   if (
     (item?.media_mime_type || "").includes("image") ||
     (item?.media_type || "").includes("image")
   ) {
     return (
-      <ImageLoad
-        source={{ uri: item?.media_url }}
+      <ImageViewer
         style={{ height: mediaHeight, width }}
-        resizeMode="contain"
-        showImageDefault={false}
+        imageUrls={imgRender}
+        renderIndicator={() => null}
+        onSwipeDown={closeSuperModal}
+        enableSwipeDown
+        saveToLocalByLongPress={false}
       />
     );
   }
