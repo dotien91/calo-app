@@ -16,7 +16,6 @@ import {
 import { getListMemberCourse } from "@services/api/course.api";
 import useStore from "@services/zustand/store";
 import { translations } from "@localization";
-import inCallManager from "react-native-incall-manager";
 
 const ClassRoomBottomView = ({
   toggleMute,
@@ -49,7 +48,6 @@ const ClassRoomBottomView = ({
   };
 
   useEffect(() => {
-    inCallManager.setSpeakerphoneOn(true);
     _getListMemberCourse();
     viewRoom({ id: chatRoomId }).then((res) => {
       if (!res.isError) {
