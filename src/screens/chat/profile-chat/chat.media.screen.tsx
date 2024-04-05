@@ -14,6 +14,7 @@ import useStore from "@services/zustand/store";
 import GoBackButton from "@screens/auth/components/GoBackButton";
 import MessageMediaView from "../room-chat/components/message/message.media.view";
 import { translations } from "@localization";
+import ChatProfileMediaView from "./chat.profile.media.view";
 
 interface MediaChatScreenProps {}
 
@@ -55,8 +56,8 @@ const MediaChatScreen: React.FC<MediaChatScreenProps> = () => {
 
   const renderMedia = () => {
     return (
-      <ScrollView contentContainerStyle={{ padding: 12 }}>
-        <MessageMediaView data={medias} fromMediaScreen={true} />
+      <ScrollView contentContainerStyle={{ paddingVertical: 12 }}>
+        <ChatProfileMediaView data={medias} fromMediaScreen={true} />
       </ScrollView>
     );
   };

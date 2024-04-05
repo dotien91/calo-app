@@ -310,22 +310,11 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
       <TouchableOpacity onPress={openMediaChatScreen} style={styles.section}>
         <Text style={styles.titleSection}>{item.title}</Text>
         <View style={styles.wrapMedia}>
-          <MessageMediaView
-            disabled={true}
-            width={widthMedia}
-            height={widthMedia}
-            fromProfileChat
-            data={mediaIdsShow}
-            customStyleBox={{
-              flex: 1,
-              ...CommonStyle.flexStart,
-            }}
-          />
           {mediaIds.length > numberItemsMediaShow && (
             <View
               style={[
                 styles.viewMoreMedia,
-                { width: widthMedia, height: widthMedia },
+                { width: widthMedia, height: widthMedia, zIndex: 2 },
               ]}
             >
               <Text style={styles.txtViewMoreMedia}>
@@ -333,6 +322,19 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
               </Text>
             </View>
           )}
+          <View>
+            <MessageMediaView
+              disabled={true}
+              width={widthMedia}
+              height={widthMedia}
+              fromProfileChat
+              data={mediaIdsShow}
+              customStyleBox={{
+                flex: 1,
+                ...CommonStyle.flexStart,
+              }}
+            />
+          </View>
         </View>
       </TouchableOpacity>
     );

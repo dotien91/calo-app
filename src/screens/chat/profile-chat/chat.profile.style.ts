@@ -71,7 +71,7 @@ export default (theme: ExtendedTheme) => {
       // borderWidth: 2,
       borderRadius: 10,
       ...CommonStyle.flexCenter,
-      backgroundColor: colors.lightOverlay,
+      backgroundColor: "rgba(0,0,0,0.5)",
       position: "absolute",
       right: 0,
       top: 0,
