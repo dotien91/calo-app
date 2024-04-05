@@ -11,13 +11,15 @@ import {
   Platform,
   ViewStyle,
 } from "react-native";
-import { MessageText, Time } from "react-native-gifted-chat";
+import { MessageText } from "react-native-gifted-chat";
 
 import { isSameMinute } from "@utils/date.utils";
 import { palette } from "@theme/themes";
 import { TypedMessageGiftedChat } from "models/chat.model";
 import MessageMediaView from "./message.media.view";
 import { sliceString } from "@helpers/string.helper";
+import useStore from "@services/zustand/store";
+import { translations } from "@localization";
 
 interface IBubble {
   touchableProps: () => void;
@@ -49,10 +51,8 @@ const Bubble = (props: IBubble) => {
     currentMessage,
     containerStyle,
     wrapperStyle,
-    messageTextStyle,
     user,
     renderUsername,
-    usernameStyle,
     touchableProps,
     renderCustomView,
     renderTicks,
@@ -85,23 +85,30 @@ const Bubble = (props: IBubble) => {
     }
   };
 
+  const userData = useStore((state) => state.userData);
+  const isMe = userData?._id == currentMessage.user._id;
+
   const _renderMessageText = () => {
     if (currentMessage.text) {
-      // if (renderMessageText) {
-      //   return renderMessageText(props);
-      // }
       return (
-        <MessageText
-          {...props}
-          textStyle={{
-            left: [
-              styles.standardFont,
-              styles.slackMessageText,
-              props?.textStyle,
-              messageTextStyle,
-            ],
-          }}
-        />
+        <View
+          style={[
+            styles.viewMess,
+            isMe && {
+              backgroundColor: palette.secondColor,
+            },
+          ]}
+        >
+          <MessageText
+            {...props}
+            customTextStyle={{
+              color: palette.textOpacity8,
+            }}
+            linkStyle={{
+              left: [{ color: palette.textOpacity8 }],
+            }}
+          />
+        </View>
       );
     }
     return null;
@@ -164,34 +171,29 @@ const Bubble = (props: IBubble) => {
       }
       return (
         <Text
-          style={[
-            styles.standardFont,
-            styles.headerItem,
-            styles.username,
-            usernameStyle,
-          ]}
+          style={[styles.standardFont, styles.headerItem, styles.txtHeader]}
         >
-          {sliceString(username, 12)}{" "}
+          {isMe ? translations.you : sliceString(username, 12)}
         </Text>
       );
     }
     return null;
   };
 
-  const _renderTime = () => {
-    if (currentMessage.createdAt) {
-      return (
-        <Time
-          {...props}
-          containerStyle={{ left: [styles.timeContainer] }}
-          timeTextStyle={{
-            left: [styles.standardFont, styles.headerItem, styles.time],
-          }}
-        />
-      );
-    }
-    return null;
-  };
+  // const _renderTime = () => {
+  //   if (currentMessage.createdAt) {
+  //     return (
+  //       <Time
+  //         {...props}
+  //         containerStyle={{ left: [styles.timeContainer] }}
+  //         timeTextStyle={{
+  //           left: [styles.standardFont, styles.headerItem, styles.time],
+  //         }}
+  //       />
+  //     );
+  //   }
+  //   return null;
+  // };
 
   const _renderCustomView = () => {
     if (renderCustomView) {
@@ -208,7 +210,7 @@ const Bubble = (props: IBubble) => {
   const messageHeader = isSameThread ? null : (
     <View style={styles.headerView}>
       {_renderUsername()}
-      {_renderTime()}
+      {/* {_renderTime()} */}
       {_renderTicks()}
     </View>
   );
@@ -241,10 +243,10 @@ const styles = StyleSheet.create({
     ...CommonStyle.hnRegular,
     // color: Colors.danger
   },
-  slackMessageText: {
-    marginLeft: 0,
-    marginRight: 0,
-  },
+  // slackMessageText: {
+  //   marginLeft: 4,
+  //   marginRight: 4,
+  // },
   container: {
     flex: 1,
     alignItems: "flex-start",
@@ -254,19 +256,19 @@ const styles = StyleSheet.create({
     minHeight: 20,
     justifyContent: "flex-end",
   },
-  username: {
-    fontWeight: "bold",
-  },
-  time: {
-    textAlign: "left",
-    fontSize: 16,
-    color: palette.textOpacity4,
-  },
-  timeContainer: {
-    marginLeft: 0,
-    marginRight: 0,
-    marginBottom: 0,
-  },
+  // username: {
+  //   fontWeight: "bold",
+  // },
+  // time: {
+  //   textAlign: "left",
+  //   fontSize: 14,
+  //   color: palette.textOpacity4,
+  // },
+  // timeContainer: {
+  //   marginLeft: 0,
+  //   marginRight: 0,
+  //   marginBottom: 0,
+  // },
   headerItem: {
     marginRight: 10,
   },
@@ -284,6 +286,17 @@ const styles = StyleSheet.create({
   /* eslint-enable react-native/no-color-literals */
   tickView: {
     flexDirection: "row",
+  },
+  viewMess: {
+    borderRadius: 8,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    minWidth: 40,
+    backgroundColor: palette.grey4,
+  },
+  txtHeader: {
+    fontSize: 14,
+    color: palette.textOpacity6,
   },
 });
 

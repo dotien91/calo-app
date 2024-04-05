@@ -76,6 +76,7 @@ export default {
     unBlockSuccess: "Unblock success!",
     warningUnblock: (name: string) => `You want to unblock ${name}?`,
   },
+  you: "You",
   permissions: {
     titleAudio: "Need permission to access microphone",
     messageAudio: "We need permission to access your microphone",

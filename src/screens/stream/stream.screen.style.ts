@@ -23,7 +23,7 @@ export default (theme: ExtendedTheme) => {
       right: 0,
       bottom: 10,
       zIndex: 1,
-      maxHeight: ScreenHeight / 2,
+      maxHeight: ScreenHeight / 3,
     },
     publisher_camera: {
       flex: 1,
