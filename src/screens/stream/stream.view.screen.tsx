@@ -20,6 +20,7 @@ import useStore from "@services/zustand/store";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import IconSvg from "assets/svg";
 import { palette } from "@theme/themes";
+import { getStatusBarHeight } from "react-native-iphone-screen-helper";
 
 function App() {
   const theme = useTheme();
@@ -96,16 +97,15 @@ function App() {
         <PressableBtn
           style={{
             position: "absolute",
-            top: 82,
+            top: getStatusBarHeight() + 10,
             right: 20,
             zIndex: 1,
-            // backgroundColor: colors.blackOverlay,
           }}
           onPress={() => {
             closeLiveStream();
           }}
         >
-          <IconSvg name="icXShadow" size={24} color={palette.white} />
+          <IconSvg name="icXShadow" size={20} color={palette.white} />
         </PressableBtn>
         {isStreaming() && renderVideoLive()}
         {isStreaming() && renderChatView()}

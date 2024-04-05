@@ -1,6 +1,7 @@
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
 import { StyleSheet } from "react-native";
+import { getStatusBarHeight } from "react-native-iphone-screen-helper";
 
 export default StyleSheet.create({
   container: {
@@ -35,8 +36,8 @@ export default StyleSheet.create({
     borderRadius: 6,
     position: "absolute",
     margin: 10,
-    top: 72,
-    right: 70,
+    top: getStatusBarHeight() + 60,
+    left: 16,
     height: 30,
     minWidth: 60,
     justifyContent: "center",
@@ -48,7 +49,7 @@ export default StyleSheet.create({
     borderRadius: 8,
     position: "absolute",
     margin: 10,
-    top: 60,
+    top: getStatusBarHeight(),
     left: 16,
     minHeight: 40,
     paddingVertical: 8,

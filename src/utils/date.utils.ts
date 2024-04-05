@@ -325,6 +325,15 @@ export const isSameMinute = (date1: string, date2: string) => {
     _date1.getYear() == _date2.getYear()
   );
 };
+export const isSameDate = (date1: string, date2: string) => {
+  const _date1 = new Date(date1);
+  const _date2 = new Date(date2);
+  return (
+    _date1.getDate() == _date2.getDate() &&
+    _date1.getMonth() == _date2.getMonth() &&
+    _date1.getYear() == _date2.getYear()
+  );
+};
 
 export const formatFromDateToDate = (date) => {
   const _dateStart = new Date(date.from);
@@ -347,4 +356,45 @@ export const formatFromDateToDate = (date) => {
   } - ${yearEnd}-${monthEnd < 10 ? `0${monthEnd}` : monthEnd}-${
     dayEnd < 10 ? `0${dayEnd}` : dayEnd
   }`;
+};
+
+export const formatDateTime = (date) => {
+  const _date = new Date(date);
+  const today = new Date();
+  if (_date.toString() === "Invalid Date") {
+    return "";
+  }
+  const year = _date.getFullYear();
+  const month = _date.getMonth() + 1;
+  const day = _date.getDate();
+  const hours = _date.getHours();
+  const minutes = _date.getMinutes();
+
+  if (_date.getFullYear() != today.getFullYear()) {
+    return `${day < 10 ? `0${day}` : day}/${
+      month < 10 ? `0${month}` : month
+    }/${year},${hours < 10 ? `0${hours}` : hours}:${
+      minutes < 10 ? `0${minutes}` : minutes
+    }`;
+  } else {
+    if (_date.getMonth() != today.getMonth()) {
+      return `${day < 10 ? `0${day}` : day}/${
+        month < 10 ? `0${month}` : month
+      },${hours < 10 ? `0${hours}` : hours}:${
+        minutes < 10 ? `0${minutes}` : minutes
+      }`;
+    } else {
+      if (_date.getDate() != today.getDate()) {
+        return `${day < 10 ? `0${day}` : day}/${
+          month < 10 ? `0${month}` : month
+        },${hours < 10 ? `0${hours}` : hours}:${
+          minutes < 10 ? `0${minutes}` : minutes
+        }`;
+      } else {
+        return `${translations.today}, ${hours < 10 ? `0${hours}` : hours}:${
+          minutes < 10 ? `0${minutes}` : minutes
+        }`;
+      }
+    }
+  }
 };

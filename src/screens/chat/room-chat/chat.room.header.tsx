@@ -64,7 +64,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
 
   return (
     <View style={styles.wrapHeader}>
-      <View style={[styles.headerLeft, isGroup && { flex: 0.85 }]}>
+      <View style={[styles.headerLeft]}>
         <GoBackButton />
         <TouchableOpacity style={styles.roomInfo} onPress={goToProfileChat}>
           <Text numberOfLines={1} style={styles.txtNamePartner}>
@@ -78,7 +78,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
         </TouchableOpacity>
       </View>
       {isGroup || isAdmin ? null : (
-        <View style={[CommonStyle.flexEnd, styles.headerRight]}>
+        <View style={[CommonStyle.flexEnd]}>
           <ActionBtn
             icon="phone"
             color={colors.black}

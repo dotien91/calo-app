@@ -444,7 +444,7 @@ export default function PostScreen() {
                   onChangeText={setDescription}
                   multiline
                   placeholderTextColor={colors.placeholder}
-                  maxLength={500}
+                  maxLength={10000}
                 />
               </View>
               {link != "" && (

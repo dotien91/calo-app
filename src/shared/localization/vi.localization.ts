@@ -76,6 +76,7 @@ export default {
     unBlockSuccess: "Bỏ chặn thành công!",
     warningUnblock: (name: string) => `Bạn muốn bỏ chặn ${name}?`,
   },
+  you: "Bạn",
   permissions: {
     titleAudio: "Cần có quyền truy cập micrô",
     messageAudio: "Chúng tôi cần có quyền truy cập vào micrô của bạn",

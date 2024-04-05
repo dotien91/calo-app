@@ -119,13 +119,17 @@ export default (theme: ExtendedTheme) => {
       borderColor: colors.borderColor2,
       width: "100%",
       height: 66,
+      paddingRight: 12,
     },
     headerLeft: {
       ...CommonStyle.flexStart,
-      flex: 0.7,
+      flex: 1,
+      flexDirection: "row",
     },
     roomInfo: {
       marginLeft: 16,
+      // flex: 1,
+      flexDirection: "row",
     },
     txtNamePartner: {
       ...CommonStyle.hnBold,
@@ -136,12 +140,11 @@ export default (theme: ExtendedTheme) => {
       ...CommonStyle.hnRegular,
       fontSize: 12,
       color: colors.timeColor,
+      flex: 1,
     },
     headerRight: {
       flex: 0.3,
       ...CommonStyle.flexEnd,
-      marginRight: 12,
-      paddingVertical: 8,
     },
     emptyView: {
       flex: 1,

@@ -3,14 +3,14 @@ import React from "react";
 import { View, StyleSheet, Text, ViewStyle } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
-import { Avatar, Day, utils } from "react-native-gifted-chat";
+import { Avatar, utils } from "react-native-gifted-chat";
 import Bubble from "./message.bubble";
 import { EnumMessageStatus } from "constants/chat.constant";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { palette } from "@theme/themes";
 import { translations } from "@localization";
 import CommonStyle from "@theme/styles";
-import { isSameMinute } from "@utils/date.utils";
+import { formatDateTime, isSameDate, isSameMinute } from "@utils/date.utils";
 import { TypedMessageGiftedChat } from "models/chat.model";
 import { SCREENS } from "constants";
 import { isEqualObjectsSameKeys } from "@utils/index";
@@ -38,11 +38,29 @@ const MessageBubble = ({ chatRoomId, ...props }: IMessageBubble) => {
     };
   };
 
+  const isSameTime = isSameMinute(
+    props.currentMessage.createdAt,
+    props.nextMessage.createdAt,
+  );
+  const isSameTimeShow = isSameDate(
+    props.currentMessage.createdAt,
+    props.previousMessage.createdAt,
+  );
+  const sameAvatar = isSameUser(props.currentMessage, props.nextMessage);
+  console.log("sameAvatar", sameAvatar);
+  const sameUser = isSameUser(props.currentMessage, props.nextMessage);
   const renderDay = () => {
-    if (props.currentMessage.createdAt) {
-      const dayProps = getInnerComponentProps();
-      return <Day {...dayProps} />;
+    if (!isSameTimeShow) {
+      return (
+        <View style={{ width: "100%", ...CommonStyle.center }}>
+          <Text style={styles.txtTime}>
+            {formatDateTime(props.currentMessage.createdAt)}
+          </Text>
+        </View>
+      );
     }
+    // return <Day {...dayProps} />;
+
     return null;
   };
 
@@ -68,13 +86,7 @@ const MessageBubble = ({ chatRoomId, ...props }: IMessageBubble) => {
 
   const renderAvatar = () => {
     let extraStyle;
-    if (
-      isSameMinute(
-        props.currentMessage.createdAt,
-        props.previousMessage.createdAt,
-      )
-    ) {
-      // Set the invisible avatar height to 0, but keep the width, padding, etc.
+    if (isSameTime && sameAvatar) {
       extraStyle = { height: 0 };
     }
 
@@ -90,9 +102,7 @@ const MessageBubble = ({ chatRoomId, ...props }: IMessageBubble) => {
     );
   };
 
-  const marginBottom = isSameUser(props.currentMessage, props.nextMessage)
-    ? 2
-    : 10;
+  const marginBottom = sameUser ? 2 : 10;
 
   const renderStatus = () => {
     const status = props.currentMessage?.status;
@@ -128,7 +138,14 @@ const MessageBubble = ({ chatRoomId, ...props }: IMessageBubble) => {
   return (
     <View>
       {renderDay()}
-      <View style={[styles.container, { marginBottom }, props.containerStyle]}>
+      <View
+        style={[
+          styles.container,
+          { marginBottom },
+          props.containerStyle,
+          !isSameTime && !sameUser && styles.viewMargin,
+        ]}
+      >
         {renderAvatar()}
         {renderBubble()}
       </View>
@@ -142,19 +159,26 @@ const styles = StyleSheet.create({
     ...CommonStyle.flexStart,
     marginLeft: 8,
     marginRight: 0,
-    alignItems: "flex-start",
+    alignItems: "flex-end",
+  },
+  viewMargin: {
+    marginTop: 16,
   },
   slackAvatar: {
     // The bottom should roughly line up with the first line of message text.
     height: 30,
     width: 30,
-    borderRadius: 12,
+    borderRadius: 15,
     marginTop: 6,
   },
   wrapStatus: {
     paddingLeft: 45,
     marginTop: -5,
     marginBottom: 10,
+  },
+  txtTime: {
+    ...CommonStyle.hnRegular,
+    color: palette.textOpacity6,
   },
 });
 
