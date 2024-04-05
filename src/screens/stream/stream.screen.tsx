@@ -362,7 +362,7 @@ function App() {
             onPress={onShouldCloseLive}
             style={{
               position: "absolute",
-              top: 68,
+              top: 82,
               right: 20,
               zIndex: 1,
               backgroundColor: palette.red,

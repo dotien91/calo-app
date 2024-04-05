@@ -10,7 +10,6 @@ import LiveBadge from "./components/LiveBadge";
 import VideoPlayer from "@shared-components/video.player.component";
 import CommonStyle from "@theme/styles";
 import createStyles from "./stream.screen.style";
-import IconBtn from "@shared-components/button/IconBtn";
 import { useLiveStream } from "./hooks/useLiveStream";
 import ChatView from "./stream.chat.list.view";
 import * as NavigationService from "react-navigation-helpers";
@@ -18,10 +17,12 @@ import { SCREENS } from "constants";
 import { Device } from "@utils/device.utils";
 import { requestViewStream } from "@services/api/stream.api";
 import useStore from "@services/zustand/store";
+import PressableBtn from "@shared-components/button/PressableBtn";
+import IconSvg from "assets/svg";
+import { palette } from "@theme/themes";
 
 function App() {
   const theme = useTheme();
-  const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
   const route = useRoute();
   const liveStreamId = route.params?.["liveStreamId"];
@@ -92,19 +93,20 @@ function App() {
       behavior={Platform.OS === "ios" ? "height" : undefined}
     >
       <View style={styles.container}>
-        <IconBtn
-          name="x"
-          color={colors.white}
-          customStyle={{
+        <PressableBtn
+          style={{
             position: "absolute",
-            top: 50,
+            top: 82,
             right: 20,
             zIndex: 1,
-            backgroundColor: colors.blackOverlay,
+            // backgroundColor: colors.blackOverlay,
           }}
-          onPress={closeLiveStream}
-          size={30}
-        />
+          onPress={() => {
+            closeLiveStream();
+          }}
+        >
+          <IconSvg name="icXShadow" size={24} color={palette.white} />
+        </PressableBtn>
         {isStreaming() && renderVideoLive()}
         {isStreaming() && renderChatView()}
         {isStreaming() && <LiveBadge />}
