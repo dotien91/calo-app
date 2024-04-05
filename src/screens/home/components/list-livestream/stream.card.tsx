@@ -49,7 +49,7 @@ const StreamCard = ({ data }: { data: IStreamItem }) => {
           width={WindowWidth - 32}
           height={((WindowWidth - 32) / 19) * 10}
           isStreamThumbnail
-          mediaThumbail={data?.user_id?.user_avatar}
+          mediaThumbail={data?.cover_url || data?.user_id?.user_avatar}
         />
         <View style={styles.viewAction}>
           <Text style={styles.styleTxtTitle1}>{data?.title}</Text>

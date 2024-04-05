@@ -71,6 +71,7 @@ const IeltsPraticeList = () => {
           return {
             ...item,
             ...findItem,
+            _id: item._id,
           };
         });
         setData(newData);

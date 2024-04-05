@@ -24,7 +24,7 @@ export interface IStreamItem {
   _id: string;
   user_id: IUSerStream;
   language?: string;
-  avatar?: string;
+  cover_url?: string;
   "media_id?": string;
   title?: string;
   caption?: string;
