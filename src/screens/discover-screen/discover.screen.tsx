@@ -104,8 +104,8 @@ const DiscoverScreen = () => {
 
           </Text>
           <Pressable style={{
-            position: 'absolute', right: -10, bottom: 0,
-            zIndex:1, opacity: 0
+            position: 'absolute', right: -10, bottom: 0, width: 40, height: 40,
+            zIndex:1, opacity: 0,
           }}  onPress={openHiddenPage}>
             <Text style={{ color: "#fff"}}>.......</Text>
           </Pressable>
