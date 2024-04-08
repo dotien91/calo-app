@@ -959,8 +959,8 @@ export default {
     deleteacount: "Detete Account",
   },
   call: {
-    mutedAll: "Muted all",
-    unMutedAll: "Unmuted all",
+    mutedAll: "Muted all students",
+    unMutedAll: "Unmuted all students",
     inComingCall: "Incoming Call...",
     titleCamera: "Need permission to access camera",
     messageCamera: "To call others, we need permission to access your camera.",

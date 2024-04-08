@@ -329,18 +329,6 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
           </Text>
         </TouchableOpacity>
       )}
-      <PressableBtn
-        style={{
-          width: 80,
-          height: 36,
-          position: "absolute",
-          bottom: 0,
-          zIndex: 1,
-        }}
-        onPress={openHiddenPage}
-      >
-        <TextBase>{"   "}</TextBase>
-      </PressableBtn>
     </SafeAreaView>
   );
 };
