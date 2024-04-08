@@ -144,6 +144,10 @@ import icMarkDone from "./icon-markdone.svg";
 import icNext from "./icon-next.svg";
 import icChat from "./chat.svg";
 import icHome from "./home.svg";
+import icNextAudio from "./icon-next-audio.svg";
+import icPreviousAudio from "./icon-previous-audio.svg";
+import icPlayAudio from "./icon-play-audio.svg";
+import icPauseAudio from "./icon-pause-audio.svg";
 
 const Icons = {
   intro1,
@@ -291,6 +295,10 @@ const Icons = {
   icNext,
   icChat,
   icHome,
+  icNextAudio,
+  icPreviousAudio,
+  icPlayAudio,
+  icPauseAudio,
 };
 
 interface IconSvgProps {

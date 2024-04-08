@@ -106,6 +106,9 @@ import TextBase from "@shared-components/TextBase";
 import { translations } from "@localization";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
 import IconSvg from "assets/svg";
+import AudioListScreen from "@screens/audio/audio-list/audio.list.screen";
+import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
+// import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -473,6 +476,8 @@ const Navigation = () => {
         />
         <Stack.Screen name={SCREENS.HIDDEN_PAGE} component={HiddenPaage} />
         <Stack.Screen name={SCREENS.WEBVIEW_SCREEN} component={WebviewScreen} />
+        <Stack.Screen name={SCREENS.AUDIO_PLAY} component={AudioPlayScreen} />
+        <Stack.Screen name={SCREENS.AUDIO_LIST} component={AudioListScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

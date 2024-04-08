@@ -92,6 +92,8 @@ export const SCREENS = {
   WEBVIEW_SCREEN: "WebviewScreen",
   COURSE_RECOMMEND: "CourseRecommend",
   HOME_AFFILIATE: "HomeAffilite",
+  AUDIO_LIST: "AudioList",
+  AUDIO_PLAY: "AudioPlay",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =
