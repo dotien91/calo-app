@@ -13,7 +13,6 @@ const PieChartCommon = ({ sections, point }) => {
           radius={80}
           innerRadius={50}
           sections={sections}
-          dividerSize={1}
           strokeCap={"butt"}
         />
         <View style={style.viewScore}>

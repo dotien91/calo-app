@@ -78,40 +78,41 @@ const SettingProfileScreen = () => {
     const paramsRequest = {};
     getListScore(paramsRequest).then((res) => {
       if (!res.isError) {
+        let { listening_percentage_average = 0, speaking_percentage_average = 0, reading_percentage_average = 0, writing_percentage_average = 0 } = res.data
         const sum =
-          res.data.listening_percentage_average +
-          res.data.speaking_percentage_average +
-          res.data.reading_percentage_average +
-          res.data.writing_percentage_average;
-        setPoint(sum / 4);
+          listening_percentage_average +
+          speaking_percentage_average +
+          reading_percentage_average +
+          writing_percentage_average;
 
-        const dataRes = [
+        setPoint((sum / 4 || 0).toFixed(3));
+
+        const data = [
           {
             percentage:
-              (res.data.listening_percentage_average * 100) / (sum || 1),
-            color: colors.btnRedPrimary,
+            Number(((listening_percentage_average * 100) / (sum || 1)).toFixed(2)),
+            color: palette.btnRedPrimary,
             title: translations.task.listening,
           },
           {
-            percentage:
-              (res.data.speaking_percentage_average * 100) / (sum || 1),
-            color: colors.gold,
+            percentage: Number(((speaking_percentage_average * 100) / (sum || 1)).toFixed(2)),
+            color: palette.gold,
             title: translations.task.speaking,
           },
           {
             percentage:
-              (res.data.reading_percentage_average * 100) / (sum || 1),
-            color: colors.blueChart,
+            Number(((reading_percentage_average * 100) / (sum || 1)).toFixed(2)),
+            color: palette.blueChart,
             title: translations.task.reading,
           },
           {
             percentage:
-              (res.data.writing_percentage_average * 100) / (sum || 1),
-            color: colors.greenChart,
+            Number(((writing_percentage_average * 100) / (sum || 1)).toFixed(2)),
+            color: palette.greenChart,
             title: translations.task.writing,
           },
         ];
-        setData(dataRes);
+        setData(data);
       }
     });
   };
@@ -224,7 +225,6 @@ const SettingProfileScreen = () => {
   const openHiddenPage = () => {
     NavigationService.navigate(SCREENS.HIDDEN_PAGE);
   };
-
   const renderPieChart = () => {
     return (
       <View style={{ marginHorizontal: 16 }}>

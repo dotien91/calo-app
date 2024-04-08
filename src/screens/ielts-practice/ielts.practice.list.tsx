@@ -13,11 +13,9 @@ import { palette } from "@theme/themes";
 import { Device } from "@utils/device.utils";
 import { IDetailPractice } from "models/course.model";
 import {
-  getAllSubmitTest,
   getListTest,
 } from "@services/api/ielts.practice.api";
 import LoadingList from "@shared-components/loading.list.component";
-import useStore from "@services/zustand/store";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { SCREENS } from "constants";
 import EmptyResultView from "@shared-components/empty.data.component";
@@ -25,7 +23,6 @@ import EmptyResultView from "@shared-components/empty.data.component";
 const IeltsPraticeList = () => {
   const route = useRoute();
   const type = route.params?.["type"];
-  const userData = useStore((state) => state.userData);
   const [isLoading, setIsLoading] = React.useState(true);
   const [data, setData] = React.useState([]);
   const [progress, setProgress] = React.useState([]);
@@ -40,9 +37,9 @@ const IeltsPraticeList = () => {
 
   const initData = () => {
     getListTest({ type }).then((res) => {
-      console.log("list test", res.data);
+      setIsLoading(false)
       if (!res.isError) {
-        _getAllSubmitTest(res.data);
+        setData(res.data);
         getProgress(res.data);
       }
     });
@@ -56,29 +53,6 @@ const IeltsPraticeList = () => {
     setProgress(progressPercent || 0);
   };
 
-  const _getAllSubmitTest = (listTest: IDetailPractice[]) => {
-    getAllSubmitTest({
-      user_id: userData?._id,
-    }).then((res) => {
-      setIsLoading(false);
-      console.log("getAllSubmitTest", res.data);
-      if (!res.isError) {
-        const resData = res.data;
-        const newData = listTest.map((item) => {
-          const findItem = resData.find(
-            (_item) => _item.test_id?._id == item?._id,
-          );
-          return {
-            ...item,
-            ...findItem,
-            _id: item._id,
-          };
-        });
-        setData(newData);
-      }
-    });
-  };
-  console.log("list with point", data);
 
   const listTestParent = React.useMemo(() => {
     const a = data
