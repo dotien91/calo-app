@@ -144,6 +144,7 @@ import icMarkDone from "./icon-markdone.svg";
 import icNext from "./icon-next.svg";
 import icChat from "./chat.svg";
 import icHome from "./home.svg";
+import icPersonSearch from "./person-search.svg";
 
 const Icons = {
   intro1,
@@ -291,6 +292,7 @@ const Icons = {
   icNext,
   icChat,
   icHome,
+  icPersonSearch,
 };
 
 interface IconSvgProps {
