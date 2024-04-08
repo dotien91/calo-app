@@ -15,8 +15,8 @@ export const isProduction =
   ENVIRONMENT.PRODUCT;
 
 //dev domain api
-const DEVELOPER_DOMAIN_DEV = "https://api.edu-like.exam24h.com";
-const DEVELOPER_DOMAIN_SOCKET_DEV = "https://socket.api-v2.ieltshunter.io";
+const DEVELOPER_DOMAIN_DEV = "https://api.ikigai.ikigroup.vn";
+const DEVELOPER_DOMAIN_SOCKET_DEV = "https://socket.api.ikigroup.vn/scoket";
 // const UPLOAD_URL = "https://media.exam24h.com/";
 
 //prod domain api
