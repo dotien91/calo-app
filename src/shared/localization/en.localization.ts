@@ -959,8 +959,8 @@ export default {
     deleteacount: "Detete Account",
   },
   call: {
-    mutedAll: "Muted all",
-    unMutedAll: "Unmuted all",
+    mutedAll: "Muted all students",
+    unMutedAll: "Unmuted all students",
     inComingCall: "Incoming Call...",
     titleCamera: "Need permission to access camera",
     messageCamera: "To call others, we need permission to access your camera.",
@@ -1081,7 +1081,7 @@ export default {
     leaderboard: "Leader Board",
     poits: "Points",
     feature: "Features",
-    ieltsPractice: "Ielts practice test",
+    ieltsPractice: "IELTS practice test",
   },
   gamificaiton: {
     youEarn: "You earned ",

@@ -148,6 +148,7 @@ import icNextAudio from "./icon-next-audio.svg";
 import icPreviousAudio from "./icon-previous-audio.svg";
 import icPlayAudio from "./icon-play-audio.svg";
 import icPauseAudio from "./icon-pause-audio.svg";
+import icPersonSearch from "./person-search.svg";
 
 const Icons = {
   intro1,
@@ -299,6 +300,7 @@ const Icons = {
   icPreviousAudio,
   icPlayAudio,
   icPauseAudio,
+  icPersonSearch,
 };
 
 interface IconSvgProps {

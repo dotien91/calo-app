@@ -230,15 +230,6 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
     NavigationService.navigate(SCREENS.EDIT_PROFILE);
   };
 
-  const countPressHiddenPageBtn = React.useRef(0);
-
-  const openHiddenPage = () => {
-    countPressHiddenPageBtn.current += 1;
-    if (countPressHiddenPageBtn.current == 3) {
-      NavigationService.navigate(SCREENS.HIDDEN_PAGE);
-      countPressHiddenPageBtn.current = 0;
-    }
-  };
 
   return (
     <SafeAreaView style={[CS.flex1]}>
@@ -338,18 +329,6 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
           </Text>
         </TouchableOpacity>
       )}
-      <PressableBtn
-        style={{
-          width: 80,
-          height: 36,
-          position: "absolute",
-          bottom: 0,
-          zIndex: 1,
-        }}
-        onPress={openHiddenPage}
-      >
-        <TextBase>{"   "}</TextBase>
-      </PressableBtn>
     </SafeAreaView>
   );
 };

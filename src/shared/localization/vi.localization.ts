@@ -1470,8 +1470,8 @@ export default {
     deleteacount: "Xoá tài khoản",
   },
   call: {
-    mutedAll: "Tắt tiếng tất cả",
-    unMutedAll: "Bật tiếng",
+    mutedAll: "Tắt tiếng tất cả học sinh",
+    unMutedAll: "Bật tiếng tất cả học sinh",
     inComingCall: "Cuộc gọi đến...",
     titleCamera: "Cần truy cập vào quyền camera trên máy của bạn",
     messageCamera:

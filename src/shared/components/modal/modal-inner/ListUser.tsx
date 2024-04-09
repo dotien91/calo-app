@@ -21,6 +21,7 @@ import IconBtn from "@shared-components/button/IconBtn";
 import TextBase from "@shared-components/TextBase";
 import useStore from "@services/zustand/store";
 import PressableBtn from "@shared-components/button/PressableBtn";
+import Button from "@shared-components/button/Button";
 
 interface ListUserProps {
   listUser: TypedUser;
@@ -66,32 +67,24 @@ const ListUser = ({ listUser, title }: ListUserProps) => {
     );
   };
 
-  const renderIconTopRight = () => {
-    return (
-      <PressableBtn
-        onPress={() => setIsMutedAll(!isMutedAll)}
-        style={styles.iconTopRight}
-      >
-        <IconBtn
-          color={isMutedAll ? palette.red : palette.text}
-          size={16}
-          name={isMutedAll ? "mic-off" : "mic"}
-        />
-        <TextBase fontWeight="500" fontSize={13}>
-          {isMutedAll
-            ? translations.call.unMutedAll
-            : translations.call.mutedAll}
-        </TextBase>
-      </PressableBtn>
-    );
+  const renderMutedBtn = () => {
+    return <Button
+      type={"primary"}
+      isFullWidth={false}
+      style={{marginBottom: 12}}
+      onPress={() => setIsMutedAll(!isMutedAll)}
+      text={isMutedAll
+        ? translations.call.unMutedAll
+        : translations.call.mutedAll} iconName={isMutedAll ? "mic-off" : "mic"} />
   };
 
   return (
     <View style={styles.box}>
       <View>
         <Text style={styles.headerTitlte}>{title}</Text>
-        {renderIconTopRight()}
       </View>
+      {renderMutedBtn()}
+
       <ScrollView>
         {listUser.map((item: TypedUser, index: number) =>
           renderItem(item, index),
@@ -128,11 +121,9 @@ export const styles = StyleSheet.create({
     marginTop: 12,
   },
   iconTopRight: {
-    position: "absolute",
-    top: 16,
-    right: 16,
     zIndex: 1,
     ...CS.flexStart,
+    marginBottom: 12,
   },
 });
 

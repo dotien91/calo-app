@@ -21,6 +21,7 @@ import { SCREENS } from "constants";
 import useStore from "@services/zustand/store";
 import LoadingList from "@shared-components/loading.list.component";
 import { palette } from "@theme/themes";
+import { Pressable } from "react-native";
 
 const DiscoverScreen = () => {
   const screenWidth = Dimensions.get("window").width;
@@ -31,6 +32,17 @@ const DiscoverScreen = () => {
   const [loading, setLoading] = useState(false);
 
   const userInfo = useStore((state) => state.userInfo);
+
+
+  const countPressHiddenPageBtn = React.useRef(0);
+
+  const openHiddenPage = () => {
+    countPressHiddenPageBtn.current += 1;
+    if (countPressHiddenPageBtn.current == 3) {
+      NavigationService.navigate(SCREENS.HIDDEN_PAGE);
+      countPressHiddenPageBtn.current = 0;
+    }
+  };
 
   const getData = () => {
     const param = {
@@ -65,7 +77,7 @@ const DiscoverScreen = () => {
     //   title: translations.discover.shop,
     // },
     {
-      icon: "icFind",
+      icon: "icPersonSearch",
       title: translations.discover.finduser,
       screen: SCREENS.COURSE_CATEGORY,
       params: { defaultIndex: 3 },
@@ -89,7 +101,14 @@ const DiscoverScreen = () => {
         <View style={{ marginLeft: 8 }}>
           <Text style={{ ...CS.hnSemiBold, fontSize: 20, color: colors.text }}>
             {userInfo?.point} {translations.discover.poits}
+
           </Text>
+          <Pressable style={{
+            position: 'absolute', right: -10, bottom: 0, width: 40, height: 40,
+            zIndex:1, opacity: 0,
+          }}  onPress={openHiddenPage}>
+            <Text style={{ color: "#fff"}}>.......</Text>
+          </Pressable>
           <Text style={styles.txtHeader}>
             {translations.discover.level}: {userInfo?.level || "-"}
           </Text>
