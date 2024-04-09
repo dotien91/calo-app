@@ -29,9 +29,7 @@ import {
 } from "@helpers/super.modal.helper";
 import { deleteUserById } from "@services/api/user.api";
 import { USER_TOKEN, _getJson } from "@services/local-storage";
-import PressableBtn from "@shared-components/button/PressableBtn";
 import { SafeAreaView } from "react-native-safe-area-context";
-import TextBase from "@shared-components/TextBase";
 
 interface SettingScreenProps {}
 
@@ -229,7 +227,6 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
   const editProfile = () => {
     NavigationService.navigate(SCREENS.EDIT_PROFILE);
   };
-
 
   return (
     <SafeAreaView style={[CS.flex1]}>

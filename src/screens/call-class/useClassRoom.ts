@@ -16,7 +16,6 @@ export const useClassRoom = () => {
     StatusBar.setTranslucent(true);
     KeepAwake.activate();
 
-
     return () => {
       StatusBar.setBackgroundColor("white");
       StatusBar.setBarStyle("dark-content");

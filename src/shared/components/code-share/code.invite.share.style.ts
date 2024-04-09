@@ -49,7 +49,7 @@ export default (theme: ExtendedTheme) => {
     },
     touchShare: {
       flexDirection: "row",
-      backgroundColor: colors.btnRedPrimary,
+      backgroundColor: colors.primary,
       paddingVertical: 12,
       paddingHorizontal: 24,
       borderRadius: 8,

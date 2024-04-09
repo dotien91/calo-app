@@ -149,8 +149,16 @@ import icPreviousAudio from "./icon-previous-audio.svg";
 import icPlayAudio from "./icon-play-audio.svg";
 import icPauseAudio from "./icon-pause-audio.svg";
 import icPersonSearch from "./person-search.svg";
+import icCard from "./card.svg";
+import icCard1 from "./card-1.svg";
+import icCard2 from "./card-2.svg";
+import icCard3 from "./card-3.svg";
 
 const Icons = {
+  icCard,
+  icCard1,
+  icCard2,
+  icCard3,
   intro1,
   intro2,
   intro3,

@@ -12,9 +12,7 @@ import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import { Device } from "@utils/device.utils";
 import { IDetailPractice } from "models/course.model";
-import {
-  getListTest,
-} from "@services/api/ielts.practice.api";
+import { getListTest } from "@services/api/ielts.practice.api";
 import LoadingList from "@shared-components/loading.list.component";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { SCREENS } from "constants";
@@ -37,7 +35,7 @@ const IeltsPraticeList = () => {
 
   const initData = () => {
     getListTest({ type }).then((res) => {
-      setIsLoading(false)
+      setIsLoading(false);
       if (!res.isError) {
         setData(res.data);
         getProgress(res.data);
@@ -52,7 +50,6 @@ const IeltsPraticeList = () => {
       listTestChild.length;
     setProgress(progressPercent || 0);
   };
-
 
   const listTestParent = React.useMemo(() => {
     const a = data

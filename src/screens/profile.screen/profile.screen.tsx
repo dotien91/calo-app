@@ -1,7 +1,7 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import {
   FlatList,
-  Pressable,
+  Image,
   SafeAreaView,
   ScrollView,
   Text,
@@ -17,7 +17,6 @@ import CS from "@theme/styles";
 import Avatar from "@shared-components/user/Avatar";
 import useStore from "@services/zustand/store";
 import IconBtn from "@shared-components/button/IconBtn";
-import PieChartCommon from "@shared-components/pie-chart/pie.chart";
 import IconSvg from "assets/svg";
 import { translations } from "@localization";
 import { getListTaskByUser } from "@services/api/task.api";
@@ -32,7 +31,7 @@ import ListCodeActive from "@shared-components/code-active/list.code.active";
 import InviteCode from "@shared-components/code-share/code.invite.share";
 import eventEmitter from "@services/event-emitter";
 import TashListItem from "@shared-components/task-item/task.list.item";
-import { getListScore } from "@services/api/pie.chart.api";
+import meaningIkiImg from "@assets/images/meaning_ikigai.png";
 
 const SettingProfileScreen = () => {
   const theme = useTheme();
@@ -70,58 +69,6 @@ const SettingProfileScreen = () => {
       end: "IHC",
     },
   ];
-
-  const [data, setData] = useState([]);
-  const [point, setPoint] = useState([]);
-
-  const _getListScore = () => {
-    const paramsRequest = {};
-    getListScore(paramsRequest).then((res) => {
-      if (!res.isError) {
-        let { listening_percentage_average = 0, speaking_percentage_average = 0, reading_percentage_average = 0, writing_percentage_average = 0 } = res.data
-        const sum =
-          listening_percentage_average +
-          speaking_percentage_average +
-          reading_percentage_average +
-          writing_percentage_average;
-
-        setPoint((sum / 4 || 0).toFixed(3));
-
-        const data = [
-          {
-            percentage:
-            Number(((listening_percentage_average * 100) / (sum || 1)).toFixed(2)),
-            color: palette.btnRedPrimary,
-            title: translations.task.listening,
-          },
-          {
-            percentage: Number(((speaking_percentage_average * 100) / (sum || 1)).toFixed(2)),
-            color: palette.gold,
-            title: translations.task.speaking,
-          },
-          {
-            percentage:
-            Number(((reading_percentage_average * 100) / (sum || 1)).toFixed(2)),
-            color: palette.blueChart,
-            title: translations.task.reading,
-          },
-          {
-            percentage:
-            Number(((writing_percentage_average * 100) / (sum || 1)).toFixed(2)),
-            color: palette.greenChart,
-            title: translations.task.writing,
-          },
-        ];
-        setData(data);
-      }
-    });
-  };
-
-  useFocusEffect(
-    React.useCallback(() => {
-      _getListScore();
-    }, []),
-  );
 
   const onPressHeaderRight = () => {
     NavigationService.navigate(SCREENS.SETTING);
@@ -222,18 +169,21 @@ const SettingProfileScreen = () => {
     );
   };
 
-  const openHiddenPage = () => {
-    NavigationService.navigate(SCREENS.HIDDEN_PAGE);
-  };
   const renderPieChart = () => {
     return (
       <View style={{ marginHorizontal: 16 }}>
         <Text style={styles.textYourScore}>{translations.task.yourscore}</Text>
-        <PieChartCommon sections={data} point={point}></PieChartCommon>
-        <Pressable onLongPress={openHiddenPage} style={styles.viewPowered}>
+        <View style={CS.center}>
+          <Image
+            source={meaningIkiImg}
+            style={styles.ikigaiImg}
+            resizeMode={"contain"}
+          />
+        </View>
+        <View style={styles.viewPowered}>
           <Text style={styles.textPoweredBy}>{translations.task.powered}</Text>
-          <IconSvg name="logoIeltsHunter" width={32} height={18} />
-        </Pressable>
+          <IconSvg name="logoIeltsHunter" width={44} height={28} />
+        </View>
       </View>
     );
   };

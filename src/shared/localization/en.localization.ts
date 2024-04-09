@@ -969,10 +969,10 @@ export default {
   },
   listCategory: {
     course: "Course",
-    tutor: "Tutor",
-    shop: "Shop",
+    tutor: "Mentor",
+    club: "Club",
     affiliate: "Affiliate",
-    descriptionTitle: "What should we today?",
+    descriptionTitle: "Explore App Features?",
   },
   recommendCourse: "Recommend course",
   ieltsHunterLive: "IELTS Hunter Live",
@@ -1000,7 +1000,7 @@ export default {
   gotIt: "Got it",
   task: {
     inviteFriend: "Invite a friend",
-    yourscore: "Your IELTS Score",
+    yourscore: "The meaning of IKIgai",
     powered: "POWERED BY",
     mycode: "My Code",
     level: "Level",

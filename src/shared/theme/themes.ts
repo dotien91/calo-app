@@ -1,7 +1,7 @@
 import { Theme } from "@react-navigation/native";
 
 export const palette = {
-  primary: "rgba(225, 66, 66, 1)",
+  primary: "rgba(204, 32, 39, 1)",
   mainColor2: "#121118",
   secondColor: "#FFEDED",
   error: "#eb032d",
@@ -86,7 +86,7 @@ export const palette = {
   bgInput2: "rgba(240, 243, 246, 1)",
   bgBestSeller: "rgba(255, 237, 237, 1)",
   red: "rgba(252, 53, 53, 1)",
-  btnRedPrimary: "rgba(225, 66, 66, 1)",
+  btnRedPrimary: "rgba(204, 32, 39, 1)",
   link: "#0044CC",
   lightBlue: "rgba(53, 174, 255, 1)",
   backgroundColorGrey: "rgba(246, 248, 250, 1)",

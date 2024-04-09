@@ -1,6 +1,7 @@
 import CS from "@theme/styles";
 import { ExtendedTheme } from "@react-navigation/native";
 import { ViewStyle, StyleSheet, TextStyle } from "react-native";
+import { Device } from "@utils/device.ui.utils";
 
 interface Style {
   viewItemScrollMoney: ViewStyle;
@@ -29,6 +30,9 @@ interface Style {
 export default (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create<Style>({
+    ikigaiImg: {
+      width: Device.width - 100,
+    },
     viewItemScrollMoney: {
       ...CS.row,
       borderWidth: 1,
@@ -98,7 +102,8 @@ export default (theme: ExtendedTheme) => {
       ...CS.hnSemiBold,
       fontSize: 16,
       color: colors.text,
-      marginVertical: 32,
+      marginTop: 16,
+      marginBottom: 12,
     },
     textMyCode: {
       ...CS.hnMedium,
@@ -136,6 +141,6 @@ export default (theme: ExtendedTheme) => {
       justifyContent: "space-between",
     },
     textDisplayName: { ...CS.hnSemiBold, fontSize: 16, color: colors.text },
-    viewPowered: { flexDirection: "row", marginTop: 32, marginLeft: 20 },
+    viewPowered: { marginLeft: 20, ...CS.flexStart, marginTop: 16 },
   });
 };

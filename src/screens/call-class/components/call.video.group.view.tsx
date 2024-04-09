@@ -1,11 +1,20 @@
 import React from "react";
-import { View, ScrollView, Dimensions, StyleSheet, FlatList } from "react-native";
+import {
+  View,
+  ScrollView,
+  Dimensions,
+  StyleSheet,
+  FlatList,
+} from "react-native";
 
 import CS from "@theme/styles";
 import { Device } from "@utils/device.ui.utils";
 import ClassRoomRtcView from "./class.room.rtc.view";
 import MicView from "./mic.view";
-import { STUDENT_VIDEO_HEIGHT, TEACHER_VIDEO_HEIGHT } from "../call.class.constant";
+import {
+  STUDENT_VIDEO_HEIGHT,
+  TEACHER_VIDEO_HEIGHT,
+} from "../call.class.constant";
 
 const widthImg = Device.width / 2;
 
@@ -110,7 +119,13 @@ const CallVideoGroupView = React.memo(
               isMe={isTeacher}
             />
             <View style={[CS.flex1, { margin: 4 }]}>
-              <FlatList data={publishers} key={item => item?.stream?._id} renderItem={renderStudentVideo} horizontal={true} contentContainerStyle={styles.studentWrap} />
+              <FlatList
+                data={publishers}
+                key={(item) => item?.stream?._id}
+                renderItem={renderStudentVideo}
+                horizontal={true}
+                contentContainerStyle={styles.studentWrap}
+              />
             </View>
           </View>
         </>
@@ -128,13 +143,10 @@ const styles = StyleSheet.create({
     flex: 1,
     zIndex: 0,
   },
-  studentWrap: {
-
-  },
+  studentWrap: {},
   teacherBox: {
     width: Device.width,
-    height:
-      TEACHER_VIDEO_HEIGHT,
+    height: TEACHER_VIDEO_HEIGHT,
     overflow: "hidden",
     // ...CS.borderStyle,
   },
