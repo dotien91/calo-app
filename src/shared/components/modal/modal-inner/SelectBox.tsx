@@ -68,8 +68,8 @@ const SelectBox = ({
           {!!item.iconSvg && (
             <IconSvg
               name={item.iconSvg}
-              size={24}
-              style={{ color: palette.text }}
+              size={20}
+              style={{ color: item?.color || palette.text }}
             />
           )}
           <Text style={styles.checkBoxLabel}>{item.name}</Text>
@@ -100,13 +100,13 @@ export const styles = StyleSheet.create({
     paddingBottom: 16,
   },
   checkBoxLabel: {
-    ...CS.hnSemiBold,
+    ...CS.hnMedium,
     fontSize: 16,
     color: palette.textOpacity8,
     marginLeft: 8,
   },
   headerTitlte: {
-    ...CS.hnSemiBold,
+    ...CS.hnBold,
     fontSize: 20,
     flex: 1,
     textAlign: "center",

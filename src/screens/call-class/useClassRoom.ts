@@ -3,7 +3,7 @@ import useStore from "@services/zustand/store";
 import React from "react";
 import { StatusBar } from "react-native";
 import KeepAwake from "react-native-keep-awake";
-import InCallManager from 'react-native-incall-manager';
+import InCallManager from "react-native-incall-manager";
 
 export const useClassRoom = () => {
   const userData = useStore((state) => state.userData);
@@ -16,7 +16,7 @@ export const useClassRoom = () => {
     StatusBar.setBarStyle("light-content");
     StatusBar.setTranslucent(true);
     KeepAwake.activate();
-    InCallManager.setForceSpeakerphoneOn(true)
+    InCallManager.setForceSpeakerphoneOn(true);
     return () => {
       StatusBar.setBackgroundColor("white");
       StatusBar.setBarStyle("dark-content");

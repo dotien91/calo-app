@@ -148,6 +148,8 @@ import icNextAudio from "./icon-next-audio.svg";
 import icPreviousAudio from "./icon-previous-audio.svg";
 import icPlayAudio from "./icon-play-audio.svg";
 import icPauseAudio from "./icon-pause-audio.svg";
+import icSort from "./icon-sort.svg";
+import icTime from "./icon-time.svg";
 
 const Icons = {
   intro1,
@@ -299,6 +301,8 @@ const Icons = {
   icPreviousAudio,
   icPlayAudio,
   icPauseAudio,
+  icSort,
+  icTime,
 };
 
 interface IconSvgProps {

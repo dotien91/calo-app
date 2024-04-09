@@ -1674,4 +1674,17 @@ export default {
     waittingResult: "Đợi kết quả",
     emptyPraticeTest: "Danh sách thi thử trống",
   },
+  club: {
+    club: "Câu lạc bộ",
+    title1: "Câu lạc bộ nổi bật",
+    title2: "Câu lạc bộ bạn quản lý",
+    title3: "Câu lạc bộ bạn đã tham gia",
+    create: "Tạo mới",
+    sortBy: "Sắp xếp câu lạc bộ theo",
+    mostVisited: "Truy cập nhiều nhất",
+    clubs: "Câu lạc bộ A-Z",
+    join: "Đã tham gia gần đây",
+    attended: "Tham gia",
+    ago: "trước",
+  },
 };

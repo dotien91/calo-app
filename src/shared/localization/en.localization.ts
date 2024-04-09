@@ -1161,5 +1161,18 @@ export default {
     waittingResult: "Waitting result",
     emptyPraticeTest: "Empty practice test",
   },
+  club: {
+    club: "Club",
+    title1: "Feature clubs",
+    title2: "Clubs you manage",
+    title3: "Club you've joine",
+    create: "Create",
+    sortBy: "Sort Clubs by",
+    mostVisited: "Most Visited",
+    clubs: "Clubs A-Z",
+    join: "Recently Joined",
+    attended: "Attended",
+    ago: "ago",
+  },
 };
 /* eslint-disable max-len */

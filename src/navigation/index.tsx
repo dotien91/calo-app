@@ -75,7 +75,6 @@ import ClassHomeWorkScreen from "@screens/class-home-work/class.home.work.screen
 import CreateWorkScreen from "@screens/class-home-work/create.work.screen";
 import DetailTaskScreen from "@screens/class-home-work/detail.task.screen";
 import AddWorkStudentScreen from "@screens/class-home-work/add.work.student.screen";
-import DiscoverScreen from "@screens/discover-screen/discover.screen";
 import ChatListScreen from "@screens/chat/list-chat/chat.list.screen";
 import NotificationScreen from "@screens/notification/NotificationScreen";
 import TaskScreen from "@screens/profile.screen/task.screen";
@@ -108,6 +107,7 @@ import { getBottomSpace } from "react-native-iphone-screen-helper";
 import IconSvg from "assets/svg";
 import AudioListScreen from "@screens/audio/audio-list/audio.list.screen";
 import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
+import ClubScreen from "@screens/club/home-club/club.screen";
 // import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -144,7 +144,7 @@ const Navigation = () => {
       case SCREENS.SETTING:
         iconName = focused ? "settings" : "settings";
         break;
-      case SCREENS.DISCOVERSCREEN:
+      case SCREENS.CLUB_SCREEN:
         iconName = focused ? "icDiscovery" : "icDiscovery";
         break;
       default:
@@ -175,8 +175,8 @@ const Navigation = () => {
       case SCREENS.SETTING:
         label = translations.setting;
         break;
-      case SCREENS.DISCOVERSCREEN:
-        label = translations.discovers;
+      case SCREENS.CLUB_SCREEN:
+        label = translations.club.club;
         break;
       default:
         label = translations.homes;
@@ -210,7 +210,7 @@ const Navigation = () => {
         <Tab.Screen name={SCREENS.HOME} component={HomeScreen} />
         <Tab.Screen name={SCREENS.COURSE_LIST} component={CourseListScreen} />
 
-        <Tab.Screen name={SCREENS.DISCOVERSCREEN} component={DiscoverScreen} />
+        <Tab.Screen name={SCREENS.CLUB_SCREEN} component={ClubScreen} />
 
         <Tab.Screen name={SCREENS.CHAT} component={ChatListScreen} />
 

@@ -94,6 +94,7 @@ export const SCREENS = {
   HOME_AFFILIATE: "HomeAffilite",
   AUDIO_LIST: "AudioList",
   AUDIO_PLAY: "AudioPlay",
+  CLUB_SCREEN: "ClubScreen",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =
