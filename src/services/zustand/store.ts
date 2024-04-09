@@ -19,6 +19,9 @@ import createAffiliateSlice, {
 import createSavePostSlice, {
   SavePostSlice,
 } from "@services/zustand/save-post/SavePostSlice";
+import createAudioSlice, {
+  AudioSlice,
+} from "@services/zustand/audio/AudioSlice";
 import { createJSONStorage, persist, StateStorage } from "zustand/middleware";
 
 export type StoreState = AppSlice &
@@ -29,6 +32,7 @@ export type StoreState = AppSlice &
   SavePostSlice &
   PaymentSlice &
   NotificationSlice &
+  AudioSlice &
   AffiliateSlice;
 export type StoreSlice<T> = (
   set: StoreApi<StoreState>["setState"],
@@ -60,6 +64,7 @@ const useStore = create<StoreState>()(
       ...createNotificationSlice(set, get),
       ...createPaymentSlice(set, get),
       ...createAffiliateSlice(set, get),
+      ...createAudioSlice(set, get),
     }),
     {
       name: "store",

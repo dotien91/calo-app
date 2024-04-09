@@ -15,18 +15,70 @@ import SocketConnect from "@services/socket/SocketConnect";
 import { SocketHelperRef } from "@helpers/socket.helper";
 import InitView from "./InitView";
 import toastConfig from "@shared-components/toastConfig/toastconfig";
-import TrackPlayer, { Capability, Event } from "react-native-track-player";
+import TrackPlayer, {
+  AppKilledPlaybackBehavior,
+  Capability,
+  Event,
+  useTrackPlayerEvents,
+} from "react-native-track-player";
+import { _setJson } from "@services/local-storage";
 
 LogBox.ignoreAllLogs();
 
 const App = () => {
   React.useEffect(() => {
+    TrackPlayer.setupPlayer()
+      .then(() => {
+        console.log("setup track player successfully");
+        TrackPlayer.updateOptions({
+          android: {
+            appKilledPlaybackBehavior:
+              AppKilledPlaybackBehavior.ContinuePlayback,
+          },
+          // This flag is now deprecated. Please use the above to define playback mode.
+          stoppingAppPausesPlayback: true,
+          capabilities: [
+            Capability.Play,
+            Capability.Pause,
+            Capability.SkipToNext,
+            Capability.SkipToPrevious,
+            Capability.Stop,
+          ],
+          compactCapabilities: [
+            Capability.Play,
+            Capability.Pause,
+            Capability.SkipToNext,
+          ],
+          progressUpdateEventInterval: 20,
+        }).catch(console.log);
+      })
+      .catch(console.log);
     NetworkManager.getInstance().configure();
     return () => {
       NetworkManager.getInstance().cleanup();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useTrackPlayerEvents(
+    [Event.PlaybackProgressUpdated, Event.PlaybackState],
+    async (event) => {
+      switch (event.type) {
+        case Event.PlaybackProgressUpdated:
+          // not triggered on release build
+          updataDaPosition();
+          console.log("data111111111", event);
+          _setJson("is_first_open_app", JSON.stringify(event));
+
+          break;
+        case Event.PlaybackState:
+          // triggered
+          // updataDaPosition();
+          // console.log("data222222");
+          break;
+      }
+    },
+  );
 
   return (
     <>
@@ -39,33 +91,6 @@ const App = () => {
     </>
   );
 };
-
-export const PlaybackService = async function () {
-  await TrackPlayer.setupPlayer();
-  await TrackPlayer.updateOptions({
-    capabilities: [
-      Capability.Play,
-      Capability.Pause,
-      Capability.SkipToNext,
-      Capability.SkipToPrevious,
-      Capability.Stop,
-    ],
-
-    // Capabilities that will show up when the notification is in the compact form on Android
-    compactCapabilities: [Capability.Play, Capability.Pause],
-  });
-
-  TrackPlayer.addEventListener(Event.RemotePlay, TrackPlayer.play);
-  TrackPlayer.addEventListener(Event.RemotePause, TrackPlayer.pause);
-  TrackPlayer.addEventListener(Event.RemoteNext, TrackPlayer.skipToNext);
-  TrackPlayer.addEventListener(
-    Event.RemotePrevious,
-    TrackPlayer.skipToPrevious,
-  );
-  TrackPlayer.addEventListener(Event.RemoteSeek, TrackPlayer.seekTo);
-};
-
-TrackPlayer.registerPlaybackService(() => PlaybackService);
 
 export default withIAPContext(
   CodePush({

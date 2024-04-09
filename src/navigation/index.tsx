@@ -108,6 +108,7 @@ import { getBottomSpace } from "react-native-iphone-screen-helper";
 import IconSvg from "assets/svg";
 import AudioListScreen from "@screens/audio/audio-list/audio.list.screen";
 import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
+import { FloatingPlayer } from "@screens/audio/components/FloatingPlayer";
 // import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -191,34 +192,39 @@ const Navigation = () => {
 
   const renderTabNavigation = () => {
     return (
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          headerShown: false,
-          tabBarLabel: ({ color }) => renderLable(route, color),
-          tabBarIcon: ({ focused, color }) =>
-            renderTabIcon(route, focused, color, 24),
-          tabBarActiveTintColor: palette.primary,
-          tabBarInactiveTintColor: "gray",
-          tabBarStyle: {
-            borderTopColor: palette.borderColor,
-            backgroundColor: isDarkMode ? palette.black : palette.white,
-            height: getBottomSpace() + 48,
-            marginTop: 4,
-          },
-        })}
-      >
-        <Tab.Screen name={SCREENS.HOME} component={HomeScreen} />
-        <Tab.Screen name={SCREENS.COURSE_LIST} component={CourseListScreen} />
+      <>
+        <Tab.Navigator
+          screenOptions={({ route }) => ({
+            headerShown: false,
+            tabBarLabel: ({ color }) => renderLable(route, color),
+            tabBarIcon: ({ focused, color }) =>
+              renderTabIcon(route, focused, color, 24),
+            tabBarActiveTintColor: palette.primary,
+            tabBarInactiveTintColor: "gray",
+            tabBarStyle: {
+              borderTopColor: palette.borderColor,
+              backgroundColor: isDarkMode ? palette.black : palette.white,
+              height: getBottomSpace() + 48,
+              marginTop: 4,
+            },
+          })}
+        >
+          <Tab.Screen name={SCREENS.HOME} component={HomeScreen} />
+          <Tab.Screen name={SCREENS.COURSE_LIST} component={CourseListScreen} />
 
-        <Tab.Screen name={SCREENS.DISCOVERSCREEN} component={DiscoverScreen} />
+          <Tab.Screen
+            name={SCREENS.DISCOVERSCREEN}
+            component={DiscoverScreen}
+          />
 
-        <Tab.Screen name={SCREENS.CHAT} component={ChatListScreen} />
+          <Tab.Screen name={SCREENS.CHAT} component={ChatListScreen} />
 
-        <Tab.Screen
-          name={SCREENS.SETTINGPROFILESCREEN}
-          component={SettingProfileScreen}
-        />
-      </Tab.Navigator>
+          <Tab.Screen
+            name={SCREENS.SETTINGPROFILESCREEN}
+            component={SettingProfileScreen}
+          />
+        </Tab.Navigator>
+      </>
     );
   };
 
@@ -479,6 +485,14 @@ const Navigation = () => {
         <Stack.Screen name={SCREENS.AUDIO_PLAY} component={AudioPlayScreen} />
         <Stack.Screen name={SCREENS.AUDIO_LIST} component={AudioListScreen} />
       </Stack.Navigator>
+      <FloatingPlayer
+        style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          bottom: getBottomSpace() + 52,
+        }}
+      />
     </NavigationContainer>
   );
 };
