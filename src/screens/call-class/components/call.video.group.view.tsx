@@ -1,12 +1,11 @@
 import React from "react";
-import { View, ScrollView, Dimensions, StyleSheet } from "react-native";
+import { View, ScrollView, Dimensions, StyleSheet, FlatList } from "react-native";
 
 import CS from "@theme/styles";
 import { Device } from "@utils/device.ui.utils";
-import { getStatusBarHeight } from "react-native-safearea-height";
-import { isIOS } from "@freakycoder/react-native-helpers";
 import ClassRoomRtcView from "./class.room.rtc.view";
 import MicView from "./mic.view";
+import { STUDENT_VIDEO_HEIGHT, TEACHER_VIDEO_HEIGHT } from "../call.class.constant";
 
 const widthImg = Device.width / 2;
 
@@ -24,7 +23,7 @@ const CallVideoGroupView = React.memo(
   }) => {
     // const data = React.useMemo(() => publishers?.[0], [publishers]);
     // if ((data?.length || 0) < 2 && !teacherStream?.stream) return null;
-    const renderStudentVideo = (item) => {
+    const renderStudentVideo = ({ item }) => {
       return (
         <View
           style={{
@@ -43,7 +42,7 @@ const CallVideoGroupView = React.memo(
             video={video}
             style={{
               width: 74,
-              height: 98,
+              height: STUDENT_VIDEO_HEIGHT,
               // ...CS.borderStyle,
             }}
             {...item}
@@ -110,9 +109,9 @@ const CallVideoGroupView = React.memo(
               {...teacherStream}
               isMe={isTeacher}
             />
-            <ScrollView horizontal={true} style={styles.studentWrap}>
-              {publishers.map((publisher) => renderStudentVideo(publisher))}
-            </ScrollView>
+            <View style={[CS.flex1, { margin: 4 }]}>
+              <FlatList data={publishers} key={item => item?.stream?._id} renderItem={renderStudentVideo} horizontal={true} contentContainerStyle={styles.studentWrap} />
+            </View>
           </View>
         </>
       );
@@ -128,35 +127,14 @@ const styles = StyleSheet.create({
     right: 0,
     flex: 1,
     zIndex: 0,
-    height:
-      Dimensions.get("screen").height -
-      44 -
-      getStatusBarHeight() -
-      36 -
-      64 +
-      (isIOS ? 22 : 0),
   },
   studentWrap: {
-    position: "absolute",
-    left: 4,
-    top:
-      Dimensions.get("screen").height -
-      44 -
-      getStatusBarHeight() -
-      36 -
-      64 +
-      4 +
-      (isIOS ? 33 : -39),
+
   },
   teacherBox: {
     width: Device.width,
     height:
-      Dimensions.get("screen").height -
-      44 -
-      getStatusBarHeight() -
-      36 -
-      64 +
-      (isIOS ? 33 : -42),
+      TEACHER_VIDEO_HEIGHT,
     overflow: "hidden",
     // ...CS.borderStyle,
   },

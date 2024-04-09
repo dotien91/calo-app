@@ -460,7 +460,7 @@ const ClassRoomScreen = () => {
         justifyContent: "flex-end",
       }}
     >
-      <ClassRoomTopView switchCamera={switchCamera} />
+      <ClassRoomTopView data={courseData} switchCamera={switchCamera} />
       {/* {renderTeacher()} */}
       {!!selfViewSrc && !!getRemoteListValue.length && (
         <CallVideoOneOneView
