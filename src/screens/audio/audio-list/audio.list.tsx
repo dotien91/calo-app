@@ -1,0 +1,70 @@
+import React from "react";
+import { FlatList, StyleSheet, View } from "react-native";
+
+import useStore from "@services/zustand/store";
+import { IAudioItem } from "models/audio.modal";
+import { useListData } from "@helpers/hooks/useListData";
+import { translations } from "@localization";
+import { GetPodCastList } from "@services/api/podcast.api";
+import AudioCategoryTitle from "../audio-book/audio.category.title";
+import AudioItemList from "../components/audio.item.list";
+
+const AudioList = () => {
+  const userData = useStore((state) => state.userData);
+
+  const { listData } = useListData<IAudioItem>(
+    {
+      auth_id: userData?._id,
+      order_by: "DESC",
+      sort_by: "createdAt",
+    },
+    GetPodCastList,
+  );
+
+  const data = React.useMemo(() => {
+    return listData.slice(0, 15);
+  }, [listData]);
+
+  const renderItem = (item: IAudioItem, index: number) => {
+    if (item.item?.is_join) {
+      return null;
+    } else {
+      return (
+        <>
+          <AudioItemList isSliderItem data={item.item} key={index} />
+        </>
+      );
+    }
+  };
+  return (
+    <View style={styles.container}>
+      <AudioCategoryTitle
+        hideViewAll={true}
+        title={translations.audio.allAudio}
+      />
+      <FlatList
+        showsHorizontalScrollIndicator={false}
+        data={data}
+        renderItem={renderItem}
+        scrollEventThrottle={16}
+        contentContainerStyle={{
+          paddingLeft: 16,
+          paddingBottom: 16,
+        }}
+        initialNumToRender={2}
+        onEndReachedThreshold={0}
+        showsVerticalScrollIndicator={false}
+        keyExtractor={(item) => item?._id + ""}
+      />
+    </View>
+  );
+};
+
+export default AudioList;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 16,
+  },
+});

@@ -95,6 +95,7 @@ export const SCREENS = {
   AUDIO_LIST: "AudioList",
   AUDIO_PLAY: "AudioPlay",
   CLUB_SCREEN: "ClubScreen",
+  AUDIO_BOOK: "AudioBook",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

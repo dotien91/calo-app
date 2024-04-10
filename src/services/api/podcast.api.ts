@@ -18,3 +18,13 @@ export async function GetPodCastDetail(id: string) {
     return response;
   });
 }
+
+export async function getListCategory(params) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "podcast/list-category",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}

@@ -108,6 +108,7 @@ import IconSvg from "assets/svg";
 import AudioListScreen from "@screens/audio/audio-list/audio.list.screen";
 import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 import ClubScreen from "@screens/club/home-club/club.screen";
+import AudioBookScreen from "@screens/audio/audio-book/audio.book.screen";
 // import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -478,6 +479,7 @@ const Navigation = () => {
         <Stack.Screen name={SCREENS.WEBVIEW_SCREEN} component={WebviewScreen} />
         <Stack.Screen name={SCREENS.AUDIO_PLAY} component={AudioPlayScreen} />
         <Stack.Screen name={SCREENS.AUDIO_LIST} component={AudioListScreen} />
+        <Stack.Screen name={SCREENS.AUDIO_BOOK} component={AudioBookScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
