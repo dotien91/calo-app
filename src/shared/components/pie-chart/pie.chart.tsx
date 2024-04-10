@@ -10,6 +10,7 @@ const PieChartCommon = ({ sections, point }) => {
     <View style={style.container}>
       <View style={style.viewPie}>
         <Pie
+          defaultStyle={{ backgroundColor: "red" }}
           radius={80}
           innerRadius={50}
           sections={sections}

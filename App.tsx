@@ -44,6 +44,6 @@ const App = () => {
 export default withIAPContext(
   CodePush({
     checkFrequency: CodePush.CheckFrequency.ON_APP_RESUME,
-    installMode: CodePush.InstallMode.ON_NEXT_RESTART,
+    installMode: CodePush.InstallMode.ON_NEXT_RESUME,
   })(App),
 );

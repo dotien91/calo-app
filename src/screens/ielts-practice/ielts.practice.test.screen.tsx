@@ -63,7 +63,6 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
     },
     [],
   );
-  console.log("list question", data);
 
   const setFinishedTime = React.useCallback((v: number) => {
     finishedTime.current = v;

@@ -136,7 +136,7 @@ const Navigation = () => {
         iconName = focused ? "icCourse" : "icCourse";
         break;
       case SCREENS.CHAT:
-        iconName = focused ? "icChat" : "icChat";
+        iconName = focused ? "icCoach" : "icCoachBlur";
         break;
       case SCREENS.NOTIFICATION:
         iconName = focused ? "bell" : "bell";
@@ -213,13 +213,12 @@ const Navigation = () => {
         >
           <Tab.Screen name={SCREENS.HOME} component={HomeScreen} />
           <Tab.Screen name={SCREENS.COURSE_LIST} component={CourseListScreen} />
+          <Tab.Screen name={SCREENS.CHAT} component={ChatListScreen} />
 
           <Tab.Screen
             name={SCREENS.DISCOVERSCREEN}
             component={DiscoverScreen}
           />
-
-          <Tab.Screen name={SCREENS.CHAT} component={ChatListScreen} />
 
           <Tab.Screen
             name={SCREENS.SETTINGPROFILESCREEN}

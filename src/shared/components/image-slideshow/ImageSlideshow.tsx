@@ -107,8 +107,8 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: "row",
     paddingHorizontal: 16,
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
+    alignItems: "flex-end",
+    justifyContent: "flex-end",
     width: "100%",
     position: "absolute",
     paddingTop: getStatusBarHeight() + 10,
