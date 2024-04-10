@@ -1,5 +1,6 @@
+import eventEmitter from "@services/event-emitter";
 import useStore from "@services/zustand/store";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import TrackPlayer, {
   useActiveTrack,
   useIsPlaying,
@@ -12,9 +13,10 @@ export const useActionTrack = () => {
   const { playing } = useIsPlaying();
   const updateAudio = useStore((store) => store.updateAudio);
 
-  const updataDaPosition = () => {
-    if (activeTrack && progress.position % 15 > 14) {
-      updateAudio({
+  const updataDaPosition = async () => {
+    console.log("progress...", progress);
+    if (activeTrack) {
+      await updateAudio({
         ...activeTrack,
         position: progress.position,
         duration: progress.duration,
@@ -22,9 +24,9 @@ export const useActionTrack = () => {
     }
   };
 
-  useEffect(() => {
-    updataDaPosition();
-  }, [progress.position]);
+  // useEffect(() => {
+  //   updataDaPosition();
+  // }, [progress.position]);
 
   const next = () => {
     updataDaPosition();
@@ -70,7 +72,9 @@ export const useActionTrack = () => {
   };
 
   const stop = async () => {
-    await TrackPlayer.reset();
+    await updataDaPosition();
+    TrackPlayer.reset();
+    eventEmitter.emit("floating_play", { show: false });
   };
 
   return {

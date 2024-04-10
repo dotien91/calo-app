@@ -109,6 +109,8 @@ import IconSvg from "assets/svg";
 import AudioListScreen from "@screens/audio/audio-list/audio.list.screen";
 import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 import { FloatingPlayer } from "@screens/audio/components/FloatingPlayer";
+import AudioPreview from "@screens/audio/audio-preview/audio.preview";
+import showAllReview from "@screens/audio/audio-preview/show.all.review";
 // import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -484,6 +486,11 @@ const Navigation = () => {
         <Stack.Screen name={SCREENS.WEBVIEW_SCREEN} component={WebviewScreen} />
         <Stack.Screen name={SCREENS.AUDIO_PLAY} component={AudioPlayScreen} />
         <Stack.Screen name={SCREENS.AUDIO_LIST} component={AudioListScreen} />
+        <Stack.Screen name={SCREENS.AUDIO_PREVIEW} component={AudioPreview} />
+        <Stack.Screen
+          name={SCREENS.SHOW_ALL_REVIEW}
+          component={showAllReview}
+        />
       </Stack.Navigator>
       <FloatingPlayer
         style={{

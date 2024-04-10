@@ -39,7 +39,7 @@ export const FloatingPlayer = ({ style }: ViewProps) => {
       eventEmitter.off("floating_play", checkScreenAudio);
     };
   }, []);
-  const { pause } = useActionTrack();
+  const { pause, stop } = useActionTrack();
 
   if (!displayedTrack || !showFloating) return null;
 
@@ -74,6 +74,14 @@ export const FloatingPlayer = ({ style }: ViewProps) => {
             size={32}
             color={palette.primary}
             onPress={pause}
+          />
+        </View>
+        <View style={styles.trackControlsContainer}>
+          <IconSvgBtn
+            name={"icClose"}
+            size={28}
+            color={palette.primary}
+            onPress={stop}
           />
         </View>
       </>

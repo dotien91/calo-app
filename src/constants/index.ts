@@ -94,6 +94,8 @@ export const SCREENS = {
   HOME_AFFILIATE: "HomeAffilite",
   AUDIO_LIST: "AudioList",
   AUDIO_PLAY: "AudioPlay",
+  AUDIO_PREVIEW: "AudioPreview",
+  SHOW_ALL_REVIEW: "ShowAllReview",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

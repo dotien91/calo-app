@@ -35,6 +35,7 @@ export enum EnumModalContentType {
   AddCouponToCourse = "add-coupon-to-course",
   SelectMissions = "select-missions",
   RefferralTask = "RefferralTask",
+  ReviewAudio = "ReviewAudio",
 }
 
 export enum EnumStyleModalType {

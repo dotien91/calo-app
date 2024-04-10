@@ -153,6 +153,7 @@ import icCard from "./card.svg";
 import icCard1 from "./card-1.svg";
 import icCard2 from "./card-2.svg";
 import icCard3 from "./card-3.svg";
+import icHeadphone from "./icon-headphone.svg";
 
 const Icons = {
   icCard,
@@ -309,6 +310,7 @@ const Icons = {
   icPlayAudio,
   icPauseAudio,
   icPersonSearch,
+  icHeadphone,
 };
 
 interface IconSvgProps {

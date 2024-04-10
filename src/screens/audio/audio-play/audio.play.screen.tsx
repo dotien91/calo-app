@@ -4,18 +4,15 @@ import { ScreenHeight, ScreenWidth } from "@freakycoder/react-native-helpers";
 import Header from "@shared-components/header/Header";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
-import { GetPodCastDetail } from "@services/api/podcast.api";
 import IconSvgBtn from "../components/IconSvgBtn";
 import Slider from "@react-native-community/slider";
 import TrackPlayer, {
   useProgress,
   useIsPlaying,
   useActiveTrack,
-  Track,
 } from "react-native-track-player";
 import { formatTime } from "@utils/date.utils";
 import eventEmitter from "@services/event-emitter";
-import useStore from "@services/zustand/store";
 import { useActionTrack } from "../hook/useActionTrack";
 
 const AudioPlayScreen = () => {
@@ -23,48 +20,46 @@ const AudioPlayScreen = () => {
   const progress = useProgress();
   const { playing } = useIsPlaying();
   const activeTrack = useActiveTrack();
-  const addAudio = useStore((store) => store.addAudio);
-  const listAudioHistory = useStore((store) => store.listAudioHistory);
 
   React.useEffect(() => {
-    _getDetailPodCast();
+    // _getDetailPodCast();
     eventEmitter.emit("floating_play", { show: false });
     return () => {
       eventEmitter.emit("floating_play", { show: true });
     };
   }, []);
 
-  const _getDetailPodCast = () => {
-    const _id = "661395c7d29bd7cb5f9bca4c";
-    GetPodCastDetail(_id).then((res) => {
-      console.log("res podcast", res);
-    });
-  };
+  // const _getDetailPodCast = () => {
+  //   const _id = "661395c7d29bd7cb5f9bca4c";
+  //   GetPodCastDetail(_id).then((res) => {
+  //     console.log("res podcast", res);
+  //   });
+  // };
 
   //check audio trong store nếu đã có, có postion thì phát tại thời điểm position đấy
-  const playTrack = async (track: Track) => {
-    const item = listAudioHistory.filter((item) => item.url === track.url);
-    if (item.length > 0) {
-      await TrackPlayer.seekBy(item[0].position || 0);
-    }
-    await TrackPlayer.play();
-  };
+  // const playTrack = async (track: Track) => {
+  //   const item = listAudioHistory.filter((item) => item.url === track.url);
+  //   if (item.length > 0) {
+  //     await TrackPlayer.seekBy(item[0].position || 0);
+  //   }
+  //   await TrackPlayer.play();
+  // };
 
-  const addTrack1 = async () => {
-    await TrackPlayer.reset();
-    const track1 = {
-      url: "https://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3", // Load media from the network
-      title: "Nóng giận là bản năng, tính lặng là bản lĩnh",
-      artist: "Tống Mặc",
-      artwork:
-        "https://files.exam24h.com/upload/2024/04/05_1712286066220/660f690336fba2cad28c28cb-1712286066220-thumbnail-178D768A-5D86-4518-BE09-792644A0331D.jpg", // Load artwork from the network
-    };
-    await TrackPlayer.add(track1);
-    playTrack(track1);
+  // const addTrack1 = async () => {
+  //   await TrackPlayer.reset();
+  //   const track1 = {
+  //     url: "https://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3", // Load media from the network
+  //     title: "Nóng giận là bản năng, tính lặng là bản lĩnh",
+  //     artist: "Tống Mặc",
+  //     artwork:
+  //       "https://files.exam24h.com/upload/2024/04/05_1712286066220/660f690336fba2cad28c28cb-1712286066220-thumbnail-178D768A-5D86-4518-BE09-792644A0331D.jpg", // Load artwork from the network
+  //   };
+  //   await TrackPlayer.add(track1);
+  //   playTrack(track1);
 
-    // await TrackPlayer.seekBy(0);
-    addAudio(track1);
-  };
+  //   // await TrackPlayer.seekBy(0);
+  //   addAudio(track1);
+  // };
   // const addTrack2 = async () => {
   //   const track2 = {
   //     url: "https://files.exam24h.com/upload/2024/04/09_1712648931272/661390fed29bd7cb5f9bc88c/Free_Test_Data_1MB_MP3.mp3", // Load media from the network
@@ -78,7 +73,7 @@ const AudioPlayScreen = () => {
   //   addAudio(track2);
   // };
 
-  const { pause, forWard, next, previous, backWard, stop } = useActionTrack();
+  const { pause, forWard, next, previous, backWard } = useActionTrack();
 
   return (
     <SafeAreaView style={CS.safeAreaView}>
@@ -151,7 +146,7 @@ const AudioPlayScreen = () => {
             size={32}
           />
           {/* Fake add audio */}
-          <IconSvgBtn
+          {/* <IconSvgBtn
             name="icNextAudio"
             onPress={addTrack1}
             color={palette.textOpacity6}
@@ -162,7 +157,7 @@ const AudioPlayScreen = () => {
             onPress={stop}
             color={palette.textOpacity6}
             size={32}
-          />
+          /> */}
         </View>
       </View>
     </SafeAreaView>
