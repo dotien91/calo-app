@@ -84,7 +84,6 @@ const VideoPreview = (
 
   useEffect(() => {
     // if (showPreview) setShowPreview(false);
-    isEnd.current = false;
     if (firstTime.current) {
       firstTime.current = false;
     } else {
@@ -292,9 +291,8 @@ const VideoPreview = (
       return;
     }
     countTimeoutDone.current += 1;
-
     if (
-      countTimeoutDone.current / duration.current >= PERCENT_DONE_VIDEO &&
+      currentTime.current / duration.current >= PERCENT_DONE_VIDEO &&
       !isDoneCourse.current
     ) {
       isDoneCourse.current = true;
@@ -325,7 +323,7 @@ const VideoPreview = (
   };
 
   const renderVideo = () => {
-    if (!ready || showPreview) {
+    if (!ready) {
       return null;
     }
     return (
@@ -338,7 +336,7 @@ const VideoPreview = (
           currentProgressData?.progress &&
             videoRef.current?.seek(currentProgressData?.progress);
           loadDone.value = true;
-          duration.current = data.duration;
+          duration.current = data.duration || 0;
           sliderRef.current?.setNativeProps({
             maximumValue: Number(duration.current),
           });
