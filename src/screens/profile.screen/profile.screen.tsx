@@ -73,7 +73,6 @@ const SettingProfileScreen = () => {
   const onPressHeaderRight = () => {
     NavigationService.navigate(SCREENS.SETTING);
   };
-
   const renderItemSelected = ({
     item,
     index,

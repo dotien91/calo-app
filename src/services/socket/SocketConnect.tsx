@@ -20,7 +20,7 @@ import { APP_URL } from "constants/config.constant";
 
 const URL_CHAT_SOCKET = APP_URL.BASEURL_SOCKET;
 console.log("URL_CHAT_SOCKET", URL_CHAT_SOCKET);
-const pointRequireShowAnimation = 2;
+const pointRequireShowAnimation = 10;
 
 export interface TypedSocket {
   disconnect: () => void;

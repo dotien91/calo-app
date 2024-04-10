@@ -90,7 +90,7 @@ const CourseLearnScreen = () => {
   //files.exam24h.com/upload/2023/12/25_1703490003885/6584fe06dfde5a43
   const onPressItem = (item: any) => {
     videoRef?.current?.setShowPreview(false);
-    if (item.type === "video") {
+    if (item?.type === "video") {
       if (currentProgressData) setCurrentProgressData(null);
       setSource(item);
     } else {

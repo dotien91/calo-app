@@ -61,7 +61,6 @@ const AddBankScreen: React.FC<AddBankScreenProps> = () => {
       bin: bank.bin,
       accountNumber: e,
     }).then((res) => {
-      console.log("Resssssss", res);
       if (res?.data?.code == "00") {
         setName(res?.data?.data?.accountName || "");
         setDisabledNameInput(true);

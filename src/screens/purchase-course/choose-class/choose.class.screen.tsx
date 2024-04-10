@@ -20,7 +20,6 @@ const ChooseClassScreen: React.FC<ChooseClassScreenProps> = () => {
 
   React.useEffect(() => {
     getCourseClassListById(courseData._id).then((res) => {
-      console.log("resssss class", courseData._id, res.data);
       if (!res.isError) {
         setClassData(res.data);
       }

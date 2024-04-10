@@ -5,9 +5,6 @@ import { Device } from "@utils/device.ui.utils";
 import { closeSuperModal } from "@helpers/super.modal.helper";
 import VideoPreview from "@screens/course/course-learn-video/components/video.preview";
 import { useSharedValue, withTiming } from "react-native-reanimated";
-import useStore from "@services/zustand/store";
-import { updateViewed } from "@services/api/course.api";
-import eventEmitter from "@services/event-emitter";
 import { StyleSheet, View } from "react-native";
 import CS from "@theme/styles";
 
@@ -34,9 +31,6 @@ const Media = ({ item }: Media) => {
   const showFloatButtonDailyMission = useSharedValue(1);
   const videoRef = useRef<any>();
   const [isLanscape, setIsLanscape] = useState(false);
-  const [currentProgressData, setCurrentProgressData] = useState(null);
-  const updateWatchingVideos = useStore((state) => state.updateWatchingVideos);
-  const [source, setSource] = useState(item?.media_url);
 
   const onPressLanscape = (isFullScreen: boolean) => {
     showFloatButtonDailyMission.value = withTiming(isFullScreen ? 0 : 1, {
@@ -45,37 +39,25 @@ const Media = ({ item }: Media) => {
     setIsLanscape(isFullScreen);
   };
 
-  const onPressItem = (item: any) => {
-    console.log("viewVieo==============", item);
-
+  const onPressItem = () => {
     videoRef?.current?.setShowPreview(false);
-    if (item.type === "video") {
-      if (currentProgressData) setCurrentProgressData(null);
-      setSource(item);
-    } else {
-      const data = {
-        id: course_id,
-        progress: 0,
-        url: item?.media_id?.media_url,
-      };
-      setTimeout(() => {
-        updateWatchingVideos(data);
-      }, 2000);
-      setSource(item);
-    }
+    // if (item?.type === "video") {
+    //   if (currentProgressData) setCurrentProgressData(null);
+    //   setSource(item);
+    // } else {
+    //   const data = {
+    //     id: course_id,
+    //     progress: 0,
+    //     url: item?.media_id?.media_url,
+    //   };
+    //   setTimeout(() => {
+    //     updateWatchingVideos(data);
+    //   }, 2000);
+    //   setSource(item);
+    // }
   };
 
-  const onPressMarkDone = (item) => {
-    if (item.is_view) {
-      return;
-    }
-    // gọi API đánh đấu đã xong video
-    updateViewed({ module_id: item._id }).then((res) => {
-      if (!res.isError) {
-        eventEmitter.emit("reload_data_preview");
-      }
-    });
-  };
+  const onPressMarkDone = () => {};
 
   const renderVideo = () => {
     return (
@@ -84,11 +66,12 @@ const Media = ({ item }: Media) => {
         url={item?.media_url}
         ref={videoRef}
         changeOrientation={false}
-        markDoneCourse={() => onPressMarkDone(source)}
+        markDoneCourse={onPressMarkDone}
         thumbnail={item?.media_url.media_thumbnail}
-        currentProgressData={currentProgressData}
+        // currentProgressData={currentProgressData}
         source={item}
         setSource={onPressItem}
+        fromSlideShow={true}
       />
     );
   };

@@ -110,7 +110,6 @@ const SmartBanking = () => {
     });
     updateUserOrder(data).then((res) => {
       closeSuperModal();
-      console.log("resssssss", res);
       if (!res.isError) {
         showToast({
           type: "success",
