@@ -153,8 +153,12 @@ import icCard from "./card.svg";
 import icCard1 from "./card-1.svg";
 import icCard2 from "./card-2.svg";
 import icCard3 from "./card-3.svg";
+import icCoach from "./logo-coach.svg";
+import icCoachBlur from "./logo-coach-blur.svg";
 
 const Icons = {
+  icCoach,
+  icCoachBlur,
   icCard,
   icCard1,
   icCard2,
