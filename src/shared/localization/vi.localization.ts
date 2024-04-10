@@ -1399,6 +1399,7 @@ export default {
     health: "Sức khỏe",
     business: "Kinh doanh",
     finance: "Tài chính",
+    emptyAudio: "Không có sách nói nào",
   },
   livestream: {
     hello: "Xin chào",

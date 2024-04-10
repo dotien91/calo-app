@@ -52,7 +52,7 @@ const ClubScreen = () => {
   };
 
   return (
-    <SafeAreaView style={CS.container}>
+    <SafeAreaView style={CS.safeAreaView}>
       <Header
         text={translations.club.club}
         iconNameRight="search"

@@ -1,20 +1,20 @@
 import React from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, SafeAreaView } from "react-native";
 
+import CS from "@theme/styles";
+import Header from "@shared-components/header/Header";
 import useStore from "@services/zustand/store";
-import { IAudioItem } from "models/audio.modal";
 import { useListData } from "@helpers/hooks/useListData";
 import { translations } from "@localization";
 import { GetPodCastList } from "@services/api/podcast.api";
-import * as NavigationService from "react-navigation-helpers";
-import AudioItem from "../components/audio.item";
-import AudioCategoryTitle from "../audio-book/audio.category.title";
-import { SCREENS } from "constants";
+import { IAudioItem } from "models/audio.modal";
+import AudioItemList from "./components/audio.item.list";
+import EmptyResultView from "@shared-components/empty.data.component";
 
-const AudioView = () => {
+const RecommendBookScreen = () => {
   const userData = useStore((state) => state.userData);
 
-  const { listData } = useListData<IAudioItem>(
+  const { listData, isLoading } = useListData<IAudioItem>(
     {
       auth_id: userData?._id,
       order_by: "DESC",
@@ -22,10 +22,6 @@ const AudioView = () => {
     },
     GetPodCastList,
   );
-
-  const onSeeAll = () => {
-    NavigationService.navigate(SCREENS.RECOMMEND_AUDIO_BOOK);
-  };
 
   const data = React.useMemo(() => {
     return listData.slice(0, 15);
@@ -37,20 +33,21 @@ const AudioView = () => {
     } else {
       return (
         <>
-          <AudioItem isSliderItem data={item.item} key={index} />
+          <AudioItemList isSliderItem data={item.item} key={index} />
         </>
       );
     }
   };
+
+  const renderEmptyCourseOfMe = () => {
+    if (isLoading)
+      return <EmptyResultView title={translations.audio.emptyAudio} />;
+  };
+
   return (
-    <View style={styles.container}>
-      <AudioCategoryTitle
-        hideViewAll={false}
-        onPress={onSeeAll}
-        title={translations.audio.recommendBook}
-      />
+    <SafeAreaView style={CS.safeAreaView}>
+      <Header text={translations.audio.recommendBook} />
       <FlatList
-        horizontal
         showsHorizontalScrollIndicator={false}
         data={data}
         renderItem={renderItem}
@@ -63,16 +60,10 @@ const AudioView = () => {
         onEndReachedThreshold={0}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item?._id + ""}
+        ListEmptyComponent={renderEmptyCourseOfMe()}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
-export default AudioView;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 16,
-  },
-});
+export default RecommendBookScreen;

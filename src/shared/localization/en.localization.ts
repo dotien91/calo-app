@@ -888,6 +888,7 @@ export default {
     health: "Health",
     business: "Business",
     finance: "Finance",
+    emptyAudio: "There are no audiobooks available",
   },
   livestream: {
     hello: "Hello!",

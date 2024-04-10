@@ -10,7 +10,7 @@ import AudioList from "../audio-list/audio.list";
 
 const AudioBookScreen = () => {
   return (
-    <SafeAreaView style={CS.container}>
+    <SafeAreaView style={CS.safeAreaView}>
       <Header text={translations.audio.audioBook} />
       <ScrollView style={styles.viewContainer}>
         <AudioQuickFilter />

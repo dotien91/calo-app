@@ -69,7 +69,7 @@ const ItemList = ({ isSliderItem, style, data }: ItemListProps) => {
   };
 
   const openPreviewCourse = () => {
-    console.log("444444=========");
+    console.log("444444=========", data._id);
   };
 
   return (

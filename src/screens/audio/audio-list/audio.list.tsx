@@ -8,6 +8,8 @@ import { translations } from "@localization";
 import { GetPodCastList } from "@services/api/podcast.api";
 import AudioCategoryTitle from "../audio-book/audio.category.title";
 import AudioItemList from "../components/audio.item.list";
+import * as NavigationService from "react-navigation-helpers";
+import { SCREENS } from "constants";
 
 const AudioList = () => {
   const userData = useStore((state) => state.userData);
@@ -36,10 +38,16 @@ const AudioList = () => {
       );
     }
   };
+
+  const onSeeAll = () => {
+    NavigationService.navigate(SCREENS.ALL_AUDIO_BOOk);
+  };
+
   return (
     <View style={styles.container}>
       <AudioCategoryTitle
-        hideViewAll={true}
+        hideViewAll={false}
+        onPress={onSeeAll}
         title={translations.audio.allAudio}
       />
       <FlatList
