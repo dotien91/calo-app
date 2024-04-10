@@ -15,70 +15,18 @@ import SocketConnect from "@services/socket/SocketConnect";
 import { SocketHelperRef } from "@helpers/socket.helper";
 import InitView from "./InitView";
 import toastConfig from "@shared-components/toastConfig/toastconfig";
-import TrackPlayer, {
-  AppKilledPlaybackBehavior,
-  Capability,
-  Event,
-  useTrackPlayerEvents,
-} from "react-native-track-player";
-import { _setJson } from "@services/local-storage";
+import AudioProgress from "@screens/audio/hook/AudioProgress";
 
 LogBox.ignoreAllLogs();
 
 const App = () => {
   React.useEffect(() => {
-    TrackPlayer.setupPlayer()
-      .then(() => {
-        console.log("setup track player successfully");
-        TrackPlayer.updateOptions({
-          android: {
-            appKilledPlaybackBehavior:
-              AppKilledPlaybackBehavior.ContinuePlayback,
-          },
-          // This flag is now deprecated. Please use the above to define playback mode.
-          stoppingAppPausesPlayback: true,
-          capabilities: [
-            Capability.Play,
-            Capability.Pause,
-            Capability.SkipToNext,
-            Capability.SkipToPrevious,
-            Capability.Stop,
-          ],
-          compactCapabilities: [
-            Capability.Play,
-            Capability.Pause,
-            Capability.SkipToNext,
-          ],
-          progressUpdateEventInterval: 20,
-        }).catch(console.log);
-      })
-      .catch(console.log);
     NetworkManager.getInstance().configure();
     return () => {
       NetworkManager.getInstance().cleanup();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useTrackPlayerEvents(
-    [Event.PlaybackProgressUpdated, Event.PlaybackState],
-    async (event) => {
-      switch (event.type) {
-        case Event.PlaybackProgressUpdated:
-          // not triggered on release build
-          updataDaPosition();
-          console.log("data111111111", event);
-          _setJson("is_first_open_app", JSON.stringify(event));
-
-          break;
-        case Event.PlaybackState:
-          // triggered
-          // updataDaPosition();
-          // console.log("data222222");
-          break;
-      }
-    },
-  );
 
   return (
     <>
@@ -88,6 +36,7 @@ const App = () => {
       <SuperModal />
       <InitView />
       <SocketConnect ref={SocketHelperRef} />
+      <AudioProgress />
     </>
   );
 };
