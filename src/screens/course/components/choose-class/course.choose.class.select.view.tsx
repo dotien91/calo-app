@@ -70,7 +70,6 @@ const ClassItem = ({
       user_id: userData?._id,
       class_id: item._id,
     }).then((res) => {
-      console.log("resssss", res);
       if (!res.isError) {
         const data = res.data;
         //eslint-disable-next-line

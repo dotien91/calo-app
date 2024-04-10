@@ -175,7 +175,6 @@ export default function PostScreen() {
 
     if (item._id) {
       updatePost(params).then((res) => {
-        console.log("ressss updatepost", res);
         if (!res.isError) {
           closeSuperModal();
           eventEmitter.emit("reload_list_post");

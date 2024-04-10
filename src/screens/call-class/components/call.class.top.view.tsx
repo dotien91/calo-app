@@ -30,9 +30,12 @@ Janus.setDependencies({
   MediaStream,
 });
 
-const ClassRoomTopView = ({ switchCamera, data } : {
+const ClassRoomTopView = ({
+  switchCamera,
+  data,
+}: {
   switchCamera: () => void;
-  data: TypedCourse
+  data: TypedCourse;
 }) => {
   const theme = useTheme();
   const { colors } = theme;

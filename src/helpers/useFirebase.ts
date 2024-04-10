@@ -76,7 +76,7 @@ const useFirebase = () => {
     // };
     switch (item?.router) {
       case "NAVIGATION_TEST_RESULT":
-        NavigationService.navigate(SCREENS.IELTS_PRACTICE_LIST);
+        NavigationService.push(SCREENS.IELTS_PRACTICE_LIST);
         break;
       case "NAVIGATION_CHAT_ROOM":
         NavigationService.navigate(SCREENS.CHAT_ROOM, {

@@ -78,36 +78,46 @@ const SettingProfileScreen = () => {
     const paramsRequest = {};
     getListScore(paramsRequest).then((res) => {
       if (!res.isError) {
-        let { listening_percentage_average = 0, speaking_percentage_average = 0, reading_percentage_average = 0, writing_percentage_average = 0 } = res.data
+        const {
+          listening_percentage_average = 0,
+          speaking_percentage_average = 0,
+          reading_percentage_average = 0,
+          writing_percentage_average = 0,
+        } = res.data;
         const sum =
           listening_percentage_average +
           speaking_percentage_average +
           reading_percentage_average +
           writing_percentage_average;
 
-        setPoint((sum / 4 || 0).toFixed(3));
-
+        const average = sum / 4;
+        setPoint(average ? average.toFixed(3) : 0);
         const data = [
           {
-            percentage:
-            Number(((listening_percentage_average * 100) / (sum || 1)).toFixed(2)),
+            percentage: Number(
+              ((listening_percentage_average * 100) / (sum || 1)).toFixed(2),
+            ),
             color: palette.btnRedPrimary,
             title: translations.task.listening,
           },
           {
-            percentage: Number(((speaking_percentage_average * 100) / (sum || 1)).toFixed(2)),
+            percentage: Number(
+              ((speaking_percentage_average * 100) / (sum || 1)).toFixed(2),
+            ),
             color: palette.gold,
             title: translations.task.speaking,
           },
           {
-            percentage:
-            Number(((reading_percentage_average * 100) / (sum || 1)).toFixed(2)),
+            percentage: Number(
+              ((reading_percentage_average * 100) / (sum || 1)).toFixed(2),
+            ),
             color: palette.blueChart,
             title: translations.task.reading,
           },
           {
-            percentage:
-            Number(((writing_percentage_average * 100) / (sum || 1)).toFixed(2)),
+            percentage: Number(
+              ((writing_percentage_average * 100) / (sum || 1)).toFixed(2),
+            ),
             color: palette.greenChart,
             title: translations.task.writing,
           },
@@ -122,11 +132,9 @@ const SettingProfileScreen = () => {
       _getListScore();
     }, []),
   );
-
   const onPressHeaderRight = () => {
     NavigationService.navigate(SCREENS.SETTING);
   };
-
   const renderItemSelected = ({
     item,
     index,

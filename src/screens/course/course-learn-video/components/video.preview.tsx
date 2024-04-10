@@ -59,6 +59,7 @@ const VideoPreview = (
     currentProgressData,
     source,
     setSource,
+    fromSlideShow = false,
   },
   ref: any,
 ) => {
@@ -69,6 +70,7 @@ const VideoPreview = (
   const showOptions = useSharedValue(0);
   const sliderRef = useRef<Slider>(null);
   const pausedRef = useRef(false);
+  const isEnd = useRef(false);
   const aniPause = useSharedValue(0);
   const isFullScreen = useRef(false);
   const [ready, setReady] = useState(true);
@@ -82,6 +84,7 @@ const VideoPreview = (
 
   useEffect(() => {
     // if (showPreview) setShowPreview(false);
+    isEnd.current = false;
     if (firstTime.current) {
       firstTime.current = false;
     } else {
@@ -298,9 +301,27 @@ const VideoPreview = (
       markDoneCourse?.();
     }
   };
-
   const _showPreview = () => {
-    setShowPreview(true);
+    isEnd.current = true;
+    !fromSlideShow && setShowPreview(true);
+    if (fromSlideShow) {
+      pausedRef.current = true;
+      aniPause.value = withTiming(pausedRef.current ? 1 : 0, { duration: 300 });
+      videoRef.current?.setNativeProps({ paused: pausedRef.current });
+      const timeSeek = 0;
+      sliderRef.current?.setNativeProps({
+        value: timeSeek,
+      });
+      currentTime.current = 0;
+      setTimeAlive(0);
+
+      videoRef.current?.seek(timeSeek);
+      showOptions.value = withTiming(1, { duration: 0 }, (f1) => {
+        if (f1) {
+          showOptions.value = withDelay(2000, withTiming(0, { duration: 300 }));
+        }
+      });
+    }
   };
 
   const renderVideo = () => {

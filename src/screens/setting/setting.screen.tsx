@@ -29,9 +29,7 @@ import {
 } from "@helpers/super.modal.helper";
 import { deleteUserById } from "@services/api/user.api";
 import { USER_TOKEN, _getJson } from "@services/local-storage";
-import PressableBtn from "@shared-components/button/PressableBtn";
 import { SafeAreaView } from "react-native-safe-area-context";
-import TextBase from "@shared-components/TextBase";
 
 interface SettingScreenProps {}
 
@@ -230,7 +228,6 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
     NavigationService.navigate(SCREENS.EDIT_PROFILE);
   };
 
-
   return (
     <SafeAreaView style={[CS.flex1]}>
       <Header text={translations.settingUser.setting}></Header>
@@ -310,25 +307,28 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
           renderViewRequestLogin()
         )}
         {renderListSetting()}
+        {isLoggedIn() && (
+          <TouchableOpacity
+            onPress={logout}
+            style={{
+              marginHorizontal: 16,
+              height: 46,
+              backgroundColor: colors.grey3,
+              justifyContent: "center",
+              alignItems: "center",
+              marginBottom: 50,
+              borderRadius: 8,
+              marginTop: 16,
+            }}
+          >
+            <Text
+              style={{ color: colors.text, fontSize: 16, fontWeight: "600" }}
+            >
+              {translations.signOut}
+            </Text>
+          </TouchableOpacity>
+        )}
       </ScrollView>
-      {isLoggedIn() && (
-        <TouchableOpacity
-          onPress={logout}
-          style={{
-            marginHorizontal: 16,
-            height: 46,
-            backgroundColor: colors.grey3,
-            justifyContent: "center",
-            alignItems: "center",
-            marginBottom: 50,
-            borderRadius: 8,
-          }}
-        >
-          <Text style={{ color: colors.text, fontSize: 16, fontWeight: "600" }}>
-            {translations.signOut}
-          </Text>
-        </TouchableOpacity>
-      )}
     </SafeAreaView>
   );
 };

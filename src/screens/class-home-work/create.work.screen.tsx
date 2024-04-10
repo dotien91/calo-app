@@ -35,6 +35,7 @@ import {
 } from "@helpers/super.modal.helper";
 import eventEmitter from "@services/event-emitter";
 import TextBase from "@shared-components/TextBase";
+import { SafeAreaView } from "react-native-safe-area-context";
 // import { regexMail } from "constants/regex.constant";
 
 // interface ButtonSocialProps {
@@ -253,7 +254,7 @@ export default function CreateWorkScreen() {
   };
 
   return (
-    <View style={styles.containerScreen}>
+    <SafeAreaView style={CS.safeAreaView}>
       <Header
         text={translations.homework.createWork}
         rightComponent={renderRightHeader}
@@ -314,6 +315,6 @@ export default function CreateWorkScreen() {
           </ScrollView>
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
-    </View>
+    </SafeAreaView>
   );
 }

@@ -24,7 +24,6 @@ const CountFollow = ({ id, postCount, name = "" }: CountFollowProps) => {
   const [countFollow, setCountFollow] = useState<CountFolowType>({});
   const _getUserInfo = (id: string) => {
     getCountFollow({ user_id: id }).then((res) => {
-      console.log("...data...", res.data);
       setCountFollow(res.data);
     });
   };

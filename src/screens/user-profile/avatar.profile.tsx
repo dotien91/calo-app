@@ -42,10 +42,6 @@ const AvatarProfile = ({ userInfo, customStyle }: UploadAvatarProps) => {
     return isMe(userInfo) ? userMedia?.user_cover : userInfo?.user_cover;
   }, [userInfo, userMedia]);
 
-  React.useEffect(() => {
-    console.log("33333333");
-  }, []);
-
   if (!userInfo?._id) {
     return (
       <View style={styles.containerSke}>
