@@ -127,7 +127,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
           }}
           // onPress={_showSuperModalCourse}
           // onPress={() => NavigationService.navigate(SCREENS.AUDIO_PLAY)}
-          onPress={() => NavigationService.navigate(SCREENS.AUDIO_BOOK)}
+          onPress={() => NavigationService.navigate(SCREENS.POST_SCREEN)}
           // onPress={() => NavigationService.navigate(SCREENS.AUDIO_PREVIEW)}
         >
           <Icon

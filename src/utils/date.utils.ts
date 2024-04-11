@@ -295,6 +295,20 @@ export const formatTime = (time: number) => {
   const sec = Math.floor(time % 60);
   return `${minute}:${sec < 10 ? "0" : ""}${sec}`;
 };
+export const formatTimeDuration = (duration: number) => {
+  const hrs = Math.floor(duration / 3600);
+  const mins = Math.floor((duration % 3600) / 60);
+  const secs = Math.floor(duration % 60);
+  if (hrs > 0) {
+    return `${hrs}h${mins}m`;
+  } else {
+    if (mins > 0) {
+      return `${mins}m${secs}s`;
+    } else {
+      return `${secs}s`;
+    }
+  }
+};
 export const formatTimeHHMM = (date) => {
   const _date = new Date(date);
   if (_date.toString() === "Invalid Date") {

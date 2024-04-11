@@ -8,6 +8,7 @@ import {
 import FastImage from "react-native-fast-image";
 import { useActiveTrack, useIsPlaying } from "react-native-track-player";
 import * as NavigationService from "react-navigation-helpers";
+
 import IconSvgBtn from "./IconSvgBtn";
 import { palette } from "@theme/themes";
 import { SCREENS } from "constants";

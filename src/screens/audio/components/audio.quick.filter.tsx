@@ -12,10 +12,6 @@ const AudioQuickFilter = () => {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const [track, setTrack] = useState([]);
 
-  const onPressBtnFilter = () => {
-    console.log("11111111==========");
-  };
-
   const getDataTrack = () => {
     getListCategory({}).then((res) => {
       if (!res.isError) {
@@ -29,10 +25,13 @@ const AudioQuickFilter = () => {
   }, []);
 
   const renderItem = (item, key) => {
+    const onPressBtnFilter = () => {
+      console.log("11111111==========", item._id);
+    };
     return (
       <TouchableOpacity
         key={key}
-        onPress={() => onPressBtnFilter(item)}
+        onPress={onPressBtnFilter}
         style={styles.btnFilter}
       >
         <Text style={styles.txtFilter}>{item.category_title}</Text>

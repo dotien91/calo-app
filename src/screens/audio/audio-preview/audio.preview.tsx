@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import TrackPlayer, { Track } from "react-native-track-player";
 import * as NavigationService from "react-navigation-helpers";
+import Sound from "react-native-sound";
 
 import { ScreenHeight } from "@freakycoder/react-native-helpers";
 import { translations } from "@localization";
@@ -29,18 +30,37 @@ import {
   showSuperModal,
 } from "@helpers/super.modal.helper";
 import Button from "@shared-components/button/Button";
+import { useRoute } from "@react-navigation/native";
+import { formatTimeDuration } from "@utils/date.utils";
 
 const AudioPreview = () => {
   const [track, setTrack] = React.useState<TypeTrackLocal>();
   const addAudio = useStore((store) => store.addAudio);
   const listAudioHistory = useStore((store) => store.listAudioHistory);
-  const id = "661395c7d29bd7cb5f9bca4c";
+  const route = useRoute();
+  const id = route?.params?.id || "";
+  const [duration, setDuration] = React.useState(0);
+  const refSoundPlayer = React.useRef<Sound>();
 
   const getDataTrack = () => {
     GetPodCastDetail(id).then((res) => {
-      console.log("resDetail....", res);
       if (!res.isError) {
         setTrack(res.data);
+        refSoundPlayer.current = new Sound(
+          res.data?.attach_files[0].media_url,
+          "",
+          (error) => {
+            if (error) {
+              console.log("failed to load the sound", error);
+              return;
+            } else {
+              setDuration(
+                Math.floor(refSoundPlayer.current?.getDuration() || 0),
+              );
+            }
+          },
+        );
+        return;
       }
     });
   };
@@ -68,7 +88,10 @@ const AudioPreview = () => {
           title={track?.podcast_category.category_title || " "}
           des={translations.podcast.category}
         />
-        <ItemCategory title={" "} des={translations.podcast.audio} />
+        <ItemCategory
+          title={formatTimeDuration(duration) || " "}
+          des={translations.podcast.audio}
+        />
         <ItemCategory
           title={track?.country || " "}
           des={translations.podcast.language}
@@ -112,10 +135,6 @@ const AudioPreview = () => {
     });
   };
 
-  const showAllReview = () => {
-    NavigationService.navigate(SCREENS.SHOW_ALL_REVIEW);
-  };
-
   return (
     <SafeAreaView style={CS.safeAreaView}>
       <Header />
@@ -150,18 +169,8 @@ const AudioPreview = () => {
           />
         </View>
 
-        <View style={styles.viewReview}>
-          <Text style={CS.hnBold}>{`${translations.podcast.countReview(
-            track?.comment_number || 0,
-          )}`}</Text>
-        </View>
         <ListReviewView id={id} />
 
-        <TouchableOpacity onPress={showAllReview} style={styles.viewShowAll}>
-          <Text style={styles.txtShowAll}>
-            {translations.podcast.showAllReview}
-          </Text>
-        </TouchableOpacity>
         <Button
           onPress={showWriteReview}
           text={translations.podcast.writeAReview}
@@ -181,24 +190,9 @@ const styles = StyleSheet.create({
     height: 32,
     paddingVertical: 0,
   },
-  txtShowAll: {
-    ...CS.hnBold,
-    color: palette.primary,
-  },
   container: {
     ...CS.flex1,
     paddingHorizontal: 16,
-  },
-  viewShowAll: {
-    marginTop: 8,
-    ...CS.center,
-    height: 32,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: palette.primary,
-  },
-  viewReview: {
-    marginTop: 8,
   },
   viewDes: {
     marginTop: 8,

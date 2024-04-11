@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { Text, View, ViewStyle } from "react-native";
 import FastImage from "react-native-fast-image";
+import * as NavigationService from "react-navigation-helpers";
 
 import CS from "@theme/styles";
 import createStyles from "../audio.style";
@@ -9,6 +10,7 @@ import { translations } from "@localization";
 import { Device } from "@utils/device.ui.utils";
 import { IAudioItem } from "models/audio.modal";
 import PressableBtn from "@shared-components/button/PressableBtn";
+import { SCREENS } from "constants";
 
 interface ItemListProps {
   isSliderItem: boolean;
@@ -20,7 +22,8 @@ const widthImage = 111;
 const heightImage = 140;
 
 const ItemList = ({ isSliderItem, style, data }: ItemListProps) => {
-  const { title, user_id, view_number, post_avatar, podcast_category } = data;
+  const { title, user_id, view_number, post_avatar, podcast_category, _id } =
+    data;
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
 
@@ -69,7 +72,7 @@ const ItemList = ({ isSliderItem, style, data }: ItemListProps) => {
   };
 
   const openPreviewCourse = () => {
-    console.log("444444=========", data._id);
+    NavigationService.navigate(SCREENS.AUDIO_PREVIEW, { id: _id });
   };
 
   return (

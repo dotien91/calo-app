@@ -1,5 +1,6 @@
 import React from "react";
 import { FlatList, StyleSheet, View } from "react-native";
+import * as NavigationService from "react-navigation-helpers";
 
 import useStore from "@services/zustand/store";
 import { IAudioItem } from "models/audio.modal";
@@ -8,7 +9,6 @@ import { translations } from "@localization";
 import { GetPodCastList } from "@services/api/podcast.api";
 import AudioCategoryTitle from "../audio-book/audio.category.title";
 import AudioItemList from "../components/audio.item.list";
-import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "constants";
 
 const AudioList = () => {
@@ -27,15 +27,11 @@ const AudioList = () => {
     return listData.slice(0, 15);
   }, [listData]);
 
-  const renderItem = (item: IAudioItem, index: number) => {
-    if (item.item?.is_join) {
+  const renderItem = ({ item, index }) => {
+    if (item?.is_join) {
       return null;
     } else {
-      return (
-        <>
-          <AudioItemList isSliderItem data={item.item} key={index} />
-        </>
-      );
+      return <AudioItemList isSliderItem data={item} key={index} />;
     }
   };
 

@@ -1,10 +1,12 @@
+import React, { useState } from "react";
+import { Text, View, StyleSheet, TextInput } from "react-native";
+
 import { closeSuperModal, showToast } from "@helpers/super.modal.helper";
 import { translations } from "@localization";
 import { CreateReview } from "@services/api/podcast.api";
+import eventEmitter from "@services/event-emitter";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
-import React, { useState } from "react";
-import { Text, View, StyleSheet, TextInput } from "react-native";
 
 interface WriteReviewProps {
   data: any;
@@ -21,7 +23,10 @@ const WriteReview = ({ data }: WriteReviewProps) => {
 
   const onPressSend = () => {
     if (title.trim().length < 10) {
-      showToast({ type: "info", message: "Tiêu đề phải dài hơn 10 ký tự" });
+      showToast({
+        type: "info",
+        message: translations.podcast.warningReviewShort,
+      });
     } else {
       const dataPost = {
         podcast_id: data.id,
@@ -30,7 +35,11 @@ const WriteReview = ({ data }: WriteReviewProps) => {
       console.log(dataPost);
       CreateReview(dataPost).then((res) => {
         if (!res.isError) {
-          showToast({ type: "success", message: "Gửi đánh giá thành công!" });
+          showToast({
+            type: "success",
+            message: translations.podcast.sendReviewSuccess,
+          });
+          eventEmitter.emit("reload_review_audio");
           closeSuperModal();
         } else {
           showToast({ type: "error", message: res.message });

@@ -1,12 +1,12 @@
 import React from "react";
 import { FlatList, StyleSheet, View } from "react-native";
+import * as NavigationService from "react-navigation-helpers";
 
 import useStore from "@services/zustand/store";
 import { IAudioItem } from "models/audio.modal";
 import { useListData } from "@helpers/hooks/useListData";
 import { translations } from "@localization";
 import { GetPodCastList } from "@services/api/podcast.api";
-import * as NavigationService from "react-navigation-helpers";
 import AudioItem from "../components/audio.item";
 import AudioCategoryTitle from "../audio-book/audio.category.title";
 import { SCREENS } from "constants";

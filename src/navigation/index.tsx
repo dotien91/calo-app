@@ -114,6 +114,7 @@ import AllBookScreen from "@screens/audio/all.book.screen";
 import { FloatingPlayer } from "@screens/audio/components/FloatingPlayer";
 import AudioPreview from "@screens/audio/audio-preview/audio.preview";
 import showAllReview from "@screens/audio/audio-preview/show.all.review";
+import DiscoverScreen from "@screens/discover-screen/discover.screen";
 // import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -150,6 +151,9 @@ const Navigation = () => {
       case SCREENS.SETTING:
         iconName = focused ? "settings" : "settings";
         break;
+      case SCREENS.DISCOVERSCREEN:
+        iconName = focused ? "icDiscovery" : "icDiscovery";
+        break;
       case SCREENS.CLUB_SCREEN:
         iconName = focused ? "icCoach" : "icCoachBlur";
         break;
@@ -177,6 +181,9 @@ const Navigation = () => {
         break;
       case SCREENS.SETTINGPROFILESCREEN:
         label = translations.profile.profile;
+        break;
+      case SCREENS.DISCOVERSCREEN:
+        label = translations.discovers;
         break;
       case SCREENS.SETTING:
         label = translations.setting;
@@ -217,7 +224,10 @@ const Navigation = () => {
           <Tab.Screen name={SCREENS.HOME} component={HomeScreen} />
           <Tab.Screen name={SCREENS.COURSE_LIST} component={CourseListScreen} />
           <Tab.Screen name={SCREENS.CLUB_SCREEN} component={ClubScreen} />
-          <Tab.Screen name={SCREENS.CHAT} component={ChatListScreen} />
+          <Tab.Screen
+            name={SCREENS.DISCOVERSCREEN}
+            component={DiscoverScreen}
+          />
 
           <Tab.Screen
             name={SCREENS.SETTINGPROFILESCREEN}

@@ -16,7 +16,6 @@ export async function ListReview(params) {
     urlPath: "podcast/review/list",
     params,
   }).then((response) => {
-    console.log("res.1..", response);
     return response;
   });
 }
