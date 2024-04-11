@@ -11,15 +11,19 @@ import { IAudioItem } from "models/audio.modal";
 import AudioItemList from "./components/audio.item.list";
 import EmptyResultView from "@shared-components/empty.data.component";
 import LoadingList from "@shared-components/loading.list.component";
+import { useRoute } from "@react-navigation/native";
 
 const AllBookScreen = () => {
   const userData = useStore((state) => state.userData);
+  const route = useRoute();
+  const id = route.params?.id || "";
 
   const { listData, isLoading } = useListData<IAudioItem>(
     {
       auth_id: userData?._id,
       order_by: "DESC",
       sort_by: "createdAt",
+      podcast_category: id,
     },
     GetPodCastList,
   );

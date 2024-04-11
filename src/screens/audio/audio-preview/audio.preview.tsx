@@ -32,6 +32,7 @@ import {
 import Button from "@shared-components/button/Button";
 import { useRoute } from "@react-navigation/native";
 import { formatTimeDuration } from "@utils/date.utils";
+import LoadingList from "@shared-components/loading.list.component";
 
 const AudioPreview = () => {
   const [track, setTrack] = React.useState<TypeTrackLocal>();
@@ -40,27 +41,25 @@ const AudioPreview = () => {
   const route = useRoute();
   const id = route?.params?.id || "";
   const [duration, setDuration] = React.useState(0);
-  const refSoundPlayer = React.useRef<Sound>();
+  const [isLoading, setIsLoading] = React.useState(true);
 
   const getDataTrack = () => {
     GetPodCastDetail(id).then((res) => {
       if (!res.isError) {
         setTrack(res.data);
-        refSoundPlayer.current = new Sound(
+        const whoosh = new Sound(
           res.data?.attach_files[0].media_url,
           "",
           (error) => {
             if (error) {
               console.log("failed to load the sound", error);
-              return;
+              setIsLoading(false);
             } else {
-              setDuration(
-                Math.floor(refSoundPlayer.current?.getDuration() || 0),
-              );
+              setDuration(Math.floor(whoosh.getDuration() || 0));
+              setIsLoading(false);
             }
           },
         );
-        return;
       }
     });
   };
@@ -138,46 +137,55 @@ const AudioPreview = () => {
   return (
     <SafeAreaView style={CS.safeAreaView}>
       <Header />
-      <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
-        <View style={styles.viewAudio}>
-          <View style={styles.viewImage}>
-            <Image
-              style={styles.viewImage}
-              source={{ uri: track?.post_avatar.media_url }}
-              borderRadius={8}
+      {isLoading ? (
+        <LoadingList numberItem={3} />
+      ) : (
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={styles.container}
+        >
+          <View style={styles.viewAudio}>
+            <View style={styles.viewImage}>
+              <Image
+                style={styles.viewImage}
+                source={{ uri: track?.post_avatar.media_url }}
+                borderRadius={8}
+              />
+            </View>
+            <View style={styles.viewTitle}>
+              <Text style={styles.txtTitle}>{track?.title}</Text>
+              <Text style={styles.txtAuthor}>
+                {track?.user_id.display_name}
+              </Text>
+            </View>
+          </View>
+          {renderCategory()}
+          <View style={styles.viewBtn}>
+            <TouchableOpacity style={styles.btnPlay} onPress={playAudio}>
+              <IconSvg name="icHeadphone" size={20} color={palette.white} />
+              <Text style={styles.txtListen}>
+                {translations.podcast.listenNow}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.viewDes}>
+            <Text style={CS.hnBold}>{translations.podcast.description}</Text>
+            <TextViewCollapsed
+              text={track?.content || ""}
+              styleText={styles.des}
             />
           </View>
-          <View style={styles.viewTitle}>
-            <Text style={styles.txtTitle}>{track?.title}</Text>
-            <Text style={styles.txtAuthor}>{track?.user_id.display_name}</Text>
-          </View>
-        </View>
-        {renderCategory()}
-        <View style={styles.viewBtn}>
-          <TouchableOpacity style={styles.btnPlay} onPress={playAudio}>
-            <IconSvg name="icHeadphone" size={20} color={palette.white} />
-            <Text style={styles.txtListen}>
-              {translations.podcast.listenNow}
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.viewDes}>
-          <Text style={CS.hnBold}>{translations.podcast.description}</Text>
-          <TextViewCollapsed
-            text={track?.content || ""}
-            styleText={styles.des}
+
+          <ListReviewView id={id} />
+
+          <Button
+            onPress={showWriteReview}
+            text={translations.podcast.writeAReview}
+            style={styles.btnReview}
+            type="primary"
           />
-        </View>
-
-        <ListReviewView id={id} />
-
-        <Button
-          onPress={showWriteReview}
-          text={translations.podcast.writeAReview}
-          style={styles.btnReview}
-          type="primary"
-        />
-      </ScrollView>
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 };
@@ -189,6 +197,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     height: 32,
     paddingVertical: 0,
+    marginBottom: 8,
   },
   container: {
     ...CS.flex1,

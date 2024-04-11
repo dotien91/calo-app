@@ -47,7 +47,7 @@ const ItemList = ({ isSliderItem, style, data }: ItemListProps) => {
         ) : (
           <Text style={styles.textNoReview}>{translations.audio.noListen}</Text>
         )}
-        <Text style={styles.txtSlug}>#{podcast_category?.category_slug}</Text>
+        <Text style={styles.txtSlug}>#{podcast_category?.category_title}</Text>
       </View>
     );
   };

@@ -66,6 +66,7 @@ const WriteReview = ({ data }: WriteReviewProps) => {
           placeholder={translations.podcast.title}
           style={styles.txtTitle}
           autoFocus
+          multiline
         />
       </View>
       {/* <View style={styles.viewReview}>

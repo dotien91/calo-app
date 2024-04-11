@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, SafeAreaView, FlatList } from "react-native";
+import { SafeAreaView, FlatList } from "react-native";
 import { useRoute } from "@react-navigation/native";
 
 import { translations } from "@localization";
@@ -9,6 +9,7 @@ import { useListData } from "@helpers/hooks/useListData";
 import { ListReview } from "@services/api/podcast.api";
 import LoadingList from "@shared-components/loading.list.component";
 import EmptyResultView from "@shared-components/empty.data.component";
+import CS from "@theme/styles";
 
 const ShowAllReview = () => {
   // gọi API Lấy danh sách review
@@ -40,7 +41,7 @@ const ShowAllReview = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={CS.safeAreaView}>
       <Header text={translations.podcast.showAllReview} />
       {isLoading && listData.length == 0 && renderLoading()}
       {!isLoading && listData.length == 0 && renderEmpty()}
@@ -62,7 +63,3 @@ const ShowAllReview = () => {
 };
 
 export default ShowAllReview;
-
-const styles = StyleSheet.create({
-  container: { flex: 1 },
-});

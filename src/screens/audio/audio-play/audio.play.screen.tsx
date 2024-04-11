@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   viewChild: {
     flex: 1,
     paddingHorizontal: 16,
-    justifyContent: "center",
+    justifyContent: "flex-start",
   },
   viewDuration: {
     height: 24,
@@ -159,6 +159,7 @@ const styles = StyleSheet.create({
   progress: {
     width: ScreenWidth - 32,
     height: 24,
+    // backgroundColor: palette.primary,
   },
   txtTime: {
     ...CS.hnRegular,
