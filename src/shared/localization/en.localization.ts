@@ -1174,6 +1174,13 @@ export default {
     emptyPraticeTest: "Empty practice test",
   },
   club: {
+    clubName: "Club name",
+    nameYourClub: "Name your club",
+    chooseYourClubPrice: "Choose your club price",
+    writeSomethingClub: "Write something to describe your club",
+    clubPrice: "Club price",
+    description: "Description",
+    createClub: "Create club",
     club: "Club",
     title1: "Feature clubs",
     title2: "Clubs you manage",

@@ -1703,6 +1703,13 @@ export default {
     emptyPraticeTest: "Danh sách thi thử trống",
   },
   club: {
+    clubName: "Tên câu lạc bộ",
+    nameYourClub: "Tên câu lạc bộ của bạn",
+    chooseYourClubPrice: "Chọn giá để tham gia câu lạc bộ",
+    writeSomethingClub: "Nhập mô tả về câu lạc bộ",
+    clubPrice: "Giá tham gia câu lạc bộ",
+    description: "Mô tả",
+    createClub: "Tạo câu lạc bộ",
     club: "Câu lạc bộ",
     title1: "Câu lạc bộ nổi bật",
     title2: "Câu lạc bộ bạn quản lý",
