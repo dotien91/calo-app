@@ -6,9 +6,8 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 interface TitleClubProps {
   textLeft?: string;
-  iconNameRight: string;
+  iconNameRight?: string;
   onPressRight?: () => void;
-  onPressLeft?: () => void;
   badge?: number;
   textRight?: string;
 }
@@ -17,26 +16,22 @@ const TitleClub = ({
   textLeft,
   iconNameRight,
   onPressRight,
-  onPressLeft,
   badge,
   textRight,
 }: TitleClubProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.viewHeadeTitle}>
-        <TouchableOpacity onPress={onPressLeft}>
-          <Text
-            numberOfLines={1}
-            style={[styles.txtTitle, { color: palette.text, ...CS.flex1 }]}
-          >
-            {textLeft || ""}
-          </Text>
-        </TouchableOpacity>
+        <Text
+          numberOfLines={1}
+          style={[styles.txtTitle, { color: palette.text, ...CS.flex1 }]}
+        >
+          {textLeft}
+        </Text>
         {/* rightComponent */}
-        <View style={styles.viewRight}>
+        <TouchableOpacity style={styles.viewRight} onPress={onPressRight}>
           {!!iconNameRight && (
             <IconSvg
-              onPress={onPressRight}
               name={iconNameRight || "ellipsis-horizontal"}
               size={24}
               color={palette.text}
@@ -47,7 +42,7 @@ const TitleClub = ({
               <Text style={styles.txtBadge}>{badge}</Text>
             </TouchableOpacity>
           )}
-        </View>
+        </TouchableOpacity>
         {/* )} */}
         {(!textRight || textRight?.trim() !== "") && (
           <TouchableOpacity
@@ -75,7 +70,8 @@ export default TitleClub;
 
 const styles = StyleSheet.create({
   container: {
-    // marginHorizontal: 16,
+    height: 28,
+    marginBottom: 8,
   },
   viewHeadeTitle: {
     flexDirection: "row",
@@ -84,7 +80,7 @@ const styles = StyleSheet.create({
   viewRight: {},
   txtTitle: {
     ...CS.hnBold,
-    lineHeight: 24,
+    lineHeight: 28,
   },
   badge: {
     width: 20,

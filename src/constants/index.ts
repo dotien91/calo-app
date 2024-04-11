@@ -100,6 +100,7 @@ export const SCREENS = {
   ALL_AUDIO_BOOk: "AllAudioBook",
   AUDIO_PREVIEW: "AudioPreview",
   SHOW_ALL_REVIEW: "ShowAllReview",
+  ELITE_CLUB: "EliteClub",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

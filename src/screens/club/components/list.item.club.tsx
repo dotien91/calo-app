@@ -1,72 +1,33 @@
-import { translations } from "@localization";
+import React from "react";
+import { Image, StyleSheet, View } from "react-native";
+
+import * as NavigationService from "react-navigation-helpers";
 import TextBase from "@shared-components/TextBase";
 import PressableBtn from "@shared-components/button/PressableBtn";
+import { translations } from "@localization";
 import { palette } from "@theme/themes";
-import React from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { SCREENS } from "constants";
 
-const ItemClub = () => {
-  const listRenderItem = [
-    {
-      img: "",
-      title:
-        "IKIGAI COACH: The Project Management: Beginner to PROject Manager",
-      time: "2 months",
-    },
-    {
-      img: "",
-      title: "Management Skills Training for New & Experienced Managers",
-      time: "3 days",
-    },
-    {
-      img: "",
-      title: "MBA in a Box: Business Lessons from a CEO",
-      time: "1 months",
-    },
-    {
-      img: "",
-      title: "Mental Health and Wellbeing Practitioner",
-      time: "2 days",
-    },
-  ];
-
-  const renderItemSelected = ({
-    item,
-    index,
-  }: {
-    item: any;
-    index: number;
-  }) => {
-    if (item.hide) return null;
-    return (
-      <View style={style.container}>
-        <PressableBtn
-          onPress={() => {
-            console.log(33333);
-          }}
-          key={index}
-          style={style.styleView}
-        >
-          <View style={style.styleImg}>{item.img}</View>
-          <View style={style.viewTxt}>
-            <TextBase numberOfLines={3} fontSize={16} fontWeight="700">
-              {item.title}
-            </TextBase>
-            <TextBase fontSize={12} fontWeight="400">
-              {`${translations.club.attended} ${item.time} ${translations.club.ago}`}
-            </TextBase>
-          </View>
-        </PressableBtn>
-      </View>
-    );
-  };
-
+const ItemClub = ({ data }: { data: any }) => {
   return (
-    <FlatList
-      showsHorizontalScrollIndicator={false}
-      data={listRenderItem}
-      renderItem={renderItemSelected}
-    />
+    <View style={style.container}>
+      <PressableBtn
+        onPress={() => {
+          NavigationService.navigate(SCREENS.ELITE_CLUB);
+        }}
+        style={style.styleView}
+      >
+        <Image style={style.styleImg} source={{ uri: data?.img || "" }} />
+        <View style={style.viewTxt}>
+          <TextBase numberOfLines={3} fontSize={16} fontWeight="700">
+            {data?.title}
+          </TextBase>
+          <TextBase fontSize={12} fontWeight="400">
+            {`${translations.club.attended} ${data?.time} ${translations.club.ago}`}
+          </TextBase>
+        </View>
+      </PressableBtn>
+    </View>
   );
 };
 
@@ -84,7 +45,7 @@ const style = StyleSheet.create({
     height: 48,
     width: 48,
     borderRadius: 8,
-    backgroundColor: palette.primary,
+    backgroundColor: palette.red,
   },
   viewTxt: {
     flex: 1,

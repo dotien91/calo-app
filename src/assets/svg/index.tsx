@@ -158,6 +158,8 @@ import icCard3 from "./card-3.svg";
 import icHeadphone from "./icon-headphone.svg";
 import icCoach from "./logo-coach.svg";
 import icCoachBlur from "./logo-coach-blur.svg";
+import icPersonal from "./icon-personal.svg";
+import icPeople from "./icon-people.svg";
 
 const Icons = {
   icCoach,
@@ -319,6 +321,8 @@ const Icons = {
   icTime,
   icPersonSearch,
   icHeadphone,
+  icPersonal,
+  icPeople,
 };
 
 interface IconSvgProps {
