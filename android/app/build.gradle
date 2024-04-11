@@ -105,9 +105,9 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    namespace "com.ikigroup.ieltshunter"
+    namespace "com.ikigroup.ikicoach"
     defaultConfig {
-        applicationId 'com.ikigroup.ieltshunter'
+        applicationId 'com.ikigroup.ikicoach'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 19
