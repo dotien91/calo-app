@@ -16,6 +16,7 @@ import {
 import { getListMemberCourse } from "@services/api/course.api";
 import useStore from "@services/zustand/store";
 import { translations } from "@localization";
+import { BOTTOM_CLASS_HEIGHT } from "../call.class.constant";
 
 const ClassRoomBottomView = ({
   toggleMute,
@@ -96,7 +97,7 @@ const ClassRoomBottomView = ({
         bottom: 0,
         right: 0,
         zIndex: 1,
-        height: 64,
+        height: BOTTOM_CLASS_HEIGHT,
       }}
     >
       <PressableBtn

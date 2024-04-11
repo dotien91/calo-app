@@ -111,6 +111,9 @@ import ClubScreen from "@screens/club/home-club/club.screen";
 import AudioBookScreen from "@screens/audio/audio-book/audio.book.screen";
 import RecommendBookScreen from "@screens/audio/recommend.book.screen";
 import AllBookScreen from "@screens/audio/all.book.screen";
+import { FloatingPlayer } from "@screens/audio/components/FloatingPlayer";
+import AudioPreview from "@screens/audio/audio-preview/audio.preview";
+import showAllReview from "@screens/audio/audio-preview/show.all.review";
 // import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -136,7 +139,7 @@ const Navigation = () => {
         iconName = focused ? "icCourse" : "icCourse";
         break;
       case SCREENS.CHAT:
-        iconName = focused ? "icChat" : "icChat";
+        iconName = focused ? "icCoach" : "icCoachBlur";
         break;
       case SCREENS.NOTIFICATION:
         iconName = focused ? "bell" : "bell";
@@ -194,34 +197,39 @@ const Navigation = () => {
 
   const renderTabNavigation = () => {
     return (
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          headerShown: false,
-          tabBarLabel: ({ color }) => renderLable(route, color),
-          tabBarIcon: ({ focused, color }) =>
-            renderTabIcon(route, focused, color, 24),
-          tabBarActiveTintColor: palette.primary,
-          tabBarInactiveTintColor: "gray",
-          tabBarStyle: {
-            borderTopColor: palette.borderColor,
-            backgroundColor: isDarkMode ? palette.black : palette.white,
-            height: getBottomSpace() + 48,
-            marginTop: 4,
-          },
-        })}
-      >
-        <Tab.Screen name={SCREENS.HOME} component={HomeScreen} />
-        <Tab.Screen name={SCREENS.COURSE_LIST} component={CourseListScreen} />
 
-        <Tab.Screen name={SCREENS.CLUB_SCREEN} component={ClubScreen} />
+      <>
+        <Tab.Navigator
+          screenOptions={({ route }) => ({
+            headerShown: false,
+            tabBarLabel: ({ color }) => renderLable(route, color),
+            tabBarIcon: ({ focused, color }) =>
+              renderTabIcon(route, focused, color, 24),
+            tabBarActiveTintColor: palette.primary,
+            tabBarInactiveTintColor: "gray",
+            tabBarStyle: {
+              borderTopColor: palette.borderColor,
+              backgroundColor: isDarkMode ? palette.black : palette.white,
+              height: getBottomSpace() + 48,
+              marginTop: 4,
+            },
+          })}
+        >
+          <Tab.Screen name={SCREENS.HOME} component={HomeScreen} />
+          <Tab.Screen name={SCREENS.COURSE_LIST} component={CourseListScreen} />
+          <Tab.Screen name={SCREENS.CHAT} component={ChatListScreen} />
 
-        <Tab.Screen name={SCREENS.CHAT} component={ChatListScreen} />
+          <Tab.Screen
+            name={SCREENS.DISCOVERSCREEN}
+            component={DiscoverScreen}
+          />
 
-        <Tab.Screen
-          name={SCREENS.SETTINGPROFILESCREEN}
-          component={SettingProfileScreen}
-        />
-      </Tab.Navigator>
+          <Tab.Screen
+            name={SCREENS.SETTINGPROFILESCREEN}
+            component={SettingProfileScreen}
+          />
+        </Tab.Navigator>
+      </>
     );
   };
 
@@ -487,7 +495,20 @@ const Navigation = () => {
           component={RecommendBookScreen}
         />
         <Stack.Screen name={SCREENS.ALL_AUDIO_BOOk} component={AllBookScreen} />
+        <Stack.Screen name={SCREENS.AUDIO_PREVIEW} component={AudioPreview} />
+        <Stack.Screen
+          name={SCREENS.SHOW_ALL_REVIEW}
+          component={showAllReview}
+        />
       </Stack.Navigator>
+      <FloatingPlayer
+        style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          bottom: getBottomSpace() + 52,
+        }}
+      />
     </NavigationContainer>
   );
 };

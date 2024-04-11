@@ -17,10 +17,9 @@ import { TypedUser } from "shared/models";
 import { translations } from "@localization";
 import { SCREENS } from "constants";
 import { closeSuperModal } from "@helpers/super.modal.helper";
-import IconBtn from "@shared-components/button/IconBtn";
-import TextBase from "@shared-components/TextBase";
 import useStore from "@services/zustand/store";
 import PressableBtn from "@shared-components/button/PressableBtn";
+import Button from "@shared-components/button/Button";
 
 interface ListUserProps {
   listUser: TypedUser;
@@ -66,23 +65,19 @@ const ListUser = ({ listUser, title }: ListUserProps) => {
     );
   };
 
-  const renderIconTopRight = () => {
+
+  const renderMutedBtn = () => {
     return (
-      <PressableBtn
+      <Button
+        type={"primary"}
+        isFullWidth={false}
+        style={{ marginBottom: 12 }}
         onPress={() => setIsMutedAll(!isMutedAll)}
-        style={styles.iconTopRight}
-      >
-        <IconBtn
-          color={isMutedAll ? palette.red : palette.text}
-          size={16}
-          name={isMutedAll ? "mic-off" : "mic"}
-        />
-        <TextBase fontWeight="500" fontSize={13}>
-          {isMutedAll
-            ? translations.call.unMutedAll
-            : translations.call.mutedAll}
-        </TextBase>
-      </PressableBtn>
+        text={
+          isMutedAll ? translations.call.unMutedAll : translations.call.mutedAll
+        }
+        iconName={isMutedAll ? "mic-off" : "mic"}
+      />
     );
   };
 
@@ -126,13 +121,6 @@ export const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 14,
     marginTop: 12,
-  },
-  iconTopRight: {
-    position: "absolute",
-    top: 16,
-    right: 16,
-    zIndex: 1,
-    ...CS.flexStart,
   },
 });
 

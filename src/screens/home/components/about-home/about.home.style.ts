@@ -24,35 +24,27 @@ export default (theme: ExtendedTheme) => {
   return StyleSheet.create<Style>({
     viewHeaderStyle: {
       marginBottom: 8,
-      backgroundColor: colors.background,
+      // backgroundColor: colors.background,
     },
     styleTxtText: {
       ...CS.hnLight,
       lineHeight: 16,
       fontSize: 12,
-      color: colors.textOpacity4,
+      color: colors.textOpacity8,
     },
     styleTxtText2: {
-      ...CS.hnMedium,
-      color: colors.textOpacity6,
+      ...CS.hnBold,
+      color: colors.text,
       lineHeight: 24,
       fontSize: 16,
     },
     styleTxtTitle: {
       ...CS.hnBold,
-      lineHeight: 28,
-      fontSize: 20,
-      color: colors.textOpacity8,
+      fontSize: 16,
+      color: colors.text,
+      marginBottom: 8,
     },
-    styleItemNaviCategory: {
-      ...CS.flexRear,
-      marginHorizontal: 16,
-      gap: 8,
-      height: 56,
-      borderRadius: 8,
-      marginTop: 8,
-      paddingHorizontal: 16,
-    },
+    styleItemNaviCategory: {},
     styleViewItemTitle: {
       flexDirection: "row",
       justifyContent: "space-between",

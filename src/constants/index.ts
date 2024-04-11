@@ -98,6 +98,8 @@ export const SCREENS = {
   AUDIO_BOOK: "AudioBook",
   RECOMMEND_AUDIO_BOOK: "RecommandAudioBook",
   ALL_AUDIO_BOOk: "AllAudioBook",
+  AUDIO_PREVIEW: "AudioPreview",
+  SHOW_ALL_REVIEW: "ShowAllReview",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

@@ -150,8 +150,22 @@ import icPlayAudio from "./icon-play-audio.svg";
 import icPauseAudio from "./icon-pause-audio.svg";
 import icSort from "./icon-sort.svg";
 import icTime from "./icon-time.svg";
+import icPersonSearch from "./person-search.svg";
+import icCard from "./card.svg";
+import icCard1 from "./card-1.svg";
+import icCard2 from "./card-2.svg";
+import icCard3 from "./card-3.svg";
+import icHeadphone from "./icon-headphone.svg";
+import icCoach from "./logo-coach.svg";
+import icCoachBlur from "./logo-coach-blur.svg";
 
 const Icons = {
+  icCoach,
+  icCoachBlur,
+  icCard,
+  icCard1,
+  icCard2,
+  icCard3,
   intro1,
   intro2,
   intro3,
@@ -303,6 +317,8 @@ const Icons = {
   icPauseAudio,
   icSort,
   icTime,
+  icPersonSearch,
+  icHeadphone,
 };
 
 interface IconSvgProps {

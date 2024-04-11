@@ -53,7 +53,6 @@ export const useChatVideoCall = (txtSearch: string, id: string) => {
       search: txtSearch,
     };
     getChatHistory(params).then((res) => {
-      console.log("ressss history", res);
       isFetching.current = false;
       if (!res.isError) {
         setIsLoadmore(false);

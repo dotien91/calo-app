@@ -6,7 +6,6 @@ import * as NavigationService from "react-navigation-helpers";
 import { SceneMap, TabBar } from "react-native-tab-view";
 import { CollapsibleHeaderTabView } from "react-native-tab-view-collapsible-header";
 
-import HeaderHome from "./components/header-home/HeaderHome";
 import { SCREENS } from "constants";
 import ListPost from "./list.post";
 
@@ -18,6 +17,7 @@ import eventEmitter from "@services/event-emitter";
 import CustomRefreshControl from "./components/refesh-controler/customRefeshControler";
 import { translations } from "@localization";
 import { getStatusBarHeight } from "react-native-safearea-height";
+import HeaderTab from "./components/header-home/HeaderTab";
 
 const initialLayout = { width: Dimensions.get("window").width };
 
@@ -89,15 +89,19 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
     );
   }, []);
 
+  const renderHeaderTab = () => {
+    return <HeaderTab />;
+  };
+
   // return <IapTest />
   return (
     <SafeAreaView
-      style={[CommonStyle.safeAreaView, { marginTop: getStatusBarHeight() }]}
+      style={[CommonStyle.safeAreaView, { paddingTop: getStatusBarHeight() }]}
     >
-      <HeaderHome />
+      {renderHeader()}
       <CollapsibleHeaderTabView
         lazy={true}
-        renderScrollHeader={renderHeader}
+        renderScrollHeader={renderHeaderTab}
         navigationState={{ index, routes }}
         renderScene={renderScene}
         onIndexChange={setIndex}
@@ -124,6 +128,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
           // onPress={_showSuperModalCourse}
           // onPress={() => NavigationService.navigate(SCREENS.AUDIO_PLAY)}
           onPress={() => NavigationService.navigate(SCREENS.AUDIO_BOOK)}
+          // onPress={() => NavigationService.navigate(SCREENS.AUDIO_PREVIEW)}
         >
           <Icon
             name={"add-outline"}

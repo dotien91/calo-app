@@ -32,6 +32,7 @@ import eventEmitter from "@services/event-emitter";
 import { translations } from "@localization";
 import CS from "@theme/styles";
 import CourseView from "@screens/home/components/list-course/list.course";
+import EmptyResultView from "@shared-components/empty.data.component";
 
 interface CourseListScreenProps {}
 
@@ -143,6 +144,17 @@ const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
     );
   }, [isTabCourse]);
 
+  const _renderEmptyComponent = React.useCallback(() => {
+    if (!listData?.length && !isLoading)
+      return (
+        <EmptyResultView
+          desc={translations.emptyList}
+          icon="chatbubbles-outline"
+        />
+      );
+    return null;
+  }, [listData, isLoading]);
+
   return (
     <View style={{ flex: 1 }}>
       <FlatList
@@ -154,7 +166,9 @@ const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
         removeClippedSubviews={true}
         keyExtractor={(item) => item?._id + ""}
         ListFooterComponent={renderFooterComponent()}
+        ListEmptyComponent={_renderEmptyComponent}
       />
+
       {isLoading && <LoadingItem numberItem={3} />}
     </View>
   );

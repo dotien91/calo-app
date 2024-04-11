@@ -27,6 +27,8 @@ const InitView = () => {
 
   React.useEffect(() => {
     initData();
+    InCallManager.start();
+    InCallManager.setForceSpeakerphoneOn(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const language = useStore((state) => state.language);

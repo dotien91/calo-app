@@ -1,5 +1,6 @@
 import React from "react";
-import { FlatList, ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { KeyboardAwareFlatList } from "react-native-keyboard-aware-scroll-view";
 
 /**
  * ? Local Imports
@@ -45,7 +46,7 @@ const AnswerChildInput = ({
         <TextBase marginBottom={16} color="text" fontWeight="600">
           {translations.ieltsPractice.answers}
         </TextBase>
-        <FlatList
+        <KeyboardAwareFlatList
           data={data}
           renderItem={renderInput}
           showsHorizontalScrollIndicator={false}

@@ -8,7 +8,6 @@ export default (theme: ExtendedTheme) => {
     container: {
       flexDirection: "row",
       alignItems: "center",
-      backgroundColor: colors.white,
       height: 56,
       paddingHorizontal: 16,
       paddingVertical: 8,

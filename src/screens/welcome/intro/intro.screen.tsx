@@ -74,7 +74,10 @@ export default function IntroScreen() {
   const nextRight = () => {
     // animate2()
     if (currentPage > 1) {
-      NavigationService.navigate(SCREENS.HOME_TAB, { screen: SCREENS.HOME });
+
+      NavigationService.navigate(SCREENS.HOME_TAB, {
+        screen: SCREENS.HOME_TAB,
+      });
       _setJson("is_first_open_app", true);
     } else {
       const newPage = currentPage + 1;

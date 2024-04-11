@@ -24,7 +24,7 @@ export default {
   required: "required",
   invalid: "Invalid",
   or: "Or",
-  welcomeBack: "Welcome back!",
+  welcomeBack: "Kickstart your journey today",
   minLength: (number: number) => `at least ${number} charectors`,
   needAnAccount: "Need an account? ",
   registerNow: "Register now!",

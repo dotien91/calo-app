@@ -36,6 +36,7 @@ export enum EnumModalContentType {
   SelectMissions = "select-missions",
   RefferralTask = "RefferralTask",
   FilterSortClub = "filter-sort-club",
+  ReviewAudio = "ReviewAudio",
 }
 
 export enum EnumStyleModalType {

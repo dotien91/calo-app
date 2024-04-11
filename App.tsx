@@ -16,6 +16,7 @@ import { SocketHelperRef } from "@helpers/socket.helper";
 import InitView from "./InitView";
 import toastConfig from "@shared-components/toastConfig/toastconfig";
 import TrackPlayer, { Capability, Event } from "react-native-track-player";
+import AudioProgress from "@screens/audio/hook/AudioProgress";
 
 LogBox.ignoreAllLogs();
 
@@ -36,6 +37,7 @@ const App = () => {
       <SuperModal />
       <InitView />
       <SocketConnect ref={SocketHelperRef} />
+      <AudioProgress />
     </>
   );
 };
@@ -70,6 +72,6 @@ TrackPlayer.registerPlaybackService(() => PlaybackService);
 export default withIAPContext(
   CodePush({
     checkFrequency: CodePush.CheckFrequency.ON_APP_RESUME,
-    installMode: CodePush.InstallMode.ON_NEXT_RESTART,
+    installMode: CodePush.InstallMode.ON_NEXT_RESUME,
   })(App),
 );

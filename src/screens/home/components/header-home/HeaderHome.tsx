@@ -69,7 +69,6 @@ const HeaderHome = () => {
   const goToChatScreen = () => {
     NavigationService.navigate(SCREENS.CHAT);
   };
-
   return (
     <View style={styles.container}>
       {Avatar}

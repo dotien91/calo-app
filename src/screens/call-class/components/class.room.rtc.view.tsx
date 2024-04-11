@@ -69,6 +69,8 @@ const ClassRoomRtcView = ({
       streamCurrent.current.getAudioTracks()[0].enabled == !isMutedAll
     )
       return;
+
+    }
     streamCurrent.current.getAudioTracks()[0].enabled = !isMutedAll;
     setStream(streamCurrent.current);
   }, [isMutedAll]);

@@ -20,6 +20,8 @@ import {
   showSuperModal,
 } from "@helpers/super.modal.helper";
 import { translations } from "@localization";
+import { TypedCourse } from "shared/models";
+import { TOP_CLASS_HEIGHT } from "../call.class.constant";
 
 Janus.setDependencies({
   RTCPeerConnection,
@@ -28,7 +30,13 @@ Janus.setDependencies({
   MediaStream,
 });
 
-const ClassRoomTopView = ({ switchCamera }) => {
+const ClassRoomTopView = ({
+  switchCamera,
+  data,
+}: {
+  switchCamera: () => void;
+  data: TypedCourse;
+}) => {
   const theme = useTheme();
   const { colors } = theme;
 
@@ -55,7 +63,7 @@ const ClassRoomTopView = ({ switchCamera }) => {
         top: 0,
         paddingHorizontal: 16,
         zIndex: 1,
-        height: 44 + getStatusBarHeight() + 16,
+        height: TOP_CLASS_HEIGHT,
         paddingTop: getStatusBarHeight(),
         ...CS.flexCenter,
       }}
@@ -85,7 +93,7 @@ const ClassRoomTopView = ({ switchCamera }) => {
           }}
         >
           {/* todo */}
-          IELTS Speaking Class IELTS Speaking Class IELTS Speaking Class
+          {data?.title}
         </Text>
         <IconBtn
           customStyle={{ marginRight: 8 }}

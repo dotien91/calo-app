@@ -129,10 +129,6 @@ const createCourseSlice: StoreSlice<CourseSlice> = (set, get) => ({
   watchingVideos: [],
   updateWatchingVideos: (data: IWatchingVideo) => {
     const { watchingVideos } = get();
-    console.log("set. =====watchingVideos", {
-      watchingVideos,
-      data,
-    });
     set(() => ({
       watchingVideos: [
         data,
