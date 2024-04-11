@@ -327,7 +327,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "IeltsHunter" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "ieltshunter" */;
 			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -674,6 +674,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = N3W324GKBJ;
 				INFOPLIST_FILE = ieltshunterTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -686,7 +687,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ikigroup.ieltshunter;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ikigroup.ikicoach;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ieltshunter.app/ieltshunter";
 			};
@@ -838,7 +839,7 @@
 					"\"$(SRCROOT)/../node_modules/react-native-restart\"",
 				);
 				INFOPLIST_FILE = ieltshunter/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = ieltshunter;
+				INFOPLIST_KEY_CFBundleDisplayName = ikicoach;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -849,7 +850,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ikigroup.ieltshunter;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ikigroup.ikicoach;
 				PRODUCT_NAME = IELTSHunter;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1003,7 +1004,7 @@
 					"\"$(SRCROOT)/../node_modules/react-native-restart\"",
 				);
 				INFOPLIST_FILE = ieltshunter/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = ieltshunter;
+				INFOPLIST_KEY_CFBundleDisplayName = ikicoach;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1014,7 +1015,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ikigroup.ieltshunter;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ikigroup.ikicoach;
 				PRODUCT_NAME = IELTSHunter;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -1199,7 +1200,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "IeltsHunter" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "ieltshunter" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
