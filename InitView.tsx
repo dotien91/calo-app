@@ -2,7 +2,7 @@ import React from "react";
 import { StatusBar, LogBox } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { Settings } from "react-native-fbsdk-next";
-
+import InCallManager from "react-native-incall-manager";
 /**
  * ? Local Imports
  */

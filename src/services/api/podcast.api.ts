@@ -10,16 +10,6 @@ export async function GetPodCastList(params) {
   });
 }
 
-export async function GetPodCastDetail(id: string) {
-  return request({
-    method: METHOD.GET,
-    urlPath: `podcast/detail/${id}`,
-    }).then((response) => {
-    console.log("res.1..", response);
-    return response;
-  });
-}
-
 export async function ListReview(params) {
   return request({
     method: METHOD.GET,
@@ -46,7 +36,7 @@ export async function getListCategory(params) {
     method: METHOD.GET,
     urlPath: "podcast/list-category",
     params,
- }).then((response) => {
+  }).then((response) => {
     return response;
   });
 }

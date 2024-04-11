@@ -80,7 +80,6 @@ const AudioPlayScreen = () => {
     <SafeAreaView style={CS.safeAreaView}>
       <Header />
       <View style={styles.viewAudio}>
-
         <View style={styles.viewImage}>
           <Image
             style={styles.viewImage}
@@ -103,7 +102,6 @@ const AudioPlayScreen = () => {
             thumbTintColor={palette.grey5}
             minimumTrackTintColor={palette.primary}
             maximumTrackTintColor={palette.grey6}
-
             onSlidingComplete={(value) => {
               TrackPlayer.seekTo(value);
             }}

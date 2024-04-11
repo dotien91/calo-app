@@ -33,7 +33,6 @@ const DiscoverScreen = () => {
 
   const userInfo = useStore((state) => state.userInfo);
 
-
   const countPressHiddenPageBtn = React.useRef(0);
 
   const openHiddenPage = () => {

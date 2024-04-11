@@ -139,7 +139,7 @@ const Navigation = () => {
         iconName = focused ? "icCourse" : "icCourse";
         break;
       case SCREENS.CHAT:
-        iconName = focused ? "icCoach" : "icCoachBlur";
+        iconName = focused ? "icChat" : "icChat";
         break;
       case SCREENS.NOTIFICATION:
         iconName = focused ? "bell" : "bell";
@@ -151,7 +151,7 @@ const Navigation = () => {
         iconName = focused ? "settings" : "settings";
         break;
       case SCREENS.CLUB_SCREEN:
-        iconName = focused ? "icDiscovery" : "icDiscovery";
+        iconName = focused ? "icCoach" : "icCoachBlur";
         break;
       default:
         iconName = focused ? "icHome" : "icHome";
@@ -197,7 +197,6 @@ const Navigation = () => {
 
   const renderTabNavigation = () => {
     return (
-
       <>
         <Tab.Navigator
           screenOptions={({ route }) => ({
@@ -217,12 +216,8 @@ const Navigation = () => {
         >
           <Tab.Screen name={SCREENS.HOME} component={HomeScreen} />
           <Tab.Screen name={SCREENS.COURSE_LIST} component={CourseListScreen} />
+          <Tab.Screen name={SCREENS.CLUB_SCREEN} component={ClubScreen} />
           <Tab.Screen name={SCREENS.CHAT} component={ChatListScreen} />
-
-          <Tab.Screen
-            name={SCREENS.DISCOVERSCREEN}
-            component={DiscoverScreen}
-          />
 
           <Tab.Screen
             name={SCREENS.SETTINGPROFILESCREEN}

@@ -18,7 +18,6 @@ import { translations } from "@localization";
 import { SCREENS } from "constants";
 import { closeSuperModal } from "@helpers/super.modal.helper";
 import useStore from "@services/zustand/store";
-import PressableBtn from "@shared-components/button/PressableBtn";
 import Button from "@shared-components/button/Button";
 
 interface ListUserProps {
@@ -65,7 +64,6 @@ const ListUser = ({ listUser, title }: ListUserProps) => {
     );
   };
 
-
   const renderMutedBtn = () => {
     return (
       <Button
@@ -85,8 +83,9 @@ const ListUser = ({ listUser, title }: ListUserProps) => {
     <View style={styles.box}>
       <View>
         <Text style={styles.headerTitlte}>{title}</Text>
-        {renderIconTopRight()}
       </View>
+      {renderMutedBtn()}
+
       <ScrollView>
         {listUser.map((item: TypedUser, index: number) =>
           renderItem(item, index),
