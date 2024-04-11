@@ -6,6 +6,7 @@ export async function GetPodCastList(params) {
     urlPath: "podcast/list",
     params,
   }).then((response) => {
+    console.log("res1111...", response);
     return response;
   });
 }
@@ -16,7 +17,6 @@ export async function ListReview(params) {
     urlPath: "podcast/review/list",
     params,
   }).then((response) => {
-    console.log("res.1..", response);
     return response;
   });
 }

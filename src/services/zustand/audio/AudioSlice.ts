@@ -18,9 +18,7 @@ const createAudioSlice: StoreSlice<AudioSlice> = (set, get) => ({
     const data = listAudioHistory.filter(
       (_item: TrackAudio) => _item?.url == track?.url,
     );
-    console.log("track...", track);
     if (data.length > 0) {
-      console.log("đã trùng");
       set({ listAudioHistory: listAudioHistory });
     } else {
       set({ listAudioHistory: [...listAudioHistory, track] });
@@ -42,7 +40,7 @@ const createAudioSlice: StoreSlice<AudioSlice> = (set, get) => ({
         listAudioHistory: listAudioHistory,
       };
     } else {
-      console.log("Không có data....", track, "...", listAudioHistory);
+      // console.log("Không có data....", track, "...", listAudioHistory);
       return {
         listAudioHistory: listAudioHistory,
       };

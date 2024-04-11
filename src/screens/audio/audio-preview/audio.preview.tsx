@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import TrackPlayer, { Track } from "react-native-track-player";
 import * as NavigationService from "react-navigation-helpers";
+import Sound from "react-native-sound";
 
 import { ScreenHeight } from "@freakycoder/react-native-helpers";
 import { translations } from "@localization";
@@ -29,18 +30,36 @@ import {
   showSuperModal,
 } from "@helpers/super.modal.helper";
 import Button from "@shared-components/button/Button";
+import { useRoute } from "@react-navigation/native";
+import { formatTimeDuration } from "@utils/date.utils";
+import LoadingList from "@shared-components/loading.list.component";
 
 const AudioPreview = () => {
   const [track, setTrack] = React.useState<TypeTrackLocal>();
   const addAudio = useStore((store) => store.addAudio);
   const listAudioHistory = useStore((store) => store.listAudioHistory);
-  const id = "661395c7d29bd7cb5f9bca4c";
+  const route = useRoute();
+  const id = route?.params?.id || "";
+  const [duration, setDuration] = React.useState(0);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   const getDataTrack = () => {
     GetPodCastDetail(id).then((res) => {
-      console.log("resDetail....", res);
       if (!res.isError) {
         setTrack(res.data);
+        const whoosh = new Sound(
+          res.data?.attach_files[0].media_url,
+          "",
+          (error) => {
+            if (error) {
+              console.log("failed to load the sound", error);
+              setIsLoading(false);
+            } else {
+              setDuration(Math.floor(whoosh.getDuration() || 0));
+              setIsLoading(false);
+            }
+          },
+        );
       }
     });
   };
@@ -68,7 +87,10 @@ const AudioPreview = () => {
           title={track?.podcast_category.category_title || " "}
           des={translations.podcast.category}
         />
-        <ItemCategory title={" "} des={translations.podcast.audio} />
+        <ItemCategory
+          title={formatTimeDuration(duration) || " "}
+          des={translations.podcast.audio}
+        />
         <ItemCategory
           title={track?.country || " "}
           des={translations.podcast.language}
@@ -112,63 +134,58 @@ const AudioPreview = () => {
     });
   };
 
-  const showAllReview = () => {
-    NavigationService.navigate(SCREENS.SHOW_ALL_REVIEW);
-  };
-
   return (
     <SafeAreaView style={CS.safeAreaView}>
       <Header />
-      <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
-        <View style={styles.viewAudio}>
-          <View style={styles.viewImage}>
-            <Image
-              style={styles.viewImage}
-              source={{ uri: track?.post_avatar.media_url }}
-              borderRadius={8}
+      {isLoading ? (
+        <LoadingList numberItem={3} />
+      ) : (
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={styles.container}
+        >
+          <View style={styles.viewAudio}>
+            <View style={styles.viewImage}>
+              <Image
+                style={styles.viewImage}
+                source={{ uri: track?.post_avatar.media_url }}
+                borderRadius={8}
+              />
+            </View>
+            <View style={styles.viewTitle}>
+              <Text style={styles.txtTitle}>{track?.title}</Text>
+              <Text style={styles.txtAuthor}>
+                {track?.user_id.display_name}
+              </Text>
+            </View>
+          </View>
+          {renderCategory()}
+          <View style={styles.viewBtn}>
+            <TouchableOpacity style={styles.btnPlay} onPress={playAudio}>
+              <IconSvg name="icHeadphone" size={20} color={palette.white} />
+              <Text style={styles.txtListen}>
+                {translations.podcast.listenNow}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.viewDes}>
+            <Text style={CS.hnBold}>{translations.podcast.description}</Text>
+            <TextViewCollapsed
+              text={track?.content || ""}
+              styleText={styles.des}
             />
           </View>
-          <View style={styles.viewTitle}>
-            <Text style={styles.txtTitle}>{track?.title}</Text>
-            <Text style={styles.txtAuthor}>{track?.user_id.display_name}</Text>
-          </View>
-        </View>
-        {renderCategory()}
-        <View style={styles.viewBtn}>
-          <TouchableOpacity style={styles.btnPlay} onPress={playAudio}>
-            <IconSvg name="icHeadphone" size={20} color={palette.white} />
-            <Text style={styles.txtListen}>
-              {translations.podcast.listenNow}
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.viewDes}>
-          <Text style={CS.hnBold}>{translations.podcast.description}</Text>
-          <TextViewCollapsed
-            text={track?.content || ""}
-            styleText={styles.des}
+
+          <ListReviewView id={id} />
+
+          <Button
+            onPress={showWriteReview}
+            text={translations.podcast.writeAReview}
+            style={styles.btnReview}
+            type="primary"
           />
-        </View>
-
-        <View style={styles.viewReview}>
-          <Text style={CS.hnBold}>{`${translations.podcast.countReview(
-            track?.comment_number || 0,
-          )}`}</Text>
-        </View>
-        <ListReviewView id={id} />
-
-        <TouchableOpacity onPress={showAllReview} style={styles.viewShowAll}>
-          <Text style={styles.txtShowAll}>
-            {translations.podcast.showAllReview}
-          </Text>
-        </TouchableOpacity>
-        <Button
-          onPress={showWriteReview}
-          text={translations.podcast.writeAReview}
-          style={styles.btnReview}
-          type="primary"
-        />
-      </ScrollView>
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 };
@@ -180,25 +197,11 @@ const styles = StyleSheet.create({
     marginTop: 8,
     height: 32,
     paddingVertical: 0,
-  },
-  txtShowAll: {
-    ...CS.hnBold,
-    color: palette.primary,
+    marginBottom: 8,
   },
   container: {
     ...CS.flex1,
     paddingHorizontal: 16,
-  },
-  viewShowAll: {
-    marginTop: 8,
-    ...CS.center,
-    height: 32,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: palette.primary,
-  },
-  viewReview: {
-    marginTop: 8,
   },
   viewDes: {
     marginTop: 8,

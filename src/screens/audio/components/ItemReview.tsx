@@ -1,9 +1,10 @@
+import * as React from "react";
+import { Text, View, StyleSheet, Image } from "react-native";
 import { ScreenWidth } from "@freakycoder/react-native-helpers";
+
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import { convertLastActive } from "@utils/time.utils";
-import * as React from "react";
-import { Text, View, StyleSheet, Image } from "react-native";
 
 interface ItemReviewProps {
   type?: "horizontal" | "vertical";

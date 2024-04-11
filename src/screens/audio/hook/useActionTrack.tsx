@@ -1,11 +1,12 @@
-import eventEmitter from "@services/event-emitter";
-import useStore from "@services/zustand/store";
 // import { useEffect } from "react";
 import TrackPlayer, {
   useActiveTrack,
   useIsPlaying,
   useProgress,
 } from "react-native-track-player";
+
+import eventEmitter from "@services/event-emitter";
+import useStore from "@services/zustand/store";
 
 export const useActionTrack = () => {
   const activeTrack = useActiveTrack();

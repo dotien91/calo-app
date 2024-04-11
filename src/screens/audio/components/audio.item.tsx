@@ -1,14 +1,16 @@
 import React, { useMemo } from "react";
 import { Text, View, ViewStyle } from "react-native";
 import FastImage from "react-native-fast-image";
+import * as NavigationService from "react-navigation-helpers";
+import { useTheme } from "@react-navigation/native";
 
 import CS from "@theme/styles";
 import createStyles from "../audio.style";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { translations } from "@localization";
-import { useTheme } from "@react-navigation/native";
 import { Device } from "@utils/device.ui.utils";
 import { IAudioItem } from "models/audio.modal";
+import { SCREENS } from "constants";
 
 interface AudioItemProps {
   isSliderItem: boolean;
@@ -33,6 +35,7 @@ const AudioItem = ({
     post_avatar,
     podcast_category,
     is_join,
+    _id,
   } = data;
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
@@ -70,7 +73,7 @@ const AudioItem = ({
         ) : (
           <Text style={styles.textNoReview}>{translations.audio.noListen}</Text>
         )}
-        <Text style={styles.txtSlug}>#{podcast_category?.category_slug}</Text>
+        <Text style={styles.txtSlug}>#{podcast_category?.category_title}</Text>
       </>
     );
   };
@@ -95,7 +98,7 @@ const AudioItem = ({
   };
 
   const openPreviewCourse = () => {
-    console.log("333333======");
+    NavigationService.navigate(SCREENS.AUDIO_PREVIEW, { id: _id });
   };
 
   return (
