@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "543656532685-2frchamcsscg7alj5vpfsu5vgn3qr2mj.apps.googleusercontent.com",
+          "client_id": "543656532685-fc4n7pou3ba3dpko7jkqjfpu8t1kgitt.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.ikigroup.ikicoach",
-            "certificate_hash": "2b1f34c90ad7897a635ed3b62ce9a24e5c9739ce"
+            "certificate_hash": "a998798307f6d429dd20d8d78e54bfee599b207f"
           }
         },
         {
