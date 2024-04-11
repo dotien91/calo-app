@@ -44,9 +44,6 @@ const ItemNotification = ({ item, pressDelete }: ItemNotificationProps) => {
       }
     });
     switch (item?.router) {
-      case "NAVIGATION_TEST_RESULT":
-        NavigationService.navigate(SCREENS.IELTS_PRACTICE_LIST);
-        break;
       case "NAVIGATION_CHAT_ROOM":
         NavigationService.navigate(SCREENS.CHAT_ROOM, {
           id: JSON.parse(item?.param).chat_room_id,

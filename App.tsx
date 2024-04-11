@@ -15,6 +15,7 @@ import SocketConnect from "@services/socket/SocketConnect";
 import { SocketHelperRef } from "@helpers/socket.helper";
 import InitView from "./InitView";
 import toastConfig from "@shared-components/toastConfig/toastconfig";
+import TrackPlayer, { Capability, Event } from "react-native-track-player";
 import AudioProgress from "@screens/audio/hook/AudioProgress";
 
 LogBox.ignoreAllLogs();
@@ -40,6 +41,33 @@ const App = () => {
     </>
   );
 };
+
+export const PlaybackService = async function () {
+  await TrackPlayer.setupPlayer();
+  await TrackPlayer.updateOptions({
+    capabilities: [
+      Capability.Play,
+      Capability.Pause,
+      Capability.SkipToNext,
+      Capability.SkipToPrevious,
+      Capability.Stop,
+    ],
+
+    // Capabilities that will show up when the notification is in the compact form on Android
+    compactCapabilities: [Capability.Play, Capability.Pause],
+  });
+
+  TrackPlayer.addEventListener(Event.RemotePlay, TrackPlayer.play);
+  TrackPlayer.addEventListener(Event.RemotePause, TrackPlayer.pause);
+  TrackPlayer.addEventListener(Event.RemoteNext, TrackPlayer.skipToNext);
+  TrackPlayer.addEventListener(
+    Event.RemotePrevious,
+    TrackPlayer.skipToPrevious,
+  );
+  TrackPlayer.addEventListener(Event.RemoteSeek, TrackPlayer.seekTo);
+};
+
+TrackPlayer.registerPlaybackService(() => PlaybackService);
 
 export default withIAPContext(
   CodePush({

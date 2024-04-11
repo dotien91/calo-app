@@ -94,6 +94,10 @@ export const SCREENS = {
   HOME_AFFILIATE: "HomeAffilite",
   AUDIO_LIST: "AudioList",
   AUDIO_PLAY: "AudioPlay",
+  CLUB_SCREEN: "ClubScreen",
+  AUDIO_BOOK: "AudioBook",
+  RECOMMEND_AUDIO_BOOK: "RecommandAudioBook",
+  ALL_AUDIO_BOOk: "AllAudioBook",
   AUDIO_PREVIEW: "AudioPreview",
   SHOW_ALL_REVIEW: "ShowAllReview",
 };

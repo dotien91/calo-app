@@ -75,7 +75,6 @@ import ClassHomeWorkScreen from "@screens/class-home-work/class.home.work.screen
 import CreateWorkScreen from "@screens/class-home-work/create.work.screen";
 import DetailTaskScreen from "@screens/class-home-work/detail.task.screen";
 import AddWorkStudentScreen from "@screens/class-home-work/add.work.student.screen";
-import DiscoverScreen from "@screens/discover-screen/discover.screen";
 import ChatListScreen from "@screens/chat/list-chat/chat.list.screen";
 import NotificationScreen from "@screens/notification/NotificationScreen";
 import TaskScreen from "@screens/profile.screen/task.screen";
@@ -108,6 +107,10 @@ import { getBottomSpace } from "react-native-iphone-screen-helper";
 import IconSvg from "assets/svg";
 import AudioListScreen from "@screens/audio/audio-list/audio.list.screen";
 import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
+import ClubScreen from "@screens/club/home-club/club.screen";
+import AudioBookScreen from "@screens/audio/audio-book/audio.book.screen";
+import RecommendBookScreen from "@screens/audio/recommend.book.screen";
+import AllBookScreen from "@screens/audio/all.book.screen";
 import { FloatingPlayer } from "@screens/audio/components/FloatingPlayer";
 import AudioPreview from "@screens/audio/audio-preview/audio.preview";
 import showAllReview from "@screens/audio/audio-preview/show.all.review";
@@ -147,7 +150,7 @@ const Navigation = () => {
       case SCREENS.SETTING:
         iconName = focused ? "settings" : "settings";
         break;
-      case SCREENS.DISCOVERSCREEN:
+      case SCREENS.CLUB_SCREEN:
         iconName = focused ? "icDiscovery" : "icDiscovery";
         break;
       default:
@@ -178,8 +181,8 @@ const Navigation = () => {
       case SCREENS.SETTING:
         label = translations.setting;
         break;
-      case SCREENS.DISCOVERSCREEN:
-        label = translations.discovers;
+      case SCREENS.CLUB_SCREEN:
+        label = translations.club.club;
         break;
       default:
         label = translations.homes;
@@ -194,6 +197,7 @@ const Navigation = () => {
 
   const renderTabNavigation = () => {
     return (
+
       <>
         <Tab.Navigator
           screenOptions={({ route }) => ({
@@ -485,6 +489,12 @@ const Navigation = () => {
         <Stack.Screen name={SCREENS.WEBVIEW_SCREEN} component={WebviewScreen} />
         <Stack.Screen name={SCREENS.AUDIO_PLAY} component={AudioPlayScreen} />
         <Stack.Screen name={SCREENS.AUDIO_LIST} component={AudioListScreen} />
+        <Stack.Screen name={SCREENS.AUDIO_BOOK} component={AudioBookScreen} />
+        <Stack.Screen
+          name={SCREENS.RECOMMEND_AUDIO_BOOK}
+          component={RecommendBookScreen}
+        />
+        <Stack.Screen name={SCREENS.ALL_AUDIO_BOOk} component={AllBookScreen} />
         <Stack.Screen name={SCREENS.AUDIO_PREVIEW} component={AudioPreview} />
         <Stack.Screen
           name={SCREENS.SHOW_ALL_REVIEW}

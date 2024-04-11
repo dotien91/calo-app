@@ -33,6 +33,7 @@ const DiscoverScreen = () => {
 
   const userInfo = useStore((state) => state.userInfo);
 
+
   const countPressHiddenPageBtn = React.useRef(0);
 
   const openHiddenPage = () => {
@@ -76,7 +77,7 @@ const DiscoverScreen = () => {
     //   title: translations.discover.shop,
     // },
     {
-      icon: "icPersonSearch",
+      icon: "icFind",
       title: translations.discover.finduser,
       screen: SCREENS.COURSE_CATEGORY,
       params: { defaultIndex: 3 },

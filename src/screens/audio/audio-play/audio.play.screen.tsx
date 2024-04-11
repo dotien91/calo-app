@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import { View, StyleSheet, SafeAreaView, Text, Image } from "react-native";
 import { ScreenHeight, ScreenWidth } from "@freakycoder/react-native-helpers";
 import Header from "@shared-components/header/Header";
@@ -79,6 +80,7 @@ const AudioPlayScreen = () => {
     <SafeAreaView style={CS.safeAreaView}>
       <Header />
       <View style={styles.viewAudio}>
+
         <View style={styles.viewImage}>
           <Image
             style={styles.viewImage}
@@ -101,6 +103,7 @@ const AudioPlayScreen = () => {
             thumbTintColor={palette.grey5}
             minimumTrackTintColor={palette.primary}
             maximumTrackTintColor={palette.grey6}
+
             onSlidingComplete={(value) => {
               TrackPlayer.seekTo(value);
             }}

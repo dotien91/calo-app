@@ -148,6 +148,8 @@ import icNextAudio from "./icon-next-audio.svg";
 import icPreviousAudio from "./icon-previous-audio.svg";
 import icPlayAudio from "./icon-play-audio.svg";
 import icPauseAudio from "./icon-pause-audio.svg";
+import icSort from "./icon-sort.svg";
+import icTime from "./icon-time.svg";
 import icPersonSearch from "./person-search.svg";
 import icCard from "./card.svg";
 import icCard1 from "./card-1.svg";
@@ -313,6 +315,8 @@ const Icons = {
   icPreviousAudio,
   icPlayAudio,
   icPauseAudio,
+  icSort,
+  icTime,
   icPersonSearch,
   icHeadphone,
 };

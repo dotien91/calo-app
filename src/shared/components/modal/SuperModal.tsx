@@ -281,6 +281,9 @@ const SuperModal: React.FC<SuperModalProps> = () => {
           {contentModalType == EnumModalContentType.RefferralTask && (
             <ReferralPopupTask data={data} />
           )}
+          {contentModalType == EnumModalContentType.FilterSortClub && (
+            <SelectBox {...data} />
+          )}
           {contentModalType == EnumModalContentType.ReviewAudio && (
             <WriteReview data={data} />
           )}

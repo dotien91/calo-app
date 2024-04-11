@@ -1,5 +1,26 @@
 import { TypedMedia, TypedUser } from "shared/models";
 
+export interface IAudioItem {
+  _id: string;
+  user_id: object;
+  podcast_language: string;
+  podcast_category: object;
+  title: string;
+  content: string;
+  excerpt: string;
+  podcast_slug: string;
+  country: string;
+  podcast_status: string;
+  post_avatar: object;
+  attach_files: any[];
+  podcast_type: string;
+  view_number: number;
+  comment_number: number;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
 export interface IUserAudio {
   official_status?: boolean;
   _id: string;

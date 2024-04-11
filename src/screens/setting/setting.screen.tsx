@@ -228,6 +228,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
     NavigationService.navigate(SCREENS.EDIT_PROFILE);
   };
 
+
   return (
     <SafeAreaView style={[CS.flex1]}>
       <Header text={translations.settingUser.setting}></Header>
