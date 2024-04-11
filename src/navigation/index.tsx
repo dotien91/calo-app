@@ -114,6 +114,7 @@ import AllBookScreen from "@screens/audio/all.book.screen";
 import { FloatingPlayer } from "@screens/audio/components/FloatingPlayer";
 import AudioPreview from "@screens/audio/audio-preview/audio.preview";
 import showAllReview from "@screens/audio/audio-preview/show.all.review";
+import EliteClubScreen from "@screens/club/elite-club/elite.club.screen";
 // import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -495,6 +496,7 @@ const Navigation = () => {
           name={SCREENS.SHOW_ALL_REVIEW}
           component={showAllReview}
         />
+        <Stack.Screen name={SCREENS.ELITE_CLUB} component={EliteClubScreen} />
       </Stack.Navigator>
       <FloatingPlayer
         style={{
