@@ -31,7 +31,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.329708522429-tb80b2s4u8k8r3p2ocn5rfa5ofr78kbl</string>
+				<string>com.googleusercontent.apps.543656532685-ea3og352pgjtb382rlhmhdl983upijma</string>
 			</array>
 		</dict>
 		<dict>
@@ -60,7 +60,7 @@
 	<key>FacebookClientToken</key>
 	<string>6054f4c2e7bae8d01389715aea05e97b</string>
 	<key>FacebookDisplayName</key>
-	<string>ielthunter</string>
+	<string>ikigaicoach</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
