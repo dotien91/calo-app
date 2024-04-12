@@ -89,7 +89,7 @@ const DateTimePickerLocal = ({
 export default DateTimePickerLocal;
 
 const styles = StyleSheet.create({
-  container: { marginTop: 8 },
+  container: { marginTop: 8, marginHorizontal: 4 },
   label: {
     ...CS.hnSemiBold,
     color: palette.text,
@@ -98,6 +98,6 @@ const styles = StyleSheet.create({
     ...CS.flex1,
     color: palette.text,
     paddingVertical: 0,
-    marginHorizontal: 12,
+    marginHorizontal: 20,
   },
 });
