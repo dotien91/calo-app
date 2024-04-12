@@ -20,7 +20,7 @@ const DEVELOPER_DOMAIN_SOCKET_DEV = "https://socket.api.ikigroup.vn/scoket";
 // const UPLOAD_URL = "https://media.exam24h.com/";
 
 //prod domain api
-const PRODUCTION_DOMAIN_PRODUCTION = "https://api.live.edu-like.exam24h.com";
+const PRODUCTION_DOMAIN_PRODUCTION = "https://api.ikigai.ikigroup.vn";
 const PRODUCTION_DOMAIN_SOCKET_PRODUCTION =
   "https://socket.live.api.ieltshunter.io";
 
