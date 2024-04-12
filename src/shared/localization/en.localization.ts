@@ -798,6 +798,10 @@ export default {
     eventNotFound: "There are no events",
     eventConfirm: "Do you want to stop video calling",
     eventEndLive: "Do you want to stop the livestream session?",
+    events: "Events",
+    upComing: "Upcoming Events",
+    pastEvent: "Past Events",
+    going: "going",
   },
   notifications: {
     notifications: "Notifications",
