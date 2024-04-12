@@ -95,7 +95,12 @@ const InputHook: React.FC<InputHookProps> = ({
           )}
         </View>
       )}
-      {!!label && <Text style={styles.label}>{label}</Text>}
+      {!!label && (
+        <Text style={styles.label}>
+          {label}
+          {rules.required && <Text style={{ color: palette.primary }}> *</Text>}
+        </Text>
+      )}
 
       <Pressable
         onPress={_forcusInput}

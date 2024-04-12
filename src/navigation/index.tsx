@@ -115,6 +115,7 @@ import { FloatingPlayer } from "@screens/audio/components/FloatingPlayer";
 import AudioPreview from "@screens/audio/audio-preview/audio.preview";
 import showAllReview from "@screens/audio/audio-preview/show.all.review";
 import EliteClubScreen from "@screens/club/elite-club/elite.club.screen";
+import CreateEventScreen from "@screens/club/create-event/create.event.screen";
 import DiscoverScreen from "@screens/discover-screen/discover.screen";
 import CreateClubScreen from "@screens/club/create-club/create.club.screen";
 // import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
@@ -508,6 +509,10 @@ const Navigation = () => {
           component={showAllReview}
         />
         <Stack.Screen name={SCREENS.ELITE_CLUB} component={EliteClubScreen} />
+        <Stack.Screen
+          name={SCREENS.CREATEEVENT}
+          component={CreateEventScreen}
+        />
         <Stack.Screen
           name={SCREENS.CREATE_CLUB_SCREEN}
           component={CreateClubScreen}
