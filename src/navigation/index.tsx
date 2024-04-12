@@ -133,9 +133,9 @@ const Navigation = () => {
       case SCREENS.COURSE_LIST:
         iconName = focused ? "icCourse" : "icCourse";
         break;
-      case SCREENS.CHAT:
-        iconName = focused ? "icCoach" : "icCoachBlur";
-        break;
+      // case SCREENS.CHAT:
+      //   iconName = focused ? "icCoach" : "icCoachBlur";
+      //   break;
       case SCREENS.NOTIFICATION:
         iconName = focused ? "bell" : "bell";
         break;
@@ -211,13 +211,12 @@ const Navigation = () => {
         >
           <Tab.Screen name={SCREENS.HOME} component={HomeScreen} />
           <Tab.Screen name={SCREENS.COURSE_LIST} component={CourseListScreen} />
-          <Tab.Screen name={SCREENS.CHAT} component={ChatListScreen} />
+          {/* <Tab.Screen name={SCREENS.CHAT} component={ChatListScreen} /> */}
 
           <Tab.Screen
             name={SCREENS.DISCOVERSCREEN}
             component={DiscoverScreen}
           />
-
 
           <Tab.Screen
             name={SCREENS.SETTINGPROFILESCREEN}
@@ -229,7 +228,8 @@ const Navigation = () => {
   };
 
   const renderStackIntro = () => {
-    if (!isFirstOpenApp) return null;
+    return null;
+    // if (!isFirstOpenApp) return null;
     return (
       <>
         <Stack.Screen

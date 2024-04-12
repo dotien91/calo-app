@@ -4,7 +4,7 @@
 <dict>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
-		<string>com.ikigroup.ieltshunter</string>
+		<string>com.ikigroup.ikicoach</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
@@ -44,17 +44,17 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.ikigroup.ieltshunter</string>
+			<string>com.ikigroup.ikicoach</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>ieltshunter</string>
+				<string>ikicoach</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>CodePushDeploymentKey</key>
-	<string>UVy5f07f_9AiwpbLfmvkC-tN59QHdUgTzbUk6</string>
+	<string>sroeTkFo6DVNh4Cr1IYbwJOxtVWbpBTHWpscz</string>
 	<key>FacebookAppID</key>
 	<string>908606980666349</string>
 	<key>FacebookClientToken</key>
@@ -82,15 +82,15 @@
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Play using while you are learning</string>
 	<key>NSCameraUsageDescription</key>
-	<string>IeltsHunter need to take a look at your camera, to put the photo up as a social asset for other users to see</string>
+	<string>Ikigai Coach need to take a look at your camera, to put the photo up as a social asset for other users to see</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>IeltsHunter need to take a look at your microphone, to put the photo up as a social asset for other users to see</string>
+	<string>Ikigai Coach need to take a look at your microphone, to put the photo up as a social asset for other users to see</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>$(PRODUCT_NAME) need to take a look at your photo album, to put the photo up as a social asset for other users to see</string>
+	<string>Ikigai Coach need to take a look at your photo album, to put the photo up as a social asset for other users to see</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>IeltsHunter need to take a look at your photo album, to put the photo up as a social asset for other users to see</string>
+	<string>Ikigai Coach need to take a look at your photo album, to put the photo up as a social asset for other users to see</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>

@@ -44,7 +44,6 @@ const CourseView = () => {
   };
 
   if (!listData.length && !isLoading) return null;
-
   return (
     <View style={styles.container}>
       <CourseCategoryTitle

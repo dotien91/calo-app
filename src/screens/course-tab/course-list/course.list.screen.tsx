@@ -149,7 +149,8 @@ const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
       return (
         <EmptyResultView
           desc={translations.emptyList}
-          icon="chatbubbles-outline"
+          icon="document-text-outline"
+          showLottie={false}
         />
       );
     return null;

@@ -126,7 +126,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
             zIndex: 1,
           }}
           // onPress={_showSuperModalCourse}
-          onPress={() => NavigationService.navigate(SCREENS.AUDIO_PLAY)}
+          onPress={() => NavigationService.navigate(SCREENS.POST_SCREEN)}
         >
           <Icon
             name={"add-outline"}

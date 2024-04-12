@@ -71,15 +71,15 @@ const GoogleLoginButton = ({ showText }: BtnProps) => {
         setTimeout(() => {
           Toast.show({
             type: "info",
-            text1: "Play services not available or outdated"
+            text1: "Play services not available or outdated",
           });
         }, 500);
       } else {
         // some other error happened
-          Toast.show({
-            type: "error",
-            text1: error?.message,
-          });
+        Toast.show({
+          type: "error",
+          text1: error?.message,
+        });
       }
     }
   };

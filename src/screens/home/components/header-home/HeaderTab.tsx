@@ -37,12 +37,12 @@ const listCategorys = [
     screen: SCREENS.HOME_AFFILIATE,
     color: "#E8F7EF",
   },
-  {
-    title: translations.listCategory.club,
-    icon: "icCard3",
-    screen: SCREENS.HOME_AFFILIATE,
-    color: "#E8F7EF",
-  },
+  // {
+  //   title: translations.listCategory.club,
+  //   icon: "icCard3",
+  //   screen: SCREENS.HOME_AFFILIATE,
+  //   color: "#E8F7EF",
+  // },
 ];
 
 const HeaderTab = () => {
