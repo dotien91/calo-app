@@ -68,26 +68,29 @@ const CreateEventScreen = () => {
             maxLength={32}
             label={translations.club.eventName}
           />
-          <DateTimePickerLocal
-            label={translations.club.startDate}
-            style={{ flex: 1 }}
-            placeholder={translations.club.chooseStartDate}
-            setTime={(time) => {
-              setStartDate(time);
-            }}
-            timeDefault={startDate}
-            iconRight={<IconSvg name="icSelectDown" />}
-          />
-          <DateTimePickerLocal
-            label={translations.club.endDate}
-            style={{ flex: 1 }}
-            placeholder={translations.club.chooseEndDate}
-            setTime={(time) => {
-              setEndDate(time);
-            }}
-            timeDefault={endDate}
-            iconRight={<IconSvg name="icSelectDown" />}
-          />
+          <View style={styles.viewDate}>
+            <DateTimePickerLocal
+              label={translations.club.startDate}
+              style={{ flex: 1 }}
+              placeholder={translations.club.chooseStartDate}
+              setTime={(time) => {
+                setStartDate(time);
+              }}
+              timeDefault={startDate}
+              iconRight={<IconSvg name="icSelectDown" />}
+            />
+            <DateTimePickerLocal
+              label={translations.club.endDate}
+              style={{ flex: 1 }}
+              placeholder={translations.club.chooseEndDate}
+              setTime={(time) => {
+                setEndDate(time);
+              }}
+              timeDefault={endDate}
+              iconRight={<IconSvg name="icSelectDown" />}
+            />
+          </View>
+
           <InputHook
             setFocus={setFocus}
             name="location"

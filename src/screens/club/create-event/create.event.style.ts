@@ -12,6 +12,7 @@ interface Style {
   styleBtn: ViewStyle;
   viewButton: ViewStyle;
   viewInput: ViewStyle;
+  viewDate: ViewStyle;
 }
 
 export default () => {
@@ -44,6 +45,9 @@ export default () => {
     },
     viewInput: {
       marginTop: 10,
+      // marginHorizontal: 16,
+    },
+    viewDate: {
       marginHorizontal: 16,
     },
   });

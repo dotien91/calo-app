@@ -95,7 +95,12 @@ const InputHook: React.FC<InputHookProps> = ({
           )}
         </View>
       )}
-      {!!label && <Text style={styles.label}>{label}</Text>}
+      {!!label && (
+        <Text style={styles.label}>
+          {label}
+          {rules.required && <Text style={{ color: palette.primary }}> *</Text>}
+        </Text>
+      )}
 
       <Pressable
         onPress={_forcusInput}
@@ -176,12 +181,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     ...CommonStyle.hnSemiBold,
     color: palette.text,
-    // paddingHorizontal: 20,
+    paddingHorizontal: 20,
   },
   viewBorder: {
     marginTop: 8,
-    // marginHorizontal: 20,
-    paddingHorizontal: 10,
+    marginHorizontal: 20,
+    paddingHorizontal: 20,
     height: 40,
     alignItems: "center",
     flexDirection: "row",
@@ -197,7 +202,7 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: palette.danger,
-    // paddingHorizontal: 20,
+    paddingHorizontal: 20,
     marginTop: 4,
   },
   textTitle: {
