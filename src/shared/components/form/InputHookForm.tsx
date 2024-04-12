@@ -77,7 +77,7 @@ const InputHook: React.FC<InputHookProps> = ({
     <View
       style={[
         styles.wrapper,
-        showPlaceholder ? { minHeight: 76, marginTop: 8 } : {},
+        showPlaceholder || label ? { minHeight: 76, marginTop: 8 } : {},
       ]}
     >
       {showPlaceholder && (
@@ -176,11 +176,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     ...CommonStyle.hnSemiBold,
     color: palette.text,
+    // paddingHorizontal: 20,
   },
   viewBorder: {
     marginTop: 8,
-    marginHorizontal: 20,
-    paddingHorizontal: 20,
+    // marginHorizontal: 20,
+    paddingHorizontal: 10,
     height: 40,
     alignItems: "center",
     flexDirection: "row",
@@ -196,7 +197,7 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: palette.danger,
-    paddingHorizontal: 12,
+    // paddingHorizontal: 20,
     marginTop: 4,
   },
   textTitle: {

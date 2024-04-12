@@ -398,3 +398,35 @@ export const formatDateTime = (date) => {
     }
   }
 };
+
+export const formatFullDateTime = (date) => {
+  const _date = new Date(date);
+  if (_date.toString() === "Invalid Date") {
+    return "";
+  }
+
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  const year = _date.getFullYear();
+  const month = months[_date.getMonth() + 1];
+  const day = _date.getDate();
+  const hours = _date.getHours();
+  const minutes = _date.getMinutes();
+
+  return ` ${day < 10 ? `0${day}` : day} ${month}, ${year} ${
+    hours < 10 ? `0${hours}` : hours
+  }:${minutes < 10 ? `0${minutes}` : minutes} `;
+};

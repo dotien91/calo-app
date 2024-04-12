@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { FlatList, View } from "react-native";
 
+import * as NavigationService from "react-navigation-helpers";
 import createStyles from "./club.style";
 import { useTheme } from "@react-navigation/native";
 import { translations } from "@localization";
@@ -8,6 +9,7 @@ import TitleClub from "./list.title.club";
 import ItemClub from "./list.item.club";
 import LoadingList from "@shared-components/loading.list.component";
 import CS from "@theme/styles";
+import { SCREENS } from "constants";
 
 const ManagedClubScreen = () => {
   const theme = useTheme();
@@ -52,7 +54,7 @@ const ManagedClubScreen = () => {
         textLeft={translations.club.title2}
         textRight={translations.club.create}
         onPressRight={() => {
-          console.log(22222);
+          NavigationService.navigate(SCREENS.CREATEEVENT);
         }}
       />
       {listRenderItem.length == 0 && isLoading ? (
