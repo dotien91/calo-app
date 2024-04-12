@@ -104,6 +104,7 @@ export const SCREENS = {
   ELITE_CLUB: "EliteClub",
   CREATEEVENT: "CreateEvent",
   EVENTSLISTSCREEN: "EventsListScreen",
+  DETAILEVENTSCREEN: "DetailScreenEvent",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

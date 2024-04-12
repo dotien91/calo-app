@@ -1,12 +1,14 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 
+import * as NavigationService from "react-navigation-helpers";
 import TextBase from "@shared-components/TextBase";
 import { translations } from "@localization";
 import { palette } from "@theme/themes";
 import { EnumColors } from "models";
 import IconSvg from "assets/svg";
 import Button from "@shared-components/button/Button";
+import { SCREENS } from "constants";
 
 const ItemEvent = ({ data }: { data: any }) => {
   const { time, title, location, author, avatar } = data;
@@ -96,10 +98,15 @@ const ItemEvent = ({ data }: { data: any }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <Pressable
+      style={styles.container}
+      onPress={() => {
+        NavigationService.navigate(SCREENS.DETAILEVENTSCREEN);
+      }}
+    >
       {renderImg()}
       {renderInfo()}
-    </View>
+    </Pressable>
   );
 };
 

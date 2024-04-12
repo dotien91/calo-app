@@ -802,6 +802,7 @@ export default {
     upComing: "Upcoming Events",
     pastEvent: "Past Events",
     going: "going",
+    eventBy: "Event by",
   },
   notifications: {
     notifications: "Notifications",

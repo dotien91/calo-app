@@ -882,6 +882,7 @@ export default {
     upComing: "Các sự kiện sắp diễn ra",
     pastEvent: "Các sự kiện đã diễn ra",
     going: "Tham gia",
+    eventBy: "Sự kiện được tổ chức bởi",
   },
   notifications: {
     notifications: "Thông báo",

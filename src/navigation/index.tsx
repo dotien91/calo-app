@@ -119,6 +119,7 @@ import CreateEventScreen from "@screens/club/create-event/create.event.screen";
 import DiscoverScreen from "@screens/discover-screen/discover.screen";
 import CreateClubScreen from "@screens/club/create-club/create.club.screen";
 import EventsListScreen from "@screens/events/events.list.screen";
+import DetailScreenEvent from "@screens/events/components/detail.screen.event";
 // import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -521,6 +522,10 @@ const Navigation = () => {
         <Stack.Screen
           name={SCREENS.EVENTSLISTSCREEN}
           component={EventsListScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.DETAILEVENTSCREEN}
+          component={DetailScreenEvent}
         />
       </Stack.Navigator>
       <FloatingPlayer
