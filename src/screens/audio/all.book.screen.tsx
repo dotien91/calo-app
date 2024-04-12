@@ -10,15 +10,20 @@ import { GetPodCastList } from "@services/api/podcast.api";
 import { IAudioItem } from "models/audio.modal";
 import AudioItemList from "./components/audio.item.list";
 import EmptyResultView from "@shared-components/empty.data.component";
+import LoadingList from "@shared-components/loading.list.component";
+import { useRoute } from "@react-navigation/native";
 
 const AllBookScreen = () => {
   const userData = useStore((state) => state.userData);
+  const route = useRoute();
+  const id = route.params?.id || "";
 
   const { listData, isLoading } = useListData<IAudioItem>(
     {
       auth_id: userData?._id,
       order_by: "DESC",
       sort_by: "createdAt",
+      podcast_category: id,
     },
     GetPodCastList,
   );
@@ -27,26 +32,26 @@ const AllBookScreen = () => {
     return listData.slice(0, 15);
   }, [listData]);
 
-  const renderItem = (item: IAudioItem, index: number) => {
-    if (item.item?.is_join) {
+  const renderItem = ({ item, index }) => {
+    if (item?.is_join) {
       return null;
     } else {
-      return (
-        <>
-          <AudioItemList isSliderItem data={item.item} key={index} />
-        </>
-      );
+      return <AudioItemList isSliderItem data={item} key={index} />;
     }
   };
 
   const renderEmptyCourseOfMe = () => {
-    if (isLoading)
-      return <EmptyResultView title={translations.audio.emptyAudio} />;
+    return <EmptyResultView title={translations.audio.emptyAudio} />;
+  };
+  const renderLoading = () => {
+    return <LoadingList numberItem={3} />;
   };
 
   return (
     <SafeAreaView style={CS.safeAreaView}>
       <Header text={translations.audio.allAudio} />
+      {!isLoading && data.length == 0 && renderEmptyCourseOfMe()}
+      {isLoading && data.length == 0 && renderLoading()}
       <FlatList
         showsHorizontalScrollIndicator={false}
         data={data}
@@ -60,7 +65,6 @@ const AllBookScreen = () => {
         onEndReachedThreshold={0}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item?._id + ""}
-        ListEmptyComponent={renderEmptyCourseOfMe()}
       />
     </SafeAreaView>
   );

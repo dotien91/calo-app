@@ -2,7 +2,7 @@ import React from "react";
 import { StatusBar, LogBox } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { Settings } from "react-native-fbsdk-next";
-import InCallManager from "react-native-incall-manager";
+// import InCallManager from "react-native-incall-manager";
 /**
  * ? Local Imports
  */
@@ -27,8 +27,8 @@ const InitView = () => {
 
   React.useEffect(() => {
     initData();
-    InCallManager.start();
-    InCallManager.setForceSpeakerphoneOn(true);
+    // InCallManager.start();
+    // InCallManager.setForceSpeakerphoneOn(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const language = useStore((state) => state.language);

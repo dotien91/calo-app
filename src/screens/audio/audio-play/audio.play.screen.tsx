@@ -1,5 +1,4 @@
 import * as React from "react";
-
 import { View, StyleSheet, SafeAreaView, Text, Image } from "react-native";
 import { ScreenHeight, ScreenWidth } from "@freakycoder/react-native-helpers";
 import Header from "@shared-components/header/Header";
@@ -12,6 +11,7 @@ import TrackPlayer, {
   useIsPlaying,
   useActiveTrack,
 } from "react-native-track-player";
+
 import { formatTime } from "@utils/date.utils";
 import eventEmitter from "@services/event-emitter";
 import { useActionTrack } from "../hook/useActionTrack";
@@ -29,50 +29,6 @@ const AudioPlayScreen = () => {
       eventEmitter.emit("floating_play", { show: true });
     };
   }, []);
-
-  // const _getDetailPodCast = () => {
-  //   const _id = "661395c7d29bd7cb5f9bca4c";
-  //   GetPodCastDetail(_id).then((res) => {
-  //     console.log("res podcast", res);
-  //   });
-  // };
-
-  //check audio trong store nếu đã có, có postion thì phát tại thời điểm position đấy
-  // const playTrack = async (track: Track) => {
-  //   const item = listAudioHistory.filter((item) => item.url === track.url);
-  //   if (item.length > 0) {
-  //     await TrackPlayer.seekBy(item[0].position || 0);
-  //   }
-  //   await TrackPlayer.play();
-  // };
-
-  // const addTrack1 = async () => {
-  //   await TrackPlayer.reset();
-  //   const track1 = {
-  //     url: "https://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3", // Load media from the network
-  //     title: "Nóng giận là bản năng, tính lặng là bản lĩnh",
-  //     artist: "Tống Mặc",
-  //     artwork:
-  //       "https://files.exam24h.com/upload/2024/04/05_1712286066220/660f690336fba2cad28c28cb-1712286066220-thumbnail-178D768A-5D86-4518-BE09-792644A0331D.jpg", // Load artwork from the network
-  //   };
-  //   await TrackPlayer.add(track1);
-  //   playTrack(track1);
-
-  //   // await TrackPlayer.seekBy(0);
-  //   addAudio(track1);
-  // };
-  // const addTrack2 = async () => {
-  //   const track2 = {
-  //     url: "https://files.exam24h.com/upload/2024/04/09_1712648931272/661390fed29bd7cb5f9bc88c/Free_Test_Data_1MB_MP3.mp3", // Load media from the network
-  //     title: "Nóng giận là bản năng",
-  //     artist: "Tống",
-  //     artwork:
-  //       "https://files.exam24h.com/upload/2024/04/05_1712281673269/65eff9ab90b6b0c22ac991d5-1712281673269-thumbnail-DALL%C3%82%C2%B7E%202024-04-05%2008.42.32%20-%20A%20student%20standing%20in%20front%20of%20a%20famous%20Australian%20university%2C%20showcasing%20modern%20buildings%20and%20lush%20campus%20grounds%2C%20with%20the%20Great%20Barrier%20Reef%20in%20the.webp", // Load artwork from the network
-  //   };
-  //   await TrackPlayer.add(track2);
-  //   // await TrackPlayer.seekBy(0);
-  //   addAudio(track2);
-  // };
 
   const { pause, forWard, next, previous, backWard } = useActionTrack();
 
@@ -146,19 +102,6 @@ const AudioPlayScreen = () => {
             color={palette.textOpacity6}
             size={32}
           />
-          {/* Fake add audio */}
-          {/* <IconSvgBtn
-            name="icNextAudio"
-            onPress={addTrack1}
-            color={palette.textOpacity6}
-            size={32}
-          />
-          <IconSvgBtn
-            name="icNextAudio"
-            onPress={stop}
-            color={palette.textOpacity6}
-            size={32}
-          /> */}
         </View>
       </View>
     </SafeAreaView>
@@ -195,7 +138,7 @@ const styles = StyleSheet.create({
   viewChild: {
     flex: 1,
     paddingHorizontal: 16,
-    justifyContent: "center",
+    justifyContent: "flex-start",
   },
   viewDuration: {
     height: 24,
@@ -216,6 +159,7 @@ const styles = StyleSheet.create({
   progress: {
     width: ScreenWidth - 32,
     height: 24,
+    // backgroundColor: palette.primary,
   },
   txtTime: {
     ...CS.hnRegular,

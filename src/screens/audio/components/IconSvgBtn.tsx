@@ -1,7 +1,8 @@
-import PressableBtn from "@shared-components/button/PressableBtn";
-import IconSvg from "assets/svg";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+
+import PressableBtn from "@shared-components/button/PressableBtn";
+import IconSvg from "assets/svg";
 
 interface IconSvgBtnProps {
   size: number;

@@ -1,8 +1,8 @@
-import Header from "@shared-components/header/Header";
+import * as React from "react";
 import { StyleSheet, SafeAreaView, ScrollView } from "react-native";
 
+import Header from "@shared-components/header/Header";
 import { translations } from "@localization";
-import * as React from "react";
 import CS from "@theme/styles";
 import AudioQuickFilter from "../components/audio.quick.filter";
 import AudioView from "../audio-list/audio.view";

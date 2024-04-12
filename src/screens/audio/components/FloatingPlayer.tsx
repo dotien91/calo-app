@@ -8,6 +8,7 @@ import {
 import FastImage from "react-native-fast-image";
 import { useActiveTrack, useIsPlaying } from "react-native-track-player";
 import * as NavigationService from "react-navigation-helpers";
+
 import IconSvgBtn from "./IconSvgBtn";
 import { palette } from "@theme/themes";
 import { SCREENS } from "constants";
@@ -93,11 +94,17 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: palette.secondColor,
+    backgroundColor: palette.background,
     paddingVertical: 12,
     paddingHorizontal: 16,
-    gap: 8,
+    gap: 12,
     height: 74,
+    shadowColor: "rgba(0,0,0,0.8)",
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.3,
+    elevation: 5,
+    shadowRadius: 5,
+    ...CS.flexRear,
   },
   trackArtworkImage: {
     width: 48,

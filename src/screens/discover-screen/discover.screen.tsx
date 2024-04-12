@@ -87,6 +87,11 @@ const DiscoverScreen = () => {
       screen: SCREENS.COURSE_CATEGORY,
       params: { defaultIndex: 1 },
     },
+    {
+      icon: "icFind",
+      title: translations.podcast.listPodcast,
+      screen: SCREENS.AUDIO_BOOK,
+    },
   ];
 
   const seeAllLeader = () => {
