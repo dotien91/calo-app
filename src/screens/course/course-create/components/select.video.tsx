@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ActivityIndicator, Image, StyleSheet, Text, View } from "react-native";
 
 import { selectMedia } from "@helpers/file.helper";
@@ -29,27 +29,27 @@ const SelectVideoHook = ({
   type = "any",
   placeholder,
 }: SelectVideoHookProps) => {
-  const [linkVideo, setLinkVideo] = React.useState("");
   const [updatingVid, setUpdatingVid] = React.useState(false);
-  const [idVideo, setIdVideo] = React.useState("");
-  const [typeMedia, setTypeMedia] = useState("");
   const [process, setProcess] = useState(0);
-  useEffect(() => {
-    if (link) {
-      setLinkVideo(link);
-    }
-    if (id) {
-      setIdVideo(id);
-    }
-    if (typeM) {
-      setTypeMedia(typeM);
-    }
-  }, [link, id, typeM]);
+  const [media, setMedia] = useState({
+    link: link || "",
+    id: id || "",
+    typeM: typeM || "",
+  });
+  // useEffect(() => {
+  //   if (link) {
+  //     setMedia({ ...media, link: link });
+  //   }
+  //   if (id) {
+  //     setMedia({ ...media, id: id });
+  //   }
+  //   if (typeM) {
+  //     setMedia({ ...media, typeM: typeM });
+  //   }
+  // }, [link, id, typeM]);
 
   const deleteVideo = () => {
-    setIdVideo("");
-    setLinkVideo("");
-    setTypeMedia("");
+    setMedia({ link: "", id: "", typeM: "" });
   };
 
   const onUploadProgress = function (progressEvent) {
@@ -65,7 +65,6 @@ const SelectVideoHook = ({
       callback: async (image) => {
         const uri = isIos() ? image.path?.replace("file://", "") : image.path;
         setUpdatingVid(true);
-        setTypeMedia(image.mime);
         const res = await uploadMedia(
           {
             name:
@@ -76,8 +75,11 @@ const SelectVideoHook = ({
           onUploadProgress,
         );
         if (res?.[0]?.callback?._id) {
-          setIdVideo(res[0]?.callback?._id);
-          setLinkVideo(res?.[0]?.callback?.media_thumbnail);
+          setMedia({
+            typeM: image.mime,
+            id: res[0]?.callback?._id,
+            link: res?.[0]?.callback?.media_thumbnail,
+          });
           setUpdatingVid(false);
           setProcess(0);
         } else {
@@ -101,7 +103,7 @@ const SelectVideoHook = ({
           backgroundColor: palette.placeholder,
         }}
       >
-        {linkVideo === "" && !updatingVid ? (
+        {media.link === "" && !updatingVid ? (
           <View>
             <Text style={[CS.hnRegular, { color: palette.primary }]}>
               {placeholder || translations.course.uploadCoverImageOrVideo}
@@ -109,7 +111,7 @@ const SelectVideoHook = ({
           </View>
         ) : (
           <View>
-            <Image source={{ uri: linkVideo }} style={styles.viewImage} />
+            <Image source={{ uri: media.link }} style={styles.viewImage} />
             {updatingVid && (
               <View style={styles.viewImageFill}>
                 <LoadingUpdateMedia />
@@ -137,9 +139,10 @@ const SelectVideoHook = ({
 
   return {
     renderSelectVideo,
-    idVideo,
+    idVideo: media.id,
+    link: media.link,
     updatingVid,
-    typeMedia,
+    typeMedia: media.typeM,
   };
 };
 

@@ -7,23 +7,29 @@ import PressableBtn from "@shared-components/button/PressableBtn";
 import { translations } from "@localization";
 import { palette } from "@theme/themes";
 import { SCREENS } from "constants";
+import { convertLastActive } from "@utils/time.utils";
 
 const ItemClub = ({ data }: { data: any }) => {
   return (
     <View style={style.container}>
       <PressableBtn
         onPress={() => {
-          NavigationService.navigate(SCREENS.ELITE_CLUB);
+          NavigationService.navigate(SCREENS.CLUB_HOME, {
+            id: data._id,
+            name: data?.name,
+          });
         }}
         style={style.styleView}
       >
-        <Image style={style.styleImg} source={{ uri: data?.img || "" }} />
+        <Image style={style.styleImg} source={{ uri: data?.avatar || "" }} />
         <View style={style.viewTxt}>
           <TextBase numberOfLines={3} fontSize={16} fontWeight="700">
-            {data?.title}
+            {data?.name}
           </TextBase>
           <TextBase fontSize={12} fontWeight="400">
-            {`${translations.club.attended} ${data?.time} ${translations.club.ago}`}
+            {`${translations.club.attended} ${convertLastActive(
+              data?.createdAt,
+            )} ${translations.club.ago}`}
           </TextBase>
         </View>
       </PressableBtn>

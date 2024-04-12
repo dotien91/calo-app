@@ -17,11 +17,11 @@ const ClubScreen = () => {
   const layout = useWindowDimensions();
 
   const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
+  const routes = [
     { key: "first", title: translations.club.tab1 },
     { key: "second", title: translations.club.tab2 },
     { key: "third", title: translations.club.tab3 },
-  ]);
+  ];
 
   const renderScene = SceneMap({
     first: FeatureClubScreen,
