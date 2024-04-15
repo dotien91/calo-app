@@ -39,7 +39,6 @@ export async function getListGroup(data) {
     urlPath: "group/list",
     data,
   }).then((response) => {
-    console.log("res....", response, "...", data);
     return response;
   });
 }
@@ -50,7 +49,6 @@ export async function getMemberGroup(data) {
     urlPath: "group/member/list",
     data,
   }).then((response) => {
-    console.log("res....", response, "...", data);
     return response;
   });
 }
@@ -58,7 +56,7 @@ export async function getMemberGroup(data) {
 interface addMember {
   group_id: string;
   user_id: string;
-  tier: string | number;
+  tier: string;
 }
 
 export async function addMemberGroup(data: addMember) {
@@ -75,7 +73,7 @@ interface updateMember {
   _id: string;
   group_id: string;
   user_id: string;
-  tier: string | number;
+  tier: string;
 }
 
 export async function updateMemberGroup(data: updateMember) {
@@ -87,9 +85,19 @@ export async function updateMemberGroup(data: updateMember) {
     return response;
   });
 }
+
+export async function deleteMemberGroup(id: string) {
+  return request({
+    method: METHOD.DELETE,
+    urlPath: `group/member/delete/${id}`,
+  }).then((response) => {
+    return response;
+  });
+}
+
 interface memberMe {
   group_id: string;
-  user_id: string;
+  user_id: string | undefined;
 }
 
 export async function checkMemberMe(data: memberMe) {

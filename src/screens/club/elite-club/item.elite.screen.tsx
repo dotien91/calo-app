@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { ImageBackground, View } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import { useTheme, useRoute } from "@react-navigation/native";
 
 import IconSvg from "assets/svg";
 import Button from "@shared-components/button/Button";
@@ -8,7 +9,6 @@ import TextBase from "@shared-components/TextBase";
 import createStyles from "./elite.club.style";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import TextViewCollapsed from "@screens/course/components/text.view.collapsed";
-import { useTheme } from "@react-navigation/native";
 import { EnumColors } from "models";
 import { translations } from "@localization";
 import { palette } from "@theme/themes";
@@ -16,10 +16,18 @@ import ItemMember from "./components/item.member";
 import ListFile from "@screens/home/components/post-item/list.media.post.item";
 import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "constants";
+import { addMemberGroup } from "@services/api/club.api";
+import useStore from "@services/zustand/store";
+import { showToast } from "@helpers/super.modal.helper";
 
 const ItemEliteScreen = () => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
+  const route = useRoute();
+  const id = route.params.id || "";
+  const name = route.params.name || "";
+
+  const userData = useStore((store) => store.userData);
 
   const IconText = ({ nameIcon, text }: { nameIcon: string; text: string }) => {
     return (
@@ -30,6 +38,23 @@ const ItemEliteScreen = () => {
         </TextBase>
       </View>
     );
+  };
+
+  const joinGroup = () => {
+    addMemberGroup({
+      group_id: id,
+      tier: "1",
+      user_id: userData._id,
+    }).then((res) => {
+      if (!res.isError) {
+        NavigationService.navigate(SCREENS.CLUB_HOME, {
+          id: id,
+          name: name,
+        });
+      } else {
+        showToast({ type: "error", message: translations.club.joinClubFalid });
+      }
+    });
   };
 
   return (
@@ -59,9 +84,7 @@ const ItemEliteScreen = () => {
           />
         </View>
         <Button
-          onPress={() => {
-            console.log(1111111);
-          }}
+          onPress={joinGroup}
           text={translations.club.purchaseJoin}
           backgroundColor={palette.primary}
         />

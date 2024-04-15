@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, SafeAreaView, TouchableOpacity } from "react-native";
+import { StyleSheet, SafeAreaView, TouchableOpacity, Text } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 
@@ -11,6 +11,7 @@ import useStore from "@services/zustand/store";
 import { palette } from "@theme/themes";
 import { SCREENS } from "constants";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import PressableBtn from "@shared-components/button/PressableBtn";
 
 const ClubPostScreen = () => {
   const route = useRoute();
@@ -20,7 +21,6 @@ const ClubPostScreen = () => {
 
   const id_club = route.params?.id || "";
   const name = route.params?.name || "";
-  console.log("id...", id_club);
 
   const gotoCreatePost = () => {
     NavigationService.navigate(SCREENS.POST_SCREEN, { group_id: id_club });
@@ -29,6 +29,15 @@ const ClubPostScreen = () => {
   return (
     <SafeAreaView style={CS.safeAreaView}>
       <Header text={name} />
+      <PressableBtn
+        onPress={() =>
+          NavigationService.navigate(SCREENS.LIST_MEMBER_CLUB, {
+            id_club: id_club,
+          })
+        }
+      >
+        <Text>ListMember</Text>
+      </PressableBtn>
       <ListPostClub id={id_club} />
       {isLoggedIn() && userData?._id && (
         <TouchableOpacity style={styles.addPost} onPress={gotoCreatePost}>

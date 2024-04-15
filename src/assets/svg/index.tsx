@@ -160,6 +160,7 @@ import icCoach from "./logo-coach.svg";
 import icCoachBlur from "./logo-coach-blur.svg";
 import icPersonal from "./icon-personal.svg";
 import icPeople from "./icon-people.svg";
+import icShield from "./icon-shield.svg";
 import icLocation from "./icon-location.svg";
 import icLocated from "./icon-located.svg";
 
@@ -325,6 +326,7 @@ const Icons = {
   icHeadphone,
   icPersonal,
   icPeople,
+  icShield,
   icLocation,
   icLocated,
 };
