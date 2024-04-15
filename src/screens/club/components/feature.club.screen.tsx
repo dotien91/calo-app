@@ -1,41 +1,44 @@
-import React, { useMemo, useState } from "react";
-import { FlatList, View } from "react-native";
+import React, { useEffect } from "react";
+import { FlatList, StyleSheet, View } from "react-native";
 
 import TitleClub from "./list.title.club";
 import ItemClub from "./list.item.club";
 import { translations } from "@localization";
-import { useTheme } from "@react-navigation/native";
-import createStyles from "./club.style";
 import LoadingList from "@shared-components/loading.list.component";
+import { getListGroup } from "@services/api/club.api";
+import { useListData } from "@helpers/hooks/useListData";
+import eventEmitter from "@services/event-emitter";
+
+interface TypeListClub {
+  avatar: any;
+  createdAt: string;
+  description: string;
+  member_counter: number;
+  name: string;
+  updatedAt: string;
+  user_id: any;
+}
 
 const FeatureClubScreen = () => {
-  const theme = useTheme();
-  const styles = useMemo(() => createStyles(theme), [theme]);
+  const paramsRequest = {
+    limit: 5,
+  };
 
-  const [isLoading] = useState(true);
-  const listRenderItem = [
-    {
-      img: "",
-      title:
-        "IKIGAI COACH: The Project Management: Beginner to PROject Manager",
-      time: "2 months",
-    },
-    {
-      img: "",
-      title: "Management Skills Training for New & Experienced Managers",
-      time: "3 days",
-    },
-    {
-      img: "",
-      title: "MBA in a Box: Business Lessons from a CEO",
-      time: "1 months",
-    },
-    {
-      img: "https://files.exam24h.com/upload/2024/04/09_1712638873985/661390fed29bd7cb5f9bc88c-1712638873983-animal-before.webp",
-      title: "Mental Health and Wellbeing Practitioner",
-      time: "2 days",
-    },
-  ];
+  const {
+    listData,
+    onEndReach,
+    isLoading,
+    refreshControl,
+    renderFooterComponent,
+    _requestData,
+  } = useListData<TypeListClub>(paramsRequest, getListGroup, []);
+
+  useEffect(() => {
+    eventEmitter.on("reload_list_club", _requestData);
+    return () => {
+      eventEmitter.off("reload_list_club", _requestData);
+    };
+  }, []);
 
   const renderLoading = () => {
     return <LoadingList numberItem={3} />;
@@ -44,34 +47,39 @@ const FeatureClubScreen = () => {
   const renderItemSelected = ({ item, index }) => {
     return <ItemClub data={item} key={index} />;
   };
+  const renderHeader = () => {
+    return <TitleClub textLeft={translations.club.title1} />;
+  };
 
   return (
     <View style={styles.styleItem}>
-      <TitleClub textLeft={translations.club.title1} />
-      {listRenderItem.length == 0 && isLoading ? (
-        renderLoading()
-      ) : (
-        <FlatList
-          showsHorizontalScrollIndicator={false}
-          data={listRenderItem}
-          renderItem={renderItemSelected}
-          scrollEventThrottle={16}
-          // contentContainerStyle={{
-          //   paddingLeft: 16,
-          //   paddingBottom: 16,
-          // }}
-          initialNumToRender={2}
-          onEndReachedThreshold={0}
-          showsVerticalScrollIndicator={false}
-          // keyExtractor={(item) => item?._id + ""}
-          // onEndReached={onEndReach}
-          removeClippedSubviews={true}
-          // refreshControl={refreshControl()}
-          // ListFooterComponent={renderFooterComponent()}
-        />
-      )}
+      {listData.length == 0 && isLoading && renderLoading()}
+      <FlatList
+        showsHorizontalScrollIndicator={false}
+        data={listData}
+        ListHeaderComponent={renderHeader}
+        renderItem={renderItemSelected}
+        scrollEventThrottle={16}
+        initialNumToRender={2}
+        onEndReachedThreshold={0}
+        showsVerticalScrollIndicator={false}
+        keyExtractor={(item) => item?._id + ""}
+        onEndReached={onEndReach}
+        removeClippedSubviews={true}
+        refreshControl={refreshControl()}
+        ListFooterComponent={renderFooterComponent()}
+      />
     </View>
   );
 };
 
 export default FeatureClubScreen;
+
+const styles = StyleSheet.create({
+  styleItem: {
+    flex: 1,
+    marginHorizontal: 16,
+    marginBottom: 16,
+    paddingTop: 10,
+  },
+});
