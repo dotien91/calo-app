@@ -48,6 +48,7 @@ export default function PostScreen() {
   const { colors } = theme;
   const route: any = useRoute();
   const item: TypedPost = route?.params?.item || {};
+  const group_id = route?.params?.group_id;
   const styles = useMemo(() => createStyles(theme), [theme]);
   const submitPostStatus = React.useRef("");
   const [postCategory, setPostCategory] = useState("");
@@ -55,6 +56,7 @@ export default function PostScreen() {
   const [listCategory, setListCategory] = useState<TypedCategory[]>([]);
   const userData = useStore((state) => state.userData);
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  console.log("group_id", group_id);
   const isTeacher =
     userData?.user_role === "teacher" || userData?.user_role === "admin";
 
@@ -172,6 +174,9 @@ export default function PostScreen() {
       attach_files: JSON.stringify(listFile.map((i) => i._id)),
       _id: item._id || "",
     };
+    if (group_id) {
+      params.group_id = group_id;
+    }
 
     if (item._id) {
       updatePost(params).then((res) => {

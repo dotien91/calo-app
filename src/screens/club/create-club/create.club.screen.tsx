@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, StyleSheet, SafeAreaView, ScrollView } from "react-native";
 import { useForm } from "react-hook-form";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
+import * as NavigationService from "react-navigation-helpers";
 
 import { translations } from "@localization";
 import Button from "@shared-components/button/Button";
@@ -9,10 +10,18 @@ import InputHook from "@shared-components/form/InputHookForm";
 import Header from "@shared-components/header/Header";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
+import SelectVideoHook from "@screens/course/course-create/components/select.video";
+import { showToast } from "@helpers/super.modal.helper";
+import { createGroup } from "@services/api/club.api";
+import { SCREENS } from "constants";
 
 const CreateClubScreen = () => {
   const [updating, setUpdating] = useState(false);
-
+  const { idVideo, renderSelectVideo, updatingVid } = SelectVideoHook({
+    type: "photo",
+    typeM: "photo",
+    placeholder: translations.club.purchaseJoin,
+  });
   const {
     control,
     handleSubmit,
@@ -21,23 +30,35 @@ const CreateClubScreen = () => {
   } = useForm({
     defaultValues: {
       name: "",
-      price: "",
+      // price: "",
       des: "",
     },
   });
   const onSubmit = (data) => {
+    console.log(updatingVid);
+    if (!idVideo || idVideo === "") {
+      showToast({ type: "error" });
+      return;
+    }
     const params = {
       name: data.name,
-      price: data.price,
-      des: data.des,
+      avatar: idVideo,
+      description: data.des,
     };
+    createGroup(params).then((res) => {
+      if (!res.isError) {
+        console.log("res...", res.data);
+        NavigationService.navigate(SCREENS.CLUB_HOME, { id: res.data._id });
+      }
+    });
     setUpdating(false);
-    console.log("...", params);
   };
+
   return (
     <SafeAreaView style={CS.safeAreaView}>
       <Header text={translations.club.createClub} iconNameLeft="x" />
       <ScrollView style={CS.flex1} showsVerticalScrollIndicator={false}>
+        <View>{renderSelectVideo()}</View>
         <InputHook
           setFocus={setFocus}
           name="name"
@@ -58,12 +79,12 @@ const CreateClubScreen = () => {
           maxLength={32}
           label={translations.club.clubName}
         />
-        <InputHook
+        {/* <InputHook
           setFocus={setFocus}
           name="price"
           customStyle={CS.flex1}
           inputProps={{
-            type: "text",
+            type: "number",
             defaultValue: "",
             placeholder: translations.club.chooseYourClubPrice,
           }}
@@ -77,7 +98,7 @@ const CreateClubScreen = () => {
           errorTxt={errors.price?.message}
           maxLength={32}
           label={translations.club.clubPrice}
-        />
+        /> */}
         <InputHook
           setFocus={setFocus}
           name="des"
