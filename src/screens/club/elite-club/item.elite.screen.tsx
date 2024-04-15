@@ -12,6 +12,10 @@ import { useTheme } from "@react-navigation/native";
 import { EnumColors } from "models";
 import { translations } from "@localization";
 import { palette } from "@theme/themes";
+import ItemMember from "./components/item.member";
+import ListFile from "@screens/home/components/post-item/list.media.post.item";
+import * as NavigationService from "react-navigation-helpers";
+import { SCREENS } from "constants";
 
 const ItemEliteScreen = () => {
   const theme = useTheme();
@@ -73,6 +77,21 @@ const ItemEliteScreen = () => {
             styleText={styles.des}
           />
           <View style={styles.viewHis}>
+            <IconSvg name="icLocated" size={20} color={palette.textOpacity6} />
+            <View>
+              <TextBase
+                fontSize={16}
+                fontWeight="500"
+                title={translations.club.location}
+              />
+              <TextBase
+                fontSize={14}
+                fontWeight="400"
+                title="8 Pham Hung, Mai Dich, Cau Giay, Ha Noi"
+              />
+            </View>
+          </View>
+          <View style={styles.viewHis}>
             <IconSvg name="icTime" size={20} color={palette.textOpacity6} />
             <View>
               <TextBase
@@ -85,6 +104,16 @@ const ItemEliteScreen = () => {
                 fontWeight="400"
                 title={`${translations.club.des1} November 16, 2022${translations.club.des2} December 16, 2023.`}
               />
+            </View>
+          </View>
+          <View style={styles.viewTitle}>
+            <TextBase
+              fontSize={16}
+              fontWeight="700"
+              title={translations.club.featureMember}
+            />
+            <View style={styles.viewMember}>
+              <ItemMember />
             </View>
           </View>
           <View style={styles.viewTitle}>
@@ -149,6 +178,36 @@ const ItemEliteScreen = () => {
               <IconText
                 nameIcon="icPeople"
                 text={`${translations.club.created} 1 month ${translations.club.ago}`}
+              />
+            </View>
+          </View>
+          <View style={styles.viewTitle}>
+            <ListFile listFile={null || []} />
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <PressableBtn
+                onPress={() => {
+                  NavigationService.navigate(SCREENS.LIST_IMAGE_SCREEN);
+                }}
+              >
+                <TextBase
+                  fontSize={16}
+                  fontWeight="500"
+                  color={EnumColors.primary}
+                >
+                  {translations.seeAll}
+                </TextBase>
+              </PressableBtn>
+              <Icon
+                name="chevron-forward-outline"
+                type={IconType.Ionicons}
+                color={palette.primary}
+                size={16}
               />
             </View>
           </View>

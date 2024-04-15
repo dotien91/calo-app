@@ -1201,7 +1201,7 @@ export default {
     about: "About",
     seeMore: "See more",
     history: "History",
-    title: "Admins and Moderators",
+    title: "Club Leader and Admins",
     group: "Group activity",
     newPosts: "new posts today",
     member: "members",
@@ -1224,6 +1224,8 @@ export default {
     chooseStartDate: "Choose start date",
     chooseEndDate: "Choose end date",
     enterLocation: "Enter location",
+    featureMember: "Featured members",
+    imageClub: "Image club",
   },
   podcast: {
     listPodcast: "List Podcasts",

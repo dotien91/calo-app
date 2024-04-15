@@ -105,6 +105,7 @@ export const SCREENS = {
   CREATEEVENT: "CreateEvent",
   EVENTSLISTSCREEN: "EventsListScreen",
   DETAILEVENTSCREEN: "DetailScreenEvent",
+  LIST_IMAGE_SCREEN: "ListImageScreen",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

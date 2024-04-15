@@ -1730,7 +1730,7 @@ export default {
     about: "Thông tin",
     seeMore: "Xem thêm",
     history: "Lịch sử",
-    title: "Quản trị viên và người điều hành",
+    title: "Chủ tịch câu lạc bộ và Quản trị viên",
     group: "Hoạt động nhóm",
     newPosts: "bài viết mới ngày hôm nay",
     member: "thành viên",
@@ -1753,5 +1753,7 @@ export default {
     chooseStartDate: "Chọn ngày bắt đầu",
     chooseEndDate: "Chọn ngày kết thúc",
     enterLocation: "Nhập vị trí",
+    featureMember: "Thành viên nổi bật",
+    imageClub: "Danh sách ảnh",
   },
 };
