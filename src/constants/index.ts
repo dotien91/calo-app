@@ -105,6 +105,7 @@ export const SCREENS = {
   SHOW_ALL_REVIEW: "ShowAllReview",
   ELITE_CLUB: "EliteClub",
   CREATEEVENT: "CreateEvent",
+  BECOME_ELITE_CLUB: "BecomeEliteClub",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

@@ -118,6 +118,7 @@ import EliteClubScreen from "@screens/club/elite-club/elite.club.screen";
 import CreateEventScreen from "@screens/club/create-event/create.event.screen";
 import DiscoverScreen from "@screens/discover-screen/discover.screen";
 import CreateClubScreen from "@screens/club/create-club/create.club.screen";
+import BecomEliteClub from "@screens/club/elite-club/components/becom.elite.club";
 import ClubPostScreen from "@screens/club/club/club.post.screen";
 import ListMemberScreen from "@screens/club/list-member/list.member";
 // import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
@@ -523,6 +524,10 @@ const Navigation = () => {
         <Stack.Screen
           name={SCREENS.CREATE_CLUB_SCREEN}
           component={CreateClubScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.BECOME_ELITE_CLUB}
+          component={BecomEliteClub}
         />
       </Stack.Navigator>
       <FloatingPlayer
