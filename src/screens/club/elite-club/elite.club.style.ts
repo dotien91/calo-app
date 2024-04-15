@@ -16,6 +16,7 @@ interface Style {
   viewIcon: ViewStyle;
   viewGroup: ViewStyle;
   styleAvatar: ViewStyle;
+  viewMember: ViewStyle;
 }
 
 export default () => {
@@ -43,9 +44,9 @@ export default () => {
       color: palette.textOpacity8,
     },
     viewHis: {
-      ...CS.flexCenter,
+      ...CS.flexStart,
       gap: 10,
-      marginHorizontal: 16,
+      marginBottom: 10,
     },
     viewHeadTitle: {
       flexDirection: "row",
@@ -62,17 +63,21 @@ export default () => {
       marginTop: 5,
     },
     viewAvatar: {
-      height: 30,
+      height: 48,
       alignItems: "center",
       flexDirection: "row",
       marginLeft: 8,
     },
     styleAvatar: {
-      height: 24,
-      width: 24,
+      height: 40,
+      width: 40,
       borderRadius: 100,
       backgroundColor: palette.gold,
       marginLeft: -8,
+    },
+    viewMember: {
+      flexDirection: "row",
+      justifyContent: "space-around",
     },
   });
 };
