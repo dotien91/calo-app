@@ -14,7 +14,7 @@ interface AvatarPostProps {
   sizeAvatar: number;
   showLevel?: boolean;
   canPress?: boolean;
-  _onPress?: boolean;
+  _onPress?: () => void;
 }
 
 const AvatarPost = ({

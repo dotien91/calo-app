@@ -111,7 +111,7 @@ const CreateClubScreen = () => {
           control={control}
           rules={{}}
           errorTxt={errors.des?.message}
-          maxLength={32}
+          maxLength={500}
           // showPlaceholder
           label={translations.club.description}
           multiline

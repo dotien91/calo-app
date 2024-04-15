@@ -28,7 +28,7 @@ interface TypeListClub {
 }
 const JoinClubSceen = () => {
   const paramsRequest = {
-    limit: 5,
+    limit: "5",
   };
 
   const {

@@ -24,7 +24,7 @@ interface TypeListClub {
 
 const ManagedClubScreen = () => {
   const paramsRequest = {
-    limit: 5,
+    limit: "5",
   };
 
   const {
