@@ -6,7 +6,7 @@ import InputHook from "@shared-components/form/InputHookForm";
 import Header from "@shared-components/header/Header";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
-import IconSvg from "assets/svg";
+import { EnumColors } from "models";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -22,11 +22,29 @@ import { getBottomSpace } from "react-native-iphone-screen-helper";
 const BecomEliteClub = () => {
   const [updating, setUpdating] = useState(false);
 
-  const IconText = ({ nameIcon, text }: { nameIcon: string; text: string }) => {
+  const IconDotText = ({ text }: { text: string }) => {
     return (
       <View style={styles.viewIcon}>
-        <IconSvg name={nameIcon} size={20} color={palette.textOpacity6} />
-        <TextBase fontSize={14} fontWeight="400" numberOfLines={2}>
+        <View
+          style={{
+            paddingTop: 8,
+          }}
+        >
+          <View
+            style={{
+              height: 8,
+              width: 8,
+              borderRadius: 10,
+              backgroundColor: palette.textOpacity8,
+            }}
+          />
+        </View>
+        <TextBase
+          fontSize={14}
+          fontWeight="400"
+          numberOfLines={2}
+          color={EnumColors.textOpacity8}
+        >
           {text}
         </TextBase>
       </View>
@@ -82,18 +100,9 @@ const BecomEliteClub = () => {
               title={translations.club.benefitsJoin}
             />
             <View style={styles.viewInfo}>
-              <IconText
-                nameIcon="icDiscovery"
-                text={translations.club.desBenefit1}
-              />
-              <IconText
-                nameIcon="icDiscovery"
-                text={translations.club.desBenefit2}
-              />
-              <IconText
-                nameIcon="icDiscovery"
-                text={translations.club.desBenefit3}
-              />
+              <IconDotText text={translations.club.desBenefit1} />
+              <IconDotText text={translations.club.desBenefit2} />
+              <IconDotText text={translations.club.desBenefit3} />
             </View>
             <TextBase
               fontSize={16}
@@ -262,6 +271,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
     marginBottom: 4,
     marginRight: 16,
+    marginLeft: 10,
   },
   viewIcon: {
     flex: 1,
