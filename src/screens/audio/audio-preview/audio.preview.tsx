@@ -101,9 +101,10 @@ const AudioPreview = () => {
     );
   };
 
-  const playTrack = async (track: Track) => {
+  const playTrack = async (track: Track, indexLocal: number) => {
     const item = listAudioHistory.filter((item) => item.url === track.url);
     if (item.length > 0) {
+      await TrackPlayer.skip(indexLocal);
       await TrackPlayer.seekBy(item[0].position || 0);
     }
     await TrackPlayer.play();
@@ -113,9 +114,9 @@ const AudioPreview = () => {
     await TrackPlayer.reset();
     const indexLocal = listAudio.findIndex((item) => item._id === track?._id);
     if (indexLocal >= 0) {
-      const list = listAudio.slice(indexLocal, listAudio.length);
-      for (let i = 0; i < list.length; i++) {
-        const element = list[i];
+      // const list = listAudio.slice(indexLocal, listAudio.length);
+      for (let i = 0; i < listAudio.length; i++) {
+        const element = listAudio[i];
         const track1 = {
           url: element?.attach_files[0].media_url,
           title: element?.title,
@@ -123,8 +124,8 @@ const AudioPreview = () => {
           artwork: element?.post_avatar.media_url,
         };
         await TrackPlayer.add(track1);
-        if (i == 0) {
-          await playTrack(track1);
+        if (i == indexLocal) {
+          await playTrack(track1, indexLocal);
         }
       }
       NavigationService.navigate(SCREENS.AUDIO_PLAY);
