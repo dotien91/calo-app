@@ -1412,6 +1412,7 @@ export default {
     audioBook: "Sách nói",
     typeAudio: "Loại sách âm thanh",
     recommendBook: "Đề xuất sách ",
+    continueListen: "Tiếp tục nghe",
     listen: "Lượt nghe",
     allAudio: "Tất cả sách nói",
     noListen: "Chưa có lượt nghe",

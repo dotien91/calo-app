@@ -885,6 +885,7 @@ export default {
     audioBook: "Audio Book",
     typeAudio: "Type of audio book",
     recommendBook: "Recommend book",
+    continueListen: "Continue listening",
     listen: "Listen",
     allAudio: "All audio book",
     noListen: "No listening",

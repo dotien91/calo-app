@@ -28,7 +28,10 @@ const AudioQuickFilter = () => {
 
   const renderItem = (item, key) => {
     const onPressBtnFilter = () => {
-      NavigationService.navigate(SCREENS.ALL_AUDIO_BOOk, { id: item._id });
+      NavigationService.navigate(SCREENS.ALL_AUDIO_BOOk, {
+        id: item._id,
+        name: item.category_title,
+      });
     };
     return (
       <TouchableOpacity

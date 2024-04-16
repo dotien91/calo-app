@@ -38,6 +38,7 @@ const AudioPreview = () => {
   const [track, setTrack] = React.useState<TypeTrackLocal>();
   const addAudio = useStore((store) => store.addAudio);
   const listAudioHistory = useStore((store) => store.listAudioHistory);
+  const listAudio = useStore((store) => store.listAudio);
   const route = useRoute();
   const id = route?.params?.id || "";
   const [duration, setDuration] = React.useState(0);
@@ -46,6 +47,7 @@ const AudioPreview = () => {
   const getDataTrack = () => {
     GetPodCastDetail(id).then((res) => {
       if (!res.isError) {
+        console.log(res);
         setTrack(res.data);
         const whoosh = new Sound(
           res.data?.attach_files[0].media_url,
@@ -109,16 +111,31 @@ const AudioPreview = () => {
 
   const playAudio = async () => {
     await TrackPlayer.reset();
-    const track1 = {
+    const indexLocal = listAudio.findIndex((item) => item._id === track?._id);
+    if (indexLocal >= 0) {
+      const list = listAudio.slice(indexLocal, listAudio.length);
+      for (let i = 0; i < list.length; i++) {
+        const element = list[i];
+        const track1 = {
+          url: element?.attach_files[0].media_url,
+          title: element?.title,
+          artist: element?.user_id.display_name,
+          artwork: element?.post_avatar.media_url,
+        };
+        await TrackPlayer.add(track1);
+        if (i == 0) {
+          await playTrack(track1);
+        }
+      }
+      NavigationService.navigate(SCREENS.AUDIO_PLAY);
+    }
+    const track2 = {
       url: track?.attach_files[0].media_url,
       title: track?.title,
       artist: track?.user_id.display_name,
       artwork: track?.post_avatar.media_url,
     };
-    await TrackPlayer.add(track1);
-    await playTrack(track1);
-    addAudio(track1);
-    NavigationService.navigate(SCREENS.AUDIO_PLAY);
+    addAudio(track2);
 
     // await TrackPlayer.seekBy(0);
   };

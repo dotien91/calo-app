@@ -44,7 +44,7 @@ export const useActionTrack = () => {
       TrackPlayer.pause();
       updataDaPosition();
     } else {
-      if (progress.position >= progress.duration) {
+      if (progress.position + 2 >= progress.duration) {
         await TrackPlayer.seekTo(0);
         await TrackPlayer.play();
       } else {
