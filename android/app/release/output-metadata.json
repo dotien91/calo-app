@@ -4,15 +4,15 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.ikigroup.ieltshunter",
+  "applicationId": "com.ikigroup.ikicoach",
   "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 14,
-      "versionName": "1.0.4",
+      "versionCode": 19,
+      "versionName": "1.0.7",
       "outputFile": "app-release.apk"
     }
   ],
