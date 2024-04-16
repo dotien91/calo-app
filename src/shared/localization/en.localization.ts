@@ -901,6 +901,10 @@ export default {
     business: "Business",
     finance: "Finance",
     emptyAudio: "There are no audiobooks available",
+    isFirst: "Already at the beginning of the list",
+    isLast: "Already at the end of the list",
+    shareAudio: (txt: string) =>
+      `Download the Ikigai Coach app now to listen to the best audiobooks: ${txt}`,
   },
   livestream: {
     hello: "Hello!",

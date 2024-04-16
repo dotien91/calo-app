@@ -17,7 +17,6 @@ import { translations } from "@localization";
 import TextViewCollapsed from "@screens/course/components/text.view.collapsed";
 import { GetPodCastDetail } from "@services/api/podcast.api";
 import useStore from "@services/zustand/store";
-import Header from "@shared-components/header/Header";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import IconSvg from "assets/svg";
@@ -33,6 +32,8 @@ import Button from "@shared-components/button/Button";
 import { useRoute } from "@react-navigation/native";
 import { formatTimeDuration } from "@utils/date.utils";
 import LoadingList from "@shared-components/loading.list.component";
+import Header from "../components/Header";
+import { shareAudio } from "@utils/share.utils";
 
 const AudioPreview = () => {
   const [track, setTrack] = React.useState<TypeTrackLocal>();
@@ -151,10 +152,13 @@ const AudioPreview = () => {
       },
     });
   };
+  const onPressShare = () => {
+    shareAudio("https://ikigai.vn");
+  };
 
   return (
     <SafeAreaView style={CS.safeAreaView}>
-      <Header />
+      <Header onPressRight={onPressShare} iconNameRight="share-2" />
       {isLoading ? (
         <LoadingList numberItem={3} />
       ) : (

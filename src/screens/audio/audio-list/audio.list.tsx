@@ -28,7 +28,8 @@ const AudioList = () => {
       auth_id: userData?._id,
       order_by: "DESC",
       sort_by: "createdAt",
-      limit: 2,
+      limit: "10",
+      podcast_category: "",
     },
     GetPodCastList,
   );

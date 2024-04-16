@@ -27,6 +27,7 @@ const AllBookScreen = () => {
       order_by: "DESC",
       sort_by: "createdAt",
       podcast_category: id,
+      limit: "10",
     },
     GetPodCastList,
   );

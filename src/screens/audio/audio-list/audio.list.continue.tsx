@@ -10,11 +10,7 @@ const AudioListContinue = () => {
   const listAudioHistory = useStore((state) => state.listAudioHistory);
 
   const renderItem = ({ item, index }) => {
-    if (item?.is_join) {
-      return null;
-    } else {
-      return <AudioItem isSliderItem data={item} key={index} />;
-    }
+    return <AudioItem isSliderItem data={item} key={index} />;
   };
 
   if (listAudioHistory.length == 0) {

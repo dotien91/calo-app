@@ -1416,7 +1416,7 @@ export default {
     stop: "Dừng",
     send: "Gửi",
     audioBook: "Sách nói",
-    typeAudio: "Loại sách âm thanh",
+    typeAudio: "Loại sách nói",
     recommendBook: "Đề xuất sách ",
     continueListen: "Tiếp tục nghe",
     listen: "Lượt nghe",
@@ -1428,6 +1428,10 @@ export default {
     business: "Kinh doanh",
     finance: "Tài chính",
     emptyAudio: "Không có sách nói nào",
+    isFirst: "Đã ở đầu danh sách",
+    isLast: "Đã ở cuối danh sách",
+    shareAudio: (txt: string) =>
+      `Tải ngay ứng dụng Ikigai Coach về để nghe những bản sách nói hay nhất: ${txt}`,
   },
   livestream: {
     hello: "Xin chào",
