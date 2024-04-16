@@ -31,8 +31,8 @@ import { palette } from "@theme/themes";
 import eventEmitter from "@services/event-emitter";
 import { translations } from "@localization";
 import CS from "@theme/styles";
-import CourseView from "@screens/home/components/list-course/list.course";
 import EmptyResultView from "@shared-components/empty.data.component";
+import CourseView from "@screens/home/components/list-course/list.course";
 
 interface CourseListScreenProps {}
 

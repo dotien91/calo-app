@@ -1792,4 +1792,6 @@ export default {
     position: "Chức danh",
     submit: "Gửi",
   },
+  close: "Đóng",
+
 };

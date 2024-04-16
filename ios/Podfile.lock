@@ -1127,11 +1127,7 @@ SPEC CHECKSUMS:
   react-native-video: c26780b224543c62d5e1b2a7244a5cd1b50e8253
   react-native-webrtc: 6fc32f3d556aa60aa2334eeaf6cadcdab2432809
   react-native-webview: 121397a02eb58554c24d0c3e26acf676ff6a87d2
-<<<<<<< HEAD
-  React-NativeModulesApple: 6cc15f8596ea8afd6c157a46a670f56ef85aba8c
-=======
   React-NativeModulesApple: 3cdd7ddf279936f715da433624e01fc29ec2fcdf
->>>>>>> 271adc39b33f1ca52dee9c3ade2ef344d84cee9f
   React-perflogger: 6bd153e776e6beed54c56b0847e1220a3ff92ba5
   React-RCTActionSheet: c0b62af44e610e69d9a2049a682f5dba4e9dff17
   React-RCTAnimation: fe7005136b58f58871cab2f70732343b6e330d30

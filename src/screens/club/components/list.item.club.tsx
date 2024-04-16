@@ -17,6 +17,11 @@ const ItemClub = ({ data }: { data: any }) => {
 
   // check user đã tham gia club hay chưa
   const checkJoinGroup = () => {
+    NavigationService.navigate(SCREENS.CLUB_HOME, {
+      club_id: data._id,
+      name: data?.name,
+    });
+    return
     checkMemberMe({ group_id: data._id, user_id: userData?._id }).then(
       (res) => {
         if (res.isError) {

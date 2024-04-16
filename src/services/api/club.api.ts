@@ -109,3 +109,34 @@ export async function checkMemberMe(data: memberMe) {
     return response;
   });
 }
+
+export async function getCourseClub(params: memberMe) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "group/course/list",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function addCourseClub(data) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "group/course/create",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function removeCourseClub(params) {
+  return request({
+    method: METHOD.DELETE,
+    urlPath: `group/course/delete/`,
+    params
+  }).then((response) => {
+    return response;
+  });
+}
+

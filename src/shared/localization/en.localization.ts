@@ -1299,5 +1299,6 @@ export default {
     title: "Title",
     review: "Review (Optional)",
   },
+  close: "Close",
 };
 /* eslint-disable max-len */

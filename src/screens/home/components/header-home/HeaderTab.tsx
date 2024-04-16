@@ -12,11 +12,11 @@ import useStore from "@services/zustand/store";
 import { EnumCourseType } from "models/course.model";
 import InviteView from "../invite-me/invite";
 import ListLiveStream from "../list-livestream/list.liveStream";
-import CourseView from "../list-course/list.course";
 import TextBase from "@shared-components/TextBase";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import { getStatusBarHeight } from "react-native-safearea-height";
 // import ListLiveStream from "../list-livestream/list.liveStream";
+import CourseView from "../list-course/list.course";
 
 const listCategorys = [
   {
@@ -50,10 +50,6 @@ const HeaderTab = () => {
   const styles = useMemo(() => createStyles(theme), [theme]);
 
   const { isLoggedIn } = useUserHook();
-
-  React.useEffect(() => {
-    console.log("rerender");
-  }, []);
 
   const setCourseCurrentType = useStore((state) => state.setCourseCurrentType);
 

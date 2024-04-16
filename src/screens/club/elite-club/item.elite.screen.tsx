@@ -41,6 +41,11 @@ const ItemEliteScreen = () => {
   };
 
   const joinGroup = () => {
+    NavigationService.navigate(SCREENS.CLUB_HOME, {
+      id: id,
+      name: name,
+    });
+    return
     addMemberGroup({
       group_id: id,
       tier: "1",
