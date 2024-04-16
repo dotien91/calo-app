@@ -2,10 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>com.ikigroup.ikicoach</string>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>IELTS Hunter</string>
+	<string>Ikigai Coach</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -27,7 +31,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.329708522429-tb80b2s4u8k8r3p2ocn5rfa5ofr78kbl</string>
+				<string>com.googleusercontent.apps.543656532685-ea3og352pgjtb382rlhmhdl983upijma</string>
 			</array>
 		</dict>
 		<dict>
@@ -40,21 +44,28 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.ikigroup.ieltshunter</string>
+			<string>com.ikigroup.ikicoach</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>ieltshunter</string>
+				<string>ikicoach</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>CodePushDeploymentKey</key>
+	<string>sroeTkFo6DVNh4Cr1IYbwJOxtVWbpBTHWpscz</string>
 	<key>FacebookAppID</key>
 	<string>908606980666349</string>
 	<key>FacebookClientToken</key>
 	<string>6054f4c2e7bae8d01389715aea05e97b</string>
 	<key>FacebookDisplayName</key>
-	<string>ielthunter</string>
+	<string>ikigaicoach</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fbapi</string>
+		<string>fbauth2</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -71,15 +82,15 @@
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Play using while you are learning</string>
 	<key>NSCameraUsageDescription</key>
-	<string>IeltsHunter need to take a look at your camera, to put the photo up as a social asset for other users to see</string>
+	<string>Ikigai Coach need to take a look at your camera, to put the photo up as a social asset for other users to see</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>IeltsHunter need to take a look at your microphone, to put the photo up as a social asset for other users to see</string>
+	<string>Ikigai Coach need to take a look at your microphone, to put the photo up as a social asset for other users to see</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>$(PRODUCT_NAME) need to take a look at your photo album, to put the photo up as a social asset for other users to see</string>
+	<string>Ikigai Coach need to take a look at your photo album, to put the photo up as a social asset for other users to see</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>IeltsHunter need to take a look at your photo album, to put the photo up as a social asset for other users to see</string>
+	<string>Ikigai Coach need to take a look at your photo album, to put the photo up as a social asset for other users to see</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
@@ -143,17 +154,6 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>CodePushDeploymentKey</key>
-	<string>UVy5f07f_9AiwpbLfmvkC-tN59QHdUgTzbUk6</string>
-	<key>BGTaskSchedulerPermittedIdentifiers</key>
-	<array>
-		<string>com.ikigroup.ieltshunter</string>
-	</array>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>fbapi</string>
-		<string>fbauth2</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>

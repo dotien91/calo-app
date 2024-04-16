@@ -148,9 +148,9 @@ const Navigation = () => {
       case SCREENS.COURSE_LIST:
         iconName = focused ? "icCourse" : "icCourse";
         break;
-      case SCREENS.CHAT:
-        iconName = focused ? "icChat" : "icChat";
-        break;
+      // case SCREENS.CHAT:
+      //   iconName = focused ? "icCoach" : "icCoachBlur";
+      //   break;
       case SCREENS.NOTIFICATION:
         iconName = focused ? "bell" : "bell";
         break;
@@ -248,7 +248,8 @@ const Navigation = () => {
   };
 
   const renderStackIntro = () => {
-    if (!isFirstOpenApp) return null;
+    return null;
+    // if (!isFirstOpenApp) return null;
     return (
       <>
         <Stack.Screen

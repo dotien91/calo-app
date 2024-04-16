@@ -57,12 +57,12 @@ export const useInAppPurchase = () => {
               product_id: currentPurchase.productId,
               purchase_time: currentPurchase.transactionDate + "",
               quantity: "1",
-              package_name: "com.ikigroup.ieltshunter",
+              package_name: "com.ikigroup.ikicoach",
               purchase_token: isIOS
                 ? currentPurchase.transactionReceipt
                 : currentPurchase.purchaseToken,
             };
-
+console.log("datadatadata", data)
             requestIapBackend(data).then((res) => {
               closeSuperModal();
               if (!res.isError) {

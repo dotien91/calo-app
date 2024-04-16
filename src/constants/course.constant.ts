@@ -21,10 +21,14 @@ export const filterCourseKeys = [
         name: translations.course.callGroup,
         id: "Call group",
       },
+      {
+        name: translations.course.offline,
+        id: "Offline",
+      },
     ],
   },
   {
-    name: translations.course.skills,
+    name: translations.course.course,
     id: "skills",
     keyFilters: [
       {
@@ -32,61 +36,65 @@ export const filterCourseKeys = [
         id: "All skills",
       },
       {
-        name: translations.course.listening,
-        id: "Listening",
+        name: translations.course.careerGuidance,
+        id: "Career Guidance",
       },
       {
-        name: translations.course.reading,
-        id: "Reading",
+        name: translations.course.life,
+        id: "Life",
       },
       {
-        name: translations.course.writing,
-        id: "Writing",
+        name: translations.course.finance,
+        id: "Finance",
       },
       {
-        name: translations.course.Speaking,
-        id: "Speaking",
+        name: translations.course.health,
+        id: "Health",
+      },
+      {
+        name: translations.course.bussiness,
+        id: "Bussiness",
       },
     ],
   },
-  {
-    name: translations.course.pricePerCourse,
-    id: "price",
-  },
-  {
-    name: translations.course.levelsOfStudy,
-    id: "levels",
-    keyFilters: [
-      {
-        name: "4+",
-        id: "4+",
-      },
-      {
-        name: "5+",
-        id: "5+",
-      },
-      {
-        name: "6+",
-        id: "6+",
-      },
-      {
-        name: "7+",
-        id: "7+",
-      },
-      {
-        name: "8+",
-        id: "8+",
-      },
-      {
-        name: "9",
-        id: "9",
-      },
-    ],
-  },
-  {
-    name: translations.course.onlyEnglish,
-    id: "onlyEnglishNativeSpeakers",
-  },
+  // {
+  //   name: translations.course.pricePerCourse,
+  //   id: "price",
+  // },
+  // {
+  //   name: translations.course.levelsOfStudy,
+  //   id: "levels",
+  //   keyFilters: [
+  //     {
+  //       name: "4+",
+  //       id: "4+",
+  //     },
+  //     {
+  //       name: "5+",
+  //       id: "5+",
+  //     },
+  //     {
+  //       name: "6+",
+  //       id: "6+",
+  //     },
+  //     {
+  //       name: "7+",
+  //       id: "7+",
+  //     },
+  //     {
+  //       name: "8+",
+  //       id: "8+",
+  //     },
+  //     {
+  //       name: "9",
+  //       id: "9",
+  //     },
+  //   ],
+  // },
+  // {
+  //   name: translations.course.onlyEnglish,
+  //   id: "onlyEnglishNativeSpeakers",
+  // },
 ];
 
 export const filterTeacherKeys = [
@@ -110,6 +118,10 @@ export const filterTeacherKeys = [
         name: translations.course.callGroup,
         id: "Call group",
       },
+      {
+        name: translations.course.offline,
+        id: "Offline",
+      },
     ],
   },
   {
@@ -117,143 +129,149 @@ export const filterTeacherKeys = [
     id: "skills",
     keyFilters: [
       {
-        name: translations.course.allSkills,
-        id: "All skills",
+        name: translations.course.allForms,
+        id: "All forms",
       },
       {
-        name: translations.course.listening,
-        id: "Listening",
+        name: translations.course.callOneVsOne,
+        id: "Call 1-1",
       },
       {
-        name: translations.course.reading,
-        id: "Reading",
+        name: translations.course.salfLearning,
+        id: "Self-learning",
       },
       {
-        name: translations.course.writing,
-        id: "Writing",
+        name: translations.course.callGroup,
+        id: "Call group",
       },
       {
-        name: translations.course.Speaking,
-        id: "Speaking",
+        name: translations.course.offline,
+        id: "Offline",
       },
     ],
   },
-  {
-    name: translations.course.timeAvailable,
-    id: "timeAvailable",
-    keyFilters: [
-      {
-        name: "9 - 12",
-        id: {
-          time_start: "9:00",
-          time_end: "12:00",
-        },
-      },
-      {
-        name: "12 - 15",
-        id: {
-          time_start: "12:00",
-          time_end: "15:00",
-        },
-      },
-      {
-        name: "15 - 18",
-        id: {
-          time_start: "15:00",
-          time_end: "18:00",
-        },
-      },
-      {
-        name: "18 - 21",
-        id: {
-          time_start: "18:00",
-          time_end: "21:00",
-        },
-      },
-      {
-        name: "21 - 0",
-        id: {
-          time_start: "21:00",
-          time_end: "0:00",
-        },
-      },
-      {
-        name: "0 - 3",
-        id: {
-          time_start: "0:00",
-          time_end: "3:00",
-        },
-      },
-    ],
-  },
-  {
-    name: translations.course.onlyEnglish,
-    id: "onlyEnglishNativeSpeakers",
-  },
-  {
-    name: translations.course.levelsOfTutor,
-    id: "levelOfTutor",
-    keyFilters: [
-      {
-        name: "8",
-        id: "8",
-      },
-      {
-        name: "8.5",
-        id: "8.5",
-      },
-      {
-        name: "9",
-        id: "9",
-      },
-    ],
-  },
+  // {
+  //   name: translations.course.timeAvailable,
+  //   id: "timeAvailable",
+  //   keyFilters: [
+  //     {
+  //       name: "9 - 12",
+  //       id: {
+  //         time_start: "9:00",
+  //         time_end: "12:00",
+  //       },
+  //     },
+  //     {
+  //       name: "12 - 15",
+  //       id: {
+  //         time_start: "12:00",
+  //         time_end: "15:00",
+  //       },
+  //     },
+  //     {
+  //       name: "15 - 18",
+  //       id: {
+  //         time_start: "15:00",
+  //         time_end: "18:00",
+  //       },
+  //     },
+  //     {
+  //       name: "18 - 21",
+  //       id: {
+  //         time_start: "18:00",
+  //         time_end: "21:00",
+  //       },
+  //     },
+  //     {
+  //       name: "21 - 0",
+  //       id: {
+  //         time_start: "21:00",
+  //         time_end: "0:00",
+  //       },
+  //     },
+  //     {
+  //       name: "0 - 3",
+  //       id: {
+  //         time_start: "0:00",
+  //         time_end: "3:00",
+  //       },
+  //     },
+  //   ],
+  // },
+  // {
+  //   name: translations.course.onlyEnglish,
+  //   id: "onlyEnglishNativeSpeakers",
+  // },
+  // {
+  //   name: translations.course.levelsOfTutor,
+  //   id: "levelOfTutor",
+  //   keyFilters: [
+  //     {
+  //       name: "8",
+  //       id: "8",
+  //     },
+  //     {
+  //       name: "8.5",
+  //       id: "8.5",
+  //     },
+  //     {
+  //       name: "9",
+  //       id: "9",
+  //     },
+  //   ],
+  // },
 ];
 
 export const quickFilterCourse = [
+  // {
+  //   name: translations.course.allForms,
+  //   id: "All forms",
+  //   type: "types",
+  // },
+  // {
+  //   name: translations.course.callOneVsOne,
+  //   id: "Call 1-1",
+  //   type: "types",
+  // },
+  // {
+  //   name: translations.course.salfLearning,
+  //   id: "Self-learning",
+  //   type: "types",
+  // },
+  // {
+  //   name: translations.course.callGroup,
+  //   id: "Call group",
+  //   type: "types",
+  // },
+  // {
+  //   name: translations.course.allSkills,
+  //   id: "All skills",
+  //   type: "skills",
+  // },
+
   {
-    name: translations.course.allForms,
-    id: "All forms",
-    type: "types",
-  },
-  {
-    name: translations.course.callOneVsOne,
-    id: "Call 1-1",
-    type: "types",
-  },
-  {
-    name: translations.course.salfLearning,
-    id: "Self-learning",
-    type: "types",
-  },
-  {
-    name: translations.course.callGroup,
-    id: "Call group",
-    type: "types",
-  },
-  {
-    name: translations.course.allSkills,
-    id: "All skills",
+    name: translations.course.life,
+    id: "Life",
     type: "skills",
   },
   {
-    name: translations.course.listening,
-    id: "Listening",
+    name: translations.course.health,
+    id: "Health",
     type: "skills",
   },
   {
-    name: translations.course.Speaking,
-    id: "Speaking",
+    name: translations.course.finance,
+    id: "Finance",
     type: "skills",
   },
   {
-    name: translations.course.reading,
-    id: "Reading",
+    name: translations.course.bussiness,
+    id: "Bussiness",
     type: "skills",
   },
   {
-    name: translations.course.writing,
-    id: "Writing",
+    name: translations.course.careerGuidance,
+    id: "Career Guidance",
     type: "skills",
   },
 ];
@@ -721,10 +739,11 @@ export const listLevel = [
 ];
 
 export const listSkill = [
-  { value: "Listening", index: 1 },
-  { value: "Reading", index: 2 },
-  { value: "Writing", index: 3 },
-  { value: "Speaking", index: 4 },
+  { value: "Career Guidance", index: 1 },
+  { value: "Life", index: 2 },
+  { value: "Finance", index: 3 },
+  { value: "Health", index: 4 },
+  { value: "Bussiness", index: 5 }
 ];
 
 export const timesInUtc = [

@@ -243,6 +243,7 @@ const Tasks = React.memo(() => {
   };
 
   const [listData, setListData] = React.useState([]);
+
   useFocusEffect(
     React.useCallback(() => {
       getTask();
@@ -263,6 +264,8 @@ const Tasks = React.memo(() => {
       }
     });
   };
+
+  if (!listData.length) return null
 
   return (
     <View style={{ marginTop: 16, marginHorizontal: 16 }}>
