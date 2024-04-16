@@ -30,7 +30,8 @@ const AudioPlayScreen = () => {
     };
   }, []);
 
-  const { pause, forWard, next, previous, backWard } = useActionTrack();
+  const { pause, forWard, next, previous, backWard, isFirst, isLast } =
+    useActionTrack();
 
   return (
     <SafeAreaView style={CS.safeAreaView}>
@@ -74,8 +75,8 @@ const AudioPlayScreen = () => {
         <View style={styles.viewAction}>
           <IconSvgBtn
             name="icPreviousAudio"
-            onPress={previous}
-            color={palette.textOpacity6}
+            onPress={!isFirst ? previous : () => {}}
+            color={isFirst ? palette.textOpacity4 : palette.textOpacity6}
             size={32}
           />
           <IconSvgBtn
@@ -98,8 +99,8 @@ const AudioPlayScreen = () => {
           />
           <IconSvgBtn
             name="icNextAudio"
-            onPress={next}
-            color={palette.textOpacity6}
+            onPress={!isLast ? next : () => {}}
+            color={isLast ? palette.textOpacity4 : palette.textOpacity6}
             size={32}
           />
         </View>

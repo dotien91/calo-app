@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
 import useStore from "@services/zustand/store";
-import { IAudioItem } from "models/audio.modal";
+import { TypeTrackLocal } from "models/audio.modal";
 import { useListData } from "@helpers/hooks/useListData";
 import { translations } from "@localization";
 import { GetPodCastList } from "@services/api/podcast.api";
@@ -11,9 +11,11 @@ import AudioCategoryTitle from "../audio-book/audio.category.title";
 import AudioItemList from "../components/audio.item.list";
 import { SCREENS } from "constants";
 import LoadingList from "@shared-components/loading.list.component";
+import { useIsFocused } from "@react-navigation/native";
 
 const AudioList = () => {
   const userData = useStore((state) => state.userData);
+  const setListAudio = useStore((state) => state.setListAudio);
 
   const {
     listData,
@@ -21,19 +23,20 @@ const AudioList = () => {
     onEndReach,
     refreshControl,
     renderFooterComponent,
-  } = useListData<IAudioItem>(
+  } = useListData<TypeTrackLocal>(
     {
       auth_id: userData?._id,
       order_by: "DESC",
       sort_by: "createdAt",
-      limit: 2,
+      limit: "10",
+      podcast_category: "",
     },
     GetPodCastList,
   );
 
-  const data = React.useMemo(() => {
-    return listData.slice(0, 15);
-  }, [listData]);
+  useEffect(() => {
+    setListAudio(listData);
+  }, [listData, useIsFocused]);
 
   const renderItem = ({ item, index }) => {
     if (item?.is_join) {
@@ -62,7 +65,7 @@ const AudioList = () => {
       ) : (
         <FlatList
           showsHorizontalScrollIndicator={false}
-          data={data}
+          data={listData}
           renderItem={renderItem}
           scrollEventThrottle={16}
           contentContainerStyle={{

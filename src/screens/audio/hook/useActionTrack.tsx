@@ -7,15 +7,17 @@ import TrackPlayer, {
 
 import eventEmitter from "@services/event-emitter";
 import useStore from "@services/zustand/store";
+import { useEffect, useState } from "react";
 
 export const useActionTrack = () => {
   const activeTrack = useActiveTrack();
   const progress = useProgress();
   const { playing } = useIsPlaying();
   const updateAudio = useStore((store) => store.updateAudio);
+  const [isFirst, setIsFirt] = useState(false);
+  const [isLast, setIsLast] = useState(false);
 
   const updataDaPosition = async () => {
-    console.log("progress...", progress);
     if (activeTrack) {
       await updateAudio({
         ...activeTrack,
@@ -25,18 +27,42 @@ export const useActionTrack = () => {
     }
   };
 
-  // useEffect(() => {
-  //   updataDaPosition();
-  // }, [progress.position]);
+  useEffect(() => {
+    checkIndexTrack();
+  }, [activeTrack]);
 
-  const next = () => {
-    updataDaPosition();
-    TrackPlayer.skipToNext();
+  const checkIndexTrack = async () => {
+    const index = await TrackPlayer.getActiveTrackIndex();
+    const length = (await TrackPlayer.getQueue()).length;
+    if (index == 0) {
+      setIsFirt(true);
+    } else {
+      setIsFirt(false);
+    }
+    if (index == length - 1) {
+      setIsLast(true);
+    } else {
+      setIsLast(false);
+    }
   };
 
-  const previous = () => {
+  const next = async () => {
     updataDaPosition();
-    TrackPlayer.skipToPrevious();
+    const index = await TrackPlayer.getActiveTrackIndex();
+    const length = (await TrackPlayer.getQueue()).length;
+    console.log(index, length);
+    if (index < length - 1) {
+      TrackPlayer.skipToNext();
+    }
+  };
+
+  const previous = async () => {
+    updataDaPosition();
+    const index = await TrackPlayer.getActiveTrackIndex();
+    console.log(index);
+    if (index > 0) {
+      TrackPlayer.skipToPrevious();
+    }
   };
 
   const pause = async () => {
@@ -44,7 +70,7 @@ export const useActionTrack = () => {
       TrackPlayer.pause();
       updataDaPosition();
     } else {
-      if (progress.position >= progress.duration) {
+      if (progress.position + 2 >= progress.duration) {
         await TrackPlayer.seekTo(0);
         await TrackPlayer.play();
       } else {
@@ -86,5 +112,7 @@ export const useActionTrack = () => {
     backWard,
     stop,
     updataDaPosition,
+    isFirst,
+    isLast,
   };
 };

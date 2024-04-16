@@ -10,12 +10,12 @@ import createStyles from "../audio.style";
 
 interface AudioCategoryTitleProps {
   title: string;
-  onPress: () => void;
+  onPress?: () => void;
   hideViewAll: boolean;
 }
 const AudioCategoryTitle = ({
   title,
-  onPress,
+  onPress = () => {},
   hideViewAll,
 }: AudioCategoryTitleProps) => {
   const theme = useTheme();

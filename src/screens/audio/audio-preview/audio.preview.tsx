@@ -17,7 +17,6 @@ import { translations } from "@localization";
 import TextViewCollapsed from "@screens/course/components/text.view.collapsed";
 import { GetPodCastDetail } from "@services/api/podcast.api";
 import useStore from "@services/zustand/store";
-import Header from "@shared-components/header/Header";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import IconSvg from "assets/svg";
@@ -33,11 +32,14 @@ import Button from "@shared-components/button/Button";
 import { useRoute } from "@react-navigation/native";
 import { formatTimeDuration } from "@utils/date.utils";
 import LoadingList from "@shared-components/loading.list.component";
+import Header from "../components/Header";
+import { shareAudio } from "@utils/share.utils";
 
 const AudioPreview = () => {
   const [track, setTrack] = React.useState<TypeTrackLocal>();
   const addAudio = useStore((store) => store.addAudio);
   const listAudioHistory = useStore((store) => store.listAudioHistory);
+  const listAudio = useStore((store) => store.listAudio);
   const route = useRoute();
   const id = route?.params?.id || "";
   const [duration, setDuration] = React.useState(0);
@@ -46,6 +48,7 @@ const AudioPreview = () => {
   const getDataTrack = () => {
     GetPodCastDetail(id).then((res) => {
       if (!res.isError) {
+        console.log(res);
         setTrack(res.data);
         const whoosh = new Sound(
           res.data?.attach_files[0].media_url,
@@ -99,9 +102,10 @@ const AudioPreview = () => {
     );
   };
 
-  const playTrack = async (track: Track) => {
+  const playTrack = async (track: Track, indexLocal: number) => {
     const item = listAudioHistory.filter((item) => item.url === track.url);
     if (item.length > 0) {
+      await TrackPlayer.skip(indexLocal);
       await TrackPlayer.seekBy(item[0].position || 0);
     }
     await TrackPlayer.play();
@@ -109,16 +113,31 @@ const AudioPreview = () => {
 
   const playAudio = async () => {
     await TrackPlayer.reset();
-    const track1 = {
+    const indexLocal = listAudio.findIndex((item) => item._id === track?._id);
+    if (indexLocal >= 0) {
+      // const list = listAudio.slice(indexLocal, listAudio.length);
+      for (let i = 0; i < listAudio.length; i++) {
+        const element = listAudio[i];
+        const track1 = {
+          url: element?.attach_files[0].media_url,
+          title: element?.title,
+          artist: element?.user_id.display_name,
+          artwork: element?.post_avatar.media_url,
+        };
+        await TrackPlayer.add(track1);
+        if (i == indexLocal) {
+          await playTrack(track1, indexLocal);
+        }
+      }
+      NavigationService.navigate(SCREENS.AUDIO_PLAY);
+    }
+    const track2 = {
       url: track?.attach_files[0].media_url,
       title: track?.title,
       artist: track?.user_id.display_name,
       artwork: track?.post_avatar.media_url,
     };
-    await TrackPlayer.add(track1);
-    await playTrack(track1);
-    addAudio(track1);
-    NavigationService.navigate(SCREENS.AUDIO_PLAY);
+    addAudio(track2);
 
     // await TrackPlayer.seekBy(0);
   };
@@ -133,10 +152,13 @@ const AudioPreview = () => {
       },
     });
   };
+  const onPressShare = () => {
+    shareAudio("https://ikigai.vn");
+  };
 
   return (
     <SafeAreaView style={CS.safeAreaView}>
-      <Header />
+      <Header onPressRight={onPressShare} iconNameRight="share-2" />
       {isLoading ? (
         <LoadingList numberItem={3} />
       ) : (
