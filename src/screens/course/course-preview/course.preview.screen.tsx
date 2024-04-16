@@ -278,7 +278,7 @@ const CoursePreviewScreen = () => {
         onPressRight={pressMore}
       />
       <ScrollView
-        contentContainerStyle={{ paddingBottom: 60 }}
+        contentContainerStyle={{ paddingBottom: 180 }}
         onScroll={handleScroll}
         scrollEventThrottle={100}
         showsVerticalScrollIndicator={false}

@@ -9,7 +9,8 @@ export enum ENVIRONMENT {
   DEVELOP = "develop",
   PRODUCT = "product",
 }
-
+// fb login
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDQ3MDU0MjMsImRhdGEiOnsiX2lkIjoiNjYxNzY2YzU1MmM2ODE5MTY2ODdjMjcxIiwia2V5IjoiMGNkNmFkZGMwNmVjOGMzNmNjOTVlYjAxNTUyMjRkNGIiLCJzaWduYXR1cmUiOiJmOTNiOGI2NDkwMmQyM2M0ZDJiZjNhMjUyNzc0NDY3MyIsInNlc3Npb24iOiI2NjFjZTQwZWM4YjM3NTBlZDM0YThjMjIifSwiaWF0IjoxNzEzMTY5NDIzfQ.V9pKUOkg3G-_2hLYRXv-ZQSz_aOd9l6hg6nmdJ_t0fY
 export const isProduction =
   (_getJson("env") || (__DEV__ ? ENVIRONMENT.DEVELOP : ENVIRONMENT.PRODUCT)) ===
   ENVIRONMENT.PRODUCT;

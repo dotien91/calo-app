@@ -8,6 +8,7 @@ import Header from "@shared-components/header/Header";
 import { getListTaskByUser } from "@services/api/task.api";
 import { translations } from "@localization";
 import TashListItem from "@shared-components/task-item/task.list.item";
+import EmptyResultView from "@shared-components/empty.data.component";
 
 const TaskScreen = () => {
   return (
@@ -22,6 +23,8 @@ const TaskScreen = () => {
 
 const Tasks = () => {
   const [listData, setListData] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
+
   useFocusEffect(
     React.useCallback(() => {
       getTask();
@@ -29,7 +32,9 @@ const Tasks = () => {
   );
 
   const getTask = () => {
+    setLoading(true)
     getListTaskByUser({ order_by: "DESC" }).then((res) => {
+      setLoading(false)
       if (!res.isError) {
         setListData((res.data?.[0]?.missions || []).reverse());
       }
@@ -41,6 +46,11 @@ const Tasks = () => {
 
   return (
     <>
+      {!loading && !listData.length && <EmptyResultView
+        desc={translations.emptyList}
+        icon="document-text-outline"
+        showLottie={false}
+      />}
       <FlatList
         data={listData}
         renderItem={renderItem}

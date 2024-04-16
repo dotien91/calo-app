@@ -60,7 +60,6 @@ const Media = ({ item }: Media) => {
   const onPressMarkDone = () => {};
 
   const renderVideo = () => {
-    console.log("itemitem", item);
     return (
       <VideoPreview
         onPressLanscape={onPressLanscape}
