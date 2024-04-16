@@ -159,6 +159,9 @@ import icHeadphone from "./icon-headphone.svg";
 import icCoach from "./logo-coach.svg";
 import icCoachBlur from "./logo-coach-blur.svg";
 import icPersonal from "./icon-personal.svg";
+import icPersonCheck from "./icon-person-check.svg";
+import icPersonDelete from "./icon-person-delete.svg";
+import icPersonAdd from "./icon-person-add.svg";
 import icPeople from "./icon-people.svg";
 import icShield from "./icon-shield.svg";
 import icLocation from "./icon-location.svg";
@@ -325,6 +328,9 @@ const Icons = {
   icPersonSearch,
   icHeadphone,
   icPersonal,
+  icPersonCheck,
+  icPersonDelete,
+  icPersonAdd,
   icPeople,
   icShield,
   icLocation,

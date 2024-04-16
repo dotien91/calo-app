@@ -7,7 +7,7 @@ import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import IconSvg from "assets/svg";
 import * as React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, Image } from "react-native";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
 
 interface PopupMemberProps {
@@ -17,6 +17,7 @@ interface PopupMemberProps {
 
 const PopupMember = (props: PopupMemberProps) => {
   const { tier, user } = props;
+  console.log("user...", user);
   const toAdmin = () => {
     updateMemberGroup({
       _id: user._id,
@@ -75,13 +76,20 @@ const PopupMember = (props: PopupMemberProps) => {
   const ItemPupup = ({ txt, onPress, iconName }) => {
     return (
       <PressableBtn onPress={onPress} style={styles.itemBtn}>
-        <IconSvg name={iconName} color={palette.text} size={20} />
+        <IconSvg name={iconName} color={palette.textOpacity6} size={20} />
         <Text style={styles.txt}>{txt}</Text>
       </PressableBtn>
     );
   };
   return (
     <View style={styles.container}>
+      <View style={styles.viewAvatar}>
+        <Image
+          style={styles.image}
+          source={{ uri: user.user_id.user_avatar }}
+        />
+        <Text style={styles.name}>{user.user_id.display_name}</Text>
+      </View>
       {tier != 1 && user.tier == 1 && (
         <ItemPupup
           txt={translations.club.memberToAdmin}
@@ -93,14 +101,14 @@ const PopupMember = (props: PopupMemberProps) => {
         <ItemPupup
           txt={translations.club.adminToMember}
           onPress={toMember}
-          iconName={"icPersonal"}
+          iconName={"icPersonCheck"}
         />
       )}
       {user.tier != 3 && (
         <ItemPupup
           txt={translations.club.deleteMember(user.user_id.display_name)}
           onPress={deleteMember}
-          iconName={"iconRemove"}
+          iconName={"icPersonDelete"}
         />
       )}
     </View>
@@ -112,15 +120,30 @@ export default PopupMember;
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    height: getBottomSpace() + 96,
+    minHeight: 96,
+    marginBottom: getBottomSpace(),
   },
   itemBtn: {
     ...CS.row,
-    gap: 8,
+    gap: 12,
     minHeight: 48,
   },
   txt: {
     ...CS.hnRegular,
     flex: 1,
+    color: palette.textOpacity8,
+  },
+  name: {
+    ...CS.hnBold,
+    marginTop: 4,
+  },
+  image: {
+    marginTop: 56,
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+  },
+  viewAvatar: {
+    ...CS.center,
   },
 });
