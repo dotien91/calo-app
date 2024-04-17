@@ -28,15 +28,15 @@ import IconSvg from "assets/svg";
 
 const ListMemberScreen = () => {
   const route = useRoute();
-  const id_club = route.params.id_club || "";
+  const club_id = route.params.club_id || "";
   const userData = useStore((store) => store.userData);
   const [tier, setTier] = React.useState("1");
 
   const paramsRequest = {
     limit: "10",
-    group_id: id_club,
+    group_id: club_id,
   };
-  checkMemberMe({ group_id: id_club, user_id: userData?._id }).then((res) => {
+  checkMemberMe({ group_id: club_id, user_id: userData?._id }).then((res) => {
     if (!res.isError) {
       setTier(res.data.tier);
     }
@@ -51,6 +51,16 @@ const ListMemberScreen = () => {
     renderFooterComponent,
   } = useListData<TypeClubMember>(paramsRequest, getMemberGroup, []);
 
+  const param = {
+    ...paramsRequest,
+    tier: "2",
+  };
+  const { listData: list, _requestData } = useListData<TypeClubMember>(
+    param,
+    getMemberGroup,
+    [],
+  );
+
   React.useEffect(() => {
     const deleteMember = ({ id }: { id: string }) => {
       const data = [...listData].filter((item) => item._id !== id);
@@ -62,6 +72,7 @@ const ListMemberScreen = () => {
       if (index >= 0) {
         data[index].tier = tier;
         setListData(data);
+        _requestData(false);
       }
     };
     eventEmitter.on("delete_member", deleteMember);
@@ -85,7 +96,7 @@ const ListMemberScreen = () => {
         contentModalType: EnumModalContentType.MemberAction,
         styleModalType: EnumStyleModalType.Bottom,
         data: {
-          hideCloseIcon: true,
+          // hideCloseIcon: true,
           tier: tier,
           user: item,
         },
@@ -128,17 +139,40 @@ const ListMemberScreen = () => {
       </View>
     );
   };
+
+  const renderHeader = () => {
+    return (
+      <>
+        {list.length > 0 && (
+          <View>
+            <Text style={styles.txtLabel}>{translations.club.admin}</Text>
+            {list.map((item, index) => {
+              return renderItem({ item: item, index: index });
+            })}
+          </View>
+        )}
+        <Text style={styles.txtLabel}>{translations.club.member}</Text>
+      </>
+    );
+  };
   const renderLoading = () => {
     return <LoadingList numberItem={3} />;
   };
 
+  const showModalAddMember = () => {};
+
   return (
     <SafeAreaView style={CS.safeAreaView}>
-      <Header text={translations.club.member} />
+      <Header
+        text={translations.club.member}
+        iconNameRight="user-plus"
+        onPressRight={showModalAddMember}
+      />
       {listData.length == 0 && isLoading && renderLoading()}
       <FlatList
         style={CS.flex1}
         data={listData}
+        ListHeaderComponent={renderHeader}
         renderItem={renderItem}
         scrollEventThrottle={16}
         onEndReachedThreshold={0}
@@ -176,5 +210,11 @@ const styles = StyleSheet.create({
     ...CS.hnMedium,
     fontSize: 14,
     color: palette.textOpacity6,
+  },
+  txtLabel: {
+    ...CS.hnBold,
+    paddingHorizontal: 16,
+    marginBottom: 8,
+    marginTop: 16,
   },
 });
