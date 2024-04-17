@@ -809,6 +809,10 @@ export default {
     pastEvent: "Past Events",
     going: "going",
     eventBy: "Event by",
+    deleteEvent: "Delete Event",
+    editEvent: "Edit event",
+    confirmDelete: "Do you want to delete",
+    deleteEventSuccess: "Event deleted successfully",
   },
   notifications: {
     notifications: "Notifications",

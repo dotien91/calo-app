@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { ActivityIndicator, Image, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Image,
+  ImageBackground,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import { WindowWidth } from "@freakycoder/react-native-helpers";
 
 import { selectMedia } from "@helpers/file.helper";
 import { isIos } from "@helpers/device.info.helper";
@@ -9,10 +18,10 @@ import { palette } from "@theme/themes";
 import CS from "@theme/styles";
 import { translations } from "@localization";
 import LoadingUpdateMedia from "./LoadingUpdateMedia";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
-import { WindowWidth } from "@freakycoder/react-native-helpers";
 import { showToast } from "@helpers/super.modal.helper";
 import TextBase from "@shared-components/TextBase";
+import IconSvg from "assets/svg";
+import { EnumColors } from "models";
 
 interface SelectVideoHookProps {
   link?: string;
@@ -93,6 +102,17 @@ const SelectVideoHook = ({
     });
   };
 
+  const IconText = ({ nameIcon, text }: { nameIcon: string; text: string }) => {
+    return (
+      <View style={styles.viewIcon}>
+        <TextBase fontSize={16} fontWeight="400" color={EnumColors.white}>
+          {text}
+        </TextBase>
+        <IconSvg name={nameIcon} size={20} color={EnumColors.white} />
+      </View>
+    );
+  };
+
   const renderSelectVideo = () => {
     return (
       <PressableBtn
@@ -137,7 +157,87 @@ const SelectVideoHook = ({
     );
   };
 
+  const renderSelectBackground = () => {
+    return (
+      <ImageBackground
+        source={require("../../../../assets/images/bgeliteclub.png")}
+        style={styles.viewImage}
+      >
+        <PressableBtn onPress={onPressChangeMedia} style={styles.styleBtn}>
+          {/* <IconText nameIcon="icImage" text={translations.club.gallery} /> */}
+          {media.link === "" && !updatingVid ? (
+            <View>
+              <IconText nameIcon="icImage" text={translations.club.gallery} />
+            </View>
+          ) : (
+            <View>
+              <Image source={{ uri: media.link }} style={styles.viewImage} />
+              {updatingVid && (
+                <View style={styles.viewImageFill}>
+                  <LoadingUpdateMedia />
+                  <View style={styles.viewImageFill}>
+                    <ActivityIndicator size={"small"} />
+                    <TextBase fontSize={12} fontWeight="500" color="primary">
+                      {process}%
+                    </TextBase>
+                  </View>
+                </View>
+              )}
+              <View style={styles.deleteViceo}>
+                <Icon
+                  name="close-outline"
+                  type={IconType.Ionicons}
+                  size={25}
+                  onPress={deleteVideo}
+                />
+              </View>
+            </View>
+          )}
+        </PressableBtn>
+      </ImageBackground>
+      // <PressableBtn
+      //   onPress={onPressChangeMedia}
+      //   style={{
+      //     height: (WindowWidth / 16) * 9,
+      //     ...CS.center,
+      //   }}
+      // >
+      //   {media.link === "" && !updatingVid ? (
+      //     <View>
+      //       <Text style={[CS.hnRegular, { color: palette.primary }]}>
+      //         {placeholder || translations.course.uploadCoverImageOrVideo}
+      //       </Text>
+      //     </View>
+      //   ) : (
+      //     <View>
+      //       <Image source={{ uri: media.link }} style={styles.viewImage} />
+      //       {updatingVid && (
+      //         <View style={styles.viewImageFill}>
+      //           <LoadingUpdateMedia />
+      //           <View style={styles.viewImageFill}>
+      //             <ActivityIndicator size={"small"} />
+      //             <TextBase fontSize={12} fontWeight="500" color="primary">
+      //               {process}%
+      //             </TextBase>
+      //           </View>
+      //         </View>
+      //       )}
+      //       <View style={styles.deleteViceo}>
+      //         <Icon
+      //           name="close-outline"
+      //           type={IconType.Ionicons}
+      //           size={25}
+      //           onPress={deleteVideo}
+      //         />
+      //       </View>
+      //     </View>
+      //   )}
+      // </PressableBtn>
+    );
+  };
+
   return {
+    renderSelectBackground,
     renderSelectVideo,
     idVideo: media.id,
     link: media.link,
@@ -171,5 +271,20 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     ...CS.center,
     backgroundColor: palette.placeholder,
+  },
+  viewIcon: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    justifyContent: "center",
+  },
+  styleBtn: {
+    flexDirection: "row",
+    backgroundColor: palette.placeholder,
+    width: 98,
+    height: 28,
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

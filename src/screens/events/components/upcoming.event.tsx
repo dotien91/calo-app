@@ -1,65 +1,69 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 
 import TextBase from "@shared-components/TextBase";
 import ItemEvent from "./item.event";
 import { translations } from "@localization";
+import { useListData } from "@helpers/hooks/useListData";
+import { TypeListEvent, getListEventGroup } from "@services/api/event.api";
+import LoadingList from "@shared-components/loading.list.component";
+import eventEmitter from "@services/event-emitter";
 
 const UpcomingEvent = () => {
-  const listData = [
-    {
-      image: "",
-      time: "25 Mar - 29 Mar",
-      title: "Offline: Personal Development: Thriving in the Modern World",
-      location: "9, Pham Hung, Mai Dich, Cau Giay, Hanoi",
-      author: "Khanh Bui",
-      avatar: "",
-    },
-    {
-      image: "",
-      time: "25 Mar - 29 Mar",
-      title: "Talkshow: Beginner to Professional Manager",
-      location: "8, Pham Hung, Mai Dich, Cau Giay, Hanoi",
-      author: "Khanh",
-      avatar: "",
-    },
-    {
-      image: "",
-      time: "25 Mar - 29 Mar",
-      title: "Talkshow: Beginner to Professional Manager",
-      location: "8, Pham Hung, Mai Dich, Cau Giay, Hanoi",
-      author: "Khanh",
-      avatar: "",
-    },
-    {
-      image: "",
-      time: "25 Mar - 29 Mar",
-      title: "Talkshow: Beginner to Professional Manager",
-      location: "8, Pham Hung, Mai Dich, Cau Giay, Hanoi",
-      author: "Khanh",
-      avatar: "",
-    },
-  ];
+  const paramsResquest = {
+    limit: "3",
+  };
+
+  const {
+    listData,
+    isLoading,
+    onEndReach,
+    refreshControl,
+    renderFooterComponent,
+    _requestData,
+  } = useListData<TypeListEvent>(paramsResquest, getListEventGroup, []);
+
+  const reload = () => {
+    _requestData(false);
+  };
+
+  useEffect(() => {
+    eventEmitter.on("reload_list_event", reload);
+    return () => {
+      eventEmitter.off("reload_list_event", reload);
+    };
+  }, []);
 
   const data = React.useMemo(() => {
     return listData.slice(0, 15);
   }, [listData]);
 
-  const renderItem = ({ item, index }) => {
-    return <ItemEvent data={item} key={index} />;
-  };
-
-  return (
-    <View style={styles.container}>
+  const renderHeader = () => {
+    return (
       <TextBase
         title={translations.event.upComing}
         fontSize={16}
         fontWeight="700"
       />
+    );
+  };
+
+  const renderItem = ({ index, item }) => {
+    return <ItemEvent key={index} data={item} />;
+  };
+
+  const renderLoading = () => {
+    return <LoadingList numberItem={3} />;
+  };
+
+  return (
+    <View style={styles.container}>
+      {listData.length == 0 && isLoading && renderLoading()}
       <FlatList
         showsHorizontalScrollIndicator={false}
-        renderItem={renderItem}
         data={data}
+        ListHeaderComponent={renderHeader}
+        renderItem={renderItem}
         scrollEventThrottle={16}
         contentContainerStyle={{
           paddingBottom: 16,
@@ -68,6 +72,10 @@ const UpcomingEvent = () => {
         onEndReachedThreshold={0}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item?._id + ""}
+        onEndReached={onEndReach}
+        removeClippedSubviews={true}
+        refreshControl={refreshControl()}
+        ListFooterComponent={renderFooterComponent()}
       />
     </View>
   );

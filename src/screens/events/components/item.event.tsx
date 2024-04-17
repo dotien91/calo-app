@@ -9,23 +9,23 @@ import { EnumColors } from "models";
 import IconSvg from "assets/svg";
 import Button from "@shared-components/button/Button";
 import { SCREENS } from "constants";
+import FastImage from "react-native-fast-image";
+import { formatDateMonth } from "@utils/date.utils";
 
 const ItemEvent = ({ data }: { data: any }) => {
-  const { time, title, location, author, avatar } = data;
   const renderImg = () => {
     return (
-      <View style={styles.viewImg} />
-      // <FastImage
-      //   style={{
-      //     ...styles.viewImg,
-      //   }}
-      //   source={{
-      //     uri: image?.media_thumbnail,
-      //     headers: { Authorization: "someAuthToken" },
-      //     priority: FastImage.priority.normal,
-      //   }}
-      //   resizeMode={FastImage.resizeMode.cover}
-      // />
+      <FastImage
+        style={{
+          ...styles.viewImg,
+        }}
+        source={{
+          uri: data?.cover || "",
+          headers: { Authorization: "someAuthToken" },
+          priority: FastImage.priority.normal,
+        }}
+        resizeMode={FastImage.resizeMode.cover}
+      />
     );
   };
 
@@ -56,13 +56,15 @@ const ItemEvent = ({ data }: { data: any }) => {
         <TextBase
           fontSize={12}
           fontWeight="500"
-          title={time}
+          title={`${formatDateMonth(data?.start_time)} - ${formatDateMonth(
+            data?.end_time,
+          )}`}
           color={EnumColors.primary}
         />
         <TextBase
           fontSize={16}
           fontWeight="700"
-          title={title}
+          title={data?.name}
           color={EnumColors.text}
           numberOfLines={2}
         />
@@ -70,16 +72,26 @@ const ItemEvent = ({ data }: { data: any }) => {
           fontSize={12}
           fontWeight="400"
           color={EnumColors.textOpacity6}
-          title={`22 ${translations.event.interested} - 16 ${translations.event.going}`}
+          title={`${data?.interested_user_ids} ${translations.event.interested} - ${data?.interested_user_ids} ${translations.event.going}`}
         />
-        <IconText nameIcon="icLocation" text={location} />
+        <IconText nameIcon="icLocation" text={data?.location} />
         <View style={styles.viewInfo}>
-          <View style={styles.viewAvatar}>{avatar}</View>
+          <FastImage
+            style={{
+              ...styles.viewAvatar,
+            }}
+            source={{
+              uri: data?.create_by?.user_avatar || "",
+              headers: { Authorization: "someAuthToken" },
+              priority: FastImage.priority.normal,
+            }}
+            resizeMode={FastImage.resizeMode.cover}
+          />
           <TextBase
             fontSize={14}
             fontWeight="400"
             color={EnumColors.textOpacity8}
-            title={author}
+            title={data?.create_by?.display_name}
           />
         </View>
         <View style={styles.viewBtn}>
@@ -101,7 +113,11 @@ const ItemEvent = ({ data }: { data: any }) => {
     <Pressable
       style={styles.container}
       onPress={() => {
-        NavigationService.navigate(SCREENS.DETAILEVENTSCREEN);
+        NavigationService.navigate(SCREENS.DETAILEVENTSCREEN, {
+          id: data._id,
+          name: data?.name,
+          item: data,
+        });
       }}
     >
       {renderImg()}

@@ -444,3 +444,54 @@ export const formatFullDateTime = (date) => {
     hours < 10 ? `0${hours}` : hours
   }:${minutes < 10 ? `0${minutes}` : minutes} `;
 };
+
+export const formatDateMonth = (date) => {
+  const _date = new Date(date);
+  if (_date.toString() === "Invalid Date") {
+    return "";
+  }
+
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  const month = months[_date.getMonth() + 1];
+  const day = _date.getDate();
+
+  return ` ${day < 10 ? `0${day}` : day} ${month}`;
+};
+
+export const formatDateAtTime = (date) => {
+  const _date = new Date(date);
+  if (_date.toString() === "Invalid Date") {
+    return "";
+  }
+
+  const days = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
+
+  const day = days[_date.getDay()];
+  const hours = _date.getHours();
+  const ampm = hours >= 12 ? "PM" : "AM";
+  const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
+
+  return `${day} AT ${formattedHours}${ampm}`;
+};
