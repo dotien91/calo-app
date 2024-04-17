@@ -44,6 +44,7 @@ import PopupCoupon from "@screens/course/course-preview/components/popup.coupon"
 import ReferralPopupTask from "@shared-components/task-item/task.referral.popup";
 import { translations } from "@localization";
 import WriteReview from "@screens/audio/components/WriteReview";
+import PopupMoreEvent from "@screens/events/components/popup.more.event";
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
 // using normal one.
@@ -286,6 +287,9 @@ const SuperModal: React.FC<SuperModalProps> = () => {
           )}
           {contentModalType == EnumModalContentType.ReviewAudio && (
             <WriteReview data={data} />
+          )}
+          {contentModalType == EnumModalContentType.MoreEventDetail && (
+            <PopupMoreEvent {...data} />
           )}
         </View>
       </StickBottomModal>

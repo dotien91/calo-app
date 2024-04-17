@@ -37,6 +37,7 @@ export enum EnumModalContentType {
   RefferralTask = "RefferralTask",
   FilterSortClub = "filter-sort-club",
   ReviewAudio = "ReviewAudio",
+  MoreEventDetail = "more-event-detail",
 }
 
 export enum EnumStyleModalType {

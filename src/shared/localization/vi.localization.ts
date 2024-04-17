@@ -883,6 +883,10 @@ export default {
     pastEvent: "Các sự kiện đã diễn ra",
     going: "Tham gia",
     eventBy: "Sự kiện được tổ chức bởi",
+    deleteEvent: "Xóa Sự kiện",
+    editEvent: "Chỉnh sửa Sự kiện",
+    confirmDelete: "Bạn có muốn xóa không?",
+    deleteEventSuccess: "Sự kiện đã được xóa thành công",
   },
   notifications: {
     notifications: "Thông báo",

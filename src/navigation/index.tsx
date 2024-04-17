@@ -124,6 +124,7 @@ import ListImageScreen from "@screens/club/elite-club/components/list.image.scre
 import BecomEliteClub from "@screens/club/elite-club/components/becom.elite.club";
 import ClubPostScreen from "@screens/club/club/club.post.screen";
 import ListMemberScreen from "@screens/club/list-member/list.member";
+import UpdateEventScreen from "@screens/events/update-event/update.event.screen";
 // import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -543,6 +544,10 @@ const Navigation = () => {
         <Stack.Screen
           name={SCREENS.BECOME_ELITE_CLUB}
           component={BecomEliteClub}
+        />
+        <Stack.Screen
+          name={SCREENS.UPDATE_EVENT_SCREEN}
+          component={UpdateEventScreen}
         />
       </Stack.Navigator>
       <FloatingPlayer

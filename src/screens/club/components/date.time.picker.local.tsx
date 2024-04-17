@@ -70,7 +70,7 @@ const DateTimePickerLocal = ({
       <DatePicker
         modal
         open={open}
-        mode="date"
+        mode="datetime"
         date={date || timeDefault ? new Date(date || timeDefault) : new Date()}
         minimumDate={new Date()}
         onConfirm={(date) => {

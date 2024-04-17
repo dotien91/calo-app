@@ -23,7 +23,7 @@ const ClubPostScreen = () => {
   console.log("id...", id_club);
 
   const gotoCreatePost = () => {
-    NavigationService.navigate(SCREENS.POST_SCREEN, { group_id: id_club });
+    NavigationService.navigate(SCREENS.EVENTSLISTSCREEN, { group_id: id_club });
   };
 
   return (
