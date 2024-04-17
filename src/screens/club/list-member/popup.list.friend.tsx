@@ -44,6 +44,10 @@ const PopupListFriend = ({ group_id }: PopupListFriendProps) => {
     getListFriend,
   );
 
+  const listFriend = React.useMemo(() => {
+    return listData.filter((item) => item.is_join != true);
+  }, [listData]);
+
   const renderItem = ({ item, index }) => {
     const isSeleted =
       listAdd.filter((items) => items === item.partner_id._id).length > 0;
@@ -108,10 +112,10 @@ const PopupListFriend = ({ group_id }: PopupListFriendProps) => {
           customStyle={styles.viewInput}
         />
       </View>
-      {!isLoading && listData.length == 0 && renderEmpty()}
-      {isLoading && listData.length == 0 && renderLoading()}
+      {!isLoading && listFriend.length == 0 && renderEmpty()}
+      {isLoading && listFriend.length == 0 && renderLoading()}
       <FlatList
-        data={listData}
+        data={listFriend}
         renderItem={renderItem}
         onEndReachedThreshold={0}
         onEndReached={onEndReach}

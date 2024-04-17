@@ -94,21 +94,21 @@ const PopupMember = (props: PopupMemberProps) => {
         />
         <Text style={styles.name}>{user.user_id.display_name}</Text>
       </View>
-      {tier != 1 && user.tier == 1 && (
+      {tier == 3 && user.tier == 1 && (
         <ItemPupup
           txt={translations.club.memberToAdmin}
           onPress={toAdmin}
           iconName={"icShield"}
         />
       )}
-      {tier != 1 && user.tier == 2 && (
+      {tier == 3 && user.tier == 2 && (
         <ItemPupup
           txt={translations.club.adminToMember}
           onPress={toMember}
           iconName={"icPersonCheck"}
         />
       )}
-      {user.tier != 3 && (
+      {(user.tier == 1 || (tier == 3 && user.tier == 2)) && (
         <ItemPupup
           txt={translations.club.deleteMember(user.user_id.display_name)}
           onPress={deleteMember}
