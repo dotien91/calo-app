@@ -82,13 +82,13 @@ const DiscoverScreen = () => {
       params: { defaultIndex: 3 },
     },
     {
-      icon: "icFind",
+      icon: "icPersonSearch",
       title: translations.discover.findTutor,
       screen: SCREENS.COURSE_CATEGORY,
       params: { defaultIndex: 1 },
     },
     {
-      icon: "icFind",
+      icon: "icAudio",
       title: translations.podcast.listPodcast,
       screen: SCREENS.AUDIO_BOOK,
     },
@@ -480,7 +480,7 @@ const DiscoverScreen = () => {
     <SafeAreaView style={{ ...CS.safeAreaView }}>
       <View style={{ flex: 1 }}>
         {renderHeader()}
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView contentContainerStyle={{paddingBottom: 80}} showsVerticalScrollIndicator={false}>
           {renderLeaderBoard()}
           {renderFeature()}
         </ScrollView>

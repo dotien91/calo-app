@@ -62,7 +62,7 @@ const ItemList = ({ isSliderItem, style, data }: ItemListProps) => {
           marginBottom: 16,
         }}
         source={{
-          uri: post_avatar?.media_thumbnail,
+          uri: post_avatar?.media_url,
           headers: { Authorization: "someAuthToken" },
           priority: FastImage.priority.normal,
         }}

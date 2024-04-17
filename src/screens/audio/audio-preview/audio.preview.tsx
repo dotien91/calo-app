@@ -34,6 +34,7 @@ import { formatTimeDuration } from "@utils/date.utils";
 import LoadingList from "@shared-components/loading.list.component";
 import Header from "../components/Header";
 import { shareAudio } from "@utils/share.utils";
+import FastImage from "react-native-fast-image";
 
 const AudioPreview = () => {
   const [track, setTrack] = React.useState<TypeTrackLocal>();
@@ -48,7 +49,7 @@ const AudioPreview = () => {
   const getDataTrack = () => {
     GetPodCastDetail(id).then((res) => {
       if (!res.isError) {
-        console.log(res);
+        console.log("GetPodCastDetail", res);
         setTrack(res.data);
         const whoosh = new Sound(
           res.data?.attach_files[0].media_url,
@@ -164,11 +165,11 @@ const AudioPreview = () => {
       ) : (
         <ScrollView
           showsVerticalScrollIndicator={false}
-          style={styles.container}
+          contentContainerStyle={styles.container}
         >
           <View style={styles.viewAudio}>
             <View style={styles.viewImage}>
-              <Image
+              <FastImage
                 style={styles.viewImage}
                 source={{ uri: track?.post_avatar.media_url }}
                 borderRadius={8}
@@ -199,7 +200,6 @@ const AudioPreview = () => {
           </View>
 
           <ListReviewView id={id} />
-
           <Button
             onPress={showWriteReview}
             text={translations.podcast.writeAReview}
@@ -222,8 +222,8 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   container: {
-    ...CS.flex1,
     paddingHorizontal: 16,
+    paddingBottom: 80
   },
   viewDes: {
     marginTop: 8,

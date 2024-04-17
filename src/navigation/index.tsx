@@ -233,10 +233,10 @@ const Navigation = () => {
         >
           <Tab.Screen name={SCREENS.HOME} component={HomeScreen} />
           <Tab.Screen name={SCREENS.COURSE_LIST} component={CourseListScreen} />
-          <Tab.Screen name={SCREENS.CLUB_SCREEN} component={ClubScreen} />
+          {/* <Tab.Screen name={SCREENS.CLUB_SCREEN} component={ClubScreen} /> */}
           <Tab.Screen
             name={SCREENS.DISCOVERSCREEN}
-            component={DiscoverScreen}
+            component={DiscoveryStackScreen}
           />
 
           <Tab.Screen
@@ -249,8 +249,7 @@ const Navigation = () => {
   };
 
   const renderStackIntro = () => {
-    return null;
-    // if (!isFirstOpenApp) return null;
+    if (!isFirstOpenApp) return null;
     return (
       <>
         <Stack.Screen
@@ -296,6 +295,28 @@ const Navigation = () => {
       </>
     );
   };
+  const DiscoverStack = createStackNavigator();
+
+  const DiscoveryStackScreen = () => {
+    return (
+      <DiscoverStack.Navigator  screenOptions={{ headerShown: false }}>
+        <Tab.Screen
+          name={SCREENS.DISCOVERSCREEN}
+          component={DiscoverScreen}
+        />
+        <Stack.Screen name={SCREENS.AUDIO_PLAY} component={AudioPlayScreen} />
+        <Stack.Screen name={SCREENS.AUDIO_LIST} component={AudioListScreen} />
+        <Stack.Screen name={SCREENS.AUDIO_BOOK} component={AudioBookScreen} />
+        <Stack.Screen
+          name={SCREENS.RECOMMEND_AUDIO_BOOK}
+          component={RecommendBookScreen}
+        />
+        <Stack.Screen name={SCREENS.ALL_AUDIO_BOOk} component={AllBookScreen} />
+        <Stack.Screen name={SCREENS.AUDIO_PREVIEW} component={AudioPreview} />
+
+      </DiscoverStack.Navigator>
+    );
+  }
 
   return (
     <NavigationContainer
@@ -503,15 +524,7 @@ const Navigation = () => {
         />
         <Stack.Screen name={SCREENS.HIDDEN_PAGE} component={HiddenPaage} />
         <Stack.Screen name={SCREENS.WEBVIEW_SCREEN} component={WebviewScreen} />
-        <Stack.Screen name={SCREENS.AUDIO_PLAY} component={AudioPlayScreen} />
-        <Stack.Screen name={SCREENS.AUDIO_LIST} component={AudioListScreen} />
-        <Stack.Screen name={SCREENS.AUDIO_BOOK} component={AudioBookScreen} />
-        <Stack.Screen
-          name={SCREENS.RECOMMEND_AUDIO_BOOK}
-          component={RecommendBookScreen}
-        />
-        <Stack.Screen name={SCREENS.ALL_AUDIO_BOOk} component={AllBookScreen} />
-        <Stack.Screen name={SCREENS.AUDIO_PREVIEW} component={AudioPreview} />
+
         <Stack.Screen
           name={SCREENS.SHOW_ALL_REVIEW}
           component={showAllReview}
@@ -551,14 +564,7 @@ const Navigation = () => {
           component={BecomEliteClub}
         />
       </Stack.Navigator>
-      <FloatingPlayer
-        style={{
-          position: "absolute",
-          left: 0,
-          right: 0,
-          bottom: getBottomSpace() + 52,
-        }}
-      />
+      <FloatingPlayer />
     </NavigationContainer>
   );
 };

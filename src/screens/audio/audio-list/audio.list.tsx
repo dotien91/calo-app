@@ -52,7 +52,6 @@ const AudioList = () => {
   const renderLoading = () => {
     return <LoadingList numberItem={3} />;
   };
-
   return (
     <View style={styles.container}>
       <AudioCategoryTitle
@@ -70,7 +69,7 @@ const AudioList = () => {
           scrollEventThrottle={16}
           contentContainerStyle={{
             paddingLeft: 16,
-            paddingBottom: 16,
+            paddingBottom: 80,
           }}
           initialNumToRender={2}
           onEndReachedThreshold={0}
