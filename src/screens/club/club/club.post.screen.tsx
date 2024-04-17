@@ -47,6 +47,24 @@ const ClubPostScreen = () => {
       >
         <Text>Course</Text>
       </PressableBtn>
+      <PressableBtn
+        onPress={() =>
+          NavigationService.navigate(SCREENS.LIST_COURSE_CLUB, {
+            club_id,
+          })
+        }
+      >
+        <Text>Image</Text>
+      </PressableBtn>
+      <PressableBtn
+        onPress={() =>
+          NavigationService.navigate(SCREENS.EVENTSLISTSCREEN, {
+            club_id,
+          })
+        }
+      >
+        <Text>event</Text>
+      </PressableBtn>
       <ListPostClub id={club_id} />
       {isLoggedIn() && userData?._id && (
         <TouchableOpacity style={styles.addPost} onPress={gotoCreatePost}>
