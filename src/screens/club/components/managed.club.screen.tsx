@@ -11,6 +11,7 @@ import { useListData } from "@helpers/hooks/useListData";
 import { getListGroup } from "@services/api/club.api";
 import eventEmitter from "@services/event-emitter";
 import CS from "@theme/styles";
+import useStore from "@services/zustand/store";
 
 interface TypeListClub {
   avatar: any;
@@ -23,8 +24,12 @@ interface TypeListClub {
 }
 
 const ManagedClubScreen = () => {
+
+  const userData = useStore(state => state.userData)
+
   const paramsRequest = {
     limit: "5",
+    user_id: userData._id
   };
 
   const {
@@ -35,7 +40,6 @@ const ManagedClubScreen = () => {
     renderFooterComponent,
     _requestData,
   } = useListData<TypeListClub>(paramsRequest, getListGroup, []);
-  // console.log("listData...", listData);
 
   useEffect(() => {
     eventEmitter.on("reload_list_club", _requestData);
