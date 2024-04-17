@@ -20,6 +20,7 @@ export function useUploadFile(
   initData?: any[],
   selectionLimit = 30,
   extraParam: IExtraParams,
+  refId?: string
 ) {
   const [listFile, setListFile] = React.useState<any[]>(initData || []);
   const [isUpLoadingFile, setIsUpLoadingFile] = React.useState(false);
@@ -90,7 +91,6 @@ export function useUploadFile(
   };
 
   const renderFile = React.useCallback(() => {
-    console.log("isUpLoadingFileisUpLoadingFile", isUpLoadingFile);
     return (
       <View style={styles.viewImage}>
         {listFileLocal.slice(0, 4).map((item: any, index: number) => {

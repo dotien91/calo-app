@@ -89,13 +89,11 @@ const ListPostClub = ({ id }: ListPostClubProps) => {
   return (
     <View
       style={{
-        ...CommonStyle.flex1,
         backgroundColor: colors.background,
       }}
     >
       {listData.length == 0 && isLoading && renderHeader()}
       <FlatList
-        scrollEnabled={false}
         ref={listRef}
         data={listData}
         renderItem={renderItem}
@@ -107,6 +105,7 @@ const ListPostClub = ({ id }: ListPostClubProps) => {
         refreshControl={refreshControl()}
         ListFooterComponent={renderFooterComponent()}
         ListEmptyComponent={renderEmpty()}
+        contentContainerStyle={{paddingBottom: 160}}
       />
     </View>
   );
