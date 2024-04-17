@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { View, StyleSheet, SafeAreaView, ScrollView } from "react-native";
+import {
+  View,
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+  TouchableOpacity,
+  Text,
+} from "react-native";
 import { useForm } from "react-hook-form";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
 import * as NavigationService from "react-navigation-helpers";
@@ -14,10 +21,12 @@ import SelectVideoHook from "@screens/course/course-create/components/select.vid
 import { showToast } from "@helpers/super.modal.helper";
 import { createGroup } from "@services/api/club.api";
 import { SCREENS } from "constants";
+import TextBase from "@shared-components/TextBase";
+import { quickFilterCourse } from "constants/course.constant";
 
 const CreateClubScreen = () => {
   const [updating, setUpdating] = useState(false);
-  const { idVideo, renderSelectVideo, updatingVid } = SelectVideoHook({
+  const { idVideo, renderSelectBackground, updatingVid } = SelectVideoHook({
     type: "photo",
     typeM: "photo",
     placeholder: translations.club.purchaseJoin,
@@ -54,11 +63,24 @@ const CreateClubScreen = () => {
     setUpdating(false);
   };
 
+  const renderItem = (item, key) => {
+    return (
+      <TouchableOpacity
+        key={key}
+        // onPress={() => onPressBtnFilter(item)}
+        style={styles.btnFilter}
+      >
+        <TextBase fontSize={16} fontWeight="500">
+          {item.name}
+        </TextBase>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <SafeAreaView style={CS.safeAreaView}>
       <Header text={translations.club.createClub} iconNameLeft="x" />
-      <ScrollView style={CS.flex1} showsVerticalScrollIndicator={false}>
-        <View>{renderSelectVideo()}</View>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <InputHook
           setFocus={setFocus}
           name="name"
@@ -79,26 +101,18 @@ const CreateClubScreen = () => {
           maxLength={32}
           label={translations.club.clubName}
         />
-        {/* <InputHook
-          setFocus={setFocus}
-          name="price"
-          customStyle={CS.flex1}
-          inputProps={{
-            type: "number",
-            defaultValue: "",
-            placeholder: translations.club.chooseYourClubPrice,
-          }}
-          control={control}
-          rules={{
-            required: {
-              value: true,
-              message: translations.required,
-            },
-          }}
-          errorTxt={errors.price?.message}
-          maxLength={32}
-          label={translations.club.clubPrice}
-        /> */}
+        <View style={styles.viewCover}>{renderSelectBackground()}</View>
+        <View style={styles.viewType}>
+          <TextBase fontSize={16} fontWeight="700" title="Type of club" />
+          <ScrollView
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.styleFilter}
+          >
+            {quickFilterCourse.map((item, index) => renderItem(item, index))}
+          </ScrollView>
+          {/* quickFilterCourse */}
+        </View>
         <InputHook
           setFocus={setFocus}
           name="des"
@@ -116,6 +130,9 @@ const CreateClubScreen = () => {
           label={translations.club.description}
           multiline
         />
+        <View style={styles.viewType}>
+          <TextBase fontSize={16} fontWeight="700" title="Add image" />
+        </View>
       </ScrollView>
       <View style={styles.viewBtn}>
         <Button
@@ -134,9 +151,35 @@ const CreateClubScreen = () => {
 export default CreateClubScreen;
 
 const styles = StyleSheet.create({
+  container: {
+    ...CS.flex1,
+  },
   viewBtn: {
     marginHorizontal: 16,
     marginTop: 16,
     marginBottom: getBottomSpace(),
+  },
+  viewCover: {
+    marginTop: 10,
+    marginBottom: 5,
+  },
+  viewType: {
+    marginTop: 8,
+    marginHorizontal: 16,
+    flex: 1,
+  },
+  btnFilter: {
+    height: 28,
+
+    backgroundColor: palette.grey,
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 8,
+  },
+  styleFilter: {
+    marginTop: 8,
+    flexDirection: "row",
+    gap: 8,
   },
 });

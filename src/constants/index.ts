@@ -111,6 +111,7 @@ export const SCREENS = {
   LIST_IMAGE_SCREEN: "ListImageScreen",
   BECOME_ELITE_CLUB: "BecomeEliteClub",
   UPDATE_EVENT_SCREEN: "UpdateEventScreen",
+  SETTING_CLUB_SCREEN: "SettingClubScreen",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

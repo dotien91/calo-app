@@ -126,6 +126,7 @@ import ClubPostScreen from "@screens/club/club/club.post.screen";
 import ListMemberScreen from "@screens/club/list-member/list.member";
 import UpdateEventScreen from "@screens/events/update-event/update.event.screen";
 import ListCourseClub from "@screens/home/components/list-course-club/list.course.club.screen";
+import SettingClubScreen from "@screens/club/setting-club/setting.club.screen";
 // import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -234,7 +235,7 @@ const Navigation = () => {
         >
           <Tab.Screen name={SCREENS.HOME} component={HomeScreen} />
           <Tab.Screen name={SCREENS.COURSE_LIST} component={CourseListScreen} />
-          {/* <Tab.Screen name={SCREENS.CLUB_SCREEN} component={ClubScreen} /> */}
+          <Tab.Screen name={SCREENS.CLUB_SCREEN} component={ClubScreen} />
           <Tab.Screen
             name={SCREENS.DISCOVERSCREEN}
             component={DiscoveryStackScreen}
@@ -300,11 +301,8 @@ const Navigation = () => {
 
   const DiscoveryStackScreen = () => {
     return (
-      <DiscoverStack.Navigator  screenOptions={{ headerShown: false }}>
-        <Tab.Screen
-          name={SCREENS.DISCOVERSCREEN}
-          component={DiscoverScreen}
-        />
+      <DiscoverStack.Navigator screenOptions={{ headerShown: false }}>
+        <Tab.Screen name={SCREENS.DISCOVERSCREEN} component={DiscoverScreen} />
         <Stack.Screen name={SCREENS.AUDIO_PLAY} component={AudioPlayScreen} />
         <Stack.Screen name={SCREENS.AUDIO_LIST} component={AudioListScreen} />
         <Stack.Screen name={SCREENS.AUDIO_BOOK} component={AudioBookScreen} />
@@ -314,10 +312,9 @@ const Navigation = () => {
         />
         <Stack.Screen name={SCREENS.ALL_AUDIO_BOOk} component={AllBookScreen} />
         <Stack.Screen name={SCREENS.AUDIO_PREVIEW} component={AudioPreview} />
-
       </DiscoverStack.Navigator>
     );
-  }
+  };
 
   return (
     <NavigationContainer
@@ -567,6 +564,10 @@ const Navigation = () => {
         <Stack.Screen
           name={SCREENS.UPDATE_EVENT_SCREEN}
           component={UpdateEventScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.SETTING_CLUB_SCREEN}
+          component={SettingClubScreen}
         />
       </Stack.Navigator>
       <FloatingPlayer />

@@ -33,6 +33,15 @@ export async function updateGroup(data: TypeUpdateGroup) {
   });
 }
 
+export async function removeGroup(_id: string) {
+  return request({
+    method: METHOD.DELETE,
+    urlPath: `group/delete/${_id}`,
+  }).then((response) => {
+    return response;
+  });
+}
+
 export async function getListGroup(data) {
   return request({
     method: METHOD.POST,
@@ -134,9 +143,8 @@ export async function removeCourseClub(params) {
   return request({
     method: METHOD.DELETE,
     urlPath: `group/course/delete/`,
-    params
+    params,
   }).then((response) => {
     return response;
   });
 }
-

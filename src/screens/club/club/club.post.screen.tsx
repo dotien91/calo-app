@@ -21,7 +21,7 @@ const ClubPostScreen = () => {
 
   const club_id = route.params?.["club_id"] || "";
   const name = route.params?.name || "";
-console.log("id_club", club_id)
+  console.log("id_club", club_id);
   const gotoCreatePost = () => {
     NavigationService.navigate(SCREENS.POST_SCREEN, { group_id: club_id });
   };
@@ -31,7 +31,7 @@ console.log("id_club", club_id)
       <PressableBtn
         onPress={() =>
           NavigationService.navigate(SCREENS.LIST_MEMBER_CLUB, {
-            club_id
+            club_id,
           })
         }
       >
@@ -40,11 +40,29 @@ console.log("id_club", club_id)
       <PressableBtn
         onPress={() =>
           NavigationService.navigate(SCREENS.LIST_COURSE_CLUB, {
-            club_id
+            club_id,
           })
         }
       >
         <Text>Course</Text>
+      </PressableBtn>
+      <PressableBtn
+        onPress={() =>
+          NavigationService.navigate(SCREENS.EVENTSLISTSCREEN, {
+            club_id,
+          })
+        }
+      >
+        <Text>Event</Text>
+      </PressableBtn>
+      <PressableBtn
+        onPress={() =>
+          NavigationService.navigate(SCREENS.SETTING_CLUB_SCREEN, {
+            club_id,
+          })
+        }
+      >
+        <Text>Setting Clubs</Text>
       </PressableBtn>
       <ListPostClub id={club_id} />
       {isLoggedIn() && userData?._id && (

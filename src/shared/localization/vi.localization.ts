@@ -1801,7 +1801,10 @@ export default {
     profession: "Nghề nghiệp",
     position: "Chức danh",
     submit: "Gửi",
+    settingClub: "Cài đặt câu lạc bộ",
+    namAndDes: "Tên và mô tả câu lạc bộ",
+    deleteGroup: "Xóa câu lạc bộ",
+    deleteGroupSuccess: "Xóa câu lạc bộ thành công",
   },
   close: "Đóng",
-
 };

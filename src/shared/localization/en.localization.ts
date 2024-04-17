@@ -1272,6 +1272,10 @@ export default {
     profession: "Profession",
     position: "Position",
     submit: "Submit",
+    settingClub: "Club settings",
+    namAndDes: "Name and description",
+    deleteGroup: "Delete group",
+    deleteGroupSuccess: "Delete group successfully",
   },
   podcast: {
     listPodcast: "List Podcasts",
