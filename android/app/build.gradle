@@ -110,8 +110,8 @@ android {
         applicationId 'com.ikigroup.ikicoach'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 19
-        versionName "1.0.7"
+        versionCode 1
+        versionName "0.1.0"
         missingDimensionStrategy "store", "play"
     }
 
