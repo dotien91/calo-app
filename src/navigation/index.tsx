@@ -125,6 +125,7 @@ import BecomEliteClub from "@screens/club/elite-club/components/becom.elite.club
 import ClubPostScreen from "@screens/club/club/club.post.screen";
 import ListMemberScreen from "@screens/club/list-member/list.member";
 import UpdateEventScreen from "@screens/events/update-event/update.event.screen";
+import ListCourseClub from "@screens/home/components/list-course-club/list.course.club.screen";
 // import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -149,9 +150,9 @@ const Navigation = () => {
       case SCREENS.COURSE_LIST:
         iconName = focused ? "icCourse" : "icCourse";
         break;
-      case SCREENS.CHAT:
-        iconName = focused ? "icChat" : "icChat";
-        break;
+      // case SCREENS.CHAT:
+      //   iconName = focused ? "icCoach" : "icCoachBlur";
+      //   break;
       case SCREENS.NOTIFICATION:
         iconName = focused ? "bell" : "bell";
         break;
@@ -233,10 +234,10 @@ const Navigation = () => {
         >
           <Tab.Screen name={SCREENS.HOME} component={HomeScreen} />
           <Tab.Screen name={SCREENS.COURSE_LIST} component={CourseListScreen} />
-          <Tab.Screen name={SCREENS.CLUB_SCREEN} component={ClubScreen} />
+          {/* <Tab.Screen name={SCREENS.CLUB_SCREEN} component={ClubScreen} /> */}
           <Tab.Screen
             name={SCREENS.DISCOVERSCREEN}
-            component={DiscoverScreen}
+            component={DiscoveryStackScreen}
           />
 
           <Tab.Screen
@@ -295,6 +296,28 @@ const Navigation = () => {
       </>
     );
   };
+  const DiscoverStack = createStackNavigator();
+
+  const DiscoveryStackScreen = () => {
+    return (
+      <DiscoverStack.Navigator  screenOptions={{ headerShown: false }}>
+        <Tab.Screen
+          name={SCREENS.DISCOVERSCREEN}
+          component={DiscoverScreen}
+        />
+        <Stack.Screen name={SCREENS.AUDIO_PLAY} component={AudioPlayScreen} />
+        <Stack.Screen name={SCREENS.AUDIO_LIST} component={AudioListScreen} />
+        <Stack.Screen name={SCREENS.AUDIO_BOOK} component={AudioBookScreen} />
+        <Stack.Screen
+          name={SCREENS.RECOMMEND_AUDIO_BOOK}
+          component={RecommendBookScreen}
+        />
+        <Stack.Screen name={SCREENS.ALL_AUDIO_BOOk} component={AllBookScreen} />
+        <Stack.Screen name={SCREENS.AUDIO_PREVIEW} component={AudioPreview} />
+
+      </DiscoverStack.Navigator>
+    );
+  }
 
   return (
     <NavigationContainer
@@ -502,15 +525,7 @@ const Navigation = () => {
         />
         <Stack.Screen name={SCREENS.HIDDEN_PAGE} component={HiddenPaage} />
         <Stack.Screen name={SCREENS.WEBVIEW_SCREEN} component={WebviewScreen} />
-        <Stack.Screen name={SCREENS.AUDIO_PLAY} component={AudioPlayScreen} />
-        <Stack.Screen name={SCREENS.AUDIO_LIST} component={AudioListScreen} />
-        <Stack.Screen name={SCREENS.AUDIO_BOOK} component={AudioBookScreen} />
-        <Stack.Screen
-          name={SCREENS.RECOMMEND_AUDIO_BOOK}
-          component={RecommendBookScreen}
-        />
-        <Stack.Screen name={SCREENS.ALL_AUDIO_BOOk} component={AllBookScreen} />
-        <Stack.Screen name={SCREENS.AUDIO_PREVIEW} component={AudioPreview} />
+
         <Stack.Screen
           name={SCREENS.SHOW_ALL_REVIEW}
           component={showAllReview}
@@ -520,6 +535,10 @@ const Navigation = () => {
         <Stack.Screen
           name={SCREENS.LIST_MEMBER_CLUB}
           component={ListMemberScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.LIST_COURSE_CLUB}
+          component={ListCourseClub}
         />
         <Stack.Screen
           name={SCREENS.CREATEEVENT}
@@ -550,14 +569,7 @@ const Navigation = () => {
           component={UpdateEventScreen}
         />
       </Stack.Navigator>
-      <FloatingPlayer
-        style={{
-          position: "absolute",
-          left: 0,
-          right: 0,
-          bottom: getBottomSpace() + 52,
-        }}
-      />
+      <FloatingPlayer />
     </NavigationContainer>
   );
 };

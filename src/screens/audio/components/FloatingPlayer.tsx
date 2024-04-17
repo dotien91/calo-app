@@ -18,6 +18,7 @@ import CS from "@theme/styles";
 import { useLastActiveTrack } from "../hook/useLastActiveTrack";
 import { MovingText } from "./MovingText";
 import { useActionTrack } from "../hook/useActionTrack";
+import { getBottomSpace } from "react-native-iphone-screen-helper";
 
 export const FloatingPlayer = ({ style }: ViewProps) => {
   const activeTrack = useActiveTrack();
@@ -105,6 +106,10 @@ const styles = StyleSheet.create({
     elevation: 5,
     shadowRadius: 5,
     ...CS.flexRear,
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: getBottomSpace() + 52,
   },
   trackArtworkImage: {
     width: 48,

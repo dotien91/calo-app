@@ -82,7 +82,7 @@ const CourseCreate = () => {
   const [updating, setUpdating] = React.useState(false);
   const [startDate, setStartDate] = React.useState<Date>();
   const [endDate, setEndDate] = React.useState<Date>();
-  const [typeCourse, setTypeCourse] = React.useState(listTypeCourse[0].value);
+  const [typeCourse, setTypeCourse] = React.useState(listTypeCourse[1].value);
   const [level, setLevel] = useState<string>(listLevel[0].value);
   const [skill, setSkill] = useState<string[]>([]);
   const [priceInput, setPriceInput] = useState("");
@@ -160,7 +160,7 @@ const CourseCreate = () => {
           // media_id: idVideo,
           public_status: data?.public_status || "draft",
           type: typeCourse,
-          level: level,
+          // level: level,
           skills: skill,
         };
         // console.log(params);
@@ -173,7 +173,9 @@ const CourseCreate = () => {
         if (course_id) {
           params._id = course_id;
         }
-        setUpdating(true);
+
+        // setUpdating(true);
+        
         showSuperModal({
           styleModalType: EnumStyleModalType.Middle,
           contentModalType: EnumModalContentType.Loading,
@@ -186,6 +188,7 @@ const CourseCreate = () => {
             (item) => item.value == priceInput,
           )?.id;
         }
+        
         if (course_id) {
           updateCourse(params).then((res) => {
             if (!res.isError) {
@@ -244,6 +247,7 @@ const CourseCreate = () => {
   };
 
   const renderSelectLevel = () => {
+    return null
     const renderLevelBtn = (item: ILevel) => {
       const _onSelectLevel = () => {
         setLevel(item.value);

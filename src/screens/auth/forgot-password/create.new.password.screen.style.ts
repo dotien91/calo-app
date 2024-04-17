@@ -19,7 +19,7 @@ const createStyles = (theme: ExtendedTheme) => {
     },
     textHeader: {
       ...CommonStyle.hnSemiBold,
-      fontSize: 32,
+      fontSize: 24,
       color: colors.mainColor2,
       textAlign: "center",
     },

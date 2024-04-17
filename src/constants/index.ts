@@ -98,6 +98,7 @@ export const SCREENS = {
   CREATE_CLUB_SCREEN: "CreateClubScreen",
   CLUB_HOME: "ClubHome",
   LIST_MEMBER_CLUB: "ListMemberClub",
+  LIST_COURSE_CLUB: "ListCourseClub",
   AUDIO_BOOK: "AudioBook",
   RECOMMEND_AUDIO_BOOK: "RecommandAudioBook",
   ALL_AUDIO_BOOk: "AllAudioBook",
@@ -113,9 +114,9 @@ export const SCREENS = {
 };
 
 export const IOS_CLIENT_ID_GOOGLE =
-  "329708522429-tb80b2s4u8k8r3p2ocn5rfa5ofr78kbl.apps.googleusercontent.com";
+  "543656532685-ea3og352pgjtb382rlhmhdl983upijma.apps.googleusercontent.com";
 export const WEB_CLIENT_ID_GOOGLE =
-  "329708522429-t56qqqgo9kasu9rqtomf1aj8al55obbo.apps.googleusercontent.com";
+  "543656532685-oh1fjl1fhvc1dcdc32agqrotf28vjj69.apps.googleusercontent.com";
 
 export enum SERVICE_UNIT {
   second = "second",

@@ -1,4 +1,4 @@
-package com.ikigroup.ieltshunter;
+package com.ikigroup.ikicoach;
 
 
 import com.facebook.react.ReactActivity;

@@ -95,7 +95,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
       action: () => {
         if (userData?._id) {
           NavigationService.navigate(SCREENS.CHAT_ROOM, {
-            partner_id: "65f7b1b3a22b22d7d3dcf078",
+            partner_id: "66150da7d29bd7cb5f9c308c",
             partner_name: "Admin",
             isAdmin: true,
           });

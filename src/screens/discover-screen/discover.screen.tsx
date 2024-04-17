@@ -66,11 +66,11 @@ const DiscoverScreen = () => {
       title: translations.discover.study,
       screen: SCREENS.COURSE_LIST,
     },
-    {
-      icon: "icGradution",
-      title: translations.discover.ieltsPractice,
-      screen: SCREENS.IELTS_PRACTICE_HOME,
-    },
+    // {
+    //   icon: "icGradution",
+    //   title: translations.discover.ieltsPractice,
+    //   screen: SCREENS.IELTS_PRACTICE_HOME,
+    // },
     // {
     //   icon: "icShop",
     //   title: translations.discover.shop,
@@ -82,13 +82,13 @@ const DiscoverScreen = () => {
       params: { defaultIndex: 3 },
     },
     {
-      icon: "icFind",
+      icon: "icPersonSearch",
       title: translations.discover.findTutor,
       screen: SCREENS.COURSE_CATEGORY,
       params: { defaultIndex: 1 },
     },
     {
-      icon: "icFind",
+      icon: "icAudio",
       title: translations.podcast.listPodcast,
       screen: SCREENS.AUDIO_BOOK,
     },
@@ -480,7 +480,7 @@ const DiscoverScreen = () => {
     <SafeAreaView style={{ ...CS.safeAreaView }}>
       <View style={{ flex: 1 }}>
         {renderHeader()}
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView contentContainerStyle={{paddingBottom: 80}} showsVerticalScrollIndicator={false}>
           {renderLeaderBoard()}
           {renderFeature()}
         </ScrollView>

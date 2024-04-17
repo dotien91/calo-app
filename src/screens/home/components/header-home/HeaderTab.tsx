@@ -12,48 +12,44 @@ import useStore from "@services/zustand/store";
 import { EnumCourseType } from "models/course.model";
 import InviteView from "../invite-me/invite";
 import ListLiveStream from "../list-livestream/list.liveStream";
-import CourseView from "../list-course/list.course";
 import TextBase from "@shared-components/TextBase";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import { getStatusBarHeight } from "react-native-safearea-height";
 // import ListLiveStream from "../list-livestream/list.liveStream";
+import CourseView from "../list-course/list.course";
+
+const listCategorys = [
+  {
+    title: translations.listCategory.course,
+    icon: "icCard",
+    screen: SCREENS.COURSE_LIST,
+    id: "course",
+  },
+  {
+    id: "tutor",
+    title: translations.listCategory.tutor,
+    icon: "icCard1",
+    screen: SCREENS.COURSE_LIST,
+  },
+  {
+    title: translations.listCategory.affiliate,
+    icon: "icCard2",
+    screen: SCREENS.HOME_AFFILIATE,
+    color: "#E8F7EF",
+  },
+  // {
+  //   title: translations.listCategory.club,
+  //   icon: "icCard3",
+  //   screen: SCREENS.HOME_AFFILIATE,
+  //   color: "#E8F7EF",
+  // },
+];
 
 const HeaderTab = () => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
 
-  const listCategorys = [
-    {
-      title: translations.listCategory.course,
-      icon: "icCard",
-      screen: SCREENS.COURSE_LIST,
-      id: "course",
-    },
-    {
-      id: "tutor",
-      title: translations.listCategory.tutor,
-      icon: "icCard1",
-      screen: SCREENS.COURSE_LIST,
-    },
-    {
-      title: translations.listCategory.affiliate,
-      icon: "icCard2",
-      screen: SCREENS.HOME_AFFILIATE,
-      color: "#E8F7EF",
-    },
-    {
-      title: translations.listCategory.club,
-      icon: "icCard3",
-      screen: SCREENS.CLUB_SCREEN,
-      color: "#E8F7EF",
-    },
-  ];
-
   const { isLoggedIn } = useUserHook();
-
-  React.useEffect(() => {
-    console.log("rerender");
-  }, []);
 
   const setCourseCurrentType = useStore((state) => state.setCourseCurrentType);
 

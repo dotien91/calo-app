@@ -38,6 +38,8 @@ export enum EnumModalContentType {
   FilterSortClub = "filter-sort-club",
   ReviewAudio = "ReviewAudio",
   MoreEventDetail = "more-event-detail",
+  MemberAction = "MemberAction",
+  SelectCourse = "SelectCourse",
 }
 
 export enum EnumStyleModalType {

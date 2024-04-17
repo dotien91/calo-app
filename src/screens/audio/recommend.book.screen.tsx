@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FlatList, SafeAreaView } from "react-native";
 
 import CS from "@theme/styles";
@@ -7,15 +7,16 @@ import useStore from "@services/zustand/store";
 import { useListData } from "@helpers/hooks/useListData";
 import { translations } from "@localization";
 import { GetPodCastList } from "@services/api/podcast.api";
-import { IAudioItem } from "models/audio.modal";
+import { TypeTrackLocal } from "models/audio.modal";
 import AudioItemList from "./components/audio.item.list";
 import EmptyResultView from "@shared-components/empty.data.component";
 import LoadingList from "@shared-components/loading.list.component";
 
 const RecommendBookScreen = () => {
   const userData = useStore((state) => state.userData);
+  const setListAudio = useStore((state) => state.setListAudio);
 
-  const { listData, isLoading } = useListData<IAudioItem>(
+  const { listData, isLoading } = useListData<TypeTrackLocal>(
     {
       auth_id: userData?._id,
       order_by: "DESC",
@@ -24,8 +25,8 @@ const RecommendBookScreen = () => {
     GetPodCastList,
   );
 
-  const data = React.useMemo(() => {
-    return listData.slice(0, 15);
+  useEffect(() => {
+    setListAudio(listData);
   }, [listData]);
 
   const renderItem = ({ item, index }) => {
@@ -47,11 +48,11 @@ const RecommendBookScreen = () => {
   return (
     <SafeAreaView style={CS.safeAreaView}>
       <Header text={translations.audio.recommendBook} />
-      {!isLoading && data.length == 0 && renderEmptyCourseOfMe()}
-      {isLoading && data.length == 0 && renderLoading()}
+      {!isLoading && listData.length == 0 && renderEmptyCourseOfMe()}
+      {isLoading && listData.length == 0 && renderLoading()}
       <FlatList
         showsHorizontalScrollIndicator={false}
-        data={data}
+        data={listData}
         renderItem={renderItem}
         scrollEventThrottle={16}
         contentContainerStyle={{

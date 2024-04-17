@@ -1,4 +1,4 @@
-package com.ikigroup.ieltshunter;
+package com.ikigroup.ikicoach;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

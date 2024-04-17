@@ -11,6 +11,12 @@ import FeatureClubScreen from "../components/feature.club.screen";
 import ManagedClubScreen from "../components/managed.club.screen";
 import JoinClubSceen from "../components/join.club.sceen";
 
+const renderScene = SceneMap({
+  first: FeatureClubScreen,
+  second: ManagedClubScreen,
+  third: JoinClubSceen,
+});
+
 const ClubScreen = () => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
@@ -23,11 +29,6 @@ const ClubScreen = () => {
     { key: "third", title: translations.club.tab3 },
   ];
 
-  const renderScene = SceneMap({
-    first: FeatureClubScreen,
-    second: ManagedClubScreen,
-    third: JoinClubSceen,
-  });
 
   const onPressHeaderRight = () => {};
 

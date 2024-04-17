@@ -1,4 +1,5 @@
 import { StoreSlice } from "@zustand";
+import { TypeTrackLocal } from "models/audio.modal";
 import { Track } from "react-native-track-player";
 
 interface TrackAudio extends Track {
@@ -9,6 +10,8 @@ export interface AudioSlice {
   listAudioHistory: TrackAudio[];
   addAudio: (track: TrackAudio) => void;
   updateAudio: (track: TrackAudio) => void;
+  listAudio: TypeTrackLocal[];
+  setListAudio: (list: TypeTrackLocal[]) => void;
 }
 
 const createAudioSlice: StoreSlice<AudioSlice> = (set, get) => ({
@@ -45,6 +48,10 @@ const createAudioSlice: StoreSlice<AudioSlice> = (set, get) => ({
         listAudioHistory: listAudioHistory,
       };
     }
+  },
+  listAudio: [],
+  setListAudio: (list: TypeTrackLocal[]) => {
+    set({ listAudio: list });
   },
 });
 export default createAudioSlice;

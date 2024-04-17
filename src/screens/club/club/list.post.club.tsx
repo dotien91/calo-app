@@ -50,7 +50,7 @@ const ListPostClub = ({ id }: ListPostClubProps) => {
   } = useListData<TypedPost>(paramsRequest, getListPost, []);
 
   useEffect(() => {
-    const typeEmit = "reload_list_post_club";
+    const typeEmit = "reload_list_post";
     eventEmitter.on(typeEmit, onRefresh);
     return () => {
       eventEmitter.off(typeEmit, onRefresh);

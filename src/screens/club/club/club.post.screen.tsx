@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, SafeAreaView, TouchableOpacity } from "react-native";
+import { StyleSheet, SafeAreaView, TouchableOpacity, Text } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 
@@ -11,6 +11,7 @@ import useStore from "@services/zustand/store";
 import { palette } from "@theme/themes";
 import { SCREENS } from "constants";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import PressableBtn from "@shared-components/button/PressableBtn";
 
 const ClubPostScreen = () => {
   const route = useRoute();
@@ -18,18 +19,34 @@ const ClubPostScreen = () => {
 
   const userData = useStore((state) => state.userData);
 
-  const id_club = route.params?.id || "";
+  const club_id = route.params?.["club_id"] || "";
   const name = route.params?.name || "";
-  console.log("id...", id_club);
-
+console.log("id_club", club_id)
   const gotoCreatePost = () => {
-    NavigationService.navigate(SCREENS.EVENTSLISTSCREEN, { group_id: id_club });
+    NavigationService.navigate(SCREENS.POST_SCREEN, { group_id: club_id });
   };
-
   return (
     <SafeAreaView style={CS.safeAreaView}>
       <Header text={name} />
-      <ListPostClub id={id_club} />
+      <PressableBtn
+        onPress={() =>
+          NavigationService.navigate(SCREENS.LIST_MEMBER_CLUB, {
+            club_id
+          })
+        }
+      >
+        <Text>ListMember</Text>
+      </PressableBtn>
+      <PressableBtn
+        onPress={() =>
+          NavigationService.navigate(SCREENS.LIST_COURSE_CLUB, {
+            club_id
+          })
+        }
+      >
+        <Text>Course</Text>
+      </PressableBtn>
+      <ListPostClub id={club_id} />
       {isLoggedIn() && userData?._id && (
         <TouchableOpacity style={styles.addPost} onPress={gotoCreatePost}>
           <Icon

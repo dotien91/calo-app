@@ -7,6 +7,7 @@ import CS from "@theme/styles";
 import AudioQuickFilter from "../components/audio.quick.filter";
 import AudioView from "../audio-list/audio.view";
 import AudioList from "../audio-list/audio.list";
+// import AudioListContinue from "../audio-list/audio.list.continue";
 
 const AudioBookScreen = () => {
   return (
@@ -14,6 +15,7 @@ const AudioBookScreen = () => {
       <Header text={translations.audio.audioBook} />
       <ScrollView style={styles.viewContainer}>
         <AudioQuickFilter />
+        {/* <AudioListContinue /> */}
         <AudioView />
         <AudioList />
       </ScrollView>
