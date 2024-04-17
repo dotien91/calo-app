@@ -112,6 +112,7 @@ export const SCREENS = {
   BECOME_ELITE_CLUB: "BecomeEliteClub",
   SEARCH_CLUB: "SearchClub",
   CLUB_BY_CATEGORY: "ClubByCategory",
+  UPDATE_EVENT_SCREEN: "UpdateEventScreen",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

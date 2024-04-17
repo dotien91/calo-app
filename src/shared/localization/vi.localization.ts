@@ -889,6 +889,10 @@ export default {
     pastEvent: "Các sự kiện đã diễn ra",
     going: "Tham gia",
     eventBy: "Sự kiện được tổ chức bởi",
+    deleteEvent: "Xóa Sự kiện",
+    editEvent: "Chỉnh sửa Sự kiện",
+    confirmDelete: "Bạn có muốn xóa không?",
+    deleteEventSuccess: "Sự kiện đã được xóa thành công",
   },
   notifications: {
     notifications: "Thông báo",
@@ -1724,6 +1728,7 @@ export default {
     toAdminSuccess: "Cấp quyền admin thành công",
     toAdminFaild: "Cấp quyền admin không thành công, thử lại sau",
     toMemberSuccess: "Thu hồi quyền admin thành công",
+    addMember: "Thêm thành viên",
     toMemberFaild: "Thu hồi quyền admin không thành công, thử lại sau",
     deleteMember: (name: string) => `Xoá ${name} khỏi nhóm`,
     deleteMemberSuccess: (name: string) => `Đã xoá ${name} khỏi nhóm`,

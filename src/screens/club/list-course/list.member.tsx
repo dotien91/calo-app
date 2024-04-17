@@ -75,7 +75,7 @@ const ListMemberScreen = () => {
   const renderItem = ({ item, index }) => {
     const gotoProfile = () => {
       NavigationService.navigate(SCREENS.PROFILE_CURRENT_USER, {
-        _id: item.user_id._id,
+        _id: item.user_id?._id,
         userInfo: item.user_id,
       });
     };
@@ -115,7 +115,7 @@ const ListMemberScreen = () => {
             </View>
           )}
         </View>
-        {item.user_id._id !== userData?._id &&
+        {item.user_id?._id !== userData?._id &&
           tier != "1" &&
           item.tier != 3 && (
             <IconSvgBtn

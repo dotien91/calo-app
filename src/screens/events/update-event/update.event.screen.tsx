@@ -1,3 +1,11 @@
+import { translations } from "@localization";
+import { useTheme, useRoute } from "@react-navigation/native";
+import DateTimePickerLocal from "@screens/club/components/date.time.picker.local";
+import Button from "@shared-components/button/Button";
+import InputHook from "@shared-components/form/InputHookForm";
+import Header from "@shared-components/header/Header";
+import CS from "@theme/styles";
+import IconSvg from "assets/svg";
 import React, { useMemo, useState } from "react";
 import {
   KeyboardAvoidingView,
@@ -6,40 +14,32 @@ import {
   ScrollView,
   View,
 } from "react-native";
+import createStyles from "./update.event.style";
+import SelectVideoHook from "@screens/course/course-create/components/select.video";
+import { useForm } from "react-hook-form";
+import { showToast } from "@helpers/super.modal.helper";
+import { SCREENS } from "constants";
+import { palette } from "@theme/themes";
+import * as NavigationService from "react-navigation-helpers";
+import { updateEvent } from "@services/api/event.api";
 import eventEmitter from "@services/event-emitter";
 
-import CS from "@theme/styles";
-import * as NavigationService from "react-navigation-helpers";
-import createStyles from "./create.event.style";
-import Header from "@shared-components/header/Header";
-import { translations } from "@localization";
-import { useTheme, useRoute } from "@react-navigation/native";
-import IconSvg from "assets/svg";
-import Button from "@shared-components/button/Button";
-import { palette } from "@theme/themes";
-import { useForm } from "react-hook-form";
-import InputHook from "@shared-components/form/InputHookForm";
-import DateTimePickerLocal from "../components/date.time.picker.local";
-import { createEvent } from "@services/api/event.api";
-import { SCREENS } from "constants";
-import { showToast } from "@helpers/super.modal.helper";
-import SelectVideoHook from "@screens/course/course-create/components/select.video";
+const UpdateEventScreen = () => {
+  const route = useRoute();
+  const item = route.params?.item || "";
+  //   console.log("iteem......", item);
 
-const CreateEventScreen = () => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const [updating, setUpdating] = useState(false);
-  const [startDate, setStartDate] = React.useState<Date>();
-  const [endDate, setEndDate] = React.useState<Date>();
-
-  const route = useRoute();
-  const group_id = route.params?.group_id || "";
-  console.log("idEvent====creaet=====", group_id);
+  const [startDate, setStartDate] = React.useState<Date>(item?.start_time);
+  const [endDate, setEndDate] = React.useState<Date>(item?.end_time);
 
   const { renderSelectVideo, updatingVid, link } = SelectVideoHook({
     type: "photo",
     typeM: "photo",
     placeholder: translations.club.purchaseJoin,
+    link: item.cover,
   });
 
   const {
@@ -49,8 +49,9 @@ const CreateEventScreen = () => {
     setFocus,
   } = useForm({
     defaultValues: {
-      name: "",
-      location: "",
+      group_id: item.group_id,
+      name: item.name,
+      location: item.location,
     },
   });
 
@@ -69,13 +70,16 @@ const CreateEventScreen = () => {
     }
     const params = {
       cover: link,
-      group_id: group_id,
+      group_id: item?.group_id,
+      _id: item?._id,
       name: data.name,
       start_time: startDate,
       end_time: endDate,
       location: data.location,
     };
-    createEvent(params).then((res) => {
+    // console.log("updateEvent==============", params);
+    updateEvent(params).then((res) => {
+      console.log("resEvent=====", JSON.stringify(res, null, 2));
       if (!res.isError) {
         NavigationService.navigate(SCREENS.EVENTSLISTSCREEN, {
           id: res.data._id,
@@ -92,7 +96,7 @@ const CreateEventScreen = () => {
       style={CS.flex1}
     >
       <SafeAreaView style={CS.safeAreaView}>
-        <Header text={translations.club.createEvent} iconNameLeft="x" />
+        <Header text={translations.event.editEvent} iconNameLeft="x" />
         <ScrollView style={CS.flex1} showsVerticalScrollIndicator={false}>
           <View>{renderSelectVideo()}</View>
           <View style={styles.viewInput}>
@@ -166,7 +170,7 @@ const CreateEventScreen = () => {
             style={{
               backgroundColor: updating ? palette.placeholder : palette.primary,
             }}
-            text={translations.club.createEvent2}
+            text={translations.club.submit}
             disabled={updating}
             onPress={handleSubmit(onSubmit)}
           />
@@ -176,4 +180,4 @@ const CreateEventScreen = () => {
   );
 };
 
-export default CreateEventScreen;
+export default UpdateEventScreen;

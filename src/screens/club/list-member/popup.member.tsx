@@ -17,7 +17,6 @@ interface PopupMemberProps {
 
 const PopupMember = (props: PopupMemberProps) => {
   const { tier, user } = props;
-  console.log("user...", user);
   const toAdmin = () => {
     updateMemberGroup({
       _id: user._id,
@@ -61,9 +60,14 @@ const PopupMember = (props: PopupMemberProps) => {
       if (!res.isError) {
         showToast({
           type: "success",
-          message: translations.club.deleteFromGroup(user.user_id.display_name),
+          message: translations.club.deleteMemberSuccess(
+            user.user_id.display_name,
+          ),
         });
         eventEmitter.emit("delete_member", { id: user._id });
+        if (user.tier == 2) {
+          eventEmitter.emit("delete_admin");
+        }
       } else {
         showToast({
           type: "error",
@@ -90,21 +94,21 @@ const PopupMember = (props: PopupMemberProps) => {
         />
         <Text style={styles.name}>{user.user_id.display_name}</Text>
       </View>
-      {tier != 1 && user.tier == 1 && (
+      {tier == 3 && user.tier == 1 && (
         <ItemPupup
           txt={translations.club.memberToAdmin}
           onPress={toAdmin}
           iconName={"icShield"}
         />
       )}
-      {tier != 1 && user.tier == 2 && (
+      {tier == 3 && user.tier == 2 && (
         <ItemPupup
           txt={translations.club.adminToMember}
           onPress={toMember}
           iconName={"icPersonCheck"}
         />
       )}
-      {user.tier != 3 && (
+      {(user.tier == 1 || (tier == 3 && user.tier == 2)) && (
         <ItemPupup
           txt={translations.club.deleteMember(user.user_id.display_name)}
           onPress={deleteMember}
