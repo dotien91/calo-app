@@ -115,6 +115,10 @@ const ListMemberScreen = () => {
       });
     };
 
+    const isEditMember =
+      item.user_id?._id !== userData?._id &&
+      ((tier == "2" && item.tier == 1) || tier == "3");
+
     return (
       <View style={styles.itemMember} key={index}>
         <AvatarPost
@@ -138,16 +142,14 @@ const ListMemberScreen = () => {
             </View>
           )}
         </View>
-        {item.user_id?._id !== userData?._id &&
-          tier != "1" &&
-          item.tier != 3 && (
-            <IconSvgBtn
-              name="icMore"
-              onPress={pressMore}
-              size={16}
-              color={palette.text}
-            />
-          )}
+        {isEditMember && (
+          <IconSvgBtn
+            name="icMore"
+            onPress={pressMore}
+            size={16}
+            color={palette.text}
+          />
+        )}
       </View>
     );
   };
