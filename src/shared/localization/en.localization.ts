@@ -1200,6 +1200,7 @@ export default {
     toAdminFaild: "Failed to grant admin rights, please try again later",
     toMemberSuccess: "Admin rights revoked successfully",
     toMemberFaild: "Failed to revoke admin rights, please try again later",
+    addMember: "Add member",
     deleteMember: (name: string) => `Remove ${name} from the group`,
     deleteMemberSuccess: (name: string) => `Removed ${name} from the group`,
     deleteMemberFaild: "Deletion unsuccessful, please try again later",

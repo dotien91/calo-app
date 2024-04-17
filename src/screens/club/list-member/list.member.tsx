@@ -49,6 +49,7 @@ const ListMemberScreen = () => {
     isLoading,
     refreshControl,
     renderFooterComponent,
+    _requestData: reloadeMember,
   } = useListData<TypeClubMember>(paramsRequest, getMemberGroup, []);
 
   const param = {
@@ -75,18 +76,29 @@ const ListMemberScreen = () => {
         _requestData(false);
       }
     };
+    const deleteAdmin = () => {
+      _requestData(false);
+    };
+    const reloadListMember = () => {
+      reloadeMember(false);
+    };
     eventEmitter.on("delete_member", deleteMember);
     eventEmitter.on("update_member", updateMember);
+    eventEmitter.on("reload_list_member", reloadListMember);
+    eventEmitter.on("delete_admin", deleteAdmin);
+
     return () => {
       eventEmitter.off("delete_member", deleteMember);
       eventEmitter.off("update_member", updateMember);
+      eventEmitter.off("reload_list_member", reloadListMember);
+      eventEmitter.off("delete_admin", deleteAdmin);
     };
   });
 
   const renderItem = ({ item, index }) => {
     const gotoProfile = () => {
       NavigationService.navigate(SCREENS.PROFILE_CURRENT_USER, {
-        _id: item.user_id._id,
+        _id: item.user_id?._id,
         userInfo: item.user_id,
       });
     };
@@ -126,7 +138,7 @@ const ListMemberScreen = () => {
             </View>
           )}
         </View>
-        {item.user_id._id !== userData?._id &&
+        {item.user_id?._id !== userData?._id &&
           tier != "1" &&
           item.tier != 3 && (
             <IconSvgBtn
@@ -159,7 +171,16 @@ const ListMemberScreen = () => {
     return <LoadingList numberItem={3} />;
   };
 
-  const showModalAddMember = () => {};
+  const showModalAddMember = () => {
+    showSuperModal({
+      contentModalType: EnumModalContentType.AddToGroup,
+      styleModalType: EnumStyleModalType.Bottom,
+      data: {
+        group_id: club_id,
+        hideCloseIcon: true,
+      },
+    });
+  };
 
   return (
     <SafeAreaView style={CS.safeAreaView}>
@@ -183,6 +204,7 @@ const ListMemberScreen = () => {
         refreshControl={refreshControl()}
         ListFooterComponent={renderFooterComponent()}
       />
+      {/* <PopupListFriend group_id={club_id} /> */}
     </SafeAreaView>
   );
 };

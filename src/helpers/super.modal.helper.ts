@@ -40,6 +40,7 @@ export enum EnumModalContentType {
   MoreEventDetail = "more-event-detail",
   MemberAction = "MemberAction",
   SelectCourse = "SelectCourse",
+  AddToGroup = "add-to-group",
 }
 
 export enum EnumStyleModalType {

@@ -27,7 +27,7 @@ import ActionMore from "@screens/course/detail-teacher/components/ActionMore";
 import ChatRoomClass from "@screens/chat/room-chat/chat.room.class.video";
 import ListUser from "./modal-inner/ListUser";
 import PopupCreateLesson from "@screens/course/course-create/components/PartViewCreate/popup.create.lesson";
-import ConfirmViewBottom from "@shared-components/comfirm-view-bottom/comfirm.view.bottom";
+// import ConfirmViewBottom from "@shared-components/comfirm-view-bottom/comfirm.view.bottom";
 import InputViewModal from "@shared-components/input-modal/input.modal";
 import ListActionInner from "./modal-inner/ListActionInner";
 import GamificationView from "./modal-inner/GamificationView";
@@ -44,9 +44,10 @@ import PopupCoupon from "@screens/course/course-preview/components/popup.coupon"
 import ReferralPopupTask from "@shared-components/task-item/task.referral.popup";
 import { translations } from "@localization";
 import WriteReview from "@screens/audio/components/WriteReview";
-import PopupMoreEvent from "@screens/events/components/popup.more.event";
+// import PopupMoreEvent from "@screens/events/components/popup.more.event";
 import PopupMember from "@screens/club/list-member/popup.member";
 import SelectCourseView from "./modal-inner/SelectCourseView";
+import PopupListFriend from "@screens/club/list-member/popup.list.friend";
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
 // using normal one.
@@ -64,7 +65,7 @@ import SelectCourseView from "./modal-inner/SelectCourseView";
 //   data
 // })
 
-interface SuperModalProps { }
+interface SuperModalProps {}
 
 const SuperModal: React.FC<SuperModalProps> = () => {
   const [data, setData] = useState();
@@ -188,114 +189,116 @@ const SuperModal: React.FC<SuperModalProps> = () => {
   };
 
   const renderContentModal = () => {
-    return <>
-      {contentModalType == EnumModalContentType.Report && (
-        <ReportView {...data} />
-      )}
-      {contentModalType == EnumModalContentType.PostAction && (
-        <ListActionOfPost data={data} />
-      )}
-      {contentModalType == EnumModalContentType.CommentAction && (
-        <ListActionOfComment data={data} />
-      )}
-      {contentModalType == EnumModalContentType.FilterListCourse && (
-        <CourseFilterModalInnter {...data} />
-      )}
-      {contentModalType == EnumModalContentType.FilterTypeCourse && (
-        <SelectBox {...data} />
-      )}
-      {contentModalType == EnumModalContentType.MoreTeacher && (
-        <ActionMore data={data} />
-      )}
-      {contentModalType == EnumModalContentType.ChatRoom && (
-        <ChatRoomClass {...data} />
-      )}
-      {contentModalType == EnumModalContentType.ListUser && (
-        <ListUser {...data} />
-      )}
-      {contentModalType == EnumModalContentType.AddLesson && (
-        <PopupCreateLesson {...data} />
-      )}
-      {contentModalType == EnumModalContentType.Confirm && (
-        <ConfirmViewBottom {...data} closeModal={closeModal} />
-      )}
-      {contentModalType == EnumModalContentType.ListMoreAction && (
-        <ListActionInner {...data} closeModal={closeModal} />
-      )}
-      {contentModalType == EnumModalContentType.TextInput && (
-        <InputViewModal {...data} closeModal={closeModal} />
-      )}
-      {contentModalType == EnumModalContentType.GamificationView && (
-        <GamificationView {...data} closeModal={closeModal} />
-      )}
-      {contentModalType == EnumModalContentType.CustomView &&
-        data.customView()}
-      {contentModalType == EnumModalContentType.ListCourse && (
-        <ListCourseLiveStream {...data} />
-      )}
-      {contentModalType == EnumModalContentType.FilterAffiliate && (
-        <FilterAffiliate data={data} />
-      )}
-      {contentModalType == EnumModalContentType.SearchBank && (
-        <ListBank {...data} closeModal={closeModal} />
-      )}
-      {contentModalType == EnumModalContentType.SelectSort && (
-        <SelectRadioButton data={data} />
-      )}
-      {contentModalType == EnumModalContentType.Referral && (
-        <ReferralPopup data={data} />
-      )}
-      {contentModalType == EnumModalContentType.TeacherClass && (
-        <TeacherClassModalInner {...data} />
-      )}
-      {contentModalType == EnumModalContentType.MoreCourse && (
-        <PopupCourseDetail {...data} />
-      )}
-      {contentModalType == EnumModalContentType.AddCouponToCourse && (
-        <PopupCoupon {...data} />
-      )}
-      {contentModalType == EnumModalContentType.RefferralTask && (
-        <ReferralPopupTask data={data} />
-      )}
-      {contentModalType == EnumModalContentType.FilterSortClub && (
-        <SelectBox {...data} />
-      )}
-      {contentModalType == EnumModalContentType.ReviewAudio && (
-        <WriteReview data={data} />
-      )}
-      {contentModalType == EnumModalContentType.MemberAction && (
-        <PopupMember {...data} />
-      )}
-      {contentModalType == EnumModalContentType.LottieAnimation && (
-        <EarnPointView {...data} />
-      )}
-      {contentModalType == EnumModalContentType.Confirm &&
-        renderConfirmView()}
-      {contentModalType == EnumModalContentType.Loading && renderLoading()}
-      {contentModalType == EnumModalContentType.Library && (
-        <ImageSlideShow {...data} closeModal={closeModal} />
-      )}
-      {contentModalType == EnumModalContentType.CustomView &&
-        data.customView()}
-      {contentModalType == EnumModalContentType.ListCourse && (
-        <ListCourseLiveStream {...data} />
-      )}
-      {contentModalType == EnumModalContentType.ChatRoom && (
-        <ChatRoomClass {...data} />
-      )}
-      {contentModalType == EnumModalContentType.SelectCourse && (
-        <SelectCourseView {...data} />
-      )}
-    </>
-  }
+    return (
+      <>
+        {contentModalType == EnumModalContentType.Report && (
+          <ReportView {...data} />
+        )}
+        {contentModalType == EnumModalContentType.PostAction && (
+          <ListActionOfPost data={data} />
+        )}
+        {contentModalType == EnumModalContentType.CommentAction && (
+          <ListActionOfComment data={data} />
+        )}
+        {contentModalType == EnumModalContentType.FilterListCourse && (
+          <CourseFilterModalInnter {...data} />
+        )}
+        {contentModalType == EnumModalContentType.FilterTypeCourse && (
+          <SelectBox {...data} />
+        )}
+        {contentModalType == EnumModalContentType.MoreTeacher && (
+          <ActionMore data={data} />
+        )}
+        {contentModalType == EnumModalContentType.ChatRoom && (
+          <ChatRoomClass {...data} />
+        )}
+        {contentModalType == EnumModalContentType.ListUser && (
+          <ListUser {...data} />
+        )}
+        {contentModalType == EnumModalContentType.AddLesson && (
+          <PopupCreateLesson {...data} />
+        )}
+        {contentModalType == EnumModalContentType.ListMoreAction && (
+          <ListActionInner {...data} closeModal={closeModal} />
+        )}
+        {contentModalType == EnumModalContentType.TextInput && (
+          <InputViewModal {...data} closeModal={closeModal} />
+        )}
+        {contentModalType == EnumModalContentType.GamificationView && (
+          <GamificationView {...data} closeModal={closeModal} />
+        )}
+        {contentModalType == EnumModalContentType.CustomView &&
+          data.customView()}
+        {contentModalType == EnumModalContentType.ListCourse && (
+          <ListCourseLiveStream {...data} />
+        )}
+        {contentModalType == EnumModalContentType.FilterAffiliate && (
+          <FilterAffiliate data={data} />
+        )}
+        {contentModalType == EnumModalContentType.SearchBank && (
+          <ListBank {...data} closeModal={closeModal} />
+        )}
+        {contentModalType == EnumModalContentType.SelectSort && (
+          <SelectRadioButton data={data} />
+        )}
+        {contentModalType == EnumModalContentType.Referral && (
+          <ReferralPopup data={data} />
+        )}
+        {contentModalType == EnumModalContentType.TeacherClass && (
+          <TeacherClassModalInner {...data} />
+        )}
+        {contentModalType == EnumModalContentType.MoreCourse && (
+          <PopupCourseDetail {...data} />
+        )}
+        {contentModalType == EnumModalContentType.AddCouponToCourse && (
+          <PopupCoupon {...data} />
+        )}
+        {contentModalType == EnumModalContentType.RefferralTask && (
+          <ReferralPopupTask data={data} />
+        )}
+        {contentModalType == EnumModalContentType.FilterSortClub && (
+          <SelectBox {...data} />
+        )}
+        {contentModalType == EnumModalContentType.ReviewAudio && (
+          <WriteReview data={data} />
+        )}
+        {contentModalType == EnumModalContentType.MemberAction && (
+          <PopupMember {...data} />
+        )}
+        {contentModalType == EnumModalContentType.LottieAnimation && (
+          <EarnPointView {...data} />
+        )}
+        {contentModalType == EnumModalContentType.Confirm &&
+          renderConfirmView()}
+        {contentModalType == EnumModalContentType.Loading && renderLoading()}
+        {contentModalType == EnumModalContentType.Library && (
+          <ImageSlideShow {...data} closeModal={closeModal} />
+        )}
+        {contentModalType == EnumModalContentType.CustomView &&
+          data.customView()}
+        {contentModalType == EnumModalContentType.ListCourse && (
+          <ListCourseLiveStream {...data} />
+        )}
+        {contentModalType == EnumModalContentType.ChatRoom && (
+          <ChatRoomClass {...data} />
+        )}
+        {contentModalType == EnumModalContentType.SelectCourse && (
+          <SelectCourseView {...data} />
+        )}
+        {contentModalType == EnumModalContentType.AddToGroup && (
+          <PopupListFriend {...data} />
+        )}
+      </>
+    );
+  };
 
   if (styleModalType == EnumStyleModalType.Bottom) {
     return (
       <StickBottomModal
         isVisible={visible}
         onBackdropPress={closeModal}
-      // swipeDirection={["down"]}
-      // onSwipeComplete={closeModal}
+        // swipeDirection={["down"]}
+        // onSwipeComplete={closeModal}
       >
         <View style={styles.bottomInner}>
           {!data?.hideCloseIcon && (
@@ -335,8 +338,8 @@ const SuperModal: React.FC<SuperModalProps> = () => {
           contentModalType == EnumModalContentType.LottieAnimation
             ? 0
             : contentModalType == EnumModalContentType.Loading
-              ? 0.1
-              : 0.6
+            ? 0.1
+            : 0.6
         }
       >
         {renderContentModal()}

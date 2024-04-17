@@ -1728,6 +1728,7 @@ export default {
     toAdminSuccess: "Cấp quyền admin thành công",
     toAdminFaild: "Cấp quyền admin không thành công, thử lại sau",
     toMemberSuccess: "Thu hồi quyền admin thành công",
+    addMember: "Thêm thành viên",
     toMemberFaild: "Thu hồi quyền admin không thành công, thử lại sau",
     deleteMember: (name: string) => `Xoá ${name} khỏi nhóm`,
     deleteMemberSuccess: (name: string) => `Đã xoá ${name} khỏi nhóm`,
@@ -1803,5 +1804,4 @@ export default {
     submit: "Gửi",
   },
   close: "Đóng",
-
 };
