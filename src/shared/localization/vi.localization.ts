@@ -1732,6 +1732,7 @@ export default {
     deleteMember: (name: string) => `Xoá ${name} khỏi nhóm`,
     deleteMemberSuccess: (name: string) => `Đã xoá ${name} khỏi nhóm`,
     deleteMemberFaild: "Xoá không thành công, vui lòng thử lại sau",
+    addImage: "Thêm ảnh",
     member: "Thành viên",
     admin: "Quản trị viên",
     leader: "Người tạo",

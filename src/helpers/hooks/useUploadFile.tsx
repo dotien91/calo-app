@@ -90,7 +90,6 @@ export function useUploadFile(
   };
 
   const renderFile = React.useCallback(() => {
-    console.log("isUpLoadingFileisUpLoadingFile", isUpLoadingFile);
     return (
       <View style={styles.viewImage}>
         {listFileLocal.slice(0, 4).map((item: any, index: number) => {
@@ -110,6 +109,48 @@ export function useUploadFile(
               <View
                 style={[
                   styles.viewFile,
+                  {
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderWidth: 1,
+                    borderColor: colors.borderColor,
+                    borderRadius: 10,
+                  },
+                ]}
+                key={`listFileLocal - ${index}`}
+              >
+                <Text style={{ color: colors.textInput }}>
+                  +{listFileLocal.length - 3}
+                </Text>
+              </View>
+            );
+          }
+          return;
+        })}
+      </View>
+    );
+  }, [listFileLocal, listFile, isUpLoadingFile]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const renderFile2 = React.useCallback(() => {
+    return (
+      <View style={styles.viewImage2}>
+        {listFileLocal.slice(0, 4).map((item: any, index: number) => {
+          if (index < 3) {
+            return (
+              <FileViewComponent
+                style={styles.viewFile2}
+                item={item}
+                key={`listFileLocal - ${index}`}
+                onPressClear={() => onRemove(item)}
+                isDone={!isUpLoadingFile}
+              />
+            );
+          }
+          if (listFileLocal.length >= 4) {
+            return (
+              <View
+                style={[
+                  styles.viewFile2,
                   {
                     justifyContent: "center",
                     alignItems: "center",
@@ -302,6 +343,7 @@ export function useUploadFile(
     onSelectVideo,
     onSelectFile,
     renderFile,
+    renderFile2,
     isUpLoadingFile,
     uploadRecord,
     setListFile,
@@ -319,8 +361,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     height: (width - 30 - 30) / 4,
   },
+  viewImage2: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
+    height: (width - 30 - 30) / 4,
+  },
   viewFile: {
     width: (width - 30 - 30) / 4,
     height: (width - 30 - 30) / 4,
+  },
+  viewFile2: {
+    width: (width - 30 - 30) / 5,
+    height: (width - 30 - 30) / 5,
   },
 });

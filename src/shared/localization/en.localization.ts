@@ -1203,6 +1203,7 @@ export default {
     deleteMember: (name: string) => `Remove ${name} from the group`,
     deleteMemberSuccess: (name: string) => `Removed ${name} from the group`,
     deleteMemberFaild: "Deletion unsuccessful, please try again later",
+    addImage: "Add image",
     member: "Member",
     admin: "Admin",
     leader: "Leader",

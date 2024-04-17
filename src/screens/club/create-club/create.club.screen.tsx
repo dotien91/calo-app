@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Text,
+  TextInput,
 } from "react-native";
 import { useForm } from "react-hook-form";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
@@ -23,14 +24,38 @@ import { createGroup } from "@services/api/club.api";
 import { SCREENS } from "constants";
 import TextBase from "@shared-components/TextBase";
 import { quickFilterCourse } from "constants/course.constant";
+import { useUploadFile } from "@helpers/hooks/useUploadFile";
+import PressableBtn from "@shared-components/button/PressableBtn";
+import IconSvg from "assets/svg";
+import { ScreenWidth } from "@freakycoder/react-native-helpers";
 
 const CreateClubScreen = () => {
   const [updating, setUpdating] = useState(false);
-  const { idVideo, renderSelectBackground, updatingVid } = SelectVideoHook({
-    type: "photo",
-    typeM: "photo",
-    placeholder: translations.club.purchaseJoin,
-  });
+  const { idVideo, renderSelectBackground, updatingVid, link } =
+    SelectVideoHook({
+      type: "photo",
+      typeM: "photo",
+      placeholder: translations.club.purchaseJoin,
+    });
+  const [selectType, setSelectType] = useState();
+  const file = [];
+
+  const {
+    onSelectPicture,
+    listFile,
+    listFileLocal,
+    renderFile2,
+    isUpLoadingFile,
+  } = useUploadFile(
+    file.map(
+      (i) =>
+        ({
+          uri: i.media_url,
+          type: i.media_type,
+          _id: i._id,
+        } || []),
+    ),
+  );
   const {
     control,
     handleSubmit,
@@ -44,33 +69,47 @@ const CreateClubScreen = () => {
     },
   });
   const onSubmit = (data) => {
-    console.log(updatingVid);
     if (!idVideo || idVideo === "") {
       showToast({ type: "error" });
       return;
     }
+    if (!selectType) {
+      showToast({ type: "error", message: "Chưa chọn type" });
+    }
     const params = {
       name: data.name,
-      avatar: idVideo,
+      cover: link,
       description: data.des,
+      isEliteClub: false,
+      skills: selectType.id,
+      featured_image: listFile.map((i) => i.uri),
     };
-    createGroup(params).then((res) => {
-      if (!res.isError) {
-        console.log("res...", res.data);
-        NavigationService.navigate(SCREENS.CLUB_HOME, { id: res.data._id });
-      }
-    });
+    console.log("params...", params);
+    // createGroup(params).then((res) => {
+    //   if (!res.isError) {
+    //     console.log("res...", res.data);
+    //     NavigationService.navigate(SCREENS.CLUB_HOME, { id: res.data._id });
+    //   }
+    // });
     setUpdating(false);
   };
 
   const renderItem = (item, key) => {
+    const isSelected = item.id === selectType?.id;
+    const onPressItem = () => {
+      setSelectType(item);
+    };
     return (
       <TouchableOpacity
         key={key}
-        // onPress={() => onPressBtnFilter(item)}
-        style={styles.btnFilter}
+        onPress={onPressItem}
+        style={isSelected ? styles.btnFilterSelected : styles.btnFilter}
       >
-        <TextBase fontSize={16} fontWeight="500">
+        <TextBase
+          fontSize={16}
+          fontWeight="500"
+          color={isSelected ? "white" : "text"}
+        >
           {item.name}
         </TextBase>
       </TouchableOpacity>
@@ -104,13 +143,9 @@ const CreateClubScreen = () => {
         <View style={styles.viewCover}>{renderSelectBackground()}</View>
         <View style={styles.viewType}>
           <TextBase fontSize={16} fontWeight="700" title="Type of club" />
-          <ScrollView
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.styleFilter}
-          >
+          <View style={styles.wrapType}>
             {quickFilterCourse.map((item, index) => renderItem(item, index))}
-          </ScrollView>
+          </View>
           {/* quickFilterCourse */}
         </View>
         <InputHook
@@ -131,7 +166,32 @@ const CreateClubScreen = () => {
           multiline
         />
         <View style={styles.viewType}>
-          <TextBase fontSize={16} fontWeight="700" title="Add image" />
+          <TextBase
+            fontSize={16}
+            fontWeight="700"
+            title={translations.club.addImage}
+          />
+          {listFileLocal.length > 0 ? (
+            <>
+              <View style={styles.viewRenderFile}>
+                {renderFile2()}
+                <PressableBtn style={styles.btnAdd} onPress={onSelectPicture}>
+                  <IconSvg
+                    name="icAdd"
+                    size={32}
+                    color={palette.textOpacity8}
+                  />
+                </PressableBtn>
+              </View>
+            </>
+          ) : (
+            <PressableBtn style={styles.uploadImage} onPress={onSelectPicture}>
+              <TextInput
+                editable={false}
+                placeholder={translations.club.addImage}
+              />
+            </PressableBtn>
+          )}
         </View>
       </ScrollView>
       <View style={styles.viewBtn}>
@@ -169,17 +229,49 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   btnFilter: {
-    height: 28,
-
     backgroundColor: palette.grey,
     borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
-    paddingHorizontal: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
+  btnFilterSelected: {
+    backgroundColor: palette.primary,
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 16,
+    paddingVertical: 8,
   },
   styleFilter: {
     marginTop: 8,
     flexDirection: "row",
     gap: 8,
+  },
+  wrapType: {
+    flexWrap: "wrap",
+    flexDirection: "row",
+    gap: 8,
+  },
+  uploadImage: {
+    height: 40,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: palette.borderColor,
+    paddingHorizontal: 16,
+    justifyContent: "center",
+  },
+  btnAdd: {
+    ...CS.center,
+    width: (ScreenWidth - 30 - 30) / 5,
+    height: (ScreenWidth - 30 - 30) / 5,
+    backgroundColor: palette.grey,
+    borderRadius: 8,
+    marginLeft: 8,
+    marginTop: -16,
+  },
+  viewRenderFile: {
+    ...CS.flexStart,
   },
 });
