@@ -7,6 +7,7 @@ import eventEmitter from "@services/event-emitter";
 
 export enum EnumModalContentType {
   Confirm = "confirm",
+  ConfirmBottom = "confirm-bottom",
   Loading = "loading",
   Library = "libray",
   Report = "report",

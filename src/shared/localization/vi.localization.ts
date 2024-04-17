@@ -557,7 +557,7 @@ export default {
     salfLearning: "Học theo video",
     callGroup: "Học nhóm",
     offline: "Học trực tiếp",
-    allSkills: "Tất cả khóa học",
+    allSkills: "Tất cả",
     listening: "Nghe",
     reading: "Đọc",
     writing: "Viết",
@@ -1799,5 +1799,4 @@ export default {
     submit: "Gửi",
   },
   close: "Đóng",
-
 };

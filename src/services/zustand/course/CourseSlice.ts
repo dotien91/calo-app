@@ -40,6 +40,8 @@ interface IProgressLearningItem {
 export interface CourseSlice {
   listCourseFilterParams: IListCourseFilterParams;
   setListCourseFilterParams: (params: IListCourseFilterParams) => void;
+  listClubFilterParams: any;
+  setListClubFilterParams: (params: any) => void;
   courseFilterKeys: ICourseFilterKeys;
   setCourseFilterKeys: (params: ICourseFilterKeys) => void;
   courseCurrentSort: ICurrentSort;
@@ -69,6 +71,9 @@ const createCourseSlice: StoreSlice<CourseSlice> = (set, get) => ({
   listCourseFilterParams: { limit: "999999999", public_status: "active" },
   setListCourseFilterParams: (params: IListCourseFilterParams) =>
     set({ listCourseFilterParams: { ...params, public_status: "active" } }),
+  listClubFilterParams: { limit: "999999999", public_status: "active" },
+  setListClubFilterParams: (params: any) =>
+    set({ listClubFilterParams: { ...params, public_status: "active" } }),
   courseFilterKeys: courseFilterKeysDefault,
   setCourseFilterKeys: (v: ICourseFilterKeys) => set({ courseFilterKeys: v }),
   courseCurrentSort: { id: "", name: "" },

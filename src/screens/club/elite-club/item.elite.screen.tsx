@@ -45,7 +45,7 @@ const ItemEliteScreen = () => {
       id: id,
       name: name,
     });
-    return
+    return;
     addMemberGroup({
       group_id: id,
       tier: "1",

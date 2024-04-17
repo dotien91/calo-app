@@ -125,6 +125,9 @@ import BecomEliteClub from "@screens/club/elite-club/components/becom.elite.club
 import ClubPostScreen from "@screens/club/club/club.post.screen";
 import ListMemberScreen from "@screens/club/list-member/list.member";
 import ListCourseClub from "@screens/home/components/list-course-club/list.course.club.screen";
+import SearchClubScreen from "@screens/club/search-club/search.club.screen";
+import ClubByCategoryScreen from "@screens/club/search-club/club.by.category.screen";
+
 // import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -233,7 +236,7 @@ const Navigation = () => {
         >
           <Tab.Screen name={SCREENS.HOME} component={HomeScreen} />
           <Tab.Screen name={SCREENS.COURSE_LIST} component={CourseListScreen} />
-          {/* <Tab.Screen name={SCREENS.CLUB_SCREEN} component={ClubScreen} /> */}
+          <Tab.Screen name={SCREENS.CLUB_SCREEN} component={ClubScreen} />
           <Tab.Screen
             name={SCREENS.DISCOVERSCREEN}
             component={DiscoveryStackScreen}
@@ -299,11 +302,8 @@ const Navigation = () => {
 
   const DiscoveryStackScreen = () => {
     return (
-      <DiscoverStack.Navigator  screenOptions={{ headerShown: false }}>
-        <Tab.Screen
-          name={SCREENS.DISCOVERSCREEN}
-          component={DiscoverScreen}
-        />
+      <DiscoverStack.Navigator screenOptions={{ headerShown: false }}>
+        <Tab.Screen name={SCREENS.DISCOVERSCREEN} component={DiscoverScreen} />
         <Stack.Screen name={SCREENS.AUDIO_PLAY} component={AudioPlayScreen} />
         <Stack.Screen name={SCREENS.AUDIO_LIST} component={AudioListScreen} />
         <Stack.Screen name={SCREENS.AUDIO_BOOK} component={AudioBookScreen} />
@@ -313,10 +313,9 @@ const Navigation = () => {
         />
         <Stack.Screen name={SCREENS.ALL_AUDIO_BOOk} component={AllBookScreen} />
         <Stack.Screen name={SCREENS.AUDIO_PREVIEW} component={AudioPreview} />
-
       </DiscoverStack.Navigator>
     );
-  }
+  };
 
   return (
     <NavigationContainer
@@ -328,8 +327,15 @@ const Navigation = () => {
     >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {renderStackIntro()}
-
         <Stack.Screen name={SCREENS.HOME_TAB} component={renderTabNavigation} />
+
+        <Stack.Screen
+          name={SCREENS.CLUB_BY_CATEGORY}
+          component={ClubByCategoryScreen}
+        />
+
+        <Stack.Screen name={SCREENS.SEARCH_CLUB} component={SearchClubScreen} />
+
         <Stack.Screen name={SCREENS.LEADERBOARD} component={LeaderBoard} />
         <Stack.Screen
           name={SCREENS.COURSE_RECOMMEND}

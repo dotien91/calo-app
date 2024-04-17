@@ -265,7 +265,7 @@ const Tasks = React.memo(() => {
     });
   };
 
-  if (!listData.length) return null
+  if (!listData.length) return null;
 
   return (
     <View style={{ marginTop: 16, marginHorizontal: 16 }}>

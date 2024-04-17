@@ -110,6 +110,8 @@ export const SCREENS = {
   DETAILEVENTSCREEN: "DetailScreenEvent",
   LIST_IMAGE_SCREEN: "ListImageScreen",
   BECOME_ELITE_CLUB: "BecomeEliteClub",
+  SEARCH_CLUB: "SearchClub",
+  CLUB_BY_CATEGORY: "ClubByCategory",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

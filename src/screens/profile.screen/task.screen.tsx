@@ -32,9 +32,9 @@ const Tasks = () => {
   );
 
   const getTask = () => {
-    setLoading(true)
+    setLoading(true);
     getListTaskByUser({ order_by: "DESC" }).then((res) => {
-      setLoading(false)
+      setLoading(false);
       if (!res.isError) {
         setListData((res.data?.[0]?.missions || []).reverse());
       }
@@ -46,11 +46,13 @@ const Tasks = () => {
 
   return (
     <>
-      {!loading && !listData.length && <EmptyResultView
-        desc={translations.emptyList}
-        icon="document-text-outline"
-        showLottie={false}
-      />}
+      {!loading && !listData.length && (
+        <EmptyResultView
+          desc={translations.emptyList}
+          icon="document-text-outline"
+          showLottie={false}
+        />
+      )}
       <FlatList
         data={listData}
         renderItem={renderItem}

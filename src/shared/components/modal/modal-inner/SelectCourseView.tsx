@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, StyleSheet, FlatList, Text, SafeAreaView } from "react-native";
+import { View, StyleSheet, FlatList, Text } from "react-native";
 import FastImage from "react-native-fast-image";
 import { useTheme } from "@react-navigation/native";
 import { debounce } from "lodash";
@@ -7,19 +7,15 @@ import { debounce } from "lodash";
 import { translations } from "@localization";
 import Button from "@shared-components/button/Button";
 import PressableBtn from "@shared-components/button/PressableBtn";
-import Header from "@shared-components/header/Header";
 import formatMoney from "@shared-components/input-money/format.money";
 import CS from "@theme/styles";
 import { TypedCourse } from "shared/models";
-import SearchInput from "@shared-components/search-input.tsx/search.input";
 import CustomCheckbox from "@shared-components/form/CustomCheckbox";
 import { closeSuperModal } from "@helpers/super.modal.helper";
-import { getCourseList, getMyClubCourse, getMyCourse } from "@services/api/course.api";
+import { getMyClubCourse } from "@services/api/course.api";
 import { useListData } from "@helpers/hooks/useListData";
 import { palette } from "@theme/themes";
-import LoadingItem from "@shared-components/loading.item";
 import LoadingList from "@shared-components/loading.list.component";
-import { ICourseItem } from "models/course.model";
 import { addCourseClub, removeCourseClub } from "@services/api/club.api";
 import eventEmitter from "@services/event-emitter";
 
@@ -28,53 +24,45 @@ interface ListCourseSelectProps {
   cb: () => void;
   user_id: string;
   group_id: string;
-
 }
 
 const SelectCourseView = ({
-    defaultItem = [],
-    user_id,
-    group_id,
-    cb,
+  defaultItem = [],
+  user_id,
+  group_id,
 }: ListCourseSelectProps) => {
   // goij API lay danh sach lop
   const theme = useTheme();
   const { colors } = theme;
-  const [itemSelected, setItemSelected] = React.useState(defaultItem)
+  const [itemSelected, setItemSelected] = React.useState(defaultItem);
 
   const paramsRequest = {
     limit: "10",
     created_user_id: user_id,
     order_by: "DESC",
     sort_by: "createdAt",
-    group_id
+    group_id,
   };
 
-  const {
-    listData,
-    onEndReach,
-    renderFooterComponent,
-    refreshing,
-    isLoading
-  } = useListData<TypedCourse>(paramsRequest, getMyClubCourse);
+  const { listData, onEndReach, renderFooterComponent, refreshing, isLoading } =
+    useListData<TypedCourse>(paramsRequest, getMyClubCourse);
 
   React.useEffect(() => {
     return () => {
-      eventEmitter.emit("refresh_list_course_club")
-    }
-  }, [])
-  
+      eventEmitter.emit("refresh_list_course_club");
+    };
+  }, []);
 
   React.useEffect(() => {
-    let itemSelectedFromApi = []
-    listData.forEach(item => {
+    const itemSelectedFromApi = [];
+    listData.forEach((item) => {
       if (item.course_group) {
-        itemSelectedFromApi.push(item._id)
+        itemSelectedFromApi.push(item._id);
       }
-    })
-    setItemSelected(itemSelectedFromApi)
-  }, [listData])
-  
+    });
+    setItemSelected(itemSelectedFromApi);
+  }, [listData]);
+
   const addItem = (id: string) => {
     setItemSelected([...itemSelected, id]);
   };
@@ -84,20 +72,21 @@ const SelectCourseView = ({
 
   const onSelectItem = (isSeleted: boolean, item: TypedCourse) => {
     isSeleted ? deleteItem(item._id) : addItem(item._id);
-    updateCourseClubWithDebounce(isSeleted, item)
-  }
+    updateCourseClubWithDebounce(isSeleted, item);
+  };
 
   const updateCourseClub = (isSeleted: boolean, item: TypedCourse) => {
     if (isSeleted) {
-      removeCourseClub({group_id, course_id: item._id})
+      removeCourseClub({ group_id, course_id: item._id });
     } else {
-      addCourseClub({group_id, course_id: item._id})
+      addCourseClub({ group_id, course_id: item._id });
     }
-  }
+  };
 
-  const updateCourseClubWithDebounce = React.useCallback(debounce(updateCourseClub, 600), []);
-
-
+  const updateCourseClubWithDebounce = React.useCallback(
+    debounce(updateCourseClub, 600),
+    [],
+  );
 
   const renderItemCourse = ({
     item,
@@ -106,8 +95,7 @@ const SelectCourseView = ({
     item: TypedCourse;
     index: number;
   }) => {
-    const isSeleted =
-      !!itemSelected.find((items) => items === item._id)
+    const isSeleted = !!itemSelected.find((items) => items === item._id);
     return (
       <PressableBtn
         key={index}
@@ -118,7 +106,7 @@ const SelectCourseView = ({
           paddingHorizontal: 16,
         }}
         onPress={() => {
-          onSelectItem(isSeleted, item)
+          onSelectItem(isSeleted, item);
         }}
       >
         <CustomCheckbox isSelected={isSeleted} />
@@ -165,7 +153,7 @@ const SelectCourseView = ({
         removeClippedSubviews={true}
         keyExtractor={(item) => item?._id + ""}
         ListFooterComponent={renderFooterComponent}
-        contentContainerStyle={{paddingBottom: 32}}
+        contentContainerStyle={{ paddingBottom: 32 }}
       />
       <View
         style={{
@@ -178,7 +166,7 @@ const SelectCourseView = ({
           left: 0,
           bottom: 0,
           paddingVertical: 8,
-          backgroundColor: palette.white
+          backgroundColor: palette.white,
         }}
       >
         <Text style={{ ...CS.hnRegular, flex: 1 }}>

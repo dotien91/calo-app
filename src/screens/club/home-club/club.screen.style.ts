@@ -29,5 +29,29 @@ export default () => {
       fontSize: 14,
       color: palette.textOpacity6,
     },
+    wrapBtnFilter: {
+      ...CS.flexStart,
+      paddingLeft: 16,
+      marginTop: 16,
+    },
+    btnFilter: {
+      paddingVertical: 4,
+      paddingHorizontal: 12,
+      borderRadius: 99,
+      backgroundColor: palette.btnInactive,
+      marginRight: 8,
+      flex: 1,
+    },
+    txtFilter: {
+      ...CS.hnRegular,
+      fontSize: 16,
+      color: palette.textOpacity6,
+    },
+    btnFilterActive: {
+      backgroundColor: palette.primary,
+    },
+    txtFilterActive: {
+      color: palette.white,
+    },
   });
 };

@@ -103,8 +103,7 @@ const ImageLoad = (props: Props) => {
           }}
         />
       )}
-      {(typeof source === "object" && source?.uri) ||
-      typeof source !== "object" ? (
+      {source?.uri ? (
         <Animated.View
           style={[
             StyleSheet.absoluteFillObject,

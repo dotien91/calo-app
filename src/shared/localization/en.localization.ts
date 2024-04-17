@@ -468,7 +468,7 @@ export default {
     callGroup: "Call group",
     offline: "Offline",
     skills: "Skills",
-    allSkills: "All course",
+    allSkills: "All",
     listening: "Listening",
     reading: "Reading",
     writing: "Writing",

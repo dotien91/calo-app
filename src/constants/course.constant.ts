@@ -243,11 +243,11 @@ export const quickFilterCourse = [
   //   id: "Call group",
   //   type: "types",
   // },
-  // {
-  //   name: translations.course.allSkills,
-  //   id: "All skills",
-  //   type: "skills",
-  // },
+  {
+    name: translations.course.allSkills,
+    id: "All skills",
+    type: "skills",
+  },
 
   {
     name: translations.course.life,
@@ -743,7 +743,7 @@ export const listSkill = [
   { value: "Life", index: 2 },
   { value: "Finance", index: 3 },
   { value: "Health", index: 4 },
-  { value: "Bussiness", index: 5 }
+  { value: "Bussiness", index: 5 },
 ];
 
 export const timesInUtc = [

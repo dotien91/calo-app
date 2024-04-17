@@ -4,13 +4,6 @@ import { FlatList, StyleSheet, View } from "react-native";
 import ItemClub from "./list.item.club";
 import TitleClub from "./list.title.club";
 import { translations } from "@localization";
-import {
-  EnumModalContentType,
-  EnumStyleModalType,
-  showSuperModal,
-} from "@helpers/super.modal.helper";
-import { palette } from "@theme/themes";
-import { EnumClubType } from "models/club.model";
 import LoadingList from "@shared-components/loading.list.component";
 import CS from "@theme/styles";
 import { useListData } from "@helpers/hooks/useListData";
@@ -28,11 +21,11 @@ interface TypeListClub {
   user_id: any;
 }
 const JoinClubSceen = () => {
-  const userData = useStore(state => state.userData)
-
+  const userData = useStore((state) => state.userData);
+  console.log("userDatauserData", userData._id);
   const paramsRequest = {
     limit: "5",
-    member_id: userData._id
+    member_id: userData?._id,
   };
 
   const {
@@ -52,36 +45,6 @@ const JoinClubSceen = () => {
     };
   }, []);
 
-  const openSelectTypeSort = () => {
-    showSuperModal({
-      contentModalType: EnumModalContentType.FilterSortClub,
-      styleModalType: EnumStyleModalType.Bottom,
-      data: {
-        title: translations.club.sortBy,
-        options: [
-          {
-            name: translations.club.mostVisited,
-            id: EnumClubType.mostVisited,
-            iconSvg: "icAffiliate",
-            color: palette.textOpacity6,
-          },
-          {
-            name: translations.club.clubs,
-            id: EnumClubType.clubs,
-            iconSvg: "icCourse",
-            color: palette.textOpacity6,
-          },
-          {
-            name: translations.club.join,
-            id: EnumClubType.join,
-            iconSvg: "icTime",
-            color: palette.textOpacity6,
-          },
-        ],
-      },
-    });
-  };
-
   const renderLoading = () => {
     return <LoadingList numberItem={3} />;
   };
@@ -94,8 +57,8 @@ const JoinClubSceen = () => {
     return (
       <TitleClub
         textLeft={translations.club.title3}
-        iconNameRight="icSort"
-        onPressRight={openSelectTypeSort}
+        // iconNameRight="icSort"
+        // onPressRight={openSelectTypeSort}
       />
     );
   };
@@ -115,7 +78,6 @@ const JoinClubSceen = () => {
         showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item?._id + ""}
         onEndReached={onEndReach}
-        removeClippedSubviews={true}
         refreshControl={refreshControl()}
         ListFooterComponent={renderFooterComponent()}
       />
