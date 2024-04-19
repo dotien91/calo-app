@@ -192,6 +192,7 @@ const SelectVideoHook = ({
     link: media.link,
     updatingVid,
     typeMedia: media.typeM,
+    setMedia,
   };
 };
 

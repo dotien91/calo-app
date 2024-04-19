@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
   SafeAreaView,
   ScrollView,
   TouchableOpacity,
-  Text,
   TextInput,
 } from "react-native";
 import { useForm } from "react-hook-form";
@@ -20,25 +19,67 @@ import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import SelectVideoHook from "@screens/course/course-create/components/select.video";
 import { showToast } from "@helpers/super.modal.helper";
-import { createGroup } from "@services/api/club.api";
-import { SCREENS } from "constants";
 import TextBase from "@shared-components/TextBase";
 import { quickFilterCourse } from "constants/course.constant";
 import { useUploadFile } from "@helpers/hooks/useUploadFile";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import IconSvg from "assets/svg";
 import { ScreenWidth } from "@freakycoder/react-native-helpers";
+import { useRoute } from "@react-navigation/native";
+import {
+  createGroup,
+  getDetailGroup,
+  updateGroup,
+} from "@services/api/club.api";
+import { SCREENS } from "constants";
 
 const CreateClubScreen = () => {
   const [updating, setUpdating] = useState(false);
-  const { idVideo, renderSelectBackground, updatingVid, link } =
+  const { idVideo, renderSelectBackground, updatingVid, link, setMedia } =
     SelectVideoHook({
       type: "photo",
       typeM: "photo",
       placeholder: translations.club.purchaseJoin,
     });
-  const [selectType, setSelectType] = useState();
-  const file = [];
+
+  const route = useRoute();
+
+  const [selectType, setSelectType] = useState<string[]>([]);
+  const club_id = route.params?.club_id || "";
+
+  const detailClub = () => {
+    getDetailGroup(club_id).then((res) => {
+      console.log("res...", res);
+      if (!res.isError) {
+        setMedia({
+          link: res.data.cover,
+          typeM: "photo",
+          id: "1",
+        });
+        setListFileLocal(
+          res.data.featured_image.map((i, index) => ({
+            uri: i,
+            type: "image/jpg",
+            _id: index,
+          })),
+        );
+        setListFile(
+          res.data.featured_image.map((i, index) => ({
+            uri: i,
+            type: "image/jpg",
+            _id: index,
+          })),
+        );
+        setValue("name", res.data.name);
+        setValue("des", res.data.description);
+        setSelectType(res.data.skills);
+      }
+    });
+  };
+
+  useEffect(() => {
+    detailClub();
+  }, []);
 
   const {
     onSelectPicture,
@@ -46,21 +87,15 @@ const CreateClubScreen = () => {
     listFileLocal,
     renderFile2,
     isUpLoadingFile,
-  } = useUploadFile(
-    file.map(
-      (i) =>
-        ({
-          uri: i.media_url,
-          type: i.media_type,
-          _id: i._id,
-        } || []),
-    ),
-  );
+    setListFileLocal,
+    setListFile,
+  } = useUploadFile([]);
   const {
     control,
     handleSubmit,
     formState: { errors },
     setFocus,
+    setValue,
   } = useForm({
     defaultValues: {
       name: "",
@@ -70,34 +105,53 @@ const CreateClubScreen = () => {
   });
   const onSubmit = (data) => {
     if (!idVideo || idVideo === "") {
-      showToast({ type: "error" });
+      showToast({ type: "error", message: "Chưa chọn ảnh nền" });
       return;
     }
-    if (!selectType) {
+    if (selectType.length == 0) {
       showToast({ type: "error", message: "Chưa chọn type" });
+      return;
     }
     const params = {
       name: data.name,
       cover: link,
       description: data.des,
       isEliteClub: false,
-      skills: selectType.id,
+      skills: selectType,
       featured_image: listFile.map((i) => i.uri),
     };
     console.log("params...", params);
-    // createGroup(params).then((res) => {
-    //   if (!res.isError) {
-    //     console.log("res...", res.data);
-    //     NavigationService.navigate(SCREENS.CLUB_HOME, { id: res.data._id });
-    //   }
-    // });
+    if (club_id) {
+      params._id = club_id;
+      updateGroup(params).then((res) => {
+        if (!res.isError) {
+          console.log("res...", res.data);
+          NavigationService.goBack();
+        }
+      });
+    } else {
+      createGroup(params).then((res) => {
+        if (!res.isError) {
+          console.log("res...", res.data);
+          NavigationService.navigate(SCREENS.CLUB_HOME, { id: res.data._id });
+        }
+      });
+    }
     setUpdating(false);
   };
 
   const renderItem = (item, key) => {
-    const isSelected = item.id === selectType?.id;
+    // const isSelected = item.id === selectType?.id;
+    const isSelected = [...selectType]?.findIndex((i) => i === item.id) >= 0;
+    // const _onSelectSkill = () => {};
     const onPressItem = () => {
-      setSelectType(item);
+      // console.log("item...", item);
+      // setSelectType(item);
+      if (isSelected) {
+        setSelectType((selectType) => selectType?.filter((i) => i !== item.id));
+      } else {
+        setSelectType([...selectType, item.id]);
+      }
     };
     return (
       <TouchableOpacity
@@ -118,7 +172,12 @@ const CreateClubScreen = () => {
 
   return (
     <SafeAreaView style={CS.safeAreaView}>
-      <Header text={translations.club.createClub} iconNameLeft="x" />
+      <Header
+        text={
+          club_id ? translations.club.updateClub : translations.club.createClub
+        }
+        iconNameLeft="x"
+      />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <InputHook
           setFocus={setFocus}
@@ -197,10 +256,17 @@ const CreateClubScreen = () => {
       <View style={styles.viewBtn}>
         <Button
           style={{
-            backgroundColor: updating ? palette.placeholder : palette.primary,
+            backgroundColor:
+              updating || updatingVid || isUpLoadingFile
+                ? palette.placeholder
+                : palette.primary,
           }}
-          text={translations.club.createClub}
-          disabled={updating}
+          text={
+            club_id
+              ? translations.club.updateClub
+              : translations.club.createClub
+          }
+          disabled={updating || updatingVid || isUpLoadingFile}
           onPress={handleSubmit(onSubmit)}
         />
       </View>

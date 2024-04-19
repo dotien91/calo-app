@@ -1745,6 +1745,7 @@ export default {
     clubPrice: "Giá tham gia câu lạc bộ",
     description: "Mô tả",
     createClub: "Tạo câu lạc bộ",
+    updateClub: "Cập nhật lạc bộ",
     club: "Câu lạc bộ",
     title1: "Câu lạc bộ nổi bật",
     title2: "Câu lạc bộ bạn quản lý",

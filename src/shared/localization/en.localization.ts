@@ -1216,6 +1216,7 @@ export default {
     clubPrice: "Club price",
     description: "Description",
     createClub: "Create club",
+    updateClub: "Update club",
     club: "Club",
     title1: "Feature clubs",
     title2: "Clubs you manage",
