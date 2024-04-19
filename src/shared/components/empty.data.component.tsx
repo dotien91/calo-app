@@ -35,6 +35,7 @@ const EmptyResultView = ({
           : {
               justifyContent: "center",
               alignItems: "center",
+              width: "100%",
               paddingHorizontal: 40,
               marginTop: 16,
               minHeight: height || Device.height / 3,

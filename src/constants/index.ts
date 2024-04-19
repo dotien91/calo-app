@@ -113,6 +113,7 @@ export const SCREENS = {
   SEARCH_CLUB: "SearchClub",
   CLUB_BY_CATEGORY: "ClubByCategory",
   UPDATE_EVENT_SCREEN: "UpdateEventScreen",
+  MEDIA_CLUB: "MediaClub",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

@@ -19,7 +19,7 @@ const ClubPostScreen = () => {
 
   const userData = useStore((state) => state.userData);
 
-  const club_id = route.params?.["club_id"] || "";
+  const club_id = route.params?.["id"] || "";
   const name = route.params?.name || "";
 
   const gotoCreatePost = () => {
@@ -64,6 +64,15 @@ const ClubPostScreen = () => {
         }
       >
         <Text>event</Text>
+      </PressableBtn>
+      <PressableBtn
+        onPress={() =>
+          NavigationService.navigate(SCREENS.MEDIA_CLUB, {
+            club_id,
+          })
+        }
+      >
+        <Text>media</Text>
       </PressableBtn>
       <ListPostClub id={club_id} />
       {isLoggedIn() && userData?._id && (

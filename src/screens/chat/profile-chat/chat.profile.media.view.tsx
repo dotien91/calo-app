@@ -61,6 +61,7 @@ const ChatProfileMediaView = ({
   };
 
   const renderItem = (item: TypedChatMediaLocal, index: number) => {
+    console.log("itemmm", item);
     if (!item) return null;
     if (item.media_type.includes("image")) {
       return (

@@ -11,7 +11,7 @@ import ImageLoad from "@shared-components/image-load/ImageLoad";
 
 const ItemClub = ({ data }: { data: any }) => {
   const goToClubScreen = () => {
-    if (data?.is_join) {
+    if (data?.attend_data) {
       NavigationService.navigate(SCREENS.CLUB_HOME, {
         id: data._id,
         name: data?.name,
@@ -23,9 +23,8 @@ const ItemClub = ({ data }: { data: any }) => {
       });
     }
   };
-
   const isLeader = React.useMemo(() => {
-    return data?.attend_data?.[0]?.tier == 3;
+    return data?.attend_data?.tier == 3;
   }, [data]);
 
   return (
@@ -36,14 +35,14 @@ const ItemClub = ({ data }: { data: any }) => {
           <TextBase numberOfLines={3} fontSize={16} fontWeight="700">
             {data?.name}
           </TextBase>
-          {!!data?.is_join && (
+          {!!data?.attend_data && (
             <TextBase fontSize={12} fontWeight="400">
               {`${
                 isLeader
                   ? translations.club.created
                   : translations.club.attended
               } ${convertLastActive(
-                isLeader ? data?.createdAt : data?.attend_data?.[0]?.createdAt,
+                isLeader ? data?.createdAt : data?.attend_data?.createdAt,
               )} ${translations.club.ago}`}
             </TextBase>
           )}

@@ -105,7 +105,7 @@ const ListPostClub = ({ id }: ListPostClubProps) => {
         refreshControl={refreshControl()}
         ListFooterComponent={renderFooterComponent()}
         ListEmptyComponent={renderEmpty()}
-        contentContainerStyle={{paddingBottom: 160}}
+        contentContainerStyle={{ paddingBottom: 160 }}
       />
     </View>
   );

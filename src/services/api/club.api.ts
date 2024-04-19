@@ -139,3 +139,14 @@ export async function removeCourseClub(params) {
     return response;
   });
 }
+
+export async function getMediaClub(params: { group_id: string; type: string }) {
+  console.log(3333, params);
+  return request({
+    method: METHOD.GET,
+    urlPath: `media/club/${params.group_id}`,
+    params,
+  }).then((response) => {
+    return response;
+  });
+}
