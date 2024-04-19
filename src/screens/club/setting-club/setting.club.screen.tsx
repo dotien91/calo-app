@@ -25,7 +25,8 @@ const SettingClubScreen = () => {
   const route = useRoute();
 
   const club_id = route.params?.club_id || "";
-  console.log("lisstId cluyb....", club_id);
+  const tier = route.params?.tier;
+  console.log("tier", tier);
 
   const ItemGroup = ({
     nameIcon,
@@ -84,11 +85,13 @@ const SettingClubScreen = () => {
           text={translations.club.namAndDes}
           onPress={goToEditClub}
         />
-        <ItemGroup
-          nameIcon="icGoNext"
-          text={translations.club.deleteGroup}
-          onPress={goToDelete}
-        />
+        {tier == 3 && (
+          <ItemGroup
+            nameIcon="icGoNext"
+            text={translations.club.deleteGroup}
+            onPress={goToDelete}
+          />
+        )}
       </View>
     </SafeAreaView>
   );

@@ -1,8 +1,9 @@
 import * as React from "react";
-import { View, StyleSheet, ImageBackground } from "react-native";
+import { View, StyleSheet } from "react-native";
 
 import { translations } from "@localization";
 import TextBase from "@shared-components/TextBase";
+import ImageLoad from "@shared-components/image-load/ImageLoad";
 
 interface HeaderClubProps {
   dataGroup: any;
@@ -11,10 +12,8 @@ interface HeaderClubProps {
 const HeaderClub = ({ dataGroup }: HeaderClubProps) => {
   return (
     <View>
-      <ImageBackground
-        source={{ uri: dataGroup?.cover }}
-        style={styles.viewImg}
-      />
+      <ImageLoad style={styles.viewImg} source={{ uri: dataGroup?.cover }} />
+
       <View style={styles.viewContent}>
         <View style={styles.viewTitle}>
           <TextBase

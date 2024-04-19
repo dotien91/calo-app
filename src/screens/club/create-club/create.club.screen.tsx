@@ -8,7 +8,6 @@ import {
   TextInput,
 } from "react-native";
 import { useForm } from "react-hook-form";
-import { getBottomSpace } from "react-native-iphone-screen-helper";
 import * as NavigationService from "react-navigation-helpers";
 
 import { translations } from "@localization";
@@ -225,6 +224,13 @@ const CreateClubScreen = () => {
           maxLength={32}
           label={translations.club.clubName}
         />
+        <View style={styles.viewType}>
+          <TextBase
+            fontSize={16}
+            fontWeight="700"
+            title={translations.club.addCover}
+          />
+        </View>
         <View style={styles.viewCover}>{renderSelectBackground()}</View>
         <View style={styles.viewType}>
           <TextBase
@@ -293,6 +299,7 @@ const CreateClubScreen = () => {
           ) : (
             <PressableBtn style={styles.uploadImage} onPress={onSelectPicture}>
               <TextInput
+                onPressIn={onSelectPicture}
                 editable={false}
                 placeholder={translations.club.addImage}
               />

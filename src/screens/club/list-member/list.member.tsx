@@ -6,7 +6,7 @@ import * as NavigationService from "react-navigation-helpers";
 import Header from "@shared-components/header/Header";
 import { translations } from "@localization";
 import { useListData } from "@helpers/hooks/useListData";
-import { checkMemberMe, getMemberGroup } from "@services/api/club.api";
+import { getMemberGroup } from "@services/api/club.api";
 import AvatarPost from "@screens/home/components/post-item/avatar.post";
 import CS from "@theme/styles";
 import LoadingList from "@shared-components/loading.list.component";
@@ -29,18 +29,13 @@ import IconSvg from "assets/svg";
 const ListMemberScreen = () => {
   const route = useRoute();
   const club_id = route.params.club_id || "";
+  const tier = route.params.tier || "";
   const userData = useStore((store) => store.userData);
-  const [tier, setTier] = React.useState("1");
 
   const paramsRequest = {
     limit: "10",
     group_id: club_id,
   };
-  checkMemberMe({ group_id: club_id, user_id: userData?._id }).then((res) => {
-    if (!res.isError) {
-      setTier(res.data.tier);
-    }
-  });
 
   const {
     listData,
@@ -203,7 +198,7 @@ const ListMemberScreen = () => {
     <SafeAreaView style={CS.safeAreaView}>
       <Header
         text={translations.club.member}
-        iconNameRight="user-plus"
+        iconNameRight={tier == 1 ? "" : "user-plus"}
         onPressRight={showModalAddMember}
       />
       {listData.length == 0 && isLoading && renderLoading()}

@@ -109,44 +109,46 @@ const ClubPostScreen = () => {
   return (
     <SafeAreaView style={CS.safeAreaView}>
       <Header text={name} />
-      <HeaderClub dataGroup={dataGroup} />
-      <View style={{ paddingHorizontal: 16 }}>
-        <Button
-          text={translations.club.attended}
-          onPress={showModalAttended}
-          style={styles.btnAttended}
-          textColor={palette.textOpacity6}
-          SvgSo={
-            <IconSvg
-              name="icPersonCheck"
-              size={16}
-              color={palette.textOpacity6}
-            />
-          }
-        />
-      </View>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={styles.listAction}
-      >
-        <BtnGroup txt={translations.club.course} onPress={navigateCourse} />
-        <BtnGroup txt={translations.club.event} onPress={navigateEvent} />
-        <BtnGroup txt={translations.club.file} onPress={navigateFile} />
-        <BtnGroup txt={translations.club.member} onPress={navigateMember} />
-      </ScrollView>
-      {/* <PopupClubPost dataGroup={dataGroup} /> */}
-      <ListPostClub id={club_id} />
-      {isLoggedIn() && userData?._id && (
-        <TouchableOpacity style={styles.addPost} onPress={gotoCreatePost}>
-          <Icon
-            name={"add-outline"}
-            type={IconType.Ionicons}
-            size={30}
-            color={palette.white}
+      <ScrollView>
+        <HeaderClub dataGroup={dataGroup} />
+        <View style={{ paddingHorizontal: 16 }}>
+          <Button
+            text={translations.club.attended2}
+            onPress={showModalAttended}
+            style={styles.btnAttended}
+            textColor={palette.textOpacity6}
+            SvgSo={
+              <IconSvg
+                name="icPersonCheck"
+                size={16}
+                color={palette.textOpacity6}
+              />
+            }
           />
-        </TouchableOpacity>
-      )}
+        </View>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={styles.listAction}
+        >
+          <BtnGroup txt={translations.club.course} onPress={navigateCourse} />
+          <BtnGroup txt={translations.club.event} onPress={navigateEvent} />
+          <BtnGroup txt={translations.club.file} onPress={navigateFile} />
+          <BtnGroup txt={translations.club.member} onPress={navigateMember} />
+        </ScrollView>
+        {/* <PopupClubPost dataGroup={dataGroup} /> */}
+        <ListPostClub id={club_id} />
+        {isLoggedIn() && userData?._id && (
+          <TouchableOpacity style={styles.addPost} onPress={gotoCreatePost}>
+            <Icon
+              name={"add-outline"}
+              type={IconType.Ionicons}
+              size={30}
+              color={palette.white}
+            />
+          </TouchableOpacity>
+        )}
+      </ScrollView>
     </SafeAreaView>
   );
 };

@@ -24,7 +24,7 @@ const ListCourseClub = () => {
   const route = useRoute();
   const club_id = route.params?.["club_id"];
   const tier = route.params?.["tier"];
-console.log("first", club_id)
+  console.log("first", club_id);
   const [itemSelected, setItemSelected] = React.useState([]);
   const { listData, isLoading, totalCount, _requestData } =
     useListData<ICourseItem>(

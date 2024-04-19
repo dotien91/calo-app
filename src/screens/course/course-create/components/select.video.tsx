@@ -193,6 +193,7 @@ const SelectVideoHook = ({
     updatingVid,
     typeMedia: media.typeM,
     setMedia,
+    onPressChangeMedia,
   };
 };
 
