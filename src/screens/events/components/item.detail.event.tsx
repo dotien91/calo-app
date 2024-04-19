@@ -75,15 +75,6 @@ const ItemDetailEvent = ({ item }) => {
               console.log(1111111111);
             }}
           />
-          {/* <Button
-            style={styles.btn}
-            text={translations.event.going}
-            backgroundColor={palette.grey3}
-            textColor={palette.textOpacity6}
-            onPress={() => {
-              console.log(1111111111);
-            }}
-          /> */}
         </View>
         <IconText
           nameIcon="icPersonal"
@@ -92,7 +83,7 @@ const ItemDetailEvent = ({ item }) => {
         <IconText nameIcon="icLocated" text={item?.location} />
         <IconText
           nameIcon="icCheckbox"
-          text={`${item?.interested_user_ids} ${translations.event.going} - ${item?.interested_user_ids} ${translations.event.interested}`}
+          text={`${item?.interested_user_ids.length} ${translations.event.going} - ${item?.interested_user_ids.length} ${translations.event.interested}`}
         />
       </View>
     );

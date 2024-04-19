@@ -30,7 +30,7 @@ import {
 const BecomEliteClub = () => {
   const [updating, setUpdating] = useState(false);
   const route = useRoute();
-  const clubId = route.params?.["club_id"]
+  const clubId = route.params?.["club_id"];
 
   const IconDotText = ({ text }: { text: string }) => {
     return (
@@ -88,7 +88,7 @@ const BecomEliteClub = () => {
       position: data.position,
       company: data.company,
       address: data.address,
-      group_id: clubId
+      group_id: clubId,
     };
     requestEliteClub(data).then((res) => {
       closeSuperModal();

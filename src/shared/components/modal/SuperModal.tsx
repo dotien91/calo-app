@@ -43,7 +43,6 @@ import PopupCoupon from "@screens/course/course-preview/components/popup.coupon"
 import ReferralPopupTask from "@shared-components/task-item/task.referral.popup";
 import { translations } from "@localization";
 import WriteReview from "@screens/audio/components/WriteReview";
-// import PopupMoreEvent from "@screens/events/components/popup.more.event";
 import PopupMember from "@screens/club/list-member/popup.member";
 import SelectCourseView from "./modal-inner/SelectCourseView";
 import PopupListFriend from "@screens/club/list-member/popup.list.friend";

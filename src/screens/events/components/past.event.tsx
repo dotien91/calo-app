@@ -5,22 +5,17 @@ import ItemEvent from "./item.event";
 import TextBase from "@shared-components/TextBase";
 import { translations } from "@localization";
 import { useListData } from "@helpers/hooks/useListData";
-import { getListEventGroup } from "@services/api/event.api";
+import { TypeListEvent, getListEventGroup } from "@services/api/event.api";
 import LoadingList from "@shared-components/loading.list.component";
 import eventEmitter from "@services/event-emitter";
+import { palette } from "@theme/themes";
+import EmptyResultView from "@shared-components/empty.data.component";
+import CommonStyle from "@theme/styles";
 
-interface TypeListEvent {
-  name: string;
-  cover?: string;
-  start_time: string;
-  end_time: string;
-  location?: string;
-  group_id: string;
-}
-
-const PastEvent = () => {
+const PastEvent = ({ club_id }) => {
   const paramsResquest = {
     limit: "3",
+    group_id: club_id,
   };
 
   const {
@@ -32,10 +27,14 @@ const PastEvent = () => {
     _requestData,
   } = useListData<TypeListEvent>(paramsResquest, getListEventGroup, []);
 
+  const reload = () => {
+    _requestData(false);
+  };
+
   useEffect(() => {
-    eventEmitter.on("reload_list_event", _requestData);
+    eventEmitter.on("reload_list_event", reload);
     return () => {
-      eventEmitter.off("reload_list_event", _requestData);
+      eventEmitter.off("reload_list_event", reload);
     };
   }, []);
 
@@ -61,6 +60,25 @@ const PastEvent = () => {
     return <LoadingList numberItem={3} />;
   };
 
+  const renderEmpty = () => {
+    if (isLoading) return null;
+    return (
+      <View
+        style={{
+          ...CommonStyle.center,
+          backgroundColor: palette.background,
+        }}
+      >
+        <EmptyResultView
+          title={translations.post.emptyPostTitle}
+          desc={translations.post.emptyPostDes}
+          icon="document-text-outline"
+          showLottie={false}
+        />
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
       {listData.length == 0 && isLoading && renderLoading()}
@@ -82,6 +100,7 @@ const PastEvent = () => {
         removeClippedSubviews={true}
         refreshControl={refreshControl()}
         ListFooterComponent={renderFooterComponent()}
+        ListEmptyComponent={renderEmpty()}
       />
     </View>
   );

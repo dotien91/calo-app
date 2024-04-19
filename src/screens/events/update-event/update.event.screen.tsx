@@ -27,7 +27,6 @@ import eventEmitter from "@services/event-emitter";
 const UpdateEventScreen = () => {
   const route = useRoute();
   const item = route.params?.item || "";
-  //   console.log("iteem......", item);
 
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
@@ -35,7 +34,7 @@ const UpdateEventScreen = () => {
   const [startDate, setStartDate] = React.useState<Date>(item?.start_time);
   const [endDate, setEndDate] = React.useState<Date>(item?.end_time);
 
-  const { renderSelectVideo, updatingVid, link } = SelectVideoHook({
+  const { renderSelectBackground, link } = SelectVideoHook({
     type: "photo",
     typeM: "photo",
     placeholder: translations.club.purchaseJoin,
@@ -56,7 +55,6 @@ const UpdateEventScreen = () => {
   });
 
   const onSubmit = (data) => {
-    console.log(updatingVid);
     if (!link || link === "") {
       showToast({ type: "error" });
       return;
@@ -77,9 +75,7 @@ const UpdateEventScreen = () => {
       end_time: endDate,
       location: data.location,
     };
-    // console.log("updateEvent==============", params);
     updateEvent(params).then((res) => {
-      console.log("resEvent=====", JSON.stringify(res, null, 2));
       if (!res.isError) {
         NavigationService.navigate(SCREENS.EVENTSLISTSCREEN, {
           id: res.data._id,
@@ -98,7 +94,7 @@ const UpdateEventScreen = () => {
       <SafeAreaView style={CS.safeAreaView}>
         <Header text={translations.event.editEvent} iconNameLeft="x" />
         <ScrollView style={CS.flex1} showsVerticalScrollIndicator={false}>
-          <View>{renderSelectVideo()}</View>
+          <View>{renderSelectBackground()}</View>
           <View style={styles.viewInput}>
             <InputHook
               setFocus={setFocus}
