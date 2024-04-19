@@ -1331,6 +1331,7 @@ export default {
     emptyReview: "List review is empty",
     title: "Title",
     review: "Review (Optional)",
+    sendRequest: "Send information successfully",
   },
   close: "Close",
 };

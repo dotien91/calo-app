@@ -25,7 +25,7 @@ interface InputPropsType {
 interface InputHookProps {
   inputProps: InputPropsType;
   control: any;
-  rules: any;
+  rules?: any;
   customStyle: TextStyle;
   errorTxt?: string;
   name: string;
@@ -98,7 +98,9 @@ const InputHook: React.FC<InputHookProps> = ({
       {!!label && (
         <Text style={styles.label}>
           {label}
-          {rules.required && <Text style={{ color: palette.primary }}> *</Text>}
+          {rules?.required && (
+            <Text style={{ color: palette.primary }}> *</Text>
+          )}
         </Text>
       )}
 

@@ -1,3 +1,14 @@
+import {
+  KeyboardAvoidingView,
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View,
+} from "react-native";
+import { useRoute } from "@react-navigation/native";
+import React, { useState } from "react";
+
 import { ScreenWidth } from "@freakycoder/react-native-helpers";
 import { translations } from "@localization";
 import TextBase from "@shared-components/TextBase";
@@ -7,20 +18,19 @@ import Header from "@shared-components/header/Header";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import { EnumColors } from "models";
-import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { phoneRegex, regexEmail } from "constants/regex.constant";
+import { requestEliteClub } from "@services/api/club.api";
 import {
-  KeyboardAvoidingView,
-  Platform,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  View,
-} from "react-native";
-import { getBottomSpace } from "react-native-iphone-screen-helper";
+  closeSuperModal,
+  showLoading,
+  showToast,
+} from "@helpers/super.modal.helper";
 
 const BecomEliteClub = () => {
   const [updating, setUpdating] = useState(false);
+  const route = useRoute();
+  const clubId = route.params?.["club_id"]
 
   const IconDotText = ({ text }: { text: string }) => {
     return (
@@ -58,27 +68,42 @@ const BecomEliteClub = () => {
     setFocus,
   } = useForm({
     defaultValues: {
-      full_name: "",
+      name: "",
       phone_number: "",
-      _profession: "",
-      _position: "",
-      _business: "",
-      _address: "",
-      current_assets: "",
+      email: "",
+      job: "",
+      position: "",
+      company: "",
+      address: "",
     },
   });
 
   const onSubmit = (data) => {
+    showLoading();
     const params = {
-      full_name: data.full_name,
+      name: data.name,
       phone_number: data.phone_number,
-      _profession: data._profession,
-      _position: data._position,
-      _business: data._business,
-      _address: data._address,
-      current_assets: data.current_assets,
+      email: data.email,
+      job: data.job,
+      position: data.position,
+      company: data.company,
+      address: data.address,
+      group_id: clubId
     };
-    setUpdating(false);
+    requestEliteClub(data).then((res) => {
+      closeSuperModal();
+      setUpdating(false);
+      if (!res.isError) {
+        showToast({
+          type: "success",
+          message: translations.podcast.sendRequest,
+        });
+      } else {
+        showToast({
+          type: "error",
+        });
+      }
+    });
     console.log("...", params);
   };
 
@@ -89,10 +114,7 @@ const BecomEliteClub = () => {
     >
       <SafeAreaView style={CS.safeAreaView}>
         <Header text={translations.club.becomeElite} />
-        <ScrollView
-          style={[CS.flex1, { marginBottom: getBottomSpace() }]}
-          showsVerticalScrollIndicator={false}
-        >
+        <ScrollView style={[CS.flex1]} showsVerticalScrollIndicator={false}>
           <View style={styles.viewDes}>
             <TextBase
               fontSize={16}
@@ -119,7 +141,7 @@ const BecomEliteClub = () => {
             <View style={styles.viewLeft}>
               <InputHook
                 setFocus={setFocus}
-                name="full_name"
+                name="name"
                 customStyle={CS.flex1}
                 inputProps={{
                   type: "text",
@@ -134,7 +156,7 @@ const BecomEliteClub = () => {
                     message: translations.required,
                   },
                 }}
-                errorTxt={errors.full_name?.message}
+                errorTxt={errors.name?.message}
                 maxLength={32}
                 label={translations.club.fullName}
               />
@@ -156,6 +178,10 @@ const BecomEliteClub = () => {
                     value: true,
                     message: translations.required,
                   },
+                  pattern: {
+                    value: phoneRegex,
+                    message: translations.error.invalidPhone,
+                  },
                 }}
                 errorTxt={errors.phone_number?.message}
                 maxLength={32}
@@ -163,11 +189,36 @@ const BecomEliteClub = () => {
               />
             </View>
           </View>
+          <InputHook
+            setFocus={setFocus}
+            name="email"
+            customStyle={CS.flex1}
+            inputProps={{
+              type: "text",
+              defaultValue: "",
+              placeholder: translations.login.email,
+            }}
+            viewStyle={styles.viewStyleRight}
+            control={control}
+            rules={{
+              required: {
+                value: true,
+                message: translations.required,
+              },
+              pattern: {
+                value: regexEmail,
+                message: translations.error.invalidEmail,
+              },
+            }}
+            errorTxt={errors.email?.message}
+            maxLength={32}
+            label={translations.login.email}
+          />
           <View style={styles.topInfo}>
             <View style={styles.viewLeft}>
               <InputHook
                 setFocus={setFocus}
-                name="_profession"
+                name="job"
                 customStyle={CS.flex1}
                 inputProps={{
                   type: "text",
@@ -176,13 +227,7 @@ const BecomEliteClub = () => {
                 }}
                 viewStyle={styles.viewStyleLeft}
                 control={control}
-                rules={{
-                  required: {
-                    value: true,
-                    message: translations.required,
-                  },
-                }}
-                errorTxt={errors._profession?.message}
+                errorTxt={errors.job?.message}
                 maxLength={32}
                 label={translations.club.profession}
               />
@@ -190,7 +235,7 @@ const BecomEliteClub = () => {
             <View style={styles.viewRight}>
               <InputHook
                 setFocus={setFocus}
-                name="_position"
+                name="position"
                 customStyle={CS.flex1}
                 inputProps={{
                   type: "text",
@@ -207,7 +252,7 @@ const BecomEliteClub = () => {
           </View>
           <InputHook
             setFocus={setFocus}
-            name="_business"
+            name="company"
             customStyle={CS.flex1}
             inputProps={{
               type: "text",
@@ -221,7 +266,7 @@ const BecomEliteClub = () => {
           />
           <InputHook
             setFocus={setFocus}
-            name="_address"
+            name="address"
             customStyle={CS.flex1}
             inputProps={{
               type: "text",
@@ -230,20 +275,6 @@ const BecomEliteClub = () => {
             }}
             control={control}
             errorTxt={errors._address?.message}
-            maxLength={32}
-            showPlaceholder
-          />
-          <InputHook
-            setFocus={setFocus}
-            name="current_assets"
-            customStyle={CS.flex1}
-            inputProps={{
-              type: "text",
-              defaultValue: "",
-              placeholder: translations.club.currentAssets,
-            }}
-            control={control}
-            errorTxt={errors.current_assets?.message}
             maxLength={32}
             showPlaceholder
           />
@@ -287,7 +318,7 @@ const styles = StyleSheet.create({
   },
   viewButton: {
     marginHorizontal: 16,
-    marginBottom: getBottomSpace(),
+    paddingTop: 16,
   },
   topInfo: {
     flexDirection: "row",

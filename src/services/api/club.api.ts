@@ -159,11 +159,20 @@ export async function removeCourseClub(params) {
 }
 
 export async function getMediaClub(params: { group_id: string; type: string }) {
-  console.log(3333, params);
   return request({
     method: METHOD.GET,
     urlPath: `media/club/${params.group_id}`,
     params,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function requestEliteClub(data) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "group/create/elite-request",
+    data,
   }).then((response) => {
     return response;
   });

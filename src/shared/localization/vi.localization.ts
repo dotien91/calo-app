@@ -1822,6 +1822,7 @@ export default {
     namAndDes: "Tên và mô tả câu lạc bộ",
     deleteGroup: "Xóa câu lạc bộ",
     deleteGroupSuccess: "Xóa câu lạc bộ thành công",
+    sendRequest: "Gửi thông tin thành công",
   },
   close: "Đóng",
 };
