@@ -266,7 +266,7 @@ export const quickFilterCourse = [
   },
   {
     name: translations.course.bussiness,
-    id: "Bussiness",
+    id: "Business",
     type: "skills",
   },
   {

@@ -49,8 +49,18 @@ const ClubPostScreen = () => {
       </PressableBtn>
       <PressableBtn
         onPress={() =>
+          //NavigationService.navigate(SCREENS.EVENTSLISTSCREEN, {
           NavigationService.navigate(SCREENS.LIST_COURSE_CLUB, {
             club_id,
+          })
+        }
+      >
+        <Text>Event</Text>
+      </PressableBtn>
+      <PressableBtn
+        onPress={() =>
+          NavigationService.navigate(SCREENS.SETTING_CLUB_SCREEN, {
+              club_id,
           })
         }
       >
@@ -63,7 +73,7 @@ const ClubPostScreen = () => {
           })
         }
       >
-        <Text>event</Text>
+        <Text>Setting Clubs</Text>
       </PressableBtn>
       <ListPostClub id={club_id} />
       {isLoggedIn() && userData?._id && (

@@ -1,5 +1,12 @@
-import React, { useState } from "react";
-import { View, StyleSheet, SafeAreaView, ScrollView } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+  TouchableOpacity,
+  TextInput,
+} from "react-native";
 import { useForm } from "react-hook-form";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
 import * as NavigationService from "react-navigation-helpers";
@@ -12,21 +19,83 @@ import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import SelectVideoHook from "@screens/course/course-create/components/select.video";
 import { showToast } from "@helpers/super.modal.helper";
-import { createGroup } from "@services/api/club.api";
+import TextBase from "@shared-components/TextBase";
+import { quickFilterCourse } from "constants/course.constant";
+import { useUploadFile } from "@helpers/hooks/useUploadFile";
+import PressableBtn from "@shared-components/button/PressableBtn";
+import IconSvg from "assets/svg";
+import { ScreenWidth } from "@freakycoder/react-native-helpers";
+import { useRoute } from "@react-navigation/native";
+import {
+  createGroup,
+  getDetailGroup,
+  updateGroup,
+} from "@services/api/club.api";
 import { SCREENS } from "constants";
 
 const CreateClubScreen = () => {
   const [updating, setUpdating] = useState(false);
-  const { idVideo, renderSelectVideo, updatingVid } = SelectVideoHook({
-    type: "photo",
-    typeM: "photo",
-    placeholder: translations.club.purchaseJoin,
-  });
+  const { idVideo, renderSelectBackground, updatingVid, link, setMedia } =
+    SelectVideoHook({
+      type: "photo",
+      typeM: "photo",
+      placeholder: translations.club.purchaseJoin,
+    });
+
+  const route = useRoute();
+
+  const [selectType, setSelectType] = useState<string[]>([]);
+  const club_id = route.params?.club_id || "";
+
+  const detailClub = () => {
+    getDetailGroup(club_id).then((res) => {
+      console.log("res...", res);
+      if (!res.isError) {
+        setMedia({
+          link: res.data.cover,
+          typeM: "photo",
+          id: "1",
+        });
+        setListFileLocal(
+          res.data.featured_image.map((i, index) => ({
+            uri: i,
+            type: "image/jpg",
+            _id: index,
+          })),
+        );
+        setListFile(
+          res.data.featured_image.map((i, index) => ({
+            uri: i,
+            type: "image/jpg",
+            _id: index,
+          })),
+        );
+        setValue("name", res.data.name);
+        setValue("des", res.data.description);
+        setSelectType(res.data.skills);
+      }
+    });
+  };
+
+  useEffect(() => {
+    detailClub();
+  }, []);
+
+  const {
+    onSelectPicture,
+    listFile,
+    listFileLocal,
+    renderFile2,
+    isUpLoadingFile,
+    setListFileLocal,
+    setListFile,
+  } = useUploadFile([]);
   const {
     control,
     handleSubmit,
     formState: { errors },
     setFocus,
+    setValue,
   } = useForm({
     defaultValues: {
       name: "",
@@ -35,30 +104,81 @@ const CreateClubScreen = () => {
     },
   });
   const onSubmit = (data) => {
-    console.log(updatingVid);
     if (!idVideo || idVideo === "") {
-      showToast({ type: "error" });
+      showToast({ type: "error", message: "Chưa chọn ảnh nền" });
+      return;
+    }
+    if (selectType.length == 0) {
+      showToast({ type: "error", message: "Chưa chọn type" });
       return;
     }
     const params = {
       name: data.name,
-      avatar: idVideo,
+      cover: link,
       description: data.des,
+      isEliteClub: false,
+      skills: selectType,
+      featured_image: listFile.map((i) => i.uri),
     };
-    createGroup(params).then((res) => {
-      if (!res.isError) {
-        console.log("res...", res.data);
-        NavigationService.navigate(SCREENS.CLUB_HOME, { id: res.data._id });
-      }
-    });
+    console.log("params...", params);
+    if (club_id) {
+      params._id = club_id;
+      updateGroup(params).then((res) => {
+        if (!res.isError) {
+          console.log("res...", res.data);
+          NavigationService.goBack();
+        }
+      });
+    } else {
+      createGroup(params).then((res) => {
+        if (!res.isError) {
+          console.log("res...", res.data);
+          NavigationService.navigate(SCREENS.CLUB_HOME, { id: res.data._id });
+        }
+      });
+    }
     setUpdating(false);
+  };
+
+  const renderItem = (item, key) => {
+    // const isSelected = item.id === selectType?.id;
+    const isSelected = [...selectType]?.findIndex((i) => i === item.id) >= 0;
+    // const _onSelectSkill = () => {};
+    const onPressItem = () => {
+      // console.log("item...", item);
+      // setSelectType(item);
+      if (isSelected) {
+        setSelectType((selectType) => selectType?.filter((i) => i !== item.id));
+      } else {
+        setSelectType([...selectType, item.id]);
+      }
+    };
+    return (
+      <TouchableOpacity
+        key={key}
+        onPress={onPressItem}
+        style={isSelected ? styles.btnFilterSelected : styles.btnFilter}
+      >
+        <TextBase
+          fontSize={16}
+          fontWeight="500"
+          color={isSelected ? "white" : "text"}
+        >
+          {item.name}
+        </TextBase>
+      </TouchableOpacity>
+    );
   };
 
   return (
     <SafeAreaView style={CS.safeAreaView}>
-      <Header text={translations.club.createClub} iconNameLeft="x" />
-      <ScrollView style={CS.flex1} showsVerticalScrollIndicator={false}>
-        <View>{renderSelectVideo()}</View>
+      <Header
+        text={
+          club_id ? translations.club.updateClub : translations.club.createClub
+        }
+        iconNameLeft="x"
+      />
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <InputHook
           setFocus={setFocus}
           name="name"
@@ -79,26 +199,14 @@ const CreateClubScreen = () => {
           maxLength={32}
           label={translations.club.clubName}
         />
-        {/* <InputHook
-          setFocus={setFocus}
-          name="price"
-          customStyle={CS.flex1}
-          inputProps={{
-            type: "number",
-            defaultValue: "",
-            placeholder: translations.club.chooseYourClubPrice,
-          }}
-          control={control}
-          rules={{
-            required: {
-              value: true,
-              message: translations.required,
-            },
-          }}
-          errorTxt={errors.price?.message}
-          maxLength={32}
-          label={translations.club.clubPrice}
-        /> */}
+        <View style={styles.viewCover}>{renderSelectBackground()}</View>
+        <View style={styles.viewType}>
+          <TextBase fontSize={16} fontWeight="700" title="Type of club" />
+          <View style={styles.wrapType}>
+            {quickFilterCourse.map((item, index) => renderItem(item, index))}
+          </View>
+          {/* quickFilterCourse */}
+        </View>
         <InputHook
           setFocus={setFocus}
           name="des"
@@ -116,14 +224,49 @@ const CreateClubScreen = () => {
           label={translations.club.description}
           multiline
         />
+        <View style={styles.viewType}>
+          <TextBase
+            fontSize={16}
+            fontWeight="700"
+            title={translations.club.addImage}
+          />
+          {listFileLocal.length > 0 ? (
+            <>
+              <View style={styles.viewRenderFile}>
+                {renderFile2()}
+                <PressableBtn style={styles.btnAdd} onPress={onSelectPicture}>
+                  <IconSvg
+                    name="icAdd"
+                    size={32}
+                    color={palette.textOpacity8}
+                  />
+                </PressableBtn>
+              </View>
+            </>
+          ) : (
+            <PressableBtn style={styles.uploadImage} onPress={onSelectPicture}>
+              <TextInput
+                editable={false}
+                placeholder={translations.club.addImage}
+              />
+            </PressableBtn>
+          )}
+        </View>
       </ScrollView>
       <View style={styles.viewBtn}>
         <Button
           style={{
-            backgroundColor: updating ? palette.placeholder : palette.primary,
+            backgroundColor:
+              updating || updatingVid || isUpLoadingFile
+                ? palette.placeholder
+                : palette.primary,
           }}
-          text={translations.club.createClub}
-          disabled={updating}
+          text={
+            club_id
+              ? translations.club.updateClub
+              : translations.club.createClub
+          }
+          disabled={updating || updatingVid || isUpLoadingFile}
           onPress={handleSubmit(onSubmit)}
         />
       </View>
@@ -134,9 +277,67 @@ const CreateClubScreen = () => {
 export default CreateClubScreen;
 
 const styles = StyleSheet.create({
+  container: {
+    ...CS.flex1,
+  },
   viewBtn: {
     marginHorizontal: 16,
     marginTop: 16,
     marginBottom: getBottomSpace(),
+  },
+  viewCover: {
+    marginTop: 10,
+    marginBottom: 5,
+  },
+  viewType: {
+    marginTop: 8,
+    marginHorizontal: 16,
+    flex: 1,
+  },
+  btnFilter: {
+    backgroundColor: palette.grey,
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
+  btnFilterSelected: {
+    backgroundColor: palette.primary,
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
+  styleFilter: {
+    marginTop: 8,
+    flexDirection: "row",
+    gap: 8,
+  },
+  wrapType: {
+    flexWrap: "wrap",
+    flexDirection: "row",
+    gap: 8,
+  },
+  uploadImage: {
+    height: 40,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: palette.borderColor,
+    paddingHorizontal: 16,
+    justifyContent: "center",
+  },
+  btnAdd: {
+    ...CS.center,
+    width: (ScreenWidth - 30 - 30) / 5,
+    height: (ScreenWidth - 30 - 30) / 5,
+    backgroundColor: palette.grey,
+    borderRadius: 8,
+    marginLeft: 8,
+    marginTop: -16,
+  },
+  viewRenderFile: {
+    ...CS.flexStart,
   },
 });

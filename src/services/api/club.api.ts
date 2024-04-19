@@ -25,9 +25,27 @@ interface TypeUpdateGroup {
 
 export async function updateGroup(data: TypeUpdateGroup) {
   return request({
-    method: METHOD.POST,
+    method: METHOD.PATCH,
     urlPath: "group/update",
     data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function getDetailGroup(id: string) {
+  return request({
+    method: METHOD.GET,
+    urlPath: `group/detail/${id}`,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function removeGroup(_id: string) {
+  return request({
+    method: METHOD.DELETE,
+    urlPath: `group/delete/${_id}`,
   }).then((response) => {
     return response;
   });
