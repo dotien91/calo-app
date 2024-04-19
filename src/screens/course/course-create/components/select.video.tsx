@@ -162,77 +162,26 @@ const SelectVideoHook = ({
       <ImageBackground
         source={require("../../../../assets/images/bgeliteclub.png")}
         style={styles.viewImage}
+        borderRadius={8}
       >
         <PressableBtn onPress={onPressChangeMedia} style={styles.styleBtn}>
-          {/* <IconText nameIcon="icImage" text={translations.club.gallery} /> */}
-          {media.link === "" && !updatingVid ? (
-            <View>
-              <IconText nameIcon="icImage" text={translations.club.gallery} />
-            </View>
-          ) : (
-            <View>
-              <Image source={{ uri: media.link }} style={styles.viewImage} />
-              {updatingVid && (
-                <View style={styles.viewImageFill}>
-                  <LoadingUpdateMedia />
-                  <View style={styles.viewImageFill}>
-                    <ActivityIndicator size={"small"} />
-                    <TextBase fontSize={12} fontWeight="500" color="primary">
-                      {process}%
-                    </TextBase>
-                  </View>
-                </View>
-              )}
-              <View style={styles.deleteViceo}>
-                <Icon
-                  name="close-outline"
-                  type={IconType.Ionicons}
-                  size={25}
-                  onPress={deleteVideo}
-                />
-              </View>
-            </View>
-          )}
+          <View style={styles.viewGally}>
+            <IconText nameIcon="icImage" text={translations.club.gallery} />
+          </View>
         </PressableBtn>
+        <Image source={{ uri: media.link }} style={styles.viewImage1} />
+        {updatingVid && (
+          <View style={styles.viewImageFill}>
+            <LoadingUpdateMedia />
+            <View style={styles.viewImageFill}>
+              <ActivityIndicator size={"small"} />
+              <TextBase fontSize={12} fontWeight="500" color="primary">
+                {process}%
+              </TextBase>
+            </View>
+          </View>
+        )}
       </ImageBackground>
-      // <PressableBtn
-      //   onPress={onPressChangeMedia}
-      //   style={{
-      //     height: (WindowWidth / 16) * 9,
-      //     ...CS.center,
-      //   }}
-      // >
-      //   {media.link === "" && !updatingVid ? (
-      //     <View>
-      //       <Text style={[CS.hnRegular, { color: palette.primary }]}>
-      //         {placeholder || translations.course.uploadCoverImageOrVideo}
-      //       </Text>
-      //     </View>
-      //   ) : (
-      //     <View>
-      //       <Image source={{ uri: media.link }} style={styles.viewImage} />
-      //       {updatingVid && (
-      //         <View style={styles.viewImageFill}>
-      //           <LoadingUpdateMedia />
-      //           <View style={styles.viewImageFill}>
-      //             <ActivityIndicator size={"small"} />
-      //             <TextBase fontSize={12} fontWeight="500" color="primary">
-      //               {process}%
-      //             </TextBase>
-      //           </View>
-      //         </View>
-      //       )}
-      //       <View style={styles.deleteViceo}>
-      //         <Icon
-      //           name="close-outline"
-      //           type={IconType.Ionicons}
-      //           size={25}
-      //           onPress={deleteVideo}
-      //         />
-      //       </View>
-      //     </View>
-      //   )}
-      // </PressableBtn>
     );
   };
 
@@ -243,6 +192,7 @@ const SelectVideoHook = ({
     link: media.link,
     updatingVid,
     typeMedia: media.typeM,
+    setMedia,
   };
 };
 
@@ -250,9 +200,10 @@ export default SelectVideoHook;
 
 const styles = StyleSheet.create({
   viewImage: {
-    width: WindowWidth,
     height: (WindowWidth / 16) * 9,
     backgroundColor: palette.placeholder,
+    marginHorizontal: 16,
+    borderRadius: 8,
   },
   viewImageFill: {
     ...CS.fillParent,
@@ -272,6 +223,9 @@ const styles = StyleSheet.create({
     ...CS.center,
     backgroundColor: palette.placeholder,
   },
+  viewGally: {
+    ...CS.center,
+  },
   viewIcon: {
     flexDirection: "row",
     alignItems: "center",
@@ -279,12 +233,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   styleBtn: {
-    flexDirection: "row",
     backgroundColor: palette.placeholder,
     width: 98,
     height: 28,
     borderRadius: 8,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-end",
+    position: "absolute",
+    bottom: 8,
+    right: 8,
+    zIndex: 99,
+  },
+  viewImage1: {
+    height: (WindowWidth / 16) * 9,
+    borderRadius: 8,
   },
 });

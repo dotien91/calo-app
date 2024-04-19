@@ -166,6 +166,7 @@ import icPeople from "./icon-people.svg";
 import icShield from "./icon-shield.svg";
 import icLocation from "./icon-location.svg";
 import icLocated from "./icon-located.svg";
+import icGoNext from "./icon-gonext.svg";
 
 const Icons = {
   icCoach,
@@ -335,6 +336,7 @@ const Icons = {
   icShield,
   icLocation,
   icLocated,
+  icGoNext,
 };
 
 interface IconSvgProps {

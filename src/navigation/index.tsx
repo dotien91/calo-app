@@ -126,6 +126,7 @@ import ClubPostScreen from "@screens/club/club/club.post.screen";
 import ListMemberScreen from "@screens/club/list-member/list.member";
 import UpdateEventScreen from "@screens/events/update-event/update.event.screen";
 import ListCourseClub from "@screens/home/components/list-course-club/list.course.club.screen";
+import SettingClubScreen from "@screens/club/setting-club/setting.club.screen";
 import SearchClubScreen from "@screens/club/search-club/search.club.screen";
 import ClubByCategoryScreen from "@screens/club/search-club/club.by.category.screen";
 import ClubMediaScreen from "@screens/club/media-club/club.media.screen";
@@ -575,6 +576,10 @@ const Navigation = () => {
         <Stack.Screen
           name={SCREENS.UPDATE_EVENT_SCREEN}
           component={UpdateEventScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.SETTING_CLUB_SCREEN}
+          component={SettingClubScreen}
         />
       </Stack.Navigator>
       <FloatingPlayer />

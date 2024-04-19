@@ -22,7 +22,6 @@ interface TypeListClub {
 }
 const JoinClubSceen = () => {
   const userData = useStore((state) => state.userData);
-  console.log("userDatauserData", userData._id);
   const paramsRequest = {
     limit: "5",
     member_id: userData?._id,

@@ -27,7 +27,6 @@ import ActionMore from "@screens/course/detail-teacher/components/ActionMore";
 import ChatRoomClass from "@screens/chat/room-chat/chat.room.class.video";
 import ListUser from "./modal-inner/ListUser";
 import PopupCreateLesson from "@screens/course/course-create/components/PartViewCreate/popup.create.lesson";
-import ConfirmViewBottom from "@shared-components/comfirm-view-bottom/comfirm.view.bottom";
 import InputViewModal from "@shared-components/input-modal/input.modal";
 import ListActionInner from "./modal-inner/ListActionInner";
 import GamificationView from "./modal-inner/GamificationView";
@@ -287,6 +286,9 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         )}
         {contentModalType == EnumModalContentType.SelectCourse && (
           <SelectCourseView {...data} />
+        )}
+        {contentModalType == EnumModalContentType.MoreEventDetail && (
+          <PopupMoreEvent {...data} />
         )}
         {contentModalType == EnumModalContentType.AddToGroup && (
           <PopupListFriend {...data} />
