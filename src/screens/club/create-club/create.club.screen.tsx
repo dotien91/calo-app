@@ -72,6 +72,7 @@ const CreateClubScreen = () => {
         );
         setValue("name", res.data.name);
         setValue("des", res.data.description);
+        setValue("location", res.data?.location || "");
         setSelectType(res.data.skills);
       }
     });
@@ -101,6 +102,7 @@ const CreateClubScreen = () => {
       name: "",
       // price: "",
       des: "",
+      location: "",
     },
   });
   const onSubmit = (data) => {
@@ -125,6 +127,7 @@ const CreateClubScreen = () => {
       isEliteClub: false,
       skills: selectType,
       featured_image: listFile.map((i) => i.uri),
+      location: data.location,
     };
     if (club_id) {
       params._id = club_id;
@@ -250,6 +253,23 @@ const CreateClubScreen = () => {
           // showPlaceholder
           label={translations.club.description}
           multiline
+        />
+        <InputHook
+          setFocus={setFocus}
+          name="location"
+          customStyle={CS.flex1}
+          inputProps={{
+            type: "text",
+            defaultValue: "",
+            placeholder: translations.club.location,
+          }}
+          control={control}
+          rules={{}}
+          errorTxt={errors.des?.message}
+          maxLength={200}
+          showPlaceholder
+          // label={translations.club.description}
+          // multiline
         />
         <View style={styles.viewType}>
           <TextBase

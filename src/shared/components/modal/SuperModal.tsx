@@ -49,6 +49,7 @@ import SelectCourseView from "./modal-inner/SelectCourseView";
 import PopupListFriend from "@screens/club/list-member/popup.list.friend";
 import PopupMoreEvent from "@screens/events/components/popup.more.event";
 import ConfirmViewBottom from "@shared-components/comfirm-view-bottom/comfirm.view.bottom";
+import PopupClubPost from "@screens/club/club/pupup.club.post";
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
 // using normal one.
@@ -294,6 +295,9 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         )}
         {contentModalType == EnumModalContentType.AddToGroup && (
           <PopupListFriend {...data} />
+        )}
+        {contentModalType == EnumModalContentType.ClubAttended && (
+          <PopupClubPost {...data} />
         )}
       </>
     );
