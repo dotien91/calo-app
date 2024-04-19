@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 
 import * as NavigationService from "react-navigation-helpers";
@@ -11,8 +11,50 @@ import Button from "@shared-components/button/Button";
 import { SCREENS } from "constants";
 import FastImage from "react-native-fast-image";
 import { formatDateMonth } from "@utils/date.utils";
+import useStore from "@services/zustand/store";
+import { updateEvent } from "@services/api/event.api";
+
+type ButtonText = "interested" | "interest";
+type BgColor = "colorMoney" | "grey3";
+type TxtColor = "primary" | "textOpacity6";
 
 const ItemEvent = ({ data }: { data: any }) => {
+  const userData = useStore((store) => store.userData);
+  const [buttonText, setButtonText] = useState<ButtonText>("interested");
+  const [bgColor, setbgColor] = useState<BgColor>("colorMoney");
+  const [txtColor, setTxtColor] = useState<TxtColor>("primary");
+  const [interestStatus, setInterestStatus] = useState<string[]>(
+    data?.interested_user_ids || [],
+  );
+
+  const goToEventScreen = () => {
+    if (data?.is_join) {
+      NavigationService.navigate(SCREENS.CLUB_SCREEN, {
+        id: data._id,
+        name: data?.name,
+        item: data,
+      });
+    } else {
+      NavigationService.navigate(SCREENS.DETAILEVENTSCREEN, {
+        id: data._id,
+        name: data?.name,
+        item: data,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (interestStatus.includes(userData?._id)) {
+      setButtonText("interest");
+      setbgColor("grey3");
+      setTxtColor("textOpacity6");
+    } else {
+      setButtonText("interested");
+      setbgColor("colorMoney");
+      setTxtColor("primary");
+    }
+  }, [data, interestStatus, userData?._id]);
+
   const renderImg = () => {
     return (
       <FastImage
@@ -51,6 +93,18 @@ const ItemEvent = ({ data }: { data: any }) => {
       );
     };
 
+    const handlePress = () => {
+      if (interestStatus.findIndex((item) => item == userData?._id) >= 0) {
+        updateEvent({ remove_user_id: userData?._id, _id: data._id }).then();
+        setInterestStatus([
+          ...interestStatus.filter((item) => item != userData._id),
+        ]);
+      } else {
+        updateEvent({ add_user_id: userData?._id, _id: data._id }).then();
+        setInterestStatus([...interestStatus, userData._id]);
+      }
+    };
+
     return (
       <View style={styles.viewContent}>
         <TextBase
@@ -72,7 +126,7 @@ const ItemEvent = ({ data }: { data: any }) => {
           fontSize={12}
           fontWeight="400"
           color={EnumColors.textOpacity6}
-          title={`${data?.interested_user_ids} ${translations.event.interested} - ${data?.interested_user_ids} ${translations.event.going}`}
+          title={`${data?.interested_user_ids.length} ${translations.event.interested}`}
         />
         <IconText nameIcon="icLocation" text={data?.location} />
         <View style={styles.viewInfo}>
@@ -97,12 +151,15 @@ const ItemEvent = ({ data }: { data: any }) => {
         <View style={styles.viewBtn}>
           <Button
             style={styles.btn}
-            text={translations.event.interested}
-            backgroundColor={palette.colorMoney}
-            textColor={palette.primary}
-            onPress={() => {
-              console.log(1111111111);
-            }}
+            // text={translations.event.interested}
+            text={
+              buttonText === "interested"
+                ? translations.event.interested
+                : translations.event.interest
+            }
+            backgroundColor={palette[bgColor]}
+            textColor={palette[txtColor]}
+            onPress={handlePress}
           />
         </View>
       </View>
@@ -110,16 +167,7 @@ const ItemEvent = ({ data }: { data: any }) => {
   };
 
   return (
-    <Pressable
-      style={styles.container}
-      onPress={() => {
-        NavigationService.navigate(SCREENS.DETAILEVENTSCREEN, {
-          id: data._id,
-          name: data?.name,
-          item: data,
-        });
-      }}
-    >
+    <Pressable style={styles.container} onPress={goToEventScreen}>
       {renderImg()}
       {renderInfo()}
     </Pressable>

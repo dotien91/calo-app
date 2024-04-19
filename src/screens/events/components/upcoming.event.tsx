@@ -8,10 +8,14 @@ import { useListData } from "@helpers/hooks/useListData";
 import { TypeListEvent, getListEventGroup } from "@services/api/event.api";
 import LoadingList from "@shared-components/loading.list.component";
 import eventEmitter from "@services/event-emitter";
+import EmptyResultView from "@shared-components/empty.data.component";
+import { palette } from "@theme/themes";
+import CS from "@theme/styles";
 
-const UpcomingEvent = () => {
+const UpcomingEvent = ({ club_id }) => {
   const paramsResquest = {
     limit: "3",
+    group_id: club_id,
   };
 
   const {
@@ -35,6 +39,10 @@ const UpcomingEvent = () => {
   }, []);
 
   const data = React.useMemo(() => {
+    console.log(
+      "listdataEvent.............",
+      JSON.stringify(listData, null, 2),
+    );
     return listData.slice(0, 15);
   }, [listData]);
 
@@ -54,6 +62,25 @@ const UpcomingEvent = () => {
 
   const renderLoading = () => {
     return <LoadingList numberItem={3} />;
+  };
+
+  const renderEmpty = () => {
+    if (isLoading) return null;
+    return (
+      <View
+        style={{
+          ...CS.center,
+          backgroundColor: palette.background,
+        }}
+      >
+        <EmptyResultView
+          title={translations.post.emptyPostTitle}
+          desc={translations.post.emptyPostDes}
+          icon="document-text-outline"
+          showLottie={false}
+        />
+      </View>
+    );
   };
 
   return (
@@ -76,6 +103,7 @@ const UpcomingEvent = () => {
         removeClippedSubviews={true}
         refreshControl={refreshControl()}
         ListFooterComponent={renderFooterComponent()}
+        ListEmptyComponent={renderEmpty()}
       />
     </View>
   );

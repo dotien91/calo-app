@@ -19,6 +19,8 @@ export interface TypeListEvent {
   group_id: string;
   createdAt?: string;
   updatedAt?: string;
+  interested_user_ids?: string;
+  create_by?: string;
 }
 
 export async function getListEventGroup(data) {
@@ -27,7 +29,6 @@ export async function getListEventGroup(data) {
     urlPath: "group/event/list",
     data,
   }).then((response) => {
-    console.log("res....", response, "....", data);
     return response;
   });
 }

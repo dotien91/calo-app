@@ -8,11 +8,11 @@ import * as NavigationService from "react-navigation-helpers";
 import { translations } from "@localization";
 import { SCREENS } from "constants";
 import UpcomingEvent from "./components/upcoming.event";
-import PastEvent from "./components/past.event";
+// import PastEvent from "./components/past.event";
 
 const EventsListScreen = () => {
   const route = useRoute();
-  const group_id = route.params?.group_id || "";
+  const group_id = route.params?.club_id || "";
 
   const addEvent = () => {
     NavigationService.navigate(SCREENS.CREATEEVENT, {
@@ -28,8 +28,8 @@ const EventsListScreen = () => {
         onPressRight={addEvent}
       />
       <ScrollView>
-        <UpcomingEvent />
-        <PastEvent />
+        <UpcomingEvent club_id={group_id} />
+        {/* <PastEvent club_id={group_id} /> */}
       </ScrollView>
     </SafeAreaView>
   );

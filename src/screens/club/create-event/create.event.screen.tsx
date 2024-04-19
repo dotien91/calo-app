@@ -34,9 +34,8 @@ const CreateEventScreen = () => {
 
   const route = useRoute();
   const group_id = route.params?.group_id || "";
-  console.log("idEvent====creaet=====", group_id);
 
-  const { renderSelectVideo, updatingVid, link } = SelectVideoHook({
+  const { renderSelectBackground, link } = SelectVideoHook({
     type: "photo",
     typeM: "photo",
     placeholder: translations.club.purchaseJoin,
@@ -55,7 +54,6 @@ const CreateEventScreen = () => {
   });
 
   const onSubmit = (data) => {
-    console.log(updatingVid);
     if (!link || link === "") {
       showToast({ type: "error" });
       return;
@@ -94,7 +92,7 @@ const CreateEventScreen = () => {
       <SafeAreaView style={CS.safeAreaView}>
         <Header text={translations.club.createEvent} iconNameLeft="x" />
         <ScrollView style={CS.flex1} showsVerticalScrollIndicator={false}>
-          <View>{renderSelectVideo()}</View>
+          <View>{renderSelectBackground()}</View>
           <View style={styles.viewInput}>
             <InputHook
               setFocus={setFocus}

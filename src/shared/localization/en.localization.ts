@@ -1092,15 +1092,21 @@ export default {
     emptyTask: "Empty task",
   },
   introwelcome: {
-    text11: "Welcome to the world of language",
+    text11: "Elevate Your Life Journey",
     text12:
-      "Ready to embark on this enriching adventure? Let's start your learning odyssey now!",
-    text21: "Join our vibrant IELTS community",
+      "Embark on a transformative experience with courses in personal development, mindfulness, and life skills. Empower yourself and thrive",
+    text21: "Unlock Your Career Potential",
     text22:
-      "A space to connect with fellow learners, share insights, and boost your preparation journey together!",
-    text31: "Diverse Learning Forms",
+      "Discover a wide range of career-oriented courses right at your fingertips. It's your gateway to professional growth and success",
+    text31: "Empower Your Financial Future",
     text32:
-      "Choose your learning adventure: dive into self-paced video modules, receive personalized guidance in 1v1 sessions, and foster group collaboration.",
+      "Unlock the secrets of finance through our expert-led courses covering budgeting, investing, and financial planning. Take control of your finances and build a secure future",
+    text41: "Unlock Business Success",
+    text42:
+      "Explore entrepreneurship, marketing, and management courses. Elevate your skills and thrive in the business world",
+    text51: "Take Care of Your Health Anytime, Anywhere",
+    text52:
+      "Explore top-notch health courses within IKIgai coach. It's where you can take charge of your health and self-development",
   },
   discover: {
     study: "Study",
