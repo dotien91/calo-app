@@ -330,7 +330,7 @@ const styles = StyleSheet.create({
   viewBtn: {
     marginHorizontal: 16,
     marginTop: 16,
-    marginBottom: getBottomSpace(),
+    marginBottom: 8,
   },
   viewCover: {
     marginTop: 10,
