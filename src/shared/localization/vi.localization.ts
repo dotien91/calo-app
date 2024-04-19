@@ -1746,7 +1746,14 @@ export default {
     clubPrice: "Giá tham gia câu lạc bộ",
     description: "Mô tả",
     createClub: "Tạo câu lạc bộ",
-    updateClub: "Cập nhật lạc bộ",
+    createClubSuccess: "Tạo câu lạc bộ thành công",
+    createClubFaild: "Tạo câu lạc bộ không thành công, thử lại sau",
+    updateClub: "Cập nhật câu lạc bộ",
+    updateClubSuccess: "Cập nhật câu lạc bộ thành công",
+    updateClubFaild: "Cập nhật câu lạc bộ không thành công, thử lại sau",
+    warningSelectImage: "Chưa chọn ảnh bìa",
+    warningSelectType: "Chưa chọn loại câu lạc bộ",
+    clubOfTyoe: "Loại câu lạc bộ",
     club: "Câu lạc bộ",
     title1: "Câu lạc bộ nổi bật",
     title2: "Câu lạc bộ bạn quản lý",
@@ -1775,7 +1782,14 @@ export default {
     des1: "Nhóm được tạo từ",
     des2: ". Tên được thay đổi lần cuối vào",
     des3: "và",
-    des4: "các thành viên khác là admin.",
+    des4: "thành viên khác là admin.",
+    createAt: (create: string, update: string) =>
+      create != update
+        ? `Nhóm được tạo vào ${create}. Tên thay đổi lần cuối vào ${update}.`
+        : `Nhóm được tạo vào ${create}.`,
+    desLeader: "là người sáng lập",
+    desAdmin: (member: number) =>
+      member > 0 ? `và ${member} thành viên khác là quản trị viên.` : ".",
     createEvent: "Tạo sự kiện",
     gallery: "Chọn",
     createEvent2: "Tạo sự kiện",

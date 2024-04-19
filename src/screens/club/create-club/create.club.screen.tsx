@@ -105,11 +105,17 @@ const CreateClubScreen = () => {
   });
   const onSubmit = (data) => {
     if (!idVideo || idVideo === "") {
-      showToast({ type: "error", message: "Chưa chọn ảnh nền" });
+      showToast({
+        type: "error",
+        message: translations.club.warningSelectImage,
+      });
       return;
     }
     if (selectType.length == 0) {
-      showToast({ type: "error", message: "Chưa chọn type" });
+      showToast({
+        type: "error",
+        message: translations.club.warningSelectType,
+      });
       return;
     }
     const params = {
@@ -120,20 +126,37 @@ const CreateClubScreen = () => {
       skills: selectType,
       featured_image: listFile.map((i) => i.uri),
     };
-    console.log("params...", params);
     if (club_id) {
       params._id = club_id;
       updateGroup(params).then((res) => {
         if (!res.isError) {
-          console.log("res...", res.data);
+          showToast({
+            type: "success",
+            message: translations.club.updateClubSuccess,
+          });
           NavigationService.goBack();
+        } else {
+          showToast({
+            type: "error",
+            message: translations.club.updateClubFaild,
+          });
         }
       });
     } else {
       createGroup(params).then((res) => {
         if (!res.isError) {
-          console.log("res...", res.data);
-          NavigationService.navigate(SCREENS.CLUB_HOME, { id: res.data._id });
+          showToast({
+            type: "success",
+            message: translations.club.createClubSuccess,
+          });
+          NavigationService.navigate(SCREENS.CLUB_HOME, {
+            club_id: res.data._id,
+          });
+        } else {
+          showToast({
+            type: "error",
+            message: translations.club.createClubFaild,
+          });
         }
       });
     }
@@ -201,7 +224,11 @@ const CreateClubScreen = () => {
         />
         <View style={styles.viewCover}>{renderSelectBackground()}</View>
         <View style={styles.viewType}>
-          <TextBase fontSize={16} fontWeight="700" title="Type of club" />
+          <TextBase
+            fontSize={16}
+            fontWeight="700"
+            title={translations.club.clubOfTyoe}
+          />
           <View style={styles.wrapType}>
             {quickFilterCourse.map((item, index) => renderItem(item, index))}
           </View>
@@ -310,11 +337,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
   },
-  styleFilter: {
-    marginTop: 8,
-    flexDirection: "row",
-    gap: 8,
-  },
+  // styleFilter: {
+  //   marginTop: 8,
+  //   flexDirection: "row",
+  //   gap: 8,
+  // },
   wrapType: {
     flexWrap: "wrap",
     flexDirection: "row",

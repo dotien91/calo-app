@@ -47,6 +47,8 @@ import WriteReview from "@screens/audio/components/WriteReview";
 import PopupMember from "@screens/club/list-member/popup.member";
 import SelectCourseView from "./modal-inner/SelectCourseView";
 import PopupListFriend from "@screens/club/list-member/popup.list.friend";
+import PopupMoreEvent from "@screens/events/components/popup.more.event";
+import ConfirmViewBottom from "@shared-components/comfirm-view-bottom/comfirm.view.bottom";
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
 // using normal one.
