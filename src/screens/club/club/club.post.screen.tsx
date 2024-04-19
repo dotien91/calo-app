@@ -92,7 +92,10 @@ const ClubPostScreen = () => {
     showSuperModal({
       contentModalType: EnumModalContentType.ClubAttended,
       styleModalType: EnumStyleModalType.Bottom,
-      data: dataGroup,
+      data: {
+        dataGroup: dataGroup,
+        hideCloseIcon: true,
+      },
     });
   };
   const BtnGroup = ({ onPress, txt }) => {
