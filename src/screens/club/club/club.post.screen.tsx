@@ -12,7 +12,6 @@ import { palette } from "@theme/themes";
 import { SCREENS } from "constants";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import PressableBtn from "@shared-components/button/PressableBtn";
-import { translations } from "@localization";
 
 const ClubPostScreen = () => {
   const route = useRoute();

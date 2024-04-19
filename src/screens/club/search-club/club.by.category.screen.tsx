@@ -35,7 +35,7 @@ const ClubByCategoryScreen: React.FC<ClubByCategoryScreenProps> = () => {
 
   return (
     <SafeAreaView style={CS.safeAreaView}>
-      <Header text={skills?.[0]} />
+      <Header text={skills?.[0] != "All skills" ? skills?.[0] : ""} />
       {isLoading && <LoadingList />}
       {!listData?.length && !isLoading && (
         <EmptyResultView

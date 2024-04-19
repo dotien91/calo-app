@@ -52,7 +52,7 @@ const ItemClub = ({ data }: { data: any }) => {
   );
 };
 
-export default ItemClub;
+export default React.memo(ItemClub);
 
 const style = StyleSheet.create({
   container: {

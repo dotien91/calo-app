@@ -10,7 +10,6 @@ import { SCREENS } from "constants";
 import { useListData } from "@helpers/hooks/useListData";
 import { getListGroup } from "@services/api/club.api";
 import eventEmitter from "@services/event-emitter";
-import CS from "@theme/styles";
 import useStore from "@services/zustand/store";
 
 interface TypeListClub {
@@ -27,7 +26,7 @@ const ManagedClubScreen = () => {
   const userData = useStore((state) => state.userData);
 
   const paramsRequest = {
-    limit: "5",
+    limit: "12",
     user_id: userData?._id,
   };
 
@@ -55,8 +54,8 @@ const ManagedClubScreen = () => {
     return <ItemClub data={item} key={index} />;
   };
 
-  const renderHeader = () => {
-    return (
+  return (
+    <View style={styles.styleItem}>
       <TitleClub
         textLeft={translations.club.title2}
         textRight={translations.club.create}
@@ -64,16 +63,10 @@ const ManagedClubScreen = () => {
           NavigationService.navigate(SCREENS.CREATE_CLUB_SCREEN);
         }}
       />
-    );
-  };
-
-  return (
-    <View style={styles.styleItem}>
       {listData.length == 0 && isLoading && renderLoading()}
       <FlatList
-        style={CS.flex1}
+        contentContainerStyle={styles.list}
         showsHorizontalScrollIndicator={false}
-        ListHeaderComponent={renderHeader}
         data={listData}
         renderItem={renderItemSelected}
         scrollEventThrottle={16}
@@ -90,10 +83,12 @@ const ManagedClubScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  list: {
+    paddingBottom: 60,
+  },
   styleItem: {
     flex: 1,
     marginHorizontal: 16,
-    marginBottom: 16,
     paddingTop: 10,
   },
 });

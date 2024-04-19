@@ -18,6 +18,7 @@ import { MediaType } from "react-native-image-picker";
 import { getMediaClub } from "@services/api/club.api";
 import EmptyResultView from "@shared-components/empty.data.component";
 import { translations } from "@localization";
+import LoadingList from "@shared-components/loading.list.component";
 
 const IMG_MEDIA = (Device.width - 8) / 3;
 
@@ -50,13 +51,7 @@ const ClubMediaImageView = () => {
     });
   };
 
-  const renderItem = ({
-    item,
-    index,
-  }: {
-    item: TypedChatMediaLocal;
-    index: number;
-  }) => {
+  const renderItem = ({ item, index }: { item: TypedMedia; index: number }) => {
     if (item.media_type.includes("image")) {
       return (
         <TouchableOpacity key={index} onPress={() => openMediaModal(item)}>
@@ -98,6 +93,7 @@ const ClubMediaImageView = () => {
       {!isLoading && !listData.length && (
         <EmptyResultView title={translations.notFound} />
       )}
+      {isLoading && <LoadingList />}
       <MasonryList
         data={listData}
         renderItem={renderItem}

@@ -236,9 +236,9 @@ const Navigation = () => {
             },
           })}
         >
-          <Tab.Screen name={SCREENS.HOME} component={HomeScreen} />
+          <Tab.Screen name={SCREENS.HOME} component={HomeStackScreen} />
           <Tab.Screen name={SCREENS.COURSE_LIST} component={CourseListScreen} />
-          <Tab.Screen name={SCREENS.CLUB_SCREEN} component={ClubScreen} />
+          <Tab.Screen name={SCREENS.CLUB_SCREEN} component={ClubStackScreen} />
           <Tab.Screen
             name={SCREENS.DISCOVERSCREEN}
             component={DiscoveryStackScreen}
@@ -305,7 +305,10 @@ const Navigation = () => {
   const DiscoveryStackScreen = () => {
     return (
       <DiscoverStack.Navigator screenOptions={{ headerShown: false }}>
-        <Tab.Screen name={SCREENS.DISCOVERSCREEN} component={DiscoverScreen} />
+        <Stack.Screen
+          name={SCREENS.DISCOVERSCREEN}
+          component={DiscoverScreen}
+        />
         <Stack.Screen name={SCREENS.AUDIO_PLAY} component={AudioPlayScreen} />
         <Stack.Screen name={SCREENS.AUDIO_LIST} component={AudioListScreen} />
         <Stack.Screen name={SCREENS.AUDIO_BOOK} component={AudioBookScreen} />
@@ -319,41 +322,143 @@ const Navigation = () => {
     );
   };
 
-  return (
-    <NavigationContainer
-      ref={navigationRef}
-      onReady={() => {
-        isReadyRef.current = true;
-      }}
-      theme={isDarkMode ? DarkTheme : LightTheme}
-    >
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name={SCREENS.HOME_TAB} component={renderTabNavigation} />
+  const ClubStack = createStackNavigator();
 
+  const ClubStackScreen = () => {
+    return (
+      <ClubStack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name={SCREENS.CLUB_SCREEN} component={ClubScreen} />
+        <Stack.Screen
+          name={SCREENS.SETTING_CLUB_SCREEN}
+          component={SettingClubScreen}
+        />
+        <Stack.Screen name={SCREENS.CLUB_HOME} component={ClubPostScreen} />
+        <Stack.Screen
+          name={SCREENS.CREATE_CLUB_SCREEN}
+          component={CreateClubScreen}
+        />
+        <Stack.Screen name={SCREENS.ELITE_CLUB} component={EliteClubScreen} />
+        <Stack.Screen
+          name={SCREENS.LIST_MEMBER_CLUB}
+          component={ListMemberScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.LIST_COURSE_CLUB}
+          component={ListCourseClub}
+        />
+        <Stack.Screen
+          name={SCREENS.CREATEEVENT}
+          component={CreateEventScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.EVENTSLISTSCREEN}
+          component={EventsListScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.DETAILEVENTSCREEN}
+          component={DetailScreenEvent}
+        />
+        <Stack.Screen
+          name={SCREENS.LIST_IMAGE_SCREEN}
+          component={ListImageScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.BECOME_ELITE_CLUB}
+          component={BecomEliteClub}
+        />
+        <Stack.Screen
+          name={SCREENS.UPDATE_EVENT_SCREEN}
+          component={UpdateEventScreen}
+        />
         <Stack.Screen name={SCREENS.MEDIA_CLUB} component={ClubMediaScreen} />
-        {renderStackIntro()}
+        {renderCommonStack()}
+      </ClubStack.Navigator>
+    );
+  };
+
+  const HomeStack = createStackNavigator();
+
+  const HomeStackScreen = () => {
+    return (
+      <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name={SCREENS.HOME_TAB} component={HomeScreen} />
+        {renderCommonStack()}
+      </HomeStack.Navigator>
+    );
+  };
+
+  const renderCommonStack = () => {
+    return (
+      <>
+        <Stack.Screen name={SCREENS.POST_DETAIL} component={PostDetailScreen} />
+        <Stack.Screen
+          name={SCREENS.COURSE_CATEGORY}
+          component={CourseFilterResultScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.COURSE_DETAIL}
+          component={CoursePreviewScreen}
+        />
+        <Stack.Screen name={SCREENS.COURSE_RATE} component={CourseRate} />
 
         <Stack.Screen
-          name={SCREENS.CLUB_BY_CATEGORY}
-          component={ClubByCategoryScreen}
-        />
-
-        <Stack.Screen name={SCREENS.SEARCH_CLUB} component={SearchClubScreen} />
-
-        <Stack.Screen name={SCREENS.LEADERBOARD} component={LeaderBoard} />
-        <Stack.Screen
-          name={SCREENS.COURSE_RECOMMEND}
-          component={CourseRecommendScreen}
+          name={SCREENS.COURSE_SEARCH}
+          component={CourseSearchScreen}
         />
         <Stack.Screen
-          name={SCREENS.CLASSHOMEWORK}
-          component={ClassHomeWorkScreen}
+          name={SCREENS.TEACHER_DETAIL}
+          component={DetailTeacherScreen}
         />
-        {renderBanksStack()}
-        {renderPracticeTestStack()}
         <Stack.Screen name={SCREENS.CHAT} component={ChatListScreen} />
+        <Stack.Screen name={SCREENS.POST_SCREEN} component={PostScreen} />
+        <Stack.Screen
+          name={SCREENS.EDIT_COMMENT}
+          component={EditCommentScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.PROFILE_CURRENT_USER}
+          component={ProfileUserScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.SEARCH_CHAT}
+          component={SearchRoomChatScreen}
+        />
+        <Stack.Screen
+          name={SCREENS.EDIT_PROFILE}
+          component={EditProfileScreen}
+        />
+        <Stack.Screen name={SCREENS.SEARCH} component={SearchPostScreen} />
+        <Stack.Screen name={SCREENS.CHAT_ROOM} component={ChatRoomScreen} />
+        <Stack.Screen
+          name={SCREENS.LOGIN_WITH_EMAIL}
+          component={LoginWithEmailScreen}
+        />
+        <Stack.Screen name={SCREENS.SIGN_UP} component={SignUpScreen} />
+        <Stack.Screen
+          name={SCREENS.FORGOT_PASSWORD}
+          component={ForgotPasswordScreen}
+        />
+        <Stack.Screen name={SCREENS.VERIFY_CODE} component={VerifyCodeScreen} />
+        <Stack.Screen
+          name={SCREENS.NEW_PASSWORD}
+          component={NewPasswordScreen}
+        />
+        <Stack.Screen name={SCREENS.PAYMENT_COURES} component={PaymentCoures} />
+        <Stack.Screen name={SCREENS.ABOUT_ME} component={AboutMe} />
+        <Stack.Screen name={SCREENS.SETTING_USER} component={SettingUser} />
+        <Stack.Screen
+          name={SCREENS.CHANGELANGUAGE}
+          component={ChangeLanguage}
+        />
+        <Stack.Screen name={SCREENS.SMARTBANKING} component={SmartBanking} />
+        <Stack.Screen name={SCREENS.CALL_PAGE} component={CallPageScreen} />
+        <Stack.Screen name={SCREENS.IN_COMING_CALL} component={InComingCall} />
+        <Stack.Screen
+          name={SCREENS.PAYMENT_SUCCESS}
+          component={PaymentSuccess}
+        />
+        <Stack.Screen name={SCREENS.TAB_FOLLOW} component={TabFollow} />
         <Stack.Screen name={SCREENS.CALL_CLASS} component={ClassRoomScreen} />
-
         <Stack.Screen
           name={SCREENS.TEACHER_COURSES}
           component={TeacherCourse}
@@ -403,24 +508,7 @@ const Navigation = () => {
           component={ChooseClassScreen}
         />
         <Stack.Screen name={SCREENS.BOOK_LESSON} component={BookLessonScreen} />
-        <Stack.Screen
-          name={SCREENS.COURSE_CATEGORY}
-          component={CourseFilterResultScreen}
-        />
-        <Stack.Screen
-          name={SCREENS.COURSE_DETAIL}
-          component={CoursePreviewScreen}
-        />
-        <Stack.Screen name={SCREENS.COURSE_RATE} component={CourseRate} />
 
-        <Stack.Screen
-          name={SCREENS.COURSE_SEARCH}
-          component={CourseSearchScreen}
-        />
-        <Stack.Screen
-          name={SCREENS.TEACHER_DETAIL}
-          component={DetailTeacherScreen}
-        />
         <Stack.Screen
           name={SCREENS.COURSE_LEARN_VIDEO_SCREEN}
           component={CourseLearnScreen}
@@ -467,67 +555,10 @@ const Navigation = () => {
           {(props) => <DetailScreen {...props} />}
         </Stack.Screen>
         <Stack.Screen name={SCREENS.LOGIN_PAGE} component={LoginScreen} />
-        <Stack.Screen name={SCREENS.POST_SCREEN} component={PostScreen} />
-        <Stack.Screen name={SCREENS.POST_DETAIL} component={PostDetailScreen} />
-        <Stack.Screen
-          name={SCREENS.EDIT_COMMENT}
-          component={EditCommentScreen}
-        />
-        <Stack.Screen
-          name={SCREENS.PROFILE_CURRENT_USER}
-          component={ProfileUserScreen}
-        />
-        <Stack.Screen
-          name={SCREENS.SEARCH_CHAT}
-          component={SearchRoomChatScreen}
-        />
-        <Stack.Screen
-          name={SCREENS.EDIT_PROFILE}
-          component={EditProfileScreen}
-        />
-        <Stack.Screen name={SCREENS.SEARCH} component={SearchPostScreen} />
-        <Stack.Screen name={SCREENS.CHAT_ROOM} component={ChatRoomScreen} />
-        <Stack.Screen
-          name={SCREENS.LOGIN_WITH_EMAIL}
-          component={LoginWithEmailScreen}
-        />
-        <Stack.Screen name={SCREENS.SIGN_UP} component={SignUpScreen} />
-        <Stack.Screen
-          name={SCREENS.FORGOT_PASSWORD}
-          component={ForgotPasswordScreen}
-        />
-        <Stack.Screen name={SCREENS.VERIFY_CODE} component={VerifyCodeScreen} />
-        <Stack.Screen
-          name={SCREENS.NEW_PASSWORD}
-          component={NewPasswordScreen}
-        />
-        <Stack.Screen name={SCREENS.PAYMENT_COURES} component={PaymentCoures} />
-        <Stack.Screen name={SCREENS.ABOUT_ME} component={AboutMe} />
-        <Stack.Screen name={SCREENS.SETTING_USER} component={SettingUser} />
-        <Stack.Screen
-          name={SCREENS.CHANGELANGUAGE}
-          component={ChangeLanguage}
-        />
-        <Stack.Screen name={SCREENS.SMARTBANKING} component={SmartBanking} />
-        <Stack.Screen name={SCREENS.CALL_PAGE} component={CallPageScreen} />
-        <Stack.Screen name={SCREENS.IN_COMING_CALL} component={InComingCall} />
-        <Stack.Screen
-          name={SCREENS.PAYMENT_SUCCESS}
-          component={PaymentSuccess}
-        />
-        <Stack.Screen name={SCREENS.TAB_FOLLOW} component={TabFollow} />
+
         <Stack.Screen name={SCREENS.AFFILIATE} component={AffiliatePage} />
         <Stack.Screen name={SCREENS.BLACK_LIST} component={BlackList} />
         <Stack.Screen name={SCREENS.HOME_AFFILIATE} component={HomeAffilite} />
-        {/* <Stack.Screen name={SCREENS.TAB_FOLLOW} component={TabFollow} />
-        <Stack.Screen
-          name={SCREENS.PRIVATESETTING}
-          component={PrivateSetting}
-        />
-        <Stack.Screen
-          name={SCREENS.SETTINGPROFILESCREEN}
-          component={SettingProfileScreen}
-        /> */}
         <Stack.Screen
           name={SCREENS.CODE_ACTIVATIONS_SCREEN}
           component={CodeActivationsScreen}
@@ -539,48 +570,40 @@ const Navigation = () => {
           name={SCREENS.SHOW_ALL_REVIEW}
           component={showAllReview}
         />
-        <Stack.Screen name={SCREENS.ELITE_CLUB} component={EliteClubScreen} />
-        <Stack.Screen name={SCREENS.CLUB_HOME} component={ClubPostScreen} />
         <Stack.Screen
-          name={SCREENS.LIST_MEMBER_CLUB}
-          component={ListMemberScreen}
+          name={SCREENS.CLUB_BY_CATEGORY}
+          component={ClubByCategoryScreen}
+        />
+
+        <Stack.Screen name={SCREENS.SEARCH_CLUB} component={SearchClubScreen} />
+
+        <Stack.Screen name={SCREENS.LEADERBOARD} component={LeaderBoard} />
+        <Stack.Screen
+          name={SCREENS.COURSE_RECOMMEND}
+          component={CourseRecommendScreen}
         />
         <Stack.Screen
-          name={SCREENS.LIST_COURSE_CLUB}
-          component={ListCourseClub}
+          name={SCREENS.CLASSHOMEWORK}
+          component={ClassHomeWorkScreen}
         />
-        <Stack.Screen
-          name={SCREENS.CREATEEVENT}
-          component={CreateEventScreen}
-        />
-        <Stack.Screen
-          name={SCREENS.CREATE_CLUB_SCREEN}
-          component={CreateClubScreen}
-        />
-        <Stack.Screen
-          name={SCREENS.EVENTSLISTSCREEN}
-          component={EventsListScreen}
-        />
-        <Stack.Screen
-          name={SCREENS.DETAILEVENTSCREEN}
-          component={DetailScreenEvent}
-        />
-        <Stack.Screen
-          name={SCREENS.LIST_IMAGE_SCREEN}
-          component={ListImageScreen}
-        />
-        <Stack.Screen
-          name={SCREENS.BECOME_ELITE_CLUB}
-          component={BecomEliteClub}
-        />
-        <Stack.Screen
-          name={SCREENS.UPDATE_EVENT_SCREEN}
-          component={UpdateEventScreen}
-        />
-        <Stack.Screen
-          name={SCREENS.SETTING_CLUB_SCREEN}
-          component={SettingClubScreen}
-        />
+        {renderBanksStack()}
+        {renderPracticeTestStack()}
+      </>
+    );
+  };
+
+  return (
+    <NavigationContainer
+      ref={navigationRef}
+      onReady={() => {
+        isReadyRef.current = true;
+      }}
+      theme={isDarkMode ? DarkTheme : LightTheme}
+    >
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name={SCREENS.HOME_TAB} component={renderTabNavigation} />
+        {renderStackIntro()}
+        {renderCommonStack()}
       </Stack.Navigator>
       <FloatingPlayer />
     </NavigationContainer>

@@ -1,7 +1,6 @@
 import React, { memo } from "react";
-import { StyleSheet, View, FlatList, Text } from "react-native";
+import { StyleSheet, View, FlatList } from "react-native";
 
-import { TypedChatMediaLocal } from "models/chat.model";
 import CS from "@theme/styles";
 import { useRoute } from "@react-navigation/native";
 import { useListData } from "@helpers/hooks/useListData";
@@ -12,6 +11,11 @@ import { openUrl } from "@helpers/file.helper";
 import IconBtn from "@shared-components/button/IconBtn";
 import EmptyResultView from "@shared-components/empty.data.component";
 import { translations } from "@localization";
+import LoadingList from "@shared-components/loading.list.component";
+import TextBase from "@shared-components/TextBase";
+import { formatFullDate } from "@utils/date.utils";
+import { palette } from "@theme/themes";
+import { EnumColors } from "models";
 
 const ClubFilesView = () => {
   const route = useRoute();
@@ -29,21 +33,22 @@ const ClubFilesView = () => {
       getMediaClub,
     );
 
-  const renderItem = ({
-    item,
-    index,
-  }: {
-    item: TypedChatMediaLocal;
-    index: number;
-  }) => {
+  const renderItem = ({ item, index }: { item: MediaType; index: number }) => {
     return (
       <PressableBtn
         key={index}
         onPress={() => openUrl(item?.media_url)}
-        style={{ marginTop: 8, ...CS.flexStart, flex: 1 }}
+        style={styles.box}
       >
-        <IconBtn name="file" customStyle={{ marginRight: 2 }} />
-        <Text style={CS.txtLink}>{item?.media_file_name}</Text>
+        <IconBtn name="file" customStyle={styles.icon} size={32} />
+        <View>
+          <TextBase color={EnumColors.text} fontWeight="700">
+            {item?.media_file_name}
+          </TextBase>
+          <TextBase fontSize={12} color={EnumColors.textOpacity6}>
+            {formatFullDate(item?.createdAt)}
+          </TextBase>
+        </View>
       </PressableBtn>
     );
   };
@@ -53,20 +58,30 @@ const ClubFilesView = () => {
       {!isLoading && !listData.length && (
         <EmptyResultView title={translations.notFound} />
       )}
+      {isLoading && <LoadingList />}
       <FlatList
         data={listData}
         renderItem={renderItem}
         onEndReached={onEndReach}
         contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 80 }}
-        ListFooterComponent={renderFooterComponent()}
         keyExtractor={(item) => item._id}
+        ListFooterComponent={renderFooterComponent()}
       />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  box: {},
+  box: {
+    marginTop: 8,
+    ...CS.flexStart,
+    ...CS.borderBottomStyle,
+    paddingBottom: 8,
+  },
+  icon: {
+    marginRight: 12,
+    color: palette.textOpacity6,
+  },
 });
 
 export default memo(ClubFilesView);

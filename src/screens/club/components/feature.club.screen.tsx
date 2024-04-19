@@ -21,7 +21,7 @@ interface TypeListClub {
 
 const FeatureClubScreen = () => {
   const paramsRequest = {
-    limit: "5",
+    limit: "12",
   };
 
   const {
@@ -47,17 +47,15 @@ const FeatureClubScreen = () => {
   const renderItemSelected = ({ item, index }) => {
     return <ItemClub data={item} key={index} />;
   };
-  const renderHeader = () => {
-    return <TitleClub textLeft={translations.club.title1} />;
-  };
 
   return (
     <View style={styles.styleItem}>
+      <TitleClub textLeft={translations.club.title1} />
       {listData.length == 0 && isLoading && renderLoading()}
       <FlatList
+        contentContainerStyle={styles.list}
         showsHorizontalScrollIndicator={false}
         data={listData}
-        ListHeaderComponent={renderHeader}
         renderItem={renderItemSelected}
         scrollEventThrottle={16}
         initialNumToRender={2}
@@ -75,10 +73,12 @@ const FeatureClubScreen = () => {
 export default FeatureClubScreen;
 
 const styles = StyleSheet.create({
+  list: {
+    paddingBottom: 60,
+  },
   styleItem: {
     flex: 1,
     marginHorizontal: 16,
-    marginBottom: 16,
     paddingTop: 10,
   },
 });

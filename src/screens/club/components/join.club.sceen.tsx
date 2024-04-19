@@ -5,7 +5,6 @@ import ItemClub from "./list.item.club";
 import TitleClub from "./list.title.club";
 import { translations } from "@localization";
 import LoadingList from "@shared-components/loading.list.component";
-import CS from "@theme/styles";
 import { useListData } from "@helpers/hooks/useListData";
 import { getListGroup } from "@services/api/club.api";
 import eventEmitter from "@services/event-emitter";
@@ -23,7 +22,7 @@ interface TypeListClub {
 const JoinClubSceen = () => {
   const userData = useStore((state) => state.userData);
   const paramsRequest = {
-    limit: "5",
+    limit: "12",
     member_id: userData?._id,
   };
 
@@ -35,7 +34,6 @@ const JoinClubSceen = () => {
     renderFooterComponent,
     _requestData,
   } = useListData<TypeListClub>(paramsRequest, getListGroup, []);
-  // console.log("lis...", listData);
 
   useEffect(() => {
     eventEmitter.on("reload_list_club", _requestData);
@@ -52,22 +50,12 @@ const JoinClubSceen = () => {
     return <ItemClub data={item} key={index} />;
   };
 
-  const renderHeader = () => {
-    return (
-      <TitleClub
-        textLeft={translations.club.title3}
-        // iconNameRight="icSort"
-        // onPressRight={openSelectTypeSort}
-      />
-    );
-  };
-
   return (
     <View style={styles.styleItem}>
+      <TitleClub textLeft={translations.club.title3} />
       {listData.length == 0 && isLoading && renderLoading()}
       <FlatList
-        style={CS.flex1}
-        ListHeaderComponent={renderHeader}
+        contentContainerStyle={styles.list}
         showsHorizontalScrollIndicator={false}
         data={listData}
         renderItem={renderItemSelected}
@@ -84,10 +72,12 @@ const JoinClubSceen = () => {
   );
 };
 const styles = StyleSheet.create({
+  list: {
+    paddingBottom: 60,
+  },
   styleItem: {
     flex: 1,
     marginHorizontal: 16,
-    marginBottom: 16,
     paddingTop: 10,
   },
 });

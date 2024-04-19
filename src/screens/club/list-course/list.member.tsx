@@ -104,11 +104,11 @@ const ListMemberScreen = () => {
           <Text style={styles.txtFullname}>
             {item.user_id?.display_name || ""}
           </Text>
-          {item.tier != "1" && (
+          {item?.tier != "1" && (
             <View style={styles.viewAdmin}>
               <IconSvg name="icShield" color={palette.textOpacity6} size={16} />
               <Text style={styles.txtAdmin}>
-                {item.tier == "2"
+                {item?.tier == "2"
                   ? translations.club.admin
                   : translations.club.leader}
               </Text>
@@ -117,7 +117,7 @@ const ListMemberScreen = () => {
         </View>
         {item.user_id?._id !== userData?._id &&
           tier != "1" &&
-          item.tier != 3 && (
+          item?.tier != 3 && (
             <IconSvgBtn
               name="icMore"
               onPress={pressMore}

@@ -15,10 +15,6 @@ const AboutHome = () => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
 
-  React.useEffect(() => {
-    console.log("rerender");
-  }, []);
-
   const userData = useStore((state) => state.userData);
 
   return (

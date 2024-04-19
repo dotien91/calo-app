@@ -22,11 +22,16 @@ import {
   getMemberGroup,
 } from "@services/api/club.api";
 import useStore from "@services/zustand/store";
-import { showToast } from "@helpers/super.modal.helper";
+import {
+  closeSuperModal,
+  showLoading,
+  showToast,
+} from "@helpers/super.modal.helper";
 import { formatVNDate } from "@utils/date.utils";
 import CS from "@theme/styles";
 import { useListData } from "@helpers/hooks/useListData";
 import { convertLastActive } from "@utils/time.utils";
+import { navigate, replace } from "@helpers/navigation.helper";
 
 const ItemEliteScreen = () => {
   const theme = useTheme();
@@ -35,7 +40,6 @@ const ItemEliteScreen = () => {
   const id = route.params.id || "";
   const name = route.params.name || "";
   const [dataGroup, setDataGroup] = useState();
-  // console.log("id", id);
 
   const userData = useStore((store) => store.userData);
 
@@ -50,9 +54,12 @@ const ItemEliteScreen = () => {
     );
   };
 
-  const detailGroup = () => {
+  useEffect(() => {
+    _getDetailGroup();
+  }, []);
+
+  const _getDetailGroup = () => {
     getDetailGroup(id).then((res) => {
-      // console.log("res...", res);
       if (!res.isError) {
         setDataGroup(res.data);
       }
@@ -80,27 +87,22 @@ const ItemEliteScreen = () => {
   );
 
   const listData = [...listData2, ...listData1];
-  // console.log("list Admin", listData);
-
-  useEffect(() => {
-    detailGroup();
-  }, []);
 
   const joinGroup = () => {
-    // return;
     if (dataGroup?.attend_data?.tier) {
-      NavigationService.navigate(SCREENS.CLUB_HOME, {
+      navigate(SCREENS.CLUB_HOME, {
         club_id: id,
         name: name,
       });
     } else {
+      showLoading();
       addMemberGroup({
         group_id: id,
-        tier: "1",
         user_id: userData?._id,
       }).then((res) => {
+        closeSuperModal();
         if (!res.isError) {
-          NavigationService.navigate(SCREENS.CLUB_HOME, {
+          replace(SCREENS.CLUB_HOME, {
             club_id: id,
             name: name,
           });
@@ -128,6 +130,7 @@ const ItemEliteScreen = () => {
         <View style={styles.viewTitle}>
           <TextBase
             fontSize={20}
+            color={EnumColors.text}
             fontWeight="700"
             title={dataGroup?.name}
             numberOfLines={3}
@@ -152,6 +155,7 @@ const ItemEliteScreen = () => {
         <View style={styles.viewTitle}>
           <TextBase
             fontSize={16}
+            color={EnumColors.text}
             fontWeight="700"
             title={translations.club.about}
           />
@@ -218,6 +222,7 @@ const ItemEliteScreen = () => {
             <View style={styles.viewHeadTitle}>
               <TextBase
                 fontSize={16}
+                color={EnumColors.text}
                 fontWeight="700"
                 title={translations.club.title}
               />
@@ -263,6 +268,7 @@ const ItemEliteScreen = () => {
               fontSize={16}
               fontWeight="700"
               title={translations.club.group}
+              color={EnumColors.text}
             />
             <View style={styles.viewGroup}>
               <IconText
@@ -292,12 +298,13 @@ const ItemEliteScreen = () => {
             <ListFile
               listFile={
                 dataGroup?.featured_image.map((item) => ({
-                  media_mime_type: "image/jpg",
+                  media_mime_type: "image",
                   media_thumbnail: item,
+                  media_url: item,
                 })) || []
               }
             />
-            {dataGroup?.featured_image?.length > 0 && (
+            {/* {dataGroup?.featured_image?.length > 0 && (
               <View
                 style={{
                   flexDirection: "row",
@@ -325,7 +332,7 @@ const ItemEliteScreen = () => {
                   size={16}
                 />
               </View>
-            )}
+            )} */}
           </View>
         </View>
       </View>

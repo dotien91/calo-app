@@ -1,10 +1,9 @@
 import React, { useMemo } from "react";
-import { Text, View, ViewStyle } from "react-native";
+import { Text, ViewStyle } from "react-native";
 import FastImage from "react-native-fast-image";
 import * as NavigationService from "react-navigation-helpers";
 import { useTheme } from "@react-navigation/native";
 
-import CS from "@theme/styles";
 import createStyles from "../audio.style";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { translations } from "@localization";
@@ -64,12 +63,10 @@ const AudioItem = ({
           {user_id?.display_name}
         </Text>
         {view_number ? (
-          <View style={[CS.flexStart, { marginBottom: 6 }]}>
-            <Text style={styles.audioRatingTxt}>
-              {`${(view_number + "" || "").slice(0, 3)}`}
-            </Text>
+          <Text style={styles.audioRatingTxt}>
+            {`${(view_number + " " || "").slice(0, 3)}`}
             <Text style={styles.textNoReview}>{translations.audio.listen}</Text>
-          </View>
+          </Text>
         ) : (
           <Text style={styles.textNoReview}>{translations.audio.noListen}</Text>
         )}

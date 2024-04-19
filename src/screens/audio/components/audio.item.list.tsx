@@ -3,7 +3,6 @@ import { Text, View, ViewStyle } from "react-native";
 import FastImage from "react-native-fast-image";
 import * as NavigationService from "react-navigation-helpers";
 
-import CS from "@theme/styles";
 import createStyles from "../audio.style";
 import { useTheme } from "@react-navigation/native";
 import { translations } from "@localization";
@@ -38,12 +37,10 @@ const ItemList = ({ isSliderItem, style, data }: ItemListProps) => {
           {podcast_category?.category_content}
         </Text>
         {view_number ? (
-          <View style={[CS.flexStart, { marginBottom: 6 }]}>
-            <Text style={styles.audioRatingTxt}>
-              {`${(view_number + "" || "").slice(0, 3)}`}
-            </Text>
+          <Text style={styles.audioRatingTxt}>
+            {`${(view_number + " " || "").slice(0, 3)}`}
             <Text style={styles.textNoReview}>{translations.audio.listen}</Text>
-          </View>
+          </Text>
         ) : (
           <Text style={styles.textNoReview}>{translations.audio.noListen}</Text>
         )}

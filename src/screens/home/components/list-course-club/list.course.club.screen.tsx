@@ -23,7 +23,8 @@ const ListCourseClub = () => {
   const userData = useStore((state) => state.userData);
   const route = useRoute();
   const club_id = route.params?.["club_id"];
-  const tier = 2;
+  const tier = route.params?.["tier"];
+
   const [itemSelected, setItemSelected] = React.useState([]);
   const { listData, isLoading, totalCount, _requestData } =
     useListData<ICourseItem>(
@@ -47,7 +48,7 @@ const ListCourseClub = () => {
   }, []);
 
   const renderItem = (item: ICourseItem, index: number) => {
-    return <CourseItem isSliderItem data={item.item.course_id} key={index} />;
+    return <CourseItem data={item.item.course_id} key={index} />;
   };
 
   const openSelectCourse = () => {
@@ -70,7 +71,7 @@ const ListCourseClub = () => {
         onPressRight={openSelectCourse}
         iconNameRight={tier < 2 ? "" : "plus"}
       />
-      <View style={{ padding: 16 }}>
+      <View style={{ paddingVertical: 16 }}>
         <Text style={styles.txtCountResult}>
           {totalCount} {translations.results}
         </Text>
@@ -86,10 +87,6 @@ const ListCourseClub = () => {
           data={listData}
           renderItem={renderItem}
           scrollEventThrottle={16}
-          contentContainerStyle={{
-            paddingLeft: 16,
-            paddingBottom: 16,
-          }}
           onEndReachedThreshold={0}
           showsVerticalScrollIndicator={false}
           keyExtractor={(item) => item?._id + ""}
@@ -106,5 +103,7 @@ const styles = StyleSheet.create({
     ...CS.hnRegular,
     fontSize: 14,
     color: palette.textOpacity8,
+    paddingHorizontal: 16,
+    marginBottom: 8,
   },
 });

@@ -95,13 +95,13 @@ const ClubScreen = () => {
         iconNameRight="search"
         onPressRight={onPressHeaderRight}
       />
-
       <TabView
         navigationState={{ index, routes }}
         renderScene={renderScene}
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}
         renderTabBar={renderTabBar}
+        lazy={true}
       />
     </SafeAreaView>
   );

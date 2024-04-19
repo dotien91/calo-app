@@ -21,8 +21,8 @@ import ClubMediaImageView from "./club.media.image.view";
 import ClubMediaFilesView from "./club.media.files.view";
 
 const renderScene = SceneMap({
-  media: () => <ClubMediaImageView />,
   file: () => <ClubMediaFilesView />,
+  media: () => <ClubMediaImageView />,
 });
 
 const ClubMediaScreen = () => {
@@ -33,8 +33,8 @@ const ClubMediaScreen = () => {
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: "media", title: "MEDIA" },
     { key: "file", title: "FILES" },
+    { key: "media", title: "MEDIA" },
   ]);
 
   const renderTabBar = (props) => (
@@ -82,6 +82,7 @@ const ClubMediaScreen = () => {
         renderScene={renderScene}
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}
+        lazy={true}
       />
     </SafeAreaView>
   );
