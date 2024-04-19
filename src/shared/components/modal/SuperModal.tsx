@@ -289,6 +289,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         )}
         {contentModalType == EnumModalContentType.MoreEventDetail && (
           <PopupMoreEvent {...data} />
+        )}
         {contentModalType == EnumModalContentType.AddToGroup && (
           <PopupListFriend {...data} />
         )}
