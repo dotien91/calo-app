@@ -1,19 +1,35 @@
-import { ScreenWidth } from "@freakycoder/react-native-helpers";
-import CS from "@theme/styles";
 import * as React from "react";
-import { Text, View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, ImageBackground } from "react-native";
+
+import { translations } from "@localization";
+import TextBase from "@shared-components/TextBase";
 
 interface HeaderClubProps {
-  name: string;
+  dataGroup: any;
 }
 
-const HeaderClub = (props: HeaderClubProps) => {
-  const { name } = props;
+const HeaderClub = ({ dataGroup }: HeaderClubProps) => {
   return (
-    <View style={styles.container}>
-      <Image style={styles.viewImage} source={{ uri: "" }} />
-      <Text style={styles.txtName}>{name}</Text>
-      <Text style={styles.txtMember}>{name}</Text>
+    <View>
+      <ImageBackground
+        source={{ uri: dataGroup?.cover }}
+        style={styles.viewImg}
+      />
+      <View style={styles.viewContent}>
+        <View style={styles.viewTitle}>
+          <TextBase
+            fontSize={20}
+            fontWeight="700"
+            title={dataGroup?.name}
+            numberOfLines={3}
+          />
+          <TextBase
+            fontSize={14}
+            fontWeight="400"
+            title={`${dataGroup?.number_member_recent_join} ${translations.club.member}`}
+          />
+        </View>
+      </View>
     </View>
   );
 };
@@ -21,19 +37,15 @@ const HeaderClub = (props: HeaderClubProps) => {
 export default HeaderClub;
 
 const styles = StyleSheet.create({
-  container: {},
-  viewImage: {
-    height: 156,
-    width: ScreenWidth,
+  viewImg: {
+    height: 200,
+    width: "100%",
   },
-  txtName: {
-    ...CS.hnBold,
-    fontSize: 20,
-    paddingHorizontal: 16,
+  viewContent: {
+    marginHorizontal: 16,
   },
-  txtMember: {
-    ...CS.hnBold,
-    fontSize: 20,
-    paddingHorizontal: 16,
+  viewTitle: {
+    marginTop: 10,
+    marginBottom: 10,
   },
 });
