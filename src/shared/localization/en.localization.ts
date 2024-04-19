@@ -1217,7 +1217,14 @@ export default {
     clubPrice: "Club price",
     description: "Description",
     createClub: "Create club",
+    createClubSuccess: "Club creation successful",
+    createClubFaild: "Failed to create club, please try again later",
     updateClub: "Update club",
+    updateClubSuccess: "Club update successful",
+    updateClubFaild: "Failed to update club, please try again later",
+    warningSelectImage: "No cover image selected",
+    warningSelectType: "Club type not selected",
+    clubOfTyoe: "Club of type",
     club: "Club",
     title1: "Feature clubs",
     title2: "Clubs you manage",
@@ -1247,6 +1254,15 @@ export default {
     des2: ". Name last changed on",
     des3: "and",
     des4: "other members are admin.",
+    createAt: (create: string, update: string) =>
+      create != update
+        ? `Group created on ${create}. Name last changed on ${update}.`
+        : `Group created on ${create}.`,
+    desLeader: "is club leader",
+    desAdmin: (member: number) =>
+      member > 0
+        ? `and ${member} other member${member > 1 ? "s" : ""} are admins.`
+        : ".",
     createEvent: "Create Event",
     gallery: "Gallery",
     createEvent2: "Create event",

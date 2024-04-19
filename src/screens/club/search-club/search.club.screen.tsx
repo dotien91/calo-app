@@ -14,22 +14,18 @@ import ItemClub from "../components/list.item.club";
 import { getListGroup } from "@services/api/club.api";
 import CS from "@theme/styles";
 
-interface SearchClubScreenProps { }
+interface SearchClubScreenProps {}
 
 const SearchClubScreen: React.FC<SearchClubScreenProps> = () => {
   const [txtSearch, setTxtSearch] = useState("");
 
   const paramRequest = React.useMemo(() => {
-    if (txtSearch) return { limit: "12", search: txtSearch}
-    return { limit: "12" }
-  }, [txtSearch])
+    if (txtSearch) return { limit: "12", search: txtSearch };
+    return { limit: "12" };
+  }, [txtSearch]);
 
   const { listData, isLoading, onEndReach, renderFooterComponent } =
-    useListSearch<TypedGeneralRoomChat>(
-      paramRequest,
-      getListGroup,
-      [],
-    );
+    useListSearch<TypedGeneralRoomChat>(paramRequest, getListGroup, []);
 
   const renderItem = ({ item, index }) => {
     return <ItemClub data={item} key={index} />;

@@ -1,5 +1,5 @@
-import React, { useMemo } from "react";
-import { ImageBackground, View } from "react-native";
+import React, { useEffect, useMemo, useState } from "react";
+import { Image, ImageBackground, View } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { useTheme, useRoute } from "@react-navigation/native";
 
@@ -12,13 +12,21 @@ import TextViewCollapsed from "@screens/course/components/text.view.collapsed";
 import { EnumColors } from "models";
 import { translations } from "@localization";
 import { palette } from "@theme/themes";
-import ItemMember from "./components/item.member";
+// import ItemMember from "./components/item.member";
 import ListFile from "@screens/home/components/post-item/list.media.post.item";
 import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "constants";
-import { addMemberGroup } from "@services/api/club.api";
+import {
+  addMemberGroup,
+  getDetailGroup,
+  getMemberGroup,
+} from "@services/api/club.api";
 import useStore from "@services/zustand/store";
 import { showToast } from "@helpers/super.modal.helper";
+import { formatVNDate } from "@utils/date.utils";
+import CS from "@theme/styles";
+import { useListData } from "@helpers/hooks/useListData";
+import { convertLastActive } from "@utils/time.utils";
 
 const ItemEliteScreen = () => {
   const theme = useTheme();
@@ -26,6 +34,8 @@ const ItemEliteScreen = () => {
   const route = useRoute();
   const id = route.params.id || "";
   const name = route.params.name || "";
+  const [dataGroup, setDataGroup] = useState();
+  // console.log("id", id);
 
   const userData = useStore((store) => store.userData);
 
@@ -40,32 +50,78 @@ const ItemEliteScreen = () => {
     );
   };
 
-  const joinGroup = () => {
-    NavigationService.navigate(SCREENS.CLUB_HOME, {
-      id: id,
-      name: name,
-    });
-    return;
-    addMemberGroup({
-      group_id: id,
-      tier: "1",
-      user_id: userData._id,
-    }).then((res) => {
+  const detailGroup = () => {
+    getDetailGroup(id).then((res) => {
+      // console.log("res...", res);
       if (!res.isError) {
-        NavigationService.navigate(SCREENS.CLUB_HOME, {
-          id: id,
-          name: name,
-        });
-      } else {
-        showToast({ type: "error", message: translations.club.joinClubFalid });
+        setDataGroup(res.data);
       }
     });
+  };
+  const paramAdmin = {
+    limit: "10",
+    group_id: id,
+    tier: "2",
+  };
+  const paramLeader = {
+    limit: "10",
+    group_id: id,
+    tier: "3",
+  };
+  const { listData: listData1 } = useListData<TypeClubMember>(
+    paramAdmin,
+    getMemberGroup,
+    [],
+  );
+  const { listData: listData2 } = useListData<TypeClubMember>(
+    paramLeader,
+    getMemberGroup,
+    [],
+  );
+
+  const listData = [...listData2, ...listData1];
+  // console.log("list Admin", listData);
+
+  useEffect(() => {
+    detailGroup();
+  }, []);
+
+  const joinGroup = () => {
+    // return;
+    if (dataGroup?.attend_data?.tier) {
+      NavigationService.navigate(SCREENS.CLUB_HOME, {
+        club_id: id,
+        name: name,
+      });
+    } else {
+      addMemberGroup({
+        group_id: id,
+        tier: "1",
+        user_id: userData?._id,
+      }).then((res) => {
+        if (!res.isError) {
+          NavigationService.navigate(SCREENS.CLUB_HOME, {
+            club_id: id,
+            name: name,
+          });
+        } else {
+          showToast({
+            type: "error",
+            message: translations.club.joinClubFalid,
+          });
+        }
+      });
+    }
+  };
+
+  const gotoMemberList = () => {
+    NavigationService.navigate(SCREENS.LIST_MEMBER_CLUB, { club_id: id });
   };
 
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("../../../assets/images/bgeliteclub.png")}
+        source={{ uri: dataGroup?.cover }}
         style={styles.viewImg}
       />
       <View style={styles.viewContent}>
@@ -73,24 +129,24 @@ const ItemEliteScreen = () => {
           <TextBase
             fontSize={20}
             fontWeight="700"
-            title="IKIGAI COACH: The Project Management: Beginner to Project Manager"
+            title={dataGroup?.name}
             numberOfLines={3}
           />
           <TextBase
             fontSize={14}
             fontWeight="400"
-            title={`212 ${translations.club.member}`}
+            title={`${dataGroup?.number_member_recent_join} ${translations.club.member}`}
           />
-          <TextBase
+          {/* <TextBase
             fontSize={20}
             fontWeight="700"
             title="3.450.000 VND"
             color={EnumColors.primary}
-          />
+          /> */}
         </View>
         <Button
           onPress={joinGroup}
-          text={translations.club.purchaseJoin}
+          text={translations.club.joinGruop}
           backgroundColor={palette.primary}
         />
         <View style={styles.viewTitle}>
@@ -101,27 +157,33 @@ const ItemEliteScreen = () => {
           />
           <TextViewCollapsed
             // text={track?.content || ""}
-            text="Vietnam Project Manager Community, a meeting place for people who are oriented or are working as Project Managers of companies, especially in the IT Software field."
+            text={dataGroup?.description}
             styleText={styles.des}
           />
-          <View style={styles.viewHis}>
-            <IconSvg name="icLocated" size={20} color={palette.textOpacity6} />
-            <View>
-              <TextBase
-                fontSize={16}
-                fontWeight="500"
-                title={translations.club.location}
+          {dataGroup?.location && (
+            <View style={styles.viewHis}>
+              <IconSvg
+                name="icLocated"
+                size={20}
+                color={palette.textOpacity6}
               />
-              <TextBase
-                fontSize={14}
-                fontWeight="400"
-                title="8 Pham Hung, Mai Dich, Cau Giay, Ha Noi"
-              />
+              <View style={CS.flex1}>
+                <TextBase
+                  fontSize={16}
+                  fontWeight="500"
+                  title={translations.club.location}
+                />
+                <TextBase
+                  fontSize={14}
+                  fontWeight="400"
+                  title={dataGroup?.location}
+                />
+              </View>
             </View>
-          </View>
+          )}
           <View style={styles.viewHis}>
             <IconSvg name="icTime" size={20} color={palette.textOpacity6} />
-            <View>
+            <View style={CS.flex1}>
               <TextBase
                 fontSize={16}
                 fontWeight="500"
@@ -130,11 +192,19 @@ const ItemEliteScreen = () => {
               <TextBase
                 fontSize={14}
                 fontWeight="400"
-                title={`${translations.club.des1} November 16, 2022${translations.club.des2} December 16, 2023.`}
+                // title={`${translations.club.des1} ${formatVNDate(
+                //   dataGroup?.createdAt,
+                // )} ${translations.club.des2} ${formatVNDate(
+                //   dataGroup?.updatedAt,
+                // )}`}
+                title={translations.club.createAt(
+                  formatVNDate(dataGroup?.createdAt),
+                  formatVNDate(dataGroup?.updatedAt),
+                )}
               />
             </View>
           </View>
-          <View style={styles.viewTitle}>
+          {/* <View style={styles.viewTitle}>
             <TextBase
               fontSize={16}
               fontWeight="700"
@@ -143,7 +213,7 @@ const ItemEliteScreen = () => {
             <View style={styles.viewMember}>
               <ItemMember />
             </View>
-          </View>
+          </View> */}
           <View style={styles.viewTitle}>
             <View style={styles.viewHeadTitle}>
               <TextBase
@@ -152,7 +222,7 @@ const ItemEliteScreen = () => {
                 title={translations.club.title}
               />
               <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <PressableBtn onPress={() => {}}>
+                <PressableBtn onPress={gotoMemberList}>
                   <TextBase
                     fontSize={16}
                     fontWeight="500"
@@ -170,16 +240,23 @@ const ItemEliteScreen = () => {
               </View>
             </View>
             <View style={styles.viewAvatar}>
-              <View style={styles.styleAvatar}></View>
-              <View style={styles.styleAvatar}></View>
-              <View style={styles.styleAvatar}></View>
-              <View style={styles.styleAvatar}></View>
+              {listData.map((item, index) => (
+                <Image
+                  key={index}
+                  style={styles.styleAvatar}
+                  source={{ uri: item.user_id.user_avatar }}
+                />
+              ))}
             </View>
-            <TextBase
-              fontSize={16}
-              fontWeight="400"
-              title={`Khanh ${translations.club.des3} 5 ${translations.club.des4}`}
-            />
+            {listData.length > 0 && (
+              <TextBase
+                fontSize={16}
+                fontWeight="400"
+                title={`${listData2[0]?.user_id.display_name} ${
+                  translations.club.desLeader
+                } ${translations.club.desAdmin(listData1.length)}`}
+              />
+            )}
           </View>
           <View style={styles.viewTitle}>
             <TextBase
@@ -190,54 +267,65 @@ const ItemEliteScreen = () => {
             <View style={styles.viewGroup}>
               <IconText
                 nameIcon="icComment"
-                text={`17 ${translations.club.newPosts}`}
+                text={`${dataGroup?.number_recent_post} ${translations.club.newPosts}`}
               />
               <IconText
                 nameIcon="icPersonal"
-                text={`217 ${translations.club.member}`}
+                text={`${dataGroup?.member_counter} ${translations.club.member}`}
               />
               <View style={{ marginLeft: 32 }}>
                 <TextBase
                   fontSize={12}
                   fontWeight="400"
-                  title={`+20 ${translations.club.inCome}`}
+                  title={`${dataGroup?.number_member_recent_join} ${translations.club.inCome}`}
                 />
               </View>
               <IconText
                 nameIcon="icPeople"
-                text={`${translations.club.created} 1 month ${translations.club.ago}`}
+                text={`${translations.club.created} ${convertLastActive(
+                  dataGroup?.createdAt,
+                )} ${translations.club.ago}`}
               />
             </View>
           </View>
           <View style={styles.viewTitle}>
-            <ListFile listFile={null || []} />
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <PressableBtn
-                onPress={() => {
-                  NavigationService.navigate(SCREENS.LIST_IMAGE_SCREEN);
+            <ListFile
+              listFile={
+                dataGroup?.featured_image.map((item) => ({
+                  media_mime_type: "image/jpg",
+                  media_thumbnail: item,
+                })) || []
+              }
+            />
+            {dataGroup?.featured_image?.length > 0 && (
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
               >
-                <TextBase
-                  fontSize={16}
-                  fontWeight="500"
-                  color={EnumColors.primary}
+                <PressableBtn
+                  onPress={() => {
+                    NavigationService.navigate(SCREENS.LIST_IMAGE_SCREEN);
+                  }}
                 >
-                  {translations.seeAll}
-                </TextBase>
-              </PressableBtn>
-              <Icon
-                name="chevron-forward-outline"
-                type={IconType.Ionicons}
-                color={palette.primary}
-                size={16}
-              />
-            </View>
+                  <TextBase
+                    fontSize={16}
+                    fontWeight="500"
+                    color={EnumColors.primary}
+                  >
+                    {translations.seeAll}
+                  </TextBase>
+                </PressableBtn>
+                <Icon
+                  name="chevron-forward-outline"
+                  type={IconType.Ionicons}
+                  color={palette.primary}
+                  size={16}
+                />
+              </View>
+            )}
           </View>
         </View>
       </View>

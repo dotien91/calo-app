@@ -56,8 +56,17 @@ const ListMemberScreen = () => {
     ...paramsRequest,
     tier: "2",
   };
+  const paramLeader = {
+    ...paramsRequest,
+    tier: "3",
+  };
   const { listData: list, _requestData } = useListData<TypeClubMember>(
     param,
+    getMemberGroup,
+    [],
+  );
+  const { listData: list2 } = useListData<TypeClubMember>(
+    paramLeader,
     getMemberGroup,
     [],
   );
@@ -157,6 +166,12 @@ const ListMemberScreen = () => {
   const renderHeader = () => {
     return (
       <>
+        <View>
+          <Text style={styles.txtLabel}>{translations.club.leader}</Text>
+          {list2.map((item, index) => {
+            return renderItem({ item: item, index: index });
+          })}
+        </View>
         {list.length > 0 && (
           <View>
             <Text style={styles.txtLabel}>{translations.club.admin}</Text>

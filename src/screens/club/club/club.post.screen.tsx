@@ -61,7 +61,7 @@ const ClubPostScreen = () => {
       <PressableBtn
         onPress={() =>
           NavigationService.navigate(SCREENS.SETTING_CLUB_SCREEN, {
-              club_id,
+            club_id,
           })
         }
       >
