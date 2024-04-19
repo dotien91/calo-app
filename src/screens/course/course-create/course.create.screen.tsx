@@ -175,7 +175,7 @@ const CourseCreate = () => {
         }
 
         // setUpdating(true);
-        
+
         showSuperModal({
           styleModalType: EnumStyleModalType.Middle,
           contentModalType: EnumModalContentType.Loading,
@@ -188,7 +188,7 @@ const CourseCreate = () => {
             (item) => item.value == priceInput,
           )?.id;
         }
-        
+
         if (course_id) {
           updateCourse(params).then((res) => {
             if (!res.isError) {
@@ -247,7 +247,7 @@ const CourseCreate = () => {
   };
 
   const renderSelectLevel = () => {
-    return null
+    return null;
     const renderLevelBtn = (item: ILevel) => {
       const _onSelectLevel = () => {
         setLevel(item.value);

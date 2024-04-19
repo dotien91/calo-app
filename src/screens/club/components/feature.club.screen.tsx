@@ -65,7 +65,6 @@ const FeatureClubScreen = () => {
         showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item?._id + ""}
         onEndReached={onEndReach}
-        removeClippedSubviews={true}
         refreshControl={refreshControl()}
         ListFooterComponent={renderFooterComponent()}
       />

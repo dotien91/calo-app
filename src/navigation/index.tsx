@@ -127,6 +127,9 @@ import ListMemberScreen from "@screens/club/list-member/list.member";
 import UpdateEventScreen from "@screens/events/update-event/update.event.screen";
 import ListCourseClub from "@screens/home/components/list-course-club/list.course.club.screen";
 import SettingClubScreen from "@screens/club/setting-club/setting.club.screen";
+import SearchClubScreen from "@screens/club/search-club/search.club.screen";
+import ClubByCategoryScreen from "@screens/club/search-club/club.by.category.screen";
+
 // import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -326,8 +329,15 @@ const Navigation = () => {
     >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {renderStackIntro()}
-
         <Stack.Screen name={SCREENS.HOME_TAB} component={renderTabNavigation} />
+
+        <Stack.Screen
+          name={SCREENS.CLUB_BY_CATEGORY}
+          component={ClubByCategoryScreen}
+        />
+
+        <Stack.Screen name={SCREENS.SEARCH_CLUB} component={SearchClubScreen} />
+
         <Stack.Screen name={SCREENS.LEADERBOARD} component={LeaderBoard} />
         <Stack.Screen
           name={SCREENS.COURSE_RECOMMEND}

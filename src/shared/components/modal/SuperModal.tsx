@@ -43,9 +43,10 @@ import PopupCoupon from "@screens/course/course-preview/components/popup.coupon"
 import ReferralPopupTask from "@shared-components/task-item/task.referral.popup";
 import { translations } from "@localization";
 import WriteReview from "@screens/audio/components/WriteReview";
-import PopupMoreEvent from "@screens/events/components/popup.more.event";
+// import PopupMoreEvent from "@screens/events/components/popup.more.event";
 import PopupMember from "@screens/club/list-member/popup.member";
 import SelectCourseView from "./modal-inner/SelectCourseView";
+import PopupListFriend from "@screens/club/list-member/popup.list.friend";
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
 // using normal one.
@@ -216,9 +217,9 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         {contentModalType == EnumModalContentType.AddLesson && (
           <PopupCreateLesson {...data} />
         )}
-        {/* {contentModalType == EnumModalContentType.Confirm && (
+        {contentModalType == EnumModalContentType.ConfirmBottom && (
           <ConfirmViewBottom {...data} closeModal={closeModal} />
-        )} */}
+        )}
         {contentModalType == EnumModalContentType.ListMoreAction && (
           <ListActionInner {...data} closeModal={closeModal} />
         )}
@@ -288,6 +289,8 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         )}
         {contentModalType == EnumModalContentType.MoreEventDetail && (
           <PopupMoreEvent {...data} />
+        {contentModalType == EnumModalContentType.AddToGroup && (
+          <PopupListFriend {...data} />
         )}
       </>
     );

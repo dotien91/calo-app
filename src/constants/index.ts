@@ -110,6 +110,8 @@ export const SCREENS = {
   DETAILEVENTSCREEN: "DetailScreenEvent",
   LIST_IMAGE_SCREEN: "ListImageScreen",
   BECOME_ELITE_CLUB: "BecomeEliteClub",
+  SEARCH_CLUB: "SearchClub",
+  CLUB_BY_CATEGORY: "ClubByCategory",
   UPDATE_EVENT_SCREEN: "UpdateEventScreen",
   SETTING_CLUB_SCREEN: "SettingClubScreen",
 };

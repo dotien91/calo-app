@@ -7,6 +7,7 @@ import eventEmitter from "@services/event-emitter";
 
 export enum EnumModalContentType {
   Confirm = "confirm",
+  ConfirmBottom = "confirm-bottom",
   Loading = "loading",
   Library = "libray",
   Report = "report",
@@ -40,6 +41,7 @@ export enum EnumModalContentType {
   MoreEventDetail = "more-event-detail",
   MemberAction = "MemberAction",
   SelectCourse = "SelectCourse",
+  AddToGroup = "add-to-group",
 }
 
 export enum EnumStyleModalType {

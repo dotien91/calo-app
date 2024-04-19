@@ -346,7 +346,7 @@ export async function getMyCourse(data: {
   created_user_id: string;
   auth_id: string;
 }) {
-  console.log("data", data)
+  console.log("data", data);
   return request({
     method: METHOD.POST,
     urlPath: "course/my-course",
@@ -360,7 +360,7 @@ export async function getMyClubCourse(data: {
   created_user_id: string;
   group_id: string;
 }) {
-  console.log("data", data)
+  console.log("data", data);
   return request({
     method: METHOD.POST,
     urlPath: "course/my-course-group",

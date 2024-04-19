@@ -390,7 +390,7 @@ const CheckoutScreen = () => {
       ],
       invitation_code: userData?.ref_invitation_code || undefined,
     };
-    
+
     createVnpayUrl(data).then(async (res) => {
       console.log("createVnpayUrl res", { timePick, res, data });
       closeSuperModal();

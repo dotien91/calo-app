@@ -151,7 +151,7 @@ export async function addCourseClub(data) {
 export async function removeCourseClub(params) {
   return request({
     method: METHOD.DELETE,
-    urlPath: `group/course/delete/`,
+    urlPath: "group/course/delete/",
     params,
   }).then((response) => {
     return response;

@@ -4,7 +4,6 @@ import {
   View,
   StyleSheet,
   SafeAreaView,
-  Image,
   ScrollView,
   TouchableOpacity,
 } from "react-native";
@@ -27,6 +26,7 @@ import {
   EnumModalContentType,
   EnumStyleModalType,
   showSuperModal,
+  showWarningLogin,
 } from "@helpers/super.modal.helper";
 import Button from "@shared-components/button/Button";
 import { useRoute } from "@react-navigation/native";
@@ -35,6 +35,7 @@ import LoadingList from "@shared-components/loading.list.component";
 import Header from "../components/Header";
 import { shareAudio } from "@utils/share.utils";
 import FastImage from "react-native-fast-image";
+import { useUserHook } from "@helpers/hooks/useUserHook";
 
 const AudioPreview = () => {
   const [track, setTrack] = React.useState<TypeTrackLocal>();
@@ -45,22 +46,21 @@ const AudioPreview = () => {
   const id = route?.params?.id || "";
   const [duration, setDuration] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(true);
+  const { isLoggedIn } = useUserHook();
 
   const getDataTrack = () => {
     GetPodCastDetail(id).then((res) => {
       if (!res.isError) {
-        console.log("GetPodCastDetail", res);
         setTrack(res.data);
+        setIsLoading(false);
         const whoosh = new Sound(
           res.data?.attach_files[0].media_url,
           "",
           (error) => {
             if (error) {
               console.log("failed to load the sound", error);
-              setIsLoading(false);
             } else {
               setDuration(Math.floor(whoosh.getDuration() || 0));
-              setIsLoading(false);
             }
           },
         );
@@ -92,7 +92,7 @@ const AudioPreview = () => {
           des={translations.podcast.category}
         />
         <ItemCategory
-          title={formatTimeDuration(duration) || " "}
+          title={duration ? formatTimeDuration(duration) : "-"}
           des={translations.podcast.audio}
         />
         <ItemCategory
@@ -139,11 +139,14 @@ const AudioPreview = () => {
       artwork: track?.post_avatar.media_url,
     };
     addAudio(track2);
-
     // await TrackPlayer.seekBy(0);
   };
 
   const showWriteReview = () => {
+    if (!isLoggedIn()) {
+      showWarningLogin();
+      return;
+    }
     showSuperModal({
       contentModalType: EnumModalContentType.ReviewAudio,
       styleModalType: EnumStyleModalType.Bottom,
@@ -223,7 +226,7 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingHorizontal: 16,
-    paddingBottom: 80
+    paddingBottom: 80,
   },
   viewDes: {
     marginTop: 8,

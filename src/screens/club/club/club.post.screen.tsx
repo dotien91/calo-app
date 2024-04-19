@@ -21,10 +21,11 @@ const ClubPostScreen = () => {
 
   const club_id = route.params?.["club_id"] || "";
   const name = route.params?.name || "";
-  console.log("id_club", club_id);
+
   const gotoCreatePost = () => {
     NavigationService.navigate(SCREENS.POST_SCREEN, { group_id: club_id });
   };
+
   return (
     <SafeAreaView style={CS.safeAreaView}>
       <Header text={name} />
@@ -48,7 +49,8 @@ const ClubPostScreen = () => {
       </PressableBtn>
       <PressableBtn
         onPress={() =>
-          NavigationService.navigate(SCREENS.EVENTSLISTSCREEN, {
+          //NavigationService.navigate(SCREENS.EVENTSLISTSCREEN, {
+          NavigationService.navigate(SCREENS.LIST_COURSE_CLUB, {
             club_id,
           })
         }
@@ -58,6 +60,15 @@ const ClubPostScreen = () => {
       <PressableBtn
         onPress={() =>
           NavigationService.navigate(SCREENS.SETTING_CLUB_SCREEN, {
+              club_id,
+          })
+        }
+      >
+        <Text>Image</Text>
+      </PressableBtn>
+      <PressableBtn
+        onPress={() =>
+          NavigationService.navigate(SCREENS.EVENTSLISTSCREEN, {
             club_id,
           })
         }

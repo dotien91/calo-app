@@ -243,11 +243,11 @@ export const quickFilterCourse = [
   //   id: "Call group",
   //   type: "types",
   // },
-  // {
-  //   name: translations.course.allSkills,
-  //   id: "All skills",
-  //   type: "skills",
-  // },
+  {
+    name: translations.course.allSkills,
+    id: "All skills",
+    type: "skills",
+  },
 
   {
     name: translations.course.life,

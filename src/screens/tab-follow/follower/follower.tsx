@@ -94,7 +94,7 @@ const Follower = ({ id }) => {
 
   const showModalHozi = (partid: string) => {
     showSuperModal({
-      contentModalType: EnumModalContentType.Confirm,
+      contentModalType: EnumModalContentType.ConfirmBottom,
       styleModalType: EnumStyleModalType.Bottom,
       data: {
         title: translations.removeThisFollow,

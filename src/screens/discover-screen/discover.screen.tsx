@@ -480,7 +480,10 @@ const DiscoverScreen = () => {
     <SafeAreaView style={{ ...CS.safeAreaView }}>
       <View style={{ flex: 1 }}>
         {renderHeader()}
-        <ScrollView contentContainerStyle={{paddingBottom: 80}} showsVerticalScrollIndicator={false}>
+        <ScrollView
+          contentContainerStyle={{ paddingBottom: 80 }}
+          showsVerticalScrollIndicator={false}
+        >
           {renderLeaderBoard()}
           {renderFeature()}
         </ScrollView>

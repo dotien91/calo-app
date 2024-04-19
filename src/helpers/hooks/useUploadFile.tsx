@@ -20,6 +20,7 @@ export function useUploadFile(
   initData?: any[],
   selectionLimit = 30,
   extraParam: IExtraParams,
+  refId?: string
 ) {
   const [listFile, setListFile] = React.useState<any[]>(initData || []);
   const [isUpLoadingFile, setIsUpLoadingFile] = React.useState(false);

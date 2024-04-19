@@ -30,6 +30,14 @@
           }
         },
         {
+          "client_id": "543656532685-kh80u4uinedpi9jhdklot68j44qdat1m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ikigroup.ikicoach",
+            "certificate_hash": "458872d2e3131e0c0aef71d0d2addfa41e779076"
+          }
+        },
+        {
           "client_id": "543656532685-oh1fjl1fhvc1dcdc32agqrotf28vjj69.apps.googleusercontent.com",
           "client_type": 3
         }

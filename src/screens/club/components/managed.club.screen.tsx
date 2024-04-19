@@ -24,12 +24,11 @@ interface TypeListClub {
 }
 
 const ManagedClubScreen = () => {
-
-  const userData = useStore(state => state.userData)
+  const userData = useStore((state) => state.userData);
 
   const paramsRequest = {
     limit: "5",
-    user_id: userData._id
+    user_id: userData?._id,
   };
 
   const {
@@ -83,7 +82,6 @@ const ManagedClubScreen = () => {
         showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item?._id + ""}
         onEndReached={onEndReach}
-        removeClippedSubviews={true}
         refreshControl={refreshControl()}
         ListFooterComponent={renderFooterComponent()}
       />
