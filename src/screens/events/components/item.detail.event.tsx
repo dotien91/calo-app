@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import FastImage from "react-native-fast-image";
 import { StyleSheet, View } from "react-native";
 import { ScreenWidth } from "@freakycoder/react-native-helpers";
@@ -10,8 +10,21 @@ import { palette } from "@theme/themes";
 import { EnumColors } from "models";
 import { translations } from "@localization";
 import { formatDateAtTime } from "@utils/date.utils";
+import { updateEvent } from "@services/api/event.api";
+import useStore from "@services/zustand/store";
+import eventEmitter from "@services/event-emitter";
+import { useRoute } from "@react-navigation/native";
 
-const ItemDetailEvent = ({ item }) => {
+const ItemDetailEvent = ({ item }: { item: any }) => {
+  const route = useRoute();
+  const _count = route.params.count || 0;
+
+  const userData = useStore((store) => store.userData);
+  const [buttonText, setButtonText] = useState<string>(
+    route.params?.interested,
+  );
+  const [count, setCount] = useState<number>(0);
+
   const IconText = ({ nameIcon, text }: { nameIcon: string; text: string }) => {
     return (
       <View style={styles.viewIcon}>
@@ -43,6 +56,32 @@ const ItemDetailEvent = ({ item }) => {
     );
   };
 
+  useEffect(() => {
+    setCount(_count);
+  }, [_count]);
+
+  const handlePress = () => {
+    if (buttonText === "interested") {
+      updateEvent({ remove_user_id: userData?._id, _id: item._id }).then(
+        (res) => {
+          if (!res.isError) {
+            eventEmitter.emit("reload_list_event");
+          }
+        },
+      );
+      setButtonText("interest");
+      setCount(count - 1);
+    } else {
+      updateEvent({ add_user_id: userData?._id, _id: item._id }).then((res) => {
+        if (!res.isError) {
+          eventEmitter.emit("reload_list_event");
+        }
+      });
+      setButtonText("interested");
+      setCount(count + 1);
+    }
+  };
+
   const renderInfo = () => {
     return (
       <View style={styles.viewContent}>
@@ -68,12 +107,20 @@ const ItemDetailEvent = ({ item }) => {
         <View style={styles.viewBtn}>
           <Button
             style={styles.btn}
-            text={translations.event.interested}
-            backgroundColor={palette.colorMoney}
-            textColor={palette.primary}
-            onPress={() => {
-              console.log(1111111111);
-            }}
+            text={
+              buttonText === "interested"
+                ? translations.event.interested
+                : translations.event.interest
+            }
+            backgroundColor={
+              buttonText === "interested" ? palette.colorMoney : palette.grey3
+            }
+            textColor={
+              buttonText === "interested"
+                ? palette.primary
+                : palette.textOpacity6
+            }
+            onPress={handlePress}
           />
         </View>
         <IconText
@@ -83,7 +130,7 @@ const ItemDetailEvent = ({ item }) => {
         <IconText nameIcon="icLocated" text={item?.location} />
         <IconText
           nameIcon="icCheckbox"
-          text={`${item?.interested_user_ids.length} ${translations.event.going} - ${item?.interested_user_ids.length} ${translations.event.interested}`}
+          text={`${count} ${translations.event.going} - ${count} ${translations.event.interested}`}
         />
       </View>
     );
