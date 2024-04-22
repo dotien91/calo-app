@@ -12,7 +12,7 @@ import EmptyResultView from "@shared-components/empty.data.component";
 import { palette } from "@theme/themes";
 import CS from "@theme/styles";
 
-const UpcomingEvent = ({ club_id }) => {
+const UpcomingEvent = ({ club_id, tier }) => {
   const paramsResquest = {
     limit: "3",
     group_id: club_id,
@@ -38,14 +38,6 @@ const UpcomingEvent = ({ club_id }) => {
     };
   }, []);
 
-  const data = React.useMemo(() => {
-    console.log(
-      "listdataEvent.............",
-      JSON.stringify(listData, null, 2),
-    );
-    return listData.slice(0, 15);
-  }, [listData]);
-
   const renderHeader = () => {
     return (
       <TextBase
@@ -57,7 +49,7 @@ const UpcomingEvent = ({ club_id }) => {
   };
 
   const renderItem = ({ index, item }) => {
-    return <ItemEvent key={index} data={item} />;
+    return <ItemEvent key={index} data={item} tier={tier} />;
   };
 
   const renderLoading = () => {
@@ -88,7 +80,7 @@ const UpcomingEvent = ({ club_id }) => {
       {listData.length == 0 && isLoading && renderLoading()}
       <FlatList
         showsHorizontalScrollIndicator={false}
-        data={data}
+        data={listData}
         ListHeaderComponent={renderHeader}
         renderItem={renderItem}
         scrollEventThrottle={16}

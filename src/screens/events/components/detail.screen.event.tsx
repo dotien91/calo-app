@@ -13,6 +13,7 @@ import {
 
 const DetailScreenEvent = () => {
   const route = useRoute();
+  const tier = route.params?.tier || "1";
 
   const item = route.params?.item;
   const pressMore = () => {
@@ -28,7 +29,10 @@ const DetailScreenEvent = () => {
 
   return (
     <SafeAreaView style={CS.safeAreaView}>
-      <Header iconNameRight="more-vertical" onPressRight={pressMore} />
+      <Header
+        iconNameRight={tier != 1 ? "more-vertical" : ""}
+        onPressRight={pressMore}
+      />
       <ScrollView showsVerticalScrollIndicator={false}>
         <ItemDetailEvent item={item} />
       </ScrollView>

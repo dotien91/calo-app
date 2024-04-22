@@ -15,45 +15,42 @@ import useStore from "@services/zustand/store";
 import { updateEvent } from "@services/api/event.api";
 
 type ButtonText = "interested" | "interest";
-type BgColor = "colorMoney" | "grey3";
-type TxtColor = "primary" | "textOpacity6";
 
-const ItemEvent = ({ data }: { data: any }) => {
+const ItemEvent = ({ data, tier }: { data: any; tier: string }) => {
   const userData = useStore((store) => store.userData);
-  const [buttonText, setButtonText] = useState<ButtonText>("interested");
-  const [bgColor, setbgColor] = useState<BgColor>("colorMoney");
-  const [txtColor, setTxtColor] = useState<TxtColor>("primary");
-  const [interestStatus, setInterestStatus] = useState<string[]>(
-    data?.interested_user_ids || [],
+  const [buttonText, setButtonText] = useState<ButtonText>(
+    data?.interested_user_ids?.includes(userData?._id) ? "interested" : "",
   );
-
+  const [count, setCount] = useState<number>(data?.interested_user_ids.length);
   const goToEventScreen = () => {
     if (data?.is_join) {
       NavigationService.navigate(SCREENS.CLUB_SCREEN, {
         id: data._id,
         name: data?.name,
         item: data,
+        tier: tier,
       });
     } else {
       NavigationService.navigate(SCREENS.DETAILEVENTSCREEN, {
         id: data._id,
         name: data?.name,
         item: data,
+        tier: tier,
+        interested: buttonText,
+        count: count,
       });
     }
   };
 
   useEffect(() => {
-    if (interestStatus.includes(userData?._id)) {
-      setButtonText("interest");
-      setbgColor("grey3");
-      setTxtColor("textOpacity6");
-    } else {
+    if (data?.interested_user_ids.includes(userData?._id)) {
       setButtonText("interested");
-      setbgColor("colorMoney");
-      setTxtColor("primary");
+      setCount(data?.interested_user_ids.length);
+    } else {
+      setButtonText("interest");
+      setCount(data?.interested_user_ids.length);
     }
-  }, [data, interestStatus, userData?._id]);
+  }, [data?.interested_user_ids]);
 
   const renderImg = () => {
     return (
@@ -94,14 +91,14 @@ const ItemEvent = ({ data }: { data: any }) => {
     };
 
     const handlePress = () => {
-      if (interestStatus.findIndex((item) => item == userData?._id) >= 0) {
+      if (buttonText === "interested") {
         updateEvent({ remove_user_id: userData?._id, _id: data._id }).then();
-        setInterestStatus([
-          ...interestStatus.filter((item) => item != userData._id),
-        ]);
+        setButtonText("interest");
+        setCount(count - 1);
       } else {
         updateEvent({ add_user_id: userData?._id, _id: data._id }).then();
-        setInterestStatus([...interestStatus, userData._id]);
+        setButtonText("interested");
+        setCount(count + 1);
       }
     };
 
@@ -126,7 +123,7 @@ const ItemEvent = ({ data }: { data: any }) => {
           fontSize={12}
           fontWeight="400"
           color={EnumColors.textOpacity6}
-          title={`${data?.interested_user_ids.length} ${translations.event.interested}`}
+          title={`${count} ${translations.event.interested}`}
         />
         <IconText nameIcon="icLocation" text={data?.location} />
         <View style={styles.viewInfo}>
@@ -151,14 +148,19 @@ const ItemEvent = ({ data }: { data: any }) => {
         <View style={styles.viewBtn}>
           <Button
             style={styles.btn}
-            // text={translations.event.interested}
             text={
               buttonText === "interested"
                 ? translations.event.interested
                 : translations.event.interest
             }
-            backgroundColor={palette[bgColor]}
-            textColor={palette[txtColor]}
+            backgroundColor={
+              buttonText === "interested" ? palette.colorMoney : palette.grey3
+            }
+            textColor={
+              buttonText === "interested"
+                ? palette.primary
+                : palette.textOpacity6
+            }
             onPress={handlePress}
           />
         </View>
@@ -174,7 +176,7 @@ const ItemEvent = ({ data }: { data: any }) => {
   );
 };
 
-export default React.memo(ItemEvent);
+export default ItemEvent;
 
 const styles = StyleSheet.create({
   container: {

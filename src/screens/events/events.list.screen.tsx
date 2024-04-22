@@ -29,7 +29,7 @@ const EventsListScreen = () => {
         onPressRight={addEvent}
       />
       <ScrollView>
-        <UpcomingEvent club_id={group_id} />
+        <UpcomingEvent club_id={group_id} tier={tier} />
         {/* <PastEvent club_id={group_id} /> */}
       </ScrollView>
     </SafeAreaView>
