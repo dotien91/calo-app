@@ -43,7 +43,8 @@ const ItemClub = ({ data }: { data: any }) => {
                   : translations.club.attended
               } ${convertLastActive(
                 isLeader ? data?.createdAt : data?.attend_data?.createdAt,
-              )} ${translations.club.ago}`}
+                translations.club.ago,
+              ).toLowerCase()}`}
             </TextBase>
           )}
         </View>

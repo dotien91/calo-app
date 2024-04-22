@@ -17,7 +17,8 @@ export default function WelcomeScreen() {
   const styles = useMemo(() => createStyles(theme), [theme]);
 
   const handleStartNow = () => {
-    NavigationService.navigate(SCREENS.HOME);
+    // NavigationService.navigate(SCREENS.HOME);
+    NavigationService.navigate(SCREENS.HOME_TAB, { screen: SCREENS.HOME });
   };
 
   return (

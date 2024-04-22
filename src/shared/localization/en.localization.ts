@@ -1210,6 +1210,7 @@ export default {
     deleteMember: (name: string) => `Remove ${name} from the club`,
     deleteMemberSuccess: (name: string) => `Removed ${name} from the club`,
     deleteMemberFaild: "Deletion unsuccessful, please try again later",
+    emptyClub: "Empty club list",
     addCover: "Add photo cover",
     leaveGroup: "Leave club",
     warningLeave: "Are you sure you want to leave this club?",

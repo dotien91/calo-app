@@ -1,7 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Image, ImageBackground, View } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
-import { useTheme, useRoute } from "@react-navigation/native";
+import {
+  useTheme,
+  useRoute,
+  useNavigation,
+  StackActions,
+} from "@react-navigation/native";
 
 import IconSvg from "assets/svg";
 import Button from "@shared-components/button/Button";
@@ -31,12 +36,14 @@ import { formatVNDate } from "@utils/date.utils";
 import CS from "@theme/styles";
 import { useListData } from "@helpers/hooks/useListData";
 import { convertLastActive } from "@utils/time.utils";
-import { navigate, replace } from "@helpers/navigation.helper";
+import { navigate } from "@helpers/navigation.helper";
+import eventEmitter from "@services/event-emitter";
 
 const ItemEliteScreen = () => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const route = useRoute();
+  const navigation = useNavigation();
   const id = route.params.id || "";
   const name = route.params.name || "";
   const [dataGroup, setDataGroup] = useState();
@@ -91,7 +98,7 @@ const ItemEliteScreen = () => {
   const joinGroup = () => {
     if (dataGroup?.attend_data?.tier) {
       navigate(SCREENS.CLUB_HOME, {
-        club_id: id,
+        id: id,
         name: name,
       });
     } else {
@@ -102,10 +109,13 @@ const ItemEliteScreen = () => {
       }).then((res) => {
         closeSuperModal();
         if (!res.isError) {
-          replace(SCREENS.CLUB_HOME, {
-            club_id: id,
-            name: name,
-          });
+          navigation.dispatch(
+            StackActions.replace(SCREENS.CLUB_HOME, {
+              id: id,
+              name: name,
+            }),
+          );
+          eventEmitter.emit("reload_list_club");
         } else {
           showToast({
             type: "error",

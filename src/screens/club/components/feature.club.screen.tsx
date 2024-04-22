@@ -8,6 +8,7 @@ import LoadingList from "@shared-components/loading.list.component";
 import { getListGroup } from "@services/api/club.api";
 import { useListData } from "@helpers/hooks/useListData";
 import eventEmitter from "@services/event-emitter";
+import EmptyResultView from "@shared-components/empty.data.component";
 
 interface TypeListClub {
   avatar: any;
@@ -48,11 +49,25 @@ const FeatureClubScreen = () => {
     return <ItemClub data={item} key={index} />;
   };
 
+  const renderEmpty = () => {
+    return <EmptyResultView title={translations.club.emptyClub} />;
+  };
+
+  const renderHeader = () => {
+    return (
+      <>
+        {listData.length == 0 && isLoading && renderLoading()}
+        {listData.length == 0 && !isLoading && renderEmpty()}
+      </>
+    );
+  };
+
   return (
     <View style={styles.styleItem}>
       <TitleClub textLeft={translations.club.title1} />
-      {listData.length == 0 && isLoading && renderLoading()}
+
       <FlatList
+        ListHeaderComponent={renderHeader}
         contentContainerStyle={styles.list}
         showsHorizontalScrollIndicator={false}
         data={listData}

@@ -13,6 +13,7 @@ import UpcomingEvent from "./components/upcoming.event";
 const EventsListScreen = () => {
   const route = useRoute();
   const group_id = route.params?.club_id || "";
+  const tier = route.params?.tier || "1";
 
   const addEvent = () => {
     NavigationService.navigate(SCREENS.CREATEEVENT, {
@@ -24,7 +25,7 @@ const EventsListScreen = () => {
     <SafeAreaView style={CS.safeAreaView}>
       <Header
         text={translations.event.events}
-        iconNameRight="plus"
+        iconNameRight={tier != 1 ? "plus" : ""}
         onPressRight={addEvent}
       />
       <ScrollView>

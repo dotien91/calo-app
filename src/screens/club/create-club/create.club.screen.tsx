@@ -6,6 +6,8 @@ import {
   ScrollView,
   TouchableOpacity,
   TextInput,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { useForm } from "react-hook-form";
 import * as NavigationService from "react-navigation-helpers";
@@ -34,12 +36,18 @@ import { SCREENS } from "constants";
 
 const CreateClubScreen = () => {
   const [updating, setUpdating] = useState(false);
-  const { idVideo, renderSelectBackground, updatingVid, link, setMedia } =
-    SelectVideoHook({
-      type: "photo",
-      typeM: "photo",
-      placeholder: translations.club.purchaseJoin,
-    });
+  const {
+    idVideo,
+    renderSelectBackground,
+    updatingVid,
+    link,
+    setMedia,
+    onPressChangeMedia,
+  } = SelectVideoHook({
+    type: "photo",
+    typeM: "photo",
+    placeholder: translations.club.purchaseJoin,
+  });
 
   const route = useRoute();
 
@@ -203,110 +211,142 @@ const CreateClubScreen = () => {
         }
         iconNameLeft="x"
       />
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        <InputHook
-          setFocus={setFocus}
-          name="name"
-          customStyle={CS.flex1}
-          inputProps={{
-            type: "text",
-            defaultValue: "",
-            placeholder: translations.club.nameYourClub,
-          }}
-          control={control}
-          rules={{
-            required: {
-              value: true,
-              message: translations.required,
-            },
-          }}
-          errorTxt={errors.name?.message}
-          maxLength={32}
-          label={translations.club.clubName}
-        />
-        <View style={styles.viewType}>
-          <TextBase
-            fontSize={16}
-            fontWeight="700"
-            title={translations.club.addCover}
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "height" : undefined}
+      >
+        <ScrollView
+          style={styles.container}
+          showsVerticalScrollIndicator={false}
+        >
+          <InputHook
+            setFocus={setFocus}
+            name="name"
+            customStyle={CS.flex1}
+            inputProps={{
+              type: "text",
+              defaultValue: "",
+              placeholder: translations.club.nameYourClub,
+            }}
+            control={control}
+            rules={{
+              required: {
+                value: true,
+                message: translations.required,
+              },
+            }}
+            errorTxt={errors.name?.message}
+            maxLength={32}
+            label={translations.club.clubName}
           />
-        </View>
-        <View style={styles.viewCover}>{renderSelectBackground()}</View>
-        <View style={styles.viewType}>
-          <TextBase
-            fontSize={16}
-            fontWeight="700"
-            title={translations.club.clubOfTyoe}
-          />
-          <View style={styles.wrapType}>
-            {quickFilterCourse.map((item, index) => renderItem(item, index))}
+          <View style={styles.viewType}>
+            <TextBase
+              fontSize={16}
+              fontWeight="700"
+              title={translations.club.addCover}
+            />
           </View>
-          {/* quickFilterCourse */}
-        </View>
-        <InputHook
-          setFocus={setFocus}
-          name="des"
-          customStyle={CS.flex1}
-          inputProps={{
-            type: "text",
-            defaultValue: "",
-            placeholder: translations.club.writeSomethingClub,
-          }}
-          control={control}
-          rules={{}}
-          errorTxt={errors.des?.message}
-          maxLength={500}
-          // showPlaceholder
-          label={translations.club.description}
-          multiline
-        />
-        <InputHook
-          setFocus={setFocus}
-          name="location"
-          customStyle={CS.flex1}
-          inputProps={{
-            type: "text",
-            defaultValue: "",
-            placeholder: translations.club.location,
-          }}
-          control={control}
-          rules={{}}
-          errorTxt={errors.des?.message}
-          maxLength={200}
-          showPlaceholder
-          // label={translations.club.description}
-          // multiline
-        />
-        <View style={styles.viewType}>
-          <TextBase
-            fontSize={16}
-            fontWeight="700"
-            title={translations.club.addImage}
-          />
-          {listFileLocal.length > 0 ? (
-            <>
-              <View style={styles.viewRenderFile}>
-                {renderFile2()}
-                <PressableBtn style={styles.btnAdd} onPress={onSelectPicture}>
-                  <IconSvg
-                    name="icAdd"
-                    size={32}
-                    color={palette.textOpacity8}
-                  />
-                </PressableBtn>
-              </View>
-            </>
+          {link || updatingVid ? (
+            <View style={styles.viewCover}>{renderSelectBackground()}</View>
           ) : (
-            <PressableBtn style={styles.uploadImage} onPress={onSelectPicture}>
+            <PressableBtn
+              style={styles.uploadCover}
+              onPress={onPressChangeMedia}
+            >
               <TextInput
-                onPressIn={onSelectPicture}
+                onPressIn={onPressChangeMedia}
                 editable={false}
                 placeholder={translations.club.addImage}
+                style={CS.flex1}
               />
+              <IconSvg name="icImage" size={24} color={palette.textOpacity6} />
             </PressableBtn>
           )}
-        </View>
-      </ScrollView>
+          <View style={styles.viewType}>
+            <TextBase
+              fontSize={16}
+              fontWeight="700"
+              title={translations.club.clubOfTyoe}
+            />
+            <View style={styles.wrapType}>
+              {quickFilterCourse.map((item, index) => renderItem(item, index))}
+            </View>
+            {/* quickFilterCourse */}
+          </View>
+          <InputHook
+            setFocus={setFocus}
+            name="des"
+            customStyle={CS.flex1}
+            inputProps={{
+              type: "text",
+              defaultValue: "",
+              placeholder: translations.club.writeSomethingClub,
+            }}
+            control={control}
+            rules={{}}
+            errorTxt={errors.des?.message}
+            maxLength={10000}
+            // showPlaceholder
+            label={translations.club.description}
+            multiline
+          />
+          <InputHook
+            setFocus={setFocus}
+            name="location"
+            customStyle={CS.flex1}
+            inputProps={{
+              type: "text",
+              defaultValue: "",
+              placeholder: translations.club.location,
+            }}
+            control={control}
+            rules={{}}
+            errorTxt={errors.des?.message}
+            maxLength={200}
+            showPlaceholder
+            // label={translations.club.description}
+            // multiline
+          />
+          <View style={styles.viewType}>
+            <TextBase
+              fontSize={16}
+              fontWeight="700"
+              title={translations.club.addImage}
+            />
+            {listFileLocal.length > 0 ? (
+              <>
+                <View style={styles.viewRenderFile}>
+                  {renderFile2()}
+                  <PressableBtn style={styles.btnAdd} onPress={onSelectPicture}>
+                    <IconSvg
+                      name="icAdd"
+                      size={32}
+                      color={palette.textOpacity8}
+                    />
+                  </PressableBtn>
+                </View>
+              </>
+            ) : (
+              <PressableBtn
+                style={styles.uploadImage}
+                onPress={onSelectPicture}
+              >
+                <TextInput
+                  onPressIn={onSelectPicture}
+                  editable={false}
+                  placeholder={translations.club.addImage}
+                  style={CS.flex1}
+                />
+                <IconSvg
+                  name="icImage"
+                  size={24}
+                  color={palette.textOpacity6}
+                />
+              </PressableBtn>
+            )}
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
       <View style={styles.viewBtn}>
         <Button
           style={{
@@ -373,6 +413,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     flexDirection: "row",
     gap: 8,
+    marginTop: 8,
   },
   uploadImage: {
     height: 40,
@@ -381,6 +422,20 @@ const styles = StyleSheet.create({
     borderColor: palette.borderColor,
     paddingHorizontal: 16,
     justifyContent: "center",
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 8,
+  },
+  uploadCover: {
+    height: 40,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: palette.borderColor,
+    paddingHorizontal: 16,
+    marginHorizontal: 16,
+    justifyContent: "center",
+    flexDirection: "row",
+    alignItems: "center",
   },
   btnAdd: {
     ...CS.center,

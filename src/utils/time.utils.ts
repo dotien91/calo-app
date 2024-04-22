@@ -21,7 +21,7 @@ export function getDisplayDate(date: string) {
   return `${dayjs(date).locale("vi").format("DD/MM/YYYY hh:mm A")}`;
 }
 
-export const convertLastActive = (time: string) => {
+export const convertLastActive = (time: string, end?: string) => {
   const timeNumber = dayjs().diff(dayjs(time), "minutes");
   if (timeNumber === 0) {
     return translations.justNow;
@@ -34,7 +34,7 @@ export const convertLastActive = (time: string) => {
   // Calculate the number of minutes
   const remainingMinutes = timeNumber % 60;
 
-  if (days > 0) return `${days} ${translations.days}`;
-  if (hours > 0) return `${hours} ${translations.hours}`;
-  return `${remainingMinutes} ${translations.minutes}`;
+  if (days > 0) return `${days} ${translations.days}${end ? ` ${end}` : ""}`;
+  if (hours > 0) return `${hours} ${translations.hours}${end ? ` ${end}` : ""}`;
+  return `${remainingMinutes} ${translations.minutes}${end ? ` ${end}` : ""}`;
 };

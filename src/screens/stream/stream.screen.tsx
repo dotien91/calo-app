@@ -260,8 +260,9 @@ function App() {
     // updateLivestream("end");
     // publisherRef.current && publisherRef.current.stopStream();
     NavigationService.popToTop();
-    NavigationService.navigate(SCREENS.HOME);
+    // NavigationService.navigate(SCREENS.HOME);
 
+    NavigationService.navigate(SCREENS.HOME_TAB, { screen: SCREENS.HOME });
     // endLiveStream()
   };
 

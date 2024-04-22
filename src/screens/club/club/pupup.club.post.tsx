@@ -33,7 +33,7 @@ const PopupClubPost = ({ dataGroup }: PopupClubPostProps) => {
   };
 
   const confirmLeave = () => {
-    deleteMemberGroup(dataGroup.attend_data._id);
+    deleteMemberGroup(dataGroup.attend_data?._id);
     showToast({ type: "success", message: translations.club.leaveGroup });
     eventEmitter.emit("reload_group_joined");
     pop(1);

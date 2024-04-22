@@ -35,7 +35,7 @@ export const useUserHook = () => {
     getCurrentUser().then((res) => {
       if (!res.isError) {
         initData(res.data);
-        NavigationService.navigate(SCREENS.HOME, { screen: SCREENS.HOME });
+        NavigationService.navigate(SCREENS.HOME_TAB, { screen: SCREENS.HOME });
         showToast({
           type: "success",
           message: translations.loginSuccess,
@@ -92,7 +92,7 @@ export const useUserHook = () => {
     setShowInvite(true);
     resetListLike();
     setBankSelected();
-    NavigationService.navigate(SCREENS.HOME);
+    NavigationService.navigate(SCREENS.HOME_TAB, { screen: SCREENS.HOME });
     // RNRestart.restart();
   };
 

@@ -86,7 +86,7 @@ const CreateEventScreen = () => {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior={Platform.OS === "ios" ? "height" : undefined}
       style={CS.flex1}
     >
       <SafeAreaView style={CS.safeAreaView}>

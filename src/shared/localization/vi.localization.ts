@@ -1739,6 +1739,7 @@ export default {
     deleteMember: (name: string) => `Xoá ${name} khỏi câu lạc bộ`,
     deleteMemberSuccess: (name: string) => `Đã xoá ${name} khỏi câu lạc bộ`,
     deleteMemberFaild: "Xoá không thành công, vui lòng thử lại sau",
+    emptyClub: "Danh sách câu lạc bộ trống",
     addCover: "Thêm ảnh bìa",
     leaveGroup: "Rời khỏi câu lạc bộ",
     warningLeave: "Bạn có chắc rời khỏi câu lạc bộ này không?",

@@ -11,6 +11,7 @@ import { useListData } from "@helpers/hooks/useListData";
 import { getListGroup } from "@services/api/club.api";
 import eventEmitter from "@services/event-emitter";
 import useStore from "@services/zustand/store";
+import EmptyResultView from "@shared-components/empty.data.component";
 
 interface TypeListClub {
   avatar: any;
@@ -54,6 +55,19 @@ const ManagedClubScreen = () => {
     return <ItemClub data={item} key={index} />;
   };
 
+  const renderEmpty = () => {
+    return <EmptyResultView title={translations.club.emptyClub} />;
+  };
+
+  const renderHeader = () => {
+    return (
+      <>
+        {listData.length == 0 && isLoading && renderLoading()}
+        {listData.length == 0 && !isLoading && renderEmpty()}
+      </>
+    );
+  };
+
   return (
     <View style={styles.styleItem}>
       <TitleClub
@@ -63,8 +77,9 @@ const ManagedClubScreen = () => {
           NavigationService.navigate(SCREENS.CREATE_CLUB_SCREEN);
         }}
       />
-      {listData.length == 0 && isLoading && renderLoading()}
+
       <FlatList
+        ListHeaderComponent={renderHeader}
         contentContainerStyle={styles.list}
         showsHorizontalScrollIndicator={false}
         data={listData}
