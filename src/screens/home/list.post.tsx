@@ -46,10 +46,10 @@ const ListPost = ({ isFollowingPost, id, isProfile }: ListPostProps) => {
     limit: 5,
     auth_id: userData?._id || "",
     is_following_list: isFollowingPost + "",
+    order_by: "DESC"
   };
   if (id) {
     paramsRequest.user_id = id;
-    paramsRequest.order_by = "DESC";
   }
 
   const {

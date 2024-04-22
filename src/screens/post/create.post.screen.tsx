@@ -56,7 +56,7 @@ export default function PostScreen() {
   const [listCategory, setListCategory] = useState<TypedCategory[]>([]);
   const userData = useStore((state) => state.userData);
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
-  console.log("group_id", group_id);
+
   const isTeacher =
     userData?.user_role === "teacher" || userData?.user_role === "admin";
 
@@ -106,8 +106,6 @@ export default function PostScreen() {
       titleLive: description,
     });
   };
-
-  console.log("listFile upload", listFile);
 
   useEffect(() => {
     getListCategory();
