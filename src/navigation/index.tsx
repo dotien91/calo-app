@@ -19,7 +19,14 @@ import { translations } from "@localization";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
 import IconSvg from "assets/svg";
 import { FloatingPlayer } from "@screens/audio/components/FloatingPlayer";
-import { BankStackData, ClubStackData, CommonStackData, DiscoveryStackData, PracticeTestData, StackIntroData } from "./navigation.constant";
+import {
+  BankStackData,
+  ClubStackData,
+  CommonStackData,
+  DiscoveryStackData,
+  PracticeTestData,
+  StackIntroData,
+} from "./navigation.constant";
 // import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -151,10 +158,9 @@ const Navigation = () => {
     if (!isFirstOpenApp) return null;
     return (
       <>
-        {StackIntroData.map(item => <Stack.Screen
-          name={item.name}
-          component={item.screen}
-        />)}
+        {StackIntroData.map((item) => (
+          <Stack.Screen name={item.name} component={item.screen} />
+        ))}
       </>
     );
   };
@@ -162,10 +168,9 @@ const Navigation = () => {
   const renderBanksStack = () => {
     return (
       <>
-        {BankStackData.map(item => <Stack.Screen
-          name={item.name}
-          component={item.screen}
-        />)}
+        {BankStackData.map((item) => (
+          <Stack.Screen name={item.name} component={item.screen} />
+        ))}
       </>
     );
   };
@@ -173,10 +178,9 @@ const Navigation = () => {
   const renderPracticeTestStack = () => {
     return (
       <>
-       {PracticeTestData.map(item => <Stack.Screen
-          name={item.name}
-          component={item.screen}
-        />)}
+        {PracticeTestData.map((item) => (
+          <Stack.Screen name={item.name} component={item.screen} />
+        ))}
       </>
     );
   };
@@ -184,7 +188,9 @@ const Navigation = () => {
   const DiscoveryStackScreen = () => {
     return (
       <DiscoverStack.Navigator screenOptions={{ headerShown: false }}>
-        {DiscoveryStackData.map(item => <Stack.Screen name={item.name} component={item.screen} />)}
+        {DiscoveryStackData.map((item) => (
+          <Stack.Screen name={item.name} component={item.screen} />
+        ))}
         {renderCommonStack()}
       </DiscoverStack.Navigator>
     );
@@ -193,7 +199,9 @@ const Navigation = () => {
   const ClubStackScreen = () => {
     return (
       <ClubStack.Navigator screenOptions={{ headerShown: false }}>
-        {ClubStackData.map(item => <Stack.Screen name={item.name} component={item.screen} />)}
+        {ClubStackData.map((item) => (
+          <Stack.Screen name={item.name} component={item.screen} />
+        ))}
         {renderCommonStack()}
       </ClubStack.Navigator>
     );
@@ -208,11 +216,12 @@ const Navigation = () => {
     );
   };
 
-
   const renderCommonStack = () => {
     return (
       <>
-        {CommonStackData.map(item => <Stack.Screen name={item.name}  component={item.screen} />)}
+        {CommonStackData.map((item) => (
+          <Stack.Screen name={item.name} component={item.screen} />
+        ))}
         {renderPracticeTestStack()}
         {renderBanksStack()}
       </>

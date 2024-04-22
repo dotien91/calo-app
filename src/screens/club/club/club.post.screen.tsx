@@ -109,7 +109,7 @@ const ClubPostScreen = () => {
   return (
     <SafeAreaView style={CS.safeAreaView}>
       <Header text={name} />
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <HeaderClub dataGroup={dataGroup} />
         <View style={{ paddingHorizontal: 16 }}>
           <Button
@@ -138,17 +138,17 @@ const ClubPostScreen = () => {
         </ScrollView>
         {/* <PopupClubPost dataGroup={dataGroup} /> */}
         <ListPostClub id={club_id} />
-        {isLoggedIn() && userData?._id && (
-          <TouchableOpacity style={styles.addPost} onPress={gotoCreatePost}>
-            <Icon
-              name={"add-outline"}
-              type={IconType.Ionicons}
-              size={30}
-              color={palette.white}
-            />
-          </TouchableOpacity>
-        )}
       </ScrollView>
+      {isLoggedIn() && userData?._id && (
+        <TouchableOpacity style={styles.addPost} onPress={gotoCreatePost}>
+          <Icon
+            name={"add-outline"}
+            type={IconType.Ionicons}
+            size={30}
+            color={palette.white}
+          />
+        </TouchableOpacity>
+      )}
     </SafeAreaView>
   );
 };

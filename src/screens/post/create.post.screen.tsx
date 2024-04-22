@@ -268,7 +268,7 @@ export default function PostScreen() {
               }
               onPress={onSelectPicture}
             />
-            {isTeacher && (
+            {isTeacher && !group_id && (
               <SelectComponent
                 icon={
                   <IconSvg size={32} name="icLive" color={colors.primary} />
@@ -303,7 +303,7 @@ export default function PostScreen() {
               onPress={onSelectVideo}
               text={translations.selectVideo}
             />
-            {isTeacher && (
+            {isTeacher && !group_id && (
               <SelectComponentText
                 icon={
                   <IconSvg size={24} name="icLive" color={colors.primary} />

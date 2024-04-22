@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   KeyboardAvoidingView,
+  Platform,
   SafeAreaView,
   ScrollView,
   View,
@@ -109,7 +110,10 @@ const EditProfileScreen = () => {
   };
 
   return (
-    <KeyboardAvoidingView style={CommonStyle.flex1}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "height" : undefined}
+      style={CommonStyle.flex1}
+    >
       <SafeAreaView style={CommonStyle.safeAreaView}>
         <Header
           onPressLeft={() => NavigationService.goBack()}
@@ -295,6 +299,7 @@ const EditProfileScreen = () => {
             <Button
               style={{
                 backgroundColor: updating ? colors.placeholder : colors.primary,
+                marginBottom: 16,
               }}
               text={translations.profile.saveProfile}
               disabled={updating}

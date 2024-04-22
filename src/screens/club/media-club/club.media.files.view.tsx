@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   box: {
     marginTop: 8,
     ...CS.flexStart,
-    ...CS.borderBottomStyle,
+    // ...CS.borderBottomStyle,
     paddingBottom: 8,
   },
   icon: {
