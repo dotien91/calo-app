@@ -180,15 +180,11 @@ const Navigation = () => {
     return (
       <>
         {PracticeTestData.map((item) => (
-<<<<<<< HEAD
           <Stack.Screen
             name={item.name}
             component={item.screen}
             key={item.name}
           />
-=======
-          <Stack.Screen name={item.name} component={item.screen} />
->>>>>>> f14f6e604cc92a42adf6b8a300067d515409991b
         ))}
       </>
     );
@@ -198,15 +194,11 @@ const Navigation = () => {
     return (
       <DiscoverStack.Navigator screenOptions={{ headerShown: false }}>
         {DiscoveryStackData.map((item) => (
-<<<<<<< HEAD
           <Stack.Screen
             key={item.name}
             name={item.name}
             component={item.screen}
           />
-=======
-          <Stack.Screen name={item.name} component={item.screen} />
->>>>>>> f14f6e604cc92a42adf6b8a300067d515409991b
         ))}
         {renderCommonStack()}
       </DiscoverStack.Navigator>
@@ -217,15 +209,11 @@ const Navigation = () => {
     return (
       <ClubStack.Navigator screenOptions={{ headerShown: false }}>
         {ClubStackData.map((item) => (
-<<<<<<< HEAD
           <Stack.Screen
             key={item.name}
             name={item.name}
             component={item.screen}
           />
-=======
-          <Stack.Screen name={item.name} component={item.screen} />
->>>>>>> f14f6e604cc92a42adf6b8a300067d515409991b
         ))}
         {renderCommonStack()}
       </ClubStack.Navigator>
