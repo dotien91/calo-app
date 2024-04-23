@@ -36,7 +36,9 @@ const AudioView = () => {
     if (item.item?.is_join) {
       return null;
     } else {
-      return <AudioItem isSliderItem data={item.item} key={index} />;
+      return (
+        <AudioItem isSliderItem data={item.item} key={index} listData={data} />
+      );
     }
   };
 

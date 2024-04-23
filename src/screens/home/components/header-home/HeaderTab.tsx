@@ -17,6 +17,7 @@ import { useUserHook } from "@helpers/hooks/useUserHook";
 import { getStatusBarHeight } from "react-native-safearea-height";
 // import ListLiveStream from "../list-livestream/list.liveStream";
 import CourseView from "../list-course/list.course";
+import AudioView from "@screens/audio/audio-list/audio.view";
 
 const HeaderTab = () => {
   const theme = useTheme();
@@ -121,6 +122,7 @@ const HeaderTab = () => {
         })}
       </View>
       <CourseView />
+      <AudioView />
       <InviteView />
       <ListLiveStream />
     </View>
