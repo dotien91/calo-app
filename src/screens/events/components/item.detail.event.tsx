@@ -113,14 +113,23 @@ const ItemDetailEvent = ({ item }: { item: any }) => {
           color={EnumColors.textOpacity8}
         />
         <View style={styles.viewBtn}>{renderButton()}</View>
-        <IconText
-          nameIcon="icPersonal"
-          text={`${translations.event.eventBy} ${item?.create_by.display_name}`}
-        />
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
+          <IconText
+            nameIcon="icPersonal"
+            text={`${translations.event.eventBy}`}
+          />
+          <View style={{ paddingTop: 17 }}>
+            <TextBase
+              fontSize={16}
+              fontWeight="700"
+              title={item?.create_by?.display_name}
+            />
+          </View>
+        </View>
         <IconText nameIcon="icLocated" text={item?.location} />
         <IconText
           nameIcon="icCheckbox"
-          text={`${count} ${translations.event.going} - ${count} ${translations.event.interested}`}
+          text={`${count} ${translations.event.interested}`}
         />
       </View>
     );
