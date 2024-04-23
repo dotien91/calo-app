@@ -16,11 +16,13 @@ const ItemClub = ({ data }: { data: any }) => {
       NavigationService.navigate(SCREENS.CLUB_HOME, {
         id: data._id,
         name: data?.name,
+        item: data,
       });
     } else {
       NavigationService.navigate(SCREENS.ELITE_CLUB, {
         id: data._id,
         name: data?.name,
+        item: data,
       });
     }
   };

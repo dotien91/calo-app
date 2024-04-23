@@ -47,8 +47,10 @@ const ItemEliteScreen = () => {
   const navigation = useNavigation();
   const id = route.params.id || "";
   const name = route.params.name || "";
+  const item = route.params.item || {};
+  console.log("item...", item);
 
-  const [dataGroup, setDataGroup] = useState();
+  const [dataGroup, setDataGroup] = useState(item);
 
   const userData = useStore((store) => store.userData);
 
@@ -70,6 +72,7 @@ const ItemEliteScreen = () => {
   const _getDetailGroup = () => {
     getDetailGroup(id).then((res) => {
       if (!res.isError) {
+        console.log("res.data...", res.data);
         setDataGroup(res.data);
       }
     });
