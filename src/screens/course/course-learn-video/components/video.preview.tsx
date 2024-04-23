@@ -330,6 +330,10 @@ const VideoPreview = (
       <Video
         ref={videoRef}
         style={StyleSheet.absoluteFill}
+        // style={{
+        //   aspectRatio: Device.width/Device.height,
+        //   width: "100%"
+        // }}
         resizeMode={isLanscapeVideo ? "contain" : "cover"}
         source={{ uri: url }}
         onLoad={(data) => {
@@ -354,9 +358,9 @@ const VideoPreview = (
   const _goBack = () => {
     NavigationService.goBack();
   };
-  const _shareScreen = () => {};
-  const _shareToTV = () => {};
-  const _settingVideo = () => {};
+  // const _shareScreen = () => {};
+  // const _shareToTV = () => {};
+  // const _settingVideo = () => {};
   return (
     <Pressable
       disabled={showPreview}
@@ -389,15 +393,15 @@ const VideoPreview = (
           <IconSvg size={24} name={"icArrowDown"} color={palette.white} />
         </PressableBtn>
         <View style={{ flexDirection: "row", gap: 4 }}>
-          <PressableBtn onPress={_shareScreen}>
+          {/* <PressableBtn onPress={_shareScreen}>
             <IconSvg size={24} name={"icShareScreen"} color={palette.white} />
-          </PressableBtn>
-          <PressableBtn onPress={_shareToTV}>
+          </PressableBtn> */}
+          {/* <PressableBtn onPress={_shareToTV}>
             <IconSvg size={24} name={"icAirPlay"} color={palette.white} />
-          </PressableBtn>
-          <PressableBtn onPress={_settingVideo}>
+          </PressableBtn> */}
+          {/* <PressableBtn onPress={_settingVideo}>
             <IconSvg size={24} name={"icSettingVideo"} color={palette.white} />
-          </PressableBtn>
+          </PressableBtn> */}
         </View>
       </Animated.View>
 

@@ -75,8 +75,8 @@ const ImageSlideShow = ({
         <Pressable onPress={closeModal}>
           <Icon
             size={36}
-            name="close-circle-outline"
-            type={IconType.Ionicons}
+            name="close-circle"
+            type={IconType.MaterialCommunityIcons}
             color={palette.white}
           />
         </Pressable>

@@ -28,7 +28,6 @@ import {
   showWarningLogin,
 } from "@helpers/super.modal.helper";
 import { deleteUserById } from "@services/api/user.api";
-import { USER_TOKEN, _getJson } from "@services/local-storage";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 interface SettingScreenProps {}
@@ -146,9 +145,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
   const becomeATutorial = () => {
     NavigationService.navigate(SCREENS.WEBVIEW_SCREEN, {
       txtHeader: translations.settingUser.becomeATutor,
-      link: `https://ieltshunter.io/become-to-tutor?auth=${_getJson(
-        USER_TOKEN,
-      )}`,
+      link: "https://www.ikigai.vn/mentor-ikigaicoach",
     });
   };
 
