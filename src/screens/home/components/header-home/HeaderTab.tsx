@@ -17,6 +17,7 @@ import { useUserHook } from "@helpers/hooks/useUserHook";
 import { getStatusBarHeight } from "react-native-safearea-height";
 // import ListLiveStream from "../list-livestream/list.liveStream";
 import CourseView from "../list-course/list.course";
+import FastImage from "react-native-fast-image";
 
 const HeaderTab = () => {
   const theme = useTheme();
@@ -123,6 +124,12 @@ const HeaderTab = () => {
       <CourseView />
       <InviteView />
       <ListLiveStream />
+      <View style={{ paddingTop: 10 }}>
+        <FastImage
+          source={require("../../../../assets/images/coverhome.png")}
+          style={{ height: 120 }}
+        />
+      </View>
     </View>
   );
 };
