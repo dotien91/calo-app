@@ -502,7 +502,7 @@ export default {
     allCourse: "すべてのコース",
     allTutor: "専門家",
   },
-  seeAll: "Xem tất cả",
+  seeAll: "すべて見る",
   settings: {
     numberOfDays: "日数",
     addPermission: "権限を追加",
@@ -730,6 +730,13 @@ export default {
     editEvent: "イベントを編集",
     confirmDelete: "削除してもよろしいですか",
     deleteEventSuccess: "イベントが削除されました",
+    editEventError: "イベント時間を超えたため編集できません",
+    eventEnded: "イベントが終了しました",
+    deleteEventError:
+      "イベントが既に発生した場合、このアクションを実行できません",
+    emptyEventTitle: "イベントがありません",
+    emptyEventDes:
+      "友達や専門家がイベントを作成すると、ここに表示されます。その後、そのイベントに参加できます。",
   },
   notifications: {
     notifications: "通知",
@@ -1342,7 +1349,7 @@ export default {
     purchaseCouse: "購入したコース",
     discount: "割引コード",
     codeActivations: "コードの有効化",
-    becomeATutor: "講師になる",
+    becomeATutor: "メンターになる",
   },
   aboutUs: {
     aboutUs: "私たちについて",

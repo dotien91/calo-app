@@ -566,7 +566,7 @@ export default {
     life: "Cuộc sống",
     finance: "Tài chính",
     health: "Sức Khỏe",
-    bussiness: "Kinh doanh",
+    business: "Kinh doanh",
     pricePerCourse: "Giá khoá học",
     minimum: "Từ",
     maximum: "Đến",
@@ -1513,7 +1513,7 @@ export default {
     purchaseCouse: "Khoá học đã mua",
     discount: "Mã giảm giá",
     codeActivations: "Kích hoạt mã",
-    becomeATutor: "Đăng ký gia sư",
+    becomeATutor: "Đăng ký người hướng dẫn",
   },
   aboutUs: {
     aboutUs: "Về chúng tôi",
@@ -1567,8 +1567,8 @@ export default {
   gotIt: "Đã hiểu",
   task: {
     inviteFriend: "Mời bạn bè",
-    yourscore: "Ý nghĩa của IKIgai",
-    powered: "Được hỗ trợ",
+    yourscore: "Hành trình IKIgai",
+    powered: "Được chứng nhận bởi",
     mycode: "Mã của tôi",
     level: "Cấp độ",
     task: "Nhiệm vụ",
