@@ -9,6 +9,7 @@ import { getListGroup } from "@services/api/club.api";
 import { useListData } from "@helpers/hooks/useListData";
 import eventEmitter from "@services/event-emitter";
 import EmptyResultView from "@shared-components/empty.data.component";
+import { useApi } from "@helpers/hooks/useApi";
 
 interface TypeListClub {
   avatar: any;
@@ -34,6 +35,11 @@ const FeatureClubScreen = () => {
     _requestData,
   } = useListData<TypeListClub>(paramsRequest, getListGroup, []);
 
+  const { data } = useApi<TypeListClub>({
+    params: { isEliteClub: true },
+    requestData: getListGroup,
+  });
+  console.log("datadata", data);
   useEffect(() => {
     eventEmitter.on("reload_list_club", _requestData);
     return () => {
@@ -56,8 +62,9 @@ const FeatureClubScreen = () => {
   const renderHeader = () => {
     return (
       <>
-        {listData.length == 0 && isLoading && renderLoading()}
-        {listData.length == 0 && !isLoading && renderEmpty()}
+        {!!data?.length && <ItemClub data={data[0]} />}
+        {!listData.length && isLoading && renderLoading()}
+        {!data?.length && !listData.length && !isLoading && renderEmpty()}
       </>
     );
   };

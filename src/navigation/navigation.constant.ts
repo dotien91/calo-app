@@ -1,19 +1,19 @@
-import AllBookScreen from "@screens/audio/all.book.screen"
-import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen"
-import AudioPreview from "@screens/audio/audio-preview/audio.preview"
-import RecommendBookScreen from "@screens/audio/recommend.book.screen"
-import DiscoverScreen from "@screens/discover-screen/discover.screen"
-import PracticeHomeScreen from "@screens/ielts-practice/ielts.practice.home.screen"
-import IeltsPraticeList from "@screens/ielts-practice/ielts.practice.list"
-import IeltsPacticeScreen from "@screens/ielts-practice/ielts.practice.test.screen"
-import ChooseLanguageScreen from "@screens/welcome/choose-language/choose.language.screen"
-import WelcomeScreen from "@screens/welcome/welcome.screen"
-import AddBankScreen from "@screens/withdraw/add.bank.screen"
-import BankListScreen from "@screens/withdraw/bank.list.screen"
-import WithdrawScreen from "@screens/withdraw/withdraw.screen"
-import { SCREENS } from "constants"
+import AllBookScreen from "@screens/audio/all.book.screen";
+import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
+import AudioPreview from "@screens/audio/audio-preview/audio.preview";
+import RecommendBookScreen from "@screens/audio/recommend.book.screen";
+import DiscoverScreen from "@screens/discover-screen/discover.screen";
+import PracticeHomeScreen from "@screens/ielts-practice/ielts.practice.home.screen";
+import IeltsPraticeList from "@screens/ielts-practice/ielts.practice.list";
+import IeltsPacticeScreen from "@screens/ielts-practice/ielts.practice.test.screen";
+import ChooseLanguageScreen from "@screens/welcome/choose-language/choose.language.screen";
+import WelcomeScreen from "@screens/welcome/welcome.screen";
+import AddBankScreen from "@screens/withdraw/add.bank.screen";
+import BankListScreen from "@screens/withdraw/bank.list.screen";
+import WithdrawScreen from "@screens/withdraw/withdraw.screen";
+import { SCREENS } from "constants";
 import IntroScreen from "@screens/welcome/intro/intro.screen";
-import AudioBookScreen from "@screens/audio/audio-book/audio.book.screen"
+import AudioBookScreen from "@screens/audio/audio-book/audio.book.screen";
 import ClassRoomScreen from "@screens/call-class/class.room.screen";
 import WebviewScreen from "@screens/webview/Webview";
 import CourseRecommendScreen from "@screens/course/course-recommend/course.recommend";
@@ -89,7 +89,6 @@ import CourseAddModuleScreen from "@screens/course/course-create/course.add.modu
 import ListCouponForMyCourse from "@screens/coupon/coupon.list";
 import CouponCreateScreen from "@screens/coupon/coupon.create";
 import TabFollow from "@screens/tab-follow/tab.follow";
-import { _getJson } from "@services/local-storage";
 import ClassHomeWorkScreen from "@screens/class-home-work/class.home.work.screen";
 import CreateWorkScreen from "@screens/class-home-work/create.work.screen";
 import DetailTaskScreen from "@screens/class-home-work/detail.task.screen";
@@ -101,212 +100,212 @@ import TeacherCourse from "@screens/teacher-courses/teacher.course";
 import LeaderBoard from "@screens/leader-board/leader.board";
 
 import AffiliatePage from "@screens/affiliate/affiliate.screen";
-import CodeActivationsScreen from "@screens/code-activations/code.activations.screen"
-import HiddenPaage from "@screens/hidden-page/hidden.page"
-import BlackList from "@screens/black-list/black.list"
+import CodeActivationsScreen from "@screens/code-activations/code.activations.screen";
+import HiddenPaage from "@screens/hidden-page/hidden.page";
+import BlackList from "@screens/black-list/black.list";
 
 export const DiscoveryStackData = [
-    {
-      name: SCREENS.DISCOVERSCREEN,
-      screen: DiscoverScreen,
-    },
-    {
-      name: SCREENS.AUDIO_PLAY,
-      screen: AudioPlayScreen,
-    },
-    {
-      name: SCREENS.AUDIO_PREVIEW,
-      screen: AudioPreview,
-    },
-    {
-      name: SCREENS.ALL_AUDIO_BOOk,
-      screen: AllBookScreen,
-    },
-    {
-      name: SCREENS.RECOMMEND_AUDIO_BOOK,
-      screen: RecommendBookScreen
-    },
-    {
-      name: SCREENS.AUDIO_BOOK,
-      screen: AudioBookScreen
-    }
-  ]
+  {
+    name: SCREENS.DISCOVERSCREEN,
+    screen: DiscoverScreen,
+  },
+  {
+    name: SCREENS.AUDIO_PLAY,
+    screen: AudioPlayScreen,
+  },
+  {
+    name: SCREENS.AUDIO_PREVIEW,
+    screen: AudioPreview,
+  },
+  {
+    name: SCREENS.ALL_AUDIO_BOOk,
+    screen: AllBookScreen,
+  },
+  {
+    name: SCREENS.RECOMMEND_AUDIO_BOOK,
+    screen: RecommendBookScreen,
+  },
+  {
+    name: SCREENS.AUDIO_BOOK,
+    screen: AudioBookScreen,
+  },
+];
 
+export const PracticeTestData = [
+  {
+    name: SCREENS.IELTS_PRACTICE_HOME,
+    screen: PracticeHomeScreen,
+  },
+  {
+    name: SCREENS.IELTS_PRACTICE_LIST,
+    screen: IeltsPraticeList,
+  },
+  {
+    name: SCREENS.IELTS_PRACTICE,
+    screen: IeltsPacticeScreen,
+  },
+];
 
- export const PracticeTestData = [
-    {
-      name: SCREENS.IELTS_PRACTICE_HOME,
-      screen: PracticeHomeScreen
-    },
-    {
-      name: SCREENS.IELTS_PRACTICE_LIST,
-      screen: IeltsPraticeList
-    },
-    {
-      name: SCREENS.IELTS_PRACTICE,
-      screen: IeltsPacticeScreen
-    }
-  ]
+export const BankStackData = [
+  {
+    name: SCREENS.BANK_LIST,
+    screen: BankListScreen,
+  },
+  {
+    name: SCREENS.WITHDRAW,
+    screen: WithdrawScreen,
+  },
+  {
+    name: SCREENS.ADD_BANK,
+    screen: AddBankScreen,
+  },
+];
 
-  export const BankStackData = [
-    {
-      name: SCREENS.BANK_LIST,
-      screen: BankListScreen,
-    },
-    {
-      name: SCREENS.WITHDRAW,
-      screen: WithdrawScreen,
-    },
-    {
-      name: SCREENS.ADD_BANK,
-      screen: AddBankScreen,
-    },
-  ]
+export const StackIntroData = [
+  {
+    name: SCREENS.CHOOSE_LANGUAGE,
+    screen: ChooseLanguageScreen,
+  },
+  {
+    name: SCREENS.INTRO,
+    screen: IntroScreen,
+  },
+  {
+    name: SCREENS.WELCOME,
+    screen: WelcomeScreen,
+  },
+];
 
+export const ClubStackData = [
+  {
+    name: SCREENS.CLUB_SCREEN,
+    screen: ClubScreen,
+  },
+  {
+    name: SCREENS.SETTING_CLUB_SCREEN,
+    screen: SettingClubScreen,
+  },
+  {
+    name: SCREENS.CLUB_HOME,
+    screen: ClubPostScreen,
+  },
+  {
+    name: SCREENS.CREATE_CLUB_SCREEN,
+    screen: CreateClubScreen,
+  },
+  {
+    name: SCREENS.ELITE_CLUB,
+    screen: EliteClubScreen,
+  },
+  {
+    name: SCREENS.LIST_MEMBER_CLUB,
+    screen: ListMemberScreen,
+  },
+  {
+    name: SCREENS.LIST_COURSE_CLUB,
+    screen: ListCourseClub,
+  },
+  {
+    name: SCREENS.CREATEEVENT,
+    screen: CreateEventScreen,
+  },
+  {
+    name: SCREENS.EVENTSLISTSCREEN,
+    screen: EventsListScreen,
+  },
+  {
+    name: SCREENS.DETAILEVENTSCREEN,
+    screen: DetailScreenEvent,
+  },
+  {
+    name: SCREENS.LIST_IMAGE_SCREEN,
+    screen: ListImageScreen,
+  },
+  {
+    name: SCREENS.BECOME_ELITE_CLUB,
+    screen: BecomEliteClub,
+  },
+  {
+    name: SCREENS.UPDATE_EVENT_SCREEN,
+    screen: UpdateEventScreen,
+  },
+  {
+    name: SCREENS.MEDIA_CLUB,
+    screen: ClubMediaScreen,
+  },
+];
 
-  export const StackIntroData = [
-    {
-      name: SCREENS.CHOOSE_LANGUAGE,
-      screen: ChooseLanguageScreen,
-    },
-    {
-      name: SCREENS.INTRO,
-      screen: IntroScreen,
-    },
-    {
-      name: SCREENS.WELCOME,
-      screen: WelcomeScreen,
-    },
-  ]
-
-  export const ClubStackData = [
-    {
-      name: SCREENS.CLUB_SCREEN,
-      screen: ClubScreen,
-    },
-    {
-      name: SCREENS.SETTING_CLUB_SCREEN,
-      screen: SettingClubScreen,
-    },
-    {
-      name: SCREENS.CLUB_HOME,
-      screen: ClubPostScreen,
-    },
-    {
-      name: SCREENS.CREATE_CLUB_SCREEN,
-      screen: CreateClubScreen,
-    },
-    {
-      name: SCREENS.ELITE_CLUB,
-      screen: EliteClubScreen,
-    }
-    ,
-    {
-      name: SCREENS.LIST_MEMBER_CLUB,
-      screen: ListMemberScreen,
-    },
-    {
-      name: SCREENS.LIST_COURSE_CLUB,
-      screen: ListCourseClub,
-    },
-    {
-      name: SCREENS.CREATEEVENT,
-      screen: CreateEventScreen,
-    },
-    {
-      name: SCREENS.EVENTSLISTSCREEN,
-      screen: EventsListScreen
-    },
-    {
-      name: SCREENS.DETAILEVENTSCREEN,
-      screen: DetailScreenEvent
-    },
-    {
-      name: SCREENS.LIST_IMAGE_SCREEN,
-      screen: ListImageScreen
-    },
-    {
-      name: SCREENS.BECOME_ELITE_CLUB,
-      screen: BecomEliteClub
-    },
-    {
-      name: SCREENS.UPDATE_EVENT_SCREEN,
-      screen: UpdateEventScreen
-    },
-    {
-      name: SCREENS.MEDIA_CLUB,
-      screen: ClubMediaScreen
-    }
-  ]
-
-  export const CommonStackData = [
-    { name: SCREENS.POST_DETAIL, screen: PostDetailScreen },
-    { name: SCREENS.COURSE_CATEGORY, screen: CourseFilterResultScreen },
-    { name: SCREENS.COURSE_DETAIL, screen: CoursePreviewScreen },
-    { name: SCREENS.COURSE_RATE, screen: CourseRate },
-    { name: SCREENS.COURSE_SEARCH, screen: CourseSearchScreen },
-    { name: SCREENS.TEACHER_DETAIL, screen: DetailTeacherScreen },
-    { name: SCREENS.CHAT, screen: ChatListScreen },
-    { name: SCREENS.POST_SCREEN, screen: PostScreen },
-    { name: SCREENS.EDIT_COMMENT, screen: EditCommentScreen },
-    { name: SCREENS.PROFILE_CURRENT_USER, screen: ProfileUserScreen },
-    { name: SCREENS.SEARCH_CHAT, screen: SearchRoomChatScreen },
-    { name: SCREENS.EDIT_PROFILE, screen: EditProfileScreen },
-    { name: SCREENS.SEARCH, screen: SearchPostScreen },
-    { name: SCREENS.CHAT_ROOM, screen: ChatRoomScreen },
-    { name: SCREENS.LOGIN_WITH_EMAIL, screen: LoginWithEmailScreen },
-    { name: SCREENS.SIGN_UP, screen: SignUpScreen },
-    { name: SCREENS.FORGOT_PASSWORD, screen: ForgotPasswordScreen },
-    { name: SCREENS.VERIFY_CODE, screen: VerifyCodeScreen },
-    { name: SCREENS.NEW_PASSWORD, screen: NewPasswordScreen },
-    { name: SCREENS.PAYMENT_COURES, screen: PaymentCoures },
-    { name: SCREENS.ABOUT_ME, screen: AboutMe },
-    { name: SCREENS.SETTING_USER, screen: SettingUser },
-    { name: SCREENS.CHANGELANGUAGE, screen: ChangeLanguage },
-    { name: SCREENS.SMARTBANKING, screen: SmartBanking },
-    { name: SCREENS.CALL_PAGE, screen: CallPageScreen },
-    { name: SCREENS.IN_COMING_CALL, screen: InComingCall },
-    { name: SCREENS.PAYMENT_SUCCESS, screen: PaymentSuccess },
-    { name: SCREENS.TAB_FOLLOW, screen: TabFollow },
-    { name: SCREENS.CALL_CLASS, screen: ClassRoomScreen },
-    { name: SCREENS.TEACHER_COURSES, screen: TeacherCourse },
-    { name: SCREENS.ADD_WORK_STUDENT, screen: AddWorkStudentScreen },
-    { name: SCREENS.DETAIL_TASK, screen: DetailTaskScreen },
-    { name: SCREENS.CREATE_WORK, screen: CreateWorkScreen },
-    { name: SCREENS.TASK_SCREEN, screen: TaskScreen },
-    { name: SCREENS.MY_COURES, screen: MyCourse },
-    { name: SCREENS.SETTING, screen: SettingScreen },
-    { name: SCREENS.NOTIFICATION, screen: NotificationScreen },
-    { name: SCREENS.COURSE_CREATE, screen: CourseCreateScreen },
-    { name: SCREENS.COURSE_LIST_MODULE, screen: CourseListVideoScreen },
-    { name: SCREENS.COURSE_ADD_MODULE, screen: CourseAddModuleScreen },
-    { name: SCREENS.COURSE_CREATE_CALENDAR_CALL, screen: CreateClassCallOneScreen },
-    { name: SCREENS.COURSE_LIST_CLASS, screen: CourseListClassScreen },
-    { name: SCREENS.COURSE_CREATE_CLASS, screen: CourseCreateClassScreen },
-    { name: SCREENS.CHOOSE_CLASS, screen: ChooseClassScreen },
-    { name: SCREENS.BOOK_LESSON, screen: BookLessonScreen },
-    { name: SCREENS.COURSE_LEARN_VIDEO_SCREEN, screen: CourseLearnScreen },
-    { name: SCREENS.COURSE_LIST_RATE, screen: ReviewScreen },
-    { name: SCREENS.COUPON_LIST, screen: ListCouponForMyCourse },
-    { name: SCREENS.COUPON_CREATE, screen: CouponCreateScreen },
-    { name: SCREENS.PROFILE_CHAT, screen: ProfileChatScreen },
-    { name: SCREENS.ADD_USER_TO_GROUP, screen: AddUserGroupChatScreen },
-    { name: SCREENS.MEDIA_CHAT_SCREEN, screen: MediaChatScreen },
-    { name: SCREENS.CREATE_GROUP_CHAT, screen: CreateGroupChatScreen },
-    { name: SCREENS.VIEW_LIVE_STREAM, screen: ViewStreamScreen },
-    { name: SCREENS.LIVE_STREAM, screen: LiveStreamScreen },
-    { name: SCREENS.DETAIL, screen: DetailScreen },
-    { name: SCREENS.LOGIN_PAGE, screen: LoginScreen },
-    { name: SCREENS.AFFILIATE, screen: AffiliatePage },
-    { name: SCREENS.BLACK_LIST, screen: BlackList },
-    { name: SCREENS.HOME_AFFILIATE, screen: HomeAffilite },
-    { name: SCREENS.CODE_ACTIVATIONS_SCREEN, screen: CodeActivationsScreen },
-    { name: SCREENS.HIDDEN_PAGE, screen: HiddenPaage },
-    { name: SCREENS.WEBVIEW_SCREEN, screen: WebviewScreen },
-    { name: SCREENS.SHOW_ALL_REVIEW, screen: showAllReview },
-    { name: SCREENS.CLUB_BY_CATEGORY, screen: ClubByCategoryScreen },
-    { name: SCREENS.SEARCH_CLUB, screen: SearchClubScreen },
-    { name: SCREENS.LEADERBOARD, screen: LeaderBoard },
-    { name: SCREENS.COURSE_RECOMMEND, screen: CourseRecommendScreen },
-    { name: SCREENS.CLASSHOMEWORK, screen: ClassHomeWorkScreen },
-  ];
+export const CommonStackData = [
+  { name: SCREENS.POST_DETAIL, screen: PostDetailScreen },
+  { name: SCREENS.COURSE_CATEGORY, screen: CourseFilterResultScreen },
+  { name: SCREENS.COURSE_DETAIL, screen: CoursePreviewScreen },
+  { name: SCREENS.COURSE_RATE, screen: CourseRate },
+  { name: SCREENS.COURSE_SEARCH, screen: CourseSearchScreen },
+  { name: SCREENS.TEACHER_DETAIL, screen: DetailTeacherScreen },
+  { name: SCREENS.CHAT, screen: ChatListScreen },
+  { name: SCREENS.POST_SCREEN, screen: PostScreen },
+  { name: SCREENS.EDIT_COMMENT, screen: EditCommentScreen },
+  { name: SCREENS.PROFILE_CURRENT_USER, screen: ProfileUserScreen },
+  { name: SCREENS.SEARCH_CHAT, screen: SearchRoomChatScreen },
+  { name: SCREENS.EDIT_PROFILE, screen: EditProfileScreen },
+  { name: SCREENS.SEARCH, screen: SearchPostScreen },
+  { name: SCREENS.CHAT_ROOM, screen: ChatRoomScreen },
+  { name: SCREENS.LOGIN_WITH_EMAIL, screen: LoginWithEmailScreen },
+  { name: SCREENS.SIGN_UP, screen: SignUpScreen },
+  { name: SCREENS.FORGOT_PASSWORD, screen: ForgotPasswordScreen },
+  { name: SCREENS.VERIFY_CODE, screen: VerifyCodeScreen },
+  { name: SCREENS.NEW_PASSWORD, screen: NewPasswordScreen },
+  { name: SCREENS.PAYMENT_COURES, screen: PaymentCoures },
+  { name: SCREENS.ABOUT_ME, screen: AboutMe },
+  { name: SCREENS.SETTING_USER, screen: SettingUser },
+  { name: SCREENS.CHANGELANGUAGE, screen: ChangeLanguage },
+  { name: SCREENS.SMARTBANKING, screen: SmartBanking },
+  { name: SCREENS.CALL_PAGE, screen: CallPageScreen },
+  { name: SCREENS.IN_COMING_CALL, screen: InComingCall },
+  { name: SCREENS.PAYMENT_SUCCESS, screen: PaymentSuccess },
+  { name: SCREENS.TAB_FOLLOW, screen: TabFollow },
+  { name: SCREENS.CALL_CLASS, screen: ClassRoomScreen },
+  { name: SCREENS.TEACHER_COURSES, screen: TeacherCourse },
+  { name: SCREENS.ADD_WORK_STUDENT, screen: AddWorkStudentScreen },
+  { name: SCREENS.DETAIL_TASK, screen: DetailTaskScreen },
+  { name: SCREENS.CREATE_WORK, screen: CreateWorkScreen },
+  { name: SCREENS.TASK_SCREEN, screen: TaskScreen },
+  { name: SCREENS.MY_COURES, screen: MyCourse },
+  { name: SCREENS.SETTING, screen: SettingScreen },
+  { name: SCREENS.NOTIFICATION, screen: NotificationScreen },
+  { name: SCREENS.COURSE_CREATE, screen: CourseCreateScreen },
+  { name: SCREENS.COURSE_LIST_MODULE, screen: CourseListVideoScreen },
+  { name: SCREENS.COURSE_ADD_MODULE, screen: CourseAddModuleScreen },
+  {
+    name: SCREENS.COURSE_CREATE_CALENDAR_CALL,
+    screen: CreateClassCallOneScreen,
+  },
+  { name: SCREENS.COURSE_LIST_CLASS, screen: CourseListClassScreen },
+  { name: SCREENS.COURSE_CREATE_CLASS, screen: CourseCreateClassScreen },
+  { name: SCREENS.CHOOSE_CLASS, screen: ChooseClassScreen },
+  { name: SCREENS.BOOK_LESSON, screen: BookLessonScreen },
+  { name: SCREENS.COURSE_LEARN_VIDEO_SCREEN, screen: CourseLearnScreen },
+  { name: SCREENS.COURSE_LIST_RATE, screen: ReviewScreen },
+  { name: SCREENS.COUPON_LIST, screen: ListCouponForMyCourse },
+  { name: SCREENS.COUPON_CREATE, screen: CouponCreateScreen },
+  { name: SCREENS.PROFILE_CHAT, screen: ProfileChatScreen },
+  { name: SCREENS.ADD_USER_TO_GROUP, screen: AddUserGroupChatScreen },
+  { name: SCREENS.MEDIA_CHAT_SCREEN, screen: MediaChatScreen },
+  { name: SCREENS.CREATE_GROUP_CHAT, screen: CreateGroupChatScreen },
+  { name: SCREENS.VIEW_LIVE_STREAM, screen: ViewStreamScreen },
+  { name: SCREENS.LIVE_STREAM, screen: LiveStreamScreen },
+  { name: SCREENS.DETAIL, screen: DetailScreen },
+  { name: SCREENS.LOGIN_PAGE, screen: LoginScreen },
+  { name: SCREENS.AFFILIATE, screen: AffiliatePage },
+  { name: SCREENS.BLACK_LIST, screen: BlackList },
+  { name: SCREENS.HOME_AFFILIATE, screen: HomeAffilite },
+  { name: SCREENS.CODE_ACTIVATIONS_SCREEN, screen: CodeActivationsScreen },
+  { name: SCREENS.HIDDEN_PAGE, screen: HiddenPaage },
+  { name: SCREENS.WEBVIEW_SCREEN, screen: WebviewScreen },
+  { name: SCREENS.SHOW_ALL_REVIEW, screen: showAllReview },
+  { name: SCREENS.CLUB_BY_CATEGORY, screen: ClubByCategoryScreen },
+  { name: SCREENS.SEARCH_CLUB, screen: SearchClubScreen },
+  { name: SCREENS.LEADERBOARD, screen: LeaderBoard },
+  { name: SCREENS.COURSE_RECOMMEND, screen: CourseRecommendScreen },
+  { name: SCREENS.CLASSHOMEWORK, screen: ClassHomeWorkScreen },
+];

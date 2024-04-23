@@ -8,6 +8,7 @@ import { translations } from "@localization";
 import { SCREENS } from "constants";
 import { convertLastActive } from "@utils/time.utils";
 import ImageLoad from "@shared-components/image-load/ImageLoad";
+import { palette } from "@theme/themes";
 
 const ItemClub = ({ data }: { data: any }) => {
   const goToClubScreen = () => {
@@ -43,11 +44,17 @@ const ItemClub = ({ data }: { data: any }) => {
                   : translations.club.attended
               } ${convertLastActive(
                 isLeader ? data?.createdAt : data?.attend_data?.createdAt,
-                translations.club.ago,
-              ).toLowerCase()}`}
+              )} ${translations.club.ago}`}
             </TextBase>
           )}
         </View>
+        {data?.isEliteClub && (
+          <View style={style.vipLabel}>
+            <TextBase fontWeight="600" fontSize={12} color={"white"}>
+              VIP
+            </TextBase>
+          </View>
+        )}
       </PressableBtn>
     </View>
   );
@@ -70,5 +77,14 @@ const style = StyleSheet.create({
   },
   viewTxt: {
     flex: 1,
+  },
+  vipLabel: {
+    paddingVertical: 3,
+    paddingHorizontal: 5,
+    borderRadius: 4,
+    backgroundColor: palette.primary,
+    position: "absolute",
+    right: 0,
+    top: 0,
   },
 });

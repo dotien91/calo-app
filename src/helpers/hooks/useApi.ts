@@ -7,6 +7,7 @@ interface TypedUseApi<T> {
   _requestData: (params: any) => void;
   noData: boolean;
   isLoading: boolean;
+  setData: (params: any) => void;
 }
 
 interface IParams {
@@ -39,6 +40,7 @@ export function useApi<T>({
   const _requestData = () => {
     requestData(params).then((res: any) => {
       // setIsLoading(false);
+      console.log(22222, params, res);
       if (!res.isError) {
         setStateListData((oldState) => ({
           ...oldState,

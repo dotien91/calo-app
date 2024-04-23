@@ -1,12 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Image, ImageBackground, View } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
-import {
-  useTheme,
-  useRoute,
-  useNavigation,
-  StackActions,
-} from "@react-navigation/native";
+import { useTheme, useRoute } from "@react-navigation/native";
 
 import IconSvg from "assets/svg";
 import Button from "@shared-components/button/Button";
@@ -36,16 +31,15 @@ import { formatVNDate } from "@utils/date.utils";
 import CS from "@theme/styles";
 import { useListData } from "@helpers/hooks/useListData";
 import { convertLastActive } from "@utils/time.utils";
-import { navigate } from "@helpers/navigation.helper";
-import eventEmitter from "@services/event-emitter";
+import { navigate, replace } from "@helpers/navigation.helper";
 
 const ItemEliteScreen = () => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const route = useRoute();
-  const navigation = useNavigation();
   const id = route.params.id || "";
   const name = route.params.name || "";
+
   const [dataGroup, setDataGroup] = useState();
 
   const userData = useStore((store) => store.userData);
@@ -98,10 +92,16 @@ const ItemEliteScreen = () => {
   const joinGroup = () => {
     if (dataGroup?.attend_data?.tier) {
       navigate(SCREENS.CLUB_HOME, {
-        id: id,
+        club_id: id,
         name: name,
       });
     } else {
+      if (dataGroup?.isEliteClub) {
+        navigate(SCREENS.BECOME_ELITE_CLUB, {
+          club_id: id,
+        });
+        return;
+      }
       showLoading();
       addMemberGroup({
         group_id: id,
@@ -109,13 +109,10 @@ const ItemEliteScreen = () => {
       }).then((res) => {
         closeSuperModal();
         if (!res.isError) {
-          navigation.dispatch(
-            StackActions.replace(SCREENS.CLUB_HOME, {
-              id: id,
-              name: name,
-            }),
-          );
-          eventEmitter.emit("reload_list_club");
+          replace(SCREENS.CLUB_HOME, {
+            club_id: id,
+            name: name,
+          });
         } else {
           showToast({
             type: "error",
@@ -161,6 +158,8 @@ const ItemEliteScreen = () => {
           onPress={joinGroup}
           text={translations.club.joinGruop}
           backgroundColor={palette.primary}
+          disabled={!dataGroup}
+          type={dataGroup ? "primary" : "inactive"}
         />
         <View style={styles.viewTitle}>
           <TextBase

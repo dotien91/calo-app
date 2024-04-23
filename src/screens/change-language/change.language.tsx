@@ -38,6 +38,11 @@ const ChangeLanguage = () => {
       value: "vi",
       flag: <IconSvg name="icFlagvi" size={32} />,
     },
+    {
+      label: "Japanese",
+      value: "jp",
+      flag: <IconSvg name="icFlagjp" size={32} />,
+    },
   ];
 
   const [selected, setSelected] = useState(useStore((state) => state.language));

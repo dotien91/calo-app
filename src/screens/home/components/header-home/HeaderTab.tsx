@@ -40,7 +40,7 @@ const listCategorys = [
   {
     title: translations.listCategory.club,
     icon: "icCard3",
-    screen: SCREENS.CLUB_SCREEN,
+    screen: SCREENS.CLUB_TAB,
     color: "#E8F7EF",
   },
 ];

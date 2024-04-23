@@ -26,6 +26,7 @@ import {
   showLoading,
   showToast,
 } from "@helpers/super.modal.helper";
+import { goBack } from "@helpers/navigation.helper";
 
 const BecomEliteClub = () => {
   const [updating, setUpdating] = useState(false);
@@ -90,7 +91,7 @@ const BecomEliteClub = () => {
       address: data.address,
       group_id: clubId,
     };
-    requestEliteClub(data).then((res) => {
+    requestEliteClub(params).then((res) => {
       closeSuperModal();
       setUpdating(false);
       if (!res.isError) {
@@ -98,6 +99,7 @@ const BecomEliteClub = () => {
           type: "success",
           message: translations.podcast.sendRequest,
         });
+        goBack();
       } else {
         showToast({
           type: "error",

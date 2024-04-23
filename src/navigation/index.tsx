@@ -19,7 +19,14 @@ import { translations } from "@localization";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
 import IconSvg from "assets/svg";
 import { FloatingPlayer } from "@screens/audio/components/FloatingPlayer";
-import { BankStackData, ClubStackData, CommonStackData, DiscoveryStackData, PracticeTestData, StackIntroData } from "./navigation.constant";
+import {
+  BankStackData,
+  ClubStackData,
+  CommonStackData,
+  DiscoveryStackData,
+  PracticeTestData,
+  StackIntroData,
+} from "./navigation.constant";
 // import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -41,7 +48,7 @@ const Navigation = () => {
   ) => {
     let iconName = "home";
     switch (route.name) {
-      case SCREENS.COURSE_LIST:
+      case SCREENS.COURSE_TAB:
         iconName = focused ? "icCourse" : "icCourse";
         break;
       // case SCREENS.CHAT:
@@ -50,16 +57,16 @@ const Navigation = () => {
       case SCREENS.NOTIFICATION:
         iconName = focused ? "bell" : "bell";
         break;
-      case SCREENS.SETTINGPROFILESCREEN:
+      case SCREENS.SETTINGPROFILESCREEN_TAB:
         iconName = focused ? "icProfile" : "icProfile";
         break;
       case SCREENS.SETTING:
         iconName = focused ? "settings" : "settings";
         break;
-      case SCREENS.DISCOVERSCREEN:
+      case SCREENS.DISCOVERSCREEN_TAB:
         iconName = focused ? "icDiscovery" : "icDiscovery";
         break;
-      case SCREENS.CLUB_SCREEN:
+      case SCREENS.CLUB_TAB:
         iconName = focused ? "icCoach" : "icCoachBlur";
         break;
       default:
@@ -75,7 +82,7 @@ const Navigation = () => {
   const renderLable = (route: any, color: any) => {
     let label = translations.homes;
     switch (route.name) {
-      case SCREENS.COURSE_LIST:
+      case SCREENS.COURSE_TAB:
         label = translations.courses;
         break;
       case SCREENS.CHAT:
@@ -84,16 +91,16 @@ const Navigation = () => {
       case SCREENS.NOTIFICATION:
         label = translations.notifications.notifications;
         break;
-      case SCREENS.SETTINGPROFILESCREEN:
+      case SCREENS.SETTINGPROFILESCREEN_TAB:
         label = translations.profile.profile;
         break;
-      case SCREENS.DISCOVERSCREEN:
+      case SCREENS.DISCOVERSCREEN_TAB:
         label = translations.discovers;
         break;
       case SCREENS.SETTING:
         label = translations.setting;
         break;
-      case SCREENS.CLUB_SCREEN:
+      case SCREENS.CLUB_TAB:
         label = translations.club.club;
         break;
       default:
@@ -110,8 +117,9 @@ const Navigation = () => {
   const DiscoverStack = createStackNavigator();
   const ClubStack = createStackNavigator();
   const HomeStack = createStackNavigator();
+  const CourseStack = createStackNavigator();
 
-  const renderTabNavigation = () => {
+  const TabNavigation = () => {
     return (
       <>
         <Tab.Navigator
@@ -130,16 +138,16 @@ const Navigation = () => {
             },
           })}
         >
-          <Tab.Screen name={SCREENS.HOME} component={HomeStackScreen} />
-          <Tab.Screen name={SCREENS.COURSE_LIST} component={CourseListScreen} />
-          <Tab.Screen name={SCREENS.CLUB_SCREEN} component={ClubStackScreen} />
+          <Tab.Screen name={SCREENS.HOME_TAB} component={HomeStackScreen} />
+          <Tab.Screen name={SCREENS.COURSE_TAB} component={CourseStackScreen} />
+          <Tab.Screen name={SCREENS.CLUB_TAB} component={ClubStackScreen} />
           <Tab.Screen
-            name={SCREENS.DISCOVERSCREEN}
+            name={SCREENS.DISCOVERSCREEN_TAB}
             component={DiscoveryStackScreen}
           />
 
           <Tab.Screen
-            name={SCREENS.SETTINGPROFILESCREEN}
+            name={SCREENS.SETTINGPROFILESCREEN_TAB}
             component={SettingProfileScreen}
           />
         </Tab.Navigator>
@@ -151,10 +159,9 @@ const Navigation = () => {
     if (!isFirstOpenApp) return null;
     return (
       <>
-        {StackIntroData.map(item => <Stack.Screen
-          name={item.name}
-          component={item.screen}
-        />)}
+        {StackIntroData.map((item) => (
+          <Stack.Screen key={item.name} name={item.name} component={item.screen} />
+        ))}
       </>
     );
   };
@@ -162,10 +169,9 @@ const Navigation = () => {
   const renderBanksStack = () => {
     return (
       <>
-        {BankStackData.map(item => <Stack.Screen
-          name={item.name}
-          component={item.screen}
-        />)}
+        {BankStackData.map((item) => (
+          <Stack.Screen name={item.name} component={item.screen} />
+        ))}
       </>
     );
   };
@@ -173,10 +179,13 @@ const Navigation = () => {
   const renderPracticeTestStack = () => {
     return (
       <>
-       {PracticeTestData.map(item => <Stack.Screen
-          name={item.name}
-          component={item.screen}
-        />)}
+        {PracticeTestData.map((item) => (
+          <Stack.Screen
+            name={item.name}
+            component={item.screen}
+            key={item.name}
+          />
+        ))}
       </>
     );
   };
@@ -184,7 +193,13 @@ const Navigation = () => {
   const DiscoveryStackScreen = () => {
     return (
       <DiscoverStack.Navigator screenOptions={{ headerShown: false }}>
-        {DiscoveryStackData.map(item => <Stack.Screen name={item.name} component={item.screen} />)}
+        {DiscoveryStackData.map((item) => (
+          <Stack.Screen
+            key={item.name}
+            name={item.name}
+            component={item.screen}
+          />
+        ))}
         {renderCommonStack()}
       </DiscoverStack.Navigator>
     );
@@ -193,9 +208,24 @@ const Navigation = () => {
   const ClubStackScreen = () => {
     return (
       <ClubStack.Navigator screenOptions={{ headerShown: false }}>
-        {ClubStackData.map(item => <Stack.Screen name={item.name} component={item.screen} />)}
+        {ClubStackData.map((item) => (
+          <Stack.Screen
+            key={item.name}
+            name={item.name}
+            component={item.screen}
+          />
+        ))}
         {renderCommonStack()}
       </ClubStack.Navigator>
+    );
+  };
+
+  const CourseStackScreen = () => {
+    return (
+      <CourseStack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name={SCREENS.COURSE_LIST} component={CourseListScreen} />
+        {renderCommonStack()}
+      </CourseStack.Navigator>
     );
   };
 
@@ -208,11 +238,12 @@ const Navigation = () => {
     );
   };
 
-
   const renderCommonStack = () => {
     return (
       <>
-        {CommonStackData.map(item => <Stack.Screen name={item.name}  component={item.screen} />)}
+        {CommonStackData.map((item) => (
+          <Stack.Screen name={item.name} component={item.screen} />
+        ))}
         {renderPracticeTestStack()}
         {renderBanksStack()}
       </>
@@ -229,7 +260,7 @@ const Navigation = () => {
     >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {renderStackIntro()}
-        <Stack.Screen name={SCREENS.HOME_TAB} component={renderTabNavigation} />
+        <Stack.Screen name={SCREENS.TABS} component={TabNavigation} />
         {renderCommonStack()}
       </Stack.Navigator>
       <FloatingPlayer />
