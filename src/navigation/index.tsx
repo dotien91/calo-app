@@ -31,6 +31,11 @@ import {
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+const DiscoverStack = createStackNavigator();
+const ClubStack = createStackNavigator();
+const HomeStack = createStackNavigator();
+const CourseStack = createStackNavigator();
+
 
 const Navigation = () => {
   const isDarkMode = useStore((state) => state.isDarkMode);
@@ -113,11 +118,6 @@ const Navigation = () => {
       </TextBase>
     );
   };
-
-  const DiscoverStack = createStackNavigator();
-  const ClubStack = createStackNavigator();
-  const HomeStack = createStackNavigator();
-  const CourseStack = createStackNavigator();
 
   const TabNavigation = () => {
     return (
@@ -276,4 +276,4 @@ const Navigation = () => {
   );
 };
 
-export default Navigation;
+export default React.memo(Navigation);

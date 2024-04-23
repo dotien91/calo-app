@@ -6,7 +6,6 @@ export async function GetPodCastList(params) {
     urlPath: "podcast/list",
     params,
   }).then((response) => {
-    console.log("res1111...", response);
     return response;
   });
 }
