@@ -502,7 +502,7 @@ export default {
     allCourse: "すべてのコース",
     allTutor: "専門家",
   },
-  seeAll: "Xem tất cả",
+  seeAll: "すべて見る",
   settings: {
     numberOfDays: "日数",
     addPermission: "権限を追加",
@@ -1349,7 +1349,7 @@ export default {
     purchaseCouse: "購入したコース",
     discount: "割引コード",
     codeActivations: "コードの有効化",
-    becomeATutor: "講師になる",
+    becomeATutor: "メンターになる",
   },
   aboutUs: {
     aboutUs: "私たちについて",

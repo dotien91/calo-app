@@ -1513,7 +1513,7 @@ export default {
     purchaseCouse: "Khoá học đã mua",
     discount: "Mã giảm giá",
     codeActivations: "Kích hoạt mã",
-    becomeATutor: "Đăng ký gia sư",
+    becomeATutor: "Đăng ký người hướng dẫn",
   },
   aboutUs: {
     aboutUs: "Về chúng tôi",
