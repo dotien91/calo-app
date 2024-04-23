@@ -34,7 +34,9 @@ const AboutHome = () => {
       <HeaderHome />
       {!!userData?.display_name && (
         <View style={CommonStyle.flex2}>
-          <Text style={styles.styleTxtText2}>{userData?.display_name}</Text>
+          <Text
+            style={styles.styleTxtText2}
+          >{`${translations.hi} ${userData?.display_name},`}</Text>
           <Text style={styles.styleTxtText}>{translations.welcomeBack}</Text>
         </View>
       )}
