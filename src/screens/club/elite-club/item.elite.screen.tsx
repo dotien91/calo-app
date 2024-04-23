@@ -26,6 +26,7 @@ import {
   closeSuperModal,
   showLoading,
   showToast,
+  showWarningLogin,
 } from "@helpers/super.modal.helper";
 import { formatVNDate } from "@utils/date.utils";
 import CS from "@theme/styles";
@@ -90,6 +91,11 @@ const ItemEliteScreen = () => {
   const listData = [...listData2, ...listData1];
 
   const joinGroup = () => {
+    console.log(userData);
+    if (userData == null) {
+      showWarningLogin();
+      return;
+    }
     if (dataGroup?.attend_data?.tier) {
       navigate(SCREENS.CLUB_HOME, {
         club_id: id,

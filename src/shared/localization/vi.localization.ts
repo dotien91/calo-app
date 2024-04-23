@@ -893,6 +893,12 @@ export default {
     editEvent: "Chỉnh sửa Sự kiện",
     confirmDelete: "Bạn có muốn xóa không?",
     deleteEventSuccess: "Sự kiện đã được xóa thành công",
+    editEventError: "Không thể chỉnh sửa do vượt quá thời gian diễn ra sự kiện",
+    eventEnded: "Sự kiện đã kết thúc",
+    deleteEventError: "Không thể hành động thao tác này khi sự kiện đã diễn ra",
+    emptyEventTitle: "Không có sự kiện diễn ra",
+    emptyEventDes:
+      "Khi một người bạn hoặc chuyên gia tạo một sự kiện, nó sẽ xuất hiện ở đây và sau đó bạn có thể tham gia vào sự kiện đó.",
   },
   notifications: {
     notifications: "Thông báo",

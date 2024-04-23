@@ -29,7 +29,7 @@ import IconSvg from "assets/svg";
 const ListMemberScreen = () => {
   const route = useRoute();
   const club_id = route.params.club_id || "";
-  const tier = route.params.tier || "";
+  const tier = route.params.tier || "1";
   const userData = useStore((store) => store.userData);
 
   const paramsRequest = {

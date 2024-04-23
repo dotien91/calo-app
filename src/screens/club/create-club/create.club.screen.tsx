@@ -26,7 +26,11 @@ import { useUploadFile } from "@helpers/hooks/useUploadFile";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import IconSvg from "assets/svg";
 import { ScreenWidth } from "@freakycoder/react-native-helpers";
-import { useRoute } from "@react-navigation/native";
+import {
+  useRoute,
+  useNavigation,
+  StackActions,
+} from "@react-navigation/native";
 import {
   createGroup,
   getDetailGroup,
@@ -35,6 +39,7 @@ import {
 import { SCREENS } from "constants";
 
 const CreateClubScreen = () => {
+  const navigation = useNavigation();
   const [updating, setUpdating] = useState(false);
   const {
     idVideo,
@@ -159,9 +164,12 @@ const CreateClubScreen = () => {
             type: "success",
             message: translations.club.createClubSuccess,
           });
-          NavigationService.navigate(SCREENS.CLUB_HOME, {
-            club_id: res.data._id,
-          });
+          navigation.dispatch(
+            StackActions.replace(SCREENS.CLUB_HOME, {
+              id: res.data._id,
+              name: data?.name,
+            }),
+          );
         } else {
           showToast({
             type: "error",
@@ -186,6 +194,9 @@ const CreateClubScreen = () => {
         setSelectType([...selectType, item.id]);
       }
     };
+    if (item.id === "All skills") {
+      return null;
+    }
     return (
       <TouchableOpacity
         key={key}
@@ -204,17 +215,20 @@ const CreateClubScreen = () => {
   };
 
   return (
-    <SafeAreaView style={CS.safeAreaView}>
-      <Header
-        text={
-          club_id ? translations.club.updateClub : translations.club.createClub
-        }
-        iconNameLeft="x"
-      />
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === "ios" ? "height" : undefined}
-      >
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "height" : undefined}
+    >
+      <SafeAreaView style={CS.safeAreaView}>
+        <Header
+          text={
+            club_id
+              ? translations.club.updateClub
+              : translations.club.createClub
+          }
+          iconNameLeft="x"
+        />
+
         <ScrollView
           style={styles.container}
           showsVerticalScrollIndicator={false}
@@ -346,25 +360,25 @@ const CreateClubScreen = () => {
             )}
           </View>
         </ScrollView>
-      </KeyboardAvoidingView>
-      <View style={styles.viewBtn}>
-        <Button
-          style={{
-            backgroundColor:
-              updating || updatingVid || isUpLoadingFile
-                ? palette.placeholder
-                : palette.primary,
-          }}
-          text={
-            club_id
-              ? translations.club.updateClub
-              : translations.club.createClub
-          }
-          disabled={updating || updatingVid || isUpLoadingFile}
-          onPress={handleSubmit(onSubmit)}
-        />
-      </View>
-    </SafeAreaView>
+        <View style={styles.viewBtn}>
+          <Button
+            style={{
+              backgroundColor:
+                updating || updatingVid || isUpLoadingFile
+                  ? palette.placeholder
+                  : palette.primary,
+            }}
+            text={
+              club_id
+                ? translations.club.updateClub
+                : translations.club.createClub
+            }
+            disabled={updating || updatingVid || isUpLoadingFile}
+            onPress={handleSubmit(onSubmit)}
+          />
+        </View>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 

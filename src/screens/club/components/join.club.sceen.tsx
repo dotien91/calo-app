@@ -24,7 +24,7 @@ const JoinClubSceen = () => {
   const userData = useStore((state) => state.userData);
   const paramsRequest = {
     limit: "12",
-    member_id: userData?._id,
+    member_id: userData?._id || "",
   };
 
   const {

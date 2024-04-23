@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
 import * as NavigationService from "react-navigation-helpers";
@@ -22,9 +22,24 @@ import eventEmitter from "@services/event-emitter";
 import { SCREENS } from "constants";
 
 const PopupMoreEvent = ({ item }) => {
-  console.log("lisstt iteam...", JSON.stringify(item, null, 1));
+  const currentTime = new Date().getTime();
+  const eventTime = new Date(item?.start_time).getTime();
+  const [isEventEnded, setIsEventEnded] = useState(false);
 
   const goToDelete = () => {
+    if (isEventEnded) {
+      return;
+    }
+
+    if (currentTime > eventTime) {
+      showToast({
+        type: "error",
+        message: translations.event.deleteEventError,
+      });
+      setIsEventEnded(true);
+      closeSuperModal();
+      return;
+    }
     showSuperModal({
       contentModalType: EnumModalContentType.Confirm,
       styleModalType: EnumStyleModalType.Middle,
@@ -32,7 +47,6 @@ const PopupMoreEvent = ({ item }) => {
         title: translations.event.confirmDelete,
         cb: () =>
           deleteEventID(item._id).then((res) => {
-            console.log("delete......", item._id);
             if (!res.isError) {
               NavigationService.goBack();
               closeSuperModal();
@@ -48,6 +62,15 @@ const PopupMoreEvent = ({ item }) => {
   };
 
   const goToFormEdit = () => {
+    if (currentTime > eventTime) {
+      showToast({
+        type: "error",
+        message: translations.event.editEventError,
+      });
+      closeSuperModal();
+      return;
+    }
+
     NavigationService.navigate(SCREENS.UPDATE_EVENT_SCREEN, {
       item: item,
     });

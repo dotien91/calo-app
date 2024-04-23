@@ -813,6 +813,13 @@ export default {
     editEvent: "Edit event",
     confirmDelete: "Do you want to delete",
     deleteEventSuccess: "Event deleted successfully",
+    editEventError: "Cannot edit due to exceeding the event time",
+    eventEnded: "Event ended",
+    deleteEventError:
+      "Cannot perform this action when the event has already occurred",
+    emptyEventTitle: "No events",
+    emptyEventDes:
+      "When a friend or expert creates an event, it will appear here, and then you can join that event.",
   },
   notifications: {
     notifications: "Notifications",

@@ -28,7 +28,7 @@ const ManagedClubScreen = () => {
 
   const paramsRequest = {
     limit: "12",
-    user_id: userData?._id,
+    user_id: userData?._id || "",
   };
 
   const {
