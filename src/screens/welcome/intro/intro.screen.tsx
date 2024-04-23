@@ -89,7 +89,7 @@ export default function WellcomeScreen() {
   const nextRight = () => {
     // animate2()
     if (currentPage > 3) {
-      NavigationService.navigate(SCREENS.HOME_TAB, {
+      NavigationService.navigate(SCREENS.TABS, {
         screen: SCREENS.HOME_TAB,
       });
       _setJson("is_first_open_app", true);

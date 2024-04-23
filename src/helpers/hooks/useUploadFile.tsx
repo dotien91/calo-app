@@ -1,6 +1,6 @@
 import { useTheme } from "@react-navigation/native";
 import FileViewComponent from "@screens/post/components/FileView";
-import { uploadMultiFile, uploadMultiMedia } from "@services/api/post.api"
+import { uploadMultiFile, uploadMultiMedia } from "@services/api/post.api";
 import * as React from "react";
 import { Platform, StyleSheet, Text, View, Dimensions } from "react-native";
 import { pick, types } from "react-native-document-picker";

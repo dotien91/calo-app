@@ -17,7 +17,7 @@ import { EnumColors } from "models";
 
 interface IRGamificationView {
   receiveData: any;
-  pointEarn: number
+  pointEarn: number;
 }
 
 const progressWidth = Device.width - 64 - 8 - 50;

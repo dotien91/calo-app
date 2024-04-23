@@ -20,7 +20,11 @@ import createStyles from "./Post.style";
 
 import useStore from "@services/zustand/store";
 import ItemPost from "@screens/post/components/post-item/post.detail.item";
-import { getListComment, getPostDetail, postComment } from "@services/api/post.api";
+import {
+  getListComment,
+  getPostDetail,
+  postComment,
+} from "@services/api/post.api";
 import CommonStyle from "@theme/styles";
 import { translations } from "@localization";
 import {

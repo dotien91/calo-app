@@ -174,7 +174,11 @@ const Navigation = () => {
     return (
       <>
         {BankStackData.map((item) => (
-          <Stack.Screen key={item.name} name={item.name} component={item.screen} />
+          <Stack.Screen
+            key={item.name}
+            name={item.name}
+            component={item.screen}
+          />
         ))}
       </>
     );

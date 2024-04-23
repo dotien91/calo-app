@@ -23,8 +23,7 @@ const DEVELOPER_DOMAIN_SOCKET_DEV = "https://socket.api.ikigroup.vn";
 
 //prod domain api
 const PRODUCTION_DOMAIN_PRODUCTION = "https://api.ikigai.ikigroup.vn";
-const PRODUCTION_DOMAIN_SOCKET_PRODUCTION =
-  "https://socket.api.ikigroup.vn";
+const PRODUCTION_DOMAIN_SOCKET_PRODUCTION = "https://socket.api.ikigroup.vn";
 
 const DOMAIN = !isProduction
   ? DEVELOPER_DOMAIN_DEV

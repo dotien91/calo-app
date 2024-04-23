@@ -44,9 +44,7 @@ const AboutMe = () => {
       showItemisLogin: false,
       title: translations.aboutUs.privacy,
       action: () => {
-        OpenURLButton(
-          "https://docs.ikigai.vn/privacy-policy",
-        );
+        OpenURLButton("https://docs.ikigai.vn/privacy-policy");
       },
     },
     {

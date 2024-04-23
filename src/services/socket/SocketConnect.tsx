@@ -94,7 +94,9 @@ const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
   };
 
   const onConnected = () => {
-    console.log("onConnected socket================================================================");
+    console.log(
+      "onConnected socket================================================================",
+    );
   };
 
   // const cointToClient = (receiveData: any) => {
@@ -106,14 +108,14 @@ const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
     const showFirstTimeEarnPoint = _getJson("showFirstTimeEarnPoint");
     const currentPoint = pointNumber.current;
     const data = JSON.parse(receiveData);
-    const pointEarn = Number(data.point) - currentPoint
+    const pointEarn = Number(data.point) - currentPoint;
     if (!showFirstTimeEarnPoint) {
       showSuperModal({
         styleModalType: EnumStyleModalType.Bottom,
         contentModalType: EnumModalContentType.GamificationView,
         data: {
           receiveData: data,
-          pointEarn
+          pointEarn,
         },
       });
       _setJson("showFirstTimeEarnPoint", true);

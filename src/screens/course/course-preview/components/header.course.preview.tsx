@@ -20,6 +20,7 @@ import {
 } from "@helpers/super.modal.helper";
 import { formatLanguage } from "@utils/string.utils";
 import FastImage from "react-native-fast-image";
+import LinearGradient from "react-native-linear-gradient";
 
 interface HeaderCourseProps {
   data?: ICourseItem;
@@ -114,12 +115,16 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
         />
         {isVideo && <PlayVideo onPress={_playVideo} />}
         {isVideo && (
-          <View
+          <LinearGradient
+            colors={[
+              palette.textOpacity0,
+              palette.textOpacity24,
+              palette.textOpacity5,
+              palette.text,
+            ]}
             style={{
               position: "absolute",
               height: 60,
-              backgroundColor: palette.black,
-              opacity: 0.6,
               bottom: 0,
               left: 0,
               right: 0,
@@ -131,7 +136,7 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
             <Text style={{ ...CS.hnMedium, color: palette.white }}>
               {translations.course.watchIntro}
             </Text>
-          </View>
+          </LinearGradient>
         )}
         {!data?.media_id && (
           <Pressable

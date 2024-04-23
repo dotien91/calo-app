@@ -14,7 +14,7 @@ export const sharePost = (post_slug: string) => {
   };
   Share.open(shareOptions)
     .then(() => {
-      postShare({community_id: post_slug})
+      postShare({ community_id: post_slug });
     })
     .catch((err) => {
       err && console.log(err);
