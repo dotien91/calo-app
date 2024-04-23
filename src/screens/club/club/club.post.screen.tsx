@@ -39,11 +39,12 @@ const ClubPostScreen = () => {
 
   const club_id = route.params?.["id"] || "";
   const name = route.params?.name || "";
+  const item = route.params?.item || {};
 
   const gotoCreatePost = () => {
     NavigationService.navigate(SCREENS.POST_SCREEN, { group_id: club_id });
   };
-  const [dataGroup, setDataGroup] = React.useState();
+  const [dataGroup, setDataGroup] = React.useState(item);
 
   React.useEffect(() => {
     _getDetailGroup();
