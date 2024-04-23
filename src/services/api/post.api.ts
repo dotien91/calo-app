@@ -237,3 +237,13 @@ export async function createReport(data: {
     return response;
   });
 }
+
+export async function postShare(data: any) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "community/share",
+    data: data,
+  }).then((response) => {
+    return response;
+  });
+}

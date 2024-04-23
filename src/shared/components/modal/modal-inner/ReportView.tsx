@@ -8,7 +8,7 @@ import {
 } from "react-native";
 
 import CommonStyle from "@theme/styles";
-import { createReport } from "@services/api/post";
+import { createReport } from "@services/api/post.api";
 import { palette } from "@theme/themes";
 import { closeSuperModal, showToast } from "@helpers/super.modal.helper";
 import { useUserHook } from "@helpers/hooks/useUserHook";

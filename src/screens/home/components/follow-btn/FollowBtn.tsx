@@ -11,7 +11,7 @@ import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
 import { TypedUser } from "models";
 import { translations } from "@localization";
-import { followUser, unFollowUser } from "@services/api/post";
+import { followUser, unFollowUser } from "@services/api/post.api";
 
 interface FollowBtnProps {
   data: TypedUser;

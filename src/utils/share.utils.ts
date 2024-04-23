@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 
 import { translations } from "@localization";
+import { postShare } from "@services/api/post.api";
 import Share from "react-native-share";
 
 const BASEURL = "https://ieltshunter.io";
@@ -12,8 +13,8 @@ export const sharePost = (post_slug: string) => {
     url: `${BASEURL}/post/detail/${post_slug}`,
   };
   Share.open(shareOptions)
-    .then((res) => {
-      console.log(res);
+    .then(() => {
+      postShare({community_id: post_slug})
     })
     .catch((err) => {
       err && console.log(err);

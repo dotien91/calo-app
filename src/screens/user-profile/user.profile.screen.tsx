@@ -25,7 +25,7 @@ import { translations } from "@localization";
 import CountFollow from "./count-follow/CountFollow";
 import { getUserById } from "@services/api/user.api";
 import { SCREENS } from "constants";
-import { getListPost } from "@services/api/post";
+import { getListPost } from "@services/api/post.api";
 import eventEmitter from "@services/event-emitter";
 import { useListData } from "@helpers/hooks/useListData";
 import ItemPost from "@screens/home/components/post-item/post.item";

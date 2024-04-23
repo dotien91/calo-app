@@ -3,7 +3,7 @@ import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 import { showToast, showWarningLogin } from "@helpers/super.modal.helper";
-import { postLike } from "@services/api/post";
+import { postLike } from "@services/api/post.api";
 import useStore from "@services/zustand/store";
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";

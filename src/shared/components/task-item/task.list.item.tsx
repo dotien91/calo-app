@@ -24,7 +24,7 @@ const TashListItem = ({ item }) => {
   const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
 
-  const progress = item.action_counter / item.action_amount;
+  const progress = (item.action_counter || 0) / item.action_amount;
 
   const showRefer = () => {
     showSuperModal({
@@ -46,10 +46,10 @@ const TashListItem = ({ item }) => {
           {!!item?.description && (
             <Text style={styles.txtDes}>{item?.description}</Text>
           )}
-          {!!item.action_counter && item.status && (
+          {!!item.action_amount && (
             <View style={CS.flexStart}>
               <Progress.Bar
-                progress={item.action_counter / item.action_amount}
+                progress={(item.action_counter || 0) / item.action_amount}
                 width={progressWidth}
                 color={progress == 1 ? colors.green : colors.lightBlue}
                 unfilledColor={colors.grey3}

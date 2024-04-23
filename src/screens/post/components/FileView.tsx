@@ -15,7 +15,7 @@ import IconFileComponent from "./IconFileComponent";
 import CommonStyle from "@theme/styles";
 import IconSvg from "assets/svg";
 import { isIos, formatBytes } from "@utils/device.ui.utils";
-import { uploadFile, uploadMedia } from "@services/api/post";
+import { uploadFile, uploadMedia } from "@services/api/post.api";
 
 interface Props {
   item: any;

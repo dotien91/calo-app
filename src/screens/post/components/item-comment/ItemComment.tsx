@@ -10,7 +10,7 @@ import createStyles from "./ItemComment.style";
 import IconSvg from "assets/svg";
 import CommonStyle from "@theme/styles";
 import { translations } from "@localization";
-import { postLikeCommnent } from "@services/api/post";
+import { postLikeCommnent } from "@services/api/post.api";
 import useStore from "@services/zustand/store";
 import {
   EnumModalContentType,

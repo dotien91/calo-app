@@ -11,7 +11,7 @@ import { translations } from "@localization";
 import lotieNoResult from "assets/lotties/no-result.json";
 import { useListData } from "@helpers/hooks/useListData";
 import ItemPost from "@screens/home/components/post-item/post.item";
-import { getListPost } from "@services/api/post";
+import { getListPost } from "@services/api/post.api";
 import PostSearchInput from "./search.post.input";
 import { TypedPost } from "shared/models";
 

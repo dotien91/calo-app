@@ -3,7 +3,7 @@ import { Image, StyleSheet, Text, View } from "react-native";
 
 import { selectMedia } from "@helpers/file.helper";
 import { isIos } from "@helpers/device.info.helper";
-import { uploadMedia } from "@services/api/post";
+import { uploadMedia } from "@services/api/post.api";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { palette } from "@theme/themes";
 import CS from "@theme/styles";

@@ -8,7 +8,7 @@ import { useTheme } from "@react-navigation/native";
 import ItemPost from "@screens/home/components/post-item/post.item";
 
 import eventEmitter from "@services/event-emitter";
-import { getListPost } from "@services/api/post";
+import { getListPost } from "@services/api/post.api";
 import CommonStyle from "@theme/styles";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";

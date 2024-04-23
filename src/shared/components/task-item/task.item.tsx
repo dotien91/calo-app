@@ -74,10 +74,10 @@ const TaskItemCommon = ({ item }) => {
           {!!item?.description && (
             <Text style={styles.txtDes}>{item?.description}</Text>
           )}
-          {!!item.action_counter && item.status && (
+          {!!item.action_amount && (
             <View style={CS.flexStart}>
               <Progress.Bar
-                progress={item.action_counter / item.action_amount}
+                progress={(item.action_counter || 1) / item.action_amount}
                 width={progressWidth}
                 color={progress == 1 ? colors.green : colors.lightBlue}
                 unfilledColor={colors.grey3}

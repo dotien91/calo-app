@@ -7,7 +7,7 @@ import * as NavigationService from "react-navigation-helpers";
 import CommonStyle from "@theme/styles";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";
-import { deleteComment } from "@services/api/post";
+import { deleteComment } from "@services/api/post.api";
 import {
   EnumModalContentType,
   EnumStyleModalType,

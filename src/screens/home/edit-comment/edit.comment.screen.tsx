@@ -5,7 +5,7 @@ import { useTheme } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 
 import { translations } from "@localization";
-import { updateCommentWithId } from "@services/api/post";
+import { updateCommentWithId } from "@services/api/post.api";
 import useStore from "@services/zustand/store";
 import CommonStyle from "@theme/styles";
 import { showToast } from "@helpers/super.modal.helper";

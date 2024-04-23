@@ -22,7 +22,7 @@ import {
 } from "@helpers/super.modal.helper";
 import useStore from "@services/zustand/store";
 import IconBtn from "@shared-components/button/IconBtn";
-import { blockUser } from "@services/api/post";
+import { blockUser } from "@services/api/post.api";
 import MessageMediaView from "../room-chat/components/message/message.media.view";
 import { Device } from "@utils/device.ui.utils";
 import eventEmitter from "@services/event-emitter";

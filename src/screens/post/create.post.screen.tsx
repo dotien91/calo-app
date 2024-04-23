@@ -26,7 +26,7 @@ import CommonStyle from "@theme/styles";
 import { translations } from "@localization";
 import { TypedCategory, TypedPost } from "shared/models";
 import { isIos } from "@utils/device.ui.utils";
-import { createNewPost, getCategory, updatePost } from "@services/api/post";
+import { createNewPost, getCategory, updatePost } from "@services/api/post.api";
 import { regexLink } from "constants/regex.constant";
 import {
   closeSuperModal,

@@ -26,7 +26,7 @@ import CS from "@theme/styles";
 import { useListSearch } from "@helpers/hooks/useListSearch";
 import { SCREENS } from "constants";
 import TutorItem from "../components/tutor.item";
-import { getListPost } from "@services/api/post";
+import { getListPost } from "@services/api/post.api";
 import { TypedPost } from "shared/models";
 import ItemPost from "@screens/home/components/post-item/post.item";
 

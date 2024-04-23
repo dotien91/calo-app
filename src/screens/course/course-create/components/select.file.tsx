@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import { isIos } from "@helpers/device.info.helper";
-import { uploadFile } from "@services/api/post";
+import { uploadFile } from "@services/api/post.api";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { palette } from "@theme/themes";
 import CS from "@theme/styles";

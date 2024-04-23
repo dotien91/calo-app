@@ -3,7 +3,7 @@ import { useCallback, useMemo, useState } from "react";
 import useStore from "@services/zustand/store";
 import { EnumRole } from "constants/system.constant";
 import { selectMedia } from "@helpers/file.helper";
-import { uploadMedia } from "@services/api/post";
+import { uploadMedia } from "@services/api/post.api";
 import { isIos } from "@helpers/device.info.helper";
 import { updateProfile } from "@services/api/user.api";
 import { showToast } from "@helpers/super.modal.helper";

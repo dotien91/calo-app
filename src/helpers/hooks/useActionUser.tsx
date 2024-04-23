@@ -1,5 +1,5 @@
 import useStore from "@services/zustand/store";
-import { blockUser, followUser, unFollowUser } from "@services/api/post";
+import { blockUser, followUser, unFollowUser } from "@services/api/post.api";
 import { showToast } from "@helpers/super.modal.helper";
 import { translations } from "@localization";
 import { TypedPost } from "shared/models";
