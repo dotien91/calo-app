@@ -1,12 +1,5 @@
 import React, { useEffect, useMemo } from "react";
-import {
-  FlatList,
-  Image,
-  SafeAreaView,
-  ScrollView,
-  Text,
-  View,
-} from "react-native";
+import { FlatList, SafeAreaView, ScrollView, Text, View } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 // import Clipboard from "@react-native-community/clipboard";
@@ -31,7 +24,7 @@ import ListCodeActive from "@shared-components/code-active/list.code.active";
 import InviteCode from "@shared-components/code-share/code.invite.share";
 import eventEmitter from "@services/event-emitter";
 import TashListItem from "@shared-components/task-item/task.list.item";
-import meaningIkiImg from "@assets/images/meaning_ikigai.png";
+import ChartIkigai from "./chart.ikigai";
 
 const SettingProfileScreen = () => {
   const theme = useTheme();
@@ -169,22 +162,7 @@ const SettingProfileScreen = () => {
   };
 
   const renderPieChart = () => {
-    return (
-      <View style={{ marginHorizontal: 16 }}>
-        <Text style={styles.textYourScore}>{translations.task.yourscore}</Text>
-        <View style={CS.center}>
-          <Image
-            source={meaningIkiImg}
-            style={styles.ikigaiImg}
-            resizeMode={"contain"}
-          />
-        </View>
-        <View style={styles.viewPowered}>
-          <Text style={styles.textPoweredBy}>{translations.task.powered}</Text>
-          <IconSvg name="logoIeltsHunter" width={44} height={28} />
-        </View>
-      </View>
-    );
+    return <ChartIkigai />;
   };
 
   const renderInviteFriend = () => {

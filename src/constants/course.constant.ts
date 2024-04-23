@@ -52,8 +52,8 @@ export const filterCourseKeys = [
         id: "Health",
       },
       {
-        name: translations.course.bussiness,
-        id: "Bussiness",
+        name: translations.course.business,
+        id: "Business",
       },
     ],
   },
@@ -265,7 +265,7 @@ export const quickFilterCourse = [
     type: "skills",
   },
   {
-    name: translations.course.bussiness,
+    name: translations.course.business,
     id: "Business",
     type: "skills",
   },
@@ -743,7 +743,7 @@ export const listSkill = [
   { value: "Life", index: 2 },
   { value: "Finance", index: 3 },
   { value: "Health", index: 4 },
-  { value: "Bussiness", index: 5 },
+  { value: "Business", index: 5 },
 ];
 
 export const timesInUtc = [

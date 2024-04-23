@@ -477,7 +477,7 @@ export default {
     life: "Life",
     finance: "Finance",
     health: "Health",
-    bussiness: "Bussiness",
+    business: "Business",
     pricePerCourse: "Price per course",
     minimum: "Minimum",
     maximum: "Maximum",

@@ -191,7 +191,7 @@ export default function WellcomeScreen() {
           numberOfPages={5}
           currentPage={currentPage}
           hidesForSinglePage
-          pageIndicatorTintColor={colors.grey1}
+          pageIndicatorTintColor={colors.grey4}
           currentPageIndicatorTintColor={colors.btnRedPrimary}
           indicatorStyle={{ borderRadius: 5 }}
           currentIndicatorStyle={{ borderRadius: 24, width: 24, height: 8 }}
