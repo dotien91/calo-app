@@ -466,32 +466,70 @@ export const formatDateMonth = (date) => {
     "Dec",
   ];
 
-  const month = months[_date.getMonth() + 1];
+  const month = months[_date.getMonth()];
   const day = _date.getDate();
 
   return ` ${day < 10 ? `0${day}` : day} ${month}`;
 };
 
-export const formatDateAtTime = (date) => {
+export const formatDateAtTime = (date: string | Date): string => {
   const _date = new Date(date);
   if (_date.toString() === "Invalid Date") {
     return "";
   }
 
-  const days = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-  ];
+  const today = new Date();
+  const weekStartDate = new Date(today);
+  weekStartDate.setDate(today.getDate() - today.getDay()); // Set to first day of the week (Sunday)
+  weekStartDate.setHours(0, 0, 0, 0);
 
-  const day = days[_date.getDay()];
-  const hours = _date.getHours();
-  const ampm = hours >= 12 ? "PM" : "AM";
-  const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
+  const isThisWeek =
+    _date >= weekStartDate &&
+    _date < new Date(weekStartDate).setDate(weekStartDate.getDate() + 7);
 
-  return `${day} AT ${formattedHours}${ampm}`;
+  if (isThisWeek) {
+    const days: string[] = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+
+    const day = days[_date.getDay()];
+    const hours = _date.getHours();
+    const minutes = _date.getMinutes();
+    const ampm = hours >= 12 ? "PM" : "AM";
+    const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+
+    return `${day} AT ${formattedHours}:${formattedMinutes}${ampm}`;
+  } else {
+    const months: string[] = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    const day = _date.getDate();
+    const month = months[_date.getMonth()];
+    const formattedDay = day < 10 ? `0${day}` : day;
+    const hours = _date.getHours();
+    const minutes = _date.getMinutes();
+    const ampm = hours >= 12 ? "PM" : "AM";
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+
+    return `${formattedDay} ${month} AT ${hours}:${formattedMinutes}${ampm}`;
+  }
 };

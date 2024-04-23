@@ -22,6 +22,15 @@ const ItemEvent = ({ data, tier }: { data: any; tier: string }) => {
     data?.interested_user_ids?.includes(userData?._id) ? "interested" : "",
   );
   const [count, setCount] = useState<number>(data?.interested_user_ids.length);
+  const [isEventEnded, setIsEventEnded] = useState<boolean>(false);
+
+  useEffect(() => {
+    const currentTime = new Date().getTime();
+    const eventEndTime = new Date(data?.end_time).getTime();
+
+    setIsEventEnded(currentTime >= eventEndTime);
+  }, [data?.end_time]);
+
   const goToEventScreen = () => {
     if (data?.is_join) {
       NavigationService.navigate(SCREENS.CLUB_SCREEN, {
@@ -68,6 +77,18 @@ const ItemEvent = ({ data, tier }: { data: any; tier: string }) => {
     );
   };
 
+  const handlePress = () => {
+    if (buttonText === "interested") {
+      updateEvent({ remove_user_id: userData?._id, _id: data._id }).then();
+      setButtonText("interest");
+      setCount(count - 1);
+    } else {
+      updateEvent({ add_user_id: userData?._id, _id: data._id }).then();
+      setButtonText("interested");
+      setCount(count + 1);
+    }
+  };
+
   const renderInfo = () => {
     const IconText = ({
       nameIcon,
@@ -88,18 +109,6 @@ const ItemEvent = ({ data, tier }: { data: any; tier: string }) => {
           </TextBase>
         </View>
       );
-    };
-
-    const handlePress = () => {
-      if (buttonText === "interested") {
-        updateEvent({ remove_user_id: userData?._id, _id: data._id }).then();
-        setButtonText("interest");
-        setCount(count - 1);
-      } else {
-        updateEvent({ add_user_id: userData?._id, _id: data._id }).then();
-        setButtonText("interested");
-        setCount(count + 1);
-      }
     };
 
     return (
@@ -145,26 +154,40 @@ const ItemEvent = ({ data, tier }: { data: any; tier: string }) => {
             title={data?.create_by?.display_name}
           />
         </View>
-        <View style={styles.viewBtn}>
-          <Button
-            style={styles.btn}
-            text={
-              buttonText === "interested"
-                ? translations.event.interested
-                : translations.event.interest
-            }
-            backgroundColor={
-              buttonText === "interested" ? palette.colorMoney : palette.grey3
-            }
-            textColor={
-              buttonText === "interested"
-                ? palette.primary
-                : palette.textOpacity6
-            }
-            onPress={handlePress}
-          />
-        </View>
+        <View style={styles.viewBtn}>{renderButton()}</View>
       </View>
+    );
+  };
+
+  const renderButton = () => {
+    if (isEventEnded) {
+      return (
+        <Button
+          style={styles.btn}
+          text={translations.event.eventEnded}
+          backgroundColor={palette.grey3}
+          textColor={palette.textOpacity6}
+          disabled
+        />
+      );
+    }
+
+    return (
+      <Button
+        style={styles.btn}
+        text={
+          buttonText === "interested"
+            ? translations.event.interested
+            : translations.event.interest
+        }
+        backgroundColor={
+          buttonText === "interested" ? palette.colorMoney : palette.grey3
+        }
+        textColor={
+          buttonText === "interested" ? palette.primary : palette.textOpacity6
+        }
+        onPress={handlePress}
+      />
     );
   };
 

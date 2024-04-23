@@ -66,8 +66,8 @@ const UpcomingEvent = ({ club_id, tier }) => {
         }}
       >
         <EmptyResultView
-          title={translations.post.emptyPostTitle}
-          desc={translations.post.emptyPostDes}
+          title={translations.event.emptyEventTitle}
+          desc={translations.event.emptyEventDes}
           icon="document-text-outline"
           showLottie={false}
         />

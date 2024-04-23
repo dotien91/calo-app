@@ -70,8 +70,8 @@ const PastEvent = ({ club_id }) => {
         }}
       >
         <EmptyResultView
-          title={translations.post.emptyPostTitle}
-          desc={translations.post.emptyPostDes}
+          title={translations.event.emptyEventTitle}
+          desc={translations.event.emptyEventDes}
           icon="document-text-outline"
           showLottie={false}
         />

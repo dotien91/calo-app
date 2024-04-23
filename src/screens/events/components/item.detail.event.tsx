@@ -24,6 +24,14 @@ const ItemDetailEvent = ({ item }: { item: any }) => {
     route.params?.interested,
   );
   const [count, setCount] = useState<number>(0);
+  const [isEventEnded, setIsEventEnded] = useState<boolean>(false);
+
+  useEffect(() => {
+    const currentTime = new Date().getTime();
+    const eventEndTime = new Date(item?.end_time).getTime();
+
+    setIsEventEnded(currentTime >= eventEndTime);
+  }, [item?.end_time]);
 
   const IconText = ({ nameIcon, text }: { nameIcon: string; text: string }) => {
     return (
@@ -88,7 +96,7 @@ const ItemDetailEvent = ({ item }: { item: any }) => {
         <TextBase
           fontSize={14}
           fontWeight="400"
-          title={`${formatDateAtTime(item?.createdAt)}`}
+          title={`${formatDateAtTime(item?.start_time)}`}
           color={EnumColors.textOpacity8}
         />
         <TextBase
@@ -104,25 +112,7 @@ const ItemDetailEvent = ({ item }: { item: any }) => {
           title={item?.location}
           color={EnumColors.textOpacity8}
         />
-        <View style={styles.viewBtn}>
-          <Button
-            style={styles.btn}
-            text={
-              buttonText === "interested"
-                ? translations.event.interested
-                : translations.event.interest
-            }
-            backgroundColor={
-              buttonText === "interested" ? palette.colorMoney : palette.grey3
-            }
-            textColor={
-              buttonText === "interested"
-                ? palette.primary
-                : palette.textOpacity6
-            }
-            onPress={handlePress}
-          />
-        </View>
+        <View style={styles.viewBtn}>{renderButton()}</View>
         <IconText
           nameIcon="icPersonal"
           text={`${translations.event.eventBy} ${item?.create_by.display_name}`}
@@ -133,6 +123,38 @@ const ItemDetailEvent = ({ item }: { item: any }) => {
           text={`${count} ${translations.event.going} - ${count} ${translations.event.interested}`}
         />
       </View>
+    );
+  };
+
+  const renderButton = () => {
+    if (isEventEnded) {
+      return (
+        <Button
+          style={styles.btn}
+          text={translations.event.eventEnded}
+          backgroundColor={palette.grey3}
+          textColor={palette.textOpacity6}
+          disabled
+        />
+      );
+    }
+
+    return (
+      <Button
+        style={styles.btn}
+        text={
+          buttonText === "interested"
+            ? translations.event.interested
+            : translations.event.interest
+        }
+        backgroundColor={
+          buttonText === "interested" ? palette.colorMoney : palette.grey3
+        }
+        textColor={
+          buttonText === "interested" ? palette.primary : palette.textOpacity6
+        }
+        onPress={handlePress}
+      />
     );
   };
 
