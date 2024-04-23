@@ -10,12 +10,14 @@ import { translations } from "@localization";
 import { Device } from "@utils/device.ui.utils";
 import { IAudioItem } from "models/audio.modal";
 import { SCREENS } from "constants";
+import useStore from "@services/zustand/store";
 
 interface AudioItemProps {
   isSliderItem: boolean;
   isHorizontalStyle?: boolean;
   style?: ViewStyle;
   data: IAudioItem;
+  listData: any;
 }
 const widthImage = Device.width / 3;
 
@@ -26,6 +28,7 @@ const AudioItem = ({
   isHorizontalStyle,
   style,
   data,
+  listData,
 }: AudioItemProps) => {
   const {
     title,
@@ -36,6 +39,8 @@ const AudioItem = ({
     is_join,
     _id,
   } = data;
+  const setListAudio = useStore((state) => state.setListAudio);
+
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const renderInfo = () => {
@@ -95,6 +100,10 @@ const AudioItem = ({
   };
 
   const openPreviewCourse = () => {
+    if (listData) {
+      console.log("list...", listData);
+      setListAudio(listData);
+    }
     NavigationService.navigate(SCREENS.AUDIO_PREVIEW, { id: _id });
   };
 

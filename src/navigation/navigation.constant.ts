@@ -110,20 +110,8 @@ export const DiscoveryStackData = [
     screen: DiscoverScreen,
   },
   {
-    name: SCREENS.AUDIO_PLAY,
-    screen: AudioPlayScreen,
-  },
-  {
-    name: SCREENS.AUDIO_PREVIEW,
-    screen: AudioPreview,
-  },
-  {
     name: SCREENS.ALL_AUDIO_BOOk,
     screen: AllBookScreen,
-  },
-  {
-    name: SCREENS.RECOMMEND_AUDIO_BOOK,
-    screen: RecommendBookScreen,
   },
   {
     name: SCREENS.AUDIO_BOOK,
@@ -308,4 +296,16 @@ export const CommonStackData = [
   { name: SCREENS.LEADERBOARD, screen: LeaderBoard },
   { name: SCREENS.COURSE_RECOMMEND, screen: CourseRecommendScreen },
   { name: SCREENS.CLASSHOMEWORK, screen: ClassHomeWorkScreen },
+  {
+    name: SCREENS.AUDIO_PREVIEW,
+    screen: AudioPreview,
+  },
+  {
+    name: SCREENS.RECOMMEND_AUDIO_BOOK,
+    screen: RecommendBookScreen,
+  },
+  {
+    name: SCREENS.AUDIO_PLAY,
+    screen: AudioPlayScreen,
+  },
 ];
