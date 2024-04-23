@@ -9,7 +9,6 @@ import {
 import eventEmitter from "@services/event-emitter";
 
 import CS from "@theme/styles";
-import * as NavigationService from "react-navigation-helpers";
 import createStyles from "./create.event.style";
 import Header from "@shared-components/header/Header";
 import { translations } from "@localization";
@@ -21,9 +20,9 @@ import { useForm } from "react-hook-form";
 import InputHook from "@shared-components/form/InputHookForm";
 import DateTimePickerLocal from "../components/date.time.picker.local";
 import { createEvent } from "@services/api/event.api";
-import { SCREENS } from "constants";
 import { showToast } from "@helpers/super.modal.helper";
 import SelectVideoHook from "@screens/course/course-create/components/select.video";
+import { goBack } from "@helpers/navigation.helper";
 
 const CreateEventScreen = () => {
   const theme = useTheme();
@@ -75,10 +74,15 @@ const CreateEventScreen = () => {
     };
     createEvent(params).then((res) => {
       if (!res.isError) {
-        NavigationService.navigate(SCREENS.EVENTSLISTSCREEN, {
-          id: res.data._id,
+        // NavigationService.navigate(SCREENS.EVENTSLISTSCREEN, {
+        //   id: res.data._id,
+        // });
+        showToast({
+          type: "success",
+          message: translations.event.createEventSuccess,
         });
         eventEmitter.emit("reload_list_event");
+        goBack();
       }
     });
     setUpdating(false);

@@ -67,12 +67,14 @@ const ManagedClubScreen = () => {
       </>
     );
   };
+  const isShowCreate =
+    userData?.user_role === "teacher" || userData?.user_role === "admin";
 
   return (
     <View style={styles.styleItem}>
       <TitleClub
         textLeft={translations.club.title2}
-        textRight={translations.club.create}
+        textRight={isShowCreate ? translations.club.create : ""}
         onPressRight={() => {
           NavigationService.navigate(SCREENS.CREATE_CLUB_SCREEN);
         }}

@@ -4,6 +4,8 @@ import {
   FlatList,
   Dimensions,
   ImageBackground,
+  SafeAreaView,
+  StyleSheet,
 } from "react-native";
 import React, { useRef, useState } from "react";
 import { useTheme } from "@react-navigation/native";
@@ -16,12 +18,13 @@ import { translations } from "@localization";
 import { palette } from "@theme/themes";
 import TextBase from "@shared-components/TextBase";
 import Button from "@shared-components/button/Button";
+import CS from "@theme/styles";
+import { WindowWidth } from "@freakycoder/react-native-helpers";
 
 export default function WellcomeScreen() {
   const theme = useTheme();
   const { colors } = theme;
   const heightScreen = Dimensions.get("window").height;
-  const widthScreen = Dimensions.get("window").width;
 
   const [currentPage, setcurrentPage] = useState(0);
 
@@ -41,7 +44,7 @@ export default function WellcomeScreen() {
       imageBottom: require("assets/images/wellcome1.png"),
       opacity: first,
       styleImageTop: { height: heightIcon, width: 304 },
-      styleImageBot: { height: heightScreen - 340, width: widthScreen },
+      styleImageBot: { height: heightScreen - 340, width: WindowWidth },
       text1: translations.introwelcome.text11,
       text2: translations.introwelcome.text12,
     },
@@ -50,7 +53,7 @@ export default function WellcomeScreen() {
       imageBottom: require("assets/images/wellcome2.png"),
       opacity: second,
       styleImageTop: { height: 304, width: 304 },
-      styleImageBot: { height: heightScreen - 340, width: widthScreen },
+      styleImageBot: { height: heightScreen - 340, width: WindowWidth },
       text1: translations.introwelcome.text21,
       text2: translations.introwelcome.text22,
     },
@@ -59,7 +62,7 @@ export default function WellcomeScreen() {
       imageBottom: require("assets/images/wellcome3.png"),
       opacity: third,
       styleImageTop: { height: 230, width: 335 },
-      styleImageBot: { height: heightScreen - 300, width: widthScreen },
+      styleImageBot: { height: heightScreen - 300, width: WindowWidth },
       text1: translations.introwelcome.text31,
       text2: translations.introwelcome.text32,
     },
@@ -68,7 +71,7 @@ export default function WellcomeScreen() {
       imageBottom: require("assets/images/wellcome4.png"),
       opacity: fourth,
       styleImageTop: { height: 304, width: 304 },
-      styleImageBot: { height: heightScreen - 340, width: widthScreen },
+      styleImageBot: { height: heightScreen - 340, width: WindowWidth },
       text1: translations.introwelcome.text41,
       text2: translations.introwelcome.text42,
     },
@@ -77,7 +80,7 @@ export default function WellcomeScreen() {
       imageBottom: require("assets/images/wellcome5.png"),
       opacity: fifth,
       styleImageTop: { height: 304, width: 304 },
-      styleImageBot: { height: heightScreen - 340, width: widthScreen },
+      styleImageBot: { height: heightScreen - 340, width: WindowWidth },
       text1: translations.introwelcome.text51,
       text2: translations.introwelcome.text52,
     },
@@ -101,38 +104,17 @@ export default function WellcomeScreen() {
   };
   const renderItem = ({ item, index }: { item: any; index: number }) => {
     return (
-      <View
-        style={{
-          width: widthScreen,
-          marginTop: 124,
-        }}
-      >
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            marginBottom: 40,
-          }}
-        >
+      <View style={styles.containerItem}>
+        <View style={styles.viewImage}>
           <ImageBackground
             key={index}
             source={item.imageBottom}
             resizeMethod="resize"
-            style={{
-              width: widthScreen - 32,
-              height: 256,
-            }}
+            style={styles.image}
             borderRadius={8}
           />
         </View>
-        <View
-          style={{
-            justifyContent: "center",
-            alignContent: "center",
-            alignItems: "center",
-            marginHorizontal: 16,
-          }}
-        >
+        <View style={styles.viewText}>
           <TextBase
             fontSize={24}
             fontWeight="700"
@@ -157,10 +139,11 @@ export default function WellcomeScreen() {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <SafeAreaView style={CS.safeAreaView}>
       <FlatList
         ref={scrollViewRef}
         // scrollEnabled={false}
+        style={styles.flatList}
         data={dataScreen}
         showsHorizontalScrollIndicator={false}
         renderItem={renderItem}
@@ -174,20 +157,9 @@ export default function WellcomeScreen() {
           );
         }}
       />
-      <View
-        style={{
-          position: "absolute",
-          alignItems: "center",
-          bottom: 30,
-          marginBottom: 88,
-          marginHorizontal: 16,
-        }}
-      >
+      <View style={styles.viewPage}>
         <PageControl
-          style={{
-            height: 54,
-            width: widthScreen - 32,
-          }}
+          style={styles.pageControl}
           numberOfPages={5}
           currentPage={currentPage}
           hidesForSinglePage
@@ -198,17 +170,53 @@ export default function WellcomeScreen() {
           indicatorSize={{ width: 8, height: 8 }}
         />
         <Button
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            borderRadius: 12,
-          }}
+          style={styles.button}
           text={translations.continue}
           backgroundColor={palette.primary}
           textColor={palette.white}
           onPress={nextRight}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  button: {
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 12,
+  },
+  pageControl: {
+    height: 54,
+    width: WindowWidth - 32,
+  },
+  flatList: {
+    marginTop: "15%",
+    maxHeight: "70%",
+  },
+  viewPage: {
+    alignItems: "center",
+    marginHorizontal: 16,
+    flex: 1,
+  },
+  viewText: {
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
+    marginHorizontal: 16,
+  },
+  containerItem: {
+    width: WindowWidth,
+    flex: 1,
+  },
+  viewImage: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 40,
+  },
+  image: {
+    width: WindowWidth - 32,
+    height: 256,
+  },
+});

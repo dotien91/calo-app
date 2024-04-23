@@ -1,7 +1,7 @@
 import { translations } from "@localization";
 import Header from "@shared-components/header/Header";
 import CS from "@theme/styles";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   SafeAreaView,
   ScrollView,
@@ -20,6 +20,7 @@ import { navigate } from "@helpers/navigation.helper";
 import { SCREENS } from "constants";
 import { quickFilterCourse } from "constants/course.constant";
 import PressableBtn from "@shared-components/button/PressableBtn";
+import useStore from "@services/zustand/store";
 
 const renderScene = SceneMap({
   first: FeatureClubScreen,
@@ -28,16 +29,33 @@ const renderScene = SceneMap({
 });
 
 const ClubScreen = () => {
+  const userData = useStore((state) => state.userData);
+  const isShowCreate =
+    userData?.user_role === "teacher" || userData?.user_role === "admin";
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const layout = useWindowDimensions();
 
-  const [index, setIndex] = React.useState(0);
-  const routes = [
+  const [index, setIndex] = useState(0);
+  const [routes, setRoute] = useState([
     { key: "first", title: translations.club.tab1 },
     { key: "second", title: translations.club.tab2 },
     { key: "third", title: translations.club.tab3 },
-  ];
+  ]);
+  useEffect(() => {
+    if (isShowCreate) {
+      setRoute([
+        { key: "first", title: translations.club.tab1 },
+        { key: "second", title: translations.club.tab2 },
+        { key: "third", title: translations.club.tab3 },
+      ]);
+    } else {
+      setRoute([
+        { key: "first", title: translations.club.tab1 },
+        { key: "third", title: translations.club.tab3 },
+      ]);
+    }
+  }, [isShowCreate]);
 
   const onPressHeaderRight = () => {
     navigate(SCREENS.SEARCH_CLUB);
