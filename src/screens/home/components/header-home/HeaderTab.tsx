@@ -18,6 +18,7 @@ import { getStatusBarHeight } from "react-native-safearea-height";
 // import ListLiveStream from "../list-livestream/list.liveStream";
 import CourseView from "../list-course/list.course";
 import FastImage from "react-native-fast-image";
+import AudioView from "@screens/audio/audio-list/audio.view";
 
 const HeaderTab = () => {
   const theme = useTheme();
@@ -122,6 +123,7 @@ const HeaderTab = () => {
         })}
       </View>
       <CourseView />
+      <AudioView />
       <InviteView />
       <ListLiveStream />
       <View style={{ paddingTop: 10 }}>

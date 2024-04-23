@@ -52,6 +52,7 @@ const FeatureClubScreen = () => {
   };
 
   const renderItemSelected = ({ item, index }) => {
+    if (item?.isEliteClub) return null;
     return <ItemClub data={item} key={index} />;
   };
 

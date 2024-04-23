@@ -94,7 +94,7 @@ const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
   };
 
   const onConnected = () => {
-    console.log("onConnected");
+    console.log("onConnected socket================================================================");
   };
 
   // const cointToClient = (receiveData: any) => {
@@ -106,12 +106,14 @@ const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
     const showFirstTimeEarnPoint = _getJson("showFirstTimeEarnPoint");
     const currentPoint = pointNumber.current;
     const data = JSON.parse(receiveData);
+    const pointEarn = Number(data.point) - currentPoint
     if (!showFirstTimeEarnPoint) {
       showSuperModal({
         styleModalType: EnumStyleModalType.Bottom,
         contentModalType: EnumModalContentType.GamificationView,
         data: {
           receiveData: data,
+          pointEarn
         },
       });
       _setJson("showFirstTimeEarnPoint", true);
@@ -120,7 +122,7 @@ const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
     if (showFirstTimeEarnPoint && data?.is_level_up == "false") {
       console.log(2222, Number(data.point), currentPoint);
       //show hiệu ứng khi user nhận được số point > pointRequireShowAnimation
-      if (Number(data.point) - currentPoint >= pointRequireShowAnimation) {
+      if (pointEarn >= pointRequireShowAnimation) {
         showSuperModal({
           styleModalType: EnumStyleModalType.Middle,
           contentModalType: EnumModalContentType.LottieAnimation,
@@ -129,7 +131,6 @@ const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
           },
         });
       } else {
-        console.log("receiveDatareceiveData", receiveData);
         setUserInfo({ ...userInfo, point: data?.point });
       }
     }

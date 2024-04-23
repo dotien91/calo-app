@@ -99,7 +99,11 @@ const Media = ({ item }: Media) => {
         <View
           style={[
             styles.styleVideo,
-            { height: isLanscape ? "100%" : (Device.width / 16) * 9 },
+            isLanscape
+              ? { height: isLanscape }
+              : {
+                  paddingVertical: 16,
+                },
           ]}
         >
           <View style={isLanscape ? styles.viewLanscape : styles.viewPortrait}>

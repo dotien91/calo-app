@@ -57,10 +57,10 @@ export const filterCourseKeys = [
       },
     ],
   },
-  // {
-  //   name: translations.course.pricePerCourse,
-  //   id: "price",
-  // },
+  {
+    name: translations.course.pricePerCourse,
+    id: "price",
+  },
   // {
   //   name: translations.course.levelsOfStudy,
   //   id: "levels",
@@ -129,24 +129,28 @@ export const filterTeacherKeys = [
     id: "skills",
     keyFilters: [
       {
-        name: translations.course.allForms,
-        id: "All forms",
+        name: translations.course.allSkills,
+        id: "All skills",
       },
       {
-        name: translations.course.callOneVsOne,
-        id: "Call 1-1",
+        name: translations.course.careerGuidance,
+        id: "Career Guidance",
       },
       {
-        name: translations.course.salfLearning,
-        id: "Self-learning",
+        name: translations.course.life,
+        id: "Life",
       },
       {
-        name: translations.course.callGroup,
-        id: "Call group",
+        name: translations.course.finance,
+        id: "Finance",
       },
       {
-        name: translations.course.offline,
-        id: "Offline",
+        name: translations.course.health,
+        id: "Health",
+      },
+      {
+        name: translations.course.bussiness,
+        id: "Bussiness",
       },
     ],
   },

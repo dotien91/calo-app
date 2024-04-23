@@ -30,35 +30,37 @@ const AboutMe = () => {
       showItemisLogin: false,
       title: translations.aboutUs.aboutUs,
       action: () => {
-        OpenURLButton("https://docs.ieltshunter.io/");
+        OpenURLButton("https://docs.ikigai.vn/");
       },
     },
     {
       showItemisLogin: false,
       title: translations.aboutUs.termofus,
       action: () => {
-        OpenURLButton("https://docs.ieltshunter.io/term-and-conditions");
+        OpenURLButton("https://docs.ikigai.vn/term-and-conditions");
       },
     },
     {
       showItemisLogin: false,
       title: translations.aboutUs.privacy,
       action: () => {
-        OpenURLButton("https://docs.ieltshunter.io/privacy-policy");
+        OpenURLButton(
+          "https://docs.ikigai.vn/privacy-policy",
+        );
       },
     },
     {
       showItemisLogin: false,
       title: translations.aboutUs.cookie,
       action: () => {
-        OpenURLButton("https://docs.ieltshunter.io/cookie");
+        OpenURLButton("https://docs.ikigai.vn/cookie");
       },
     },
     {
       showItemisLogin: false,
       title: translations.aboutUs.return,
       action: () => {
-        OpenURLButton("https://docs.ieltshunter.io/chinh-sach-hoan-tien");
+        OpenURLButton("https://docs.ikigai.vn/chinh-sach-hoan-tien");
       },
     },
   ];

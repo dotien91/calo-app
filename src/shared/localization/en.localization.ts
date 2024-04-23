@@ -464,7 +464,7 @@ export default {
     formOfLearn: "From of learning",
     allForms: "All forms",
     callOneVsOne: "Call 1-1",
-    salfLearning: "Salf learning",
+    salfLearning: "Self learning",
     callGroup: "Call group",
     offline: "Offline",
     skills: "Skills",

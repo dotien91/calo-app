@@ -17,11 +17,12 @@ import { EnumColors } from "models";
 
 interface IRGamificationView {
   receiveData: any;
+  pointEarn: number
 }
 
 const progressWidth = Device.width - 64 - 8 - 50;
 
-const GamificationView = ({ receiveData }: IRGamificationView) => {
+const GamificationView = ({ receiveData, pointEarn }: IRGamificationView) => {
   // {"user_id":"6585460adfde5a433c986c67","point":"43","is_level_up":"false"}
   // receiveData = { "user_id": "6585460adfde5a433c986c67", "point": "1000" }
 
@@ -161,7 +162,7 @@ const GamificationView = ({ receiveData }: IRGamificationView) => {
       />
       <View style={CS.flexCenter}>
         <TextBase fontSize={20} fontWeight="700">
-          {translations.gamificaiton.youEarn} 10{" "}
+          {translations.gamificaiton.youEarn} {pointEarn || 10}{" "}
         </TextBase>
         <IconSvg
           style={{ marginTop: -4 }}
