@@ -104,6 +104,7 @@ const ItemEvent = ({ data, tier }: { data: any; tier: string }) => {
             fontSize={12}
             fontWeight="400"
             color={EnumColors.textOpacity6}
+            style={{ flex: 1 }}
           >
             {text}
           </TextBase>

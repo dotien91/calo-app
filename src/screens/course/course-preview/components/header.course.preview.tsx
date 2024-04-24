@@ -37,7 +37,7 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
         contentModalType: EnumModalContentType.Library,
         styleModalType: EnumStyleModalType.Middle,
         data: {
-          listMedia: [data.media_id],
+          listMedia: [data?.media_id],
           index: 0,
         },
       });
@@ -47,7 +47,7 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
           contentModalType: EnumModalContentType.Library,
           styleModalType: EnumStyleModalType.Middle,
           data: {
-            listMedia: [data.avatar],
+            listMedia: [data?.avatar],
             index: 0,
           },
         });
@@ -56,7 +56,7 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
   };
 
   const _gotoDetailTeacher = () => {
-    NavigationService.push(SCREENS.PROFILE_CURRENT_USER, {
+    NavigationService.push(SCREENS.TEACHER_DETAIL, {
       _id: data?.user_id?._id,
     });
   };
@@ -250,7 +250,7 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
       {data?.coupon_id == null ||
       (data?.coupon_id?.availableAt &&
         new Date(data?.coupon_id?.availableAt) > new Date()) ||
-      (data.type === "Self-learning" || data.type === "Call group" ? (
+      (data?.type === "Self-learning" || data?.type === "Call group" ? (
         <Text style={styles.textPrice}>{formatPrice(data?.price)}</Text>
       ) : (
         data?.coupon_id?.availableAt &&

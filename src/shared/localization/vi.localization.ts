@@ -448,6 +448,7 @@ export default {
     at: "lúc",
   },
   course: {
+    previewMentor: "Xem Mentor",
     prepareCourse: "Các khóa học này đang được biên soạn!",
     suggestPickCourse: "Lựa chọn khóa học phù hợp với bạn phía dưới !",
     slogan: "Giáo dục là sức mạnh!",
@@ -563,7 +564,7 @@ export default {
     reading: "Đọc",
     writing: "Viết",
     Speaking: "Nói",
-    careerGuidance: "Hướng dẫn nghề nghiệp",
+    careerGuidance: "Hướng nghiệp",
     life: "Cuộc sống",
     finance: "Tài chính",
     health: "Sức Khỏe",

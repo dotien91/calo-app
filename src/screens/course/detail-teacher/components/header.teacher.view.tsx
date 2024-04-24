@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   Linking,
 } from "react-native";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 import { translations } from "@localization";
 import Avatar from "@shared-components/user/Avatar";
@@ -14,9 +13,25 @@ import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import IconSvg from "assets/svg";
 import { TypedUser } from "models";
+import { ScreenWidth, WindowWidth } from "@freakycoder/react-native-helpers";
+import TextViewCollapsed from "@screens/course/components/text.view.collapsed";
+import LinearGradient from "react-native-linear-gradient";
+import ButtonSvg from "@shared-components/button/ButtonIconSvg";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import {
+  EnumModalContentType,
+  EnumStyleModalType,
+  showSuperModal,
+} from "@helpers/super.modal.helper";
 
 interface HeaderDetailTeacherProps {
   data?: TypedUser;
+}
+
+interface CertificatesProps {
+  dateOfIssue: string;
+  isValidated: boolean;
+  name: string;
 }
 
 const HeaderDetailTeacher = ({ data }: HeaderDetailTeacherProps) => {
@@ -52,70 +67,142 @@ const HeaderDetailTeacher = ({ data }: HeaderDetailTeacherProps) => {
   //   );
   // }
 
+  const _viewMedia = () => {
+    if (data?.user_avatar_thumbnail) {
+      showSuperModal({
+        contentModalType: EnumModalContentType.Library,
+        styleModalType: EnumStyleModalType.Middle,
+        data: {
+          listMedia: [
+            {
+              media_url: data?.user_avatar_thumbnail,
+              media_type: "image",
+            },
+          ],
+          index: 0,
+        },
+      });
+    }
+  };
+
+  const isImage =
+    data?.user_avatar_thumbnail &&
+    !data?.user_avatar_thumbnail.startsWith("image");
   return (
-    <View style={styles.container}>
-      <View style={CS.center}>
-        <Avatar
-          sourceUri={{ uri: data?.user_avatar_thumbnail }}
-          style={styles.avatar}
-        />
-        <Text style={styles.txtFullname}>{data?.display_name}</Text>
-      </View>
-
-      <View style={styles.viewCount}>
-        <View style={styles.itemCount}>
-          <Text style={styles.textCount}>{data?.student_count}</Text>
-          <Text style={styles.textDes}>{translations.course.student}</Text>
-        </View>
-        <View style={styles.itemCount}>
-          <Text style={styles.textCount}>{data?.course_count}</Text>
-          <Text style={styles.textDes}>{translations.course.course}</Text>
-        </View>
-        {!!data?.taught_time && data.taught_time > 0 && (
-          <View style={styles.itemCount}>
-            <Text style={styles.textCount}>{data?.taught_time}</Text>
-            <Text style={styles.textDes}>
-              {translations.course.teachingTime}
-            </Text>
+    <>
+      <Avatar
+        sourceUri={{ uri: data?.user_avatar_thumbnail }}
+        style={styles.avatar}
+      />
+      {isImage && (
+        <LinearGradient
+          colors={[
+            palette.white0,
+            palette.white7,
+            palette.white86,
+            palette.white,
+          ]}
+          style={{
+            marginTop: -190,
+            height: 300,
+          }}
+        >
+          <View style={styles.container}>
+            <View>
+              <Text style={styles.txtFullname}>{data?.display_name}</Text>
+              {data?.certificates?.length > 0 ? (
+                data?.certificates.map(
+                  (item: CertificatesProps, index: number) => {
+                    return (
+                      <View key={index} style={styles.viewCer}>
+                        <View style={{ flexDirection: "row" }}>
+                          <Text style={styles.textCer}>{item.name}</Text>
+                        </View>
+                      </View>
+                    );
+                  },
+                )
+              ) : (
+                <TextViewCollapsed text={translations.noCertificates} />
+              )}
+            </View>
+            <View style={styles.viewCount}>
+              <View style={styles.itemCount}>
+                <Text style={styles.textCount}>{data?.student_count}</Text>
+                <Text style={styles.textDes}>
+                  {translations.course.student}
+                </Text>
+              </View>
+              <View style={styles.itemCount}>
+                <Text style={styles.textCount}>{data?.course_count}</Text>
+                <Text style={styles.textDes}>{translations.course.course}</Text>
+              </View>
+              {!!data?.taught_time && data?.taught_time > 0 && (
+                <View style={styles.itemCount}>
+                  <Text
+                    style={styles.textCount}
+                  >{`${data?.taught_time} hrs`}</Text>
+                  <Text style={styles.textDes}>
+                    {translations.course.teachingTime}
+                  </Text>
+                </View>
+              )}
+            </View>
+            <View style={styles.viewBtn}>
+              <ButtonSvg
+                onPress={_viewMedia}
+                style={{
+                  backgroundColor: palette.primary,
+                  width: 200,
+                  borderRadius: 12,
+                }}
+                text={translations.course.previewMentor}
+                iconName="icPreview"
+                textColor={palette.white}
+              />
+            </View>
+            {!!data?._id &&
+              (linkFb !== "" || linkWebsite !== "" || linkYoutube !== "") && (
+                <View style={styles.viewCenter}>
+                  {linkFb !== "" && (
+                    <TouchableOpacity
+                      onPress={_openLinkingFB}
+                      style={styles.viewIcon}
+                    >
+                      <IconSvg
+                        name="icFacebook"
+                        size={32}
+                        color={palette.blue}
+                      />
+                    </TouchableOpacity>
+                  )}
+                  {linkYoutube !== "" && (
+                    <TouchableOpacity
+                      onPress={_openLinkingYoutube}
+                      style={styles.viewIcon}
+                    >
+                      <IconSvg name="icSocialYoutube" size={32} />
+                    </TouchableOpacity>
+                  )}
+                  {linkWebsite !== "" && (
+                    <TouchableOpacity
+                      onPress={_openLinkingWeb}
+                      style={styles.viewIcon}
+                    >
+                      <IconSvg
+                        name="icLink"
+                        size={24}
+                        rotate={45}
+                        color={palette.textOpacity6}
+                      />
+                    </TouchableOpacity>
+                  )}
+                </View>
+              )}
           </View>
-        )}
-      </View>
-
-      {!!data?._id &&
-        (linkFb !== "" || linkWebsite !== "" || linkYoutube !== "") && (
-          <View style={styles.viewCenter}>
-            {linkFb !== "" && (
-              <TouchableOpacity
-                onPress={_openLinkingFB}
-                style={styles.viewIcon}
-              >
-                <IconSvg name="icFacebook" size={32} color={palette.blue} />
-              </TouchableOpacity>
-            )}
-            {linkYoutube !== "" && (
-              <TouchableOpacity
-                onPress={_openLinkingYoutube}
-                style={styles.viewIcon}
-              >
-                <IconSvg name="icSocialYoutube" size={32} />
-              </TouchableOpacity>
-            )}
-            {linkWebsite !== "" && (
-              <TouchableOpacity
-                onPress={_openLinkingWeb}
-                style={styles.viewIcon}
-              >
-                <IconSvg
-                  name="icLink"
-                  size={24}
-                  rotate={45}
-                  color={palette.text}
-                />
-              </TouchableOpacity>
-            )}
-          </View>
-        )}
-    </View>
+        </LinearGradient>
+      )}
+    </>
   );
 };
 
@@ -128,11 +215,11 @@ const styles = StyleSheet.create({
   txtFullname: {
     ...CS.hnBold,
     fontSize: 20,
-    marginTop: 8,
+    marginTop: 16,
     minHeight: 24,
   },
   viewCount: {
-    marginTop: 8,
+    marginTop: 16,
     paddingHorizontal: 20,
     height: 52,
     ...CS.center,
@@ -152,6 +239,8 @@ const styles = StyleSheet.create({
   textDes: {
     ...CS.hnRegular,
     fontSize: 16,
+    lineHeight: 24,
+    color: palette.textOpacity8,
   },
   viewIcon: {
     width: 48,
@@ -159,11 +248,10 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     ...CS.center,
     backgroundColor: palette.background,
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.1,
-    elevation: 1,
-    shadowRadius: 5,
-    marginBottom: 4,
+    elevation: 2,
+    shadowRadius: 8,
   },
   viewCenter: {
     height: 60,
@@ -172,9 +260,24 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   avatar: {
-    width: 96,
-    height: 96,
-    borderRadius: 48,
+    width: ScreenWidth,
+    height: (WindowWidth / 16) * 20,
+  },
+  textCer: {
+    ...CS.hnMedium,
+    ...CS.flex1,
+    fontSize: 16,
+    lineHeight: 24,
+    color: palette.textOpacity8,
+  },
+  viewCer: {
+    marginTop: 8,
+    marginBottom: 4,
+  },
+  viewBtn: {
+    ...CS.center,
+    marginTop: 16,
+    marginBottom: 16,
   },
 });
 
