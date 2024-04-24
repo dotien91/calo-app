@@ -36,7 +36,6 @@ const ClubStack = createStackNavigator();
 const HomeStack = createStackNavigator();
 const CourseStack = createStackNavigator();
 
-
 const Navigation = () => {
   const isDarkMode = useStore((state) => state.isDarkMode);
   // const isFirstOpenApp = useStore((state) => state.isFirstOpenApp);

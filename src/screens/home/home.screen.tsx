@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, TouchableOpacity, Dimensions, SafeAreaView } from "react-native";
+import { Text, TouchableOpacity, Dimensions, View } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import * as NavigationService from "react-navigation-helpers";
@@ -16,7 +16,6 @@ import AboutHome from "./components/about-home/about.home";
 import eventEmitter from "@services/event-emitter";
 import CustomRefreshControl from "./components/refesh-controler/customRefeshControler";
 import { translations } from "@localization";
-import { getStatusBarHeight } from "react-native-safearea-height";
 import HeaderTab from "./components/header-home/HeaderTab";
 
 const initialLayout = { width: Dimensions.get("window").width };
@@ -95,9 +94,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
 
   // return <IapTest />
   return (
-    <SafeAreaView
-      style={[CommonStyle.safeAreaView, { paddingTop: getStatusBarHeight() }]}
-    >
+    <View style={CommonStyle.flex1}>
       {renderHeader()}
       <CollapsibleHeaderTabView
         lazy={true}
@@ -138,7 +135,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
           />
         </TouchableOpacity>
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 

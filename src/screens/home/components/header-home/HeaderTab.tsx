@@ -13,8 +13,8 @@ import { EnumCourseType } from "models/course.model";
 import InviteView from "../invite-me/invite";
 import ListLiveStream from "../list-livestream/list.liveStream";
 import TextBase from "@shared-components/TextBase";
-import { useUserHook } from "@helpers/hooks/useUserHook";
-import { getStatusBarHeight } from "react-native-safearea-height";
+// import { useUserHook } from "@helpers/hooks/useUserHook";
+// import { getStatusBarHeight } from "react-native-safearea-height";
 // import ListLiveStream from "../list-livestream/list.liveStream";
 import CourseView from "../list-course/list.course";
 import FastImage from "react-native-fast-image";
@@ -23,7 +23,7 @@ import AudioView from "@screens/audio/audio-list/audio.view";
 const HeaderTab = () => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
-
+  const userData = useStore((state) => state.userData);
   const listCategorys = [
     {
       title: translations.listCategory.course,
@@ -51,7 +51,7 @@ const HeaderTab = () => {
     },
   ];
 
-  const { isLoggedIn } = useUserHook();
+  // const { isLoggedIn } = useUserHook();
 
   const setCourseCurrentType = useStore((state) => state.setCourseCurrentType);
 
@@ -97,16 +97,15 @@ const HeaderTab = () => {
   };
 
   return (
-    <View
-      style={[
-        styles.viewHeaderStyle,
-        {
-          marginTop: isLoggedIn()
-            ? getStatusBarHeight() + 94
-            : getStatusBarHeight() + 46,
-        },
-      ]}
-    >
+    <View style={[styles.viewHeaderStyle]}>
+      {!!userData?.display_name && (
+        <View style={[CommonStyle.flex2, { marginTop: 6 }]}>
+          <Text
+            style={styles.styleTxtText2}
+          >{`${translations.hi} ${userData?.display_name},`}</Text>
+          <Text style={styles.styleTxtText}>{translations.welcomeBack}</Text>
+        </View>
+      )}
       <View style={CommonStyle.flex2}>
         <Text style={styles.styleTxtTitle}>
           {translations.listCategory.descriptionTitle}

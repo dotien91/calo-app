@@ -18,7 +18,7 @@ export default (theme: ExtendedTheme) => {
       shadowOpacity: 0.1,
       elevation: 10,
       shadowRadius: 1,
-      marginBottom: 8,
+      // marginBottom: 8,
     },
     viewInput: {
       flexDirection: "row",
