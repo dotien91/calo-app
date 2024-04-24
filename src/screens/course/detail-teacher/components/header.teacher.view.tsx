@@ -85,124 +85,118 @@ const HeaderDetailTeacher = ({ data }: HeaderDetailTeacherProps) => {
     }
   };
 
-  const isImage =
-    data?.user_avatar_thumbnail &&
-    !data?.user_avatar_thumbnail.startsWith("image");
   return (
-    <>
+    <View style={{ flex: 1 }}>
       <Avatar
         sourceUri={{ uri: data?.user_avatar_thumbnail }}
         style={styles.avatar}
+        resizeMode="cover"
       />
-      {isImage && (
-        <LinearGradient
-          colors={[
-            palette.white0,
-            palette.white7,
-            palette.white86,
-            palette.white,
-          ]}
-          style={{
-            marginTop: -190,
-            height: 300,
-          }}
-        >
-          <View style={styles.container}>
-            <View>
-              <Text style={styles.txtFullname}>{data?.display_name}</Text>
-              {data?.certificates?.length > 0 ? (
-                data?.certificates.map(
-                  (item: CertificatesProps, index: number) => {
-                    return (
-                      <View key={index} style={styles.viewCer}>
-                        <View style={{ flexDirection: "row" }}>
-                          <Text style={styles.textCer}>{item.name}</Text>
-                        </View>
+      <LinearGradient
+        colors={[
+          palette.white0,
+          palette.white7,
+          palette.white86,
+          palette.white,
+          palette.white,
+        ]}
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          minHeight: 250,
+        }}
+      >
+        <View style={styles.container}>
+          <View>
+            <Text style={styles.txtFullname}>{data?.display_name}</Text>
+            {data?.certificates?.length > 0 ? (
+              data?.certificates.map(
+                (item: CertificatesProps, index: number) => {
+                  return (
+                    <View key={index} style={styles.viewCer}>
+                      <View style={{ flexDirection: "row" }}>
+                        <Text style={styles.textCer}>{item.name}</Text>
                       </View>
-                    );
-                  },
-                )
-              ) : (
-                <TextViewCollapsed text={translations.noCertificates} />
-              )}
+                    </View>
+                  );
+                },
+              )
+            ) : (
+              <TextViewCollapsed text={translations.noCertificates} />
+            )}
+          </View>
+          <View style={styles.viewCount}>
+            <View style={styles.itemCount}>
+              <Text style={styles.textCount}>{data?.student_count}</Text>
+              <Text style={styles.textDes}>{translations.course.student}</Text>
             </View>
-            <View style={styles.viewCount}>
+            <View style={styles.itemCount}>
+              <Text style={styles.textCount}>{data?.course_count}</Text>
+              <Text style={styles.textDes}>{translations.course.course}</Text>
+            </View>
+            {!!data?.taught_time && data?.taught_time > 0 && (
               <View style={styles.itemCount}>
-                <Text style={styles.textCount}>{data?.student_count}</Text>
+                <Text
+                  style={styles.textCount}
+                >{`${data?.taught_time} hrs`}</Text>
                 <Text style={styles.textDes}>
-                  {translations.course.student}
+                  {translations.course.teachingTime}
                 </Text>
               </View>
-              <View style={styles.itemCount}>
-                <Text style={styles.textCount}>{data?.course_count}</Text>
-                <Text style={styles.textDes}>{translations.course.course}</Text>
-              </View>
-              {!!data?.taught_time && data?.taught_time > 0 && (
-                <View style={styles.itemCount}>
-                  <Text
-                    style={styles.textCount}
-                  >{`${data?.taught_time} hrs`}</Text>
-                  <Text style={styles.textDes}>
-                    {translations.course.teachingTime}
-                  </Text>
-                </View>
-              )}
-            </View>
-            <View style={styles.viewBtn}>
-              <ButtonSvg
-                onPress={_viewMedia}
-                style={{
-                  backgroundColor: palette.primary,
-                  width: 200,
-                  borderRadius: 12,
-                }}
-                text={translations.course.previewMentor}
-                iconName="icPreview"
-                textColor={palette.white}
-              />
-            </View>
-            {!!data?._id &&
-              (linkFb !== "" || linkWebsite !== "" || linkYoutube !== "") && (
-                <View style={styles.viewCenter}>
-                  {linkFb !== "" && (
-                    <TouchableOpacity
-                      onPress={_openLinkingFB}
-                      style={styles.viewIcon}
-                    >
-                      <IconSvg
-                        name="icFacebook"
-                        size={32}
-                        color={palette.blue}
-                      />
-                    </TouchableOpacity>
-                  )}
-                  {linkYoutube !== "" && (
-                    <TouchableOpacity
-                      onPress={_openLinkingYoutube}
-                      style={styles.viewIcon}
-                    >
-                      <IconSvg name="icSocialYoutube" size={32} />
-                    </TouchableOpacity>
-                  )}
-                  {linkWebsite !== "" && (
-                    <TouchableOpacity
-                      onPress={_openLinkingWeb}
-                      style={styles.viewIcon}
-                    >
-                      <IconSvg
-                        name="icLink"
-                        size={24}
-                        rotate={45}
-                        color={palette.textOpacity6}
-                      />
-                    </TouchableOpacity>
-                  )}
-                </View>
-              )}
+            )}
           </View>
-        </LinearGradient>
-      )}
-    </>
+          <View style={styles.viewBtn}>
+            <ButtonSvg
+              onPress={_viewMedia}
+              style={{
+                backgroundColor: palette.primary,
+                width: 200,
+                borderRadius: 12,
+              }}
+              text={translations.course.previewMentor}
+              iconName="icPreview"
+              textColor={palette.white}
+            />
+          </View>
+          {!!data?._id &&
+            (linkFb !== "" || linkWebsite !== "" || linkYoutube !== "") && (
+              <View style={styles.viewCenter}>
+                {linkFb !== "" && (
+                  <TouchableOpacity
+                    onPress={_openLinkingFB}
+                    style={styles.viewIcon}
+                  >
+                    <IconSvg name="icFacebook" size={32} color={palette.blue} />
+                  </TouchableOpacity>
+                )}
+                {linkYoutube !== "" && (
+                  <TouchableOpacity
+                    onPress={_openLinkingYoutube}
+                    style={styles.viewIcon}
+                  >
+                    <IconSvg name="icSocialYoutube" size={32} />
+                  </TouchableOpacity>
+                )}
+                {linkWebsite !== "" && (
+                  <TouchableOpacity
+                    onPress={_openLinkingWeb}
+                    style={styles.viewIcon}
+                  >
+                    <IconSvg
+                      name="icLink"
+                      size={24}
+                      rotate={45}
+                      color={palette.textOpacity6}
+                    />
+                  </TouchableOpacity>
+                )}
+              </View>
+            )}
+        </View>
+      </LinearGradient>
+    </View>
   );
 };
 
@@ -261,7 +255,7 @@ const styles = StyleSheet.create({
   },
   avatar: {
     width: ScreenWidth,
-    height: (WindowWidth / 16) * 20,
+    height: (WindowWidth / 375) * 720,
   },
   textCer: {
     ...CS.hnMedium,
