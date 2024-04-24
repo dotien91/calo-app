@@ -25,6 +25,11 @@ interface TypeItemLanguage {
 export default function ChooseLanguageScreen() {
   const languageList: TypeItemLanguage[] = [
     {
+      label: "Japanese",
+      value: "jp",
+      flag: <IconSvg name="icFlagjp" size={32} />,
+    },
+    {
       label: "English",
       value: "en",
       flag: <IconSvg name="icFlagen" size={32} />,

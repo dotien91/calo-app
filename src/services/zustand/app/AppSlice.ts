@@ -16,7 +16,7 @@ const createAppSlice: StoreSlice<AppSlice> = (set) => ({
   setDarkMode: (value: boolean) => set({ isDarkMode: value }),
   isFirstOpenApp: true,
   setIsFirstOpenApp: (value: boolean) => set({ isFirstOpenApp: value }),
-  language: "vi",
+  language: "jp",
   setLanguage: (value: string) => set({ language: value }),
   isShowWelcome: true,
   setShowWelcome: (value: boolean) => set({ isShowWelcome: value }),

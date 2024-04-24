@@ -250,7 +250,7 @@ const CreateClubScreen = () => {
               },
             }}
             errorTxt={errors.name?.message}
-            maxLength={32}
+            maxLength={200}
             label={translations.club.clubName}
           />
           <View style={styles.viewType}>
