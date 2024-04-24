@@ -27,8 +27,11 @@ import {
   showToast,
 } from "@helpers/super.modal.helper";
 import { goBack } from "@helpers/navigation.helper";
+import useStore from "@services/zustand/store";
 
 const BecomEliteClub = () => {
+  const isSendEliteClub = useStore((store) => store.isSendEliteClub);
+  const setIsSendEliteClub = useStore((store) => store.setIsSendEliteClub);
   const [updating, setUpdating] = useState(false);
   const route = useRoute();
   const clubId = route.params?.["club_id"];
@@ -97,8 +100,9 @@ const BecomEliteClub = () => {
       if (!res.isError) {
         showToast({
           type: "success",
-          message: translations.podcast.sendRequest,
+          message: translations.club.sendRequest,
         });
+        setIsSendEliteClub(true);
         goBack();
       } else {
         showToast({
@@ -108,6 +112,20 @@ const BecomEliteClub = () => {
     });
     console.log("...", params);
   };
+
+  if (isSendEliteClub) {
+    return (
+      <SafeAreaView style={CS.safeAreaView}>
+        <Header text={translations.club.becomeElite} />
+        <View style={[CS.flex1, CS.center, { paddingHorizontal: 16 }]}>
+          <TextBase
+            textAlign="center"
+            title={translations.club.sendEliteClub}
+          />
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <KeyboardAvoidingView

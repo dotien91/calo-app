@@ -1750,6 +1750,8 @@ export default {
     addCover: "Thêm ảnh bìa",
     leaveGroup: "Rời khỏi câu lạc bộ",
     warningLeave: "Bạn có chắc rời khỏi câu lạc bộ này không?",
+    sendEliteClub:
+      "Bạn đã gửi yêu cầu tham gia câu lạc bộ, vui lòng chờ xác nhận từ quản lý câu lạc bộ",
     file: "Tệp/Ảnh",
     event: "Sự kiện",
     course: "Khoá học",

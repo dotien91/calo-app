@@ -33,10 +33,16 @@ const PopupClubPost = ({ dataGroup }: PopupClubPostProps) => {
   };
 
   const confirmLeave = () => {
-    deleteMemberGroup(dataGroup.attend_data?._id);
-    showToast({ type: "success", message: translations.club.leaveGroup });
-    eventEmitter.emit("reload_group_joined");
-    pop(1);
+    deleteMemberGroup(dataGroup.attend_data?._id).then((res) => {
+      if (!res.isError) {
+        eventEmitter.emit("reload_group_joined");
+        eventEmitter.emit("reload_list_club");
+        showToast({ type: "success", message: translations.club.leaveGroup });
+        pop(1);
+      } else {
+        showToast({ type: "error", message: res.message });
+      }
+    });
   };
 
   const showConfirmLeaveGroup = () => {

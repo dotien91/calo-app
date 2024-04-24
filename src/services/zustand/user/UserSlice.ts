@@ -25,6 +25,8 @@ export interface UserSlice {
   setUserInfo: (user: TypedUser) => void;
   showInvite: boolean;
   setShowInvite: (bol: boolean) => void;
+  isSendEliteClub: boolean;
+  setIsSendEliteClub: (bol: boolean) => void;
 }
 
 const createUserSlice: StoreSlice<UserSlice> = (set) => ({
@@ -73,6 +75,10 @@ const createUserSlice: StoreSlice<UserSlice> = (set) => ({
     set((state) => {
       return { userMedia: { ...state.userMedia, ...v } };
     });
+  },
+  isSendEliteClub: false,
+  setIsSendEliteClub: (bol: boolean) => {
+    set({ isSendEliteClub: bol });
   },
 });
 

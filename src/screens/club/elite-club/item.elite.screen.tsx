@@ -325,7 +325,7 @@ const ItemEliteScreen = () => {
           <View style={styles.viewTitle}>
             <ListFile
               listFile={
-                dataGroup?.featured_image.map((item) => ({
+                dataGroup?.featured_image?.map((item) => ({
                   media_mime_type: "image",
                   media_thumbnail: item,
                   media_url: item,

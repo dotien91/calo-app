@@ -1222,6 +1222,8 @@ export default {
     addCover: "Add photo cover",
     leaveGroup: "Leave club",
     warningLeave: "Are you sure you want to leave this club?",
+    sendEliteClub:
+      "You have sent a request to join the club, please wait for confirmation from the club owner.",
     file: "File/Image",
     event: "Event",
     course: "Course",
@@ -1317,6 +1319,7 @@ export default {
     namAndDes: "Name and description",
     deleteGroup: "Delete Club",
     deleteGroupSuccess: "Delete Club successfully",
+    sendRequest: "Send information successfully",
   },
   podcast: {
     listPodcast: "List Podcasts",

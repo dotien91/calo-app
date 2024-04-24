@@ -1586,6 +1586,8 @@ export default {
     addCover: "カバー画像を追加",
     leaveGroup: "クラブを退出",
     warningLeave: "このクラブから本当に退出しますか？",
+    sendEliteClub:
+      "クラブへの参加リクエストを送信しました。クラブのオーナーからの承認をお待ちください。",
     file: "ファイル/画像",
     event: "イベント",
     course: "コース",
