@@ -287,6 +287,7 @@ export default {
     at: "時",
   },
   course: {
+    previewMentor: "プレビューメンター",
     prepareCourse: "これらのコースは現在編集中です！",
     suggestPickCourse: "以下から適切なコースを選択してください！",
     slogan: "教育は力です！",

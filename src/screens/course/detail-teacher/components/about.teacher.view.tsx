@@ -23,7 +23,10 @@ const AboutTeacher = ({ data }: AboutTeacherProps) => {
   return (
     <View style={styles.container}>
       <Text style={styles.textTitle}>{translations.aboutMe}</Text>
-      <TextViewCollapsed text={data?.bio || translations.noReferrals} />
+      <TextViewCollapsed
+        styleText={styles.txtDes}
+        text={data?.bio || translations.noReferrals}
+      />
 
       <Text style={styles.textTitle}>{translations.course.certifications}</Text>
       {data?.certificates?.length > 0 ? (
@@ -36,7 +39,7 @@ const AboutTeacher = ({ data }: AboutTeacherProps) => {
               <View style={{ flexDirection: "row" }}>
                 <Text style={styles.textCer}>{item.name}</Text>
                 {item.isValidated && (
-                  <IconSvg name="icCheck" color={palette.green} />
+                  <IconSvg name="icCheck" color={palette.blue} />
                 )}
               </View>
             </View>
@@ -56,28 +59,32 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   textTitle: {
-    ...CS.hnMedium,
-    fontSize: 20,
-    lineHeight: 28,
+    ...CS.hnBold,
+    fontSize: 16,
+    lineHeight: 24,
     marginTop: 16,
     minHeight: 28,
   },
-
+  txtDes: {
+    ...CS.hnRegular,
+    color: palette.textOpacity6,
+    lineHeight: 24,
+  },
   viewCer: {
     marginTop: 8,
     marginBottom: 4,
   },
   textTime: {
     ...CS.hnRegular,
-    fontSize: 14,
-    lineHeight: 22,
+    fontSize: 12,
+    lineHeight: 16,
     color: palette.textOpacity6,
   },
   textCer: {
     ...CS.hnMedium,
     ...CS.flex1,
     fontSize: 16,
-    lineHeight: 22,
+    lineHeight: 24,
     color: palette.textOpacity8,
   },
 });

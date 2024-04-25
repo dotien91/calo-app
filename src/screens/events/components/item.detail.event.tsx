@@ -41,6 +41,7 @@ const ItemDetailEvent = ({ item }: { item: any }) => {
           fontSize={16}
           fontWeight="400"
           color={EnumColors.textOpacity8}
+          style={{ flex: 1 }}
         >
           {text}
         </TextBase>
@@ -113,17 +114,23 @@ const ItemDetailEvent = ({ item }: { item: any }) => {
           color={EnumColors.textOpacity8}
         />
         <View style={styles.viewBtn}>{renderButton()}</View>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
-          <IconText
-            nameIcon="icPersonal"
-            text={`${translations.event.eventBy}`}
-          />
-          <View style={{ paddingTop: 17 }}>
-            <TextBase
-              fontSize={16}
-              fontWeight="700"
-              title={item?.create_by?.display_name}
-            />
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 10,
+            marginTop: 16,
+          }}
+        >
+          <IconSvg name="icPersonal" size={20} color={palette.textOpacity8} />
+          <View style={{ flex: 1 }}>
+            <TextBase title={`${translations.event.eventBy} `}>
+              <TextBase
+                fontSize={16}
+                fontWeight="700"
+                title={item?.create_by?.display_name}
+              />
+            </TextBase>
           </View>
         </View>
         <IconText nameIcon="icLocated" text={item?.location} />

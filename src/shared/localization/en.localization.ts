@@ -380,6 +380,7 @@ export default {
     at: "at",
   },
   course: {
+    previewMentor: "Preview mentor",
     course: "Course",
     newCourse: "New Course",
     createCourse: "Create Course",
@@ -412,12 +413,12 @@ export default {
     mentor: "Mentor",
     viewProfile: "View Profile",
     educationProgram: "Education Program",
-    viewMore: "View More",
-    hideLess: "Hide less",
+    viewMore: "Show More",
+    hideLess: "Show less",
     rate: "Rate",
     emptyRate: "No reviews yet",
     rankTeacher: "Instructor ratings",
-    student: "Student",
+    student: "Students",
     courseContent: "Course content",
     requestSkills: "Request skills",
     information: "Information",
@@ -447,7 +448,7 @@ export default {
     filterSpeaker: "Native teachers",
     viewResult: (text: string) =>
       text != "0" ? "View " + text + " courses" : "No result find",
-    moreCouresBy: (name: string) => `More course buy ${name}`,
+    moreCouresBy: (name: string) => `More course by ${name}`,
     viewResultTutor: (text: string) =>
       text != 0 ? "View " + text + " tutors" : "No result find",
     priceCourse: "Course Price",

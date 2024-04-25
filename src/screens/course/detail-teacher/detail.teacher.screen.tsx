@@ -5,13 +5,12 @@ import {
   ScrollView,
   Text,
   FlatList,
-  SafeAreaView,
+  TouchableOpacity,
 } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
 import HeaderDetailTeacher from "./components/header.teacher.view";
 import CS from "@theme/styles";
-import Header from "@shared-components/header/Header";
 import AboutTeacher from "./components/about.teacher.view";
 import { getUserById } from "@services/api/user.api";
 import { TypedUser } from "models";
@@ -30,10 +29,14 @@ import { translations } from "@localization";
 import EmptyResultView from "@shared-components/empty.data.component";
 import LoadingList from "@shared-components/loading.list.component";
 import { ICourseItem } from "models/course.model";
+import { Device } from "@utils/device.utils";
+import { getStatusBarHeight } from "react-native-safearea-height";
+import { palette } from "@theme/themes";
+import IconSvg from "assets/svg";
 
 const DetailTeacherScreen = () => {
   const route = useRoute();
-  const idTeacher = route.params?.["idTeacher"];
+  const idTeacher = route.params?.["_id"];
 
   const _goBack = () => {
     NavigationService.goBack();
@@ -94,14 +97,25 @@ const DetailTeacherScreen = () => {
     );
   };
 
+  const renderHeader = () => {
+    return (
+      <View style={styles.viewHeader}>
+        <View style={styles.viewBtnHeader}>
+          <TouchableOpacity style={styles.viewBtn} onPress={_goBack}>
+            <IconSvg name="icBack" size={20} color={palette.white} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.viewBtn} onPress={_showMore}>
+            <IconSvg name="icMore" size={20} color={palette.white} />
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  };
+
   return (
-    <SafeAreaView style={CS.safeAreaView}>
-      <Header
-        onPressLeft={_goBack}
-        iconNameRight={isMe ? "share" : "more-vertical"}
-        onPressRight={_showMore}
-      />
-      <ScrollView style={CS.flex1} showsVerticalScrollIndicator={false}>
+    <View style={CS.flex1}>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        {renderHeader()}
         <HeaderDetailTeacher data={data} />
         <AboutTeacher data={data} />
         <View style={{ paddingHorizontal: 16, marginBottom: 8 }}>
@@ -124,18 +138,44 @@ const DetailTeacherScreen = () => {
           refreshing={refreshing}
         />
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
 export default DetailTeacherScreen;
 
 const styles = StyleSheet.create({
+  viewHeader: {
+    width: Device.width,
+    position: "absolute",
+    left: 0,
+    top: 0,
+    zIndex: 1,
+    paddingTop: getStatusBarHeight(),
+    padding: 16,
+  },
+  viewBtnHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingTop: 8,
+  },
+  viewBtn: {
+    ...CS.center,
+    height: 32,
+    width: 32,
+    backgroundColor: palette.placeholder,
+    borderRadius: 100,
+  },
   textTitle: {
-    ...CS.hnMedium,
-    fontSize: 20,
-    lineHeight: 28,
+    ...CS.hnBold,
+    fontSize: 16,
+    lineHeight: 24,
     marginTop: 16,
     minHeight: 28,
+  },
+  container: {
+    ...CS.flex1,
+    left: 0,
+    top: 0,
   },
 });

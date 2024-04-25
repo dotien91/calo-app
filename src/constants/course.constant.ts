@@ -252,25 +252,24 @@ export const quickFilterCourse = [
     id: "All skills",
     type: "skills",
   },
-
-  {
-    name: translations.course.life,
-    id: "Life",
-    type: "skills",
-  },
   {
     name: translations.course.health,
     id: "Health",
     type: "skills",
   },
   {
-    name: translations.course.finance,
-    id: "Finance",
+    name: translations.course.life,
+    id: "Life",
     type: "skills",
   },
   {
     name: translations.course.business,
     id: "Business",
+    type: "skills",
+  },
+  {
+    name: translations.course.finance,
+    id: "Finance",
     type: "skills",
   },
   {
