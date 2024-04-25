@@ -1,8 +1,5 @@
 import { StyleSheet } from "react-native";
-import {
-  getBottomSpace,
-  getStatusBarHeight,
-} from "react-native-iphone-screen-helper";
+import { getBottomSpace } from "react-native-iphone-screen-helper";
 import CommonStyle from "@theme/styles";
 import { ExtendedTheme } from "@react-navigation/native";
 
@@ -13,7 +10,7 @@ const createStyles = (theme: ExtendedTheme) => {
       ...CommonStyle.flex1,
       backgroundColor: colors.background,
       justifyContent: "space-between",
-      paddingTop: getStatusBarHeight(),
+      // paddingTop: getStatusBarHeight(),
       marginBottom: getBottomSpace(),
       paddingBottom: 10,
     },
@@ -22,6 +19,7 @@ const createStyles = (theme: ExtendedTheme) => {
       fontSize: 24,
       color: colors.mainColor2,
       textAlign: "center",
+      marginTop: 16,
     },
     buttonMarginGG: {
       marginTop: 30,
@@ -47,9 +45,11 @@ const createStyles = (theme: ExtendedTheme) => {
     },
     viewSocial: {
       flexDirection: "row",
-      gap: 18,
+      gap: 36,
       paddingHorizontal: 20,
       marginTop: 16,
+      alignItems: "center",
+      justifyContent: "center",
     },
     textRegister: {
       ...CommonStyle.hnMedium,

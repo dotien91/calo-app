@@ -7,8 +7,6 @@ import CommonStyle from "@theme/styles";
 import Button from "@shared-components/button/Button";
 import IconSvg from "assets/svg";
 import createStyles from "./login.screen.style";
-import ViewTermPolicy from "../components/TermPolicyView";
-import OrView from "../components/OrView";
 import { SCREENS } from "constants";
 import { translations } from "@localization";
 import GoogleLoginButton from "@shared-components/button/GoogleLoginButton";
@@ -27,27 +25,51 @@ export default function LoginScreen() {
     NavigationService.push(SCREENS.LOGIN_WITH_EMAIL);
   };
 
+  const pressRegister = () => {
+    NavigationService.push(SCREENS.SIGN_UP);
+  };
+
   return (
     <SafeAreaView style={CommonStyle.safeAreaView}>
       <Header />
       <View style={styles.container}>
-        <View style={[CommonStyle.flex1, CommonStyle.center]}>
-          <IconSvg name="logoIeltsHunter" width={120} height={67} />
+        <View style={[CommonStyle.center]}>
+          <IconSvg
+            name="logoIkigaiCoach"
+            width={108}
+            height={95}
+            color={colors.primary}
+          />
         </View>
-        <Text style={styles.textHeader}>{translations.welcomeBack}</Text>
-        <GoogleLoginButton showText={true} />
-        <FBLoginButton showText={true} />
-        <AppleLoginButton showText={true} />
-        <OrView />
-        <Button
-          style={styles.buttonMargin}
-          onPress={pressMail}
-          textColor={colors.mainColor2}
-          backgroundColor={palette.btnInactive}
-          SvgSo={<IconSvg name="icMail" size={16} color={colors.mainColor2} />}
-          text={translations.continueWith("E-mail")}
-        />
-        <ViewTermPolicy style={{ paddingHorizontal: 20, marginTop: 36 }} />
+        {/* <Text style={styles.textHeader}>{translations.welcomeBack}</Text> */}
+        <View style={[CommonStyle.flex1, CommonStyle.center]}>
+          <AppleLoginButton showText={true} />
+          <GoogleLoginButton showText={true} />
+          <FBLoginButton showText={true} />
+          {/* <OrView /> */}
+          <Button
+            style={styles.buttonMargin}
+            onPress={pressMail}
+            textColor={colors.mainColor2}
+            backgroundColor={palette.btnInactive}
+            type="outline"
+            // SvgSo={<IconSvg name="icMail" size={16} color={colors.mainColor2} />}
+            text={translations.continueWith("E-mail")}
+          />
+          <Text style={styles.textRegister}>
+            {translations.needAnAccount}
+            <Text
+              style={[
+                CommonStyle.hnSemiBold,
+                { color: colors.primary, textDecorationLine: "underline" },
+              ]}
+              onPress={pressRegister}
+            >
+              {translations.registerNow}
+            </Text>
+          </Text>
+        </View>
+        {/* <ViewTermPolicy style={{ paddingHorizontal: 20, marginTop: 36 }} /> */}
       </View>
     </SafeAreaView>
   );

@@ -91,7 +91,7 @@ const GoogleLoginButton = ({ showText }: BtnProps) => {
         onPress={_onPress}
         textColor={palette.mainColor2}
         backgroundColor={palette.transparent}
-        SvgSo={<IconSvg name="icGoogle" size={16} />}
+        SvgSo={<IconSvg name="icGoogle" size={28} />}
       />
     );
   }
@@ -113,12 +113,13 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   iconBtn: {
-    flex: 1,
+    // flex: 1,
     justifyContent: "center",
     alignItems: "center",
     borderColor: palette.mainColor2,
     height: 48,
-    borderWidth: 1,
+    width: 48,
+    // borderWidth: 1,
     borderRadius: 10,
   },
 });

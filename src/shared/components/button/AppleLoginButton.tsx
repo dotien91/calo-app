@@ -75,7 +75,7 @@ const AppleLoginButton = ({ showText }: BtnProps) => {
         style={styles.iconBtn}
         onPress={loginApple}
         backgroundColor={"transparent"}
-        SvgSo={<IconSvg name="icAppleBlack" size={20} />}
+        SvgSo={<IconSvg name="icAppleBlack" size={32} />}
       />
     );
   }
@@ -93,14 +93,17 @@ const AppleLoginButton = ({ showText }: BtnProps) => {
 };
 
 const styles = StyleSheet.create({
-  btn: {},
+  btn: {
+    marginBottom: 16,
+  },
   iconBtn: {
-    flex: 1,
+    // flex: 1,
     justifyContent: "center",
     alignItems: "center",
     borderColor: palette.mainColor2,
     height: 48,
-    borderWidth: 1,
+    width: 48,
+    // borderWidth: 1,
     borderRadius: 10,
   },
 });

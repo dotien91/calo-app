@@ -83,7 +83,7 @@ const FBLoginButton = ({ showText }: BtnProps) => {
         style={styles.iconBtn}
         onPress={_onPress}
         backgroundColor={"transparent"}
-        SvgSo={<IconSvg name="icFacebook" color="#1877F2" size={20} />}
+        SvgSo={<IconSvg name="icFacebook" color="#1877F2" size={32} />}
       />
     );
   }
@@ -92,9 +92,9 @@ const FBLoginButton = ({ showText }: BtnProps) => {
     <Button
       style={styles.btn}
       onPress={_onPress}
-      textColor={palette.white}
-      backgroundColor={"#1877F2"}
-      SvgSo={<IconSvg name="icFacebook" size={16} />}
+      textColor={palette.text}
+      backgroundColor={palette.btnInactive}
+      SvgSo={<IconSvg name="icFacebook" size={16} color="#1877F2" />}
       text={translations.continueWith("Facebook")}
     />
   );
@@ -105,12 +105,13 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   iconBtn: {
-    flex: 1,
+    // flex: 1,
     justifyContent: "center",
     alignItems: "center",
     borderColor: palette.mainColor2,
     height: 48,
-    borderWidth: 1,
+    width: 48,
+    // borderWidth: 1,
     borderRadius: 10,
   },
 });

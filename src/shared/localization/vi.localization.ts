@@ -13,6 +13,7 @@ export default {
   placeholderEmail: "Email",
   placeholderVerifyCode: "Mã xác thực",
   placeholderPasword: "Mật khẩu",
+  placeholderRePasword: "Nhập lại mật khẩu",
   forgotPassword: "Quên mật khẩu",
   verifyCodeTitle: (text: string) =>
     `Nhập mã xác thực nhận được từ email ${text}`,

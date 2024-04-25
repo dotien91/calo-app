@@ -9,6 +9,7 @@ import icSearch from "./search.svg";
 import icWelcome from "./welcome.svg";
 import icCheckCircleFill from "./check_circle_fill.svg";
 import logoIeltsHunter from "./ielts-hunter.svg";
+import logoIkigaiCoach from "./logo-ikigai-coach.svg";
 import icApple from "./social-apple.svg";
 import icClose from "./icon-close.svg";
 import icFacebook from "./social-fb.svg";
@@ -193,6 +194,7 @@ const Icons = {
   icWelcome,
   icCheckCircleFill,
   logoIeltsHunter,
+  logoIkigaiCoach,
   icApple,
   icFacebook,
   icGoogle,

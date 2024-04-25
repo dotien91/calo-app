@@ -15,7 +15,6 @@ import CommonStyle from "@theme/styles";
 import Button from "@shared-components/button/Button";
 import IconSvg from "assets/svg";
 import createStyles from "./login.with.email.screen.style";
-import ViewTermPolicy from "../components/TermPolicyView";
 import OrView from "../components/OrView";
 import InputHook from "@shared-components/form/InputHookForm";
 import { useForm } from "react-hook-form";
@@ -106,7 +105,12 @@ export default function LoginWithEmailScreen() {
         >
           <View style={styles.container}>
             <View style={[{ alignItems: "center" }]}>
-              <IconSvg name="logoIeltsHunter" width={120} height={67} />
+              <IconSvg
+                name="logoIkigaiCoach"
+                width={108}
+                height={95}
+                color={colors.primary}
+              />
             </View>
             <View>
               <Text style={styles.textHeader}>{translations.welcomeBack}</Text>
@@ -121,7 +125,11 @@ export default function LoginWithEmailScreen() {
                   placeholder: translations.placeholderEmail,
                 }}
                 iconLeft={
-                  <IconSvg name="icMail" size={18} color={colors.mainColor2} />
+                  <IconSvg
+                    name="icMail"
+                    size={18}
+                    color={colors.textOpacity6}
+                  />
                 }
                 control={control}
                 rules={{
@@ -132,6 +140,7 @@ export default function LoginWithEmailScreen() {
                   // pattern: regexMail,
                 }}
                 errorTxt={errors.email?.message}
+                showPlaceholder
               />
 
               {/* password input */}
@@ -151,7 +160,13 @@ export default function LoginWithEmailScreen() {
                   },
                   // pattern: regexMail,
                 }}
-                iconLeft={<IconSvg name="icLock" size={18} />}
+                iconLeft={
+                  <IconSvg
+                    name="icLock"
+                    size={18}
+                    color={colors.textOpacity6}
+                  />
+                }
                 isPassword={!showPass}
                 iconRight={
                   <IconSvg
@@ -160,44 +175,38 @@ export default function LoginWithEmailScreen() {
                   />
                 }
                 errorTxt={errors.password?.message}
+                showPlaceholder
               />
+              <View style={[CommonStyle.flexEnd, { paddingHorizontal: 20 }]}>
+                <Text
+                  onPress={pressForgotPassword}
+                  style={styles.txtForgotPass}
+                >
+                  {translations.forgotPassword}?
+                </Text>
+              </View>
               <View style={styles.paddingButton}>
                 <Button
                   style={styles.buttonMargin}
                   onPress={handleSubmit(onSubmit)}
                   textColor={colors.white}
                   backgroundColor={colors.primary}
-                  SvgSo={
-                    <IconSvg size={18} name="icMail" color={colors.white} />
-                  }
-                  text={translations.continueWith("E-mail")}
+                  // SvgSo={
+                  //   <IconSvg size={18} name="icMail" color={colors.white} />
+                  // }
+                  text={translations.signIn}
                 />
-              </View>
-              <View style={CommonStyle.center}>
-                <Text
-                  onPress={pressForgotPassword}
-                  style={[
-                    CommonStyle.hnMedium,
-                    {
-                      textAlign: "center",
-                      marginTop: 16,
-                      textDecorationLine: "underline",
-                    },
-                  ]}
-                >
-                  {translations.forgotPassword}?
-                </Text>
               </View>
 
               <OrView />
               <View style={styles.viewSocial}>
-                <GoogleLoginButton />
                 <AppleLoginButton />
+                <GoogleLoginButton />
                 <FBLoginButton />
               </View>
-              <ViewTermPolicy
+              {/* <ViewTermPolicy
                 style={{ paddingHorizontal: 20, marginTop: 36 }}
-              />
+              /> */}
               <Text style={styles.textRegister}>
                 {translations.needAnAccount}
                 <Text

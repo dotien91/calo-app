@@ -12,6 +12,7 @@ export default {
   placeholderEmail: "Email",
   placeholderVerifyCode: "Verify code",
   placeholderPasword: "Password",
+  placeholderRePasword: "Repeat password",
   forgotPassword: "forgot password",
   verifyCodeTitle: (text: string) => `Input verify code from email ${text}`,
   signIn: "Sign in",

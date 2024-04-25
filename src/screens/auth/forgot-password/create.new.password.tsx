@@ -105,7 +105,12 @@ export default function NewPasswordScreen() {
         <View style={styles.container}>
           <GoBackButton />
           <View style={[{ alignItems: "center" }]}>
-            <IconSvg name="logoIeltsHunter" width={120} height={67} />
+            <IconSvg
+              name="logoIkigaiCoach"
+              width={108}
+              height={95}
+              color={colors.primary}
+            />
           </View>
           <View>
             <Text style={styles.textHeader}>{translations.updatePassword}</Text>

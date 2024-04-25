@@ -13,6 +13,7 @@ export default {
   placeholderEmail: "メール",
   placeholderVerifyCode: "認証コード",
   placeholderPasword: "パスワード",
+  placeholderRePasword: "パスワードをもう一度入力してください",
   forgotPassword: "パスワードを忘れた",
   verifyCodeTitle: (text) =>
     `${text}から受け取った認証コードを入力してください`,

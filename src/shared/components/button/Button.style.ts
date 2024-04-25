@@ -6,7 +6,7 @@ export default () => {
   return StyleSheet.create({
     viewButton: {
       paddingVertical: 9,
-      borderRadius: 8,
+      borderRadius: 12,
       backgroundColor: palette.mainColor2,
       ...CommonStyle.flexCenter,
       paddingHorizontal: 16,

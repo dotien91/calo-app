@@ -14,7 +14,6 @@ import * as NavigationService from "react-navigation-helpers";
 import CommonStyle from "@theme/styles";
 import Button from "@shared-components/button/Button";
 import createStyles from "./signup.screen.style";
-import ViewTermPolicy from "../components/TermPolicyView";
 import OrView from "../components/OrView";
 import InputHook from "@shared-components/form/InputHookForm";
 import { useForm } from "react-hook-form";
@@ -36,7 +35,6 @@ import GoogleLoginButton from "@shared-components/button/GoogleLoginButton";
 import AppleLoginButton from "@shared-components/button/AppleLoginButton";
 import FBLoginButton from "@shared-components/button/FBLoginButton";
 import { SCREENS } from "constants";
-import Header from "@shared-components/header/Header";
 
 // interface ButtonSocialProps {
 //   onPress: () => void;
@@ -59,6 +57,7 @@ export default function SignUpScreen() {
       fullname: "",
       email: "",
       password: "",
+      repassword: "",
     },
   });
 
@@ -106,7 +105,7 @@ export default function SignUpScreen() {
 
   return (
     <SafeAreaView style={CommonStyle.safeAreaView}>
-      <Header />
+      {/* <Header /> */}
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <KeyboardAvoidingView
           style={{ flex: 1 }}
@@ -114,7 +113,12 @@ export default function SignUpScreen() {
         >
           <View style={styles.container}>
             <View style={[{ alignItems: "center" }]}>
-              <IconSvg name="logoIeltsHunter" width={120} height={67} />
+              <IconSvg
+                name="logoIkigaiCoach"
+                width={108}
+                height={95}
+                color={colors.primary}
+              />
             </View>
             <View>
               <Text style={styles.textHeader}>
@@ -123,7 +127,9 @@ export default function SignUpScreen() {
 
               {/* fullname input */}
               <InputHook
-                iconLeft={<IconSvg name="icLoginFullname" />}
+                iconLeft={
+                  <IconSvg name="icLoginFullname" color={colors.textOpacity6} />
+                }
                 name="fullname"
                 customStyle={CommonStyle.flex1}
                 inputProps={{
@@ -139,11 +145,12 @@ export default function SignUpScreen() {
                   },
                 }}
                 errorTxt={errors.fullname?.message}
+                showPlaceholder
               />
 
               {/* email input */}
               <InputHook
-                iconLeft={<IconSvg name="icMail" color={colors.mainColor2} />}
+                iconLeft={<IconSvg name="icMail" color={colors.textOpacity6} />}
                 name="email"
                 customStyle={CommonStyle.flex1}
                 inputProps={{
@@ -163,11 +170,12 @@ export default function SignUpScreen() {
                   },
                 }}
                 errorTxt={errors.email?.message}
+                showPlaceholder
               />
 
               {/* pass input */}
               <InputHook
-                iconLeft={<IconSvg name="icLock" />}
+                iconLeft={<IconSvg name="icLock" color={colors.textOpacity6} />}
                 name="password"
                 customStyle={{}}
                 inputProps={{
@@ -200,6 +208,39 @@ export default function SignUpScreen() {
                   />
                 }
                 errorTxt={errors.password?.message}
+                showPlaceholder
+              />
+              <InputHook
+                iconLeft={<IconSvg name="icLock" color={colors.textOpacity6} />}
+                name="repassword"
+                customStyle={{}}
+                inputProps={{
+                  type: "text",
+                  defaultValue: "",
+                  placeholder: translations.placeholderRePasword,
+                }}
+                control={control}
+                rules={{
+                  required: {
+                    value: true,
+                    message: translations.required,
+                  },
+                  minLength: {
+                    value: 8,
+                    message: translations.error.minLengthPass,
+                  },
+                }}
+                isPassword={!showPass}
+                iconRight={
+                  <IconSvg
+                    onPress={() => {
+                      setShowPass((showPass) => !showPass);
+                    }}
+                    name={showPass ? "icEye" : "icEyeCrossed"}
+                  />
+                }
+                errorTxt={errors.repassword?.message}
+                showPlaceholder
               />
               <View style={styles.paddingButton}>
                 <Button
@@ -212,13 +253,13 @@ export default function SignUpScreen() {
               </View>
               <OrView />
               <View style={styles.viewSocial}>
-                <GoogleLoginButton />
                 <AppleLoginButton />
+                <GoogleLoginButton />
                 <FBLoginButton />
               </View>
-              <ViewTermPolicy
+              {/* <ViewTermPolicy
                 style={{ paddingHorizontal: 20, marginTop: 36 }}
-              />
+              /> */}
               <Text style={styles.textRegister}>
                 {translations.haveAnAccount}
                 <Text

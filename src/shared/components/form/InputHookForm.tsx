@@ -75,10 +75,7 @@ const InputHook: React.FC<InputHookProps> = ({
   const [length, setLength] = useState("");
   return (
     <View
-      style={[
-        styles.wrapper,
-        showPlaceholder || label ? { minHeight: 76, marginTop: 8 } : {},
-      ]}
+      style={[styles.wrapper, showPlaceholder || label ? { marginTop: 8 } : {}]}
     >
       {showPlaceholder && (
         <View
@@ -192,7 +189,7 @@ const styles = StyleSheet.create({
     height: 40,
     alignItems: "center",
     flexDirection: "row",
-    borderRadius: 8,
+    borderRadius: 12,
     gap: 15,
     ...CommonStyle.borderStyle,
   },

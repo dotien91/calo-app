@@ -31,6 +31,12 @@ const createStyles = (theme: ExtendedTheme) => {
     buttonMargin: {
       marginVertical: 16,
     },
+    textRegister: {
+      ...CommonStyle.hnMedium,
+      color: colors.mainColor2,
+      textAlign: "center",
+      marginTop: 16,
+    },
   });
 };
 export default createStyles;

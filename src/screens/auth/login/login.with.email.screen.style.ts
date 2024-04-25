@@ -43,9 +43,11 @@ const createStyles = (theme: ExtendedTheme) => {
     },
     viewSocial: {
       flexDirection: "row",
-      gap: 18,
+      gap: 36,
       paddingHorizontal: 20,
       marginTop: 16,
+      alignItems: "center",
+      justifyContent: "center",
     },
     textRegister: {
       ...CommonStyle.hnMedium,
@@ -56,6 +58,11 @@ const createStyles = (theme: ExtendedTheme) => {
     textWarning: {
       paddingHorizontal: 20,
       color: colors.primary,
+    },
+    txtForgotPass: {
+      ...CommonStyle.hnMedium,
+      color: colors.primary,
+      marginTop: 16,
     },
   });
 };

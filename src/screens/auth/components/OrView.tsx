@@ -19,7 +19,7 @@ const OrView = () => {
       }}
     >
       <View
-        style={{ height: 1, backgroundColor: colors.mainColor2, flex: 1 }}
+        style={{ height: 1, backgroundColor: colors.background, flex: 1 }}
       />
       <Text
         style={[
@@ -30,7 +30,7 @@ const OrView = () => {
         {translations.or}
       </Text>
       <View
-        style={{ height: 1, backgroundColor: colors.mainColor2, flex: 1 }}
+        style={{ height: 1, backgroundColor: colors.background, flex: 1 }}
       />
     </View>
   );

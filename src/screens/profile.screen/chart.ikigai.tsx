@@ -178,7 +178,7 @@ const ChartIkigai = () => {
       </View>
       <View style={styles.viewPowered}>
         <Text style={styles.textPoweredBy}>{translations.task.powered}</Text>
-        <IconSvg name="logoIeltsHunter" width={44} height={28} />
+        <IconSvg name="logoIkigaiCoach" size={32} color={palette.primary} />
       </View>
     </View>
   );
