@@ -15,7 +15,7 @@ const EliteClubScreen = () => {
   return (
     <SafeAreaView style={CS.safeAreaView}>
       <Header text={name} />
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
           <ItemEliteScreen />
         </View>

@@ -331,6 +331,7 @@ const ItemEliteScreen = () => {
                   media_url: item,
                 })) || []
               }
+              styleContainer={{ marginLeft: 0 }}
             />
             {/* {dataGroup?.featured_image?.length > 0 && (
               <View

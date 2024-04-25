@@ -10,7 +10,8 @@ const FONT_SIZE = 16;
 const BORDER_RADIUS1 = 4;
 const BORDER_RADIUS2 = 4;
 const PADDING_LEFT = 12;
-const SIZE_IMAGE1 = width - PADDING_HORIZONTAL * 2 - PADDING_LEFT - SIZE_AVATAR;
+const SIZE_IMAGE1 = width - PADDING_HORIZONTAL * 2;
+const Margin = -SIZE_AVATAR - PADDING_LEFT / 2;
 export default (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
@@ -32,6 +33,9 @@ export default (theme: ExtendedTheme) => {
       height: SIZE_IMAGE1,
       width: SIZE_IMAGE1,
       borderRadius: BORDER_RADIUS1,
+    },
+    viewImage1: {
+      marginLeft: Margin,
     },
     viewImage2: {
       flexDirection: "row",

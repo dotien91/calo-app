@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useTheme } from "@react-navigation/native";
-import { Text, View, Pressable, Image } from "react-native";
+import { Text, View, Pressable, Image, ViewStyle } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 import createStyles from "./post.item.style";
@@ -16,9 +16,10 @@ import { palette } from "@theme/themes";
 
 interface ListFileProps {
   listFile: TypedMedia[];
+  styleContainer?: ViewStyle;
 }
 
-const ListFile = ({ listFile }: ListFileProps) => {
+const ListFile = ({ listFile, styleContainer = {} }: ListFileProps) => {
   const listMedia = listFile.filter(
     (i: any) =>
       i.media_mime_type.includes("image") ||
@@ -69,7 +70,10 @@ const ListFile = ({ listFile }: ListFileProps) => {
 
   if (listMedia.length == 1) {
     return (
-      <Pressable onPress={showImage0} style={styles.image11}>
+      <Pressable
+        onPress={showImage0}
+        style={[styles.viewImage1, styleContainer]}
+      >
         <Image
           style={styles.image11}
           source={{ uri: listMedia[0].media_thumbnail }}
@@ -80,7 +84,7 @@ const ListFile = ({ listFile }: ListFileProps) => {
   }
   if (listMedia.length == 2) {
     return (
-      <View style={styles.viewImage2}>
+      <View style={[styles.viewImage2, styleContainer]}>
         <Pressable onPress={showImage0} style={styles.imageNormal}>
           <Image
             style={styles.imageNormal}
@@ -100,7 +104,7 @@ const ListFile = ({ listFile }: ListFileProps) => {
   }
   if (listMedia.length >= 3) {
     return (
-      <View style={styles.viewImage3}>
+      <View style={[styles.viewImage3, styleContainer]}>
         <Pressable onPress={showImage0} style={styles.imageNormal}>
           <Image
             style={styles.imageNormal}

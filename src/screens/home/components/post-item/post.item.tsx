@@ -100,7 +100,10 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
           <HeaderItempost data={data} onPress={goToProfileCurrentUser} />
           {HasTag}
           {ContentStatus}
-          <ListFile listFile={data?.attach_files || []} />
+          <ListFile
+            listFile={data?.attach_files || []}
+            styleContainer={styles.viewImage1}
+          />
           <ListFilePostItem listFile={data?.attach_files || []} />
         </PressableBtn>
         <LikeSharePostItem data={data} pressComment={pressComment} />
