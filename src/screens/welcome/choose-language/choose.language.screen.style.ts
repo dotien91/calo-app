@@ -6,6 +6,7 @@ import {
   getStatusBarHeight,
   getBottomSpace,
 } from "react-native-iphone-screen-helper";
+import { palette } from "@theme/themes";
 
 const createStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
@@ -40,38 +41,41 @@ const createStyles = (theme: ExtendedTheme) => {
       color: colors.mainColor2,
     },
     child: {
-      ...CommonStyle.flex1,
-      marginTop: 26,
+      // ...CommonStyle.flex1,
+      marginTop: 34,
       backgroundColor: colors.white,
     },
     itemLanguageSelected: {
       ...CommonStyle.row,
-      height: 60,
+      height: 40,
       paddingLeft: 16,
       paddingRight: 24,
       justifyContent: "space-between",
       backgroundColor: "#F2FFFB",
-      borderRadius: 8,
+      borderRadius: 12,
       marginHorizontal: 16,
       borderWidth: 2,
       borderColor: colors.blueChart,
+      marginBottom: 12,
     },
     itemLanguageNotSelected: {
       ...CommonStyle.row,
-      height: 60,
+      height: 40,
       paddingLeft: 16,
       paddingRight: 24,
       justifyContent: "space-between",
       backgroundColor: colors.white,
-      borderRadius: 8,
+      borderRadius: 12,
       marginHorizontal: 16,
       borderWidth: 1,
       borderColor: colors.grey3,
+      marginBottom: 12,
     },
     textLanguage: {
       ...CommonStyle.hnSemiBold,
-      fontSize: 18,
-      color: colors.mainColor2,
+      fontSize: 14,
+      color: palette.textOpacity6,
+      lineHeight: 22,
       marginLeft: 16,
     },
     btnStyle: {

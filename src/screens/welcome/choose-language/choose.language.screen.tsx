@@ -14,8 +14,9 @@ import createStyles from "./choose.language.screen.style";
 import { SCREENS } from "constants";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";
-import Header from "@shared-components/header/Header";
 import { updateSession } from "@services/api/notification.api";
+import { palette } from "@theme/themes";
+import TextBase from "@shared-components/TextBase";
 
 interface TypeItemLanguage {
   label: string;
@@ -25,38 +26,38 @@ interface TypeItemLanguage {
 export default function ChooseLanguageScreen() {
   const languageList: TypeItemLanguage[] = [
     {
+      label: "Vietnamese",
+      value: "vi",
+      flag: <IconSvg name="icFlagvi" size={20} />,
+    },
+    {
       label: "Japanese",
       value: "jp",
-      flag: <IconSvg name="icFlagjp" size={32} />,
+      flag: <IconSvg name="icFlagjp" size={20} />,
     },
     {
       label: "English",
       value: "en",
-      flag: <IconSvg name="icFlagen" size={32} />,
-    },
-    {
-      label: "Vietnamese",
-      value: "vi",
-      flag: <IconSvg name="icFlagvi" size={32} />,
+      flag: <IconSvg name="icFlagen" size={20} />,
     },
   ];
-  const [selected, setSelected] = useState(useStore((state) => state.language));
+  const [selected] = useState(useStore((state) => state.language));
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const setLanguage = useStore((state) => state.setLanguage);
 
-  const handleKeepGoing = () => {
-    translations.setLanguage(selected);
-    setLanguage(selected);
+  const handleKeepGoing = (value: string) => {
+    translations.setLanguage(value);
+    setLanguage(value);
     NavigationService.replace(SCREENS.INTRO);
-    updateSession({ picked_language: selected });
+    updateSession({ picked_language: value });
   };
 
   const ItemLanguage = ({ item }: { item: TypeItemLanguage }) => {
     const isSelect: boolean = item.value == selected;
     return (
       <Pressable
-        onPress={() => setSelected(item.value)}
+        onPress={() => handleKeepGoing(item.value)}
         style={
           isSelect
             ? styles.itemLanguageSelected
@@ -76,17 +77,28 @@ export default function ChooseLanguageScreen() {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
-        <Header
-          text={translations.changeLanguage}
-          hideBackBtn
-          onPressRight={handleKeepGoing}
-          iconNameRight="check"
-        />
-        <View style={styles.child}>
-          <View style={styles.viewItem}>
-            {languageList.map((item, index: number) => {
-              return <ItemLanguage key={index} item={item} />;
-            })}
+        <View style={[{ alignItems: "center" }]}>
+          <IconSvg
+            name="logoIkigaiCoach"
+            width={108}
+            height={95}
+            color={palette.primary}
+          />
+        </View>
+        <View style={{ flex: 1 }}>
+          <View style={{ alignItems: "center", marginTop: 40 }}>
+            <TextBase
+              title={translations.changeLanguage}
+              fontSize={24}
+              fontWeight="700"
+            />
+          </View>
+          <View style={styles.child}>
+            <View style={styles.viewItem}>
+              {languageList.map((item, index: number) => {
+                return <ItemLanguage key={index} item={item} />;
+              })}
+            </View>
           </View>
         </View>
       </View>
