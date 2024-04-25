@@ -882,3 +882,90 @@ export const timeFullWeek = [
   { value: 5, label: "Fri", times: timesInUtc },
   { value: 6, label: "Sat", times: timesInUtc },
 ];
+
+export const quickFilterLife = [
+  {
+    name: translations.setup.lifeCoaching,
+    id: "Life coaching",
+    type: "skills",
+  },
+
+  {
+    name: translations.setup.personalDevelopment,
+    id: "Personal development",
+    type: "skills",
+  },
+  {
+    name: translations.setup.goalSetting,
+    id: "Goal Setting",
+    type: "skills",
+  },
+  {
+    name: translations.setup.timeMana,
+    id: "Time Management",
+    type: "skills",
+  },
+  {
+    name: translations.setup.stressMana,
+    id: "Stress management",
+    type: "skills",
+  },
+];
+
+export const quickFilterHealthAndWell = [
+  {
+    name: translations.setup.healthAndWell,
+    id: "Health & wellness",
+    type: "skills",
+  },
+
+  {
+    name: translations.setup.nutri,
+    id: "Nutri & diet",
+    type: "skills",
+  },
+  {
+    name: translations.setup.fitness,
+    id: "Fitness & exercise",
+    type: "skills",
+  },
+  {
+    name: translations.setup.mental,
+    id: "Mental health",
+    type: "skills",
+  },
+  {
+    name: translations.setup.sleep,
+    id: "Sleep improvement",
+    type: "skills",
+  },
+];
+
+export const quickFilterBusinessAndCareer = [
+  {
+    name: translations.setup.businessCoa,
+    id: "Business coaching",
+    type: "skills",
+  },
+
+  {
+    name: translations.setup.careerDeve,
+    id: "Career development",
+    type: "skills",
+  },
+  {
+    name: translations.setup.entre,
+    id: "Entrepreneurship",
+    type: "skills",
+  },
+  {
+    name: translations.setup.leaderSkill,
+    id: "Leadership skills",
+    type: "skills",
+  },
+  {
+    name: translations.setup.workLife,
+    id: "Work-life balance",
+    type: "skills",
+  },
+];

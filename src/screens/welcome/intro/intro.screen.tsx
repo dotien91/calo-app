@@ -12,7 +12,6 @@ import { useTheme } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 
 import { SCREENS } from "constants";
-import { _setJson } from "@services/local-storage";
 import PageControl from "react-native-page-control";
 import { translations } from "@localization";
 import { palette } from "@theme/themes";
@@ -89,10 +88,7 @@ export default function WellcomeScreen() {
   const nextRight = () => {
     // animate2()
     if (currentPage > 3) {
-      NavigationService.navigate(SCREENS.TABS, {
-        screen: SCREENS.HOME_TAB,
-      });
-      _setJson("is_first_open_app", true);
+      NavigationService.replace(SCREENS.ACCOUNT_SETUP_SCREEN);
     } else {
       const newPage = currentPage + 1;
       setcurrentPage(newPage);
