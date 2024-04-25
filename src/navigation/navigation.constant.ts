@@ -103,6 +103,7 @@ import AffiliatePage from "@screens/affiliate/affiliate.screen";
 import CodeActivationsScreen from "@screens/code-activations/code.activations.screen";
 import HiddenPaage from "@screens/hidden-page/hidden.page";
 import BlackList from "@screens/black-list/black.list";
+import AccountSetupScreen from "@screens/welcome/account-setup/account.setup.screen";
 
 export const DiscoveryStackData = [
   {
@@ -161,6 +162,10 @@ export const StackIntroData = [
   {
     name: SCREENS.WELCOME,
     screen: WelcomeScreen,
+  },
+  {
+    name: SCREENS.ACCOUNT_SETUP_SCREEN,
+    screen: AccountSetupScreen,
   },
 ];
 
