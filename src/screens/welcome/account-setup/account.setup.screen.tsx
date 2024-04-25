@@ -87,9 +87,7 @@ const AccountSetupScreen = () => {
   };
 
   const navigateToIntro = () => {
-    NavigationService.navigate(SCREENS.TABS, {
-      screen: SCREENS.HOME_TAB,
-    });
+    NavigationService.replace(SCREENS.TABS);
     _setJson("is_first_open_app", true);
   };
 

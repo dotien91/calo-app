@@ -48,7 +48,7 @@ export default function ChooseLanguageScreen() {
   const handleKeepGoing = () => {
     translations.setLanguage(selected);
     setLanguage(selected);
-    NavigationService.navigate(SCREENS.INTRO);
+    NavigationService.replace(SCREENS.INTRO);
     updateSession({ picked_language: selected });
   };
 
