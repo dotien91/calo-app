@@ -44,7 +44,7 @@ const TutorItem = ({
   //   setIsLike((old) => !old);
   // };
   const _gotoDetailTeacher = () => {
-    NavigationService.navigate(SCREENS.PROFILE_CURRENT_USER, {
+    NavigationService.navigate(SCREENS.TEACHER_DETAIL, {
       _id: res._id,
       userInfo: res.user_id,
     });

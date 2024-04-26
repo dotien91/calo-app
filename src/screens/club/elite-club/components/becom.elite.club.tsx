@@ -218,7 +218,6 @@ const BecomEliteClub = () => {
               defaultValue: "",
               placeholder: translations.login.email,
             }}
-            viewStyle={styles.viewStyleRight}
             control={control}
             rules={{
               required: {

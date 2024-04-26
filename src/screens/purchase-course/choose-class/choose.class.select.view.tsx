@@ -147,8 +147,8 @@ const ChooseClassSelectView: React.FC<ChooseClassSelectViewProps> = ({
 
   const goToCheckout = () => {
     if (isAndroid()) {
-      alert("handle in app purchase")
-      return
+      alert("handle in app purchase");
+      return;
     }
     showLoading();
     const dataCheck = {
