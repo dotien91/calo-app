@@ -45,7 +45,7 @@ const SetupScreen1: React.FC<SetupScreen1Props> = ({ onSelectedData }) => {
       onSelectedData(item);
     };
     return (
-      <TouchableOpacity onPress={handlePress}>
+      <TouchableOpacity onPress={handlePress} style={styles.viewItem}>
         <View style={styles.viewImg}>
           <Image
             key={index}
@@ -117,8 +117,11 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     flexDirection: "row",
     justifyContent: "space-between",
-    marginHorizontal: 12,
+    // marginHorizontal: 12,
     gap: 13,
     marginTop: 36,
+  },
+  viewItem: {
+    width: (ScreenWidth - 90) / 3,
   },
 });

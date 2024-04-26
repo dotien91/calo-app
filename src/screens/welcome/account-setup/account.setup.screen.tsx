@@ -11,7 +11,7 @@ import { translations } from "@localization";
 import SetupScreen1 from "./components/setup.screen1";
 import SetupScreen2 from "./components/setup.screen2";
 import SetupScreen3 from "./components/setup.screen3";
-import { showToast } from "@helpers/super.modal.helper";
+// import { showToast } from "@helpers/super.modal.helper";
 import { _setJson } from "@services/local-storage";
 
 const AccountSetupScreen = () => {
@@ -43,34 +43,37 @@ const AccountSetupScreen = () => {
   const nextRight = () => {
     switch (currentPage) {
       case 0:
-        if (value) {
-          animateToNextPage();
-        } else {
-          showToast({
-            type: "error",
-            message: translations.setup.errorChoose,
-          });
-        }
+        animateToNextPage();
+        console.log(value);
+        // if (value) {
+        // } else {
+        //   showToast({
+        //     type: "error",
+        //     message: translations.setup.errorChoose,
+        //   });
+        // }
         break;
       case 1:
-        if (value1.length > 0) {
-          animateToNextPage();
-        } else {
-          showToast({
-            type: "error",
-            message: translations.setup.errorChoose,
-          });
-        }
+        animateToNextPage();
+        console.log(value1);
+        // if (value1.length > 0) {
+        // } else {
+        //   showToast({
+        //     type: "error",
+        //     message: translations.setup.errorChoose,
+        //   });
+        // }
         break;
       case 2:
-        if (value2.length > 0) {
-          navigateToIntro();
-        } else {
-          showToast({
-            type: "error",
-            message: translations.setup.errorChoose,
-          });
-        }
+        navigateToIntro();
+        console.log(value2);
+        // if (value2.length > 0) {
+        // } else {
+        //   showToast({
+        //     type: "error",
+        //     message: translations.setup.errorChoose,
+        //   });
+        // }
         break;
       default:
         break;
@@ -103,7 +106,7 @@ const AccountSetupScreen = () => {
     <View style={{ flex: 1 }}>
       <FlatList
         ref={scrollViewRef}
-        scrollEnabled={false}
+        // scrollEnabled={false}
         style={styles.flatList}
         data={renderScreen}
         showsHorizontalScrollIndicator={false}

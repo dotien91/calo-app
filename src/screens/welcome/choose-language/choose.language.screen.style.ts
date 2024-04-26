@@ -14,7 +14,7 @@ const createStyles = (theme: ExtendedTheme) => {
     container: {
       ...CommonStyle.flex1,
       backgroundColor: colors.background,
-      paddingTop: getStatusBarHeight(),
+      paddingTop: getStatusBarHeight() + 30,
       marginBottom: getBottomSpace(),
       paddingBottom: 10,
     },
@@ -41,7 +41,7 @@ const createStyles = (theme: ExtendedTheme) => {
       color: colors.mainColor2,
     },
     child: {
-      // ...CommonStyle.flex1,
+      // ...CommonStyle.flex1,r
       marginTop: 34,
       backgroundColor: colors.white,
     },
