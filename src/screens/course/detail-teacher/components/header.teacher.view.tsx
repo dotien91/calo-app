@@ -111,7 +111,7 @@ const HeaderDetailTeacher = ({ data }: HeaderDetailTeacherProps) => {
         <View style={styles.container}>
           <View>
             <Text style={styles.txtFullname}>{data?.display_name}</Text>
-            {data?.certificates?.length > 0 ? (
+            {/* {data?.certificates?.length > 0 ? (
               data?.certificates.map(
                 (item: CertificatesProps, index: number) => {
                   return (
@@ -125,7 +125,7 @@ const HeaderDetailTeacher = ({ data }: HeaderDetailTeacherProps) => {
               )
             ) : (
               <TextViewCollapsed text={translations.noCertificates} />
-            )}
+            )} */}
           </View>
           <View style={styles.viewCount}>
             <View style={styles.itemCount}>
