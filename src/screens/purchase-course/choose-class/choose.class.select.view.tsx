@@ -23,6 +23,7 @@ import {
 import eventEmitter from "@services/event-emitter";
 import { isIOS } from "@freakycoder/react-native-helpers";
 import Button from "@shared-components/button/Button";
+import { isAndroid } from "@helpers/device.info.helper";
 
 interface ChooseClassSelectViewProps {
   classData: IClassRoom[];
@@ -145,6 +146,10 @@ const ChooseClassSelectView: React.FC<ChooseClassSelectViewProps> = ({
   };
 
   const goToCheckout = () => {
+    if (isAndroid()) {
+      alert("handle in app purchase")
+      return
+    }
     showLoading();
     const dataCheck = {
       class_id: selectedClass?._id,

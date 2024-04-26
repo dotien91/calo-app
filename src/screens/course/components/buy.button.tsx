@@ -16,6 +16,7 @@ import {
 } from "@helpers/super.modal.helper";
 import eventEmitter from "@services/event-emitter";
 import { isIOS } from "@freakycoder/react-native-helpers";
+import { isAndroid } from "@helpers/device.info.helper";
 
 interface BuyButtonProps {
   data?: ICourseItem;
@@ -35,6 +36,10 @@ const BuyButton = ({ data, type }: BuyButtonProps) => {
       return;
     }
     if (data?.type == EnumClassType.SelfLearning) {
+      if (isAndroid()) {
+        alert("handle in app purchase")
+        return
+      }
       if (!data?.price_id) {
         showToast({
           type: "warning",

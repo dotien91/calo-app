@@ -1101,7 +1101,7 @@ SPEC CHECKSUMS:
   React-Core: aaacca67f9ca54f142827e67f44bfbd815875eb6
   React-CoreModules: 32fab1d62416849a3b6dac6feff9d54e5ddc2d1e
   React-cxxreact: 37765b4975541105b2a3322a4b473417c158c869
-  React-debug: ea24fd1164eec22857ef18e5f7e84228c1cd9491
+  React-debug: fea3ca9eb48445bdb11ef7b1a364442f8aa67525
   React-hermes: 935ae71fb3d7654e947beba8498835cd5e479707
   React-jsi: ec628dc7a15ffea969f237b0ea6d2fde212b19dd
   React-jsiexecutor: 59d1eb03af7d30b7d66589c410f13151271e8006
@@ -1127,7 +1127,7 @@ SPEC CHECKSUMS:
   react-native-video: c26780b224543c62d5e1b2a7244a5cd1b50e8253
   react-native-webrtc: 6fc32f3d556aa60aa2334eeaf6cadcdab2432809
   react-native-webview: 121397a02eb58554c24d0c3e26acf676ff6a87d2
-  React-NativeModulesApple: 3cdd7ddf279936f715da433624e01fc29ec2fcdf
+  React-NativeModulesApple: b06f919a6217a62df2b88ac0125c5eae132adcf2
   React-perflogger: 6bd153e776e6beed54c56b0847e1220a3ff92ba5
   React-RCTActionSheet: c0b62af44e610e69d9a2049a682f5dba4e9dff17
   React-RCTAnimation: fe7005136b58f58871cab2f70732343b6e330d30
@@ -1141,9 +1141,9 @@ SPEC CHECKSUMS:
   React-RCTVibration: ea3a68a49873a54ced927c90923fc6932baf344a
   React-rncore: 9672a017af4a7da7495d911f0b690cbcae9dd18d
   React-runtimeexecutor: 369ae9bb3f83b65201c0c8f7d50b72280b5a1dbc
-  React-runtimescheduler: 2e57f5993dd86cbc04a960ca17e3b2182f4fb167
-  React-utils: 8a817965725654c2d902e156782910a37fee9a39
-  ReactCommon: 615f50d85bf18d6bd848c34b4e26c8b3df134731
+  React-runtimescheduler: 13ec09f2aa54c4ed7a9dfa1a37e95fee767223d3
+  React-utils: 61eddf0ea9ba85f59c63d2373772f466d95bff7d
+  ReactCommon: 1ce25e371c9453df3f222e28dcd5cbd52215dd6d
   ReactNativeART: 78edc68dd4a1e675338cd0cd113319cf3a65f2ab
   ReactNativeAudioToolkit: de9610f323e855ac6574be8c99621f3d57c5df06
   ReactNativeIncallManager: bfc9c67358cd524882a7c4116dcb311ac2293d4b
