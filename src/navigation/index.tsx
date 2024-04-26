@@ -207,7 +207,7 @@ const Navigation = () => {
             component={item.screen}
           />
         ))}
-        {renderCommonStack()}
+        {/* {renderCommonStack()} */}
       </DiscoverStack.Navigator>
     );
   };
@@ -222,7 +222,7 @@ const Navigation = () => {
             component={item.screen}
           />
         ))}
-        {renderCommonStack()}
+        {/* {renderCommonStack()} */}
       </ClubStack.Navigator>
     );
   };
@@ -231,7 +231,7 @@ const Navigation = () => {
     return (
       <CourseStack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name={SCREENS.COURSE_LIST} component={CourseListScreen} />
-        {renderCommonStack()}
+        {/* {renderCommonStack()} */}
       </CourseStack.Navigator>
     );
   };
@@ -240,7 +240,7 @@ const Navigation = () => {
     return (
       <HomeStack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name={SCREENS.HOME} component={HomeScreen} />
-        {renderCommonStack()}
+        {/* {renderCommonStack()} */}
       </HomeStack.Navigator>
     );
   };
