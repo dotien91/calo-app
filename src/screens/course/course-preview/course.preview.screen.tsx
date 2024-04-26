@@ -80,7 +80,6 @@ const CoursePreviewScreen = () => {
   }
   const _getCourseDetail = () => {
     getCourseDetail(course_id, params).then((res) => {
-      console.log("course detail", res);
       const data = res.data;
       if (!res.isError) {
         // setIsLoading(false);
