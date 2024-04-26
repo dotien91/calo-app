@@ -19,6 +19,7 @@ import TextBase from "@shared-components/TextBase";
 import Button from "@shared-components/button/Button";
 import CS from "@theme/styles";
 import { WindowWidth } from "@freakycoder/react-native-helpers";
+import { _setJson } from "@services/local-storage";
 
 export default function WellcomeScreen() {
   const theme = useTheme();
@@ -86,9 +87,9 @@ export default function WellcomeScreen() {
   ];
 
   const nextRight = () => {
-    // animate2()
-    if (currentPage > 3) {
-      NavigationService.replace(SCREENS.ACCOUNT_SETUP_SCREEN);
+    if (currentPage >= dataScreen.length - 1) {
+      NavigationService.replace(SCREENS.TABS);
+      _setJson("is_first_open_app", true);
     } else {
       const newPage = currentPage + 1;
       setcurrentPage(newPage);

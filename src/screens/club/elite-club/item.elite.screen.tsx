@@ -164,7 +164,7 @@ const ItemEliteScreen = () => {
           <TextBase
             fontSize={14}
             fontWeight="400"
-            title={`${dataGroup?.number_member_recent_join} ${translations.club.member}`}
+            title={`${dataGroup?.member_counter} ${translations.club.member}`}
           />
           {/* <TextBase
             fontSize={20}
