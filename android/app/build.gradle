@@ -105,13 +105,13 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    namespace "com.ikigroup.ikicoach"
+    namespace "com.ikigroup.ikigaicoachlite"
     defaultConfig {
-        applicationId 'com.ikigroup.ikicoach'
+        applicationId 'com.ikigroup.ikigaicoachlite'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 7
-        versionName "0.1.6"
+        versionCode 8
+        versionName "0.1.7"
         missingDimensionStrategy "store", "play"
     }
 

@@ -4,15 +4,15 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.ikigroup.ikicoach",
+  "applicationId": "com.ikigroup.ikigaicoachlite",
   "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 5,
-      "versionName": "0.1.4",
+      "versionCode": 7,
+      "versionName": "0.1.6",
       "outputFile": "app-release.apk"
     }
   ],

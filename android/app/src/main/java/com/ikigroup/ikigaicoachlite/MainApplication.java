@@ -1,4 +1,4 @@
-package com.ikigroup.ikicoach;
+package com.ikigroup.ikigaicoachlite;
 
 import android.app.Application;
 import com.facebook.react.PackageList;
