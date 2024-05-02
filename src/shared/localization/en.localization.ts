@@ -470,7 +470,7 @@ export default {
     salfLearning: "Self learning",
     callGroup: "Call group",
     offline: "Offline",
-    skills: "Skills",
+    skills: "Category",
     allSkills: "All",
     listening: "Listening",
     reading: "Reading",

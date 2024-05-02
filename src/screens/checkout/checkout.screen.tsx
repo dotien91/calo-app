@@ -388,6 +388,7 @@ const CheckoutScreen = () => {
           },
         },
       ],
+      external_app_name: "ieltshunter",
       invitation_code: userData?.ref_invitation_code || undefined,
     };
 
