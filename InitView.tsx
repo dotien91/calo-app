@@ -36,7 +36,6 @@ const InitView = () => {
   React.useEffect(() => {
     // StatusBar.setBarStyle(!isDarkMode ? "dark-content" : "light-content");
     StatusBar.setBarStyle("dark-content");
-
     if (isAndroid) {
       StatusBar.setBackgroundColor("rgba(0,0,0,0)");
       StatusBar.setTranslucent(true);
