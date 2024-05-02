@@ -14,6 +14,7 @@ import { palette } from "@theme/themes";
 import IconSvg from "assets/svg";
 import { TypedUser } from "models";
 import { ScreenWidth, WindowWidth } from "@freakycoder/react-native-helpers";
+// import TextViewCollapsed from "@screens/course/components/text.view.collapsed";
 import LinearGradient from "react-native-linear-gradient";
 import ButtonSvg from "@shared-components/button/ButtonIconSvg";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
@@ -27,6 +28,11 @@ interface HeaderDetailTeacherProps {
   data?: TypedUser;
 }
 
+// interface CertificatesProps {
+//   dateOfIssue: string;
+//   isValidated: boolean;
+//   name: string;
+// }
 
 const HeaderDetailTeacher = ({ data }: HeaderDetailTeacherProps) => {
   const linkFb = (data?.links?.[0]?.facebook || "").trim();
