@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { Text, TouchableOpacity, Dimensions, View, StatusBar } from "react-native";
+import {
+  Text,
+  TouchableOpacity,
+  Dimensions,
+  View,
+  StatusBar,
+} from "react-native";
 import { useTheme } from "@react-navigation/native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import * as NavigationService from "react-navigation-helpers";
@@ -95,10 +101,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
   // return <IapTest />
   return (
     <View style={CommonStyle.flex1}>
-        <StatusBar
-    backgroundColor="transparent"
-    barStyle="dark-content"
-  />
+      <StatusBar backgroundColor="transparent" barStyle="dark-content" />
       {renderHeader()}
       <CollapsibleHeaderTabView
         lazy={true}

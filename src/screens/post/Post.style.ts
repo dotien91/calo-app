@@ -176,10 +176,10 @@ const createStyles = (theme: ExtendedTheme) => {
     },
     btnAction: {
       ...CommonStyle.center,
-      height: 32,
+      height: 28,
       alignSelf: "flex-start",
       backgroundColor: colors.grey,
-      borderRadius: 4,
+      borderRadius: 8,
     },
     btnAdd: {
       ...CommonStyle.center,
