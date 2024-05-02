@@ -130,8 +130,8 @@ const SelectVideoHook = ({
             </Text>
           </View>
         ) : (
-          <View>
-            <Image source={{ uri: media.link }} style={styles.viewImage} />
+          <View style={styles.viewFull}>
+            <Image source={{ uri: media.link }} style={styles.viewImageFull} />
             {updatingVid && (
               <View style={styles.viewImageFill}>
                 <LoadingUpdateMedia />
@@ -200,6 +200,14 @@ const SelectVideoHook = ({
 export default SelectVideoHook;
 
 const styles = StyleSheet.create({
+  viewImageFull: {
+    height: (WindowWidth / 16) * 9,
+    backgroundColor: palette.placeholder,
+  },
+  viewFull: {
+    width: WindowWidth,
+    height: (WindowWidth / 16) * 9,
+  },
   viewImage: {
     height: (WindowWidth / 16) * 9,
     backgroundColor: palette.placeholder,
