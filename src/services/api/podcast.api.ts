@@ -1,6 +1,8 @@
+import { LANG, _getJson } from "@services/local-storage";
 import request, { METHOD } from "./api";
 
 export async function GetPodCastList(params) {
+  params.lang = _getJson(LANG) || "en";
   return request({
     method: METHOD.GET,
     urlPath: "podcast/list",

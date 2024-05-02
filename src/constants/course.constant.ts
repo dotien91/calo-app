@@ -749,6 +749,12 @@ export const listSkill = [
   { value: "Business", index: 5 },
 ];
 
+export const listLang = [
+  { value: "vi", label: "vi" },
+  { value: "en", label: "en" },
+  { value: "jp", label: "jp" },
+];
+
 export const timesInUtc = [
   {
     label: "0:00 - 1:00",

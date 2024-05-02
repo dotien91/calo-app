@@ -972,6 +972,7 @@ export default {
       "To complete the payment process, please make a transfer to the account number below:",
     content: "Content tranfer",
     courseNotAvailable: "Course not available",
+    selectlang: "Select language",
   },
   settingUser: {
     language: "Language",
@@ -1035,6 +1036,7 @@ export default {
   selectFile: "Upload file",
   en: "English",
   vi: "Vietnamese",
+  jp: "Japanese",
   leaderBoard: "Leader Board",
   inprogress: "Inprogress",
   complete: "Complete",

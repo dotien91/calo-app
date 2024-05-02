@@ -17,6 +17,7 @@ import useStore from "@services/zustand/store";
 import { updateSession } from "@services/api/notification.api";
 import { palette } from "@theme/themes";
 import TextBase from "@shared-components/TextBase";
+import { LANG, _setJson } from "@services/local-storage";
 
 interface TypeItemLanguage {
   label: string;
@@ -49,6 +50,7 @@ export default function ChooseLanguageScreen() {
   const handleKeepGoing = (value: string) => {
     translations.setLanguage(value);
     setLanguage(value);
+    _setJson(LANG, value);
     NavigationService.replace(SCREENS.INTRO);
     updateSession({ picked_language: value });
   };

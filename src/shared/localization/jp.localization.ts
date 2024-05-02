@@ -1334,6 +1334,7 @@ export default {
       "支払いを完了するために、以下のアカウントに振り込みを行ってください：",
     content: "振り込み内容",
     courseNotAvailable: "コースは利用できません",
+    selectlang: "言語を選択する",
   },
   settingUser: {
     language: "言語",
@@ -1399,6 +1400,7 @@ export default {
   selectFile: "ファイルを選択",
   en: "英語",
   vi: "ベトナム語",
+  jp: "日本語",
   leaderBoard: "リーダーボード",
   inprogress: "進行中",
   complete: "完了",

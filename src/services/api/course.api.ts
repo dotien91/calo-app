@@ -1,6 +1,8 @@
+import { LANG, _getJson } from "@services/local-storage";
 import request, { METHOD } from "./api";
 
 export async function getCourseList(data) {
+  data.lang = _getJson(LANG) || "en";
   return request({
     method: METHOD.POST,
     urlPath: "course/list",
@@ -10,6 +12,7 @@ export async function getCourseList(data) {
   });
 }
 export async function getCourseSuggest(data) {
+  data.lang = _getJson(LANG) || "en";
   return request({
     method: METHOD.POST,
     urlPath: "course/suggest",

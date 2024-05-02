@@ -73,8 +73,8 @@ const style = StyleSheet.create({
     gap: 12,
   },
   styleImg: {
-    height: 48,
-    width: 48,
+    height: 68,
+    width: 68,
     borderRadius: 8,
   },
   viewTxt: {

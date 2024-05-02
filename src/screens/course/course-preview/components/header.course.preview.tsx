@@ -238,15 +238,19 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
         } ${formatVNDate(data?.updatedAt)}`}</Text>
       </View>
 
-      <View style={styles.viewUpdate}>
-        <IconSvg name="icLanguage" size={20} color={palette.textOpacity8} />
-        <Text style={styles.txtUpdate}>{data?.country}</Text>
-      </View>
+      {!!data?.lang && (
+        <View style={styles.viewUpdate}>
+          <IconSvg name="icLanguage" size={20} color={palette.textOpacity8} />
+          <Text style={styles.txtUpdate}>{data.lang.toUpperCase()}</Text>
+        </View>
+      )}
 
-      <View style={styles.viewUpdate}>
-        <IconSvg name="icCC" size={20} color={palette.textOpacity8} />
-        <Text style={styles.txtUpdate}>{formatLanguage(data?.language)}</Text>
-      </View>
+      {!!data?.lang && (
+        <View style={styles.viewUpdate}>
+          <IconSvg name="icCC" size={20} color={palette.textOpacity8} />
+          <Text style={styles.txtUpdate}>{formatLanguage(data.lang)}</Text>
+        </View>
+      )}
       {data?.coupon_id == null ||
       (data?.coupon_id?.availableAt &&
         new Date(data?.coupon_id?.availableAt) > new Date()) ||

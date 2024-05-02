@@ -39,10 +39,10 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
   const userData = useStore((state) => state.userData);
 
   const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
+  const routes = [
     { key: "first", title: translations.homework.forYou },
     { key: "second", title: translations.homework.following },
-  ]);
+  ];
 
   const renderTabBar = (props) => (
     <TabBar

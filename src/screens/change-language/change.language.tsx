@@ -19,6 +19,7 @@ import {
   EnumStyleModalType,
   showSuperModal,
 } from "@helpers/super.modal.helper";
+import { LANG, _setJson } from "@services/local-storage";
 
 interface TypeItemLanguage {
   label: string;
@@ -51,6 +52,7 @@ const ChangeLanguage = () => {
 
   const switchLanguage = () => {
     setLanguage(selected);
+    _setJson(LANG, selected);
     translations.setLanguage(selected);
     updateSession({ picked_language: selected });
     RNRestart.Restart();

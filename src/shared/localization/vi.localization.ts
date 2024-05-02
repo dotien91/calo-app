@@ -1498,6 +1498,7 @@ export default {
       "Để hoàn tất quá trình thanh toán, vui lòng thực hiện chuyển khoản tới số tài khoản bên dưới:",
     content: "Nội dung chuyển khoản",
     courseNotAvailable: "Khóa học không khả dụng",
+    selectlang: "Chọn ngôn ngữ",
   },
   settingUser: {
     language: "Ngôn ngữ",
@@ -1563,6 +1564,7 @@ export default {
   selectFile: "Upload file",
   en: "Tiếng Anh",
   vi: "Tiếng Việt",
+  jp: "Tiếng Nhật",
   leaderBoard: "Bảng xếp hạng",
   inprogress: "Đang học",
   complete: "Hoàn thành",

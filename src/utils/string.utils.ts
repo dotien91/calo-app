@@ -10,6 +10,8 @@ export const formatLanguage = (countryId: string) => {
       return translations.en;
     case "vi":
       return translations.vi;
+    case "jo":
+      return translations.jp;
     default:
       return "";
   }
