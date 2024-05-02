@@ -388,7 +388,7 @@ const CheckoutScreen = () => {
           },
         },
       ],
-      external_app_name: "ieltshunter",
+      external_app_name: "ikicoach",
       invitation_code: userData?.ref_invitation_code || undefined,
     };
 
