@@ -228,9 +228,9 @@ export default {
     uploadImageFaild: "Image upload failed. Please try again!",
     uploadVideoFaild: "Video upload failed. Please try again!",
     sharePost:
-      "Join the IELTS Hunter community today and receive rewards of up to 1000 Points.",
+      "Join the IKIGAI Coach community today and receive rewards of up to 1000 Points.",
     shareCode: (txt: string) =>
-      `Learn IELTS with me and win rewards. Join and get up to 10,000 Coins.Enter referral code "${txt}" to receive rewards.`,
+      `Join the IKIGAI Coach community with me to receive rewards of up to 10000 Points. Enter the referral code "${txt}" to claim your reward.`,
   },
   navigation: {
     dashboard: "Dashboard",
@@ -918,7 +918,7 @@ export default {
     isFirst: "Already at the beginning of the list",
     isLast: "Already at the end of the list",
     shareAudio: (txt: string) =>
-      `Download the Ikigai Coach app now to listen to the best audiobooks: ${txt}`,
+      `Download the IKIGAI Coach app now to listen to the best audiobooks: ${txt}`,
   },
   livestream: {
     hello: "Hello!",
@@ -1018,7 +1018,7 @@ export default {
     descriptionTitle: "Explore App Features?",
   },
   recommendCourse: "Recommend course",
-  ieltsHunterLive: "Ikigai Coach Live",
+  ieltsHunterLive: "IKIGAI Coach Live",
   nameTutor: (name: string) => `${name}'s course`,
   titleLive: "Nguyen Trung Kien's IELTS Writing class",
   titleName: "IELTS Listening [MASTERCLASS]: Get Band 7+ in 2024",
@@ -1118,7 +1118,7 @@ export default {
       "Explore entrepreneurship, marketing, and management courses. Elevate your skills and thrive in the business world",
     text51: "Take Care of Your Health Anytime, Anywhere",
     text52:
-      "Explore top-notch health courses within IKIgai coach. It's where you can take charge of your health and self-development",
+      "Explore top-notch health courses within IKIGAI Coach. It's where you can take charge of your health and self-development",
   },
   discover: {
     study: "Study",
@@ -1371,7 +1371,7 @@ export default {
     orientation: "Orientation",
     health: "Health",
     charity: "Charity",
-    title2: "What do you want to use IKIgai Coach for?",
+    title2: "What do you want to use IKIGAI Coach for?",
     des: "We need to know this for regulatory reasons. And also, we’re curious!",
     lifeCoaching: "Life Coaching",
     personalDevelopment: "Personal Development",
@@ -1389,7 +1389,7 @@ export default {
     entre: "Entrepreneurship",
     leaderSkill: "Leadership Skills",
     workLife: "Work-Life Balance",
-    title3: "What brings you to IKIgai Coach?",
+    title3: "What brings you to IKIGAI Coach?",
     seeking: "Seeking balance",
     expl: "Exploring purpose",
     needing: "Needing support",

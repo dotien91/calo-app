@@ -257,22 +257,22 @@ const styles = StyleSheet.create({
     width: ScreenWidth,
     height: (WindowWidth / 375) * 720,
   },
-  textCer: {
-    ...CS.hnMedium,
-    ...CS.flex1,
-    fontSize: 16,
-    lineHeight: 24,
-    color: palette.textOpacity8,
-  },
+  // textCer: {
+  //   ...CS.hnMedium,
+  //   ...CS.flex1,
+  //   fontSize: 16,
+  //   lineHeight: 24,
+  //   color: palette.textOpacity8,
+  // },
   // viewCer: {
   //   marginTop: 8,
   //   marginBottom: 4,
   // },
-  // viewBtn: {
-  //   ...CS.center,
-  //   marginTop: 16,
-  //   marginBottom: 16,
-  // },
+  viewBtn: {
+    ...CS.center,
+    marginTop: 16,
+    marginBottom: 16,
+  },
 });
 
 export const PlayVideo = ({ onPress }) => {

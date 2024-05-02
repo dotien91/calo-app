@@ -4,7 +4,7 @@ import { translations } from "@localization";
 import { postShare } from "@services/api/post.api";
 import Share from "react-native-share";
 
-const BASEURL = "https://ieltshunter.io";
+const BASEURL = "https://ikigai.vn";
 
 export const sharePost = (post_slug: string) => {
   const shareOptions = {

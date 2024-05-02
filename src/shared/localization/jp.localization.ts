@@ -238,9 +238,9 @@ export default {
     uploadVideoFaild:
       "ビデオのアップロードに失敗しました。再試行してください！",
     sharePost:
-      "今日からIkigai coachコミュニティに参加して、最大1000ポイントの報酬を受け取りましょう。",
-    shareCode: (txt) =>
-      `私と一緒にIELTSを学び、報酬を受け取りましょう。${txt}という招待コードを入力して報酬を受け取りましょう。`,
+      "今日からIKIGAI Coachコミュニティに参加して、最大1000ポイントの報酬を受け取りましょう。",
+    shareCode: (txt: string) =>
+      `私と一緒にIKIGAI Coachコミュニティに参加して、最大10000ポイントの報酬を受け取ろう。リファラルコード "${txt}" を入力して報酬を受け取ってください。`,
   },
   navigation: {
     dashboard: "ダッシュボード",
@@ -1281,7 +1281,7 @@ export default {
     isFirst: "リストの先頭です",
     isLast: "リストの最後です",
     shareAudio: (txt: string) =>
-      `Ikigai Coachアプリをダウンロードして、最高のオーディオブックを聴こう: ${txt}`,
+      `IKIGAI Coachアプリをダウンロードして、最高のオーディオブックを聴こう: ${txt}`,
   },
   livestream: {
     hello: "こんにちは",
@@ -1382,7 +1382,7 @@ export default {
     descriptionTitle: "機能を探索",
   },
   recommendCourse: "おすすめコース",
-  ieltsHunterLive: "Ikigai Coach Live",
+  ieltsHunterLive: "IKIGAI Coach Live",
   nameTutor: (name: string) => `${name}のコース`,
   titleLive: "Nguyễn Trung KiênのIELTSライティングクラス",
   titleName: "IELTS Listening [MASTERCLASS]: 2024年にBand 7+を達成",
@@ -1482,7 +1482,7 @@ export default {
       "起業、マーケティング、管理に関するコースを探索してください。ビジネスの世界でスキルを向上させ、成長する",
     text51: "どこでもいつでも健康をケアする",
     text52:
-      "IKIgai coachでトップの健康コースを探索してください。あなた自身の健康を管理し、自己成長を促進する場所",
+      "IKIGAI Coachでトップの健康コースを探索してください。あなた自身の健康を管理し、自己成長を促進する場所",
   },
   discover: {
     study: "学習",
@@ -1695,7 +1695,7 @@ export default {
     orientation: "オリエンテーション",
     health: "健康",
     charity: "チャリティ",
-    title2: "IKIgai Coachをどのように使用したいですか？",
+    title2: "IKIGAI Coachをどのように使用したいですか？",
     des: "規制上の理由と、私たちが好奇心から知りたいからです！",
     lifeCoaching: "ライフコーチング",
     personalDevelopment: "個人的成長",
@@ -1713,7 +1713,7 @@ export default {
     entre: "起業",
     leaderSkill: "リーダーシップスキル",
     workLife: "ワークライフバランス",
-    title3: "IKIgai Coachに来た理由は何ですか？",
+    title3: "IKIGAI Coachに来た理由は何ですか？",
     seeking: "バランスを求める",
     expl: "目的を探求する",
     needing: "サポートが必要",

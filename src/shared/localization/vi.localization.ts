@@ -236,9 +236,9 @@ export default {
     uploadImageFaild: "Tải ảnh lên thất bại. Vui lòng thử lại!",
     uploadVideoFaild: "Tải video lên thất bại. Vui lòng thử lại!",
     sharePost:
-      "Tham gia cộng đồng Ikigai coach ngay hôm nay và nhận thưởng lên tới 1000 Point",
+      "Tham gia cộng đồng IKIGAI Coach ngay hôm nay và nhận thưởng lên tới 1000 Point",
     shareCode: (txt: string) =>
-      `Học IELTS và nhận thưởng cùng tớ. Tham gia và nhận thưởng lên tới 10000 Coin, Nhập mã giới thiệu "${txt}" để nhận thưởng`,
+      `Tham gia cộng đồng IKIGAI Coach cùng tớ để nhận thưởng lên tới 10000 Point nhé, Nhập mã giới thiệu "${txt}" để nhận thưởng.`,
   },
   navigation: {
     dashboard: "Trang chủ",
@@ -1444,7 +1444,7 @@ export default {
     isFirst: "Đã ở đầu danh sách",
     isLast: "Đã ở cuối danh sách",
     shareAudio: (txt: string) =>
-      `Tải ngay ứng dụng Ikigai Coach về để nghe những bản sách nói hay nhất: ${txt}`,
+      `Tải ngay ứng dụng IKIGAI Coach về để nghe những bản sách nói hay nhất: ${txt}`,
   },
   livestream: {
     hello: "Xin chào",
@@ -1546,7 +1546,7 @@ export default {
     descriptionTitle: "Khám phá các tính năng",
   },
   recommendCourse: "Đề xuất khoá học",
-  ieltsHunterLive: "Ikigai Coach Live",
+  ieltsHunterLive: "IKIGAI Coach Live",
   nameTutor: (name: string) => `Khoá học của ${name}`,
   titleLive: "Lớp viết IELTS của Nguyễn Trung Kiên",
   titleName: "IELTS Nghe [MASTERCLASS]: Đạt Band 7+ vào năm 2024",
@@ -1646,7 +1646,7 @@ export default {
       "Khám phá khóa học về khởi nghiệp, tiếp thị và quản lý. Nâng cao kỹ năng của bạn và phát triển trong thế giới kinh doanh",
     text51: "Chăm Sóc Sức Khỏe Của Bạn Bất Cứ Lúc Nào, Bất Cứ Nơi Đâu",
     text52:
-      "Khám phá các khóa học sức khỏe hàng đầu trong IKIgai coach. Đây là nơi bạn có thể tự quản lý sức khỏe và phát triển bản thân",
+      "Khám phá các khóa học sức khỏe hàng đầu trong IKIGAI Coach. Đây là nơi bạn có thể tự quản lý sức khỏe và phát triển bản thân",
   },
   discover: {
     study: "Học",
@@ -1860,7 +1860,7 @@ export default {
     orientation: "Định hướng",
     health: "Sức khỏe",
     charity: "Từ thiện",
-    title2: "Bạn muốn sử dụng IKIgai Coach để làm gì?",
+    title2: "Bạn muốn sử dụng IKIGAI Coach để làm gì?",
     des: "Chúng tôi cần biết điều này vì lý do quy định. Và cũng vì chúng tôi tò mò!",
     lifeCoaching: "Huấn luyện cuộc sống",
     personalDevelopment: "Phát triển cá nhân",
@@ -1878,7 +1878,7 @@ export default {
     entre: "Khởi nghiệp",
     leaderSkill: "Kỹ năng lãnh đạo",
     workLife: "Cân bằng giữa công việc và cuộc sống",
-    title3: "Bạn đến với IKIgai Coach vì lý do gì?",
+    title3: "Bạn đến với IKIGAI Coach vì lý do gì?",
     seeking: "Tìm kiếm sự cân bằng",
     expl: "Khám phá mục đích",
     needing: "Cần sự hỗ trợ",
