@@ -37,6 +37,7 @@ interface Style {
   styleTextErrorPaymentMethod: TextStyle;
   styleTextAddcode: TextStyle;
   container: ViewStyle;
+  note: ViewStyle;
 }
 
 export default (theme: ExtendedTheme) => {
@@ -222,7 +223,7 @@ export default (theme: ExtendedTheme) => {
       margin: 12,
       ...CS.hnMedium,
       color: colors.info,
-      marginLeft: 16,
+      marginLeft: 32,
     },
   });
 };
