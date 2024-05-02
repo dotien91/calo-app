@@ -37,8 +37,8 @@ const BuyButton = ({ data, type }: BuyButtonProps) => {
     }
     if (data?.type == EnumClassType.SelfLearning) {
       if (isAndroid()) {
-        alert("handle in app purchase")
-        return
+        alert("handle in app purchase");
+        return;
       }
       if (!data?.price_id) {
         showToast({

@@ -375,7 +375,7 @@ export default {
     teacher: "専門家",
     typeLearning: "学習のタイプ",
     formLearning: "学習形式",
-    skills: "コース",
+    skills: "カテゴリー",
     filterSpeaker: "地元の専門家",
     viewResult: (text: string) =>
       text != 0 ? text + "のコースを見る" : "結果が見つかりません",

@@ -536,7 +536,7 @@ export default {
     teacher: "Chuyên gia",
     typeLearning: "Loại hình huấn luyện",
     formLearning: "Hình thức học",
-    skills: "Course",
+    skills: "Danh mục",
     filterSpeaker: "Chuyên gia bản địa",
     viewResult: (text: string) =>
       text != 0 ? "Xem " + text + " khoá học" : "Không tìm thấy kết quả",
