@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef } from "react";
-import { FlatList, SafeAreaView, Text, View } from "react-native";
+import { FlatList, SafeAreaView } from "react-native";
 import { useTheme, useIsFocused } from "@react-navigation/native";
-import * as NavigationService from "react-navigation-helpers";
+// import * as NavigationService from "react-navigation-helpers";
 /**
  * ? Local Imports
  */
@@ -15,10 +15,11 @@ import { getListNotification } from "@services/api/notification.api";
 import EmptyResultView from "@shared-components/empty.data.component";
 import LoadingList from "@shared-components/loading.list.component";
 import { TypedNotification } from "models/notification.model";
-import IconSvg from "assets/svg";
-import { palette } from "@theme/themes";
-import PressableBtn from "@shared-components/button/PressableBtn";
+// import IconSvg from "assets/svg";
+// import { palette } from "@theme/themes";
+// import PressableBtn from "@shared-components/button/PressableBtn";
 import CS from "@theme/styles";
+import Header from "@shared-components/header/Header";
 
 interface ProfileScreenProps {}
 
@@ -75,20 +76,23 @@ const NotificationScreen: React.FC<ProfileScreenProps> = () => {
   //   const date = new Date().toISOString();
   //   setReadAllAt(date);
   // };
-  const goBack = () => {
-    NavigationService.goBack();
-  };
+  // const goBack = () => {
+  //   NavigationService.goBack();
+  // };
 
   const headerNotification = () => {
     return (
-      <View style={styles.viewHeader}>
-        <PressableBtn style={styles.buttonBack} onPress={goBack}>
-          <IconSvg name="icBack" size={24} color={palette.text} />
-        </PressableBtn>
-        <Text style={styles.txtheader}>
-          {translations.notifications.notifications}
-        </Text>
-      </View>
+      // <View style={styles.viewHeader}>
+      //   <PressableBtn style={styles.buttonBack} onPress={goBack}>
+      //     <IconSvg name="icBack" size={24} color={palette.text} />
+      //   </PressableBtn>
+      //   <Text style={styles.txtheader}>
+      //     {translations.notifications.notifications}
+      //   </Text>
+      // </View>
+      <>
+        <Header text={translations.notifications.notifications} />
+      </>
     );
   };
 

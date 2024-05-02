@@ -408,7 +408,7 @@ export default {
     life: "生活",
     finance: "財務",
     health: "健康",
-    bussiness: "ビジネス",
+    business: "ビジネス",
     pricePerCourse: "コースの価格",
     minimum: "最低",
     maximum: "最高",

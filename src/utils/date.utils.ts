@@ -210,8 +210,8 @@ export function getFormatDayNotification(
   return IsSameDay
     ? dayjs(time).format(sameDay)
     : IsSameYear
-    ? dayjs(time).format("HH:mm DD/MM")
-    : dayjs(time).format("HH:mm DD/MM/YYYY");
+    ? dayjs(time).format("HH:mm - DD/MM")
+    : dayjs(time).format("HH:mm - DD/MM/YYYY");
 }
 
 export function getDisplayDate(date: string) {
