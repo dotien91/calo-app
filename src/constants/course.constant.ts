@@ -149,8 +149,8 @@ export const filterTeacherKeys = [
         id: "Health",
       },
       {
-        name: translations.course.bussiness,
-        id: "Bussiness",
+        name: translations.course.business,
+        id: "Business",
       },
     ],
   },
