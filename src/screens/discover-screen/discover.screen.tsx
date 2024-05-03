@@ -366,7 +366,7 @@ const DiscoverScreen = () => {
                 borderBottomRightRadius: 12,
               }}
             >
-              <View style={{ alignItems: "center", marginTop: 30 }}>
+              <View style={{ alignItems: "center", marginTop: 25 }}>
                 <Text
                   numberOfLines={1}
                   style={{ ...CS.hnRegular, fontSize: 14, color: colors.text }}

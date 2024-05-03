@@ -394,7 +394,7 @@ export default {
     timeStart: "Time start",
     day: "Day",
     schedule: "Schedule",
-    courseMine: "Course mine",
+    courseMine: "My course",
     selectedTime: "Please choose at least one session",
     warningUploadCoverImageOrVideo:
       "Please select a video/photo introducing the course",
@@ -421,7 +421,7 @@ export default {
     rankTeacher: "Instructor ratings",
     student: "Students",
     courseContent: "Course content",
-    requestSkills: "Request skills",
+    requestSkills: "Category",
     information: "Information",
     instructor: "Instructor",
     titleModule: "Title Module",
