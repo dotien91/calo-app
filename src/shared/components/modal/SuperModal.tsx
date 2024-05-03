@@ -210,9 +210,6 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         {contentModalType == EnumModalContentType.MoreTeacher && (
           <ActionMore data={data} />
         )}
-        {contentModalType == EnumModalContentType.ChatRoom && (
-          <ChatRoomClass {...data} />
-        )}
         {contentModalType == EnumModalContentType.ListUser && (
           <ListUser {...data} />
         )}
@@ -233,9 +230,6 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         )}
         {contentModalType == EnumModalContentType.CustomView &&
           data.customView()}
-        {contentModalType == EnumModalContentType.ListCourse && (
-          <ListCourseLiveStream {...data} />
-        )}
         {contentModalType == EnumModalContentType.FilterAffiliate && (
           <FilterAffiliate data={data} />
         )}
