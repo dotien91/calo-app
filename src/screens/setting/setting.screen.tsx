@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { View, TouchableOpacity, Text, Image, ScrollView } from "react-native";
+import { View, TouchableOpacity, Text, ScrollView } from "react-native";
 import { useTheme } from "@react-navigation/native";
 // import crashlytics from "@react-native-firebase/crashlytics";
 
@@ -18,7 +18,6 @@ import useStore from "@services/zustand/store";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import CS from "@theme/styles";
 // import { USER_TOKEN, _setJson } from "@services/local-storage";
-import IconBtn from "@shared-components/button/IconBtn";
 import useUserHelper from "@helpers/hooks/useUserHelper";
 import {
   EnumModalContentType,
@@ -29,6 +28,8 @@ import {
 } from "@helpers/super.modal.helper";
 import { deleteUserById } from "@services/api/user.api";
 import { SafeAreaView } from "react-native-safe-area-context";
+import IconSvg from "assets/svg";
+import { palette } from "@theme/themes";
 
 interface SettingScreenProps {}
 
@@ -46,7 +47,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
   const listSetting = [
     {
       title: translations.settingUser.purchaseCouse,
-      icon: require("assets/images/book.png"),
+      iconName: "icBookFull",
       action: () => {
         if (userData?._id) {
           NavigationService.navigate(SCREENS.MY_COURES);
@@ -58,14 +59,14 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
     {
       title: translations.course.manageClass,
       id: 1,
-      iconFont: "book",
+      iconName: "icBookFull",
       action: () => {
         NavigationService.navigate(SCREENS.TEACHER_COURSES);
       },
     },
     {
       title: translations.settingUser.blackList,
-      icon: require("assets/images/blacklisticon.png"),
+      iconName: "icBlackList",
       action: () => {
         if (userData?._id) {
           NavigationService.navigate(SCREENS.BLACK_LIST);
@@ -75,22 +76,25 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
       },
     },
     {
-      icon: require("assets/images/settingicon.png"),
+      iconName: "icSetting",
       title: translations.settingUser.language,
       action: () => {
         NavigationService.navigate(SCREENS.CHANGELANGUAGE);
       },
     },
-    // {
-    //   title: translations.settingUser.private,
-    //   icon: require("assets/images/securityicon.png"),
-    //   action: () => {
-    //     NavigationService.navigate(SCREENS.PRIVATESETTING);
-    //   },
-    // },
+    {
+      title: translations.course.manageCourse,
+      id: 1,
+      iconName: "icBookFull",
+      action: () => {
+        NavigationService.navigate(SCREENS.PROFILE_CURRENT_USER, {
+          tab: "course",
+        });
+      },
+    },
     {
       title: translations.settingUser.support,
-      icon: require("assets/images/supporticon.png"),
+      iconName: "icSupport",
       action: () => {
         if (userData?._id) {
           NavigationService.navigate(SCREENS.CHAT_ROOM, {
@@ -105,14 +109,14 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
     },
     {
       title: translations.settingUser.aboutus,
-      icon: require("assets/images/aboutusicon.png"),
+      iconName: "icAboutUs",
       action: () => {
         NavigationService.navigate(SCREENS.ABOUT_ME);
       },
     },
     {
       title: translations.settingUser.discount,
-      iconFont: "gift",
+      iconName: "icGift",
       id: 2,
       action: () => {
         if (userData?._id) {
@@ -125,7 +129,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
     {
       showItemisLogin: true,
       title: translations.aboutUs.deleteacount,
-      iconFont: "trash-2",
+      iconName: "icTrash",
       id: 3,
       action: () => {
         deleteUser();
@@ -196,18 +200,11 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
               key={index}
             >
               <View style={styles.styleViewItemTitle}>
-                {item.iconFont ? (
-                  <IconBtn
-                    size={20}
-                    name={item.iconFont}
-                    customStyle={{ marginRight: 8 }}
-                  />
-                ) : (
-                  <Image
-                    style={{ height: 20, width: 20, marginRight: 8 }}
-                    source={item.icon}
-                  ></Image>
-                )}
+                <IconSvg
+                  name={item.iconName}
+                  size={20}
+                  color={palette.textOpacity8}
+                />
                 <Text style={styles.styleTextItemTitle}>{item.title}</Text>
               </View>
               <Icon

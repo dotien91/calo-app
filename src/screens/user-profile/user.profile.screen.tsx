@@ -501,8 +501,8 @@ const ProfileUser = (props: ProfileUserProps) => {
       style={{ backgroundColor: colors.background }}
     />
   );
-
-  const [index, setIndex] = React.useState(0);
+  const ind = route.params?.["tab"] === "course" ? 2 : 0;
+  const [index, setIndex] = React.useState(ind);
   const [routes, setRoute] = React.useState([
     { key: "first", title: translations.post.posts },
     { key: "third", title: translations.post.listPostSave },
@@ -604,12 +604,13 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   bottonAction: {
-    width: 116,
+    minWidth: 116,
     height: 40,
     borderRadius: 4,
     borderWidth: 2,
     borderColor: palette.mainColor2,
     ...CommonStyle.center,
+    paddingHorizontal: 8,
   },
   txtButton: {
     ...CommonStyle.hnBold,

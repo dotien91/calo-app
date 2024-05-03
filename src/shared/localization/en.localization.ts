@@ -563,6 +563,7 @@ export default {
     myCourse: "My course",
     noClass: "Empty class",
     manageClass: "Manage classes",
+    manageCourse: "Manage course",
     recommendCourse: "Recommend course",
     teachingTime: "Teaching time",
     sortByTutor: "Sort mentor by",

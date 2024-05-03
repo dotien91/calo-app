@@ -489,6 +489,7 @@ export default {
     myCourse: "私のコース",
     noClass: "クラスがありません",
     manageClass: "クラスを管理",
+    manageCourse: "コースを管理する",
     recommendCourse: "おすすめコース",
     teachingTime: "教えた時間",
     sortByTutor: "講師でソート",

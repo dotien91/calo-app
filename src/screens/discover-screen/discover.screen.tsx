@@ -62,6 +62,11 @@ const DiscoverScreen = () => {
 
   const listFeature = [
     {
+      icon: "icAudio",
+      title: translations.podcast.listPodcast,
+      screen: SCREENS.AUDIO_BOOK,
+    },
+    {
       icon: "icThreeBook",
       title: translations.discover.study,
       screen: SCREENS.COURSE_LIST,
@@ -86,11 +91,6 @@ const DiscoverScreen = () => {
       title: translations.discover.findTutor,
       screen: SCREENS.COURSE_CATEGORY,
       params: { defaultIndex: 1 },
-    },
-    {
-      icon: "icAudio",
-      title: translations.podcast.listPodcast,
-      screen: SCREENS.AUDIO_BOOK,
     },
   ];
 

@@ -1,6 +1,12 @@
 import React, { useCallback, useMemo } from "react";
 
-import { View, KeyboardAvoidingView, Platform } from "react-native";
+import {
+  View,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from "react-native";
 // import Orientation from 'react-native-orientation';
 import { useTheme, useRoute } from "@react-navigation/native";
 import KeepAwake from "react-native-keep-awake";
@@ -64,7 +70,9 @@ function App() {
           width={Device.width}
           height={Device.height}
           autoPlay={true}
-          onPress={() => {}}
+          onPress={() => {
+            Keyboard.dismiss();
+          }}
         />
       </View>
     );
@@ -93,24 +101,30 @@ function App() {
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "height" : undefined}
     >
-      <View style={styles.container}>
-        <PressableBtn
-          style={{
-            position: "absolute",
-            top: getStatusBarHeight() + 10,
-            right: 20,
-            zIndex: 1,
-          }}
-          onPress={() => {
-            closeLiveStream();
-          }}
-        >
-          <IconSvg name="icXShadow" size={20} color={palette.white} />
-        </PressableBtn>
-        {isStreaming() && renderVideoLive()}
-        {isStreaming() && renderChatView()}
-        {isStreaming() && <LiveBadge />}
-      </View>
+      <TouchableWithoutFeedback
+        onPress={() => {
+          Keyboard.dismiss();
+        }}
+      >
+        <View style={styles.container}>
+          <PressableBtn
+            style={{
+              position: "absolute",
+              top: getStatusBarHeight() + 10,
+              right: 20,
+              zIndex: 1,
+            }}
+            onPress={() => {
+              closeLiveStream();
+            }}
+          >
+            <IconSvg name="icXShadow" size={20} color={palette.white} />
+          </PressableBtn>
+          {isStreaming() && renderVideoLive()}
+          {isStreaming() && renderChatView()}
+          {isStreaming() && <LiveBadge />}
+        </View>
+      </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );
 }

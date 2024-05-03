@@ -12,6 +12,7 @@ import {
 import { useTheme, useRoute } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 import QRCode from "react-native-qrcode-svg";
+import Share from "react-native-share";
 
 import { translations } from "@localization";
 import createStyles from "./smart.banking.style";
@@ -40,7 +41,7 @@ const SmartBanking = () => {
   const price = route.params?.["price"] as number;
   const countCheckPaymentSuccess = React.useRef(null);
   const intervalCheckPaymentSuccess = React.useRef(null);
-  const [qrcode, setqeCode] = useState();
+  const [qrcode, setqrCode] = useState();
 
   const callbackPaymentSuccess = () => {
     NavigationService.navigate(SCREENS.PAYMENT_SUCCESS);
@@ -96,6 +97,7 @@ const SmartBanking = () => {
   //     },
   //   });
   // };
+  let refQr: any;
 
   const actionSend = () => {
     const data = {
@@ -135,19 +137,49 @@ const SmartBanking = () => {
       accountName: "CÔNG TY CỔ PHẦN IKIGROUP",
       acqId: 970422,
       amount: price,
-      addInfo: `IELTS ${short_id}`,
+      addInfo: `IKIGAI Coach ${short_id}`,
       format: "text",
       template: "compact",
     };
     genQr(data)
       .then((res: any) => {
         // console.log("json", JSON.stringify(res, null, 2));
-        setqeCode(res.data.data.qrCode);
+        setqrCode(res.data.data.qrCode);
         console.log("json", res.data.data.qrCode);
       })
       .catch((err: any) => {
         console.log(err);
       });
+  };
+
+  // const CACHE_IMAGE_FOLDER = fs.CachesDirectoryPath + "/image/";
+  const shareQR = () => {
+    // const newPath = `${fs.DocumentDirectoryPath}/${short_id}`;
+    refQr.toDataURL((data) => {
+      const shareImageBase64 = {
+        title: "QR",
+        message: "Save QR code",
+        url: `data:image/png;base64,${data}`,
+      };
+      Share.open(shareImageBase64);
+
+      // fs.writeFile(
+      //   `${CACHE_IMAGE_FOLDER}/${short_id}.png`,
+      //   // `data:image/png;base64,${data}`,
+      //   data,
+      //   "base64",
+      // );
+      // fs.writeFile(`img${short_id}`, `${data}`, "base64")
+      //   .then((success) => {
+      //     console.log("IMG COPIED!");
+      //     console.log(newPath);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err.message);
+      //   });
+
+      // return newPath;
+    });
   };
 
   return (
@@ -158,12 +190,14 @@ const SmartBanking = () => {
           {translations.payment.tocomplete}
         </Text>
         <View style={styles.styleViewCopyNumberBank}>
-          <Text style={styles.styleTextNumberBank}>818187777</Text>
           <TouchableOpacity
             onPress={() => {
               copyToClipboard("818187777");
+              showToast({ type: "info", message: "Coppied" });
             }}
+            style={CS.row}
           >
+            <Text style={styles.styleTextNumberBank}>818187777</Text>
             <Image
               style={{ height: 15.3, width: 13.79 }}
               source={require("assets/images/CopyIcon.png")}
@@ -180,11 +214,12 @@ const SmartBanking = () => {
         <TouchableOpacity
           style={{ flexDirection: "row", justifyContent: "center" }}
           onPress={() => {
-            copyToClipboard(`IELTS ${short_id}`);
+            copyToClipboard(`IKIGAI Coach ${short_id}`);
+            showToast({ type: "info", message: "Coppied" });
           }}
         >
           <Text numberOfLines={2} style={styles.styleTextNameBank}>
-            {translations.payment.content}: IELTS {short_id}
+            {translations.payment.content}: IKIGAI Coach {short_id}
           </Text>
           <Image
             style={{ height: 15.3, width: 13.79, marginLeft: 5 }}
@@ -192,12 +227,8 @@ const SmartBanking = () => {
           ></Image>
         </TouchableOpacity>
         <View style={{ marginBottom: 16 }}>
-          {/* <Image
-            style={{ height: 180, width: 180, marginBottom: 4 }}
-            source={{ uri: qrcode?.config?.data_content }}
-          ></Image> */}
-          <QRCode value={qrcode} />
-          <Text style={styles.styleTextSaveQRcode}>
+          <QRCode value={qrcode} getRef={(c) => (refQr = c)} />
+          <Text style={styles.styleTextSaveQRcode} onPress={shareQR}>
             {translations.payment.saveQRCode}
           </Text>
         </View>

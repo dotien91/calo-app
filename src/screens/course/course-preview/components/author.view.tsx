@@ -36,7 +36,13 @@ const AuthorView = ({ data }: AuthorViewProps) => {
       <View
         style={{ flexDirection: "row", alignItems: "center", marginTop: 8 }}
       >
-        <IconSvg name={nameIcon} size={24} color={palette.textOpacity6} />
+        <View style={{ width: 24, ...CS.center }}>
+          <IconSvg
+            name={nameIcon}
+            size={nameIcon === "icBookFull" ? 16 : 24}
+            color={palette.textOpacity6}
+          />
+        </View>
         <Text style={[styles.txtBodyContent, { marginLeft: 8 }]}>{text}</Text>
       </View>
     );

@@ -1,11 +1,10 @@
-import React from "react";
-import { View, Text } from "react-native";
+import React, { useCallback } from "react";
+import { View, Text, Image } from "react-native";
 
 import styles from "./LiveBadge.styles";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { palette } from "@theme/themes";
 import useStore from "@services/zustand/store";
-import AvatarPost from "@screens/home/components/post-item/avatar.post";
 import { translations } from "@localization";
 
 const LiveBadge = () => {
@@ -13,16 +12,28 @@ const LiveBadge = () => {
   const emojiNumber = useStore((state) => state.emojiNumber);
   const userLive = useStore((state) => state.userLive);
 
+  const ViewAvatar = useCallback(() => {
+    const sizeAvatar = 40;
+    const BORDER_AVATAR = sizeAvatar / 2;
+    return (
+      <Image
+        source={{
+          uri: userLive?.user_avatar || userLive?.user_avatar_thumbnail,
+        }}
+        style={{
+          width: sizeAvatar,
+          height: sizeAvatar,
+          borderRadius: BORDER_AVATAR,
+        }}
+      />
+    );
+  }, [userLive]);
+
   return (
     <>
       <View style={styles.viewName}>
         <View style={styles.avatar}>
-          <AvatarPost
-            data={userLive}
-            style={styles.avatar}
-            sizeAvatar={40}
-            showLevel
-          />
+          <ViewAvatar />
         </View>
         <View>
           <Text style={styles.txtName}>{userLive?.display_name}</Text>
