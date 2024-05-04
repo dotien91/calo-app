@@ -91,6 +91,7 @@ const ListChatLiveStream: React.FC<ChatViewProps> = ({
         renderItem={renderItem}
         contentContainerStyle={messages.length ? styles.listChat : {}}
         showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item?._id + ""}
         onEndReached={_getChatHistory}
         // ListEmptyComponent={ListEmptyComponent}
@@ -142,8 +143,7 @@ const ShoppingLiveProduct = React.memo(
           course_id: shoppingProduct._id,
           dataCourse: shoppingProduct,
         });
-      }, 500)
-
+      }, 500);
 
       console.log("isTeacher...", isTeacher);
     };

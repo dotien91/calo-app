@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 
 import Avatar from "@shared-components/user/Avatar";
 import { TypedChatHistory } from "models/chat.model";
@@ -15,7 +15,7 @@ const LiveStreamMessageItem = ({
   const sourceUri = createBy?.user_avatar || createBy?.user_avatar_thumbnail;
   const displayName = createBy?.display_name || " ";
   return (
-    <View style={styles.box}>
+    <Pressable style={styles.box}>
       {!!sourceUri && (
         <Avatar
           sourceUri={{
@@ -30,15 +30,11 @@ const LiveStreamMessageItem = ({
           }}
         />
       )}
-      <Text>
-        <Text style={styles.txtName}>
-          {displayName.length < 15
-            ? `${displayName} `
-            : `${displayName.substring(0, 12)}...`}{" "}
-        </Text>
+      <View>
+        <Text style={styles.txtName}>{displayName}</Text>
         <Text style={styles.txt}>{chat_content}</Text>
-      </Text>
-    </View>
+      </View>
+    </Pressable>
   );
 };
 
@@ -59,7 +55,7 @@ const styles: any = StyleSheet.create({
     ...CommonStyle.hnMedium,
     fontSize: 14,
     color: palette.white,
-    width: 100,
+    // width: 100,
     flex: 1,
   },
 });

@@ -11,6 +11,7 @@ export default () => {
       ...CommonStyle.flexCenter,
       paddingHorizontal: 16,
       gap: 8,
+      minHeight: 40,
     },
     textButton: {
       ...CommonStyle.hnSemiBold,

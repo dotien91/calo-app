@@ -149,8 +149,7 @@ function App() {
   }, [liveData]);
 
   const handleOnConnectionFailed = () => {
-    console.log("New handleOnConnectionFailed" );
-
+    console.log("New handleOnConnectionFailed");
   };
 
   // const handleOnConnectionStarted = (data: string) => {
@@ -162,7 +161,7 @@ function App() {
   // };
 
   const handleOnDisconnect = () => {
-    console.log("New handleOnDisconnect" );
+    console.log("New handleOnDisconnect");
   };
 
   const handleOnNewBitrateReceived = (data: number) => {
@@ -368,28 +367,42 @@ function App() {
             />
           )}
           {isStreaming ? (
-            <TouchableOpacity
-              onPress={onShouldCloseLive}
-              style={{
-                position: "absolute",
-                top: 82,
-                right: 20,
-                zIndex: 1,
-                backgroundColor: palette.red,
-                paddingHorizontal: 8,
-                paddingVertical: 4,
-                borderRadius: 4,
-              }}
-            >
-              <Text
+            <>
+              <IconSvg
                 style={{
-                  ...CS.hnBold,
-                  color: palette.white,
+                  position: "absolute",
+                  top: 50,
+                  right: 24,
+                  zIndex: 1,
+                }}
+                name="icCameraShadow"
+                color={colors.white}
+                size={32}
+                onPress={handleSwitchCamera}
+              />
+              <TouchableOpacity
+                onPress={onShouldCloseLive}
+                style={{
+                  position: "absolute",
+                  top: 82,
+                  right: 20,
+                  zIndex: 1,
+                  backgroundColor: palette.red,
+                  paddingHorizontal: 8,
+                  paddingVertical: 4,
+                  borderRadius: 4,
                 }}
               >
-                {translations.event.end}
-              </Text>
-            </TouchableOpacity>
+                <Text
+                  style={{
+                    ...CS.hnBold,
+                    color: palette.white,
+                  }}
+                >
+                  {translations.event.end}
+                </Text>
+              </TouchableOpacity>
+            </>
           ) : (
             <IconSvg
               style={{
@@ -405,26 +418,29 @@ function App() {
             />
           )}
           {permissionGranted && show && (
-          <RTMPPublisher
-            videoSettings={{
-              width: Device.width,
-              height: Device.height,
-              bitrate: 1000 * 1024,
-              audioBitrate: 128 * 1000
-            }}
-            ref={publisherRef}
-            streamURL={liveData?.livestream_data?.rtmp_url || "rtmp://broadcast.ieltshunter.io:1935/live"}
-            streamName={liveData?.livestream_data?.stream_key || ""}
-            style={styles.publisher_camera}
-            onDisconnect={handleOnDisconnect}
-            onConnectionFailed={handleOnConnectionFailed}
-            // onConnectionStarted={handleOnConnectionStarted}
-            // onConnectionSuccess={handleOnConnectionSuccess}
-            onNewBitrateReceived={handleOnNewBitrateReceived}
-            // onStreamStateChanged={handleOnStreamStateChanged}
-            // onBluetoothDeviceStatusChanged={handleBluetoothDeviceStatusChange}
-          />
-        )}
+            <RTMPPublisher
+              videoSettings={{
+                width: Device.width,
+                height: Device.height,
+                bitrate: 1000 * 1024,
+                audioBitrate: 128 * 1000,
+              }}
+              ref={publisherRef}
+              streamURL={
+                liveData?.livestream_data?.rtmp_url ||
+                "rtmp://broadcast.ieltshunter.io:1935/live"
+              }
+              streamName={liveData?.livestream_data?.stream_key || ""}
+              style={styles.publisher_camera}
+              onDisconnect={handleOnDisconnect}
+              onConnectionFailed={handleOnConnectionFailed}
+              // onConnectionStarted={handleOnConnectionStarted}
+              // onConnectionSuccess={handleOnConnectionSuccess}
+              onNewBitrateReceived={handleOnNewBitrateReceived}
+              // onStreamStateChanged={handleOnStreamStateChanged}
+              // onBluetoothDeviceStatusChanged={handleBluetoothDeviceStatusChange}
+            />
+          )}
           {isStreaming && renderChatView()}
           {isStreaming && <LiveBadge />}
 

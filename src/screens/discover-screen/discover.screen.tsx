@@ -64,11 +64,11 @@ const DiscoverScreen = () => {
       title: translations.podcast.listPodcast,
       screen: SCREENS.AUDIO_BOOK,
     },
-    {
-      icon: "icThreeBook",
-      title: translations.discover.study,
-      screen: SCREENS.COURSE_LIST,
-    },
+    // {
+    //   icon: "icThreeBook",
+    //   title: translations.discover.study,
+    //   screen: SCREENS.COURSE_LIST,
+    // },
     // {
     //   icon: "icGradution",
     //   title: translations.discover.ieltsPractice,

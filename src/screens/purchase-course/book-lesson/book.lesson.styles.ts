@@ -17,6 +17,9 @@ export default (theme: ExtendedTheme) => {
       marginTop: 16,
       // ...CS.safeAreaView,
     },
+    viewBtn: {
+      paddingHorizontal: 16,
+    },
     label: {
       ...CS.hnMedium,
       color: colors.text,

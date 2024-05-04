@@ -98,6 +98,7 @@ const LeaderBoard = () => {
     return (
       <>
         <ItemLeaderBoard />
+        {isLoading && <LoadingList numberItem={2} />}
       </>
     );
   };
@@ -116,7 +117,6 @@ const LeaderBoard = () => {
     >
       <View style={{ flex: 1 }}>
         <Header text={translations.leaderBoard} />
-        {isLoading && <LoadingList numberItem={2} />}
         {/* {renderLeaderBoard()} */}
         <FlatList
           ListHeaderComponent={renderLeaderBoard()}

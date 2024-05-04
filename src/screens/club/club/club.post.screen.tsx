@@ -174,6 +174,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     minHeight: 30,
     gap: 8,
+    paddingVertical: 8,
   },
   styleBtn: {
     borderRadius: 32,
