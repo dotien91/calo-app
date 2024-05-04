@@ -60,7 +60,6 @@ const ListPost = ({ isFollowingPost, id, isProfile }: ListPostProps) => {
     renderFooterComponent,
     _requestData,
   } = useListData<TypedPost>(paramsRequest, getListPost, []);
-
   useEffect(() => {
     const typeEmit = isFollowingPost
       ? "reload_following_post"
@@ -70,7 +69,6 @@ const ListPost = ({ isFollowingPost, id, isProfile }: ListPostProps) => {
       eventEmitter.off(typeEmit, onRefresh);
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
   const onRefresh = () => {
     _requestData();
     setTimeout(() => {
@@ -124,7 +122,7 @@ const ListPost = ({ isFollowingPost, id, isProfile }: ListPostProps) => {
           ref={listRef}
           data={listData}
           renderItem={renderItem}
-          onEndReachedThreshold={0}
+          onEndReachedThreshold={0.8}
           onEndReached={onEndReach}
           showsVerticalScrollIndicator={false}
           removeClippedSubviews={true}
@@ -149,7 +147,7 @@ const ListPost = ({ isFollowingPost, id, isProfile }: ListPostProps) => {
         ref={listRef}
         data={listData}
         renderItem={renderItem}
-        onEndReachedThreshold={0}
+        onEndReachedThreshold={0.8}
         onEndReached={onEndReach}
         showsVerticalScrollIndicator={false}
         removeClippedSubviews={true}

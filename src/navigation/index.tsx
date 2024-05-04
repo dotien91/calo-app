@@ -27,6 +27,7 @@ import {
   PracticeTestData,
   StackIntroData,
 } from "./navigation.constant";
+
 // import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -267,6 +268,8 @@ const Navigation = () => {
     >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {renderStackIntro()}
+        {/* <Stack.Screen name={SCREENS.VIEW_LIVE_STREAM} component={ViewStreamScreen} /> */}
+
         <Stack.Screen name={SCREENS.TABS} component={TabNavigation} />
         {renderCommonStack()}
       </Stack.Navigator>

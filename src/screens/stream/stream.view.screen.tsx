@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from "react";
 
-import { View, KeyboardAvoidingView, Platform } from "react-native";
+import { View, KeyboardAvoidingView, Platform, Text, ActivityIndicator } from "react-native";
 // import Orientation from 'react-native-orientation';
 import { useTheme, useRoute } from "@react-navigation/native";
 import KeepAwake from "react-native-keep-awake";
@@ -21,11 +21,17 @@ import PressableBtn from "@shared-components/button/PressableBtn";
 import IconSvg from "assets/svg";
 import { palette } from "@theme/themes";
 import { getStatusBarHeight } from "react-native-iphone-screen-helper";
+import { translations } from "@localization";
+import TextBase from "@shared-components/TextBase";
 
-function App() {
+function StreamViewScreen() {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const route = useRoute();
+  const [isReady, setIsReady] = React.useState(false)
+  const checkReadyTmp = React.useRef(null)
+  const retryTmp = React.useRef(false)
+
   const liveStreamId = route.params?.["liveStreamId"];
 
   const { liveData } = useLiveStream({
@@ -34,17 +40,41 @@ function App() {
   });
   const setEmojiNumber = useStore((state) => state.setEmojiNumber);
 
-  console.log("liveDataliveData", liveData);
+  const isStreamReady = (data) => {
+    var startDate = new Date(data.createdAt);
+    // Do your operations
+    var endDate = new Date();
+    var seconds = (endDate.getTime() - startDate.getTime()) / 1000;
+    if (seconds > 60) clearInterval(checkReadyTmp.current);
+    return seconds > 13
+  }
+
   React.useEffect(() => {
-    return () => {
-      setEmojiNumber(0);
-    };
-  }, []);
+    if (!liveData) return
+    checkReadyTmp.current = setInterval(() => {
+      if (isStreamReady(liveData)) {
+        setIsReady(true);
+        clearInterval(checkReadyTmp.current);
+        checkReadyTmp.current = null
+      }
+    }, 500)
+  }, [liveData]);
+
+
   React.useEffect(() => {
     requestViewStream({ livestream_id: liveStreamId });
     KeepAwake.activate();
     return () => {
       KeepAwake.deactivate();
+      setEmojiNumber(0);
+      if (checkReadyTmp.current) {
+        clearInterval(checkReadyTmp.current);
+        checkReadyTmp.current = null
+      }
+      if (retryTmp.current) {
+        clearInterval(retryTmp.current);
+        retryTmp.current = null
+      }
     };
   }, []);
 
@@ -52,20 +82,50 @@ function App() {
     return !!liveData?._id;
   }, [liveData?._id]);
 
+  const onLoad = () => {
+    if (retryTmp.current) {
+      clearInterval(retryTmp.current)
+      retryTmp.current = null
+    }
+  }
+
+  const onError = () => {
+    if (retryTmp.current) {
+      clearInterval(retryTmp.current)
+      retryTmp.current = null
+    }
+    retryTmp.current = setInterval(() => {
+      setIsReady(false)
+      setTimeout(() => {
+        setIsReady(true)
+      }, 800)
+    }, 8000)
+  }
+
+
   const renderVideoLive = () => {
     return (
       <View style={{ flex: 1, padding: 30, ...CommonStyle.flexCenter }}>
-        <VideoPlayer
+        {isReady ? <VideoPlayer
           mediaUrl={liveData.livestream_data?.m3u8_url}
           // mediaUrl={
           //   "https://live-par-2-cdn-alt.livepush.io/live/bigbuckbunnyclip/index.m3u8"
           // }
-          resizeMode="cover"
+          resizeMode="contain"
           width={Device.width}
           height={Device.height}
           autoPlay={true}
-          onPress={() => {}}
-        />
+          onLoad={onLoad}
+          onError={onError}
+
+        /> : <View style={{ backgroundColor: 'rgba(255,255,255,0.2)', padding: 16, borderRadius: 12, ...CommonStyle.center }}>
+          <View style={CommonStyle.flexCenter}>
+            <ActivityIndicator size={"large"} color={palette.white} />
+          </View>
+          <TextBase color="white" fontSize={20} >
+            {translations.liveStream.streamPending}
+          </TextBase>
+        </View>}
       </View>
     );
   };
@@ -115,4 +175,4 @@ function App() {
   );
 }
 
-export default React.forwardRef(App);
+export default React.forwardRef(StreamViewScreen);

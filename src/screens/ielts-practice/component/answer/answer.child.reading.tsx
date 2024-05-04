@@ -31,7 +31,6 @@ const AnswerChildDropdown = ({
   setAnsweData,
   answer,
 }: IAnswerChildDropdown) => {
-  console.log("@222222", answer);
   const _onChangeText = (v, { index }) => {
     setAnsweData({ index, content: v });
   };

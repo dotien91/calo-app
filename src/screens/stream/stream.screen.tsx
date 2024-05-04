@@ -40,6 +40,7 @@ import { palette } from "@theme/themes";
 import { SCREENS } from "constants";
 import IconSvg from "assets/svg";
 import PressableBtn from "@shared-components/button/PressableBtn";
+import { Device } from "@utils/device.ui.utils";
 
 function App() {
   const publisherRef = useRef<RTMPPublisherRefProps>(null);
@@ -145,9 +146,10 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [liveData]);
 
-  // const handleOnConnectionFailed = () => {
-  //   showToast({ type: "error" });
-  // };
+  const handleOnConnectionFailed = () => {
+    console.log("New handleOnConnectionFailed" );
+
+  };
 
   // const handleOnConnectionStarted = (data: string) => {
   //   console.log("Connection Started: =====" + data);
@@ -157,13 +159,13 @@ function App() {
   //   console.log("Connected====");
   // };
 
-  // const handleOnDisconnect = () => {
-  //   showToast({ type: "error" });
-  // };
+  const handleOnDisconnect = () => {
+    console.log("New handleOnDisconnect" );
+  };
 
-  // const handleOnNewBitrateReceived = (data: number) => {
-  //   console.log("New Bitrate Received: =====" + data);
-  // };
+  const handleOnNewBitrateReceived = (data: number) => {
+    console.log("New Bitrate Received: =====" + data);
+  };
 
   // const handleOnStreamStateChanged = (data: StreamState) => {
   //   console.log("Stream Status: =====" + data);
@@ -183,7 +185,7 @@ function App() {
       // if (listFile.length > 0) {
       _createLiveStream(
         inputRef.current.value || translations.livestream.hello,
-        listFile[listFile.length - 1]?._id,
+        listFile[listFile.length - 1]?.uri,
       );
       // } else {
       //   showToast({
@@ -397,15 +399,21 @@ function App() {
         )}
         {permissionGranted && show && (
           <RTMPPublisher
+            videoSettings={{
+              width: Device.width,
+              height: Device.height,
+              bitrate: 1000 * 1024,
+              audioBitrate: 128 * 1000
+            }}
             ref={publisherRef}
-            streamURL={liveData?.livestream_data?.rtmp_url || ""}
+            streamURL={liveData?.livestream_data?.rtmp_url || "rtmp://broadcast.ieltshunter.io:1935/live"}
             streamName={liveData?.livestream_data?.stream_key || ""}
             style={styles.publisher_camera}
-            // onDisconnect={handleOnDisconnect}
-            // onConnectionFailed={handleOnConnectionFailed}
+            onDisconnect={handleOnDisconnect}
+            onConnectionFailed={handleOnConnectionFailed}
             // onConnectionStarted={handleOnConnectionStarted}
             // onConnectionSuccess={handleOnConnectionSuccess}
-            // onNewBitrateReceived={handleOnNewBitrateReceived}
+            onNewBitrateReceived={handleOnNewBitrateReceived}
             // onStreamStateChanged={handleOnStreamStateChanged}
             // onBluetoothDeviceStatusChanged={handleBluetoothDeviceStatusChange}
           />

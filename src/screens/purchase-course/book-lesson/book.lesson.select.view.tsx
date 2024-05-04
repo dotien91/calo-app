@@ -245,7 +245,6 @@ const BookLessonSelectView: React.FC<BookLessonSelectViewProps> = () => {
     const timesAvailable = getLabelHourLesson(
       times?.[duration - 1]?.times_in_utc || [],
     );
-
     return (
       <View style={styles.selectBox}>
         {timesAvailable.map((item) => renderTimeBtn(item))}

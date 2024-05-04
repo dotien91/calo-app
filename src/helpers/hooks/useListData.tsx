@@ -99,6 +99,7 @@ export function useListData<T>(
     if (!stateListData.isLastPage && !isFetching.current) {
       isFetching.current = true;
       setIsLoadmore(true);
+
       await requestData({ page: stateListData.nextPage + "", ...params }).then(
         (res: any) => {
           setIsLoadmore(false);

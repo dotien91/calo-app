@@ -137,10 +137,13 @@ const ShoppingLiveProduct = React.memo(
 
     const _onPress = () => {
       hideLiveStream?.();
-      NavigationService.navigate(SCREENS.COURSE_DETAIL, {
-        course_id: shoppingProduct._id,
-        dataCourse: shoppingProduct,
-      });
+      setTimeout(() => {
+        NavigationService.navigate(SCREENS.COURSE_DETAIL, {
+          course_id: shoppingProduct._id,
+          dataCourse: shoppingProduct,
+        });
+      }, 500)
+
 
       console.log("isTeacher...", isTeacher);
     };

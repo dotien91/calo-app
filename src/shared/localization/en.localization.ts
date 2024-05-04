@@ -870,6 +870,7 @@ export default {
     change: "Change",
     warning: "Select photos before going live",
     likes: "likes",
+    streamPending: "The livestream session will begin shortly",
   },
   noResult: "No result found!",
   results: "results",

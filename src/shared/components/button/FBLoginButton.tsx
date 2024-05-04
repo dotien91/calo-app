@@ -35,7 +35,6 @@ const FBLoginButton = ({ showText }: BtnProps) => {
         if (!isCancelled) {
           AccessToken.getCurrentAccessToken().then(
             async (data: AccessToken | null) => {
-              closeSuperModal();
               if (data?.accessToken) {
                 const user_token = data?.accessToken.toString();
                 const paramsLogin = {
@@ -43,11 +42,12 @@ const FBLoginButton = ({ showText }: BtnProps) => {
                   ...getDeviceInfo(),
                 };
                 loginWithFB(paramsLogin).then((res) => {
-                  console.log("paramsLoginparamsLogin", { res, paramsLogin });
                   if (!res.isError) {
                     const user_token = res.headers["x-authorization"];
                     handleLogin(user_token);
+                    closeSuperModal();
                   } else {
+                    closeSuperModal();
                     showToast({
                       type: "error",
                       ...res,
@@ -55,6 +55,7 @@ const FBLoginButton = ({ showText }: BtnProps) => {
                   }
                 });
               } else {
+                closeSuperModal();
                 showToast({
                   type: "error",
                   ...res,
