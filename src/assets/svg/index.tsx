@@ -172,8 +172,10 @@ import icLocation from "./icon-location.svg";
 import icLocated from "./icon-located.svg";
 import icGoNext from "./icon-gonext.svg";
 import icPreview from "./icon-preview.svg";
+import icVip from "./icon-vip.svg";
 
 const Icons = {
+  icVip,
   icPreview,
   icCoach,
   icCoachBlur,

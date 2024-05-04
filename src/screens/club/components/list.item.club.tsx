@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { ImageBackground, StyleSheet, View } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
 import TextBase from "@shared-components/TextBase";
@@ -9,6 +9,8 @@ import { SCREENS } from "constants";
 import { convertLastActive } from "@utils/time.utils";
 import ImageLoad from "@shared-components/image-load/ImageLoad";
 import { palette } from "@theme/themes";
+import Button from "@shared-components/button/Button";
+import IconSvg from "assets/svg";
 
 const ItemClub = ({ data }: { data: any }) => {
   const goToClubScreen = () => {
@@ -17,18 +19,68 @@ const ItemClub = ({ data }: { data: any }) => {
         id: data._id,
         name: data?.name,
         item: data,
+        isVIP: data?.isEliteClub,
       });
     } else {
       NavigationService.navigate(SCREENS.ELITE_CLUB, {
         id: data._id,
         name: data?.name,
         item: data,
+        isVIP: data?.isEliteClub,
       });
     }
   };
   const isLeader = React.useMemo(() => {
     return data?.attend_data?.tier == 3;
   }, [data]);
+
+  if (data?.isEliteClub) {
+    return (
+      <View style={style.viewVip}>
+        <View style={style.viewBg}>
+          <ImageBackground
+            source={require("../../../assets/images/bgvipelitclub.png")}
+            borderTopLeftRadius={8}
+            borderTopRightRadius={8}
+            style={style.viewBgVip}
+          />
+        </View>
+
+        <View style={style.viewAva}>
+          <ImageLoad style={style.styleImgVip} source={{ uri: data?.cover }} />
+        </View>
+
+        <View style={style.viewTextVip}>
+          <View style={style.txtVip}>
+            <TextBase numberOfLines={3} fontSize={16} fontWeight="700">
+              {data?.name}{" "}
+              <IconSvg name="icVip" size={24} color={palette.primary} />
+            </TextBase>
+            {!!data?.attend_data ? (
+              <TextBase fontSize={12} fontWeight="400">
+                {`${
+                  isLeader
+                    ? translations.club.created
+                    : translations.club.attended
+                } ${convertLastActive(
+                  isLeader ? data?.createdAt : data?.attend_data?.createdAt,
+                )} ${translations.club.ago}`}
+              </TextBase>
+            ) : (
+              <View style={{ height: 14 }}></View>
+            )}
+          </View>
+
+          <Button
+            onPress={goToClubScreen}
+            style={style.btnJoin}
+            text={translations.club.joinGruop}
+            type={data?.attend_data ? "primary" : "inactive"}
+          />
+        </View>
+      </View>
+    );
+  }
 
   return (
     <View style={style.container}>
@@ -50,13 +102,6 @@ const ItemClub = ({ data }: { data: any }) => {
             </TextBase>
           )}
         </View>
-        {data?.isEliteClub && (
-          <View style={style.vipLabel}>
-            <TextBase fontWeight="600" fontSize={12} color={"white"}>
-              VIP
-            </TextBase>
-          </View>
-        )}
       </PressableBtn>
     </View>
   );
@@ -80,13 +125,41 @@ const style = StyleSheet.create({
   viewTxt: {
     flex: 1,
   },
-  vipLabel: {
-    paddingVertical: 3,
-    paddingHorizontal: 5,
-    borderRadius: 4,
+  viewVip: {
+    height: 295,
+    borderRadius: 8,
+    backgroundColor: palette.background,
+    borderWidth: 1,
+    borderColor: palette.borderColor2,
+  },
+  viewBg: {
+    flex: 1,
+  },
+  viewTextVip: {
+    flex: 1,
+    marginHorizontal: 16,
+  },
+  viewBgVip: {
+    height: 150,
+  },
+  viewAva: {
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  styleImgVip: {
+    height: 64,
+    width: 64,
+    borderRadius: 100,
+    zIndex: 99,
+    borderWidth: 4,
+    borderColor: palette.white,
+  },
+  btnJoin: {
     backgroundColor: palette.primary,
-    position: "absolute",
-    right: 0,
-    top: 0,
+    alignItems: "center",
+  },
+  txtVip: {
+    alignItems: "center",
+    marginBottom: 8,
   },
 });

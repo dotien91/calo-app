@@ -3,7 +3,6 @@ import {
   View,
   Text,
   SafeAreaView,
-  Dimensions,
   TouchableOpacity,
   ScrollView,
   StyleSheet,
@@ -14,7 +13,6 @@ import { useTheme } from "@react-navigation/native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 import IconSvg from "assets/svg";
-import Avatar from "@shared-components/user/Avatar";
 import CS from "@theme/styles";
 import { getListLeaderBoard } from "@services/api/user.api";
 import { translations } from "@localization";
@@ -22,9 +20,9 @@ import { SCREENS } from "constants";
 import useStore from "@services/zustand/store";
 import LoadingList from "@shared-components/loading.list.component";
 import { palette } from "@theme/themes";
+import ItemLeaderBoard from "./components/item.leader.board";
 
 const DiscoverScreen = () => {
-  const screenWidth = Dimensions.get("window").width;
   const theme = useTheme();
   const { colors } = theme;
 
@@ -157,251 +155,14 @@ const DiscoverScreen = () => {
             ></Icon>
           </TouchableOpacity>
         </View>
-        <View style={{ flex: 1, flexDirection: "row" }}>
-          <View style={{ flex: 1 / 3, justifyContent: "flex-end" }}>
-            <View style={{ zIndex: 1 }}>
-              <Avatar
-                style={{
-                  zIndex: 99,
-                  width: 64,
-                  height: 64,
-                  borderRadius: 32,
-                  position: "absolute",
-                  bottom: -25,
-                  left: screenWidth / 6 - 32 - 4,
-                  borderWidth: 3,
-                  borderColor: colors.blueBorder,
-                }}
-                sourceUri={{
-                  uri: `${listRank[1]?.user_avatar}`,
-                }}
-                resizeMode={"cover"}
-              ></Avatar>
-              <View
-                style={{
-                  zIndex: 99,
-                  backgroundColor: colors.blueBorder,
-                  height: 20,
-                  width: 20,
-                  borderRadius: 10,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  position: "absolute",
-                  bottom: -25,
-                  right: screenWidth / 6 - 32 - 4,
-                }}
-              >
-                <Text
-                  style={{ ...CS.hnRegular, fontSize: 14, color: colors.white }}
-                >
-                  2
-                </Text>
-              </View>
-            </View>
-            <View
-              style={{
-                backgroundColor: colors.skyblue,
-                flex: 1 / 2,
-                borderTopLeftRadius: 12,
-                borderBottomLeftRadius: 12,
-              }}
-            >
-              <View style={{ alignItems: "center", marginTop: 30 }}>
-                <Text
-                  numberOfLines={2}
-                  style={{ ...CS.hnRegular, fontSize: 14, color: colors.text }}
-                >
-                  {listRank[1]?.display_name}
-                </Text>
-                <Text
-                  style={{
-                    ...CS.hnSemiBold,
-                    fontSize: 20,
-                    color: colors.blueBorder,
-                  }}
-                >
-                  {listRank[1]?.point}
-                </Text>
-                <Text
-                  style={{
-                    ...CS.hnRegular,
-                    fontSize: 14,
-                    color: colors.textOpacity8,
-                  }}
-                >
-                  {translations.discover.poits}
-                </Text>
-              </View>
-            </View>
-          </View>
-          <View style={{ flex: 1 / 3, justifyContent: "flex-end" }}>
-            <View style={{ zIndex: 1 }}>
-              <Avatar
-                style={{
-                  zIndex: 99,
-                  width: 88,
-                  height: 88,
-                  borderRadius: 44,
-                  position: "absolute",
-                  bottom: -40,
-                  left: screenWidth / 6 - 44 - 4,
-                  borderWidth: 3,
-                  borderColor: colors.gold,
-                }}
-                sourceUri={{
-                  uri: `${listRank[0]?.user_avatar_thumbnail}`,
-                }}
-                resizeMode={"cover"}
-              ></Avatar>
-
-              <IconSvg
-                style={{
-                  position: "absolute",
-                  bottom: 50,
-                  left: screenWidth / 6 - 13 - 8,
-                  zIndex: 99,
-                }}
-                name="icKing"
-                size={30}
-                color={colors.gold}
-              ></IconSvg>
-              <View
-                style={{
-                  zIndex: 99,
-                  backgroundColor: colors.gold,
-                  height: 20,
-                  width: 20,
-                  borderRadius: 10,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  position: "absolute",
-                  bottom: -38,
-                  right: screenWidth / 6 - 44 - 4,
-                }}
-              >
-                <Text
-                  style={{ ...CS.hnRegular, fontSize: 14, color: colors.white }}
-                >
-                  1
-                </Text>
-              </View>
-            </View>
-            <View
-              style={{
-                backgroundColor: colors.skin,
-                flex: 0.7,
-                borderTopLeftRadius: 30,
-                borderTopRightRadius: 32,
-              }}
-            >
-              <View style={{ alignItems: "center", marginTop: 45 }}>
-                <Text
-                  numberOfLines={3}
-                  style={{ ...CS.hnRegular, fontSize: 14, color: colors.text }}
-                >
-                  {listRank[0]?.display_name}
-                </Text>
-                <Text
-                  style={{ ...CS.hnSemiBold, fontSize: 20, color: colors.gold }}
-                >
-                  {listRank[0]?.point}
-                </Text>
-                <Text
-                  style={{
-                    ...CS.hnRegular,
-                    fontSize: 14,
-                    color: colors.textOpacity8,
-                  }}
-                >
-                  {translations.discover.poits}
-                </Text>
-              </View>
-            </View>
-          </View>
-          <View style={{ flex: 1 / 3, justifyContent: "flex-end" }}>
-            <View style={{ zIndex: 1 }}>
-              <Avatar
-                style={{
-                  zIndex: 99,
-                  width: 56,
-                  height: 56,
-                  borderRadius: 28,
-                  position: "absolute",
-                  bottom: -22,
-                  left: screenWidth / 6 - 28 - 4,
-                  borderWidth: 3,
-                  borderColor: colors.green,
-                }}
-                sourceUri={{
-                  uri: `${listRank[2]?.user_avatar_thumbnail}`,
-                }}
-                resizeMode={"cover"}
-              ></Avatar>
-              <View
-                style={{
-                  zIndex: 99,
-                  backgroundColor: colors.green,
-                  height: 20,
-                  width: 20,
-                  borderRadius: 10,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  position: "absolute",
-                  bottom: -22,
-                  right: screenWidth / 6 - 28 - 8,
-                }}
-              >
-                <Text
-                  style={{ ...CS.hnRegular, fontSize: 14, color: colors.white }}
-                >
-                  3
-                </Text>
-              </View>
-            </View>
-            <View
-              style={{
-                backgroundColor: colors.greenOpa,
-                flex: 0.4,
-                borderTopRightRadius: 12,
-                borderBottomRightRadius: 12,
-              }}
-            >
-              <View style={{ alignItems: "center", marginTop: 25 }}>
-                <Text
-                  numberOfLines={1}
-                  style={{ ...CS.hnRegular, fontSize: 14, color: colors.text }}
-                >
-                  {listRank[2]?.display_name}
-                </Text>
-                <Text
-                  style={{
-                    ...CS.hnSemiBold,
-                    fontSize: 20,
-                    color: colors.greenText,
-                  }}
-                >
-                  {listRank[2]?.point}
-                </Text>
-                <Text
-                  style={{
-                    ...CS.hnRegular,
-                    fontSize: 14,
-                    color: colors.textOpacity8,
-                  }}
-                >
-                  {translations.discover.poits}
-                </Text>
-              </View>
-            </View>
-          </View>
-        </View>
+        <ItemLeaderBoard />
       </View>
     );
   };
 
   const renderFeature = () => {
     return (
-      <View style={{ marginHorizontal: 16 }}>
+      <View style={{ marginTop: 20, marginHorizontal: 16 }}>
         <Text
           style={{
             ...CS.hnSemiBold,
