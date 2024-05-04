@@ -55,7 +55,7 @@ if linkage != nil
 end
 
 target 'ieltshunter' do
-  use_frameworks! :linkage => :static
+  # use_frameworks! :linkage => :static
   config = use_native_modules!
   $RNFirebaseAsStaticFramework = true
 
