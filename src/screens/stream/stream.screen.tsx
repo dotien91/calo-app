@@ -43,6 +43,7 @@ import { SCREENS } from "constants";
 import IconSvg from "assets/svg";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { Device } from "@utils/device.ui.utils";
+import { isAndroid } from "@helpers/device.info.helper";
 
 function App() {
   const publisherRef = useRef<RTMPPublisherRefProps>(null);
@@ -124,8 +125,8 @@ function App() {
     // StatusBar.setBackgroundColor("black");
     checkPermission();
     KeepAwake.activate();
-    const txtFromPostScreen = route.params?.["titleLive"];
-    if (!txtFromPostScreen) return;
+    // const txtFromPostScreen = route.params?.["titleLive"];
+    // if (!txtFromPostScreen) return;
     // _createLiveStream(txtFromPostScreen);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     return () => {
@@ -422,8 +423,9 @@ function App() {
               videoSettings={{
                 width: Device.width,
                 height: Device.height,
-                bitrate: 1000 * 1024,
+                bitrate: (isAndroid() ? 3000 : 1000) * 1024,
                 audioBitrate: 128 * 1000,
+                // 3000 * 1024, 128 * 1024
               }}
               ref={publisherRef}
               streamURL={

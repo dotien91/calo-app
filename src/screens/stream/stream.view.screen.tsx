@@ -118,7 +118,7 @@ function StreamViewScreen() {
         {isReady ? (
           <VideoPlayer
             mediaUrl={liveData.livestream_data?.m3u8_url}
-            resizeMode="contain"
+            resizeMode="cover"
             width={Device.width}
             height={Device.height}
             autoPlay={true}
