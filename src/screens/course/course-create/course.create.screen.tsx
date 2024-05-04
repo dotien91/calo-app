@@ -57,7 +57,7 @@ interface ILevel {
 
 interface ISkill {
   value: string;
-  index: string | number;
+  id: string;
 }
 
 const CourseCreate = () => {
@@ -287,12 +287,12 @@ const CourseCreate = () => {
 
   const renderSelectSkill = () => {
     const renderSkillBtn = (item: ISkill) => {
-      const isSelected = [...skill]?.findIndex((i) => i === item.value) >= 0;
+      const isSelected = [...skill]?.findIndex((i) => i === item.id) >= 0;
       const _onSelectSkill = () => {
         if (isSelected) {
-          setSkill((skill) => skill?.filter((i) => i !== item.value));
+          setSkill((skill) => skill?.filter((i) => i !== item.id));
         } else {
-          setSkill([...skill, item.value]);
+          setSkill([...skill, item.id]);
         }
       };
       return (

@@ -47,7 +47,7 @@ const createStyles = (theme: ExtendedTheme) => {
     },
     itemLanguageSelected: {
       ...CommonStyle.row,
-      height: 40,
+      height: 50,
       paddingLeft: 16,
       paddingRight: 24,
       justifyContent: "space-between",
@@ -60,7 +60,7 @@ const createStyles = (theme: ExtendedTheme) => {
     },
     itemLanguageNotSelected: {
       ...CommonStyle.row,
-      height: 40,
+      height: 50,
       paddingLeft: 16,
       paddingRight: 24,
       justifyContent: "space-between",

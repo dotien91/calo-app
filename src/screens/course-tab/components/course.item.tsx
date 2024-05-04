@@ -18,6 +18,7 @@ import { translations } from "@localization";
 import CourseProgressBar from "./course.progress.bar";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { formatPriceCourse } from "@helpers/string.helper";
+import { listSkill } from "constants/course.constant";
 
 interface CourseItemProps {
   isHorizontalStyle?: boolean;
@@ -136,9 +137,10 @@ const CourseItem = ({
         <View style={{ marginTop: 6, flexDirection: "row", gap: 8 }}>
           <Badge title="Best-seller" />
           {public_status !== "active" && <Badge title={public_status} />}
-          {skills.map((item, index) => (
-            <Badge key={index} title={item} />
-          ))}
+          {skills.map((item, index) => {
+            const txt = listSkill.filter((i) => i.id !== item);
+            return <Badge key={index} title={txt[0].value} />;
+          })}
         </View>
       </>
     );

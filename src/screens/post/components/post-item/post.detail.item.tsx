@@ -18,6 +18,8 @@ import {
 } from "@helpers/super.modal.helper";
 import CS from "@theme/styles";
 import ListFilePostItem from "@screens/home/components/post-item/list.file.post.item copy";
+import { navigate } from "@helpers/navigation.helper";
+import { SCREENS } from "constants";
 
 const SIZE_AVATAR = 32;
 const FONT_SIZE = 16;
@@ -136,7 +138,12 @@ const ItemPost = ({ data, pressComment, scrollToCmt }: ItemPostProps) => {
     );
   }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const gotoDetail = () => {};
+  const gotoDetail = () => {
+    navigate(SCREENS.PROFILE_CURRENT_USER, {
+      _id: data?.user_id?._id,
+      userInfo: data.user_id,
+    });
+  };
 
   return (
     <View
@@ -153,7 +160,7 @@ const ItemPost = ({ data, pressComment, scrollToCmt }: ItemPostProps) => {
       <View style={styles.container}>
         <AvatarPost
           data={data?.user_id}
-          pressAvatar={gotoDetail}
+          _onPress={gotoDetail}
           sizeAvatar={SIZE_AVATAR}
           showLevel
         />

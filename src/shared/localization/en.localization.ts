@@ -13,7 +13,7 @@ export default {
   placeholderVerifyCode: "Verify code",
   placeholderPasword: "Password",
   placeholderRePasword: "Repeat password",
-  forgotPassword: "forgot password",
+  forgotPassword: "Forgot password",
   verifyCodeTitle: (text: string) => `Input verify code from email ${text}`,
   signIn: "Sign in",
   signUp: "Sign up",
@@ -202,7 +202,7 @@ export default {
     pleaseInputTitleOrContent: "Please input title or content",
     pleaseSelectCategory: "Please select category",
     pollMinLength: "Poll need at least 2 answers",
-    createPostSuccess: "create post successfully",
+    createPostSuccess: "Create post successfully",
     like: "Like",
     liked: "Liked",
     share: "Share",
@@ -643,7 +643,7 @@ export default {
     descriptionPoint:
       "This is the number of points the student will receive for each corresponding action",
     inviteDes:
-      "You will get 4000 points for each friend who activates oyur code and earns 10000 points. Your friend will also get 1000 points as a reward.",
+      "You will get 4000 points for each friend who activates your code and earns 10000 points. Your friend will also get 1000 points as a reward.",
     changeLanguage: "Change Language",
     warningDeleteAccount: "Do you want to delete your account?",
   },

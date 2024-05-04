@@ -27,7 +27,7 @@ import {
   PracticeTestData,
   StackIntroData,
 } from "./navigation.constant";
-import analytics from '@react-native-firebase/analytics';
+import analytics from "@react-native-firebase/analytics";
 
 // import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 // ? If you want to use stack or tab or both
@@ -268,11 +268,11 @@ const Navigation = () => {
       theme={isDarkMode ? DarkTheme : LightTheme}
       onStateChange={async () => {
         const currentRouteName = navigationRef.current.getCurrentRoute().name;
-        console.log("currentRouteName", currentRouteName)
-          await analytics().logScreenView({
-            screen_name: currentRouteName,
-            screen_class: currentRouteName
-          });
+        console.log("currentRouteName", currentRouteName);
+        await analytics().logScreenView({
+          screen_name: currentRouteName,
+          screen_class: currentRouteName,
+        });
 
         // Save the current route name for later comparison
       }}

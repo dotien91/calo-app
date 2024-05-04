@@ -81,8 +81,8 @@ const styles = StyleSheet.create({
   viewShowAll: {
     marginTop: 8,
     ...CS.center,
-    height: 32,
-    borderRadius: 8,
+    minHeight: 40,
+    borderRadius: 12,
     borderWidth: 1,
     borderColor: palette.primary,
   },

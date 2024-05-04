@@ -74,8 +74,12 @@ const ItemClub = ({ data }: { data: any }) => {
           <Button
             onPress={goToClubScreen}
             style={style.btnJoin}
-            text={translations.club.joinGruop}
-            type={data?.attend_data ? "primary" : "inactive"}
+            text={
+              data?.attend_data
+                ? translations.club.attended2
+                : translations.club.joinGruop
+            }
+            type={"primary"}
           />
         </View>
       </View>
