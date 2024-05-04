@@ -31,11 +31,12 @@ export default (theme: ExtendedTheme) => {
     styleViewItemTitle: {
       flexDirection: "row",
       justifyContent: "center",
+      gap: 8,
     },
     styleTextItemTitle: {
       ...CS.hnSemiBold,
       fontSize: 16,
-      color: colors.text,
+      color: colors.textOpacity8,
     },
     styleButtonEditProfile: {
       backgroundColor: colors.red,

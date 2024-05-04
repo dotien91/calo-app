@@ -32,7 +32,19 @@ const CourseItem = ({
   style,
   data,
 }: CourseItemProps) => {
-  const { _id, title, rating, user_id, media_id, avatar, is_join, type } = data;
+  const {
+    _id,
+    title,
+    rating,
+    user_id,
+    media_id,
+    avatar,
+    is_join,
+    type,
+    skills,
+    public_status,
+  } = data;
+  console.log("data...", data);
   let widthImage = Device.width - 32;
   if (isHorizontalStyle) {
     widthImage = widthImage / 1.5;
@@ -121,8 +133,13 @@ const CourseItem = ({
             {translations.course.noreview}
           </Text>
         )}
-        <View style={{ height: 6 }} />
-        <Badge title="Best-seller" />
+        <View style={{ marginTop: 6, flexDirection: "row", gap: 8 }}>
+          <Badge title="Best-seller" />
+          {public_status !== "active" && <Badge title={public_status} />}
+          {skills.map((item, index) => (
+            <Badge key={index} title={item} />
+          ))}
+        </View>
       </>
     );
   };

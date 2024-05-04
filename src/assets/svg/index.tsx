@@ -163,14 +163,19 @@ import icPersonal from "./icon-personal.svg";
 import icPersonCheck from "./icon-person-check.svg";
 import icPersonDelete from "./icon-person-delete.svg";
 import icPersonAdd from "./icon-person-add.svg";
+import icAboutUs from "./icon-about-us.svg";
+import icDiscount from "./icon-discount.svg";
+import icGift from "./icon-gift.svg";
 import icPeople from "./icon-people.svg";
 import icShield from "./icon-shield.svg";
 import icLocation from "./icon-location.svg";
 import icLocated from "./icon-located.svg";
 import icGoNext from "./icon-gonext.svg";
 import icPreview from "./icon-preview.svg";
+import icVip from "./icon-vip.svg";
 
 const Icons = {
+  icVip,
   icPreview,
   icCoach,
   icCoachBlur,
@@ -178,6 +183,9 @@ const Icons = {
   icCard1,
   icCard2,
   icCard3,
+  icAboutUs,
+  icDiscount,
+  icGift,
   intro1,
   intro2,
   intro3,

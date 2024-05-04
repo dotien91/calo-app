@@ -13,17 +13,18 @@ import { useListDataRank } from "@helpers/hooks/useListDataRank";
 import LoadingList from "@shared-components/loading.list.component";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
 import { translations } from "@localization";
-import IconSvg from "assets/svg";
 import createStyles from "./leader.board.style";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { SCREENS } from "constants";
+import ItemLeaderBoard from "@screens/discover-screen/components/item.leader.board";
+import { useUserHook } from "@helpers/hooks/useUserHook";
 
 const LeaderBoard = () => {
   const theme = useTheme();
-  const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
 
-  const [listRank, setListRank] = useState([]);
+  const { isLoggedIn } = useUserHook();
+
   const [rankUser, setRankUser] = useState({});
   const [indexRankUser, setindexRankUser] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -50,23 +51,6 @@ const LeaderBoard = () => {
 
   useEffect(() => {
     getData();
-  }, []);
-
-  const getData1 = () => {
-    const param = {
-      limit: 3,
-    };
-    setLoading(true);
-    getListLeaderBoard(param).then((res) => {
-      setLoading(false);
-      if (!res.isError) {
-        setListRank(res.data.other_users);
-      }
-    });
-  };
-
-  useEffect(() => {
-    getData1();
   }, []);
 
   const renderItem = ({ item, index }: { item: any; index: number }) => {
@@ -112,95 +96,9 @@ const LeaderBoard = () => {
   const renderLeaderBoard = () => {
     // if (!rankUser.length) return null;
     return (
-      <View style={styles.viewTop}>
-        <View style={{ flex: 1, flexDirection: "row" }}>
-          <View style={styles.viewStyle}>
-            <View style={{ zIndex: 1 }}>
-              <Avatar
-                style={styles.avatarTop2}
-                sourceUri={{
-                  uri: `${listRank[1]?.user_avatar}`,
-                  // uri: item?.user_avatar_thumbnail,
-                }}
-                resizeMode={"cover"}
-              />
-              <View style={styles.viewTop2}>
-                <Text style={styles.txtTop}>2</Text>
-              </View>
-            </View>
-            <View style={styles.styleTop2}>
-              <View style={styles.styleVTop}>
-                <Text numberOfLines={2} style={styles.txtNameTop}>
-                  {listRank[1]?.display_name}
-                </Text>
-                <Text style={styles.txtPointTop2}>{listRank[1]?.point}</Text>
-                <Text style={styles.txtViewPoint}>
-                  {translations.discover.poits}
-                </Text>
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.viewStyle}>
-            <View style={{ zIndex: 1 }}>
-              <Avatar
-                style={styles.avatarTop1}
-                sourceUri={{
-                  uri: `${listRank[0]?.user_avatar_thumbnail}`,
-                }}
-                resizeMode={"cover"}
-              />
-
-              <IconSvg
-                style={styles.viewIcon}
-                name="icKing"
-                size={30}
-                color={colors.gold}
-              />
-              <View style={styles.viewTop1}>
-                <Text style={styles.txtTop}>1</Text>
-              </View>
-            </View>
-            <View style={styles.viewStyleTop1}>
-              <View style={styles.styleVTop1}>
-                <Text numberOfLines={3} style={styles.txtNameTop}>
-                  {listRank[0]?.display_name}
-                </Text>
-                <Text style={styles.txtPointTop1}>{listRank[0]?.point}</Text>
-                <Text style={styles.txtViewPoint}>
-                  {translations.discover.poits}
-                </Text>
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.viewStyle}>
-            <View style={{ zIndex: 1 }}>
-              <Avatar
-                style={styles.avatarTop3}
-                sourceUri={{
-                  uri: `${listRank[2]?.user_avatar_thumbnail}`,
-                }}
-                resizeMode={"cover"}
-              />
-              <View style={styles.viewTop3}>
-                <Text style={styles.txtTop}>3</Text>
-              </View>
-            </View>
-            <View style={styles.styleTop3}>
-              <View style={styles.styleVTop}>
-                <Text numberOfLines={1} style={styles.txtNameTop}>
-                  {listRank[2]?.display_name}
-                </Text>
-                <Text style={styles.txtPointTop3}>{listRank[2]?.point}</Text>
-                <Text style={styles.txtViewPoint}>
-                  {translations.discover.poits}
-                </Text>
-              </View>
-            </View>
-          </View>
-        </View>
-      </View>
+      <>
+        <ItemLeaderBoard />
+      </>
     );
   };
 
@@ -231,34 +129,37 @@ const LeaderBoard = () => {
           ListFooterComponent={renderFooterComponent}
         />
         {/* {setIsFooterSticky ? ( */}
-        <View style={styles.viewBtn}>
-          <View style={styles.viewItem2}>
-            <Text style={styles.txtRank}>{rankUser?.rank}</Text>
-            <View style={{ zIndex: 1 }}>
-              <Avatar
-                style={styles.viewAvatar2}
-                sourceUri={{
-                  uri: rankUser?.user_avatar_thumbnail,
-                }}
-                resizeMode={"cover"}
-              />
-              <View style={styles.viewTxtLevel2}>
-                <Text style={styles.txtLevel2}>{rankUser?.level}</Text>
+
+        {isLoggedIn() && (
+          <View style={styles.viewBtn}>
+            <View style={styles.viewItem2}>
+              <Text style={styles.txtRank}>{rankUser?.rank}</Text>
+              <View style={{ zIndex: 1 }}>
+                <Avatar
+                  style={styles.viewAvatar2}
+                  sourceUri={{
+                    uri: rankUser?.user_avatar_thumbnail,
+                  }}
+                  resizeMode={"cover"}
+                />
+                <View style={styles.viewTxtLevel2}>
+                  <Text style={styles.txtLevel2}>{rankUser?.level}</Text>
+                </View>
+              </View>
+              <View style={{ width: "55%" }}>
+                <Text style={styles.txtName2} numberOfLines={1}>
+                  {rankUser?.display_name}
+                </Text>
+                <Text style={styles.txtPoint2}>
+                  {rankUser?.point} {translations.discover.poits}
+                </Text>
               </View>
             </View>
-            <View style={{ width: "55%" }}>
-              <Text style={styles.txtName2} numberOfLines={1}>
-                {rankUser?.display_name}
-              </Text>
-              <Text style={styles.txtPoint2}>
-                {rankUser?.point} {translations.discover.poits}
-              </Text>
-            </View>
+            <PressableBtn onPress={gotoTask} style={styles.styleBtn}>
+              <Text style={styles.txtBtn}>{translations.continue}</Text>
+            </PressableBtn>
           </View>
-          <PressableBtn onPress={gotoTask} style={styles.styleBtn}>
-            <Text style={styles.txtBtn}>{translations.continue}</Text>
-          </PressableBtn>
-        </View>
+        )}
       </View>
     </SafeAreaView>
   );

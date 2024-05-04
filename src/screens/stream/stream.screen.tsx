@@ -8,6 +8,8 @@ import {
   Text,
   Image,
   ActivityIndicator,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import RTMPPublisher, { RTMPPublisherRefProps } from "react-native-publisher";
 import { useTheme, useRoute, useFocusEffect } from "@react-navigation/native";
@@ -344,60 +346,65 @@ function App() {
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "height" : undefined}
     >
-      <View style={styles.container}>
-        {renderInput()}
-        {!isStreaming && (
-          <IconSvg
-            style={{
-              position: "absolute",
-              top: 68,
-              left: 24,
-              zIndex: 1,
-            }}
-            name="icXShadow"
-            color={colors.white}
-            size={32}
-            onPress={onShouldCloseLive}
-          />
-        )}
-        {isStreaming ? (
-          <TouchableOpacity
-            onPress={onShouldCloseLive}
-            style={{
-              position: "absolute",
-              top: 82,
-              right: 20,
-              zIndex: 1,
-              backgroundColor: palette.red,
-              paddingHorizontal: 8,
-              paddingVertical: 4,
-              borderRadius: 4,
-            }}
-          >
-            <Text
+      <TouchableWithoutFeedback
+        onPress={() => {
+          Keyboard.dismiss();
+        }}
+      >
+        <View style={styles.container}>
+          {renderInput()}
+          {!isStreaming && (
+            <IconSvg
               style={{
-                ...CS.hnBold,
-                color: palette.white,
+                position: "absolute",
+                top: 68,
+                left: 24,
+                zIndex: 1,
+              }}
+              name="icXShadow"
+              color={colors.white}
+              size={32}
+              onPress={onShouldCloseLive}
+            />
+          )}
+          {isStreaming ? (
+            <TouchableOpacity
+              onPress={onShouldCloseLive}
+              style={{
+                position: "absolute",
+                top: 82,
+                right: 20,
+                zIndex: 1,
+                backgroundColor: palette.red,
+                paddingHorizontal: 8,
+                paddingVertical: 4,
+                borderRadius: 4,
               }}
             >
-              {translations.event.end}
-            </Text>
-          </TouchableOpacity>
-        ) : (
-          <IconSvg
-            style={{
-              position: "absolute",
-              top: 68,
-              right: 24,
-              zIndex: 1,
-            }}
-            name="icCameraShadow"
-            color={colors.white}
-            size={32}
-            onPress={handleSwitchCamera}
-          />
-        )}
-        {permissionGranted && show && (
+              <Text
+                style={{
+                  ...CS.hnBold,
+                  color: palette.white,
+                }}
+              >
+                {translations.event.end}
+              </Text>
+            </TouchableOpacity>
+          ) : (
+            <IconSvg
+              style={{
+                position: "absolute",
+                top: 68,
+                right: 24,
+                zIndex: 1,
+              }}
+              name="icCameraShadow"
+              color={colors.white}
+              size={32}
+              onPress={handleSwitchCamera}
+            />
+          )}
+          {permissionGranted && show && (
           <RTMPPublisher
             videoSettings={{
               width: Device.width,
@@ -418,35 +425,36 @@ function App() {
             // onBluetoothDeviceStatusChanged={handleBluetoothDeviceStatusChange}
           />
         )}
-        {isStreaming && renderChatView()}
-        {isStreaming && <LiveBadge />}
+          {isStreaming && renderChatView()}
+          {isStreaming && <LiveBadge />}
 
-        {!isStreaming && (
-          <View style={styles.footer_container}>
-            <View
-              style={[
-                styles.stream_container,
-                loading && { opacity: 0.7, ...CS.flexCenter, flex: 1 },
-              ]}
-            >
-              <Button
-                type={isUpLoadingFile ? "disable" : "primary"}
-                onPress={handleStartStream}
-                style={{
-                  height: 48,
-                  paddingVertical: 12,
-                  paddingHorizontal: 48,
-                }}
-                textColor={colors.white}
-                backgroundColor={colors.primary}
-                text={translations.liveStream.goLive}
-                disabled={loading}
-                isFullWidth={false}
-              />
+          {!isStreaming && (
+            <View style={styles.footer_container}>
+              <View
+                style={[
+                  styles.stream_container,
+                  loading && { opacity: 0.7, ...CS.flexCenter, flex: 1 },
+                ]}
+              >
+                <Button
+                  type={isUpLoadingFile ? "disable" : "primary"}
+                  onPress={handleStartStream}
+                  style={{
+                    height: 48,
+                    paddingVertical: 12,
+                    paddingHorizontal: 48,
+                  }}
+                  textColor={colors.white}
+                  backgroundColor={colors.primary}
+                  text={translations.liveStream.goLive}
+                  disabled={loading}
+                  isFullWidth={false}
+                />
+              </View>
             </View>
-          </View>
-        )}
-      </View>
+          )}
+        </View>
+      </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );
 }

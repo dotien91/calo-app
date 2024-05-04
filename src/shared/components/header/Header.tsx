@@ -14,6 +14,7 @@ import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
 import { isAndroid } from "@helpers/device.info.helper";
 import IconBtn from "@shared-components/button/IconBtn";
+import IconSvg from "assets/svg";
 
 interface HeaderProps {
   iconNameLeft?: string;
@@ -26,6 +27,7 @@ interface HeaderProps {
   badge?: number;
   hideBackBtn?: boolean;
   rightComponent?: JSX.Element;
+  isVIP?: boolean;
 }
 
 const Header = ({
@@ -39,6 +41,7 @@ const Header = ({
   badge,
   hideBackBtn = false,
   rightComponent,
+  isVIP,
 }: HeaderProps) => {
   const theme = useTheme();
   const { colors } = theme;
@@ -71,6 +74,14 @@ const Header = ({
         ]}
       >
         {text || ""}
+        {isVIP && (
+          <IconSvg
+            style={{ marginLeft: 8 }}
+            name="icVip"
+            size={24}
+            color={palette.primary}
+          />
+        )}
       </Text>
       {/* {!!iconNameRight && ( */}
       <View style={styles.viewIcons}>

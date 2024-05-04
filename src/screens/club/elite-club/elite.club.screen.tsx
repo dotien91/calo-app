@@ -12,9 +12,10 @@ const EliteClubScreen = () => {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const route = useRoute();
   const name = route.params.name || "";
+  const isVIP = route.params.isVIP || false;
   return (
     <SafeAreaView style={CS.safeAreaView}>
-      <Header text={name} />
+      <Header text={name} isVIP={isVIP} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
           <ItemEliteScreen />

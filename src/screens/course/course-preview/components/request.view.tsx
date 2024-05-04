@@ -42,7 +42,7 @@ const RequestSkillView = ({ data }: RequestSkillViewProps) => {
   }
   return (
     <View style={styles.container}>
-      <Text style={styles.paragraph}>{translations.course.requestSkills}</Text>
+      <Text style={styles.paragraph}>{translations.post.category}</Text>
       {data?.skills.map((item: string, index: number) => {
         return <TextRequest key={index + item} text={item} />;
       })}

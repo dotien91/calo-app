@@ -742,11 +742,11 @@ export const listLevel = [
 ];
 
 export const listSkill = [
-  { value: "Career Guidance", index: 1 },
-  { value: "Life", index: 2 },
-  { value: "Finance", index: 3 },
   { value: "Health", index: 4 },
+  { value: "Life", index: 2 },
   { value: "Business", index: 5 },
+  { value: "Finance", index: 3 },
+  { value: "Career Guidance", index: 1 },
 ];
 
 export const listLang = [

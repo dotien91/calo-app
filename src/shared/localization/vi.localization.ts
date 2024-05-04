@@ -651,6 +651,7 @@ export default {
     myCourse: "Khoá học của tôi",
     noClass: "Chưa có lớp học",
     manageClass: "Quản lí lớp học",
+    manageCourse: "Quản lý khoá học",
     recommendCourse: "Khoá học gợi ý",
     teachingTime: "Đã dạy",
     sortByTutor: "Sắp xếp theo gia sư",
