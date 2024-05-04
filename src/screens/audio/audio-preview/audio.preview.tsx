@@ -108,8 +108,9 @@ const AudioPreview = () => {
     if (item.length > 0) {
       await TrackPlayer.skip(indexLocal);
       await TrackPlayer.seekBy(item[0].position || 0);
+      await TrackPlayer.play();
+      NavigationService.navigate(SCREENS.AUDIO_PLAY);
     }
-    await TrackPlayer.play();
   };
 
   const playAudio = async () => {
@@ -130,7 +131,6 @@ const AudioPreview = () => {
           await playTrack(track1, indexLocal);
         }
       }
-      NavigationService.navigate(SCREENS.AUDIO_PLAY);
     }
     const track2 = {
       url: track?.attach_files[0].media_url,
@@ -272,7 +272,8 @@ const styles = StyleSheet.create({
   },
   viewAudio: {
     ...CS.center,
-    height: (ScreenHeight * 411) / 812,
+    marginTop: 10,
+    minHeight: (ScreenHeight * 411) / 812,
   },
   viewImage: {
     ...CS.center,
@@ -281,7 +282,7 @@ const styles = StyleSheet.create({
   },
   viewTitle: {
     marginTop: 16,
-    height: (ScreenHeight * 84) / 812,
+    minHeight: (ScreenHeight * 84) / 812,
   },
   txtTitle: {
     ...CS.hnBold,

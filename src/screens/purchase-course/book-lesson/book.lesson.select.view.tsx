@@ -248,7 +248,6 @@ const BookLessonSelectView: React.FC<BookLessonSelectViewProps> = () => {
     return (
       <View style={styles.selectBox}>
         {timesAvailable.map((item) => renderTimeBtn(item))}
-        <Text style={styles.des}>{translations.purchase.hoursNote}</Text>
       </View>
     );
   };
@@ -256,11 +255,14 @@ const BookLessonSelectView: React.FC<BookLessonSelectViewProps> = () => {
   const renderPurchaseBtn = () => {
     const isActive = !!day.length;
     return (
-      <Button
-        text={translations.purchase.orderNow}
-        type={isActive ? "primary" : "disabled"}
-        onPress={goToCheckout}
-      />
+      <View style={styles.viewBtn}>
+        <Text style={styles.des}>{translations.purchase.hoursNote}</Text>
+        <Button
+          text={translations.purchase.orderNow}
+          type={isActive ? "primary" : "disabled"}
+          onPress={goToCheckout}
+        />
+      </View>
     );
   };
 
@@ -273,8 +275,8 @@ const BookLessonSelectView: React.FC<BookLessonSelectViewProps> = () => {
         {renderSectionDuration()}
         {renderSectionDate()}
         {renderSectionTime()}
-        {renderPurchaseBtn()}
       </ScrollView>
+      {renderPurchaseBtn()}
     </SafeAreaView>
   );
 };

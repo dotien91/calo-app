@@ -175,6 +175,8 @@ const InputChatLive: React.FC<InputChatLiveProps> = ({
               setKeyboardVisible(true);
             }}
             showClearIcon={false}
+            returnKeyType="send"
+            onSubmitEditing={onSend}
           />
           <IconBtn
             name={"send"}

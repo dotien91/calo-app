@@ -6,6 +6,7 @@ import {
   Platform,
   Keyboard,
   TouchableWithoutFeedback,
+  ActivityIndicator,
 } from "react-native";
 // import Orientation from 'react-native-orientation';
 import { useTheme, useRoute } from "@react-navigation/native";
@@ -34,9 +35,9 @@ function StreamViewScreen() {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const route = useRoute();
-  const [isReady, setIsReady] = React.useState(false)
-  const checkReadyTmp = React.useRef(null)
-  const retryTmp = React.useRef(false)
+  const [isReady, setIsReady] = React.useState(false);
+  const checkReadyTmp = React.useRef(null);
+  const retryTmp = React.useRef(false);
 
   const liveStreamId = route.params?.["liveStreamId"];
 
@@ -52,20 +53,19 @@ function StreamViewScreen() {
     var endDate = new Date();
     var seconds = (endDate.getTime() - startDate.getTime()) / 1000;
     if (seconds > 60) clearInterval(checkReadyTmp.current);
-    return seconds > 13
-  }
+    return seconds > 13;
+  };
 
   React.useEffect(() => {
-    if (!liveData) return
+    if (!liveData) return;
     checkReadyTmp.current = setInterval(() => {
       if (isStreamReady(liveData)) {
         setIsReady(true);
         clearInterval(checkReadyTmp.current);
-        checkReadyTmp.current = null
+        checkReadyTmp.current = null;
       }
-    }, 500)
+    }, 500);
   }, [liveData]);
-
 
   React.useEffect(() => {
     requestViewStream({ livestream_id: liveStreamId });
@@ -75,11 +75,11 @@ function StreamViewScreen() {
       setEmojiNumber(0);
       if (checkReadyTmp.current) {
         clearInterval(checkReadyTmp.current);
-        checkReadyTmp.current = null
+        checkReadyTmp.current = null;
       }
       if (retryTmp.current) {
         clearInterval(retryTmp.current);
-        retryTmp.current = null
+        retryTmp.current = null;
       }
     };
   }, []);
@@ -90,49 +90,59 @@ function StreamViewScreen() {
 
   const onLoad = () => {
     if (retryTmp.current) {
-      clearInterval(retryTmp.current)
-      retryTmp.current = null
+      clearInterval(retryTmp.current);
+      retryTmp.current = null;
     }
-  }
+  };
 
   const onError = () => {
     if (retryTmp.current) {
-      clearInterval(retryTmp.current)
-      retryTmp.current = null
+      clearInterval(retryTmp.current);
+      retryTmp.current = null;
     }
     retryTmp.current = setInterval(() => {
-      setIsReady(false)
+      setIsReady(false);
       setTimeout(() => {
-        setIsReady(true)
-      }, 800)
-    }, 8000)
-  }
+        setIsReady(true);
+      }, 800);
+    }, 8000);
+  };
 
   const onPressVideo = React.useCallback(() => {
     Keyboard.dismiss();
-  }, [])
-
+  }, []);
 
   const renderVideoLive = () => {
     return (
       <View style={{ flex: 1, padding: 30, ...CommonStyle.flexCenter }}>
-        {isReady ? <VideoPlayer
-          mediaUrl={liveData.livestream_data?.m3u8_url}
-          resizeMode="contain"
-          width={Device.width}
-          height={Device.height}
-          autoPlay={true}
-          onLoad={onLoad}
-          onError={onError}
-          onPress={onPressVideo}
-        /> : <View style={{ backgroundColor: 'rgba(255,255,255,0.2)', padding: 16, borderRadius: 12, ...CommonStyle.center }}>
-          <View style={CommonStyle.flexCenter}>
-            <ActivityIndicator size={"large"} color={palette.white} />
+        {isReady ? (
+          <VideoPlayer
+            mediaUrl={liveData.livestream_data?.m3u8_url}
+            resizeMode="contain"
+            width={Device.width}
+            height={Device.height}
+            autoPlay={true}
+            onLoad={onLoad}
+            onError={onError}
+            onPress={onPressVideo}
+          />
+        ) : (
+          <View
+            style={{
+              backgroundColor: "rgba(255,255,255,0.2)",
+              padding: 16,
+              borderRadius: 12,
+              ...CommonStyle.center,
+            }}
+          >
+            <View style={CommonStyle.flexCenter}>
+              <ActivityIndicator size={"large"} color={palette.white} />
+            </View>
+            <TextBase color="white" fontSize={20}>
+              {translations.liveStream.streamPending}
+            </TextBase>
           </View>
-          <TextBase color="white" fontSize={20} >
-            {translations.liveStream.streamPending}
-          </TextBase>
-        </View>}
+        )}
       </View>
     );
   };
