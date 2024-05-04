@@ -28,7 +28,7 @@ export const filterCourseKeys = [
     ],
   },
   {
-    name: translations.course.course,
+    name: translations.course.skills,
     id: "skills",
     keyFilters: [
       {
@@ -36,24 +36,24 @@ export const filterCourseKeys = [
         id: "All skills",
       },
       {
-        name: translations.course.careerGuidance,
-        id: "Career Guidance",
+        name: translations.course.health,
+        id: "Health",
       },
       {
         name: translations.course.life,
         id: "Life",
       },
       {
+        name: translations.course.business,
+        id: "Business",
+      },
+      {
         name: translations.course.finance,
         id: "Finance",
       },
       {
-        name: translations.course.health,
-        id: "Health",
-      },
-      {
-        name: translations.course.business,
-        id: "Business",
+        name: translations.course.careerGuidance,
+        id: "Career Guidance",
       },
     ],
   },
@@ -742,17 +742,17 @@ export const listLevel = [
 ];
 
 export const listSkill = [
-  { value: "Health", index: 4 },
-  { value: "Life", index: 2 },
-  { value: "Business", index: 5 },
-  { value: "Finance", index: 3 },
-  { value: "Career Guidance", index: 1 },
+  { id: "Health", value: translations.course.health },
+  { id: "Life", value: translations.course.life },
+  { id: "Business", value: translations.course.business },
+  { id: "Finance", value: translations.course.finance },
+  { id: "Career Guidance", value: translations.course.careerGuidance },
 ];
 
 export const listLang = [
-  { value: "vi", label: "vi" },
-  { value: "en", label: "en" },
-  { value: "jp", label: "jp" },
+  { value: "vi", label: translations.vi },
+  { value: "en", label: translations.en },
+  { value: "jp", label: translations.jp },
 ];
 
 export const timesInUtc = [

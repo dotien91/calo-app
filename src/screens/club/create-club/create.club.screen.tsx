@@ -61,7 +61,7 @@ const CreateClubScreen = () => {
 
   const detailClub = () => {
     getDetailGroup(club_id).then((res) => {
-      console.log("res...", res);
+      // console.log("res...", res);
       if (!res.isError) {
         setMedia({
           link: res.data.cover,

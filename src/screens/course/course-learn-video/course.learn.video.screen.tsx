@@ -93,6 +93,7 @@ const CourseLearnScreen = () => {
     if (item?.type === "video") {
       if (currentProgressData) setCurrentProgressData(null);
       setSource(item);
+      console.log("item...", item);
     } else {
       const data = {
         id: course_id,

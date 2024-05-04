@@ -6,12 +6,14 @@ import { palette } from "@theme/themes";
 import { ICourseItem } from "models/course.model";
 import { translations } from "@localization";
 import SkeletonPlaceholder from "@shared-components/skeleton";
+import { listSkill } from "constants/course.constant";
 
 interface RequestSkillViewProps {
   data?: ICourseItem;
 }
 
 const TextRequest = ({ text }: { text: string }) => {
+  const txt = listSkill.filter((item) => item.id !== text);
   return (
     <View style={{ ...CS.row, marginTop: 8 }}>
       <View
@@ -23,7 +25,7 @@ const TextRequest = ({ text }: { text: string }) => {
           backgroundColor: palette.textOpacity6,
         }}
       />
-      <Text style={styles.txtRequest}>{text}</Text>
+      <Text style={styles.txtRequest}>{txt[0]?.value}</Text>
     </View>
   );
 };

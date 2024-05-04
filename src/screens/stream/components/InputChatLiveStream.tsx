@@ -38,7 +38,7 @@ import { EnumColors } from "models";
 const reactionData = [
   { type: "like", image: images.like_static, gif: images.like_gif },
   { type: "love", image: images.love_static, gif: images.love_gif },
-  { type: "care", image: images.angry_static, gif: images.angry_gif },
+  // { type: "care", image: images.angry_static, gif: images.angry_gif },
   { type: "haha", image: images.haha_static, gif: images.haha_gif },
   { type: "wow", image: images.wow_static, gif: images.wow_gif },
   { type: "sad", image: images.sad_static, gif: images.sad_gif },
@@ -46,7 +46,7 @@ const reactionData = [
 ];
 
 interface InputChatLiveProps {
-  sendChatMessage: () => void;
+  sendChatMessage: (txt: string) => void;
   hideLiveStream: () => void;
   chatRoomId: string;
   isPublisher: boolean;
@@ -86,8 +86,10 @@ const InputChatLive: React.FC<InputChatLiveProps> = ({
   const { totalCount } = useListData<ICourseItem>(paramsRequest, getMyCourse);
 
   const onSend = () => {
-    const text = inputRef.current.value || "";
-    sendChatMessage(text);
+    const text: string = inputRef.current.value || "";
+    if (text.trim() !== "") {
+      sendChatMessage(text.trim());
+    }
     inputRef.current.setValue("");
   };
 
