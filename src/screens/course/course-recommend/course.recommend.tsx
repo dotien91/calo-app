@@ -19,6 +19,7 @@ const CourseRecommendScreen = () => {
         order_by: "DESC",
         sort_by: "createdAt",
         limit: "5",
+        public_status: "active",
       },
       getCourseSuggest,
     );
