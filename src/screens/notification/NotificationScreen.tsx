@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { FlatList, SafeAreaView } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 // import * as NavigationService from "react-navigation-helpers";

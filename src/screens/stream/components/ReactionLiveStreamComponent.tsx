@@ -26,7 +26,7 @@ import {
   IconWow,
 } from "./utils";
 import uuid from "react-native-uuid";
-import useStore from "@services/zustand/store";
+// import useStore from "@services/zustand/store";
 
 interface TypedReaction {}
 interface Props {
@@ -142,13 +142,13 @@ const ItemReactionLivestream = ({ item, finishedAnimation }: Props) => {
 
 const ReactionLiveStreamComponent = (_, ref) => {
   const [queueReactions, setQueueReactions] = useState<TypedReaction[]>([]);
-  const userData = useStore((state) => state.userData);
+  // const userData = useStore((state) => state.userData);
 
   useImperativeHandle(ref, () => ({
     newReaction: (data) => {
       setQueueReactions((prev) => [
         ...prev,
-        { react_type: data.react_type, id: uuid.v4(), createBy: userData },
+        { react_type: data.react_type, id: uuid.v4(), createBy: data.user_id },
       ]);
     },
   }));

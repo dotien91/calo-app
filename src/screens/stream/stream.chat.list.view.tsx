@@ -72,12 +72,19 @@ const ListChatLiveStream: React.FC<ChatViewProps> = ({
 
   React.useEffect(() => {
     eventEmitter.on("show_reaction_animation", showReact);
+    eventEmitter.on("show_reaction_animation_live", showReactLive);
 
     return () => {
       eventEmitter.off("show_reaction_animation", showReact);
+      eventEmitter.off("show_reaction_animation_live", showReactLive);
     };
   }, []);
 
+  const showReactLive = ({ type, user_id }) => {
+    if (user_id._id !== userData._id) {
+      refReaction.current?.newReaction({ react_type: type, user_id: user_id });
+    }
+  };
   const showReact = (type: string) => {
     refReaction.current?.newReaction({ react_type: type, user_id: userData });
   };

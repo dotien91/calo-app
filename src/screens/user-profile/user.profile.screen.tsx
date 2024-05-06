@@ -432,6 +432,7 @@ const ProfileUser = (props: ProfileUserProps) => {
     },
     getMyCourse,
   );
+  // console.log("lis....", listDataCourse);
   const isUserLogin = React.useMemo(
     () => userData?._id === userInfo?._id,
     [userData, userInfo],

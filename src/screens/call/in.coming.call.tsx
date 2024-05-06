@@ -37,7 +37,7 @@ const InComingCall = () => {
   const ringing = useSharedValue(0);
   const data = route.params.data || {};
   const partner = data.to_user || {};
-  console.log(data, "data call receive");
+  console.log("data call receive...", data);
   const ringingRef = useRef<any>(null);
   const callAnswerCall = useRef(false);
 
@@ -154,8 +154,8 @@ const InComingCall = () => {
           <ImageLoad
             source={{
               uri:
-                data?.to_user?.user_avatar_thumbnail ||
-                data?.to_user?.user_avatar ||
+                data?.from_user?.user_avatar_thumbnail ||
+                data?.from_user?.user_avatar ||
                 "",
             }}
             width={MHS._190}
@@ -165,7 +165,7 @@ const InComingCall = () => {
         </View>
         <View>
           <Text style={{ textAlign: "center" }}>
-            {partner?.display_name || ""}
+            {data?.from_user?.display_name || ""}
           </Text>
         </View>
         <View style={styles.viewActions}>

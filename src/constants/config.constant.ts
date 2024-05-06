@@ -16,6 +16,7 @@ export const isProduction =
   ENVIRONMENT.PRODUCT;
 // const DEVELOPER_DOMAIN_DEV = "https://api.edu-like.exam24h.com";
 // const DEVELOPER_DOMAIN_SOCKET_DEV = "https://socket.api-v2.ieltshunter.io";
+
 //dev domain api
 // const DEVELOPER_DOMAIN_DEV = "http://192.168.1.154:3900";
 const DEVELOPER_DOMAIN_DEV = "https://api.ikigai.ikigroup.vn";
