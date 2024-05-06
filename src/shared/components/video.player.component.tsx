@@ -46,6 +46,12 @@ const VideoPlayer = ({
   const [showThumbnail, setShowThumbnail] = useState(!!mediaThumbail);
 
   React.useEffect(() => {
+    return () => {
+      refVideo.current?.setNativeProps({ paused: true });
+    };
+  }, []);
+
+  React.useEffect(() => {
     if (isStreamThumbnail && !isPreloading) {
       setPause((old) => !old);
       setShowThumbnail(false);

@@ -1,13 +1,12 @@
 import React, { useEffect, useMemo, useRef } from "react";
 import { FlatList, SafeAreaView } from "react-native";
-import { useTheme, useIsFocused } from "@react-navigation/native";
+import { useIsFocused } from "@react-navigation/native";
 // import * as NavigationService from "react-navigation-helpers";
 /**
  * ? Local Imports
  */
 import ItemNotification from "./ItemNotification";
 
-import createStyles from "./NotificationScreen.style";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";
 import { useListData } from "@helpers/hooks/useListData";
@@ -25,8 +24,6 @@ interface ProfileScreenProps {}
 
 const NotificationScreen: React.FC<ProfileScreenProps> = () => {
   const isFocused = useIsFocused();
-  const theme = useTheme();
-  const styles = useMemo(() => createStyles(theme), [theme]);
   const userData = useStore((state) => state.userData);
   // const setReadAllAt = useStore((state) => state.setReadAllAt);
   const listRef = useRef(null);

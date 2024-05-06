@@ -71,13 +71,19 @@ function App() {
   const { appStateStatus } = useAppStateCheck();
 
   useEffect(() => {
+    console.log("appStateStatus", appStateStatus);
     if (appStateStatus == "active" && !show) {
+      console.log("stop");
       setShow(true);
       setTimeout(() => {
         publisherRef.current && publisherRef.current?.startStream?.();
       }, 1000);
     }
-    if (appStateStatus == "background" && show) {
+    if (
+      (appStateStatus == "background" || appStateStatus == "inactive") &&
+      show
+    ) {
+      console.log("start");
       publisherRef.current && publisherRef.current?.stopStream?.();
       setShow(false);
     }
@@ -130,11 +136,13 @@ function App() {
     // _createLiveStream(txtFromPostScreen);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     return () => {
+      publisherRef.current && publisherRef.current?.stopStream?.();
       KeepAwake.deactivate();
       updateLivestream("end", liveData?._id);
-      publisherRef.current && publisherRef.current?.stopStream?.();
+
+      console.log(2222222222, publisherRef.current);
       publisherRef.current && publisherRef.current?.mute?.();
-      setShow(false);
+      // setShow(false);
     };
   }, []);
 
@@ -259,10 +267,10 @@ function App() {
       },
     });
   };
-
+  console.log(111, publisherRef.current);
   const closeLiveStream = () => {
     // updateLivestream("end");
-    // publisherRef.current && publisherRef.current.stopStream();
+    publisherRef.current && publisherRef.current.stopStream();
     NavigationService.popToTop();
     // NavigationService.navigate(SCREENS.HOME);
 
@@ -423,7 +431,7 @@ function App() {
               videoSettings={{
                 width: Device.width,
                 height: Device.height,
-                bitrate: (isAndroid() ? 3000 : 1000) * 1024,
+                bitrate: (isAndroid() ? 3000 : 600) * 1024,
                 audioBitrate: 128 * 1000,
                 // 3000 * 1024, 128 * 1024
               }}

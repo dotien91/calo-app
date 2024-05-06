@@ -29,7 +29,6 @@ const AnswerChildDropdown = ({
   data,
   isTimeout,
   setAnsweData,
-  answer,
 }: IAnswerChildDropdown) => {
   const _onChangeText = (v, { index }) => {
     setAnsweData({ index, content: v });

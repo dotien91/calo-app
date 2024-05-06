@@ -56,7 +56,7 @@ const ItemClub = ({ data }: { data: any }) => {
               {data?.name}{" "}
               <IconSvg name="icVip" size={24} color={palette.primary} />
             </TextBase>
-            {!!data?.attend_data ? (
+            {data?.attend_data ? (
               <TextBase fontSize={12} fontWeight="400">
                 {`${
                   isLeader

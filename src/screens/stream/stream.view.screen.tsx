@@ -48,10 +48,10 @@ function StreamViewScreen() {
   const setEmojiNumber = useStore((state) => state.setEmojiNumber);
 
   const isStreamReady = (data) => {
-    var startDate = new Date(data.createdAt);
+    const startDate = new Date(data.createdAt);
     // Do your operations
-    var endDate = new Date();
-    var seconds = (endDate.getTime() - startDate.getTime()) / 1000;
+    const endDate = new Date();
+    const seconds = (endDate.getTime() - startDate.getTime()) / 1000;
     if (seconds > 60) clearInterval(checkReadyTmp.current);
     return seconds > 13;
   };
@@ -89,6 +89,7 @@ function StreamViewScreen() {
   }, [liveData?._id]);
 
   const onLoad = () => {
+    console.log("error");
     if (retryTmp.current) {
       clearInterval(retryTmp.current);
       retryTmp.current = null;
@@ -96,6 +97,7 @@ function StreamViewScreen() {
   };
 
   const onError = () => {
+    console.log("error");
     if (retryTmp.current) {
       clearInterval(retryTmp.current);
       retryTmp.current = null;
@@ -108,24 +110,30 @@ function StreamViewScreen() {
     }, 8000);
   };
 
+  const renderVideo = () => {
+    return (
+      <VideoPlayer
+        mediaUrl={liveData.livestream_data?.m3u8_url}
+        resizeMode="cover"
+        width={Device.width}
+        height={Device.height}
+        autoPlay={true}
+        onLoad={onLoad}
+        onError={onError}
+        onPress={onPressVideo}
+      />
+    );
+  };
+
   const onPressVideo = React.useCallback(() => {
     Keyboard.dismiss();
   }, []);
-
+  // console.log("liveData.livestream_data?.m3u8_url", liveData?.livestream_data?.m3u8_url)
   const renderVideoLive = () => {
     return (
       <View style={{ flex: 1, padding: 30, ...CommonStyle.flexCenter }}>
         {isReady ? (
-          <VideoPlayer
-            mediaUrl={liveData.livestream_data?.m3u8_url}
-            resizeMode="cover"
-            width={Device.width}
-            height={Device.height}
-            autoPlay={true}
-            onLoad={onLoad}
-            onError={onError}
-            onPress={onPressVideo}
-          />
+          renderVideo()
         ) : (
           <View
             style={{

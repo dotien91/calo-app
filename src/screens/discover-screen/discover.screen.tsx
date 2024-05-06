@@ -112,7 +112,8 @@ const DiscoverScreen = () => {
               width: 40,
               height: 40,
               zIndex: 1,
-              opacity: 0,
+              backgroundColor: "grey",
+              opacity: __DEV__ ? 1 : 0,
             }}
             onPress={openHiddenPage}
           >

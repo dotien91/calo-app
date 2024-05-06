@@ -27,7 +27,7 @@ const LeaderBoard = () => {
 
   const [rankUser, setRankUser] = useState({});
   const [indexRankUser, setindexRankUser] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
 
   const { listData, onEndReach, renderFooterComponent, isLoading } =
     useListDataRank({ limit: "12" }, getListLeaderBoard);

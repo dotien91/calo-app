@@ -137,6 +137,7 @@ const ShoppingLiveProduct = React.memo(
     if (!shoppingProduct) return null;
 
     const _onPress = () => {
+      if (isTeacher) return;
       hideLiveStream?.();
       setTimeout(() => {
         NavigationService.navigate(SCREENS.COURSE_DETAIL, {
@@ -165,9 +166,10 @@ const ShoppingLiveProduct = React.memo(
         emitSocket("emitProduct", "");
       }
     };
+    const Component = isTeacher ? View : PressableBtn;
 
     return (
-      <PressableBtn onPress={_onPress} style={styles.viewCourse}>
+      <Component onPress={_onPress} style={styles.viewCourse}>
         <View style={styles.viewCard}>
           <View style={styles.viewImage}>
             <FastImage
@@ -237,7 +239,7 @@ const ShoppingLiveProduct = React.memo(
           color={palette.textOpacity8}
           size={20}
         />
-      </PressableBtn>
+      </Component>
     );
   },
 );
