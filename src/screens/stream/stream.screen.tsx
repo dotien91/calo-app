@@ -428,13 +428,13 @@ function App() {
           )}
           {permissionGranted && show && (
             <RTMPPublisher
-              videoSettings={{
-                width: Device.width,
-                height: Device.height,
-                bitrate: (isAndroid() ? 3000 : 600) * 1024,
-                audioBitrate: 128 * 1000,
-                // 3000 * 1024, 128 * 1024
-              }}
+              // videoSettings={{
+              //   width: Device.width,
+              //   height: Device.height,
+              //   bitrate: (isAndroid() ? 800 : 600) * 1024,
+              //   audioBitrate: 128 * 1000,
+              //   // 3000 * 1024, 128 * 1024
+              // }}
               ref={publisherRef}
               streamURL={
                 liveData?.livestream_data?.rtmp_url ||
