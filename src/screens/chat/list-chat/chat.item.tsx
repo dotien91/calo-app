@@ -31,6 +31,7 @@ const ChatItem = ({
   React.useEffect(() => {
     setReadCount(read_count);
   }, [read_count]);
+  console.log("chat...", chat_room_id);
 
   const onPress = () => {
     if (read_count) {

@@ -23,6 +23,8 @@ import { convertLastActive } from "@utils/time.utils";
 import { TypedComment } from "shared/models";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import AvatarPost from "@screens/home/components/post-item/avatar.post";
+import { navigate } from "react-navigation-helpers";
+import { SCREENS } from "constants";
 
 const SIZE_AVATAR = 32;
 const PADDING_LEFT = 12;
@@ -68,10 +70,21 @@ const ItemReply = ({ item, onPressReplyChild, repCmtId }: ItemReplyProps) => {
       });
     }
   };
+  const gotoDetail = () => {
+    navigate(SCREENS.PROFILE_CURRENT_USER, {
+      _id: item?.user_id?._id,
+      userInfo: item.user_id,
+    });
+  };
 
   const AvatarRep = useMemo(() => {
     return (
-      <AvatarPost data={item?.user_id} sizeAvatar={SIZE_AVATAR} showLevel />
+      <AvatarPost
+        _onPress={gotoDetail}
+        data={item?.user_id}
+        sizeAvatar={SIZE_AVATAR}
+        showLevel
+      />
     );
   }, [item]);
 
@@ -85,7 +98,7 @@ const ItemReply = ({ item, onPressReplyChild, repCmtId }: ItemReplyProps) => {
   const HeaderItemComment = useMemo(() => {
     return (
       <View style={styles.containerHeader}>
-        <View style={styles.viewTxtHeader}>
+        <PressableBtn onPress={gotoDetail} style={styles.viewTxtHeader}>
           <Text style={styles.txtHeader}>{item?.user_id?.display_name}</Text>
           {item?.user_id?.official_status && (
             <IconSvg name="icVerify" size={14} />
@@ -94,7 +107,7 @@ const ItemReply = ({ item, onPressReplyChild, repCmtId }: ItemReplyProps) => {
           <Text style={styles.txtTimeHeader}>
             {convertLastActive(item?.createdAt)}
           </Text>
-        </View>
+        </PressableBtn>
         {!item?.sending && (
           <PressableBtn onPress={_showStickBottom}>
             <Icon
@@ -173,9 +186,21 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
     setListReply(data.child || []);
   }, [data, data.child]);
 
+  const gotoDetail = () => {
+    navigate(SCREENS.PROFILE_CURRENT_USER, {
+      _id: data?.user_id?._id,
+      userInfo: data.user_id,
+    });
+  };
+
   const Avatar = useMemo(() => {
     return (
-      <AvatarPost sizeAvatar={SIZE_AVATAR} data={data?.user_id} showLevel />
+      <AvatarPost
+        _onPress={gotoDetail}
+        sizeAvatar={SIZE_AVATAR}
+        data={data?.user_id}
+        showLevel
+      />
     );
   }, [data]);
   const _showStickBottom = () => {
@@ -193,7 +218,7 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
   const HeaderItemComment = useMemo(() => {
     return (
       <View style={styles.containerHeader}>
-        <View style={styles.viewTxtHeader}>
+        <PressableBtn onPress={gotoDetail} style={styles.viewTxtHeader}>
           <Text numberOfLines={2} style={styles.txtHeader}>
             {data?.user_id?.display_name}
           </Text>
@@ -204,7 +229,7 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
           <Text style={styles.txtTimeHeader}>
             {convertLastActive(data?.createdAt)}
           </Text>
-        </View>
+        </PressableBtn>
         {!data.sending && (
           <PressableBtn onPress={_showStickBottom}>
             <Icon

@@ -3,7 +3,6 @@ import {
   View,
   TouchableOpacity,
   StyleSheet,
-  Image,
   ScrollView,
   Keyboard,
 } from "react-native";
@@ -34,15 +33,54 @@ import { ICourseItem } from "models/course.model";
 import { getMyCourse } from "@services/api/course.api";
 import TextBase from "@shared-components/TextBase";
 import { EnumColors } from "models";
+import {
+  IconCare,
+  IconHaHa,
+  IconLike,
+  IconLove,
+  IconSad,
+  IconWow,
+} from "./utils";
+import { MHS } from "@utils/size.utils";
 
 const reactionData = [
-  { type: "like", image: images.like_static, gif: images.like_gif },
-  { type: "love", image: images.love_static, gif: images.love_gif },
-  // { type: "care", image: images.angry_static, gif: images.angry_gif },
-  { type: "haha", image: images.haha_static, gif: images.haha_gif },
-  { type: "wow", image: images.wow_static, gif: images.wow_gif },
-  { type: "sad", image: images.sad_static, gif: images.sad_gif },
-  { type: "angry", image: images.angry_static, gif: images.angry_gif },
+  {
+    type: "like",
+    image: images.like_static,
+    gif: images.like_gif,
+    link: <IconLike width={MHS._40} height={MHS._40} />,
+  },
+  {
+    type: "love",
+    image: images.love_static,
+    gif: images.love_gif,
+    link: <IconLove width={MHS._40} height={MHS._40} />,
+  },
+  {
+    type: "care",
+    image: images.angry_static,
+    gif: images.angry_gif,
+    link: <IconCare width={MHS._40} height={MHS._40} />,
+  },
+  {
+    type: "haha",
+    image: images.haha_static,
+    gif: images.haha_gif,
+    link: <IconHaHa width={MHS._40} height={MHS._40} />,
+  },
+  {
+    type: "wow",
+    image: images.wow_static,
+    gif: images.wow_gif,
+    link: <IconWow width={MHS._40} height={MHS._40} />,
+  },
+  {
+    type: "sad",
+    image: images.sad_static,
+    gif: images.sad_gif,
+    link: <IconSad width={MHS._40} height={MHS._40} />,
+  },
+  // { type: "angry", image: images.angry_static, gif: images.angry_gif },
 ];
 
 interface InputChatLiveProps {
@@ -134,11 +172,12 @@ const InputChatLive: React.FC<InputChatLiveProps> = ({
               key={index}
               style={styles.reactionBtn}
             >
-              <Image
+              {/* <Image
                 source={item.image}
                 style={{ width: 40, height: 40 }}
                 resizeMode="contain"
-              />
+              /> */}
+              {item.link}
             </TouchableOpacity>
           );
         })}

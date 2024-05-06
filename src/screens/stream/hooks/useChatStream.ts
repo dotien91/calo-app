@@ -15,6 +15,7 @@ import {
 } from "@helpers/super.modal.helper";
 import { translations } from "@localization";
 import { goBack } from "react-navigation-helpers";
+import eventEmitter from "@services/event-emitter";
 
 const limit = 5;
 
@@ -117,6 +118,11 @@ export const useLiveChatHistory = ({
     console.log("onsocket emojiToClient...", data);
     if (!data) return;
     data = JSON.parse(data);
+    console.log(data.user_id);
+    eventEmitter.emit("show_reaction_animation_live", {
+      type: data.react_type,
+      user_id: data.user_id,
+    });
     const likeNumber = data?.livestream_id?.like_number;
     if (!likeNumber) return;
     setEmojiNumber(likeNumber);

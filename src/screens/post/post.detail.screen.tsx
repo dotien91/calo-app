@@ -337,6 +337,7 @@ const PostDetail = (props: PostDetailProps) => {
   };
 
   const renderItem = ({ item }: { item: TypedComment }) => {
+    console.log("item...", item);
     return (
       <View>
         <ItemComment data={item} onPressReply={() => pressReply(item)} />

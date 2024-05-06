@@ -380,7 +380,7 @@ function App() {
               <IconSvg
                 style={{
                   position: "absolute",
-                  top: 50,
+                  top: 122,
                   right: 24,
                   zIndex: 1,
                 }}

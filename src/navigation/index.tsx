@@ -251,7 +251,11 @@ const Navigation = () => {
     return (
       <>
         {CommonStackData.map((item) => (
-          <Stack.Screen key={item.name} name={item.name} component={item.screen} />
+          <Stack.Screen
+            key={item.name}
+            name={item.name}
+            component={item.screen}
+          />
         ))}
         {renderPracticeTestStack()}
         {renderBanksStack()}

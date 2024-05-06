@@ -34,6 +34,7 @@ const ItemLeaderBoard = () => {
 
   useEffect(() => {
     getDataRank();
+    console.log(loading);
   }, []);
 
   return (
