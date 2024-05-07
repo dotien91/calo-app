@@ -32,6 +32,7 @@ import { getListNotification } from "@services/api/notification.api";
 import IconSvg from "assets/svg";
 import { palette } from "@theme/themes";
 import PressableBtn from "@shared-components/button/PressableBtn";
+import { useUserHook } from "@helpers/hooks/useUserHook";
 
 interface ListScreenProps {}
 
@@ -72,6 +73,7 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
       }
     });
   };
+  const { isLoggedIn, renderViewRequestLogin } = useUserHook();
 
   useEffect(() => {
     if (isFocused) {
@@ -177,36 +179,43 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
       <View style={{ height: 12 }} />
       <ListFriend />
       <View style={{ height: 8 }} />
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={scrollToRefresh} />
-        }
-      >
-        {lastNoti && <ChatNotification item={lastNoti} />}
-        {isLoading && <LoadingList numberItem={3} />}
-        {noData && (
-          <EmptyResultView
-            title={translations.noNewMessageTittle}
-            desc={translations.noNewMessageDesc}
-            icon={"chatbubble-ellipses-outline"}
-          />
-        )}
-        <View style={{ height: 8 }} />
-        <FlatList
-          data={listData}
-          renderItem={renderItem}
-          scrollEventThrottle={16}
-          contentContainerStyle={styles.listChat}
-          onEndReachedThreshold={0}
-          onEndReached={onEndReach}
+      {!isLoggedIn() ? (
+        renderViewRequestLogin()
+      ) : (
+        <ScrollView
           showsVerticalScrollIndicator={false}
-          removeClippedSubviews={true}
-          keyExtractor={(item) => item?.chat_room_id?._id + ""}
-          refreshControl={refreshControl()}
-          ListFooterComponent={renderFooterComponent()}
-        />
-      </ScrollView>
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={scrollToRefresh}
+            />
+          }
+        >
+          {lastNoti && <ChatNotification item={lastNoti} />}
+          {isLoading && <LoadingList numberItem={3} />}
+          {noData && (
+            <EmptyResultView
+              title={translations.noNewMessageTittle}
+              desc={translations.noNewMessageDesc}
+              icon={"chatbubble-ellipses-outline"}
+            />
+          )}
+          <View style={{ height: 8 }} />
+          <FlatList
+            data={listData}
+            renderItem={renderItem}
+            scrollEventThrottle={16}
+            contentContainerStyle={styles.listChat}
+            onEndReachedThreshold={0}
+            onEndReached={onEndReach}
+            showsVerticalScrollIndicator={false}
+            removeClippedSubviews={true}
+            keyExtractor={(item) => item?.chat_room_id?._id + ""}
+            refreshControl={refreshControl()}
+            ListFooterComponent={renderFooterComponent()}
+          />
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 };

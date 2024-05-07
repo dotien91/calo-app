@@ -10,6 +10,7 @@ import { getListGroup } from "@services/api/club.api";
 import eventEmitter from "@services/event-emitter";
 import useStore from "@services/zustand/store";
 import EmptyResultView from "@shared-components/empty.data.component";
+import { useUserHook } from "@helpers/hooks/useUserHook";
 
 interface TypeListClub {
   avatar: any;
@@ -63,6 +64,10 @@ const JoinClubSceen = () => {
       </>
     );
   };
+  const { isLoggedIn, renderViewRequestLogin } = useUserHook();
+  if (!isLoggedIn()) {
+    return <View style={styles.styleItem}>{renderViewRequestLogin()}</View>;
+  }
 
   return (
     <View style={styles.styleItem}>
