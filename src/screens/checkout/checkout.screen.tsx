@@ -146,10 +146,11 @@ const CheckoutScreen = () => {
             borderRadius: 8,
             marginRight: 8,
             marginVertical: 8,
+            marginLeft: 16,
           }}
           resizeMode="cover"
         />
-        <View>
+        <View style={CS.flex1}>
           <Text style={styles.styleContentCouresPayment} numberOfLines={3}>
             {courseData?.title}
           </Text>
@@ -171,7 +172,7 @@ const CheckoutScreen = () => {
               key={index}
               style={[
                 {
-                  borderBottomColor: index === 3 ? colors.white : colors.grey3,
+                  borderBottomColor: index === 4 ? colors.white : colors.grey3,
                 },
                 styles.styleViewItemFormTime,
               ]}
@@ -446,7 +447,7 @@ const CheckoutScreen = () => {
           showsVerticalScrollIndicator={false}
         >
           {renderViewCoures()}
-          <Text style={styles.note}>{translations.payment.notePurchase}</Text>
+          {/* <Text style={styles.note}>{translations.payment.notePurchase}</Text> */}
           {renderFormTime()}
           {/* {renderPromo()} */}
           {renderPaymentMethod()}

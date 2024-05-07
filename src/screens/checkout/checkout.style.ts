@@ -48,18 +48,16 @@ export default (theme: ExtendedTheme) => {
       paddingTop: isIOS ? 0 : getStatusBarHeight(),
     },
     styleShawdow: {
-      shadowColor: colors.white,
+      shadowColor: colors.backgroundPayment,
       borderWidth: 1,
       borderColor: colors.white,
-      shadowOffset: {
-        width: 0,
-        height: 3,
-      },
-      shadowRadius: 3.05,
-      shadowOpacity: 0.17,
-      elevation: 4,
-      borderRadius: 8,
+      shadowOffset: { width: 0, height: 4 },
+      shadowRadius: 20,
+      shadowOpacity: 1,
+      elevation: 5,
+      // borderRadius: 8,
       backgroundColor: colors.white,
+      marginHorizontal: 0,
     },
     styleViewProMo: {
       ...CS.row,
@@ -223,7 +221,7 @@ export default (theme: ExtendedTheme) => {
       margin: 12,
       ...CS.hnMedium,
       color: colors.info,
-      marginLeft: 32,
+      marginHorizontal: 16,
     },
   });
 };
