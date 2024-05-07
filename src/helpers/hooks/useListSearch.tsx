@@ -86,6 +86,13 @@ export function useListSearch<T>(
           noData: !newData.length,
           totalCount: res?.headers?.["x-total-count"] || 0,
         }));
+      } else {
+        setStateListData((oldState) => ({
+          ...oldState,
+          isLoading: false,
+          listData: [],
+          noData: true,
+        }));
       }
     });
   };

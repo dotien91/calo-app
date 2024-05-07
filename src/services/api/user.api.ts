@@ -136,6 +136,8 @@ export async function getListUser(params: { search: string }) {
     method: METHOD.GET,
     urlPath: "user/list",
     params: { ...params, display_name: params?.search || "" },
+  }).then((response) => {
+    return response;
   });
 }
 
