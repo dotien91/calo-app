@@ -349,7 +349,7 @@ export async function getMyCourse(data: {
   created_user_id: string;
   auth_id: string;
 }) {
-  console.log("data", data);
+  data.lang = _getJson(LANG) || "en";
   return request({
     method: METHOD.POST,
     urlPath: "course/my-course",
