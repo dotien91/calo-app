@@ -61,7 +61,7 @@ export default (theme: ExtendedTheme) => {
       backgroundColor: colors.white,
       borderRadius: 4,
       paddingVertical: 2,
-      ...CS.borderBottomStyle
+      ...CS.borderBottomStyle,
     },
     txtBtn: {
       ...CS.hnSemiBold,
@@ -100,7 +100,7 @@ export default (theme: ExtendedTheme) => {
     },
     hourActiveBtn: {
       // backgroundColor: colors.btnInactive,
-      opacity: 0.5
+      opacity: 0.5,
     },
     durationBtnActive: {
       backgroundColor: colors.primary,

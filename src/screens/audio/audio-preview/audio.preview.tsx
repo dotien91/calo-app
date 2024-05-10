@@ -106,13 +106,12 @@ const AudioPreview = () => {
 
   const playTrack = async (track: Track, indexLocal: number) => {
     const item = listAudioHistory.filter((item) => item.url === track.url);
+    await TrackPlayer.skip(indexLocal);
     if (item.length > 0) {
-      await TrackPlayer.skip(indexLocal);
       await TrackPlayer.seekBy(item[0].position || 0);
-      await TrackPlayer.play();
-      NavigationService.navigate(SCREENS.AUDIO_PLAY);
-      closeSuperModal();
     }
+    await TrackPlayer.play();
+    closeSuperModal();
   };
 
   const playAudio = async () => {
@@ -121,7 +120,9 @@ const AudioPreview = () => {
       contentModalType: EnumModalContentType.Loading,
       styleModalType: EnumStyleModalType.Middle,
     });
-    const indexLocal = listAudio.findIndex((item) => item._id === track?._id);
+    NavigationService.navigate(SCREENS.AUDIO_PLAY);
+
+    const indexLocal = listAudio.findIndex((item) => item._id === id);
     if (indexLocal >= 0) {
       // const list = listAudio.slice(indexLocal, listAudio.length);
       for (let i = 0; i < listAudio.length; i++) {

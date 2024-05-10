@@ -10,25 +10,29 @@ import { Device } from "@utils/device.ui.utils";
 import { IAudioItem } from "models/audio.modal";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { SCREENS } from "constants";
+import CS from "@theme/styles";
+import useStore from "@services/zustand/store";
 
 interface ItemListProps {
   isSliderItem: boolean;
   style?: ViewStyle;
   data: IAudioItem;
+  listData: any[];
 }
 
 const widthImage = 111;
 const heightImage = 140;
 
-const ItemList = ({ isSliderItem, style, data }: ItemListProps) => {
+const ItemList = ({ isSliderItem, style, data, listData }: ItemListProps) => {
   const { title, user_id, view_number, post_avatar, podcast_category, _id } =
     data;
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
+  const setListAudio = useStore((state) => state.setListAudio);
 
   const renderInfo = () => {
     return (
-      <View style={{ marginBottom: 10 }}>
+      <View style={CS.flex1}>
         <Text numberOfLines={2} style={styles.audioTitle}>
           {title}
         </Text>
@@ -69,6 +73,7 @@ const ItemList = ({ isSliderItem, style, data }: ItemListProps) => {
   };
 
   const openPreviewCourse = () => {
+    setListAudio(listData);
     NavigationService.navigate(SCREENS.AUDIO_PREVIEW, { id: _id });
   };
 
@@ -79,8 +84,8 @@ const ItemList = ({ isSliderItem, style, data }: ItemListProps) => {
         styles.audioItem1,
         isSliderItem && {
           padding: 0,
-          width: Device.width - 170,
-          marginRight: 16,
+          width: Device.width - 32,
+          // marginRight: 16,
         },
         style ? style : {},
       ]}

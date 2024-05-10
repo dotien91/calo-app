@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
@@ -11,11 +11,9 @@ import AudioCategoryTitle from "../audio-book/audio.category.title";
 import AudioItemList from "../components/audio.item.list";
 import { SCREENS } from "constants";
 import LoadingList from "@shared-components/loading.list.component";
-import { useIsFocused } from "@react-navigation/native";
 
 const AudioList = () => {
   const userData = useStore((state) => state.userData);
-  const setListAudio = useStore((state) => state.setListAudio);
 
   const {
     listData,
@@ -34,15 +32,18 @@ const AudioList = () => {
     GetPodCastList,
   );
 
-  useEffect(() => {
-    setListAudio(listData);
-  }, [listData, useIsFocused]);
-
   const renderItem = ({ item, index }) => {
     if (item?.is_join) {
       return null;
     } else {
-      return <AudioItemList isSliderItem data={item} key={index} />;
+      return (
+        <AudioItemList
+          listData={listData}
+          isSliderItem
+          data={item}
+          key={index}
+        />
+      );
     }
   };
 
