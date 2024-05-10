@@ -46,8 +46,18 @@ const AudioPlayScreen = () => {
           />
         </View>
         <View style={styles.viewTitle}>
-          <Text style={styles.txtTitle}>{activeTrack?.title}</Text>
-          <Text style={styles.txtAuthor}>{activeTrack?.artist}</Text>
+          <Text
+            numberOfLines={2}
+            style={[
+              styles.txtTitle,
+              activeTrack?.title.length > 60 && { textAlign: "auto" },
+            ]}
+          >
+            {activeTrack?.title}
+          </Text>
+          <Text numberOfLines={1} style={styles.txtAuthor}>
+            {activeTrack?.artist}
+          </Text>
         </View>
       </View>
       <View style={styles.viewChild}>
@@ -126,10 +136,12 @@ const styles = StyleSheet.create({
   viewTitle: {
     marginTop: 16,
     height: (ScreenHeight * 84) / 812,
+    width: ScreenWidth,
   },
   txtTitle: {
     ...CS.hnBold,
     fontSize: 20,
+    paddingHorizontal: 16,
     textAlign: "center",
   },
   txtAuthor: {
