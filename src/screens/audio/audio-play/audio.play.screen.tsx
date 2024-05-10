@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, StyleSheet, SafeAreaView, Text, Image } from "react-native";
+import { View, StyleSheet, SafeAreaView, Text } from "react-native";
 import { ScreenHeight, ScreenWidth } from "@freakycoder/react-native-helpers";
 import Header from "@shared-components/header/Header";
 import CS from "@theme/styles";
@@ -11,6 +11,7 @@ import TrackPlayer, {
   useIsPlaying,
   useActiveTrack,
 } from "react-native-track-player";
+import FastImage from "react-native-fast-image";
 
 import { formatTime } from "@utils/date.utils";
 import eventEmitter from "@services/event-emitter";
@@ -38,7 +39,7 @@ const AudioPlayScreen = () => {
       <Header />
       <View style={styles.viewAudio}>
         <View style={styles.viewImage}>
-          <Image
+          <FastImage
             style={styles.viewImage}
             source={{ uri: activeTrack?.artwork }}
             borderRadius={8}

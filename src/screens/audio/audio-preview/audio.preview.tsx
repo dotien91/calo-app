@@ -25,6 +25,7 @@ import ListReviewView from "./list.review";
 import {
   EnumModalContentType,
   EnumStyleModalType,
+  closeSuperModal,
   showSuperModal,
   showWarningLogin,
 } from "@helpers/super.modal.helper";
@@ -110,11 +111,16 @@ const AudioPreview = () => {
       await TrackPlayer.seekBy(item[0].position || 0);
       await TrackPlayer.play();
       NavigationService.navigate(SCREENS.AUDIO_PLAY);
+      closeSuperModal();
     }
   };
 
   const playAudio = async () => {
     await TrackPlayer.reset();
+    showSuperModal({
+      contentModalType: EnumModalContentType.Loading,
+      styleModalType: EnumStyleModalType.Middle,
+    });
     const indexLocal = listAudio.findIndex((item) => item._id === track?._id);
     if (indexLocal >= 0) {
       // const list = listAudio.slice(indexLocal, listAudio.length);
@@ -132,6 +138,7 @@ const AudioPreview = () => {
         }
       }
     }
+    // lưu vào store
     const track2 = {
       url: track?.attach_files[0].media_url,
       title: track?.title,
