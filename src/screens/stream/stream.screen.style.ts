@@ -116,5 +116,17 @@ export default (theme: ExtendedTheme) => {
       borderRadius: 20,
       backgroundColor: colors.backgroundInputLive,
     },
+    iconStyle: {
+      position: "absolute",
+      zIndex: 1,
+    },
+     buttonStyle: {
+      position: "absolute",
+      zIndex: 1,
+      backgroundColor: colors.red,
+      paddingHorizontal: 8,
+      paddingVertical: 4,
+      borderRadius: 4,
+    }
   });
 };

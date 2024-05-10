@@ -63,7 +63,7 @@ const Media = ({ item }: Media) => {
     return (
       <VideoPreview
         onPressLanscape={onPressLanscape}
-        url={item?.media_url}
+        url={"https://live-par-2-cdn-alt.livepush.io/live/bigbuckbunnyclip/index.m3u8"}
         ref={videoRef}
         changeOrientation={false}
         markDoneCourse={onPressMarkDone}

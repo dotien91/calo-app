@@ -23,7 +23,7 @@ import Animated, {
   withDelay,
   withTiming,
 } from "react-native-reanimated";
-import Video from "react-native-video";
+import Video from 'react-native-video'
 import Slider from "@react-native-community/slider";
 import * as NavigationService from "react-navigation-helpers";
 import LottieView from "lottie-react-native";
@@ -40,7 +40,6 @@ import IconSvg from "assets/svg";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import useStore from "@services/zustand/store";
 import { translations } from "@localization";
-
 const PERCENT_DONE_VIDEO = 0.5;
 
 const VideoPreview = (
@@ -210,7 +209,7 @@ const VideoPreview = (
   const onPressPause = () => {
     pausedRef.current = !pausedRef.current;
     aniPause.value = withTiming(pausedRef.current ? 1 : 0, { duration: 300 });
-    videoRef.current?.setNativeProps({ paused: pausedRef.current });
+    videoRef.current?.setNativeProps?.({ paused: pausedRef.current });
     //set lại hiển thị bộ option chứ không thì sẽ ăn cái gesture handle rồi ẩn đi mất
     showOptions.value = withTiming(1, { duration: 0 }, (f1) => {
       if (f1) {
@@ -351,6 +350,7 @@ const VideoPreview = (
         onProgress={onProgress}
         onEnd={_showPreview}
         repeat={repeat}
+        audio="speaker"
       />
     );
   };

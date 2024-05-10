@@ -16,7 +16,6 @@ export const useClassRoom = () => {
     StatusBar.setBarStyle("light-content");
     StatusBar.setTranslucent(true);
     KeepAwake.activate();
-    InCallManager.start();
     InCallManager.setSpeakerphoneOn(true);
     return () => {
       StatusBar.setBackgroundColor("white");

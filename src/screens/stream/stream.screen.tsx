@@ -12,10 +12,10 @@ import {
   Keyboard,
 } from "react-native";
 import RTMPPublisher, { RTMPPublisherRefProps } from "react-native-publisher";
-import { useTheme, useRoute, useFocusEffect } from "@react-navigation/native";
+import { useTheme, useFocusEffect } from "@react-navigation/native";
 import { IconType } from "react-native-dynamic-vector-icons";
 import KeepAwake from "react-native-keep-awake";
-
+import _ from "lodash"
 import LiveBadge from "./components/LiveBadge";
 import { useUploadFile } from "@helpers/hooks/useUploadFile";
 
@@ -42,7 +42,6 @@ import { palette } from "@theme/themes";
 import { SCREENS } from "constants";
 import IconSvg from "assets/svg";
 import PressableBtn from "@shared-components/button/PressableBtn";
-import { Device } from "@utils/device.ui.utils";
 import { isAndroid } from "@helpers/device.info.helper";
 
 function App() {
@@ -64,30 +63,29 @@ function App() {
 
   const isStreaming = React.useMemo(() => !!liveData?._id, [liveData?._id]);
   const { isLoggedIn, renderViewRequestLogin } = useUserHook();
-  const route = useRoute();
   const [permissionGranted, setPermissionGranted] =
     React.useState<boolean>(false);
 
   const { appStateStatus } = useAppStateCheck();
 
   useEffect(() => {
-    console.log("appStateStatus", appStateStatus);
+    if (!liveData) return
     if (appStateStatus == "active" && !show) {
-      console.log("stop");
+      // ensureStartStream()
       setShow(true);
       setTimeout(() => {
-        publisherRef.current && publisherRef.current?.startStream?.();
+        !_.isEmpty(publisherRef.current) && publisherRef.current?.startStream?.();
       }, 1000);
     }
     if (
       (appStateStatus == "background" || appStateStatus == "inactive") &&
       show
     ) {
-      console.log("start");
-      publisherRef.current && publisherRef.current?.stopStream?.();
+      !_.isEmpty(publisherRef.current) && publisherRef.current?.stopStream?.();
       setShow(false);
     }
-  }, [appStateStatus, show]);
+  }, [appStateStatus, show, liveData]);
+
 
   const checkPermission = async () => {
     const permission = await requestPermission(
@@ -95,7 +93,6 @@ function App() {
       "camera, microphone, bluetooth",
     );
 
-    console.log("permissionpermissionpermission", permission);
     setPermissionGranted(permission == RESULTS.GRANTED);
   };
 
@@ -103,7 +100,7 @@ function App() {
     setShow(true);
     if (isStreaming) {
       setTimeout(() => {
-        publisherRef.current && publisherRef.current?.startStream();
+        !_.isEmpty(publisherRef.current) && publisherRef.current?.startStream();
       }, 1000);
     }
   };
@@ -115,7 +112,7 @@ function App() {
   );
 
   const hideLiveStream = () => {
-    publisherRef.current && publisherRef.current?.stopStream();
+    // publisherRef.current && publisherRef.current?.stopStream();
     setShow(false);
   };
 
@@ -128,33 +125,28 @@ function App() {
     onSelectPicture();
   };
   useEffect(() => {
-    // StatusBar.setBackgroundColor("black");
     checkPermission();
     KeepAwake.activate();
-    // const txtFromPostScreen = route.params?.["titleLive"];
-    // if (!txtFromPostScreen) return;
-    // _createLiveStream(txtFromPostScreen);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     return () => {
-      publisherRef.current && publisherRef.current?.stopStream?.();
+      !_.isEmpty(publisherRef.current) && publisherRef.current?.stopStream?.();
       KeepAwake.deactivate();
       updateLivestream("end", liveData?._id);
-
-      console.log(2222222222, publisherRef.current);
-      publisherRef.current && publisherRef.current?.mute?.();
+      !_.isEmpty(publisherRef.current) && publisherRef.current?.mute?.();
       // setShow(false);
     };
   }, []);
 
   useEffect(() => {
-    publisherRef.current?.startStream && publisherRef.current.startStream();
-    return () => {
-      if (liveData?._id) {
-        updateLivestream("end", liveData?._id);
-        publisherRef.current && publisherRef.current.stopStream();
-      }
-    };
+    if (!_.isEmpty(publisherRef.current))  {
+      publisherRef.current.startStream()
+      publisherRef.current.setAudioInput(1);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => {
+      updateLivestream("end", liveData?._id);
+      // setShow(false);
+    };
   }, [liveData]);
 
   const handleOnConnectionFailed = () => {
@@ -177,9 +169,9 @@ function App() {
     console.log("New Bitrate Received: =====" + data);
   };
 
-  // const handleOnStreamStateChanged = (data: StreamState) => {
-  //   console.log("Stream Status: =====" + data);
-  // };
+  const handleOnStreamStateChanged = () => {
+    // alert(3)
+  };
 
   // const handleUnmute = () => {
   //   publisherRef.current && publisherRef.current.unmute();
@@ -191,6 +183,7 @@ function App() {
   //   setIsMuted(true);
   // };
   const handleStartStream = () => {
+
     if (permissionGranted) {
       // if (listFile.length > 0) {
       _createLiveStream(
@@ -213,7 +206,7 @@ function App() {
   // };
 
   const handleSwitchCamera = () => {
-    publisherRef.current && publisherRef.current.switchCamera();
+    !_.isEmpty(publisherRef.current) && publisherRef.current.switchCamera();
   };
 
   // const handleToggleMicrophoneModal = () => {
@@ -349,6 +342,71 @@ function App() {
 
   if (!isLoggedIn) return renderViewRequestLogin();
 
+  const renderTopView = () => {
+    return (
+      <>
+        {renderInput()}
+        {!isStreaming && (
+          <IconSvg
+            style={{
+              ...styles.iconStyle,
+              top: 68,
+              left: 24,
+            }}
+            name="icXShadow"
+            color={colors.white}
+            size={32}
+            onPress={onShouldCloseLive}
+          />
+        )}
+        {isStreaming ? (
+          <>
+            <IconSvg
+              style={{
+                ...styles.iconStyle,
+                top: 122,
+                right: 24,
+              }}
+              name="icCameraShadow"
+              color={colors.white}
+              size={32}
+              onPress={handleSwitchCamera}
+            />
+            <TouchableOpacity
+              onPress={onShouldCloseLive}
+              style={{
+                ...styles.buttonStyle,
+                top: 82,
+                right: 20,
+              }}
+            >
+              <Text
+                style={{
+                  ...CS.hnBold,
+                  color: palette.white,
+                }}
+              >
+                {translations.event.end}
+              </Text>
+            </TouchableOpacity>
+          </>
+        ) : (
+          <IconSvg
+            style={{
+              ...styles.iconStyle,
+              top: 68,
+              right: 24,
+            }}
+            name="icCameraShadow"
+            color={colors.white}
+            size={32}
+            onPress={handleSwitchCamera}
+          />
+        )}
+      </>
+    );
+  }
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -360,100 +418,49 @@ function App() {
         }}
       >
         <View style={styles.container}>
-          {renderInput()}
-          {!isStreaming && (
-            <IconSvg
-              style={{
-                position: "absolute",
-                top: 68,
-                left: 24,
-                zIndex: 1,
-              }}
-              name="icXShadow"
-              color={colors.white}
-              size={32}
-              onPress={onShouldCloseLive}
-            />
-          )}
-          {isStreaming ? (
-            <>
-              <IconSvg
-                style={{
-                  position: "absolute",
-                  top: 122,
-                  right: 24,
-                  zIndex: 1,
-                }}
-                name="icCameraShadow"
-                color={colors.white}
-                size={32}
-                onPress={handleSwitchCamera}
+          {renderTopView()}
+          {permissionGranted && (!isAndroid() || show) && (
+            isAndroid() ?
+              <RTMPPublisher
+                ref={publisherRef}
+                streamURL={
+                  liveData?.livestream_data?.rtmp_url ||
+                  "rtmp://broadcast.ieltshunter.io:1935/live"
+                }
+                streamName={liveData?.livestream_data?.stream_key || ""}
+                style={styles.publisher_camera}
+                onDisconnect={handleOnDisconnect}
+                onConnectionFailed={handleOnConnectionFailed}
+                onNewBitrateReceived={handleOnNewBitrateReceived}
+                onStreamStateChanged={handleOnStreamStateChanged}
               />
-              <TouchableOpacity
-                onPress={onShouldCloseLive}
-                style={{
-                  position: "absolute",
-                  top: 82,
-                  right: 20,
-                  zIndex: 1,
-                  backgroundColor: palette.red,
-                  paddingHorizontal: 8,
-                  paddingVertical: 4,
-                  borderRadius: 4,
+              :
+              <RTMPPublisher
+                videoSettings={{
+                  width: 640,
+                  height: 640 * 16 / 9,
+                  bitrate: 800 * 1024,
+                  audioBitrate: 128 * 1000,
+                  // 3000 * 1024, 128 * 1024
                 }}
-              >
-                <Text
-                  style={{
-                    ...CS.hnBold,
-                    color: palette.white,
-                  }}
-                >
-                  {translations.event.end}
-                </Text>
-              </TouchableOpacity>
-            </>
-          ) : (
-            <IconSvg
-              style={{
-                position: "absolute",
-                top: 68,
-                right: 24,
-                zIndex: 1,
-              }}
-              name="icCameraShadow"
-              color={colors.white}
-              size={32}
-              onPress={handleSwitchCamera}
-            />
-          )}
-          {permissionGranted && show && (
-            <RTMPPublisher
-              // videoSettings={{
-              //   width: Device.width,
-              //   height: Device.height,
-              //   bitrate: (isAndroid() ? 800 : 600) * 1024,
-              //   audioBitrate: 128 * 1000,
-              //   // 3000 * 1024, 128 * 1024
-              // }}
-              ref={publisherRef}
-              streamURL={
-                liveData?.livestream_data?.rtmp_url ||
-                "rtmp://broadcast.ieltshunter.io:1935/live"
-              }
-              streamName={liveData?.livestream_data?.stream_key || ""}
-              style={styles.publisher_camera}
-              onDisconnect={handleOnDisconnect}
-              onConnectionFailed={handleOnConnectionFailed}
-              // onConnectionStarted={handleOnConnectionStarted}
-              // onConnectionSuccess={handleOnConnectionSuccess}
-              onNewBitrateReceived={handleOnNewBitrateReceived}
-              // onStreamStateChanged={handleOnStreamStateChanged}
+                ref={publisherRef}
+                streamURL={
+                  liveData?.livestream_data?.rtmp_url ||
+                  "rtmp://broadcast.ieltshunter.io:1935/live"
+                }
+                streamName={liveData?.livestream_data?.stream_key || ""}
+                style={styles.publisher_camera}
+                onDisconnect={handleOnDisconnect}
+                onConnectionFailed={handleOnConnectionFailed}
+                // onConnectionStarted={handleOnConnectionStarted}
+                // onConnectionSuccess={handleOnConnectionSuccess}
+                onNewBitrateReceived={handleOnNewBitrateReceived}
+                onStreamStateChanged={handleOnStreamStateChanged}
               // onBluetoothDeviceStatusChanged={handleBluetoothDeviceStatusChange}
-            />
+              />
           )}
           {isStreaming && renderChatView()}
           {isStreaming && <LiveBadge />}
-
           {!isStreaming && (
             <View style={styles.footer_container}>
               <View
