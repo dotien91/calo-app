@@ -10,6 +10,7 @@ import { useListData } from "@helpers/hooks/useListData";
 import eventEmitter from "@services/event-emitter";
 import EmptyResultView from "@shared-components/empty.data.component";
 import { useApi } from "@helpers/hooks/useApi";
+import useStore from "@services/zustand/store";
 
 interface TypeListClub {
   avatar: any;
@@ -26,6 +27,8 @@ const FeatureClubScreen = () => {
     limit: "12",
   };
 
+  const userData = useStore((store) => store.userData);
+
   const {
     listData,
     onEndReach,
@@ -33,12 +36,17 @@ const FeatureClubScreen = () => {
     refreshControl,
     renderFooterComponent,
     _requestData,
-  } = useListData<TypeListClub>(paramsRequest, getListGroup, []);
+  } = useListData<TypeListClub>(paramsRequest, getListGroup, [], userData);
 
-  const { data } = useApi<TypeListClub>({
+  const { data, _requestData: reloadElitClub } = useApi<TypeListClub>({
     params: { isEliteClub: true },
     requestData: getListGroup,
   });
+
+  useEffect(() => {
+    _requestData(true);
+    reloadElitClub(true);
+  }, [userData?._id]);
   console.log("datadata", data);
   useEffect(() => {
     eventEmitter.on("reload_list_club", _requestData);

@@ -47,6 +47,10 @@ const ManagedClubScreen = () => {
     };
   }, []);
 
+  useEffect(() => {
+    _requestData(true);
+  }, [userData?._id]);
+
   const renderLoading = () => {
     return <LoadingList numberItem={3} />;
   };
