@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { FlatList, SafeAreaView } from "react-native";
 
 import CS from "@theme/styles";
@@ -14,7 +14,7 @@ import LoadingList from "@shared-components/loading.list.component";
 
 const RecommendBookScreen = () => {
   const userData = useStore((state) => state.userData);
-  const setListAudio = useStore((state) => state.setListAudio);
+  // const setListAudio = useStore((state) => state.setListAudio);
 
   const { listData, isLoading } = useListData<TypeTrackLocal>(
     {
@@ -25,15 +25,22 @@ const RecommendBookScreen = () => {
     GetPodCastList,
   );
 
-  useEffect(() => {
-    setListAudio(listData);
-  }, [listData]);
+  // useEffect(() => {
+  //   setListAudio(listData);
+  // }, [listData]);
 
   const renderItem = ({ item, index }) => {
     if (item?.is_join) {
       return null;
     } else {
-      return <AudioItemList isSliderItem data={item} key={index} />;
+      return (
+        <AudioItemList
+          listData={listData}
+          isSliderItem
+          data={item}
+          key={index}
+        />
+      );
     }
   };
 
