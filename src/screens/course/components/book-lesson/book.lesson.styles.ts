@@ -51,16 +51,17 @@ export default (theme: ExtendedTheme) => {
       borderColor: colors.white,
     },
     hourBtn: {
-      shadowColor: "rgba(0,0,0,0.8)",
-      shadowOffset: { width: 0, height: 6 },
-      shadowOpacity: 0.1,
-      elevation: 1,
-      shadowRadius: 5,
+      // shadowColor: "rgba(0,0,0,0.8)",
+      // shadowOffset: { width: 0, height: 6 },
+      // shadowOpacity: 0.1,
+      // elevation: 1,
+      // shadowRadius: 5,
       marginBottom: 8,
       ...CS.center,
       backgroundColor: colors.white,
       borderRadius: 4,
       paddingVertical: 2,
+      ...CS.borderBottomStyle
     },
     txtBtn: {
       ...CS.hnSemiBold,
@@ -98,7 +99,8 @@ export default (theme: ExtendedTheme) => {
       color: palette.white,
     },
     hourActiveBtn: {
-      backgroundColor: colors.btnInactive,
+      // backgroundColor: colors.btnInactive,
+      opacity: 0.5
     },
     durationBtnActive: {
       backgroundColor: colors.primary,

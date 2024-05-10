@@ -193,8 +193,7 @@ const BookLessonSelectView = ({
             {item.extraLabel}
           </Text>
         )}
-        <PressableBtn
-          disable={isDisabled}
+        <View
           // onPress={() => onSelectTimeStart(item, isActive)}
           style={[styles.hourBtn, isDisabled && styles.hourActiveBtn]}
         >
@@ -210,7 +209,7 @@ const BookLessonSelectView = ({
               <IconBtn color={palette.white} size={16} name="check" />
             )}
           </View> */}
-        </PressableBtn>
+        </View>
       </>
     );
   };
