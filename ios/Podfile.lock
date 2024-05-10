@@ -197,7 +197,6 @@ PODS:
   - MMKV (1.3.4):
     - MMKVCore (~> 1.3.4)
   - MMKVCore (1.3.4)
-  - MobileVLCKit (3.5.1)
   - nanopb (2.30909.1):
     - nanopb/decode (= 2.30909.1)
     - nanopb/encode (= 2.30909.1)
@@ -563,10 +562,6 @@ PODS:
     - react-native-video/Video (= 5.2.1)
   - react-native-video/Video (5.2.1):
     - React-Core
-  - react-native-vlc-media-player (1.0.38):
-    - MobileVLCKit (= 3.5.1)
-    - React
-    - TVVLCKit (= 3.5.1)
   - react-native-webrtc (118.0.3):
     - JitsiWebRTC (~> 118.0.0)
     - React-Core
@@ -768,7 +763,7 @@ PODS:
     - React-Core
   - RNSVG (14.1.0):
     - React-Core
-  - RNVectorIcons (10.0.3):
+  - RNVectorIcons (10.1.0):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
   - SDWebImage (5.11.1):
@@ -828,7 +823,6 @@ DEPENDENCIES:
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - react-native-track-player (from `../node_modules/react-native-track-player`)
   - react-native-video (from `../node_modules/react-native-video`)
-  - react-native-vlc-media-player (from `../node_modules/react-native-vlc-media-player`)
   - react-native-webrtc (from `../node_modules/react-native-webrtc`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
@@ -914,7 +908,6 @@ SPEC REPOS:
     - lottie-ios
     - MMKV
     - MMKVCore
-    - MobileVLCKit
     - nanopb
     - PromisesObjC
     - PromisesSwift
@@ -1011,8 +1004,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-track-player"
   react-native-video:
     :path: "../node_modules/react-native-video"
-  react-native-vlc-media-player:
-    :path: "../node_modules/react-native-vlc-media-player"
   react-native-webrtc:
     :path: "../node_modules/react-native-webrtc"
   react-native-webview:
@@ -1155,7 +1146,6 @@ SPEC CHECKSUMS:
   lottie-react-native: cdeae481649c11d586084b8662f03251c4dd8249
   MMKV: ed58ad794b3f88c24d604a5b74f3fba17fcbaf74
   MMKVCore: a67a1cede26175c413176f404a7cedec43f96a0b
-  MobileVLCKit: 144d5f565512d1147d63b0fa1379231b3fd66535
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   PromisesSwift: 9d77319bbe72ebf6d872900551f7eeba9bce2851
@@ -1192,7 +1182,6 @@ SPEC CHECKSUMS:
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
   react-native-track-player: 97d76dbbd35f27cc709e5f04540615e54264b3f9
   react-native-video: c26780b224543c62d5e1b2a7244a5cd1b50e8253
-  react-native-vlc-media-player: 0f9860bded57cd6764ac55b5c0e97347069cb40a
   react-native-webrtc: 6fc32f3d556aa60aa2334eeaf6cadcdab2432809
   react-native-webview: 107961c73db53d66549c867a3b64eaa20d34c41f
   React-NativeModulesApple: c57f3efe0df288a6532b726ad2d0322a9bf38472
@@ -1240,7 +1229,7 @@ SPEC CHECKSUMS:
   RNShare: 859ff710211285676b0bcedd156c12437ea1d564
   RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
   RNSVG: ba3e7232f45e34b7b47e74472386cf4e1a676d0a
-  RNVectorIcons: 64e6a523ac30a3241efa9baf1ffbcc5e76ff747a
+  RNVectorIcons: bfb663f3f7b37340cd90120151b720641523dc84
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
