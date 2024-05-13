@@ -26,8 +26,8 @@ const InitView = () => {
   const { getUserData } = useUserHook();
 
   React.useEffect(() => {
+    SplashScreen.hide();
     initData();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const language = useStore((state) => state.language);
@@ -41,9 +41,6 @@ const InitView = () => {
       StatusBar.setTranslucent(true);
     }
     translations.setLanguage(language);
-    setTimeout(() => {
-      SplashScreen.hide();
-    }, 500);
   }, [isDarkMode, language]);
 
   const initData = () => {
