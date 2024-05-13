@@ -106,6 +106,7 @@ const ClassRoomScreen = () => {
               audiolevel_event: true,
               audio_active_packets: 50,
               audio_level_average: 40,
+              bitrate: 800 * 1000,
             };
             sfutest.send({
               message: create,
@@ -113,6 +114,7 @@ const ClassRoomScreen = () => {
                 const register = {
                   request: "join",
                   room: roomId,
+                  bitrate: 800 * 1000,
                   ptype: "publisher",
                   display: JSON.stringify({
                     isTeacher,

@@ -15,7 +15,7 @@ import RTMPPublisher, { RTMPPublisherRefProps } from "react-native-publisher";
 import { useTheme, useFocusEffect } from "@react-navigation/native";
 import { IconType } from "react-native-dynamic-vector-icons";
 import KeepAwake from "react-native-keep-awake";
-import _ from "lodash"
+import _ from "lodash";
 import LiveBadge from "./components/LiveBadge";
 import { useUploadFile } from "@helpers/hooks/useUploadFile";
 
@@ -69,12 +69,13 @@ function App() {
   const { appStateStatus } = useAppStateCheck();
 
   useEffect(() => {
-    if (!liveData) return
+    if (!liveData) return;
     if (appStateStatus == "active" && !show) {
       // ensureStartStream()
       setShow(true);
       setTimeout(() => {
-        !_.isEmpty(publisherRef.current) && publisherRef.current?.startStream?.();
+        !_.isEmpty(publisherRef.current) &&
+          publisherRef.current?.startStream?.();
       }, 1000);
     }
     if (
@@ -85,7 +86,6 @@ function App() {
       setShow(false);
     }
   }, [appStateStatus, show, liveData]);
-
 
   const checkPermission = async () => {
     const permission = await requestPermission(
@@ -138,8 +138,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (!_.isEmpty(publisherRef.current))  {
-      publisherRef.current.startStream()
+    if (!_.isEmpty(publisherRef.current)) {
+      publisherRef.current.startStream();
       publisherRef.current.setAudioInput(1);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -183,7 +183,6 @@ function App() {
   //   setIsMuted(true);
   // };
   const handleStartStream = () => {
-
     if (permissionGranted) {
       // if (listFile.length > 0) {
       _createLiveStream(
@@ -260,7 +259,6 @@ function App() {
       },
     });
   };
-  console.log(111, publisherRef.current);
   const closeLiveStream = () => {
     // updateLivestream("end");
     publisherRef.current && publisherRef.current.stopStream();
@@ -405,7 +403,7 @@ function App() {
         )}
       </>
     );
-  }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -419,8 +417,9 @@ function App() {
       >
         <View style={styles.container}>
           {renderTopView()}
-          {permissionGranted && (!isAndroid() || show) && (
-            isAndroid() ?
+          {permissionGranted &&
+            (!isAndroid() || show) &&
+            (isAndroid() ? (
               <RTMPPublisher
                 ref={publisherRef}
                 streamURL={
@@ -434,11 +433,11 @@ function App() {
                 onNewBitrateReceived={handleOnNewBitrateReceived}
                 onStreamStateChanged={handleOnStreamStateChanged}
               />
-              :
+            ) : (
               <RTMPPublisher
                 videoSettings={{
                   width: 640,
-                  height: 640 * 16 / 9,
+                  height: (640 * 16) / 9,
                   bitrate: 800 * 1024,
                   audioBitrate: 128 * 1000,
                   // 3000 * 1024, 128 * 1024
@@ -456,9 +455,9 @@ function App() {
                 // onConnectionSuccess={handleOnConnectionSuccess}
                 onNewBitrateReceived={handleOnNewBitrateReceived}
                 onStreamStateChanged={handleOnStreamStateChanged}
-              // onBluetoothDeviceStatusChanged={handleBluetoothDeviceStatusChange}
+                // onBluetoothDeviceStatusChanged={handleBluetoothDeviceStatusChange}
               />
-          )}
+            ))}
           {isStreaming && renderChatView()}
           {isStreaming && <LiveBadge />}
           {!isStreaming && (

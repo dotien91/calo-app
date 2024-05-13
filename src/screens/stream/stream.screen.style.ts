@@ -120,13 +120,13 @@ export default (theme: ExtendedTheme) => {
       position: "absolute",
       zIndex: 1,
     },
-     buttonStyle: {
+    buttonStyle: {
       position: "absolute",
       zIndex: 1,
       backgroundColor: colors.red,
       paddingHorizontal: 8,
       paddingVertical: 4,
       borderRadius: 4,
-    }
+    },
   });
 };

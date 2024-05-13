@@ -23,7 +23,7 @@ import Animated, {
   withDelay,
   withTiming,
 } from "react-native-reanimated";
-import Video from 'react-native-video'
+import Video from "react-native-video";
 import Slider from "@react-native-community/slider";
 import * as NavigationService from "react-navigation-helpers";
 import LottieView from "lottie-react-native";

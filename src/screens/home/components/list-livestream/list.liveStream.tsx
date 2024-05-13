@@ -47,7 +47,7 @@ const ListLiveStream = () => {
     await TrackPlayer.play();
     setTimeout(() => {
       TrackPlayer.stop();
-    })
+    }, 2000);
   };
 
   const onRefresh = () => {

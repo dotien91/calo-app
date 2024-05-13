@@ -2164,13 +2164,7 @@ function Janus(gatewayCallbacks) {
     // If we still need to create a PeerConnection, let's do that
     if (!config.pc) {
       const pc_config = {
-        iceServers: [
-          {
-            urls: "stun:stun.whiteg.app:3478",
-            username: "whiteg",
-            credential: "whiteg123456",
-          },
-        ],
+        iceServers: [{urls: "stun:stun.oncenter.vn:3478", username: "ikigroup", credential: "ikigroup"}],
         iceTransportPolicy: iceTransportPolicy,
         bundlePolicy: bundlePolicy,
       };

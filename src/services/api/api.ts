@@ -1,7 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import lodash from "lodash";
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { _getJson, USER_TOKEN } from "@services/local-storage";
 import { APP_URL } from "constants/config.constant";
 
 // export const BASEURL = "https://api.edu-like.exam24h.com/api/";
@@ -33,7 +32,9 @@ export const apiClient = axios.create({
 // Add a request interceptor
 apiClient.interceptors.request.use(
   function (config) {
-    const userToken = _getJson(USER_TOKEN);
+    // const userToken = _getJson(USER_TOKEN);
+    const userToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDcxMDMxMzMsImRhdGEiOnsiX2lkIjoiNjYxNzkxOTk1MmM2ODE5MTY2ODdlMzJlIiwia2V5IjoiYjM4MTgzODdiM2U3YmRjOTNiNDg1ZTU4ZGM4ZjA4YzIiLCJzaWduYXR1cmUiOiIwN2E1YWY4YzhkYmRkZWRmMTE2OWE0MTA4MDlmNTIwZCIsInNlc3Npb24iOiI2NjQxN2ExZDkyODE2OGY0YmEyOGE0NjQifSwiaWF0IjoxNzE1NTY3MTMzfQ.HZ26Wto9VAYMd4pTb6svh5Q59PPGTInemjZ1anDmnvk";
     if (userToken) config.headers["X-Authorization"] = userToken;
     return config;
   },

@@ -28,6 +28,7 @@ const TeacherCourse = () => {
   const coursesHasClass = React.useMemo(() => {
     let data = [];
     listData.forEach((item) => {
+      console.log(222222, listData);
       if (item?.classes?.length) {
         const currentClass = item.classes.map((_item) => ({
           courseData: item,
@@ -42,6 +43,7 @@ const TeacherCourse = () => {
   }, [listData]);
 
   const renderItem = ({ item }) => {
+    console.log("22222", item);
     return <ClassItem item={item} />;
   };
   const renderEmpty = () => {

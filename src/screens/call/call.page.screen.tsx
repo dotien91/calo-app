@@ -100,9 +100,9 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
   const servers = {
     iceServers: [
       {
-        urls: ["stun:stun.whiteg.app:3478", "turn:stun.whiteg.app:3478"],
-        username: "whiteg",
-        credential: "whiteg123456",
+        urls: ["stun:stun.oncenter.vn:3478", "turn:stun.oncenter.vn:3478"],
+        username: "ikigroup",
+        credential: "ikigroup",
       },
     ],
   };
