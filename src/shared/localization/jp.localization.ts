@@ -423,6 +423,7 @@ export default {
     emptyRate: "評価なし",
     rankTeacher: "講師ランキング",
     student: "学生",
+    students: "学生",
     many: "",
     courseContent: "コース内容",
     requestSkills: "必要なスキル",

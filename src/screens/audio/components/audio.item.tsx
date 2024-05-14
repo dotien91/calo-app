@@ -11,6 +11,7 @@ import { Device } from "@utils/device.ui.utils";
 import { IAudioItem } from "models/audio.modal";
 import { SCREENS } from "constants";
 import useStore from "@services/zustand/store";
+import { formatNumber } from "react-native-currency-input";
 
 interface AudioItemProps {
   isSliderItem: boolean;
@@ -69,7 +70,7 @@ const AudioItem = ({
         </Text>
         {view_number ? (
           <Text style={styles.audioRatingTxt}>
-            {`${(view_number + " " || "").slice(0, 3)}`}
+            {`${(formatNumber(view_number) + " " || "")}`}
             <Text style={styles.textNoReview}>{translations.audio.listen}</Text>
           </Text>
         ) : (

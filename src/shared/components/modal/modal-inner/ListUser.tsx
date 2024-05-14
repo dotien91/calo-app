@@ -65,6 +65,7 @@ const ListUser = ({ listUser, title }: ListUserProps) => {
   };
 
   const renderMutedBtn = () => {
+    return null
     return (
       <Button
         type={"primary"}

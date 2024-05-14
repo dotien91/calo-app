@@ -494,6 +494,7 @@ export default {
     emptyRate: "Chưa có đánh giá",
     rankTeacher: "Xếp hạng giảng viên",
     student: "Học viên",
+    students: "Học viên",
     many: "",
     courseContent: "Nội dung khoá học",
     requestSkills: "Kỹ năng cần có",

@@ -420,6 +420,7 @@ export default {
     emptyRate: "No reviews yet",
     rankTeacher: "Instructor ratings",
     student: "Student",
+    students: "Students",
     many: "s",
     courseContent: "Course content",
     requestSkills: "Category",

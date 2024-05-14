@@ -386,10 +386,10 @@ const styles = StyleSheet.create({
     // backgroundColor: palette.whiteOverlay
   },
   modalInner: {
-    minWidth: "80%",
+    minWidth: "70%",
     backgroundColor: palette.white,
     borderRadius: 6,
-    padding: 30,
+    padding: 16,
     overflow: "hidden",
   },
   btnStyle: {

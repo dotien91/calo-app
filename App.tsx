@@ -67,7 +67,7 @@ export const PlaybackService = async function () {
   TrackPlayer.addEventListener(Event.RemoteSeek, TrackPlayer.seekTo);
 };
 
-TrackPlayer.registerPlaybackService(() => PlaybackService);
+// TrackPlayer.registerPlaybackService(() => PlaybackService);
 
 export default withIAPContext(
   CodePush({
