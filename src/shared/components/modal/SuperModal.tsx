@@ -386,7 +386,7 @@ const styles = StyleSheet.create({
     // backgroundColor: palette.whiteOverlay
   },
   modalInner: {
-    minWidth: "60%",
+    minWidth: "80%",
     backgroundColor: palette.white,
     borderRadius: 6,
     padding: 30,

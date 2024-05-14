@@ -85,29 +85,33 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
     NavigationService.push(SCREENS.POST_DETAIL, param);
   };
   return (
-    <View style={styles.container}>
-      <AvatarPost
-        data={data?.user_id}
-        pressAvatar={goToProfileCurrentUser}
-        sizeAvatar={SIZE_AVATAR}
-        showLevel
-      />
-      <View style={{ ...CommonStyle.flex1 }}>
-        <PressableBtn
-          onPress={detailScreen}
-          style={[CommonStyle.flex1, { paddingLeft: 8 }]}
-        >
-          <HeaderItempost data={data} onPress={goToProfileCurrentUser} />
-          {HasTag}
-          {ContentStatus}
-          <ListFile
-            listFile={data?.attach_files || []}
-            styleContainer={styles.viewImage1}
-          />
-          <ListFilePostItem listFile={data?.attach_files || []} />
-        </PressableBtn>
-        <LikeSharePostItem data={data} pressComment={pressComment} />
+    <View>
+      <View style={styles.container}>
+        <AvatarPost
+          data={data?.user_id}
+          pressAvatar={goToProfileCurrentUser}
+          sizeAvatar={SIZE_AVATAR}
+          showLevel
+        />
+        <View style={{ ...CommonStyle.flex1 }}>
+          <PressableBtn
+            onPress={detailScreen}
+            style={[CommonStyle.flex1, { paddingLeft: 8 }]}
+          >
+            <HeaderItempost data={data} onPress={goToProfileCurrentUser} />
+          </PressableBtn>
+        </View>
       </View>
+      <PressableBtn onPress={detailScreen} style={{ paddingHorizontal: 16 }}>
+        {HasTag}
+        {ContentStatus}
+        <ListFile
+          listFile={data?.attach_files || []}
+          styleContainer={styles.viewImage1}
+        />
+        <ListFilePostItem listFile={data?.attach_files || []} />
+        <LikeSharePostItem data={data} pressComment={pressComment} />
+      </PressableBtn>
     </View>
   );
 };

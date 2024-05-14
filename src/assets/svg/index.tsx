@@ -173,6 +173,7 @@ import icLocated from "./icon-located.svg";
 import icGoNext from "./icon-gonext.svg";
 import icPreview from "./icon-preview.svg";
 import icVip from "./icon-vip.svg";
+import icSharePost from "./icon-share-post.svg";
 
 const Icons = {
   icVip,
@@ -349,6 +350,7 @@ const Icons = {
   icLocation,
   icLocated,
   icGoNext,
+  icSharePost,
 };
 
 interface IconSvgProps {

@@ -40,7 +40,7 @@ const LikeSharePostItem = ({ data, pressComment }: LikeSharePostItemProps) => {
         onPress={_sharePost}
         style={[styles.viewLike, { justifyContent: "flex-end" }]}
       >
-        <IconSvg size={16} name="icShare" color={colors.text} />
+        <IconSvg size={16} name="icSharePost" color={colors.text} />
         <Text style={styles.textLikeShare}>{translations.post.share}</Text>
       </TouchableOpacity>
     </View>

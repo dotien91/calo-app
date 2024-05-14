@@ -58,19 +58,21 @@ const HeaderItempost = ({
         }}
       >
         <View style={{ flex: 1 }}>
-          <Text
-            style={{
-              ...CommonStyle.hnBold,
-              ...CommonStyle.flex1,
-              fontSize: FONT_SIZE,
-              color: colors.mainColor2,
-            }}
-            onPress={onPress}
-          >
-            {data?.user_id?.display_name + " "}
-            {data?.user_id?.official_status && (
-              <IconSvg name="icVerify" size={FONT_SIZE} />
-            )}
+          <View>
+            <Text
+              style={{
+                ...CommonStyle.hnBold,
+                ...CommonStyle.flex1,
+                fontSize: FONT_SIZE,
+                color: colors.mainColor2,
+              }}
+              onPress={onPress}
+            >
+              {data?.user_id?.display_name + " "}
+              {data?.user_id?.official_status && (
+                <IconSvg name="icVerify" size={FONT_SIZE} />
+              )}
+            </Text>
             <Text
               style={{
                 ...CommonStyle.hnRegular,
@@ -80,7 +82,7 @@ const HeaderItempost = ({
             >
               {" " + convertLastActive(data?.createdAt)}
             </Text>
-          </Text>
+          </View>
         </View>
       </View>
       <TouchableOpacity onPress={_showStickBottom}>

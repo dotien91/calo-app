@@ -416,7 +416,8 @@ export default function PostScreen() {
         <View style={[styles.container]}>
           <KeyboardAvoidingView
             style={CommonStyle.flex1}
-            behavior={isIos ? "height" : undefined}
+            behavior={isIos ? "padding" : undefined}
+            keyboardVerticalOffset={isIos ? 0 : 0}
           >
             <HeaderPost
               onPressPost={onSubmit}

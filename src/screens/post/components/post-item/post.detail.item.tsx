@@ -166,12 +166,14 @@ const ItemPost = ({ data, pressComment, scrollToCmt }: ItemPostProps) => {
         />
         <View style={{ paddingLeft: PADDING_LEFT, ...CS.flex1 }}>
           <HeaderPostItem data={data} onPress={gotoDetail} isDetail={true} />
-          {HasTag}
-          {ContentStatus}
-          {ListFile}
-          <ListFilePostItem listFile={data?.attach_files || []} />
-          <LikeSharePostItem data={data} pressComment={pressComment} />
         </View>
+      </View>
+      <View style={{ paddingHorizontal: 16 }}>
+        {HasTag}
+        {ContentStatus}
+        {ListFile}
+        <ListFilePostItem listFile={data?.attach_files || []} />
+        <LikeSharePostItem data={data} pressComment={pressComment} />
       </View>
     </View>
   );

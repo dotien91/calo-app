@@ -5,13 +5,13 @@ import CommonStyle from "@theme/styles";
 const { width } = Dimensions.get("screen");
 
 const PADDING_HORIZONTAL = 16;
-const SIZE_AVATAR = 32;
+// const SIZE_AVATAR = 32;
 const FONT_SIZE = 16;
 const BORDER_RADIUS1 = 4;
 const BORDER_RADIUS2 = 4;
-const PADDING_LEFT = 12;
+// const PADDING_LEFT = 12;
 const SIZE_IMAGE1 = width - PADDING_HORIZONTAL * 2;
-const Margin = -SIZE_AVATAR - PADDING_LEFT / 2;
+const Margin = 0;
 export default (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
@@ -22,6 +22,7 @@ export default (theme: ExtendedTheme) => {
       backgroundColor: colors.background,
       paddingTop: 14,
       paddingBottom: 4,
+      alignItems: "center",
     },
     viewPlayvideo: {
       ...CommonStyle.fillParent,
