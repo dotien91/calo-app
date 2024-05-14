@@ -44,7 +44,6 @@ const ClassRoomScreen = () => {
   const remoteListPluginHandleCurrent = React.useRef({});
   const userData = useStore((state) => state.userData);
   // const stream = React.useRef(null);
-
   const [config, setConfig] = useState({
     mute: false,
     video: true,
@@ -54,7 +53,6 @@ const ClassRoomScreen = () => {
   const courseRoom = route.params?.["courseRoom"];
   const { roomId, chatRoomId } = courseRoom;
   const courseData = route.params?.["courseData"];
-  console.log("roomId", roomId);
 
   const isVideoOneOne = courseData?.type == EnumClassType.Call11;
   const { isTeacher } = useClassRoom();
@@ -214,6 +212,7 @@ const ClassRoomScreen = () => {
                   }, 500);
                 }
               } else if (event == "talking") {
+                console.log("talkingggg")
                 updateListParticipants(msg.id, "add");
               } else if (event == "stopped-talking") {
                 updateListParticipants(msg.id, "delete");
@@ -254,8 +253,8 @@ const ClassRoomScreen = () => {
       // this.setState({ publish: true });
       sfutest.createOffer({
         media: {
-          audioRecv: false,
-          videoRecv: false,
+          audioRecv: true,
+          videoRecv: true,
           audioSend: useAudio,
           videoSend: true,
         },

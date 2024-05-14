@@ -3,7 +3,9 @@ import useStore from "@services/zustand/store";
 import React from "react";
 import { StatusBar } from "react-native";
 import KeepAwake from "react-native-keep-awake";
+import inCallManager from "react-native-incall-manager";
 import { setSpeakerByTrick } from "./call.class.helper";
+import { isAndroid } from "@helpers/device.info.helper";
 
 export const useClassRoom = () => {
   const userData = useStore((state) => state.userData);
@@ -16,8 +18,16 @@ export const useClassRoom = () => {
     StatusBar.setBarStyle("light-content");
     StatusBar.setTranslucent(true);
     KeepAwake.activate();
-    setSpeakerByTrick()
+    if (!isAndroid()) {
+      setSpeakerByTrick()
+      inCallManager.start({ media: "video" });
+      inCallManager.setSpeakerphoneOn(true)
+      inCallManager.stopProximitySensor()
+      setIsMutedAll(false);
+    }
+
     return () => {
+      // inCallManager.stop()
       StatusBar.setBackgroundColor("white");
       StatusBar.setBarStyle("dark-content");
       KeepAwake.deactivate();

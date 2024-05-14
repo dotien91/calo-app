@@ -572,7 +572,6 @@ const ProfileUser = (props: ProfileUserProps) => {
   return (
     <SafeAreaView style={CommonStyle.safeAreaView}>
       <HeaderProfile />
-
       <FlatList
         ref={listRef}
         ListHeaderComponent={renderHeader}

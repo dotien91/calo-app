@@ -211,7 +211,7 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
       <View>
         <Text style={styles.txtcount}>{`${data?.review_count || 0} ${
           translations.course.rate
-        }/${data?.join_number || 0} ${translations.course.student}`}</Text>
+        }/${data?.join_number || 0} ${translations.course[data?.join_number > 1 ? "students" : "student"]}`}</Text>
       </View>
       <Text style={styles.textCreateBy}>
         {translations.course.teacher}:{" "}

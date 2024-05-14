@@ -12,6 +12,7 @@ import PressableBtn from "@shared-components/button/PressableBtn";
 import { SCREENS } from "constants";
 import CS from "@theme/styles";
 import useStore from "@services/zustand/store";
+import { formatNumber } from "react-native-currency-input";
 
 interface ItemListProps {
   isSliderItem: boolean;
@@ -42,7 +43,7 @@ const ItemList = ({ isSliderItem, style, data, listData }: ItemListProps) => {
         </Text>
         {view_number ? (
           <Text style={styles.audioRatingTxt}>
-            {`${(view_number + " " || "").slice(0, 3)}`}
+            {`${(formatNumber(view_number) + " " || "")}`}
             <Text style={styles.textNoReview}>{translations.audio.listen}</Text>
           </Text>
         ) : (

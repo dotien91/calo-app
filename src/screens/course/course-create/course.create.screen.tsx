@@ -39,7 +39,7 @@ import {
   listLevel,
   listSkill,
   listTypeCourse,
-  listLang,
+  // listLang,
 } from "constants/course.constant";
 import SelectVideoHook from "./components/select.video";
 import eventEmitter from "@services/event-emitter";
@@ -87,7 +87,7 @@ const CourseCreate = () => {
   const [level, setLevel] = useState<string>(listLevel[0].value);
   const [skill, setSkill] = useState<string[]>([]);
   const [priceInput, setPriceInput] = useState("");
-  const [lang, setLang] = useState("vi");
+  // const [lang, setLang] = useState("vi");
 
   const { idVideo, renderSelectVideo, updatingVid, typeMedia } =
     SelectVideoHook({
@@ -112,7 +112,7 @@ const CourseCreate = () => {
       // setLevel(data?.level || "");
       setSkill(data.skills);
       setPriceInput(data.price.toString());
-      setPriceInput(data?.lang);
+      // setPriceInput(data?.lang);
     }
   }, [data]);
 
@@ -151,7 +151,7 @@ const CourseCreate = () => {
       if (startDate < endDate) {
         const params = {
           title: dataHook.title,
-          lang: lang,
+          // lang: lang,
           description: dataHook.description,
           long_description: dataHook.long_description,
           // price: dataHook.price,
@@ -395,29 +395,29 @@ const CourseCreate = () => {
     );
   };
 
-  const renderSelectLang = () => {
-    return (
-      <View style={{ zIndex: 3, marginVertical: 8 }}>
-        <Text
-          style={{
-            ...CS.hnMedium,
-            color: colors.text,
-            marginLeft: 20,
-            marginVertical: 8,
-          }}
-        >
-          {translations.payment.selectlang}
-        </Text>
+  // const renderSelectLang = () => {
+  //   return (
+  //     <View style={{ zIndex: 3, marginVertical: 8 }}>
+  //       <Text
+  //         style={{
+  //           ...CS.hnMedium,
+  //           color: colors.text,
+  //           marginLeft: 20,
+  //           marginVertical: 8,
+  //         }}
+  //       >
+  //         {translations.payment.selectlang}
+  //       </Text>
 
-        <DropDownItem
-          value={lang}
-          setValue={setLang}
-          items={listLang}
-          placeholder={translations.payment.selectlang}
-        />
-      </View>
-    );
-  };
+  //       <DropDownItem
+  //         value={lang}
+  //         setValue={setLang}
+  //         items={listLang}
+  //         placeholder={translations.payment.selectlang}
+  //       />
+  //     </View>
+  //   );
+  // };
 
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>
@@ -520,7 +520,7 @@ const CourseCreate = () => {
           <View style={{ paddingHorizontal: 20 }}>
             {renderSelectTypeCourse()}
           </View>
-          {renderSelectLang()}
+          {/* {renderSelectLang()} */}
           {renderPrice()}
           <View style={{ paddingHorizontal: 20 }}>
             {renderSelectLevel()}

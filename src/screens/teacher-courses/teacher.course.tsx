@@ -28,7 +28,6 @@ const TeacherCourse = () => {
   const coursesHasClass = React.useMemo(() => {
     let data = [];
     listData.forEach((item) => {
-      console.log(222222, listData);
       if (item?.classes?.length) {
         const currentClass = item.classes.map((_item) => ({
           courseData: item,
@@ -51,7 +50,6 @@ const TeacherCourse = () => {
       <EmptyResultView title={translations.notFound} style={styles.viewEmpty} />
     );
   };
-
   return (
     <SafeAreaView style={CS.safeAreaView}>
       <Header text={translations.course.manageClass} />
