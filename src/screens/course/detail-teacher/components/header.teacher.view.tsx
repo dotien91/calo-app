@@ -131,13 +131,13 @@ const HeaderDetailTeacher = ({ data }: HeaderDetailTeacherProps) => {
             <View style={styles.itemCount}>
               <Text style={styles.textCount}>{data?.student_count}</Text>
               <Text style={styles.textDes}>{`${translations.course.student}${
-                (data?.student_count || 0) >= 2 && translations.course.many
+                (data?.student_count || 0) >= 2 ? translations.course.many : ""
               }`}</Text>
             </View>
             <View style={styles.itemCount}>
               <Text style={styles.textCount}>{data?.course_count}</Text>
               <Text style={styles.textDes}>{`${translations.course.course}${
-                (data?.course_count || 0) >= 2 && translations.course.many
+                (data?.course_count || 0) >= 2 ? translations.course.many : ""
               }`}</Text>
             </View>
             {!!data?.taught_time && data?.taught_time > 0 && (

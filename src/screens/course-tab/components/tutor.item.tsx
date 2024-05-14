@@ -108,7 +108,7 @@ const TutorItem = ({
           <View style={[CS.row, { gap: 8 }]}>
             <Text style={styles.tutorInfoTxt}>{`${student_count} ${
               translations.course.student
-            }${student_count >= 2 && translations.course.many}`}</Text>
+            }${student_count >= 2 ? translations.course.many : ""}`}</Text>
             <View style={styles.viewDot} />
             <Text
               style={styles.tutorInfoTxt}

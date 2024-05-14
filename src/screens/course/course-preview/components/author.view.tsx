@@ -103,13 +103,17 @@ const AuthorView = ({ data }: AuthorViewProps) => {
             nameIcon="icStudent"
             text={`${data?.user_id.member_count || 0} ${
               translations.course.student
+            }${
+              data?.user_id.member_count >= 2 ? translations.course.many : ""
             }`}
           />
           <IconText
             nameIcon="icBookFull"
             text={`${data?.user_id.course_count || 0} ${
               translations.course.course
-            }${data?.user_id.course_count >= 2 && translations.course.many}`}
+            }${
+              data?.user_id.course_count >= 2 ? translations.course.many : ""
+            }`}
           />
         </View>
       </View>
