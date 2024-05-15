@@ -9,8 +9,7 @@ const BASEURL = "https://ikigai.vn";
 export const sharePost = (post_slug: string) => {
   const shareOptions = {
     title: translations.post.share,
-    message: translations.post.sharePost,
-    url: `${BASEURL}/post/detail/${post_slug}`,
+    message: `${translations.post.sharePost} ${BASEURL}/post/detail/${post_slug}`,
   };
   Share.open(shareOptions)
     .then(() => {
@@ -24,8 +23,8 @@ export const sharePost = (post_slug: string) => {
 export const shareProfile = (profileId: string) => {
   console.log("profileId", profileId);
   const shareOptions = {
-    title: translations.profile.shareProfile,
-    url: `${BASEURL}/user/detail/${profileId}`,
+    title: translations.post.share,
+    message: `${translations.profile.shareProfile} ${BASEURL}/user/detail/${profileId}`,
   };
   Share.open(shareOptions)
     .then((res) => {
@@ -37,8 +36,8 @@ export const shareProfile = (profileId: string) => {
 };
 export const shareCourse = (courseId: string) => {
   const shareOptions = {
-    title: translations.course.shareThisCourse,
-    url: `${BASEURL}/course/detail/${courseId}`,
+    title: translations.post.share,
+    message: `${translations.course.shareThisCourse} ${BASEURL}/course/detail/${courseId}`,
   };
   Share.open(shareOptions)
     .then((res) => {

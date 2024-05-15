@@ -75,7 +75,7 @@ const HeaderDetailTeacher = ({ data }: HeaderDetailTeacherProps) => {
         data: {
           listMedia: [
             {
-              media_url: data?.user_avatar_thumbnail,
+              media_url: data?.user_avatar,
               media_type: "image",
             },
           ],
@@ -88,7 +88,7 @@ const HeaderDetailTeacher = ({ data }: HeaderDetailTeacherProps) => {
   return (
     <View style={{ flex: 1 }}>
       <Avatar
-        sourceUri={{ uri: data?.user_avatar_thumbnail }}
+        sourceUri={{ uri: data?.user_avatar }}
         style={styles.avatar}
         resizeMode="cover"
       />
@@ -212,9 +212,10 @@ const styles = StyleSheet.create({
   },
   txtFullname: {
     ...CS.hnBold,
-    fontSize: 20,
+    fontSize: 40,
     marginTop: 16,
     minHeight: 24,
+    textAlign: "center",
   },
   viewCount: {
     marginTop: 16,

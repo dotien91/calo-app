@@ -273,6 +273,7 @@ export default {
     signinWithPassword: "パスワードでログイン",
     dontHaveAccount: "アカウントをお持ちでないですか？",
     or: "または",
+    requireLogin: "この機能を使用するにはログインが必要です",
   },
   validate: {
     emailInvalid: "メールが無効です",
