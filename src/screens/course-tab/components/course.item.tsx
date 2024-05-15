@@ -138,7 +138,7 @@ const CourseItem = ({
           <Badge title="Best-seller" />
           {public_status !== "active" && <Badge title={public_status} />}
           {skills.map((item, index) => {
-            const txt = listSkill.filter((i) => i.id !== item);
+            const txt = listSkill.filter((i) => i.id === item);
             return <Badge key={index} title={txt[0].value} />;
           })}
         </View>

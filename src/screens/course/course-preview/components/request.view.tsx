@@ -13,7 +13,7 @@ interface RequestSkillViewProps {
 }
 
 const TextRequest = ({ text }: { text: string }) => {
-  const txt = listSkill.filter((item) => item.id !== text);
+  const txt = listSkill.filter((item) => item.id === text);
   return (
     <View style={{ ...CS.row, marginTop: 8 }}>
       <View
