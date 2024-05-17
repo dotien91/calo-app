@@ -320,7 +320,7 @@ const ProfileUser = (props: ProfileUserProps) => {
   };
 
   const _shareProfile = () => {
-    shareProfile(userInfo?._id);
+    shareProfile(userData?.invitation_code);
   };
 
   const ListAction = () => {

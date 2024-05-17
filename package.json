@@ -21,6 +21,7 @@
     "@react-native-firebase/analytics": "^19.2.2",
     "@react-native-firebase/app": "^18.7.3",
     "@react-native-firebase/crashlytics": "^19.0.1",
+    "@react-native-firebase/dynamic-links": "^19.2.2",
     "@react-native-firebase/messaging": "^18.7.3",
     "@react-native-google-signin/google-signin": "^11.0.0",
     "@react-native-seoul/masonry-list": "^1.4.2",

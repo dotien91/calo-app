@@ -7,9 +7,10 @@ import LikeBtn from "../like-btn/LikeBtn";
 import { TypedPost } from "shared/models";
 import createStyles from "./post.item.style";
 import { translations } from "@localization";
-import { sharePost } from "@utils/share.utils";
+import { shareCodeInvite, sharePost } from "@utils/share.utils";
 import IconSvg from "assets/svg";
 import CommentBtn from "../comment-btn/CommentBtn";
+import useStore from "@services/zustand/store";
 interface LikeSharePostItemProps {
   data: TypedPost;
   pressComment: () => void;
@@ -19,9 +20,11 @@ const LikeSharePostItem = ({ data, pressComment }: LikeSharePostItemProps) => {
   const theme = useTheme();
   const { colors } = theme;
   const styles = React.useMemo(() => createStyles(theme), [theme]);
+  const userData = useStore((store) => store.userData);
 
   const _sharePost = () => {
-    sharePost(data._id);
+    sharePost(userData?.invitation_code);
+    // shareCodeInvite(userData?.invitation_code || "");
   };
 
   return (

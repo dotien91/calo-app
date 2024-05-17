@@ -4,7 +4,11 @@ import * as NavigationService from "react-navigation-helpers";
 // Import package from node modules
 
 import useStore from "@services/zustand/store";
-import { getCurrentUser, getListBlock } from "@services/api/user.api";
+import {
+  getCurrentUser,
+  getListBlock,
+  postInvitationCode,
+} from "@services/api/user.api";
 import { showToast } from "../super.modal.helper";
 import { SCREENS } from "constants";
 import { _setJson, _getJson, USER_TOKEN } from "@services/local-storage";
@@ -25,6 +29,8 @@ export const useUserHook = () => {
   const setShowInvite = useStore((state) => state.setShowInvite);
   const updateListBlock = useStore((state) => state.updateListBlock);
   const userData = useStore((state) => state.userData);
+  const codeInvite = useStore((state) => state.codeInvite);
+  const setCodeInvite = useStore((state) => state.setCodeInvite);
 
   const isLoggedIn = React.useCallback(() => {
     return _getJson(USER_TOKEN) && !!userData?._id;
@@ -50,6 +56,20 @@ export const useUserHook = () => {
       if (!res.isError) {
         console.log("token", _getJson(USER_TOKEN), res.data);
         initData(res.data);
+      }
+      if (codeInvite && codeInvite !== "") {
+        const data = {
+          invitation_code: codeInvite,
+        };
+        postInvitationCode(data).then((res) => {
+          if (!res.isError) {
+            console.log("data,", res.data);
+            setShowInvite(false);
+            setCodeInvite("");
+          } else {
+            console.log("data,", res.message);
+          }
+        });
       }
     });
   };

@@ -17,6 +17,7 @@ import InitView from "./InitView";
 import toastConfig from "@shared-components/toastConfig/toastconfig";
 import TrackPlayer, { Capability, Event } from "react-native-track-player";
 import AudioProgress from "@screens/audio/hook/AudioProgress";
+import ReadDinamicLink from "@screens/read-dynamic-link/read.dinamic.link";
 
 LogBox.ignoreAllLogs();
 
@@ -38,6 +39,7 @@ const App = () => {
       <InitView />
       <SocketConnect ref={SocketHelperRef} />
       <AudioProgress />
+      <ReadDinamicLink />
     </>
   );
 };

@@ -26,6 +26,7 @@ const CourseLearnAction = ({ course_id }: CourseLearnActionProps) => {
   const listFavourites = useStore((state) => state.listFavourites);
   const addToFavourites = useStore((state) => state.addToFavourites);
   const [isLike, setIsLike] = React.useState(false);
+  const userData = useStore((state) => state.userData);
 
   React.useEffect(() => {
     const like =
@@ -40,7 +41,7 @@ const CourseLearnAction = ({ course_id }: CourseLearnActionProps) => {
     });
   };
   const _onPressShareThisCourse = () => {
-    shareCourse(course_id);
+    shareCourse(userData?.invitation_code);
   };
   // const _onPressResources = () => {};
   const _onPressAddCourseToFavourites = () => {

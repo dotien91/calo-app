@@ -54,7 +54,7 @@ const DetailTeacherScreen = () => {
 
   const _showMore = () => {
     if (isMe) {
-      shareProfile(idTeacher);
+      shareProfile(userData?.invitation_code);
     } else {
       showSuperModal({
         styleModalType: EnumStyleModalType.Bottom,

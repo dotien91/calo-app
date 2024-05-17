@@ -3,28 +3,68 @@
 import { translations } from "@localization";
 import { postShare } from "@services/api/post.api";
 import Share from "react-native-share";
+import dynamicLinks from "@react-native-firebase/dynamic-links";
 
 const BASEURL = "https://ikigai.vn";
 
-export const sharePost = (post_slug: string) => {
-  const shareOptions = {
-    title: translations.post.share,
-    message: `${translations.post.sharePost} ${BASEURL}/post/detail/${post_slug}`,
-  };
-  Share.open(shareOptions)
-    .then(() => {
-      postShare({ community_id: post_slug });
-    })
-    .catch((err) => {
-      err && console.log(err);
-    });
+const createDynamicLink = async (str: string) => {
+  console.log(str);
+  try {
+    const link = await dynamicLinks().buildShortLink(
+      {
+        link: str, // Your deep link URL
+        domainUriPrefix: "https://ikigaicoach.page.link",
+        ios: {
+          bundleId: "com.ikigroup.ikicoach",
+          appStoreId: "6484263984",
+        },
+        android: {
+          packageName: "com.ikigroup.ikigaicoach",
+          minimumVersion: "1",
+        },
+      },
+      "SHORT",
+    ); // or 'SHORT' if you want a short link
+
+    console.log("Generated Dynamic Link:", link);
+    return link;
+    // Use the generated dynamic link for sharing or redirection
+  } catch (error) {
+    console.error("Error generating dynamic link:", error);
+    return null;
+  }
 };
 
-export const shareProfile = (profileId: string) => {
-  console.log("profileId", profileId);
+export const sharePost = async (post_slug: string) => {
+  const linkDynamic = await createDynamicLink(
+    // slug,
+    `${BASEURL}/${post_slug}`,
+  );
+  // console.log("linkDynamic...", linkDynamic);
+  if (linkDynamic) {
+    const shareOptions = {
+      title: translations.post.share,
+      message: `${translations.post.sharePost} ${linkDynamic}`,
+    };
+    Share.open(shareOptions)
+      .then(() => {
+        postShare({ community_id: post_slug });
+      })
+      .catch((err) => {
+        err && console.log(err);
+      });
+  }
+};
+
+export const shareProfile = async (profileId: string) => {
+  const linkDynamic = await createDynamicLink(
+    // slug,
+    `${BASEURL}/${profileId}`,
+  );
   const shareOptions = {
     title: translations.post.share,
-    message: `${translations.profile.shareProfile} ${BASEURL}/user/detail/${profileId}`,
+    // message: `${translations.profile.shareProfile} ${BASEURL}/user/detail/${profileId}`,
+    message: `${translations.profile.shareProfile} ${linkDynamic}`,
   };
   Share.open(shareOptions)
     .then((res) => {
@@ -34,10 +74,15 @@ export const shareProfile = (profileId: string) => {
       err && console.log(err);
     });
 };
-export const shareCourse = (courseId: string) => {
+export const shareCourse = async (courseId: string) => {
+  const linkDynamic = await createDynamicLink(
+    // slug,
+    `${BASEURL}/${courseId}`,
+  );
   const shareOptions = {
     title: translations.post.share,
-    message: `${translations.course.shareThisCourse} ${BASEURL}/course/detail/${courseId}`,
+    message: `${translations.course.shareThisCourse} ${linkDynamic}`,
+    // message: `${translations.course.shareThisCourse} ${BASEURL}/course/detail/${courseId}`,
   };
   Share.open(shareOptions)
     .then((res) => {
@@ -47,10 +92,16 @@ export const shareCourse = (courseId: string) => {
       err && console.log(err);
     });
 };
-export const shareCodeInvite = (code: string) => {
+export const shareCodeInvite = async (code: string) => {
+  const linkDynamic =
+    (await createDynamicLink(
+      // slug,
+      `${BASEURL}/${code}`,
+    )) || "";
   const shareOptions = {
     title: translations.post.share,
-    message: translations.post.shareCode(code),
+    message: translations.post.shareCode(linkDynamic),
+    // message: translations.post.shareCode(code),
   };
   Share.open(shareOptions)
     .then((res) => {

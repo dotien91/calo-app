@@ -27,6 +27,8 @@ export interface UserSlice {
   setShowInvite: (bol: boolean) => void;
   isSendEliteClub: boolean;
   setIsSendEliteClub: (bol: boolean) => void;
+  codeInvite: string;
+  setCodeInvite: (str: string) => void;
 }
 
 const createUserSlice: StoreSlice<UserSlice> = (set) => ({
@@ -79,6 +81,10 @@ const createUserSlice: StoreSlice<UserSlice> = (set) => ({
   isSendEliteClub: false,
   setIsSendEliteClub: (bol: boolean) => {
     set({ isSendEliteClub: bol });
+  },
+  codeInvite: "",
+  setCodeInvite: (str: string) => {
+    set({ codeInvite: str });
   },
 });
 

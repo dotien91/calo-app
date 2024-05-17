@@ -13,15 +13,17 @@ import { shareProfile } from "@utils/share.utils";
 import IconSvg from "assets/svg";
 import { TypedUser } from "models";
 import { palette } from "@theme/themes";
+import useStore from "@services/zustand/store";
 
 interface ActionMoreProps {
   data?: TypedUser;
 }
 
 const ActionMore = ({ data }: ActionMoreProps) => {
+  const userData = useStore((state) => state.userData);
   const _share = () => {
     if (data?._id) {
-      shareProfile(data?._id);
+      shareProfile(userData?.invitation_code);
     }
   };
   const _report = () => {
