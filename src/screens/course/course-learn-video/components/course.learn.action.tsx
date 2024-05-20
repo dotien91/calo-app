@@ -42,6 +42,7 @@ const CourseLearnAction = ({ course_id }: CourseLearnActionProps) => {
   };
   const _onPressShareThisCourse = () => {
     shareCourse(userData?.invitation_code);
+    s;
   };
   // const _onPressResources = () => {};
   const _onPressAddCourseToFavourites = () => {

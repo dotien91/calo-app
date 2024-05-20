@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { StyleSheet, ScrollView, View, Text, SafeAreaView } from "react-native";
+import {
+  StyleSheet,
+  ScrollView,
+  View,
+  Text,
+  SafeAreaView,
+  TouchableOpacity,
+} from "react-native";
 // import * as NavigationService from "react-navigation-helpers";
 import { useRoute } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
@@ -38,6 +45,9 @@ import {
   showSuperModal,
   showToast,
 } from "@helpers/super.modal.helper";
+import { shareCourse } from "@utils/share.utils";
+import { formatPrice } from "@helpers/string.helper";
+import IconSvg from "assets/svg";
 
 const CoursePreviewScreen = () => {
   const userData = useStore((state) => state.userData);
@@ -255,6 +265,7 @@ const CoursePreviewScreen = () => {
       }
     });
   };
+  const commition = formatPrice(data?.price / 5);
   const pressMore = () => {
     showSuperModal({
       contentModalType: EnumModalContentType.MoreCourse,
@@ -287,6 +298,41 @@ const CoursePreviewScreen = () => {
         {!data?.is_join && !(data?.user_id._id === userData?._id) && (
           <BuyButton courseRoom={courseRoom} data={data} type="full" />
         )}
+        <TouchableOpacity
+          style={{
+            flex: 1,
+            backgroundColor: palette.yellow20,
+            borderRadius: 8,
+            marginHorizontal: 16,
+            marginTop: 16,
+            minHeight: 40,
+            paddingHorizontal: 16,
+            paddingVertical: 8,
+            gap: 8,
+          }}
+          onPress={() => shareCourse(userData?.invitation_code, data?.title)}
+        >
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <View
+              style={{ flexDirection: "row", alignItems: "center", gap: 8 }}
+            >
+              <IconSvg name="icDollar" size={16} />
+              <Text style={CS.hnSemiBold}>
+                {`${translations.affiliate.commission}: ${commition}`}
+              </Text>
+            </View>
+            <View>
+              <Text style={[CS.hnBold, { textDecorationLine: "underline" }]}>
+                {translations.affiliate.saleNow}
+              </Text>
+            </View>
+          </View>
+          <Text style={[CS.hnRegular, { fontStyle: "italic", fontSize: 14 }]}>
+            {translations.course.desReferal(commition)}
+          </Text>
+        </TouchableOpacity>
         {data?.is_join && (
           <EnrollNow
             courseRoom={courseRoom}

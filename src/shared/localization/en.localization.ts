@@ -230,7 +230,7 @@ export default {
     sharePost:
       "Join the IKIGAI Coach community today and receive rewards of up to 1000 Points.",
     shareCode: (txt: string) =>
-      `Join the IKIGAI Coach community with me to receive rewards of up to 10000 Points. Enter the referral code "${txt}" to claim your reward.`,
+      `Join the IKIGAI Coach community with me to receive rewards of up to 10,000 points. Visit "${txt}" to claim your rewards.`,
   },
   navigation: {
     dashboard: "Dashboard",
@@ -381,6 +381,8 @@ export default {
     at: "at",
   },
   course: {
+    desReferal: (txt: string) =>
+      `When a user installs the app and purchases this course, you will receive the corresponding ${txt}. The amount will be updated on your Revenue page.`,
     previewMentor: "Preview mentor",
     course: "Course",
     newCourse: "New Course",
@@ -533,7 +535,8 @@ export default {
     addPart: "Add part",
     addPartSuccess: "Add part success",
     aboutThisCourse: "About this course",
-    shareThisCourse: "Share this course",
+    shareThisCourse: (courseName: string) =>
+      `Buy the course ${courseName} now to receive many promotions today. Download it at`,
     resources: "Resources",
     addCourseToFavourites: "Add course to favourites",
     reportAPlaybackProblem: "Report a playback problem",
@@ -1145,6 +1148,12 @@ export default {
       "Earn more point and grow your level by doing tasks and improving your skill.",
   },
   affiliate: {
+    shareCode: "Share code",
+    saleNow: "Sale now",
+    saleCourse: "Sales",
+    aff: "Revenue",
+    moneyOut: "Withdraw",
+    referal: "Referrer",
     yourIncome: "Your Income",
     withdraw: "Withdraw",
     today: "To day",
@@ -1158,16 +1167,24 @@ export default {
     fromDate: "From date",
     toDate: "To date",
     commission: "Commission",
+    commissionSale: "Sales Commission: 20%",
+    desCommission:
+      "When a user you refer purchases a course, you will receive a 20% commission on the course. For example, if a course costs 10,000,000 VND, you will receive 2,000,000 VND when the user successfully buys the course!",
+    referalCommission: "Referral Commission: 5%",
+    desRef:
+      "When you refer collaborators, you will receive a reward equivalent to 5% of the order value when the collaborator's customer successfully makes a purchase.",
     noTransaction: "No transaction has occurred",
-    description: "Members who refer purchases are rewarded with commission (",
+    // description: "Members who refer purchases are rewarded with commission (",
+    description:
+      "When a referrer enters your code, you will receive a sales commission equivalent to 20% of each order. Additionally, you have the opportunity to earn a referral commission of up to 5%.",
     description2: "% commission",
     description3:
       "). For example: If a member refers a purchase of a course priced at 1,000,000 VND → Commission received: 80,000 VND → 80 ",
     whyJoin: "Why join affiliate?",
-    text1: "User referral/Referral management",
-    text2: "Revenue management",
-    text3: "Withdrawal",
-    text4: "Purchasing products/Courses",
+    text1: "Increase your income by selling with IKIGAI COACH",
+    text2: "Money is credited immediately when a customer purchases a course",
+    text3: "Manage revenue in real-time",
+    text4: "Withdraw money to your bank account",
     totalAmount: "Total Amount",
     totalCoin: "Total Coin",
     emptyProduct: "Empty Product",

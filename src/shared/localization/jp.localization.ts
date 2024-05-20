@@ -240,7 +240,7 @@ export default {
     sharePost:
       "今日からIKIGAI Coachコミュニティに参加して、最大1000ポイントの報酬を受け取りましょう。",
     shareCode: (txt: string) =>
-      `私と一緒にIKIGAI Coachコミュニティに参加して、最大10000ポイントの報酬を受け取ろう。リファラルコード "${txt}" を入力して報酬を受け取ってください。`,
+      `一緒にIKIGAIコーチコミュニティに参加して、最大10000ポイントのボーナスを受け取りましょう。ボーナスを受け取るには、「${txt}」にアクセスしてください。`,
   },
   navigation: {
     dashboard: "ダッシュボード",
@@ -380,6 +380,8 @@ export default {
     at: "時",
   },
   course: {
+    desReferal: (txt: string) =>
+      `ユーザーがアプリをインストールしてこのコースを購入すると、あなたは対応する${txt}を受け取ります。金額はあなたの収益ページに更新されます。`,
     previewMentor: "プレビューメンター",
     prepareCourse: "これらのコースは現在編集中です！",
     suggestPickCourse: "以下から適切なコースを選択してください！",
@@ -554,7 +556,8 @@ export default {
     addPart: "部分を追加",
     addPartSuccess: "部分の追加に成功",
     aboutThisCourse: "コース情報",
-    shareThisCourse: "このコースを共有",
+    shareThisCourse: (courseName: string) =>
+      `今日中にたくさんの特典を受け取るために、${courseName}コースを今すぐ購入してください。ダウンロードは`,
     resources: "資料",
     addCourseToFavourites: "お気に入りに追加",
     reportAPlaybackProblem: "再生問題を報告",
@@ -1601,6 +1604,12 @@ export default {
       "ミッションを完了し、スキルを向上させてポイントとレベルを上げます。",
   },
   affiliate: {
+    shareCode: "コードを共有",
+    saleNow: "今すぐ販売",
+    saleCourse: "販売", // Hanbai
+    aff: "収益", // Shūeki
+    moneyOut: "引き出し", // Hikidashi
+    referal: "紹介者", // Shōkaisha
     yourIncome: "あなたの収入",
     withdraw: "引き出し",
     today: "今日",
@@ -1614,16 +1623,24 @@ export default {
     fromDate: "開始日",
     toDate: "終了日",
     commission: "手数料",
+    commissionSale: "販売手数料: 20%",
+    desCommission:
+      "あなたが紹介したユーザーがコースを購入すると、コースの20%の手数料を受け取ります。例えば、コースの価格が10,000,000 VNDの場合、ユーザーがコースを成功裏に購入すると2,000,000 VNDを受け取ります！",
+    referalCommission: "紹介手数料: 5%",
+    desRef:
+      "あなたが共同作業者を紹介すると、共同作業者のお客様が購入を成功させた場合、注文金額の5%に相当する報酬を受け取ります。",
     noTransaction: "トランザクションは発生していません",
-    description: "紹介されたメンバーが購入すると、報酬が発生します(",
+    // description: "紹介されたメンバーが購入すると、報酬が発生します(",
+    description:
+      "あなたの紹介コードを入力した紹介者は、各注文で売上の20％に相当するコミッションを受け取ります。さらに、最大5％の紹介コミッションを受け取るチャンスもあります。",
     description2: "% 報酬",
     description3:
       "). 例: 価格が1,000,000ドンのコースを紹介すると、報酬は80,000ドン → 80 ",
     whyJoin: "なぜアフィリエイトに参加するのか？",
-    text1: "ユーザーを紹介/紹介管理",
-    text2: "収益を管理する",
-    text3: "引き出し",
-    text4: "製品/コースを購入",
+    text1: "IKIGAI COACH と一緒に販売して収入を増やしましょう",
+    text2: "お客様がコースを購入するとすぐにお金が入金されます",
+    text3: "リアルタイムで収益を管理",
+    text4: "銀行口座に引き出し",
     totalAmount: "合計金額",
     totalCoin: "合計コイン",
     emptyProduct: "製品リストは空です",

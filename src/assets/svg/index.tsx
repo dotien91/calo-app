@@ -174,6 +174,7 @@ import icGoNext from "./icon-gonext.svg";
 import icPreview from "./icon-preview.svg";
 import icVip from "./icon-vip.svg";
 import icSharePost from "./icon-share-post.svg";
+import icDollar from "./dollar.svg";
 
 const Icons = {
   icVip,
@@ -351,6 +352,7 @@ const Icons = {
   icLocated,
   icGoNext,
   icSharePost,
+  icDollar,
 };
 
 interface IconSvgProps {

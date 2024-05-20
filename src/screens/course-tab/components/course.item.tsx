@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { View, Text, ViewStyle } from "react-native";
+import { View, Text, ViewStyle, TouchableOpacity } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import FastImage from "react-native-fast-image";
 import * as NavigationService from "react-navigation-helpers";
@@ -19,6 +19,9 @@ import CourseProgressBar from "./course.progress.bar";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { formatPriceCourse } from "@helpers/string.helper";
 import { listSkill } from "constants/course.constant";
+import useStore from "@services/zustand/store";
+import { shareCourse } from "@utils/share.utils";
+import IconSvg from "assets/svg";
 
 interface CourseItemProps {
   isHorizontalStyle?: boolean;
@@ -45,6 +48,7 @@ const CourseItem = ({
     skills,
     public_status,
   } = data;
+  const userData = useStore((state) => state.userData);
   console.log("data...", data);
   let widthImage = Device.width - 32;
   if (isHorizontalStyle) {
@@ -141,6 +145,47 @@ const CourseItem = ({
             const txt = listSkill.filter((i) => i.id === item);
             return <Badge key={index} title={txt[0].value} />;
           })}
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            height: 40,
+            justifyContent: "space-between",
+            gap: 16,
+            marginTop: 8,
+          }}
+        >
+          <TouchableOpacity
+            style={{
+              flex: 1,
+              backgroundColor: palette.yellow20,
+              ...CS.center,
+              borderRadius: 8,
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 4,
+            }}
+            onPress={() => shareCourse(userData?.invitation_code, data.title)}
+          >
+            <IconSvg name="icDollar" size={16} />
+            <Text style={CS.hnSemiBold}>
+              {`${translations.affiliate.commission}: ${priceCourse.commition}`}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={openPreviewCourse}
+            style={{
+              backgroundColor: palette.primary,
+              ...CS.center,
+              borderRadius: 8,
+              paddingHorizontal: 16,
+            }}
+          >
+            <Text style={[CS.hnBold, { color: palette.white }]}>
+              {translations.course.buyNow}
+            </Text>
+          </TouchableOpacity>
         </View>
       </>
     );

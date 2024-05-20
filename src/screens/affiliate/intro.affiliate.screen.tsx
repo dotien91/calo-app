@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import {
+  Image,
   ImageBackground,
   SafeAreaView,
   ScrollView,
   StyleSheet,
+  Text,
   View,
 } from "react-native";
 import CS from "@theme/styles";
@@ -21,6 +23,14 @@ import useStore from "@services/zustand/store";
 import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "constants";
 import { getCommission } from "@services/api/affiliate.api";
+import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
+import { navigate } from "@helpers/navigation.helper";
+import {
+  EnumModalContentType,
+  EnumStyleModalType,
+  showSuperModal,
+} from "@helpers/super.modal.helper";
+import { getReferralMe } from "@services/api/user.api";
 
 const HomeAffilite = () => {
   const dataText = [
@@ -52,6 +62,7 @@ const HomeAffilite = () => {
     userData?.user_role === "teacher" || userData?.user_role === "admin";
 
   const [commission, setCommission] = useState([]);
+  const [referralMe, setReferralMe] = useState([]);
 
   const _getCommission = () => {
     const paramsRequest = {};
@@ -66,7 +77,69 @@ const HomeAffilite = () => {
 
   useEffect(() => {
     _getCommission();
+    _getReferralMe();
   }, []);
+
+  const ItemAff = ({
+    link,
+    title,
+    onPress,
+  }: {
+    link: any;
+    title: string;
+    onPress: () => void;
+  }) => {
+    return (
+      <PressableBtn onPress={onPress} style={styles.item}>
+        <View style={styles.viewImage}>
+          {link && <Image style={styles.image} source={link} />}
+        </View>
+        <Text style={styles.text}>{title}</Text>
+      </PressableBtn>
+    );
+  };
+
+  const onPressSaleCourse = () => {
+    NavigationService.navigate(SCREENS.COURSE_TAB);
+  };
+  const navigateAffiliate = () => {
+    NavigationService.navigate(SCREENS.AFFILIATE);
+  };
+  const navigateWidthDraw = () => {
+    NavigationService.navigate(SCREENS.WITHDRAW);
+  };
+  const showReferrer = () => {
+    NavigationService.navigate(SCREENS.CODE_ACTIVATIONS_SCREEN);
+  };
+
+  const _getReferralMe = () => {
+    getReferralMe({}).then((res) => {
+      setReferralMe(res.data);
+    });
+  };
+
+  const listAffiliate = [
+    {
+      title: translations.affiliate.saleCourse,
+      image: require("../../assets/images/shopping-cart.png"),
+      onPress: onPressSaleCourse,
+    },
+    {
+      title: translations.affiliate.aff,
+      image: require("../../assets/images/money.png"),
+      onPress: navigateAffiliate,
+    },
+    {
+      title: translations.affiliate.moneyOut,
+      image: require("../../assets/images/payment.png"),
+      onPress: navigateWidthDraw,
+    },
+    {
+      title: translations.affiliate.referal,
+      image: require("../../assets/images/capital.png"),
+      onPress: showReferrer,
+    },
+  ];
 
   return (
     <SafeAreaView
@@ -76,7 +149,7 @@ const HomeAffilite = () => {
     >
       <Header text={translations.listCategory.affiliate} />
       <ScrollView>
-        <View style={styles.viewImg}>
+        {/* <View style={styles.viewImg}>
           <ImageBackground
             source={require("../../assets/images/bgintroaffilite.jpg")}
             style={styles.styleImage}
@@ -122,6 +195,17 @@ const HomeAffilite = () => {
               <IconSvg name="icNext" size={40} color={palette.white} />
             </PressableBtn>
           </ImageBackground>
+        </View> */}
+        <View style={{ flexDirection: "row", paddingHorizontal: 16, gap: 8 }}>
+          {listAffiliate.map((item) => {
+            return (
+              <ItemAff
+                link={item.image}
+                onPress={item.onPress}
+                title={item.title}
+              />
+            );
+          })}
         </View>
         <View style={styles.viewText}>
           <TextBase fontSize={16} fontWeight="600" color={EnumColors.text}>
@@ -136,6 +220,7 @@ const HomeAffilite = () => {
                     fontSize={16}
                     fontWeight="400"
                     color={EnumColors.textOpacity8}
+                    style={CS.flex1}
                   >
                     {item.label}
                   </TextBase>
@@ -144,33 +229,31 @@ const HomeAffilite = () => {
             })}
           </View>
         </View>
-        <View style={styles.viewCommission}>
-          <View style={styles.viewContent}>
-            <TextBase fontSize={16} fontWeight="600" color={EnumColors.text}>
-              {translations.affiliate.commission}
-            </TextBase>
-            <View style={styles.viewDesciption}>
-              <IconSvg name="icCommission" size={48} />
-              <View style={styles.viewTxtDesciption}>
-                <TextBase
-                  fontSize={14}
-                  fontWeight="400"
-                  color={EnumColors.textOpacity8}
-                >
-                  {translations.affiliate.description}
-                  <TextBase fontWeight="700">
-                    {`${commission * 100}${
-                      translations.affiliate.description2
-                    }`}
-                  </TextBase>
-                  {translations.affiliate.description3}
-                  <IconSvg name="icCoin" color={palette.gold} size={14} />
-                </TextBase>
-              </View>
-            </View>
-            <InviteCode />
-          </View>
+        {/* <View style={styles.viewCommission}> */}
+        <View style={styles.viewContent}>
+          <TextBase fontSize={16} fontWeight="600" color={EnumColors.text}>
+            {`${translations.affiliate.commissionSale}`}
+          </TextBase>
+          <TextBase
+            fontSize={14}
+            fontWeight="400"
+            color={EnumColors.textOpacity8}
+          >
+            {translations.affiliate.desCommission}
+          </TextBase>
+          <TextBase fontSize={16} fontWeight="600" color={EnumColors.text}>
+            {`${translations.affiliate.referalCommission}`}
+          </TextBase>
+          <TextBase
+            fontSize={14}
+            fontWeight="400"
+            color={EnumColors.textOpacity8}
+          >
+            {translations.affiliate.desRef}
+          </TextBase>
         </View>
+        <InviteCode />
+        {/* </View> */}
         <ListCodeActive />
       </ScrollView>
     </SafeAreaView>
@@ -195,7 +278,7 @@ const styles = StyleSheet.create({
     backgroundColor: palette.backgroundColorGrey,
     borderRadius: 8,
   },
-  viewContent: { marginHorizontal: 16, marginVertical: 8 },
+  viewContent: { marginHorizontal: 16, marginVertical: 8, gap: 8 },
   viewDesciption: {
     flexDirection: "row",
     gap: 8,
@@ -219,5 +302,24 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     alignItems: "flex-end",
     justifyContent: "space-between",
+  },
+  item: {
+    width: (SCREEN_WIDTH - 56) / 4,
+    alignItems: "center",
+  },
+  viewImage: {
+    width: (SCREEN_WIDTH - 56) / 4,
+    height: (SCREEN_WIDTH - 56) / 4,
+    borderRadius: 8,
+    backgroundColor: palette.borderColor,
+    ...CS.center,
+  },
+  image: {
+    width: (SCREEN_WIDTH - 56) / 6,
+    height: (SCREEN_WIDTH - 56) / 6,
+  },
+  text: {
+    ...CS.hnBold,
+    textAlign: "center",
   },
 });

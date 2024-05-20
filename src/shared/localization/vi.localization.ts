@@ -238,7 +238,7 @@ export default {
     sharePost:
       "Tham gia cộng đồng IKIGAI Coach ngay hôm nay và nhận thưởng lên tới 1000 Point",
     shareCode: (txt: string) =>
-      `Tham gia cộng đồng IKIGAI Coach cùng tớ để nhận thưởng lên tới 10000 Point nhé, Nhập mã giới thiệu "${txt}" để nhận thưởng.`,
+      `Tham gia cộng đồng IKIGAI Coach cùng tớ để nhận thưởng lên tới 10000 Point nhé, truy cập "${txt}" để nhận thưởng.`,
   },
   navigation: {
     dashboard: "Trang chủ",
@@ -449,6 +449,8 @@ export default {
     at: "lúc",
   },
   course: {
+    desReferal: (txt: string) =>
+      `Khi người dùng cài đặt ứng dụng và mua khoá học này, bạn sẽ nhận được ${txt} tương ứng. Số tiền sẽ được cập nhật ở trang Doanh thu của bạn.`,
     previewMentor: "Xem Mentor",
     prepareCourse: "Các khóa học này đang được biên soạn!",
     suggestPickCourse: "Lựa chọn khóa học phù hợp với bạn phía dưới !",
@@ -623,7 +625,8 @@ export default {
     addPart: "Thêm học phần",
     addPartSuccess: "Thêm học phần thành công",
     aboutThisCourse: "Thông tin khoá học",
-    shareThisCourse: "Chia sẻ khoá học",
+    shareThisCourse: (courseName: string) =>
+      `Mua ngay khoá học ${courseName} để nhận nhiều ưu đãi trong hôm nay. Tải về tại`,
     resources: "Tài liệu",
     addCourseToFavourites: "Thêm vào danh sách yêu thích",
     reportAPlaybackProblem: "Báo cáo sự cố",
@@ -1089,7 +1092,7 @@ export default {
     sortBy: "Sắp xếp theo",
     timeLatest: "Thời gian: mới nhất",
     priceHighest: "Giá: cao đến thấp",
-    header: "Kích hoạt mã",
+    header: "Những người đã nhập mã",
     referrer: "Người giới thiệu",
     copyCodeSuccsess: "Sao chép mã thành công",
     activate: "Kích hoạt mã",
@@ -1673,6 +1676,12 @@ export default {
       "Nhận thêm điểm và thăng cấp bằng cách làm nhiêm vụ và cải thiện các kỹ năng của bạn.",
   },
   affiliate: {
+    shareCode: "Chia sẻ mã",
+    saleNow: "Bán ngay",
+    saleCourse: "Bán hàng",
+    aff: "Doanh thu",
+    moneyOut: "Rút tiền",
+    referal: "Người giới thiệu",
     yourIncome: "Thu nhập của bạn",
     withdraw: "Rút tiền",
     today: "Hôm nay",
@@ -1686,16 +1695,24 @@ export default {
     fromDate: "Từ ngày",
     toDate: "Đến ngày",
     commission: "Hoa hồng",
+    commissionSale: "Hoa hồng bán hàng: 20%",
+    desCommission:
+      "Khi người dùng bạn giới thiệu mua khoá học, bạn sẽ nhận được 20% hoa hồng của khoá học. Ví dụ khoá học có giá 10,000,000đ, bạn sẽ nhận được 2,000,000đ khi người dùng mua khoá học thành công!",
+    referalCommission: "Hoa hồng giới thiệu: 5%",
+    desRef:
+      "Khi bạn giới thiệu các cộng tác viên, bạn sẽ nhận được một phần thưởng tương đương 5% giá trị của đơn hàng khi khách hàng của Cộng tác viên mua hàng thành công.",
     noTransaction: "Chưa phát sinh giao dịch",
-    description: "Thành viên giới thiệu mua hàng được thưởng hoa hồng (",
+    // description: "Thành viên giới thiệu mua hàng được thưởng hoa hồng (",
+    description:
+      "Người giới thiệu khi nhập mã của bạn bạn sẽ nhận được hoa hồng bán hàng tương đương 20% trên mỗi đơn hàng, ngoài ra bạn cũng có cơ hội nhận được hoa hồng giới thiệu lên tới 5%.",
     description2: "% hoa hồng",
     description3:
       "). Ví dụ: Nếu thành viên giới thiệu mua khóa học có giá 1.000.000 đồng → Hoa hồng nhận được: 80.000 đồng → 80 ",
     whyJoin: "Tại sao nên tham gia Tiếp thị liên kết?",
-    text1: "Giới thiệu người dùng/Quản lý giới thiệu",
-    text2: "Quản lý doanh thu",
-    text3: "Rút",
-    text4: "Mua sản phẩm/Khóa học",
+    text1: "Tăng thêm thu nhập từ việc bán hàng cùng IKIGAI COACH",
+    text2: "Tiền được cộng ngay khi khách hàng mua khoá học",
+    text3: "Quản lý doanh thu theo thời gian thực",
+    text4: "Rút tiền về tài khoản ngân hàng",
     totalAmount: "Tổng số tiền",
     totalCoin: "Tổng số coin",
     emptyProduct: "Danh sách sản phẩn trống",

@@ -46,6 +46,20 @@ export const useUserHook = () => {
           type: "success",
           message: translations.loginSuccess,
         });
+        if (codeInvite && codeInvite !== "") {
+          const data = {
+            invitation_code: codeInvite,
+          };
+          postInvitationCode(data).then((res) => {
+            if (!res.isError) {
+              console.log("data,", res.data);
+              setShowInvite(false);
+              setCodeInvite("");
+            } else {
+              console.log("data,", res.message);
+            }
+          });
+        }
       }
     });
   };

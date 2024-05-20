@@ -109,6 +109,7 @@ export const palette = {
   backgroundInputLive: "rgba(0,0,0,0.5)",
   backgroundPayment: "rgba(0,0,0,0.03)",
   yellow: "#FFA347",
+  yellow20: "#FFA34733",
   backgroundNotification: "#FD7467",
   primarySub: "rgba(241, 144, 144, 1)",
   colorMoney: "#FEAEAE",

@@ -46,12 +46,14 @@ const InviteCode = () => {
         </View>
         <TouchableOpacity onPress={shareCode} style={styles.touchShare}>
           <IconSvg name="icupLoad" width={32} height={18} />
-          <Text style={styles.textShare}>{translations.post.share}</Text>
+          <Text style={styles.textShare}>
+            {translations.affiliate.shareCode}
+          </Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.viewLineInviteFriend}></View>
+      {/* <View style={styles.viewLineInviteFriend}></View> */}
       <Text style={styles.textDesciption}>
-        {translations.settings.inviteDes}
+        {translations.affiliate.description}
       </Text>
     </View>
   );
