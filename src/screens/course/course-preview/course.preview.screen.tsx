@@ -95,6 +95,7 @@ const CoursePreviewScreen = () => {
         // setIsLoading(false);
         setData(data);
         const classId = data.classes?.[0]?._id;
+        console.log("classId", classId)
         if (classId) {
           _getCourseRoom(data, classId);
         }
@@ -274,6 +275,7 @@ const CoursePreviewScreen = () => {
         dataCourse: data,
         isTeacher: data?.user_id?._id === userData?._id,
         hideCloseIcon: true,
+        courseRoom,
       },
     });
   };
