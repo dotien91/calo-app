@@ -294,7 +294,7 @@ const IeltsReadingPacticeScreen = () => {
     <SafeAreaView style={CS.safeAreaView}>
       <IeltsPracticeHeader
         text={translations.ieltsPractice.praticeTest}
-        iconNameRight="info"
+        // iconNameRight="info"
         renderBottomComponent={renderBottomComponent}
       />
       <View style={CS.flex1}>
