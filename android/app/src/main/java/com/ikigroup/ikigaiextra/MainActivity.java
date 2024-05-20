@@ -1,4 +1,4 @@
-package com.ikigroup.ikigaicoach;
+package com.ikigroup.ikigaiextra;
 
 
 import com.facebook.react.ReactActivity;

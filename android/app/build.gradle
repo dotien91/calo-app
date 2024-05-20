@@ -105,9 +105,9 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    namespace "com.ikigroup.ikigaicoach"
+    namespace "com.ikigroup.ikigaiextra"
     defaultConfig {
-        applicationId 'com.ikigroup.ikigaicoach'
+        applicationId 'com.ikigroup.ikigaiextra'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 5
@@ -132,7 +132,7 @@ android {
             keyPassword 'android'
         }
         release {
-            storeFile file('release-keystore-coach')
+            storeFile file('release-keystore-ikigaiextra')
             storePassword 'exam24h'
             keyAlias 'exam24h'
             keyPassword 'exam24h'

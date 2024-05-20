@@ -30,35 +30,35 @@ const AboutMe = () => {
       showItemisLogin: false,
       title: translations.aboutUs.aboutUs,
       action: () => {
-        OpenURLButton("https://docs.ikigai.vn/");
+        OpenURLButton("https://guides.ikigai.vn/");
       },
     },
     {
       showItemisLogin: false,
       title: translations.aboutUs.termofus,
       action: () => {
-        OpenURLButton("https://docs.ikigai.vn/term-and-conditions");
+        OpenURLButton("https://guides.ikigai.vn/term-and-conditions");
       },
     },
     {
       showItemisLogin: false,
       title: translations.aboutUs.privacy,
       action: () => {
-        OpenURLButton("https://docs.ikigai.vn/privacy-policy");
+        OpenURLButton("https://guides.ikigai.vn/privacy-policy");
       },
     },
     {
       showItemisLogin: false,
       title: translations.aboutUs.cookie,
       action: () => {
-        OpenURLButton("https://docs.ikigai.vn/cookie");
+        OpenURLButton("https://guides.ikigai.vn/cookie");
       },
     },
     {
       showItemisLogin: false,
       title: translations.aboutUs.return,
       action: () => {
-        OpenURLButton("https://docs.ikigai.vn/chinh-sach-hoan-tien");
+        OpenURLButton("https://guides.ikigai.vn/chinh-sach-hoan-tien");
       },
     },
   ];
