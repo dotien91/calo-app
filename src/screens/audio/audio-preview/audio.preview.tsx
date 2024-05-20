@@ -125,6 +125,7 @@ const AudioPreview = () => {
     const indexLocal = listAudio.findIndex((item) => item._id === id);
     if (indexLocal >= 0) {
       // const list = listAudio.slice(indexLocal, listAudio.length);
+      let track;
       for (let i = 0; i < listAudio.length; i++) {
         const element = listAudio[i];
         const track1 = {
@@ -135,8 +136,11 @@ const AudioPreview = () => {
         };
         await TrackPlayer.add(track1);
         if (i == indexLocal) {
-          await playTrack(track1, indexLocal);
+          track = track1;
         }
+      }
+      if (track) {
+        await playTrack(track, indexLocal);
       }
     }
     // lưu vào store
