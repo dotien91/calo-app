@@ -109,7 +109,7 @@ export function formatCoin(
             .toFixed(decimalCount)
             .slice(2)
         : "") +
-      " IHC"
+      " ICC"
     );
   } catch (e) {
     console.log(e);
