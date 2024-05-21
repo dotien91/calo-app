@@ -106,7 +106,6 @@ export const useChatHistory = (txtSearch: string, searchModeChat: boolean) => {
 
   const msgToClient = (data: string) => {
     let newMessage: TypedMessageGiftedChat = JSON.parse(data);
-    console.log("msgToClient", newMessage);
     newMessage = {
       ...newMessage,
       text: newMessage.chat_content || "",
