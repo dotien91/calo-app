@@ -89,12 +89,11 @@ const CourseCreate = () => {
   const [priceInput, setPriceInput] = useState("");
   // const [lang, setLang] = useState("vi");
 
-  const { idVideo, renderSelectVideo, updatingVid, typeMedia } =
-    SelectVideoHook({
-      id: data?.media_id?._id || data?.avatar?._id,
-      link: data?.media_id?.media_thumbnail || data?.avatar?.media_thumbnail,
-      typeM: data?.media_id ? "video" : "image",
-    });
+  const { idVideo, renderSelectVideo, updatingVid } = SelectVideoHook({
+    id: data?.media_id?._id || data?.avatar?._id,
+    link: data?.media_id?.media_thumbnail || data?.avatar?.media_thumbnail,
+    typeM: data?.media_id ? "video" : "image",
+  });
   // const { idImage, renderSelectImage, updatingImg } = SelectImageHook({
   //   width: 1600,
   //   height: 900,
@@ -162,19 +161,19 @@ const CourseCreate = () => {
           // language: userData?.default_language,
           country: userData?.country,
           // avatar: idImage,
-          // media_id: idVideo,
+          media_id: idVideo,
           public_status: data?.public_status || "draft",
           type: typeCourse,
           // level: level,
           skills: skill,
         };
         // console.log(params);
-        if (typeMedia.startsWith("video")) {
-          params.media_id = idVideo;
-        }
-        if (typeMedia.startsWith("image")) {
-          params.avatar = idVideo;
-        }
+        // if (typeMedia.startsWith("video")) {
+        // params.media_id = idVideo;
+        // }
+        // if (typeMedia.startsWith("image")) {
+        //   params.avatar = idVideo;
+        // }
         if (course_id) {
           params._id = course_id;
         }

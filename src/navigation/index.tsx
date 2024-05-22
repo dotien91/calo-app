@@ -28,6 +28,9 @@ import {
   StackIntroData,
 } from "./navigation.constant";
 import analytics from "@react-native-firebase/analytics";
+import { TouchableOpacity } from "react-native";
+import { navigate } from "@helpers/navigation.helper";
+import eventEmitter from "@services/event-emitter";
 
 // import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 // ? If you want to use stack or tab or both
@@ -137,6 +140,20 @@ const Navigation = () => {
               height: getBottomSpace() + 48,
               marginTop: 4,
             },
+            tabBarButton: (props) => (
+              <TouchableOpacity
+                {...props}
+                onPress={() => {
+                  navigate(route.name);
+                  if (
+                    route.name == "HomeTab" &&
+                    props.accessibilityState.selected
+                  ) {
+                    eventEmitter.emit("reload_home_page");
+                  }
+                }}
+              />
+            ),
           })}
         >
           <Tab.Screen name={SCREENS.HOME_TAB} component={HomeStackScreen} />

@@ -7,7 +7,7 @@ import LikeBtn from "../like-btn/LikeBtn";
 import { TypedPost } from "shared/models";
 import createStyles from "./post.item.style";
 import { translations } from "@localization";
-import { shareCodeInvite, sharePost } from "@utils/share.utils";
+import { sharePost } from "@utils/share.utils";
 import IconSvg from "assets/svg";
 import CommentBtn from "../comment-btn/CommentBtn";
 import useStore from "@services/zustand/store";

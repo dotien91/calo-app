@@ -46,7 +46,7 @@ import {
   showToast,
 } from "@helpers/super.modal.helper";
 import { shareCourse } from "@utils/share.utils";
-import { formatPrice } from "@helpers/string.helper";
+import { formatPriceCourse } from "@helpers/string.helper";
 import IconSvg from "assets/svg";
 
 const CoursePreviewScreen = () => {
@@ -95,7 +95,7 @@ const CoursePreviewScreen = () => {
         // setIsLoading(false);
         setData(data);
         const classId = data.classes?.[0]?._id;
-        console.log("classId", classId)
+        // console.log("classId", classId);
         if (classId) {
           _getCourseRoom(data, classId);
         }
@@ -266,7 +266,9 @@ const CoursePreviewScreen = () => {
       }
     });
   };
-  const commition = formatPrice(data?.price / 5);
+  // const commition = formatPrice(data?.price / 5);
+  const priceCourse = formatPriceCourse(data);
+
   const pressMore = () => {
     showSuperModal({
       contentModalType: EnumModalContentType.MoreCourse,
@@ -322,7 +324,7 @@ const CoursePreviewScreen = () => {
             >
               <IconSvg name="icDollar" size={16} />
               <Text style={CS.hnSemiBold}>
-                {`${translations.affiliate.commission}: ${commition}`}
+                {`${translations.affiliate.commission}: ${priceCourse.commition}`}
               </Text>
             </View>
             <View>
@@ -332,7 +334,7 @@ const CoursePreviewScreen = () => {
             </View>
           </View>
           <Text style={[CS.hnRegular, { fontStyle: "italic", fontSize: 14 }]}>
-            {translations.course.desReferal(commition)}
+            {translations.course.desReferal(priceCourse.commition)}
           </Text>
         </TouchableOpacity>
         {data?.is_join && (

@@ -72,8 +72,7 @@ const ListPost = ({ isFollowingPost, id, isProfile }: ListPostProps) => {
   const onRefresh = () => {
     _requestData();
     setTimeout(() => {
-      listRef &&
-        listRef.current?.scrollToOffset({ animated: true, offset: 1100 });
+      listRef && listRef.current?.scrollToOffset({ animated: true, offset: 0 });
     }, 200);
   };
 

@@ -20,7 +20,6 @@ import IconSvg from "assets/svg";
 import { palette } from "@theme/themes";
 import { deleteCourse } from "@services/api/course.api";
 import eventEmitter from "@services/event-emitter";
-import { EnumTypeCall } from "@services/api/call.api";
 
 interface PopupCourseDetailProps {
   isTeacher: boolean;
@@ -40,7 +39,7 @@ const PopupCourseDetail = ({
       data: dataCourse,
     });
   };
-  console.log(22222, courseRoom)
+  console.log(22222, courseRoom);
 
   const isJoined = dataCourse.is_join || false;
   const showHomeWork =
@@ -100,7 +99,7 @@ const PopupCourseDetail = ({
     NavigationService.navigate(SCREENS.CHAT_ROOM, {
       id: courseRoom?.chatRoomId,
     });
-    closeSuperModal()
+    closeSuperModal();
   };
   const goToHomeWork = () => {
     NavigationService.navigate(SCREENS.CLASSHOMEWORK, {
@@ -208,13 +207,15 @@ const PopupCourseDetail = ({
           title={translations.profile.chat}
         />
       )}
-      {isJoined && showHomeWork && dataCourse.type == EnumClassType.CallGroup && (
-        <ItemPopup
-          icName="icCourse"
-          onPress={goToHomeWork}
-          title={translations.homework.header}
-        />
-      )}
+      {isJoined &&
+        showHomeWork &&
+        dataCourse.type == EnumClassType.CallGroup && (
+          <ItemPopup
+            icName="icCourse"
+            onPress={goToHomeWork}
+            title={translations.homework.header}
+          />
+        )}
       {isTeacher && (
         <ItemPopup
           icName="iconRemove"

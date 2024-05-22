@@ -49,7 +49,6 @@ const CourseItem = ({
     public_status,
   } = data;
   const userData = useStore((state) => state.userData);
-  console.log("data...", data);
   let widthImage = Device.width - 32;
   if (isHorizontalStyle) {
     widthImage = widthImage / 1.5;

@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   Image,
-  ImageBackground,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -18,19 +17,9 @@ import TextBase from "@shared-components/TextBase";
 import { EnumColors } from "models";
 import IconSvg from "assets/svg";
 import PressableBtn from "@shared-components/button/PressableBtn";
-import formatMoney from "@shared-components/input-money/format.money";
-import useStore from "@services/zustand/store";
 import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "constants";
-import { getCommission } from "@services/api/affiliate.api";
 import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
-import { navigate } from "@helpers/navigation.helper";
-import {
-  EnumModalContentType,
-  EnumStyleModalType,
-  showSuperModal,
-} from "@helpers/super.modal.helper";
-import { getReferralMe } from "@services/api/user.api";
 
 const HomeAffilite = () => {
   const dataText = [
@@ -51,33 +40,33 @@ const HomeAffilite = () => {
       label: translations.affiliate.text4,
     },
   ];
-  const userInfo = useStore((state) => state.userInfo);
+  // const userInfo = useStore((state) => state.userInfo);
 
-  const handleSelect = () => {
-    NavigationService.navigate(SCREENS.AFFILIATE);
-  };
+  // const handleSelect = () => {
+  //   NavigationService.navigate(SCREENS.AFFILIATE);
+  // };
 
-  const userData = useStore((state) => state.userData);
-  const isShowMoney =
-    userData?.user_role === "teacher" || userData?.user_role === "admin";
+  // const userData = useStore((state) => state.userData);
+  // const isShowMoney =
+  //   userData?.user_role === "teacher" || userData?.user_role === "admin";
 
-  const [commission, setCommission] = useState([]);
-  const [referralMe, setReferralMe] = useState([]);
+  // const [commission, setCommission] = useState([]);
+  // const [referralMe, setReferralMe] = useState([]);
 
-  const _getCommission = () => {
-    const paramsRequest = {};
-    getCommission(paramsRequest).then((res) => {
-      if (!res.isError) {
-        console.log("commission Rate====", res.data.config.data_content);
+  // const _getCommission = () => {
+  //   const paramsRequest = {};
+  //   getCommission(paramsRequest).then((res) => {
+  //     if (!res.isError) {
+  //       console.log("commission Rate====", res.data.config.data_content);
 
-        setCommission(res.data.config.data_content);
-      }
-    });
-  };
+  //       setCommission(res.data.config.data_content);
+  //     }
+  //   });
+  // };
 
   useEffect(() => {
-    _getCommission();
-    _getReferralMe();
+    // _getCommission();
+    // _getReferralMe();
   }, []);
 
   const ItemAff = ({
@@ -112,11 +101,11 @@ const HomeAffilite = () => {
     NavigationService.navigate(SCREENS.CODE_ACTIVATIONS_SCREEN);
   };
 
-  const _getReferralMe = () => {
-    getReferralMe({}).then((res) => {
-      setReferralMe(res.data);
-    });
-  };
+  // const _getReferralMe = () => {
+  //   getReferralMe({}).then((res) => {
+  //     setReferralMe(res.data);
+  //   });
+  // };
 
   const listAffiliate = [
     {
@@ -197,9 +186,10 @@ const HomeAffilite = () => {
           </ImageBackground>
         </View> */}
         <View style={{ flexDirection: "row", paddingHorizontal: 16, gap: 8 }}>
-          {listAffiliate.map((item) => {
+          {listAffiliate.map((item, index) => {
             return (
               <ItemAff
+                key={index}
                 link={item.image}
                 onPress={item.onPress}
                 title={item.title}
@@ -263,46 +253,46 @@ const HomeAffilite = () => {
 export default HomeAffilite;
 
 const styles = StyleSheet.create({
-  viewImg: {
-    marginHorizontal: 16,
-    paddingBottom: 16,
-  },
-  styleImage: {
-    height: 202,
-    width: "100%",
-    justifyContent: "flex-end",
-    paddingBottom: 10,
-  },
-  viewCommission: {
-    marginHorizontal: 16,
-    backgroundColor: palette.backgroundColorGrey,
-    borderRadius: 8,
-  },
+  // viewImg: {
+  //   marginHorizontal: 16,
+  //   paddingBottom: 16,
+  // },
+  // styleImage: {
+  //   height: 202,
+  //   width: "100%",
+  //   justifyContent: "flex-end",
+  //   paddingBottom: 10,
+  // },
+  // viewCommission: {
+  //   marginHorizontal: 16,
+  //   backgroundColor: palette.backgroundColorGrey,
+  //   borderRadius: 8,
+  // },
   viewContent: { marginHorizontal: 16, marginVertical: 8, gap: 8 },
-  viewDesciption: {
-    flexDirection: "row",
-    gap: 8,
-    width: "100%",
-    minHeight: 132,
-    paddingTop: 8,
-  },
-  viewTxtDesciption: {
-    paddingHorizontal: 4,
-    paddingBottom: 16,
-    width: "80%",
-    ...CS.center,
-  },
+  // viewDesciption: {
+  //   flexDirection: "row",
+  //   gap: 8,
+  //   width: "100%",
+  //   minHeight: 132,
+  //   paddingTop: 8,
+  // },
+  // viewTxtDesciption: {
+  //   paddingHorizontal: 4,
+  //   paddingBottom: 16,
+  //   width: "80%",
+  //   ...CS.center,
+  // },
   viewText: {
     marginHorizontal: 16,
   },
   viewTxt: { paddingBottom: 16, paddingTop: 16 },
   styleDes: { flexDirection: "row", gap: 8, paddingBottom: 8 },
-  viewBtn: {
-    flexDirection: "row",
-    marginHorizontal: 16,
-    alignItems: "flex-end",
-    justifyContent: "space-between",
-  },
+  // viewBtn: {
+  //   flexDirection: "row",
+  //   marginHorizontal: 16,
+  //   alignItems: "flex-end",
+  //   justifyContent: "space-between",
+  // },
   item: {
     width: (SCREEN_WIDTH - 56) / 4,
     alignItems: "center",

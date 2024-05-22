@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Text,
   TouchableOpacity,
@@ -81,6 +81,13 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
       setRefreshing(false);
     }, 3000);
   };
+
+  useEffect(() => {
+    eventEmitter.on("reload_home_page", reloadData);
+    return () => {
+      eventEmitter.off("reload_home_page", reloadData);
+    };
+  }, []);
 
   const renderRefreshControl = (refreshProps) => {
     return <CustomRefreshControl {...refreshProps} />;
