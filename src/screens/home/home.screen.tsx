@@ -104,6 +104,9 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
   const renderHeaderTab = () => {
     return <HeaderTab />;
   };
+  const makeScrollTrans = (event) => {
+    console.log(event);
+  };
 
   // return <IapTest />
   return (
@@ -121,6 +124,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
         onStartRefresh={reloadData}
         renderRefreshControl={renderRefreshControl}
         isRefreshing={refreshing}
+        makeScrollTrans={makeScrollTrans}
       />
       {isLoggedIn() && userData?._id && (
         <TouchableOpacity

@@ -66,8 +66,13 @@ export default (theme: ExtendedTheme) => {
     textLikeShare: {
       ...CommonStyle.hnRegular,
       fontSize: FONT_SIZE,
-      color: colors.text,
+      color: colors.textOpacity8,
       marginLeft: 8,
+    },
+    text: {
+      ...CommonStyle.hnRegular,
+      fontSize: FONT_SIZE,
+      color: colors.textOpacity8,
     },
     viewMore: {
       ...CommonStyle.fillParent,

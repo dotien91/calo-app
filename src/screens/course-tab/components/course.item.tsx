@@ -172,7 +172,7 @@ const CourseItem = ({
               {`${translations.affiliate.commission}: ${priceCourse.commition}`}
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={openPreviewCourse}
             style={{
               backgroundColor: palette.primary,
@@ -184,7 +184,7 @@ const CourseItem = ({
             <Text style={[CS.hnBold, { color: palette.white }]}>
               {translations.course.buyNow}
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </>
     );

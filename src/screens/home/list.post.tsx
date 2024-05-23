@@ -133,6 +133,9 @@ const ListPost = ({ isFollowingPost, id, isProfile }: ListPostProps) => {
       </View>
     );
   }
+  // const onScrollEndDrag = (event) => {
+  //   console.log("event...", event.nativeEvent.contentOffset);
+  // };
   return (
     <View
       style={{
@@ -141,6 +144,8 @@ const ListPost = ({ isFollowingPost, id, isProfile }: ListPostProps) => {
       }}
     >
       <HFlatList
+        // onScrollEndDrag={onScrollEndDrag}
+        // onContentSizeChange={handleScroll3} thay đổi khi loadmore
         ListHeaderComponent={renderHeader}
         index={isFollowingPost ? 1 : 0}
         ref={listRef}

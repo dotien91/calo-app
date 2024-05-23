@@ -21,6 +21,7 @@ const LikeBtn = (props: LikeBtnProps) => {
   const userData = useStore((state) => state.userData);
   const listLike = useStore((state) => state.listLike);
   const [loadding, setLoading] = useState(false);
+  const [buttonColor, setButtonColor] = useState(palette.background);
 
   useEffect(() => {
     const index = listLike.findIndex((item) => item._id === props.data?._id);
@@ -67,17 +68,22 @@ const LikeBtn = (props: LikeBtnProps) => {
   return (
     <TouchableOpacity
       onPress={pressLike}
+      onPressIn={() => setButtonColor(palette.textOpacity4)}
+      onPressOut={() => setButtonColor(palette.background)}
       disabled={loadding}
-      style={[styles.viewLike, { justifyContent: "flex-start" }]}
+      style={[
+        styles.viewLike,
+        { justifyContent: "flex-start", backgroundColor: buttonColor },
+      ]}
     >
       <Icon
         type={IconType.Ionicons}
         size={16}
         name={isLike ? "heart" : "heart-outline"}
-        color={isLike ? palette.primary : palette.text}
+        color={isLike ? palette.primary : palette.textOpacity6}
       />
 
-      <Text style={styles.textLikeShare}>{likeNumber}</Text>
+      <Text style={styles.textLikeShare}>{translations.post.like}</Text>
     </TouchableOpacity>
   );
 };
