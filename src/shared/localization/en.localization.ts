@@ -1108,6 +1108,8 @@ export default {
     markError: "Scores must be numeric and less than 100",
     forYou: "For you",
     following: "Following",
+    trending: "Trending",
+    mostPopular: "Most popular",
     emptyTask: "Empty task",
   },
   introwelcome: {

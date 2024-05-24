@@ -1,5 +1,5 @@
 import { translations } from "@localization";
-import useStore from "@services/zustand/store";
+// import useStore from "@services/zustand/store";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import IconSvg from "assets/svg";

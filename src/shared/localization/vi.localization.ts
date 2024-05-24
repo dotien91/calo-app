@@ -1636,6 +1636,8 @@ export default {
     markError: "Điểm phải là số và nhỏ hơn 100",
     forYou: "Dành cho bạn",
     following: "Đang theo dõi",
+    trending: "Thịnh hành",
+    mostPopular: "Nổi bật",
     emptyTask: "Chưa có bài tập nào",
   },
   introwelcome: {

@@ -1564,6 +1564,8 @@ export default {
     markError: "点数は数値で100以下でなければなりません",
     forYou: "あなたのために",
     following: "フォロー中",
+    trending: "流行っている",
+    mostPopular: "最も人気がある",
     emptyTask: "宿題はありません",
   },
   introwelcome: {
