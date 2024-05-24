@@ -96,6 +96,10 @@ const HeaderTab = () => {
     );
   };
 
+  const gotoAudioBook = () => {
+    NavigationService.navigate(SCREENS.AUDIO_BOOK);
+  };
+
   return (
     <View style={[styles.viewHeaderStyle]}>
       {!!userData?.display_name && (
@@ -122,7 +126,7 @@ const HeaderTab = () => {
         })}
       </View>
       {/* <CourseView /> */}
-      <AudioView />
+      <AudioView onPress={gotoAudioBook} />
       <InviteView />
       <ListLiveStream />
       {/* <View style={{ paddingTop: 10 }}>

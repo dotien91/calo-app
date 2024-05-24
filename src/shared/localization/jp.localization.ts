@@ -1360,6 +1360,7 @@ export default {
     sending: "送信中...",
   },
   audio: {
+    play: "再生",
     pause: "一時停止",
     resume: "再開",
     stop: "停止",

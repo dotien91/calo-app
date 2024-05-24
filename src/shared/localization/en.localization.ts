@@ -905,6 +905,7 @@ export default {
     takeAPhoto: "Take a photo",
   },
   audio: {
+    play: "Play",
     pause: "Pause",
     resume: "Resume",
     stop: "Stop",

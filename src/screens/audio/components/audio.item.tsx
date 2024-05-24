@@ -105,7 +105,7 @@ const AudioItem = ({
       console.log("list...", listData);
       setListAudio(listData);
     }
-    NavigationService.navigate(SCREENS.AUDIO_PREVIEW, { id: _id });
+    NavigationService.navigate(SCREENS.AUDIO_PREVIEW, { id: _id, data: data });
   };
 
   return (

@@ -332,7 +332,7 @@ const ListPostNew = ({ id }: ListPostProps) => {
         >
           <ContentFilter />
         </Animated.View>
-        <SafeAreaView style={{ backgroundColor: "red" }}></SafeAreaView>
+        <SafeAreaView></SafeAreaView>
         <FlatList
           StickyHeaderComponent={StickyHeaderComponent}
           stickyHeaderIndices={[1]}

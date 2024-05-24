@@ -12,7 +12,10 @@ import AudioCategoryTitle from "../audio-book/audio.category.title";
 import { SCREENS } from "constants";
 import LoadingItem from "@shared-components/loading.item";
 
-const AudioView = () => {
+interface AudioViewProps {
+  onPress?: () => void;
+}
+const AudioView = ({ onPress }: AudioViewProps) => {
   const userData = useStore((state) => state.userData);
 
   const { listData, isLoading } = useListData<IAudioItem>(
@@ -25,7 +28,11 @@ const AudioView = () => {
   );
 
   const onSeeAll = () => {
-    NavigationService.navigate(SCREENS.RECOMMEND_AUDIO_BOOK);
+    if (onPress) {
+      onPress();
+    } else {
+      NavigationService.navigate(SCREENS.RECOMMEND_AUDIO_BOOK);
+    }
   };
 
   const data = React.useMemo(() => {

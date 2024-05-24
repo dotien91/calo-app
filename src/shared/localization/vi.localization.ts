@@ -1431,6 +1431,7 @@ export default {
     sending: "Đang gửi...",
   },
   audio: {
+    play: "Phát",
     pause: "Tạm dừng",
     resume: "Tiếp tục",
     stop: "Dừng",

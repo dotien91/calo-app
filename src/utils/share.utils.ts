@@ -5,7 +5,7 @@ import { postShare } from "@services/api/post.api";
 import Share from "react-native-share";
 import dynamicLinks from "@react-native-firebase/dynamic-links";
 
-const BASEURL = "https://ikigai.vn";
+const BASEURL = "https://ikigaicoach.net";
 
 const createDynamicLink = async (str: string) => {
   console.log(str);

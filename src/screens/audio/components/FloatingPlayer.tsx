@@ -1,4 +1,5 @@
 import {
+  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -19,6 +20,14 @@ import { useLastActiveTrack } from "../hook/useLastActiveTrack";
 import { MovingText } from "./MovingText";
 import { useActionTrack } from "../hook/useActionTrack";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
+import Animated, {
+  Easing,
+  cancelAnimation,
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withTiming,
+} from "react-native-reanimated";
 
 export const FloatingPlayer = ({ style }: ViewProps) => {
   const activeTrack = useActiveTrack();
@@ -31,9 +40,21 @@ export const FloatingPlayer = ({ style }: ViewProps) => {
   };
   const { playing } = useIsPlaying();
 
+  const rotation = useSharedValue(0);
   const checkScreenAudio = ({ show }) => {
     setShowFloating(show);
   };
+  // const startAnimation = () => {
+  //   rotation.value = withRepeat(withTiming(360, { duration: 4000 }), -1, true);
+  // };
+  // useEffect(() => {
+  //   rotation.value = 0;
+  //   if (playing) {
+  //     startAnimation();
+  //   } else {
+  //     cancelAnimation(rotation);
+  //   }
+  // }, [playing]);
 
   useEffect(() => {
     eventEmitter.on("floating_play", checkScreenAudio);
@@ -45,6 +66,24 @@ export const FloatingPlayer = ({ style }: ViewProps) => {
 
   if (!displayedTrack || !showFloating) return null;
 
+  const RenderAvatar = () => {
+    const animatedStyle = useAnimatedStyle(() => {
+      return {
+        transform: [{ rotate: `${rotation.value}deg` }],
+      };
+    });
+    return (
+      <Animated.View style={[styles.trackArtworkImage, animatedStyle]}>
+        <Animated.Image
+          source={{
+            uri: displayedTrack.artwork,
+          }}
+          style={styles.trackArtworkImage}
+        />
+      </Animated.View>
+    );
+  };
+
   return (
     <TouchableOpacity
       onPress={handlePress}
@@ -52,12 +91,15 @@ export const FloatingPlayer = ({ style }: ViewProps) => {
       style={[styles.container, style]}
     >
       <>
-        <FastImage
-          source={{
-            uri: displayedTrack.artwork,
-          }}
-          style={styles.trackArtworkImage}
-        />
+        {/* <Animated.View style={[styles.trackArtworkImage]}>
+          <Image
+            source={{
+              uri: displayedTrack.artwork,
+            }}
+            style={styles.trackArtworkImage}
+          />
+        </Animated.View> */}
+        <RenderAvatar />
 
         <View style={styles.trackTitleContainer}>
           <MovingText
