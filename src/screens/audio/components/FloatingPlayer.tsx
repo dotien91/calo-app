@@ -1,5 +1,4 @@
 import {
-  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -8,11 +7,9 @@ import {
 } from "react-native";
 import FastImage from "react-native-fast-image";
 import { useActiveTrack, useIsPlaying } from "react-native-track-player";
-import * as NavigationService from "react-navigation-helpers";
 
 import IconSvgBtn from "./IconSvgBtn";
 import { palette } from "@theme/themes";
-import { SCREENS } from "constants";
 import React, { useEffect } from "react";
 import eventEmitter from "@services/event-emitter";
 import CS from "@theme/styles";
@@ -28,6 +25,11 @@ import Animated, {
   withRepeat,
   withTiming,
 } from "react-native-reanimated";
+import {
+  EnumModalContentType,
+  EnumStyleModalType,
+  showSuperModal,
+} from "@helpers/super.modal.helper";
 
 export const FloatingPlayer = ({ style }: ViewProps) => {
   const activeTrack = useActiveTrack();
@@ -36,7 +38,11 @@ export const FloatingPlayer = ({ style }: ViewProps) => {
   const displayedTrack = activeTrack ?? lastActiveTrack;
   const [showFloating, setShowFloating] = React.useState(false);
   const handlePress = () => {
-    NavigationService.navigate(SCREENS.AUDIO_PLAY);
+    // NavigationService.navigate(SCREENS.AUDIO_PLAY);
+    showSuperModal({
+      contentModalType: EnumModalContentType.PlayPodcast,
+      styleModalType: EnumStyleModalType.Full,
+    });
   };
   const { playing } = useIsPlaying();
 
@@ -44,17 +50,22 @@ export const FloatingPlayer = ({ style }: ViewProps) => {
   const checkScreenAudio = ({ show }) => {
     setShowFloating(show);
   };
-  // const startAnimation = () => {
-  //   rotation.value = withRepeat(withTiming(360, { duration: 4000 }), -1, true);
-  // };
-  // useEffect(() => {
-  //   rotation.value = 0;
-  //   if (playing) {
-  //     startAnimation();
-  //   } else {
-  //     cancelAnimation(rotation);
-  //   }
-  // }, [playing]);
+  const startAnimation = () => {
+    rotation.value = withRepeat(
+      withTiming(360, { duration: 4000, easing: Easing.linear }),
+      -1,
+      false,
+    );
+  };
+  useEffect(() => {
+    rotation.value = 0;
+    if (playing) {
+      startAnimation();
+    } else {
+      cancelAnimation(rotation);
+      rotation.value = 0;
+    }
+  }, [playing]);
 
   useEffect(() => {
     eventEmitter.on("floating_play", checkScreenAudio);
@@ -74,7 +85,7 @@ export const FloatingPlayer = ({ style }: ViewProps) => {
     });
     return (
       <Animated.View style={[styles.trackArtworkImage, animatedStyle]}>
-        <Animated.Image
+        <FastImage
           source={{
             uri: displayedTrack.artwork,
           }}
@@ -87,18 +98,10 @@ export const FloatingPlayer = ({ style }: ViewProps) => {
   return (
     <TouchableOpacity
       onPress={handlePress}
-      activeOpacity={0.9}
+      activeOpacity={0.95}
       style={[styles.container, style]}
     >
       <>
-        {/* <Animated.View style={[styles.trackArtworkImage]}>
-          <Image
-            source={{
-              uri: displayedTrack.artwork,
-            }}
-            style={styles.trackArtworkImage}
-          />
-        </Animated.View> */}
         <RenderAvatar />
 
         <View style={styles.trackTitleContainer}>
@@ -157,7 +160,6 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: "red",
   },
   trackTitleContainer: {
     flex: 1,

@@ -1338,6 +1338,7 @@ export default {
     congratulation: "CHÚC MỪNG BẠN ĐÃ NHẬN ĐƯỢC PHẦN QUÀ",
   },
   podcast: {
+    updating: "Sách nói đang được cập nhật, thử lại sau",
     listPodcast: "Danh sách sách nói",
     emptyList: "Không có sách nói nào",
     infoPodcast: "Nhập thông tin sách nói",

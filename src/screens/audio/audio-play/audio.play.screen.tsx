@@ -16,6 +16,7 @@ import FastImage from "react-native-fast-image";
 import { formatTime } from "@utils/date.utils";
 import eventEmitter from "@services/event-emitter";
 import { useActionTrack } from "../hook/useActionTrack";
+import { closeSuperModal } from "@helpers/super.modal.helper";
 
 const HEIGHT_IMAGE = (ScreenHeight * 311) / 812;
 const WIDTH_IMAGE = (HEIGHT_IMAGE * 114) / 140;
@@ -34,12 +35,14 @@ const AudioPlayScreen = () => {
     };
   }, []);
 
-  const { pause, forWard, next, previous, backWard, isFirst, isLast } =
-    useActionTrack();
+  const { pause, forWard, backWard } = useActionTrack();
+  const closeModal = () => {
+    closeSuperModal();
+  };
 
   return (
     <SafeAreaView style={CS.safeAreaView}>
-      <Header />
+      <Header onPressLeft={closeModal} />
       <View style={styles.viewAudio}>
         <View style={styles.viewImage}>
           <FastImage

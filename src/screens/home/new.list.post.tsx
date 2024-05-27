@@ -19,7 +19,7 @@ import ItemPost from "./components/post-item/post.item";
 
 import eventEmitter from "@services/event-emitter";
 import { getListPost } from "@services/api/post.api";
-import CS, { Shadow2 } from "@theme/styles";
+import CS from "@theme/styles";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";
 import { useListData } from "@helpers/hooks/useListData";
@@ -50,9 +50,8 @@ interface ListPostProps {
 
 type filterProp = "forYou" | "following" | "trending" | "most_popular";
 
-const HEADER_HEIGHT = getStatusBarHeight() + 70;
-const TAB_HEIGHT = 70;
-const STATUS_BAR_HEIGHT = getStatusBarHeight();
+const HEADER_HEIGHT = getStatusBarHeight() + 50;
+const TAB_HEIGHT = 50;
 
 const ListPostNew = ({ id }: ListPostProps) => {
   const listRef = useRef<any>(null);
@@ -127,7 +126,8 @@ const ListPostNew = ({ id }: ListPostProps) => {
     return {
       opacity: positionFilter.value === "absolute" ? 1 : 0,
       zIndex: positionFilter.value === "absolute" ? 100 : -1,
-      height: showHeader.value ? HEADER_HEIGHT + 50 : STATUS_BAR_HEIGHT + 50,
+      height: 40,
+      marginTop: positionFilter.value === "absolute" ? 0 : 8,
     };
   }, []);
   const onScroll = useCallback(
@@ -211,7 +211,7 @@ const ListPostNew = ({ id }: ListPostProps) => {
           style={[styles.filter]}
           onLayout={onLayoutFilter}
         >
-          {ContentFilter}
+          {ContentFilter()}
         </AniPressable>
       </>
     );
@@ -244,13 +244,13 @@ const ListPostNew = ({ id }: ListPostProps) => {
     });
     listRef.current.scrollToOffset({
       animated: true,
-      offset: currentPositionFilter.value + 5,
+      offset: currentPositionFilter.value + 5 - 70,
     });
 
     setTimeout(() => {
-      showHeader.value = withTiming(0, { duration: 1 });
+      showHeader.value = withTiming(1, { duration: 1 });
       pauseAnimation.current = true;
-      positionFilter.value = "absolute";
+      positionFilter.value = "relative";
     }, 300);
   }, [filter, isFirst]);
 
@@ -273,7 +273,7 @@ const ListPostNew = ({ id }: ListPostProps) => {
     // },
   ];
 
-  const ContentFilter = () => {
+  function ContentFilter() {
     return (
       <ScrollView
         style={{ height: 30, marginHorizontal: 16 }}
@@ -291,12 +291,12 @@ const ListPostNew = ({ id }: ListPostProps) => {
                 {
                   backgroundColor: selected
                     ? palette.primary
-                    : palette.background,
+                    : palette.btnInactive2,
                 },
               ]}
               onPress={() => {
                 setIsFirst(false);
-                setFilter(item.id);
+                setFilter(selected ? "forYou" : item.id);
               }}
             >
               <Text
@@ -314,7 +314,7 @@ const ListPostNew = ({ id }: ListPostProps) => {
         })}
       </ScrollView>
     );
-  };
+  }
 
   return (
     <View
@@ -325,17 +325,15 @@ const ListPostNew = ({ id }: ListPostProps) => {
     >
       <Animated.View style={[styles.headerAni, styleHeader]}>
         {<AboutHome />}
-      </Animated.View>
-      <View style={CS.safeAreaView}>
-        <Animated.View
-          style={[styles.filter, styles.absoluteFilter, styleFilter]}
-        >
-          <ContentFilter />
+        <Animated.View style={[styles.filter, styleFilter]}>
+          {ContentFilter()}
         </Animated.View>
-        <SafeAreaView></SafeAreaView>
+      </Animated.View>
+      <SafeAreaView style={CS.safeAreaView}>
         <FlatList
           StickyHeaderComponent={StickyHeaderComponent}
           stickyHeaderIndices={[1]}
+          stickyHeaderHiddenOnScroll={true}
           ref={listRef}
           data={listData}
           onScroll={onScroll}
@@ -364,7 +362,7 @@ const ListPostNew = ({ id }: ListPostProps) => {
 
           //
         />
-      </View>
+      </SafeAreaView>
     </View>
   );
 
@@ -390,19 +388,20 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 4,
     height: 40,
-    ...Shadow2,
+    borderBottomWidth: 1,
+    borderBottomColor: palette.borderColor,
   },
-  absoluteFilter: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    marginTop: 0,
-    paddingTop: getStatusBarHeight(),
-    height: 50,
-    alignItems: "flex-end",
-    paddingBottom: 8,
-  },
+  // absoluteFilter: {
+  //   position: "absolute",
+  //   top: 0,
+  //   left: 0,
+  //   right: 0,
+  //   marginTop: 0,
+  //   paddingTop: getStatusBarHeight(),
+  //   height: 50,
+  //   alignItems: "flex-end",
+  //   paddingBottom: 8,
+  // },
   styleItemFilter: {
     paddingHorizontal: 10,
     borderRadius: 5,

@@ -16,6 +16,7 @@ export const useActionTrack = () => {
   const updateAudio = useStore((store) => store.updateAudio);
   const [isFirst, setIsFirt] = useState(false);
   const [isLast, setIsLast] = useState(false);
+  const [rate, setRate] = useState(1.0);
 
   const updataDaPosition = async () => {
     if (activeTrack) {
@@ -114,5 +115,7 @@ export const useActionTrack = () => {
     updataDaPosition,
     isFirst,
     isLast,
+    rate,
+    setRate,
   };
 };

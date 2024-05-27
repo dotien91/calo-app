@@ -16,6 +16,7 @@ import { formatNumber } from "react-native-currency-input";
 import { palette } from "@theme/themes";
 import IconSvg from "assets/svg";
 import TrackPlayer, { Track } from "react-native-track-player";
+import eventEmitter from "@services/event-emitter";
 
 interface ItemListProps {
   isSliderItem: boolean;
@@ -28,8 +29,15 @@ const widthImage = 111;
 const heightImage = 140;
 
 const ItemList = ({ isSliderItem, style, data, listData }: ItemListProps) => {
-  const { title, user_id, view_number, post_avatar, podcast_category, _id } =
-    data;
+  const {
+    title,
+    user_id,
+    view_number,
+    post_avatar,
+    podcast_category,
+    _id,
+    content,
+  } = data;
   const addAudio = useStore((store) => store.addAudio);
   const listAudioHistory = useStore((store) => store.listAudioHistory);
 
@@ -45,7 +53,8 @@ const ItemList = ({ isSliderItem, style, data, listData }: ItemListProps) => {
     await TrackPlayer.play();
   };
   const playAudio = async () => {
-    NavigationService.navigate(SCREENS.AUDIO_PLAY);
+    // NavigationService.navigate(SCREENS.AUDIO_PLAY);
+    eventEmitter.emit("floating_play", { show: true });
     await TrackPlayer.reset();
     const track = {
       url: data?.attach_files[0].media_url,
@@ -66,7 +75,7 @@ const ItemList = ({ isSliderItem, style, data, listData }: ItemListProps) => {
         </Text>
         <Text style={styles.audioAuthorTxt}>{user_id?.display_name}</Text>
         <Text style={styles.txtContent} numberOfLines={2}>
-          {podcast_category?.category_content}
+          {content}
         </Text>
         {view_number ? (
           <Text style={styles.audioRatingTxt}>

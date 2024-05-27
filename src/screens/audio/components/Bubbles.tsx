@@ -50,7 +50,6 @@ function ChatHeads({
       const left = targetX;
       const right = width - targetX;
       const minDistance = Math.min(top, bottom, left, right);
-      let snapX = targetX;
       let snapY = targetY;
       switch (minDistance) {
         case top:
@@ -125,7 +124,4 @@ const styles = StyleSheet.create({
     zIndex: -1,
   },
   black: { backgroundColor: "black" },
-  blue: { backgroundColor: "blue" },
-  green: { backgroundColor: "green" },
-  yellow: { backgroundColor: "yellow" },
 });

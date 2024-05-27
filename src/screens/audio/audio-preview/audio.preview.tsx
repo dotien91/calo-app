@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 import TrackPlayer, { Track, useActiveTrack } from "react-native-track-player";
-import * as NavigationService from "react-navigation-helpers";
 import Sound from "react-native-sound";
 
 import { ScreenHeight } from "@freakycoder/react-native-helpers";
@@ -19,7 +18,6 @@ import useStore from "@services/zustand/store";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import IconSvg from "assets/svg";
-import { SCREENS } from "constants";
 import { TypeTrackLocal } from "models/audio.modal";
 import ListReviewView from "./list.review";
 import {
@@ -27,6 +25,7 @@ import {
   EnumStyleModalType,
   closeSuperModal,
   showSuperModal,
+  showToast,
   showWarningLogin,
 } from "@helpers/super.modal.helper";
 import Button from "@shared-components/button/Button";
@@ -37,6 +36,7 @@ import { shareAudio } from "@utils/share.utils";
 import FastImage from "react-native-fast-image";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import { useLastActiveTrack } from "../hook/useLastActiveTrack";
+import eventEmitter from "@services/event-emitter";
 
 const HEIGHT_IMAGE = (ScreenHeight * 311) / 812;
 const WIDTH_IMAGE = (HEIGHT_IMAGE * 114) / 140;
@@ -58,7 +58,7 @@ const AudioPreview = () => {
   const displayedTrack = activeTrack ?? lastActiveTrack;
 
   const getDataTrack = () => {
-    if (data?.attach_files[0].media_url) {
+    if (data?.attach_files[0]?.media_url) {
       const whoosh = new Sound(data?.attach_files[0].media_url, "", (error) => {
         if (error) {
           console.log("failed to load the sound", error);
@@ -170,7 +170,12 @@ const AudioPreview = () => {
   //   // await TrackPlayer.seekBy(0);
   // };
   const playAudio = async () => {
-    NavigationService.navigate(SCREENS.AUDIO_PLAY);
+    // NavigationService.navigate(SCREENS.AUDIO_PLAY);
+    if (data?.attach_files.length == 0) {
+      showToast({ type: "warning", message: translations.podcast.updating });
+      return;
+    }
+    eventEmitter.emit("floating_play", { show: true });
     await TrackPlayer.reset();
     const track = {
       url: data?.attach_files[0].media_url,

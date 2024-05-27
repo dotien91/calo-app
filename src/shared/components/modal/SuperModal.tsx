@@ -49,6 +49,7 @@ import PopupListFriend from "@screens/club/list-member/popup.list.friend";
 import PopupMoreEvent from "@screens/events/components/popup.more.event";
 import ConfirmViewBottom from "@shared-components/comfirm-view-bottom/comfirm.view.bottom";
 import PopupClubPost from "@screens/club/club/pupup.club.post";
+import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
 // using normal one.
@@ -192,6 +193,9 @@ const SuperModal: React.FC<SuperModalProps> = () => {
   const renderContentModal = () => {
     return (
       <>
+        {contentModalType == EnumModalContentType.PlayPodcast && (
+          <AudioPlayScreen />
+        )}
         {contentModalType == EnumModalContentType.Report && (
           <ReportView {...data} />
         )}
@@ -304,7 +308,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         // swipeDirection={["down"]}
         // onSwipeComplete={closeModal}
       >
-        <View style={styles.bottomInner}>
+        <View style={[styles.bottomInner, data?.style ? data.style : {}]}>
           {!data?.hideCloseIcon && (
             <IconBtn
               onPress={closeModal}
@@ -325,6 +329,33 @@ const SuperModal: React.FC<SuperModalProps> = () => {
               top: 8,
             }}
           />
+          {renderContentModal()}
+        </View>
+      </StickBottomModal>
+    );
+  }
+
+  if (styleModalType == EnumStyleModalType.Full) {
+    return (
+      <StickBottomModal
+        isVisible={visible}
+        onBackdropPress={closeModal}
+        // swipeDirection={["down"]}
+        // onSwipeComplete={closeModal}
+      >
+        <View style={styles.fullModal}>
+          {/* <View
+            style={{
+              height: 4,
+              width: 32,
+              borderRadius: 99,
+              backgroundColor: palette.grey3,
+              position: "absolute",
+              left: "50%",
+              marginRight: 16,
+              top: 8,
+            }}
+          /> */}
           {renderContentModal()}
         </View>
       </StickBottomModal>
@@ -365,6 +396,18 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 16,
     paddingVertical: 16,
     maxHeight: (ScreenHeight / 5) * 4,
+    position: "absolute",
+    left: 0,
+    bottom: 0,
+    right: 0,
+  },
+  fullModal: {
+    // ...CommonStyle.flex1,
+    backgroundColor: palette.white,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    paddingVertical: 16,
+    height: ScreenHeight,
     position: "absolute",
     left: 0,
     bottom: 0,

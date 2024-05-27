@@ -303,7 +303,7 @@ export const formatTimeDuration = (duration: number) => {
     return `${hrs}h${mins}m`;
   } else {
     if (mins > 0) {
-      return `${mins}m${secs}s`;
+      return `${mins}m`;
     } else {
       return `${secs}s`;
     }

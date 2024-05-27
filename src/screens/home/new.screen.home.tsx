@@ -1,8 +1,7 @@
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import CS from "@theme/styles";
 import React from "react";
-import { View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { View, TouchableOpacity } from "react-native";
 import ListPostNew from "./new.list.post";
 import useStore from "@services/zustand/store";
 import { palette } from "@theme/themes";
@@ -12,15 +11,12 @@ import { SCREENS } from "constants";
 
 const NewHomeScreen = () => {
   const userData = useStore((state) => state.userData);
-  const renderHeader = () => {
-    return <View></View>;
-  };
+
   const { isLoggedIn } = useUserHook();
 
   return (
     <View style={CS.flex1}>
       {/* <StatusBar backgroundColor="transparent" barStyle="dark-content" /> */}
-      {renderHeader()}
       <View style={{ flex: 1 }}>
         <ListPostNew />
       </View>
