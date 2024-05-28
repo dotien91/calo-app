@@ -142,20 +142,20 @@ const Navigation = () => {
               height: getBottomSpace() + 48,
               marginTop: 4,
             },
-            tabBarButton: (props) => (
-              <TouchableOpacity
-                {...props}
-                onPress={() => {
-                  navigate(route.name);
-                  if (
-                    route.name == "HomeTab" &&
-                    props.accessibilityState.selected
-                  ) {
-                    eventEmitter.emit("reload_home_page");
-                  }
-                }}
-              />
-            ),
+            // tabBarButton: (props) => (
+            //   <TouchableOpacity
+            //     {...props}
+            //     onPress={() => {
+            //       navigate(route.name);
+            //       if (
+            //         route.name == "HomeTab" &&
+            //         props.accessibilityState.selected
+            //       ) {
+            //         eventEmitter.emit("reload_home_page");
+            //       }
+            //     }}
+            //   />
+            // ),
           })}
         >
           <Tab.Screen name={SCREENS.HOME_TAB} component={HomeStackScreen} />
@@ -164,6 +164,11 @@ const Navigation = () => {
           <Tab.Screen
             name={SCREENS.DISCOVERSCREEN_TAB}
             component={DiscoveryStackScreen}
+            listeners={{
+              tabPress: (e) => {
+                navigate(SCREENS.DISCOVERSCREEN_TAB);
+              },
+            }}
           />
 
           <Tab.Screen
@@ -291,7 +296,7 @@ const Navigation = () => {
       theme={isDarkMode ? DarkTheme : LightTheme}
       onStateChange={async () => {
         const currentRouteName = navigationRef.current.getCurrentRoute().name;
-        console.log("currentRouteName", currentRouteName);
+        eventEmitter.emit("screen_active", { screen: currentRouteName });
         await analytics().logScreenView({
           screen_name: currentRouteName,
           screen_class: currentRouteName,
