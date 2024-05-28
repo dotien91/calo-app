@@ -151,10 +151,6 @@ const styles = StyleSheet.create({
     elevation: 5,
     shadowRadius: 5,
     ...CS.flexRear,
-    position: "absolute",
-    left: 0,
-    right: 0,
-    bottom: getBottomSpace() + 52,
   },
   trackArtworkImage: {
     width: 48,
