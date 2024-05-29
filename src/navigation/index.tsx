@@ -18,7 +18,6 @@ import TextBase from "@shared-components/TextBase";
 import { translations } from "@localization";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
 import IconSvg from "assets/svg";
-import { FloatingPlayer } from "@screens/audio/components/FloatingPlayer";
 import {
   BankStackData,
   ClubStackData,
@@ -28,7 +27,6 @@ import {
   StackIntroData,
 } from "./navigation.constant";
 import analytics from "@react-native-firebase/analytics";
-import { TouchableOpacity } from "react-native";
 import { navigate } from "@helpers/navigation.helper";
 import eventEmitter from "@services/event-emitter";
 import NewHomeScreen from "@screens/home/new.screen.home";
@@ -312,7 +310,6 @@ const Navigation = () => {
         <Stack.Screen name={SCREENS.TABS} component={TabNavigation} />
         {renderCommonStack()}
       </Stack.Navigator>
-      {/* <FloatingPlayer /> */}
       <BottomSheetPanResponder />
     </NavigationContainer>
   );

@@ -44,7 +44,7 @@ const WIDTH_IMAGE = (HEIGHT_IMAGE * 114) / 140;
 const AudioPreview = () => {
   const addAudio = useStore((store) => store.addAudio);
   const listAudioHistory = useStore((store) => store.listAudioHistory);
-  // const listAudio = useStore((store) => store.listAudio);
+  const listAudio = useStore((store) => store.listAudio);
   const route = useRoute();
   const id = route?.params?.id || "";
   const data = route?.params?.data || {};
@@ -186,6 +186,19 @@ const AudioPreview = () => {
     await TrackPlayer.add(track);
     await playTrack(track);
     addAudio(track);
+    setTimeout(async () => {
+      for (let i = 0; i < listAudio.length; i++) {
+        const element = listAudio[i];
+        const track1 = {
+          url: element?.attach_files[0].media_url,
+          title: element?.title,
+          artist: element?.user_id.display_name,
+          artwork: element?.post_avatar.media_url,
+        };
+        if (track1.url === track.url) continue;
+        await TrackPlayer.add(track1);
+      }
+    }, 1000);
   };
 
   const showWriteReview = () => {

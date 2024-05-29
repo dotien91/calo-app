@@ -1,7 +1,6 @@
 import * as React from "react";
-import { View, StyleSheet, SafeAreaView, Text } from "react-native";
+import { View, StyleSheet, Text, Pressable } from "react-native";
 import { ScreenHeight, ScreenWidth } from "@freakycoder/react-native-helpers";
-import Header from "@shared-components/header/Header";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import IconSvgBtn from "../components/IconSvgBtn";
@@ -17,6 +16,7 @@ import { formatTime } from "@utils/date.utils";
 import eventEmitter from "@services/event-emitter";
 import { useActionTrack } from "../hook/useActionTrack";
 import { FloatingPlayer } from "./FloatingPlayer";
+import { SCREEN_HEIGHT } from "@gorhom/bottom-sheet";
 
 const HEIGHT_IMAGE = (ScreenHeight * 311) / 812;
 const WIDTH_IMAGE = (HEIGHT_IMAGE * 114) / 140;
@@ -54,94 +54,112 @@ const ModalAudioPlayScreen = ({
   }
 
   return (
-    <SafeAreaView style={CS.safeAreaView}>
-      <Header onPressLeft={onPressHide} />
-      <View style={styles.viewAudio}>
-        <View style={styles.viewImage}>
-          <FastImage
-            style={styles.viewImage}
-            source={{ uri: activeTrack?.artwork }}
-            borderRadius={8}
-          />
+    <>
+      <Pressable onPress={onPressHide} style={styles.viewBackdrop} />
+      <View style={styles.container}>
+        {/* <Header onPressLeft={onPressHide} /> */}
+        <View style={styles.dragbarContainer}>
+          <View style={styles.dragBar} />
         </View>
-        <View style={styles.viewTitle}>
-          <Text
-            numberOfLines={2}
-            style={[
-              styles.txtTitle,
-              activeTrack?.title.length > 60 && { textAlign: "auto" },
-            ]}
-          >
-            {activeTrack?.title}
-          </Text>
-          <Text numberOfLines={1} style={styles.txtAuthor}>
-            {activeTrack?.artist}
-          </Text>
-        </View>
-      </View>
-      <View style={styles.viewChild}>
-        <View style={styles.viewDuration}>
-          <Slider
-            style={styles.progress}
-            value={progress.position}
-            minimumValue={0}
-            maximumValue={progress.duration}
-            thumbTintColor={palette.grey5}
-            minimumTrackTintColor={palette.primary}
-            maximumTrackTintColor={palette.grey6}
-            onSlidingComplete={(value) => {
-              TrackPlayer.seekTo(value);
-            }}
-          />
-        </View>
-        <View style={styles.viewTime}>
-          <View>
-            <Text style={styles.txtTime}>{formatTime(progress.position)}</Text>
+        <View style={styles.viewAudio}>
+          <View style={styles.viewImage}>
+            <FastImage
+              style={styles.viewImage}
+              source={{ uri: activeTrack?.artwork }}
+              borderRadius={8}
+            />
           </View>
-          <View>
-            <Text style={styles.txtTime}>{formatTime(progress.duration)}</Text>
+          <View style={styles.viewTitle}>
+            <Text
+              numberOfLines={2}
+              style={[
+                styles.txtTitle,
+                activeTrack?.title.length > 60 && { textAlign: "auto" },
+              ]}
+            >
+              {activeTrack?.title}
+            </Text>
+            <Text numberOfLines={1} style={styles.txtAuthor}>
+              {activeTrack?.artist}
+            </Text>
           </View>
         </View>
-        <View style={styles.viewAction}>
-          {/* <IconSvgBtn
+        <View style={styles.viewChild}>
+          <View style={styles.viewDuration}>
+            <Slider
+              style={styles.progress}
+              value={progress.position}
+              minimumValue={0}
+              maximumValue={progress.duration}
+              thumbTintColor={palette.grey5}
+              minimumTrackTintColor={palette.primary}
+              maximumTrackTintColor={palette.grey6}
+              onSlidingComplete={(value) => {
+                TrackPlayer.seekTo(value);
+              }}
+            />
+          </View>
+          <View style={styles.viewTime}>
+            <View>
+              <Text style={styles.txtTime}>
+                {formatTime(progress.position)}
+              </Text>
+            </View>
+            <View>
+              <Text style={styles.txtTime}>
+                {formatTime(progress.duration)}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.viewAction}>
+            {/* <IconSvgBtn
             name="icPreviousAudio"
             onPress={!isFirst ? previous : () => {}}
             color={isFirst ? palette.textOpacity4 : palette.textOpacity6}
             size={32}
           /> */}
-          <IconSvgBtn
-            name="icBackward"
-            onPress={backWard}
-            color={palette.textOpacity6}
-            size={40}
-          />
-          <IconSvgBtn
-            name={!playing ? "icPlayAudio" : "icPauseAudio"}
-            onPress={pause}
-            color={palette.primary}
-            size={64}
-          />
-          <IconSvgBtn
-            name="icForward"
-            onPress={forWard}
-            color={palette.textOpacity6}
-            size={40}
-          />
-          {/* <IconSvgBtn
+            <IconSvgBtn
+              name="icBackward"
+              onPress={backWard}
+              color={palette.textOpacity6}
+              size={40}
+            />
+            <IconSvgBtn
+              name={!playing ? "icPlayAudio" : "icPauseAudio"}
+              onPress={pause}
+              color={palette.primary}
+              size={64}
+            />
+            <IconSvgBtn
+              name="icForward"
+              onPress={forWard}
+              color={palette.textOpacity6}
+              size={40}
+            />
+            {/* <IconSvgBtn
             name="icNextAudio"
             onPress={!isLast ? next : () => {}}
             color={isLast ? palette.textOpacity4 : palette.textOpacity6}
             size={32}
           /> */}
+          </View>
         </View>
       </View>
-    </SafeAreaView>
+    </>
   );
 };
 
 export default ModalAudioPlayScreen;
 
 const styles = StyleSheet.create({
+  viewBackdrop: {
+    flex: 1,
+    backgroundColor: palette.backgroundPayment,
+  },
+  container: {
+    height: (SCREEN_HEIGHT * 7) / 8,
+    backgroundColor: palette.background,
+  },
   viewAudio: {
     paddingHorizontal: 16,
     ...CS.center,
@@ -197,5 +215,22 @@ const styles = StyleSheet.create({
   },
   txtTime: {
     ...CS.hnRegular,
+  },
+  dragbarContainer: {
+    width: "100%",
+    height: 40,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+
+    elevation: 2,
+    backgroundColor: palette.background,
+  },
+  dragBar: {
+    width: 80,
+    height: 6,
+    backgroundColor: palette.background2,
+    borderRadius: 12,
   },
 });

@@ -11,12 +11,20 @@ import {
   StyleSheet,
   View,
   Text,
-  SafeAreaView,
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
+import Animated, {
+  Extrapolate,
+  interpolate,
+  useAnimatedRef,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
+import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
+import { getStatusBarHeight } from "@freakycoder/react-native-helpers";
 
 import ItemPost from "./components/post-item/post.item";
-
 import eventEmitter from "@services/event-emitter";
 import { getListPost } from "@services/api/post.api";
 import CS from "@theme/styles";
@@ -27,21 +35,15 @@ import EmptyResultView from "@shared-components/empty.data.component";
 import { TypedPost } from "shared/models";
 import HeaderTab from "./components/header-home/HeaderTab";
 import { palette } from "@theme/themes";
-import Animated, {
-  Extrapolate,
-  interpolate,
-  useAnimatedRef,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from "react-native-reanimated";
+
 import AboutHome from "./components/about-home/about.home";
-import { getStatusBarHeight } from "@freakycoder/react-native-helpers";
 import {
   EnumModalContentType,
   EnumStyleModalType,
   showSuperModal,
+  showWarningLogin,
 } from "@helpers/super.modal.helper";
+import { fakeItem1 } from "./mock/fakeItem1";
 
 interface ListPostProps {
   id?: string;
@@ -50,18 +52,18 @@ interface ListPostProps {
 
 type filterProp = "forYou" | "following" | "trending" | "most_popular";
 
-const HEADER_HEIGHT = getStatusBarHeight() + 50;
-const TAB_HEIGHT = 50;
+const HEADER_HEIGHT = getStatusBarHeight() + 56;
+const TAB_HEIGHT = 56;
 
 const ListPostNew = ({ id }: ListPostProps) => {
   const listRef = useRef<any>(null);
   const scrollRef = useRef<any>(null);
-
+  console.log("statusbarHeight: ", getStatusBarHeight());
   const theme = useTheme();
   const { colors } = theme;
 
   const userData = useStore((state) => state.userData);
-  // const { isLoggedIn, renderViewRequestLogin } = useUserHook();
+  // const { isLoggedIn } = useUserHook();
 
   const renderItem = ({ item }: any) => {
     return <ItemPost key={item._id} data={item} isProfile={id?.length > 0} />;
@@ -74,17 +76,11 @@ const ListPostNew = ({ id }: ListPostProps) => {
     auth_id: userData?._id || "",
     is_following_list: filter === "following" ? "true" : "false",
     order_by: "DESC",
-    order_type:
-      filter === "trending"
-        ? "trending"
-        : filter === "most_popular"
-        ? "most_popular"
-        : "time",
+    order_type: filter === "trending" ? "trending" : "time",
   };
   if (id) {
     paramsRequest.user_id = id;
   }
-
   const {
     listData,
     onEndReach,
@@ -92,7 +88,21 @@ const ListPostNew = ({ id }: ListPostProps) => {
     refreshControl,
     renderFooterComponent,
     _requestData,
-  } = useListData<TypedPost>(paramsRequest, getListPost, []);
+  } = useListData<TypedPost>(
+    paramsRequest,
+    getListPost,
+    [fakeItem1],
+    userData?._id,
+  );
+  const customFooter = () => {
+    if (listData.length === 1 && !isLoading) return <>{renderEmpty()}</>;
+    return renderFooterComponent;
+  };
+
+  useEffect(() => {
+    setFilter("forYou");
+  }, [userData?._id]);
+
   useEffect(() => {
     const typeEmit = "reload_list_post";
     eventEmitter.on(typeEmit, onRefresh);
@@ -103,7 +113,8 @@ const ListPostNew = ({ id }: ListPostProps) => {
   const onRefresh = () => {
     _requestData();
     setTimeout(() => {
-      listRef && listRef.current?.scrollToOffset({ animated: true, offset: 0 });
+      // listRef && listRef.current?.scrollToOffset({ animated: true, offset: 0 });
+      scrollToFilter();
     }, 200);
   };
 
@@ -276,42 +287,48 @@ const ListPostNew = ({ id }: ListPostProps) => {
   function ContentFilter() {
     return (
       <ScrollView
-        style={{ height: 30, marginHorizontal: 16 }}
+        style={{ height: 30 }}
         showsHorizontalScrollIndicator={false}
         horizontal
         ref={scrollRef}
       >
-        {listFilter.map((item, index) => {
-          const selected = filter === item.id;
-          return (
-            <Pressable
-              key={index}
-              style={[
-                styles.styleItemFilter,
-                {
-                  backgroundColor: selected
-                    ? palette.primary
-                    : palette.btnInactive2,
-                },
-              ]}
-              onPress={() => {
-                setIsFirst(false);
-                setFilter(selected ? "forYou" : item.id);
-              }}
-            >
-              <Text
+        <View style={{ flexDirection: "row", paddingHorizontal: 16 }}>
+          {listFilter.map((item, index) => {
+            const selected = filter === item.id;
+            return (
+              <Pressable
+                key={index}
                 style={[
-                  styles.txtFilter,
+                  styles.styleItemFilter,
                   {
-                    color: selected ? colors.white : colors.textOpacity8,
+                    backgroundColor: selected
+                      ? palette.primary
+                      : palette.btnInactive2,
                   },
                 ]}
+                onPress={() => {
+                  if (item.id === "following" && !userData?._id) {
+                    showWarningLogin();
+                    return;
+                  }
+                  setIsFirst(false);
+                  setFilter(selected ? "forYou" : item.id);
+                }}
               >
-                {item.name}
-              </Text>
-            </Pressable>
-          );
-        })}
+                <Text
+                  style={[
+                    styles.txtFilter,
+                    {
+                      color: selected ? colors.white : colors.textOpacity8,
+                    },
+                  ]}
+                >
+                  {item.name}
+                </Text>
+              </Pressable>
+            );
+          })}
+        </View>
       </ScrollView>
     );
   }
@@ -329,7 +346,7 @@ const ListPostNew = ({ id }: ListPostProps) => {
           {ContentFilter()}
         </Animated.View>
       </Animated.View>
-      <SafeAreaView style={CS.safeAreaView}>
+      <View style={[CS.flex1, { marginTop: getStatusBarHeight() }]}>
         <FlatList
           StickyHeaderComponent={StickyHeaderComponent}
           stickyHeaderIndices={[1]}
@@ -345,24 +362,21 @@ const ListPostNew = ({ id }: ListPostProps) => {
           removeClippedSubviews={true}
           keyExtractor={(item) => item?._id + ""}
           refreshControl={refreshControl()}
-          ListFooterComponent={renderFooterComponent()}
-          ListEmptyComponent={renderEmpty()}
+          ListFooterComponent={customFooter()}
           progressViewOffset={HEADER_HEIGHT}
           onScrollBeginDrag={(e) => {
             onScrollBeginDrag?.(e);
             hasScrolled.current = true;
           }}
-          contentContainerStyle={{ paddingTop: TAB_HEIGHT }}
+          contentContainerStyle={{ paddingTop: TAB_HEIGHT, marginTop: 16 }}
           // decelerationRate={'fast'}
 
           onLayoutFilter={onLayoutFilter}
           // ContentFilter={ContentFilter}
           // onPressFilter={onPressFilter}
           scrollToFilter={scrollToFilter}
-
-          //
         />
-      </SafeAreaView>
+      </View>
     </View>
   );
 
@@ -409,6 +423,7 @@ const styles = StyleSheet.create({
     borderColor: palette.borderColor,
     marginRight: 8,
     ...CS.center,
+    minWidth: (SCREEN_WIDTH - 40) / 3,
   },
   txtFilter: {
     ...CS.hnSemiBold,

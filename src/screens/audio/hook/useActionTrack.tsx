@@ -100,8 +100,8 @@ export const useActionTrack = () => {
   };
 
   const stop = async () => {
-    await updataDaPosition();
-    TrackPlayer.reset();
+    eventEmitter.emit("floating_play", { show: false });
+    updataDaPosition();
     const track = {
       // url: "https://files.exam24h.com/upload/2024/05/10_1715327584971/661768ce52c681916687c57c/sound.m4a",
       url: "https://ia801304.us.archive.org/32/items/SilentRingtone/silence.mp3",
@@ -113,7 +113,7 @@ export const useActionTrack = () => {
     await TrackPlayer.seekBy(1);
     await TrackPlayer.add(track);
     await TrackPlayer.play();
-    eventEmitter.emit("floating_play", { show: false });
+    await TrackPlayer.stop();
   };
 
   return {

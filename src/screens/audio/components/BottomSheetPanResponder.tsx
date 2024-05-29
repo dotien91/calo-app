@@ -8,7 +8,6 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
 import CS from "@theme/styles";
-import { palette } from "@theme/themes";
 import { useActiveTrack } from "react-native-track-player";
 import { useLastActiveTrack } from "../hook/useLastActiveTrack";
 import ModalAudioPlayScreen from "../audio-play/modal.audio.play.screen";
@@ -164,17 +163,17 @@ const BottomSheetPanResponder = () => {
 export default BottomSheetPanResponder;
 
 const styles = StyleSheet.create({
-  container: {
-    // flex: 1,
-    backgroundColor: palette.background,
-    position: "absolute",
-    ...CS.flexRear,
-    left: 0,
-    right: 0,
-    bottom: getBottomSpace() + 50,
-  },
+  // container: {
+  //   // flex: 1,
+  //   backgroundColor: palette.background,
+  //   position: "absolute",
+  //   ...CS.flexRear,
+  //   left: 0,
+  //   right: 0,
+  //   bottom: getBottomSpace() + 50,
+  // },
   sheetContainer: {
-    backgroundColor: palette.background,
+    // backgroundColor: palette.background,
     position: "absolute",
     bottom: 0,
     width: "100%",

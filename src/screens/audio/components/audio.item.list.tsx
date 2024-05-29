@@ -129,6 +129,7 @@ const ItemList = ({ isSliderItem, style, data, listData }: ItemListProps) => {
       onPress={openPreviewCourse}
       style={[
         styles.audioItem1,
+        { marginVertical: 4 },
         isSliderItem && {
           padding: 0,
           width: Device.width - 32,

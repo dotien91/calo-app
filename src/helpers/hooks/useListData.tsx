@@ -81,7 +81,7 @@ export function useListData<T>(
           ...oldState,
           isLastPage,
           nextPage,
-          listData: newData,
+          listData: [...initData, ...newData],
           totalCount: res?.headers?.["x-total-count"] || 0,
           isLoading: false,
           noData: !newData.length,
@@ -90,7 +90,7 @@ export function useListData<T>(
         setStateListData((oldState) => ({
           ...oldState,
           isLoading: false,
-          listData: [],
+          listData: initData,
           noData: true,
         }));
       }

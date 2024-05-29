@@ -1,10 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  ViewProps,
-} from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import FastImage from "react-native-fast-image";
 import { useActiveTrack, useIsPlaying } from "react-native-track-player";
 
@@ -21,11 +15,6 @@ import Animated, {
   withRepeat,
   withTiming,
 } from "react-native-reanimated";
-import {
-  EnumModalContentType,
-  EnumStyleModalType,
-  showSuperModal,
-} from "@helpers/super.modal.helper";
 import { MovingText } from "../components/MovingText";
 import IconSvgBtn from "../components/IconSvgBtn";
 interface FloatingPlayerProps {

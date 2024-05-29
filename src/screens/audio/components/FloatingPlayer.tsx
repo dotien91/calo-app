@@ -16,7 +16,6 @@ import CS from "@theme/styles";
 import { useLastActiveTrack } from "../hook/useLastActiveTrack";
 import { MovingText } from "./MovingText";
 import { useActionTrack } from "../hook/useActionTrack";
-import { getBottomSpace } from "react-native-iphone-screen-helper";
 import Animated, {
   Easing,
   cancelAnimation,
