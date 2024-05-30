@@ -16,7 +16,6 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { MovingText } from "../components/MovingText";
-import IconSvgBtn from "../components/IconSvgBtn";
 import IconSvg from "assets/svg";
 interface FloatingPlayerProps {
   onPressShow: () => void;

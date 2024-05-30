@@ -9,7 +9,6 @@ import {
 import { ScreenHeight, ScreenWidth } from "@freakycoder/react-native-helpers";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
-import IconSvgBtn from "../components/IconSvgBtn";
 import Slider from "@react-native-community/slider";
 import TrackPlayer, {
   useProgress,

@@ -11,7 +11,6 @@ import {
   StyleSheet,
   View,
   Text,
-  StatusBar,
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import Animated, {
@@ -113,10 +112,10 @@ const ListPostNew = ({ id }: ListPostProps) => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
   const onRefresh = () => {
     _requestData();
-    setTimeout(() => {
-      // listRef && listRef.current?.scrollToOffset({ animated: true, offset: 0 });
-      scrollToFilter();
-    }, 200);
+    // setTimeout(() => {
+    //   // listRef && listRef.current?.scrollToOffset({ animated: true, offset: 0 });
+    //   scrollToFilter();
+    // }, 200);
   };
 
   const currentPositionFilter = useSharedValue(0);

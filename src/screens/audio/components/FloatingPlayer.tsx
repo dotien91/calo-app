@@ -8,7 +8,6 @@ import {
 import FastImage from "react-native-fast-image";
 import { useActiveTrack, useIsPlaying } from "react-native-track-player";
 
-import IconSvgBtn from "./IconSvgBtn";
 import { palette } from "@theme/themes";
 import React, { useEffect } from "react";
 import eventEmitter from "@services/event-emitter";
