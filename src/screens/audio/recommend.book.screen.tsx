@@ -63,7 +63,7 @@ const RecommendBookScreen = () => {
   const hide =
     !displayedTrack ||
     displayedTrack.url ===
-      "https://ia801304.us.archive.org/32/items/SilentRingtone/silence.mp3";
+      "https://files.exam24h.com/upload/2024/05/10_1715327584971/661768ce52c681916687c57c/sound.m4a";
   console.log(hide);
 
   return (

@@ -107,7 +107,8 @@ export const useActionTrack = () => {
       url: "https://ia801304.us.archive.org/32/items/SilentRingtone/silence.mp3",
       title: "",
       artist: "",
-      artwork: "",
+      artwork:
+        "https://files.exam24h.com/upload/2024/04/10_1712715670272/6615f765d29bd7cb5f9c5911-1712715670272-thumbnail-IMG_2559.JPG",
     };
     await TrackPlayer.reset();
     await TrackPlayer.seekBy(1);
