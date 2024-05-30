@@ -63,7 +63,7 @@ const ClassRoomRtcView = ({
   }, [streamURL]);
 
   React.useEffect(() => {
-    return
+    return;
     if (
       isMe ||
       isTeacher ||

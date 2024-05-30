@@ -51,15 +51,15 @@ const SettingProfileScreen = () => {
     {
       icon: "icCoinStar",
       title: userInfo?.point || 0,
-      onPress: () => NavigationService.navigate(SCREENS.DISCOVERSCREEN),
-      end: "Points",
+      onPress: () => NavigationService.navigate(SCREENS.DISCOVERSCREEN_TAB),
+      end: (userInfo?.point || 0) > 1 ? "Points" : "Point",
     },
     {
       icon: "icCoin",
       title: userInfo?.current_coin || 0,
       onPress: () =>
         NavigationService.navigate(SCREENS.AFFILIATE, { type: "coin" }),
-      end: "IHC",
+      end: "ICC",
     },
   ];
 

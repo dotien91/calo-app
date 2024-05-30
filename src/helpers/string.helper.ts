@@ -109,7 +109,7 @@ export function formatCoin(
             .toFixed(decimalCount)
             .slice(2)
         : "") +
-      " IHC"
+      " ICC"
     );
   } catch (e) {
     console.log(e);
@@ -141,8 +141,15 @@ export const getPriceCourse = (item: any) => {
 };
 
 export const formatPriceCourse = (data) => {
+  if (!data) {
+    return {
+      newPrice: "",
+      oldPrice: "",
+      commition: "",
+    };
+  }
   let oldPrice = "";
-  if (data.type === "Call group" || data.type === "Self-learning") {
+  if (data?.type === "Call group" || data?.type === "Self-learning") {
     return {
       newPrice: "",
       oldPrice: formatPrice(data.price),

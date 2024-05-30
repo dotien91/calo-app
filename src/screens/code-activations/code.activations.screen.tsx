@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Text, View, ScrollView, Image } from "react-native";
+import { Text, View, ScrollView, Image, ImageBackground } from "react-native";
 import Accordion from "react-native-collapsible/Accordion";
 import * as Animatable from "react-native-animatable";
 import * as NavigationService from "react-navigation-helpers";
@@ -124,15 +124,18 @@ const CodeActivationsScreen = () => {
     // console.log("data...", data);
     return (
       <Animatable.View duration={300} key={index} style={styles.viewCourse}>
-        <View style={styles.avatarCourse}>
+        <ImageBackground
+          source={require("../../assets/images/money.png")}
+          style={styles.avatarCourse}
+        >
           <Image
             style={styles.avatarCourse}
             source={{ uri: data?.ref_id?.avatar?.media_thumbnail }}
           />
-        </View>
+        </ImageBackground>
         <View style={CS.flex1}>
           <Text style={{ ...CS.hnMedium, color: colors.text }}>
-            {data?.note || "a"}
+            {data?.note || ""}
           </Text>
           <Text style={styles.txtPriceCourse}>
             {data.transaction_value_type === "coin"

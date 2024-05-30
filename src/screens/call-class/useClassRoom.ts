@@ -19,10 +19,10 @@ export const useClassRoom = () => {
     StatusBar.setTranslucent(true);
     KeepAwake.activate();
     if (!isAndroid()) {
-      setSpeakerByTrick()
+      setSpeakerByTrick();
       inCallManager.start({ media: "video" });
-      inCallManager.setSpeakerphoneOn(true)
-      inCallManager.stopProximitySensor()
+      inCallManager.setSpeakerphoneOn(true);
+      inCallManager.stopProximitySensor();
       setIsMutedAll(false);
     }
 

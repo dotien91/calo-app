@@ -350,7 +350,7 @@ export async function getMyCourse(data: {
   auth_id: string;
 }) {
   data.lang = _getJson(LANG) || "en";
-  console.log(2222, data)
+  console.log(2222, data);
   return request({
     method: METHOD.POST,
     urlPath: "course/my-course",

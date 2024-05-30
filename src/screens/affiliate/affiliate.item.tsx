@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image, ImageBackground } from "react-native";
 
 import TextBase from "@shared-components/TextBase";
 import { EnumColors } from "models";
@@ -18,7 +18,7 @@ const ItemAffiliate = ({ item }: ItemAffiliateProps) => {
   const typeToken = item.transaction_value_type === "token";
   const isCashOut = item.transaction_bank;
   const commission = typeToken
-    ? formatMoney(transaction_value, { suffix: " đ", showPositiveSign: true })
+    ? formatMoney(transaction_value, { suffix: " đ", showPositiveSign: false })
     : formatCoin(transaction_value) || "";
   const fullname = isCashOut
     ? translations.withDraw.header
@@ -35,11 +35,14 @@ const ItemAffiliate = ({ item }: ItemAffiliateProps) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.styleImage}>
+      <ImageBackground
+        style={styles.styleImage}
+        source={require("../../assets/images/money.png")}
+      >
         {linkImage && (
           <Image source={{ uri: linkImage }} style={styles.styleImage} />
         )}
-      </View>
+      </ImageBackground>
       <View style={CS.flex1}>
         <TextBase
           numberOfLines={2}
@@ -71,7 +74,7 @@ const ItemAffiliate = ({ item }: ItemAffiliateProps) => {
           fontSize={16}
           fontWeight="400"
           color={item?.method === "plus" ? "green2" : "primary"}
-        >{`${commission}`}</TextBase>
+        >{`${item?.method === "plus" ? "+" : "-"}${commission}`}</TextBase>
         <TextBase>
           {item.method === "minus"
             ? item.status === "processing"

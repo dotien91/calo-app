@@ -43,7 +43,7 @@ const ItemList = ({ isSliderItem, style, data, listData }: ItemListProps) => {
         </Text>
         {view_number ? (
           <Text style={styles.audioRatingTxt}>
-            {`${(formatNumber(view_number) + " " || "")}`}
+            {`${formatNumber(view_number) + " " || ""}`}
             <Text style={styles.textNoReview}>{translations.audio.listen}</Text>
           </Text>
         ) : (

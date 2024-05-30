@@ -212,7 +212,7 @@ const ClassRoomScreen = () => {
                   }, 500);
                 }
               } else if (event == "talking") {
-                console.log("talkingggg")
+                console.log("talkingggg");
                 updateListParticipants(msg.id, "add");
               } else if (event == "stopped-talking") {
                 updateListParticipants(msg.id, "delete");

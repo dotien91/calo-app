@@ -49,7 +49,6 @@ const CourseItem = ({
     public_status,
   } = data;
   const userData = useStore((state) => state.userData);
-  console.log("data...", data);
   let widthImage = Device.width - 32;
   if (isHorizontalStyle) {
     widthImage = widthImage / 1.5;
@@ -173,7 +172,7 @@ const CourseItem = ({
               {`${translations.affiliate.commission}: ${priceCourse.commition}`}
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={openPreviewCourse}
             style={{
               backgroundColor: palette.primary,
@@ -185,7 +184,7 @@ const CourseItem = ({
             <Text style={[CS.hnBold, { color: palette.white }]}>
               {translations.course.buyNow}
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </>
     );

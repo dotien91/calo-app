@@ -21,8 +21,8 @@ interface AuthorViewProps {
 
 const AuthorView = ({ data }: AuthorViewProps) => {
   const _gotoDetailTeacher = () => {
-    NavigationService.navigate(SCREENS.TEACHER_DETAIL, {
-      idTeacher: data?.user_id?._id,
+    NavigationService.push(SCREENS.TEACHER_DETAIL, {
+      _id: data?.user_id?._id,
     });
   };
   // const _gotoDetailTeacher = () => {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Text,
   TouchableOpacity,
@@ -82,6 +82,13 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
     }, 3000);
   };
 
+  useEffect(() => {
+    eventEmitter.on("reload_home_page", reloadData);
+    return () => {
+      eventEmitter.off("reload_home_page", reloadData);
+    };
+  }, []);
+
   const renderRefreshControl = (refreshProps) => {
     return <CustomRefreshControl {...refreshProps} />;
   };
@@ -96,6 +103,9 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
 
   const renderHeaderTab = () => {
     return <HeaderTab />;
+  };
+  const makeScrollTrans = (event) => {
+    console.log(event);
   };
 
   // return <IapTest />
@@ -114,6 +124,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
         onStartRefresh={reloadData}
         renderRefreshControl={renderRefreshControl}
         isRefreshing={refreshing}
+        makeScrollTrans={makeScrollTrans}
       />
       {isLoggedIn() && userData?._id && (
         <TouchableOpacity

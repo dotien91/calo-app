@@ -17,7 +17,6 @@ import Header from "@shared-components/header/Header";
 // import FastImage from "react-native-fast-image";
 import { PaymentMethod } from "constants/chat.constant";
 import { translations } from "@localization";
-import { numberWithCommas } from "@utils/string.utils";
 import { createVnpayUrl, getOrderDetail } from "@services/api/payment.api";
 import {
   EnumModalContentType,
@@ -36,6 +35,7 @@ import useAppStateCheck from "@helpers/hooks/useAppStateCheck";
 import useStore from "@services/zustand/store";
 import { SCREENS } from "constants";
 import ImageLoad from "@shared-components/image-load/ImageLoad";
+import { formatPriceCourse } from "@helpers/string.helper";
 
 const CheckoutScreen = () => {
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(
@@ -51,6 +51,7 @@ const CheckoutScreen = () => {
   const type = courseData.type;
   const isClassCourse = type == EnumClassType.CallGroup;
   const isVideoCourse = type == EnumClassType.SelfLearning;
+  const priceCourse = formatPriceCourse(courseData);
 
   const countCheckPaymentSuccess = React.useRef(0);
 
@@ -155,7 +156,7 @@ const CheckoutScreen = () => {
             {courseData?.title}
           </Text>
           <Text style={styles.styleMoneyContentCouresPayment}>
-            {numberWithCommas(courseData.price)}
+            {priceCourse.newPrice || priceCourse.oldPrice}
           </Text>
         </View>
       </View>
@@ -309,7 +310,7 @@ const CheckoutScreen = () => {
               {translations.payment.coursePrice}
             </Text>
             <Text style={styles.styleTextContentItemPaymentDetail}>
-              {numberWithCommas(courseData.price)}
+              {priceCourse.newPrice || priceCourse.oldPrice}
             </Text>
           </View>
           <View style={styles.styleViewLine}></View>
@@ -326,7 +327,7 @@ const CheckoutScreen = () => {
               {translations.payment.totalpayment}
             </Text>
             <Text style={styles.styleTextMoneyPaymentDetail}>
-              {numberWithCommas(courseData.price)}
+              {priceCourse.newPrice || priceCourse.oldPrice}
             </Text>
           </View>
         </View>
@@ -342,7 +343,7 @@ const CheckoutScreen = () => {
             {translations.payment.totalpayment}
           </Text>
           <Text style={styles.styleTextMoneyCompletePayment}>
-            {numberWithCommas(courseData.price)}đ
+            {priceCourse.newPrice || priceCourse.oldPrice}
           </Text>
         </View>
         <TouchableOpacity
