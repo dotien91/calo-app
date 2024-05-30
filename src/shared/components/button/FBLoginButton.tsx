@@ -26,6 +26,7 @@ const FBLoginButton = ({ showText }: BtnProps) => {
   const { handleLogin } = useUserHook();
 
   const _onPress = async () => {
+    LoginManager.logOut();
     showSuperModal({
       contentModalType: EnumModalContentType.Loading,
       styleModalType: EnumStyleModalType.Middle,

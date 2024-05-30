@@ -47,6 +47,9 @@ PODS:
   - Firebase/Crashlytics (10.19.0):
     - Firebase/CoreOnly
     - FirebaseCrashlytics (~> 10.19.0)
+  - Firebase/DynamicLinks (10.19.0):
+    - Firebase/CoreOnly
+    - FirebaseDynamicLinks (~> 10.19.0)
   - Firebase/Messaging (10.19.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 10.19.0)
@@ -84,6 +87,8 @@ PODS:
     - GoogleUtilities/Environment (~> 7.8)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (~> 2.1)
+  - FirebaseDynamicLinks (10.19.0):
+    - FirebaseCore (~> 10.0)
   - FirebaseInstallations (10.23.0):
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
@@ -562,7 +567,7 @@ PODS:
     - react-native-video/Video (= 5.2.1)
   - react-native-video/Video (5.2.1):
     - React-Core
-  - react-native-webrtc (118.0.3):
+  - react-native-webrtc (118.0.7):
     - JitsiWebRTC (~> 118.0.0)
     - React-Core
   - react-native-webview (13.6.4):
@@ -712,6 +717,11 @@ PODS:
     - FirebaseCoreExtension (= 10.19.0)
     - React-Core
     - RNFBApp
+  - RNFBDynamicLinks (19.2.2):
+    - Firebase/DynamicLinks (= 10.19.0)
+    - GoogleUtilities/AppDelegateSwizzler
+    - React-Core
+    - RNFBApp
   - RNFBMessaging (18.7.3):
     - Firebase/Messaging (= 10.19.0)
     - FirebaseCoreExtension (= 10.19.0)
@@ -855,6 +865,7 @@ DEPENDENCIES:
   - "RNFBAnalytics (from `../node_modules/@react-native-firebase/analytics`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBCrashlytics (from `../node_modules/@react-native-firebase/crashlytics`)"
+  - "RNFBDynamicLinks (from `../node_modules/@react-native-firebase/dynamic-links`)"
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - RNFileViewer (from `../node_modules/react-native-file-viewer`)
   - RNFS (from `../node_modules/react-native-fs`)
@@ -889,6 +900,7 @@ SPEC REPOS:
     - FirebaseCoreExtension
     - FirebaseCoreInternal
     - FirebaseCrashlytics
+    - FirebaseDynamicLinks
     - FirebaseInstallations
     - FirebaseMessaging
     - FirebaseSessions
@@ -1068,6 +1080,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBCrashlytics:
     :path: "../node_modules/@react-native-firebase/crashlytics"
+  RNFBDynamicLinks:
+    :path: "../node_modules/@react-native-firebase/dynamic-links"
   RNFBMessaging:
     :path: "../node_modules/@react-native-firebase/messaging"
   RNFileViewer:
@@ -1124,6 +1138,7 @@ SPEC CHECKSUMS:
   FirebaseCoreExtension: c08d14c7b22e07994e876d837e6f58642f340087
   FirebaseCoreInternal: 6a292e6f0bece1243a737e81556e56e5e19282e3
   FirebaseCrashlytics: a4d2ad12f5c07ec8ee0ebc89133a45498a293ba6
+  FirebaseDynamicLinks: bd0455c62de367bb46605692af35e423fd7b3b69
   FirebaseInstallations: 42d6ead4605d6eafb3b6683674e80e18eb6f2c35
   FirebaseMessaging: d322bd030a0e97398bf134746e087b88e6ba0074
   FirebaseSessions: f06853e30f99fe42aa511014d7ee6c8c319f08a3
@@ -1182,7 +1197,7 @@ SPEC CHECKSUMS:
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
   react-native-track-player: 97d76dbbd35f27cc709e5f04540615e54264b3f9
   react-native-video: c26780b224543c62d5e1b2a7244a5cd1b50e8253
-  react-native-webrtc: 6fc32f3d556aa60aa2334eeaf6cadcdab2432809
+  react-native-webrtc: 8b024c7bb9a005d2b9efeba4c691172dbd00268d
   react-native-webview: 107961c73db53d66549c867a3b64eaa20d34c41f
   React-NativeModulesApple: c57f3efe0df288a6532b726ad2d0322a9bf38472
   React-perflogger: 6bd153e776e6beed54c56b0847e1220a3ff92ba5
@@ -1214,6 +1229,7 @@ SPEC CHECKSUMS:
   RNFBAnalytics: e6884ec3f31085bf57cfa3fd26d62b3caf0d7e0d
   RNFBApp: 5ee688b07ed0fa692a3a8fd07df6d6ae41e4c3a0
   RNFBCrashlytics: 81f4e4d190753a1ea33f61c3ec12c028507cf7e9
+  RNFBDynamicLinks: d5c49e9fc1467b394a2529044c441184e8f6e10a
   RNFBMessaging: c839473d12cbe1b042b29898177033de4214e932
   RNFileViewer: ce7ca3ac370e18554d35d6355cffd7c30437c592
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
