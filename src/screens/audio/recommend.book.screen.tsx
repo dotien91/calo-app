@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, SafeAreaView } from "react-native";
+import { FlatList, SafeAreaView, View } from "react-native";
 
 import CS from "@theme/styles";
 import Header from "@shared-components/header/Header";
@@ -11,6 +11,11 @@ import { TypeTrackLocal } from "models/audio.modal";
 import AudioItemList from "./components/audio.item.list";
 import EmptyResultView from "@shared-components/empty.data.component";
 import LoadingList from "@shared-components/loading.list.component";
+import { useActiveTrack } from "react-native-track-player";
+import { useLastActiveTrack } from "./hook/useLastActiveTrack";
+import { getBottomSpace } from "react-native-iphone-screen-helper";
+import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
+import { palette } from "@theme/themes";
 
 const RecommendBookScreen = () => {
   const userData = useStore((state) => state.userData);
@@ -51,6 +56,15 @@ const RecommendBookScreen = () => {
   const renderLoading = () => {
     return <LoadingList numberItem={3} />;
   };
+  const activeTrack = useActiveTrack();
+  const lastActiveTrack = useLastActiveTrack();
+
+  const displayedTrack = activeTrack ?? lastActiveTrack;
+  const hide =
+    !displayedTrack ||
+    displayedTrack.url ===
+      "https://ia801304.us.archive.org/32/items/SilentRingtone/silence.mp3";
+  console.log(hide);
 
   return (
     <SafeAreaView style={CS.safeAreaView}>
@@ -72,6 +86,20 @@ const RecommendBookScreen = () => {
         keyExtractor={(item) => item?._id + ""}
         // ListEmptyComponent={renderEmptyCourseOfMe()}
       />
+      {!hide && (
+        <View
+          style={{
+            height: getBottomSpace() + 60,
+            width: SCREEN_WIDTH,
+            position: "absolute",
+            zIndex: 1,
+            backgroundColor: palette.background,
+            bottom: 0,
+            left: 0,
+            right: 0,
+          }}
+        />
+      )}
     </SafeAreaView>
   );
 };

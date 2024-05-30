@@ -65,7 +65,6 @@ const BottomSheetPanResponder = () => {
   ];
 
   const screenActive = ({ screen }) => {
-    console.log("screen2", screen);
     if (listScreenShow.includes(screen)) {
       setShowPodcast(true);
     } else {
@@ -86,35 +85,54 @@ const BottomSheetPanResponder = () => {
       onPanResponderGrant: () => {
         sheetRef.setOffset(lastRef.current);
       },
+      onStartShouldSetPanResponderCapture: () => false,
+      onMoveShouldSetPanResponderCapture: (evt, gestureState) => {
+        return Math.abs(gestureState.dx) > 40;
+      },
+
       onPanResponderMove: (_, gesture) => {
-        if (lastRef.current === MAX_Y && gesture.dy > -MAX_Y + 2 * THRESHOLD) {
-          console.log(gesture.dy, -MAX_Y + 2 * THRESHOLD);
+        // console.log(gesture.dy, -MAX_Y - 2 * THRESHOLD);
+        if (lastRef.current === MAX_Y && gesture.dy > -MAX_Y - 2 * THRESHOLD) {
           setShowFull(false);
         }
-        if (lastRef.current === MIN_Y && gesture.dy > -THRESHOLD) {
-          console.log(gesture.dy > -THRESHOLD);
+        if (lastRef.current === MIN_Y && gesture.dy < -THRESHOLD) {
           setShowFull(true);
         }
-
-        sheetRef.setValue(gesture.dy);
+        if (
+          (gesture.dy > 40 && lastRef.current === MAX_Y) ||
+          (gesture.dy < -40 && lastRef.current === MIN_Y)
+        ) {
+          sheetRef.setValue(gesture.dy);
+        }
       },
       onPanResponderRelease: (_, gesture) => {
         sheetRef.flattenOffset();
-
-        if (gesture.dy > 0) {
+        console.log("gesture...", gesture.dy);
+        if (gesture.dy > 20) {
           //dragging down
-          if (gesture.dy <= THRESHOLD) {
-            autoSpring(MAX_Y);
-            setShowFull(true);
+          if (lastRef.current === MAX_Y) {
+            if (gesture.dy < 40) {
+              autoSpring(MAX_Y);
+              setShowFull(true);
+            } else {
+              autoSpring(MIN_Y);
+              setShowFull(false);
+            }
           } else {
             autoSpring(MIN_Y);
             setShowFull(false);
           }
-        } else {
+        }
+        if (gesture.dy < -20) {
           // dragging up
-          if (gesture.dy >= -THRESHOLD) {
-            autoSpring(MIN_Y);
-            setShowFull(false);
+          if (lastRef.current === MIN_Y) {
+            if (gesture.dy > -40) {
+              autoSpring(MIN_Y);
+              setShowFull(false);
+            } else {
+              autoSpring(MAX_Y);
+              setShowFull(true);
+            }
           } else {
             autoSpring(MAX_Y);
             setShowFull(true);
@@ -127,7 +145,7 @@ const BottomSheetPanResponder = () => {
   const lastActiveTrack = useLastActiveTrack();
 
   const displayedTrack = activeTrack ?? lastActiveTrack;
-  console.log("displayedTrack", displayedTrack);
+  // console.log("displayedTrack", displayedTrack);
 
   const onPressHide = () => {
     autoSpring(MIN_Y);

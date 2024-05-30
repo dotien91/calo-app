@@ -37,6 +37,8 @@ import FastImage from "react-native-fast-image";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import { useLastActiveTrack } from "../hook/useLastActiveTrack";
 import eventEmitter from "@services/event-emitter";
+import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
+import { getBottomSpace } from "react-native-iphone-screen-helper";
 
 const HEIGHT_IMAGE = (ScreenHeight * 311) / 812;
 const WIDTH_IMAGE = (HEIGHT_IMAGE * 114) / 140;
@@ -218,6 +220,11 @@ const AudioPreview = () => {
   const onPressShare = () => {
     shareAudio("https://ikigaicoach.net");
   };
+  const hide =
+    !displayedTrack ||
+    displayedTrack.url ===
+      "https://ia801304.us.archive.org/32/items/SilentRingtone/silence.mp3";
+  console.log(hide);
 
   return (
     <SafeAreaView style={CS.safeAreaView}>
@@ -265,6 +272,20 @@ const AudioPreview = () => {
           type="primary"
         />
       </ScrollView>
+      {!hide && (
+        <View
+          style={{
+            height: getBottomSpace() + 60,
+            width: SCREEN_WIDTH,
+            position: "absolute",
+            zIndex: 1,
+            backgroundColor: palette.background,
+            bottom: 0,
+            left: 0,
+            right: 0,
+          }}
+        />
+      )}
     </SafeAreaView>
   );
 };

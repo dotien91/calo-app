@@ -156,14 +156,23 @@ const Navigation = () => {
             // ),
           })}
         >
-          <Tab.Screen name={SCREENS.HOME_TAB} component={HomeStackScreen} />
+          <Tab.Screen
+            name={SCREENS.HOME_TAB}
+            component={HomeStackScreen}
+            listeners={{
+              tabPress: () => {
+                navigate(SCREENS.HOME_TAB);
+                eventEmitter.emit("reload_home_page");
+              },
+            }}
+          />
           <Tab.Screen name={SCREENS.COURSE_TAB} component={CourseStackScreen} />
           <Tab.Screen name={SCREENS.CLUB_TAB} component={ClubStackScreen} />
           <Tab.Screen
             name={SCREENS.DISCOVERSCREEN_TAB}
             component={DiscoveryStackScreen}
             listeners={{
-              tabPress: (e) => {
+              tabPress: () => {
                 navigate(SCREENS.DISCOVERSCREEN_TAB);
               },
             }}

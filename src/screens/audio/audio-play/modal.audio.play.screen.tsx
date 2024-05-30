@@ -1,5 +1,11 @@
 import * as React from "react";
-import { View, StyleSheet, Text, Pressable } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  Pressable,
+  TouchableOpacity,
+} from "react-native";
 import { ScreenHeight, ScreenWidth } from "@freakycoder/react-native-helpers";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
@@ -17,6 +23,7 @@ import eventEmitter from "@services/event-emitter";
 import { useActionTrack } from "../hook/useActionTrack";
 import { FloatingPlayer } from "./FloatingPlayer";
 import { SCREEN_HEIGHT } from "@gorhom/bottom-sheet";
+import IconSvg from "assets/svg";
 
 const HEIGHT_IMAGE = (ScreenHeight * 311) / 812;
 const WIDTH_IMAGE = (HEIGHT_IMAGE * 114) / 140;
@@ -55,7 +62,7 @@ const ModalAudioPlayScreen = ({
 
   return (
     <>
-      <Pressable onPress={onPressHide} style={styles.viewBackdrop} />
+      <Pressable onPressIn={onPressHide} style={styles.viewBackdrop} />
       <View style={styles.container}>
         {/* <Header onPressLeft={onPressHide} /> */}
         <View style={styles.dragbarContainer}>
@@ -118,24 +125,33 @@ const ModalAudioPlayScreen = ({
             color={isFirst ? palette.textOpacity4 : palette.textOpacity6}
             size={32}
           /> */}
-            <IconSvgBtn
-              name="icBackward"
-              onPress={backWard}
-              color={palette.textOpacity6}
-              size={40}
-            />
-            <IconSvgBtn
-              name={!playing ? "icPlayAudio" : "icPauseAudio"}
-              onPress={pause}
-              color={palette.primary}
-              size={64}
-            />
-            <IconSvgBtn
-              name="icForward"
-              onPress={forWard}
-              color={palette.textOpacity6}
-              size={40}
-            />
+            <TouchableOpacity
+              style={styles.buttonContainer}
+              onPressIn={backWard}
+            >
+              <IconSvg
+                name="icBackward"
+                color={palette.textOpacity6}
+                size={40}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.buttonContainer} onPressIn={pause}>
+              <IconSvg
+                name={!playing ? "icPlayAudio" : "icPauseAudio"}
+                color={palette.primary}
+                size={64}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttonContainer}
+              onPressIn={forWard}
+            >
+              <IconSvg
+                name="icForward"
+                color={palette.textOpacity6}
+                size={40}
+              />
+            </TouchableOpacity>
             {/* <IconSvgBtn
             name="icNextAudio"
             onPress={!isLast ? next : () => {}}
@@ -154,11 +170,12 @@ export default ModalAudioPlayScreen;
 const styles = StyleSheet.create({
   viewBackdrop: {
     flex: 1,
-    backgroundColor: palette.backgroundPayment,
+    // backgroundColor: palette.backgroundPayment,
   },
   container: {
     height: (SCREEN_HEIGHT * 7) / 8,
     backgroundColor: palette.background,
+    // pointerEvents: "box-none",
   },
   viewAudio: {
     paddingHorizontal: 16,
@@ -207,6 +224,7 @@ const styles = StyleSheet.create({
     ...CS.center,
     gap: 20,
     width: "100%",
+    // pointerEvents: "box-none",
   },
   progress: {
     width: ScreenWidth - 32,
@@ -223,7 +241,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     justifyContent: "center",
     alignItems: "center",
-
+    // pointerEvents: "box-none",
     elevation: 2,
     backgroundColor: palette.background,
   },
@@ -232,5 +250,8 @@ const styles = StyleSheet.create({
     height: 6,
     backgroundColor: palette.background2,
     borderRadius: 12,
+  },
+  buttonContainer: {
+    // pointerEvents: "box-none", // Đảm bảo button nhận sự kiện
   },
 });

@@ -99,7 +99,6 @@ const ItemList = ({ isSliderItem, style, data, listData }: ItemListProps) => {
       </View>
     );
   };
-
   const renderImg = () => {
     return (
       <FastImage
@@ -110,7 +109,7 @@ const ItemList = ({ isSliderItem, style, data, listData }: ItemListProps) => {
           marginBottom: 16,
         }}
         source={{
-          uri: post_avatar?.media_url,
+          uri: post_avatar?.media_thumbnail || post_avatar?.media_url,
           headers: { Authorization: "someAuthToken" },
           priority: FastImage.priority.normal,
         }}

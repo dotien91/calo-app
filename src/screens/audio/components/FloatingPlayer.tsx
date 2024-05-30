@@ -29,6 +29,7 @@ import {
   EnumStyleModalType,
   showSuperModal,
 } from "@helpers/super.modal.helper";
+import IconSvg from "assets/svg";
 
 export const FloatingPlayer = ({ style }: ViewProps) => {
   const activeTrack = useActiveTrack();
@@ -114,22 +115,16 @@ export const FloatingPlayer = ({ style }: ViewProps) => {
           </Text>
         </View>
 
-        <View style={styles.trackControlsContainer}>
-          <IconSvgBtn
+        <TouchableOpacity onPress={pause} style={styles.trackControlsContainer}>
+          <IconSvg
             name={playing ? "icPauseAudio" : "icPlayAudio"}
             size={32}
             color={palette.primary}
-            onPress={pause}
           />
-        </View>
-        <View style={styles.trackControlsContainer}>
-          <IconSvgBtn
-            name={"icClose"}
-            size={28}
-            color={palette.primary}
-            onPress={stop}
-          />
-        </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={stop} style={styles.trackControlsContainer}>
+          <IconSvg name={"icClose"} size={28} color={palette.primary} />
+        </TouchableOpacity>
       </>
     </TouchableOpacity>
   );

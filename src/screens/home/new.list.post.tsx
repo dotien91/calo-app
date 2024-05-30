@@ -11,6 +11,7 @@ import {
   StyleSheet,
   View,
   Text,
+  StatusBar,
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import Animated, {
@@ -58,7 +59,7 @@ const TAB_HEIGHT = 56;
 const ListPostNew = ({ id }: ListPostProps) => {
   const listRef = useRef<any>(null);
   const scrollRef = useRef<any>(null);
-  console.log("statusbarHeight: ", getStatusBarHeight());
+  // console.log("statusbarHeight: ", getStatusBarHeight());
   const theme = useTheme();
   const { colors } = theme;
 

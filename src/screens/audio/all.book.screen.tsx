@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { FlatList, SafeAreaView } from "react-native";
+import { FlatList, SafeAreaView, View } from "react-native";
 
 import CS from "@theme/styles";
 import useStore from "@services/zustand/store";
@@ -12,6 +12,11 @@ import AudioItemList from "./components/audio.item.list";
 import EmptyResultView from "@shared-components/empty.data.component";
 import LoadingList from "@shared-components/loading.list.component";
 import { useRoute } from "@react-navigation/native";
+import { getBottomSpace } from "react-native-iphone-screen-helper";
+import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
+import { palette } from "@theme/themes";
+import { useActiveTrack } from "react-native-track-player";
+import { useLastActiveTrack } from "./hook/useLastActiveTrack";
 
 const AllBookScreen = () => {
   const userData = useStore((state) => state.userData);
@@ -51,6 +56,15 @@ const AllBookScreen = () => {
     return <LoadingList numberItem={3} />;
   };
 
+  const activeTrack = useActiveTrack();
+  const lastActiveTrack = useLastActiveTrack();
+
+  const displayedTrack = activeTrack ?? lastActiveTrack;
+  const hide =
+    !displayedTrack ||
+    displayedTrack.url ===
+      "https://ia801304.us.archive.org/32/items/SilentRingtone/silence.mp3";
+
   return (
     <SafeAreaView style={CS.safeAreaView}>
       <Header text={name || translations.audio.allAudio} />
@@ -70,6 +84,20 @@ const AllBookScreen = () => {
         showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item?._id + ""}
       />
+      {!hide && (
+        <View
+          style={{
+            height: getBottomSpace() + 60,
+            width: SCREEN_WIDTH,
+            position: "absolute",
+            zIndex: 1,
+            backgroundColor: palette.background,
+            bottom: 0,
+            left: 0,
+            right: 0,
+          }}
+        />
+      )}
     </SafeAreaView>
   );
 };

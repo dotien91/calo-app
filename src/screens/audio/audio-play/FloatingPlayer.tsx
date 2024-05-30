@@ -17,6 +17,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { MovingText } from "../components/MovingText";
 import IconSvgBtn from "../components/IconSvgBtn";
+import IconSvg from "assets/svg";
 interface FloatingPlayerProps {
   onPressShow: () => void;
 }
@@ -96,22 +97,22 @@ export const FloatingPlayer = ({ onPressShow }: FloatingPlayerProps) => {
           </Text>
         </View>
 
-        <View style={styles.trackControlsContainer}>
-          <IconSvgBtn
+        <TouchableOpacity
+          style={styles.trackControlsContainer}
+          onPressIn={pause}
+        >
+          <IconSvg
             name={playing ? "icPauseAudio" : "icPlayAudio"}
             size={32}
             color={palette.primary}
-            onPress={pause}
           />
-        </View>
-        <View style={styles.trackControlsContainer}>
-          <IconSvgBtn
-            name={"icClose"}
-            size={28}
-            color={palette.primary}
-            onPress={stop}
-          />
-        </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.trackControlsContainer}
+          onPressIn={stop}
+        >
+          <IconSvg name={"icClose"} size={28} color={palette.primary} />
+        </TouchableOpacity>
       </>
     </TouchableOpacity>
   );
@@ -124,7 +125,7 @@ const styles = StyleSheet.create({
     backgroundColor: palette.background,
     paddingVertical: 12,
     paddingHorizontal: 16,
-    gap: 12,
+    gap: 4,
     height: 74,
     borderBottomColor: palette.borderColor,
     borderBottomWidth: 1,
@@ -143,7 +144,7 @@ const styles = StyleSheet.create({
   trackControlsContainer: {
     flexDirection: "row",
     alignItems: "center",
-    columnGap: 20,
+    padding: 8,
   },
   txtTitle: {
     ...CS.hnMedium,
