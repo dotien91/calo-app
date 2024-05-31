@@ -43,11 +43,13 @@ export enum EnumModalContentType {
   MemberAction = "MemberAction",
   SelectCourse = "SelectCourse",
   AddToGroup = "add-to-group",
+  PlayPodcast = "play-podcast",
 }
 
 export enum EnumStyleModalType {
   Bottom = "bottom",
   Middle = "middle",
+  Full = "full",
 }
 
 export interface IShowModalParams {

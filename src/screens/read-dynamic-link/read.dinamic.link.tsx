@@ -15,6 +15,7 @@ const ReadDinamicLink = () => {
         console.log("link...", link);
         const code = link
           .replace("https://ikigai.vn/", "")
+          .replace("https://ikigaicoach.net/", "")
           .replace("&isi=6484263984&ibi=com.ikigroup.ikicoach", "");
         console.log(code);
         if (codeInvite === "") {
@@ -26,7 +27,9 @@ const ReadDinamicLink = () => {
         if (url) {
           // navigate(url);
           console.log("url 2...", url);
-          const code = url.replace("https://ikigai.vn/", "");
+          const code = url
+            .replace("https://ikigai.vn/", "")
+            .replace("https://ikigaicoach.net/", "");
           console.log(code);
           if (codeInvite === "") {
             setCodeInvite(code);

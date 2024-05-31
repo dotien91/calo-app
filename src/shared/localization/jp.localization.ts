@@ -1267,6 +1267,7 @@ export default {
     congratulation: "おめでとうございます、ギフトを受け取りました",
   },
   podcast: {
+    updating: "ポッドキャストは更新中です。後でもう一度お試しください。",
     listPodcast: "ポッドキャストのリスト",
     emptyList: "ポッドキャストがありません",
     infoPodcast: "ポッドキャスト情報を入力",
@@ -1360,6 +1361,7 @@ export default {
     sending: "送信中...",
   },
   audio: {
+    play: "再生",
     pause: "一時停止",
     resume: "再開",
     stop: "停止",

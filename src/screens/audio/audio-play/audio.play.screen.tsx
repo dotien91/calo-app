@@ -16,6 +16,10 @@ import FastImage from "react-native-fast-image";
 import { formatTime } from "@utils/date.utils";
 import eventEmitter from "@services/event-emitter";
 import { useActionTrack } from "../hook/useActionTrack";
+import { closeSuperModal } from "@helpers/super.modal.helper";
+
+const HEIGHT_IMAGE = (ScreenHeight * 311) / 812;
+const WIDTH_IMAGE = (HEIGHT_IMAGE * 114) / 140;
 
 const AudioPlayScreen = () => {
   // const [podcast, setPodcast] = React.useState();
@@ -31,12 +35,14 @@ const AudioPlayScreen = () => {
     };
   }, []);
 
-  const { pause, forWard, next, previous, backWard, isFirst, isLast } =
-    useActionTrack();
+  const { pause, forWard, backWard } = useActionTrack();
+  const closeModal = () => {
+    closeSuperModal();
+  };
 
   return (
     <SafeAreaView style={CS.safeAreaView}>
-      <Header />
+      <Header onPressLeft={closeModal} />
       <View style={styles.viewAudio}>
         <View style={styles.viewImage}>
           <FastImage
@@ -84,17 +90,17 @@ const AudioPlayScreen = () => {
           </View>
         </View>
         <View style={styles.viewAction}>
-          <IconSvgBtn
+          {/* <IconSvgBtn
             name="icPreviousAudio"
             onPress={!isFirst ? previous : () => {}}
             color={isFirst ? palette.textOpacity4 : palette.textOpacity6}
             size={32}
-          />
+          /> */}
           <IconSvgBtn
             name="icBackward"
             onPress={backWard}
             color={palette.textOpacity6}
-            size={32}
+            size={40}
           />
           <IconSvgBtn
             name={!playing ? "icPlayAudio" : "icPauseAudio"}
@@ -106,14 +112,14 @@ const AudioPlayScreen = () => {
             name="icForward"
             onPress={forWard}
             color={palette.textOpacity6}
-            size={32}
+            size={40}
           />
-          <IconSvgBtn
+          {/* <IconSvgBtn
             name="icNextAudio"
             onPress={!isLast ? next : () => {}}
             color={isLast ? palette.textOpacity4 : palette.textOpacity6}
             size={32}
-          />
+          /> */}
         </View>
       </View>
     </SafeAreaView>
@@ -130,8 +136,8 @@ const styles = StyleSheet.create({
   },
   viewImage: {
     ...CS.center,
-    height: (ScreenHeight * 311) / 812,
-    width: (ScreenHeight * 195) / 812,
+    height: HEIGHT_IMAGE,
+    width: WIDTH_IMAGE,
   },
   viewTitle: {
     marginTop: 16,
@@ -167,7 +173,7 @@ const styles = StyleSheet.create({
     height: 64,
     ...CS.row,
     ...CS.center,
-    gap: 16,
+    gap: 20,
     width: "100%",
   },
   progress: {

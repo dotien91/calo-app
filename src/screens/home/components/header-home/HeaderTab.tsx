@@ -19,6 +19,7 @@ import TextBase from "@shared-components/TextBase";
 // import CourseView from "../list-course/list.course";
 // import FastImage from "react-native-fast-image";
 import AudioView from "@screens/audio/audio-list/audio.view";
+import { navigate } from "@helpers/navigation.helper";
 
 const HeaderTab = () => {
   const theme = useTheme();
@@ -96,6 +97,17 @@ const HeaderTab = () => {
     );
   };
 
+  const gotoAudioBook = () => {
+    // NavigationService.navigate(SCREENS.DISCOVERSCREEN_TAB, {
+    //   screen: SCREENS.AUDIO_BOOK,
+    //   initial: true,
+    // });
+    navigate(SCREENS.DISCOVERSCREEN_TAB);
+    setTimeout(() => {
+      navigate(SCREENS.AUDIO_BOOK);
+    }, 1);
+  };
+
   return (
     <View style={[styles.viewHeaderStyle]}>
       {!!userData?.display_name && (
@@ -122,7 +134,7 @@ const HeaderTab = () => {
         })}
       </View>
       {/* <CourseView /> */}
-      <AudioView />
+      <AudioView onPress={gotoAudioBook} />
       <InviteView />
       <ListLiveStream />
       {/* <View style={{ paddingTop: 10 }}>

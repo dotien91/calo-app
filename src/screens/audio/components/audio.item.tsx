@@ -91,7 +91,7 @@ const AudioItem = ({
           marginBottom: 16,
         }}
         source={{
-          uri: post_avatar?.media_url,
+          uri: post_avatar?.media_thumbnail || post_avatar?.media_url,
           headers: { Authorization: "someAuthToken" },
           priority: FastImage.priority.normal,
         }}
@@ -105,7 +105,7 @@ const AudioItem = ({
       console.log("list...", listData);
       setListAudio(listData);
     }
-    NavigationService.navigate(SCREENS.AUDIO_PREVIEW, { id: _id });
+    NavigationService.navigate(SCREENS.AUDIO_PREVIEW, { id: _id, data: data });
   };
 
   return (

@@ -22,6 +22,10 @@ interface Style {
   txtSlug: TextStyle;
   txtContent: TextStyle;
   audioItem1: ViewStyle;
+  viewHastag: ViewStyle;
+  btnPlay: ViewStyle;
+  viewIconPlay: ViewStyle;
+  txtPlay: TextStyle;
 }
 
 export default (theme: ExtendedTheme) => {
@@ -112,6 +116,7 @@ export default (theme: ExtendedTheme) => {
     txtSlug: {
       ...CS.hnSemiBold,
       color: colors.blue,
+      fontSize: 14,
       marginBottom: 4,
     },
     txtContent: {
@@ -119,6 +124,31 @@ export default (theme: ExtendedTheme) => {
       color: colors.textOpacity6,
       fontSize: 14,
       marginBottom: 4,
+    },
+    viewHastag: {
+      ...CS.row,
+      gap: 8,
+    },
+    btnPlay: {
+      paddingVertical: 2,
+      paddingHorizontal: 8,
+      borderRadius: 20,
+      borderWidth: 1,
+      borderColor: colors.borderColor,
+      ...CS.row,
+      gap: 8,
+    },
+    viewIconPlay: {
+      width: 16,
+      height: 16,
+      borderRadius: 12,
+      backgroundColor: colors.primary,
+      ...CS.center,
+    },
+    txtPlay: {
+      ...CS.hnBold,
+      color: colors.textOpacity6,
+      fontSize: 12,
     },
   });
 };

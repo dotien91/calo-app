@@ -18,7 +18,6 @@ import TextBase from "@shared-components/TextBase";
 import { translations } from "@localization";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
 import IconSvg from "assets/svg";
-import { FloatingPlayer } from "@screens/audio/components/FloatingPlayer";
 import {
   BankStackData,
   ClubStackData,
@@ -28,10 +27,10 @@ import {
   StackIntroData,
 } from "./navigation.constant";
 import analytics from "@react-native-firebase/analytics";
-import { TouchableOpacity } from "react-native";
 import { navigate } from "@helpers/navigation.helper";
 import eventEmitter from "@services/event-emitter";
 import NewHomeScreen from "@screens/home/new.screen.home";
+import BottomSheetPanResponder from "@screens/audio/components/BottomSheetPanResponder";
 
 // import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 // ? If you want to use stack or tab or both
@@ -141,28 +140,42 @@ const Navigation = () => {
               height: getBottomSpace() + 48,
               marginTop: 4,
             },
-            tabBarButton: (props) => (
-              <TouchableOpacity
-                {...props}
-                onPress={() => {
-                  navigate(route.name);
-                  if (
-                    route.name == "HomeTab" &&
-                    props.accessibilityState.selected
-                  ) {
-                    eventEmitter.emit("reload_home_page");
-                  }
-                }}
-              />
-            ),
+            // tabBarButton: (props) => (
+            //   <TouchableOpacity
+            //     {...props}
+            //     onPress={() => {
+            //       navigate(route.name);
+            //       if (
+            //         route.name == "HomeTab" &&
+            //         props.accessibilityState.selected
+            //       ) {
+            //         eventEmitter.emit("reload_home_page");
+            //       }
+            //     }}
+            //   />
+            // ),
           })}
         >
-          <Tab.Screen name={SCREENS.HOME_TAB} component={HomeStackScreen} />
+          <Tab.Screen
+            name={SCREENS.HOME_TAB}
+            component={HomeStackScreen}
+            listeners={{
+              tabPress: () => {
+                navigate(SCREENS.HOME_TAB);
+                eventEmitter.emit("reload_home_page");
+              },
+            }}
+          />
           <Tab.Screen name={SCREENS.COURSE_TAB} component={CourseStackScreen} />
           <Tab.Screen name={SCREENS.CLUB_TAB} component={ClubStackScreen} />
           <Tab.Screen
             name={SCREENS.DISCOVERSCREEN_TAB}
             component={DiscoveryStackScreen}
+            listeners={{
+              tabPress: () => {
+                navigate(SCREENS.DISCOVERSCREEN_TAB);
+              },
+            }}
           />
 
           <Tab.Screen
@@ -290,7 +303,7 @@ const Navigation = () => {
       theme={isDarkMode ? DarkTheme : LightTheme}
       onStateChange={async () => {
         const currentRouteName = navigationRef.current.getCurrentRoute().name;
-        console.log("currentRouteName", currentRouteName);
+        eventEmitter.emit("screen_active", { screen: currentRouteName });
         await analytics().logScreenView({
           screen_name: currentRouteName,
           screen_class: currentRouteName,
@@ -306,7 +319,7 @@ const Navigation = () => {
         <Stack.Screen name={SCREENS.TABS} component={TabNavigation} />
         {renderCommonStack()}
       </Stack.Navigator>
-      <FloatingPlayer />
+      <BottomSheetPanResponder />
     </NavigationContainer>
   );
 };

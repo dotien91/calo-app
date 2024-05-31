@@ -13,6 +13,10 @@ import { SCREENS } from "constants";
 import CS from "@theme/styles";
 import useStore from "@services/zustand/store";
 import { formatNumber } from "react-native-currency-input";
+import { palette } from "@theme/themes";
+import IconSvg from "assets/svg";
+import TrackPlayer, { Track } from "react-native-track-player";
+import eventEmitter from "@services/event-emitter";
 
 interface ItemListProps {
   isSliderItem: boolean;
@@ -25,11 +29,43 @@ const widthImage = 111;
 const heightImage = 140;
 
 const ItemList = ({ isSliderItem, style, data, listData }: ItemListProps) => {
-  const { title, user_id, view_number, post_avatar, podcast_category, _id } =
-    data;
+  const {
+    title,
+    user_id,
+    view_number,
+    post_avatar,
+    podcast_category,
+    _id,
+    content,
+  } = data;
+  const addAudio = useStore((store) => store.addAudio);
+  const listAudioHistory = useStore((store) => store.listAudioHistory);
+
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const setListAudio = useStore((state) => state.setListAudio);
+  const playTrack = async (track: Track) => {
+    const item = listAudioHistory.filter((item) => item.url === track.url);
+    // await TrackPlayer.skip(indexLocal);
+    if (item.length > 0) {
+      await TrackPlayer.seekBy(item[0].position || 0);
+    }
+    await TrackPlayer.play();
+  };
+  const playAudio = async () => {
+    // NavigationService.navigate(SCREENS.AUDIO_PLAY);
+    eventEmitter.emit("floating_play", { show: true });
+    await TrackPlayer.reset();
+    const track = {
+      url: data?.attach_files[0].media_url,
+      title: data?.title,
+      artist: data?.user_id.display_name,
+      artwork: data?.post_avatar.media_url,
+    };
+    await TrackPlayer.add(track);
+    await playTrack(track);
+    addAudio(track);
+  };
 
   const renderInfo = () => {
     return (
@@ -39,7 +75,7 @@ const ItemList = ({ isSliderItem, style, data, listData }: ItemListProps) => {
         </Text>
         <Text style={styles.audioAuthorTxt}>{user_id?.display_name}</Text>
         <Text style={styles.txtContent} numberOfLines={2}>
-          {podcast_category?.category_content}
+          {content}
         </Text>
         {view_number ? (
           <Text style={styles.audioRatingTxt}>
@@ -49,11 +85,20 @@ const ItemList = ({ isSliderItem, style, data, listData }: ItemListProps) => {
         ) : (
           <Text style={styles.textNoReview}>{translations.audio.noListen}</Text>
         )}
-        <Text style={styles.txtSlug}>#{podcast_category?.category_title}</Text>
+        <View style={styles.viewHastag}>
+          <PressableBtn style={styles.btnPlay} onPress={playAudio}>
+            <View style={styles.viewIconPlay}>
+              <IconSvg name="icPlay" color={palette.white} size={8} />
+            </View>
+            <Text style={styles.txtPlay}>{translations.audio.play}</Text>
+          </PressableBtn>
+          <Text style={styles.txtSlug}>
+            #{podcast_category?.category_title}
+          </Text>
+        </View>
       </View>
     );
   };
-
   const renderImg = () => {
     return (
       <FastImage
@@ -64,7 +109,7 @@ const ItemList = ({ isSliderItem, style, data, listData }: ItemListProps) => {
           marginBottom: 16,
         }}
         source={{
-          uri: post_avatar?.media_url,
+          uri: post_avatar?.media_thumbnail || post_avatar?.media_url,
           headers: { Authorization: "someAuthToken" },
           priority: FastImage.priority.normal,
         }}
@@ -75,7 +120,7 @@ const ItemList = ({ isSliderItem, style, data, listData }: ItemListProps) => {
 
   const openPreviewCourse = () => {
     setListAudio(listData);
-    NavigationService.navigate(SCREENS.AUDIO_PREVIEW, { id: _id });
+    NavigationService.navigate(SCREENS.AUDIO_PREVIEW, { id: _id, data: data });
   };
 
   return (
@@ -83,6 +128,7 @@ const ItemList = ({ isSliderItem, style, data, listData }: ItemListProps) => {
       onPress={openPreviewCourse}
       style={[
         styles.audioItem1,
+        { marginVertical: 4 },
         isSliderItem && {
           padding: 0,
           width: Device.width - 32,

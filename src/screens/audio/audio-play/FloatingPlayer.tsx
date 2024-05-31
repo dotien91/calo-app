@@ -1,19 +1,11 @@
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  ViewProps,
-} from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import FastImage from "react-native-fast-image";
 import { useActiveTrack, useIsPlaying } from "react-native-track-player";
 
 import { palette } from "@theme/themes";
 import React, { useEffect } from "react";
-import eventEmitter from "@services/event-emitter";
 import CS from "@theme/styles";
 import { useLastActiveTrack } from "../hook/useLastActiveTrack";
-import { MovingText } from "./MovingText";
 import { useActionTrack } from "../hook/useActionTrack";
 import Animated, {
   Easing,
@@ -23,32 +15,28 @@ import Animated, {
   withRepeat,
   withTiming,
 } from "react-native-reanimated";
-import {
-  EnumModalContentType,
-  EnumStyleModalType,
-  showSuperModal,
-} from "@helpers/super.modal.helper";
+import { MovingText } from "../components/MovingText";
 import IconSvg from "assets/svg";
+interface FloatingPlayerProps {
+  onPressShow: () => void;
+}
 
-export const FloatingPlayer = ({ style }: ViewProps) => {
+export const FloatingPlayer = ({ onPressShow }: FloatingPlayerProps) => {
   const activeTrack = useActiveTrack();
   const lastActiveTrack = useLastActiveTrack();
 
   const displayedTrack = activeTrack ?? lastActiveTrack;
-  const [showFloating, setShowFloating] = React.useState(false);
-  const handlePress = () => {
-    // NavigationService.navigate(SCREENS.AUDIO_PLAY);
-    showSuperModal({
-      contentModalType: EnumModalContentType.PlayPodcast,
-      styleModalType: EnumStyleModalType.Full,
-    });
-  };
+  // const handlePress = () => {
+  //   // NavigationService.navigate(SCREENS.AUDIO_PLAY);
+  //   showSuperModal({
+  //     contentModalType: EnumModalContentType.PlayPodcast,
+  //     styleModalType: EnumStyleModalType.Full,
+  //   });
+  // };
   const { playing } = useIsPlaying();
 
   const rotation = useSharedValue(0);
-  const checkScreenAudio = ({ show }) => {
-    setShowFloating(show);
-  };
+
   const startAnimation = () => {
     rotation.value = withRepeat(
       withTiming(360, { duration: 4000, easing: Easing.linear }),
@@ -66,15 +54,9 @@ export const FloatingPlayer = ({ style }: ViewProps) => {
     }
   }, [playing]);
 
-  useEffect(() => {
-    eventEmitter.on("floating_play", checkScreenAudio);
-    return () => {
-      eventEmitter.off("floating_play", checkScreenAudio);
-    };
-  }, []);
   const { pause, stop } = useActionTrack();
 
-  if (!displayedTrack || !showFloating) return null;
+  if (!displayedTrack) return null;
 
   const RenderAvatar = () => {
     const animatedStyle = useAnimatedStyle(() => {
@@ -96,9 +78,9 @@ export const FloatingPlayer = ({ style }: ViewProps) => {
 
   return (
     <TouchableOpacity
-      onPress={handlePress}
+      onPress={onPressShow}
       activeOpacity={0.95}
-      style={[styles.container, style]}
+      style={[styles.container]}
     >
       <>
         <RenderAvatar />
@@ -114,14 +96,20 @@ export const FloatingPlayer = ({ style }: ViewProps) => {
           </Text>
         </View>
 
-        <TouchableOpacity onPress={pause} style={styles.trackControlsContainer}>
+        <TouchableOpacity
+          style={styles.trackControlsContainer}
+          onPressIn={pause}
+        >
           <IconSvg
             name={playing ? "icPauseAudio" : "icPlayAudio"}
             size={32}
             color={palette.primary}
           />
         </TouchableOpacity>
-        <TouchableOpacity onPress={stop} style={styles.trackControlsContainer}>
+        <TouchableOpacity
+          style={styles.trackControlsContainer}
+          onPressIn={stop}
+        >
           <IconSvg name={"icClose"} size={28} color={palette.primary} />
         </TouchableOpacity>
       </>
@@ -136,13 +124,10 @@ const styles = StyleSheet.create({
     backgroundColor: palette.background,
     paddingVertical: 12,
     paddingHorizontal: 16,
-    gap: 12,
+    gap: 4,
     height: 74,
-    shadowColor: "rgba(0,0,0,0.8)",
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.3,
-    elevation: 5,
-    shadowRadius: 5,
+    borderBottomColor: palette.borderColor,
+    borderBottomWidth: 1,
     ...CS.flexRear,
   },
   trackArtworkImage: {
@@ -158,7 +143,7 @@ const styles = StyleSheet.create({
   trackControlsContainer: {
     flexDirection: "row",
     alignItems: "center",
-    columnGap: 20,
+    padding: 8,
   },
   txtTitle: {
     ...CS.hnMedium,

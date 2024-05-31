@@ -905,6 +905,7 @@ export default {
     takeAPhoto: "Take a photo",
   },
   audio: {
+    play: "Play",
     pause: "Pause",
     resume: "Resume",
     stop: "Stop",
@@ -1349,6 +1350,7 @@ export default {
     sendRequest: "Send information successfully",
   },
   podcast: {
+    updating: "Podcast are being updated, please try again later.",
     listPodcast: "List Podcasts",
     emptyList: "List podcast is empty",
     infoPodcast: "Enter podcast information",

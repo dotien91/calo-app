@@ -11,22 +11,8 @@ import {
   StyleSheet,
   View,
   Text,
-  SafeAreaView,
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
-
-import ItemPost from "./components/post-item/post.item";
-
-import eventEmitter from "@services/event-emitter";
-import { getListPost } from "@services/api/post.api";
-import CS, { Shadow2 } from "@theme/styles";
-import { translations } from "@localization";
-import useStore from "@services/zustand/store";
-import { useListData } from "@helpers/hooks/useListData";
-import EmptyResultView from "@shared-components/empty.data.component";
-import { TypedPost } from "shared/models";
-import HeaderTab from "./components/header-home/HeaderTab";
-import { palette } from "@theme/themes";
 import Animated, {
   Extrapolate,
   interpolate,
@@ -35,13 +21,29 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import AboutHome from "./components/about-home/about.home";
+import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
 import { getStatusBarHeight } from "@freakycoder/react-native-helpers";
+
+import ItemPost from "./components/post-item/post.item";
+import eventEmitter from "@services/event-emitter";
+import { getListPost } from "@services/api/post.api";
+import CS from "@theme/styles";
+import { translations } from "@localization";
+import useStore from "@services/zustand/store";
+import { useListData } from "@helpers/hooks/useListData";
+import EmptyResultView from "@shared-components/empty.data.component";
+import { TypedPost } from "shared/models";
+import HeaderTab from "./components/header-home/HeaderTab";
+import { palette } from "@theme/themes";
+
+import AboutHome from "./components/about-home/about.home";
 import {
   EnumModalContentType,
   EnumStyleModalType,
   showSuperModal,
+  showWarningLogin,
 } from "@helpers/super.modal.helper";
+import { fakeItem1 } from "./mock/fakeItem1";
 
 interface ListPostProps {
   id?: string;
@@ -50,19 +52,18 @@ interface ListPostProps {
 
 type filterProp = "forYou" | "following" | "trending" | "most_popular";
 
-const HEADER_HEIGHT = getStatusBarHeight() + 70;
-const TAB_HEIGHT = 70;
-const STATUS_BAR_HEIGHT = getStatusBarHeight();
+const HEADER_HEIGHT = getStatusBarHeight() + 56;
+const TAB_HEIGHT = 56;
 
 const ListPostNew = ({ id }: ListPostProps) => {
   const listRef = useRef<any>(null);
   const scrollRef = useRef<any>(null);
-
+  // console.log("statusbarHeight: ", getStatusBarHeight());
   const theme = useTheme();
   const { colors } = theme;
 
   const userData = useStore((state) => state.userData);
-  // const { isLoggedIn, renderViewRequestLogin } = useUserHook();
+  // const { isLoggedIn } = useUserHook();
 
   const renderItem = ({ item }: any) => {
     return <ItemPost key={item._id} data={item} isProfile={id?.length > 0} />;
@@ -75,17 +76,11 @@ const ListPostNew = ({ id }: ListPostProps) => {
     auth_id: userData?._id || "",
     is_following_list: filter === "following" ? "true" : "false",
     order_by: "DESC",
-    order_type:
-      filter === "trending"
-        ? "trending"
-        : filter === "most_popular"
-        ? "most_popular"
-        : "time",
+    order_type: filter === "trending" ? "trending" : "time",
   };
   if (id) {
     paramsRequest.user_id = id;
   }
-
   const {
     listData,
     onEndReach,
@@ -93,7 +88,21 @@ const ListPostNew = ({ id }: ListPostProps) => {
     refreshControl,
     renderFooterComponent,
     _requestData,
-  } = useListData<TypedPost>(paramsRequest, getListPost, []);
+  } = useListData<TypedPost>(
+    paramsRequest,
+    getListPost,
+    [fakeItem1],
+    userData?._id,
+  );
+  const customFooter = () => {
+    if (listData.length === 1 && !isLoading) return <>{renderEmpty()}</>;
+    return renderFooterComponent;
+  };
+
+  useEffect(() => {
+    setFilter("forYou");
+  }, [userData?._id]);
+
   useEffect(() => {
     const typeEmit = "reload_list_post";
     eventEmitter.on(typeEmit, onRefresh);
@@ -103,9 +112,10 @@ const ListPostNew = ({ id }: ListPostProps) => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
   const onRefresh = () => {
     _requestData();
-    setTimeout(() => {
-      listRef && listRef.current?.scrollToOffset({ animated: true, offset: 0 });
-    }, 200);
+    // setTimeout(() => {
+    //   // listRef && listRef.current?.scrollToOffset({ animated: true, offset: 0 });
+    //   scrollToFilter();
+    // }, 200);
   };
 
   const currentPositionFilter = useSharedValue(0);
@@ -127,7 +137,8 @@ const ListPostNew = ({ id }: ListPostProps) => {
     return {
       opacity: positionFilter.value === "absolute" ? 1 : 0,
       zIndex: positionFilter.value === "absolute" ? 100 : -1,
-      height: showHeader.value ? HEADER_HEIGHT + 50 : STATUS_BAR_HEIGHT + 50,
+      height: 40,
+      marginTop: positionFilter.value === "absolute" ? 0 : 8,
     };
   }, []);
   const onScroll = useCallback(
@@ -211,7 +222,7 @@ const ListPostNew = ({ id }: ListPostProps) => {
           style={[styles.filter]}
           onLayout={onLayoutFilter}
         >
-          {ContentFilter}
+          {ContentFilter()}
         </AniPressable>
       </>
     );
@@ -244,13 +255,13 @@ const ListPostNew = ({ id }: ListPostProps) => {
     });
     listRef.current.scrollToOffset({
       animated: true,
-      offset: currentPositionFilter.value + 5,
+      offset: currentPositionFilter.value + 5 - 70,
     });
 
     setTimeout(() => {
-      showHeader.value = withTiming(0, { duration: 1 });
+      showHeader.value = withTiming(1, { duration: 1 });
       pauseAnimation.current = true;
-      positionFilter.value = "absolute";
+      positionFilter.value = "relative";
     }, 300);
   }, [filter, isFirst]);
 
@@ -273,48 +284,54 @@ const ListPostNew = ({ id }: ListPostProps) => {
     // },
   ];
 
-  const ContentFilter = () => {
+  function ContentFilter() {
     return (
       <ScrollView
-        style={{ height: 30, marginHorizontal: 16 }}
+        style={{ height: 30 }}
         showsHorizontalScrollIndicator={false}
         horizontal
         ref={scrollRef}
       >
-        {listFilter.map((item, index) => {
-          const selected = filter === item.id;
-          return (
-            <Pressable
-              key={index}
-              style={[
-                styles.styleItemFilter,
-                {
-                  backgroundColor: selected
-                    ? palette.primary
-                    : palette.background,
-                },
-              ]}
-              onPress={() => {
-                setIsFirst(false);
-                setFilter(item.id);
-              }}
-            >
-              <Text
+        <View style={{ flexDirection: "row", paddingHorizontal: 16 }}>
+          {listFilter.map((item, index) => {
+            const selected = filter === item.id;
+            return (
+              <Pressable
+                key={index}
                 style={[
-                  styles.txtFilter,
+                  styles.styleItemFilter,
                   {
-                    color: selected ? colors.white : colors.textOpacity8,
+                    backgroundColor: selected
+                      ? palette.primary
+                      : palette.btnInactive2,
                   },
                 ]}
+                onPress={() => {
+                  if (item.id === "following" && !userData?._id) {
+                    showWarningLogin();
+                    return;
+                  }
+                  setIsFirst(false);
+                  setFilter(selected ? "forYou" : item.id);
+                }}
               >
-                {item.name}
-              </Text>
-            </Pressable>
-          );
-        })}
+                <Text
+                  style={[
+                    styles.txtFilter,
+                    {
+                      color: selected ? colors.white : colors.textOpacity8,
+                    },
+                  ]}
+                >
+                  {item.name}
+                </Text>
+              </Pressable>
+            );
+          })}
+        </View>
       </ScrollView>
     );
-  };
+  }
 
   return (
     <View
@@ -325,17 +342,15 @@ const ListPostNew = ({ id }: ListPostProps) => {
     >
       <Animated.View style={[styles.headerAni, styleHeader]}>
         {<AboutHome />}
-      </Animated.View>
-      <View style={CS.safeAreaView}>
-        <Animated.View
-          style={[styles.filter, styles.absoluteFilter, styleFilter]}
-        >
-          <ContentFilter />
+        <Animated.View style={[styles.filter, styleFilter]}>
+          {ContentFilter()}
         </Animated.View>
-        <SafeAreaView style={{ backgroundColor: "red" }}></SafeAreaView>
+      </Animated.View>
+      <View style={[CS.flex1, { marginTop: getStatusBarHeight() }]}>
         <FlatList
           StickyHeaderComponent={StickyHeaderComponent}
           stickyHeaderIndices={[1]}
+          stickyHeaderHiddenOnScroll={true}
           ref={listRef}
           data={listData}
           onScroll={onScroll}
@@ -347,22 +362,19 @@ const ListPostNew = ({ id }: ListPostProps) => {
           removeClippedSubviews={true}
           keyExtractor={(item) => item?._id + ""}
           refreshControl={refreshControl()}
-          ListFooterComponent={renderFooterComponent()}
-          ListEmptyComponent={renderEmpty()}
+          ListFooterComponent={customFooter()}
           progressViewOffset={HEADER_HEIGHT}
           onScrollBeginDrag={(e) => {
             onScrollBeginDrag?.(e);
             hasScrolled.current = true;
           }}
-          contentContainerStyle={{ paddingTop: TAB_HEIGHT }}
+          contentContainerStyle={{ paddingTop: TAB_HEIGHT, marginTop: 16 }}
           // decelerationRate={'fast'}
 
           onLayoutFilter={onLayoutFilter}
           // ContentFilter={ContentFilter}
           // onPressFilter={onPressFilter}
           scrollToFilter={scrollToFilter}
-
-          //
         />
       </View>
     </View>
@@ -390,19 +402,20 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 4,
     height: 40,
-    ...Shadow2,
+    borderBottomWidth: 1,
+    borderBottomColor: palette.borderColor,
   },
-  absoluteFilter: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    marginTop: 0,
-    paddingTop: getStatusBarHeight(),
-    height: 50,
-    alignItems: "flex-end",
-    paddingBottom: 8,
-  },
+  // absoluteFilter: {
+  //   position: "absolute",
+  //   top: 0,
+  //   left: 0,
+  //   right: 0,
+  //   marginTop: 0,
+  //   paddingTop: getStatusBarHeight(),
+  //   height: 50,
+  //   alignItems: "flex-end",
+  //   paddingBottom: 8,
+  // },
   styleItemFilter: {
     paddingHorizontal: 10,
     borderRadius: 5,
@@ -410,6 +423,7 @@ const styles = StyleSheet.create({
     borderColor: palette.borderColor,
     marginRight: 8,
     ...CS.center,
+    minWidth: (SCREEN_WIDTH - 40) / 3,
   },
   txtFilter: {
     ...CS.hnSemiBold,
