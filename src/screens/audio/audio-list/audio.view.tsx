@@ -20,6 +20,7 @@ const AudioView = ({ onPress }: AudioViewProps) => {
 
   const { listData, isLoading } = useListData<IAudioItem>(
     {
+      limit: "10",
       auth_id: userData?._id,
       order_by: "DESC",
       sort_by: "createdAt",
@@ -34,10 +35,6 @@ const AudioView = ({ onPress }: AudioViewProps) => {
       NavigationService.navigate(SCREENS.RECOMMEND_AUDIO_BOOK);
     }
   };
-
-  const data = React.useMemo(() => {
-    return listData.slice(0, 15);
-  }, [listData]);
 
   const renderItem = (item: IAudioItem, index: number) => {
     if (item.item?.is_join) {
@@ -66,7 +63,7 @@ const AudioView = ({ onPress }: AudioViewProps) => {
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
-          data={data}
+          data={listData}
           renderItem={renderItem}
           scrollEventThrottle={16}
           contentContainerStyle={{
