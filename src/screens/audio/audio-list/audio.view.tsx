@@ -20,9 +20,8 @@ const AudioView = ({ onPress }: AudioViewProps) => {
 
   const { listData, isLoading } = useListData<IAudioItem>(
     {
-      limit: "10",
+      limit: "6",
       auth_id: userData?._id,
-      order_by: "DESC",
       sort_by: "createdAt",
     },
     GetPodCastList,
@@ -37,13 +36,9 @@ const AudioView = ({ onPress }: AudioViewProps) => {
   };
 
   const renderItem = (item: IAudioItem, index: number) => {
-    if (item.item?.is_join) {
-      return null;
-    } else {
       return (
-        <AudioItem isSliderItem data={item.item} key={index} listData={data} />
+        <AudioItem isSliderItem data={item.item} key={index} listData={listData} />
       );
-    }
   };
 
   const renderLoading = () => {
