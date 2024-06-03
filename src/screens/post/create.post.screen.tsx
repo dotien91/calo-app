@@ -48,7 +48,9 @@ export default function PostScreen() {
   const { colors } = theme;
   const route: any = useRoute();
   const item: TypedPost = route?.params?.item || {};
-  const group_id = route?.params?.group_id;
+  const group_id = route?.params?.["group_id"];
+  const isAdminClub = route?.params?.["isAdminClub"];
+
   const styles = useMemo(() => createStyles(theme), [theme]);
   const submitPostStatus = React.useRef("");
   const [postCategory, setPostCategory] = useState("");
@@ -104,12 +106,17 @@ export default function PostScreen() {
   const onPressLive = () => {
     NavigationService.navigate(SCREENS.LIVE_STREAM, {
       titleLive: description,
+      group_id,
     });
   };
 
   useEffect(() => {
     getListCategory();
   }, []);
+
+  const showLiveBtn = React.useMemo(() => {
+    return isTeacher || isAdminClub;
+  }, [isTeacher, isAdminClub]);
 
   //continue creating post ưhen file upload success
   React.useEffect(() => {
@@ -268,7 +275,7 @@ export default function PostScreen() {
               }
               onPress={onSelectPicture}
             />
-            {isTeacher && !group_id && (
+            {showLiveBtn && (
               <SelectComponent
                 icon={
                   <IconSvg size={32} name="icLive" color={colors.primary} />
@@ -303,7 +310,7 @@ export default function PostScreen() {
               onPress={onSelectVideo}
               text={translations.selectVideo}
             />
-            {isTeacher && !group_id && (
+            {showLiveBtn && (
               <SelectComponentText
                 icon={
                   <IconSvg size={24} name="icLive" color={colors.primary} />

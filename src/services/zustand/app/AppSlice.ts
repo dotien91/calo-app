@@ -1,4 +1,4 @@
-import { LANG, _getJson, _getLang } from "@services/local-storage";
+import { _getLang } from "@services/local-storage";
 import { StoreSlice } from "@zustand";
 
 export interface AppSlice {

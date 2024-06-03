@@ -10,9 +10,11 @@ import { ILiveData } from "models/stream.model";
 export const useLiveStream = ({
   isPublisher,
   liveStreamId,
+  group_id,
 }: {
   isPublisher: boolean;
   liveStreamId?: string;
+  group_id?: string;
 }) => {
   const [liveData, setLiveData] = useState<ILiveData>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -23,7 +25,7 @@ export const useLiveStream = ({
 
   const _createLiveStream = (title: string, avatar: string) => {
     setLoading(true);
-    createLiveStream(title, avatar).then((res) => {
+    createLiveStream(title, avatar, group_id).then((res) => {
       setLoading(false);
 
       if (!res.isError && res.data._id) {

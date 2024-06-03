@@ -42,7 +42,10 @@ const ClubPostScreen = () => {
   const item = route.params?.item || {};
 
   const gotoCreatePost = () => {
-    NavigationService.navigate(SCREENS.POST_SCREEN, { group_id: club_id });
+    NavigationService.navigate(SCREENS.POST_SCREEN, {
+      group_id: club_id,
+      isAdminClub: true,
+    });
   };
   const [dataGroup, setDataGroup] = React.useState(item);
 

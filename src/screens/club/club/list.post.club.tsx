@@ -16,6 +16,7 @@ import { useListData } from "@helpers/hooks/useListData";
 import EmptyResultView from "@shared-components/empty.data.component";
 import { TypedPost } from "shared/models";
 import LoadingList from "@shared-components/loading.list.component";
+import ListLiveStream from "@screens/home/components/list-livestream/list.liveStream";
 
 interface ListPostClubProps {
   id: string;
@@ -63,7 +64,6 @@ const ListPostClub = ({ id }: ListPostClubProps) => {
       listRef && listRef.current?.scrollToOffset({ animated: true, offset: 0 });
     }, 200);
   };
-
   const renderEmpty = () => {
     if (isLoading) return null;
     return (
@@ -83,6 +83,10 @@ const ListPostClub = ({ id }: ListPostClubProps) => {
     );
   };
 
+  const _renderHeader = () => {
+    return <ListLiveStream group_id={id} />;
+  };
+
   const renderHeader = () => {
     return <LoadingList numberItem={3} />;
   };
@@ -96,6 +100,7 @@ const ListPostClub = ({ id }: ListPostClubProps) => {
       <FlatList
         ref={listRef}
         data={listData}
+        ListHeaderComponent={_renderHeader}
         renderItem={renderItem}
         onEndReachedThreshold={0}
         onEndReached={onEndReach}

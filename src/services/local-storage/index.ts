@@ -14,8 +14,8 @@ export const _getJson = (key: string) => {
 export const _getLang = () => {
   const lang = _getJson(LANG) || "en";
   translations.setLanguage(lang);
-  return lang
-}
+  return lang;
+};
 
 export const _setJson = (key: string, value: any) => {
   LocalStorage.set(key, JSON.stringify(value));

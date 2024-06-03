@@ -36,9 +36,14 @@ const AudioView = ({ onPress }: AudioViewProps) => {
   };
 
   const renderItem = (item: IAudioItem, index: number) => {
-      return (
-        <AudioItem isSliderItem data={item.item} key={index} listData={listData} />
-      );
+    return (
+      <AudioItem
+        isSliderItem
+        data={item.item}
+        key={index}
+        listData={listData}
+      />
+    );
   };
 
   const renderLoading = () => {

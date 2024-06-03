@@ -12,7 +12,7 @@ import {
   Keyboard,
 } from "react-native";
 import RTMPPublisher, { RTMPPublisherRefProps } from "react-native-publisher";
-import { useTheme, useFocusEffect } from "@react-navigation/native";
+import { useTheme, useFocusEffect, useRoute } from "@react-navigation/native";
 import { IconType } from "react-native-dynamic-vector-icons";
 import KeepAwake from "react-native-keep-awake";
 import _ from "lodash";
@@ -54,9 +54,12 @@ function App() {
   const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
   const inputRef = useRef("");
+  const route = useRoute();
+  const group_id = route.params?.["group_id"];
 
   const { _createLiveStream, liveData, loading } = useLiveStream({
     isPublisher: true,
+    group_id,
   });
 
   const [show, setShow] = React.useState(true);
@@ -264,8 +267,9 @@ function App() {
     publisherRef.current && publisherRef.current.stopStream();
     NavigationService.popToTop();
     // NavigationService.navigate(SCREENS.HOME);
-
-    NavigationService.navigate(SCREENS.HOME_TAB, { screen: SCREENS.HOME });
+    if (!group_id) {
+      NavigationService.navigate(SCREENS.HOME_TAB, { screen: SCREENS.HOME });
+    }
     // endLiveStream()
   };
 

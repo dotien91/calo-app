@@ -8,7 +8,7 @@ import { PaginationProps, SwiperFlatList } from "react-native-swiper-flatlist";
 import { useFocusEffect } from "@react-navigation/native";
 import TrackPlayer from "react-native-track-player";
 
-const ListLiveStream = () => {
+const ListLiveStream = ({ group_id }: { group_id: string }) => {
   const listRef = useRef(null);
   const [listDataStream, setListDataStream] = useState([]);
 
@@ -27,6 +27,9 @@ const ListLiveStream = () => {
 
   useEffect(() => {
     PlayAudio();
+    if (group_id) {
+      _getListLiveStream();
+    }
     eventEmitter.on("reload_list_stream", onRefresh);
     return () => {
       eventEmitter.off("reload_list_stream", onRefresh);
@@ -58,13 +61,12 @@ const ListLiveStream = () => {
   };
 
   const _getListLiveStream = () => {
-    getListLiveStream().then((res) => {
+    getListLiveStream({
+      group_id,
+      order_by: "DESC",
+    }).then((res) => {
       if (!res.isError) {
-        const listDataStream = res.data.filter(
-          // const listDataStream = fakedata.filter(
-          (item) => item?.livestream_status == "live",
-        );
-        setListDataStream(listDataStream.reverse());
+        setListDataStream(res.data);
       }
     });
   };

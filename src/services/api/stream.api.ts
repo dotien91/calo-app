@@ -1,10 +1,14 @@
 import request, { METHOD } from "./api";
 
-export async function createLiveStream(title: string, avatar: string) {
+export async function createLiveStream(
+  title: string,
+  avatar: string,
+  group_id?: string,
+) {
   return request({
     method: METHOD.POST,
-    urlPath: "livestream/create",
-    data: { title, livestream_status: "live", avatar },
+    urlPath: group_id ? "livestream/group/create" : "livestream/create",
+    data: { title, livestream_status: "live", avatar, group_id },
   }).then((response) => {
     return response;
   });
@@ -92,12 +96,13 @@ export async function updateLivestream2(data) {
   });
 }
 
-export async function getListLiveStream() {
+export async function getListLiveStream(params: any) {
   return request({
     method: METHOD.GET,
     urlPath: "livestream/list",
     params: {
       livestream_status: "live",
+      ...params,
     },
   }).then((response) => {
     return response;

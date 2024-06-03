@@ -1,39 +1,27 @@
 import React from "react";
-import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, View } from "react-native";
 
 import Header from "@shared-components/header/Header";
 import CS from "@theme/styles";
-import { getMyCourse } from "@services/api/course.api";
-import { useListData } from "@helpers/hooks/useListData";
-import { ICourseItem } from "models/course.model";
-import useStore from "@services/zustand/store";
 import { translations } from "@localization";
-import LoadingList from "@shared-components/loading.list.component";
-import ClassItem from "./class.item";
-import EmptyResultView from "@shared-components/empty.data.component";
-import { Calendar } from 'react-native-big-calendar'
+import { Calendar } from "react-native-big-calendar";
 import Button from "@shared-components/button/Button";
-const currentData = (new Date()).getDate()
-const plusDate = (number) => {
-  new Date(currentData + number)
-}
+
 const events = [
   {
-    title: 'Meeting',
-    start: new Date('2024-06-03T03:24:00'),
-    end:new Date('2024-06-03T04:24:00'),
+    title: "Meeting",
+    start: new Date("2024-06-03T03:24:00"),
+    end: new Date("2024-06-03T04:24:00"),
   },
   {
-    title: 'Coffee break',
-    start: new Date('2024-06-04T04:24:00'),
-    end: new Date('2024-06-04T06:24:00'),
-
+    title: "Coffee break",
+    start: new Date("2024-06-04T04:24:00"),
+    end: new Date("2024-06-04T06:24:00"),
   },
-]
+];
 const TeacherCourse = () => {
-  const userData = useStore((state) => state.userData);
-  const [date, setDate] = React.useState(new Date())
-  const [mode, setMode] = React.useState("week")
+  const [date, setDate] = React.useState(new Date());
+  const [mode, setMode] = React.useState("week");
 
   // const { listData, isLoading } = useListData<ICourseItem>(
   //   {
@@ -71,22 +59,39 @@ const TeacherCourse = () => {
   // };
 
   const _onPressCell = (e) => {
-    alert(e)
-  }
+    alert(e);
+  };
 
   const renderCalendar = () => {
-    return <Calendar mode={mode}  onPressCell={_onPressCell} activeDate={date} onPressDateHeader={(e)=> setDate(e)} onPressEvent={() => alert(3)} events={events} height={600} />
-  }
+    return (
+      <Calendar
+        mode={mode}
+        onPressCell={_onPressCell}
+        activeDate={date}
+        onPressDateHeader={(e) => setDate(e)}
+        onPressEvent={() => alert(3)}
+        events={events}
+        height={600}
+      />
+    );
+  };
 
   return (
     <SafeAreaView style={CS.safeAreaView}>
       <Header text={translations.course.manageClass} />
       <View style={CS.flexStart}>
         <Button isFullWidth={false} text="day" onPress={() => setMode("day")} />
-        <Button isFullWidth={false} text="week" onPress={() => setMode("week")} />
+        <Button
+          isFullWidth={false}
+          text="week"
+          onPress={() => setMode("week")}
+        />
 
-        <Button isFullWidth={false} text="month" onPress={() => setMode("month")} />
-
+        <Button
+          isFullWidth={false}
+          text="month"
+          onPress={() => setMode("month")}
+        />
       </View>
       {renderCalendar()}
       {/* {isLoading && <LoadingList numberItem={2} />}
@@ -105,14 +110,14 @@ const TeacherCourse = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 16,
-  },
-  viewEmpty: {
-    minHeight: 200,
-    ...CS.center,
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     paddingHorizontal: 16,
+//   },
+//   viewEmpty: {
+//     minHeight: 200,
+//     ...CS.center,
+//   },
+// });
 
 export default TeacherCourse;

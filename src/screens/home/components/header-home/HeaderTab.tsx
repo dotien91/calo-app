@@ -136,7 +136,7 @@ const HeaderTab = () => {
       {/* <CourseView /> */}
       <AudioView onPress={gotoAudioBook} />
       <InviteView />
-      <ListLiveStream />
+      <ListLiveStream group_id={null} />
       {/* <View style={{ paddingTop: 10 }}>
         <FastImage
           source={require("../../../../assets/images/coverhome.png")}

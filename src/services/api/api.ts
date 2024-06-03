@@ -51,9 +51,7 @@ apiClient.interceptors.response.use(
     return response;
   },
   (error) => {
-    console.log(
-      "error interceptors", error
-    );
+    console.log("error interceptors", error);
     let message: string = error?.response?.data?.message;
     if (lodash.isArray(message)) {
       message = error?.response?.data?.message?.[0] || "";
