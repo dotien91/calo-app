@@ -122,7 +122,6 @@ const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
       return;
     }
     if (showFirstTimeEarnPoint && data?.is_level_up == "false") {
-      console.log(2222, Number(data.point), currentPoint);
       //show hiệu ứng khi user nhận được số point > pointRequireShowAnimation
       if (pointEarn >= pointRequireShowAnimation) {
         showSuperModal({

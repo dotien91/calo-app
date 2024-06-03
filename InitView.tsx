@@ -8,7 +8,6 @@ import { Settings } from "react-native-fbsdk-next";
  */
 import { isAndroid } from "@freakycoder/react-native-helpers";
 import useStore from "@services/zustand/store";
-import { translations } from "@localization";
 import { setDeviceInfo } from "@helpers/device.info.helper";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import useFirebase from "@helpers/useFirebase";
@@ -30,7 +29,6 @@ const InitView = () => {
     initData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const language = useStore((state) => state.language);
   const { initIAP } = useInAppPurchase();
 
   React.useEffect(() => {
@@ -40,8 +38,7 @@ const InitView = () => {
       StatusBar.setBackgroundColor("rgba(0,0,0,0)");
       StatusBar.setTranslucent(true);
     }
-    translations.setLanguage(language);
-  }, [isDarkMode, language]);
+  }, [isDarkMode]);
 
   const initData = () => {
     setEnv();

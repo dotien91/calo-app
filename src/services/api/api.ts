@@ -52,8 +52,7 @@ apiClient.interceptors.response.use(
   },
   (error) => {
     console.log(
-      "error interceptors",
-      JSON.stringify({ error, url: error?.config?.url }, null, 2),
+      "error interceptors", error
     );
     let message: string = error?.response?.data?.message;
     if (lodash.isArray(message)) {

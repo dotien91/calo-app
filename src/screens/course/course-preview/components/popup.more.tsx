@@ -39,7 +39,6 @@ const PopupCourseDetail = ({
       data: dataCourse,
     });
   };
-  console.log(22222, courseRoom);
 
   const isJoined = dataCourse.is_join || false;
   const showHomeWork =

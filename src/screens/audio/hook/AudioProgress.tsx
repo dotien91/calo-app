@@ -68,7 +68,6 @@ const AudioProgress = () => {
         case Event.PlaybackState:
           // triggered
           // updataDaPosition();
-          // console.log("data222222");
           break;
       }
     },

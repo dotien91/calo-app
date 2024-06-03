@@ -40,7 +40,6 @@ export function useApi<T>({
   const _requestData = () => {
     requestData(params).then((res: any) => {
       // setIsLoading(false);
-      console.log(22222, params, res);
       if (!res.isError) {
         setStateListData((oldState) => ({
           ...oldState,

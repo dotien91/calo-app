@@ -31,6 +31,7 @@ import { navigate } from "@helpers/navigation.helper";
 import eventEmitter from "@services/event-emitter";
 import NewHomeScreen from "@screens/home/new.screen.home";
 import BottomSheetPanResponder from "@screens/audio/components/BottomSheetPanResponder";
+import TeacherCourse from "@screens/teacher-courses/teacher.course";
 
 // import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 // ? If you want to use stack or tab or both
@@ -313,6 +314,7 @@ const Navigation = () => {
       }}
     >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {/* <Stack.Screen name={"SCREENS.TEACHER_COURSES"} component={TeacherCourse} /> */}
         {renderStackIntro()}
         {/* <Stack.Screen name={SCREENS.VIEW_LIVE_STREAM} component={ViewStreamScreen} /> */}
 
