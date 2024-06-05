@@ -1361,6 +1361,13 @@ export default {
     sending: "送信中...",
   },
   audio: {
+    titlePodcast: "ポッドキャストのタイトル",
+    description: "説明",
+    playlist: "プレイリスト",
+    typeOfPodcast: "ポッドキャストの種類",
+    full: "フル",
+    trailer: "予告編",
+    uploadAudio: "オーディオをアップロード",
     play: "再生",
     pause: "一時停止",
     resume: "再開",

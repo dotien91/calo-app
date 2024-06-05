@@ -1432,6 +1432,13 @@ export default {
     sending: "Đang gửi...",
   },
   audio: {
+    titlePodcast: "Tiêu đề podcast",
+    description: "Mô tả",
+    playlist: "Danh sách phát",
+    typeOfPodcast: "Loại podcast",
+    full: "Đầy đủ",
+    trailer: "Giới thiệu",
+    uploadAudio: "Tải lên âm thanh",
     play: "Phát",
     pause: "Tạm dừng",
     resume: "Tiếp tục",

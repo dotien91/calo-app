@@ -99,6 +99,9 @@ const SelectVideoHook = ({
           });
         }
       },
+      _finally: () => {
+        setUpdatingVid(false);
+      },
     });
   };
 

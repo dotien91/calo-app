@@ -905,6 +905,13 @@ export default {
     takeAPhoto: "Take a photo",
   },
   audio: {
+    titlePodcast: "Podcast episode title",
+    description: "Description",
+    playlist: "Playlist",
+    typeOfPodcast: "Type of podcast",
+    full: "Full",
+    trailer: "Trailer",
+    uploadAudio: "Upload podcast",
     play: "Play",
     pause: "Pause",
     resume: "Resume",
