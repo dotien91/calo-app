@@ -17,3 +17,13 @@ export const priceIds = [
   // { id: "com.course.tier17", label: "18,999,000", value: 18999000 },
   // { id: "com.course.tier18", label: "26,999,000", value: 26999000 },
 ];
+
+export const priceIdsLiveStream = [
+  { id: undefined, label: "Miễn phí", value: 0 },
+  { id: "com.coach.tier8", label: "599,000", value: 599000 },
+  { id: "com.coach.tier9", label: "699,000", value: 699000 },
+  { id: "com.coach.tier10", label: "799,000", value: 799000 },
+  { id: "com.coach.tier11", label: "999,000", value: 999000 },
+  { id: "com.coach.tier12", label: "1,999,000", value: 1999000 },
+  { id: "com.coach.tier13", label: "2,499,000", value: 2499000 },
+];

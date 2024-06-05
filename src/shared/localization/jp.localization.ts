@@ -1838,4 +1838,15 @@ export default {
     other: "その他",
     errorChoose: "一つ以上のオプションを選択してください！",
   },
+  validateTime: "スケジュール時間は現在の時間よりも後でなければなりません！",
+  updateLivestream: {
+    deleteSuccess: "ライブストリームのスケジュールを正常に削除しました",
+    confirmDelete: "このライブストリームのスケジュールを削除しますか？",
+    orderLive: "ライブストリームを注文する",
+    makePlan: "スケジュールを作成する",
+    makePlanSuccess: "スケジュールが正常に作成されました",
+    happenning: "進行中",
+    list: "ライブストリーム一覧",
+    planDes: "放送スケジュールはホームページに表示されます",
+  },
 };

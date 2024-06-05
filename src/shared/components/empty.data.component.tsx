@@ -5,7 +5,7 @@ import { View, Text, ViewStyle } from "react-native";
 import CommonStyle from "@theme/styles";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { palette } from "@theme/themes";
-import lotieNoResult from "assets/lotties/no-result.json";
+import lotieNoResult from "assets/lotties/emptyBox.json";
 import { Device } from "@utils/device.ui.utils";
 
 interface IEmptyResultView {

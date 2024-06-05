@@ -10,6 +10,7 @@ import {
   ActivityIndicator,
   TouchableWithoutFeedback,
   Keyboard,
+  StyleSheet,
 } from "react-native";
 import RTMPPublisher, { RTMPPublisherRefProps } from "react-native-publisher";
 import { useTheme, useFocusEffect, useRoute } from "@react-navigation/native";
@@ -31,7 +32,7 @@ import {
   EnumStyleModalType,
   showSuperModal,
 } from "@helpers/super.modal.helper";
-import { updateLivestream } from "@services/api/stream.api";
+import { getListLiveStream, updateLivestream } from "@services/api/stream.api";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import { requestPermission } from "@helpers/permission.helper";
 import { PERMISSION } from "constants/system.constant";
@@ -43,6 +44,13 @@ import { SCREENS } from "constants";
 import IconSvg from "assets/svg";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { isAndroid } from "@helpers/device.info.helper";
+import IconBtn from "@shared-components/button/IconBtn";
+import TextBase from "@shared-components/TextBase";
+import { navigate } from "@helpers/navigation.helper";
+import { useListData } from "@helpers/hooks/useListData";
+import { IStreamItem } from "models/stream.model";
+import useStore from "@services/zustand/store";
+import eventEmitter from "@services/event-emitter";
 
 function App() {
   const publisherRef = useRef<RTMPPublisherRefProps>(null);
@@ -56,10 +64,12 @@ function App() {
   const inputRef = useRef("");
   const route = useRoute();
   const group_id = route.params?.["group_id"];
+  const go_live_id = route.params?.["go_live_id"];
 
   const { _createLiveStream, liveData, loading } = useLiveStream({
     isPublisher: true,
     group_id,
+    go_live_id,
   });
 
   const [show, setShow] = React.useState(true);
@@ -188,10 +198,11 @@ function App() {
   const handleStartStream = () => {
     if (permissionGranted) {
       // if (listFile.length > 0) {
-      _createLiveStream(
-        inputRef.current.value || translations.livestream.hello,
-        listFile[listFile.length - 1]?.uri,
-      );
+      _createLiveStream({
+        title: inputRef.current.value || translations.livestream.hello,
+        cover_url: listFile[listFile.length - 1]?.uri,
+        livestream_status: "live",
+      });
       // } else {
       //   showToast({
       //     type: "warning",
@@ -283,60 +294,120 @@ function App() {
     }
   };
 
+  const openSettingLive = () => {
+    showSuperModal({
+      styleModalType: EnumStyleModalType.Bottom,
+      contentModalType: EnumModalContentType.Schedule,
+      data: {
+        cover: listFile[listFile.length - 1]?.uri,
+        title: inputRef.current?.value || translations.livestream.hello,
+        cb: _createLiveStream,
+      },
+    });
+  };
+
+  const openManageStreamScreen = () => {
+    navigate(SCREENS.MANAGE_LIVESTREAM);
+  };
+
+  const openCouponPage = () => {
+    navigate(SCREENS.COUPON_LIST);
+  };
+
   const renderInput = () => {
     if (isStreaming) return null;
     return (
       <View style={styles.topView}>
-        <View style={[styles.viewAvatarLive, styles.shadowView]}>
-          {listFile.length <= 0 ? (
-            <IconSvg name="icImage" size={72} />
-          ) : (
-            <Image
-              style={styles.viewAvatarLive}
-              source={{ uri: listFile[listFile.length - 1].uri }}
-            />
-          )}
-          {isUpLoadingFile && (
-            <View
-              style={[
-                styles.viewAvatarLive,
-                { position: "absolute", zIndex: 1 },
-              ]}
+        <View style={CS.flexRear}>
+          <View style={[styles.viewAvatarLive, styles.shadowView]}>
+            {listFile.length <= 0 ? (
+              <IconSvg name="icImage" size={72} />
+            ) : (
+              <Image
+                style={styles.viewAvatarLive}
+                source={{ uri: listFile[listFile.length - 1].uri }}
+              />
+            )}
+            {isUpLoadingFile && (
+              <View
+                style={[
+                  styles.viewAvatarLive,
+                  { position: "absolute", zIndex: 1 },
+                ]}
+              >
+                <ActivityIndicator size={"small"} />
+              </View>
+            )}
+            <PressableBtn
+              // disable={isUpLoadingFile}
+              onPress={_onSelectPicture}
+              style={styles.avatarLive}
             >
-              <ActivityIndicator size={"small"} />
-            </View>
-          )}
-          <PressableBtn
-            // disable={isUpLoadingFile}
-            onPress={_onSelectPicture}
-            style={styles.avatarLive}
-          >
-            <Text
-              style={{
-                ...CS.hnRegular,
-                fontSize: 12,
-                color: palette.textOpacity6,
+              <Text
+                style={{
+                  ...CS.hnRegular,
+                  fontSize: 12,
+                  color: palette.textOpacity6,
+                }}
+              >
+                {translations.liveStream.addCover}
+              </Text>
+            </PressableBtn>
+          </View>
+          <View style={[styles.viewInput, styles.shadowView]}>
+            <Input
+              ref={inputRef}
+              placeholder={translations.livestream.inputTitle}
+              placeholderTextColor={colors.white}
+              customStyle={styles.input}
+              multiline
+              showClearIcon={false}
+              icon={{
+                type: IconType.Feather,
+                name: "edit-3",
+                style: { color: colors.white },
+                size: 18,
               }}
-            >
-              {translations.liveStream.addCover}
-            </Text>
-          </PressableBtn>
+            />
+          </View>
         </View>
-        <View style={[styles.viewInput, styles.shadowView]}>
-          <Input
-            ref={inputRef}
-            placeholder={translations.livestream.inputTitle}
-            placeholderTextColor={colors.white}
-            customStyle={styles.input}
-            multiline
-            showClearIcon={false}
-            icon={{
-              type: IconType.Feather,
-              name: "edit-3",
-              style: { color: colors.white },
-              size: 18,
-            }}
-          />
+        <View
+          style={[
+            CS.flexRear,
+            {
+              marginTop: 20,
+              gap: 8,
+            },
+          ]}
+        >
+          <PressableBtn style={stylex.btnTop} onPress={openSettingLive}>
+            <IconBtn name="share" color={palette.white} />
+            <TextBase
+              textAlign="center"
+              fontSize={12}
+              title={translations.post.share}
+              color={"white"}
+            />
+          </PressableBtn>
+          <PressableBtn style={stylex.btnTop} onPress={openCouponPage}>
+            <IconBtn name="gift" color={palette.white} />
+            <TextBase
+              textAlign="center"
+              fontSize={12}
+              title={translations.coupon.coupon}
+              color={"white"}
+            />
+          </PressableBtn>
+          <PressableBtn style={stylex.btnTop} onPress={openSettingLive}>
+            <IconBtn name="settings" color={palette.white} />
+            <TextBase
+              textAlign="center"
+              fontSize={12}
+              title={translations.setting}
+              color={"white"}
+            />
+          </PressableBtn>
+          <ActionBtn openManageStreamScreen={openManageStreamScreen} />
         </View>
       </View>
     );
@@ -464,7 +535,7 @@ function App() {
             ))}
           {isStreaming && renderChatView()}
           {isStreaming && <LiveBadge />}
-          {!isStreaming && (
+          {!go_live_id && !isStreaming && (
             <View style={styles.footer_container}>
               <View
                 style={[
@@ -494,5 +565,70 @@ function App() {
     </KeyboardAvoidingView>
   );
 }
+
+const ActionBtn = ({ openManageStreamScreen }) => {
+  const userData = useStore((state) => state.userData);
+  const paramRequest = React.useMemo(() => {
+    return {
+      limit: "2",
+      livestream_status: ["schedule"],
+      user_id: userData?._id,
+      order_by: "DESC",
+    };
+  }, [userData]);
+
+  useEffect(() => {
+    eventEmitter.on("refresh_number_badge_schedule_live", _requestData);
+    return () => {
+      eventEmitter.off("refresh_number_badge_schedule_live", _requestData);
+    };
+  }, []);
+
+  const { listData, _requestData, totalCount } = useListData<IStreamItem>(
+    paramRequest,
+    getListLiveStream,
+    [],
+  );
+  console.log("listData", listData.length);
+  if (totalCount <= 0) return null;
+  return (
+    <PressableBtn style={stylex.btnTop} onPress={openManageStreamScreen}>
+      <IconBtn name="calendar" color={palette.white} />
+      <TextBase
+        textAlign="center"
+        fontSize={12}
+        title={translations.updateLivestream.makePlan}
+        color={"white"}
+      />
+      <View style={stylex.badge}>
+        <TextBase textAlign="center" fontSize={12} color={"white"}>
+          {totalCount}
+        </TextBase>
+      </View>
+    </PressableBtn>
+  );
+};
+
+const stylex = StyleSheet.create({
+  btnTop: {
+    ...CS.borderStyle,
+    borderColor: palette.white,
+    padding: 8,
+    flex: 1,
+    ...CS.center,
+    justifyContent: "flex-start",
+    height: 74,
+    borderRadius: 8,
+  },
+  badge: {
+    position: "absolute",
+    right: 4,
+    top: 4,
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: palette.primary,
+  },
+});
 
 export default React.memo(App);

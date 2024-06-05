@@ -14,6 +14,7 @@ import {
   useIAP,
 } from "react-native-iap";
 import { SCREENS } from "constants";
+import { _getJson, _setJson } from "@services/local-storage";
 
 export const useInAppPurchase = () => {
   const {
@@ -70,7 +71,18 @@ export const useInAppPurchase = () => {
                   type: "success",
                   message: translations.payment.completecheckout,
                 });
-                NavigationService.navigate(SCREENS.MY_COURES);
+                if (_getJson("current_product_purchase_type") == "livestream") {
+                  NavigationService.popToTop();
+                  NavigationService.navigate(SCREENS.VIEW_LIVE_STREAM, {
+                    liveStreamId: _getJson("current_product_id"),
+                  });
+                  eventEmitter.emit("refresh_livestream_preview");
+                  eventEmitter.emit("reload_list_stream");
+                } else {
+                  NavigationService.navigate(SCREENS.MY_COURES);
+                }
+                _setJson("current_product_purchase_type", "");
+                _setJson("current_product_id", "");
               } else {
                 showToast({
                   message: res.message,
@@ -139,12 +151,15 @@ export const useInAppPurchase = () => {
     });
   };
 
-  const buyProduct = async ({ productId, cb, data }) => {
-    console.log("11111", JSON.stringify(data));
+  const buyProduct = async ({ productId, cb, data, typeProduct, local_id }) => {
     const orderData = await createOrder(data);
     if (!orderData) return;
     callback.current = cb;
     typeBuy.current = "product";
+    // typeProduct.current = typeProduct;
+    // local_id.current = local_id;
+    _setJson("current_product_purchase_type", typeProduct);
+    _setJson("current_product_id", local_id);
     try {
       if (isIOS) {
         await requestPurchase({ sku: productId });
@@ -153,9 +168,9 @@ export const useInAppPurchase = () => {
       }
     } catch (error) {
       closeSuperModal();
-      // showToast({
-      //   type: "error",
-      // });
+      showToast({
+        type: "error",
+      });
     }
   };
 

@@ -1911,4 +1911,15 @@ export default {
     other: "Khác",
     errorChoose: "Vui lòng chọn một hoặc nhiều tùy chọn!",
   },
+  validateTime: "Thời gian lên lịch phải lớn hơn thời gian hiện tại!",
+  updateLivestream: {
+    deleteSuccess: "Xóa lịch livestream thành công",
+    confirmDelete: "Bạn có muốn xóa lịch livestream này không!",
+    orderLive: "Đặt mua livestream",
+    makePlan: "Lên lịch",
+    makePlanSuccess: "Lên lịch thành công",
+    happenning: "Đang diễn ra",
+    list: "Danh sách livestream",
+    planDes: "Lịch phát sóng sẽ được hiển thị bên ngoài trang chủ",
+  },
 };

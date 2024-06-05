@@ -80,6 +80,7 @@ export const palette = {
   grey5: "#EBEBEF",
   grey6: "#F0F3F6",
   btnInactive: "rgba(0, 53, 128, 0.1)",
+  textOpacity9: "rgba(22, 28, 36, 0.9)",
   textOpacity8: "rgba(22, 28, 36, 0.8)",
   textOpacity6: "rgba(22, 28, 36, 0.64)",
   textOpacity5: "rgba(22, 28, 36, 0.52)",

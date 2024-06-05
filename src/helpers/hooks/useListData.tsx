@@ -21,6 +21,8 @@ interface TypedUseListData<T> {
   renderFooterComponent: () => void;
   onEndReach: () => void;
   refreshControl: any;
+  noData: boolean;
+  totalCount: number;
 }
 
 interface TypedStateListData<T> {

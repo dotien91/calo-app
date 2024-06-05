@@ -275,6 +275,29 @@ export const formatFullDate = (date) => {
   } ${day < 10 ? `0${day}` : day}-${month < 10 ? `0${month}` : month}-${year} `;
 };
 
+export const getHoursAndDate = (date) => {
+  const _date = new Date(date);
+  if (_date.toString() === "Invalid Date") {
+    return {
+      hour: "",
+      date: "",
+    };
+  }
+  const year = _date.getFullYear();
+  const month = _date.getMonth() + 1;
+  const day = _date.getDate();
+  const hours = _date.getHours();
+  const minutes = _date.getMinutes();
+  return {
+    hour: `${hours < 10 ? `0${hours}` : hours}:${
+      minutes < 10 ? `0${minutes}` : minutes
+    }`,
+    date: `${day < 10 ? `0${day}` : day}-${
+      month < 10 ? `0${month}` : month
+    }-${year} `,
+  };
+};
+
 export const formatVNDate = (date) => {
   const _date = new Date(date);
   if (_date.toString() === "Invalid Date") {

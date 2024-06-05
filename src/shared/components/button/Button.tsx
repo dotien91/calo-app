@@ -5,6 +5,11 @@ import createStyles from "./Button.style";
 import { palette } from "@theme/themes";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
+interface ICustomStyle {
+  button?: ViewStyle;
+  text?: ViewStyle;
+}
+
 interface ButtonProps {
   onPress: () => void;
   text?: string;
@@ -17,6 +22,9 @@ interface ButtonProps {
   iconName?: string;
   isFullWidth?: boolean;
   showRightIcon?: boolean;
+  isSmallButton?: boolean;
+  isMiddleButton?: boolean;
+  customStyle?: ICustomStyle;
 }
 
 export default function Button({
@@ -31,6 +39,9 @@ export default function Button({
   type,
   isFullWidth = true,
   showRightIcon = false,
+  isSmallButton = false,
+  isMiddleButton = false,
+  customStyle,
 }: ButtonProps) {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(), [theme]);
@@ -54,7 +65,6 @@ export default function Button({
         break;
     }
   };
-
   return (
     <Pressable
       disabled={disabled || type == "disabled"}
@@ -68,8 +78,13 @@ export default function Button({
           type == "outline" && styles.btnOutline,
           type == "disabled" && styles.btnDisabled,
           type == "viewmore" && styles.btnViewmore,
-          isFullWidth ? { width: "100%" } : { alignSelf: "flex-start" },
+          isFullWidth
+            ? { width: "100%" }
+            : { width: "auto", alignSelf: "start" },
+          isSmallButton ? styles.smallBtn : {},
+          isMiddleButton ? styles.middleBtn : {},
           style && style,
+          customStyle && customStyle?.button,
         ];
       }}
       onPress={onPress}
@@ -79,9 +94,9 @@ export default function Button({
         <Icon
           type={IconType.Feather}
           name={iconName}
-          size={20}
+          size={isSmallButton ? 12 : 20}
           color={colorIcon()}
-          style={{ marginRight: 6 }}
+          style={{ marginRight: isSmallButton ? -4 : 6 }}
         />
       )}
       <Text
@@ -91,6 +106,9 @@ export default function Button({
           type == "primary" && styles.txtBtnPrimary,
           (type == "outline" || type == "viewmore") && styles.txtBtnOutline,
           type == "disabled" && styles.txtBtnDisabled,
+          isSmallButton && { fontSize: 13, fontWeight: "500" },
+          isMiddleButton && styles.textMiddleButton,
+          customStyle && customStyle?.text,
         ]}
       >
         {text}
@@ -99,7 +117,7 @@ export default function Button({
         <Icon
           type={IconType.Feather}
           name={iconName}
-          size={20}
+          size={isSmallButton ? 12 : 20}
           color={colorIcon()}
           style={{ marginLeft: 6 }}
         />

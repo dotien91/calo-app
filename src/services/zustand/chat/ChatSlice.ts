@@ -37,6 +37,7 @@ const createChatSlice: StoreSlice<ChatSlice> = (set, get) => ({
   searchModeChat: false,
   setSearchModeChat: (value: boolean) => set({ searchModeChat: value }),
   updateCurrentMediaIds: (item) => {
+    if (!item?.id) return;
     const { currentMediaIds } = get();
     const oldItem = currentMediaIds.find((_item) => _item?.id == item?.id) || {
       data: [],

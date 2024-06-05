@@ -90,5 +90,22 @@ export default () => {
     btnViewmore: {
       backgroundColor: palette.grey1,
     },
+    smallBtn: {
+      paddingVertical: 2,
+      paddingHorizontal: 8,
+      minHeight: "auto",
+      borderRadius: 8,
+    },
+    middleBtn: {
+      paddingVertical: 5,
+      paddingHorizontal: 12,
+      minHeight: "auto",
+      borderRadius: 8,
+    },
+    textMiddleButton: {
+      ...CommonStyle.hnMedium,
+      color: palette.white,
+      fontSize: 16,
+    },
   });
 };

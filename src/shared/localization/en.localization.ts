@@ -1422,5 +1422,16 @@ export default {
     other: "Other",
     errorChoose: "Please choose one or more options!",
   },
+  validateTime: "Scheduled time must be greater than the current time!",
+  updateLivestream: {
+    deleteSuccess: "Successfully deleted the livestream schedule",
+    confirmDelete: "Do you want to delete this livestream schedule?",
+    orderLive: "Order livestream",
+    makePlan: "Schedule",
+    makePlanSuccess: "Schedule successful",
+    happenning: "Happening now",
+    list: "Livestream list",
+    planDes: "The broadcast schedule will be displayed on the homepage",
+  },
 };
 /* eslint-disable max-len */

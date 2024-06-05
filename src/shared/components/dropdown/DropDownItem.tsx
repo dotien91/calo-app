@@ -1,8 +1,6 @@
-import { View } from "react-native";
-import React, { useMemo, useState } from "react";
+import { ViewStyle } from "react-native";
+import React, { useState } from "react";
 import DropDownPicker from "react-native-dropdown-picker";
-import { useTheme } from "@react-navigation/native";
-import createStyles from "./DropDownItem.style";
 import { palette } from "@theme/themes";
 
 type ItemType = {
@@ -17,29 +15,31 @@ interface DropDownItemProps {
   value: string;
   setValue: Dispatch<SetStateCallback<string>>;
   items: ItemType[];
+  customStyle: ViewStyle;
 }
 
 export default function DropDownItem({
   value,
   setValue,
   items,
+  customStyle,
   ...res
 }: DropDownItemProps) {
   const [open, setOpen] = useState(false);
-  const theme = useTheme();
-  const styles = useMemo(() => createStyles(theme), [theme]);
   return (
-    <View style={styles.container}>
-      <DropDownPicker
-        open={open}
-        value={value}
-        items={items}
-        setOpen={setOpen}
-        setValue={setValue}
-        multiple={false}
-        {...res}
-        style={{ borderColor: palette.borderColor1 }}
-      />
-    </View>
+    <DropDownPicker
+      open={open}
+      value={value}
+      items={items}
+      setOpen={setOpen}
+      setValue={setValue}
+      multiple={false}
+      {...res}
+      style={[
+        { borderColor: palette.borderColor },
+        !!customStyle && customStyle,
+      ]}
+      containerStyle={{ margin: 0, padding: 0 }}
+    />
   );
 }
