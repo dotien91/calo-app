@@ -8,6 +8,7 @@ import TrackPlayer, {
 import eventEmitter from "@services/event-emitter";
 import useStore from "@services/zustand/store";
 import { useEffect, useState } from "react";
+import { GetPodCastSuggest } from "@services/api/podcast.api";
 
 export const useActionTrack = () => {
   const activeTrack = useActiveTrack();
@@ -17,6 +18,7 @@ export const useActionTrack = () => {
   const [isFirst, setIsFirt] = useState(false);
   const [isLast, setIsLast] = useState(false);
   const [rate, setRate] = useState(1.0);
+  const id = activeTrack?.id;
 
   const updataDaPosition = async () => {
     if (activeTrack) {
@@ -46,6 +48,48 @@ export const useActionTrack = () => {
       setIsLast(false);
     }
   };
+  useEffect(() => {
+    if (id) {
+      addTrack(id);
+    }
+  }, [id]);
+
+  const addTrack = (idTrack: string) => {
+    console.log("idTrack...", idTrack);
+    GetPodCastSuggest(idTrack).then((res) => {
+      if (!res.isError) {
+        // console.log("res...", res.data);
+        const data = res.data;
+        for (let i = 0; i < data.length; i++) {
+          const element = data[i];
+
+          const track1 = {
+            url: element.attach_files[0].media_url,
+            title: element.title,
+            artist: element.user_id.display_name,
+            artwork: element.post_avatar.media_url,
+            id: element._id,
+          };
+          addTrackIfNotDuplicate(track1);
+        }
+      }
+    });
+  };
+  async function addTrackIfNotDuplicate(newTrack) {
+    // Lấy hàng đợi hiện tại
+    const queue = await TrackPlayer.getQueue();
+    console.log("queue...", queue);
+    // Kiểm tra xem track mới có trùng ID với bất kỳ track nào trong hàng đợi không
+    const isDuplicate = queue.some((track) => track.id === newTrack.id);
+
+    // Nếu không trùng, thêm track vào hàng đợi
+    if (!isDuplicate) {
+      await TrackPlayer.add(newTrack);
+      console.log(`Track ${newTrack.id} đã được thêm vào hàng đợi.`);
+    } else {
+      console.log(`Track ${newTrack.id} đã tồn tại trong hàng đợi.`);
+    }
+  }
 
   const next = async () => {
     updataDaPosition();

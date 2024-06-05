@@ -59,3 +59,12 @@ export async function GetPodCastDetail(id: string) {
     return response;
   });
 }
+
+export async function GetPodCastSuggest(id: string) {
+  return request({
+    method: METHOD.GET,
+    urlPath: `podcast/${id}/suggest`,
+  }).then((response) => {
+    return response;
+  });
+}
