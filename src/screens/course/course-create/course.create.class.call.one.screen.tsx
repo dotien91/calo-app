@@ -68,6 +68,7 @@ const CreateClassCallOneScreen = () => {
           // console.log("res.s..", JSON.stringify(res.data));
           if (res.data.time_available.length > 0) {
             setUpdateTime(true);
+            // lấy data gen lại ở đây
             const mapTime = res.data.time_available.map(
               (item: ITimeSelected) => {
                 return {
@@ -151,7 +152,6 @@ const CreateClassCallOneScreen = () => {
         day: date,
         time_start: item.time_start,
         time_end: addOneHour(item.time_start),
-
         duration: 1,
       };
       if (indexSelected >= 0) {

@@ -1383,7 +1383,7 @@ export default {
     descriptionPoint:
       "Khi tương tác trong cộng đồng như bình luận, thích, đăng bài, mời thành viên hay xem bài học hoặc điểm danh, các thành viên sẽ nhận được số Point tương ứng theo cài đặt từ quản trị viên.\n\nThành viên có thể sử dụng đồng tiền ảo này tích luỹ để lên cấp, mở khoá các khoá học mới.",
     descriptionDiamond:
-      "Để nhận được kim cương trong cộng đồng, các thành viên sẽ phải hoàn thành các nhiệm vụ và điểm danh hàng ngày.\n\nCác thành viên có thể sử dụng kim cương để mua bán các khoá học,…( mỗi kim cương tương ứng 1000 vnđ) trong cộng đồng.",
+      "Để nhận được kim cương trong cộng đồng, các thành viên sẽ phải hoàn thành các nhiệm vụ và điểm danh hàng ngày.\n\nCác thành viên có thể sử dụng kim cương để mua bán các khoá học,…( mỗi kim cương tương ứng 1000 VND) trong cộng đồng.",
     actionPoint:
       "Khi tương tác trong cộng đồng như bình luận, thích, đăng bài, mời thành viên hay xem bài học hoặc điểm danh, các thành viên sẽ nhận được số Point tương ứng theo cài đặt từ quản trị viên.",
     personPoint:
@@ -1391,7 +1391,7 @@ export default {
     titleDiamond:
       "Để nhận được kim cương trong cộng đồng, các thành viên sẽ phải hoàn thành các nhiệm vụ và điểm danh hàng ngày.",
     personDiamond:
-      "Các thành viên có thể sử dụng kim cương để mua bán các khoá học,…( mỗi kim cương tương ứng 1000 vnđ) trong cộng đồng.",
+      "Các thành viên có thể sử dụng kim cương để mua bán các khoá học,…( mỗi kim cương tương ứng 1000 VND) trong cộng đồng.",
     noteDiamond:
       "Lưu ý: Point và kim cương chỉ có giá trị khi sử dụng trên kênh của cộng đồng mà thành viên đang tương tác mà thôi.",
   },

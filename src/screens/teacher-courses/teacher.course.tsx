@@ -1,27 +1,52 @@
 import React from "react";
-import { SafeAreaView, View } from "react-native";
+import { SafeAreaView, Text, View, TouchableOpacity } from "react-native";
+import {
+  Calendar,
+  CalendarTouchableOpacityProps,
+  ICalendarEventBase,
+  Mode,
+} from "react-native-big-calendar";
 
 import Header from "@shared-components/header/Header";
 import CS from "@theme/styles";
 import { translations } from "@localization";
-import { Calendar } from "react-native-big-calendar";
 import Button from "@shared-components/button/Button";
+import { palette } from "@theme/themes";
 
-const events = [
+interface MyCustomEventType extends ICalendarEventBase {
+  color: string;
+}
+
+const listevents = [
   {
     title: "Meeting",
-    start: new Date("2024-06-03T03:24:00"),
-    end: new Date("2024-06-03T04:24:00"),
+    start: new Date("2024-06-05T03:24:00"),
+    end: new Date("2024-06-05T04:24:00"),
+    color: palette.primary,
   },
   {
     title: "Coffee break",
-    start: new Date("2024-06-04T04:24:00"),
-    end: new Date("2024-06-04T06:24:00"),
+    start: new Date("2024-06-07T04:24:00"),
+    end: new Date("2024-06-07T06:24:00"),
+    color: palette.yellow,
+  },
+  {
+    title: "Meeting",
+    start: new Date("2024-06-04T03:24:00"),
+    end: new Date("2024-06-04T04:24:00"),
+    color: palette.primarySub,
+  },
+  {
+    title: "Coffee break",
+    start: new Date("2024-06-06T04:24:00"),
+    end: new Date("2024-06-06T06:24:00"),
+    color: palette.backgroundColorGrey,
   },
 ];
 const TeacherCourse = () => {
   const [date, setDate] = React.useState(new Date());
-  const [mode, setMode] = React.useState("week");
+  const [mode, setMode] = React.useState<Mode>("week");
+  const [events, setEvents] = React.useState(listevents);
 
   // const { listData, isLoading } = useListData<ICourseItem>(
   //   {
@@ -62,15 +87,39 @@ const TeacherCourse = () => {
     alert(e);
   };
 
+  const renderEvent = <T extends MyCustomEventType>(
+    event: T,
+    touchableOpacityProps: CalendarTouchableOpacityProps,
+  ) => (
+    <TouchableOpacity {...touchableOpacityProps}>
+      <View
+        style={{
+          backgroundColor: event.color,
+          width: "auto",
+          height: 4,
+          borderRadius: 2,
+        }}
+      />
+      <Text style={[CS.hnRegular, { fontSize: 10 }]}>{`${event.title}`}</Text>
+    </TouchableOpacity>
+  );
+
   const renderCalendar = () => {
     return (
       <Calendar
         mode={mode}
+        renderEvent={renderEvent}
         onPressCell={_onPressCell}
         activeDate={date}
         onPressDateHeader={(e) => setDate(e)}
-        onPressEvent={() => alert(3)}
+        onPressEvent={(e) => alert(e.title)}
         events={events}
+        eventCellStyle={{
+          borderRadius: 10,
+          backgroundColor: palette.secondColor,
+          borderWidth: 1,
+          borderColor: palette.borderColor,
+        }}
         height={600}
       />
     );
@@ -81,6 +130,11 @@ const TeacherCourse = () => {
       <Header text={translations.course.manageClass} />
       <View style={CS.flexStart}>
         <Button isFullWidth={false} text="day" onPress={() => setMode("day")} />
+        <Button
+          isFullWidth={false}
+          text="3day"
+          onPress={() => setMode("3days")}
+        />
         <Button
           isFullWidth={false}
           text="week"
