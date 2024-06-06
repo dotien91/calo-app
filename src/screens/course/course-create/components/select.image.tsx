@@ -67,7 +67,7 @@ const SelectImageHook = ({
         }
       },
       _finally: () => {
-        // setUpdatingImg(false);
+        setUpdatingImg(false);
       },
     });
   };

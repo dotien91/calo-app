@@ -11,6 +11,8 @@ import AudioCategoryTitle from "../audio-book/audio.category.title";
 import AudioItemList from "../components/audio.item.list";
 import { SCREENS } from "constants";
 import LoadingList from "@shared-components/loading.list.component";
+import AudioQuickFilter from "../components/audio.quick.filter";
+import AudioView from "./audio.view";
 
 const AudioList = () => {
   const userData = useStore((state) => state.userData);
@@ -53,17 +55,26 @@ const AudioList = () => {
   const renderLoading = () => {
     return <LoadingList numberItem={3} />;
   };
+  function renderHeader() {
+    return (
+      <View style={{ marginHorizontal: -16 }}>
+        <AudioQuickFilter />
+        <AudioView />
+        <AudioCategoryTitle
+          hideViewAll={false}
+          onPress={onSeeAll}
+          title={translations.audio.allAudio}
+        />
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
-      <AudioCategoryTitle
-        hideViewAll={false}
-        onPress={onSeeAll}
-        title={translations.audio.allAudio}
-      />
       {listData.length == 0 && isLoading ? (
         renderLoading()
       ) : (
         <FlatList
+          ListHeaderComponent={renderHeader()}
           showsHorizontalScrollIndicator={false}
           data={listData}
           renderItem={renderItem}
