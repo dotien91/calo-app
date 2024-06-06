@@ -113,6 +113,10 @@ export const palette = {
   backgroundNotification: "#FD7467",
   primarySub: "rgba(241, 144, 144, 1)",
   colorMoney: "#FEAEAE",
+  newClass: "#2BC456",
+  callGroup: "#FEAEAE",
+  call11: "#161C24",
+  leave: "#F0F3F6",
 };
 
 interface ExtendedTheme extends Theme {

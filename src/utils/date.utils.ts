@@ -533,3 +533,27 @@ export const formatDateAtTime = (date: string | Date): string => {
     return `${formattedDay} ${month} AT ${hours}:${formattedMinutes}${ampm}`;
   }
 };
+
+export const formatCalendarDateTime = ({
+  start,
+  end,
+}: {
+  start: string | Date;
+  end: string | Date;
+}) => {
+  const dateStart = new Date(start);
+  const dateEnd = new Date(end);
+  const year = dateStart.getFullYear();
+  const month = dateStart.getMonth() + 1;
+  const day = dateStart.getDate();
+  const hoursStart = dateStart.getHours();
+  const minutesStart = dateStart.getMinutes();
+  const hoursEnd = dateEnd.getHours();
+  const minutesEnd = dateEnd.getMinutes();
+
+  return `${day < 10 ? `0${day}` : day}/${month}/${year}, ${
+    hoursStart < 10 ? `0${hoursStart}` : hoursStart
+  }:${minutesStart < 10 ? `0${minutesStart}` : minutesStart}-${
+    hoursEnd < 10 ? `0${hoursEnd}` : hoursEnd
+  }:${minutesEnd < 10 ? `0${minutesEnd}` : minutesEnd} `;
+};

@@ -175,6 +175,13 @@ import icPreview from "./icon-preview.svg";
 import icVip from "./icon-vip.svg";
 import icSharePost from "./icon-share-post.svg";
 import icDollar from "./dollar.svg";
+import icSelect from "./icon-select.svg";
+import icDay from "./icon-day.svg";
+import icMonth from "./icon-month.svg";
+import icWeek from "./icon-week.svg";
+import icAgenda from "./icon-agenda.svg";
+import icCopy from "./icon-copy.svg";
+import icCall from "./icon-call.svg";
 
 const Icons = {
   icVip,
@@ -353,6 +360,13 @@ const Icons = {
   icGoNext,
   icSharePost,
   icDollar,
+  icSelect,
+  icDay,
+  icMonth,
+  icWeek,
+  icAgenda,
+  icCopy,
+  icCall,
 };
 
 interface IconSvgProps {

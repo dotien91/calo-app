@@ -45,7 +45,8 @@ const NewHomeScreen = () => {
           }}
           // onPress={_showSuperModalCourse}
           // onPress={() => NavigationService.navigate(SCREENS.AUDIO_PLAY)}
-          onPress={() => navigate(SCREENS.POST_SCREEN)}
+          onPress={() => navigate(SCREENS.TEACHER_COURSES)}
+          // onPress={() => navigate(SCREENS.POST_SCREEN)}
           // onPress={() => NavigationService.navigate(SCREENS.AUDIO_PREVIEW)}
         >
           <Icon
