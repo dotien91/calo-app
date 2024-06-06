@@ -162,7 +162,7 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
   };
 
   const gotoHomeScreen = () => {
-    NavigationService.navigate(SCREENS.HOME);
+    NavigationService.goBack();
   };
 
   return (

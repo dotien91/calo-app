@@ -104,6 +104,7 @@ import CodeActivationsScreen from "@screens/code-activations/code.activations.sc
 import HiddenPaage from "@screens/hidden-page/hidden.page";
 import BlackList from "@screens/black-list/black.list";
 import AccountSetupScreen from "@screens/welcome/account-setup/account.setup.screen";
+import TeacherScreen from "@screens/profile.screen/ikiCoachTeacher.screen";
 
 export const DiscoveryStackData = [
   {
@@ -312,6 +313,10 @@ export const CommonStackData = [
   {
     name: SCREENS.AUDIO_PLAY,
     screen: AudioPlayScreen,
+  },
+  {
+    name: SCREENS.TEACHER_SCREEN,
+    screen: TeacherScreen,
   },
   // {
   //   name: SCREENS.ALL_AUDIO_BOOk,

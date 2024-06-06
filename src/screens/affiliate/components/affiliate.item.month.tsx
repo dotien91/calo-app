@@ -9,16 +9,25 @@ import { palette } from "@theme/themes";
 interface ItemMonthProps {
   text: string;
   price: string;
+  style?: {
+    view?: object;
+    textMonth?: object;
+    textCommissionMonth?: object;
+  };
+  color?: string;
 }
 
-const ItemMonth = ({ text, price }: ItemMonthProps) => {
+const ItemMonth: React.FC<ItemMonthProps> = ({ text, price, style, color }) => {
   const theme = useTheme();
   const styles = React.useMemo(() => createStyles(theme), [theme]);
   return (
-    <View style={styles.styleViewTotal}>
+    <View style={[styles.styleViewTotal, style?.view]}>
       <View>
-        <Text style={styles.txtMonth}>{text}</Text>
-        <Text numberOfLines={2} style={styles.txtCommissionMonth}>
+        <Text style={[styles.txtMonth, style?.textMonth]}>{text}</Text>
+        <Text
+          numberOfLines={2}
+          style={[styles.txtCommissionMonth, style?.textCommissionMonth]}
+        >
           {price}
         </Text>
       </View>
@@ -26,7 +35,7 @@ const ItemMonth = ({ text, price }: ItemMonthProps) => {
         name="trending-up-outline"
         size={24}
         type={IconType.Ionicons}
-        color={palette.green2}
+        color={color || palette.green}
       />
     </View>
   );
