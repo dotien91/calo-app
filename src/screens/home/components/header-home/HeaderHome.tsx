@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { View, Image, TouchableOpacity } from "react-native";
+import { View, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import * as NavigationService from "react-navigation-helpers";
@@ -12,6 +12,9 @@ import TextBase from "@shared-components/TextBase";
 import formatMoney from "@shared-components/input-money/format.money";
 import IconSvg from "assets/svg";
 import { palette } from "@theme/themes";
+import { getCount } from "@services/api/chat.api";
+import CS from "@theme/styles";
+import { EnumColors } from "models";
 
 const SIZE_AVATAR = 40;
 const BORDER_AVATAR = 20;
@@ -19,10 +22,23 @@ const HeaderHome = () => {
   const userData = useStore((state) => state.userData);
   const userInfo = useStore((state) => state.userInfo);
   const userMedia = useStore((state) => state.userMedia);
+  const unreadNumber = useStore((state) => state.unreadNumber);
+  const setUnreadNumber = useStore((state) => state.setUnreadNumber);
 
   const theme = useTheme();
   const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
+
+  React.useEffect(() => {
+    getCount({
+      read_count: "unread",
+    }).then((res) => {
+      if (!res.isError) {
+        setUnreadNumber(res?.data?.count ?? 0);
+      }
+    });
+  }, []);
+
   const gotoProfile = () => {
     if (userData) {
       NavigationService.push(SCREENS.PROFILE_CURRENT_USER, {
@@ -92,9 +108,30 @@ const HeaderHome = () => {
       </PressableBtn>
       <TouchableOpacity style={styles.viewInput} onPress={goToChatScreen}>
         <IconSvg name="icMessage" size={20} color={colors.textOpacity6} />
+        {unreadNumber > 0 && (
+          <View style={stylex.badge}>
+            <TextBase fontSize={12} fontWeight="600" color={EnumColors.white}>
+              {unreadNumber}
+            </TextBase>
+          </View>
+        )}
       </TouchableOpacity>
     </View>
   );
 };
+
+const stylex = StyleSheet.create({
+  badge: {
+    position: "absolute",
+    right: -6,
+    top: -6,
+    width: 18,
+    height: 18,
+    borderRadius: 99,
+    zIndex: 1,
+    backgroundColor: palette.primary,
+    ...CS.center,
+  },
+});
 
 export default React.memo(HeaderHome);

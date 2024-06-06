@@ -109,7 +109,6 @@ export function useListData<T>(
           setIsLoadmore(false);
           const newData = res.data;
           isFetching.current = false;
-
           if (!res.isError && lodash.isArray(newData)) {
             let isLastPage = false;
             let { nextPage } = stateListData;

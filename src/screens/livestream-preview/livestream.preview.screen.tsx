@@ -26,6 +26,8 @@ import { navigate } from "@helpers/navigation.helper";
 import { SCREENS } from "constants";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import { translations } from "@localization";
+import TextViewCollapsed from "@screens/course/components/text.view.collapsed";
+import { palette } from "@theme/themes";
 
 const LiveStreamPreviewScreem = () => {
   const userData = useStore((state) => state.userData);
@@ -76,6 +78,10 @@ const LiveStreamPreviewScreem = () => {
     return (
       <View style={styles.authorBox}>
         <UserItem {...data.user_id} />
+        <TextViewCollapsed
+          styleText={styles.txtDes}
+          text={data?.user_id?.bio || translations.noReferrals}
+        />
       </View>
     );
   };
@@ -152,6 +158,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 16,
     marginTop: 16,
+  },
+  txtDes: {
+    ...CS.hnRegular,
+    color: palette.textOpacity6,
+    lineHeight: 24,
   },
 });
 

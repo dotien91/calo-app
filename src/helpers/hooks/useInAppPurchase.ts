@@ -38,7 +38,6 @@ export const useInAppPurchase = () => {
 
   useEffect(() => {
     const checkCurrentPurchase = async () => {
-      console.log("currentPurchasecurrentPurchase", currentPurchase);
       try {
         if (
           (isIosStorekit2() && currentPurchase?.transactionId) ||

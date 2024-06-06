@@ -19,6 +19,8 @@ export interface ChatSlice {
   setSearchModeChat: (searchModeChat: boolean) => void;
   isMutedAll: boolean;
   setIsMutedAll: (isMutedAll: boolean) => void;
+  unreadNumber: number;
+  setUnreadNumber: (viewNumber: number) => void;
 }
 
 const createChatSlice: StoreSlice<ChatSlice> = (set, get) => ({
@@ -57,6 +59,8 @@ const createChatSlice: StoreSlice<ChatSlice> = (set, get) => ({
   setIsMutedAll: (v) => {
     set({ isMutedAll: v });
   },
+  unreadNumber: 0,
+  setUnreadNumber: (value: number) => set({ unreadNumber: value }),
 });
 
 export default createChatSlice;

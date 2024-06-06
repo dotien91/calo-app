@@ -35,6 +35,7 @@ import EmptyResultView from "@shared-components/empty.data.component";
 import { TypedPost } from "shared/models";
 import HeaderTab from "./components/header-home/HeaderTab";
 import { palette } from "@theme/themes";
+import { Viewport } from "@skele/components";
 
 import AboutHome from "./components/about-home/about.home";
 import {
@@ -63,7 +64,6 @@ const ListPostNew = ({ id }: ListPostProps) => {
   const { colors } = theme;
 
   const userData = useStore((state) => state.userData);
-  // const { isLoggedIn } = useUserHook();
 
   const renderItem = ({ item }: any) => {
     return <ItemPost key={item._id} data={item} isProfile={id?.length > 0} />;
@@ -347,35 +347,37 @@ const ListPostNew = ({ id }: ListPostProps) => {
         </Animated.View>
       </Animated.View>
       <View style={[CS.flex1, { marginTop: getStatusBarHeight() }]}>
-        <FlatList
-          StickyHeaderComponent={StickyHeaderComponent}
-          stickyHeaderIndices={[1]}
-          stickyHeaderHiddenOnScroll={true}
-          ref={listRef}
-          data={listData}
-          onScroll={onScroll}
-          ListHeaderComponent={renderHeaderTab}
-          renderItem={renderItem}
-          onEndReachedThreshold={0.8}
-          onEndReached={onEndReach}
-          showsVerticalScrollIndicator={false}
-          removeClippedSubviews={true}
-          keyExtractor={(item) => item?._id + ""}
-          refreshControl={refreshControl()}
-          ListFooterComponent={customFooter()}
-          progressViewOffset={HEADER_HEIGHT}
-          onScrollBeginDrag={(e) => {
-            onScrollBeginDrag?.(e);
-            hasScrolled.current = true;
-          }}
-          contentContainerStyle={{ paddingTop: TAB_HEIGHT, marginTop: 16 }}
-          // decelerationRate={'fast'}
+        <Viewport.Tracker>
+          <FlatList
+            StickyHeaderComponent={StickyHeaderComponent}
+            stickyHeaderIndices={[1]}
+            stickyHeaderHiddenOnScroll={true}
+            ref={listRef}
+            data={listData}
+            onScroll={onScroll}
+            ListHeaderComponent={renderHeaderTab}
+            renderItem={renderItem}
+            onEndReachedThreshold={0.8}
+            onEndReached={onEndReach}
+            showsVerticalScrollIndicator={false}
+            removeClippedSubviews={true}
+            keyExtractor={(item) => item?._id + ""}
+            refreshControl={refreshControl()}
+            ListFooterComponent={customFooter()}
+            progressViewOffset={HEADER_HEIGHT}
+            onScrollBeginDrag={(e) => {
+              onScrollBeginDrag?.(e);
+              hasScrolled.current = true;
+            }}
+            contentContainerStyle={{ paddingTop: TAB_HEIGHT, marginTop: 16 }}
+            // decelerationRate={'fast'}
 
-          onLayoutFilter={onLayoutFilter}
-          // ContentFilter={ContentFilter}
-          // onPressFilter={onPressFilter}
-          scrollToFilter={scrollToFilter}
-        />
+            onLayoutFilter={onLayoutFilter}
+            // ContentFilter={ContentFilter}
+            // onPressFilter={onPressFilter}
+            scrollToFilter={scrollToFilter}
+          />
+        </Viewport.Tracker>
       </View>
     </View>
   );

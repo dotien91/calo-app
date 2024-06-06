@@ -14,7 +14,7 @@ import * as NavigationService from "react-navigation-helpers";
  * ? Local Imports
  */
 import createStyles from "./chat.list.screen.style";
-import { getListChat } from "@services/api/chat.api";
+import { getCount, getListChat } from "@services/api/chat.api";
 import ChatItem from "./chat.item";
 import ListFriend from "./friend.list.view";
 import { translations } from "@localization";
@@ -46,6 +46,8 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
   const isFocused = useIsFocused();
   const [lastNoti, setLastNoti] = useState();
   const [refreshing, setRefreshing] = useState(false);
+  const setUnreadNumber = useStore((state) => state.setUnreadNumber);
+
   const {
     listData,
     onEndReach,
@@ -61,6 +63,7 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
     [],
     userData,
   );
+
   const getLastNotification = () => {
     const param = {
       limit: 1,
@@ -79,6 +82,14 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
     if (isFocused) {
       getLastNotification();
       eventEmitter.emit("reload_list_friend");
+    } else {
+      getCount({
+        read_count: "unread",
+      }).then((res) => {
+        if (!res.isError) {
+          setUnreadNumber(res?.data?.count ?? 0);
+        }
+      });
     }
   }, [isFocused]);
 

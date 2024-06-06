@@ -103,3 +103,13 @@ export async function changeNameGroup(data: any) {
     return response;
   });
 }
+
+export async function getCount(params) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "chat-room/count-reply",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}

@@ -78,7 +78,7 @@ const LikeBtn = (props: LikeBtnProps) => {
     >
       <Icon
         type={IconType.Ionicons}
-        size={16}
+        size={20}
         name={isLike ? "heart" : "heart-outline"}
         color={isLike ? palette.primary : palette.textOpacity6}
       />
