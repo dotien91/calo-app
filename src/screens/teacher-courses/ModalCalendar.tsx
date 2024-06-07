@@ -20,8 +20,8 @@ export default function ModalCalendar({
       {...restProps}
       backdropOpacity={backdropOpacity || 0.5}
       style={styles.modal}
-      animationIn={animationIn || "slideInUp"}
-      animationOut={animationOut || "slideInUp"}
+      animationIn={animationIn || "fadeInRight"}
+      animationOut={animationOut || "fadeOutRight"}
       animationInTiming={200}
       avoidKeyboard={true}
     >

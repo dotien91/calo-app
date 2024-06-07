@@ -123,7 +123,15 @@ const TeacherCourse = () => {
           backgroundColor: event.color,
         }}
       />
-      <Text style={styles.txtItemEvent}>{event.title}</Text>
+      <Text numberOfLines={1} style={styles.txtItemEvent}>
+        {event.title}
+      </Text>
+      <Text numberOfLines={1} style={styles.txtItemEvent}>
+        {formatCalendarDateTime({
+          start: event?.start,
+          end: event?.end,
+        })}
+      </Text>
     </TouchableOpacity>
   );
 
@@ -160,7 +168,7 @@ const TeacherCourse = () => {
     onPressRight?: () => void;
   }) => {
     return (
-      <View style={{ ...CS.row, gap: 8 }}>
+      <View style={styles.containerItemDetail}>
         <IconSvg name={iconLeft} size={20} color={palette.textOpacity8} />
         <View style={CS.flex1}>
           <PressableBtn
@@ -252,17 +260,6 @@ const TeacherCourse = () => {
             </View>
           </View>
           <View style={styles.paddingH}>
-            {/* <PressableBtn
-              style={{
-                ...styles.btnDetailEvent,
-                borderColor: event?.color,
-              }}
-              onPress={startCall}
-            >
-              <Text style={styles.txtBtnDeatilEvent}>
-                {translations.chat.startCall}
-              </Text>
-            </PressableBtn> */}
             <ItemDetailEvent
               color={event?.color}
               iconLeft={"icCall"}
@@ -296,9 +293,6 @@ const TeacherCourse = () => {
       <SafeAreaView style={styles.bottomInner}>
         <View style={styles.viewTypeCalendar}>
           <ItemTypeDate
-            item={{ icon: "icMonth", title: translations.month, type: "month" }}
-          />
-          <ItemTypeDate
             item={{
               icon: "icAgenda",
               title: translations.schedule,
@@ -310,6 +304,9 @@ const TeacherCourse = () => {
           />
           <ItemTypeDate
             item={{ icon: "icWeek", title: translations.week, type: "week" }}
+          />
+          <ItemTypeDate
+            item={{ icon: "icMonth", title: translations.month, type: "month" }}
           />
         </View>
         <View style={styles.paddingH}>
@@ -366,9 +363,6 @@ const TeacherCourse = () => {
         onBackdropPress={() => setModalVisible(false)}
         propagateSwipe={true}
         style={styles.modal}
-        animationIn={"fadeInRight"}
-        animationOut={"fadeOutRight"}
-        backdropOpacity={0}
       >
         <SelectTypeCalendar />
       </ModalCalendar>
@@ -381,9 +375,6 @@ const TeacherCourse = () => {
         }}
         swipeDirection={["left", "right"]}
         style={styles.modal}
-        animationIn={"fadeInRight"}
-        animationOut={"fadeOutRight"}
-        backdropOpacity={0}
         swipeThreshold={100}
         onSwipeComplete={closeModalDetail}
       >
@@ -445,13 +436,15 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   btnDetailEvent: {
-    marginTop: 8,
     padding: 8,
     borderRadius: 8,
     borderWidth: 1,
     alignSelf: "flex-start",
   },
-  txtBtnDeatilEvent: {},
+  txtBtnDeatilEvent: {
+    ...CS.hnRegular,
+    fontSize: 14,
+  },
   viewRect: {
     width: 20,
     height: 20,
@@ -499,6 +492,11 @@ const styles = StyleSheet.create({
   },
   paddingH: {
     paddingHorizontal: 16,
+  },
+  containerItemDetail: {
+    ...CS.row,
+    gap: 8,
+    marginTop: 8,
   },
 });
 

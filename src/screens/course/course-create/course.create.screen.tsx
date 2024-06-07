@@ -47,7 +47,7 @@ import { SCREENS } from "constants";
 // import SelectImageHook from "./components/select.image";
 import TextInputPrice from "../components/text.input.price/text.input.price";
 import { EnumClassType } from "models/course.model";
-import { priceIds } from "constants/iap.constant";
+import { durationCall11List, priceIds } from "constants/iap.constant";
 import DropDownItem from "@shared-components/dropdown/DropDownItem";
 import IconSvg from "assets/svg";
 import { useUploadFile } from "@helpers/hooks/useUploadFile";
@@ -91,6 +91,7 @@ const CourseCreate = () => {
   const [level, setLevel] = useState<string>(listLevel[0].value);
   const [skill, setSkill] = useState<string[]>([]);
   const [priceInput, setPriceInput] = useState("");
+  const [durationCall11, setDurationCall11] = useState(1);
   // const [lang, setLang] = useState("vi");
 
   const { idVideo, renderSelectVideo, updatingVid } = SelectVideoHook({
@@ -203,8 +204,8 @@ const CourseCreate = () => {
       language: "en",
       // language: userData?.default_language,
       country: userData?.country,
-      // avatar: idImage,
-      media_id: idVideo,
+      avatar: idVideo,
+      media_id: idVid,
       public_status: data?.public_status || "draft",
       type: typeCourse,
       // level: level,
@@ -373,6 +374,29 @@ const CourseCreate = () => {
           </View>
         </PressableBtn>
       </>
+    );
+  };
+  const renderDurationCall11 = () => {
+    if (typeCourse !== EnumClassType.Call11) return null;
+    return (
+      <View style={{ zIndex: 2, marginVertical: 8, marginHorizontal: 4 }}>
+        <Text
+          style={{
+            ...CS.hnMedium,
+            color: colors.text,
+            marginLeft: 16,
+            marginVertical: 8,
+          }}
+        >
+          {`translations.course.durationCall11`}
+        </Text>
+        <DropDownItem
+          value={durationCall11}
+          setValue={setDurationCall11}
+          items={durationCall11List}
+          placeholder={"duration"}
+        />
+      </View>
     );
   };
 
@@ -576,6 +600,29 @@ const CourseCreate = () => {
           <View style={{ paddingHorizontal: 20 }}>
             {renderSelectTypeCourse()}
           </View>
+          {renderDurationCall11()}
+          {typeCourse === EnumClassType.Call11 && (
+            <InputHook
+              name="count"
+              customStyle={CS.flex1}
+              inputProps={{
+                type: "number",
+                defaultValue: "1",
+                placeholder: translations.course.longDescription,
+                keyboardType: "numeric",
+              }}
+              control={control}
+              rules={{
+                required: {
+                  value: true,
+                  message: translations.required,
+                },
+              }}
+              errorTxt={errors.long_description?.message}
+              maxLength={3}
+              showPlaceholder
+            />
+          )}
           {/* {renderSelectLang()} */}
           {renderPrice()}
           <View style={{ paddingHorizontal: 20 }}>

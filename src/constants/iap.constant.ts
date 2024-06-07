@@ -17,3 +17,9 @@ export const priceIds = [
   // { id: "com.course.tier17", label: "18,999,000", value: 18999000 },
   // { id: "com.course.tier18", label: "26,999,000", value: 26999000 },
 ];
+
+export const durationCall11List = [
+  { label: "0.5h", value: 0.5 },
+  { label: "1h", value: 1 },
+  { label: "2h", value: 2 },
+];

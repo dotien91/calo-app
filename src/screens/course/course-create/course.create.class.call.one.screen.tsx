@@ -18,6 +18,7 @@ import {
   updateTimeAvailableTeacher,
 } from "@services/api/course.api";
 import { showToast } from "@helpers/super.modal.helper";
+import dayjs from "dayjs";
 
 interface ITimeSelected {
   day: number;
@@ -48,13 +49,14 @@ const CreateClassCallOneScreen = () => {
     time.setMinutes(minutes);
 
     // Add one hour
-    time.setHours(time.getHours() + 1);
+    // time.setHours(time.getHours() + 1);
+    const day = dayjs(time).add(30, "minutes").toDate();
 
     // Format the result
-    const result = `${(time.getHours() + "").padStart(2, "0") + ""}:${
-      (time.getMinutes() + "").padStart(2, "0") + ""
+    const result = `${(day.getHours() + "").padStart(2, "0") + ""}:${
+      (day.getMinutes() + "").padStart(2, "0") + ""
     }`;
-    console.log("result", result);
+    // console.log("result", result);
     return result;
   };
 
@@ -65,7 +67,7 @@ const CreateClassCallOneScreen = () => {
       };
       _getTimeAvailableTeacher(params).then((res) => {
         if (!res.isError) {
-          // console.log("res.s..", JSON.stringify(res.data));
+          // console.log("res.s..", JSON.stringify(res.data.time_available));
           if (res.data.time_available.length > 0) {
             setUpdateTime(true);
             // lấy data gen lại ở đây
@@ -75,7 +77,7 @@ const CreateClassCallOneScreen = () => {
                   day: item.day,
                   time_start: item.time_start,
                   time_end: addOneHour(item.time_start),
-                  duration: 1,
+                  duration: 0.5,
                 };
               },
             );
@@ -198,9 +200,18 @@ const CreateClassCallOneScreen = () => {
   }, [date, timeSelected]);
 
   const _submitTime = () => {
+    const time_available = timeSelected
+      .sort((a, b) => a.day - b.day)
+      .sort((a, b) => {
+        if (a.day === b.day) {
+          return a.time_start.localeCompare(b.time_start);
+        }
+        return a.day - b.day;
+      });
+    console.log("time_available", time_available);
     const data = {
       user_id: userData?._id,
-      time_available: timeSelected,
+      time_available: time_available,
     };
     setUpdating(true);
     if (!updataTime) {
