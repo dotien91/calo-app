@@ -457,6 +457,8 @@ export default {
   course: {
     desReferal: (txt: string) =>
       `Khi người dùng cài đặt ứng dụng và mua khoá học này, bạn sẽ nhận được ${txt} tương ứng. Số tiền sẽ được cập nhật ở trang Doanh thu của bạn.`,
+    uploadVideoPreview: "Tải lên video giới thiệu",
+    uploadAlbumPreview: "Tải lên album giới thiệu",
     previewMentor: "Xem Mentor",
     prepareCourse: "Các khóa học này đang được biên soạn!",
     suggestPickCourse: "Lựa chọn khóa học phù hợp với bạn phía dưới !",

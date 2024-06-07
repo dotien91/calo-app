@@ -19,7 +19,7 @@ interface IExtraParams {
 export function useUploadFile(
   initData?: any[],
   selectionLimit = 30,
-  extraParam: IExtraParams,
+  extraParam?: IExtraParams,
 ) {
   const [listFile, setListFile] = React.useState<any[]>(initData || []);
   const [isUpLoadingFile, setIsUpLoadingFile] = React.useState(false);

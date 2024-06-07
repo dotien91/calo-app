@@ -388,6 +388,8 @@ export default {
   course: {
     desReferal: (txt: string) =>
       `ユーザーがアプリをインストールしてこのコースを購入すると、あなたは対応する${txt}を受け取ります。金額はあなたの収益ページに更新されます。`,
+    uploadVideoPreview: "紹介ビデオをアップロード",
+    uploadAlbumPreview: "紹介アルバムをアップロード",
     previewMentor: "プレビューメンター",
     prepareCourse: "これらのコースは現在編集中です！",
     suggestPickCourse: "以下から適切なコースを選択してください！",

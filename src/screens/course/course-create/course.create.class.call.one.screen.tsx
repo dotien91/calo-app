@@ -16,6 +16,7 @@ import {
   createTimeAvailableTeacher,
   _getTimeAvailableTeacher,
   updateTimeAvailableTeacher,
+  getTimeAvailableTeacherBuyId,
 } from "@services/api/course.api";
 import { showToast } from "@helpers/super.modal.helper";
 import dayjs from "dayjs";
@@ -60,33 +61,59 @@ const CreateClassCallOneScreen = () => {
     return result;
   };
 
+  // useEffect(() => {
+  //   const _getTimeAvailable = () => {
+  //     const params = {
+  //       user_id: userData?._id,
+  //     };
+  //     _getTimeAvailableTeacher(params).then((res) => {
+  //       if (!res.isError) {
+  //         // console.log("res.s..", JSON.stringify(res.data.time_available));
+  //         if (res.data.time_available.length > 0) {
+  //           setUpdateTime(true);
+  //           // lấy data gen lại ở đây
+  //           const mapTime = res.data.time_available.map(
+  //             (item: ITimeSelected) => {
+  //               return {
+  //                 day: item.day,
+  //                 time_start: item.time_start,
+  //                 time_end: addOneHour(item.time_start),
+  //                 duration: 0.5,
+  //               };
+  //             },
+  //           );
+  //           setTimeSelected(mapTime);
+  //         }
+  //       }
+  //     });
+  //   };
+  //   _getTimeAvailable();
+  // }, []);
+
   useEffect(() => {
-    const _getTimeAvailable = () => {
-      const params = {
-        user_id: userData?._id,
-      };
-      _getTimeAvailableTeacher(params).then((res) => {
+    const _getTimeAvailableNew = () => {
+      getTimeAvailableTeacherBuyId(userData?._id).then((res) => {
         if (!res.isError) {
-          // console.log("res.s..", JSON.stringify(res.data.time_available));
-          if (res.data.time_available.length > 0) {
-            setUpdateTime(true);
-            // lấy data gen lại ở đây
-            const mapTime = res.data.time_available.map(
-              (item: ITimeSelected) => {
-                return {
-                  day: item.day,
-                  time_start: item.time_start,
-                  time_end: addOneHour(item.time_start),
-                  duration: 0.5,
-                };
-              },
-            );
-            setTimeSelected(mapTime);
-          }
+          console.log("res.s..", JSON.stringify(res.data.time_available));
+          // if (res.data.time_available.length > 0) {
+          //   setUpdateTime(true);
+          //   // lấy data gen lại ở đây
+          //   const mapTime = res.data.time_available.map(
+          //     (item: ITimeSelected) => {
+          //       return {
+          //         day: item.day,
+          //         time_start: item.time_start,
+          //         time_end: addOneHour(item.time_start),
+          //         duration: 0.5,
+          //       };
+          //     },
+          //   );
+          //   setTimeSelected(mapTime);
+          // }
         }
       });
     };
-    _getTimeAvailable();
+    _getTimeAvailableNew();
   }, []);
 
   const styles = React.useMemo(() => createStyles(theme), [theme]);

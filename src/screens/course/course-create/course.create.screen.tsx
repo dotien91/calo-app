@@ -205,9 +205,10 @@ const CourseCreate = () => {
       // language: userData?.default_language,
       country: userData?.country,
       avatar: idVideo,
-      media_id: idVid,
+      // media_id: idVid,
       public_status: data?.public_status || "draft",
       type: typeCourse,
+      class_duration: "1",
       // level: level,
       skills: skill,
     };
@@ -215,6 +216,7 @@ const CourseCreate = () => {
     if (course_id) {
       params._id = course_id;
     }
+    console.log("params...", params);
 
     // setUpdating(true);
 
@@ -484,9 +486,13 @@ const CourseCreate = () => {
         />
         <ScrollView showsVerticalScrollIndicator={false} style={CS.flex1}>
           {renderSelectVideo()}
-          <Text style={styles.textTitle}>{"Tải lên video giới thiệu"}</Text>
+          <Text style={styles.textTitle}>
+            {translations.course.uploadVideoPreview}
+          </Text>
           {renderSelectVideo2()}
-          <Text style={styles.textTitle}>{"Tải lên album giới thiệu"}</Text>
+          <Text style={styles.textTitle}>
+            {translations.course.uploadAlbumPreview}
+          </Text>
           {listFileLocal.length > 0 ? (
             <>
               <View style={styles.viewRenderFile}>

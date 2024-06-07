@@ -389,6 +389,8 @@ export default {
   course: {
     desReferal: (txt: string) =>
       `When a user installs the app and purchases this course, you will receive the corresponding ${txt}. The amount will be updated on your Revenue page.`,
+    uploadVideoPreview: "Upload video preview",
+    uploadAlbumPreview: "Upload album preview",
     previewMentor: "Preview mentor",
     course: "Course",
     newCourse: "New Course",

@@ -522,3 +522,52 @@ export async function addUserToCourseVideo(data: {
     return response;
   });
 }
+
+export async function updateTeacherTimeAvaiable(data) {
+  return request({
+    method: METHOD.PATCH,
+    urlPath: "course/create/time-available",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function getTimeAvailableNew(id: string, params) {
+  return request({
+    method: METHOD.GET,
+    urlPath: `course/${id}/time-available/day`,
+    params: params,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function getTimeWeekAvailableNew(id: string, params) {
+  return request({
+    method: METHOD.GET,
+    urlPath: `course/${id}/time-available/every-week`,
+    params: params,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function getTimeAvailableTeacherNew(params) {
+  return request({
+    method: METHOD.GET,
+    urlPath: `course/teacher/time-available`,
+    params: params,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function getTimeAvailableTeacherBuyId(id: string) {
+  return request({
+    method: METHOD.GET,
+    urlPath: `course/teacher/${id}/time-available`,
+  }).then((response) => {
+    return response;
+  });
+}
