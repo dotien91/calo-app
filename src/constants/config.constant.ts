@@ -4,7 +4,8 @@ import { _getJson } from "@services/local-storage";
 export const RECAPCHA_KEY = "smRY9k7cjMACBJSeVEj6E3VgqKe858gnAmBRQQNS";
 export const CACHE_MEDIA_FOLDER = fs.CachesDirectoryPath + "/media/";
 export const CACHE_MEDIA_CHAT_FOLDER = fs.CachesDirectoryPath + "/media_chat/";
-
+// 0c24ced46070984f007539ec2857b991b30753b6
+// 460743c70cc260d81309e13dd4e503af3b9e4222
 export enum ENVIRONMENT {
   DEVELOP = "develop",
   PRODUCT = "product",
@@ -19,7 +20,7 @@ export const isProduction =
 
 //dev domain api
 // const DEVELOPER_DOMAIN_DEV = "http://192.168.1.55:3900";
-const DEVELOPER_DOMAIN_DEV = "https://api.ikigai.ikigroup.vn";
+const DEVELOPER_DOMAIN_DEV = "https://dev.api.ikigai.ikigroup.vn";
 const DEVELOPER_DOMAIN_SOCKET_DEV = "https://socket.api.ikigroup.vn";
 // const UPLOAD_URL = "https://media.exam24h.com/";
 

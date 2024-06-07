@@ -253,7 +253,7 @@ const ListPostNew = ({ id }: ListPostProps) => {
       contentModalType: EnumModalContentType.Loading,
       styleModalType: EnumStyleModalType.Middle,
     });
-    listRef.current.scrollToOffset({
+    listRef.current?.scrollToOffset({
       animated: true,
       offset: currentPositionFilter.value + 5 - 70,
     });
@@ -369,7 +369,7 @@ const ListPostNew = ({ id }: ListPostProps) => {
               onScrollBeginDrag?.(e);
               hasScrolled.current = true;
             }}
-            contentContainerStyle={{ paddingTop: TAB_HEIGHT, marginTop: 16 }}
+            contentContainerStyle={{ paddingTop: TAB_HEIGHT, marginTop: 16, paddingBottom: 100 }}
             // decelerationRate={'fast'}
 
             onLayoutFilter={onLayoutFilter}

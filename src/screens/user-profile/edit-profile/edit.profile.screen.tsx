@@ -28,6 +28,7 @@ import { updateProfile } from "@services/api/user.api";
 import { showToast } from "@helpers/super.modal.helper";
 import eventEmitter from "@services/event-emitter";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
+import { palette } from "@theme/themes";
 
 const EditProfileScreen = () => {
   const userData = useStore((store) => store.userData);
@@ -120,7 +121,6 @@ const EditProfileScreen = () => {
           text={translations.profile.editProfile}
         />
         <ScrollView
-          style={[CommonStyle.flex1, { marginBottom: getBottomSpace() }]}
           showsVerticalScrollIndicator={false}
         >
           <InputHook
@@ -295,18 +295,20 @@ const EditProfileScreen = () => {
             errorTxt={errors.youtube?.message}
             showPlaceholder
           />
-          <View style={{ marginHorizontal: 16, marginTop: 16 }}>
-            <Button
-              style={{
-                backgroundColor: updating ? colors.placeholder : colors.primary,
-                marginBottom: 16,
-              }}
-              text={translations.profile.saveProfile}
-              disabled={updating}
-              onPress={handleSubmit(onSubmit)}
-            />
-          </View>
+          <View style={{height: 100}} />
+
         </ScrollView>
+        <View style={{ position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 1, padding: 16, ...CommonStyle.borderTopStyle, backgroundColor: palette.white }}>
+          <Button
+            style={{
+              backgroundColor: updating ? colors.placeholder : colors.primary,
+              marginBottom: 16,
+            }}
+            text={translations.profile.saveProfile}
+            disabled={updating}
+            onPress={handleSubmit(onSubmit)}
+          />
+        </View>
       </SafeAreaView>
     </KeyboardAvoidingView>
   );

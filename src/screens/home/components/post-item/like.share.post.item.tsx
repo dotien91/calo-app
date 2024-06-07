@@ -97,8 +97,8 @@ const BtnShare = () => {
     >
       <Icon
         size={20}
-        type={IconType.FontAwesome}
-        name="share-outline"
+        type={IconType.FontAwesome5}
+        name="share"
         color={colors.textOpacity6}
       />
       <Text style={styles.textLikeShare}>{translations.post.share}</Text>
