@@ -16,6 +16,7 @@ import HuongDan from "../assets/images/utilities/HuongDan.png";
 import BaoMat from "../assets/images/utilities/BaoMat.png";
 import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "constants";
+import { Linking } from "react-native";
 
 export type itemContentType = {
   title: string;
@@ -34,14 +35,17 @@ export const utilities = [
       {
         title: translations.profileTeacher.revenua,
         uri: DoanhThu,
+        onPress: () => NavigationService.navigate(SCREENS.AFFILIATE),
       },
       {
         title: translations.profileTeacher.withdraw,
         uri: RutTien,
+        onPress: () => NavigationService.navigate(SCREENS.WITHDRAW),
       },
       {
         title: translations.profileTeacher.setUpAccount,
         uri: CaiDatSTK,
+        onPress: () => NavigationService.navigate(SCREENS.BANK_LIST),
       },
     ],
   },
@@ -60,6 +64,7 @@ export const utilities = [
       {
         title: translations.profileTeacher.discount,
         uri: Discount,
+        onPress: () => NavigationService.navigate(SCREENS.COUPON_LIST),
       },
       {
         title: translations.profileTeacher.chat,
@@ -90,6 +95,7 @@ export const utilities = [
       {
         title: translations.profileTeacher.myClub,
         uri: CLB,
+        onPress: () => NavigationService.navigate(SCREENS.MANAGE_CLUB),
       },
       {
         title: translations.profileTeacher.myPodcast,
@@ -103,10 +109,13 @@ export const utilities = [
       {
         title: translations.profileTeacher.guide,
         uri: HuongDan,
+        onPress: () => Linking.openURL("https://docs.ikigaicoach.net"),
       },
       {
         title: translations.profileTeacher.Security,
         uri: BaoMat,
+        onPress: () =>
+          Linking.openURL("https://docs.ikigaicoach.net/chinh-sach"),
       },
     ],
   },

@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  Image,
-  FlatList,
-} from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
 import React, { useMemo } from "react";
 import { useTheme } from "@react-navigation/native";
 import createStyle from "./ikiCoachTeacher.screen.style";
@@ -21,15 +14,11 @@ import ItemMonth from "../affiliate/components/affiliate.item.month";
 import { getUserIncome } from "@services/api/affiliate.api";
 import Avatar from "@shared-components/user/Avatar";
 import { Tasks } from "./profile.screen";
-import {
-  itemContentType,
-  itemType,
-  utilities,
-} from "constants/coachTeacher.constant";
-import CS from "@theme/styles";
+import { itemType, utilities } from "constants/coachTeacher.constant";
 import IconSvg from "assets/svg";
 import LinearGradient from "react-native-linear-gradient";
 import * as NavigationService from "react-navigation-helpers";
+import CS from "@theme/styles";
 
 interface ItemIncomeType {
   count: number;
@@ -84,8 +73,8 @@ const TeacherScreen = () => {
               size={40}
               style={{
                 position: "absolute",
-                bottom: 20,
-                right: 20,
+                bottom: 30,
+                right: 16,
               }}
             />
           </View>
@@ -95,13 +84,17 @@ const TeacherScreen = () => {
             style={{
               view: {
                 backgroundColor: colors.greenTh2,
+                width: 166,
+                height: 72,
               },
               textMonth: {
+                ...CS.hnBold,
                 color: colors.grey,
-                fontWeight: "400",
+                fontSize: 12,
               },
               textCommissionMonth: {
                 color: colors.white,
+                marginTop: 10,
               },
             }}
             text={translations.affiliate.thisMonth}
@@ -118,13 +111,17 @@ const TeacherScreen = () => {
             style={{
               view: {
                 backgroundColor: colors.greenTh2,
+                width: 166,
+                height: 72,
               },
               textMonth: {
+                ...CS.hnBold,
                 color: colors.grey,
-                fontWeight: "400",
+                fontSize: 12,
               },
               textCommissionMonth: {
                 color: colors.white,
+                marginTop: 10,
               },
             }}
             text={translations.affiliate.lastMonth}
@@ -145,7 +142,7 @@ const TeacherScreen = () => {
   const HeaderTeacherScreen = () => {
     return (
       <LinearGradient
-        colors={[colors.greenTh2, colors.greenTh1]}
+        colors={[colors.greenTh3, colors.greenTh1]}
         style={styles.viewHeaderContainer}
       >
         <TouchableOpacity
@@ -163,7 +160,7 @@ const TeacherScreen = () => {
               top: 0,
             }}
           />
-          <TextBase fontSize={17} color="white">
+          <TextBase fontSize={15} color="white" style={{ marginTop: 5 }}>
             Ikigai Coach Teacher
           </TextBase>
         </TouchableOpacity>
@@ -171,14 +168,15 @@ const TeacherScreen = () => {
           style={{
             alignItems: "center",
             justifyContent: "center",
+            marginTop: 20,
           }}
         >
           <Text numberOfLines={1} style={styles.textHeader}>
-            Your Balance
+            {translations.profileTeacher.balance}
           </Text>
           <TextBase
             fontWeight="600"
-            fontSize={24}
+            fontSize={30}
             color={EnumColors.white}
             textAlign="center"
             style={styles.textMoneyHeader}
@@ -217,64 +215,63 @@ const TeacherScreen = () => {
         <TouchableOpacity style={styles.viewProfileBtn}>
           <Text
             style={{
-              fontSize: 16,
-              fontWeight: "600",
+              ...CS.hnBold,
               color: colors.white,
+              fontSize: 14,
             }}
           >
-            Profile
+            {translations.profileTeacher.profile}
           </Text>
         </TouchableOpacity>
       </View>
     );
   };
 
-  const renderIcon = (items: itemContentType[]) => {
+  const renderIcon = (items) => {
     return (
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        numColumns={4}
-        scrollEnabled={false}
-        data={items}
-        renderItem={({ item, index }) => (
-          <View key={index} style={{ flexDirection: "row", marginBottom: 10 }}>
-            <TouchableOpacity
-              onPress={item.onPress}
-              key={index}
+      <View
+        style={{
+          flexDirection: "row",
+          flexWrap: "wrap",
+        }}
+      >
+        {items.map((item, index) => (
+          <TouchableOpacity
+            onPress={item.onPress}
+            key={index}
+            style={{
+              width: 75,
+              marginLeft: 15,
+            }}
+          >
+            <View
               style={{
-                justifyContent: "space-between",
-                height: 120,
-                width: 100,
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop: 10,
               }}
             >
-              <View
+              <Image
+                source={item.uri}
                 style={{
-                  ...CS.center,
-                  marginTop: 10,
+                  height: 60,
+                  width: 60,
                 }}
-              >
-                <Image
-                  source={item.uri}
-                  style={{
-                    height: 60,
-                    width: 60,
-                  }}
-                />
-                <TextBase fontWeight="400" textAlign="center">
-                  {item.title}
-                </TextBase>
-              </View>
-            </TouchableOpacity>
-          </View>
-        )}
-      />
+              />
+              <TextBase fontWeight="400" textAlign="center" fontSize={14}>
+                {item.title}
+              </TextBase>
+            </View>
+          </TouchableOpacity>
+        ))}
+      </View>
     );
   };
 
   const renderUtilities = (item: itemType, index: number) => {
     return (
-      <View key={index}>
-        <TextBase style={{ marginLeft: 10, marginTop: 5 }} fontWeight="600">
+      <View key={index} style={{ marginBottom: 20 }}>
+        <TextBase style={{ marginLeft: 15, marginTop: 5 }} fontWeight="700">
           {item.textTitle}
         </TextBase>
         {renderIcon(item.content)}

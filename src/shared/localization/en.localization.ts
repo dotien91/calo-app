@@ -747,8 +747,10 @@ export default {
     course: "COURSE",
     teacherPage: "TEACHER PAGE",
     guideUse: "GUIDE",
-    titleBtn: "Ikigai Coach Teacher",
+    titleBtn: "IkigaiCoach Teacher",
     desBtn: "Access the page reserved for teachers",
+    profile: "Profile",
+    balance: "Balance",
   },
   member: {
     chat: "chat",

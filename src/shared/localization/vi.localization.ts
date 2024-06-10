@@ -929,8 +929,10 @@ export default {
     course: "KHÓA HỌC",
     teacherPage: "TRANG GIÁO VIÊN",
     guideUse: "HƯỚNG DẪN",
-    titleBtn: "Giáo Viên Huấn Luyện Ikigai",
+    titleBtn: "Giáo viên Ikigai Coach",
     desBtn: "Truy cập vào trang dành cho giáo viên",
+    profile: "Xem hồ sơ",
+    balance: "Số dư",
   },
   notifications: {
     notifications: "Thông báo",

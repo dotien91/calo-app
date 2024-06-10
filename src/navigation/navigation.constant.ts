@@ -105,6 +105,7 @@ import HiddenPaage from "@screens/hidden-page/hidden.page";
 import BlackList from "@screens/black-list/black.list";
 import AccountSetupScreen from "@screens/welcome/account-setup/account.setup.screen";
 import TeacherScreen from "@screens/profile.screen/ikiCoachTeacher.screen";
+import ManagedClubScreen from "@screens/club/components/managed.club.screen";
 
 export const DiscoveryStackData = [
   {
@@ -317,6 +318,10 @@ export const CommonStackData = [
   {
     name: SCREENS.TEACHER_SCREEN,
     screen: TeacherScreen,
+  },
+  {
+    name: SCREENS.MANAGE_CLUB,
+    screen: ManagedClubScreen,
   },
   // {
   //   name: SCREENS.ALL_AUDIO_BOOk,

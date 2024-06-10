@@ -122,6 +122,7 @@ export const SCREENS = {
   SETTING_CLUB_SCREEN: "SettingClubScreen",
   ACCOUNT_SETUP_SCREEN: "AccountSetupScreen",
   TEACHER_SCREEN: "TeacherScreen",
+  MANAGE_CLUB: "ManageClub",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

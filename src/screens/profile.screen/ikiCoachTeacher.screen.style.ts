@@ -1,6 +1,8 @@
 import CS from "@theme/styles";
 import { ExtendedTheme } from "@react-navigation/native";
-import { ViewStyle, StyleSheet, TextStyle, StatusBar } from "react-native";
+import { ViewStyle, StyleSheet, TextStyle } from "react-native";
+import { getStatusBarHeight } from "react-native-safearea-height";
+import { Device } from "@utils/device.ui.utils";
 
 interface Style {
   container: ViewStyle;
@@ -25,13 +27,14 @@ export default (theme: ExtendedTheme) => {
   return StyleSheet.create<Style>({
     container: {
       flex: 1,
-      marginTop: StatusBar.currentHeight,
+      marginTop: getStatusBarHeight(),
       backgroundColor: colors.white,
+      width: Device.width,
     },
     viewHeaderContainer: {
       backgroundColor: colors.greenTh1,
-      borderBottomEndRadius: 10,
-      borderBottomStartRadius: 10,
+      borderBottomLeftRadius: 15,
+      borderBottomRightRadius: 15,
       marginBottom: 5,
     },
     viewHeader: {
@@ -51,7 +54,6 @@ export default (theme: ExtendedTheme) => {
     },
     styleViewTotalAff: {
       flexDirection: "row",
-      marginTop: 10,
       marginHorizontal: 16,
       gap: 8,
       marginBottom: 20,
@@ -60,16 +62,19 @@ export default (theme: ExtendedTheme) => {
       flexDirection: "column",
       alignItems: "flex-end",
       flex: 1,
+      marginRight: 6,
     },
     txtToday: {
-      ...CS.hnRegular,
+      ...CS.hnBold,
       fontSize: 12,
       color: colors.white,
+      marginTop: 15,
     },
     txtCommissionToday: {
       ...CS.hnSemiBold,
       fontSize: 20,
       color: colors.white,
+      marginTop: 4,
     },
     styleViewLine: {
       flex: 1,
@@ -93,7 +98,9 @@ export default (theme: ExtendedTheme) => {
     },
     viewAvatar: {
       flexDirection: "row",
-      justifyContent: "space-around",
+      justifyContent: "space-between",
+      paddingHorizontal: 15,
+      marginTop: 8,
     },
     viewProfileBtn: {
       backgroundColor: colors.black,
@@ -102,7 +109,7 @@ export default (theme: ExtendedTheme) => {
       borderRadius: 12,
       justifyContent: "center",
       alignItems: "center",
-      marginTop: 8,
+      marginTop: 12,
     },
   });
 };

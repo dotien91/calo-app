@@ -784,6 +784,8 @@ export default {
     guideUse: "ガイド",
     titleBtn: "生き甲斐コーチ教師",
     desBtn: "教師専用ページにアクセスする",
+    profile: "プロフィールを見る",
+    balance: "残高",
   },
   member: {
     chat: "チャット",
