@@ -265,3 +265,42 @@ export async function getReferralUserProduct(params: any) {
     return response;
   });
 }
+
+export async function requestListCertificate(params) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "user/certificate/list",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function requestAddCertificate(data) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "user/certificate/create",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function requestUpdateCertificate(data) {
+  return request({
+    method: METHOD.PATCH,
+    urlPath: "user/certificate/update",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function requestDeleteCertificate(id: string) {
+  return request({
+    method: METHOD.DELETE,
+    urlPath: `user/certificate/delete/${id}`,
+  }).then((response) => {
+    return response;
+  });
+}

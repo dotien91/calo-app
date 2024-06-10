@@ -124,6 +124,8 @@ export const SCREENS = {
   LIVESTREAM_PREVIEW: "LiveStreamPreview",
   LIVESTREAM_LIST: "LiveStreamList",
   MANAGE_LIVESTREAM: "ManageLivestream",
+  MANAGE_CERTIFICATE: "ManageCertificate",
+  CREATE_CERTIFICATE: "CreateCertificate",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

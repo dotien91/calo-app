@@ -64,12 +64,12 @@ export const useUserHook = () => {
     });
   };
 
-  const getUserData = () => {
+  const getUserData = (initUserData = true) => {
     getCurrentUser().then((res) => {
       console.log("current user data", res);
       if (!res.isError) {
         console.log("token", _getJson(USER_TOKEN), res.data);
-        initData(res.data);
+        initData(res.data, initUserData);
       }
       if (codeInvite && codeInvite !== "") {
         const data = {
@@ -88,8 +88,8 @@ export const useUserHook = () => {
     });
   };
 
-  const initData = (data: TypedUser) => {
-    setUserData(data);
+  const initData = (data: TypedUser, initUserData: boolean) => {
+    initUserData && setUserData(data);
     setUserInfo(data);
     setLinkAvatar(data.user_avatar_thumbnail);
 

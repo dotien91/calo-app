@@ -27,7 +27,6 @@ import useStore from "@services/zustand/store";
 import { updateProfile } from "@services/api/user.api";
 import { showToast } from "@helpers/super.modal.helper";
 import eventEmitter from "@services/event-emitter";
-import { getBottomSpace } from "react-native-iphone-screen-helper";
 import { palette } from "@theme/themes";
 
 const EditProfileScreen = () => {
@@ -120,9 +119,7 @@ const EditProfileScreen = () => {
           onPressLeft={() => NavigationService.goBack()}
           text={translations.profile.editProfile}
         />
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-        >
+        <ScrollView showsVerticalScrollIndicator={false}>
           <InputHook
             setFocus={setFocus}
             name="fullname"
@@ -295,10 +292,20 @@ const EditProfileScreen = () => {
             errorTxt={errors.youtube?.message}
             showPlaceholder
           />
-          <View style={{height: 100}} />
-
+          <View style={{ height: 100 }} />
         </ScrollView>
-        <View style={{ position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 1, padding: 16, ...CommonStyle.borderTopStyle, backgroundColor: palette.white }}>
+        <View
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            zIndex: 1,
+            padding: 16,
+            ...CommonStyle.borderTopStyle,
+            backgroundColor: palette.white,
+          }}
+        >
           <Button
             style={{
               backgroundColor: updating ? colors.placeholder : colors.primary,

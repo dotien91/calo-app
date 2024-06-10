@@ -51,6 +51,8 @@ import ConfirmViewBottom from "@shared-components/comfirm-view-bottom/comfirm.vi
 import PopupClubPost from "@screens/club/club/pupup.club.post";
 import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 import ScheduleView from "./modal-inner/ScheduleView";
+import ViewMore from "./modal-inner/ViewMore";
+
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
 // using normal one.
@@ -299,6 +301,9 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         )}
         {contentModalType == EnumModalContentType.Schedule && (
           <ScheduleView {...data} />
+        )}
+        {contentModalType == EnumModalContentType.ViewMore && (
+          <ViewMore {...data} />
         )}
       </>
     );

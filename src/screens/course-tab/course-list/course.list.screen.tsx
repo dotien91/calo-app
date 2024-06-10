@@ -146,11 +146,7 @@ const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
 
   const _renderEmptyComponent = React.useCallback(() => {
     if (!listData?.length && !isLoading)
-      return (
-        <EmptyResultView
-          desc={translations.emptyList}
-        />
-      );
+      return <EmptyResultView desc={translations.emptyList} />;
     return null;
   }, [listData, isLoading]);
 

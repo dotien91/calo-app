@@ -72,6 +72,7 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
     };
     getListNotification(param).then((res) => {
       if (!res.isError) {
+        console.log("res.data", res.data);
         setLastNoti(res.data[0]);
       }
     });

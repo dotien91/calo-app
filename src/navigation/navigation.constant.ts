@@ -107,6 +107,8 @@ import AccountSetupScreen from "@screens/welcome/account-setup/account.setup.scr
 import LiveStreamPreviewScreem from "@screens/livestream-preview/livestream.preview.screen";
 import LivestreamListScreen from "@screens/stream/list.livestream.screen";
 import ManageLivestreamScreen from "@screens/stream/manage.livestream.screen";
+import ManagedCertificateScreen from "@screens/user-profile/manage-certificate/managed.certificate.screen";
+import CreateCertificateScreen from "@screens/user-profile/manage-certificate/create.certificate.screen";
 
 export const DiscoveryStackData = [
   {
@@ -327,6 +329,14 @@ export const CommonStackData = [
   {
     name: SCREENS.MANAGE_LIVESTREAM,
     screen: ManageLivestreamScreen,
+  },
+  {
+    name: SCREENS.MANAGE_CERTIFICATE,
+    screen: ManagedCertificateScreen,
+  },
+  {
+    name: SCREENS.CREATE_CERTIFICATE,
+    screen: CreateCertificateScreen,
   },
   // {
   //   name: SCREENS.ALL_AUDIO_BOOk,

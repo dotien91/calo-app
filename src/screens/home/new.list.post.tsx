@@ -369,7 +369,11 @@ const ListPostNew = ({ id }: ListPostProps) => {
               onScrollBeginDrag?.(e);
               hasScrolled.current = true;
             }}
-            contentContainerStyle={{ paddingTop: TAB_HEIGHT, marginTop: 16, paddingBottom: 100 }}
+            contentContainerStyle={{
+              paddingTop: TAB_HEIGHT,
+              marginTop: 16,
+              paddingBottom: 100,
+            }}
             // decelerationRate={'fast'}
 
             onLayoutFilter={onLayoutFilter}

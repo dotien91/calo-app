@@ -15,6 +15,8 @@ interface DateTimePickerLocalProps {
   timeDefault: string;
   warning?: boolean;
   label?: string;
+  functionFormatTime: () => void;
+  minimumDate?: string;
 }
 
 const DateTimePicker = ({
@@ -25,9 +27,13 @@ const DateTimePicker = ({
   timeDefault = "",
   warning,
   label,
+  functionFormatTime,
+  minimumDate,
 }: DateTimePickerLocalProps) => {
   const [date, setDate] = useState<Date>();
   const [open, setOpen] = useState(false);
+
+  const fnFormatTime = functionFormatTime ? functionFormatTime : formatFullDate;
 
   return (
     <View style={styles.container}>
@@ -57,9 +63,9 @@ const DateTimePicker = ({
           ]}
         >
           {date
-            ? formatFullDate(date)
+            ? fnFormatTime(date)
             : timeDefault !== ""
-            ? formatFullDate(timeDefault)
+            ? fnFormatTime(timeDefault)
             : placeholder}
         </Text>
         <View style={{ marginRight: 12 }}>{!!iconRight && iconRight}</View>
@@ -69,7 +75,7 @@ const DateTimePicker = ({
         open={open}
         mode="datetime"
         date={date || timeDefault ? new Date(date || timeDefault) : new Date()}
-        minimumDate={new Date()}
+        minimumDate={minimumDate}
         onConfirm={(date) => {
           setOpen(false);
           setDate(date);
@@ -86,7 +92,7 @@ const DateTimePicker = ({
 export default DateTimePicker;
 
 const styles = StyleSheet.create({
-  container: { marginTop: 8, marginHorizontal: 4 },
+  container: { marginTop: 8, marginHorizontal: 4, flex: 1 },
   label: {
     ...CS.hnSemiBold,
     color: palette.text,
