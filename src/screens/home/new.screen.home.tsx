@@ -37,7 +37,7 @@ const NewHomeScreen = () => {
       <View style={{ flex: 1 }}>
         <ListPostNew />
       </View>
-      {isLoggedIn() && userData?._id && (
+      {isLoggedIn() && (
         <TouchableOpacity
           style={{
             position: "absolute",

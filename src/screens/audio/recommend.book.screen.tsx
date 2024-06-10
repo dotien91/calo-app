@@ -33,7 +33,6 @@ const RecommendBookScreen = () => {
   // useEffect(() => {
   //   setListAudio(listData);
   // }, [listData]);
-
   const renderItem = ({ item, index }) => {
     if (item?.is_join) {
       return null;
