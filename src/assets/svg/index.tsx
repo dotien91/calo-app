@@ -175,7 +175,8 @@ import icPreview from "./icon-preview.svg";
 import icVip from "./icon-vip.svg";
 import icSharePost from "./icon-share-post.svg";
 import icDollar from "./dollar.svg";
-
+import icMoney2 from "./icon-money2.svg";
+import icTeacher from "./teacher1.svg";
 const Icons = {
   icVip,
   icPreview,
@@ -353,6 +354,8 @@ const Icons = {
   icGoNext,
   icSharePost,
   icDollar,
+  icMoney2,
+  icTeacher,
 };
 
 interface IconSvgProps {

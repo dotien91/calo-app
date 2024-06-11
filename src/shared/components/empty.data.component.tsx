@@ -7,6 +7,7 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { palette } from "@theme/themes";
 import lotieNoResult from "assets/lotties/emptyBox.json";
 import { Device } from "@utils/device.ui.utils";
+import { translations } from "@localization";
 
 interface IEmptyResultView {
   title?: string;
@@ -65,7 +66,7 @@ const EmptyResultView = ({
       <Text
         style={{ ...CommonStyle.hnBold, textAlign: "center", marginBottom: 14 }}
       >
-        {title}
+        {title || translations.emptyList}
       </Text>
       <Text style={{ ...CommonStyle.hnRegular, textAlign: "center" }}>
         {desc}

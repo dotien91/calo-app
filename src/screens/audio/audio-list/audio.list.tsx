@@ -13,11 +13,13 @@ import { SCREENS } from "constants";
 import LoadingList from "@shared-components/loading.list.component";
 import AudioQuickFilter from "../components/audio.quick.filter";
 import AudioView from "./audio.view";
+import EmptyResultView from "@shared-components/empty.data.component";
 
 const AudioList = () => {
   const userData = useStore((state) => state.userData);
 
   const {
+    noData,
     listData,
     isLoading,
     onEndReach,
@@ -33,20 +35,15 @@ const AudioList = () => {
     },
     GetPodCastList,
   );
-
   const renderItem = ({ item, index }) => {
-    if (item?.is_join) {
-      return null;
-    } else {
-      return (
-        <AudioItemList
-          listData={listData}
-          isSliderItem
-          data={item}
-          key={index}
-        />
-      );
-    }
+    return (
+      <AudioItemList
+        listData={listData}
+        isSliderItem
+        data={item}
+        key={index}
+      />
+    );
   };
 
   const onSeeAll = () => {
@@ -69,8 +66,16 @@ const AudioList = () => {
       </View>
     );
   }
+
+  const renderEmptyComponent = () => {
+    if (!noData) return null
+    return <EmptyResultView />
+  }
+
+
   return (
     <View style={styles.container}>
+
       {listData.length == 0 && isLoading ? (
         renderLoading()
       ) : (
@@ -92,6 +97,7 @@ const AudioList = () => {
           removeClippedSubviews={true}
           refreshControl={refreshControl()}
           ListFooterComponent={renderFooterComponent()}
+          ListEmptyComponent={renderEmptyComponent()}
         />
       )}
     </View>

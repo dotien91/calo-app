@@ -21,6 +21,7 @@ import { SCREENS } from "constants";
 import { quickFilterCourse } from "constants/course.constant";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import useStore from "@services/zustand/store";
+import { useRoute } from "@react-navigation/native";
 
 const renderScene = SceneMap({
   first: FeatureClubScreen,
@@ -30,13 +31,15 @@ const renderScene = SceneMap({
 
 const ClubScreen = () => {
   const userData = useStore((state) => state.userData);
+  const route = useRoute();
+  const defaultIndex = route?.params?.["defaultIndex"] || 0;
   const isShowCreate =
     userData?.user_role === "teacher" || userData?.user_role === "admin";
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const layout = useWindowDimensions();
 
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(defaultIndex);
   const [routes, setRoute] = useState([
     { key: "first", title: translations.club.tab1 },
     { key: "second", title: translations.club.tab2 },

@@ -126,6 +126,8 @@ export const SCREENS = {
   MANAGE_LIVESTREAM: "ManageLivestream",
   MANAGE_CERTIFICATE: "ManageCertificate",
   CREATE_CERTIFICATE: "CreateCertificate",
+  TEACHER_SCREEN: "TeacherScreen",
+  MANAGE_CLUB: "ManageClub",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =
