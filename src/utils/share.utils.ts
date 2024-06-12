@@ -19,7 +19,7 @@ const createDynamicLink = async (str: string) => {
           appStoreId: "6484263984",
         },
         android: {
-          packageName: "com.ikigroup.ikigaicoach",
+          packageName: "com.ikigroup.ikigaiextra",
           minimumVersion: "1",
         },
       },
