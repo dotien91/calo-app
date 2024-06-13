@@ -22,6 +22,7 @@ import { showToast } from "@helpers/super.modal.helper";
 import TextBase from "@shared-components/TextBase";
 import IconSvg from "assets/svg";
 import { EnumColors } from "models";
+import IconBtn from "@shared-components/button/IconBtn";
 
 interface SelectVideoHookProps {
   link?: string;
@@ -31,7 +32,7 @@ interface SelectVideoHookProps {
   typeM?: string;
 }
 
-const SelectVideoHook = ({
+const useSelectVideoHook = ({
   link,
   id,
   typeM,
@@ -202,6 +203,7 @@ const SelectVideoHook = ({
           </View>
         ) : (
           <Image source={{ uri: media.link }} style={styles.viewImage1} />
+
         )}
         {updatingVid && (
           <View style={styles.viewImageFill}>
@@ -228,10 +230,12 @@ const SelectVideoHook = ({
     typeMedia: media.typeM,
     setMedia,
     onPressChangeMedia,
+    renderSelectImage,
+    updatingVid,
   };
 };
 
-export default SelectVideoHook;
+export default useSelectVideoHook;
 
 const styles = StyleSheet.create({
   viewImageFull: {
@@ -264,6 +268,7 @@ const styles = StyleSheet.create({
     backgroundColor: palette.placeholder,
     ...CS.row,
     gap: 8,
+    borderRadius: 12,
   },
   deleteViceo: {
     position: "absolute",

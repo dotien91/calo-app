@@ -44,6 +44,8 @@ export enum EnumModalContentType {
   SelectCourse = "SelectCourse",
   AddToGroup = "add-to-group",
   PlayPodcast = "play-podcast",
+  Schedule = "schedule",
+  ViewMore = "view-more",
 }
 
 export enum EnumStyleModalType {

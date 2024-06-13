@@ -8,7 +8,6 @@ import { TypedPost } from "shared/models";
 import createStyles from "./post.item.style";
 import { translations } from "@localization";
 import { sharePost } from "@utils/share.utils";
-import IconSvg from "assets/svg";
 import CommentBtn from "../comment-btn/CommentBtn";
 import useStore from "@services/zustand/store";
 import { palette } from "@theme/themes";
@@ -96,7 +95,12 @@ const BtnShare = () => {
         { justifyContent: "flex-end", backgroundColor: buttonColor },
       ]}
     >
-      <IconSvg size={16} name="icSharePost" color={colors.textOpacity6} />
+      <Icon
+        size={20}
+        type={IconType.FontAwesome5}
+        name="share"
+        color={colors.textOpacity6}
+      />
       <Text style={styles.textLikeShare}>{translations.post.share}</Text>
     </TouchableOpacity>
   );

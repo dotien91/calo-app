@@ -216,7 +216,6 @@ export const useChatHistory = (txtSearch: string, searchModeChat: boolean) => {
   };
 
   useEffect(() => {
-    console.log("chatRoomId", chatRoomId);
     if (!chatRoomId) {
       //create chat room from listfriend
       createChatRoom({

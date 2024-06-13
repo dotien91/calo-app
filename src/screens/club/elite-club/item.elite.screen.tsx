@@ -48,7 +48,6 @@ const ItemEliteScreen = () => {
   const id = route.params.id || "";
   const name = route.params.name || "";
   const item = route.params.item || {};
-  console.log("item...", item);
 
   const [dataGroup, setDataGroup] = useState(item);
 

@@ -183,6 +183,8 @@ import icAgenda from "./icon-agenda.svg";
 import icCopy from "./icon-copy.svg";
 import icCall from "./icon-call.svg";
 
+import icMoney2 from "./icon-money2.svg";
+import icTeacher from "./teacher1.svg";
 const Icons = {
   icVip,
   icPreview,
@@ -367,6 +369,8 @@ const Icons = {
   icAgenda,
   icCopy,
   icCall,
+  icMoney2,
+  icTeacher,
 };
 
 interface IconSvgProps {

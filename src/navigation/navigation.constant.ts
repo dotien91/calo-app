@@ -104,6 +104,13 @@ import CodeActivationsScreen from "@screens/code-activations/code.activations.sc
 import HiddenPaage from "@screens/hidden-page/hidden.page";
 import BlackList from "@screens/black-list/black.list";
 import AccountSetupScreen from "@screens/welcome/account-setup/account.setup.screen";
+import LiveStreamPreviewScreem from "@screens/livestream-preview/livestream.preview.screen";
+import LivestreamListScreen from "@screens/stream/list.livestream.screen";
+import ManageLivestreamScreen from "@screens/stream/manage.livestream.screen";
+import ManagedCertificateScreen from "@screens/user-profile/manage-certificate/managed.certificate.screen";
+import CreateCertificateScreen from "@screens/user-profile/manage-certificate/create.certificate.screen";
+import TeacherScreen from "@screens/profile.screen/ikiCoachTeacher.screen";
+import ManagedClubScreen from "@screens/club/components/managed.club.screen";
 
 export const DiscoveryStackData = [
   {
@@ -302,6 +309,10 @@ export const CommonStackData = [
   { name: SCREENS.COURSE_RECOMMEND, screen: CourseRecommendScreen },
   { name: SCREENS.CLASSHOMEWORK, screen: ClassHomeWorkScreen },
   {
+    name: SCREENS.ALL_AUDIO_BOOk,
+    screen: AllBookScreen,
+  },
+  {
     name: SCREENS.AUDIO_PREVIEW,
     screen: AudioPreview,
   },
@@ -313,10 +324,35 @@ export const CommonStackData = [
     name: SCREENS.AUDIO_PLAY,
     screen: AudioPlayScreen,
   },
-  // {
-  //   name: SCREENS.ALL_AUDIO_BOOk,
-  //   screen: AllBookScreen,
-  // },
+  {
+    name: SCREENS.LIVESTREAM_PREVIEW,
+    screen: LiveStreamPreviewScreem,
+  },
+  {
+    name: SCREENS.LIVESTREAM_LIST,
+    screen: LivestreamListScreen,
+  },
+  {
+    name: SCREENS.MANAGE_LIVESTREAM,
+    screen: ManageLivestreamScreen,
+  },
+  {
+    name: SCREENS.MANAGE_CERTIFICATE,
+    screen: ManagedCertificateScreen,
+  },
+  {
+    name: SCREENS.CREATE_CERTIFICATE,
+    screen: CreateCertificateScreen,
+  },
+  {
+    name: SCREENS.TEACHER_SCREEN,
+    screen: TeacherScreen,
+  },
+  {
+    name: SCREENS.AUDIO_BOOK,
+    screen: AudioBookScreen,
+  },
+  ...ClubStackData,
   // {
   //   name: SCREENS.AUDIO_BOOK,
   //   screen: AudioBookScreen,

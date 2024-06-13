@@ -14,7 +14,7 @@ import { formatCoin } from "@helpers/string.helper";
 import CS from "@theme/styles";
 import { SCREENS } from "constants";
 
-const HeaderAffiliate = () => {
+const HeaderAffiliate = ({ fromHomepage }: { fromHomepage: boolean }) => {
   const userData = useStore((state) => state.userData);
   const type = useStore((state) => state.type);
   const setType = useStore((state) => state.setType);
@@ -46,13 +46,15 @@ const HeaderAffiliate = () => {
       style={styles.backgroundHeader}
     >
       <View style={styles.viewHeaderFake}>
-        <Icon
-          onPress={_onPressLeft}
-          name={"chevron-left"}
-          type={IconType.Feather}
-          size={25}
-          color={palette.white}
-        />
+        {!fromHomepage && (
+          <Icon
+            onPress={_onPressLeft}
+            name={"chevron-left"}
+            type={IconType.Feather}
+            size={25}
+            color={palette.white}
+          />
+        )}
         <Text numberOfLines={1} style={styles.txtHeader}>
           {translations.affiliate.yourIncome}
         </Text>

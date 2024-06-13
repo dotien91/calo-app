@@ -93,7 +93,6 @@ const ThreadCommentsView = ({
       },
     });
   };
-
   return (
     <>
       <PressableBtn onPress={showPopupComment}>

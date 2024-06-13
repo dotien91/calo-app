@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Text,
   View,
   StyleSheet,
-  Animated,
   TouchableOpacity,
   TextStyle,
 } from "react-native";
@@ -24,30 +23,17 @@ const TextViewCollapsed = ({
 }: TextViewCollapsedProps) => {
   const [collapsed, setCollapsed] = useState(true);
   const [maxLines, setMaxLines] = useState(3);
-  const animationHeight = useRef(new Animated.Value(80)).current;
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
   };
 
   const collapseView = () => {
-    setTimeout(() => {
-      setMaxLines(3);
-    }, 300);
-    Animated.timing(animationHeight, {
-      duration: 300,
-      toValue: 80,
-      useNativeDriver: false,
-    }).start();
+    setMaxLines(3);
   };
 
   const expandView = () => {
     setMaxLines(null);
-    Animated.timing(animationHeight, {
-      duration: 300,
-      toValue: 1000,
-      useNativeDriver: false,
-    }).start();
   };
 
   useEffect(() => {
@@ -60,11 +46,11 @@ const TextViewCollapsed = ({
 
   return (
     <View style={styles.container}>
-      <Animated.View style={{ maxHeight: animationHeight }}>
+      <View>
         <Text style={[styles.paragraph, styleText]} numberOfLines={maxLines}>
           {text}
         </Text>
-      </Animated.View>
+      </View>
       {text?.trim().length > 100 && (
         <TouchableOpacity
           style={{ flexDirection: "row", alignItems: "center" }}

@@ -15,6 +15,9 @@ import { SCREENS } from "constants";
 import { TypedPost } from "shared/models";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import ListFilePostItem from "./list.file.post.item copy";
+import VisibilitySensor from "visibility-sensor-react-native";
+const a =
+  "https://files.exam24h.com/short/2024/06/03_1717383863099/6617c4568eb0c7a297dea6a5/IMG_4040.mov";
 
 const SIZE_AVATAR = 32;
 const FONT_SIZE = 16;
@@ -84,35 +87,78 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
     const param = { id: data._id, data: data };
     NavigationService.push(SCREENS.POST_DETAIL, param);
   };
-  return (
-    <View>
-      <View style={styles.container}>
-        <AvatarPost
-          data={data?.user_id}
-          pressAvatar={goToProfileCurrentUser}
-          sizeAvatar={SIZE_AVATAR}
-          showLevel
-        />
-        <View style={{ ...CommonStyle.flex1 }}>
-          <PressableBtn
-            onPress={detailScreen}
-            style={[CommonStyle.flex1, { paddingLeft: 8 }]}
-          >
-            <HeaderItempost data={data} onPress={goToProfileCurrentUser} />
-          </PressableBtn>
+
+  const handleImageVisibility = (v) => {
+    if ((data?.attach_files || [])[0]?.media_url != a) return;
+    if (v) {
+      console.log("show");
+    } else {
+      console.log("hidden");
+    }
+  };
+
+  if ((data?.attach_files || [])[0]?.media_url == a)
+    return (
+      <View>
+        <View style={styles.container}>
+          <AvatarPost
+            data={data?.user_id}
+            pressAvatar={goToProfileCurrentUser}
+            sizeAvatar={SIZE_AVATAR}
+            showLevel
+          />
+          <View style={{ ...CommonStyle.flex1 }}>
+            <PressableBtn
+              onPress={detailScreen}
+              style={[CommonStyle.flex1, { paddingLeft: 8 }]}
+            >
+              <HeaderItempost data={data} onPress={goToProfileCurrentUser} />
+            </PressableBtn>
+          </View>
         </View>
+        <PressableBtn onPress={detailScreen} style={{ paddingHorizontal: 16 }}>
+          {HasTag}
+          {ContentStatus}
+          <ListFile
+            listFile={data?.attach_files || []}
+            styleContainer={styles.viewImage1}
+          />
+          <ListFilePostItem listFile={data?.attach_files || []} />
+          <LikeSharePostItem data={data} pressComment={pressComment} />
+        </PressableBtn>
       </View>
-      <PressableBtn onPress={detailScreen} style={{ paddingHorizontal: 16 }}>
-        {HasTag}
-        {ContentStatus}
-        <ListFile
-          listFile={data?.attach_files || []}
-          styleContainer={styles.viewImage1}
-        />
-        <ListFilePostItem listFile={data?.attach_files || []} />
-        <LikeSharePostItem data={data} pressComment={pressComment} />
-      </PressableBtn>
-    </View>
+    );
+  return (
+    <VisibilitySensor onChange={handleImageVisibility}>
+      <View>
+        <View style={styles.container}>
+          <AvatarPost
+            data={data?.user_id}
+            pressAvatar={goToProfileCurrentUser}
+            sizeAvatar={SIZE_AVATAR}
+            showLevel
+          />
+          <View style={{ ...CommonStyle.flex1 }}>
+            <PressableBtn
+              onPress={detailScreen}
+              style={[CommonStyle.flex1, { paddingLeft: 8 }]}
+            >
+              <HeaderItempost data={data} onPress={goToProfileCurrentUser} />
+            </PressableBtn>
+          </View>
+        </View>
+        <PressableBtn onPress={detailScreen} style={{ paddingHorizontal: 16 }}>
+          {HasTag}
+          {ContentStatus}
+          <ListFile
+            listFile={data?.attach_files || []}
+            styleContainer={styles.viewImage1}
+          />
+          <ListFilePostItem listFile={data?.attach_files || []} />
+          <LikeSharePostItem data={data} pressComment={pressComment} />
+        </PressableBtn>
+      </View>
+    </VisibilitySensor>
   );
 };
 

@@ -2165,6 +2165,11 @@
   dependencies:
     "@sinonjs/commons" "^3.0.0"
 
+"@skele/components@^1.0.0-alpha.40":
+  version "1.0.0-alpha.40"
+  resolved "https://registry.yarnpkg.com/@skele/components/-/components-1.0.0-alpha.40.tgz#1548f77ec5bdc6c6ea2ad8ffcb47809581e64289"
+  integrity sha512-8mhYslxz71l+8maHegrNqQrl+a6oRFSl+OmAC4Gny1vQ8znCyGG8gR+SWFeDnNALpOi/EZvPC65qTylkoq6xZg==
+
 "@socket.io/component-emitter@~3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@socket.io/component-emitter/-/component-emitter-3.1.0.tgz#96116f2a912e0c02817345b3c10751069920d553"
@@ -7809,6 +7814,11 @@ react-native-incall-manager@^4.2.0:
   resolved "https://registry.yarnpkg.com/react-native-incall-manager/-/react-native-incall-manager-4.2.0.tgz#1cc781591007c4c9fc21deea82a308d46dc4db6c"
   integrity sha512-DC5XRQVAwNgNA6YZ3ILF6ttWXv/MUQ4omzmVDh/uHc0TW0v4f8QIdt6D9GHZhGKb3+qB7XKUxpXVBrLH+9zqfQ==
 
+react-native-inviewport@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-inviewport/-/react-native-inviewport-1.1.0.tgz#36776b09f00354dddbb4b07099f49149440da567"
+  integrity sha512-KtrVLF9lFtxMfKuGMrVZ0gYZmU+Qz5i7EDbjgjBCY01EIApbwo4Mow5+vMliZpCAUfdITDY7MaAxBjE/bHUFXw==
+
 react-native-iphone-screen-helper@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/react-native-iphone-screen-helper/-/react-native-iphone-screen-helper-2.1.1.tgz#80e82a9badf97934f41739c58f518914b8ae1e91"
@@ -9752,6 +9762,10 @@ vary@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==
+
+"visibility-sensor-react-native@https://github.com/olcayertas/visibility-sensor-react-native.git":
+  version "2.0.0"
+  resolved "https://github.com/olcayertas/visibility-sensor-react-native.git#5aac5519ebdeaa567fe5d3314c47c0d53a5cfbb2"
 
 vlq@^1.0.0:
   version "1.0.1"

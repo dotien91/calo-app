@@ -5,8 +5,9 @@ import { View, Text, ViewStyle } from "react-native";
 import CommonStyle from "@theme/styles";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { palette } from "@theme/themes";
-import lotieNoResult from "assets/lotties/no-result.json";
+import lotieNoResult from "assets/lotties/emptyBox.json";
 import { Device } from "@utils/device.ui.utils";
+import { translations } from "@localization";
 
 interface IEmptyResultView {
   title?: string;
@@ -51,6 +52,7 @@ const EmptyResultView = ({
           style={{ marginBottom: 16 }}
         />
       )}
+      <View style={CommonStyle.flexCenter}>
       {!icon && showLottie && (
         <AnimatedLottieView
           source={lottieJson || lotieNoResult}
@@ -60,10 +62,11 @@ const EmptyResultView = ({
           autoPlay
         />
       )}
+      </View>
       <Text
         style={{ ...CommonStyle.hnBold, textAlign: "center", marginBottom: 14 }}
       >
-        {title}
+        {title || translations.emptyList}
       </Text>
       <Text style={{ ...CommonStyle.hnRegular, textAlign: "center" }}>
         {desc}

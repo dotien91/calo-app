@@ -137,9 +137,11 @@ const ItemNotification = ({ item, pressDelete }: ItemNotificationProps) => {
           {getFormatDayNotification(item?.createdAt || "")}
         </Text>
       </View>
-      <PressableBtn onPress={_deleteNotification}>
-        <IconSvg name="icClose" size={20} color={palette.textOpacity8} />
-      </PressableBtn>
+      <View style={{ justifyContent: "flex-start", height: "100%" }}>
+        <PressableBtn style={styles.deleteIcon} onPress={_deleteNotification}>
+          <IconSvg name="icClose" size={12} color={palette.white} />
+        </PressableBtn>
+      </View>
     </TouchableOpacity>
   );
 };
@@ -178,11 +180,11 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     minHeight: 60,
-    flexDirection: "row",
-    alignItems: "center",
     gap: 8,
     paddingHorizontal: 16,
     paddingVertical: 8,
+    ...CommonStyle.flexRear,
+    alignContent: "flex-start",
   },
   viewAvatar: {
     width: 48,
@@ -215,6 +217,14 @@ const styles = StyleSheet.create({
     ...CommonStyle.hnRegular,
     fontSize: 14,
     color: palette.textOpacity8,
+  },
+  deleteIcon: {
+    backgroundColor: palette.red,
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

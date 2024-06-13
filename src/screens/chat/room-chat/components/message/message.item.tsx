@@ -47,7 +47,6 @@ const MessageBubble = ({ chatRoomId, ...props }: IMessageBubble) => {
     props.previousMessage.createdAt,
   );
   const sameAvatar = isSameUser(props.currentMessage, props.nextMessage);
-  console.log("sameAvatar", sameAvatar);
   const sameUser = isSameUser(props.currentMessage, props.nextMessage);
   const renderDay = () => {
     if (!isSameTimeShow) {

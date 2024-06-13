@@ -423,12 +423,11 @@ const CourseCreate = () => {
       typeCourse == EnumClassType.CallGroup
     ) {
       return (
-        <View style={{ zIndex: 2, marginVertical: 8 }}>
+        <View style={{ zIndex: 2, marginVertical: 8, paddingHorizontal: 16 }}>
           <Text
             style={{
               ...CS.hnMedium,
               color: colors.text,
-              marginLeft: 20,
               marginVertical: 8,
             }}
           >

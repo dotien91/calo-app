@@ -36,7 +36,6 @@ const ItemPost = ({ data, pressComment, scrollToCmt }: ItemPostProps) => {
   const theme = useTheme();
   const { colors } = theme;
   const styles = React.useMemo(() => createStyles(theme), [theme]);
-
   const HasTag = useMemo(() => {
     if (
       data &&

@@ -177,7 +177,6 @@ export const useChatVideoCall = (txtSearch: string, id: string) => {
   const partnerId = null;
 
   const getRoomDetail = () => {
-    console.log("chatRoomIdchatRoomId", chatRoomId);
     viewRoom({ id: chatRoomId }).then((res) => {
       if (!res.isError) {
         setRoomDetail(res.data);

@@ -43,7 +43,7 @@ const AudioQuickFilter = () => {
       </TouchableOpacity>
     );
   };
-
+  if (!track.length) return null
   return (
     <View>
       <AudioCategoryTitle

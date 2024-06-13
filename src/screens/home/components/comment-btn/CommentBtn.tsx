@@ -22,7 +22,7 @@ const CommentBtn = ({ pressComment }: CommentBtnProps) => {
         { justifyContent: "center", backgroundColor: buttonColor },
       ]}
     >
-      <IconSvg size={16} name="icComment" color={palette.textOpacity6} />
+      <IconSvg size={20} name="icComment" color={palette.textOpacity6} />
       <Text style={styles.textLikeShare}>{translations.post.comment}</Text>
     </TouchableOpacity>
   );

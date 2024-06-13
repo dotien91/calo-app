@@ -76,7 +76,7 @@ const AvatarProfile = ({ userInfo, customStyle }: UploadAvatarProps) => {
             style={styles.iconCover}
           >
             <Icon
-              name="camera-outline"
+              name="image"
               type={IconType.Ionicons}
               color={colors.text}
               size={25}
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     bottom: 8,
     zIndex: 1,
     backgroundColor: palette.white,
-    padding: 2,
+    padding: 4,
     borderRadius: 99,
   },
 });

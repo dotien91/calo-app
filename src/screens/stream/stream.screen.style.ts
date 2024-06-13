@@ -58,12 +58,11 @@ export default (theme: ExtendedTheme) => {
       left: 30,
       width: Device.width - 64,
       top: 140,
-      height: 72,
+      // height: 72,
       zIndex: 1,
       // paddingVertical: 8,
       // paddingHorizontal: 8,
       // backgroundColor: colors.lightOverlay,
-      flexDirection: "row",
       gap: 8,
     },
     input: {

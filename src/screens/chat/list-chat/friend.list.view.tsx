@@ -53,7 +53,6 @@ const ListFriend: React.FC<ListFriendProps> = () => {
       partner_name: partner_id?.display_name,
     });
   };
-
   const renderItem = ({
     item,
     index,

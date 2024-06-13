@@ -19,6 +19,8 @@ export interface ChatSlice {
   setSearchModeChat: (searchModeChat: boolean) => void;
   isMutedAll: boolean;
   setIsMutedAll: (isMutedAll: boolean) => void;
+  unreadNumber: number;
+  setUnreadNumber: (viewNumber: number) => void;
 }
 
 const createChatSlice: StoreSlice<ChatSlice> = (set, get) => ({
@@ -37,6 +39,7 @@ const createChatSlice: StoreSlice<ChatSlice> = (set, get) => ({
   searchModeChat: false,
   setSearchModeChat: (value: boolean) => set({ searchModeChat: value }),
   updateCurrentMediaIds: (item) => {
+    if (!item?.id) return;
     const { currentMediaIds } = get();
     const oldItem = currentMediaIds.find((_item) => _item?.id == item?.id) || {
       data: [],
@@ -56,6 +59,8 @@ const createChatSlice: StoreSlice<ChatSlice> = (set, get) => ({
   setIsMutedAll: (v) => {
     set({ isMutedAll: v });
   },
+  unreadNumber: 0,
+  setUnreadNumber: (value: number) => set({ unreadNumber: value }),
 });
 
 export default createChatSlice;

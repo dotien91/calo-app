@@ -38,7 +38,7 @@ const TextBase = ({
 }: Props) => {
   // const theme = useTheme();
   // const { colors } = theme;
-  const _color = palette?.[color] || palette.textOpacity8;
+  const _color = palette?.[color] || palette.textOpacity9;
 
   const fontFamily = useMemo(() => {
     switch (fontWeight) {

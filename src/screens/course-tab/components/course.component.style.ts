@@ -111,5 +111,25 @@ export default (theme: ExtendedTheme) => {
       borderRadius: 2,
       backgroundColor: colors.textOpacity6,
     },
+    viewCount: {
+      marginTop: 16,
+      paddingHorizontal: 20,
+      height: 52,
+      flexDirection: "row",
+      gap: 8,
+    },
+    itemCount: {
+      paddingHorizontal: 20,
+      ...CS.center,
+      minHeight: 50,
+      minWidth: 60,
+    },
+    textCount: {
+      ...CS.hnRegular,
+      fontSize: 14,
+    },
+    textDes: {
+      color: colors.textOpacity8,
+    },
   });
 };
