@@ -191,9 +191,10 @@ const CreateCertificateScreen = () => {
               message: translations.required,
             },
           }}
-          maxLength={32}
           label={translations.manageCertificate.description}
           errorTxt={errors.description?.message}
+          maxLength={250}
+          multiline
         />
         {/* issued_by */}
         <InputHook
@@ -211,9 +212,9 @@ const CreateCertificateScreen = () => {
               message: translations.required,
             },
           }}
-          maxLength={32}
           label={translations.manageCertificate.issuedBy}
           errorTxt={errors.issued_by?.message}
+          maxLength={32}
         />
         {/* start_issued */}
         {renderTimeIssued()}

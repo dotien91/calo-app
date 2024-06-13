@@ -181,8 +181,8 @@ const AudioPreview = () => {
     const track = {
       url: data?.attach_files[0].media_url,
       title: data?.title,
-      artist: data?.user_id.display_name,
-      artwork: data?.post_avatar.media_url,
+      artist: data?.user_id?.display_name,
+      artwork: data?.post_avatar?.media_url,
       id: data?._id,
     };
     await TrackPlayer.add(track);
@@ -244,7 +244,7 @@ const AudioPreview = () => {
           </View>
           <View style={styles.viewTitle}>
             <Text style={styles.txtTitle}>{track?.title}</Text>
-            <Text style={styles.txtAuthor}>{track?.user_id.display_name}</Text>
+            <Text style={styles.txtAuthor}>{track?.user_id?.display_name}</Text>
           </View>
         </View>
         {renderCategory()}

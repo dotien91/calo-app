@@ -15,13 +15,26 @@ interface ItemMonthProps {
     textCommissionMonth?: object;
   };
   color?: string;
+  fromHomepage?: boolean;
 }
 
-const ItemMonth: React.FC<ItemMonthProps> = ({ text, price, style, color }) => {
+const ItemMonth: React.FC<ItemMonthProps> = ({
+  text,
+  price,
+  style,
+  color,
+  fromHomepage,
+}) => {
   const theme = useTheme();
   const styles = React.useMemo(() => createStyles(theme), [theme]);
   return (
-    <View style={[styles.styleViewTotal, style?.view]}>
+    <View
+      style={[
+        styles.styleViewTotal,
+        style?.view,
+        fromHomepage && { paddingVertical: 0 },
+      ]}
+    >
       <View>
         <Text style={[styles.txtMonth, style?.textMonth]}>{text}</Text>
         <Text

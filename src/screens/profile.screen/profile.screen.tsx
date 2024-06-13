@@ -34,7 +34,7 @@ const SettingProfileScreen = () => {
   const userInfo = useStore((state) => state.userInfo);
   const userMedia = useStore((state) => state.userMedia);
   const { renderViewRequestLogin } = useUserHook();
-  const { changeUserMedia } = useUserHelper();
+  const { changeUserMedia, isTeacher } = useUserHelper();
 
   const styles = useMemo(() => createStyles(theme), [theme]);
   const listrenderPointCoin = [
@@ -191,6 +191,7 @@ const SettingProfileScreen = () => {
     );
   }
   const renderButtonTeacherScreen = () => {
+    if (!isTeacher) return null;
     return (
       <PressableBtn
         onPress={() => NavigationService.navigate(SCREENS.TEACHER_SCREEN)}

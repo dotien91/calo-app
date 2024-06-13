@@ -54,7 +54,10 @@ const CreateEventScreen = () => {
 
   const onSubmit = (data) => {
     if (!link || link === "") {
-      showToast({ type: "error" });
+      showToast({
+        type: "error",
+        message: translations.validate.requireAvatar,
+      });
       return;
     }
     if (!endDate || !startDate || endDate <= startDate) {

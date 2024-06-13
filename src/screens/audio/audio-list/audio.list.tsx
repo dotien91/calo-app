@@ -37,12 +37,7 @@ const AudioList = () => {
   );
   const renderItem = ({ item, index }) => {
     return (
-      <AudioItemList
-        listData={listData}
-        isSliderItem
-        data={item}
-        key={index}
-      />
+      <AudioItemList listData={listData} isSliderItem data={item} key={index} />
     );
   };
 
@@ -68,14 +63,12 @@ const AudioList = () => {
   }
 
   const renderEmptyComponent = () => {
-    if (!noData) return null
-    return <EmptyResultView />
-  }
-
+    if (!noData) return null;
+    return <EmptyResultView />;
+  };
 
   return (
     <View style={styles.container}>
-
       {listData.length == 0 && isLoading ? (
         renderLoading()
       ) : (

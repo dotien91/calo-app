@@ -4,7 +4,6 @@ import useDeepCompareEffect from "use-deep-compare-effect";
 import { palette } from "@theme/themes";
 import lodash from "lodash";
 import LoadingList from "@shared-components/loading.list.component";
-import { closeSuperModal } from "@helpers/super.modal.helper";
 // onEndReach: (info?: { distanceFromEnd: number }) => void;
 // refreshControl: () => JSX.Element;
 // renderFooterComponent: () => JSX.Element;
@@ -67,7 +66,6 @@ export function useListData<T>(
       // })
       const newData = res.data;
       // setIsLoading(false);
-      closeSuperModal();
       if (!res.isError && lodash.isArray(newData)) {
         isFetching.current = false;
 

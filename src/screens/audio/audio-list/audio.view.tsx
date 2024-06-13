@@ -46,7 +46,7 @@ const AudioView = ({ onPress }: AudioViewProps) => {
     );
   };
 
-  if (noData) return null
+  if (noData) return null;
 
   const renderLoading = () => {
     return <LoadingItem />;

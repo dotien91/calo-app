@@ -62,7 +62,6 @@ export const useInAppPurchase = () => {
                 ? currentPurchase.transactionReceipt
                 : currentPurchase.purchaseToken,
             };
-            console.log("datadatadata", data);
             requestIapBackend(data).then((res) => {
               closeSuperModal();
               if (!res.isError) {

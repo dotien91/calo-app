@@ -13,6 +13,7 @@ import useStore from "@services/zustand/store";
 import { formatCoin } from "@helpers/string.helper";
 import CS from "@theme/styles";
 import { SCREENS } from "constants";
+import { Device } from "@utils/device.ui.utils";
 
 const HeaderAffiliate = ({ fromHomepage }: { fromHomepage: boolean }) => {
   const userData = useStore((state) => state.userData);
@@ -41,64 +42,87 @@ const HeaderAffiliate = ({ fromHomepage }: { fromHomepage: boolean }) => {
     userData?.user_role === "teacher" || userData?.user_role === "admin";
 
   return (
-    <ImageBackground
-      source={require("../../../assets/images/bgaffiliate.png")}
-      style={styles.backgroundHeader}
-    >
-      <View style={styles.viewHeaderFake}>
-        {!fromHomepage && (
-          <Icon
-            onPress={_onPressLeft}
-            name={"chevron-left"}
-            type={IconType.Feather}
-            size={25}
-            color={palette.white}
-          />
-        )}
-        <Text numberOfLines={1} style={styles.txtHeader}>
-          {translations.affiliate.yourIncome}
-        </Text>
-        <View style={{ width: 25, ...CS.center }}>
-          {isSwitch && (
+    <View style={CS.center}>
+      <ImageBackground
+        source={require("../../../assets/images/bgaffiliate.png")}
+        style={[
+          styles.backgroundHeader,
+          fromHomepage && {
+            width: Device.width - 32,
+            borderRadius: 12,
+            overflow: "hidden",
+            height: 110,
+          },
+        ]}
+      >
+        <View
+          style={[
+            styles.viewHeaderFake,
+            fromHomepage && {
+              marginTop: 0,
+            },
+          ]}
+        >
+          {!fromHomepage && (
             <Icon
-              onPress={switchToken}
-              name="swap-horizontal"
-              size={24}
+              onPress={_onPressLeft}
+              name={"chevron-left"}
+              type={IconType.Feather}
+              size={25}
               color={palette.white}
-              type={IconType.Ionicons}
             />
           )}
+          <Text numberOfLines={1} style={styles.txtHeader}>
+            {translations.affiliate.yourIncome}
+          </Text>
+          <View style={{ width: 25, ...CS.center }}>
+            {isSwitch && (
+              <Icon
+                onPress={switchToken}
+                name="swap-horizontal"
+                size={24}
+                color={palette.white}
+                type={IconType.Ionicons}
+              />
+            )}
+          </View>
         </View>
-      </View>
-      <View>
-        <TextBase
-          fontWeight="600"
-          fontSize={24}
-          color={EnumColors.white}
-          textAlign="center"
-          style={styles.txtMoneyHeader}
-        >
-          {type === "coin"
-            ? formatCoin(userData?.current_coin || 0)
-            : formatMoney(userData?.current_token || 0, {
-                suffix: " đ",
-              })}
-        </TextBase>
-        {type === "token" && (
+        <View>
           <TextBase
             fontWeight="600"
+            fontSize={24}
             color={EnumColors.white}
             textAlign="center"
-            style={{
-              textDecorationLine: "underline",
-            }}
-            onPress={_onPressWithdraw}
+            style={[
+              styles.txtMoneyHeader,
+              fromHomepage && {
+                marginTop: 0,
+                marginBottom: 0,
+              },
+            ]}
           >
-            {translations.affiliate.withdraw}
+            {type === "coin"
+              ? formatCoin(userData?.current_coin || 0)
+              : formatMoney(userData?.current_token || 0, {
+                  suffix: " đ",
+                })}
           </TextBase>
-        )}
-      </View>
-    </ImageBackground>
+          {type === "token" && (
+            <TextBase
+              fontWeight="600"
+              color={EnumColors.white}
+              textAlign="center"
+              style={{
+                textDecorationLine: "underline",
+              }}
+              onPress={_onPressWithdraw}
+            >
+              {translations.affiliate.withdraw}
+            </TextBase>
+          )}
+        </View>
+      </ImageBackground>
+    </View>
   );
 };
 
