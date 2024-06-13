@@ -88,7 +88,7 @@ export const palette = {
   textOpacity4: "rgba(22, 28, 36, 0.4)",
   textOpacity2: "rgba(22, 28, 36, 0.90)",
   textOpacity0: "rgba(22, 28, 36, 0)",
-  gold: "rgba(255, 163, 71, 1)",
+  gold: "#FFD05B",
   bgInput: "rgba(232, 235, 239, 1)",
   bgInput2: "rgba(240, 243, 246, 1)",
   bgBestSeller: "rgba(255, 237, 237, 1)",

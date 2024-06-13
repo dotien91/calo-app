@@ -185,7 +185,14 @@ import icCall from "./icon-call.svg";
 
 import icMoney2 from "./icon-money2.svg";
 import icTeacher from "./teacher1.svg";
+import icCmtPost from "./icon-comment-post.svg";
+import icHeartPost from "./icon-heart-pos.svg";
+import icHeartPostSolid from "./icon-heart-pos-solid.svg";
+
 const Icons = {
+  icHeartPostSolid,
+  icHeartPost,
+  icCmtPost,
   icVip,
   icPreview,
   icCoach,

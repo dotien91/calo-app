@@ -48,7 +48,7 @@ const toastConfig = {
     <View style={styles.viewFull}>
       <View style={props.text2 ? styles.containerFull : styles.container}>
         <View style={[styles.iconSize, props.text2 && { marginTop: 12 }]}>
-          <IconSvg color={palette.red} size={24} name="icError" />
+          <IconSvg color={"red"} size={24} name="icError" />
         </View>
         <View style={CS.flex1}>
           {props.text2 && (

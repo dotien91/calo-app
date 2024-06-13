@@ -160,29 +160,31 @@ const useSelectVideoHook = ({
 
   const renderSelectBackground = () => {
     return (
-      <ImageBackground
-        source={require("../../../../assets/images/bgeliteclub.png")}
-        style={styles.viewImage}
-        borderRadius={8}
-      >
-        <PressableBtn onPress={onPressChangeMedia} style={styles.styleBtn}>
-          <View style={styles.viewGally}>
-            <IconText nameIcon="icImage" text={translations.club.gallery} />
-          </View>
-        </PressableBtn>
-        <Image source={{ uri: media.link }} style={styles.viewImage1} />
-        {updatingVid && (
-          <View style={styles.viewImageFill}>
-            <LoadingUpdateMedia />
-            <View style={styles.viewImageFill}>
-              <ActivityIndicator size={"small"} />
-              <TextBase fontSize={12} fontWeight="500" color="primary">
-                {process}%
-              </TextBase>
+      <PressableBtn onPress={onPressChangeMedia}>
+        <ImageBackground
+          source={require("../../../../assets/images/bgeliteclub.png")}
+          style={styles.viewImage}
+          borderRadius={8}
+        >
+          <PressableBtn onPress={onPressChangeMedia} style={styles.styleBtn}>
+            <View style={styles.viewGally}>
+              <IconText nameIcon="icImage" text={translations.club.gallery} />
             </View>
-          </View>
-        )}
-      </ImageBackground>
+          </PressableBtn>
+          <Image source={{ uri: media.link }} style={styles.viewImage1} />
+          {updatingVid && (
+            <View style={styles.viewImageFill}>
+              <LoadingUpdateMedia />
+              <View style={styles.viewImageFill}>
+                <ActivityIndicator size={"small"} />
+                <TextBase fontSize={12} fontWeight="500" color="primary">
+                  {process}%
+                </TextBase>
+              </View>
+            </View>
+          )}
+        </ImageBackground>
+      </PressableBtn>
     );
   };
   const renderSelectVideo2 = () => {

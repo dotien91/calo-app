@@ -40,7 +40,7 @@ export const useUserHook = () => {
     _setJson(USER_TOKEN, token);
 
     getCurrentUser().then((res) => {
-    console.log("current user data", res);
+      console.log("current user data", res);
       if (!res.isError) {
         initData(res.data, true);
         NavigationService.navigate(SCREENS.HOME_TAB, { screen: SCREENS.HOME });
@@ -130,7 +130,7 @@ export const useUserHook = () => {
     resetListLike();
     setBankSelected();
     NavigationService.navigate(SCREENS.HOME_TAB, { screen: SCREENS.HOME });
-    setUnreadNumber(0)
+    setUnreadNumber(0);
     // RNRestart.restart();
   };
 

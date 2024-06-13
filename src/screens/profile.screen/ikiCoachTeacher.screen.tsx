@@ -68,8 +68,8 @@ const TeacherScreen = () => {
               {type === "coin"
                 ? formatCoin(userIncome?.today?.total_coin || 0)
                 : formatMoney(userIncome?.today?.total_token, {
-                  suffix: " IHC",
-                })}
+                    suffix: " IHC",
+                  })}
             </Text>
             <IconSvg
               name="icMoney2"
@@ -105,8 +105,8 @@ const TeacherScreen = () => {
               type === "coin"
                 ? formatCoin(userIncome?.current_month?.total_coin || 0)
                 : formatMoney(userIncome?.current_month?.total_token, {
-                  suffix: " IHC",
-                })
+                    suffix: " IHC",
+                  })
             }
             color={colors.white}
           />
@@ -132,8 +132,8 @@ const TeacherScreen = () => {
               type === "coin"
                 ? formatCoin(userIncome?.last_month?.total_coin || 0)
                 : formatMoney(userIncome?.last_month?.total_token, {
-                  suffix: " IHC",
-                })
+                    suffix: " IHC",
+                  })
             }
             color={colors.white}
           />
@@ -241,11 +241,11 @@ const TeacherScreen = () => {
         txtHeader: "",
         link: data?.url,
       });
-      return
+      return;
     }
 
-    navigate(data.screen, data?.param)
-  }
+    navigate(data.screen, data?.param);
+  };
 
   const renderIcon = (items) => {
     return (

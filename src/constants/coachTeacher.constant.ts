@@ -6,7 +6,6 @@ import KhoaHoc from "../assets/images/utilities/KH.png";
 import LichDay from "../assets/images/utilities/LichDay.png";
 import Discount from "../assets/images/utilities/MaGiamGia.png";
 import ChatHV from "../assets/images/utilities/ChatHV.png";
-import GioDay from "../assets/images/utilities/GioDay.png";
 import QLClass from "../assets/images/utilities/QLClass.png";
 import TuyChinh from "../assets/images/utilities/TuyChinhHoSo.png";
 import QLChungChi from "../assets/images/utilities/QLChungChi.png";
@@ -38,12 +37,12 @@ export const utilities = [
       {
         title: translations.profileTeacher.withdraw,
         uri: RutTien,
-        screen: (SCREENS.WITHDRAW),
+        screen: SCREENS.WITHDRAW,
       },
       {
         title: translations.profileTeacher.setUpAccount,
         uri: CaiDatSTK,
-        screen: (SCREENS.BANK_LIST),
+        screen: SCREENS.BANK_LIST,
       },
     ],
   },
@@ -53,22 +52,22 @@ export const utilities = [
       {
         title: translations.profileTeacher.myCourse,
         uri: KhoaHoc,
-        screen: (SCREENS.MY_COURES),
+        screen: SCREENS.MY_COURES,
       },
       {
         title: translations.profileTeacher.schedule,
-        screen: (SCREENS.TEACHER_COURSES),
+        screen: SCREENS.TEACHER_COURSES,
         uri: LichDay,
       },
       {
         title: translations.profileTeacher.discount,
         uri: Discount,
-        screen: (SCREENS.COUPON_LIST),
+        screen: SCREENS.COUPON_LIST,
       },
       {
         title: translations.profileTeacher.chat,
         uri: ChatHV,
-        screen: (SCREENS.CHAT),
+        screen: SCREENS.CHAT,
       },
       // {
       //   title: translations.profileTeacher.setTeaching,
@@ -77,7 +76,7 @@ export const utilities = [
       // },
       {
         title: translations.profileTeacher.manageClass,
-        screen: (SCREENS.TEACHER_COURSES),
+        screen: SCREENS.TEACHER_COURSES,
         uri: QLClass,
       },
     ],
@@ -87,26 +86,26 @@ export const utilities = [
     content: [
       {
         title: translations.profileTeacher.customProfile,
-        screen: (SCREENS.EDIT_PROFILE),
+        screen: SCREENS.EDIT_PROFILE,
         uri: TuyChinh,
       },
       {
         title: translations.profileTeacher.manageCerti,
-        screen: (SCREENS.MANAGE_CERTIFICATE),
+        screen: SCREENS.MANAGE_CERTIFICATE,
         uri: QLChungChi,
       },
       {
         title: translations.profileTeacher.myClub,
         uri: CLB,
-        screen: (SCREENS.CLUB_SCREEN),
+        screen: SCREENS.CLUB_SCREEN,
         param: {
-          defaultIndex: 1
-        }
+          defaultIndex: 1,
+        },
       },
       {
         title: translations.profileTeacher.myPodcast,
         uri: Podcast,
-        screen: (SCREENS.AUDIO_BOOK),
+        screen: SCREENS.AUDIO_BOOK,
       },
     ],
   },
@@ -116,12 +115,12 @@ export const utilities = [
       {
         title: translations.profileTeacher.guide,
         uri: HuongDan,
-        url: ("https://docs.ikigaicoach.net"),
+        url: "https://docs.ikigaicoach.net",
       },
       {
         title: translations.profileTeacher.Security,
         uri: BaoMat,
-        url: ("https://docs.ikigaicoach.net/chinh-sach"),
+        url: "https://docs.ikigaicoach.net/chinh-sach",
       },
     ],
   },

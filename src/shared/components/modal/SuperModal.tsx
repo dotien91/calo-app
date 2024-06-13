@@ -91,6 +91,13 @@ const SuperModal: React.FC<SuperModalProps> = () => {
     };
   }, []);
 
+  useEffect(() => {
+    console.log({
+      styleModalType,
+      contentModalType,
+    });
+  }, [styleModalType, contentModalType]);
+
   const showModal = ({
     contentModalType,
     styleModalType,
@@ -486,4 +493,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SuperModal;
+export default React.memo(SuperModal);

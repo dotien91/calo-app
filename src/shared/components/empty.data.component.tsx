@@ -53,15 +53,15 @@ const EmptyResultView = ({
         />
       )}
       <View style={CommonStyle.flexCenter}>
-      {!icon && showLottie && (
-        <AnimatedLottieView
-          source={lottieJson || lotieNoResult}
-          style={{ width: 60, height: 60, marginBottom: 10 }}
-          loop
-          speed={1.5}
-          autoPlay
-        />
-      )}
+        {!icon && showLottie && (
+          <AnimatedLottieView
+            source={lottieJson || lotieNoResult}
+            style={{ width: 60, height: 60, marginBottom: 10 }}
+            loop
+            speed={1.5}
+            autoPlay
+          />
+        )}
       </View>
       <Text
         style={{ ...CommonStyle.hnBold, textAlign: "center", marginBottom: 14 }}

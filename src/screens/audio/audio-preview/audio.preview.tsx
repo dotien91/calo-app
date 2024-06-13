@@ -186,8 +186,8 @@ const AudioPreview = () => {
     const track = {
       url: data?.attach_files[0].media_url,
       title: data?.title,
-      artist: data?.user_id.display_name,
-      artwork: data?.post_avatar.media_url,
+      artist: data?.user_id?.display_name,
+      artwork: data?.post_avatar?.media_url,
       id: data?._id,
     };
     await TrackPlayer.add(track);
@@ -310,7 +310,6 @@ const AudioPreview = () => {
               styleText={styles.des}
             />
           </View>
-
           <ListReviewView id={id} />
           <Button
             onPress={showWriteReview}

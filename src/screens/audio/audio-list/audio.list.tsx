@@ -76,14 +76,12 @@ const AudioList = () => {
   }
 
   const renderEmptyComponent = () => {
-    if (!noData) return null
-    return <EmptyResultView />
-  }
-
+    if (!noData) return null;
+    return <EmptyResultView />;
+  };
 
   return (
     <View style={styles.container}>
-
       {listData.length == 0 && isLoading ? (
         renderLoading()
       ) : (

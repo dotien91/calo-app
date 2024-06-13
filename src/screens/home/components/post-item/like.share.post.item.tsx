@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, View, TouchableOpacity } from "react-native";
+import { Text, View } from "react-native";
 import { useTheme } from "@react-navigation/native";
 
 import LikeBtn from "../like-btn/LikeBtn";
@@ -12,6 +12,8 @@ import CommentBtn from "../comment-btn/CommentBtn";
 import useStore from "@services/zustand/store";
 import { palette } from "@theme/themes";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import IconSvg from "assets/svg";
+import PressableBtn from "@shared-components/button/PressableBtn";
 interface LikeSharePostItemProps {
   data: TypedPost;
   pressComment: () => void;
@@ -81,28 +83,16 @@ const BtnShare = () => {
     sharePost(userData?.invitation_code);
     // shareCodeInvite(userData?.invitation_code || "");
   };
-  const [buttonColor, setButtonColor] = React.useState(palette.background);
   const theme = useTheme();
-  const { colors } = theme;
   const styles = React.useMemo(() => createStyles(theme), [theme]);
   return (
-    <TouchableOpacity
+    <PressableBtn
       onPress={_sharePost}
-      onPressIn={() => setButtonColor(palette.textOpacity4)}
-      onPressOut={() => setButtonColor(palette.background)}
-      style={[
-        styles.viewLike,
-        { justifyContent: "flex-end", backgroundColor: buttonColor },
-      ]}
+      style={[styles.viewLike, { justifyContent: "flex-end" }]}
     >
-      <Icon
-        size={20}
-        type={IconType.FontAwesome5}
-        name="share"
-        color={colors.textOpacity6}
-      />
+      <IconSvg size={20} name="icShare" />
       <Text style={styles.textLikeShare}>{translations.post.share}</Text>
-    </TouchableOpacity>
+    </PressableBtn>
   );
 };
 

@@ -10,7 +10,7 @@ import {
   useWindowDimensions,
 } from "react-native";
 import createStyles from "./club.screen.style";
-import { useTheme } from "@react-navigation/native";
+import { useTheme, useRoute } from "@react-navigation/native";
 import { palette } from "@theme/themes";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import FeatureClubScreen from "../components/feature.club.screen";
@@ -21,7 +21,6 @@ import { SCREENS } from "constants";
 import { quickFilterCourse } from "constants/course.constant";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import useStore from "@services/zustand/store";
-import { useRoute } from "@react-navigation/native";
 
 const renderScene = SceneMap({
   first: FeatureClubScreen,

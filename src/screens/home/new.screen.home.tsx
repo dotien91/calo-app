@@ -3,7 +3,6 @@ import CS from "@theme/styles";
 import React from "react";
 import { View, TouchableOpacity } from "react-native";
 import ListPostNew from "./new.list.post";
-import useStore from "@services/zustand/store";
 import { palette } from "@theme/themes";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { navigate } from "@helpers/navigation.helper";
@@ -13,8 +12,6 @@ import { useLastActiveTrack } from "@screens/audio/hook/useLastActiveTrack";
 // import { EnumModalContentType, EnumStyleModalType, showSuperModal } from "@helpers/super.modal.helper";
 
 const NewHomeScreen = () => {
-  const userData = useStore((state) => state.userData);
-
   const { isLoggedIn } = useUserHook();
   const activeTrack = useActiveTrack();
   const lastActiveTrack = useLastActiveTrack();

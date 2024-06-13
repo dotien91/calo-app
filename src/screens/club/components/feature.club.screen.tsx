@@ -47,7 +47,6 @@ const FeatureClubScreen = () => {
     _requestData(true);
     reloadElitClub(true);
   }, [userData?._id]);
-  console.log("datadata", data);
   useEffect(() => {
     eventEmitter.on("reload_list_club", _requestData);
     return () => {
