@@ -166,6 +166,6 @@ const styles = StyleSheet.create({
   txtArtist: {
     ...CS.hnRegular,
     fontSize: 14,
-    color: palette.textOpacity4,
+    color: palette.white,
   },
 });

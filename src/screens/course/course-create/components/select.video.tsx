@@ -185,40 +185,25 @@ const useSelectVideoHook = ({
       </ImageBackground>
     );
   };
-  const renderSelectImage = () => {
+  const renderSelectVideo2 = () => {
     return (
-      <View
-        style={[
-          styles.viewSelectImage,
-          (updatingVid || !!media.link) && {
-            height: (WindowWidth / 16) * 9,
-            borderWidth: 0,
-          },
-        ]}
+      <PressableBtn
+        style={
+          media.link !== "" || updatingVid
+            ? styles.viewImage
+            : styles.viewImage2
+        }
+        onPress={onPressChangeMedia}
       >
-        {media.link === "" && !updatingVid ? (
-          <PressableBtn
-            onPress={onPressChangeMedia}
-            style={[CS.fillParent, CS.flexCenter]}
-          >
-            <IconBtn
-              name="upload"
-              customStyle={{ marginRight: 8 }}
-              color={palette.primary}
-            />
+        {media.link === "" ? (
+          <View>
             <Text style={[CS.hnRegular, { color: palette.primary }]}>
-              {placeholder || translations.course.uploadCoverImageOrVideo}
+              {placeholder}
             </Text>
-          </PressableBtn>
+          </View>
         ) : (
-          <>
-            <PressableBtn onPress={onPressChangeMedia} style={styles.styleBtn}>
-              <View style={styles.viewGally}>
-                <IconText nameIcon="icImage" text={translations.club.gallery} />
-              </View>
-            </PressableBtn>
-            <Image source={{ uri: media.link }} style={styles.viewImage1} />
-          </>
+          <Image source={{ uri: media.link }} style={styles.viewImage1} />
+
         )}
         {updatingVid && (
           <View style={styles.viewImageFill}>
@@ -231,13 +216,14 @@ const useSelectVideoHook = ({
             </View>
           </View>
         )}
-      </View>
+      </PressableBtn>
     );
   };
 
   return {
     renderSelectBackground,
     renderSelectVideo,
+    renderSelectVideo2,
     idVideo: media.id,
     link: media.link,
     updatingVid,
@@ -266,14 +252,15 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     borderRadius: 8,
   },
-  viewSelectImage: {
-    height: 40,
+  viewImage2: {
+    ...CS.center,
+    height: 48,
     backgroundColor: palette.background,
-    marginHorizontal: 16,
+    marginHorizontal: 20,
     borderRadius: 12,
-    borderWidth: 1,
     borderStyle: "dashed",
-    borderColor: palette.primary,
+    borderColor: palette.borderColor,
+    borderWidth: 1,
   },
   viewImageFill: {
     ...CS.fillParent,

@@ -113,6 +113,10 @@ export default {
   days: "ngày",
   weeks: "tuần",
   months: "tháng",
+  day: "Ngày",
+  week: "Tuần",
+  month: "Tháng",
+  schedule: "Lịch",
   years: "năm",
   ago: "trước",
   copied: "Đã sao chép",
@@ -396,6 +400,8 @@ export default {
   },
   chat: {
     search: "Tìm kiếm",
+    sendMessage: "Gửi tin nhắn",
+    startCall: "Bắt đầu cuộc gọi",
     cancel: "Hủy",
     weHaveRemovedErrorPhoto: "Hệ thống xóa tệp lỗi và video dài hơn 1 phút",
     sendYourAudioMessage: "Gửi tin nhắn âm thanh của bạn",
@@ -451,12 +457,16 @@ export default {
   course: {
     desReferal: (txt: string) =>
       `Khi người dùng cài đặt ứng dụng và mua khoá học này, bạn sẽ nhận được ${txt} tương ứng. Số tiền sẽ được cập nhật ở trang Doanh thu của bạn.`,
+    uploadVideoPreview: "Tải lên video giới thiệu",
+    uploadAlbumPreview: "Tải lên album giới thiệu",
     previewMentor: "Xem Mentor",
     prepareCourse: "Các khóa học này đang được biên soạn!",
     suggestPickCourse: "Lựa chọn khóa học phù hợp với bạn phía dưới !",
     slogan: "Giáo dục là sức mạnh!",
     course: "Khóa học",
     add: "Thêm",
+    maxLesson: (num: string | number) => `Số buổi học tối đa là ${num} buổi`,
+    emptyLesson: "Giáo viên đã kín lịch trong ngày",
     warningDelete: "Bạn muốn xoá khoá học này?",
     warningFull: "Chọn đầy đủ thông tin",
     duration: "Thời gian",
@@ -563,6 +573,10 @@ export default {
     callOneVsOne: "Học 1-1",
     salfLearning: "Học theo video",
     callGroup: "Học nhóm",
+    newClass: "Lớp mới",
+    leave: "Lịch nghỉ",
+    addLeave: "Thêm lịch nghỉ",
+    note: "Ghi chú",
     offline: "Học trực tiếp",
     allSkills: "Tất cả",
     listening: "Nghe",
@@ -672,6 +686,8 @@ export default {
     timeStartAt: "Thời gian bắt đầu",
     allCourse: "Tất cả khoá học",
     allTutor: "Người hướng dẫn",
+    durationCall11: "Thời lượng buổi học",
+    lessionCount: "Số buổi học",
   },
   seeAll: "Xem tất cả",
   settings: {
@@ -1408,7 +1424,7 @@ export default {
     descriptionPoint:
       "Khi tương tác trong cộng đồng như bình luận, thích, đăng bài, mời thành viên hay xem bài học hoặc điểm danh, các thành viên sẽ nhận được số Point tương ứng theo cài đặt từ quản trị viên.\n\nThành viên có thể sử dụng đồng tiền ảo này tích luỹ để lên cấp, mở khoá các khoá học mới.",
     descriptionDiamond:
-      "Để nhận được kim cương trong cộng đồng, các thành viên sẽ phải hoàn thành các nhiệm vụ và điểm danh hàng ngày.\n\nCác thành viên có thể sử dụng kim cương để mua bán các khoá học,…( mỗi kim cương tương ứng 1000 vnđ) trong cộng đồng.",
+      "Để nhận được kim cương trong cộng đồng, các thành viên sẽ phải hoàn thành các nhiệm vụ và điểm danh hàng ngày.\n\nCác thành viên có thể sử dụng kim cương để mua bán các khoá học,…( mỗi kim cương tương ứng 1000 VND) trong cộng đồng.",
     actionPoint:
       "Khi tương tác trong cộng đồng như bình luận, thích, đăng bài, mời thành viên hay xem bài học hoặc điểm danh, các thành viên sẽ nhận được số Point tương ứng theo cài đặt từ quản trị viên.",
     personPoint:
@@ -1416,7 +1432,7 @@ export default {
     titleDiamond:
       "Để nhận được kim cương trong cộng đồng, các thành viên sẽ phải hoàn thành các nhiệm vụ và điểm danh hàng ngày.",
     personDiamond:
-      "Các thành viên có thể sử dụng kim cương để mua bán các khoá học,…( mỗi kim cương tương ứng 1000 vnđ) trong cộng đồng.",
+      "Các thành viên có thể sử dụng kim cương để mua bán các khoá học,…( mỗi kim cương tương ứng 1000 VND) trong cộng đồng.",
     noteDiamond:
       "Lưu ý: Point và kim cương chỉ có giá trị khi sử dụng trên kênh của cộng đồng mà thành viên đang tương tác mà thôi.",
   },
@@ -1479,6 +1495,7 @@ export default {
     isLast: "Đã ở cuối danh sách",
     shareAudio: (txt: string) =>
       `Tải ngay ứng dụng IKIGAI Coach về để nghe những bản sách nói hay nhất: ${txt}`,
+    listened: "Đã nghe",
   },
   livestream: {
     hello: "Xin chào",

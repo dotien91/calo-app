@@ -17,7 +17,11 @@ import Header from "@shared-components/header/Header";
 // import FastImage from "react-native-fast-image";
 import { PaymentMethod } from "constants/chat.constant";
 import { translations } from "@localization";
-import { createVnpayUrl, getOrderDetail } from "@services/api/payment.api";
+import {
+  createOrderCallOneOne,
+  createVnpayUrl,
+  getOrderDetail,
+} from "@services/api/payment.api";
 import {
   EnumModalContentType,
   EnumStyleModalType,
@@ -36,6 +40,7 @@ import useStore from "@services/zustand/store";
 import { SCREENS } from "constants";
 import ImageLoad from "@shared-components/image-load/ImageLoad";
 import { formatPriceCourse } from "@helpers/string.helper";
+import { formatVNDate } from "@utils/date.utils";
 
 const CheckoutScreen = () => {
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(
@@ -46,11 +51,19 @@ const CheckoutScreen = () => {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const route = useRoute();
   const courseData = route.params?.["courseData"];
-  const timePick = route.params?.["timePick"];
-  const duration = route.params?.["duration"];
+  const timePick = route.params?.["timePick"] || [];
+  const duration = route.params?.["duration"] || "";
+  const listTimeSelected: any[] = route.params?.["listTimeSelected"] || [];
+  // console.log(
+  //   "listTime",
+  //   listTimeSelected.map((item) => {
+  //     return { ...item, date: item.day, day: new Date(item.day).getDay() };
+  //   }),
+  // );
   const type = courseData.type;
   const isClassCourse = type == EnumClassType.CallGroup;
   const isVideoCourse = type == EnumClassType.SelfLearning;
+  const isCallOneOne = type == EnumClassType.Call11;
   const priceCourse = formatPriceCourse(courseData);
 
   const countCheckPaymentSuccess = React.useRef(0);
@@ -131,7 +144,6 @@ const CheckoutScreen = () => {
   }
 
   const renderViewCoures = () => {
-    console.log("courseData", courseData);
     return (
       <View style={[styles.styleViewCoures, styles.styleShawdow]}>
         <ImageLoad
@@ -167,7 +179,7 @@ const CheckoutScreen = () => {
     return (
       <View style={[styles.styleMarginBottom, styles.styleShawdow]}>
         {listFormTime.map((item, index) => {
-          if (!item.value) return null;
+          if (!item.value || item.value.trim() == "") return null;
           return (
             <View
               key={index}
@@ -185,6 +197,30 @@ const CheckoutScreen = () => {
             </View>
           );
         })}
+        {listTimeSelected.length > 0 && (
+          <View style={[styles.styleViewItemFormTime]}>
+            <Text style={styles.styleTextBold}>
+              {translations.payment.learningtime}
+            </Text>
+            <View style={{ flex: 1 }}>
+              {listTimeSelected.map((item, index) => {
+                return (
+                  <Text
+                    key={index}
+                    style={[
+                      styles.styleTextValueFormTime,
+                      { textAlign: "right", fontSize: 14 },
+                    ]}
+                  >
+                    {`${formatVNDate(item.day)}(${item.time_start}-${
+                      item.time_end
+                    })`}
+                  </Text>
+                );
+              })}
+            </View>
+          </View>
+        )}
       </View>
     );
   };
@@ -394,29 +430,85 @@ const CheckoutScreen = () => {
       invitation_code: userData?.ref_invitation_code || undefined,
     };
 
-    createVnpayUrl(data).then(async (res) => {
-      console.log("createVnpayUrl res", { timePick, res, data });
-      closeSuperModal();
-      if (!res.isError) {
-        const url = res.data?.redirect_url;
-        const tradeId = res.data._id;
-        if (isVnPayMethod) {
-          Linking.openURL(url);
-          setTradeId(tradeId);
+    if (isCallOneOne) {
+      // Gọi API mới mua khoá học call 1-1 ở đây
+      const _listTimeSelected = listTimeSelected.map((item) => {
+        const day = new Date(item.day).getDay();
+        return {
+          ...item,
+          date: item.day,
+          day: day == 0 ? 6 : day - 1,
+        };
+      });
+
+      const newData = {
+        payment_method: isVnPayMethod ? "vn_pay" : "smart_banking",
+        deep_link: "ikicoach://payment",
+        plan_objects: [
+          {
+            amount_of_package: "1",
+            plan_id: courseData.plan_id,
+            type: "Course",
+            payload: {
+              type: courseData.type == "Call 1-1" ? "oneone" : "class",
+              data: {
+                user_id: userData._id,
+                course_id: courseData._id,
+                time_pick: _listTimeSelected,
+              },
+            },
+          },
+        ],
+        external_app_name: "ikicoach",
+        // invitation_code: userData?.ref_invitation_code || undefined,
+      };
+      console.log("call11", newData);
+      createOrderCallOneOne(newData).then((res) => {
+        if (!res.isError) {
+          const url = res.data?.redirect_url;
+          const tradeId = res.data._id;
+          if (isVnPayMethod) {
+            Linking.openURL(url);
+            setTradeId(tradeId);
+          } else {
+            console.log("tradeIdtradeIdtradeId", tradeId);
+            NavigationService.navigate(SCREENS.SMARTBANKING, {
+              tradeId,
+              short_id: res.data?.short_id,
+              price: courseData.price,
+            });
+          }
         } else {
-          console.log("tradeIdtradeIdtradeId", tradeId);
-          NavigationService.navigate(SCREENS.SMARTBANKING, {
-            tradeId,
-            short_id: res.data?.short_id,
-            price: courseData.price,
+          showToast({
+            type: "error",
           });
         }
-      } else {
-        showToast({
-          type: "error",
-        });
-      }
-    });
+      });
+    } else {
+      createVnpayUrl(data).then(async (res) => {
+        console.log("createVnpayUrl res", { timePick, res, data });
+        closeSuperModal();
+        if (!res.isError) {
+          const url = res.data?.redirect_url;
+          const tradeId = res.data._id;
+          if (isVnPayMethod) {
+            Linking.openURL(url);
+            setTradeId(tradeId);
+          } else {
+            console.log("tradeIdtradeIdtradeId", tradeId);
+            NavigationService.navigate(SCREENS.SMARTBANKING, {
+              tradeId,
+              short_id: res.data?.short_id,
+              price: courseData.price,
+            });
+          }
+        } else {
+          showToast({
+            type: "error",
+          });
+        }
+      });
+    }
   };
 
   const actionCompletePayment = () => {

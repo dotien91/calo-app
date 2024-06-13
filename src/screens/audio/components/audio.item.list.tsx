@@ -17,18 +17,26 @@ import { palette } from "@theme/themes";
 import IconSvg from "assets/svg";
 import TrackPlayer, { Track } from "react-native-track-player";
 import eventEmitter from "@services/event-emitter";
+import TextBase from "@shared-components/TextBase";
 
 interface ItemListProps {
   isSliderItem: boolean;
   style?: ViewStyle;
   data: IAudioItem;
   listData: any[];
+  isWatched?: boolean;
 }
 
 const widthImage = 111;
 const heightImage = 140;
 
-const ItemList = ({ isSliderItem, style, data, listData }: ItemListProps) => {
+const ItemList = ({
+  isSliderItem,
+  style,
+  data,
+  listData,
+  isWatched,
+}: ItemListProps) => {
   const {
     title,
     user_id,
@@ -102,20 +110,29 @@ const ItemList = ({ isSliderItem, style, data, listData }: ItemListProps) => {
   };
   const renderImg = () => {
     return (
-      <FastImage
-        style={{
-          ...styles.courseImg,
-          width: widthImage,
-          height: heightImage,
-          marginBottom: 16,
-        }}
-        source={{
-          uri: post_avatar?.media_thumbnail || post_avatar?.media_url,
-          headers: { Authorization: "someAuthToken" },
-          priority: FastImage.priority.normal,
-        }}
-        resizeMode={FastImage.resizeMode.cover}
-      />
+      <View>
+        <FastImage
+          style={{
+            ...styles.courseImg,
+            width: widthImage,
+            height: heightImage,
+            marginBottom: 16,
+          }}
+          source={{
+            uri: post_avatar?.media_thumbnail || post_avatar?.media_url,
+            headers: { Authorization: "someAuthToken" },
+            priority: FastImage.priority.normal,
+          }}
+          resizeMode={FastImage.resizeMode.cover}
+        />
+        {isWatched && (
+          <View style={styles.viewIsWatched}>
+            <TextBase fontSize={13} fontWeight="600" color={"white"}>
+              {translations.audio.listened}
+            </TextBase>
+          </View>
+        )}
+      </View>
     );
   };
 

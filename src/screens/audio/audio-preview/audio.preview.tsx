@@ -6,6 +6,8 @@ import {
   SafeAreaView,
   ScrollView,
   TouchableOpacity,
+  ImageBackground,
+  StatusBar,
 } from "react-native";
 import TrackPlayer, { Track, useActiveTrack } from "react-native-track-player";
 import Sound from "react-native-sound";
@@ -31,7 +33,6 @@ import {
 import Button from "@shared-components/button/Button";
 import { useRoute } from "@react-navigation/native";
 import { formatTimeDuration } from "@utils/date.utils";
-import Header from "../components/Header";
 import { shareAudio } from "@utils/share.utils";
 import FastImage from "react-native-fast-image";
 import { useUserHook } from "@helpers/hooks/useUserHook";
@@ -39,6 +40,10 @@ import { useLastActiveTrack } from "../hook/useLastActiveTrack";
 import eventEmitter from "@services/event-emitter";
 import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
+import { _setJson } from "@services/local-storage";
+import * as NavigationService from "react-navigation-helpers";
+import { IconType } from "react-native-dynamic-vector-icons";
+import IconBtn from "@shared-components/button/IconBtn";
 
 const HEIGHT_IMAGE = (ScreenHeight * 311) / 812;
 const WIDTH_IMAGE = (HEIGHT_IMAGE * 114) / 140;
@@ -201,6 +206,7 @@ const AudioPreview = () => {
     //     await TrackPlayer.add(track1);
     //   }
     // }, 1000);
+    _setJson(`Audio${id}`, true);
   };
 
   const showWriteReview = () => {
@@ -225,67 +231,112 @@ const AudioPreview = () => {
     displayedTrack.url ===
       "https://ia801304.us.archive.org/32/items/SilentRingtone/silence.mp3";
   console.log(hide);
-
+  const Header = () => {
+    return (
+      <View style={styles.viewHeader}>
+        <IconBtn
+          onPress={() => NavigationService.goBack()}
+          name={"chevron-left"}
+          type={IconType.Feather}
+          size={25}
+          color={palette.white}
+        />
+        <IconBtn
+          onPress={onPressShare}
+          name={"share-2"}
+          type={IconType.Feather}
+          size={25}
+          color={palette.white}
+        />
+      </View>
+    );
+  };
   return (
-    <SafeAreaView style={CS.safeAreaView}>
-      <Header onPressRight={onPressShare} iconNameRight="share-2" />
-
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.container}
+    <SafeAreaView>
+      <ImageBackground
+        source={{ uri: data?.post_avatar.media_url }}
+        blurRadius={100}
       >
-        <View style={styles.viewAudio}>
-          <View style={styles.viewImage}>
-            <FastImage
-              style={styles.viewImage}
-              source={{ uri: track?.post_avatar.media_url }}
-              borderRadius={8}
+        <StatusBar hidden={true} />
+        <View style={{ height: 50 }}>
+          <View
+            style={{
+              position: "absolute",
+              backgroundColor: "#484d49",
+              bottom: 0,
+              left: 0,
+              right: 0,
+              top: 0,
+              opacity: 0.3,
+            }}
+          />
+          <Header />
+        </View>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.container}
+        >
+          <View style={styles.overlay} />
+          <View style={styles.viewAudio}>
+            <View style={styles.viewImage}>
+              <FastImage
+                style={styles.viewImage}
+                source={{ uri: track?.post_avatar.media_url }}
+                borderRadius={8}
+              />
+            </View>
+            <View style={styles.viewTitle}>
+              <Text style={styles.txtTitle}>{track?.title}</Text>
+              <Text style={styles.txtAuthor}>
+                {track?.user_id.display_name}
+              </Text>
+            </View>
+          </View>
+          {renderCategory()}
+          <View style={styles.viewBtn}>
+            <TouchableOpacity style={styles.btnPlay} onPress={playAudio}>
+              <IconSvg name="icHeadphone" size={20} color={palette.white} />
+              <Text style={styles.txtListen}>
+                {translations.podcast.listenNow}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.viewDes}>
+            <Text style={[CS.hnBold, { color: palette.white }]}>
+              {translations.podcast.description}
+            </Text>
+            <TextViewCollapsed
+              text={track?.content || ""}
+              styleText={styles.des}
             />
           </View>
-          <View style={styles.viewTitle}>
-            <Text style={styles.txtTitle}>{track?.title}</Text>
-            <Text style={styles.txtAuthor}>{track?.user_id.display_name}</Text>
-          </View>
-        </View>
-        {renderCategory()}
-        <View style={styles.viewBtn}>
-          <TouchableOpacity style={styles.btnPlay} onPress={playAudio}>
-            <IconSvg name="icHeadphone" size={20} color={palette.white} />
-            <Text style={styles.txtListen}>
-              {translations.podcast.listenNow}
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.viewDes}>
-          <Text style={CS.hnBold}>{translations.podcast.description}</Text>
-          <TextViewCollapsed
-            text={track?.content || ""}
-            styleText={styles.des}
-          />
-        </View>
 
-        <ListReviewView id={id} />
-        <Button
-          onPress={showWriteReview}
-          text={translations.podcast.writeAReview}
-          style={{ ...styles.btnReview, marginBottom: displayedTrack ? 60 : 8 }}
-          type="primary"
-        />
-      </ScrollView>
-      {!hide && (
-        <View
-          style={{
-            height: getBottomSpace() + 60,
-            width: SCREEN_WIDTH,
-            position: "absolute",
-            zIndex: 1,
-            backgroundColor: palette.background,
-            bottom: 0,
-            left: 0,
-            right: 0,
-          }}
-        />
-      )}
+          <ListReviewView id={id} />
+          <Button
+            onPress={showWriteReview}
+            text={translations.podcast.writeAReview}
+            style={{
+              ...styles.btnReview,
+              marginBottom: displayedTrack ? 60 : 8,
+            }}
+            type="black"
+          />
+        </ScrollView>
+        {!hide && (
+          <View
+            style={{
+              height: getBottomSpace() + 60,
+              width: SCREEN_WIDTH,
+              position: "absolute",
+              zIndex: 1,
+              backgroundColor: palette.background,
+              bottom: 0,
+              left: 0,
+              right: 0,
+            }}
+          />
+        )}
+      </ImageBackground>
     </SafeAreaView>
   );
 };
@@ -310,7 +361,7 @@ const styles = StyleSheet.create({
   des: {
     marginTop: 8,
     ...CS.hnRegular,
-    color: palette.textOpacity8,
+    color: palette.white,
   },
   viewBtn: {
     width: "100%",
@@ -321,7 +372,7 @@ const styles = StyleSheet.create({
     paddingVertical: 9,
     ...CS.row,
     gap: 8,
-    backgroundColor: palette.primary,
+    backgroundColor: palette.black,
     borderRadius: 8,
     paddingHorizontal: 16,
   },
@@ -341,10 +392,11 @@ const styles = StyleSheet.create({
   titleCategory: {
     ...CS.hnBold,
     fontSize: 20,
+    color: palette.white,
   },
   desCategory: {
     ...CS.hnRegular,
-    color: palette.textOpacity8,
+    color: palette.white,
   },
   viewAudio: {
     ...CS.center,
@@ -364,10 +416,29 @@ const styles = StyleSheet.create({
     ...CS.hnBold,
     fontSize: 20,
     textAlign: "center",
+    color: palette.white,
   },
   txtAuthor: {
     ...CS.hnRegular,
     textAlign: "center",
-    color: palette.textOpacity6,
+    color: palette.white,
+  },
+  viewHeader: {
+    height: 50,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    gap: 8,
+  },
+  overlay: {
+    position: "absolute",
+    zIndex: -1,
+    backgroundColor: "#484d49",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    top: 0,
+    opacity: 0.3,
   },
 });
