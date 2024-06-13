@@ -119,8 +119,6 @@ const CourseCreate = () => {
     listFileLocal,
     renderFile2,
     isUpLoadingFile,
-    setListFileLocal,
-    setListFile,
   } = useUploadFile(
     data?.media_album?.map(
       (i) =>
@@ -665,7 +663,9 @@ const CourseCreate = () => {
                   ? translations.course.updateCourse
                   : translations.course.createCourse
               }
-              disabled={updating || updatingVid || updateVideo}
+              disabled={
+                updating || updatingVid || updateVideo || isUpLoadingFile
+              }
               onPress={handleSubmit(onSubmit)}
             />
           </View>

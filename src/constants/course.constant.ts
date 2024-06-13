@@ -323,31 +323,31 @@ export const sortTutorSelectData = [
 
 export const daysOfWeek = [
   {
-    value: 1,
+    value: 0,
     label: "Mon",
   },
   {
-    value: 2,
+    value: 1,
     label: "Tue",
   },
   {
-    value: 3,
+    value: 2,
     label: "Wed",
   },
   {
-    value: 4,
+    value: 3,
     label: "Thu",
   },
   {
-    value: 5,
+    value: 4,
     label: "Fri",
   },
   {
-    value: 6,
+    value: 5,
     label: "Sat",
   },
   {
-    value: 0,
+    value: 6,
     label: "Sun",
   },
 ];
@@ -809,7 +809,7 @@ export const timesInUtc = [
   {
     label: "5:00 - 5:30",
     is_picked: false,
-    time_start: "05:30",
+    time_start: "05:00",
   },
   {
     label: "5:30 - 6:00",
@@ -999,13 +999,13 @@ export const timesInUtc = [
 ];
 
 export const timeFullWeek = [
-  { value: 0, label: "Sun", times: timesInUtc },
-  { value: 1, label: "Mon", times: timesInUtc },
-  { value: 2, label: "Tue", times: timesInUtc },
-  { value: 3, label: "Wed", times: timesInUtc },
-  { value: 4, label: "Thu", times: timesInUtc },
-  { value: 5, label: "Fri", times: timesInUtc },
-  { value: 6, label: "Sat", times: timesInUtc },
+  { value: 0, label: "Mon", times: timesInUtc },
+  { value: 1, label: "Tue", times: timesInUtc },
+  { value: 2, label: "Wed", times: timesInUtc },
+  { value: 3, label: "Thu", times: timesInUtc },
+  { value: 4, label: "Fri", times: timesInUtc },
+  { value: 5, label: "Sat", times: timesInUtc },
+  { value: 6, label: "Sun", times: timesInUtc },
 ];
 
 export const quickFilterLife = [

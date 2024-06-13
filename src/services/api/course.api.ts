@@ -580,6 +580,7 @@ export async function getTimeAvailableTeacherBuyId(id: string) {
     return response;
   });
 }
+
 export async function CreateCourseV2(data) {
   return request({
     method: METHOD.POST,
@@ -589,11 +590,30 @@ export async function CreateCourseV2(data) {
     return response;
   });
 }
+
 export async function updateCourseV2(id: string, data) {
   return request({
     method: METHOD.PATCH,
     urlPath: `course/${id}/v2/update`,
     data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function getPlanStudent() {
+  return request({
+    method: METHOD.GET,
+    urlPath: "course/v2/plan-student",
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function getPlanTeacher() {
+  return request({
+    method: METHOD.GET,
+    urlPath: "course/v2/plan-teacher",
   }).then((response) => {
     return response;
   });

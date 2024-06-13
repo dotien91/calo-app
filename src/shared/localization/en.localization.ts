@@ -398,6 +398,9 @@ export default {
     updateCourse: "Update Course",
     uploadCoverImageOrVideo: "Upload an introductory photo or video",
     add: "Add",
+    maxLesson: (num: string | number) =>
+      `The maximum number of lessons is ${num}`,
+    emptyLesson: "The teacher is fully booked for the day.",
     warningDelete: "Are you sure you are deleting this course?",
     warningFull: "Select complete information",
     duration: "Duration",

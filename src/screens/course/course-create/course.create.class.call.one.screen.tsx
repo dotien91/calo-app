@@ -13,10 +13,9 @@ import { getLabelHourLesson } from "@screens/course-tab/course.helper";
 import Button from "@shared-components/button/Button";
 import useStore from "@services/zustand/store";
 import {
-  createTimeAvailableTeacher,
-  _getTimeAvailableTeacher,
-  updateTimeAvailableTeacher,
+  // _getTimeAvailableTeacher,
   getTimeAvailableTeacherBuyId,
+  updateTeacherTimeAvaiable,
 } from "@services/api/course.api";
 import { showToast } from "@helpers/super.modal.helper";
 import dayjs from "dayjs";
@@ -37,7 +36,7 @@ const CreateClassCallOneScreen = () => {
   const [timeSelected, setTimeSelected] = useState<ITimeSelected[]>([]);
   const [date, setDate] = useState<number>(0);
   const [updating, setUpdating] = useState(false);
-  const [updataTime, setUpdateTime] = useState(false);
+  // const [updataTime, setUpdateTime] = useState(false);
   const userData = useStore((store) => store.userData);
 
   const addOneHour = (timeStr) => {
@@ -61,55 +60,32 @@ const CreateClassCallOneScreen = () => {
     return result;
   };
 
-  // useEffect(() => {
-  //   const _getTimeAvailable = () => {
-  //     const params = {
-  //       user_id: userData?._id,
-  //     };
-  //     _getTimeAvailableTeacher(params).then((res) => {
-  //       if (!res.isError) {
-  //         // console.log("res.s..", JSON.stringify(res.data.time_available));
-  //         if (res.data.time_available.length > 0) {
-  //           setUpdateTime(true);
-  //           // lấy data gen lại ở đây
-  //           const mapTime = res.data.time_available.map(
-  //             (item: ITimeSelected) => {
-  //               return {
-  //                 day: item.day,
-  //                 time_start: item.time_start,
-  //                 time_end: addOneHour(item.time_start),
-  //                 duration: 0.5,
-  //               };
-  //             },
-  //           );
-  //           setTimeSelected(mapTime);
-  //         }
-  //       }
-  //     });
-  //   };
-  //   _getTimeAvailable();
-  // }, []);
-
   useEffect(() => {
     const _getTimeAvailableNew = () => {
       getTimeAvailableTeacherBuyId(userData?._id).then((res) => {
         if (!res.isError) {
-          console.log("res.s..", JSON.stringify(res.data.time_available));
-          // if (res.data.time_available.length > 0) {
-          //   setUpdateTime(true);
-          //   // lấy data gen lại ở đây
-          //   const mapTime = res.data.time_available.map(
-          //     (item: ITimeSelected) => {
-          //       return {
-          //         day: item.day,
-          //         time_start: item.time_start,
-          //         time_end: addOneHour(item.time_start),
-          //         duration: 0.5,
-          //       };
-          //     },
-          //   );
-          //   setTimeSelected(mapTime);
-          // }
+          // console.log("res.s..", res.data);
+          const schedule = res.data.schedule;
+          const dataUpdate = [];
+          for (let i = 0; i < schedule.length; i++) {
+            if (schedule[i].time_available.length > 0) {
+              // setUpdateTime(true);
+              const mapTime = schedule[i].time_available.map(
+                (item: ITimeSelected) => {
+                  return {
+                    day: schedule[i].day,
+                    time_start: item.time_start,
+                    time_end: addOneHour(item.time_start),
+                  };
+                },
+              );
+              // console.log("mapTime...", mapTime);
+              dataUpdate.push(...mapTime);
+            }
+          }
+          if (dataUpdate.length > 0) {
+            setTimeSelected(dataUpdate);
+          }
         }
       });
     };
@@ -181,7 +157,6 @@ const CreateClassCallOneScreen = () => {
         day: date,
         time_start: item.time_start,
         time_end: addOneHour(item.time_start),
-        duration: 1,
       };
       if (indexSelected >= 0) {
         const newTimeSelected = [...timeSelected].filter(
@@ -216,6 +191,45 @@ const CreateClassCallOneScreen = () => {
       </>
     );
   };
+
+  function groupByDay(intervals) {
+    const grouped = intervals.reduce((acc, interval) => {
+      if (!acc[interval.day]) {
+        acc[interval.day] = { day: interval.day, time_available: [] };
+      }
+      acc[interval.day].time_available.push({
+        time_start: interval.time_start,
+        time_end: interval.time_end,
+      });
+      return acc;
+    }, {});
+    return Object.values(grouped);
+  }
+
+  function mergeIntervals(intervals) {
+    if (intervals.length === 0) return [];
+    intervals.sort((a, b) => a.time_start.localeCompare(b.time_start));
+    const mergedIntervals = [intervals[0]];
+    for (let i = 1; i < intervals.length; i++) {
+      const last = mergedIntervals[mergedIntervals.length - 1];
+      const current = intervals[i];
+      if (current.time_start === last.time_end) {
+        last.time_end = current.time_end;
+      } else {
+        mergedIntervals.push(current);
+      }
+    }
+    return mergedIntervals;
+  }
+  function processIntervals(intervals) {
+    const groupedByDay = groupByDay(intervals);
+    groupedByDay.forEach((group) => {
+      group.time_available = mergeIntervals(group.time_available);
+    });
+
+    return groupedByDay;
+  }
+
   const renderSelectHours = useMemo(() => {
     const data = timeFullWeek?.[date]?.times;
     const dataWithLabel = getLabelHourLesson(data);
@@ -235,43 +249,28 @@ const CreateClassCallOneScreen = () => {
         }
         return a.day - b.day;
       });
-    console.log("time_available", time_available);
+
+    const schedule = processIntervals(time_available);
+
     const data = {
-      user_id: userData?._id,
-      time_available: time_available,
+      schedule: schedule,
     };
+    console.log("data", JSON.stringify(data));
     setUpdating(true);
-    if (!updataTime) {
-      createTimeAvailableTeacher(data).then((res) => {
-        console.log(res);
-        if (!res.isError) {
-          setUpdating(false);
-          showToast({
-            type: "success",
-            message: translations.course.createModuleSuccess,
-          });
-          NavigationService.goBack();
-        } else {
-          setUpdating(false);
-          showToast({ type: "error", message: res.message });
-        }
-      });
-    } else {
-      updateTimeAvailableTeacher(data).then((res) => {
-        console.log(res);
-        if (!res.isError) {
-          setUpdating(false);
-          showToast({
-            type: "success",
-            message: translations.course.updateModuleSuccess,
-          });
-          NavigationService.goBack();
-        } else {
-          setUpdating(false);
-          showToast({ type: "error", message: res.message });
-        }
-      });
-    }
+    updateTeacherTimeAvaiable(data).then((res) => {
+      // console.log(res);
+      if (!res.isError) {
+        setUpdating(false);
+        showToast({
+          type: "success",
+          message: translations.course.createModuleSuccess,
+        });
+        NavigationService.goBack();
+      } else {
+        setUpdating(false);
+        showToast({ type: "error", message: res.message });
+      }
+    });
   };
 
   return (

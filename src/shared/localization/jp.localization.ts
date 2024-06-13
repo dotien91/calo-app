@@ -396,6 +396,8 @@ export default {
     slogan: "教育は力です！",
     course: "コース",
     add: "追加",
+    maxLesson: (num: string | number) => `最大授業数は${num}回です。`,
+    emptyLesson: "先生はその日の予定がいっぱいです。",
     warningDelete: "このコースを削除しますか？",
     warningFull: "情報を完全に選択してください",
     duration: "期間",

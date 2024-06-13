@@ -19,47 +19,18 @@ import Header from "@shared-components/header/Header";
 import CS from "@theme/styles";
 import { translations } from "@localization";
 import { palette } from "@theme/themes";
-import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from "@gorhom/bottom-sheet";
 import ModalCalendar from "./ModalCalendar";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import IconSvg from "assets/svg";
 import { formatCalendarDateTime } from "@utils/date.utils";
 import IconSvgBtn from "@screens/audio/components/IconSvgBtn";
+import { getPlanStudent, getPlanTeacher } from "@services/api/course.api";
 
 interface MyCustomEventType extends ICalendarEventBase {
   color: string;
 }
 
-const listevents = [
-  {
-    title: "Call 1-1 với Dangth",
-    start: new Date("2024-06-05T03:24:00"),
-    end: new Date("2024-06-05T04:24:00"),
-    color: palette.call11,
-    type: "call11",
-  },
-  {
-    title: "Call 1-1 với Tony Vu",
-    start: new Date("2024-06-07T04:24:00"),
-    end: new Date("2024-06-07T06:24:00"),
-    color: palette.newClass,
-    type: "call11",
-  },
-  {
-    title: "Call group lớp C06",
-    start: new Date("2024-06-04T03:24:00"),
-    end: new Date("2024-06-04T04:24:00"),
-    color: palette.callGroup,
-    type: "callGroup",
-  },
-  {
-    title: "Call group lớp E06",
-    start: new Date("2024-06-06T04:24:00"),
-    end: new Date("2024-06-06T06:24:00"),
-    color: palette.callGroup,
-    type: "callGroup",
-  },
-];
 const TeacherCourse = () => {
   const [date, setDate] = React.useState(new Date());
   const [mode, setMode] = React.useState<Mode>("week");
@@ -67,8 +38,70 @@ const TeacherCourse = () => {
   const [eventsSelect, setEventsSelect] = React.useState<any>(null);
   const [modalVisible, setModalVisible] = React.useState(false);
 
+  const getListEvent = async () => {
+    const listEventStudent: any[] = [];
+    const listEventTeacher: any[] = [];
+    await getPlanStudent().then((res) => {
+      const dataStudent = res.data;
+      for (let index = 0; index < dataStudent.length; index++) {
+        const element = dataStudent[index];
+        const schedule = element.schedule;
+        for (let i = 0; i < schedule.length; i++) {
+          const date = schedule[i].date;
+          const e = schedule[i].time_available;
+          for (let ind = 0; ind < e.length; ind++) {
+            const ele = e[ind];
+            const [hours, minutes] = ele.time_start.split(":");
+            const [hoursEnd, minutesEnd] = ele.time_end.split(":");
+
+            const dataAdd = {
+              title: "Call 1-1 với giáo viên",
+              start: new Date(new Date(date).setHours(hours, minutes)),
+              end: new Date(new Date(date).setHours(hoursEnd, minutesEnd)),
+              color: ind > 0 || i > 0 ? palette.call11 : palette.newClass,
+              type: "call11",
+            };
+            listEventStudent.push(dataAdd);
+          }
+        }
+      }
+    });
+
+    await getPlanTeacher().then((res) => {
+      const dataTeacher = res.data;
+      if (!dataTeacher) {
+        return;
+      }
+      for (let index = 0; index < dataTeacher.length; index++) {
+        const element = dataTeacher[index];
+        const schedule = element.schedule;
+        for (let i = 0; i < schedule.length; i++) {
+          const date = schedule[i].date;
+          const e = schedule[i].time_available;
+          for (let ind = 0; ind < e.length; ind++) {
+            const ele = e[ind];
+            const [hours, minutes] = ele.time_start.split(":");
+            const [hoursEnd, minutesEnd] = ele.time_end.split(":");
+
+            const dataAdd = {
+              title: "Call 1-1 với học sinh",
+              start: new Date(new Date(date).setHours(hours, minutes)),
+              end: new Date(new Date(date).setHours(hoursEnd, minutesEnd)),
+              color: ind > 0 || i > 0 ? palette.call11 : palette.newClass,
+              type: "call11",
+            };
+            listEventTeacher.push(dataAdd);
+          }
+        }
+      }
+    });
+
+    const list = [...listEventStudent, ...listEventTeacher];
+    setEvents(list);
+  };
+
   useEffect(() => {
-    setEvents(listevents);
+    getListEvent();
   }, []);
 
   const ItemCheck = ({ item }: { item: { color: string; title: string } }) => {
@@ -108,9 +141,9 @@ const TeacherCourse = () => {
 
   const addLeave = () => {};
 
-  const _onPressCell = (e) => {
-    alert(e);
-  };
+  // const _onPressCell = (e) => {
+  //   // alert(e);
+  // };
 
   const renderEvent = <T extends MyCustomEventType>(
     event: T,
@@ -123,15 +156,19 @@ const TeacherCourse = () => {
           backgroundColor: event.color,
         }}
       />
-      <Text numberOfLines={1} style={styles.txtItemEvent}>
-        {event.title}
-      </Text>
-      <Text numberOfLines={1} style={styles.txtItemEvent}>
-        {formatCalendarDateTime({
-          start: event?.start,
-          end: event?.end,
-        })}
-      </Text>
+      <View style={CS.flex1}>
+        <Text numberOfLines={1} style={styles.txtItemEvent}>
+          {event.title}
+        </Text>
+        {mode === "schedule" && (
+          <Text numberOfLines={1} style={styles.txtItemEvent}>
+            {formatCalendarDateTime({
+              start: event?.start,
+              end: event?.end,
+            })}
+          </Text>
+        )}
+      </View>
     </TouchableOpacity>
   );
 
@@ -140,13 +177,13 @@ const TeacherCourse = () => {
       <Calendar
         mode={mode}
         renderEvent={renderEvent}
-        onPressCell={_onPressCell}
+        // onPressCell={_onPressCell}
         activeDate={date}
         onPressDateHeader={(e) => setDate(e)}
         onPressEvent={(e) => setEventsSelect(e)}
         events={events}
         eventCellStyle={styles.eventCellStyle}
-        height={600}
+        height={SCREEN_HEIGHT}
       />
     );
   };
@@ -385,13 +422,6 @@ const TeacherCourse = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 16,
-  },
-  viewEmpty: {
-    minHeight: 200,
-    ...CS.center,
-  },
   modal: {
     ...CS.flexCenter,
   },
@@ -476,8 +506,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   viewSticky: {
-    width: "auto",
-    height: 4,
+    height: "auto",
+    width: 2,
     borderRadius: 2,
   },
   txtItemEvent: {
@@ -485,10 +515,13 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
   eventCellStyle: {
-    borderRadius: 10,
+    borderRadius: 4,
     backgroundColor: palette.secondColor,
     borderWidth: 1,
     borderColor: palette.borderColor,
+    padding: 0,
+    flexDirection: "row",
+    gap: 8,
   },
   paddingH: {
     paddingHorizontal: 16,

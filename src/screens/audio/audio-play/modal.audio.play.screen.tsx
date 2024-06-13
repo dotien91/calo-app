@@ -24,7 +24,7 @@ import { useActionTrack } from "../hook/useActionTrack";
 import { FloatingPlayer } from "./FloatingPlayer";
 import { SCREEN_HEIGHT } from "@gorhom/bottom-sheet";
 import IconSvg from "assets/svg";
-import * as NavigationService from "react-navigation-helpers";
+// import * as NavigationService from "react-navigation-helpers";
 import IconBtn from "@shared-components/button/IconBtn";
 import { IconType } from "react-native-dynamic-vector-icons";
 
@@ -250,23 +250,23 @@ const styles = StyleSheet.create({
     ...CS.hnRegular,
     color: palette.white,
   },
-  dragbarContainer: {
-    width: "100%",
-    height: 40,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    justifyContent: "center",
-    alignItems: "center",
-    // pointerEvents: "box-none",
-    elevation: 2,
-    backgroundColor: palette.background,
-  },
-  dragBar: {
-    width: 80,
-    height: 6,
-    backgroundColor: palette.background2,
-    borderRadius: 12,
-  },
+  // dragbarContainer: {
+  //   width: "100%",
+  //   height: 40,
+  //   borderTopLeftRadius: 20,
+  //   borderTopRightRadius: 20,
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  //   // pointerEvents: "box-none",
+  //   elevation: 2,
+  //   backgroundColor: palette.background,
+  // },
+  // dragBar: {
+  //   width: 80,
+  //   height: 6,
+  //   backgroundColor: palette.background2,
+  //   borderRadius: 12,
+  // },
   buttonContainer: {
     // pointerEvents: "box-none", // Đảm bảo button nhận sự kiện
   },

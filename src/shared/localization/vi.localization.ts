@@ -465,6 +465,8 @@ export default {
     slogan: "Giáo dục là sức mạnh!",
     course: "Khóa học",
     add: "Thêm",
+    maxLesson: (num: string | number) => `Số buổi học tối đa là ${num} buổi`,
+    emptyLesson: "Giáo viên đã kín lịch trong ngày",
     warningDelete: "Bạn muốn xoá khoá học này?",
     warningFull: "Chọn đầy đủ thông tin",
     duration: "Thời gian",
