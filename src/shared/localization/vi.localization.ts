@@ -684,6 +684,8 @@ export default {
     timeStartAt: "Thời gian bắt đầu",
     allCourse: "Tất cả khoá học",
     allTutor: "Người hướng dẫn",
+    durationCall11: "Thời lượng buổi học",
+    lessionCount: "Số buổi học",
   },
   seeAll: "Xem tất cả",
   settings: {
@@ -1466,6 +1468,7 @@ export default {
     isLast: "Đã ở cuối danh sách",
     shareAudio: (txt: string) =>
       `Tải ngay ứng dụng IKIGAI Coach về để nghe những bản sách nói hay nhất: ${txt}`,
+    listened: "Đã nghe",
   },
   livestream: {
     hello: "Xin chào",

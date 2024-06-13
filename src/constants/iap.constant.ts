@@ -19,7 +19,7 @@ export const priceIds = [
 ];
 
 export const durationCall11List = [
-  { label: "0.5h", value: 0.5 },
-  { label: "1h", value: 1 },
-  { label: "2h", value: 2 },
+  { label: "0.5h", value: "0.5" },
+  { label: "1h", value: "1" },
+  { label: "2h", value: "2" },
 ];

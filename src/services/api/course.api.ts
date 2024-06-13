@@ -71,6 +71,15 @@ export async function getCourseDetail(id: string, params) {
     return response;
   });
 }
+export async function getCourseDetail2(id: string, params) {
+  return request({
+    method: METHOD.GET,
+    urlPath: `course/v2/detail/${id}`,
+    params,
+  }).then((response) => {
+    return response;
+  });
+}
 export async function getListModule(params) {
   return request({
     method: METHOD.GET,
@@ -556,7 +565,7 @@ export async function getTimeWeekAvailableNew(id: string, params) {
 export async function getTimeAvailableTeacherNew(params) {
   return request({
     method: METHOD.GET,
-    urlPath: `course/teacher/time-available`,
+    urlPath: "course/teacher/time-available",
     params: params,
   }).then((response) => {
     return response;
@@ -567,6 +576,24 @@ export async function getTimeAvailableTeacherBuyId(id: string) {
   return request({
     method: METHOD.GET,
     urlPath: `course/teacher/${id}/time-available`,
+  }).then((response) => {
+    return response;
+  });
+}
+export async function CreateCourseV2(data) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "course/v2/create",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+export async function updateCourseV2(id: string, data) {
+  return request({
+    method: METHOD.PATCH,
+    urlPath: `course/${id}/v2/update`,
+    data,
   }).then((response) => {
     return response;
   });

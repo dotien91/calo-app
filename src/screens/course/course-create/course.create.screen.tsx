@@ -26,7 +26,7 @@ import Button from "@shared-components/button/Button";
 import useStore from "@services/zustand/store";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { palette } from "@theme/themes";
-import { createCourse, updateCourse } from "@services/api/course.api";
+import { updateCourseV2, CreateCourseV2 } from "@services/api/course.api";
 import {
   EnumModalContentType,
   EnumStyleModalType,
@@ -77,6 +77,7 @@ const CourseCreate = () => {
       long_description: "",
       price: "",
       startTime: "",
+      lession_count: "",
     },
   });
   const route = useRoute();
@@ -91,7 +92,7 @@ const CourseCreate = () => {
   const [level, setLevel] = useState<string>(listLevel[0].value);
   const [skill, setSkill] = useState<string[]>([]);
   const [priceInput, setPriceInput] = useState("");
-  const [durationCall11, setDurationCall11] = useState(1);
+  const [durationCall11, setDurationCall11] = useState("");
   // const [lang, setLang] = useState("vi");
 
   const { idVideo, renderSelectVideo, updatingVid } = SelectVideoHook({
@@ -120,7 +121,16 @@ const CourseCreate = () => {
     isUpLoadingFile,
     setListFileLocal,
     setListFile,
-  } = useUploadFile([]);
+  } = useUploadFile(
+    data?.media_album?.map(
+      (i) =>
+        ({
+          uri: i.media_url,
+          type: i.media_type,
+          _id: i._id,
+        } || []),
+    ),
+  );
   // const { idImage, renderSelectImage, updatingImg } = SelectImageHook({
   //   width: 1600,
   //   height: 900,
@@ -153,6 +163,8 @@ const CourseCreate = () => {
       setValue("description", data.description);
       setValue("long_description", data.long_description);
       setValue("price", data.price.toString());
+      setValue("lession_count", data.lession_count);
+      setDurationCall11(data.class_duration);
       setDateStart(new Date(data.start_time));
       setIsSwitchStart(data?.start_time ? true : false);
       setDateEnd(data?.end_time ? new Date(data.end_time) : "");
@@ -165,6 +177,7 @@ const CourseCreate = () => {
     }
   }, [data]);
 
+  console.log("data=====", data);
   const userData = useStore((store) => store.userData);
 
   const openListTypeCourse = () => {
@@ -182,6 +195,7 @@ const CourseCreate = () => {
     description: string;
     long_description: string;
     price: string | number;
+    lession_count: string;
   }) => {
     if (isSwitchStart && isSwitchEnd) {
       if (dateStart > dateEnd) {
@@ -205,20 +219,22 @@ const CourseCreate = () => {
       // language: userData?.default_language,
       country: userData?.country,
       avatar: idVideo,
-      // media_id: idVid,
+      media_id: idVid,
+      media_album: listFile?.map((i) => i._id),
       public_status: data?.public_status || "draft",
       type: typeCourse,
-      class_duration: "1",
+      class_duration: durationCall11,
+      lession_count: parseInt(dataHook.lession_count),
       // level: level,
       skills: skill,
     };
 
-    if (course_id) {
-      params._id = course_id;
-    }
+    // if (course_id) {
+    //   params._id = course_id;
+    // }
     console.log("params...", params);
 
-    // setUpdating(true);
+    setUpdating(true);
 
     showSuperModal({
       styleModalType: EnumStyleModalType.Middle,
@@ -234,7 +250,7 @@ const CourseCreate = () => {
     }
 
     if (course_id) {
-      updateCourse(params).then((res) => {
+      updateCourseV2(course_id, params).then((res) => {
         if (!res.isError) {
           showToast({
             type: "success",
@@ -249,6 +265,7 @@ const CourseCreate = () => {
           });
           setUpdating(false);
         } else {
+          console.log(res.message);
           showToast({
             type: "error",
             message: res.message,
@@ -258,7 +275,7 @@ const CourseCreate = () => {
         }
       });
     } else {
-      createCourse(params).then((res) => {
+      CreateCourseV2(params).then((res) => {
         if (!res.isError) {
           showToast({
             type: "success",
@@ -390,13 +407,13 @@ const CourseCreate = () => {
             marginVertical: 8,
           }}
         >
-          {`translations.course.durationCall11`}
+          {translations.course.durationCall11}
         </Text>
         <DropDownItem
           value={durationCall11}
           setValue={setDurationCall11}
           items={durationCall11List}
-          placeholder={"duration"}
+          placeholder={"select"}
         />
       </View>
     );
@@ -421,7 +438,7 @@ const CourseCreate = () => {
           </Text>
 
           <DropDownItem
-            value={priceInput}
+            value={priceIds}
             setValue={setPriceInput}
             items={priceIds}
             placeholder={translations.payment.coursePrice}
@@ -609,12 +626,12 @@ const CourseCreate = () => {
           {renderDurationCall11()}
           {typeCourse === EnumClassType.Call11 && (
             <InputHook
-              name="count"
+              name="lession_count"
               customStyle={CS.flex1}
               inputProps={{
                 type: "number",
                 defaultValue: "1",
-                placeholder: translations.course.longDescription,
+                placeholder: translations.course.lessionCount,
                 keyboardType: "numeric",
               }}
               control={control}

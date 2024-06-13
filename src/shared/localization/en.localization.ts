@@ -596,6 +596,8 @@ export default {
     timeStartAt: "Start at",
     allCourse: "All course",
     allTutor: "All mentor",
+    durationCall11: "Course duration",
+    lessionCount: "Number of lessions",
   },
   seeAll: "See all",
   settings: {
@@ -939,6 +941,7 @@ export default {
     isLast: "Already at the end of the list",
     shareAudio: (txt: string) =>
       `Download the IKIGAI Coach app now to listen to the best audiobooks: ${txt}`,
+    listened: "listened",
   },
   livestream: {
     hello: "Hello!",

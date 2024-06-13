@@ -614,6 +614,8 @@ export default {
     timeStartAt: "開始時間",
     allCourse: "すべてのコース",
     allTutor: "専門家",
+    durationCall11: "コースの期間",
+    lessionCount: "レッスンの数",
   },
   seeAll: "すべて見る",
   settings: {
@@ -1395,6 +1397,7 @@ export default {
     isLast: "リストの最後です",
     shareAudio: (txt: string) =>
       `IKIGAI Coachアプリをダウンロードして、最高のオーディオブックを聴こう: ${txt}`,
+    listened: "聞いた",
   },
   livestream: {
     hello: "こんにちは",
