@@ -4,6 +4,8 @@ import { showToast } from "@helpers/super.modal.helper";
 import { translations } from "@localization";
 import { TypedPost } from "shared/models";
 import { postUnBlockUser } from "@services/api/user.api";
+import { isIos } from "@helpers/device.info.helper";
+import { Linking } from "react-native";
 
 export function useActionUser() {
   // const userData = useStore((store) => store.userData);
@@ -95,11 +97,20 @@ export function useActionUser() {
     deletePostSave(data);
   };
 
+  const cancelSubscription = () => {
+    if (isIos()) {
+      Linking.openURL("https://apps.apple.com/account/subscriptions");
+    } else {
+      Linking.openURL("https://play.google.com/store/account/subscriptions");
+    }
+  };
+
   return {
     _followUser,
     _blockUser,
     _savePost,
     _deletePostSave,
     unBlockUser,
+    cancelSubscription,
   };
 }

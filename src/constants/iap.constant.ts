@@ -27,3 +27,9 @@ export const priceIdsLiveStream = [
   { id: "com.coach.tier12", label: "1,999,000", value: 1999000 },
   { id: "com.coach.tier13", label: "2,499,000", value: 2499000 },
 ];
+
+export const subscriptionIds = [
+  // { id: "com.coach.podcasttest", label: "39,000", value: 39000 },
+  { id: "com.coach.podcasttest2", label: "49,000", value: 49000 },
+  // { id: "com.coach.podcasttest3", label: "59,000", value: 59000 },
+];

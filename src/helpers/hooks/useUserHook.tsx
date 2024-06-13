@@ -7,6 +7,7 @@ import useStore from "@services/zustand/store";
 import {
   getCurrentUser,
   getListBlock,
+  getUserSuscription,
   postInvitationCode,
 } from "@services/api/user.api";
 import { showToast } from "../super.modal.helper";
@@ -24,6 +25,7 @@ export const useUserHook = () => {
   const setUserMedia = useStore((state) => state.setUserMedia);
   const resetListLike = useStore((state) => state.resetListLike);
   const setBankSelected = useStore((state) => state.setBankSelected);
+  const setExtraUserData = useStore((state) => state.setExtraUserData);
 
   const initListFollow = useStore((state) => state.initListFollow);
   const setShowInvite = useStore((state) => state.setShowInvite);
@@ -40,7 +42,7 @@ export const useUserHook = () => {
     _setJson(USER_TOKEN, token);
 
     getCurrentUser().then((res) => {
-    console.log("current user data", res);
+      console.log("current user data", res);
       if (!res.isError) {
         initData(res.data, true);
         NavigationService.navigate(SCREENS.HOME_TAB, { screen: SCREENS.HOME });
@@ -101,6 +103,17 @@ export const useUserHook = () => {
     });
     initListFollow(data.follow_users);
     initListBlock();
+    initUserSubscription(data._id);
+  };
+
+  const initUserSubscription = (id) => {
+    getUserSuscription(id).then((res) => {
+      if (!res.isError) {
+        setExtraUserData({
+          user_subscription: res.data,
+        });
+      }
+    });
   };
 
   const initListBlock = () => {
@@ -130,7 +143,7 @@ export const useUserHook = () => {
     resetListLike();
     setBankSelected();
     NavigationService.navigate(SCREENS.HOME_TAB, { screen: SCREENS.HOME });
-    setUnreadNumber(0)
+    setUnreadNumber(0);
     // RNRestart.restart();
   };
 

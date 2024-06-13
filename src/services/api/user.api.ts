@@ -304,3 +304,22 @@ export async function requestDeleteCertificate(id: string) {
     return response;
   });
 }
+
+export async function requestListSubscriptionByUserId(params) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "subscription/list",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function getUserSuscription(id: string) {
+  return request({
+    method: METHOD.GET,
+    urlPath: `subscription/user/${id}`,
+  }).then((response) => {
+    return response;
+  });
+}
