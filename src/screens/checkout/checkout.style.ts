@@ -3,6 +3,7 @@ import { ExtendedTheme } from "@react-navigation/native";
 import { ViewStyle, StyleSheet, TextStyle } from "react-native";
 import { isIOS } from "@freakycoder/react-native-helpers";
 import { getStatusBarHeight } from "react-native-safearea-height";
+import { palette } from "@theme/themes";
 // import CS from "@theme/styles";
 
 interface Style {
@@ -91,8 +92,9 @@ export default (theme: ExtendedTheme) => {
       ...CS.row,
       marginHorizontal: 16,
       justifyContent: "space-between",
-      height: 56,
+      minHeight: 56,
       borderBottomWidth: 1,
+      borderColor: palette.white,
     },
     styleViewCustomRadioButtom: {
       height: 22,

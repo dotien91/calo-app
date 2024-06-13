@@ -50,9 +50,9 @@ const ListReviewView = ({ id }: ListReviewProps) => {
 
   return (
     <View style={styles.container}>
-      <Text style={CS.hnBold}>{`${translations.podcast.countReview(
-        count,
-      )}`}</Text>
+      <Text
+        style={[CS.hnBold, { color: palette.white }]}
+      >{`${translations.podcast.countReview(count)}`}</Text>
       <ScrollView
         horizontal
         style={styles.viewListReview}

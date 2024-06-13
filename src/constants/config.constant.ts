@@ -19,8 +19,10 @@ export const isProduction =
 // const DEVELOPER_DOMAIN_SOCKET_DEV = "https://socket.api-v2.ieltshunter.io";
 
 //dev domain api
-const DEVELOPER_DOMAIN_DEV = "http://192.168.1.55:3900";
-// const DEVELOPER_DOMAIN_DEV = "https://dev.api.ikigai.ikigroup.vn";
+// const DEVELOPER_DOMAIN_DEV = "http://192.168.1.35:3900";
+// const DEVELOPER_DOMAIN_DEV = "http://192.168.1.55:3900";
+const DEVELOPER_DOMAIN_DEV = "https://dev.api.ikigai.ikigroup.vn";
+
 const DEVELOPER_DOMAIN_SOCKET_DEV = "https://socket.api.ikigroup.vn";
 // const UPLOAD_URL = "https://media.exam24h.com/";
 
