@@ -22,7 +22,7 @@ export const durationCall11List = [
   { label: "0.5h", value: "0.5" },
   { label: "1h", value: "1" },
   { label: "2h", value: "2" },
-]
+];
 
 export const priceIdsLiveStream = [
   { id: undefined, label: "Miễn phí", value: 0 },
@@ -33,4 +33,8 @@ export const priceIdsLiveStream = [
   { id: "com.coach.livestream.tier5", label: "499,000", value: 499000 },
 ];
 
-export const priceIdSubscription = { id: "com.coach.livestream.tier1", label: "39,000", value: 39000 }
+export const priceIdSubscription = {
+  id: "com.coach.livestream.tier1",
+  label: "39,000",
+  value: 39000,
+};

@@ -111,7 +111,6 @@ const EditProfileScreen = () => {
     });
   };
 
-
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "height" : undefined}

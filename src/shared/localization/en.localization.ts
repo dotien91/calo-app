@@ -401,6 +401,9 @@ export default {
     maxLesson: (num: string | number) =>
       `The maximum number of lessons is ${num}`,
     emptyLesson: "The teacher is fully booked for the day.",
+    call11With: (type: "teacher" | "student", name: string) =>
+      `Call 1-1 with ${type === "student" ? "student" : "teacher"} ${name}`,
+    isFirst: "(First lesson)",
     warningDelete: "Are you sure you are deleting this course?",
     warningFull: "Select complete information",
     duration: "Duration",

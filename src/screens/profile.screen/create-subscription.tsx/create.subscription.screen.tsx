@@ -62,9 +62,8 @@ const CreateCertificateScreen = () => {
       title: data?.title,
       description: data.description,
       price: priceIdSubscription.value,
-      price_id: priceIdSubscription.id
+      price_id: priceIdSubscription.id,
     };
-
 
     showLoading();
     setUpdating(true);

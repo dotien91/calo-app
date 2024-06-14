@@ -96,4 +96,3 @@ export async function requestDeleteSubscription(id: string) {
     return response;
   });
 }
-

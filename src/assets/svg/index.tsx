@@ -188,6 +188,8 @@ import icTeacher from "./teacher1.svg";
 import icCmtPost from "./icon-comment-post.svg";
 import icHeartPost from "./icon-heart-pos.svg";
 import icHeartPostSolid from "./icon-heart-pos-solid.svg";
+import icCalendar from "./icon-calendar.svg";
+import icCalendarFilled from "./icon-calendar-filled.svg";
 
 const Icons = {
   icHeartPostSolid,
@@ -378,6 +380,8 @@ const Icons = {
   icCall,
   icMoney2,
   icTeacher,
+  icCalendar,
+  icCalendarFilled,
 };
 
 interface IconSvgProps {

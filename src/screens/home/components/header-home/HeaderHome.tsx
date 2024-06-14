@@ -15,6 +15,7 @@ import { palette } from "@theme/themes";
 import { getCount } from "@services/api/chat.api";
 import CS from "@theme/styles";
 import { EnumColors } from "models";
+import { navigate } from "@helpers/navigation.helper";
 
 const SIZE_AVATAR = 40;
 const BORDER_AVATAR = 20;
@@ -82,6 +83,10 @@ const HeaderHome = () => {
     });
   };
 
+  const gotoCalendar = () => {
+    navigate(SCREENS.TEACHER_COURSES);
+  };
+
   const goToChatScreen = () => {
     NavigationService.navigate(SCREENS.CHAT);
   };
@@ -98,6 +103,9 @@ const HeaderHome = () => {
           <IconSvg name="icCoinStar" size={16} color={palette.yellow} />
         )}
       </View>
+      <PressableBtn style={styles.viewInput} onPress={gotoCalendar}>
+        <IconSvg name="icCalendar" size={20} color={colors.textOpacity6} />
+      </PressableBtn>
       <PressableBtn style={styles.viewInput} onPress={goToSearchScreen}>
         <Icon
           name="search-outline"

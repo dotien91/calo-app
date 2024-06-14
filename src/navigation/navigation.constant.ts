@@ -355,7 +355,7 @@ export const CommonStackData = [
   ...ClubStackData,
   {
     name: SCREENS.CREATE_SUBSCRIPTION,
-    screen: CreateSubscriptionScreen
+    screen: CreateSubscriptionScreen,
   },
   // {
   //   name: SCREENS.AUDIO_BOOK,

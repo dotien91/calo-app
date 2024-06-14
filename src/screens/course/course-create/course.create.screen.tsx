@@ -220,7 +220,7 @@ const CourseCreate = () => {
       media_id: idVid,
       media_video: idVid,
       media_album: listFile?.map((i) => i._id),
-      public_status: data?.public_status || "draft",
+      public_status: data?.public_status || "pending",
       type: typeCourse,
       class_duration: durationCall11,
       lession_count: parseInt(dataHook.lession_count),

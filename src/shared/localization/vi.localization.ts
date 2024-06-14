@@ -467,6 +467,9 @@ export default {
     add: "Thêm",
     maxLesson: (num: string | number) => `Số buổi học tối đa là ${num} buổi`,
     emptyLesson: "Giáo viên đã kín lịch trong ngày",
+    call11With: (type: "teacher" | "student", name: string) =>
+      `Call 1-1 với ${type === "student" ? "học sinh" : "giáo viên"} ${name}`,
+    isFirst: "(Buối đầu)",
     warningDelete: "Bạn muốn xoá khoá học này?",
     warningFull: "Chọn đầy đủ thông tin",
     duration: "Thời gian",

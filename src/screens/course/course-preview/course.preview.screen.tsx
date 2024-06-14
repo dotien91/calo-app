@@ -48,6 +48,7 @@ import {
 import { shareCourse } from "@utils/share.utils";
 import { formatPriceCourse } from "@helpers/string.helper";
 import IconSvg from "assets/svg";
+import AlbumView from "./components/album.view";
 
 const CoursePreviewScreen = () => {
   const userData = useStore((state) => state.userData);
@@ -374,6 +375,7 @@ const CoursePreviewScreen = () => {
             {/* <LessionContentView data={data} /> */}
             <RequestSkillView data={data} />
             <DescriptionView data={data} />
+            <AlbumView data={data} />
           </View>
         )}
         <BookLessonSelectView

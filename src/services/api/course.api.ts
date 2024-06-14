@@ -340,6 +340,19 @@ export async function getCourseRoom(params: {
     return response;
   });
 }
+export async function getCourseRoomV2(params: {
+  course_plan_student_id: string;
+  student_id: string;
+  teacher_id: string;
+}) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "course/v2/room",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}
 
 export async function getListMemberCourse(params: {
   auth_id: string;

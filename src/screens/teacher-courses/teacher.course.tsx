@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   SafeAreaView,
   Text,
   View,
   TouchableOpacity,
   StyleSheet,
+  Clipboard,
 } from "react-native";
 import {
   Calendar,
@@ -25,79 +26,125 @@ import PressableBtn from "@shared-components/button/PressableBtn";
 import IconSvg from "assets/svg";
 import { formatCalendarDateTime } from "@utils/date.utils";
 import IconSvgBtn from "@screens/audio/components/IconSvgBtn";
-import { getPlanStudent, getPlanTeacher } from "@services/api/course.api";
+import {
+  getCourseRoomV2,
+  getPlanStudent,
+  getPlanTeacher,
+} from "@services/api/course.api";
+import { getBottomSpace } from "react-native-iphone-screen-helper";
+import { navigate } from "@helpers/navigation.helper";
+import { SCREENS } from "constants";
+import { EnumClassType } from "models/course.model";
+import { showToast } from "@helpers/super.modal.helper";
 
 interface MyCustomEventType extends ICalendarEventBase {
   color: string;
 }
 
+const HEIGHT_CALENDAR =
+  SCREEN_HEIGHT - getStatusBarHeight() - getBottomSpace() - 48;
+
 const TeacherCourse = () => {
   const [date, setDate] = React.useState(new Date());
-  const [mode, setMode] = React.useState<Mode>("week");
-  const [events, setEvents] = React.useState<any[]>([]);
+  const [mode, setMode] = React.useState<Mode>("schedule");
   const [eventsSelect, setEventsSelect] = React.useState<any>(null);
   const [modalVisible, setModalVisible] = React.useState(false);
 
-  const getListEvent = async () => {
+  const [eventTeacher, setEventTeacher] = useState<any>([]);
+  const [eventUser, setEventUser] = useState<any[]>([]);
+
+  const getListEventStudent = async () => {
     const listEventStudent: any[] = [];
-    const listEventTeacher: any[] = [];
     await getPlanStudent().then((res) => {
-      const dataStudent = res.data;
-      for (let index = 0; index < dataStudent.length; index++) {
-        const element = dataStudent[index];
-        const schedule = element.schedule;
-        for (let i = 0; i < schedule.length; i++) {
-          const date = schedule[i].date;
-          const e = schedule[i].time_available;
-          for (let ind = 0; ind < e.length; ind++) {
-            const ele = e[ind];
-            const [hours, minutes] = ele.time_start.split(":");
-            const [hoursEnd, minutesEnd] = ele.time_end.split(":");
+      if (!res.isError) {
+        const dataStudent = res.data;
+        console.log("res.student..", res);
+        for (let index = 0; index < dataStudent.length; index++) {
+          const element = dataStudent[index];
+          const schedule = element.schedule;
+          for (let i = 0; i < schedule.length; i++) {
+            const date = schedule[i].date;
+            const e = schedule[i].time_available;
+            for (let ind = 0; ind < e.length; ind++) {
+              const ele = e[ind];
+              const [hours, minutes] = ele.time_start.split(":");
+              const [hoursEnd, minutesEnd] = ele.time_end.split(":");
 
-            const dataAdd = {
-              title: "Call 1-1 với giáo viên",
-              start: new Date(new Date(date).setHours(hours, minutes)),
-              end: new Date(new Date(date).setHours(hoursEnd, minutesEnd)),
-              color: ind > 0 || i > 0 ? palette.call11 : palette.newClass,
-              type: "call11",
-            };
-            listEventStudent.push(dataAdd);
+              const dataAdd = {
+                title: translations.course.call11With(
+                  "teacher",
+                  element.teacher_id.display_name,
+                ),
+                start: new Date(new Date(date).setHours(hours, minutes)),
+                end: new Date(new Date(date).setHours(hoursEnd, minutesEnd)),
+                color: ind > 0 || i > 0 ? palette.call11 : palette.newClass,
+                type: EnumClassType.Call11,
+                student_name: element.student_id.display_name,
+                student_id: element.student_id._id,
+                teacher_name: element.teacher_id.display_name,
+                teacher_id: element.teacher_id._id,
+                partner_id: element.teacher_id._id,
+                partner_name: element.teacher_id.display_name,
+                plan_id: element._id,
+                course_name: element.course_id.title,
+              };
+              listEventStudent.push(dataAdd);
+            }
           }
         }
       }
     });
-
+    setEventUser(listEventStudent);
+  };
+  const getListEventTeacher = async () => {
+    const listEventTeacher: any[] = [];
     await getPlanTeacher().then((res) => {
-      const dataTeacher = res.data;
-      if (!dataTeacher) {
-        return;
-      }
-      for (let index = 0; index < dataTeacher.length; index++) {
-        const element = dataTeacher[index];
-        const schedule = element.schedule;
-        for (let i = 0; i < schedule.length; i++) {
-          const date = schedule[i].date;
-          const e = schedule[i].time_available;
-          for (let ind = 0; ind < e.length; ind++) {
-            const ele = e[ind];
-            const [hours, minutes] = ele.time_start.split(":");
-            const [hoursEnd, minutesEnd] = ele.time_end.split(":");
+      if (!res.isError) {
+        const dataStudent = res.data;
+        console.log("res.teacher..", res);
+        for (let index = 0; index < dataStudent.length; index++) {
+          const element = dataStudent[index];
+          const schedule = element.schedule;
+          for (let i = 0; i < schedule.length; i++) {
+            const date = schedule[i].date;
+            const e = schedule[i].time_available;
+            for (let ind = 0; ind < e.length; ind++) {
+              const ele = e[ind];
+              const [hours, minutes] = ele.time_start.split(":");
+              const [hoursEnd, minutesEnd] = ele.time_end.split(":");
 
-            const dataAdd = {
-              title: "Call 1-1 với học sinh",
-              start: new Date(new Date(date).setHours(hours, minutes)),
-              end: new Date(new Date(date).setHours(hoursEnd, minutesEnd)),
-              color: ind > 0 || i > 0 ? palette.call11 : palette.newClass,
-              type: "call11",
-            };
-            listEventTeacher.push(dataAdd);
+              const dataAdd = {
+                title: translations.course.call11With(
+                  "student",
+                  element.student_id.display_name,
+                ),
+                start: new Date(new Date(date).setHours(hours, minutes)),
+                end: new Date(new Date(date).setHours(hoursEnd, minutesEnd)),
+                color: ind > 0 || i > 0 ? palette.call11 : palette.newClass,
+                type: EnumClassType.Call11,
+                student_name: element.student_id.display_name,
+                student_id: element.student_id._id,
+                teacher_name: element.teacher_id.display_name,
+                partner_id: element.student_id._id,
+                partner_name: element.student_id.display_name,
+                teacher_id: element.teacher_id._id,
+                plan_id: element._id,
+                course_name: element.course_id.title,
+              };
+              listEventTeacher.push(dataAdd);
+            }
           }
         }
       }
+      console.log("listEventTeacher", listEventTeacher);
+      setEventTeacher(listEventTeacher);
     });
+    return listEventTeacher;
+  };
 
-    const list = [...listEventStudent, ...listEventTeacher];
-    setEvents(list);
+  const getListEvent = () => {
+    getListEventStudent();
+    getListEventTeacher();
   };
 
   useEffect(() => {
@@ -139,7 +186,7 @@ const TeacherCourse = () => {
     );
   };
 
-  const addLeave = () => {};
+  // const addLeave = () => {};
 
   // const _onPressCell = (e) => {
   //   // alert(e);
@@ -156,23 +203,41 @@ const TeacherCourse = () => {
           backgroundColor: event.color,
         }}
       />
-      <View style={CS.flex1}>
-        <Text numberOfLines={1} style={styles.txtItemEvent}>
+      <View
+        style={[
+          CS.flex1,
+          { backgroundColor: `${event.color}30`, paddingLeft: 8 },
+        ]}
+      >
+        <Text
+          numberOfLines={1}
+          style={[
+            styles.txtItemEvent,
+            mode === "schedule" ? { fontSize: 16 } : {},
+          ]}
+        >
           {event.title}
         </Text>
         {mode === "schedule" && (
-          <Text numberOfLines={1} style={styles.txtItemEvent}>
+          <Text
+            numberOfLines={1}
+            style={[
+              styles.txtItemEvent,
+              mode === "schedule" ? { fontSize: 12 } : {},
+            ]}
+          >
             {formatCalendarDateTime({
               start: event?.start,
               end: event?.end,
             })}
+            {event.course_name}
           </Text>
         )}
       </View>
     </TouchableOpacity>
   );
 
-  const renderCalendar = () => {
+  const renderCalendar = useMemo(() => {
     return (
       <Calendar
         mode={mode}
@@ -181,12 +246,12 @@ const TeacherCourse = () => {
         activeDate={date}
         onPressDateHeader={(e) => setDate(e)}
         onPressEvent={(e) => setEventsSelect(e)}
-        events={events}
+        events={[...eventTeacher, ...eventUser]}
         eventCellStyle={styles.eventCellStyle}
-        height={SCREEN_HEIGHT}
+        height={HEIGHT_CALENDAR}
       />
     );
-  };
+  }, [eventTeacher, eventUser, mode]);
   const closeModalDetail = () => setEventsSelect(null);
 
   const ItemDetailEvent = ({
@@ -230,102 +295,147 @@ const TeacherCourse = () => {
     );
   };
 
-  const DetailEvent = ({ event }) => {
-    if (event == null) {
-      return null;
-    } else {
-      const startCall = () => {
-        if (event.type === "call11") {
-          alert("Bắt đầu cuộc gọi call11");
-        }
-        if (event.type === "callGroup") {
-          alert("Bắt đầu cuộc gọi callGroup");
-        }
-      };
-      const copyLink = () => {
-        alert("copy link");
-      };
-      const sendMessage = () => {
-        alert("gửi tin nhắn");
-      };
-      return (
-        <View style={styles.bottomFull}>
-          <View
-            style={{
-              ...styles.viewHeader,
-              backgroundColor: `${event?.color}10`,
-            }}
-          >
-            <View style={styles.headerDetail}>
-              <PressableBtn onPress={closeModalDetail} style={styles.viewIcon}>
-                <Icon
-                  name={"chevron-left"}
-                  type={IconType.Feather}
-                  size={25}
-                  color={palette.text}
-                />
-              </PressableBtn>
-              <PressableBtn style={styles.viewIcon}>
-                <Icon
-                  name={"edit"}
-                  type={IconType.Feather}
-                  size={20}
-                  color={palette.text}
-                />
-              </PressableBtn>
-            </View>
-            <View style={styles.viewTitle}>
-              <View
-                style={{
-                  ...styles.viewRect,
-                  backgroundColor: event?.color,
-                }}
-              />
-              <View>
-                <Text style={{ ...CS.hnRegular, color: event?.color }}>
-                  {event?.title}
-                </Text>
-                <Text
-                  style={{ ...CS.hnRegular, fontSize: 14, color: event?.color }}
+  const DetailEvent = useCallback(
+    ({ event }) => {
+      if (event == null) {
+        return null;
+      } else {
+        let courseRoom: any;
+        getCourseRoomV2({
+          course_plan_student_id: event?.plan_id,
+          student_id: event?.student_id,
+          teacher_id: event?.teacher_id,
+        }).then((res) => {
+          if (!res.isError) {
+            const data = res.data;
+            const roomId = (data?.redirect_url || "").match(/[^\/]+$/)?.[0];
+            courseRoom = { roomId, chatRoomId: data?.chat_room_id };
+          }
+        });
+        const startCall = () => {
+          if (event.type === EnumClassType.Call11) {
+            closeModalDetail();
+            navigate(SCREENS.CALL_CLASS, {
+              course_id: event.course_id,
+              courseData: { type: event.type, user_id: event.teacher_id },
+              courseRoom,
+            });
+            // alert("Bắt đầu cuộc gọi call11");
+          }
+          if (event.type === EnumClassType.CallGroup) {
+            alert("Bắt đầu cuộc gọi callGroup");
+          }
+        };
+        const copyLink = () => {
+          Clipboard.setString(
+            ` https://app.ikigaicoach.net/room/${courseRoom?.roomId}`,
+          );
+          showToast({ type: "success", message: translations.copied });
+        };
+        const sendMessage = () => {
+          closeModalDetail();
+          navigate(SCREENS.CHAT_ROOM, {
+            id: courseRoom?.chat_room_id,
+            partner_id: event.partner_id,
+            partner_name: event?.partner_name,
+          });
+        };
+        return (
+          <View style={styles.bottomFull}>
+            <View
+              style={{
+                ...styles.viewHeader,
+                backgroundColor: `${event?.color}10`,
+              }}
+            >
+              <View style={styles.headerDetail}>
+                <PressableBtn
+                  onPress={closeModalDetail}
+                  style={styles.viewIcon}
                 >
-                  {formatCalendarDateTime({
-                    start: event?.start,
-                    end: event?.end,
-                  })}
-                </Text>
+                  <Icon
+                    name={"chevron-left"}
+                    type={IconType.Feather}
+                    size={25}
+                    color={palette.text}
+                  />
+                </PressableBtn>
+                {/* <PressableBtn style={styles.viewIcon}>
+                  <Icon
+                    name={"edit"}
+                    type={IconType.Feather}
+                    size={20}
+                    color={palette.text}
+                  />
+                </PressableBtn> */}
+              </View>
+              <View style={styles.viewTitle}>
+                <View
+                  style={{
+                    ...styles.viewRect,
+                    backgroundColor: event?.color,
+                  }}
+                />
+                <View>
+                  <Text style={{ ...CS.hnRegular, color: event?.color }}>
+                    {event?.title}
+                  </Text>
+                  <Text
+                    style={{
+                      ...CS.hnRegular,
+                      fontSize: 14,
+                      color: event?.color,
+                    }}
+                  >
+                    {formatCalendarDateTime({
+                      start: event?.start,
+                      end: event?.end,
+                    })}
+                  </Text>
+                  <Text
+                    style={{
+                      ...CS.hnRegular,
+                      fontSize: 14,
+                      color: event?.color,
+                    }}
+                  >
+                    {event.course_name}
+                  </Text>
+                </View>
               </View>
             </View>
-          </View>
-          <View style={styles.paddingH}>
-            <ItemDetailEvent
-              color={event?.color}
-              iconLeft={"icCall"}
-              title={translations.chat.startCall}
-              onPress={startCall}
-              iconRight="icCopy"
-              onPressRight={copyLink}
-            />
-            <ItemDetailEvent
-              color={event?.color}
-              iconLeft={"icMessage"}
-              title={translations.chat.sendMessage}
-              onPress={sendMessage}
-            />
-            {event?.type === "callGroup" && (
+            <View style={styles.paddingH}>
               <ItemDetailEvent
                 color={event?.color}
-                iconLeft={"icChat"}
-                title={translations.course.assignTask}
+                iconLeft={"icCall"}
+                title={translations.chat.startCall}
+                onPress={startCall}
+                iconRight="icCopy"
+                onPressRight={copyLink}
+              />
+              <ItemDetailEvent
+                color={event?.color}
+                iconLeft={"icMessage"}
+                title={translations.chat.sendMessage}
                 onPress={sendMessage}
               />
-            )}
+              {event?.type === "callGroup" && (
+                <ItemDetailEvent
+                  color={event?.color}
+                  iconLeft={"icChat"}
+                  title={translations.course.assignTask}
+                  onPress={sendMessage}
+                />
+              )}
+            </View>
           </View>
-        </View>
-      );
-    }
-  };
+        );
+      }
+    },
+    [eventsSelect],
+  );
 
-  const SelectTypeCalendar = () => {
+  const SelectTypeCalendar = useCallback(() => {
     return (
       <SafeAreaView style={styles.bottomInner}>
         <View style={styles.viewTypeCalendar}>
@@ -347,11 +457,11 @@ const TeacherCourse = () => {
           />
         </View>
         <View style={styles.paddingH}>
-          <View style={styles.viewBorder} />
-          <PressableBtn onPress={addLeave} style={styles.viewBtn}>
+          {/* <View style={styles.viewBorder} /> */}
+          {/* <PressableBtn onPress={addLeave} style={styles.viewBtn}>
             <IconSvg name="icAdd" size={24} color={palette.textOpacity8} />
             <Text style={CS.hnRegular}>{translations.course.addLeave}</Text>
-          </PressableBtn>
+          </PressableBtn> */}
           <View style={styles.viewBorder} />
           <View style={styles.viewBtn}>
             <Text style={CS.hnSemiBold}>{translations.course.note}</Text>
@@ -375,14 +485,14 @@ const TeacherCourse = () => {
                 title: translations.course.callOneVsOne,
               }}
             />
-            <ItemCheck
+            {/* <ItemCheck
               item={{ color: palette.leave, title: translations.course.leave }}
-            />
+            /> */}
           </View>
         </View>
       </SafeAreaView>
     );
-  };
+  }, [mode, modalVisible]);
 
   return (
     <>
@@ -393,7 +503,7 @@ const TeacherCourse = () => {
           onPressRight={() => setModalVisible(true)}
         />
 
-        {renderCalendar()}
+        {renderCalendar}
       </SafeAreaView>
       <ModalCalendar
         isVisible={modalVisible}
@@ -430,7 +540,6 @@ const styles = StyleSheet.create({
     backgroundColor: palette.background,
     paddingHorizontal: 16,
     paddingVertical: 16,
-    // position: "absolute",
     left: SCREEN_WIDTH / 5,
     bottom: 0,
     right: 0,
@@ -439,7 +548,6 @@ const styles = StyleSheet.create({
   bottomFull: {
     ...CS.flex1,
     backgroundColor: palette.background,
-    // position: "absolute",
     left: 0,
     bottom: 0,
     right: 0,
@@ -507,21 +615,21 @@ const styles = StyleSheet.create({
   },
   viewSticky: {
     height: "auto",
-    width: 2,
-    borderRadius: 2,
+    width: 4,
+    borderTopLeftRadius: 8,
+    borderBottomLeftRadius: 8,
   },
   txtItemEvent: {
     ...CS.hnRegular,
     fontSize: 10,
   },
   eventCellStyle: {
-    borderRadius: 4,
-    backgroundColor: palette.secondColor,
+    borderRadius: 8,
+    backgroundColor: palette.background,
     borderWidth: 1,
     borderColor: palette.borderColor,
     padding: 0,
     flexDirection: "row",
-    gap: 8,
   },
   paddingH: {
     paddingHorizontal: 16,
