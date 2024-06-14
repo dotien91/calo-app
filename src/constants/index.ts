@@ -128,6 +128,7 @@ export const SCREENS = {
   CREATE_CERTIFICATE: "CreateCertificate",
   TEACHER_SCREEN: "TeacherScreen",
   MANAGE_CLUB: "ManageClub",
+  CREATE_SUBSCRIPTION: "CreateSubscription",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

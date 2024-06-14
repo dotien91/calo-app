@@ -1986,4 +1986,18 @@ export default {
     year: "Năm cấp chức chỉ ",
     description: "Mô tả",
   },
+  subscription: {
+    title: "Dịch vụ đăng ký",
+    des: "Dịch vụ đăng ký của bạn sẽ được hiển thị trên trang chủ",
+    addSubscription: "Thêm dịch vụ đăng ký",
+    addSubscriptionSuccess: "Thêm dịch vụ đăng ký thành công",
+    deleteSubscription: "Xóa dịch vụ đăng ký",
+    confirmDeleteSubscription: "Bạn có muốn xóa dịch vụ đăng ký này!",
+    deleteSubscriptionSuccess: "Xóa dịch vụ đăng ký thành công",
+    editSubscription: "Chỉnh sửa dịch vụ đăng ký",
+    editSubscriptionSuccess: "Chỉnh sửa dịch vụ đăng ký thành công",
+    description: "Kiếm thêm thu nhập từ các nội dung podcast tải lên",
+  },
+  label: "Tiêu đề",
+  description: "Mô tả",
 };

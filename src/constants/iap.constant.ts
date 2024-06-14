@@ -32,3 +32,5 @@ export const priceIdsLiveStream = [
   { id: "com.coach.livestream.tier4", label: "399,000", value: 399000 },
   { id: "com.coach.livestream.tier5", label: "499,000", value: 499000 },
 ];
+
+export const priceIdSubscription = { id: "com.coach.livestream.tier1", label: "39,000", value: 39000 }
