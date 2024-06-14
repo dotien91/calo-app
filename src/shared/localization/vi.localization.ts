@@ -1983,7 +1983,7 @@ export default {
     chooseCertificateError: "Vui lòng chọn chứng chỉ",
     chooseCertificateDes: "Vui lòng chọn mô tả chứng chỉ",
     issuedBy: "Cấp bởi",
-    year: "Năm học",
+    year: "Năm cấp chức chỉ ",
     description: "Mô tả",
   },
 };
