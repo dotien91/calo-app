@@ -205,7 +205,6 @@ const useSelectVideoHook = ({
           </View>
         ) : (
           <Image source={{ uri: media.link }} style={styles.viewImage1} />
-
         )}
         {updatingVid && (
           <View style={styles.viewImageFill}>
@@ -222,6 +221,56 @@ const useSelectVideoHook = ({
     );
   };
 
+  const renderSelectImage = () => {
+    return (
+      <View
+        style={[
+          styles.viewSelectImage,
+          (updatingVid || !!media.link) && {
+            height: (WindowWidth / 16) * 9,
+            borderWidth: 0,
+          },
+        ]}
+      >
+        {media.link === "" && !updatingVid ? (
+          <PressableBtn
+            onPress={onPressChangeMedia}
+            style={[CS.fillParent, CS.flexCenter]}
+          >
+            <IconBtn
+              name="upload"
+              customStyle={{ marginRight: 8 }}
+              color={palette.primary}
+            />
+            <Text style={[CS.hnRegular, { color: palette.primary }]}>
+              {placeholder || translations.course.uploadCoverImageOrVideo}
+            </Text>
+          </PressableBtn>
+        ) : (
+          <>
+            <PressableBtn onPress={onPressChangeMedia} style={styles.styleBtn}>
+              <View style={styles.viewGally}>
+                <IconText nameIcon="icImage" text={translations.club.gallery} />
+              </View>
+            </PressableBtn>
+            <Image source={{ uri: media.link }} style={styles.viewImage1} />
+          </>
+        )}
+        {updatingVid && (
+          <View style={styles.viewImageFill}>
+            <LoadingUpdateMedia />
+            <View style={styles.viewImageFill}>
+              <ActivityIndicator size={"small"} />
+              <TextBase fontSize={12} fontWeight="500" color="primary">
+                {process}%
+              </TextBase>
+            </View>
+          </View>
+        )}
+      </View>
+    );
+  };
+
   return {
     renderSelectBackground,
     renderSelectVideo,
@@ -233,7 +282,6 @@ const useSelectVideoHook = ({
     setMedia,
     onPressChangeMedia,
     renderSelectImage,
-    updatingVid,
   };
 };
 
@@ -307,5 +355,14 @@ const styles = StyleSheet.create({
   viewImage1: {
     height: (WindowWidth / 16) * 9,
     borderRadius: 8,
+  },
+  viewSelectImage: {
+    height: 40,
+    backgroundColor: palette.background,
+    marginHorizontal: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderStyle: "dashed",
+    borderColor: palette.primary,
   },
 });

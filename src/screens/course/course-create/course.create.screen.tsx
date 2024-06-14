@@ -110,7 +110,7 @@ const CourseCreate = () => {
     id: data?.media_id?._id,
     link: data?.media_id?.media_thumbnail || "",
     typeM: "video",
-    placeholder: translations.course.uploadCoverImage,
+    placeholder: translations.course.uploadVideoPreview,
     type: "video",
   });
   const {
@@ -175,7 +175,7 @@ const CourseCreate = () => {
     }
   }, [data]);
 
-  console.log("data=====", data);
+  // console.log("data=====", data);
   const userData = useStore((store) => store.userData);
 
   const openListTypeCourse = () => {
@@ -218,6 +218,7 @@ const CourseCreate = () => {
       country: userData?.country,
       avatar: idVideo,
       media_id: idVid,
+      media_video: idVid,
       media_album: listFile?.map((i) => i._id),
       public_status: data?.public_status || "draft",
       type: typeCourse,
@@ -396,12 +397,11 @@ const CourseCreate = () => {
   const renderDurationCall11 = () => {
     if (typeCourse !== EnumClassType.Call11) return null;
     return (
-      <View style={{ zIndex: 2, marginVertical: 8, marginHorizontal: 4 }}>
+      <View style={{ zIndex: 2, marginVertical: 8, marginHorizontal: 20 }}>
         <Text
           style={{
             ...CS.hnMedium,
             color: colors.text,
-            marginLeft: 16,
             marginVertical: 8,
           }}
         >
@@ -435,7 +435,7 @@ const CourseCreate = () => {
           </Text>
 
           <DropDownItem
-            value={priceIds}
+            value={priceInput}
             setValue={setPriceInput}
             items={priceIds}
             placeholder={translations.payment.coursePrice}

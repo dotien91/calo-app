@@ -115,9 +115,9 @@ export const palette = {
   primarySub: "rgba(241, 144, 144, 1)",
   colorMoney: "#FEAEAE",
   newClass: "#2BC456",
-  callGroup: "#FEAEAE",
-  call11: "#161C24",
-  leave: "#F0F3F6",
+  callGroup: "#0044CC",
+  call11: "#FD7467",
+  leave: "#E8EBEF",
 
   greenTh2: "#30AD6A",
   greenTh1: "#5AD693",
