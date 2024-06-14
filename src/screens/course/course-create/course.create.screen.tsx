@@ -161,7 +161,7 @@ const CourseCreate = () => {
       setValue("description", data.description);
       setValue("long_description", data.long_description);
       setValue("price", data.price.toString());
-      setValue("lession_count", data.lession_count);
+      setValue("lession_count", data.lession_count.toString());
       setDurationCall11(data.class_duration);
       setDateStart(new Date(data.start_time));
       setIsSwitchStart(data?.start_time ? true : false);

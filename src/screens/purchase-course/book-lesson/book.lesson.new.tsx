@@ -35,7 +35,7 @@ const BookLessonNew = () => {
   ).toISOString();
   const mindate = new Date().toISOString();
   const maxdate = new Date(courseData.end_time || "2050-12-31").toISOString();
-  const sumday = courseData.lession_count * 2;
+  const sumday = courseData.lession_count;
   const [listTimeSelected, setListTimeSelected] = useState<TimeAvaiableType[]>(
     [],
   );
