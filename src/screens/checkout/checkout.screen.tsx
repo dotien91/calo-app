@@ -426,7 +426,7 @@ const CheckoutScreen = () => {
           },
         },
       ],
-      external_app_name: "ikicoach",
+      external_app_name: "ikigai",
       invitation_code: userData?.ref_invitation_code || undefined,
     };
 
@@ -460,7 +460,7 @@ const CheckoutScreen = () => {
             },
           },
         ],
-        external_app_name: "ikicoach",
+        external_app_name: "ikigai",
         // invitation_code: userData?.ref_invitation_code || undefined,
       };
       console.log("call11", newData);

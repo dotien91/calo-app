@@ -84,7 +84,7 @@ const CreateAudio = () => {
       <View style={{ zIndex: 2, marginVertical: 8 }}>
         <Text style={styles.txtTitle}>{translations.audio.playlist}</Text>
 
-        <View style={{ paddingHorizontal: 4 }}>
+        <View style={{ paddingHorizontal: 20 }}>
           <DropDownItem
             value={playlist}
             setValue={setPlaylist}

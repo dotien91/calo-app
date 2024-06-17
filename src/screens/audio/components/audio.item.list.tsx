@@ -23,7 +23,7 @@ interface ItemListProps {
   isSliderItem: boolean;
   style?: ViewStyle;
   data: IAudioItem;
-  listData: any[];
+  listData?: any[];
   isWatched?: boolean;
 }
 

@@ -72,7 +72,7 @@ export default (theme: ExtendedTheme) => {
     },
     audioTitle: {
       ...CS.hnSemiBold,
-      color: colors.white,
+      color: colors.textOpacity8,
       fontSize: 16,
       marginBottom: 4,
     },
