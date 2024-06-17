@@ -1,5 +1,5 @@
 import { useState } from "react";
-import DocumentPicker from "react-native-document-picker";
+import { pick, types, isCancel } from "react-native-document-picker";
 import { uploadMultiFile } from "@services/api/post.api";
 import { isIos } from "@helpers/device.info.helper";
 import { showToast } from "@helpers/super.modal.helper";
@@ -12,8 +12,8 @@ const useUploadAudio = () => {
 
   const pickAudio = async () => {
     try {
-      const pickerResult = await DocumentPicker.pick({
-        type: [DocumentPicker.types.audio],
+      const pickerResult = await pick({
+        type: [types.audio],
       });
 
       setUploading(true);
@@ -53,7 +53,7 @@ const useUploadAudio = () => {
         setUploading(false);
       }
     } catch (err) {
-      if (DocumentPicker.isCancel(err)) {
+      if (isCancel(err)) {
         // Người dùng đã huỷ lựa chọn file
       } else {
         setError(err);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   ActivityIndicator,
@@ -22,10 +22,18 @@ import Button from "@shared-components/button/Button";
 import { useRoute } from "@react-navigation/native";
 import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
 import IconSvg from "assets/svg";
+import { CreatePodcast, GetPodCastList } from "@services/api/podcast.api";
+import useStore from "@services/zustand/store";
+import { showToast } from "@helpers/super.modal.helper";
+import { goBack } from "@helpers/navigation.helper";
 
 const CreateAudio = () => {
   const route = useRoute();
   const type = route?.params?.type || "full";
+
+  const isChild = route?.params?.isChild || false;
+  const parent_id = route?.params?.parent_id || null;
+  const userData = useStore((state) => state.userData);
   const {
     control,
     handleSubmit,
@@ -37,14 +45,39 @@ const CreateAudio = () => {
     },
   });
 
-  const [playlist, setPlaylist] = useState("");
+  const [playlist, setPlaylist] = useState(parent_id || "");
   const [listPlaylist, setListPlaylist] = useState([]);
-  const [typePodcast, setTypePodcast] = useState<"full" | "trailer">("full");
+  const [typePodcast, setTypePodcast] = useState<"public" | "member">("public");
   const { file, pickAudio, uploading } = useUploadAudio();
   const { renderSelectImageAudio, idImage, updatingImg } = SelectImageHook({
     width: 900,
     height: 1600,
   });
+
+  const getListParent = () => {
+    const params = {
+      user_id: userData?._id,
+      order_by: "DESC",
+      sort_by: "createdAt",
+      limit: "10",
+    };
+    GetPodCastList(params).then((res) => {
+      // console.log("res podcast list", res.data);
+      const data = res.data;
+      const dataSet = data.map((i) => {
+        return {
+          value: i._id,
+          label: i.title,
+        };
+      });
+      console.log("dataset...", dataSet);
+      setListPlaylist(dataSet);
+    });
+  };
+
+  useEffect(() => {
+    getListParent();
+  }, []);
 
   const renderPlaylist = () => {
     return (
@@ -63,19 +96,66 @@ const CreateAudio = () => {
     );
   };
   const setTypeFull = () => {
-    setTypePodcast("full");
+    setTypePodcast("public");
   };
   const setTypeTrailer = () => {
-    setTypePodcast("trailer");
+    setTypePodcast("member");
   };
 
   const onSubmit = (dataHook) => {
-    console.log(dataHook);
+    if (!idImage) {
+      showToast({
+        type: "error",
+        message: translations.podcast.warningSelectCover,
+      });
+      return;
+    }
+    if (file == null) {
+      showToast({
+        type: "error",
+        message: translations.podcast.warningUploadPodcast,
+      });
+      return;
+    }
+    const dataUpload = {
+      podcast_language: "en",
+      title: dataHook.title,
+      content: dataHook.description,
+      post_avatar: idImage,
+      attach_files: JSON.stringify([file?._id]),
+      // post_avatar: "666fbc55aed6a4d7087725f1",
+      // attach_files: JSON.stringify(["666c228c94f133507f9cb104"]),
+      podcast_category: "661393d1d29bd7cb5f9bc9ce",
+      is_premium: typePodcast === "member",
+      // parent_id: playlist,
+    };
+    if (isChild || parent_id) {
+      if (playlist === "") {
+        showToast({
+          type: "error",
+          message: translations.podcast.selectPodcast,
+        });
+        return;
+      }
+      dataUpload.parent_id = playlist;
+    }
+    console.log("dataUpload", dataUpload);
+    CreatePodcast(dataUpload).then((res) => {
+      if (!res.isError) {
+        // console.log("res upload...", res);
+        showToast({
+          type: "success",
+          message: translations.podcast.createPodcastSuccess,
+        });
+        goBack();
+        // chuyen den trang danh sach podcast
+      }
+    });
   };
 
   return (
     <SafeAreaView style={CS.safeAreaView}>
-      <Header text="Tải lên một podcast" />
+      <Header text={translations.podcast.uploadePodcast} />
       <ScrollView style={CS.flex1}>
         <View style={styles.containerImage}>
           <View style={styles.viewImage}>{renderSelectImageAudio()}</View>
@@ -121,7 +201,7 @@ const CreateAudio = () => {
         />
         {type === "full" && (
           <View>
-            {renderPlaylist()}
+            {isChild && !parent_id && renderPlaylist()}
             <Text style={styles.txtTitle}>
               {translations.audio.typeOfPodcast}
             </Text>
@@ -130,7 +210,7 @@ const CreateAudio = () => {
                 style={{
                   ...styles.btnType,
                   backgroundColor:
-                    typePodcast == "full"
+                    typePodcast == "public"
                       ? palette.primary
                       : palette.btnInactive,
                 }}
@@ -140,19 +220,19 @@ const CreateAudio = () => {
                   style={{
                     ...styles.txtBtn,
                     color:
-                      typePodcast == "full"
+                      typePodcast == "public"
                         ? palette.white
                         : palette.textOpacity8,
                   }}
                 >
-                  {translations.audio.full}
+                  {translations.podcast.public}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={{
                   ...styles.btnType,
                   backgroundColor:
-                    typePodcast == "full"
+                    typePodcast == "public"
                       ? palette.btnInactive
                       : palette.primary,
                 }}
@@ -162,12 +242,12 @@ const CreateAudio = () => {
                   style={{
                     ...styles.txtBtn,
                     color:
-                      typePodcast == "full"
+                      typePodcast == "public"
                         ? palette.textOpacity8
                         : palette.white,
                   }}
                 >
-                  {translations.audio.trailer}
+                  {translations.podcast.member}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -212,7 +292,7 @@ const CreateAudio = () => {
             backgroundColor:
               uploading || updatingImg ? palette.placeholder : palette.primary,
           }}
-          text={"Create podcast"}
+          text={translations.podcast.uploadePodcast}
           disabled={uploading || updatingImg}
           onPress={handleSubmit(onSubmit)}
         />

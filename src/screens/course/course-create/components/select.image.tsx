@@ -121,11 +121,11 @@ const SelectImageHook = ({
 export default SelectImageHook;
 
 const styles = StyleSheet.create({
-  viewImage: {
-    width: 160,
-    height: 90,
-    backgroundColor: palette.placeholder,
-  },
+  // viewImage: {
+  //   width: 160,
+  //   height: 90,
+  //   backgroundColor: palette.placeholder,
+  // },
   viewImage2: {
     width: 90,
     height: 120,

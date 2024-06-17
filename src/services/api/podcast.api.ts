@@ -68,3 +68,22 @@ export async function GetPodCastSuggest(id: string) {
     return response;
   });
 }
+
+interface ICreatePodcast {
+  podcast_language: string;
+  content: string;
+  title: string;
+  post_avatar: string;
+  attach_files: string;
+  parent_id?: string;
+}
+
+export async function CreatePodcast(data: ICreatePodcast) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "podcast/create",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
