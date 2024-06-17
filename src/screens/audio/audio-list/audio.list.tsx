@@ -11,8 +11,6 @@ import AudioCategoryTitle from "../audio-book/audio.category.title";
 import AudioItemList from "../components/audio.item.list";
 import { SCREENS } from "constants";
 import LoadingList from "@shared-components/loading.list.component";
-import AudioQuickFilter from "../components/audio.quick.filter";
-import AudioView from "./audio.view";
 import { _getJson } from "@services/local-storage";
 import AudioQuickFilter from "../components/audio.quick.filter";
 import AudioView from "./audio.view";
