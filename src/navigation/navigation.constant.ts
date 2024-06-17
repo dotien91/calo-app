@@ -104,6 +104,7 @@ import CodeActivationsScreen from "@screens/code-activations/code.activations.sc
 import HiddenPaage from "@screens/hidden-page/hidden.page";
 import BlackList from "@screens/black-list/black.list";
 import AccountSetupScreen from "@screens/welcome/account-setup/account.setup.screen";
+import CreateAudio from "@screens/audio/create-audio/create.audio";
 import LiveStreamPreviewScreem from "@screens/livestream-preview/livestream.preview.screen";
 import LivestreamListScreen from "@screens/stream/list.livestream.screen";
 import ManageLivestreamScreen from "@screens/stream/manage.livestream.screen";
@@ -124,6 +125,10 @@ export const DiscoveryStackData = [
   {
     name: SCREENS.AUDIO_BOOK,
     screen: AudioBookScreen,
+  },
+  {
+    name: SCREENS.CREATE_AUDIO,
+    screen: CreateAudio,
   },
 ];
 
