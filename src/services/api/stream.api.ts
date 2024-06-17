@@ -1,14 +1,24 @@
 import request, { METHOD } from "./api";
 
-export async function createLiveStream(
-  title: string,
-  avatar: string,
-  group_id?: string,
-) {
+export async function createLiveStream(data: {
+  title: string;
+  cover_url: string;
+  group_id?: string;
+}) {
   return request({
     method: METHOD.POST,
-    urlPath: group_id ? "livestream/group/create" : "livestream/create",
-    data: { title, livestream_status: "live", avatar, group_id },
+    urlPath: data?.group_id ? "livestream/group/create" : "livestream/create",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function saveLiveStream(data) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "livestream/create",
+    data,
   }).then((response) => {
     return response;
   });
@@ -100,10 +110,7 @@ export async function getListLiveStream(params: any) {
   return request({
     method: METHOD.GET,
     urlPath: "livestream/list",
-    params: {
-      livestream_status: "live",
-      ...params,
-    },
+    params,
   }).then((response) => {
     return response;
   });
@@ -123,6 +130,25 @@ export async function requestViewStream(data: { livestream_id: string }) {
     method: METHOD.POST,
     urlPath: "livestream/view",
     data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function requestGoLive(data: { livestream_id: string }) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "livestream/go-live",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function requestDeleteLivestream(id: string) {
+  return request({
+    method: METHOD.DELETE,
+    urlPath: `livestream/delete/${id}`,
   }).then((response) => {
     return response;
   });

@@ -7,6 +7,7 @@ import {
   Text,
   Keyboard,
   SafeAreaView,
+  TextInput,
 } from "react-native";
 import { useTheme, useRoute } from "@react-navigation/native";
 import { useForm } from "react-hook-form";
@@ -22,11 +23,10 @@ import CS from "@theme/styles";
 import Header from "@shared-components/header/Header";
 import { translations } from "@localization";
 import Button from "@shared-components/button/Button";
-import DatePickerLocal from "./components/dataPicker";
 import useStore from "@services/zustand/store";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { palette } from "@theme/themes";
-import { createCourse, updateCourse } from "@services/api/course.api";
+import { updateCourseV2, CreateCourseV2 } from "@services/api/course.api";
 import {
   EnumModalContentType,
   EnumStyleModalType,
@@ -47,8 +47,12 @@ import { SCREENS } from "constants";
 // import SelectImageHook from "./components/select.image";
 import TextInputPrice from "../components/text.input.price/text.input.price";
 import { EnumClassType } from "models/course.model";
-import { priceIds } from "constants/iap.constant";
+import { durationCall11List, priceIds } from "constants/iap.constant";
 import DropDownItem from "@shared-components/dropdown/DropDownItem";
+import IconSvg from "assets/svg";
+import { useUploadFile } from "@helpers/hooks/useUploadFile";
+import { ScreenWidth } from "@freakycoder/react-native-helpers";
+import useSelectTime from "./components/useSelectTime";
 
 interface ILevel {
   value: string;
@@ -73,6 +77,7 @@ const CourseCreate = () => {
       long_description: "",
       price: "",
       startTime: "",
+      lession_count: "",
     },
   });
   const route = useRoute();
@@ -81,23 +86,74 @@ const CourseCreate = () => {
   const theme = useTheme();
   const { colors } = theme;
   const [updating, setUpdating] = React.useState(false);
-  const [startDate, setStartDate] = React.useState<Date>();
-  const [endDate, setEndDate] = React.useState<Date>();
+  // const [startDate, setStartDate] = React.useState<Date>();
+  // const [endDate, setEndDate] = React.useState<Date>();
   const [typeCourse, setTypeCourse] = React.useState(listTypeCourse[1].value);
   const [level, setLevel] = useState<string>(listLevel[0].value);
   const [skill, setSkill] = useState<string[]>([]);
   const [priceInput, setPriceInput] = useState("");
+  const [durationCall11, setDurationCall11] = useState("");
   // const [lang, setLang] = useState("vi");
 
   const { idVideo, renderSelectVideo, updatingVid } = SelectVideoHook({
-    id: data?.media_id?._id || data?.avatar?._id,
-    link: data?.media_id?.media_thumbnail || data?.avatar?.media_thumbnail,
-    typeM: data?.media_id ? "video" : "image",
+    id: data?.avatar?._id,
+    link: data?.avatar?.media_thumbnail || "",
+    typeM: "image",
+    placeholder: translations.course.uploadCoverImage,
+    type: "photo",
   });
+  const {
+    idVideo: idVid,
+    renderSelectVideo2,
+    updatingVid: updateVideo,
+  } = SelectVideoHook({
+    id: data?.media_id?._id,
+    link: data?.media_id?.media_thumbnail || "",
+    typeM: "video",
+    placeholder: translations.course.uploadVideoPreview,
+    type: "video",
+  });
+  const {
+    onSelectPicture,
+    listFile,
+    listFileLocal,
+    renderFile2,
+    isUpLoadingFile,
+  } = useUploadFile(
+    data?.media_album?.map(
+      (i) =>
+        ({
+          uri: i.media_url,
+          type: i.media_type,
+          _id: i._id,
+        } || []),
+    ),
+  );
   // const { idImage, renderSelectImage, updatingImg } = SelectImageHook({
   //   width: 1600,
   //   height: 900,
   // });
+
+  const {
+    date: dateStart,
+    setDate: setDateStart,
+    isSwitch: isSwitchStart,
+    setIsSwitch: setIsSwitchStart,
+    renderSelect,
+  } = useSelectTime({
+    title: translations.purchase.startDate,
+    time: "",
+  });
+  const {
+    date: dateEnd,
+    setDate: setDateEnd,
+    isSwitch: isSwitchEnd,
+    setIsSwitch: setIsSwitchEnd,
+    renderSelect: renderSelect2,
+  } = useSelectTime({
+    title: translations.purchase.endDate,
+    time: "",
+  });
 
   useEffect(() => {
     if (data) {
@@ -105,8 +161,12 @@ const CourseCreate = () => {
       setValue("description", data.description);
       setValue("long_description", data.long_description);
       setValue("price", data.price.toString());
-      setStartDate(new Date(data.start_time));
-      setEndDate(data?.end_time ? new Date(data.end_time) : "");
+      setValue("lession_count", data.lession_count.toString());
+      setDurationCall11(data.class_duration);
+      setDateStart(new Date(data.start_time));
+      setIsSwitchStart(data?.start_time ? true : false);
+      setDateEnd(data?.end_time ? new Date(data.end_time) : "");
+      setIsSwitchEnd(data?.end_time ? true : false);
       setTypeCourse(data.type);
       // setLevel(data?.level || "");
       setSkill(data.skills);
@@ -115,6 +175,7 @@ const CourseCreate = () => {
     }
   }, [data]);
 
+  // console.log("data=====", data);
   const userData = useStore((store) => store.userData);
 
   const openListTypeCourse = () => {
@@ -132,121 +193,109 @@ const CourseCreate = () => {
     description: string;
     long_description: string;
     price: string | number;
+    lession_count: string;
   }) => {
-    if (!startDate || !endDate || idVideo === "") {
-      if (startDate || !endDate) {
+    if (isSwitchStart && isSwitchEnd) {
+      if (dateStart > dateEnd) {
         showToast({
           type: "error",
           message: translations.course.warningSelectTime,
         });
+        return;
       }
-      if (idVideo === "") {
-        showToast({
-          type: "error",
-          message: translations.course.warningUploadCoverImageOrVideo,
-        });
-      }
-    } else {
-      if (startDate < endDate) {
-        const params = {
-          title: dataHook.title,
-          // lang: lang,
-          description: dataHook.description,
-          long_description: dataHook.long_description,
-          // price: dataHook.price,
-          price: priceInput + "",
-          start_time: startDate?.toISOString(),
-          end_time: endDate?.toISOString(),
-          language: "en",
-          // language: userData?.default_language,
-          country: userData?.country,
-          // avatar: idImage,
-          media_id: idVideo,
-          public_status: data?.public_status || "draft",
-          type: typeCourse,
-          // level: level,
-          skills: skill,
-        };
-        // console.log(params);
-        // if (typeMedia.startsWith("video")) {
-        // params.media_id = idVideo;
-        // }
-        // if (typeMedia.startsWith("image")) {
-        //   params.avatar = idVideo;
-        // }
-        if (course_id) {
-          params._id = course_id;
-        }
+    }
+    const params = {
+      title: dataHook.title,
+      // lang: lang,
+      description: dataHook.description,
+      long_description: dataHook.long_description,
+      // price: dataHook.price,
+      price: priceInput + "",
+      start_time: isSwitchStart ? dateStart : "",
+      end_time: isSwitchEnd ? dateEnd : "",
+      language: "en",
+      // language: userData?.default_language,
+      country: userData?.country,
+      avatar: idVideo,
+      media_id: idVid,
+      media_video: idVid,
+      media_album: listFile?.map((i) => i._id),
+      public_status: data?.public_status || "pending",
+      type: typeCourse,
+      class_duration: durationCall11,
+      lession_count: parseInt(dataHook.lession_count),
+      // level: level,
+      skills: skill,
+    };
 
-        // setUpdating(true);
+    // if (course_id) {
+    //   params._id = course_id;
+    // }
+    console.log("params...", params);
 
-        showSuperModal({
-          styleModalType: EnumStyleModalType.Middle,
-          contentModalType: EnumModalContentType.Loading,
-        });
-        if (
-          typeCourse == EnumClassType.SelfLearning ||
-          typeCourse == EnumClassType.CallGroup
-        ) {
-          params["price_id"] = priceIds.find(
-            (item) => item.value == priceInput,
-          )?.id;
-        }
+    setUpdating(true);
 
-        if (course_id) {
-          updateCourse(params).then((res) => {
-            if (!res.isError) {
-              showToast({
-                type: "success",
-                message: translations.course.updateModuleSuccess,
-              });
-              eventEmitter.emit("reload_list_course");
-              closeSuperModal();
-              eventEmitter.emit("reload_data_preview");
-              NavigationService.navigate(SCREENS.COURSE_DETAIL, {
-                course_id: course_id,
-                fromScreen: "createCourse",
-              });
-              setUpdating(false);
-            } else {
-              showToast({
-                type: "error",
-                message: res.message,
-              });
-              closeSuperModal();
-              setUpdating(false);
-            }
+    showSuperModal({
+      styleModalType: EnumStyleModalType.Middle,
+      contentModalType: EnumModalContentType.Loading,
+    });
+    if (
+      typeCourse == EnumClassType.SelfLearning ||
+      typeCourse == EnumClassType.CallGroup
+    ) {
+      params["price_id"] = priceIds.find(
+        (item) => item.value == priceInput,
+      )?.id;
+    }
+
+    if (course_id) {
+      updateCourseV2(course_id, params).then((res) => {
+        if (!res.isError) {
+          showToast({
+            type: "success",
+            message: translations.course.updateModuleSuccess,
           });
+          eventEmitter.emit("reload_list_course");
+          closeSuperModal();
+          eventEmitter.emit("reload_data_preview");
+          NavigationService.navigate(SCREENS.COURSE_DETAIL, {
+            course_id: course_id,
+            fromScreen: "createCourse",
+          });
+          setUpdating(false);
         } else {
-          createCourse(params).then((res) => {
-            if (!res.isError) {
-              showToast({
-                type: "success",
-                message: translations.course.createCourseSuccess,
-              });
-              eventEmitter.emit("reload_list_course");
-              NavigationService.navigate(SCREENS.COURSE_DETAIL, {
-                course_id: res?.data?._id,
-                fromScreen: "createCourse",
-              });
-              setUpdating(false);
-              closeSuperModal();
-            } else {
-              showToast({
-                type: "error",
-                message: res.message,
-              });
-              setUpdating(false);
-              closeSuperModal();
-            }
+          console.log(res.message);
+          showToast({
+            type: "error",
+            message: res.message,
           });
+          closeSuperModal();
+          setUpdating(false);
         }
-      } else {
-        showToast({
-          type: "error",
-          message: translations.course.warningSelectTimeGreater,
-        });
-      }
+      });
+    } else {
+      CreateCourseV2(params).then((res) => {
+        if (!res.isError) {
+          showToast({
+            type: "success",
+            message: translations.course.createCourseSuccess,
+          });
+          eventEmitter.emit("reload_list_course");
+          NavigationService.navigate(SCREENS.COURSE_DETAIL, {
+            course_id: res?.data?._id,
+            fromScreen: "createCourse",
+          });
+          setUpdating(false);
+          closeSuperModal();
+        } else {
+          showToast({
+            type: "error",
+            message: res.message,
+          });
+          setUpdating(false);
+          closeSuperModal();
+        }
+      });
     }
   };
 
@@ -345,6 +394,28 @@ const CourseCreate = () => {
       </>
     );
   };
+  const renderDurationCall11 = () => {
+    if (typeCourse !== EnumClassType.Call11) return null;
+    return (
+      <View style={{ zIndex: 2, marginVertical: 8, marginHorizontal: 20 }}>
+        <Text
+          style={{
+            ...CS.hnMedium,
+            color: colors.text,
+            marginVertical: 8,
+          }}
+        >
+          {translations.course.durationCall11}
+        </Text>
+        <DropDownItem
+          value={durationCall11}
+          setValue={setDurationCall11}
+          items={durationCall11List}
+          placeholder={"select"}
+        />
+      </View>
+    );
+  };
 
   const renderPrice = () => {
     if (
@@ -352,12 +423,11 @@ const CourseCreate = () => {
       typeCourse == EnumClassType.CallGroup
     ) {
       return (
-        <View style={{ zIndex: 2, marginVertical: 8 }}>
+        <View style={{ zIndex: 2, marginVertical: 8, paddingHorizontal: 16 }}>
           <Text
             style={{
               ...CS.hnMedium,
               color: colors.text,
-              marginLeft: 20,
               marginVertical: 8,
             }}
           >
@@ -430,6 +500,37 @@ const CourseCreate = () => {
         />
         <ScrollView showsVerticalScrollIndicator={false} style={CS.flex1}>
           {renderSelectVideo()}
+          <Text style={styles.textTitle}>
+            {translations.course.uploadVideoPreview}
+          </Text>
+          {renderSelectVideo2()}
+          <Text style={styles.textTitle}>
+            {translations.course.uploadAlbumPreview}
+          </Text>
+          {listFileLocal.length > 0 ? (
+            <>
+              <View style={styles.viewRenderFile}>
+                {renderFile2()}
+                <PressableBtn style={styles.btnAdd} onPress={onSelectPicture}>
+                  <IconSvg
+                    name="icAdd"
+                    size={32}
+                    color={palette.textOpacity8}
+                  />
+                </PressableBtn>
+              </View>
+            </>
+          ) : (
+            <PressableBtn style={styles.uploadImage} onPress={onSelectPicture}>
+              <TextInput
+                onPressIn={onSelectPicture}
+                editable={false}
+                placeholder={translations.club.addImage}
+                style={CS.flex1}
+              />
+              <IconSvg name="icImage" size={24} color={palette.textOpacity6} />
+            </PressableBtn>
+          )}
 
           <InputHook
             name="title"
@@ -493,7 +594,7 @@ const CourseCreate = () => {
             showPlaceholder
           />
 
-          <Text style={styles.textTitle}>
+          {/* <Text style={styles.textTitle}>
             {translations.course.timeAvailable}
           </Text>
 
@@ -514,17 +615,42 @@ const CourseCreate = () => {
               }}
               timeDefault={endDate}
             />
-          </View>
+          </View> */}
 
           <View style={{ paddingHorizontal: 20 }}>
             {renderSelectTypeCourse()}
           </View>
+          {renderDurationCall11()}
+          {typeCourse === EnumClassType.Call11 && (
+            <InputHook
+              name="lession_count"
+              customStyle={CS.flex1}
+              inputProps={{
+                type: "number",
+                defaultValue: "1",
+                placeholder: translations.course.lessionCount,
+                keyboardType: "numeric",
+              }}
+              control={control}
+              rules={{
+                required: {
+                  value: true,
+                  message: translations.required,
+                },
+              }}
+              errorTxt={errors.long_description?.message}
+              maxLength={3}
+              showPlaceholder
+            />
+          )}
           {/* {renderSelectLang()} */}
           {renderPrice()}
           <View style={{ paddingHorizontal: 20 }}>
             {renderSelectLevel()}
             {renderSelectSkill()}
           </View>
+          {renderSelect()}
+          {renderSelect2()}
           <View style={styles.paddingButton}>
             <Button
               style={{
@@ -536,7 +662,9 @@ const CourseCreate = () => {
                   ? translations.course.updateCourse
                   : translations.course.createCourse
               }
-              disabled={updating || updatingVid}
+              disabled={
+                updating || updatingVid || updateVideo || isUpLoadingFile
+              }
               onPress={handleSubmit(onSubmit)}
             />
           </View>
@@ -659,5 +787,31 @@ const styles = StyleSheet.create({
   paddingButton: {
     paddingHorizontal: 16,
     marginTop: 16,
+  },
+  uploadImage: {
+    height: 40,
+    borderRadius: 8,
+    borderWidth: 1,
+    marginHorizontal: 20,
+    borderColor: palette.borderColor,
+    paddingHorizontal: 16,
+    justifyContent: "center",
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 8,
+  },
+  btnAdd: {
+    ...CS.center,
+    width: (ScreenWidth - 30 - 30) / 5,
+    height: (ScreenWidth - 30 - 30) / 5,
+    backgroundColor: palette.grey,
+    borderRadius: 8,
+    marginLeft: 8,
+    marginTop: -16,
+  },
+  viewRenderFile: {
+    ...CS.flexStart,
+    marginHorizontal: 20,
+    marginTop: 8,
   },
 });

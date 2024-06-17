@@ -22,7 +22,7 @@ import ListReviewCourse from "./components/list.review.course";
 import CS from "@theme/styles";
 import { EnumClassType, ICourseItem } from "models/course.model";
 import {
-  getCourseDetail,
+  getCourseDetail2,
   getCourseRoom,
   updateCourse,
 } from "@services/api/course.api";
@@ -48,6 +48,7 @@ import {
 import { shareCourse } from "@utils/share.utils";
 import { formatPriceCourse } from "@helpers/string.helper";
 import IconSvg from "assets/svg";
+import AlbumView from "./components/album.view";
 
 const CoursePreviewScreen = () => {
   const userData = useStore((state) => state.userData);
@@ -89,7 +90,7 @@ const CoursePreviewScreen = () => {
     params["auth_id"] = userData?._id;
   }
   const _getCourseDetail = () => {
-    getCourseDetail(course_id, params).then((res) => {
+    getCourseDetail2(course_id, params).then((res) => {
       const data = res.data;
       if (!res.isError) {
         // setIsLoading(false);
@@ -374,6 +375,7 @@ const CoursePreviewScreen = () => {
             {/* <LessionContentView data={data} /> */}
             <RequestSkillView data={data} />
             <DescriptionView data={data} />
+            <AlbumView data={data} />
           </View>
         )}
         <BookLessonSelectView

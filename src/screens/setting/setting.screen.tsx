@@ -65,6 +65,14 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
       },
     },
     {
+      title: translations.settings.calendar,
+      id: 1,
+      iconName: "icCalendarFilled",
+      action: () => {
+        NavigationService.navigate(SCREENS.TEACHER_COURSES);
+      },
+    },
+    {
       title: translations.settingUser.blackList,
       iconName: "icBlackList",
       action: () => {

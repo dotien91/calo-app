@@ -18,7 +18,7 @@ interface AudioViewProps {
 const AudioView = ({ onPress }: AudioViewProps) => {
   const userData = useStore((state) => state.userData);
 
-  const { listData, isLoading } = useListData<IAudioItem>(
+  const { listData, isLoading, noData } = useListData<IAudioItem>(
     {
       limit: "6",
       auth_id: userData?._id,
@@ -45,6 +45,8 @@ const AudioView = ({ onPress }: AudioViewProps) => {
       />
     );
   };
+
+  if (noData) return null;
 
   const renderLoading = () => {
     return <LoadingItem />;

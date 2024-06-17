@@ -38,9 +38,11 @@ export const useUserHook = () => {
 
   const handleLogin = (token: string) => {
     _setJson(USER_TOKEN, token);
+
     getCurrentUser().then((res) => {
+      console.log("current user data", res);
       if (!res.isError) {
-        initData(res.data);
+        initData(res.data, true);
         NavigationService.navigate(SCREENS.HOME_TAB, { screen: SCREENS.HOME });
         showToast({
           type: "success",
@@ -64,12 +66,12 @@ export const useUserHook = () => {
     });
   };
 
-  const getUserData = () => {
+  const getUserData = (initUserData = true) => {
     getCurrentUser().then((res) => {
       console.log("current user data", res);
       if (!res.isError) {
         console.log("token", _getJson(USER_TOKEN), res.data);
-        initData(res.data);
+        initData(res.data, initUserData);
       }
       if (codeInvite && codeInvite !== "") {
         const data = {
@@ -88,8 +90,8 @@ export const useUserHook = () => {
     });
   };
 
-  const initData = (data: TypedUser) => {
-    setUserData(data);
+  const initData = (data: TypedUser, initUserData: boolean) => {
+    initUserData && setUserData(data);
     setUserInfo(data);
     setLinkAvatar(data.user_avatar_thumbnail);
 
@@ -108,6 +110,7 @@ export const useUserHook = () => {
       }
     });
   };
+  const setUnreadNumber = useStore((state) => state.setUnreadNumber);
 
   const logout = () => {
     showToast({
@@ -127,6 +130,7 @@ export const useUserHook = () => {
     resetListLike();
     setBankSelected();
     NavigationService.navigate(SCREENS.HOME_TAB, { screen: SCREENS.HOME });
+    setUnreadNumber(0);
     // RNRestart.restart();
   };
 

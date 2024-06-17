@@ -10,8 +10,34 @@ import IconSvg from "assets/svg";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { WindowWidth } from "@freakycoder/react-native-helpers";
 import VideoPlayer from "@shared-components/video.player.component";
+import FastImage from "react-native-fast-image";
+import Button from "@shared-components/button/Button";
+import TextBase from "@shared-components/TextBase";
+import { getHoursAndDate } from "@utils/date.utils";
+import { navigate } from "@helpers/navigation.helper";
+import { Device } from "@utils/device.ui.utils";
+import IconBtn from "@shared-components/button/IconBtn";
+import {
+  EnumModalContentType,
+  EnumStyleModalType,
+  closeSuperModal,
+  showSuperModal,
+  showToast,
+} from "@helpers/super.modal.helper";
+import { requestDeleteLivestream } from "@services/api/stream.api";
+import eventEmitter from "@services/event-emitter";
+import formatMoney from "@shared-components/input-money/format.money";
+import useStore from "@services/zustand/store";
+import { translations } from "@localization";
 
-const StreamCard = ({ data }: { data: IStreamItem }) => {
+const StreamCard = ({
+  data,
+  isSliderItem = true,
+  isEditMode = false,
+}: {
+  data: IStreamItem;
+}) => {
+  const userData = useStore((state) => state.userData);
   const IconText = ({ nameIcon, text }: { nameIcon: string; text: string }) => {
     return (
       <View style={styles.iconText}>
@@ -22,18 +48,215 @@ const StreamCard = ({ data }: { data: IStreamItem }) => {
   };
 
   const goToViewStream = () => {
+    if (data?.price && !data?.is_join) {
+      navigate(SCREENS.LIVESTREAM_PREVIEW, {
+        data,
+      });
+      return;
+    }
     NavigationService.navigate(SCREENS.VIEW_LIVE_STREAM, {
       liveStreamId: data._id,
     });
   };
-  console.log(data?.user_id?.user_avatar);
+
+  const goToDetailStream = () => {
+    if (
+      (data?.is_join || !data?.price) &&
+      userData?._id != data?.user_id?._id
+    ) {
+      navigate(SCREENS.VIEW_LIVE_STREAM, {
+        liveStreamId: data._id,
+      });
+    } else {
+      navigate(SCREENS.LIVESTREAM_PREVIEW, {
+        data,
+      });
+    }
+  };
+
+  const deleteLivestream = () => {
+    requestDeleteLivestream(data?._id).then((res) => {
+      closeSuperModal();
+      if (!res.isError) {
+        showToast({
+          type: "success",
+          message: translations.updateLivestream.deleteSuccess,
+        });
+        eventEmitter.emit("reload_list_stream");
+        eventEmitter.emit("refresh_number_badge_schedule_live");
+      } else {
+        showToast({
+          type: "error",
+          message: res?.message,
+        });
+      }
+    });
+  };
+
+  const showConfirmDelete = () => {
+    showSuperModal({
+      contentModalType: EnumModalContentType.Confirm,
+      styleModalType: EnumStyleModalType.Middle,
+      data: {
+        title: translations.updateLivestream.confirmDelete,
+        cb: deleteLivestream,
+      },
+    });
+  };
+
+  if (data.livestream_status == "schedule") {
+    return (
+      <View
+        style={[
+          styles.container,
+          !isSliderItem && {
+            flex: 1,
+            marginHorizontal: 8,
+            marginRight: 0,
+            borderRadius: 12,
+            overflow: "hidden",
+            marginTop: 8,
+            marginBottom: 0,
+            paddingBottom: 0,
+          },
+        ]}
+      >
+        <PressableBtn
+          onPress={goToDetailStream}
+          style={[!isSliderItem ? {} : styles.styleItemLiveStream]}
+        >
+          <FastImage
+            source={{ uri: data?.cover_url || data?.user_id?.user_avatar }}
+            resizeMode="cover"
+            style={{
+              width: Device.width - 16,
+              height: ((WindowWidth - 16) / 19) * 10,
+              borderRadius: 12,
+            }}
+          />
+          <View style={styles.boxPrice}>
+            <View
+              style={{
+                backgroundColor: palette.lightOverlay,
+                borderRadius: 8,
+                padding: 4,
+                ...CS.flexStart,
+              }}
+            >
+              {!!data?.price && (
+                <View
+                  style={{
+                    backgroundColor: palette.gold,
+                    borderRadius: 99,
+                    padding: 3,
+                    marginRight: 4,
+                  }}
+                >
+                  <IconBtn name="dollar-sign" size={16} color={palette.black} />
+                </View>
+              )}
+              <TextBase
+                fontSize={14}
+                textAlign="center"
+                color="gold"
+                fontWeight="700"
+              >
+                {data?.price ? formatMoney(data?.price) + " đ" : "Free"}{" "}
+              </TextBase>
+            </View>
+          </View>
+          <View style={styles.boxTime}>
+            <View
+              style={{
+                backgroundColor: palette.lightOverlay,
+                borderRadius: 8,
+                padding: 8,
+              }}
+            >
+              <TextBase
+                textAlign="center"
+                fontSize={28}
+                color="white"
+                fontWeight="700"
+              >
+                {getHoursAndDate(data?.start_time).hour}
+              </TextBase>
+              <TextBase
+                textAlign="center"
+                fontSize={20}
+                color="white"
+                fontWeight="600"
+              >
+                {getHoursAndDate(data?.start_time).date}
+              </TextBase>
+            </View>
+          </View>
+          <View style={styles.viewActionSchedule}>
+            <Button
+              type="primary"
+              isFullWidth={false}
+              isSmallButton
+              text="Lên lịch"
+              iconName="calendar"
+            />
+          </View>
+          {isEditMode && (
+            <PressableBtn onPress={showConfirmDelete} style={styles.boxEdit}>
+              <IconBtn name="trash-2" size={22} color={palette.white} />
+            </PressableBtn>
+          )}
+        </PressableBtn>
+      </View>
+    );
+  }
   return (
-    <View style={styles.container}>
-      <PressableBtn onPress={goToViewStream} style={styles.styleItemLiveStream}>
-        {/* <FastImage
-          style={styles.styleCover}
-          source={{ uri: data?.user_id?.user_avatar_thumbnail }}
-        /> */}
+    <View
+      style={[
+        styles.container,
+        !isSliderItem && {
+          flex: 1,
+          marginHorizontal: 8,
+          marginRight: 0,
+          borderRadius: 12,
+          overflow: "hidden",
+          marginTop: 8,
+          marginBottom: 0,
+          paddingBottom: 0,
+        },
+      ]}
+    >
+      <PressableBtn
+        onPress={goToViewStream}
+        style={[!isSliderItem ? {} : styles.styleItemLiveStream]}
+      >
+        {!!data?.price_id && !data?.is_join && (
+          <View style={styles.boxPrice}>
+            <View
+              style={{
+                backgroundColor: palette.lightOverlay,
+                borderRadius: 8,
+                padding: 4,
+                ...CS.flexStart,
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: palette.gold,
+                }}
+              >
+                <IconBtn name="dollar-sign" size={16} color={palette.black} />
+              </View>
+              <TextBase
+                fontSize={14}
+                textAlign="center"
+                color={palette.gold}
+                fontWeight="700"
+              >
+                {formatMoney(data?.price) || "Free"}{" "}
+              </TextBase>
+            </View>
+          </View>
+        )}
         <VideoPlayer
           autoPlay={false}
           wrapStyle={{
@@ -74,10 +297,10 @@ const StreamCard = ({ data }: { data: IStreamItem }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
+    ...CS.flexCenter,
     paddingBottom: 4,
     marginHorizontal: 4,
-    width: WindowWidth - 40,
+    width: WindowWidth - 16,
     marginRight: 8,
   },
   iconText: {
@@ -132,6 +355,38 @@ const styles = StyleSheet.create({
     backgroundColor: palette.textOpacity6,
     borderRadius: 4,
     width: 60,
+  },
+  viewActionSchedule: {
+    position: "absolute",
+    zIndex: 2,
+    bottom: 12,
+    left: 12,
+  },
+  boxTime: {
+    position: "absolute",
+    zIndex: 99,
+    left: 0,
+    top: 0,
+    right: 0,
+    bottom: 0,
+    ...CS.flexCenter,
+  },
+  boxPrice: {
+    position: "absolute",
+    zIndex: 99,
+    left: 8,
+    top: 8,
+    ...CS.flexCenter,
+  },
+  boxEdit: {
+    position: "absolute",
+    zIndex: 99,
+    right: 8,
+    top: 8,
+    padding: 5,
+    backgroundColor: palette.red,
+    borderRadius: 99,
+    ...CS.flexCenter,
   },
 });
 

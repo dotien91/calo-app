@@ -11,6 +11,8 @@ import { TypedUser } from "models";
 import Avatar from "@shared-components/user/Avatar";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { SCREENS } from "constants";
+import { translations } from "@localization";
+import { EnumRole } from "constants/system.constant";
 
 interface TutorItemProps extends TypedUser {
   isHorizontalStyle: boolean;
@@ -21,6 +23,7 @@ const UserItem = ({
   display_name,
   user_avatar_thumbnail,
   _id,
+  user_role,
   ...res
 }: TutorItemProps) => {
   const theme = useTheme();
@@ -57,6 +60,14 @@ const UserItem = ({
                 {display_name}
               </Text>
             </View>
+            {user_role == EnumRole.Teacher && (
+              <Text style={styles.textCount}>
+                {(res?.student_count || 0) + " "}
+                <Text style={styles.textDes}>{`${translations.course.student}${
+                  (res?.student_count || 0) >= 2 ? translations.course.many : ""
+                }`}</Text>
+              </Text>
+            )}
           </View>
         </View>
       </>

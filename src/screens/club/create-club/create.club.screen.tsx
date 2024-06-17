@@ -186,7 +186,6 @@ const CreateClubScreen = () => {
     const isSelected = [...selectType]?.findIndex((i) => i === item.id) >= 0;
     // const _onSelectSkill = () => {};
     const onPressItem = () => {
-      // console.log("item...", item);
       // setSelectType(item);
       if (isSelected) {
         setSelectType((selectType) => selectType?.filter((i) => i !== item.id));

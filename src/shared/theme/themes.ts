@@ -80,6 +80,7 @@ export const palette = {
   grey5: "#EBEBEF",
   grey6: "#F0F3F6",
   btnInactive: "rgba(0, 53, 128, 0.1)",
+  textOpacity9: "rgba(22, 28, 36, 0.9)",
   textOpacity8: "rgba(22, 28, 36, 0.8)",
   textOpacity6: "rgba(22, 28, 36, 0.64)",
   textOpacity5: "rgba(22, 28, 36, 0.52)",
@@ -87,7 +88,7 @@ export const palette = {
   textOpacity4: "rgba(22, 28, 36, 0.4)",
   textOpacity2: "rgba(22, 28, 36, 0.90)",
   textOpacity0: "rgba(22, 28, 36, 0)",
-  gold: "rgba(255, 163, 71, 1)",
+  gold: "#FFD05B",
   bgInput: "rgba(232, 235, 239, 1)",
   bgInput2: "rgba(240, 243, 246, 1)",
   bgBestSeller: "rgba(255, 237, 237, 1)",
@@ -113,6 +114,14 @@ export const palette = {
   backgroundNotification: "#FD7467",
   primarySub: "rgba(241, 144, 144, 1)",
   colorMoney: "#FEAEAE",
+  newClass: "#2BC456",
+  callGroup: "#0044CC",
+  call11: "#FD7467",
+  leave: "#E8EBEF",
+
+  greenTh2: "#30AD6A",
+  greenTh1: "#5AD693",
+  greenTh3: "#2AA764",
 };
 
 interface ExtendedTheme extends Theme {

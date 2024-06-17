@@ -13,11 +13,16 @@ import { SCREENS } from "constants";
 import LoadingList from "@shared-components/loading.list.component";
 import AudioQuickFilter from "../components/audio.quick.filter";
 import AudioView from "./audio.view";
+import { _getJson } from "@services/local-storage";
+import AudioQuickFilter from "../components/audio.quick.filter";
+import AudioView from "./audio.view";
+import EmptyResultView from "@shared-components/empty.data.component";
 
 const AudioList = () => {
   const userData = useStore((state) => state.userData);
 
   const {
+    noData,
     listData,
     isLoading,
     onEndReach,
@@ -33,8 +38,9 @@ const AudioList = () => {
     },
     GetPodCastList,
   );
-
   const renderItem = ({ item, index }) => {
+    const isWatched = _getJson(`Audio${item._id}`);
+    console.log(isWatched, item._id);
     if (item?.is_join) {
       return null;
     } else {
@@ -44,6 +50,7 @@ const AudioList = () => {
           isSliderItem
           data={item}
           key={index}
+          isWatched={isWatched}
         />
       );
     }
@@ -68,6 +75,12 @@ const AudioList = () => {
       </View>
     );
   }
+
+  const renderEmptyComponent = () => {
+    if (!noData) return null;
+    return <EmptyResultView />;
+  };
+
   return (
     <View style={styles.container}>
       {listData.length == 0 && isLoading ? (
@@ -91,6 +104,7 @@ const AudioList = () => {
           removeClippedSubviews={true}
           refreshControl={refreshControl()}
           ListFooterComponent={renderFooterComponent()}
+          ListEmptyComponent={renderEmptyComponent()}
         />
       )}
     </View>
@@ -102,6 +116,5 @@ export default AudioList;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 16,
   },
 });

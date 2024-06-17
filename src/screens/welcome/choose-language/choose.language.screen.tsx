@@ -54,7 +54,6 @@ export default function ChooseLanguageScreen() {
     NavigationService.replace(SCREENS.INTRO);
     updateSession({ picked_language: value });
   };
-
   const ItemLanguage = ({ item }: { item: TypeItemLanguage }) => {
     const isSelect: boolean = item.value == selected;
     return (

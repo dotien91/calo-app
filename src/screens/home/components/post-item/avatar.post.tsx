@@ -34,6 +34,7 @@ const AvatarPost = ({
       userInfo: data,
     });
   };
+
   return (
     <Component
       onPress={onPressAvatar}

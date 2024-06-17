@@ -20,6 +20,7 @@ import TextBase from "@shared-components/TextBase";
 // import FastImage from "react-native-fast-image";
 import AudioView from "@screens/audio/audio-list/audio.view";
 import { navigate } from "@helpers/navigation.helper";
+import AfiliateShortcut from "@screens/affiliate/components/afiliate.shortcut";
 
 const HeaderTab = () => {
   const theme = useTheme();
@@ -107,7 +108,6 @@ const HeaderTab = () => {
       navigate(SCREENS.AUDIO_BOOK);
     }, 1);
   };
-
   return (
     <View style={[styles.viewHeaderStyle]}>
       {!!userData?.display_name && (
@@ -134,6 +134,7 @@ const HeaderTab = () => {
         })}
       </View>
       {/* <CourseView /> */}
+      <AfiliateShortcut />
       <AudioView onPress={gotoAudioBook} />
       <InviteView />
       <ListLiveStream group_id={null} />

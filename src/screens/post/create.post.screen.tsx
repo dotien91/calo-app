@@ -58,6 +58,7 @@ export default function PostScreen() {
   const [listCategory, setListCategory] = useState<TypedCategory[]>([]);
   const userData = useStore((state) => state.userData);
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  const userMedia = useStore((state) => state.userMedia);
 
   const isTeacher =
     userData?.user_role === "teacher" || userData?.user_role === "admin";
@@ -436,7 +437,7 @@ export default function PostScreen() {
               <View style={styles.styleCardName}>
                 <Avatar
                   style={styles.styleAvatar}
-                  sourceUri={{ uri: userData?.user_avatar_thumbnail }}
+                  sourceUri={{ uri: userMedia?.user_avatar }}
                 />
                 {renderNameCategory()}
               </View>

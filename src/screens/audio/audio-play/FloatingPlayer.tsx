@@ -1,4 +1,10 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  ImageBackground,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import FastImage from "react-native-fast-image";
 import { useActiveTrack, useIsPlaying } from "react-native-track-player";
 
@@ -77,43 +83,46 @@ export const FloatingPlayer = ({ onPressShow }: FloatingPlayerProps) => {
   };
 
   return (
-    <TouchableOpacity
-      onPress={onPressShow}
-      activeOpacity={0.95}
-      style={[styles.container]}
-    >
-      <>
-        <RenderAvatar />
+    <ImageBackground source={{ uri: displayedTrack.artwork }} blurRadius={100}>
+      <View style={styles.overlay} />
+      <TouchableOpacity
+        onPress={onPressShow}
+        activeOpacity={0.95}
+        style={[styles.container]}
+      >
+        <>
+          <RenderAvatar />
 
-        <View style={styles.trackTitleContainer}>
-          <MovingText
-            style={styles.txtTitle}
-            animationThreshold={25}
-            text={displayedTrack.title ?? ""}
-          />
-          <Text style={styles.txtArtist} numberOfLines={1}>
-            {displayedTrack.artist}
-          </Text>
-        </View>
+          <View style={styles.trackTitleContainer}>
+            <MovingText
+              style={styles.txtTitle}
+              animationThreshold={25}
+              text={displayedTrack.title ?? ""}
+            />
+            <Text style={styles.txtArtist} numberOfLines={1}>
+              {displayedTrack.artist}
+            </Text>
+          </View>
 
-        <TouchableOpacity
-          style={styles.trackControlsContainer}
-          onPressIn={pause}
-        >
-          <IconSvg
-            name={playing ? "icPauseAudio" : "icPlayAudio"}
-            size={32}
-            color={palette.primary}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.trackControlsContainer}
-          onPressIn={stop}
-        >
-          <IconSvg name={"icClose"} size={28} color={palette.primary} />
-        </TouchableOpacity>
-      </>
-    </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.trackControlsContainer}
+            onPressIn={pause}
+          >
+            <IconSvg
+              name={playing ? "icPauseAudio" : "icPlayAudio"}
+              size={32}
+              color={palette.white}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.trackControlsContainer}
+            onPressIn={stop}
+          >
+            <IconSvg name={"icClose"} size={28} color={palette.white} />
+          </TouchableOpacity>
+        </>
+      </TouchableOpacity>
+    </ImageBackground>
   );
 };
 
@@ -121,7 +130,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: palette.background,
     paddingVertical: 12,
     paddingHorizontal: 16,
     gap: 4,
@@ -147,10 +155,20 @@ const styles = StyleSheet.create({
   },
   txtTitle: {
     ...CS.hnMedium,
+    color: palette.white,
   },
   txtArtist: {
     ...CS.hnRegular,
     fontSize: 14,
-    color: palette.textOpacity4,
+    color: palette.white,
+  },
+  overlay: {
+    position: "absolute",
+    backgroundColor: "#484d49",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    top: 0,
+    opacity: 0.3,
   },
 });

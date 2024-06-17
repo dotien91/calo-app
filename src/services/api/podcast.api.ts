@@ -82,7 +82,36 @@ export async function CreatePodcast(data: ICreatePodcast) {
   return request({
     method: METHOD.POST,
     urlPath: "podcast/create",
+      data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function requestCreateSubscription(data) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "subscription/create",
     data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function requestUpdateSubscription(data) {
+  return request({
+    method: METHOD.PATCH,
+    urlPath: "subscription/update",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function requestDeleteSubscription(id: string) {
+  return request({
+    method: METHOD.DELETE,
+    urlPath: `subscription/delete/${id}`,
   }).then((response) => {
     return response;
   });

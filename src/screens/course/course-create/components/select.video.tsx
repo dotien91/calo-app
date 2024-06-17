@@ -22,6 +22,7 @@ import { showToast } from "@helpers/super.modal.helper";
 import TextBase from "@shared-components/TextBase";
 import IconSvg from "assets/svg";
 import { EnumColors } from "models";
+import IconBtn from "@shared-components/button/IconBtn";
 
 interface SelectVideoHookProps {
   link?: string;
@@ -31,7 +32,7 @@ interface SelectVideoHookProps {
   typeM?: string;
 }
 
-const SelectVideoHook = ({
+const useSelectVideoHook = ({
   link,
   id,
   typeM,
@@ -162,17 +163,52 @@ const SelectVideoHook = ({
 
   const renderSelectBackground = () => {
     return (
-      <ImageBackground
-        source={require("../../../../assets/images/bgeliteclub.png")}
-        style={styles.viewImage}
-        borderRadius={8}
+      <PressableBtn onPress={onPressChangeMedia}>
+        <ImageBackground
+          source={require("../../../../assets/images/bgeliteclub.png")}
+          style={styles.viewImage}
+          borderRadius={8}
+        >
+          <PressableBtn onPress={onPressChangeMedia} style={styles.styleBtn}>
+            <View style={styles.viewGally}>
+              <IconText nameIcon="icImage" text={translations.club.gallery} />
+            </View>
+          </PressableBtn>
+          <Image source={{ uri: media.link }} style={styles.viewImage1} />
+          {updatingVid && (
+            <View style={styles.viewImageFill}>
+              <LoadingUpdateMedia />
+              <View style={styles.viewImageFill}>
+                <ActivityIndicator size={"small"} />
+                <TextBase fontSize={12} fontWeight="500" color="primary">
+                  {process}%
+                </TextBase>
+              </View>
+            </View>
+          )}
+        </ImageBackground>
+      </PressableBtn>
+    );
+  };
+  const renderSelectVideo2 = () => {
+    return (
+      <PressableBtn
+        style={
+          media.link !== "" || updatingVid
+            ? styles.viewImage
+            : styles.viewImage2
+        }
+        onPress={onPressChangeMedia}
       >
-        <PressableBtn onPress={onPressChangeMedia} style={styles.styleBtn}>
-          <View style={styles.viewGally}>
-            <IconText nameIcon="icImage" text={translations.club.gallery} />
+        {media.link === "" ? (
+          <View>
+            <Text style={[CS.hnRegular, { color: palette.primary }]}>
+              {placeholder}
+            </Text>
           </View>
-        </PressableBtn>
-        <Image source={{ uri: media.link }} style={styles.viewImage1} />
+        ) : (
+          <Image source={{ uri: media.link }} style={styles.viewImage1} />
+        )}
         {updatingVid && (
           <View style={styles.viewImageFill}>
             <LoadingUpdateMedia />
@@ -184,23 +220,75 @@ const SelectVideoHook = ({
             </View>
           </View>
         )}
-      </ImageBackground>
+      </PressableBtn>
+    );
+  };
+
+  const renderSelectImage = () => {
+    return (
+      <View
+        style={[
+          styles.viewSelectImage,
+          (updatingVid || !!media.link) && {
+            height: (WindowWidth / 16) * 9,
+            borderWidth: 0,
+          },
+        ]}
+      >
+        {media.link === "" && !updatingVid ? (
+          <PressableBtn
+            onPress={onPressChangeMedia}
+            style={[CS.fillParent, CS.flexCenter]}
+          >
+            <IconBtn
+              name="upload"
+              customStyle={{ marginRight: 8 }}
+              color={palette.primary}
+            />
+            <Text style={[CS.hnRegular, { color: palette.primary }]}>
+              {placeholder || translations.course.uploadCoverImageOrVideo}
+            </Text>
+          </PressableBtn>
+        ) : (
+          <>
+            <PressableBtn onPress={onPressChangeMedia} style={styles.styleBtn}>
+              <View style={styles.viewGally}>
+                <IconText nameIcon="icImage" text={translations.club.gallery} />
+              </View>
+            </PressableBtn>
+            <Image source={{ uri: media.link }} style={styles.viewImage1} />
+          </>
+        )}
+        {updatingVid && (
+          <View style={styles.viewImageFill}>
+            <LoadingUpdateMedia />
+            <View style={styles.viewImageFill}>
+              <ActivityIndicator size={"small"} />
+              <TextBase fontSize={12} fontWeight="500" color="primary">
+                {process}%
+              </TextBase>
+            </View>
+          </View>
+        )}
+      </View>
     );
   };
 
   return {
     renderSelectBackground,
     renderSelectVideo,
+    renderSelectVideo2,
     idVideo: media.id,
     link: media.link,
     updatingVid,
     typeMedia: media.typeM,
     setMedia,
     onPressChangeMedia,
+    renderSelectImage,
   };
 };
 
-export default SelectVideoHook;
+export default useSelectVideoHook;
 
 const styles = StyleSheet.create({
   viewImageFull: {
@@ -217,12 +305,23 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     borderRadius: 8,
   },
+  viewImage2: {
+    ...CS.center,
+    height: 48,
+    backgroundColor: palette.background,
+    marginHorizontal: 20,
+    borderRadius: 12,
+    borderStyle: "dashed",
+    borderColor: palette.borderColor,
+    borderWidth: 1,
+  },
   viewImageFill: {
     ...CS.fillParent,
     ...CS.center,
     backgroundColor: palette.placeholder,
     ...CS.row,
     gap: 8,
+    borderRadius: 12,
   },
   deleteViceo: {
     position: "absolute",
@@ -259,5 +358,14 @@ const styles = StyleSheet.create({
   viewImage1: {
     height: (WindowWidth / 16) * 9,
     borderRadius: 8,
+  },
+  viewSelectImage: {
+    height: 40,
+    backgroundColor: palette.background,
+    marginHorizontal: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderStyle: "dashed",
+    borderColor: palette.primary,
   },
 });

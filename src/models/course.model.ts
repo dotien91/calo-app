@@ -43,6 +43,7 @@ export interface ICourseItem {
   promotion: number;
   is_join: boolean;
   coupon_id?: CouponType;
+  media_album?: TypedMedia[];
 }
 
 export interface ICourseModuleItem {

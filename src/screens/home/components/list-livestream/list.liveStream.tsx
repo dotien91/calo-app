@@ -7,11 +7,15 @@ import eventEmitter from "@services/event-emitter";
 import { PaginationProps, SwiperFlatList } from "react-native-swiper-flatlist";
 import { useFocusEffect } from "@react-navigation/native";
 import TrackPlayer from "react-native-track-player";
+import CourseCategoryTitle from "@screens/course-tab/course-list/course.category.title";
+import { navigate } from "@helpers/navigation.helper";
+import { SCREENS } from "constants";
+import useStore from "@services/zustand/store";
 
 const ListLiveStream = ({ group_id }: { group_id: string }) => {
   const listRef = useRef(null);
   const [listDataStream, setListDataStream] = useState([]);
-
+  const userData = useStore((state) => state.userData);
   const renderItem = ({ item }: any) => {
     if (item?.livestream_status)
       return <StreamCard key={item._id} data={item} />;
@@ -24,6 +28,10 @@ const ListLiveStream = ({ group_id }: { group_id: string }) => {
       }, 1000);
     }, []),
   );
+
+  useEffect(() => {
+    _getListLiveStream();
+  }, [userData]);
 
   useEffect(() => {
     PlayAudio();
@@ -64,9 +72,12 @@ const ListLiveStream = ({ group_id }: { group_id: string }) => {
     getListLiveStream({
       group_id,
       order_by: "DESC",
+      livestream_status: ["live", "schedule"],
     }).then((res) => {
       if (!res.isError) {
         setListDataStream(res.data);
+      } else {
+        setListDataStream([]);
       }
     });
   };
@@ -75,8 +86,17 @@ const ListLiveStream = ({ group_id }: { group_id: string }) => {
     return null;
   }
 
+  const onSeeAll = () => {
+    navigate(SCREENS.LIVESTREAM_LIST);
+  };
+
   return (
     <View style={styles.container}>
+      <CourseCategoryTitle
+        hideViewAll={false}
+        title={"Livestream"}
+        onPress={onSeeAll}
+      />
       <SwiperFlatList
         // autoplay
         autoplayDelay={2}

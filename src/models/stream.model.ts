@@ -44,4 +44,5 @@ export interface IStreamItem {
   cloudflare_stream_id?: string;
   react_value: any;
   livestream_data: ILiveData;
+  is_join: boolean;
 }

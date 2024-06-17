@@ -19,7 +19,7 @@ interface IExtraParams {
 export function useUploadFile(
   initData?: any[],
   selectionLimit = 30,
-  extraParam: IExtraParams,
+  extraParam?: IExtraParams,
 ) {
   const [listFile, setListFile] = React.useState<any[]>(initData || []);
   const [isUpLoadingFile, setIsUpLoadingFile] = React.useState(false);
@@ -321,7 +321,6 @@ export function useUploadFile(
         type: i.type,
         _id: res[index].callback?._id,
       }));
-      console.log(111111, data);
       setListFile(data);
     }
     setIsUpLoadingFile(false);
@@ -365,7 +364,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     gap: 10,
-    height: (width - 30 - 30) / 4,
+    height: (width - 40 - 40) / 4,
   },
   viewFile: {
     width: (width - 30 - 30) / 4,

@@ -122,6 +122,14 @@ export const SCREENS = {
   MEDIA_CLUB: "MediaClub",
   SETTING_CLUB_SCREEN: "SettingClubScreen",
   ACCOUNT_SETUP_SCREEN: "AccountSetupScreen",
+  LIVESTREAM_PREVIEW: "LiveStreamPreview",
+  LIVESTREAM_LIST: "LiveStreamList",
+  MANAGE_LIVESTREAM: "ManageLivestream",
+  MANAGE_CERTIFICATE: "ManageCertificate",
+  CREATE_CERTIFICATE: "CreateCertificate",
+  TEACHER_SCREEN: "TeacherScreen",
+  MANAGE_CLUB: "ManageClub",
+  CREATE_SUBSCRIPTION: "CreateSubscription",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

@@ -45,7 +45,6 @@ const GoogleLoginButton = ({ showText }: BtnProps) => {
         user_token: idToken,
         ...getDeviceInfo(),
       };
-      console.log("paramsLogin", paramsLogin);
       loginWithGoogle(paramsLogin).then((res) => {
         closeSuperModal();
         if (!res.isError) {

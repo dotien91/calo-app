@@ -62,6 +62,7 @@ const BuyButton = ({ data, type }: BuyButtonProps) => {
       eventEmitter.emit("emit_buy_product", {
         productId: data?.price_id,
         data: _data,
+        typeProduct: "course",
       });
       return;
     }

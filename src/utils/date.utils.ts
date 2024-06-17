@@ -275,6 +275,29 @@ export const formatFullDate = (date) => {
   } ${day < 10 ? `0${day}` : day}-${month < 10 ? `0${month}` : month}-${year} `;
 };
 
+export const getHoursAndDate = (date) => {
+  const _date = new Date(date);
+  if (_date.toString() === "Invalid Date") {
+    return {
+      hour: "",
+      date: "",
+    };
+  }
+  const year = _date.getFullYear();
+  const month = _date.getMonth() + 1;
+  const day = _date.getDate();
+  const hours = _date.getHours();
+  const minutes = _date.getMinutes();
+  return {
+    hour: `${hours < 10 ? `0${hours}` : hours}:${
+      minutes < 10 ? `0${minutes}` : minutes
+    }`,
+    date: `${day < 10 ? `0${day}` : day}-${
+      month < 10 ? `0${month}` : month
+    }-${year} `,
+  };
+};
+
 export const formatVNDate = (date) => {
   const _date = new Date(date);
   if (_date.toString() === "Invalid Date") {
@@ -532,4 +555,28 @@ export const formatDateAtTime = (date: string | Date): string => {
 
     return `${formattedDay} ${month} AT ${hours}:${formattedMinutes}${ampm}`;
   }
+};
+
+export const formatCalendarDateTime = ({
+  start,
+  end,
+}: {
+  start: string | Date;
+  end: string | Date;
+}) => {
+  const dateStart = new Date(start);
+  const dateEnd = new Date(end);
+  const year = dateStart.getFullYear();
+  const month = dateStart.getMonth() + 1;
+  const day = dateStart.getDate();
+  const hoursStart = dateStart.getHours();
+  const minutesStart = dateStart.getMinutes();
+  const hoursEnd = dateEnd.getHours();
+  const minutesEnd = dateEnd.getMinutes();
+
+  return `${day < 10 ? `0${day}` : day}/${month}/${year}, ${
+    hoursStart < 10 ? `0${hoursStart}` : hoursStart
+  }:${minutesStart < 10 ? `0${minutesStart}` : minutesStart}-${
+    hoursEnd < 10 ? `0${hoursEnd}` : hoursEnd
+  }:${minutesEnd < 10 ? `0${minutesEnd}` : minutesEnd} `;
 };

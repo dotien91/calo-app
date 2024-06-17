@@ -67,7 +67,7 @@ export default function LoginWithEmailScreen() {
       styleModalType: EnumStyleModalType.Middle,
     });
     const params: ILoginWithPass = {
-      user_email: data.email,
+      user_email: data.email.toLowerCase(),
       user_password: data.password,
       ...getDeviceInfo(),
     };

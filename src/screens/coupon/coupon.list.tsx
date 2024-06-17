@@ -20,6 +20,7 @@ const ListCouponForMyCourse = () => {
   const {
     isLoading,
     listData,
+    noData,
     onEndReach,
     renderFooterComponent,
     _requestData,
@@ -66,7 +67,8 @@ const ListCouponForMyCourse = () => {
         iconNameRight={isAdd ? "plus" : undefined}
         onPressRight={pressRightHeader}
       />
-      {!isLoading && listData?.length == 0 && renderEmpty()}
+      {isLoading && <LoadingList numberItem={3} />}
+      {!isLoading && noData && renderEmpty()}
       <FlatList
         data={listData}
         renderItem={renderItem}
@@ -76,7 +78,6 @@ const ListCouponForMyCourse = () => {
         keyExtractor={(item) => item?._id + ""}
         ListFooterComponent={renderFooterComponent()}
       />
-      {isLoading && <LoadingList numberItem={10} />}
     </SafeAreaView>
   );
 };

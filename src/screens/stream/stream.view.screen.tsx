@@ -7,6 +7,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   ActivityIndicator,
+  ImageBackground,
 } from "react-native";
 // import Orientation from 'react-native-orientation';
 import { useTheme, useRoute } from "@react-navigation/native";
@@ -15,7 +16,6 @@ import LiveBadge from "./components/LiveBadge";
 // import MicrophoneSelectModal from './components/MicrophoneSelectModal';
 
 import VideoPlayer from "@shared-components/video.player.component";
-import CommonStyle from "@theme/styles";
 import createStyles from "./stream.screen.style";
 import { useLiveStream } from "./hooks/useLiveStream";
 import ChatView from "./stream.chat.list.view";
@@ -31,6 +31,9 @@ import { getStatusBarHeight } from "react-native-iphone-screen-helper";
 import { translations } from "@localization";
 import TextBase from "@shared-components/TextBase";
 import TrackPlayer from "react-native-track-player";
+import Avatar from "@shared-components/user/Avatar";
+import CS from "@theme/styles";
+import { getHoursAndDate } from "@utils/date.utils";
 
 function StreamViewScreen() {
   const theme = useTheme();
@@ -41,13 +44,11 @@ function StreamViewScreen() {
   const retryTmp = React.useRef(false);
 
   const liveStreamId = route.params?.["liveStreamId"];
-
-  const { liveData } = useLiveStream({
+  const { liveData, isCommingSoon } = useLiveStream({
     isPublisher: false,
     liveStreamId,
   });
   const setEmojiNumber = useStore((state) => state.setEmojiNumber);
-
   const isStreamReady = (data) => {
     const startDate = new Date(data.createdAt);
     // Do your operations
@@ -133,6 +134,56 @@ function StreamViewScreen() {
   };
 
   const renderVideo = () => {
+    if (isCommingSoon)
+      return (
+        <View
+          style={[
+            CS.center,
+            {
+              marginTop: -(Device.height / 4),
+            },
+          ]}
+        >
+          <Avatar
+            style={{
+              marginBottom: 16,
+              width: 120,
+              height: 120,
+              borderRadius: 999,
+              ...CS.borderStyle,
+              borderWidth: 3,
+              borderColor: palette.white,
+            }}
+            sourceUri={{
+              uri: liveData.user_id?.user_avatar,
+            }}
+          />
+          <View
+            style={{
+              backgroundColor: palette.lightOverlay,
+              borderRadius: 8,
+              padding: 8,
+            }}
+          >
+            <TextBase
+              textAlign="center"
+              fontSize={28}
+              color="white"
+              fontWeight="700"
+            >
+              {getHoursAndDate(liveData?.start_time).hour}
+            </TextBase>
+            <TextBase
+              textAlign="center"
+              fontSize={20}
+              color="white"
+              fontWeight="600"
+            >
+              {getHoursAndDate(liveData?.start_time).date}
+            </TextBase>
+          </View>
+        </View>
+      );
     return (
       <VideoPlayer
         mediaUrl={liveData.livestream_data?.m3u8_url}
@@ -153,7 +204,7 @@ function StreamViewScreen() {
   // console.log("liveData.livestream_data?.m3u8_url", liveData?.livestream_data?.m3u8_url)
   const renderVideoLive = () => {
     return (
-      <View style={{ flex: 1, padding: 30, ...CommonStyle.flexCenter }}>
+      <View style={{ flex: 1, padding: 30, ...CS.flexCenter }}>
         {isReady ? (
           renderVideo()
         ) : (
@@ -162,10 +213,10 @@ function StreamViewScreen() {
               backgroundColor: "rgba(255,255,255,0.2)",
               padding: 16,
               borderRadius: 12,
-              ...CommonStyle.center,
+              ...CS.center,
             }}
           >
-            <View style={CommonStyle.flexCenter}>
+            <View style={CS.flexCenter}>
               <ActivityIndicator size={"large"} color={palette.white} />
             </View>
             <TextBase color="white" fontSize={20}>
@@ -195,36 +246,54 @@ function StreamViewScreen() {
     NavigationService.navigate(SCREENS.HOME);
   };
 
-  return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "height" : undefined}
-    >
-      <TouchableWithoutFeedback
-        onPress={() => {
-          Keyboard.dismiss();
-        }}
+  const renderContent = () => {
+    return (
+      <KeyboardAvoidingView
+        style={{ flex: 1, backgroundColor: palette.blackOverlay }}
+        behavior={Platform.OS === "ios" ? "height" : undefined}
       >
-        <View style={styles.container}>
-          <PressableBtn
-            style={{
-              position: "absolute",
-              top: getStatusBarHeight() + 10,
-              right: 20,
-              zIndex: 1,
-            }}
-            onPress={() => {
-              closeLiveStream();
-            }}
+        <TouchableWithoutFeedback
+          onPress={() => {
+            Keyboard.dismiss();
+          }}
+        >
+          <View
+            style={[styles.container, { backgroundColor: palette.transparent }]}
           >
-            <IconSvg name="icXShadow" size={20} color={palette.white} />
-          </PressableBtn>
-          {isStreaming() && renderVideoLive()}
-          {isStreaming() && renderChatView()}
-          {isStreaming() && <LiveBadge />}
-        </View>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+            <PressableBtn
+              style={{
+                position: "absolute",
+                top: getStatusBarHeight() + 10,
+                right: 20,
+                zIndex: 1,
+              }}
+              onPress={() => {
+                closeLiveStream();
+              }}
+            >
+              <IconSvg name="icXShadow" size={20} color={palette.white} />
+            </PressableBtn>
+            {isStreaming() && renderVideoLive()}
+            {isStreaming() && renderChatView()}
+            {isStreaming() && <LiveBadge />}
+          </View>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
+    );
+  };
+
+  if (!isCommingSoon) return renderContent();
+  return (
+    <ImageBackground
+      source={{ uri: liveData?.cover_url || liveData?.user_id?.user_avatar }}
+      style={{
+        width: "100%",
+        height: Device.height,
+        backgroundColor: palette.blackOverlay,
+      }}
+    >
+      {renderContent()}
+    </ImageBackground>
   );
 }
 
