@@ -450,6 +450,7 @@ const CheckoutScreen = () => {
             plan_id: courseData.plan_id,
             type: "Course",
             payload: {
+              lession_count: courseData.lession_count,
               type: courseData.type == "Call 1-1" ? "oneone" : "class",
               data: {
                 user_id: userData._id,
