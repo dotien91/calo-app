@@ -100,6 +100,9 @@ const useSelectVideoHook = ({
           });
         }
       },
+      _finally: () => {
+        setUpdatingVid(false);
+      },
     });
   };
 
