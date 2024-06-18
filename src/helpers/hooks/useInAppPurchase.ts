@@ -168,8 +168,6 @@ export const useInAppPurchase = () => {
           skus: subscriptionIds.map((item) => item.id),
         });
       }
-      await getAvailablePurchases();
-      alert(9);
       // await getAvailablePurchases();
     } catch (error) {
       console.log("error initIAP", error);
