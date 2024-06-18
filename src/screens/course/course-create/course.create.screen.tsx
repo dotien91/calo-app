@@ -8,6 +8,7 @@ import {
   Keyboard,
   SafeAreaView,
   TextInput,
+  Linking,
 } from "react-native";
 import { useTheme, useRoute } from "@react-navigation/native";
 import { useForm } from "react-hook-form";
@@ -88,11 +89,12 @@ const CourseCreate = () => {
   const [updating, setUpdating] = React.useState(false);
   // const [startDate, setStartDate] = React.useState<Date>();
   // const [endDate, setEndDate] = React.useState<Date>();
-  const [typeCourse, setTypeCourse] = React.useState(listTypeCourse[1].value);
+  const [typeCourse, setTypeCourse] = React.useState(listTypeCourse[0].value);
   const [level, setLevel] = useState<string>(listLevel[0].value);
   const [skill, setSkill] = useState<string[]>([]);
   const [priceInput, setPriceInput] = useState("");
-  const [durationCall11, setDurationCall11] = useState("");
+  const [durationCall11, setDurationCall11] = useState("1");
+  const [publicStatus, setPublicStatus] = useState("draft");
   // const [lang, setLang] = useState("vi");
 
   const { idVideo, renderSelectVideo, updatingVid } = SelectVideoHook({
@@ -128,6 +130,7 @@ const CourseCreate = () => {
           _id: i._id,
         } || []),
     ),
+    50,
   );
   // const { idImage, renderSelectImage, updatingImg } = SelectImageHook({
   //   width: 1600,
@@ -141,7 +144,7 @@ const CourseCreate = () => {
     setIsSwitch: setIsSwitchStart,
     renderSelect,
   } = useSelectTime({
-    title: translations.purchase.startDate,
+    title: translations.purchase.startCourse,
     time: "",
   });
   const {
@@ -151,7 +154,7 @@ const CourseCreate = () => {
     setIsSwitch: setIsSwitchEnd,
     renderSelect: renderSelect2,
   } = useSelectTime({
-    title: translations.purchase.endDate,
+    title: translations.purchase.endCourse,
     time: "",
   });
 
@@ -171,6 +174,7 @@ const CourseCreate = () => {
       // setLevel(data?.level || "");
       setSkill(data.skills);
       setPriceInput(data.price.toString());
+      setPublicStatus(data.public_status);
       // setPriceInput(data?.lang);
     }
   }, [data]);
@@ -220,7 +224,7 @@ const CourseCreate = () => {
       media_id: idVid,
       media_video: idVid,
       media_album: listFile?.map((i) => i._id),
-      public_status: data?.public_status || "pending",
+      public_status: publicStatus,
       type: typeCourse,
       class_duration: durationCall11,
       lession_count: parseInt(dataHook.lession_count),
@@ -376,6 +380,7 @@ const CourseCreate = () => {
       <>
         <Text style={{ ...CS.hnMedium, marginVertical: 8 }}>
           {translations.course.typeCourse}
+          <Require />
         </Text>
         <PressableBtn onPress={openListTypeCourse}>
           <View
@@ -411,7 +416,7 @@ const CourseCreate = () => {
           value={durationCall11}
           setValue={setDurationCall11}
           items={durationCall11List}
-          placeholder={"select"}
+          placeholder={translations.course.duration}
         />
       </View>
     );
@@ -432,6 +437,7 @@ const CourseCreate = () => {
             }}
           >
             {translations.payment.coursePrice}
+            <Require />
           </Text>
 
           <DropDownItem
@@ -464,29 +470,59 @@ const CourseCreate = () => {
     );
   };
 
-  // const renderSelectLang = () => {
-  //   return (
-  //     <View style={{ zIndex: 3, marginVertical: 8 }}>
-  //       <Text
-  //         style={{
-  //           ...CS.hnMedium,
-  //           color: colors.text,
-  //           marginLeft: 20,
-  //           marginVertical: 8,
-  //         }}
-  //       >
-  //         {translations.payment.selectlang}
-  //       </Text>
+  const onPressGuide = () => {
+    Linking.openURL(
+      "https://docs.ikigaicoach.net/danh-cho-giao-vien/huong-dan-dang-tai-khoa-hoc",
+    );
+  };
 
-  //       <DropDownItem
-  //         value={lang}
-  //         setValue={setLang}
-  //         items={listLang}
-  //         placeholder={translations.payment.selectlang}
-  //       />
-  //     </View>
-  //   );
-  // };
+  const renderGuide = () => {
+    return (
+      <View>
+        <Text style={styles.txtGuide} onPress={onPressGuide}>
+          {translations.course.referUserGuideHere}
+        </Text>
+      </View>
+    );
+  };
+
+  const renderStatus = () => {
+    const selectPublic = () => {
+      if (
+        !data ||
+        data.public_status === "draft" ||
+        data.public_status === "pending"
+      ) {
+        setPublicStatus("pending");
+      } else {
+        setPublicStatus(data.public_status);
+      }
+    };
+
+    const selectDraft = () => {
+      setPublicStatus("draft");
+    };
+
+    return (
+      <View>
+        <Text style={styles.textTitle}>{translations.course.publicMode}</Text>
+        <View style={styles.formSelectStatus}>
+          <PressableBtn onPress={selectDraft} style={styles.viewBtn}>
+            <Text style={styles.txtLabel}>{translations.draft}</Text>
+            <View style={styles.border}>
+              {publicStatus === "draft" && <View style={styles.selected} />}
+            </View>
+          </PressableBtn>
+          <PressableBtn onPress={selectPublic} style={styles.viewBtn}>
+            <Text style={styles.txtLabel}>{translations.public}</Text>
+            <View style={styles.border}>
+              {publicStatus !== "draft" && <View style={styles.selected} />}
+            </View>
+          </PressableBtn>
+        </View>
+      </View>
+    );
+  };
 
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>
@@ -499,9 +535,11 @@ const CourseCreate = () => {
           }
         />
         <ScrollView showsVerticalScrollIndicator={false} style={CS.flex1}>
+          {renderGuide()}
           {renderSelectVideo()}
           <Text style={styles.textTitle}>
             {translations.course.uploadVideoPreview}
+            <Require />
           </Text>
           {renderSelectVideo2()}
           <Text style={styles.textTitle}>
@@ -550,6 +588,7 @@ const CourseCreate = () => {
             errorTxt={errors.title?.message}
             maxLength={100}
             showPlaceholder
+            required
           />
           <InputHook
             name="description"
@@ -571,6 +610,7 @@ const CourseCreate = () => {
             countLength
             multiline
             showPlaceholder
+            required
           />
           <InputHook
             name="long_description"
@@ -592,30 +632,8 @@ const CourseCreate = () => {
             maxLength={10000}
             countLength
             showPlaceholder
+            required
           />
-
-          {/* <Text style={styles.textTitle}>
-            {translations.course.timeAvailable}
-          </Text>
-
-          <View style={{ paddingHorizontal: 20, flexDirection: "row", gap: 8 }}>
-            <DatePickerLocal
-              style={{ flex: 1 }}
-              placeholder={translations.course.startTime}
-              setTime={(time) => {
-                setStartDate(time);
-              }}
-              timeDefault={startDate}
-            />
-            <DatePickerLocal
-              style={{ flex: 1 }}
-              placeholder={translations.course.endTime}
-              setTime={(time) => {
-                setEndDate(time);
-              }}
-              timeDefault={endDate}
-            />
-          </View> */}
 
           <View style={{ paddingHorizontal: 20 }}>
             {renderSelectTypeCourse()}
@@ -643,7 +661,6 @@ const CourseCreate = () => {
               showPlaceholder
             />
           )}
-          {/* {renderSelectLang()} */}
           {renderPrice()}
           <View style={{ paddingHorizontal: 20 }}>
             {renderSelectLevel()}
@@ -651,6 +668,7 @@ const CourseCreate = () => {
           </View>
           {renderSelect()}
           {renderSelect2()}
+          {renderStatus()}
           <View style={styles.paddingButton}>
             <Button
               style={{
@@ -743,6 +761,10 @@ const CourseCreate = () => {
 
 export default CourseCreate;
 
+const Require = () => {
+  return <Text style={styles.require}>{" *"}</Text>;
+};
+
 const styles = StyleSheet.create({
   category: {
     marginTop: 10,
@@ -813,5 +835,44 @@ const styles = StyleSheet.create({
     ...CS.flexStart,
     marginHorizontal: 20,
     marginTop: 8,
+  },
+  txtGuide: {
+    ...CS.hnMedium,
+    paddingHorizontal: 16,
+    textDecorationLine: "underline",
+    color: palette.link,
+  },
+  viewBtn: {
+    flex: 1,
+    flexDirection: "row",
+    gap: 8,
+    ...CS.center,
+  },
+  txtLabel: {
+    ...CS.hnRegular,
+  },
+  border: {
+    width: 20,
+    height: 20,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: palette.primary,
+    ...CS.center,
+  },
+  selected: {
+    width: 10,
+    height: 10,
+    borderRadius: 10,
+    backgroundColor: palette.primary,
+  },
+  require: {
+    ...CS.hnRegular,
+    color: palette.primary,
+  },
+  formSelectStatus: {
+    flexDirection: "row",
+    gap: 8,
+    marginTop: 8,
+    paddingHorizontal: 16,
   },
 });

@@ -41,6 +41,7 @@ interface InputHookProps {
   label?: string;
   countLength?: boolean;
   textWarning?: string;
+  required?: boolean;
 }
 
 // eslint-disable-next-line react/display-name
@@ -63,6 +64,7 @@ const InputHook: React.FC<InputHookProps> = ({
   label,
   countLength,
   textWarning,
+  required,
 }) => {
   const refInput = useRef<TextInput>(null);
   const _forcusInput = () => {
@@ -86,7 +88,10 @@ const InputHook: React.FC<InputHookProps> = ({
             paddingHorizontal: 20,
           }}
         >
-          <Text style={styles.textTitle}>{inputProps.placeholder}</Text>
+          <Text style={styles.textTitle}>
+            {inputProps.placeholder}
+            {required && <Text style={{ color: palette.primary }}> *</Text>}
+          </Text>
           {!textWarning && countLength && (
             <Text style={styles.textCount}>{`${length}/${maxLength}`}</Text>
           )}

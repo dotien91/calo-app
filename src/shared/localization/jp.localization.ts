@@ -386,6 +386,8 @@ export default {
     at: "時",
   },
   course: {
+    referUserGuideHere: "使用ガイドはこちらを参照してください",
+    publicMode: "公開モード",
     desReferal: (txt: string) =>
       `ユーザーがアプリをインストールしてこのコースを購入すると、あなたは対応する${txt}を受け取ります。金額はあなたの収益ページに更新されます。`,
     uploadVideoPreview: "紹介ビデオをアップロード",
@@ -1311,8 +1313,9 @@ export default {
     congratulation: "おめでとうございます、ギフトを受け取りました",
   },
   podcast: {
+    myPodcast: "私のポッドキャスト",
     uploadePodcast: "ポッドキャストをアップロード",
-    selectPodcast: "親ポッドキャストを選択",
+    selectPodcast: "ポッドキャストリストを選択してください",
     warningSelectCover: "ポッドキャストのカバー画像をアップロード",
     warningUploadPodcast: "アップロードするポッドキャストファイルを選択",
     createPodcastSuccess: "ポッドキャストのアップロードに成功しました",
@@ -1463,6 +1466,8 @@ export default {
     participants: "参加者",
     startDate: "開始日",
     endDate: "終了日",
+    startCourse: "開講日時を設定",
+    endCourse: "終了日時",
   },
   payment: {
     paymentmethod: "支払い方法",

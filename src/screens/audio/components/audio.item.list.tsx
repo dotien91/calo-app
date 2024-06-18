@@ -10,7 +10,6 @@ import { Device } from "@utils/device.ui.utils";
 import { IAudioItem } from "models/audio.modal";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { SCREENS } from "constants";
-import CS from "@theme/styles";
 import useStore from "@services/zustand/store";
 import { formatNumber } from "react-native-currency-input";
 import { palette } from "@theme/themes";
@@ -29,12 +28,23 @@ interface ItemListProps {
   isSliderItem: boolean;
   style?: ViewStyle;
   data: IAudioItem;
-  listData: any[];
+  listData?: any[];
+  colorText?: string;
+  borderColorPlay?: string;
+  styleInfo?: ViewStyle;
 }
 const widthImage = 111;
 const heightImage = 140;
 
-const ItemList = ({ isSliderItem, style, data, listData }: ItemListProps) => {
+const ItemList = ({
+  isSliderItem,
+  style,
+  data,
+  listData,
+  styleInfo,
+  colorText,
+  borderColorPlay,
+}: ItemListProps) => {
   const {
     title,
     user_id,
@@ -86,28 +96,57 @@ const ItemList = ({ isSliderItem, style, data, listData }: ItemListProps) => {
 
   const renderInfo = () => {
     return (
-      <View style={CS.flex1}>
-        <Text numberOfLines={2} style={styles.audioTitle}>
+      <View style={[styles.viewInfo, styleInfo]}>
+        <Text
+          numberOfLines={2}
+          style={[styles.audioTitle, colorText ? { color: colorText } : {}]}
+        >
           {title}
         </Text>
-        <Text style={styles.audioAuthorTxt}>{user_id?.display_name}</Text>
-        <Text style={styles.txtContent} numberOfLines={2}>
+        <Text
+          style={[styles.audioAuthorTxt, colorText ? { color: colorText } : {}]}
+        >
+          {user_id?.display_name}
+        </Text>
+        <Text
+          style={[styles.txtContent, colorText ? { color: colorText } : {}]}
+          numberOfLines={2}
+        >
           {content}
         </Text>
         {view_number ? (
-          <Text style={styles.audioRatingTxt}>
+          <Text
+            style={[
+              styles.audioRatingTxt,
+              colorText ? { color: colorText } : {},
+            ]}
+          >
             {`${formatNumber(view_number) + " " || ""}`}
             <Text style={styles.textNoReview}>{translations.audio.listen}</Text>
           </Text>
         ) : (
-          <Text style={styles.textNoReview}>{translations.audio.noListen}</Text>
+          <Text
+            style={[styles.textNoReview, colorText ? { color: colorText } : {}]}
+          >
+            {translations.audio.noListen}
+          </Text>
         )}
         <View style={styles.viewHastag}>
-          <PressableBtn style={styles.btnPlay} onPress={playAudio}>
+          <PressableBtn
+            style={[
+              styles.btnPlay,
+              borderColorPlay ? { borderColor: borderColorPlay } : {},
+            ]}
+            onPress={playAudio}
+          >
             <View style={styles.viewIconPlay}>
               <IconSvg name="icPlay" color={palette.white} size={8} />
             </View>
-            <Text style={styles.txtPlay}>{translations.audio.play}</Text>
+            <Text
+              style={[styles.txtPlay, colorText ? { color: colorText } : {}]}
+            >
+              {translations.audio.play}
+            </Text>
           </PressableBtn>
           <Text style={styles.txtSlug}>
             #{podcast_category?.category_title}
@@ -124,7 +163,7 @@ const ItemList = ({ isSliderItem, style, data, listData }: ItemListProps) => {
             ...styles.courseImg,
             width: widthImage,
             height: heightImage,
-            marginBottom: 16,
+            // marginBottom: 16,
           }}
           source={{
             uri: post_avatar?.media_thumbnail || post_avatar?.media_url,

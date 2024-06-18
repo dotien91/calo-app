@@ -27,6 +27,7 @@ interface Style {
   viewIconPlay: ViewStyle;
   txtPlay: TextStyle;
   viewIsWatched: ViewStyle;
+  viewInfo: ViewStyle;
 }
 
 export default (theme: ExtendedTheme) => {
@@ -66,13 +67,15 @@ export default (theme: ExtendedTheme) => {
     audioItem1: {
       padding: 16,
       paddingTop: 0,
+      borderRadius: 16,
+      backgroundColor: colors.white,
     },
     courseImg: {
       borderRadius: 10,
     },
     audioTitle: {
       ...CS.hnSemiBold,
-      color: colors.white,
+      color: colors.textOpacity8,
       fontSize: 16,
       marginBottom: 4,
     },
@@ -157,6 +160,11 @@ export default (theme: ExtendedTheme) => {
       right: 0,
       backgroundColor: colors.green2,
       zIndex: 1,
+    },
+    viewInfo: {
+      flex: 1,
+      borderTopRightRadius: 16,
+      borderBottomRightRadius: 16,
     },
   });
 };

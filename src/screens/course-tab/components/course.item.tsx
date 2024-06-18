@@ -41,7 +41,7 @@ const CourseItem = ({
     title,
     rating,
     user_id,
-    media_id,
+    // media_id,
     avatar,
     is_join,
     type,
@@ -142,7 +142,7 @@ const CourseItem = ({
           {public_status !== "active" && <Badge title={public_status} />}
           {skills.map((item, index) => {
             const txt = listSkill.filter((i) => i.id === item);
-            return <Badge key={index} title={txt[0].value} />;
+            return <Badge key={index} title={txt?.[0]?.value} />;
           })}
         </View>
         <View
@@ -203,7 +203,7 @@ const CourseItem = ({
         //   uri: media_thumbnail,
         // }}
         source={{
-          uri: media_id?.media_thumbnail || avatar?.media_thumbnail,
+          uri: avatar?.media_thumbnail,
           headers: { Authorization: "someAuthToken" },
           priority: FastImage.priority.normal,
         }}

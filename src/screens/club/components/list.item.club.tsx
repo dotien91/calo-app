@@ -39,7 +39,7 @@ const ItemClub = ({ data }: { data: any }) => {
       <View style={style.viewVip}>
         <View style={style.viewBg}>
           <ImageBackground
-            source={require("../../../assets/images/bgvipelitclub.png")}
+            source={{ uri: data.background_cover }}
             borderTopLeftRadius={8}
             borderTopRightRadius={8}
             style={style.viewBgVip}
