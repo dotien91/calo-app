@@ -308,6 +308,7 @@ const TeacherCourse = () => {
         }).then((res) => {
           if (!res.isError) {
             const data = res.data;
+            //eslint-disable-next-line
             const roomId = (data?.redirect_url || "").match(/[^\/]+$/)?.[0];
             courseRoom = { roomId, chatRoomId: data?.chat_room_id };
           }
