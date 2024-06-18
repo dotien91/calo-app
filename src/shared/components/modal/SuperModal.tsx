@@ -52,6 +52,7 @@ import PopupClubPost from "@screens/club/club/pupup.club.post";
 import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 import ScheduleView from "./modal-inner/ScheduleView";
 import ViewMore from "./modal-inner/ViewMore";
+import SubscriptionView from "./modal-inner/SubscriptionView";
 
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
@@ -79,8 +80,8 @@ const SuperModal: React.FC<SuperModalProps> = () => {
   const [contentModalType, setContentModalType] =
     useState<EnumModalContentType>();
   // const [contentModalType, setContentModalType] =
-  //   useState<EnumModalContentType>(EnumModalContentType.Schedule);
-  //   const [styleModalType, setStyleModalType] = useState<EnumStyleModalType>("bottom");
+  //   useState<EnumModalContentType>(EnumModalContentType.SubscriptionView);
+  // const [styleModalType, setStyleModalType] = useState<EnumStyleModalType>("middle");
 
   useEffect(() => {
     eventEmitter.on("show_super_modal", showModal);
@@ -90,6 +91,13 @@ const SuperModal: React.FC<SuperModalProps> = () => {
       eventEmitter.off("close_super_modal", closeModal);
     };
   }, []);
+
+  useEffect(() => {
+    console.log({
+      styleModalType,
+      contentModalType,
+    });
+  }, [styleModalType, contentModalType]);
 
   const showModal = ({
     contentModalType,
@@ -305,6 +313,9 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         {contentModalType == EnumModalContentType.ViewMore && (
           <ViewMore {...data} />
         )}
+        {contentModalType == EnumModalContentType.SubscriptionView && (
+          <SubscriptionView />
+        )}
       </>
     );
   };
@@ -486,4 +497,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SuperModal;
+export default React.memo(SuperModal);

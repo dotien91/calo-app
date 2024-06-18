@@ -92,7 +92,7 @@ const AffiliateShortcut = () => {
         })}
       </View>
       <AffiliateHeader2 fromHomepage />
-      <AffiliateStatisticalView />
+      <AffiliateStatisticalView fromHomepage />
     </>
   );
 };

@@ -69,6 +69,7 @@ interface IRequest {
   option?: RequestOption;
   customHeader?: Headers;
   onUploadProgress?: any;
+  timeOut?: number;
 }
 
 export default function request({
@@ -80,6 +81,7 @@ export default function request({
   option,
   customHeader,
   onUploadProgress,
+  timeOut = 20000,
 }: IRequest) {
   return apiClient
     .request({
@@ -89,6 +91,7 @@ export default function request({
       data,
       ...option,
       headers: customHeader || headersDefault,
+      timeout: timeOut,
       onUploadProgress: onUploadProgress ? onUploadProgress : () => {},
     })
     .catch((error) => {

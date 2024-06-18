@@ -8,6 +8,8 @@ import { useTheme } from "@react-navigation/native";
 import ItemMonth from "./affiliate.item.month";
 import useStore from "@services/zustand/store";
 import { formatCoin } from "@helpers/string.helper";
+import { palette } from "@theme/themes";
+import IconSvg from "assets/svg";
 
 interface ItemIncomeType {
   count: number;
@@ -21,7 +23,11 @@ interface UserIncomeType {
   today?: ItemIncomeType;
   yesterday?: ItemIncomeType;
 }
-const AffiliateStatisticalView = () => {
+const AffiliateStatisticalView = ({
+  fromHomepage,
+}: {
+  fromHomepage: boolean;
+}) => {
   const [userIncome, setUserIncome] = useState<UserIncomeType>();
   const userData = useStore((state) => state.userData);
   const type = useStore((state) => state.type);
@@ -49,24 +55,52 @@ const AffiliateStatisticalView = () => {
   return (
     <View style={styles.styleViewTotalAff}>
       <View style={styles.styleTotalToday}>
-        <ImageBackground
-          source={require("../../../assets/images/bgihcaffiliate.png")}
-          resizeMode="cover"
-          imageStyle={{ borderRadius: 8 }}
-          style={styles.styleImageBg2}
-        >
-          <Text style={styles.txtToday}>{translations.affiliate.today}</Text>
-          <Text style={styles.txtCommissionToday}>
-            {type === "coin"
-              ? formatCoin(userIncome?.today?.total_coin || 0)
-              : formatMoney(userIncome?.today?.total_token, {
-                  suffix: " đ",
-                })}
-          </Text>
-        </ImageBackground>
+        {fromHomepage ? (
+          <View
+            style={[
+              styles.styleImageBg2,
+              { height: 110, backgroundColor: palette.primary },
+            ]}
+          >
+            <Text style={styles.txtToday}>{translations.affiliate.today}</Text>
+            <Text numberOfLines={2} style={styles.txtCommissionToday}>
+              {type === "coin"
+                ? formatCoin(userIncome?.today?.total_coin || 0)
+                : formatMoney(userIncome?.today?.total_token, {
+                    suffix: " đ",
+                  })}
+            </Text>
+            <IconSvg
+              size={35}
+              style={{
+                position: "absolute",
+                right: 12,
+                bottom: 12,
+              }}
+              name="icCoin"
+            />
+          </View>
+        ) : (
+          <ImageBackground
+            source={require("../../../assets/images/bgihcaffiliate.png")}
+            resizeMode="cover"
+            imageStyle={{ borderRadius: 8 }}
+            style={[styles.styleImageBg2, fromHomepage && { height: 120 }]}
+          >
+            <Text style={styles.txtToday}>{translations.affiliate.today}</Text>
+            <Text style={styles.txtCommissionToday}>
+              {type === "coin"
+                ? formatCoin(userIncome?.today?.total_coin || 0)
+                : formatMoney(userIncome?.today?.total_token, {
+                    suffix: " đ",
+                  })}
+            </Text>
+          </ImageBackground>
+        )}
       </View>
       <View style={styles.styleViewLine}>
         <ItemMonth
+          fromHomepage
           text={translations.affiliate.thisMonth}
           price={
             type === "coin"
@@ -77,6 +111,7 @@ const AffiliateStatisticalView = () => {
           }
         />
         <ItemMonth
+          fromHomepage
           text={translations.affiliate.lastMonth}
           price={
             type === "coin"

@@ -14,7 +14,6 @@ import { SCREENS } from "constants";
 import { ICourseItem } from "models/course.model";
 import { Device } from "@utils/device.ui.utils";
 import LoadingList from "@shared-components/loading.list.component";
-import { closeSuperModal } from "@helpers/super.modal.helper";
 import { emitSocket } from "@helpers/socket.helper";
 import useStore from "@services/zustand/store";
 import { updateLivestream2 } from "@services/api/stream.api";
@@ -120,7 +119,7 @@ const Item = React.memo(({ item, isTeacher, liveData, cbOnpressCourse }) => {
         course_id: item._id,
         dataCourse: item,
       });
-      closeSuperModal();
+      // closeSuperModal();
     }
   };
   return (

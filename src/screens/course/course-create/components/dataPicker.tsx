@@ -8,22 +8,21 @@ import DatePicker from "react-native-date-picker";
 
 interface SelectDateTimeProps {
   setTime: (time: Date) => void;
-  placeholder: string;
-  style: ViewStyle;
+  placeholder?: string;
+  style?: ViewStyle;
   timeDefault: string;
   warning?: boolean;
 }
 
 const SelectDateTime = ({
   setTime,
-  placeholder,
+  placeholder = "",
   style,
   timeDefault = "",
   warning,
 }: SelectDateTimeProps) => {
   const [date, setDate] = useState<Date>();
   const [open, setOpen] = useState(false);
-  console.log("...", timeDefault);
 
   return (
     <>

@@ -29,6 +29,7 @@ const ScheduleView = ({ cover, title, cb }: IScheduleView) => {
   const [startDate, setStartDate] = React.useState(new Date());
   const [priceInput, setPriceInput] = useState("0");
   const userMedia = useStore((state) => state.userMedia);
+  const [loading, setLoading] = useState(false);
 
   const renderPrice = () => {
     return (
@@ -59,6 +60,8 @@ const ScheduleView = ({ cover, title, cb }: IScheduleView) => {
         message: translations.validateTime,
       });
     } else {
+      closeSuperModal();
+      setLoading(true);
       const data = {
         startDate: startDate,
         price: priceInput + "",
@@ -75,6 +78,7 @@ const ScheduleView = ({ cover, title, cb }: IScheduleView) => {
         return;
       }
       saveLiveStream(data).then((res) => {
+        setLoading(false);
         if (res.isError) {
           showToast({
             type: "error",
@@ -131,7 +135,12 @@ const ScheduleView = ({ cover, title, cb }: IScheduleView) => {
           timeDefault={startDate}
           iconRight={<IconSvg name="icSelectDown" />}
         />
-        <Button onPress={onSave} text={translations.save} type={"primary"} />
+        <Button
+          disabled={loading}
+          onPress={onSave}
+          text={translations.save}
+          type={"primary"}
+        />
       </View>
     </View>
   );

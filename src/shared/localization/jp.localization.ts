@@ -113,6 +113,10 @@ export default {
   days: "日",
   weeks: "週",
   months: "月",
+  day: "日",
+  week: "週",
+  month: "月",
+  schedule: "スケジュール",
   years: "年",
   ago: "前",
   copied: "コピーされました",
@@ -326,6 +330,8 @@ export default {
   },
   chat: {
     search: "検索",
+    sendMessage: "メッセージを送る",
+    startCall: "通話を開始",
     cancel: "キャンセル",
     weHaveRemovedErrorPhoto:
       "エラーの写真ファイルまたは1分以上の動画を削除しました",
@@ -382,12 +388,16 @@ export default {
   course: {
     desReferal: (txt: string) =>
       `ユーザーがアプリをインストールしてこのコースを購入すると、あなたは対応する${txt}を受け取ります。金額はあなたの収益ページに更新されます。`,
+    uploadVideoPreview: "紹介ビデオをアップロード",
+    uploadAlbumPreview: "紹介アルバムをアップロード",
     previewMentor: "プレビューメンター",
     prepareCourse: "これらのコースは現在編集中です！",
     suggestPickCourse: "以下から適切なコースを選択してください！",
     slogan: "教育は力です！",
     course: "コース",
     add: "追加",
+    maxLesson: (num: string | number) => `最大授業数は${num}回です。`,
+    emptyLesson: "先生はその日の予定がいっぱいです。",
     warningDelete: "このコースを削除しますか？",
     warningFull: "情報を完全に選択してください",
     duration: "期間",
@@ -494,6 +504,10 @@ export default {
     callOneVsOne: "1対1で学ぶ",
     salfLearning: "ビデオで学ぶ",
     callGroup: "グループで学ぶ",
+    leave: "休暇予定",
+    newClass: "新しいクラス",
+    addLeave: "休暇を追加する",
+    note: "注記",
     offline: "直接学ぶ",
     allSkills: "すべて",
     listening: "聞く",
@@ -602,6 +616,8 @@ export default {
     timeStartAt: "開始時間",
     allCourse: "すべてのコース",
     allTutor: "専門家",
+    durationCall11: "コースの期間",
+    lessionCount: "レッスンの数",
   },
   seeAll: "すべて見る",
   settings: {
@@ -1408,6 +1424,7 @@ export default {
     isLast: "リストの最後です",
     shareAudio: (txt: string) =>
       `IKIGAI Coachアプリをダウンロードして、最高のオーディオブックを聴こう: ${txt}`,
+    listened: "聞いた",
   },
   livestream: {
     hello: "こんにちは",

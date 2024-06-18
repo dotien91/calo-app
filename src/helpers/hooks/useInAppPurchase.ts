@@ -21,6 +21,7 @@ import { _getJson, _setJson } from "@services/local-storage";
 import { subscriptionIds } from "constants/iap.constant";
 import { isAndroid } from "@helpers/device.info.helper";
 import useStore from "@services/zustand/store";
+import { Platform } from "react-native";
 
 export const useInAppPurchase = () => {
   const {
@@ -34,21 +35,15 @@ export const useInAppPurchase = () => {
     requestPurchase,
     getSubscriptions,
     requestSubscription,
-    purchaseHistory,
   } = useIAP();
   const typeBuy = useRef<"subscription" | "product" | "">("");
   const callback = useRef<() => void | undefined>();
   const local_order_id = useRef("");
   const setExtraUserData = useStore((state) => state.setExtraUserData);
 
-  console.log("subscriptions", subscriptions, {
-    subscriptions,
-    availablePurchases,
-    purchaseHistory,
-  });
+  console.log("subscriptions22222", subscriptions);
 
   useEffect(() => {
-    alert(JSON.stringify(subscriptions));
     setExtraUserData({ subscriptions });
   }, [subscriptions]);
 
@@ -56,15 +51,20 @@ export const useInAppPurchase = () => {
     console.log("currentPurchase", currentPurchase);
     const checkCurrentPurchase = async () => {
       try {
+        // alert(JSON.stringify(currentPurchase))
         if (
           (isIosStorekit2() && currentPurchase?.transactionId) ||
           currentPurchase?.transactionReceipt
         ) {
-          await finishTransaction({
+          const currentProductPurchaseType = _getJson("current_product_type");
+          const paramsFinishTransaction = {
             purchase: currentPurchase,
-            isConsumable:
-              isIOS || _getJson("current_product_type") == "product",
-          });
+            isConsumable: isIOS || currentProductPurchaseType == "product",
+            ...(Platform.OS === "android"
+              ? { developerPayloadAndroid: "" }
+              : {}),
+          };
+          await finishTransaction(paramsFinishTransaction);
           await getAvailablePurchases();
           const data = {
             order_id: isIOS
@@ -74,18 +74,19 @@ export const useInAppPurchase = () => {
             product_id: currentPurchase.productId,
             purchase_time: currentPurchase.transactionDate + "",
             quantity: "1",
-            package_name: "com.ikigroup.ikicoach",
+            package_name: isAndroid()
+              ? "com.ikigroup.ikigaiextra"
+              : "com.ikigroup.ikicoach",
+            type: currentProductPurchaseType,
             purchase_token: isIOS
               ? currentPurchase.transactionReceipt
               : currentPurchase.purchaseToken,
           };
+
           if (
-            _getJson("current_product_type") === "product" ||
-            _getJson("current_product_type") === "subscription"
+            currentProductPurchaseType === "product" ||
+            currentProductPurchaseType === "subscription"
           ) {
-            const currentProductPurchaseType = _getJson(
-              "current_product_purchase_type",
-            );
             requestIapBackend(data).then((res) => {
               closeSuperModal();
               if (!res.isError) {
@@ -107,6 +108,7 @@ export const useInAppPurchase = () => {
                 }
                 _setJson("current_product_purchase_type", "");
                 _setJson("current_product_id", "");
+                _setJson("current_product_type", "");
               } else {
                 showToast({
                   message: res.message,
@@ -166,7 +168,8 @@ export const useInAppPurchase = () => {
           skus: subscriptionIds.map((item) => item.id),
         });
       }
-      // await getAvailablePurchases();
+      await getAvailablePurchases();
+      alert(9);
       // await getAvailablePurchases();
     } catch (error) {
       console.log("error initIAP", error);
@@ -189,7 +192,6 @@ export const useInAppPurchase = () => {
   const buySubscription = async ({
     pac,
     cb,
-    typePurchase,
     data,
     offerToken,
   }) => {
@@ -197,7 +199,7 @@ export const useInAppPurchase = () => {
       await clearTransactionIOS();
     }
     callback.current = cb;
-    _setJson("current_product_type", typePurchase);
+    _setJson("current_product_type", "subscription");
     const orderData = await createOrder(data);
     if (!orderData) {
       showToast({

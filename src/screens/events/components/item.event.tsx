@@ -27,7 +27,6 @@ const ItemEvent = ({ data, tier }: { data: any; tier: string }) => {
   useEffect(() => {
     const currentTime = new Date().getTime();
     const eventEndTime = new Date(data?.end_time).getTime();
-
     setIsEventEnded(currentTime >= eventEndTime);
   }, [data?.end_time]);
 
@@ -211,7 +210,6 @@ const styles = StyleSheet.create({
   },
   viewImg: {
     borderRadius: 8,
-    backgroundColor: palette.red,
     width: 56,
     height: 56,
   },

@@ -22,6 +22,7 @@ export async function uploadMedia(file: MediaAsset, onUploadProgress?: any) {
     data: newForm,
     customHeader: { "Content-Type": "multipart/form-data" },
     onUploadProgress: onUploadProgress ? onUploadProgress : () => {},
+    timeOut: 1800000,
   }).then((response) => {
     if (Array.isArray(response.data)) {
       return response.data;
@@ -38,6 +39,7 @@ export async function uploadFile(file: MediaAsset) {
     url: `${UPLOAD_URL}upload-file?callback=${BASEURL}media/create`,
     data: newForm,
     customHeader: { "Content-Type": "multipart/form-data" },
+    timeOut: 1800000,
   }).then((response) => {
     return response;
   });
@@ -62,6 +64,7 @@ export async function uploadMultiFile(files: MediaAsset[]): Promise<any> {
     url: `${UPLOAD_URL}upload-file?callback=${BASEURL}media/create`,
     data: newForm,
     customHeader: { "Content-Type": "multipart/form-data" },
+    timeOut: 1800000,
   }).then((response) => {
     if (Array.isArray(response.data)) {
       return response.data;
@@ -80,6 +83,7 @@ export async function uploadMultiMedia(files: MediaAsset[]): Promise<any> {
     url: `${UPLOAD_URL}upload-media?callback=${BASEURL}media/create`,
     data: newForm,
     customHeader: { "Content-Type": "multipart/form-data" },
+    timeOut: 1800000,
   }).then((response) => {
     if (Array.isArray(response.data)) {
       return response.data;

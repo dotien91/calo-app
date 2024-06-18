@@ -110,6 +110,7 @@ import ManageLivestreamScreen from "@screens/stream/manage.livestream.screen";
 import ManagedCertificateScreen from "@screens/user-profile/manage-certificate/managed.certificate.screen";
 import CreateCertificateScreen from "@screens/user-profile/manage-certificate/create.certificate.screen";
 import TeacherScreen from "@screens/profile.screen/ikiCoachTeacher.screen";
+import CreateSubscriptionScreen from "@screens/profile.screen/create-subscription.tsx/create.subscription.screen";
 
 export const DiscoveryStackData = [
   {
@@ -205,10 +206,6 @@ export const ClubStackData = [
     screen: ListCourseClub,
   },
   {
-    name: SCREENS.CREATEEVENT,
-    screen: CreateEventScreen,
-  },
-  {
     name: SCREENS.EVENTSLISTSCREEN,
     screen: EventsListScreen,
   },
@@ -223,10 +220,6 @@ export const ClubStackData = [
   {
     name: SCREENS.BECOME_ELITE_CLUB,
     screen: BecomEliteClub,
-  },
-  {
-    name: SCREENS.UPDATE_EVENT_SCREEN,
-    screen: UpdateEventScreen,
   },
   {
     name: SCREENS.MEDIA_CLUB,
@@ -351,7 +344,19 @@ export const CommonStackData = [
     name: SCREENS.AUDIO_BOOK,
     screen: AudioBookScreen,
   },
+  {
+    name: SCREENS.UPDATE_EVENT_SCREEN,
+    screen: UpdateEventScreen,
+  },
+  {
+    name: SCREENS.CREATEEVENT,
+    screen: CreateEventScreen,
+  },
   ...ClubStackData,
+  {
+    name: SCREENS.CREATE_SUBSCRIPTION,
+    screen: CreateSubscriptionScreen,
+  },
   // {
   //   name: SCREENS.AUDIO_BOOK,
   //   screen: AudioBookScreen,

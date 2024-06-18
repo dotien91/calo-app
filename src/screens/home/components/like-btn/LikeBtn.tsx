@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, StyleSheet, TouchableOpacity } from "react-native";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import { Text, StyleSheet } from "react-native";
 
 import { showToast, showWarningLogin } from "@helpers/super.modal.helper";
 import { postLike } from "@services/api/post.api";
@@ -9,6 +8,8 @@ import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
 import { translations } from "@localization";
 import { TypedPost } from "shared/models";
+import IconSvg from "assets/svg";
+import PressableBtn from "@shared-components/button/PressableBtn";
 
 interface LikeBtnProps {
   data: TypedPost;
@@ -21,7 +22,6 @@ const LikeBtn = (props: LikeBtnProps) => {
   const userData = useStore((state) => state.userData);
   const listLike = useStore((state) => state.listLike);
   const [loadding, setLoading] = useState(false);
-  const [buttonColor, setButtonColor] = useState(palette.background);
 
   useEffect(() => {
     const index = listLike.findIndex((item) => item._id === props.data?._id);
@@ -66,25 +66,16 @@ const LikeBtn = (props: LikeBtnProps) => {
     }
   };
   return (
-    <TouchableOpacity
+    <PressableBtn
       onPress={pressLike}
-      onPressIn={() => setButtonColor(palette.textOpacity4)}
-      onPressOut={() => setButtonColor(palette.background)}
       disabled={loadding}
-      style={[
-        styles.viewLike,
-        { justifyContent: "flex-start", backgroundColor: buttonColor },
-      ]}
+      style={[styles.viewLike, { justifyContent: "flex-start" }]}
     >
-      <Icon
-        type={IconType.Ionicons}
-        size={20}
-        name={isLike ? "heart" : "heart-outline"}
-        color={isLike ? palette.primary : palette.textOpacity6}
-      />
+      {/* icHeartPost */}
+      <IconSvg size={20} name={isLike ? "icHeartPostSolid" : "icHeartPost"} />
 
       <Text style={styles.textLikeShare}>{translations.post.like}</Text>
-    </TouchableOpacity>
+    </PressableBtn>
   );
 };
 

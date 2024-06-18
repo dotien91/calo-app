@@ -183,7 +183,7 @@ function App() {
   };
 
   const handleOnStreamStateChanged = () => {
-    // alert(3)
+    //
   };
 
   // const handleUnmute = () => {
@@ -584,13 +584,12 @@ const ActionBtn = ({ openManageStreamScreen }) => {
     };
   }, []);
 
-  const { listData, _requestData, totalCount } = useListData<IStreamItem>(
+  const { _requestData, totalCount } = useListData<IStreamItem>(
     paramRequest,
     getListLiveStream,
     [],
   );
-  console.log("listData", listData.length);
-  if (totalCount <= 0) return null;
+
   return (
     <PressableBtn style={stylex.btnTop} onPress={openManageStreamScreen}>
       <IconBtn name="calendar" color={palette.white} />
@@ -600,11 +599,13 @@ const ActionBtn = ({ openManageStreamScreen }) => {
         title={translations.updateLivestream.makePlan}
         color={"white"}
       />
-      <View style={stylex.badge}>
-        <TextBase textAlign="center" fontSize={12} color={"white"}>
-          {totalCount}
-        </TextBase>
-      </View>
+      {totalCount > 0 && (
+        <View style={stylex.badge}>
+          <TextBase textAlign="center" fontSize={12} color={"white"}>
+            {totalCount}
+          </TextBase>
+        </View>
+      )}
     </PressableBtn>
   );
 };

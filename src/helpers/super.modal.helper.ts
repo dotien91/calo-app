@@ -46,6 +46,7 @@ export enum EnumModalContentType {
   PlayPodcast = "play-podcast",
   Schedule = "schedule",
   ViewMore = "view-more",
+  SubscriptionView = "subscription-view",
 }
 
 export enum EnumStyleModalType {

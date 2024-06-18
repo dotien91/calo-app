@@ -34,7 +34,6 @@ import TrackPlayer from "react-native-track-player";
 import Avatar from "@shared-components/user/Avatar";
 import CS from "@theme/styles";
 import { getHoursAndDate } from "@utils/date.utils";
-import Button from "@shared-components/button/Button";
 
 function StreamViewScreen() {
   const theme = useTheme();
@@ -49,9 +48,7 @@ function StreamViewScreen() {
     isPublisher: false,
     liveStreamId,
   });
-  console.log(222, liveStreamId);
   const setEmojiNumber = useStore((state) => state.setEmojiNumber);
-
   const isStreamReady = (data) => {
     const startDate = new Date(data.createdAt);
     // Do your operations
@@ -139,12 +136,19 @@ function StreamViewScreen() {
   const renderVideo = () => {
     if (isCommingSoon)
       return (
-        <View style={CS.center}>
+        <View
+          style={[
+            CS.center,
+            {
+              marginTop: -(Device.height / 4),
+            },
+          ]}
+        >
           <Avatar
             style={{
               marginBottom: 16,
-              width: 100,
-              height: 100,
+              width: 120,
+              height: 120,
               borderRadius: 999,
               ...CS.borderStyle,
               borderWidth: 3,
@@ -256,36 +260,19 @@ function StreamViewScreen() {
           <View
             style={[styles.container, { backgroundColor: palette.transparent }]}
           >
-            {!isCommingSoon ? (
-              <PressableBtn
-                style={{
-                  position: "absolute",
-                  top: getStatusBarHeight() + 10,
-                  right: 20,
-                  zIndex: 1,
-                }}
-                onPress={() => {
-                  closeLiveStream();
-                }}
-              >
-                <IconSvg name="icXShadow" size={20} color={palette.white} />
-              </PressableBtn>
-            ) : (
-              <Button
-                customStyle={{
-                  button: {
-                    position: "absolute",
-                    top: getStatusBarHeight() + 10,
-                    right: 20,
-                  },
-                }}
-                type="primary"
-                isFullWidth={false}
-                isSmallButton
-                text={translations.updateLivestream.makePlan}
-                iconName="calendar"
-              />
-            )}
+            <PressableBtn
+              style={{
+                position: "absolute",
+                top: getStatusBarHeight() + 10,
+                right: 20,
+                zIndex: 1,
+              }}
+              onPress={() => {
+                closeLiveStream();
+              }}
+            >
+              <IconSvg name="icXShadow" size={20} color={palette.white} />
+            </PressableBtn>
             {isStreaming() && renderVideoLive()}
             {isStreaming() && renderChatView()}
             {isStreaming() && <LiveBadge />}

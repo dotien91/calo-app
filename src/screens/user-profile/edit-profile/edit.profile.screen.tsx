@@ -28,6 +28,7 @@ import { updateProfile } from "@services/api/user.api";
 import { showToast } from "@helpers/super.modal.helper";
 import eventEmitter from "@services/event-emitter";
 import { palette } from "@theme/themes";
+import CreateSubscriptionBtn from "../component/CreateSubscriptionBtn";
 
 const EditProfileScreen = () => {
   const userData = useStore((store) => store.userData);
@@ -120,6 +121,7 @@ const EditProfileScreen = () => {
           text={translations.profile.editProfile}
         />
         <ScrollView showsVerticalScrollIndicator={false}>
+          <CreateSubscriptionBtn />
           <InputHook
             setFocus={setFocus}
             name="fullname"

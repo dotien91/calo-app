@@ -1,5 +1,5 @@
 import React from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { useRoute } from "@react-navigation/native";
 
 import Header from "@shared-components/header/Header";
@@ -135,7 +135,6 @@ const LiveStreamPreviewScreem = () => {
         </View>
         {renderPublisher()}
         <View style={{ height: 16 }} />
-        {renderBuyBtn()}
       </View>
     );
   };
@@ -148,7 +147,10 @@ const LiveStreamPreviewScreem = () => {
             : translations.updateLivestream.orderLive
         }
       />
-      {renderContent()}
+      <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
+        {renderContent()}
+      </ScrollView>
+      <View style={styles.fixedBtn}>{renderBuyBtn()}</View>
     </SafeAreaView>
   );
 };
@@ -164,6 +166,17 @@ const styles = StyleSheet.create({
     ...CS.hnRegular,
     color: palette.textOpacity6,
     lineHeight: 24,
+  },
+  fixedBtn: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: 16,
+    paddingTop: 8,
+    paddingBottom: 32,
+    backgroundColor: palette.white,
+    zIndex: 1,
   },
 });
 

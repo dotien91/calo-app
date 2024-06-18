@@ -11,6 +11,7 @@ import AudioCategoryTitle from "../audio-book/audio.category.title";
 import AudioItemList from "../components/audio.item.list";
 import { SCREENS } from "constants";
 import LoadingList from "@shared-components/loading.list.component";
+import { _getJson } from "@services/local-storage";
 import AudioQuickFilter from "../components/audio.quick.filter";
 import AudioView from "./audio.view";
 import EmptyResultView from "@shared-components/empty.data.component";
@@ -36,9 +37,21 @@ const AudioList = () => {
     GetPodCastList,
   );
   const renderItem = ({ item, index }) => {
-    return (
-      <AudioItemList listData={listData} isSliderItem data={item} key={index} />
-    );
+    const isWatched = _getJson(`Audio${item._id}`);
+    console.log(isWatched, item._id);
+    if (item?.is_join) {
+      return null;
+    } else {
+      return (
+        <AudioItemList
+          listData={listData}
+          isSliderItem
+          data={item}
+          key={index}
+          isWatched={isWatched}
+        />
+      );
+    }
   };
 
   const onSeeAll = () => {

@@ -18,11 +18,10 @@ import createStyles from "./update.event.style";
 import SelectVideoHook from "@screens/course/course-create/components/select.video";
 import { useForm } from "react-hook-form";
 import { showToast } from "@helpers/super.modal.helper";
-import { SCREENS } from "constants";
 import { palette } from "@theme/themes";
-import * as NavigationService from "react-navigation-helpers";
 import { updateEvent } from "@services/api/event.api";
 import eventEmitter from "@services/event-emitter";
+import { pop } from "@helpers/navigation.helper";
 
 const UpdateEventScreen = () => {
   const route = useRoute();
@@ -48,7 +47,7 @@ const UpdateEventScreen = () => {
     setFocus,
   } = useForm({
     defaultValues: {
-      group_id: item.group_id,
+      group_id: item.group_id._id,
       name: item.name,
       location: item.location,
     },
@@ -68,7 +67,6 @@ const UpdateEventScreen = () => {
     }
     const params = {
       cover: link,
-      group_id: item?.group_id,
       _id: item?._id,
       name: data.name,
       start_time: startDate,
@@ -77,9 +75,7 @@ const UpdateEventScreen = () => {
     };
     updateEvent(params).then((res) => {
       if (!res.isError) {
-        NavigationService.navigate(SCREENS.EVENTSLISTSCREEN, {
-          id: res.data._id,
-        });
+        pop(2);
         eventEmitter.emit("reload_list_event");
       }
     });

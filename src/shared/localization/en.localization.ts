@@ -109,6 +109,10 @@ export default {
   days: "days",
   weeks: "weeks",
   months: "months",
+  day: "Day",
+  week: "Week",
+  month: "Month",
+  schedule: "Schedule",
   years: "years",
   ago: "ago on",
   copied: "Copied",
@@ -328,6 +332,8 @@ export default {
   },
   chat: {
     search: "Search",
+    sendMessage: "Send message",
+    startCall: "Start call",
     cancel: "cancel",
     weHaveRemovedErrorPhoto:
       "We have removed error photo files or videos longer than 1 minutes",
@@ -383,6 +389,8 @@ export default {
   course: {
     desReferal: (txt: string) =>
       `When a user installs the app and purchases this course, you will receive the corresponding ${txt}. The amount will be updated on your Revenue page.`,
+    uploadVideoPreview: "Upload video preview",
+    uploadAlbumPreview: "Upload album preview",
     previewMentor: "Preview mentor",
     course: "Course",
     newCourse: "New Course",
@@ -390,6 +398,9 @@ export default {
     updateCourse: "Update Course",
     uploadCoverImageOrVideo: "Upload an introductory photo or video",
     add: "Add",
+    maxLesson: (num: string | number) =>
+      `The maximum number of lessons is ${num}`,
+    emptyLesson: "The teacher is fully booked for the day.",
     warningDelete: "Are you sure you are deleting this course?",
     warningFull: "Select complete information",
     duration: "Duration",
@@ -473,6 +484,10 @@ export default {
     callOneVsOne: "Call 1-1",
     salfLearning: "Self learning",
     callGroup: "Call group",
+    newClass: "New class",
+    leave: "Leave",
+    addLeave: "Add vacation schedule",
+    note: "Note",
     offline: "Offline",
     skills: "Category",
     allSkills: "All",
@@ -584,6 +599,8 @@ export default {
     timeStartAt: "Start at",
     allCourse: "All course",
     allTutor: "All mentor",
+    durationCall11: "Course duration",
+    lessionCount: "Number of lessions",
   },
   seeAll: "See all",
   settings: {
@@ -952,6 +969,7 @@ export default {
     isLast: "Already at the end of the list",
     shareAudio: (txt: string) =>
       `Download the IKIGAI Coach app now to listen to the best audiobooks: ${txt}`,
+    listened: "listened",
   },
   livestream: {
     hello: "Hello!",

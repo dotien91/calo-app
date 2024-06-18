@@ -58,13 +58,7 @@ const FileViewComponent = ({
       }
     } catch (error: any) {
       console.log("error", error);
-
       setError(true);
-      // thông báo
-      // GlobalPopupHelper.alert({
-      //   type: "error",
-      //   message: error?.message || languages.somethingWentWrong,
-      // });
     }
   };
 
@@ -89,11 +83,6 @@ const FileViewComponent = ({
       console.log("error", error);
 
       setError(true);
-      // Thông báo lỗi
-      // GlobalPopupHelper.alert({
-      //   type: "error",
-      //   message: error?.message || languages.somethingWentWrong,
-      // });
     }
   };
 

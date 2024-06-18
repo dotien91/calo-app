@@ -160,17 +160,52 @@ const useSelectVideoHook = ({
 
   const renderSelectBackground = () => {
     return (
-      <ImageBackground
-        source={require("../../../../assets/images/bgeliteclub.png")}
-        style={styles.viewImage}
-        borderRadius={8}
+      <PressableBtn onPress={onPressChangeMedia}>
+        <ImageBackground
+          source={require("../../../../assets/images/bgeliteclub.png")}
+          style={styles.viewImage}
+          borderRadius={8}
+        >
+          <PressableBtn onPress={onPressChangeMedia} style={styles.styleBtn}>
+            <View style={styles.viewGally}>
+              <IconText nameIcon="icImage" text={translations.club.gallery} />
+            </View>
+          </PressableBtn>
+          <Image source={{ uri: media.link }} style={styles.viewImage1} />
+          {updatingVid && (
+            <View style={styles.viewImageFill}>
+              <LoadingUpdateMedia />
+              <View style={styles.viewImageFill}>
+                <ActivityIndicator size={"small"} />
+                <TextBase fontSize={12} fontWeight="500" color="primary">
+                  {process}%
+                </TextBase>
+              </View>
+            </View>
+          )}
+        </ImageBackground>
+      </PressableBtn>
+    );
+  };
+  const renderSelectVideo2 = () => {
+    return (
+      <PressableBtn
+        style={
+          media.link !== "" || updatingVid
+            ? styles.viewImage
+            : styles.viewImage2
+        }
+        onPress={onPressChangeMedia}
       >
-        <PressableBtn onPress={onPressChangeMedia} style={styles.styleBtn}>
-          <View style={styles.viewGally}>
-            <IconText nameIcon="icImage" text={translations.club.gallery} />
+        {media.link === "" ? (
+          <View>
+            <Text style={[CS.hnRegular, { color: palette.primary }]}>
+              {placeholder}
+            </Text>
           </View>
-        </PressableBtn>
-        <Image source={{ uri: media.link }} style={styles.viewImage1} />
+        ) : (
+          <Image source={{ uri: media.link }} style={styles.viewImage1} />
+        )}
         {updatingVid && (
           <View style={styles.viewImageFill}>
             <LoadingUpdateMedia />
@@ -182,9 +217,10 @@ const useSelectVideoHook = ({
             </View>
           </View>
         )}
-      </ImageBackground>
+      </PressableBtn>
     );
   };
+
   const renderSelectImage = () => {
     return (
       <View
@@ -238,6 +274,7 @@ const useSelectVideoHook = ({
   return {
     renderSelectBackground,
     renderSelectVideo,
+    renderSelectVideo2,
     idVideo: media.id,
     link: media.link,
     updatingVid,
@@ -245,7 +282,6 @@ const useSelectVideoHook = ({
     setMedia,
     onPressChangeMedia,
     renderSelectImage,
-    updatingVid,
   };
 };
 
@@ -266,14 +302,15 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     borderRadius: 8,
   },
-  viewSelectImage: {
-    height: 40,
+  viewImage2: {
+    ...CS.center,
+    height: 48,
     backgroundColor: palette.background,
-    marginHorizontal: 16,
+    marginHorizontal: 20,
     borderRadius: 12,
-    borderWidth: 1,
     borderStyle: "dashed",
-    borderColor: palette.primary,
+    borderColor: palette.borderColor,
+    borderWidth: 1,
   },
   viewImageFill: {
     ...CS.fillParent,
@@ -318,5 +355,14 @@ const styles = StyleSheet.create({
   viewImage1: {
     height: (WindowWidth / 16) * 9,
     borderRadius: 8,
+  },
+  viewSelectImage: {
+    height: 40,
+    backgroundColor: palette.background,
+    marginHorizontal: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderStyle: "dashed",
+    borderColor: palette.primary,
   },
 });

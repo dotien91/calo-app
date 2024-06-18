@@ -10,6 +10,15 @@ export async function createVnpayUrl(data) {
     return response;
   });
 }
+export async function createOrderCallOneOne(data) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "order/v2/create",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
 
 export async function getOrderDetail(id: string) {
   return request({

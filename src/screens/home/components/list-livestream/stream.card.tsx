@@ -104,7 +104,6 @@ const StreamCard = ({
     });
   };
 
-  console.log(data?.livestream_status);
   if (data.livestream_status == "schedule") {
     return (
       <View
@@ -144,14 +143,25 @@ const StreamCard = ({
                 ...CS.flexStart,
               }}
             >
-              <IconBtn name="dollar-sign" size={16} color={palette.gold} />
+              {!!data?.price && (
+                <View
+                  style={{
+                    backgroundColor: palette.gold,
+                    borderRadius: 99,
+                    padding: 3,
+                    marginRight: 4,
+                  }}
+                >
+                  <IconBtn name="dollar-sign" size={16} color={palette.black} />
+                </View>
+              )}
               <TextBase
                 fontSize={14}
                 textAlign="center"
                 color="gold"
                 fontWeight="700"
               >
-                {formatMoney(data?.price) || "Free"}{" "}
+                {data?.price ? formatMoney(data?.price) + " đ" : "Free"}{" "}
               </TextBase>
             </View>
           </View>
@@ -229,11 +239,17 @@ const StreamCard = ({
                 ...CS.flexStart,
               }}
             >
-              <IconBtn name="dollar-sign" size={16} color={palette.gold} />
+              <View
+                style={{
+                  backgroundColor: palette.gold,
+                }}
+              >
+                <IconBtn name="dollar-sign" size={16} color={palette.black} />
+              </View>
               <TextBase
                 fontSize={14}
                 textAlign="center"
-                color="gold"
+                color={palette.gold}
                 fontWeight="700"
               >
                 {formatMoney(data?.price) || "Free"}{" "}

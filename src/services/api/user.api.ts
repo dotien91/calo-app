@@ -305,11 +305,10 @@ export async function requestDeleteCertificate(id: string) {
   });
 }
 
-export async function requestListSubscriptionByUserId(params) {
+export async function requestListSubscriptionSell() {
   return request({
     method: METHOD.GET,
     urlPath: "subscription/list",
-    params,
   }).then((response) => {
     return response;
   });

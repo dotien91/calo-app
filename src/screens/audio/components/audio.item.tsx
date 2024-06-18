@@ -12,6 +12,12 @@ import { IAudioItem } from "models/audio.modal";
 import { SCREENS } from "constants";
 import useStore from "@services/zustand/store";
 import { formatNumber } from "react-native-currency-input";
+import useUserHelper from "@helpers/hooks/useUserHelper";
+import {
+  EnumModalContentType,
+  EnumStyleModalType,
+  showSuperModal,
+} from "@helpers/super.modal.helper";
 
 interface AudioItemProps {
   isSliderItem: boolean;
@@ -37,29 +43,15 @@ const AudioItem = ({
     view_number,
     post_avatar,
     podcast_category,
-    is_join,
     _id,
+    subscription_id,
   } = data;
   const setListAudio = useStore((state) => state.setListAudio);
+  const { isActiveSubscription } = useUserHelper();
 
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const renderInfo = () => {
-    if (is_join)
-      return (
-        <>
-          {/* <Text style={styles.audioTitle}>{title}</Text>
-          <Text style={styles.audioAuthorTxt}>{user_id?.display_name}</Text>
-          {isCourseVideo && (
-            <CourseProgressBar
-              dataFromApi={moduleViewedData}
-              isSliderItem={isSliderItem}
-              id={_id}
-            />
-          )} */}
-        </>
-      );
-
     return (
       <>
         <Text numberOfLines={2} style={styles.audioTitle}>
@@ -101,6 +93,14 @@ const AudioItem = ({
   };
 
   const openPreviewCourse = () => {
+    console.log("subscription_id", subscription_id, isActiveSubscription);
+    if (subscription_id && !isActiveSubscription) {
+      showSuperModal({
+        styleModalType: EnumStyleModalType.Middle,
+        contentModalType: EnumModalContentType.SubscriptionView,
+      });
+      return;
+    }
     if (listData) {
       console.log("list...", listData);
       setListAudio(listData);

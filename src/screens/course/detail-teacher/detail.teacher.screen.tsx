@@ -33,6 +33,7 @@ import { Device } from "@utils/device.utils";
 import { getStatusBarHeight } from "react-native-safearea-height";
 import { palette } from "@theme/themes";
 import IconSvg from "assets/svg";
+import AudioView from "@screens/audio/audio-list/audio.view";
 
 const DetailTeacherScreen = () => {
   const route = useRoute();
@@ -118,11 +119,19 @@ const DetailTeacherScreen = () => {
         {renderHeader()}
         <HeaderDetailTeacher data={data} />
         <AboutTeacher data={data} />
+        <AudioView
+          fromTeacherScreen
+          extraParams={{
+            user_id: data?._id,
+            is_premium: true,
+          }}
+        />
         <View style={{ paddingHorizontal: 16, marginBottom: 8 }}>
           <Text style={styles.textTitle}>
             {translations.course.moreCouresBy(data?.display_name || "")}
           </Text>
         </View>
+
         <FlatList
           scrollToOverflowEnabled
           data={listData}

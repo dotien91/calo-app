@@ -26,6 +26,7 @@ interface Style {
   btnPlay: ViewStyle;
   viewIconPlay: ViewStyle;
   txtPlay: TextStyle;
+  viewIsWatched: ViewStyle;
 }
 
 export default (theme: ExtendedTheme) => {
@@ -71,7 +72,7 @@ export default (theme: ExtendedTheme) => {
     },
     audioTitle: {
       ...CS.hnSemiBold,
-      color: colors.text,
+      color: colors.white,
       fontSize: 16,
       marginBottom: 4,
     },
@@ -149,6 +150,13 @@ export default (theme: ExtendedTheme) => {
       ...CS.hnBold,
       color: colors.textOpacity6,
       fontSize: 12,
+    },
+    viewIsWatched: {
+      position: "absolute",
+      top: 0,
+      right: 0,
+      backgroundColor: colors.green2,
+      zIndex: 1,
     },
   });
 };
