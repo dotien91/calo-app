@@ -77,6 +77,9 @@ const UpdateEventScreen = () => {
       if (!res.isError) {
         pop(2);
         eventEmitter.emit("reload_list_event");
+        showToast({
+          message: translations.updateSuccess,
+        });
       }
     });
     setUpdating(false);

@@ -12,6 +12,8 @@ export interface AudioSlice {
   updateAudio: (track: TrackAudio) => void;
   listAudio: TypeTrackLocal[];
   setListAudio: (list: TypeTrackLocal[]) => void;
+  listAudioWatched: string[];
+  updateListAudioWatched: (_id: string) => void;
 }
 
 const createAudioSlice: StoreSlice<AudioSlice> = (set, get) => ({
@@ -52,6 +54,14 @@ const createAudioSlice: StoreSlice<AudioSlice> = (set, get) => ({
   listAudio: [],
   setListAudio: (list: TypeTrackLocal[]) => {
     set({ listAudio: list });
+  },
+  listAudioWatched: [],
+  updateListAudioWatched: (_id: string) => {
+    const { listAudioWatched } = get();
+    const index = listAudioWatched.findIndex((item) => item === _id);
+    if (index < 0) {
+      set({ listAudioWatched: [...listAudioWatched, _id] });
+    }
   },
 });
 export default createAudioSlice;
