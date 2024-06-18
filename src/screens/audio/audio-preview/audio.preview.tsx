@@ -256,13 +256,16 @@ const AudioPreview = () => {
     );
   };
   return (
-    <SafeAreaView>
+    <SafeAreaView style={CS.safeAreaView}>
       <ImageBackground
         source={{ uri: data?.post_avatar.media_url }}
         blurRadius={100}
       >
-        <StatusBar hidden={true} />
-        <View style={{ height: 50 }}>
+        <StatusBar
+        barStyle={"light-content"}
+        backgroundColor={palette.statusBarAudio}
+        />
+        <View>
           <View
             style={{
               position: "absolute",
@@ -325,7 +328,7 @@ const AudioPreview = () => {
             type="black"
           />
         </ScrollView>
-        {!hide && (
+        {/* {!hide && (
           <View
             style={{
               height: getBottomSpace() + 60,
@@ -338,7 +341,7 @@ const AudioPreview = () => {
               right: 0,
             }}
           />
-        )}
+        )} */}
       </ImageBackground>
     </SafeAreaView>
   );
@@ -433,6 +436,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 16,
     gap: 8,
+    
   },
   overlay: {
     position: "absolute",

@@ -157,6 +157,9 @@ export default (theme: ExtendedTheme) => {
       right: 0,
       backgroundColor: colors.green2,
       zIndex: 1,
+      borderTopRightRadius: 5,
+      borderBottomLeftRadius: 5,
+      padding: 1
     },
   });
 };
