@@ -24,19 +24,11 @@ interface ItemListProps {
   style?: ViewStyle;
   data: IAudioItem;
   listData: any[];
-  isWatched?: boolean;
 }
-
 const widthImage = 111;
 const heightImage = 140;
 
-const ItemList = ({
-  isSliderItem,
-  style,
-  data,
-  listData,
-  isWatched,
-}: ItemListProps) => {
+const ItemList = ({ isSliderItem, style, data, listData }: ItemListProps) => {
   const {
     title,
     user_id,
@@ -48,6 +40,7 @@ const ItemList = ({
   } = data;
   const addAudio = useStore((store) => store.addAudio);
   const listAudioHistory = useStore((store) => store.listAudioHistory);
+  const listAudioWatched = useStore((store) => store.listAudioWatched);
 
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
@@ -75,6 +68,11 @@ const ItemList = ({
     await playTrack(track);
     addAudio(track);
   };
+
+  const isWatched = useMemo(
+    () => listAudioWatched.includes(_id),
+    [listAudioWatched],
+  );
 
   const renderInfo = () => {
     return (

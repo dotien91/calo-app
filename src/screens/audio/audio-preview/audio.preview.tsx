@@ -62,7 +62,10 @@ const AudioPreview = () => {
   const lastActiveTrack = useLastActiveTrack();
 
   const displayedTrack = activeTrack ?? lastActiveTrack;
-
+  const listAudioWatched = useStore((store) => store.listAudioWatched);
+  const updateListAudioWatched = useStore(
+    (store) => store.updateListAudioWatched,
+  );
   const getDataTrack = () => {
     if (data?.attach_files[0]?.media_url) {
       const whoosh = new Sound(data?.attach_files[0].media_url, "", (error) => {
@@ -206,7 +209,8 @@ const AudioPreview = () => {
     //     await TrackPlayer.add(track1);
     //   }
     // }, 1000);
-    _setJson(`Audio${id}`, true);
+    updateListAudioWatched(id);
+    _setJson("Audio", JSON.stringify(listAudioWatched));
   };
 
   const showWriteReview = () => {

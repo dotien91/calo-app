@@ -37,8 +37,6 @@ const AudioList = () => {
     GetPodCastList,
   );
   const renderItem = ({ item, index }) => {
-    const isWatched = _getJson(`Audio${item._id}`);
-    console.log(isWatched, item._id);
     if (item?.is_join) {
       return null;
     } else {
@@ -48,7 +46,6 @@ const AudioList = () => {
           isSliderItem
           data={item}
           key={index}
-          isWatched={isWatched}
         />
       );
     }
