@@ -14,6 +14,7 @@ import eventEmitter from "@services/event-emitter";
 const useUserHelper = () => {
   const userData = useStore((state) => state.userData);
   const setUserMedia = useStore((state) => state.setUserMedia);
+  const extraUserData = useStore((state) => state.extraUserData);
   const [loading, setLoading] = useState(false);
   const isTeacher = useMemo(() => {
     return userData?.user_role == EnumRole.Teacher;
@@ -78,12 +79,17 @@ const useUserHelper = () => {
     });
   };
 
+  const isActiveSubscription = useMemo(() => {
+    return !!extraUserData.user_subscription;
+  }, [extraUserData]);
+
   return {
     isTeacher,
     isAdmin,
     isMe,
     changeUserMedia,
     loading,
+    isActiveSubscription,
   };
 };
 

@@ -18,6 +18,12 @@ import IconSvg from "assets/svg";
 import TrackPlayer, { Track } from "react-native-track-player";
 import eventEmitter from "@services/event-emitter";
 import TextBase from "@shared-components/TextBase";
+import useUserHelper from "@helpers/hooks/useUserHelper";
+import {
+  EnumModalContentType,
+  EnumStyleModalType,
+  showSuperModal,
+} from "@helpers/super.modal.helper";
 
 interface ItemListProps {
   isSliderItem: boolean;
@@ -37,7 +43,9 @@ const ItemList = ({ isSliderItem, style, data, listData }: ItemListProps) => {
     podcast_category,
     _id,
     content,
+    subscription_id,
   } = data;
+
   const addAudio = useStore((store) => store.addAudio);
   const listAudioHistory = useStore((store) => store.listAudioHistory);
   const listAudioWatched = useStore((store) => store.listAudioWatched);
@@ -45,6 +53,8 @@ const ItemList = ({ isSliderItem, style, data, listData }: ItemListProps) => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const setListAudio = useStore((state) => state.setListAudio);
+  const { isActiveSubscription } = useUserHelper();
+
   const playTrack = async (track: Track) => {
     const item = listAudioHistory.filter((item) => item.url === track.url);
     // await TrackPlayer.skip(indexLocal);
@@ -135,6 +145,14 @@ const ItemList = ({ isSliderItem, style, data, listData }: ItemListProps) => {
   };
 
   const openPreviewCourse = () => {
+    console.log("subscription_id", subscription_id);
+    if (subscription_id && !isActiveSubscription) {
+      showSuperModal({
+        styleModalType: EnumStyleModalType.Middle,
+        contentModalType: EnumModalContentType.SubscriptionView,
+      });
+      return;
+    }
     setListAudio(listData);
     NavigationService.navigate(SCREENS.AUDIO_PREVIEW, { id: _id, data: data });
   };

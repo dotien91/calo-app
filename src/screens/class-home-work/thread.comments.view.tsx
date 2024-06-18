@@ -40,7 +40,6 @@ const ThreadCommentsView = ({
 }: IThreadCommentsView) => {
   const route = useRoute();
   const data = route.params?.["data"];
-  console.log("11111", data);
   const [listData, setListData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
 

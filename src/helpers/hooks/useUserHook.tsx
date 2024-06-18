@@ -7,7 +7,9 @@ import useStore from "@services/zustand/store";
 import {
   getCurrentUser,
   getListBlock,
+  getUserSuscription,
   postInvitationCode,
+  requestListSubscriptionSell,
 } from "@services/api/user.api";
 import { showToast } from "../super.modal.helper";
 import { SCREENS } from "constants";
@@ -24,6 +26,7 @@ export const useUserHook = () => {
   const setUserMedia = useStore((state) => state.setUserMedia);
   const resetListLike = useStore((state) => state.resetListLike);
   const setBankSelected = useStore((state) => state.setBankSelected);
+  const setExtraUserData = useStore((state) => state.setExtraUserData);
 
   const initListFollow = useStore((state) => state.initListFollow);
   const setShowInvite = useStore((state) => state.setShowInvite);
@@ -101,6 +104,30 @@ export const useUserHook = () => {
     });
     initListFollow(data.follow_users);
     initListBlock();
+    initUserSubscription(data._id);
+    initSubscriptionSell(data._id);
+  };
+
+  const initUserSubscription = (id) => {
+    getUserSuscription(id).then((res) => {
+      console.log("ressss", id, res.data);
+
+      if (!res.isError) {
+        setExtraUserData({
+          user_subscription: res.data,
+        });
+      }
+    });
+  };
+
+  const initSubscriptionSell = () => {
+    requestListSubscriptionSell().then((res) => {
+      if (!res.isError) {
+        setExtraUserData({
+          subscription_sell: res.data?.[0],
+        });
+      }
+    });
   };
 
   const initListBlock = () => {
@@ -110,6 +137,7 @@ export const useUserHook = () => {
       }
     });
   };
+
   const setUnreadNumber = useStore((state) => state.setUnreadNumber);
 
   const logout = () => {
@@ -174,5 +202,6 @@ export const useUserHook = () => {
     logout,
     renderViewRequestLogin,
     initListBlock,
+    initSubscriptionSell,
   };
 };

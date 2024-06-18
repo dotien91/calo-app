@@ -11,15 +11,21 @@ import AudioItem from "../components/audio.item";
 import AudioCategoryTitle from "../audio-book/audio.category.title";
 import { SCREENS } from "constants";
 import LoadingItem from "@shared-components/loading.item";
+import SubscriptionBtn from "@screens/home/components/subscription-btn/SubscriptionBtn";
 
 interface AudioViewProps {
   onPress?: () => void;
 }
-const AudioView = ({ onPress }: AudioViewProps) => {
+const AudioView = ({
+  onPress,
+  extraParams,
+  fromTeacherScreen,
+}: AudioViewProps) => {
   const userData = useStore((state) => state.userData);
 
   const { listData, isLoading, noData } = useListData<IAudioItem>(
     {
+      ...extraParams,
       limit: "6",
       auth_id: userData?._id,
       sort_by: "createdAt",
@@ -54,6 +60,11 @@ const AudioView = ({ onPress }: AudioViewProps) => {
 
   return (
     <View style={styles.container}>
+      {fromTeacherScreen && (
+        <View style={{ padding: 16 }}>
+          <SubscriptionBtn />
+        </View>
+      )}
       <AudioCategoryTitle
         hideViewAll={false}
         onPress={onSeeAll}

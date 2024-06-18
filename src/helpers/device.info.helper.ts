@@ -1,7 +1,6 @@
 import { getUniqueId } from "react-native-device-info";
 import { Platform } from "react-native";
 import { _getJson } from "@services/local-storage";
-
 interface DeviceInfoType {
   device_uuid: string;
   device_type: string;

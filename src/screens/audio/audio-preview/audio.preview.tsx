@@ -292,7 +292,7 @@ const AudioPreview = () => {
             <View style={styles.viewTitle}>
               <Text style={styles.txtTitle}>{track?.title}</Text>
               <Text style={styles.txtAuthor}>
-                {track?.user_id.display_name}
+                {track?.user_id?.display_name}
               </Text>
             </View>
           </View>

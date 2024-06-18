@@ -24,7 +24,6 @@ const BuyBottom = ({ show, data, courseRoom }: BuyBottomProps) => {
   const animationHeight = useRef(new Animated.Value(-90)).current;
   const userData = useStore((state) => state.userData);
   const isTeacher = userData?._id === data?.user_id._id;
-
   const collapseView = () => {
     Animated.timing(animationHeight, {
       duration: 300,
