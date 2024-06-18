@@ -174,7 +174,7 @@ const ItemList = ({
         />
         {isWatched && (
           <View style={styles.viewIsWatched}>
-            <TextBase fontSize={13} fontWeight="600" color={"white"}>
+            <TextBase fontSize={12} fontWeight="600" color={"white"}>
               {translations.audio.listened}
             </TextBase>
           </View>

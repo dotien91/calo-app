@@ -301,12 +301,12 @@ const styles = StyleSheet.create({
     width: (SCREEN_WIDTH - 56) / 4,
     height: (SCREEN_WIDTH - 56) / 4,
     borderRadius: 8,
-    backgroundColor: palette.borderColor,
+    // backgroundColor: palette.borderColor,
     ...CS.center,
   },
   image: {
-    width: (SCREEN_WIDTH - 56) / 6,
-    height: (SCREEN_WIDTH - 56) / 6,
+    width: (SCREEN_WIDTH - 56) / 5,
+    height: (SCREEN_WIDTH - 56) / 5,
   },
   text: {
     ...CS.hnBold,

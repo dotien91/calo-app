@@ -130,7 +130,7 @@ const LiveStreamPreviewScreem = () => {
         <View style={CS.flexStart}>
           <IconBtn name="dollar-sign" customStyle={{ marginRight: 8 }} />
           <TextBase textAlign="center" fontWeight="600">
-            {formatMoney(data?.price)}
+            {formatMoney(data?.price)} đ
           </TextBase>
         </View>
         {renderPublisher()}

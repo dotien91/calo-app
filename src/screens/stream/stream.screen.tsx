@@ -380,7 +380,7 @@ function App() {
             },
           ]}
         >
-          <PressableBtn style={stylex.btnTop} onPress={openSettingLive}>
+          {/* <PressableBtn style={stylex.btnTop} onPress={openSettingLive}>
             <IconBtn name="share" color={palette.white} />
             <TextBase
               textAlign="center"
@@ -388,7 +388,7 @@ function App() {
               title={translations.post.share}
               color={"white"}
             />
-          </PressableBtn>
+          </PressableBtn> */}
           <PressableBtn style={stylex.btnTop} onPress={openCouponPage}>
             <IconBtn name="gift" color={palette.white} />
             <TextBase

@@ -1384,6 +1384,8 @@ export default {
     congratulation: "CHÚC MỪNG BẠN ĐÃ NHẬN ĐƯỢC PHẦN QUÀ",
   },
   podcast: {
+    createPlaylist: "Tạo playlist",
+    createPodcast: "Tạo podcast",
     myPodcast: "Podcast của tôi",
     uploadePodcast: "Tải lên podcast",
     selectPodcast: "Vui lòng chọn danh sách podcast",

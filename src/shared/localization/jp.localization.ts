@@ -1313,6 +1313,8 @@ export default {
     congratulation: "おめでとうございます、ギフトを受け取りました",
   },
   podcast: {
+    createPlaylist: "プレイリストを作成",
+    createPodcast: "ポッドキャストを作成",
     myPodcast: "私のポッドキャスト",
     uploadePodcast: "ポッドキャストをアップロード",
     selectPodcast: "ポッドキャストリストを選択してください",
