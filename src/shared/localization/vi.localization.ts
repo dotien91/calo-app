@@ -455,6 +455,8 @@ export default {
     at: "lúc",
   },
   course: {
+    referUserGuideHere: "Tham khảo hướng dẫn sử dụng tại đây",
+    publicMode: "Chế độ công khai",
     desReferal: (txt: string) =>
       `Khi người dùng cài đặt ứng dụng và mua khoá học này, bạn sẽ nhận được ${txt} tương ứng. Số tiền sẽ được cập nhật ở trang Doanh thu của bạn.`,
     uploadVideoPreview: "Tải lên video giới thiệu",
@@ -1382,8 +1384,9 @@ export default {
     congratulation: "CHÚC MỪNG BẠN ĐÃ NHẬN ĐƯỢC PHẦN QUÀ",
   },
   podcast: {
+    myPodcast: "Podcast của tôi",
     uploadePodcast: "Tải lên podcast",
-    selectPodcast: "Chọn podcast cha",
+    selectPodcast: "Vui lòng chọn danh sách podcast",
     warningSelectCover: "Tải lên ảnh nền podcast",
     warningUploadPodcast: "Chọn file podcast cần tải lên",
     createPodcastSuccess: "Tải lên podcast thành công",
@@ -1535,6 +1538,8 @@ export default {
     participants: "Thành viên",
     startDate: "Ngày bắt đầu",
     endDate: "Ngày kết thúc",
+    startCourse: "Đặt lịch khai giảng",
+    endCourse: "Thời gian hết hạn",
   },
   payment: {
     paymentmethod: "Phương thức thanh toán",

@@ -41,7 +41,7 @@ const CourseItem = ({
     title,
     rating,
     user_id,
-    media_id,
+    // media_id,
     avatar,
     is_join,
     type,
@@ -203,7 +203,7 @@ const CourseItem = ({
         //   uri: media_thumbnail,
         // }}
         source={{
-          uri: media_id?.media_thumbnail || avatar?.media_thumbnail,
+          uri: avatar?.media_thumbnail,
           headers: { Authorization: "someAuthToken" },
           priority: FastImage.priority.normal,
         }}

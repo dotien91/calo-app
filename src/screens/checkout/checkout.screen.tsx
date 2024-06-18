@@ -463,7 +463,7 @@ const CheckoutScreen = () => {
         external_app_name: "ikigai",
         // invitation_code: userData?.ref_invitation_code || undefined,
       };
-      console.log("call11", newData);
+      // console.log("call11", newData);
       createOrderCallOneOne(newData).then((res) => {
         if (!res.isError) {
           const url = res.data?.redirect_url;

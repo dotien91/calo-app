@@ -106,6 +106,7 @@ export const SCREENS = {
   LIST_COURSE_CLUB: "ListCourseClub",
   AUDIO_BOOK: "AudioBook",
   CREATE_AUDIO: "CreateAudio",
+  MY_AUDIO: "MyAudio",
   RECOMMEND_AUDIO_BOOK: "RecommandAudioBook",
   ALL_AUDIO_BOOk: "AllAudioBook",
   AUDIO_PREVIEW: "AudioPreview",

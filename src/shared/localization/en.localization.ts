@@ -387,6 +387,8 @@ export default {
     at: "at",
   },
   course: {
+    referUserGuideHere: "Refer to the user guide here",
+    publicMode: "Public mode",
     desReferal: (txt: string) =>
       `When a user installs the app and purchases this course, you will receive the corresponding ${txt}. The amount will be updated on your Revenue page.`,
     uploadVideoPreview: "Upload video preview",
@@ -1001,6 +1003,8 @@ export default {
     participants: "Participants",
     startDate: "Start date",
     endDate: "End date",
+    startCourse: "Schedule start date",
+    endCourse: "Expiration date",
   },
   payment: {
     paymentmethod: "Payment method",
@@ -1403,8 +1407,9 @@ export default {
     sendRequest: "Send information successfully",
   },
   podcast: {
+    myPodcast: "My podcast",
     uploadePodcast: "Upload podcast",
-    selectPodcast: "Select parent podcast",
+    selectPodcast: "Please select the podcast list",
     warningSelectCover: "Upload podcast cover image",
     warningUploadPodcast: "Select podcast file to upload",
     createPodcastSuccess: "Podcast uploaded successfully",
