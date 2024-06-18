@@ -29,6 +29,8 @@ export interface UserSlice {
   setIsSendEliteClub: (bol: boolean) => void;
   codeInvite: string;
   setCodeInvite: (str: string) => void;
+  extraUserData: any;
+  setExtraUserData: (data: any) => void;
 }
 
 const createUserSlice: StoreSlice<UserSlice> = (set) => ({
@@ -85,6 +87,12 @@ const createUserSlice: StoreSlice<UserSlice> = (set) => ({
   codeInvite: "",
   setCodeInvite: (str: string) => {
     set({ codeInvite: str });
+  },
+  extraUserData: null,
+  setExtraUserData: (data: any) => {
+    set((state) => {
+      return { extraUserData: { ...state.extraUserData, ...data } };
+    });
   },
 });
 

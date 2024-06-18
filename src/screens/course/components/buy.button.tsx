@@ -29,7 +29,6 @@ interface BuyButtonProps {
 const BuyButton = ({ data, type }: BuyButtonProps) => {
   const { isLoggedIn } = useUserHook();
   const isJoin = data?.is_join;
-
   const goToBuyScreen = async () => {
     if (!isLoggedIn()) {
       showWarningLogin();
@@ -62,6 +61,7 @@ const BuyButton = ({ data, type }: BuyButtonProps) => {
       eventEmitter.emit("emit_buy_product", {
         productId: data?.price_id,
         data: _data,
+        typePurchase: "product",
         typeProduct: "course",
       });
       return;
@@ -78,7 +78,6 @@ const BuyButton = ({ data, type }: BuyButtonProps) => {
       courseData: data,
     });
   };
-
   if (!data?._id) {
     return null;
   }

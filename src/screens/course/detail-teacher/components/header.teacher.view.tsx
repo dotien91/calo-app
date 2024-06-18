@@ -28,17 +28,10 @@ interface HeaderDetailTeacherProps {
   data?: TypedUser;
 }
 
-// interface CertificatesProps {
-//   dateOfIssue: string;
-//   isValidated: boolean;
-//   name: string;
-// }
-
 const HeaderDetailTeacher = ({ data }: HeaderDetailTeacherProps) => {
   const linkFb = (data?.links?.[0]?.facebook || "").trim();
   const linkYoutube = (data?.links?.[0]?.youtube || "").trim();
   const linkWebsite = (data?.links?.[0]?.website || "").trim();
-
   const _openLinkingFB = () => {
     Linking.openURL(linkFb);
   };
@@ -48,24 +41,6 @@ const HeaderDetailTeacher = ({ data }: HeaderDetailTeacherProps) => {
   const _openLinkingWeb = () => {
     Linking.openURL(linkWebsite);
   };
-
-  // if (!data?._id) {
-  //   return (
-  //     <View style={styles.container}>
-  //       <View style={CS.center}>
-  //         <SkeletonPlaceholder>
-  //           <View style={styles.avatar} />
-  //         </SkeletonPlaceholder>
-  //       </View>
-  //       <SkeletonPlaceholder>
-  //         <View style={styles.txtFullname} />
-  //         <View style={styles.txtFullname} />
-  //         <View style={styles.txtFullname} />
-  //         <View style={styles.txtFullname} />
-  //       </SkeletonPlaceholder>
-  //     </View>
-  //   );
-  // }
 
   const _viewMedia = () => {
     if (data?.user_avatar_thumbnail) {

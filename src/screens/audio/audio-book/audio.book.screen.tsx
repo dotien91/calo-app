@@ -9,19 +9,21 @@ import CS from "@theme/styles";
 import AudioList from "../audio-list/audio.list";
 import { palette } from "@theme/themes";
 import { useUserHook } from "@helpers/hooks/useUserHook";
-import useStore from "@services/zustand/store";
+// import useStore from "@services/zustand/store";
 import { useLastActiveTrack } from "../hook/useLastActiveTrack";
 import { navigate } from "@helpers/navigation.helper";
 import { SCREENS } from "constants";
+import useUserHelper from "@helpers/hooks/useUserHelper";
 // import AudioListContinue from "../audio-list/audio.list.continue";
 
 const AudioBookScreen = () => {
-  const userData = useStore((state) => state.userData);
+  // const userData = useStore((state) => state.userData);
   const activeTrack = useActiveTrack();
   const lastActiveTrack = useLastActiveTrack();
 
   const displayedTrack = activeTrack ?? lastActiveTrack;
   const { isLoggedIn } = useUserHook();
+  const { isTeacher } = useUserHelper();
   const hide =
     !displayedTrack ||
     displayedTrack.url ===
@@ -33,7 +35,7 @@ const AudioBookScreen = () => {
     <SafeAreaView style={CS.safeAreaView}>
       <Header text={translations.audio.audioBook} />
       <AudioList />
-      {isLoggedIn() && userData?._id && (
+      {isLoggedIn() && isTeacher && (
         <>
           <TouchableOpacity
             style={{
@@ -43,7 +45,7 @@ const AudioBookScreen = () => {
             onPress={() => setShowMore(!showMore)}
           >
             <Icon
-              name={"add-outline"}
+              name={showMore ? "close-outline" : "add-outline"}
               type={IconType.Ionicons}
               size={30}
               color={palette.white}
@@ -60,7 +62,7 @@ const AudioBookScreen = () => {
               <Icon
                 name={"list-circle-outline"}
                 type={IconType.Ionicons}
-                size={30}
+                size={25}
                 color={palette.white}
               />
             </TouchableOpacity>
@@ -69,14 +71,30 @@ const AudioBookScreen = () => {
             <TouchableOpacity
               style={{
                 ...styles.btn2,
-                bottom: !hide ? 200 : 130,
+                bottom: !hide ? 190 : 120,
               }}
               onPress={() => navigate(SCREENS.CREATE_AUDIO, { isChild: true })}
             >
               <Icon
                 name={"headset-outline"}
                 type={IconType.Ionicons}
-                size={30}
+                size={25}
+                color={palette.white}
+              />
+            </TouchableOpacity>
+          )}
+          {showMore && (
+            <TouchableOpacity
+              style={{
+                ...styles.btn2,
+                bottom: !hide ? 240 : 170,
+              }}
+              onPress={() => navigate(SCREENS.MY_AUDIO)}
+            >
+              <Icon
+                name={"settings-outline"}
+                type={IconType.Ionicons}
+                size={25}
                 color={palette.white}
               />
             </TouchableOpacity>

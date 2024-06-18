@@ -4,6 +4,7 @@ import { useTheme } from "@react-navigation/native";
 import createStyles from "./Button.style";
 import { palette } from "@theme/themes";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import TextBase from "@shared-components/TextBase";
 
 interface ICustomStyle {
   button?: ViewStyle;
@@ -25,6 +26,7 @@ interface ButtonProps {
   isSmallButton?: boolean;
   isMiddleButton?: boolean;
   customStyle?: ICustomStyle;
+  subText?: string;
 }
 
 export default function Button({
@@ -42,6 +44,7 @@ export default function Button({
   isSmallButton = false,
   isMiddleButton = false,
   customStyle,
+  subText,
 }: ButtonProps) {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(), [theme]);
@@ -70,7 +73,7 @@ export default function Button({
       disabled={disabled || type == "disabled"}
       style={({ pressed }) => {
         return [
-          styles.viewButton,
+          !subText && styles.viewButton,
           !!backgroundColor && { backgroundColor: backgroundColor },
           { opacity: pressed ? 0.8 : 1.0 },
           disabled && { backgroundColor: palette.borderColor },
@@ -85,6 +88,9 @@ export default function Button({
           isMiddleButton ? styles.middleBtn : {},
           style && style,
           customStyle && customStyle?.button,
+          !!subText && {
+            borderRadius: 12,
+          },
         ];
       }}
       onPress={onPress}
@@ -113,6 +119,20 @@ export default function Button({
       >
         {text}
       </Text>
+      <TextBase
+        title={subText}
+        fontSize={14}
+        style={[
+          styles.textButton,
+          !!textColor && { color: textColor },
+          type == "primary" && styles.txtBtnPrimary,
+          (type == "outline" || type == "viewmore") && styles.txtBtnOutline,
+          type == "disabled" && styles.txtBtnDisabled,
+          isSmallButton && { fontSize: 13, fontWeight: "500" },
+          isMiddleButton && styles.textMiddleButton,
+          customStyle && customStyle?.text,
+        ]}
+      />
       {!!showRightIcon && !!iconName && (
         <Icon
           type={IconType.Feather}

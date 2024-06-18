@@ -68,6 +68,7 @@ const LiveStreamPreviewScreem = () => {
     eventEmitter.emit("emit_buy_product", {
       productId: data?.price_id,
       data: _data,
+      typePurchase: "product",
       typeProduct: "livestream",
       local_id: data._id,
     });

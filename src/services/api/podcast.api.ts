@@ -82,7 +82,7 @@ export async function CreatePodcast(data: ICreatePodcast) {
   return request({
     method: METHOD.POST,
     urlPath: "podcast/create",
-      data,
+    data,
   }).then((response) => {
     return response;
   });

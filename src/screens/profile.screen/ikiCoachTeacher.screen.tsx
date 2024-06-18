@@ -22,7 +22,6 @@ import CS from "@theme/styles";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { navigate } from "@helpers/navigation.helper";
 import { SCREENS } from "constants";
-import CreateSubscriptionBtn from "@screens/user-profile/component/CreateSubscriptionBtn";
 
 interface ItemIncomeType {
   count: number;
@@ -305,7 +304,6 @@ const TeacherScreen = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <HeaderTeacherScreen />
         {renderAvatar()}
-        <CreateSubscriptionBtn />
         <Tasks numberOfTasks={2} />
         {utilities.map((item, index) => renderUtilities(item, index))}
       </ScrollView>

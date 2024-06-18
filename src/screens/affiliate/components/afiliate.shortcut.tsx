@@ -9,7 +9,6 @@ import { SCREENS } from "constants";
 import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
 import useStore from "@services/zustand/store";
 import AffiliateStatisticalView from "./affiliate.statistical.view";
-import AffiliateHeader2 from "@screens/affiliate//components/affiliate.header";
 
 const AffiliateShortcut = () => {
   const userData = useStore((state) => state.userData);
@@ -91,7 +90,7 @@ const AffiliateShortcut = () => {
           );
         })}
       </View>
-      <AffiliateHeader2 fromHomepage />
+      {/* <AffiliateHeader2 fromHomepage /> */}
       <AffiliateStatisticalView fromHomepage />
     </>
   );

@@ -28,7 +28,6 @@ import { updateProfile } from "@services/api/user.api";
 import { showToast } from "@helpers/super.modal.helper";
 import eventEmitter from "@services/event-emitter";
 import { palette } from "@theme/themes";
-import TextBase from "@shared-components/TextBase";
 import CreateSubscriptionBtn from "../component/CreateSubscriptionBtn";
 
 const EditProfileScreen = () => {

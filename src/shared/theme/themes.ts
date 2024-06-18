@@ -122,7 +122,7 @@ export const palette = {
   greenTh2: "#30AD6A",
   greenTh1: "#5AD693",
   greenTh3: "#2AA764",
-  statusBarAudio: "rgba(0, 0, 0, 0.7)"
+  statusBarAudio: "rgba(0, 0, 0, 0.7)",
 };
 
 interface ExtendedTheme extends Theme {

@@ -183,7 +183,7 @@ function App() {
   };
 
   const handleOnStreamStateChanged = () => {
-    // alert(3)
+    //
   };
 
   // const handleUnmute = () => {

@@ -4,10 +4,10 @@ import {
   View,
   StyleSheet,
   SafeAreaView,
-  ScrollView,
   TouchableOpacity,
   ImageBackground,
   StatusBar,
+  FlatList,
 } from "react-native";
 import TrackPlayer, { Track, useActiveTrack } from "react-native-track-player";
 import Sound from "react-native-sound";
@@ -15,7 +15,7 @@ import Sound from "react-native-sound";
 import { ScreenHeight } from "@freakycoder/react-native-helpers";
 import { translations } from "@localization";
 import TextViewCollapsed from "@screens/course/components/text.view.collapsed";
-import { GetPodCastDetail } from "@services/api/podcast.api";
+import { GetPodCastDetail, GetPodCastList } from "@services/api/podcast.api";
 import useStore from "@services/zustand/store";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
@@ -44,12 +44,15 @@ import { _setJson } from "@services/local-storage";
 import * as NavigationService from "react-navigation-helpers";
 import { IconType } from "react-native-dynamic-vector-icons";
 import IconBtn from "@shared-components/button/IconBtn";
+import { useListData } from "@helpers/hooks/useListData";
+import AudioItemList from "../components/audio.item.list";
 
 const HEIGHT_IMAGE = (ScreenHeight * 311) / 812;
 const WIDTH_IMAGE = (HEIGHT_IMAGE * 114) / 140;
 
 const AudioPreview = () => {
   const addAudio = useStore((store) => store.addAudio);
+  // const userData = useStore((store) => store.userData);
   const listAudioHistory = useStore((store) => store.listAudioHistory);
   const route = useRoute();
   const id = route?.params?.id || "";
@@ -95,8 +98,21 @@ const AudioPreview = () => {
     }
   };
 
+  const { listData, onEndReach } = useListData<any>(
+    {
+      parent_id: id,
+      order_by: "DESC",
+      sort_by: "createdAt",
+      limit: "10",
+    },
+    GetPodCastList,
+  );
+
+  // console.log("data...", listData);
+
   React.useEffect(() => {
     getDataTrack();
+    // getListChildPoscast()
   }, []);
   const ItemCategory = ({ title, des }: { title: string; des: string }) => {
     return (
@@ -255,6 +271,75 @@ const AudioPreview = () => {
       </View>
     );
   };
+
+  function renderHeader() {
+    return (
+      <>
+        <View style={styles.viewAudio}>
+          <View style={styles.viewImage}>
+            <FastImage
+              style={styles.viewImage}
+              source={{ uri: track?.post_avatar.media_url }}
+              borderRadius={8}
+            />
+          </View>
+          <View style={styles.viewTitle}>
+            <Text style={styles.txtTitle}>{track?.title}</Text>
+            <Text style={styles.txtAuthor}>{track?.user_id.display_name}</Text>
+          </View>
+        </View>
+        {renderCategory()}
+        <View style={styles.viewBtn}>
+          <TouchableOpacity style={styles.btnPlay} onPress={playAudio}>
+            <IconSvg name="icHeadphone" size={20} color={palette.white} />
+            <Text style={styles.txtListen}>
+              {translations.podcast.listenNow}
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.viewDes}>
+          <Text style={[CS.hnBold, { color: palette.white }]}>
+            {translations.podcast.description}
+          </Text>
+          <TextViewCollapsed
+            text={track?.content || ""}
+            styleText={styles.des}
+          />
+        </View>
+      </>
+    );
+  }
+
+  function renderFooter() {
+    return (
+      <>
+        <ListReviewView id={id} />
+        <Button
+          onPress={showWriteReview}
+          text={translations.podcast.writeAReview}
+          style={{
+            ...styles.btnReview,
+            marginBottom: displayedTrack ? 60 : 8,
+          }}
+          type="black"
+        />
+      </>
+    );
+  }
+  const renderItem = ({ item, index }) => {
+    // console.log("item...", item);
+    return (
+      <AudioItemList
+        isSliderItem
+        data={item}
+        key={index}
+        style={{ backgroundColor: "#00000030" }}
+        colorText={palette.white8}
+        borderColorPlay={palette.primary}
+      />
+    );
+  };
+
   return (
     <SafeAreaView style={CS.safeAreaView}>
       <ImageBackground
@@ -262,8 +347,8 @@ const AudioPreview = () => {
         blurRadius={100}
       >
         <StatusBar
-        barStyle={"light-content"}
-        backgroundColor={palette.statusBarAudio}
+          barStyle={"light-content"}
+          backgroundColor={palette.statusBarAudio}
         />
         <View>
           <View
@@ -274,61 +359,22 @@ const AudioPreview = () => {
               left: 0,
               right: 0,
               top: 0,
-              opacity: 0.3,
+              opacity: 0.4,
             }}
           />
           <Header />
         </View>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
+        <View style={styles.overlay} />
+
+        <FlatList
+          data={listData}
           contentContainerStyle={styles.container}
-        >
-          <View style={styles.overlay} />
-          <View style={styles.viewAudio}>
-            <View style={styles.viewImage}>
-              <FastImage
-                style={styles.viewImage}
-                source={{ uri: track?.post_avatar.media_url }}
-                borderRadius={8}
-              />
-            </View>
-            <View style={styles.viewTitle}>
-              <Text style={styles.txtTitle}>{track?.title}</Text>
-              <Text style={styles.txtAuthor}>
-                {track?.user_id.display_name}
-              </Text>
-            </View>
-          </View>
-          {renderCategory()}
-          <View style={styles.viewBtn}>
-            <TouchableOpacity style={styles.btnPlay} onPress={playAudio}>
-              <IconSvg name="icHeadphone" size={20} color={palette.white} />
-              <Text style={styles.txtListen}>
-                {translations.podcast.listenNow}
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.viewDes}>
-            <Text style={[CS.hnBold, { color: palette.white }]}>
-              {translations.podcast.description}
-            </Text>
-            <TextViewCollapsed
-              text={track?.content || ""}
-              styleText={styles.des}
-            />
-          </View>
-          <ListReviewView id={id} />
-          <Button
-            onPress={showWriteReview}
-            text={translations.podcast.writeAReview}
-            style={{
-              ...styles.btnReview,
-              marginBottom: displayedTrack ? 60 : 8,
-            }}
-            type="black"
-          />
-        </ScrollView>
-        {/* {!hide && (
+          renderItem={renderItem}
+          onEndReached={onEndReach}
+          ListFooterComponent={renderFooter}
+          ListHeaderComponent={renderHeader}
+        />
+        {!hide && (
           <View
             style={{
               height: getBottomSpace() + 60,
@@ -341,7 +387,7 @@ const AudioPreview = () => {
               right: 0,
             }}
           />
-        )} */}
+        )}
       </ImageBackground>
     </SafeAreaView>
   );
@@ -436,11 +482,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 16,
     gap: 8,
-    
   },
   overlay: {
     position: "absolute",
-    zIndex: -1,
+    // zIndex: -1,
     backgroundColor: "#484d49",
     bottom: 0,
     left: 0,
