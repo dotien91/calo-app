@@ -38,13 +38,12 @@ export default (theme: ExtendedTheme) => {
       borderBottomLeftRadius: 15,
       borderBottomRightRadius: 15,
       marginBottom: 5,
-      marginTop: isAndroid ? getStatusBarHeight() : 0,
     },
     viewHeader: {
       ...CS.row,
       justifyContent: "center",
       alignItems: "center",
-      marginTop: 10,
+      marginTop: isAndroid ? getStatusBarHeight() : 10,
     },
     textMoneyHeader: {
       marginTop: 8,

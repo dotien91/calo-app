@@ -159,7 +159,7 @@ const TeacherScreen = () => {
             color={colors.white}
             customStyle={{
               position: "absolute",
-              left: 5,
+              left: 8,
               top: 0,
             }}
           />

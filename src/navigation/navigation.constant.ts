@@ -362,6 +362,10 @@ export const CommonStackData = [
     name: SCREENS.CREATEEVENT,
     screen: CreateEventScreen,
   },
+  {
+    name: SCREENS.MY_AUDIO,
+    screen: MyAudioScreen,
+  },
   ...ClubStackData,
   // {
   //   name: SCREENS.CREATE_SUBSCRIPTION,

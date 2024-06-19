@@ -32,7 +32,7 @@ const App = () => {
 
   return (
     <>
-      <StatusBar backgroundColor={palette.white} />
+      {/* <StatusBar backgroundColor={palette.white} /> */}
       <Navigation />
       <Toast config={toastConfig} />
       <SuperModal />

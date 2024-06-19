@@ -186,7 +186,7 @@ const CodeActivationsScreen = () => {
     return <EmptyResultView title={translations.emptyList} />;
   };
   return (
-    <SafeAreaView style={CS.safeAreaView}>
+    <SafeAreaView>
       <Header text={translations.settingUser.codeActivations} />
       {/* {renderHeader()} */}
       {!listUserRef.length && renderEmpty()}

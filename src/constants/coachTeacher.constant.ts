@@ -59,7 +59,7 @@ export const utilities = [
       },
       {
         title: translations.profileTeacher.schedule,
-        screen: SCREENS.TEACHER_COURSES,
+        screen: SCREENS.COURSE_CREATE_CALENDAR_CALL,
         uri: LichDay,
       },
       {
@@ -108,7 +108,7 @@ export const utilities = [
       {
         title: translations.profileTeacher.myPodcast,
         uri: Podcast,
-        screen: SCREENS.AUDIO_BOOK,
+        screen: SCREENS.MY_AUDIO,
       },
     ],
   },
