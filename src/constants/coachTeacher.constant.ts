@@ -52,11 +52,14 @@ export const utilities = [
       {
         title: translations.profileTeacher.myCourse,
         uri: KhoaHoc,
-        screen: SCREENS.MY_COURES,
+        screen: SCREENS.PROFILE_CURRENT_USER,
+        param: {
+          tab: "course",
+        },
       },
       {
         title: translations.profileTeacher.schedule,
-        screen: SCREENS.TEACHER_COURSES,
+        screen: SCREENS.COURSE_CREATE_CALENDAR_CALL,
         uri: LichDay,
       },
       {
@@ -105,7 +108,7 @@ export const utilities = [
       {
         title: translations.profileTeacher.myPodcast,
         uri: Podcast,
-        screen: SCREENS.AUDIO_BOOK,
+        screen: SCREENS.MY_AUDIO,
       },
     ],
   },

@@ -245,7 +245,7 @@ const SettingProfileScreen = () => {
       />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ flex: 1, marginBottom: 20 }}>
-          {renderButtonTeacherScreen()}
+          {isTeacher ? renderButtonTeacherScreen() : null}
           {renderScrollPointCoin()}
           {renderPieChart()}
           <Tasks />
@@ -258,75 +258,80 @@ const SettingProfileScreen = () => {
 };
 interface TaskProps {
   numberOfTasks?: number;
+  title?: string;
 }
-export const Tasks: React.FC<TaskProps> = React.memo(({ numberOfTasks }) => {
-  const theme = useTheme();
-  const { colors } = theme;
-  const styles = useMemo(() => createStyles(theme), [theme]);
+export const Tasks: React.FC<TaskProps> = React.memo(
+  ({ numberOfTasks, title }) => {
+    const theme = useTheme();
+    const { colors } = theme;
+    const styles = useMemo(() => createStyles(theme), [theme]);
 
-  const onSeeAll = () => {
-    NavigationService.navigate(SCREENS.TASK_SCREEN);
-  };
-
-  const [listData, setListData] = React.useState([]);
-
-  useFocusEffect(
-    React.useCallback(() => {
-      getTask();
-    }, []),
-  );
-
-  useEffect(() => {
-    eventEmitter.on("reload_list_task", getTask);
-    return () => {
-      eventEmitter.off("reload_list_task", getTask);
+    const onSeeAll = () => {
+      NavigationService.navigate(SCREENS.TASK_SCREEN);
     };
-  }, []);
 
-  const getTask = () => {
-    getListTaskByUser({ order_by: "DESC" }).then((res) => {
-      if (!res.isError) {
-        setListData((res.data?.[0]?.missions || []).reverse());
-      }
-    });
-  };
+    const [listData, setListData] = React.useState([]);
 
-  if (!listData.length) return null;
+    useFocusEffect(
+      React.useCallback(() => {
+        getTask();
+      }, []),
+    );
 
-  return (
-    <View style={{ marginTop: 5, marginHorizontal: 16 }}>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          marginVertical: 16,
-        }}
-      >
-        <Text style={styles.textTasks}>{translations.task.task}</Text>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <PressableBtn onPress={onSeeAll}>
-            <Text style={styles.textSeeAll}>{translations.seeAll}</Text>
-          </PressableBtn>
-          <Icon
-            name="chevron-forward-outline"
-            type={IconType.Ionicons}
-            color={colors.btnRedPrimary}
-            size={16}
-          ></Icon>
+    useEffect(() => {
+      eventEmitter.on("reload_list_task", getTask);
+      return () => {
+        eventEmitter.off("reload_list_task", getTask);
+      };
+    }, []);
+
+    const getTask = () => {
+      getListTaskByUser({ order_by: "DESC" }).then((res) => {
+        if (!res.isError) {
+          setListData((res.data?.[0]?.missions || []).reverse());
+        }
+      });
+    };
+
+    if (!listData.length) return null;
+
+    return (
+      <View style={{ marginTop: 5, marginHorizontal: 16 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginVertical: 16,
+          }}
+        >
+          <Text style={styles.textTasks}>
+            {title || translations.task.task}
+          </Text>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <PressableBtn onPress={onSeeAll}>
+              <Text style={styles.textSeeAll}>{translations.seeAll}</Text>
+            </PressableBtn>
+            <Icon
+              name="chevron-forward-outline"
+              type={IconType.Ionicons}
+              color={colors.btnRedPrimary}
+              size={16}
+            ></Icon>
+          </View>
+        </View>
+        <View
+          style={{
+            backgroundColor: colors.backgroundColorGrey,
+            borderRadius: 8,
+          }}
+        >
+          {listData.slice(0, numberOfTasks || 5).map((item, index) => {
+            return <TashListItem key={index} item={item} />;
+          })}
         </View>
       </View>
-      <View
-        style={{
-          backgroundColor: colors.backgroundColorGrey,
-          borderRadius: 8,
-        }}
-      >
-        {listData.slice(0, numberOfTasks || 5).map((item, index) => {
-          return <TashListItem key={index} item={item} />;
-        })}
-      </View>
-    </View>
-  );
-});
+    );
+  },
+);
 
 export default SettingProfileScreen;

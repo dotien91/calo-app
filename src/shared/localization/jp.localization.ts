@@ -808,6 +808,7 @@ export default {
     desBtn: "教師専用ページにアクセスする",
     profile: "プロフィールを見る",
     balance: "残高",
+    task: "任務",
   },
   member: {
     chat: "チャット",

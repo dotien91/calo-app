@@ -774,6 +774,7 @@ export default {
     desBtn: "Access the page reserved for teachers",
     profile: "Profile",
     balance: "Balance",
+    task: "TASKS",
   },
   member: {
     chat: "chat",

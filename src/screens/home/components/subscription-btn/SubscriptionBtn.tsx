@@ -10,18 +10,20 @@ import eventEmitter from "@services/event-emitter";
 import { isIOS } from "@freakycoder/react-native-helpers";
 import Button from "@shared-components/button/Button";
 import useUserHelper from "@helpers/hooks/useUserHelper";
+import { isAndroid } from "@helpers/device.info.helper";
 
 const SubscriptionBtn = () => {
   const userData = useStore((state) => state.userData);
   const [loading, setLoading] = useState(false);
   const extraUserData = useStore((state) => state.extraUserData);
-  const { subscription_sell } = extraUserData;
+  const { subscription_sell, subscriptions } = extraUserData;
   const { isActiveSubscription } = useUserHelper();
-
   const planInfo = useMemo(() => {
+    if (isAndroid())
+      return extraUserData?.subscriptions?.[0]?.subscriptionOfferDetails?.[0]
+        ?.pricingPhases?.pricingPhaseList?.[0];
     return extraUserData?.subscriptions?.[0];
   }, [extraUserData]);
-
   const pressFollow = () => {
     closeSuperModal();
     if (!userData) {
@@ -47,17 +49,31 @@ const SubscriptionBtn = () => {
         typeProduct: "subscription",
         cb: null,
         pac: {
-          productId: subscription_sell?.price_id,
+          productId: extraUserData?.subscriptions?.[0].productId,
         },
-        offerToken: planInfo.subscriptionOfferDetails?.[0]?.offerToken,
+        offerToken:
+          extraUserData?.subscriptions?.[0]?.subscriptionOfferDetails?.[0]
+            ?.offerToken,
       });
       setTimeout(() => {
         setLoading(false);
       }, 3000);
     }
   };
-
-  if (!subscription_sell || !planInfo) return null;
+  if (!subscription_sell || !planInfo || !subscriptions?.length) return null;
+  const subText = React.useMemo(() => {
+    if (isAndroid()) {
+      console.log("planInfo", planInfo);
+      return planInfo?.formattedPrice + "/" + planInfo?.billingPeriod;
+    }
+    return (
+      planInfo?.localizedPrice +
+      "/" +
+      planInfo?.subscriptionPeriodNumberIOS +
+      " " +
+      planInfo?.subscriptionPeriodUnitIOS
+    );
+  }, [planInfo]);
   return (
     <Button
       disabled={loading}
@@ -65,16 +81,10 @@ const SubscriptionBtn = () => {
       type={isActiveSubscription ? "outline" : "primary"}
       text={
         isActiveSubscription
-          ? "Đã đăng ký thuê bao"
+          ? "Đã đăng ký Podcast Premium"
           : "Đăng ký " + subscription_sell?.title
       }
-      subText={
-        planInfo?.localizedPrice +
-        "/" +
-        planInfo?.subscriptionPeriodNumberIOS +
-        " " +
-        planInfo?.subscriptionPeriodUnitIOS
-      }
+      subText={subText}
     />
   );
 };
