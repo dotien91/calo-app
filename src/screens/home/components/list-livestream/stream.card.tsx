@@ -129,7 +129,7 @@ const StreamCard = ({
             source={{ uri: data?.cover_url || data?.user_id?.user_avatar }}
             resizeMode="cover"
             style={{
-              width: Device.width - 16,
+              width: Device.width - 32,
               height: ((WindowWidth - 16) / 19) * 10,
               borderRadius: 12,
             }}
@@ -299,9 +299,9 @@ const styles = StyleSheet.create({
   container: {
     ...CS.flexCenter,
     paddingBottom: 4,
-    marginHorizontal: 4,
+    marginRight: 4,
     width: WindowWidth - 16,
-    marginRight: 8,
+    // marginRight: 8,
   },
   iconText: {
     ...CS.center,

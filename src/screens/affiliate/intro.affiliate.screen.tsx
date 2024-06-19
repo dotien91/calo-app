@@ -1,12 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  Image,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import CS from "@theme/styles";
 import Header from "@shared-components/header/Header";
 import { translations } from "@localization";
@@ -16,10 +9,11 @@ import { palette } from "@theme/themes";
 import TextBase from "@shared-components/TextBase";
 import { EnumColors } from "models";
 import IconSvg from "assets/svg";
-import PressableBtn from "@shared-components/button/PressableBtn";
-import * as NavigationService from "react-navigation-helpers";
-import { SCREENS } from "constants";
-import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
+// import PressableBtn from "@shared-components/button/PressableBtn";
+// import * as NavigationService from "react-navigation-helpers";
+// import { SCREENS } from "constants";
+// import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
+import AfiliateShortcut from "./components/afiliate.shortcut";
 
 const HomeAffilite = () => {
   const dataText = [
@@ -69,66 +63,43 @@ const HomeAffilite = () => {
     // _getReferralMe();
   }, []);
 
-  const ItemAff = ({
-    link,
-    title,
-    onPress,
-  }: {
-    link: any;
-    title: string;
-    onPress: () => void;
-  }) => {
-    return (
-      <PressableBtn onPress={onPress} style={styles.item}>
-        <View style={styles.viewImage}>
-          {link && <Image style={styles.image} source={link} />}
-        </View>
-        <Text style={styles.text}>{title}</Text>
-      </PressableBtn>
-    );
-  };
+  // const ItemAff = ({
+  //   link,
+  //   title,
+  //   onPress,
+  // }: {
+  //   link: any;
+  //   title: string;
+  //   onPress: () => void;
+  // }) => {
+  //   return (
+  //     <PressableBtn onPress={onPress} style={styles.item}>
+  //       <View style={styles.viewImage}>
+  //         {link && <Image style={styles.image} source={link} />}
+  //       </View>
+  //       <Text style={styles.text}>{title}</Text>
+  //     </PressableBtn>
+  //   );
+  // };
 
-  const onPressSaleCourse = () => {
-    NavigationService.navigate(SCREENS.COURSE_TAB);
-  };
-  const navigateAffiliate = () => {
-    NavigationService.navigate(SCREENS.AFFILIATE);
-  };
-  const navigateWidthDraw = () => {
-    NavigationService.navigate(SCREENS.WITHDRAW);
-  };
-  const showReferrer = () => {
-    NavigationService.navigate(SCREENS.CODE_ACTIVATIONS_SCREEN);
-  };
+  // const onPressSaleCourse = () => {
+  //   NavigationService.navigate(SCREENS.COURSE_TAB);
+  // };
+  // const navigateAffiliate = () => {
+  //   NavigationService.navigate(SCREENS.AFFILIATE);
+  // };
+  // const navigateWidthDraw = () => {
+  //   NavigationService.navigate(SCREENS.WITHDRAW);
+  // };
+  // const showReferrer = () => {
+  //   NavigationService.navigate(SCREENS.CODE_ACTIVATIONS_SCREEN);
+  // };
 
   // const _getReferralMe = () => {
   //   getReferralMe({}).then((res) => {
   //     setReferralMe(res.data);
   //   });
   // };
-
-  const listAffiliate = [
-    {
-      title: translations.affiliate.saleCourse,
-      image: require("../../assets/images/shopping-cart.png"),
-      onPress: onPressSaleCourse,
-    },
-    {
-      title: translations.affiliate.aff,
-      image: require("../../assets/images/money.png"),
-      onPress: navigateAffiliate,
-    },
-    {
-      title: translations.affiliate.moneyOut,
-      image: require("../../assets/images/payment.png"),
-      onPress: navigateWidthDraw,
-    },
-    {
-      title: translations.affiliate.referal,
-      image: require("../../assets/images/capital.png"),
-      onPress: showReferrer,
-    },
-  ];
 
   return (
     <SafeAreaView
@@ -185,18 +156,7 @@ const HomeAffilite = () => {
             </PressableBtn>
           </ImageBackground>
         </View> */}
-        <View style={{ flexDirection: "row", paddingHorizontal: 16, gap: 8 }}>
-          {listAffiliate.map((item, index) => {
-            return (
-              <ItemAff
-                key={index}
-                link={item.image}
-                onPress={item.onPress}
-                title={item.title}
-              />
-            );
-          })}
-        </View>
+        <AfiliateShortcut hideStatic />
         <View style={styles.viewText}>
           <TextBase fontSize={16} fontWeight="600" color={EnumColors.text}>
             {translations.affiliate.whyJoin}
@@ -293,23 +253,24 @@ const styles = StyleSheet.create({
   //   alignItems: "flex-end",
   //   justifyContent: "space-between",
   // },
-  item: {
-    width: (SCREEN_WIDTH - 56) / 4,
-    alignItems: "center",
-  },
-  viewImage: {
-    width: (SCREEN_WIDTH - 56) / 4,
-    height: (SCREEN_WIDTH - 56) / 4,
-    borderRadius: 8,
-    // backgroundColor: palette.borderColor,
-    ...CS.center,
-  },
-  image: {
-    width: (SCREEN_WIDTH - 56) / 5,
-    height: (SCREEN_WIDTH - 56) / 5,
-  },
-  text: {
-    ...CS.hnBold,
-    textAlign: "center",
-  },
+  // item: {
+  //   width: (SCREEN_WIDTH - 56) / 4,
+  //   alignItems: "center",
+  // },
+  // viewImage: {
+  //   width: (SCREEN_WIDTH - 56) / 5,
+  //   height: (SCREEN_WIDTH - 56) / 5,
+  //   borderRadius: 8,
+  //   // backgroundColor: palette.borderColor,
+  //   ...CS.center,
+  // },
+  // image: {
+  //   width: (SCREEN_WIDTH - 56) / 5,
+  //   height: (SCREEN_WIDTH - 56) / 5,
+  // },
+  // text: {
+  //   ...CS.hnRegular,
+  //   textAlign: "center",
+  //   fontSize: 14,
+  // },
 });

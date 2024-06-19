@@ -11,7 +11,6 @@ import { sharePost } from "@utils/share.utils";
 import CommentBtn from "../comment-btn/CommentBtn";
 import useStore from "@services/zustand/store";
 import { palette } from "@theme/themes";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import IconSvg from "assets/svg";
 import PressableBtn from "@shared-components/button/PressableBtn";
 interface LikeSharePostItemProps {
@@ -56,13 +55,13 @@ const CountComment = ({ data }) => {
     >
       {likeNumber > 0 && (
         <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
-          <Icon
+          {/* <Icon
             type={IconType.Ionicons}
             size={16}
             name={"heart"}
             color={palette.textOpacity6}
-          />
-          <Text style={styles.text}>{likeNumber}</Text>
+          /> */}
+          <Text style={styles.text}>{translations.post.likes(likeNumber)}</Text>
         </View>
       )}
       {cmtNumber > 0 && (

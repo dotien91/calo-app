@@ -33,7 +33,7 @@ export default (theme: ExtendedTheme) => {
     },
     footer_container: {
       position: "absolute",
-      bottom: 144,
+      bottom: 40,
       left: 0,
       right: 0,
       justifyContent: "space-between",

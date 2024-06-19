@@ -21,6 +21,7 @@ import TextBase from "@shared-components/TextBase";
 import AudioView from "@screens/audio/audio-list/audio.view";
 import { navigate } from "@helpers/navigation.helper";
 import AfiliateShortcut from "@screens/affiliate/components/afiliate.shortcut";
+import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
 
 const HeaderTab = () => {
   const theme = useTheme();
@@ -89,7 +90,7 @@ const HeaderTab = () => {
           }}
           color={item.iconColor}
           name={item.icon}
-          size={64}
+          size={(SCREEN_WIDTH - 56) / 5}
         />
         <TextBase textAlign="center" fontSize={14}>
           {item.title}
@@ -135,7 +136,7 @@ const HeaderTab = () => {
       </View>
       {/* <CourseView /> */}
       <AfiliateShortcut />
-      <AudioView onPress={gotoAudioBook} />
+      <AudioView extraParams={{ type: "suggestion" }} onPress={gotoAudioBook} />
       <InviteView />
       <ListLiveStream group_id={null} />
       {/* <View style={{ paddingTop: 10 }}>

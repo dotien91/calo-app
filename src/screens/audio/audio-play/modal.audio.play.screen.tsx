@@ -6,6 +6,7 @@ import {
   Pressable,
   TouchableOpacity,
   ImageBackground,
+  SafeAreaView,
 } from "react-native";
 import { ScreenHeight, ScreenWidth } from "@freakycoder/react-native-helpers";
 import CS from "@theme/styles";
@@ -82,6 +83,7 @@ const ModalAudioPlayScreen = ({
         blurRadius={100}
         source={{ uri: activeTrack?.artwork }}
       >
+        <SafeAreaView />
         <View style={styles.overlay} />
         <Pressable onPressIn={onPressHide} style={styles.viewBackdrop} />
         <View style={styles.container}>

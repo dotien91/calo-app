@@ -44,6 +44,7 @@ export interface ICourseItem {
   is_join: boolean;
   coupon_id?: CouponType;
   media_album?: TypedMedia[];
+  lession_count?: number;
 }
 
 export interface ICourseModuleItem {

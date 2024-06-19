@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Image, StyleSheet, Text, View } from "react-native";
 
 import { selectMedia } from "@helpers/file.helper";
 import { isIos } from "@helpers/device.info.helper";
@@ -10,6 +10,7 @@ import CS from "@theme/styles";
 import { translations } from "@localization";
 import LoadingUpdateMedia from "./LoadingUpdateMedia";
 import IconSvg from "assets/svg";
+import TextBase from "@shared-components/TextBase";
 interface SelectImageHookProps {
   width?: number;
   height?: number;
@@ -26,6 +27,7 @@ const SelectImageHook = ({
   typeM,
 }: SelectImageHookProps) => {
   const [updatingImg, setUpdatingImg] = React.useState(false);
+  const [process, setProcess] = React.useState(0);
   const [media, setMedia] = React.useState({
     link: link || "",
     id: id || "",
@@ -50,11 +52,15 @@ const SelectImageHook = ({
         height: height,
       },
       callback: async (image) => {
-        const res = await uploadMedia({
-          name: image?.filename || image.path?.split("/")?.reverse()?.[0] || "",
-          uri: isIos() ? image.path?.replace("file://", "") : image.path,
-          type: image.mime,
-        });
+        const res = await uploadMedia(
+          {
+            name:
+              image?.filename || image.path?.split("/")?.reverse()?.[0] || "",
+            uri: isIos() ? image.path?.replace("file://", "") : image.path,
+            type: image.mime,
+          },
+          onUploadProgress,
+        );
         if (res?.[0]?.callback?._id) {
           setMedia({
             typeM: image.mime,
@@ -70,6 +76,13 @@ const SelectImageHook = ({
         setUpdatingImg(false);
       },
     });
+  };
+
+  const onUploadProgress = function (progressEvent) {
+    const percentCompleted = Math.round(
+      (progressEvent.loaded * 100) / progressEvent.total,
+    );
+    setProcess(percentCompleted);
   };
 
   const renderSelectImageAudio = () => {
@@ -88,6 +101,12 @@ const SelectImageHook = ({
             {updatingImg ? (
               <View style={styles.viewImageFill}>
                 <LoadingUpdateMedia />
+                <View style={styles.viewImageFill}>
+                  <ActivityIndicator size={"small"} />
+                  <TextBase fontSize={12} fontWeight="500" color="primary">
+                    {process}%
+                  </TextBase>
+                </View>
               </View>
             ) : (
               <>
@@ -129,6 +148,8 @@ const styles = StyleSheet.create({
   viewImage2: {
     width: 90,
     height: 120,
+    borderColor: palette.borderColor,
+    borderRadius: 8,
   },
   viewImageBorder: {
     padding: 8,

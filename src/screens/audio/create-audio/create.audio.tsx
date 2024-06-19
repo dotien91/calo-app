@@ -129,6 +129,7 @@ const CreateAudio = () => {
       is_premium: typePodcast === "member",
       // parent_id: playlist,
     };
+    //  const data = {"attach_files": "[\"6672a4e703108bc71a6b4ff5\"]", "content": "Mo ta 1", "is_premium": false, "podcast_category": "661393d1d29bd7cb5f9bc9ce", "podcast_language": "en", "post_avatar": "6672a4bb03108bc71a6b4fce", "title": "Tieu de 1"}
     if (isChild || parent_id) {
       if (playlist === "") {
         showToast({
@@ -141,6 +142,7 @@ const CreateAudio = () => {
     }
     console.log("dataUpload", dataUpload);
     CreatePodcast(dataUpload).then((res) => {
+      // console.log("res error", res);
       if (!res.isError) {
         // console.log("res upload...", res);
         showToast({
@@ -149,6 +151,9 @@ const CreateAudio = () => {
         });
         goBack();
         // chuyen den trang danh sach podcast
+      } else {
+        console.log("res error", res);
+        // showToast({ type: "error", message: res.message });
       }
     });
   };
@@ -337,12 +342,14 @@ const styles = StyleSheet.create({
   },
   viewBtn: {
     marginTop: 8,
+    height: 40,
     marginHorizontal: 20,
     width: SCREEN_WIDTH - 40,
   },
   viewNotFile: {
     ...CS.row,
     ...CS.center,
+    height: 40,
     gap: 8,
   },
 });

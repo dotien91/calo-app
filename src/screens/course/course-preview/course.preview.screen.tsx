@@ -33,7 +33,7 @@ import PressableBtn from "@shared-components/button/PressableBtn";
 import { translations } from "@localization";
 import useStore from "@services/zustand/store";
 import eventEmitter from "@services/event-emitter";
-import BookLessonSelectView from "../components/book-lesson/course.book.lesson.select.view";
+// import BookLessonSelectView from "../components/book-lesson/course.book.lesson.select.view";
 import ChooseClassSelectView from "../components/choose-class/course.choose.class.select.view";
 import EnrollNow from "../components/EnrollNow";
 import { SCREENS } from "constants";
@@ -49,6 +49,7 @@ import { shareCourse } from "@utils/share.utils";
 import { formatPriceCourse } from "@helpers/string.helper";
 import IconSvg from "assets/svg";
 import AlbumView from "./components/album.view";
+import BookLessonNew from "../components/book-lesson-new/book.lesson.new";
 
 const CoursePreviewScreen = () => {
   const userData = useStore((state) => state.userData);
@@ -378,10 +379,13 @@ const CoursePreviewScreen = () => {
             <AlbumView data={data} />
           </View>
         )}
-        <BookLessonSelectView
+        {/* <BookLessonSelectView
           isShow={data?.type === EnumClassType.Call11 && tabSelected !== 1}
           course_id={course_id}
-        />
+        /> */}
+        {data && data?.type === EnumClassType.Call11 && tabSelected !== 1 && (
+          <BookLessonNew courseData={data} />
+        )}
         <ChooseClassSelectView
           isShow={data?.type === EnumClassType.CallGroup && tabSelected !== 1}
           course_id={course_id}

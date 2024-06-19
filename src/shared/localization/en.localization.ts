@@ -190,6 +190,7 @@ export default {
   clear: "Clear all",
   searchForKey: "Results for keywords: ",
   post: {
+    likes: (count: number) => `${count} like${count > 1 ? "s" : ""}`,
     post: "Post",
     posts: "Post",
     detailPost: (name: string) => `${name}'s post`,
@@ -966,7 +967,9 @@ export default {
     send: "Send",
     audioBook: "Audio Book",
     typeAudio: "Type of audio book",
-    recommendBook: "Recommend book",
+    recommendBook: "Recommend podcast",
+    teacherPodcast: "Teacher's podcast",
+    episodeList: "EPISODE LIST",
     continueListen: "Continue listening",
     listen: "Listen",
     allAudio: "All audio book",

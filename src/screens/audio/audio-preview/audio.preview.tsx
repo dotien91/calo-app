@@ -306,6 +306,13 @@ const AudioPreview = () => {
             styleText={styles.des}
           />
         </View>
+        {listData.length > 0 && (
+          <View style={styles.viewDes}>
+            <Text style={[CS.hnBold, { color: palette.white }]}>
+              {translations.audio.episodeList}
+            </Text>
+          </View>
+        )}
       </>
     );
   }
@@ -341,15 +348,14 @@ const AudioPreview = () => {
   };
 
   return (
-    <SafeAreaView
-      style={[CS.safeAreaView, { backgroundColor: palette.statusBarAudio }]}
-    >
+    <View style={CS.flex1}>
       <ImageBackground
         source={{ uri: data?.post_avatar.media_url }}
         blurRadius={50}
       >
-        <View>
-          {/* <View
+        <SafeAreaView>
+          <View>
+            {/* <View
             style={{
               position: "absolute",
               backgroundColor: "#484d49",
@@ -360,34 +366,35 @@ const AudioPreview = () => {
               opacity: 0.4,
             }}
           /> */}
-          <Header />
-        </View>
-        {/* <View style={styles.overlay} /> */}
+            <Header />
+          </View>
+          {/* <View style={styles.overlay} /> */}
 
-        <FlatList
-          data={listData}
-          contentContainerStyle={styles.container}
-          renderItem={renderItem}
-          onEndReached={onEndReach}
-          ListFooterComponent={renderFooter}
-          ListHeaderComponent={renderHeader}
-        />
-        {!hide && (
-          <View
-            style={{
-              height: getBottomSpace() + 70,
-              width: SCREEN_WIDTH,
-              position: "absolute",
-              zIndex: 1,
-              backgroundColor: palette.statusBarAudio,
-              bottom: 0,
-              left: 0,
-              right: 0,
-            }}
+          <FlatList
+            data={listData}
+            contentContainerStyle={styles.container}
+            renderItem={renderItem}
+            onEndReached={onEndReach}
+            ListFooterComponent={renderFooter}
+            ListHeaderComponent={renderHeader}
           />
-        )}
+          {!hide && (
+            <View
+              style={{
+                height: getBottomSpace() + 70,
+                width: SCREEN_WIDTH,
+                position: "absolute",
+                zIndex: 1,
+                backgroundColor: palette.statusBarAudio,
+                bottom: 0,
+                left: 0,
+                right: 0,
+              }}
+            />
+          )}
+        </SafeAreaView>
       </ImageBackground>
-    </SafeAreaView>
+    </View>
   );
 };
 

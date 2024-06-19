@@ -15,6 +15,8 @@ import SubscriptionBtn from "@screens/home/components/subscription-btn/Subscript
 
 interface AudioViewProps {
   onPress?: () => void;
+  fromTeacherScreen?: boolean;
+  extraParams?: object;
 }
 const AudioView = ({
   onPress,
@@ -28,7 +30,7 @@ const AudioView = ({
       ...extraParams,
       limit: "6",
       auth_id: userData?._id,
-      sort_by: "createdAt",
+      // type: "suggestion",
     },
     GetPodCastList,
   );
@@ -68,7 +70,11 @@ const AudioView = ({
       <AudioCategoryTitle
         hideViewAll={false}
         onPress={onSeeAll}
-        title={translations.audio.recommendBook}
+        title={
+          fromTeacherScreen
+            ? translations.audio.teacherPodcast
+            : translations.audio.recommendBook
+        }
       />
       {listData.length == 0 && isLoading ? (
         renderLoading()

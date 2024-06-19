@@ -9,8 +9,11 @@ import { SCREENS } from "constants";
 import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
 import useStore from "@services/zustand/store";
 import AffiliateStatisticalView from "./affiliate.statistical.view";
+interface AffiliateShortcutProps {
+  hideStatic?: boolean;
+}
 
-const AffiliateShortcut = () => {
+const AffiliateShortcut = ({ hideStatic }: AffiliateShortcutProps) => {
   const userData = useStore((state) => state.userData);
 
   const ItemAff = ({
@@ -91,7 +94,7 @@ const AffiliateShortcut = () => {
         })}
       </View>
       {/* <AffiliateHeader2 fromHomepage /> */}
-      <AffiliateStatisticalView fromHomepage />
+      {!hideStatic && <AffiliateStatisticalView fromHomepage />}
     </>
   );
 };
@@ -101,17 +104,18 @@ export default React.memo(AffiliateShortcut);
 const styles = StyleSheet.create({
   item: {
     width: (SCREEN_WIDTH - 56) / 4,
+    alignItems: "center",
   },
   viewImage: {
-    width: (SCREEN_WIDTH - 56) / 4,
-    height: (SCREEN_WIDTH - 56) / 4,
+    width: (SCREEN_WIDTH - 56) / 5,
+    height: (SCREEN_WIDTH - 56) / 5,
     borderRadius: 8,
-    backgroundColor: palette.borderColor,
+    // backgroundColor: palette.borderColor,
     ...CS.center,
   },
   image: {
-    width: (SCREEN_WIDTH - 56) / 6,
-    height: (SCREEN_WIDTH - 56) / 6,
+    width: (SCREEN_WIDTH - 56) / 5,
+    height: (SCREEN_WIDTH - 56) / 5,
   },
   text: {
     ...CS.hnRegular,

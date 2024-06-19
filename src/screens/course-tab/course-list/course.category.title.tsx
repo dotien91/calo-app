@@ -26,7 +26,13 @@ const CourseCategoryTitle = ({
   const styles = useMemo(() => createStyles(theme), [theme]);
 
   return (
-    <View style={{ ...CS.flexRear, paddingHorizontal: 16, marginBottom: 8 }}>
+    <View
+      style={{
+        ...CS.flexRear,
+        paddingHorizontal: 16,
+        marginBottom: 8,
+      }}
+    >
       <Text style={styles.typeLearningLabel}>{title}</Text>
       {!hideViewAll && (
         <PressableBtn onPress={onPress} style={{ ...CS.flexEnd }}>

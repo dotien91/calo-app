@@ -198,6 +198,7 @@ export default {
   free: "無料",
   level: "レベル",
   post: {
+    likes: (count: number) => `${count} いいね`,
     post: "投稿",
     posts: "投稿",
     detailPost: (name) => `${name}の投稿`,
@@ -1433,6 +1434,8 @@ export default {
     audioBook: "オーディオブック",
     typeAudio: "オーディオタイプ",
     recommendBook: "推奨書籍",
+    teacherPodcast: "先生のポッドキャスト",
+    episodeList: "エピソードリスト",
     continueListen: "続けて聴く",
     listen: "再生回数",
     allAudio: "すべてのオーディオ",

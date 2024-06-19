@@ -1,7 +1,7 @@
 import { getListLiveStream } from "@services/api/stream.api";
 import { palette } from "@theme/themes";
 import React, { useEffect, useRef, useState } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import StreamCard from "./stream.card";
 import eventEmitter from "@services/event-emitter";
 import { PaginationProps, SwiperFlatList } from "react-native-swiper-flatlist";
@@ -11,14 +11,26 @@ import CourseCategoryTitle from "@screens/course-tab/course-list/course.category
 import { navigate } from "@helpers/navigation.helper";
 import { SCREENS } from "constants";
 import useStore from "@services/zustand/store";
+import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
+import CS from "@theme/styles";
 
 const ListLiveStream = ({ group_id }: { group_id: string }) => {
   const listRef = useRef(null);
   const [listDataStream, setListDataStream] = useState([]);
   const userData = useStore((state) => state.userData);
   const renderItem = ({ item }: any) => {
-    if (item?.livestream_status)
-      return <StreamCard key={item._id} data={item} />;
+    if (item?.livestream_status) {
+      return (
+        <View style={{ width: SCREEN_WIDTH - 12 }}>
+          <Text numberOfLines={1} style={styles.titleLive}>
+            {item.title}
+          </Text>
+          <StreamCard key={item._id} data={item} />
+        </View>
+      );
+    } else {
+      return null;
+    }
   };
 
   useFocusEffect(
@@ -97,20 +109,26 @@ const ListLiveStream = ({ group_id }: { group_id: string }) => {
         title={"Livestream"}
         onPress={onSeeAll}
       />
-      <SwiperFlatList
-        // autoplay
-        autoplayDelay={2}
-        autoplayLoop
-        index={0}
-        showPagination={listDataStream.length > 1}
-        data={listDataStream}
-        renderItem={renderItem}
-        paginationActiveColor={palette.primary}
-        paginationDefaultColor={palette.grey4}
-        paginationStyleItemActive={{ width: 24, height: 6, borderRadius: 10 }}
-        paginationStyleItemInactive={{ width: 6, height: 6, borderRadius: 10 }}
-        PaginationComponent={Pagination}
-      />
+      <View style={{ marginLeft: 8, marginRight: 4, marginTop: -8 }}>
+        <SwiperFlatList
+          // autoplay
+          autoplayDelay={2}
+          autoplayLoop
+          index={0}
+          showPagination={listDataStream.length > 1}
+          data={listDataStream}
+          renderItem={renderItem}
+          paginationActiveColor={palette.primary}
+          paginationDefaultColor={palette.grey4}
+          paginationStyleItemActive={{ width: 24, height: 6, borderRadius: 10 }}
+          paginationStyleItemInactive={{
+            width: 6,
+            height: 6,
+            borderRadius: 10,
+          }}
+          PaginationComponent={Pagination}
+        />
+      </View>
     </View>
   );
 };
@@ -159,15 +177,21 @@ export default React.memo(ListLiveStream);
 
 const styles = StyleSheet.create({
   container: {
-    marginLeft: 12,
+    // marginLeft: 12,
     marginVertical: 8,
     // height: ((WindowWidth - 40) / 19) * 10,
   },
   containerScrollable: {
     flexDirection: "row",
     position: "absolute",
-    right: 10,
+    right: 20,
     bottom: 10,
     gap: 4,
+  },
+  titleLive: {
+    ...CS.hnSemiBold,
+    paddingLeft: 8,
+    paddingRight: 16,
+    marginBottom: 8,
   },
 });

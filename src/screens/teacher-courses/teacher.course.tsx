@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
   SafeAreaView,
   Text,
@@ -36,6 +42,8 @@ import { navigate } from "@helpers/navigation.helper";
 import { SCREENS } from "constants";
 import { EnumClassType } from "models/course.model";
 import { showToast } from "@helpers/super.modal.helper";
+import EmptyResultView from "@shared-components/empty.data.component";
+import LottieComponent from "@shared-components/lottie/LottieComponent";
 
 interface MyCustomEventType extends ICalendarEventBase {
   color: string;
@@ -52,10 +60,13 @@ const TeacherCourse = () => {
 
   const [eventTeacher, setEventTeacher] = useState<any>([]);
   const [eventUser, setEventUser] = useState<any[]>([]);
+  const isFetchingStudent = useRef(true);
+  const isFetchingTeacher = useRef(true);
 
   const getListEventStudent = async () => {
     const listEventStudent: any[] = [];
     await getPlanStudent().then((res) => {
+      isFetchingStudent.current = false;
       if (!res.isError) {
         const dataStudent = res.data;
         console.log("res.student..", res);
@@ -99,6 +110,7 @@ const TeacherCourse = () => {
   const getListEventTeacher = async () => {
     const listEventTeacher: any[] = [];
     await getPlanTeacher().then((res) => {
+      isFetchingTeacher.current = false;
       if (!res.isError) {
         const dataStudent = res.data;
         console.log("res.teacher..", res);
@@ -136,10 +148,10 @@ const TeacherCourse = () => {
           }
         }
       }
-      console.log("listEventTeacher", listEventTeacher);
+      // console.log("listEventTeacher", listEventTeacher);
       setEventTeacher(listEventTeacher);
     });
-    return listEventTeacher;
+    // return listEventTeacher;
   };
 
   const getListEvent = () => {
@@ -252,6 +264,10 @@ const TeacherCourse = () => {
       />
     );
   }, [eventTeacher, eventUser, mode]);
+
+  const renderEmpty = () => {
+    return <EmptyResultView />;
+  };
   const closeModalDetail = () => setEventsSelect(null);
 
   const ItemDetailEvent = ({
@@ -503,7 +519,19 @@ const TeacherCourse = () => {
           iconNameRight="calendar"
           onPressRight={() => setModalVisible(true)}
         />
-
+        {isFetchingStudent.current || isFetchingTeacher.current ? (
+          <LottieComponent
+            resizeMode="contain"
+            height={120}
+            customStyle={{}}
+            lottieJson={require("assets/lotties/loading-circle.json")}
+          />
+        ) : null}
+        {[...eventTeacher, ...eventUser].length == 0 &&
+          mode == "schedule" &&
+          !isFetchingStudent.current &&
+          !isFetchingTeacher.current &&
+          renderEmpty()}
         {renderCalendar}
       </SafeAreaView>
       <ModalCalendar

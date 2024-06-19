@@ -75,6 +75,13 @@ const ItemList = ({
   };
   const playAudio = async () => {
     // NavigationService.navigate(SCREENS.AUDIO_PLAY);
+    if (subscription_id && !isActiveSubscription) {
+      showSuperModal({
+        styleModalType: EnumStyleModalType.Middle,
+        contentModalType: EnumModalContentType.SubscriptionView,
+      });
+      return;
+    }
     eventEmitter.emit("floating_play", { show: true });
     await TrackPlayer.reset();
     const track = {
@@ -193,7 +200,7 @@ const ItemList = ({
       return;
     }
     setListAudio(listData);
-    NavigationService.navigate(SCREENS.AUDIO_PREVIEW, { id: _id, data: data });
+    NavigationService.push(SCREENS.AUDIO_PREVIEW, { id: _id, data: data });
   };
 
   return (

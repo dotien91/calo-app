@@ -198,6 +198,7 @@ export default {
   free: "Miễn phí",
   level: "Cấp độ",
   post: {
+    likes: (count: number) => `${count} lượt thích`,
     post: "Tạo",
     posts: "Bài viết",
     detailPost: (name: string) => `Bài viết của ${name}`,
@@ -1503,7 +1504,9 @@ export default {
     send: "Gửi",
     audioBook: "Sách nói",
     typeAudio: "Loại sách nói",
-    recommendBook: "Đề xuất sách ",
+    recommendBook: "Đề xuất podcast",
+    teacherPodcast: "Podcast của giáo viên",
+    episodeList: "DANH SÁCH CÁC TẬP",
     continueListen: "Tiếp tục nghe",
     listen: "Lượt nghe",
     allAudio: "Tất cả sách nói",

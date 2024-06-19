@@ -508,12 +508,18 @@ const CourseCreate = () => {
         <Text style={styles.textTitle}>{translations.course.publicMode}</Text>
         <View style={styles.formSelectStatus}>
           <PressableBtn onPress={selectDraft} style={styles.viewBtn}>
+            <IconSvg name="icPrivate" size={20} color={palette.textOpacity8} />
             <Text style={styles.txtLabel}>{translations.draft}</Text>
             <View style={styles.border}>
               {publicStatus === "draft" && <View style={styles.selected} />}
             </View>
           </PressableBtn>
           <PressableBtn onPress={selectPublic} style={styles.viewBtn}>
+            <IconSvg
+              name="icDiscovery"
+              size={20}
+              color={palette.textOpacity8}
+            />
             <Text style={styles.txtLabel}>{translations.public}</Text>
             <View style={styles.border}>
               {publicStatus !== "draft" && <View style={styles.selected} />}
@@ -661,10 +667,11 @@ const CourseCreate = () => {
               errorTxt={errors.long_description?.message}
               maxLength={3}
               showPlaceholder
+              required
             />
           )}
           {renderPrice()}
-          <View style={{ paddingHorizontal: 20 }}>
+          <View style={{ paddingHorizontal: 20, marginBottom: 8 }}>
             {renderSelectLevel()}
             {renderSelectSkill()}
           </View>
@@ -807,6 +814,7 @@ const styles = StyleSheet.create({
   textTitle: {
     ...CS.hnMedium,
     marginHorizontal: 20,
+    marginVertical: 8,
   },
   paddingButton: {
     paddingHorizontal: 16,
@@ -822,7 +830,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 8,
   },
   btnAdd: {
     ...CS.center,
@@ -836,7 +843,6 @@ const styles = StyleSheet.create({
   viewRenderFile: {
     ...CS.flexStart,
     marginHorizontal: 20,
-    marginTop: 8,
   },
   // txtGuide: {
   //   ...CS.hnMedium,

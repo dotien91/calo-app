@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Text,
   View,
@@ -31,18 +31,25 @@ import Input from "@shared-components/form/Input";
 
 interface IScheduleView {
   title?: string;
-  cover?: string;
+  cover?: any[];
   cb?: () => void;
 }
 
-const ScheduleView = ({ cb }: IScheduleView) => {
+const ScheduleView = ({ cb, title, cover }: IScheduleView) => {
   const [hasSchedule, setHasSchedule] = React.useState(false);
   const [startDate, setStartDate] = React.useState(new Date());
   const [priceInput, setPriceInput] = useState("0");
   const [loading, setLoading] = useState(false);
   const inputRef = React.useRef("");
+  console.log("tilte", title, cover);
 
-  const { onSelectPicture, isUpLoadingFile, listFile } = useUploadFile([], 1);
+  const { onSelectPicture, isUpLoadingFile, listFile, setListFile } =
+    useUploadFile([], 1);
+  useEffect(() => {
+    if (cover) {
+      setListFile([cover]);
+    }
+  }, []);
 
   const renderPrice = () => {
     return (
@@ -152,6 +159,7 @@ const ScheduleView = ({ cb }: IScheduleView) => {
           <View style={[styles.viewInput, styles.shadowView]}>
             <Input
               ref={inputRef}
+              defaultValue={title}
               placeholder={translations.livestream.inputTitle}
               placeholderTextColor={palette.white}
               customStyle={styles.input}

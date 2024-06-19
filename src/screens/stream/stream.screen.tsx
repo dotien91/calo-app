@@ -299,7 +299,7 @@ function App() {
       styleModalType: EnumStyleModalType.Bottom,
       contentModalType: EnumModalContentType.Schedule,
       data: {
-        cover: listFile[listFile.length - 1]?.uri,
+        cover: listFile[listFile.length - 1],
         title: inputRef.current?.value || translations.livestream.hello,
         cb: _createLiveStream,
       },
