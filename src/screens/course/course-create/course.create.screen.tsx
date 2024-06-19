@@ -476,15 +476,15 @@ const CourseCreate = () => {
     );
   };
 
-  const renderGuide = () => {
-    return (
-      <View>
-        <Text style={styles.txtGuide} onPress={onPressGuide}>
-          {translations.course.referUserGuideHere}
-        </Text>
-      </View>
-    );
-  };
+  // const renderGuide = () => {
+  //   return (
+  //     <View>
+  //       <Text style={styles.txtGuide} onPress={onPressGuide}>
+  //         {translations.course.referUserGuideHere}
+  //       </Text>
+  //     </View>
+  //   );
+  // };
 
   const renderStatus = () => {
     const selectPublic = () => {
@@ -533,9 +533,11 @@ const CourseCreate = () => {
               ? translations.course.updateCourse
               : translations.course.createCourse
           }
+          iconNameRight="info"
+          onPressRight={onPressGuide}
         />
         <ScrollView showsVerticalScrollIndicator={false} style={CS.flex1}>
-          {renderGuide()}
+          {/* {renderGuide()} */}
           {renderSelectVideo()}
           <Text style={styles.textTitle}>
             {translations.course.uploadVideoPreview}
@@ -836,12 +838,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginTop: 8,
   },
-  txtGuide: {
-    ...CS.hnMedium,
-    paddingHorizontal: 16,
-    textDecorationLine: "underline",
-    color: palette.link,
-  },
+  // txtGuide: {
+  //   ...CS.hnMedium,
+  //   paddingHorizontal: 16,
+  //   textDecorationLine: "underline",
+  //   color: palette.link,
+  // },
   viewBtn: {
     flex: 1,
     flexDirection: "row",

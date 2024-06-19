@@ -6,7 +6,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   ImageBackground,
-  StatusBar,
+  // StatusBar,
   FlatList,
 } from "react-native";
 import TrackPlayer, { Track, useActiveTrack } from "react-native-track-player";
@@ -319,7 +319,7 @@ const AudioPreview = () => {
           text={translations.podcast.writeAReview}
           style={{
             ...styles.btnReview,
-            marginBottom: displayedTrack ? 60 : 8,
+            marginBottom: displayedTrack ? 120 : 8,
           }}
           type="black"
         />
@@ -341,17 +341,15 @@ const AudioPreview = () => {
   };
 
   return (
-    <SafeAreaView style={CS.safeAreaView}>
+    <SafeAreaView
+      style={[CS.safeAreaView, { backgroundColor: palette.statusBarAudio }]}
+    >
       <ImageBackground
         source={{ uri: data?.post_avatar.media_url }}
-        blurRadius={100}
+        blurRadius={50}
       >
-        <StatusBar
-          barStyle={"light-content"}
-          backgroundColor={palette.statusBarAudio}
-        />
         <View>
-          <View
+          {/* <View
             style={{
               position: "absolute",
               backgroundColor: "#484d49",
@@ -361,10 +359,10 @@ const AudioPreview = () => {
               top: 0,
               opacity: 0.4,
             }}
-          />
+          /> */}
           <Header />
         </View>
-        <View style={styles.overlay} />
+        {/* <View style={styles.overlay} /> */}
 
         <FlatList
           data={listData}
@@ -377,11 +375,11 @@ const AudioPreview = () => {
         {!hide && (
           <View
             style={{
-              height: getBottomSpace() + 60,
+              height: getBottomSpace() + 70,
               width: SCREEN_WIDTH,
               position: "absolute",
               zIndex: 1,
-              backgroundColor: palette.background,
+              backgroundColor: palette.statusBarAudio,
               bottom: 0,
               left: 0,
               right: 0,
@@ -483,14 +481,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     gap: 8,
   },
-  overlay: {
-    position: "absolute",
-    // zIndex: -1,
-    backgroundColor: "#484d49",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    top: 0,
-    opacity: 0.3,
-  },
+  // overlay: {
+  //   position: "absolute",
+  //   // zIndex: -1,
+  //   backgroundColor: "#484d49",
+  //   bottom: 0,
+  //   left: 0,
+  //   right: 0,
+  //   top: 0,
+  //   opacity: 0.3,
+  // },
 });

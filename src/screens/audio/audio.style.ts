@@ -156,13 +156,12 @@ export default (theme: ExtendedTheme) => {
     },
     viewIsWatched: {
       position: "absolute",
-      top: 0,
-      right: 0,
-      backgroundColor: colors.green2,
+      top: 4,
+      right: 4,
+      backgroundColor: colors.textOpacity8,
       zIndex: 1,
-      borderTopRightRadius: 5,
-      borderBottomLeftRadius: 5,
-      padding: 1,
+      borderRadius: 8,
+      paddingHorizontal: 8,
     },
     viewInfo: {
       flex: 1,

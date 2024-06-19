@@ -1408,6 +1408,8 @@ export default {
     sendRequest: "Send information successfully",
   },
   podcast: {
+    createPlaylist: "Create playlist",
+    createPodcast: "Create podcast",
     myPodcast: "My podcast",
     uploadePodcast: "Upload podcast",
     selectPodcast: "Please select the podcast list",

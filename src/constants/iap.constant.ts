@@ -1,3 +1,5 @@
+import { Platform } from "react-native";
+
 export const priceIds = [
   // { id: "com.course.tier1", label: "99,000", value: 99000 },
   // { id: "com.courseonline.tier2", label: "199,000", value: 199000 },
@@ -33,11 +35,18 @@ export const priceIdsLiveStream = [
   { id: "com.coach.livestream.tier5", label: "499,000", value: 499000 },
 ];
 
-export const subscriptionIds = [
-  // { id: "com.coach.podcasttest", label: "39,000", value: 39000 },
-  { id: "com.coach.podcasttest2", label: "39,000", value: 39000 },
-  // { id: "com.coach.podcasttest3", label: "59,000", value: 59000 },
-];
+export const subscriptionIds = Platform.select({
+  ios: () => [
+    // { id: "com.coach.podcasttest", label: "39,000", value: 39000 },
+    { id: "com.coach.podcasttest2", label: "39,000", value: 39000 },
+    // { id: "com.coach.podcasttest3", label: "59,000", value: 59000 },
+  ],
+  android: () => [
+    // { id: "com.coach.podcasttest", label: "39,000", value: 39000 },
+    { id: "com.coach.podcasttest3", label: "39,000", value: 39000 },
+    // { id: "com.coach.podcasttest3", label: "59,000", value: 59000 },
+  ],
+});
 export const priceIdSubscription = {
   id: "com.coach.livestream.tier1",
   label: "39,000",

@@ -1,5 +1,11 @@
 import * as React from "react";
-import { SafeAreaView, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { useActiveTrack } from "react-native-track-player";
 
@@ -52,52 +58,75 @@ const AudioBookScreen = () => {
             />
           </TouchableOpacity>
           {showMore && (
-            <TouchableOpacity
-              style={{
-                ...styles.btn2,
-                bottom: !hide ? 140 : 70,
-              }}
-              onPress={() => navigate(SCREENS.CREATE_AUDIO)}
-            >
-              <Icon
-                name={"list-circle-outline"}
-                type={IconType.Ionicons}
-                size={25}
-                color={palette.white}
-              />
-            </TouchableOpacity>
+            <>
+              <TouchableOpacity
+                style={{
+                  ...styles.btn2,
+                  bottom: !hide ? 140 : 70,
+                }}
+                onPress={() => navigate(SCREENS.CREATE_AUDIO)}
+              >
+                <Icon
+                  name={"musical-note-outline"}
+                  type={IconType.Ionicons}
+                  size={25}
+                  color={palette.white}
+                />
+              </TouchableOpacity>
+              <View style={{ ...styles.viewTxt, bottom: !hide ? 150 : 80 }}>
+                <Text style={{ ...styles.txt }}>
+                  {translations.podcast.createPlaylist}
+                </Text>
+              </View>
+            </>
           )}
           {showMore && (
-            <TouchableOpacity
-              style={{
-                ...styles.btn2,
-                bottom: !hide ? 190 : 120,
-              }}
-              onPress={() => navigate(SCREENS.CREATE_AUDIO, { isChild: true })}
-            >
-              <Icon
-                name={"headset-outline"}
-                type={IconType.Ionicons}
-                size={25}
-                color={palette.white}
-              />
-            </TouchableOpacity>
+            <>
+              <TouchableOpacity
+                style={{
+                  ...styles.btn2,
+                  bottom: !hide ? 190 : 120,
+                }}
+                onPress={() =>
+                  navigate(SCREENS.CREATE_AUDIO, { isChild: true })
+                }
+              >
+                <Icon
+                  name={"headset-outline"}
+                  type={IconType.Ionicons}
+                  size={25}
+                  color={palette.white}
+                />
+              </TouchableOpacity>
+              <View style={{ ...styles.viewTxt, bottom: !hide ? 200 : 130 }}>
+                <Text style={{ ...styles.txt }}>
+                  {translations.podcast.createPodcast}
+                </Text>
+              </View>
+            </>
           )}
           {showMore && (
-            <TouchableOpacity
-              style={{
-                ...styles.btn2,
-                bottom: !hide ? 240 : 170,
-              }}
-              onPress={() => navigate(SCREENS.MY_AUDIO)}
-            >
-              <Icon
-                name={"settings-outline"}
-                type={IconType.Ionicons}
-                size={25}
-                color={palette.white}
-              />
-            </TouchableOpacity>
+            <>
+              <TouchableOpacity
+                style={{
+                  ...styles.btn2,
+                  bottom: !hide ? 240 : 170,
+                }}
+                onPress={() => navigate(SCREENS.MY_AUDIO)}
+              >
+                <Icon
+                  name={"list-circle-outline"}
+                  type={IconType.Ionicons}
+                  size={25}
+                  color={palette.white}
+                />
+              </TouchableOpacity>
+              <View style={{ ...styles.viewTxt, bottom: !hide ? 250 : 180 }}>
+                <Text style={{ ...styles.txt }}>
+                  {translations.podcast.myPodcast}
+                </Text>
+              </View>
+            </>
           )}
         </>
       )}
@@ -127,6 +156,20 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     right: 10,
     zIndex: 1,
+  },
+  viewTxt: {
+    position: "absolute",
+    // height: 40,
+    backgroundColor: palette.textOpacity6,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 25,
+    right: 60,
+    zIndex: 1,
+  },
+  txt: {
+    color: palette.white,
+    textAlign: "right",
   },
 });
 
