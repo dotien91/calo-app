@@ -205,6 +205,7 @@ const TeacherScreen = () => {
           style={{
             flexDirection: "row",
             marginBottom: 8,
+            alignItems: "center",
           }}
         >
           <Avatar
@@ -218,7 +219,14 @@ const TeacherScreen = () => {
             }}
             resizeMode={"cover"}
           />
-          <Text style={styles.textDisplayName}>{userData?.display_name}</Text>
+          <View style={{ marginLeft: 16 }}>
+            <Text style={styles.textDisplayName}>{userData?.display_name}</Text>
+            <View style={styles.boxLevel}>
+              <Text style={styles.textLevel}>
+                {translations.task.level} {userData?.level}
+              </Text>
+            </View>
+          </View>
         </View>
         <View style={styles.viewProfileBtn}>
           <Text
@@ -290,8 +298,8 @@ const TeacherScreen = () => {
 
   const renderUtilities = (item: itemType, index: number) => {
     return (
-      <View key={index} style={{ marginBottom: 20 }}>
-        <TextBase style={{ marginLeft: 15, marginTop: 5 }} fontWeight="700">
+      <View key={index} style={{ marginBottom: 20, marginTop: 10 }}>
+        <TextBase style={{ marginLeft: 15 }} fontWeight="700">
           {item.textTitle}
         </TextBase>
         {renderIcon(item.content)}
@@ -304,7 +312,7 @@ const TeacherScreen = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <HeaderTeacherScreen />
         {renderAvatar()}
-        <Tasks numberOfTasks={2} />
+        <Tasks numberOfTasks={2} title={translations.profileTeacher.task} />
         {utilities.map((item, index) => renderUtilities(item, index))}
       </ScrollView>
     </View>

@@ -807,6 +807,7 @@ export default {
     desBtn: "教師専用ページにアクセスする",
     profile: "プロフィールを見る",
     balance: "残高",
+    task: "任務",
   },
   member: {
     chat: "チャット",
@@ -1430,7 +1431,7 @@ export default {
     send: "送信",
     audioBook: "オーディオブック",
     typeAudio: "オーディオタイプ",
-    recommendBook: "推奨書籍",
+    recommendBook: "ポッドキャストをおすすめ",
     continueListen: "続けて聴く",
     listen: "再生回数",
     allAudio: "すべてのオーディオ",

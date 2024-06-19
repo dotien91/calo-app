@@ -309,7 +309,9 @@ const styles = StyleSheet.create({
     height: (SCREEN_WIDTH - 56) / 6,
   },
   text: {
-    ...CS.hnBold,
+    fontWeight: "400",
     textAlign: "center",
+    fontSize: 14,
+    color: palette.textOpacity9,
   },
 });

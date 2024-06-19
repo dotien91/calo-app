@@ -773,6 +773,7 @@ export default {
     desBtn: "Access the page reserved for teachers",
     profile: "Profile",
     balance: "Balance",
+    task: "TASKS",
   },
   member: {
     chat: "chat",
@@ -966,7 +967,7 @@ export default {
     send: "Send",
     audioBook: "Audio Book",
     typeAudio: "Type of audio book",
-    recommendBook: "Recommend book",
+    recommendBook: "Recommend podcast",
     continueListen: "Continue listening",
     listen: "Listen",
     allAudio: "All audio book",

@@ -21,6 +21,7 @@ import { formatDate } from "@utils/date.utils";
 import { getListAffiliate } from "@services/api/affiliate.api";
 import formatMoney from "@shared-components/input-money/format.money";
 import { SafeAreaView } from "react-native-safe-area-context";
+import EmptyResultView from "@shared-components/empty.data.component";
 
 const CodeActivationsScreen = () => {
   // const [courseCurrentSort, setCourseCurrentSort] = useState({});
@@ -181,11 +182,14 @@ const CodeActivationsScreen = () => {
       </Animatable.View>
     );
   };
-
+  const renderEmpty = () => {
+    return <EmptyResultView title={translations.emptyList} />;
+  };
   return (
     <SafeAreaView style={CS.safeAreaView}>
       <Header text={translations.settingUser.codeActivations} />
       {/* {renderHeader()} */}
+      {!listUserRef.length && renderEmpty()}
       <ScrollView showsVerticalScrollIndicator={false}>
         <Accordion
           sections={listUserRef}

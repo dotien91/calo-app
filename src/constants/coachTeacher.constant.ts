@@ -52,7 +52,10 @@ export const utilities = [
       {
         title: translations.profileTeacher.myCourse,
         uri: KhoaHoc,
-        screen: SCREENS.MY_COURES,
+        screen: SCREENS.PROFILE_CURRENT_USER,
+        param: {
+          tab: "course",
+        },
       },
       {
         title: translations.profileTeacher.schedule,

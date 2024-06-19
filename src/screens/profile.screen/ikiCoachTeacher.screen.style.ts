@@ -2,7 +2,7 @@ import CS from "@theme/styles";
 import { ExtendedTheme } from "@react-navigation/native";
 import { ViewStyle, StyleSheet, TextStyle } from "react-native";
 import { getStatusBarHeight } from "react-native-safearea-height";
-import { Device } from "@utils/device.ui.utils";
+import { Device, isAndroid } from "@utils/device.ui.utils";
 
 interface Style {
   container: ViewStyle;
@@ -19,6 +19,8 @@ interface Style {
   textDisplayName: TextStyle;
   viewAvatar: ViewStyle;
   viewProfileBtn: ViewStyle;
+  boxLevel: ViewStyle;
+  textLevel: TextStyle;
 }
 
 export default (theme: ExtendedTheme) => {
@@ -36,7 +38,7 @@ export default (theme: ExtendedTheme) => {
       borderBottomLeftRadius: 15,
       borderBottomRightRadius: 15,
       marginBottom: 5,
-      marginTop: getStatusBarHeight(),
+      marginTop: isAndroid ? getStatusBarHeight() : 0,
     },
     viewHeader: {
       ...CS.row,
@@ -94,8 +96,7 @@ export default (theme: ExtendedTheme) => {
       ...CS.hnSemiBold,
       fontSize: 16,
       color: colors.text,
-      marginLeft: 8,
-      marginTop: 3,
+      paddingBottom: 5,
     },
     viewAvatar: {
       flexDirection: "row",
@@ -111,6 +112,21 @@ export default (theme: ExtendedTheme) => {
       justifyContent: "center",
       alignItems: "center",
       marginTop: 12,
+    },
+    boxLevel: {
+      backgroundColor: colors.btnRedPrimary,
+      maxWidth: 70,
+      textAlign: "center",
+      color: colors.white,
+      paddingVertical: 2,
+      borderRadius: 4,
+      paddingHorizontal: 4,
+    },
+    textLevel: {
+      textAlign: "center",
+      ...CS.hnRegular,
+      fontSize: 12,
+      color: colors.white,
     },
   });
 };
