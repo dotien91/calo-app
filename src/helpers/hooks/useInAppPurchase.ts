@@ -18,7 +18,7 @@ import {
 } from "react-native-iap";
 import { SCREENS } from "constants";
 import { _getJson, _setJson } from "@services/local-storage";
-import { subscriptionIds } from "constants/iap.constant";
+import { priceIdsLiveStream, subscriptionIds } from "constants/iap.constant";
 import { isAndroid } from "@helpers/device.info.helper";
 import useStore from "@services/zustand/store";
 import { Platform } from "react-native";
@@ -160,8 +160,10 @@ export const useInAppPurchase = () => {
     try {
       await initConnection();
       isAndroid() && (await flushFailedPurchasesCachedAsPendingAndroid());
-      if (productIds.length > 0) {
-        await getProducts({ skus: productIds });
+      console.log("priceIdsLiveStreampriceIdsLiveStream", priceIdsLiveStream)
+      const livestreamIds = priceIdsLiveStream.filter(item => !!item.id).map(item => item.id)
+      if (productIds.length > 0 || !!priceIdsLiveStream.length) {
+        await getProducts({ skus: [...productIds, ...livestreamIds] });
       }
       console.log("subscriptionIds", subscriptionIds());
       if (subscriptionIds()?.length > 0) {
@@ -226,6 +228,7 @@ export const useInAppPurchase = () => {
     callback.current = cb;
     typeBuy.current = typeProduct;
     const orderData = await createOrder(data);
+    console.log("orderDataorderData", orderData)
     if (!orderData) return;
     // typeProduct.current = typeProduct;
     // local_id.current = local_id;
