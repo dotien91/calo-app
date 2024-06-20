@@ -354,19 +354,19 @@ const AudioPreview = () => {
 
   return (
     <View style={[CS.flex1, { backgroundColor: palette.statusBarAudio }]}>
-      <SafeAreaView
-        style={{
-          marginBottom: isAndroid() ? getBottomSpace() : 0,
-          marginTop: isAndroid() ? getStatusBarHeight() : 0,
-        }}
-      />
       <ImageBackground
         style={CS.flex1}
         source={{ uri: data?.post_avatar.media_url }}
         blurRadius={50}
       >
+        <SafeAreaView
+          style={{
+            marginBottom: isAndroid() ? getBottomSpace() : 0,
+            marginTop: isAndroid() ? getStatusBarHeight() : 0,
+          }}
+        />
         <View style={styles.overlay} />
-        <View>
+        <View style={CS.flex1}>
           <Header />
           <FlatList
             data={listData}

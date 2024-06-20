@@ -388,6 +388,7 @@ export default {
     at: "at",
   },
   course: {
+    warningPrice: "Please select a course price",
     referUserGuideHere: "Refer to the user guide here",
     publicMode: "Public mode",
     desReferal: (txt: string) =>

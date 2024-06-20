@@ -208,6 +208,10 @@ const CourseCreate = () => {
         return;
       }
     }
+    if (priceInput === "") {
+      showToast({ type: "error", message: translations.course.warningPrice });
+      return;
+    }
     const params = {
       title: dataHook.title,
       // lang: lang,
@@ -460,6 +464,7 @@ const CourseCreate = () => {
           }}
         >
           {translations.payment.coursePrice}
+          <Require />
         </Text>
 
         <TextInputPrice
@@ -660,11 +665,11 @@ const CourseCreate = () => {
               control={control}
               rules={{
                 required: {
-                  value: true,
+                  value: typeCourse === EnumClassType.Call11 && true,
                   message: translations.required,
                 },
               }}
-              errorTxt={errors.long_description?.message}
+              errorTxt={errors.lession_count?.message}
               maxLength={3}
               showPlaceholder
               required

@@ -5,6 +5,7 @@ import TextBase from "@shared-components/TextBase";
 import SelectDateTime from "./dataPicker";
 import { EnumColors } from "models";
 import CS from "@theme/styles";
+import { palette } from "@theme/themes";
 
 interface useSelectTimeProps {
   title: string;
@@ -30,6 +31,7 @@ const useSelectTime = ({ title, time }: useSelectTimeProps) => {
             {title}
           </TextBase>
           <Switch
+            trackColor={{ false: palette.btnInactive, true: palette.lightBlue }}
             value={isSwitch}
             onChange={() => {
               setIsSwitch(!isSwitch);

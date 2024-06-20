@@ -387,6 +387,7 @@ export default {
     at: "時",
   },
   course: {
+    warningPrice: "コースの価格を選択してください",
     referUserGuideHere: "使用ガイドはこちらを参照してください",
     publicMode: "公開モード",
     desReferal: (txt: string) =>

@@ -456,6 +456,7 @@ export default {
     at: "lúc",
   },
   course: {
+    warningPrice: "Vui lòng chọn giá khoá học",
     referUserGuideHere: "Tham khảo hướng dẫn sử dụng tại đây",
     publicMode: "Chế độ công khai",
     desReferal: (txt: string) =>

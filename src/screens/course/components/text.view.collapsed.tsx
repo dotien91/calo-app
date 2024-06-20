@@ -58,7 +58,9 @@ const TextViewCollapsed = ({
           style={{ flexDirection: "row", alignItems: "center" }}
           onPress={toggleCollapsed}
         >
-          <Text style={[styles.txtSeeMore, { color: textColor|| palette.primary }]}>
+          <Text
+            style={[styles.txtSeeMore, { color: textColor || palette.primary }]}
+          >
             {!collapsed
               ? translations.course.hideLess
               : translations.course.viewMore}
