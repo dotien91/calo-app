@@ -369,6 +369,7 @@ const AudioPreview = () => {
         <View style={CS.flex1}>
           <Header />
           <FlatList
+            showsVerticalScrollIndicator={false}
             data={listData}
             contentContainerStyle={styles.container}
             renderItem={renderItem}

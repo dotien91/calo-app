@@ -83,7 +83,11 @@ export const FloatingPlayer = ({ onPressShow }: FloatingPlayerProps) => {
   };
 
   return (
-    <ImageBackground source={{ uri: displayedTrack.artwork }} blurRadius={100}>
+    <ImageBackground
+      style={{ backgroundColor: palette.iconInactive }}
+      source={{ uri: displayedTrack.artwork }}
+      blurRadius={100}
+    >
       <View style={styles.overlay} />
       <TouchableOpacity
         onPress={onPressShow}

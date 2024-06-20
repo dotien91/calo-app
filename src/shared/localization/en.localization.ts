@@ -986,7 +986,7 @@ export default {
     isLast: "Already at the end of the list",
     shareAudio: (txt: string) =>
       `Download the IKIGAI Coach app now to listen to the best audiobooks: ${txt}`,
-    listened: "listened",
+    listened: "Listened",
   },
   livestream: {
     hello: "Hello!",

@@ -45,7 +45,7 @@ import { ICourseItem } from "models/course.model";
 import { formatVNDate } from "@utils/date.utils";
 import IconSvg from "assets/svg";
 import TextViewCollapsed from "@screens/course/components/text.view.collapsed";
-import SubscriptionBtn from "@screens/home/components/subscription-btn/SubscriptionBtn";
+// import SubscriptionBtn from "@screens/home/components/subscription-btn/SubscriptionBtn";
 
 const initialLayout = WindowWidth;
 interface ProfileUserProps {
@@ -342,7 +342,7 @@ const ProfileUser = (props: ProfileUserProps) => {
           {isUserLogin && (
             <ButtomAction onPress={openChatRoom} text={translations.message} />
           )}
-          <SubscriptionBtn userInfo={userInfo} />
+          {/* <SubscriptionBtn userInfo={userInfo} /> */}
         </View>
       );
     }
