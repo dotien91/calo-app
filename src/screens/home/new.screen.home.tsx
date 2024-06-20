@@ -9,6 +9,9 @@ import { navigate } from "@helpers/navigation.helper";
 import { SCREENS } from "constants";
 import { useActiveTrack } from "react-native-track-player";
 import { useLastActiveTrack } from "@screens/audio/hook/useLastActiveTrack";
+import { emitSocket } from "@helpers/socket.helper";
+import useStore from "@services/zustand/store";
+import { closeSuperModal, showLoading } from "@helpers/super.modal.helper";
 // import { EnumModalContentType, EnumStyleModalType, showSuperModal } from "@helpers/super.modal.helper";
 
 const NewHomeScreen = () => {
@@ -20,7 +23,7 @@ const NewHomeScreen = () => {
   const hide =
     !displayedTrack ||
     displayedTrack.url ===
-      "https://ia801304.us.archive.org/32/items/SilentRingtone/silence.mp3";
+    "https://ia801304.us.archive.org/32/items/SilentRingtone/silence.mp3";
 
   // const _showSuperModalCourse = () => {
   //   showSuperModal({
@@ -28,6 +31,7 @@ const NewHomeScreen = () => {
   //     contentModalType: EnumModalContentType.Schedule
   //   })
   // };
+  const userData = useStore(state => state.userData)
   return (
     <View style={CS.flex1}>
       {/* <StatusBar backgroundColor="transparent" barStyle="dark-content" /> */}
@@ -50,8 +54,27 @@ const NewHomeScreen = () => {
           }}
           // onPress={_showSuperModalCourse}
           // onPress={() => NavigationService.navigate(SCREENS.AUDIO_PLAY)}
-          onPress={() => navigate(SCREENS.POST_SCREEN)}
-          // onPress={() => navigate(SCREENS.MANAGE_CERTIFICATE)}
+          onPress={() => {
+            const id = userData?.user_role == "teacher" ? "666ffe3f715cee894e6f0a71" : "666c162294f133507f9c87da"
+            // if (userData?.user_role == "teacher") {
+            //   showLoading()
+            //   emitSocket("joinOneone", id);
+            //   setTimeout(() => {
+            //     navigate(SCREENS.ONEONE_SCREEN)
+            //     setTimeout(() => {
+            //       closeSuperModal()
+            //     }, 500)
+            //   }, 3000)
+            //   return
+            // } else {
+              navigate(SCREENS.ONEONE_SCREEN)
+            // }
+            // navigate(SCREENS.ONEONE_SCREEN)
+            // navigate(SCREENS.POST_SCREEN)
+
+
+          }}
+        // onPress={() => navigate(SCREENS.MANAGE_CERTIFICATE)}
         >
           <Icon
             name={"add-outline"}

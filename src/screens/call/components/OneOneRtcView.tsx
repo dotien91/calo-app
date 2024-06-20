@@ -9,23 +9,23 @@ import {
   IconSpeakerCall,
   RotateIcon,
   SplitView,
-} from "./assets/svgIcons";
+} from "../assets/svgIcons";
 
 import useStore from "@services/zustand/store";
 import LinearGradient from "react-native-linear-gradient";
-import ImageLoad from "./components/ImageLoad";
+import ImageLoad from "@shared-components/image-load/ImageLoad";
 import { emitSocket, offSocket, onSocket } from "@helpers/socket.helper";
 
 import { SCREENS } from "constants";
-import { Device } from "./ui/device.ui";
+import { Device } from "../ui/device.ui";
 // import { useCall, useLocalStream, _requestAudioPermission, _requestCameraPermission } from "./utils";
 
 import { endCall, makeCall } from "@services/api/call.api";
 
 import RNCallKeep from "react-native-callkeep";
 import KeepAwake from "react-native-keep-awake";
-interface HomeScreenProps {}
-import createStyles from "./call.page.screen.style";
+interface OneOneRtcViewProps {}
+import createStyles from "../call.page.screen.style";
 import {
   Pressable,
   View,
@@ -43,7 +43,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import { MHS } from "./ui/sizes.ui";
+import { MHS } from "../ui/sizes.ui";
 
 const HEIGHT_BOTTOM = Device.isX ? Device.safeAreaInsetX.bottom + 90 : 110;
 
@@ -58,16 +58,19 @@ import {
 } from "react-native-webrtc";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
-import { HIT_SLOP_EXPAND_20 } from "./constants/system.constant";
-import SoundComponent from "./components/sound.component";
-import TextBase from "./components/TextBase";
+import { HIT_SLOP_EXPAND_20 } from "../constants/system.constant";
+import SoundComponent from "../components/sound.component";
+import TextBase from "../components/TextBase";
 import { palette } from "@theme/themes";
 import { translations } from "@localization";
+import { goBack, replace } from "@helpers/navigation.helper";
 
-const CallPageScreen: React.FC<HomeScreenProps> = () => {
+const OneOneRtcView: React.FC<OneOneRtcViewProps> = () => {
   const route = useRoute<any>();
   const intervalTimer = useRef<ReturnType<typeof setInterval> | null>();
   const ringingRef = useRef<any>();
+  const a = useRef<any>();
+
   const callTime = useRef<any>();
   const timeoutEndCall = useRef<ReturnType<typeof setInterval> | null>();
   const [timer, setTimer] = useState(0);
@@ -76,11 +79,32 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
   const item = route.params?.item || {};
   const optionFilter = useSharedValue(0);
 
-  const [data, setDataCall] = useState<any>(route.params?.data || {});
+  const [data, setDataCall] = useState<any>({
+    room_id: "667002fd570c57a537c7ad2e"
+  });
   const [callType] = useState(route.params?.type || "video_call");
+  const userData = useStore((state) => state.userData);
 
   const peerConnection = useRef<RTCPeerConnection>();
   const [remoteStreams, setRemoteStreams] = useState<any>({});
+  const [showRemoteStream, setShowRemoteStream] = useState<any>(true);
+
+
+  const leaveOneoneClient = () => {
+    setRemoteStreams({})
+  }
+  useEffect(() => {
+    if (!userData) return
+    const id = userData?.user_role == "teacher" ? "666ffe3f715cee894e6f0a71" : "666c162294f133507f9c87da" 
+    onSocket("leaveOneoneClient", leaveOneoneClient);
+
+    return () => {
+      offSocket("leaveOneoneClient", leaveOneoneClient);
+      onPressEndCall()
+    }
+  }, [userData])
+  
+
   const [configActions, setConfigActions] = useState({
     localMic: true,
     localCamera: callType === "video_call",
@@ -95,7 +119,6 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
     remoteStreams: {},
   });
 
-  const userData = useStore((state) => state.userData);
   const [account] = useState<any>(userData);
   const servers = {
     iceServers: [
@@ -109,8 +132,9 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
 
   const isMakeCall = useMemo(() => {
     //Chat room ID
-    return !data.chat_room_id;
-  }, []);
+    alert(userData?.user_role)
+    return userData?.user_role !== "teacher"
+  }, [userData]);
 
   useEffect(() => {
     if (streams?.id) {
@@ -136,7 +160,6 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
     KeepAwake.activate();
     createLocalStream();
     if (isMakeCall) {
-      ringingRef.current?.playSound();
     } else {
       onSocket("msgToUser", msgToUser);
     }
@@ -146,12 +169,9 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
     };
 
     onSocket("endCall", () => {
-      ringingRef.current?.stopSound();
       releaseCamera();
       RNCallKeep.endAllCalls();
-      setTimeout(() => {
-        NavigationService.navigate(SCREENS.CHAT);
-      }, 500);
+        NavigationService.popToTop()
     });
 
     const backHandler = BackHandler.addEventListener(
@@ -169,10 +189,11 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
       if (timeoutEndCall.current) {
         clearTimeout(timeoutEndCall.current);
       }
-      ringingRef.current?.stopSound();
       setDataCall({});
     };
   }, []);
+  // {"chatRoomId": "66700320570c57a537c7ad80", "roomId": "667002fd570c57a537c7ad2e"}
+
 
   const createRoom = async () => {
     if (Platform.OS === "android") {
@@ -181,60 +202,27 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
     }
     try {
       if (!isMakeCall) {
-        callTime.current = data.call_time;
-        const res = await makeCall(
-          data?.to_user?._id,
-          callType,
-          data.call_time,
-          data.chat_room_id,
-        );
-        if (res?.data) {
-          if (res.data?.is_has_call) {
-            return;
-          }
+  
           joinCall({
             stream: streams,
-            roomId: data.room_id,
+            roomId: "667002fd570c57a537c7ad2e",
           });
-        } else {
-          RNCallKeep.endAllCalls();
-        }
         return;
       } else {
-        timeoutEndCall.current = setTimeout(() => {
-          onPressEndCall();
-        }, 40000);
-        callTime.current = `${Math.round(Date.now() / 1000)}`;
-        const res = await makeCall(
-          item?.partner_id?._id,
-          callType,
-          callTime.current,
-          item?.chat_room_id?._id,
-        )
-          .then(async (res: any) => {
-            return res;
-          })
-          .catch(async () => {
-            return null;
-          });
-
-        if (res && res.data) {
-          await startCall({
-            stream: streams,
-            roomId: res.data.room_id,
-          });
-        } else {
-          RNCallKeep.endAllCalls();
-          Alert.alert(translations.somethingWentWrong);
-          NavigationService.goBack();
-        }
+        // await makeCall(
+        //   "666ffe3f715cee894e6f0a71",
+        //   callType,
+        //   undefined,
+        //   "667002fd570c57a537c7ad2e",
+        // );
+        alert(4)
+        startCall({
+          stream: streams,
+          roomId: "667002fd570c57a537c7ad2e",
+        });
       }
     } catch (error: any) {
-      RNCallKeep.endAllCalls();
-      Alert.alert(
-        error?.response?.data?.message || translations.somethingWentWrong,
-      );
-      NavigationService.goBack();
+   
     }
   };
 
@@ -285,24 +273,24 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
     closePeer();
     RNCallKeep.endAllCalls();
     ringingRef.current?.stopSound();
-    NavigationService.navigate(SCREENS.CHAT);
+    // NavigationService.popToTop()
 
     try {
-      if (!isMakeCall) {
-        await endCall(
-          data?.to_user?._id,
-          callType,
-          callTime.current,
-          data?.chat_room_id,
-        );
-      } else {
-        await endCall(
-          item?.partner_id?._id,
-          callType,
-          callTime.current,
-          item?.chat_room_id?._id,
-        );
-      }
+      // if (!isMakeCall) {
+      //   await endCall(
+      //     data?.to_user?._id,
+      //     callType,
+      //     callTime.current,
+      //     data?.chat_room_id,
+      //   );
+      // } else {
+      //   await endCall(
+      //     item?.partner_id?._id,
+      //     callType,
+      //     callTime.current,
+      //     item?.chat_room_id?._id,
+      //   );
+      // }
     } catch (error: any) {
       Alert.alert(
         error?.response?.data?.message || translations.somethingWentWrong,
@@ -360,7 +348,6 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
   }) => {
     peerConnection.current = new RTCPeerConnection(servers);
     emitSocket("joinCall", roomId);
-
     peerConnection.current.addEventListener("icecandidate", (event) => {
       // When you find a null candidate then there are no more candidates.
       // Gathering of candidates has finished.
@@ -371,7 +358,6 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
         return;
       }
       const dataToSend = { id: uuidv4(), candidate: event.candidate.toJSON() };
-      // console.log("emitOfferCandidates", dataToSend);
 
       emitSocket("emitOfferCandidates", {
         room_id: roomId,
@@ -382,14 +368,15 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
       // Keeping to Trickle ICE Standards, you should send the candidates immediately.
     });
     peerConnection.current.addEventListener("track", (event) => {
+      alert(Object.keys(remoteStreams).length)
       const newRemoteStream =
         Object.keys(remoteStreams).length === 0
           ? new MediaStream()
           : remoteStreams;
-      if (newRemoteStream) {
+      // if (newRemoteStream) {
         newRemoteStream.addTrack(event.track, newRemoteStream);
         setRemoteStreams(newRemoteStream);
-      }
+      // }
     });
 
     // Add our stream to the peer connection.
@@ -412,8 +399,10 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
       room_id: roomId,
       payload: JSON.stringify(offer),
     };
-    alert("emit offer client")
+
     emitSocket("emitOffer", dataToEmitSocket);
+    alert("offer sent");
+
     onSocket("answerClient", (d: any) => {
       // console.log("START 02", typeof d)
       if (!d) {
@@ -493,6 +482,8 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
     );
 
     peerConnection.current.addEventListener("track", (event) => {
+      alert(Object.keys(remoteStreams).length)
+
       const newRemoteStream =
         Object.keys(remoteStreams).length === 0
           ? new MediaStream()
@@ -535,7 +526,6 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
       }
     });
 
-    alert("onSocket offer client")
     onSocket("offerClient", async (d: any) => {
       // console.log(d, 'JOIN 01')
       if (!d) {
@@ -558,6 +548,7 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
             sdp: answerDescription.sdp,
           };
           // console.log(answer, 'answer GUI DI')
+          alert("answer")
           emitSocket("emitAnswer", {
             room_id: roomId,
             payload: JSON.stringify(answer),
@@ -640,18 +631,18 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
   const viewVideo = useAnimatedStyle(() => {
     return {
       backgroundColor: "red",
-      height: splitView.value ? "50%" : "100%",
+      height: "100%",
       marginTop: 0,
     };
   });
 
   const localVideoStyle = useAnimatedStyle(() => {
     return {
-      position: splitView.value == 0 ? "absolute" : "relative",
-      width: splitView.value ? Device.width : 80,
-      height: splitView.value ? "50%" : 120,
-      top: splitView.value ? 0 : 76,
-      right: splitView.value ? 0 : 20,
+      position:  "absolute",
+      width: Device.width,
+      height: Device.height/2,
+      top: 0,
+      right: splitView.value ? 0 : 0,
     };
   });
 
@@ -678,7 +669,6 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
     });
     optionFilter.value = withTiming(0, { duration: 300 });
   };
-
   const formatTime = (seconds: number) => {
     if (seconds <= 0) {
       return "";
@@ -691,13 +681,12 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
       (seconds < 10 ? "0" + seconds : seconds)
     );
   };
-
   return (
     <View style={styles.container}>
       <Pressable
         style={styles.headerIcon}
         hitSlop={HIT_SLOP_EXPAND_20}
-        onPress={onPressEndCall}
+        onPress={() => {onPressEndCall(); goBack()}}
       >
         <BackIcon width={MHS._24} height={MHS._24} color={palette.background} />
       </Pressable>
@@ -713,14 +702,14 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
         ]}
         style={styles.topHeaderCall}
       />
-      <View style={styles.topHeaderTimer}>
+      {showRemoteStream && <View style={styles.topHeaderTimer}>
         <TextBase
-          title={formatTime(timer)}
+          title={remoteStreams?.id}
           fontSize={18}
           fontWeight="700"
           color={palette.background}
         />
-      </View>
+      </View>}
       <Animated.View style={[styles.viewLocalVideo, localVideoStyle]}>
         {streams?.id && configActions.localCamera ? (
           <RTCView
@@ -741,8 +730,11 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
         )}
       </Animated.View>
 
-      <Animated.View style={[viewVideo]}>
-        {remoteStreams?.id ? (
+      <Animated.View style={[viewVideo, {
+        bottom: 0,
+        top: "auto",
+      }]}>
+        {showRemoteStream && remoteStreams?.id ? (
           <RTCView
             streamURL={remoteStreams?.toURL()}
             style={{ ...StyleSheet.absoluteFillObject }}
@@ -817,10 +809,10 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
       </SafeAreaView>
       <SoundComponent
         ref={ringingRef}
-        source={require("./assets/sound/ringback.wav")}
+        source={require("../assets/sound/ringback.wav")}
       />
     </View>
   );
 };
 
-export default CallPageScreen;
+export default OneOneRtcView;

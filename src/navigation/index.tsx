@@ -27,10 +27,12 @@ import {
   StackIntroData,
 } from "./navigation.constant";
 import analytics from "@react-native-firebase/analytics";
-import { navigate } from "@helpers/navigation.helper";
+import { getRoute, navigate } from "@helpers/navigation.helper";
 import eventEmitter from "@services/event-emitter";
 import NewHomeScreen from "@screens/home/new.screen.home";
 import BottomSheetPanResponder from "@screens/audio/components/BottomSheetPanResponder";
+import OneoneScreen from "@screens/call/oneone.screen";
+import CallPageScreen from "@screens/call/call.page.screen";
 
 // import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 // ? If you want to use stack or tab or both
@@ -308,17 +310,19 @@ const Navigation = () => {
           screen_name: currentRouteName,
           screen_class: currentRouteName,
         });
-
         // Save the current route name for later comparison
       }}
     >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {/* <Stack.Screen name={"SCREENS.TEACHER_COURSES"} component={TeacherCourse} /> */}
         {renderStackIntro()}
         {/* <Stack.Screen name={SCREENS.VIEW_LIVE_STREAM} component={ViewStreamScreen} /> */}
 
         <Stack.Screen name={SCREENS.TABS} component={TabNavigation} />
         {renderCommonStack()}
+        <Stack.Screen options={{
+        animationEnabled: false,
+      }} name={SCREENS.ONEONE_SCREEN} component={OneoneScreen} />
+
       </Stack.Navigator>
       <BottomSheetPanResponder />
     </NavigationContainer>

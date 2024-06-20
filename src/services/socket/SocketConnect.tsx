@@ -14,9 +14,14 @@ import { translations } from "@localization";
 import {
   EnumModalContentType,
   EnumStyleModalType,
+  closeSuperModal,
+  showLoading,
   showSuperModal,
 } from "@helpers/super.modal.helper";
 import { APP_URL } from "constants/config.constant";
+import { goBack, navigate } from "@helpers/navigation.helper";
+import { emitSocket } from "@helpers/socket.helper";
+import eventEmitter from "@services/event-emitter";
 
 const URL_CHAT_SOCKET = APP_URL.BASEURL_SOCKET;
 console.log("URL_CHAT_SOCKET", URL_CHAT_SOCKET);
@@ -85,9 +90,23 @@ const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
         .on("makeCall", makeCall)
         // .on("cointToClient", cointToClient)
         .on("pointToClient", pointToClient)
-        .on("redeemToClient", redeemToClient);
+        .on("redeemToClient", redeemToClient)
+        .on("joinOneoneClient", joinOneoneClient);
+
     }
   };
+  const joinOneoneClient = () => {
+    // if (getRoute().name == SCREENS.ONEONE_SCREEN) {
+      // goBack()
+      // setTimeout(() => {
+      //   navigate(SCREENS.ONEONE_SCREEN, {
+      //     noEmit: true
+      //   })
+      // }, 1200)
+
+      // eventEmitter.emit("reload_oneone_screen")
+    // }
+  }
 
   const onDisconnect = () => {
     console.log("disconnected");

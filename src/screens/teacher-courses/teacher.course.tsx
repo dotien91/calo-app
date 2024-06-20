@@ -314,6 +314,8 @@ const TeacherCourse = () => {
           }
         });
         const startCall = () => {
+console.log("courseRoom", courseRoom)
+          return
           if (event.type === EnumClassType.Call11) {
             closeModalDetail();
             navigate(SCREENS.CALL_CLASS, {
