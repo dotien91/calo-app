@@ -694,6 +694,7 @@ export default {
     allTutor: "Người hướng dẫn",
     durationCall11: "Thời lượng buổi học",
     lessionCount: "Số buổi học",
+    messagePublic: "Khi bạn chọn công khai khóa học, trước khi hiển thị khóa học sẽ được đội ngũ Admin của Ikigai Coach kiểm duyệt, thời gian duyệt khóa học không quá một ngày làm việc."
   },
   seeAll: "Xem tất cả",
   settings: {

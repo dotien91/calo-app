@@ -607,6 +607,7 @@ export default {
     allTutor: "All mentor",
     durationCall11: "Course duration",
     lessionCount: "Number of lessions",
+    messagePublic: "When you choose to make the course public, it will be reviewed by the Ikigai Coach Admin team before being displayed. The review process will take no more than one working day."
   },
   seeAll: "See all",
   settings: {
@@ -985,7 +986,7 @@ export default {
     isLast: "Already at the end of the list",
     shareAudio: (txt: string) =>
       `Download the IKIGAI Coach app now to listen to the best audiobooks: ${txt}`,
-    listened: "listened",
+    listened: "Listened",
   },
   livestream: {
     hello: "Hello!",
