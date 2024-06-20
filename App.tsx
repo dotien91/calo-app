@@ -1,5 +1,5 @@
 import React from "react";
-import { StatusBar, LogBox } from "react-native";
+import { LogBox } from "react-native";
 import Toast from "react-native-toast-message";
 import { withIAPContext } from "react-native-iap";
 import CodePush from "react-native-code-push";
@@ -9,7 +9,6 @@ import CodePush from "react-native-code-push";
  */
 import Navigation from "./src/navigation";
 import NetworkManager from "@helpers/network.helper";
-import { palette } from "@theme/themes";
 import SuperModal from "@shared-components/modal/SuperModal";
 import SocketConnect from "@services/socket/SocketConnect";
 import { SocketHelperRef } from "@helpers/socket.helper";

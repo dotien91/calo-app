@@ -1,4 +1,11 @@
-import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  Image,
+  SafeAreaView,
+} from "react-native";
 import React, { useMemo } from "react";
 import { useTheme } from "@react-navigation/native";
 import createStyle from "./ikiCoachTeacher.screen.style";
@@ -22,6 +29,9 @@ import CS from "@theme/styles";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { navigate } from "@helpers/navigation.helper";
 import { SCREENS } from "constants";
+import { isAndroid } from "@helpers/device.info.helper";
+import { getBottomSpace } from "react-native-iphone-screen-helper";
+import { getStatusBarHeight } from "react-native-safearea-height";
 
 interface ItemIncomeType {
   count: number;
@@ -148,6 +158,12 @@ const TeacherScreen = () => {
         colors={[colors.greenTh3, colors.greenTh1]}
         style={styles.viewHeaderContainer}
       >
+        <SafeAreaView
+          style={{
+            marginBottom: isAndroid() ? getBottomSpace() : 0,
+            marginTop: isAndroid() ? getStatusBarHeight() : 0,
+          }}
+        />
         <TouchableOpacity
           onPress={NavigationService.goBack}
           style={styles.viewHeader}

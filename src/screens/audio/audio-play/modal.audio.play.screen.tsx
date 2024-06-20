@@ -28,6 +28,8 @@ import IconSvg from "assets/svg";
 // import * as NavigationService from "react-navigation-helpers";
 import IconBtn from "@shared-components/button/IconBtn";
 import { IconType } from "react-native-dynamic-vector-icons";
+import { isAndroid } from "@helpers/device.info.helper";
+import { getBottomSpace } from "react-native-iphone-screen-helper";
 
 const HEIGHT_IMAGE = (ScreenHeight * 311) / 812;
 const WIDTH_IMAGE = (HEIGHT_IMAGE * 114) / 140;
@@ -83,7 +85,11 @@ const ModalAudioPlayScreen = ({
         blurRadius={100}
         source={{ uri: activeTrack?.artwork }}
       >
-        <SafeAreaView />
+        <SafeAreaView
+          style={{
+            marginBottom: isAndroid() ? getBottomSpace() : 0,
+          }}
+        />
         <View style={styles.overlay} />
         <Pressable onPressIn={onPressHide} style={styles.viewBackdrop} />
         <View style={styles.container}>

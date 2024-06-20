@@ -1,8 +1,7 @@
 import CS from "@theme/styles";
 import { ExtendedTheme } from "@react-navigation/native";
 import { ViewStyle, StyleSheet, TextStyle } from "react-native";
-import { getStatusBarHeight } from "react-native-safearea-height";
-import { Device, isAndroid } from "@utils/device.ui.utils";
+import { Device } from "@utils/device.ui.utils";
 
 interface Style {
   container: ViewStyle;
@@ -43,7 +42,7 @@ export default (theme: ExtendedTheme) => {
       ...CS.row,
       justifyContent: "center",
       alignItems: "center",
-      marginTop: isAndroid ? getStatusBarHeight() : 10,
+      // marginTop: isAndroid ? getStatusBarHeight() : 10,
     },
     textMoneyHeader: {
       marginTop: 8,

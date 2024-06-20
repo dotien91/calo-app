@@ -46,6 +46,8 @@ import { IconType } from "react-native-dynamic-vector-icons";
 import IconBtn from "@shared-components/button/IconBtn";
 import { useListData } from "@helpers/hooks/useListData";
 import AudioItemList from "../components/audio.item.list";
+import { isAndroid } from "@helpers/device.info.helper";
+import { getStatusBarHeight } from "react-native-safearea-height";
 
 const HEIGHT_IMAGE = (ScreenHeight * 311) / 812;
 const WIDTH_IMAGE = (HEIGHT_IMAGE * 114) / 140;
@@ -326,7 +328,7 @@ const AudioPreview = () => {
           text={translations.podcast.writeAReview}
           style={{
             ...styles.btnReview,
-            marginBottom: displayedTrack ? 120 : 8,
+            marginBottom: !hide ? getBottomSpace() + 70 : 8,
           }}
           type="black"
         />
@@ -350,50 +352,44 @@ const AudioPreview = () => {
   return (
     <View style={CS.flex1}>
       <ImageBackground
+        style={CS.flex1}
         source={{ uri: data?.post_avatar.media_url }}
         blurRadius={50}
       >
-        <SafeAreaView>
-          <View>
-            {/* <View
-            style={{
-              position: "absolute",
-              backgroundColor: "#484d49",
-              bottom: 0,
-              left: 0,
-              right: 0,
-              top: 0,
-              opacity: 0.4,
-            }}
-          /> */}
-            <Header />
-          </View>
-          {/* <View style={styles.overlay} /> */}
+        <SafeAreaView
+          style={{
+            marginBottom: isAndroid() ? getBottomSpace() : 0,
+            marginTop: isAndroid() ? getStatusBarHeight() : 0,
+          }}
+        />
+        <View>
+          <Header />
+        </View>
+        {/* <View style={styles.overlay} /> */}
 
-          <FlatList
-            data={listData}
-            contentContainerStyle={styles.container}
-            renderItem={renderItem}
-            onEndReached={onEndReach}
-            ListFooterComponent={renderFooter}
-            ListHeaderComponent={renderHeader}
-          />
-          {!hide && (
-            <View
-              style={{
-                height: getBottomSpace() + 70,
-                width: SCREEN_WIDTH,
-                position: "absolute",
-                zIndex: 1,
-                backgroundColor: palette.statusBarAudio,
-                bottom: 0,
-                left: 0,
-                right: 0,
-              }}
-            />
-          )}
-        </SafeAreaView>
+        <FlatList
+          data={listData}
+          contentContainerStyle={styles.container}
+          renderItem={renderItem}
+          onEndReached={onEndReach}
+          ListFooterComponent={renderFooter}
+          ListHeaderComponent={renderHeader}
+        />
       </ImageBackground>
+      {!hide && (
+        <View
+          style={{
+            height: getBottomSpace() + 70,
+            width: SCREEN_WIDTH,
+            position: "absolute",
+            zIndex: 1,
+            backgroundColor: palette.statusBarAudio,
+            bottom: 0,
+            left: 0,
+            right: 0,
+          }}
+        />
+      )}
     </View>
   );
 };

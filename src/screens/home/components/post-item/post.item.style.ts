@@ -57,6 +57,7 @@ export default (theme: ExtendedTheme) => {
       marginTop: 4,
       justifyContent: "space-between",
       alignItems: "center",
+      paddingBottom: 4,
     },
     viewLike: {
       ...CommonStyle.flex1,

@@ -136,7 +136,10 @@ const HeaderTab = () => {
       </View>
       {/* <CourseView /> */}
       <AfiliateShortcut />
-      <AudioView extraParams={{ type: "suggestion" }} onPress={gotoAudioBook} />
+      <AudioView
+        extraParams={userData?._id ? { type: "suggestion" } : {}}
+        onPress={gotoAudioBook}
+      />
       <InviteView />
       <ListLiveStream group_id={null} />
       {/* <View style={{ paddingTop: 10 }}>

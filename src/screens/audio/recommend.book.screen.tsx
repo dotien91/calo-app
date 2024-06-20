@@ -21,12 +21,16 @@ const RecommendBookScreen = () => {
   const userData = useStore((state) => state.userData);
   // const setListAudio = useStore((state) => state.setListAudio);
 
+  const params = {
+    auth_id: userData?._id,
+    // order_by: "DESC",
+    sort_by: "createdAt",
+  };
+  if (userData?._id) {
+    params.type = "suggestion";
+  }
   const { listData, isLoading } = useListData<TypeTrackLocal>(
-    {
-      auth_id: userData?._id,
-      order_by: "DESC",
-      sort_by: "createdAt",
-    },
+    params,
     GetPodCastList,
   );
 

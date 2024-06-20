@@ -1,7 +1,7 @@
 import { getListLiveStream } from "@services/api/stream.api";
 import { palette } from "@theme/themes";
 import React, { useEffect, useRef, useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import StreamCard from "./stream.card";
 import eventEmitter from "@services/event-emitter";
 import { PaginationProps, SwiperFlatList } from "react-native-swiper-flatlist";
@@ -12,7 +12,6 @@ import { navigate } from "@helpers/navigation.helper";
 import { SCREENS } from "constants";
 import useStore from "@services/zustand/store";
 import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
-import CS from "@theme/styles";
 
 const ListLiveStream = ({ group_id }: { group_id: string }) => {
   const listRef = useRef(null);
@@ -22,9 +21,6 @@ const ListLiveStream = ({ group_id }: { group_id: string }) => {
     if (item?.livestream_status) {
       return (
         <View style={{ width: SCREEN_WIDTH - 12 }}>
-          <Text numberOfLines={1} style={styles.titleLive}>
-            {item.title}
-          </Text>
           <StreamCard key={item._id} data={item} />
         </View>
       );
@@ -85,6 +81,7 @@ const ListLiveStream = ({ group_id }: { group_id: string }) => {
       group_id,
       order_by: "DESC",
       livestream_status: ["live", "schedule"],
+      limit: "6",
     }).then((res) => {
       if (!res.isError) {
         setListDataStream(res.data);
@@ -188,10 +185,10 @@ const styles = StyleSheet.create({
     bottom: 10,
     gap: 4,
   },
-  titleLive: {
-    ...CS.hnSemiBold,
-    paddingLeft: 8,
-    paddingRight: 16,
-    marginBottom: 8,
-  },
+  // titleLive: {
+  //   ...CS.hnSemiBold,
+  //   paddingLeft: 8,
+  //   paddingRight: 16,
+  //   marginBottom: 8,
+  // },
 });

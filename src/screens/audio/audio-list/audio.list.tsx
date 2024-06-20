@@ -60,7 +60,7 @@ const AudioList = () => {
     return (
       <View style={{ marginHorizontal: -16 }}>
         <AudioQuickFilter />
-        <AudioView extraParams={{ type: "suggestion" }} />
+        <AudioView extraParams={userData?._id ? { type: "suggestion" } : {}} />
         <AudioCategoryTitle
           hideViewAll={false}
           onPress={onSeeAll}

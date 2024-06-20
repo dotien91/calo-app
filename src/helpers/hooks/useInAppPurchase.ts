@@ -160,8 +160,10 @@ export const useInAppPurchase = () => {
     try {
       await initConnection();
       isAndroid() && (await flushFailedPurchasesCachedAsPendingAndroid());
-      console.log("priceIdsLiveStreampriceIdsLiveStream", priceIdsLiveStream)
-      const livestreamIds = priceIdsLiveStream.filter(item => !!item.id).map(item => item.id)
+      console.log("priceIdsLiveStreampriceIdsLiveStream", priceIdsLiveStream);
+      const livestreamIds = priceIdsLiveStream
+        .filter((item) => !!item.id)
+        .map((item) => item.id);
       if (productIds.length > 0 || !!priceIdsLiveStream.length) {
         await getProducts({ skus: [...productIds, ...livestreamIds] });
       }
@@ -228,7 +230,7 @@ export const useInAppPurchase = () => {
     callback.current = cb;
     typeBuy.current = typeProduct;
     const orderData = await createOrder(data);
-    console.log("orderDataorderData", orderData)
+    console.log("orderDataorderData", orderData);
     if (!orderData) return;
     // typeProduct.current = typeProduct;
     // local_id.current = local_id;

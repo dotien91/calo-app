@@ -171,24 +171,27 @@ const StreamCard = ({
                 backgroundColor: palette.lightOverlay,
                 borderRadius: 8,
                 padding: 8,
+                marginHorizontal: 20,
               }}
             >
               <TextBase
                 textAlign="center"
-                fontSize={28}
+                fontSize={24}
                 color="white"
                 fontWeight="700"
+                numberOfLines={2}
               >
-                {getHoursAndDate(data?.start_time).hour}
+                {/* {getHoursAndDate(data?.start_time).hour} */}
+                {data?.title}
               </TextBase>
-              <TextBase
+              {/* <TextBase
                 textAlign="center"
                 fontSize={20}
                 color="white"
                 fontWeight="600"
               >
                 {getHoursAndDate(data?.start_time).date}
-              </TextBase>
+              </TextBase> */}
             </View>
           </View>
           <View style={styles.viewActionSchedule}>
@@ -196,7 +199,9 @@ const StreamCard = ({
               type="primary"
               isFullWidth={false}
               isSmallButton
-              text="Lên lịch"
+              text={`${getHoursAndDate(data?.start_time).hour} ${
+                getHoursAndDate(data?.start_time).date
+              }`}
               iconName="calendar"
             />
           </View>
