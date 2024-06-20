@@ -32,6 +32,7 @@ import { SCREENS } from "constants";
 import { isAndroid } from "@helpers/device.info.helper";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
 import { getStatusBarHeight } from "react-native-safearea-height";
+import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
 
 interface ItemIncomeType {
   count: number;
@@ -284,7 +285,7 @@ const TeacherScreen = () => {
             onPress={() => onPressItem(item)}
             key={index}
             style={{
-              width: 75,
+              width: (SCREEN_WIDTH + 70) / 6,
               marginLeft: 15,
             }}
           >
@@ -298,8 +299,8 @@ const TeacherScreen = () => {
               <Image
                 source={item.uri}
                 style={{
-                  height: 60,
-                  width: 60,
+                  height: (SCREEN_WIDTH - 25) / 6,
+                  width: (SCREEN_WIDTH - 25) / 6,
                 }}
               />
               <TextBase fontWeight="400" textAlign="center" fontSize={14}>
