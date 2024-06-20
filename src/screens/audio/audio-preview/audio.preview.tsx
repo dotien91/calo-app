@@ -293,7 +293,7 @@ const AudioPreview = () => {
         {renderCategory()}
         <View style={styles.viewBtn}>
           <TouchableOpacity style={styles.btnPlay} onPress={playAudio}>
-            <IconSvg name="icHeadphone" size={20} color={palette.white} />
+            <IconSvg name="icHeadphone" size={20} color={palette.black} />
             <Text style={styles.txtListen}>
               {translations.podcast.listenNow}
             </Text>
@@ -306,6 +306,7 @@ const AudioPreview = () => {
           <TextViewCollapsed
             text={track?.content || ""}
             styleText={styles.des}
+            textColor="red"
           />
         </View>
         {listData.length > 0 && (
@@ -330,7 +331,9 @@ const AudioPreview = () => {
             ...styles.btnReview,
             marginBottom: !hide ? getBottomSpace() + 70 : 8,
           }}
-          type="black"
+          // type="black"
+          backgroundColor={palette.white}
+          textColor={palette.black}
         />
       </>
     );
@@ -350,31 +353,30 @@ const AudioPreview = () => {
   };
 
   return (
-    <View style={CS.flex1}>
+    <View style={[CS.flex1, { backgroundColor: palette.statusBarAudio }]}>
+      <SafeAreaView
+        style={{
+          marginBottom: isAndroid() ? getBottomSpace() : 0,
+          marginTop: isAndroid() ? getStatusBarHeight() : 0,
+        }}
+      />
       <ImageBackground
         style={CS.flex1}
         source={{ uri: data?.post_avatar.media_url }}
         blurRadius={50}
       >
-        <SafeAreaView
-          style={{
-            marginBottom: isAndroid() ? getBottomSpace() : 0,
-            marginTop: isAndroid() ? getStatusBarHeight() : 0,
-          }}
-        />
+        <View style={styles.overlay} />
         <View>
           <Header />
+          <FlatList
+            data={listData}
+            contentContainerStyle={styles.container}
+            renderItem={renderItem}
+            onEndReached={onEndReach}
+            ListFooterComponent={renderFooter}
+            ListHeaderComponent={renderHeader}
+          />
         </View>
-        {/* <View style={styles.overlay} /> */}
-
-        <FlatList
-          data={listData}
-          contentContainerStyle={styles.container}
-          renderItem={renderItem}
-          onEndReached={onEndReach}
-          ListFooterComponent={renderFooter}
-          ListHeaderComponent={renderHeader}
-        />
       </ImageBackground>
       {!hide && (
         <View
@@ -425,14 +427,14 @@ const styles = StyleSheet.create({
     paddingVertical: 9,
     ...CS.row,
     gap: 8,
-    backgroundColor: palette.black,
+    backgroundColor: palette.white,
     borderRadius: 8,
     paddingHorizontal: 16,
   },
   txtListen: {
     ...CS.hnMedium,
     fontSize: 14,
-    color: palette.white,
+    color: palette.black,
   },
   categoryContainer: {
     ...CS.row,
@@ -484,14 +486,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     gap: 8,
   },
-  // overlay: {
-  //   position: "absolute",
-  //   // zIndex: -1,
-  //   backgroundColor: "#484d49",
-  //   bottom: 0,
-  //   left: 0,
-  //   right: 0,
-  //   top: 0,
-  //   opacity: 0.3,
-  // },
+  overlay: {
+    position: "absolute",
+    // zIndex: -1,
+    backgroundColor: "#484d49",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    top: 0,
+    opacity: 0.7,
+  },
 });

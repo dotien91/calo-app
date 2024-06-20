@@ -15,11 +15,13 @@ import { palette } from "@theme/themes";
 interface TextViewCollapsedProps {
   text: string;
   styleText?: TextStyle;
+  textColor?: string;
 }
 
 const TextViewCollapsed = ({
   text,
   styleText = {},
+  textColor,
 }: TextViewCollapsedProps) => {
   const [collapsed, setCollapsed] = useState(true);
   const [maxLines, setMaxLines] = useState(3);
@@ -56,7 +58,7 @@ const TextViewCollapsed = ({
           style={{ flexDirection: "row", alignItems: "center" }}
           onPress={toggleCollapsed}
         >
-          <Text style={styles.txtSeeMore}>
+          <Text style={[styles.txtSeeMore, { color: textColor }]}>
             {!collapsed
               ? translations.course.hideLess
               : translations.course.viewMore}
@@ -65,7 +67,7 @@ const TextViewCollapsed = ({
             size={16}
             name={!collapsed ? "chevron-up" : "chevron-down"}
             type={IconType.Ionicons}
-            color={palette.primary}
+            color={textColor || palette.primary}
           />
         </TouchableOpacity>
       )}
