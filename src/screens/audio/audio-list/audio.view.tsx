@@ -80,6 +80,8 @@ const AudioView = ({
   }
 
   const renderCreatorView = () => {
+    if (fromTeacherScreen) return null
+
     return <><AudioCategoryTitle
       hideViewAll={false}
       onPress={seeAllCreator}
@@ -117,11 +119,6 @@ const AudioView = ({
 
   return (
     <View style={styles.container}>
-      {fromTeacherScreen && (
-        <View style={{ padding: 16 }}>
-          <SubscriptionBtn />
-        </View>
-      )}
       <AudioCategoryTitle
         hideViewAll={false}
         onPress={onSeeAll}

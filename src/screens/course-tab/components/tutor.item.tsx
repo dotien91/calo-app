@@ -17,6 +17,7 @@ import { SCREENS } from "constants";
 import { translations } from "@localization";
 import IconSvg from "assets/svg";
 import { palette } from "@theme/themes";
+import { Device } from "@utils/device.ui.utils";
 
 interface TutorItemProps extends TypedUser {
   isHorizontalStyle: boolean;
@@ -102,7 +103,7 @@ const TutorItem = ({
             {/* <Text style={styles.lessonTxt}>50 min lesson</Text> */}
           </View>
         </View>
-        {!!description && <Text style={styles.tutorIntro}>{description}</Text>}
+        {!!description && <Text numberOfLines={2} style={styles.tutorIntro}>{description}</Text>}
         {/* <Badge title="best-seller" /> */}
         {!!educations?.length && renderEducations()}
         <View>
@@ -158,11 +159,12 @@ const TutorItem = ({
     );
   };
   return (
-    <PressableBtn onPress={_gotoDetailTeacher} style={[styles.tutorItem, {
+    <PressableBtn onPress={_gotoDetailTeacher} style={[styles.tutorItem, isSliderItem && {
       borderWidth: 1,
       padding: 12,
       borderRadius: 12,
       marginLeft: 0,
+      maxWidth: Device.width - 30,
     }]}>
       {renderInfo()}
     </PressableBtn>
