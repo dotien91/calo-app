@@ -54,8 +54,8 @@ const ItemList = ({
     _id,
     content,
     subscription_id,
+    is_premium,
   } = data;
-
   const addAudio = useStore((store) => store.addAudio);
   const listAudioHistory = useStore((store) => store.listAudioHistory);
   const listAudioWatched = useStore((store) => store.listAudioWatched);
@@ -75,7 +75,7 @@ const ItemList = ({
   };
   const playAudio = async () => {
     // NavigationService.navigate(SCREENS.AUDIO_PLAY);
-    if (subscription_id && !isActiveSubscription) {
+    if (is_premium && !isActiveSubscription) {
       showSuperModal({
         styleModalType: EnumStyleModalType.Middle,
         contentModalType: EnumModalContentType.SubscriptionView,
@@ -186,16 +186,22 @@ const ItemList = ({
             </TextBase>
           </View>
         )}
+        {is_premium && <IconSvg name="icKing" size={24} style={{
+          position: "absolute", top: 4, right: 4, zIndex: 1000 
+        }} />}
       </View>
     );
   };
 
   const openPreviewCourse = () => {
-    console.log("subscription_id", subscription_id);
-    if (subscription_id && !isActiveSubscription) {
+    console.log("subscription_id", is_premium, isActiveSubscription);
+    if (is_premium && !isActiveSubscription) {
       showSuperModal({
-        styleModalType: EnumStyleModalType.Middle,
+        styleModalType: EnumStyleModalType.Bottom,
         contentModalType: EnumModalContentType.SubscriptionView,
+        data: {
+          hideCloseIcon: true,
+        }
       });
       return;
     }

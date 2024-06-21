@@ -17,7 +17,6 @@ import EmptyResultView from "@shared-components/empty.data.component";
 
 const AudioList = () => {
   const userData = useStore((state) => state.userData);
-
   const {
     noData,
     listData,

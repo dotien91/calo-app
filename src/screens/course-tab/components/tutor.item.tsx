@@ -33,6 +33,7 @@ const TutorItem = ({
   student_count,
   rating,
   course_count,
+  isSliderItem,
   ...res
 }: TutorItemProps) => {
   const theme = useTheme();
@@ -87,7 +88,7 @@ const TutorItem = ({
               {tutor_level && (
                 <View style={CS.flexStart}>
                   <IconBtn name={"book"} customStyle={{ marginRight: 12 }} />
-                  <Text style={styles.tutorInfoTxt}>IELTS {tutor_level}</Text>
+                  <Text style={styles.tutorInfoTxt}>Level {tutor_level}</Text>
                 </View>
               )}
               {/* <IconBtn
@@ -106,13 +107,13 @@ const TutorItem = ({
         {!!educations?.length && renderEducations()}
         <View>
           <View style={[CS.row, { gap: 8 }]}>
-            <Text style={styles.tutorInfoTxt}>{`${student_count} ${
+            <Text style={styles.tutorInfoTxt}>{`${student_count || 0} ${
               translations.course.student
             }${student_count >= 2 ? translations.course.many : ""}`}</Text>
             <View style={styles.viewDot} />
             <Text
               style={styles.tutorInfoTxt}
-            >{`${course_count} ${translations.course.course}`}</Text>
+            >{`${course_count || 0} ${translations.course.course}`}</Text>
           </View>
 
           {rating > 0 ? (
@@ -157,7 +158,12 @@ const TutorItem = ({
     );
   };
   return (
-    <PressableBtn onPress={_gotoDetailTeacher} style={[styles.tutorItem]}>
+    <PressableBtn onPress={_gotoDetailTeacher} style={[styles.tutorItem, {
+      borderWidth: 1,
+      padding: 12,
+      borderRadius: 12,
+      marginLeft: 0,
+    }]}>
       {renderInfo()}
     </PressableBtn>
   );
