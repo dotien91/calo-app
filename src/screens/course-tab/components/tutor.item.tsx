@@ -164,7 +164,7 @@ const TutorItem = ({
       padding: 12,
       borderRadius: 12,
       marginLeft: 0,
-      maxWidth: Device.width - 30,
+      width: Device.width - 80,
     }]}>
       {renderInfo()}
     </PressableBtn>

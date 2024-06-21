@@ -47,7 +47,7 @@ const SubscriptionBtn = () => {
           local_id: subscription_sell._id,
         },
         typePurchase: "subscription",
-        typeProduct: "subscription",
+        typeProduct: "podcast",
         cb: null,
         pac: {
           productId: extraUserData?.subscriptions?.[0].productId,
