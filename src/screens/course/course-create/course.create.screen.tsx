@@ -531,10 +531,14 @@ const CourseCreate = () => {
             </View>
           </PressableBtn>
         </View>
-        {publicStatus !== "draft" && <View style={styles.messagePublic}>
-          <View style={styles.viewMessagePublic}/>
-            <Text style={styles.txtMessPublic}>{translations.course.messagePublic}</Text>
-        </View>}
+        {publicStatus !== "draft" && (
+          <View style={styles.messagePublic}>
+            <View style={styles.viewMessagePublic} />
+            <Text style={styles.txtMessPublic}>
+              {translations.course.messagePublic}
+            </Text>
+          </View>
+        )}
       </View>
     );
   };
@@ -892,22 +896,22 @@ const styles = StyleSheet.create({
     marginTop: 8,
     paddingHorizontal: 16,
   },
-  messagePublic:{
+  messagePublic: {
     paddingTop: 8,
-    width: ScreenWidth*0.9,
+    width: ScreenWidth * 0.9,
     alignSelf: "center",
-    flexDirection: "row"
+    flexDirection: "row",
   },
-  txtMessPublic:{
+  txtMessPublic: {
     fontSize: 15,
     opacity: 0.8,
     fontStyle: "italic",
-    marginLeft: 5
+    marginLeft: 5,
   },
-  viewMessagePublic:{
-      height: 75,
-      width: 4,
-      backgroundColor: palette.textOpacity4,
-      marginTop: 2
-  }
+  viewMessagePublic: {
+    height: 75,
+    width: 4,
+    backgroundColor: palette.textOpacity4,
+    marginTop: 2,
+  },
 });

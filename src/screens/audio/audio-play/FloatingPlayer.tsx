@@ -84,7 +84,7 @@ export const FloatingPlayer = ({ onPressShow }: FloatingPlayerProps) => {
 
   return (
     <ImageBackground
-      style={{ backgroundColor: palette.iconInactive }}
+      style={{ backgroundColor: palette.mainColor2 }}
       source={{ uri: displayedTrack.artwork }}
       blurRadius={100}
     >

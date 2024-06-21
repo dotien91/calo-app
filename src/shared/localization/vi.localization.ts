@@ -695,7 +695,8 @@ export default {
     allTutor: "Người hướng dẫn",
     durationCall11: "Thời lượng buổi học",
     lessionCount: "Số buổi học",
-    messagePublic: "Khi bạn chọn công khai khóa học, trước khi hiển thị khóa học sẽ được đội ngũ Admin của Ikigai Coach kiểm duyệt, thời gian duyệt khóa học không quá một ngày làm việc."
+    messagePublic:
+      "Khi bạn chọn công khai khóa học, trước khi hiển thị khóa học sẽ được đội ngũ Admin của Ikigai Coach kiểm duyệt, thời gian duyệt khóa học không quá một ngày làm việc.",
   },
   seeAll: "Xem tất cả",
   settings: {
@@ -2041,13 +2042,16 @@ export default {
     getIt: "Mua ngay",
     noThanks: "Không, cảm ơn",
     des1: "Gia hạn tự động có thể hủy bất kỳ lúc nào",
-    des2IOS: "Đăng ký sẽ được tính phí thông qua tài khoản iTunes của bạn. Đăng ký của bạn sẽ tự động được gia hạn trừ khi bạn hủy đăng ký trong vòng 24 giờ trước khi kết thúc thời hạn đăng ký hiện tại trong cài đặt iTunes Store của bạn. Để trở thành thành viên có nghĩa là bạn đồng ý với các điều khoản và thỏa thuận sau đây.",
-    des2Android: "Đăng ký sẽ được tính phí thông qua tài khoản Google Play của bạn. Đăng ký của bạn sẽ tự động được gia hạn trừ khi bạn hủy đăng ký trong vòng 24 giờ trước khi kết thúc thời hạn đăng ký hiện tại trong cài đặt Google Play Store của bạn. Để trở thành thành viên có nghĩa là bạn đồng ý với các điều khoản và thỏa thuận sau đây.",
+    des2IOS:
+      "Đăng ký sẽ được tính phí thông qua tài khoản iTunes của bạn. Đăng ký của bạn sẽ tự động được gia hạn trừ khi bạn hủy đăng ký trong vòng 24 giờ trước khi kết thúc thời hạn đăng ký hiện tại trong cài đặt iTunes Store của bạn. Để trở thành thành viên có nghĩa là bạn đồng ý với các điều khoản và thỏa thuận sau đây.",
+    des2Android:
+      "Đăng ký sẽ được tính phí thông qua tài khoản Google Play của bạn. Đăng ký của bạn sẽ tự động được gia hạn trừ khi bạn hủy đăng ký trong vòng 24 giờ trước khi kết thúc thời hạn đăng ký hiện tại trong cài đặt Google Play Store của bạn. Để trở thành thành viên có nghĩa là bạn đồng ý với các điều khoản và thỏa thuận sau đây.",
     des3: "Thời hạn dịch vụ giá trị gia tăng của Ikigai Coach Chính sách quyền riêng tư Thời hạn gia hạn đăng ký tự động",
     error: "Lỗi",
     getServiceFail: "Lấy dịch vụ thất bại",
     whiteGPro: "Ikigai Coach PREMIUM",
-    proDes: "Nâng cấp lên PREMIUM để có giao diện, nhắn tin và gọi điện không giới hạn, bật chế độ du lịch và xem những người thích mình!",
+    proDes:
+      "Nâng cấp lên PREMIUM để có giao diện, nhắn tin và gọi điện không giới hạn, bật chế độ du lịch và xem những người thích mình!",
     getPro: "Nâng cấp Premium",
     unlimitedViewUser: "Xem tất cả người dùng",
     fullVisitorList: "Xem toàn bộ người đã xem",
@@ -2055,7 +2059,8 @@ export default {
     call30minutes: "30 phút gọi miễn phí mỗi phòng chat",
     fullFollowList: "Xem toàn bộ người theo dõi",
     unlimitedReplyMessage: "Trả lời tin nhắn không giới hạn",
-    advanceFilter: "Bộ lọc nâng cao (Vai trò, khoảng cách, hình thể, thời gian Online)",
+    advanceFilter:
+      "Bộ lọc nâng cao (Vai trò, khoảng cách, hình thể, thời gian Online)",
     fullFilter: "Toàn bộ bộ lọc",
     spotLight: "Nổi bật trên danh sách chat, trang chủ",
     proFunction: "Gói :PRO",
@@ -2076,7 +2081,7 @@ export default {
     then: "sau đó",
     from: "từ",
     subscribe: "Đăng ký",
-    start: "Bắt đầu"
+    start: "Bắt đầu",
   },
   creator: "Nhà sáng tạo nội dung",
 };

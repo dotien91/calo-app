@@ -81,7 +81,7 @@ const ModalAudioPlayScreen = ({
   return (
     <>
       <ImageBackground
-        style={{ flex: 1, backgroundColor: palette.iconInactive }}
+        style={{ flex: 1, backgroundColor: palette.mainColor2 }}
         blurRadius={100}
         source={{ uri: activeTrack?.artwork }}
       >

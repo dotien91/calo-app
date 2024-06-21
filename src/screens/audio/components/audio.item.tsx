@@ -102,7 +102,7 @@ const AudioItem = ({
         contentModalType: EnumModalContentType.SubscriptionView,
         data: {
           hideCloseIcon: true,
-        }
+        },
       });
       return;
     }
@@ -124,9 +124,18 @@ const AudioItem = ({
     >
       <View>
         {renderImg()}
-        {is_premium && <IconSvg name="icKing" size={24} style={{
-          position: "absolute", top: 4, right: 4, zIndex: 1000
-        }} />}
+        {is_premium && (
+          <IconSvg
+            name="icKing"
+            size={24}
+            style={{
+              position: "absolute",
+              top: 4,
+              right: 4,
+              zIndex: 1000,
+            }}
+          />
+        )}
       </View>
       {renderInfo()}
     </PressableBtn>

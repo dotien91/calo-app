@@ -1,5 +1,5 @@
 import React from "react";
-import { Linking, Platform, StyleSheet, View } from "react-native";
+import { Linking, Platform, ScrollView, StyleSheet, View } from "react-native";
 /**
  * ? Local Imports
  */
@@ -23,10 +23,10 @@ const SubscriptionView = () => {
   };
 
   const onPressPolicy = () => {
-    OpenURLButton("https://guides.ikigai.vn/privacy-policy")
-  }
+    OpenURLButton("https://guides.ikigai.vn/privacy-policy");
+  };
   return (
-    <View
+    <ScrollView
       style={{
         backgroundColor: palette.white,
         borderRadius: 12,
@@ -50,18 +50,30 @@ const SubscriptionView = () => {
       <View style={styles.viewDes}>
         <TextBase
           color={EnumColors.textOpacity4}
-          title={translations.premiumAccount.des1} fontSize={14} fontWeight="700" />
+          title={translations.premiumAccount.des1}
+          fontSize={14}
+          fontWeight="700"
+        />
         <TextBase
-          title={Platform.OS == "ios" ? translations.premiumAccount.des2IOS : translations.premiumAccount.des2Android}
+          title={
+            Platform.OS == "ios"
+              ? translations.premiumAccount.des2IOS
+              : translations.premiumAccount.des2Android
+          }
           fontSize={12}
           style={{ textAlign: "center" }}
           color={EnumColors.textOpacity4}
         />
         <PressableBtn onPress={onPressPolicy}>
-          <TextBase title={translations.aboutUs.privacy} fontSize={12} style={styles.policy} color={EnumColors.textOpacity4} />
+          <TextBase
+            title={translations.aboutUs.privacy}
+            fontSize={12}
+            style={styles.policy}
+            color={EnumColors.textOpacity4}
+          />
         </PressableBtn>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -75,8 +87,7 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
     textAlign: "center",
     marginTop: 12,
-  }
+  },
 });
-
 
 export default React.memo(SubscriptionView);
