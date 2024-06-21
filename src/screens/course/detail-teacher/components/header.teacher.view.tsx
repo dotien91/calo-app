@@ -24,14 +24,14 @@ import {
   showSuperModal,
 } from "@helpers/super.modal.helper";
 import SubscriptionBtn from "@screens/home/components/subscription-btn/SubscriptionBtn";
-import Button from "@shared-components/button/Button";
+// import Button from "@shared-components/button/Button";
 
 interface HeaderDetailTeacherProps {
   data?: TypedUser;
 }
 
 const HeaderDetailTeacher = ({ data }: HeaderDetailTeacherProps) => {
-  console.log("datadatadata", data)
+  console.log("datadatadata", data);
   const linkFb = (data?.links?.[0]?.facebook || "").trim();
   const linkYoutube = (data?.links?.[0]?.youtube || "").trim();
   const linkWebsite = (data?.links?.[0]?.website || "").trim();
@@ -141,7 +141,7 @@ const HeaderDetailTeacher = ({ data }: HeaderDetailTeacherProps) => {
               iconName="icPreview"
               textColor={palette.white}
             />
-            <View style={{height: 12}} />
+            <View style={{ height: 12 }} />
             {!!data?.is_creator && <SubscriptionBtn />}
           </View>
           {!!data?._id &&

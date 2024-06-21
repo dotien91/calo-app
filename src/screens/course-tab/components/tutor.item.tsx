@@ -103,7 +103,11 @@ const TutorItem = ({
             {/* <Text style={styles.lessonTxt}>50 min lesson</Text> */}
           </View>
         </View>
-        {!!description && <Text numberOfLines={2} style={styles.tutorIntro}>{description}</Text>}
+        {!!description && (
+          <Text numberOfLines={2} style={styles.tutorIntro}>
+            {description}
+          </Text>
+        )}
         {/* <Badge title="best-seller" /> */}
         {!!educations?.length && renderEducations()}
         <View>
@@ -112,9 +116,9 @@ const TutorItem = ({
               translations.course.student
             }${student_count >= 2 ? translations.course.many : ""}`}</Text>
             <View style={styles.viewDot} />
-            <Text
-              style={styles.tutorInfoTxt}
-            >{`${course_count || 0} ${translations.course.course}`}</Text>
+            <Text style={styles.tutorInfoTxt}>{`${course_count || 0} ${
+              translations.course.course
+            }`}</Text>
           </View>
 
           {rating > 0 ? (

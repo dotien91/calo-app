@@ -1,45 +1,28 @@
-import React, { useEffect } from "react";
-import { FlatList, SafeAreaView, View } from "react-native";
+import React from "react";
+import { FlatList, SafeAreaView } from "react-native";
 
 import CS from "@theme/styles";
-import useStore from "@services/zustand/store";
 import Header from "@shared-components/header/Header";
 import { useListData } from "@helpers/hooks/useListData";
 import { translations } from "@localization";
-import { GetPodCastList } from "@services/api/podcast.api";
 import { TypeTrackLocal } from "models/audio.modal";
-import AudioItemList from "./components/audio.item.list";
 import EmptyResultView from "@shared-components/empty.data.component";
 import LoadingList from "@shared-components/loading.list.component";
-import { useRoute } from "@react-navigation/native";
-import UserItem from "@screens/course-tab/components/user.item";
-import ListUser from "@shared-components/modal/modal-inner/ListUser";
 import { getListUser } from "@services/api/user.api";
-import { TypedUser } from "models";
 import TutorItem from "@screens/course-tab/components/tutor.item";
 
 const AllCreatorScreen = () => {
-  const userData = useStore((state) => state.userData);
-
-  const route = useRoute();
-  const id = route.params?.id || "";
-
-  const {    
-     listData,
-    isLoading,
-    onEndReach,
-    renderFooterComponent,
-    refreshing, } = useListData<TypeTrackLocal>(
-    {
-      is_creator: true,
-      limit: 6
-    },
-    getListUser,
-  );
-
+  const { listData, isLoading, onEndReach, renderFooterComponent } =
+    useListData<TypeTrackLocal>(
+      {
+        is_creator: true,
+        limit: 6,
+      },
+      getListUser,
+    );
 
   const renderItem = ({ item }) => {
-      return <TutorItem {...item} />
+    return <TutorItem {...item} />;
   };
 
   const renderEmptyCourseOfMe = () => {
@@ -48,7 +31,6 @@ const AllCreatorScreen = () => {
   const renderLoading = () => {
     return <LoadingList numberItem={3} />;
   };
-
 
   return (
     <SafeAreaView style={CS.safeAreaView}>

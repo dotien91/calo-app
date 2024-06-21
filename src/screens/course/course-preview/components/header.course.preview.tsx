@@ -128,7 +128,7 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
               left: 0,
               right: 0,
               zIndex: 1,
-              paddingLeft: 33,
+              paddingLeft: 0,
               ...CS.center,
             }}
           >

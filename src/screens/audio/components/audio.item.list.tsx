@@ -53,7 +53,7 @@ const ItemList = ({
     podcast_category,
     _id,
     content,
-    subscription_id,
+    // subscription_id,
     is_premium,
   } = data;
   const addAudio = useStore((store) => store.addAudio);
@@ -186,9 +186,18 @@ const ItemList = ({
             </TextBase>
           </View>
         )}
-        {is_premium && <IconSvg name="icKing" size={24} style={{
-          position: "absolute", top: 4, right: 4, zIndex: 1000 
-        }} />}
+        {is_premium && (
+          <IconSvg
+            name="icKing"
+            size={24}
+            style={{
+              position: "absolute",
+              top: 4,
+              right: 4,
+              zIndex: 1000,
+            }}
+          />
+        )}
       </View>
     );
   };
@@ -201,7 +210,7 @@ const ItemList = ({
         contentModalType: EnumModalContentType.SubscriptionView,
         data: {
           hideCloseIcon: true,
-        }
+        },
       });
       return;
     }

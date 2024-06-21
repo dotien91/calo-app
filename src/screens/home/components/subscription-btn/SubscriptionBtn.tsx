@@ -80,11 +80,15 @@ const SubscriptionBtn = () => {
       disabled={loading}
       onPress={isActiveSubscription ? null : pressFollow}
       type={isActiveSubscription ? "outline" : "primary"}
-      customStyle={isActiveSubscription ? {} : {
-        button: {
-          backgroundColor: palette.black
-        }
-      }}
+      customStyle={
+        isActiveSubscription
+          ? {}
+          : {
+              button: {
+                backgroundColor: palette.black,
+              },
+            }
+      }
       text={
         isActiveSubscription
           ? "Đã đăng ký Podcast Premium"

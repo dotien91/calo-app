@@ -6,14 +6,17 @@ import useStore from "@services/zustand/store";
 import { IAudioItem } from "models/audio.modal";
 import { useListData } from "@helpers/hooks/useListData";
 import { translations } from "@localization";
-import { GetPodCastList, requestCreatorPodcast } from "@services/api/podcast.api";
+import {
+  GetPodCastList,
+  // requestCreatorPodcast,
+} from "@services/api/podcast.api";
 import AudioItem from "../components/audio.item";
 import AudioCategoryTitle from "../audio-book/audio.category.title";
 import { SCREENS } from "constants";
 import LoadingItem from "@shared-components/loading.item";
-import SubscriptionBtn from "@screens/home/components/subscription-btn/SubscriptionBtn";
+// import SubscriptionBtn from "@screens/home/components/subscription-btn/SubscriptionBtn";
 import { getListUser } from "@services/api/user.api";
-import UserItem from "@screens/course-tab/components/user.item";
+// import UserItem from "@screens/course-tab/components/user.item";
 import { navigate } from "@helpers/navigation.helper";
 import TutorItem from "@screens/course-tab/components/tutor.item";
 
@@ -28,7 +31,7 @@ const AudioView = ({
   fromTeacherScreen,
 }: AudioViewProps) => {
   const userData = useStore((state) => state.userData);
-  const [listCreator, setListCreator] = React.useState([])
+  const [listCreator, setListCreator] = React.useState([]);
   const { listData, isLoading, noData } = useListData<IAudioItem>(
     {
       ...extraParams,
@@ -50,15 +53,13 @@ const AudioView = ({
   React.useEffect(() => {
     getListUser({
       is_creator: true,
-      limit: 6
-    }).then(res => {
+      limit: 6,
+    }).then((res) => {
       if (!res.isError) {
-        setListCreator(res.data)
+        setListCreator(res.data);
       }
-    })
-
-  }, [])
-  
+    });
+  }, []);
 
   const renderItem = (item: IAudioItem, index: number) => {
     return (
@@ -72,44 +73,45 @@ const AudioView = ({
   };
 
   const renderItemCreator = (item) => {
-    return <TutorItem isSliderItem {...item.item} />
-  }
+    return <TutorItem isSliderItem {...item.item} />;
+  };
 
   const seeAllCreator = () => {
-    navigate(SCREENS.LIST_CREATORS)
-  }
+    navigate(SCREENS.LIST_CREATORS);
+  };
 
   const renderCreatorView = () => {
-    if (fromTeacherScreen) return null
+    if (fromTeacherScreen) return null;
 
-    return <><AudioCategoryTitle
-      hideViewAll={false}
-      onPress={seeAllCreator}
-      title={
-          translations.creator
-      }
-    />
-      {listData.length == 0 && isLoading ? (
-        renderLoading()
-      ) : (
-        <FlatList
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          data={listCreator}
-          renderItem={renderItemCreator}
-          scrollEventThrottle={16}
-          contentContainerStyle={{
-            paddingLeft: 16,
-            paddingBottom: 16,
-          }}
-          initialNumToRender={2}
-          onEndReachedThreshold={0}
-          showsVerticalScrollIndicator={false}
-          keyExtractor={(item) => item?._id + ""}
+    return (
+      <>
+        <AudioCategoryTitle
+          hideViewAll={false}
+          onPress={seeAllCreator}
+          title={translations.creator}
         />
-      )}
-    </>
-  }
+        {listData.length == 0 && isLoading ? (
+          renderLoading()
+        ) : (
+          <FlatList
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            data={listCreator}
+            renderItem={renderItemCreator}
+            scrollEventThrottle={16}
+            contentContainerStyle={{
+              paddingLeft: 16,
+              paddingBottom: 16,
+            }}
+            initialNumToRender={2}
+            onEndReachedThreshold={0}
+            showsVerticalScrollIndicator={false}
+            keyExtractor={(item) => item?._id + ""}
+          />
+        )}
+      </>
+    );
+  };
 
   if (noData) return null;
 

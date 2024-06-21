@@ -370,6 +370,6 @@ export const CommonStackData = [
   ...ClubStackData,
   {
     name: SCREENS.LIST_CREATORS,
-    screen: AllCreatorScreen
+    screen: AllCreatorScreen,
   },
 ];

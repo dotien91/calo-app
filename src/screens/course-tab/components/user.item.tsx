@@ -92,11 +92,17 @@ const UserItem = ({
   };
 
   return (
-    <PressableBtn onPress={openProfile} style={[styles.tutorItem, isSliderItem && {
-      borderBottomColor: "white",
-      paddingBottom: 0,
-      marginBottom: 0,
-    }]}>
+    <PressableBtn
+      onPress={openProfile}
+      style={[
+        styles.tutorItem,
+        isSliderItem && {
+          borderBottomColor: "white",
+          paddingBottom: 0,
+          marginBottom: 0,
+        },
+      ]}
+    >
       {renderInfo()}
     </PressableBtn>
   );
