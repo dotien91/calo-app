@@ -24,6 +24,7 @@ const UserItem = ({
   user_avatar_thumbnail,
   _id,
   user_role,
+  isSliderItem,
   ...res
 }: TutorItemProps) => {
   const theme = useTheme();
@@ -91,7 +92,17 @@ const UserItem = ({
   };
 
   return (
-    <PressableBtn onPress={openProfile} style={[styles.tutorItem]}>
+    <PressableBtn
+      onPress={openProfile}
+      style={[
+        styles.tutorItem,
+        isSliderItem && {
+          borderBottomColor: "white",
+          paddingBottom: 0,
+          marginBottom: 0,
+        },
+      ]}
+    >
       {renderInfo()}
     </PressableBtn>
   );

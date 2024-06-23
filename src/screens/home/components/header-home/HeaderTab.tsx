@@ -22,6 +22,7 @@ import AudioView from "@screens/audio/audio-list/audio.view";
 import { navigate } from "@helpers/navigation.helper";
 import AfiliateShortcut from "@screens/affiliate/components/afiliate.shortcut";
 import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
+import CourseView from "../list-course/list.course";
 
 const HeaderTab = () => {
   const theme = useTheme();
@@ -134,12 +135,12 @@ const HeaderTab = () => {
           return renderItem(item, index);
         })}
       </View>
-      {/* <CourseView /> */}
       <AfiliateShortcut />
       <AudioView
         extraParams={userData?._id ? { type: "suggestion" } : {}}
         onPress={gotoAudioBook}
       />
+      <CourseView />
       <InviteView />
       <ListLiveStream group_id={null} />
       {/* <View style={{ paddingTop: 10 }}>

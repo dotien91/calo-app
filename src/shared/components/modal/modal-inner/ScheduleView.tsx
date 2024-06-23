@@ -232,7 +232,7 @@ export default ScheduleView;
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
+    padding: 0,
     flex: 1,
   },
   content: {},

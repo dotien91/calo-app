@@ -43,10 +43,10 @@ const LiveStreamPreviewScreem = () => {
       showWarningLogin();
       return;
     }
-    if (isAndroid()) {
-      alert("handle in app purchase");
-      return;
-    }
+    // if (isAndroid()) {
+    //   alert("handle in app purchase");
+    //   return;
+    // }
     if (!data?.price_id) {
       showToast({
         type: "warning",

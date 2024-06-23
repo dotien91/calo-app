@@ -116,3 +116,13 @@ export async function requestDeleteSubscription(id: string) {
     return response;
   });
 }
+
+export async function requestCreatorPodcast(params: any) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "podcast/list/creator",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}

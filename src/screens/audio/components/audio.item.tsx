@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { Text, ViewStyle } from "react-native";
+import { Text, View, ViewStyle } from "react-native";
 import FastImage from "react-native-fast-image";
 import * as NavigationService from "react-navigation-helpers";
 import { useTheme } from "@react-navigation/native";
@@ -18,6 +18,7 @@ import {
   EnumStyleModalType,
   showSuperModal,
 } from "@helpers/super.modal.helper";
+import IconSvg from "assets/svg";
 
 interface AudioItemProps {
   isSliderItem: boolean;
@@ -45,6 +46,7 @@ const AudioItem = ({
     podcast_category,
     _id,
     subscription_id,
+    is_premium,
   } = data;
   const setListAudio = useStore((state) => state.setListAudio);
   const { isActiveSubscription } = useUserHelper();
@@ -94,10 +96,13 @@ const AudioItem = ({
 
   const openPreviewCourse = () => {
     console.log("subscription_id", subscription_id, isActiveSubscription);
-    if (subscription_id && !isActiveSubscription) {
+    if (is_premium && !isActiveSubscription) {
       showSuperModal({
-        styleModalType: EnumStyleModalType.Middle,
+        styleModalType: EnumStyleModalType.Bottom,
         contentModalType: EnumModalContentType.SubscriptionView,
+        data: {
+          hideCloseIcon: true,
+        },
       });
       return;
     }
@@ -117,7 +122,21 @@ const AudioItem = ({
         style ? style : {},
       ]}
     >
-      {renderImg()}
+      <View>
+        {renderImg()}
+        {is_premium && (
+          <IconSvg
+            name="icKing"
+            size={24}
+            style={{
+              position: "absolute",
+              top: 4,
+              right: 4,
+              zIndex: 1000,
+            }}
+          />
+        )}
+      </View>
       {renderInfo()}
     </PressableBtn>
   );

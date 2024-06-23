@@ -11,6 +11,7 @@ import { isIOS } from "@freakycoder/react-native-helpers";
 import Button from "@shared-components/button/Button";
 import useUserHelper from "@helpers/hooks/useUserHelper";
 import { isAndroid } from "@helpers/device.info.helper";
+import { palette } from "@theme/themes";
 
 const SubscriptionBtn = () => {
   const userData = useStore((state) => state.userData);
@@ -46,7 +47,7 @@ const SubscriptionBtn = () => {
           local_id: subscription_sell._id,
         },
         typePurchase: "subscription",
-        typeProduct: "subscription",
+        typeProduct: "podcast",
         cb: null,
         pac: {
           productId: extraUserData?.subscriptions?.[0].productId,
@@ -79,6 +80,15 @@ const SubscriptionBtn = () => {
       disabled={loading}
       onPress={isActiveSubscription ? null : pressFollow}
       type={isActiveSubscription ? "outline" : "primary"}
+      customStyle={
+        isActiveSubscription
+          ? {}
+          : {
+              button: {
+                backgroundColor: palette.black,
+              },
+            }
+      }
       text={
         isActiveSubscription
           ? "Đã đăng ký Podcast Premium"

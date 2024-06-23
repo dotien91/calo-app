@@ -77,7 +77,7 @@ const AffiliateShortcut = ({ hideStatic }: AffiliateShortcutProps) => {
     },
   ];
 
-  if ((userData?.current_coin || 0) < 10) return null;
+  if ((userData?.current_coin || 0) < 10 && !hideStatic) return null;
 
   return (
     <>

@@ -56,7 +56,9 @@ export const useInAppPurchase = () => {
           (isIosStorekit2() && currentPurchase?.transactionId) ||
           currentPurchase?.transactionReceipt
         ) {
-          const currentProductPurchaseType = _getJson("current_product_type");
+          const currentProductPurchaseType = _getJson("current_product_purchase_type");
+          const currentProductType = _getJson("current_product_type");
+
           const paramsFinishTransaction = {
             purchase: currentPurchase,
             isConsumable: isIOS || currentProductPurchaseType == "product",
@@ -94,14 +96,14 @@ export const useInAppPurchase = () => {
                   type: "success",
                   message: translations.payment.completecheckout,
                 });
-                if (currentProductPurchaseType == "livestream") {
+                if (currentProductType == "livestream") {
                   NavigationService.popToTop();
                   NavigationService.navigate(SCREENS.VIEW_LIVE_STREAM, {
                     liveStreamId: _getJson("current_product_id"),
                   });
                   eventEmitter.emit("refresh_livestream_preview");
                   eventEmitter.emit("reload_list_stream");
-                } else if (currentProductPurchaseType == "subscription") {
+                } else if (currentProductType == "subscription") {
                   alert("subscribe success");
                 } else {
                   NavigationService.navigate(SCREENS.MY_COURES);
@@ -197,7 +199,8 @@ export const useInAppPurchase = () => {
       await clearTransactionIOS();
     }
     callback.current = cb;
-    _setJson("current_product_type", "subscription");
+    _setJson("current_product_type", "podcast");
+    _setJson("current_product_purchase_type", "subscription");
     const orderData = await createOrder(data);
     if (!orderData) {
       showToast({
@@ -234,9 +237,9 @@ export const useInAppPurchase = () => {
     if (!orderData) return;
     // typeProduct.current = typeProduct;
     // local_id.current = local_id;
-    _setJson("current_product_purchase_type", typeProduct);
+    _setJson("current_product_purchase_type", typePurchase);
     _setJson("current_product_id", local_id);
-    _setJson("current_product_type", typePurchase);
+    _setJson("current_product_type", typeProduct);
 
     try {
       if (isIOS) {

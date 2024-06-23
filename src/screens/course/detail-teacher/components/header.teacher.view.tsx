@@ -23,12 +23,15 @@ import {
   EnumStyleModalType,
   showSuperModal,
 } from "@helpers/super.modal.helper";
+import SubscriptionBtn from "@screens/home/components/subscription-btn/SubscriptionBtn";
+// import Button from "@shared-components/button/Button";
 
 interface HeaderDetailTeacherProps {
   data?: TypedUser;
 }
 
 const HeaderDetailTeacher = ({ data }: HeaderDetailTeacherProps) => {
+  console.log("datadatadata", data);
   const linkFb = (data?.links?.[0]?.facebook || "").trim();
   const linkYoutube = (data?.links?.[0]?.youtube || "").trim();
   const linkWebsite = (data?.links?.[0]?.website || "").trim();
@@ -128,16 +131,18 @@ const HeaderDetailTeacher = ({ data }: HeaderDetailTeacherProps) => {
           </View>
           <View style={styles.viewBtn}>
             <ButtonSvg
+              type={"outline"}
               onPress={_viewMedia}
-              style={{
-                backgroundColor: palette.primary,
-                width: 200,
-                borderRadius: 12,
-              }}
+              // style={{
+              //   backgroundColor: palette.primary,
+              //   borderRadius: 12,
+              // }}
               text={translations.course.previewMentor}
               iconName="icPreview"
               textColor={palette.white}
             />
+            <View style={{ height: 12 }} />
+            {!!data?.is_creator && <SubscriptionBtn />}
           </View>
           {!!data?._id &&
             (linkFb !== "" || linkWebsite !== "" || linkYoutube !== "") && (

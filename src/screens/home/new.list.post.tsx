@@ -70,6 +70,7 @@ const ListPostNew = ({ id }: ListPostProps) => {
   };
   const [filter, setFilter] = useState<filterProp>("forYou");
   const [isFirst, setIsFirst] = useState<boolean>(true);
+  const isScrollToTop = useSharedValue(0);
 
   const paramsRequest = {
     limit: 10,
@@ -104,18 +105,25 @@ const ListPostNew = ({ id }: ListPostProps) => {
   }, [userData?._id]);
 
   useEffect(() => {
-    const typeEmit = "reload_list_post";
+    const typeEmit = "reload_home_page";
     eventEmitter.on(typeEmit, onRefresh);
     return () => {
       eventEmitter.off(typeEmit, onRefresh);
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
   const onRefresh = () => {
-    _requestData();
-    // setTimeout(() => {
-    //   // listRef && listRef.current?.scrollToOffset({ animated: true, offset: 0 });
-    //   scrollToFilter();
-    // }, 200);
+    if (isScrollToTop.value == 1) {
+      _requestData();
+    }
+    setTimeout(() => {
+      listRef.current &&
+        listRef.current.scrollToOffset({ animated: true, offset: 0 });
+      isScrollToTop.value = 1;
+      // scrollToFilter();
+    }, 200);
+    setTimeout(() => {
+      isScrollToTop.value = 0;
+    }, 3000);
   };
 
   const currentPositionFilter = useSharedValue(0);

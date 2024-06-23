@@ -17,6 +17,7 @@ import { SCREENS } from "constants";
 import { translations } from "@localization";
 import IconSvg from "assets/svg";
 import { palette } from "@theme/themes";
+import { Device } from "@utils/device.ui.utils";
 
 interface TutorItemProps extends TypedUser {
   isHorizontalStyle: boolean;
@@ -33,6 +34,7 @@ const TutorItem = ({
   student_count,
   rating,
   course_count,
+  isSliderItem,
   ...res
 }: TutorItemProps) => {
   const theme = useTheme();
@@ -87,7 +89,7 @@ const TutorItem = ({
               {tutor_level && (
                 <View style={CS.flexStart}>
                   <IconBtn name={"book"} customStyle={{ marginRight: 12 }} />
-                  <Text style={styles.tutorInfoTxt}>IELTS {tutor_level}</Text>
+                  <Text style={styles.tutorInfoTxt}>Level {tutor_level}</Text>
                 </View>
               )}
               {/* <IconBtn
@@ -101,18 +103,22 @@ const TutorItem = ({
             {/* <Text style={styles.lessonTxt}>50 min lesson</Text> */}
           </View>
         </View>
-        {!!description && <Text style={styles.tutorIntro}>{description}</Text>}
+        {!!description && (
+          <Text numberOfLines={2} style={styles.tutorIntro}>
+            {description}
+          </Text>
+        )}
         {/* <Badge title="best-seller" /> */}
         {!!educations?.length && renderEducations()}
         <View>
           <View style={[CS.row, { gap: 8 }]}>
-            <Text style={styles.tutorInfoTxt}>{`${student_count} ${
+            <Text style={styles.tutorInfoTxt}>{`${student_count || 0} ${
               translations.course.student
             }${student_count >= 2 ? translations.course.many : ""}`}</Text>
             <View style={styles.viewDot} />
-            <Text
-              style={styles.tutorInfoTxt}
-            >{`${course_count} ${translations.course.course}`}</Text>
+            <Text style={styles.tutorInfoTxt}>{`${course_count || 0} ${
+              translations.course.course
+            }`}</Text>
           </View>
 
           {rating > 0 ? (
@@ -157,7 +163,13 @@ const TutorItem = ({
     );
   };
   return (
-    <PressableBtn onPress={_gotoDetailTeacher} style={[styles.tutorItem]}>
+    <PressableBtn onPress={_gotoDetailTeacher} style={[styles.tutorItem, isSliderItem && {
+      borderWidth: 1,
+      padding: 12,
+      borderRadius: 12,
+      marginLeft: 0,
+      width: Device.width - 80,
+    }]}>
       {renderInfo()}
     </PressableBtn>
   );
