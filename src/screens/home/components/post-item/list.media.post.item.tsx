@@ -118,6 +118,7 @@ const ListFile = ({ listFile, styleContainer = {} }: ListFileProps) => {
         <ViewportAwareImage
           onViewportEnter={playVideo}
           onViewportLeave={stopVideo}
+          style={styles.image11}
         >
           {renderVideoPlayer()}
         </ViewportAwareImage>

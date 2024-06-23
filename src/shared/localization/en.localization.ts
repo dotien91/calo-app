@@ -608,7 +608,9 @@ export default {
     allTutor: "All mentor",
     durationCall11: "Course duration",
     lessionCount: "Number of lessions",
-    messagePublic: "When you choose to make the course public, it will be reviewed by the Ikigai Coach Admin team before being displayed. The review process will take no more than one working day."
+    messagePublic: "When you choose to make the course public, it will be reviewed by the Ikigai Coach Admin team before being displayed. The review process will take no more than one working day.",
+    draft: "Draft",
+    public: "Public"
   },
   seeAll: "See all",
   settings: {

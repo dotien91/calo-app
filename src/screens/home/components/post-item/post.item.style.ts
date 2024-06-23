@@ -34,6 +34,8 @@ export default (theme: ExtendedTheme) => {
       height: SIZE_IMAGE1,
       width: SIZE_IMAGE1,
       borderRadius: BORDER_RADIUS1,
+      ...CommonStyle.center,
+      alignSelf: "center",
     },
     viewImage1: {
       marginLeft: Margin,

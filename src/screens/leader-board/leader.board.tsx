@@ -103,9 +103,9 @@ const LeaderBoard = () => {
     );
   };
 
-  const _keyExtractor = (item) => {
-    return item._id;
-  };
+  // const _keyExtractor = (item) => {
+  //   return item._id;
+  // };
 
   const gotoTask = () => {
     NavigationService.navigate(SCREENS.TASK_SCREEN);
@@ -124,7 +124,7 @@ const LeaderBoard = () => {
           renderItem={renderItem}
           showsVerticalScrollIndicator={false}
           onEndReached={onEndReach}
-          keyExtractor={_keyExtractor}
+          keyExtractor={(item) => `${item._id}-${item.rank}`}
           contentContainerStyle={{ marginHorizontal: 16, paddingBottom: 100 }}
           ListFooterComponent={renderFooterComponent}
         />
