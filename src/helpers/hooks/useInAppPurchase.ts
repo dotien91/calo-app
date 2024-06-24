@@ -107,26 +107,32 @@ export const useInAppPurchase = () => {
                   });
                   eventEmitter.emit("refresh_livestream_preview");
                   eventEmitter.emit("reload_list_stream");
-                } else if (currentProductType == "subscription") {
-                  alert("subscribe success");
-                  getUserSuscription(userData?._id).then((res) => {
-                    console.log("ressss userSub", userData?._id, res.data);
-                    if (!res.isError) {
-                      setExtraUserData({
-                        user_subscription: res.data,
-                      });
-                    }
-                  });
-                } else {
+                } else if (
+                  currentProductType == "subscription" ||
+                  currentProductType == "podcast"
+                ) {
+                  setTimeout(() => {
+                    getUserSuscription(userData?._id).then((res) => {
+                      if (!res.isError) {
+                        setExtraUserData({
+                          user_subscription: res.data,
+                        });
+                      }
+                    });
+                  }, 1000);
+                } else if (currentProductType == "course") {
                   NavigationService.navigate(SCREENS.MY_COURES);
-                  getUserSuscription(userData?._id).then((res) => {
-                    console.log("ressss userSub", userData?._id, res.data);
-                    if (!res.isError) {
-                      setExtraUserData({
-                        user_subscription: res.data,
-                      });
-                    }
-                  });
+                } else {
+                  setTimeout(() => {
+                    getUserSuscription(userData?._id).then((res) => {
+                      console.log("ressss userSub", userData?._id, res.data);
+                      if (!res.isError) {
+                        setExtraUserData({
+                          user_subscription: res.data,
+                        });
+                      }
+                    });
+                  }, 1000);
                 }
                 _setJson("current_product_purchase_type", "");
                 _setJson("current_product_id", "");
