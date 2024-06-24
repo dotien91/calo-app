@@ -163,13 +163,19 @@ const TutorItem = ({
     );
   };
   return (
-    <PressableBtn onPress={_gotoDetailTeacher} style={[styles.tutorItem, isSliderItem && {
-      borderWidth: 1,
-      padding: 12,
-      borderRadius: 12,
-      marginLeft: 0,
-      width: Device.width - 80,
-    }]}>
+    <PressableBtn
+      onPress={_gotoDetailTeacher}
+      style={[
+        styles.tutorItem,
+        isSliderItem && {
+          borderWidth: 1,
+          padding: 12,
+          borderRadius: 12,
+          marginLeft: 0,
+          width: Device.width - 80,
+        },
+      ]}
+    >
       {renderInfo()}
     </PressableBtn>
   );

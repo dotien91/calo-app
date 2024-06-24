@@ -59,7 +59,14 @@ const ListReviewView = ({ id }: ListReviewProps) => {
         showsHorizontalScrollIndicator={false}
       >
         {listData?.map((item, index) => {
-          return <ItemReview item={item} key={index} />;
+          return (
+            <ItemReview
+              item={item}
+              key={index}
+              bgColor="#222222"
+              txtColor="white"
+            />
+          );
         })}
       </ScrollView>
       {count > 0 && (

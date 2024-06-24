@@ -695,9 +695,10 @@ export default {
     allTutor: "Người hướng dẫn",
     durationCall11: "Thời lượng buổi học",
     lessionCount: "Số buổi học",
-    messagePublic: "Khi bạn chọn công khai khóa học, trước khi hiển thị khóa học sẽ được đội ngũ Admin của Ikigai Coach kiểm duyệt, thời gian duyệt khóa học không quá một ngày làm việc.",
+    messagePublic:
+      "Khi bạn chọn công khai khóa học, trước khi hiển thị khóa học sẽ được đội ngũ Admin của Ikigai Coach kiểm duyệt, thời gian duyệt khóa học không quá một ngày làm việc.",
     draft: "Bản nháp",
-    public: "Công khai" 
+    public: "Công khai",
   },
   seeAll: "Xem tất cả",
   settings: {
@@ -955,7 +956,7 @@ export default {
     course: "KHÓA HỌC",
     teacherPage: "TRANG GIÁO VIÊN",
     guideUse: "HƯỚNG DẪN",
-    titleBtn: "Giáo viên Ikigai Coach",
+    titleBtn: "Dành cho giáo viên",
     desBtn: "Truy cập vào trang dành cho giáo viên",
     profile: "Xem hồ sơ",
     balance: "Số dư",

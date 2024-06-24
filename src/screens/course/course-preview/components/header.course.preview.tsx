@@ -180,7 +180,9 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
       {(data?.public_status === "draft" ||
         data?.public_status === "pending") && (
         <Text style={{ ...CS.hnRegular, fontSize: 12 }}>
-          {data?.public_status !== "draft" ? `(${translations.course.public})`: `(${translations.course.draft})`}
+          {data?.public_status !== "draft"
+            ? `(${translations.course.public})`
+            : `(${translations.course.draft})`}
         </Text>
       )}
 
