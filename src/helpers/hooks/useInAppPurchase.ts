@@ -22,6 +22,7 @@ import { priceIdsLiveStream, subscriptionIds } from "constants/iap.constant";
 import { isAndroid } from "@helpers/device.info.helper";
 import useStore from "@services/zustand/store";
 import { Platform } from "react-native";
+import { getUserSuscription } from "@services/api/user.api";
 
 export const useInAppPurchase = () => {
   const {
@@ -40,6 +41,7 @@ export const useInAppPurchase = () => {
   const callback = useRef<() => void | undefined>();
   const local_order_id = useRef("");
   const setExtraUserData = useStore((state) => state.setExtraUserData);
+  const userData = useStore((state) => state.userData);
 
   console.log("subscriptions22222", subscriptions);
 
@@ -56,7 +58,9 @@ export const useInAppPurchase = () => {
           (isIosStorekit2() && currentPurchase?.transactionId) ||
           currentPurchase?.transactionReceipt
         ) {
-          const currentProductPurchaseType = _getJson("current_product_purchase_type");
+          const currentProductPurchaseType = _getJson(
+            "current_product_purchase_type",
+          );
           const currentProductType = _getJson("current_product_type");
 
           const paramsFinishTransaction = {
@@ -105,8 +109,24 @@ export const useInAppPurchase = () => {
                   eventEmitter.emit("reload_list_stream");
                 } else if (currentProductType == "subscription") {
                   alert("subscribe success");
+                  getUserSuscription(userData?._id).then((res) => {
+                    console.log("ressss userSub", userData?._id, res.data);
+                    if (!res.isError) {
+                      setExtraUserData({
+                        user_subscription: res.data,
+                      });
+                    }
+                  });
                 } else {
                   NavigationService.navigate(SCREENS.MY_COURES);
+                  getUserSuscription(userData?._id).then((res) => {
+                    console.log("ressss userSub", userData?._id, res.data);
+                    if (!res.isError) {
+                      setExtraUserData({
+                        user_subscription: res.data,
+                      });
+                    }
+                  });
                 }
                 _setJson("current_product_purchase_type", "");
                 _setJson("current_product_id", "");
