@@ -245,7 +245,7 @@ const SettingProfileScreen = () => {
       />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ flex: 1, marginBottom: 20 }}>
-          {isTeacher ? renderButtonTeacherScreen() : null}
+          {renderButtonTeacherScreen()}
           {renderScrollPointCoin()}
           {renderPieChart()}
           <Tasks />

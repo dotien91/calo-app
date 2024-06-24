@@ -625,9 +625,10 @@ export default {
     allTutor: "専門家",
     durationCall11: "コースの期間",
     lessionCount: "レッスンの数",
-    messagePublic: "コースを公開することを選択した場合、表示される前にIkigai Coachの管理チームによって審査されます。審査には営業日で1日以内がかかります。",
+    messagePublic:
+      "コースを公開することを選択した場合、表示される前にIkigai Coachの管理チームによって審査されます。審査には営業日で1日以内がかかります。",
     draft: "下書き",
-    public: "公開"
+    public: "公開",
   },
   seeAll: "すべて見る",
   settings: {

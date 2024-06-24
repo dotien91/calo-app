@@ -9,14 +9,22 @@ import { convertLastActive } from "@utils/time.utils";
 interface ItemReviewProps {
   type?: "horizontal" | "vertical";
   item: any;
+  bgColor?: string;
+  txtColor?: string;
 }
 
-const ItemReview = ({ type = "horizontal", item }: ItemReviewProps) => {
+const ItemReview = ({
+  type = "horizontal",
+  item,
+  bgColor,
+  txtColor,
+}: ItemReviewProps) => {
   return (
     <View
       style={[
         styles.container,
         type === "vertical" && { width: ScreenWidth - 32, marginRight: 0 },
+        bgColor ? { backgroundColor: bgColor } : {},
       ]}
     >
       <View style={styles.viewInfo}>
@@ -25,16 +33,21 @@ const ItemReview = ({ type = "horizontal", item }: ItemReviewProps) => {
           source={{ uri: item?.user_id?.user_avatar_thumbnail }}
         />
         <View style={styles.viewName}>
-          <Text style={styles.txtFullname}>
+          <Text
+            style={[styles.txtFullname, { color: txtColor || palette.text }]}
+          >
             {item?.user_id?.display_name || ""}
           </Text>
-          <Text style={styles.txtTime}>
+          <Text style={[styles.txtTime, { color: txtColor || palette.text }]}>
             {convertLastActive(item?.updatedAt || "")}
           </Text>
         </View>
       </View>
       <View style={styles.viewContent}>
-        <Text numberOfLines={4} style={styles.txtContent}>
+        <Text
+          numberOfLines={4}
+          style={[styles.txtContent, { color: txtColor || palette.text }]}
+        >
           {item?.content || ""}
         </Text>
       </View>
