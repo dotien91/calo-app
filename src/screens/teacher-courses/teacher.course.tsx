@@ -340,14 +340,17 @@ const TeacherCourse = () => {
               event,
             };
             console.log("params", params);
-            return;
             closeModalDetail();
             navigate(SCREENS.ONEONE_SCREEN, params);
             // alert("Bắt đầu cuộc gọi call11");
+          } else {
+            
+           navigate(SCREENS.CALL_CLASS, {
+              courseRoom,
+              courseData: { type: event.type, user_id: event.teacher_id },
+            });
           }
-          if (event.type === EnumClassType.CallGroup) {
-            alert("Bắt đầu cuộc gọi callGroup");
-          }
+    
         };
         const copyLink = () => {
           Clipboard.setString(
