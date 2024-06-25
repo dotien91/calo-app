@@ -112,7 +112,6 @@ import ManagedCertificateScreen from "@screens/user-profile/manage-certificate/m
 import CreateCertificateScreen from "@screens/user-profile/manage-certificate/create.certificate.screen";
 import TeacherScreen from "@screens/profile.screen/ikiCoachTeacher.screen";
 import MyAudioScreen from "@screens/audio/my-audio/my.audio.screen";
-import OneoneScreen from "@screens/call/oneone.screen";
 // import CreateSubscriptionScreen from "@screens/profile.screen/create-subscription.tsx/create.subscription.screen";
 
 export const DiscoveryStackData = [

@@ -80,7 +80,7 @@ const useUserHelper = () => {
   };
 
   const isActiveSubscription = useMemo(() => {
-    return true
+    return true;
     return !!extraUserData.user_subscription;
   }, [extraUserData]);
 

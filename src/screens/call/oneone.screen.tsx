@@ -1,72 +1,100 @@
-import React, { useMemo, useRef, useState, useEffect } from "react";
-
-interface OneoneScreenProps {}
+import React, { useState, useEffect } from "react";
 
 import OneOneRtcView from "./components/OneOneRtcView";
 import eventEmitter from "@services/event-emitter";
-import { closeSuperModal, showLoading } from "@helpers/super.modal.helper";
 import { useRoute } from "@react-navigation/native";
 import useStore from "@services/zustand/store";
 import { emitSocket } from "@helpers/socket.helper";
+import { EnumRole } from "constants/system.constant";
+import { ActivityIndicator, SafeAreaView, View } from "react-native";
+import CS from "@theme/styles";
+import TextBase from "@shared-components/TextBase";
+import { EnumColors } from "models";
+import { translations } from "@localization";
+import { palette } from "@theme/themes";
+import ClassOneOneRoomTopView from "@screens/call-class/components/call.oneone.class.top.view";
+
+interface OneoneScreenProps {}
 
 const OneoneScreen: React.FC<OneoneScreenProps> = () => {
-
-  const [visible, setVisible] = useState(true)
-  const userData = useStore(state => state.userData)
+  const [visible, setVisible] = useState(true);
+  const userData = useStore((state) => state.userData);
+  const route = useRoute<any>();
+  const event = route.params?.event;
+  const courseRoom = route.params?.courseRoom;
 
   const reloadOneOneView = () => {
-    setVisible(false)
-    showLoading()
-  }
-  const route = useRoute<any>();
-  const noEmit = route.params?.noEmit
+    setVisible(false);
+  };
 
   useEffect(() => {
-    if (!userData) return
-
+    if (!userData) return;
     if (!visible) {
-      setTimeout(() => {
-        setVisible(true)
-      }, userData?.user_role != "teacher" ? 4000 : 200)
-    } else {
-      closeSuperModal()
+      setTimeout(
+        () => {
+          userData?.user_role == EnumRole.Teacher &&
+            emitSocket("clearAnswer", courseRoom?.roomId);
+
+          setVisible(true);
+        },
+        userData?.user_role != EnumRole.Teacher ? 4000 : 0,
+      );
     }
-  }, [visible, userData])
+  }, [visible, userData]);
 
   useEffect(() => {
-    if (!userData) return
-    const id = userData?.user_role == "teacher" ? "666ffe3f715cee894e6f0a71" : "666c162294f133507f9c87da" 
-    // if (userData?.user_role !== "teacher") {
-      setTimeout(() => {
-        emitSocket("joinOneone", id);
-
-      },  userData?.user_role !== "teacher" ? 0 : 3000)
-
-    // }
-    // if (!noEmit) {
-    //   alert("join")
-    //   emitSocket("joinOneone", id);
-
-    // }
+    emitSocket(
+      userData?.user_role == EnumRole.Teacher ? "clearAnswer" : "clearOffer",
+      courseRoom?.roomId,
+    );
+    if (!userData) return;
+    emitSocket("joinOneone", event?.partner_id?._id);
     return () => {
-      emitSocket("leaveOneone", id);
-    }
-  }, [userData])
-  
-  
+      emitSocket("leaveOneone", event?.partner_id?._id);
+    };
+  }, [userData]);
 
   useEffect(() => {
-    eventEmitter.on("reload_oneone_screen", reloadOneOneView)
+    eventEmitter.on("reload_oneone_screen", reloadOneOneView);
     return () => {
-    eventEmitter.emit("reload_oneone_screen", reloadOneOneView)
-    }
-  }, [])
-  
+      eventEmitter.off("reload_oneone_screen", reloadOneOneView);
+    };
+  }, []);
+
+  const renderRoomLoading = () => {
+    return (
+      <SafeAreaView
+        style={[CS.safeAreaView, { backgroundColor: palette.black }]}
+      >
+        <ClassOneOneRoomTopView data={event} />
+        <View style={[CS.center, { flex: 1 }]}>
+          <View
+            style={{
+              backgroundColor: palette.link,
+              padding: 16,
+              borderRadius: 12,
+            }}
+          >
+            <TextBase
+              marginBottom={12}
+              color={EnumColors.white}
+              title={
+                event?.partner_id?.display_name + " " + translations.loadingRoom
+              }
+              fontSize={20}
+            />
+            <ActivityIndicator color={palette.white} />
+          </View>
+        </View>
+      </SafeAreaView>
+    );
+  };
 
   return (
-   <>
-    {visible && <OneOneRtcView />}
-   </>
+    <>
+      {visible && <OneOneRtcView />}
+      {!visible && renderRoomLoading()}
+    </>
   );
 };
 

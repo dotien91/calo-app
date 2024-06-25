@@ -2025,4 +2025,5 @@ export default {
   },
   label: "Tiêu đề",
   description: "Mô tả",
+  loadingRoom: "đang vào lớp học",
 };

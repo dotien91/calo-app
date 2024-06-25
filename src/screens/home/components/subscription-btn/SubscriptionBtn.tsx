@@ -19,7 +19,9 @@ const SubscriptionBtn = () => {
   const { subscription_sell, subscriptions } = extraUserData;
   const { isActiveSubscription } = useUserHelper();
   const planInfo = useMemo(() => {
-    if (isAndroid()) return extraUserData?.subscriptions?.[0]?.subscriptionOfferDetails?.[0]?.pricingPhases?.pricingPhaseList?.[0]
+    if (isAndroid())
+      return extraUserData?.subscriptions?.[0]?.subscriptionOfferDetails?.[0]
+        ?.pricingPhases?.pricingPhaseList?.[0];
     return extraUserData?.subscriptions?.[0];
   }, [extraUserData]);
   const pressFollow = () => {
@@ -49,26 +51,30 @@ const SubscriptionBtn = () => {
         pac: {
           productId: extraUserData?.subscriptions?.[0].productId,
         },
-        offerToken: extraUserData?.subscriptions?.[0]?.subscriptionOfferDetails?.[0]?.offerToken,
+        offerToken:
+          extraUserData?.subscriptions?.[0]?.subscriptionOfferDetails?.[0]
+            ?.offerToken,
       });
       setTimeout(() => {
         setLoading(false);
       }, 3000);
     }
   };
-  if (!subscription_sell || !planInfo || !subscriptions?.length) return null;
   const subText = React.useMemo(() => {
     if (isAndroid()) {
-      console.log("planInfo", planInfo)
-      return planInfo?.formattedPrice+"/"+planInfo?.billingPeriod
+      console.log("planInfo", planInfo);
+      return planInfo?.formattedPrice + "/" + planInfo?.billingPeriod;
     }
-    return planInfo?.localizedPrice +
-    "/" +
-    planInfo?.subscriptionPeriodNumberIOS +
-    " " +
-    planInfo?.subscriptionPeriodUnitIOS
-  
-  }, [planInfo])
+    return (
+      planInfo?.localizedPrice +
+      "/" +
+      planInfo?.subscriptionPeriodNumberIOS +
+      " " +
+      planInfo?.subscriptionPeriodUnitIOS
+    );
+  }, [planInfo]);
+  if (!subscription_sell || !planInfo || !subscriptions?.length) return null;
+
   return (
     <Button
       disabled={loading}

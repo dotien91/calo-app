@@ -36,6 +36,7 @@ import { navigate } from "@helpers/navigation.helper";
 import { SCREENS } from "constants";
 import { EnumClassType } from "models/course.model";
 import { showToast } from "@helpers/super.modal.helper";
+import useStore from "@services/zustand/store";
 
 interface MyCustomEventType extends ICalendarEventBase {
   color: string;
@@ -52,6 +53,7 @@ const TeacherCourse = () => {
 
   const [eventTeacher, setEventTeacher] = useState<any>([]);
   const [eventUser, setEventUser] = useState<any[]>([]);
+  const userData = useStore((state) => state.userData);
 
   const getListEventStudent = async () => {
     const listEventStudent: any[] = [];
@@ -69,7 +71,6 @@ const TeacherCourse = () => {
               const ele = e[ind];
               const [hours, minutes] = ele.time_start.split(":");
               const [hoursEnd, minutesEnd] = ele.time_end.split(":");
-
               const dataAdd = {
                 title: translations.course.call11With(
                   "teacher",
@@ -80,10 +81,10 @@ const TeacherCourse = () => {
                 color: ind > 0 || i > 0 ? palette.call11 : palette.newClass,
                 type: EnumClassType.Call11,
                 student_name: element.student_id.display_name,
-                student_id: element.student_id._id,
+                student_id: element.student_id,
                 teacher_name: element.teacher_id.display_name,
-                teacher_id: element.teacher_id._id,
-                partner_id: element.teacher_id._id,
+                teacher_id: element.teacher_id,
+                partner_id: element.teacher_id,
                 partner_name: element.teacher_id.display_name,
                 plan_id: element._id,
                 course_name: element.course_id.title,
@@ -123,11 +124,11 @@ const TeacherCourse = () => {
                 color: ind > 0 || i > 0 ? palette.call11 : palette.newClass,
                 type: EnumClassType.Call11,
                 student_name: element.student_id.display_name,
-                student_id: element.student_id._id,
+                student_id: element.student_id,
                 teacher_name: element.teacher_id.display_name,
-                partner_id: element.student_id._id,
+                partner_id: element.student_id,
                 partner_name: element.student_id.display_name,
-                teacher_id: element.teacher_id._id,
+                teacher_id: element.teacher_id,
                 plan_id: element._id,
                 course_name: element.course_id.title,
               };
@@ -303,8 +304,8 @@ const TeacherCourse = () => {
         let courseRoom: any;
         getCourseRoomV2({
           course_plan_student_id: event?.plan_id,
-          student_id: event?.student_id,
-          teacher_id: event?.teacher_id,
+          student_id: event?.student_id?._id,
+          teacher_id: event?.teacher_id?._id,
         }).then((res) => {
           if (!res.isError) {
             const data = res.data;
@@ -314,15 +315,18 @@ const TeacherCourse = () => {
           }
         });
         const startCall = () => {
-console.log("courseRoom", courseRoom)
-          return
           if (event.type === EnumClassType.Call11) {
-            closeModalDetail();
-            navigate(SCREENS.CALL_CLASS, {
+            const params = {
               course_id: event.course_id,
               courseData: { type: event.type, user_id: event.teacher_id },
               courseRoom,
-            });
+              isMakeCall: event?.teacher_id?._id == userData?._id,
+              event,
+            };
+            console.log("params", params);
+            return;
+            closeModalDetail();
+            navigate(SCREENS.ONEONE_SCREEN, params);
             // alert("Bắt đầu cuộc gọi call11");
           }
           if (event.type === EnumClassType.CallGroup) {
@@ -589,7 +593,7 @@ const styles = StyleSheet.create({
   viewRect: {
     width: 20,
     height: 20,
-    borderRadius: 8,
+    borderRadius: 11,
   },
   viewIcon: {
     ...CS.center,

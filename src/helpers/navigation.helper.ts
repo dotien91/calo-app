@@ -4,8 +4,8 @@ export const navigate = (name, params?) => {
   NavigationService.navigate(name, params);
 };
 
-export const getRoute = (name, params?) => {
-  return NavigationService.navigationRef.current?.getCurrentRoute()
+export const getRoute = () => {
+  return NavigationService.navigationRef.current?.getCurrentRoute();
 };
 
 export const push = (name, params?) => {

@@ -163,7 +163,7 @@ export const useInAppPurchase = () => {
       if (productIds.length > 0) {
         await getProducts({ skus: productIds });
       }
-      console.log("subscriptionIds", subscriptionIds())
+      console.log("subscriptionIds", subscriptionIds());
       if (subscriptionIds()?.length > 0) {
         await getSubscriptions({
           skus: subscriptionIds().map((item) => item.id),
