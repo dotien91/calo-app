@@ -30,7 +30,12 @@ import { SCREEN_HEIGHT, SCREEN_WIDTH } from "@gorhom/bottom-sheet";
 import ModalCalendar from "./ModalCalendar";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import IconSvg from "assets/svg";
-import { formatCalendarDateTime } from "@utils/date.utils";
+import {
+  formatCalendarDateTime,
+  formatDate,
+  formatTimeHHMM,
+  getHoursAndDate,
+} from "@utils/date.utils";
 import IconSvgBtn from "@screens/audio/components/IconSvgBtn";
 import {
   getCourseRoomV2,
@@ -44,13 +49,11 @@ import { EnumClassType } from "models/course.model";
 import { showToast } from "@helpers/super.modal.helper";
 import EmptyResultView from "@shared-components/empty.data.component";
 import LottieComponent from "@shared-components/lottie/LottieComponent";
+import { Agenda } from "react-native-calendars";
 
 interface MyCustomEventType extends ICalendarEventBase {
   color: string;
 }
-
-const HEIGHT_CALENDAR =
-  SCREEN_HEIGHT - getStatusBarHeight() - getBottomSpace() - 48;
 
 const TeacherCourse = () => {
   const [date, setDate] = React.useState(new Date());
@@ -62,6 +65,7 @@ const TeacherCourse = () => {
   const [eventUser, setEventUser] = useState<any[]>([]);
   const isFetchingStudent = useRef(true);
   const isFetchingTeacher = useRef(true);
+  const today = formatDate(new Date());
 
   const getListEventStudent = async () => {
     const listEventStudent: any[] = [];
@@ -86,6 +90,7 @@ const TeacherCourse = () => {
                   "teacher",
                   element.teacher_id.display_name,
                 ),
+                date: date,
                 start: new Date(new Date(date).setHours(hours, minutes)),
                 end: new Date(new Date(date).setHours(hoursEnd, minutesEnd)),
                 color: ind > 0 || i > 0 ? palette.call11 : palette.newClass,
@@ -107,6 +112,22 @@ const TeacherCourse = () => {
     });
     setEventUser(listEventStudent);
   };
+  const [currentTime, setCurrentTime] = useState([]);
+
+  useEffect(() => {
+    const updateCurrentTime = () => {
+      console.log("1");
+      const day = new Date();
+      const timeAlive = [];
+      const date = formatDate(day);
+      timeAlive[0] = { date: date, start: day, timeAlive: true };
+      setCurrentTime(timeAlive);
+    };
+    updateCurrentTime();
+    const timer = setInterval(updateCurrentTime, 600000); // Update every 10 minutes
+
+    return () => clearInterval(timer);
+  }, []);
   const getListEventTeacher = async () => {
     const listEventTeacher: any[] = [];
     await getPlanTeacher().then((res) => {
@@ -130,6 +151,7 @@ const TeacherCourse = () => {
                   "student",
                   element.student_id.display_name,
                 ),
+                date: formatDate(date),
                 start: new Date(new Date(date).setHours(hours, minutes)),
                 end: new Date(new Date(date).setHours(hoursEnd, minutesEnd)),
                 color: ind > 0 || i > 0 ? palette.call11 : palette.newClass,
@@ -162,6 +184,32 @@ const TeacherCourse = () => {
   useEffect(() => {
     getListEvent();
   }, []);
+
+  useEffect(() => {
+    const event = [...eventTeacher, ...eventUser, ...currentTime];
+    const eve = event
+      .sort((a, b) => new Date(a.date) - new Date(b.date))
+      .sort((a, b) => {
+        if (a.date === b.date) {
+          return a.start - b.start;
+        }
+        return a.date - b.date;
+      });
+    const groupedData = eve.reduce((groups, item) => {
+      const date = item.date;
+      if (!groups[date]) {
+        groups[date] = [];
+      }
+      groups[date].push(item);
+      return groups;
+    }, {});
+    console.log("...old...", groupedData);
+    // Object.keys(event).forEach((key) => {
+    //   newItems[formatDate(event[key].start)] = event[key];
+    // });
+    // console.log("...evevt...", newItems);
+    setItems(groupedData);
+  }, [eventTeacher, eventUser, currentTime]);
 
   const ItemCheck = ({ item }: { item: { color: string; title: string } }) => {
     return (
@@ -204,70 +252,126 @@ const TeacherCourse = () => {
   //   // alert(e);
   // };
 
-  const renderEvent = <T extends MyCustomEventType>(
-    event: T,
-    touchableOpacityProps: CalendarTouchableOpacityProps,
-  ) => (
-    <TouchableOpacity {...touchableOpacityProps}>
-      <View
-        style={{
-          ...styles.viewSticky,
-          backgroundColor: event.color,
-        }}
-      />
-      <View
-        style={[
-          CS.flex1,
-          { backgroundColor: `${event.color}30`, paddingLeft: 8 },
-        ]}
-      >
-        <Text
-          numberOfLines={1}
-          style={[
-            styles.txtItemEvent,
-            mode === "schedule" ? { fontSize: 16 } : {},
-          ]}
-        >
-          {event.title}
-        </Text>
-        {mode === "schedule" && (
-          <Text
-            numberOfLines={1}
-            style={[
-              styles.txtItemEvent,
-              mode === "schedule" ? { fontSize: 12 } : {},
-            ]}
+  const [items, setItems] = useState({});
+
+  // const loadItems = (day) => {
+  //   const itemsCopy = { ...items };
+  //   setTimeout(() => {
+  //     for (let i = -15; i < 85; i++) {
+  //       const time = day.timestamp + i * 24 * 60 * 60 * 1000;
+  //       const strTime = timeToString(time);
+  //       if (!itemsCopy[strTime]) {
+  //         itemsCopy[strTime] = [];
+  //         const numItems = Math.floor(Math.random() * 3 + 1);
+  //         for (let j = 0; j < numItems; j++) {
+  //           itemsCopy[strTime].push({
+  //             name: `Item ${i} ${j} for ${strTime}`,
+  //             height: Math.max(50, Math.floor(Math.random() * 150)),
+  //           });
+  //         }
+  //       }
+  //     }
+  //     const newItems = {};
+  //     Object.keys(itemsCopy).forEach((key) => {
+  //       newItems[key] = itemsCopy[key];
+  //     });
+  //     console.log("new item...", newItems);
+  //     // setItems(newItems);
+  //   }, 1000);
+  // };
+
+  const renderItem = (item) => {
+    const onPress = () => {
+      setEventsSelect(item);
+      console.log("eventSelected...", item);
+    };
+    if (item.timeAlive) {
+      console.log("item...", item);
+    }
+
+    return (
+      <View key={item.date}>
+        {item.timeAlive ? (
+          <View style={{ ...CS.row, marginTop: 8 }}>
+            <View
+              style={{
+                width: 4,
+                height: 4,
+                borderRadius: 2,
+                backgroundColor: palette.red,
+              }}
+            />
+            <View
+              style={{
+                flex: 1,
+                height: 1,
+                borderRadius: 2,
+                backgroundColor: palette.red,
+              }}
+            />
+          </View>
+        ) : (
+          <TouchableOpacity
+            style={{
+              ...CS.row,
+              marginTop: 8,
+              backgroundColor: `${item.color}30`,
+              gap: 8,
+            }}
+            onPress={onPress}
           >
-            {formatCalendarDateTime({
-              start: event?.start,
-              end: event?.end,
-            })}
-            {event.course_name}
-          </Text>
+            <View
+              style={{
+                ...styles.viewSticky,
+                backgroundColor: item.color,
+              }}
+            />
+            <View style={{ ...CS.flex1, gap: 4, paddingVertical: 4 }}>
+              <Text numberOfLines={1} style={[styles.txtItemEvent]}>
+                {item.title}
+              </Text>
+              <Text numberOfLines={2} style={[styles.txtItemEvent]}>
+                {formatCalendarDateTime({
+                  start: item?.start,
+                  end: item?.end,
+                })}
+              </Text>
+              <Text numberOfLines={2} style={[styles.txtItemEvent]}>
+                {item.course_name}
+              </Text>
+            </View>
+          </TouchableOpacity>
         )}
       </View>
-    </TouchableOpacity>
-  );
-
-  const renderCalendar = useMemo(() => {
-    return (
-      <Calendar
-        mode={mode}
-        renderEvent={renderEvent}
-        // onPressCell={_onPressCell}
-        activeDate={date}
-        onPressDateHeader={(e) => setDate(e)}
-        onPressEvent={(e) => setEventsSelect(e)}
-        events={[...eventTeacher, ...eventUser]}
-        eventCellStyle={styles.eventCellStyle}
-        height={HEIGHT_CALENDAR}
-      />
     );
-  }, [eventTeacher, eventUser, mode]);
+  };
 
   const renderEmpty = () => {
-    return <EmptyResultView />;
+    return (
+      <EmptyResultView
+        height={200}
+        title="Ngày bạn chọn không có lịch"
+        desc="Chọn ngày được đánh dấu trên lịch để xem chi tiết"
+      />
+    );
   };
+
+  function renderCalendar() {
+    return (
+      <Agenda
+        items={items}
+        // loadItemsForMonth={loadItems}
+        selected={today}
+        renderItem={renderItem}
+        // loadItemsForMonth={(month) => {
+        //   console.log("trigger items loading", month);
+        // }}
+        showClosingKnob={true} // hiện close khi full lịch
+        renderEmptyData={renderEmpty}
+      />
+    );
+  }
+
   const closeModalDetail = () => setEventsSelect(null);
 
   const ItemDetailEvent = ({
@@ -527,12 +631,12 @@ const TeacherCourse = () => {
             lottieJson={require("assets/lotties/loading-circle.json")}
           />
         ) : null}
-        {[...eventTeacher, ...eventUser].length == 0 &&
+        {/* {[...eventTeacher, ...eventUser].length == 0 &&
           mode == "schedule" &&
           !isFetchingStudent.current &&
           !isFetchingTeacher.current &&
-          renderEmpty()}
-        {renderCalendar}
+          renderEmpty()} */}
+        {renderCalendar()}
       </SafeAreaView>
       <ModalCalendar
         isVisible={modalVisible}
@@ -643,14 +747,14 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   viewSticky: {
-    height: "auto",
+    height: "100%",
     width: 4,
     borderTopLeftRadius: 8,
     borderBottomLeftRadius: 8,
   },
   txtItemEvent: {
     ...CS.hnRegular,
-    fontSize: 10,
+    fontSize: 16,
   },
   eventCellStyle: {
     borderRadius: 8,
@@ -667,6 +771,39 @@ const styles = StyleSheet.create({
     ...CS.row,
     gap: 8,
     marginTop: 8,
+  },
+  item: {
+    backgroundColor: "white",
+    flex: 1,
+    borderRadius: 5,
+    padding: 10,
+    marginRight: 10,
+    marginTop: 17,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  time: {
+    fontWeight: "bold",
+    marginRight: 10,
+    color: "#333",
+  },
+  dayContainer: {
+    backgroundColor: "#f0f0f0",
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 5,
+  },
+  todayContainer: {
+    backgroundColor: "#e0f7fa",
+  },
+  dayText: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  currentTimeMarker: {
+    fontSize: 14,
+    color: "#ff1744",
+    marginTop: 5,
   },
 });
 
