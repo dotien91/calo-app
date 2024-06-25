@@ -202,7 +202,7 @@ const OneOneRtcView: React.FC<OneOneRtcViewProps> = () => {
         });
       }
     } catch (error: any) {
-      console.log(error)
+      console.log(error);
     }
   };
 

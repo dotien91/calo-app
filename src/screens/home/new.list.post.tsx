@@ -1,7 +1,13 @@
 /* eslint-disable camelcase */
 /*eslint no-unsafe-optional-chaining: "error"*/
 
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  Component,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import {
   FlatList,
   NativeScrollEvent,
@@ -54,7 +60,6 @@ interface ListPostProps {
 type filterProp = "forYou" | "following" | "trending" | "most_popular";
 
 const HEADER_HEIGHT = getStatusBarHeight() + 56;
-const TAB_HEIGHT = 56;
 
 const ListPostNew = ({ id }: ListPostProps) => {
   const listRef = useRef<any>(null);
@@ -356,48 +361,92 @@ const ListPostNew = ({ id }: ListPostProps) => {
       </Animated.View>
       <View style={[CS.flex1, { marginTop: getStatusBarHeight() }]}>
         <Viewport.Tracker>
-          <FlatList
+          <List
             StickyHeaderComponent={StickyHeaderComponent}
             stickyHeaderIndices={[1]}
-            stickyHeaderHiddenOnScroll={true}
-            ref={listRef}
-            data={listData}
+            listData={listData}
             onScroll={onScroll}
             ListHeaderComponent={renderHeaderTab}
             renderItem={renderItem}
-            onEndReachedThreshold={0.8}
             onEndReached={onEndReach}
-            showsVerticalScrollIndicator={false}
-            removeClippedSubviews={true}
-            keyExtractor={(item) => item?._id + ""}
-            refreshControl={refreshControl()}
-            ListFooterComponent={customFooter()}
+            refreshControl={refreshControl}
+            ListFooterComponent={customFooter}
             progressViewOffset={HEADER_HEIGHT}
             onScrollBeginDrag={(e) => {
               onScrollBeginDrag?.(e);
               hasScrolled.current = true;
             }}
-            contentContainerStyle={{
-              paddingTop: TAB_HEIGHT,
-              marginTop: 16,
-              paddingBottom: 100,
-            }}
-            // decelerationRate={'fast'}
-
             onLayoutFilter={onLayoutFilter}
-            // ContentFilter={ContentFilter}
-            // onPressFilter={onPressFilter}
             scrollToFilter={scrollToFilter}
           />
         </Viewport.Tracker>
       </View>
     </View>
   );
-
-  // const onScrollEndDrag = (event) => {
-  //   console.log("event...", event.nativeEvent.contentOffset);
-  // };
 };
+
+class List extends Component {
+  componentDidMount(): void {
+    eventEmitter.on("scroll_home_to_top", this.scrollToTop);
+  }
+
+  componentWillUnmount(): void {
+    eventEmitter.off("scroll_home_to_top", this.scrollToTop);
+  }
+
+  scrollToTop = () => {
+    this.flatListRef.scrollToOffset({ animated: true, offset: 0 });
+  };
+  render() {
+    const {
+      StickyHeaderComponent,
+      listData,
+      onScroll,
+      renderItem,
+      onEndReach,
+      HEADER_HEIGHT,
+      onScrollBeginDrag,
+      TAB_HEIGHT,
+      onLayoutFilter,
+      scrollToFilter,
+      ListHeaderComponent,
+      ListFooterComponent,
+      refreshControl,
+    } = this.props;
+
+    return (
+      <>
+        <FlatList
+          StickyHeaderComponent={StickyHeaderComponent}
+          stickyHeaderIndices={[1]}
+          stickyHeaderHiddenOnScroll={true}
+          ref={(node) => (this.flatListRef = node)}
+          data={listData}
+          onScroll={onScroll}
+          ListHeaderComponent={ListHeaderComponent}
+          renderItem={renderItem}
+          onEndReachedThreshold={0.8}
+          onEndReached={onEndReach}
+          showsVerticalScrollIndicator={false}
+          removeClippedSubviews={true}
+          keyExtractor={(item) => item?._id + ""}
+          refreshControl={refreshControl()}
+          ListFooterComponent={ListFooterComponent()}
+          progressViewOffset={HEADER_HEIGHT}
+          onScrollBeginDrag={onScrollBeginDrag}
+          contentContainerStyle={{
+            paddingTop: TAB_HEIGHT,
+            marginTop: 16,
+            paddingBottom: 100,
+            paddingTop: 60,
+          }}
+          onLayoutFilter={onLayoutFilter}
+          scrollToFilter={scrollToFilter}
+        />
+      </>
+    );
+  }
+}
 
 export default ListPostNew;
 

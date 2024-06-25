@@ -17,7 +17,7 @@ const SubscriptionBtn = () => {
   const userData = useStore((state) => state.userData);
   const [loading, setLoading] = useState(false);
   const extraUserData = useStore((state) => state.extraUserData);
-  const { subscription_sell, subscriptions } = extraUserData;
+  const { subscription_sell } = extraUserData;
   const { isActiveSubscription } = useUserHelper();
   const planInfo = useMemo(() => {
     if (isAndroid())

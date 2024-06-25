@@ -164,6 +164,7 @@ const Navigation = () => {
               tabPress: () => {
                 navigate(SCREENS.HOME_TAB);
                 eventEmitter.emit("reload_home_page");
+                eventEmitter.emit("scroll_home_to_top");
               },
             }}
           />
