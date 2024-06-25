@@ -2086,4 +2086,5 @@ export default {
     start: "Bắt đầu",
   },
   creator: "Nhà sáng tạo nội dung",
+  loadingRoom: "đang vào lớp học",
 };

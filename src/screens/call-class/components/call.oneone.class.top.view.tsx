@@ -1,0 +1,107 @@
+import React from "react";
+import { View, Text } from "react-native";
+import { useTheme } from "@react-navigation/native";
+import * as NavigationService from "react-navigation-helpers";
+
+import CS from "@theme/styles";
+import PressableBtn from "@shared-components/button/PressableBtn";
+import IconBtn from "@shared-components/button/IconBtn";
+import { getStatusBarHeight } from "react-native-safearea-height";
+import {
+  EnumModalContentType,
+  EnumStyleModalType,
+  showSuperModal,
+} from "@helpers/super.modal.helper";
+import { translations } from "@localization";
+import { TypedCourse } from "shared/models";
+import { TOP_CLASS_HEIGHT } from "../call.class.constant";
+
+const ClassOneOneRoomTopView = ({
+  data,
+}: {
+  switchCamera: () => void;
+  data: TypedCourse;
+}) => {
+  const theme = useTheme();
+  const { colors } = theme;
+
+  const showConfirmEndCall = () => {
+    showSuperModal({
+      contentModalType: EnumModalContentType.Confirm,
+      styleModalType: EnumStyleModalType.Middle,
+      data: {
+        title: translations.event.eventConfirm,
+        cb: () => NavigationService.goBack(),
+      },
+    });
+  };
+
+  return (
+    <View
+      style={{
+        ...CS.flexRear,
+        flex: 1,
+        backgroundColor: colors.blackOverlay,
+        position: "absolute",
+        left: 0,
+        right: 0,
+        top: 0,
+        paddingHorizontal: 16,
+        zIndex: 1,
+        height: TOP_CLASS_HEIGHT,
+        paddingTop: getStatusBarHeight(),
+        ...CS.flexCenter,
+      }}
+    >
+      <View style={CS.flexStart}>
+        <IconBtn
+          customStyle={{ marginRight: 8, marginLeft: -8 }}
+          name="chevron-left"
+          color={colors.white}
+          onPress={() => NavigationService.goBack()}
+          size={30}
+        />
+        {/* <IconBtn
+          onPress={switchCamera}
+          customStyle={{ marginRight: 8 }}
+          name="camera-flip-outline"
+          color={colors.white}
+          type={IconType.MaterialCommunityIcons}
+        /> */}
+      </View>
+      <View style={{ ...CS.flexCenter, flex: 1 }}>
+        <Text
+          numberOfLines={1}
+          style={{
+            ...CS.hnSemiBold,
+            color: colors.white,
+            flex: 1,
+          }}
+        >
+          {/* todo */}
+          {data?.course_name}
+        </Text>
+      </View>
+      <PressableBtn
+        onPress={showConfirmEndCall}
+        style={{
+          paddingVertical: 4,
+          paddingHorizontal: 12,
+          backgroundColor: colors.primary,
+          borderRadius: 4,
+        }}
+      >
+        <Text
+          style={{
+            ...CS.hnSemiBold,
+            color: colors.white,
+          }}
+        >
+          {translations.event.end}
+        </Text>
+      </PressableBtn>
+    </View>
+  );
+};
+
+export default ClassOneOneRoomTopView;

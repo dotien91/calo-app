@@ -61,7 +61,6 @@ const SubscriptionBtn = () => {
       }, 3000);
     }
   };
-  if (!subscription_sell || !planInfo || !subscriptions?.length) return null;
   const subText = React.useMemo(() => {
     if (isAndroid()) {
       console.log("planInfo", planInfo);

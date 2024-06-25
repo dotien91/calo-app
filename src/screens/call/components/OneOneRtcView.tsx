@@ -3,36 +3,28 @@ import { useTheme, useRoute } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as NavigationService from "react-navigation-helpers";
 import {
-  AcceptCall,
-  BackIcon,
   IconCameraCall,
   IconSpeakerCall,
   RotateIcon,
-  SplitView,
-} from "./assets/svgIcons";
+} from "../assets/svgIcons";
 
 import useStore from "@services/zustand/store";
 import LinearGradient from "react-native-linear-gradient";
-import ImageLoad from "./components/ImageLoad";
+import ImageLoad from "@shared-components/image-load/ImageLoad";
 import { emitSocket, offSocket, onSocket } from "@helpers/socket.helper";
 
-import { SCREENS } from "constants";
-import { Device } from "./ui/device.ui";
+import { Device } from "../ui/device.ui";
 // import { useCall, useLocalStream, _requestAudioPermission, _requestCameraPermission } from "./utils";
-
-import { endCall, makeCall } from "@services/api/call.api";
 
 import RNCallKeep from "react-native-callkeep";
 import KeepAwake from "react-native-keep-awake";
-interface HomeScreenProps {}
-import createStyles from "./call.page.screen.style";
+interface OneOneRtcViewProps {}
+import createStyles from "../call.page.screen.style";
 import {
-  Pressable,
   View,
   BackHandler,
   Platform,
   StyleSheet,
-  TouchableWithoutFeedback,
   Alert,
   PermissionsAndroid,
 } from "react-native";
@@ -41,9 +33,8 @@ import Animated, {
   interpolate,
   useAnimatedStyle,
   useSharedValue,
-  withTiming,
 } from "react-native-reanimated";
-import { MHS } from "./ui/sizes.ui";
+import { MHS } from "../ui/sizes.ui";
 
 const HEIGHT_BOTTOM = Device.isX ? Device.safeAreaInsetX.bottom + 90 : 110;
 
@@ -58,29 +49,61 @@ import {
 } from "react-native-webrtc";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
-import { HIT_SLOP_EXPAND_20 } from "./constants/system.constant";
-import SoundComponent from "./components/sound.component";
-import TextBase from "./components/TextBase";
+import SoundComponent from "./sound.component";
 import { palette } from "@theme/themes";
 import { translations } from "@localization";
+import { EnumRole } from "constants/system.constant";
+import ClassOneOneRoomTopView from "@screens/call-class/components/call.oneone.class.top.view";
+import PressableBtn from "@shared-components/button/PressableBtn";
+import IconBtn from "@shared-components/button/IconBtn";
+import { IconType } from "react-native-dynamic-vector-icons";
+import {
+  EnumModalContentType,
+  EnumStyleModalType,
+  showSuperModal,
+} from "@helpers/super.modal.helper";
 
-const CallPageScreen: React.FC<HomeScreenProps> = () => {
+const OneOneRtcView: React.FC<OneOneRtcViewProps> = () => {
   const route = useRoute<any>();
   const intervalTimer = useRef<ReturnType<typeof setInterval> | null>();
   const ringingRef = useRef<any>();
-  const callTime = useRef<any>();
+  const trackRef = useRef<any>();
+  const remote = useRef<any>();
+
   const timeoutEndCall = useRef<ReturnType<typeof setInterval> | null>();
-  const [timer, setTimer] = useState(0);
   const startTimer = useRef(false);
 
   const item = route.params?.item || {};
-  const optionFilter = useSharedValue(0);
+  const event = route.params?.event || {};
 
-  const [data, setDataCall] = useState<any>(route.params?.data || {});
+  const optionFilter = useSharedValue(0);
+  const isMakeCall = route.params?.isMakeCall;
+  const courseRoom = route.params?.courseRoom;
+  const [data, setDataCall] = useState<any>({
+    room_id: courseRoom?.roomId,
+  });
   const [callType] = useState(route.params?.type || "video_call");
+  const userData = useStore((state) => state.userData);
 
   const peerConnection = useRef<RTCPeerConnection>();
   const [remoteStreams, setRemoteStreams] = useState<any>({});
+
+  const leaveOneoneClient = () => {
+    setRemoteStreams({});
+  };
+  useEffect(() => {
+    if (!userData) return;
+    onSocket("leaveOneoneClient", leaveOneoneClient);
+    return () => {
+      offSocket("leaveOneoneClient", leaveOneoneClient);
+      onPressEndCall();
+      emitSocket(
+        userData?.user_role != EnumRole.Teacher ? "clearAnswer" : "clearOffer",
+        userData?._id,
+      );
+    };
+  }, [userData]);
+
   const [configActions, setConfigActions] = useState({
     localMic: true,
     localCamera: callType === "video_call",
@@ -95,7 +118,6 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
     remoteStreams: {},
   });
 
-  const userData = useStore((state) => state.userData);
   const [account] = useState<any>(userData);
   const servers = {
     iceServers: [
@@ -106,11 +128,6 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
       },
     ],
   };
-
-  const isMakeCall = useMemo(() => {
-    //Chat room ID
-    return !data.chat_room_id;
-  }, []);
 
   useEffect(() => {
     if (streams?.id) {
@@ -135,23 +152,15 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
   useEffect(() => {
     KeepAwake.activate();
     createLocalStream();
-    if (isMakeCall) {
-      ringingRef.current?.playSound();
-    } else {
-      onSocket("msgToUser", msgToUser);
-    }
     const backAction = () => {
       onPressEndCall();
       return true;
     };
 
     onSocket("endCall", () => {
-      ringingRef.current?.stopSound();
       releaseCamera();
       RNCallKeep.endAllCalls();
-      setTimeout(() => {
-        NavigationService.navigate(SCREENS.CHAT);
-      }, 500);
+      NavigationService.popToTop();
     });
 
     const backHandler = BackHandler.addEventListener(
@@ -169,10 +178,10 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
       if (timeoutEndCall.current) {
         clearTimeout(timeoutEndCall.current);
       }
-      ringingRef.current?.stopSound();
       setDataCall({});
     };
   }, []);
+  // {"chatRoomId": "66700320570c57a537c7ad80", "roomId": "667002fd570c57a537c7ad2e"}
 
   const createRoom = async () => {
     if (Platform.OS === "android") {
@@ -181,60 +190,19 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
     }
     try {
       if (!isMakeCall) {
-        callTime.current = data.call_time;
-        const res = await makeCall(
-          data?.to_user?._id,
-          callType,
-          data.call_time,
-          data.chat_room_id,
-        );
-        if (res?.data) {
-          if (res.data?.is_has_call) {
-            return;
-          }
-          joinCall({
-            stream: streams,
-            roomId: data.room_id,
-          });
-        } else {
-          RNCallKeep.endAllCalls();
-        }
+        joinCall({
+          stream: streams,
+          roomId: courseRoom?.roomId,
+        });
         return;
       } else {
-        timeoutEndCall.current = setTimeout(() => {
-          onPressEndCall();
-        }, 40000);
-        callTime.current = `${Math.round(Date.now() / 1000)}`;
-        const res = await makeCall(
-          item?.partner_id?._id,
-          callType,
-          callTime.current,
-          item?.chat_room_id?._id,
-        )
-          .then(async (res: any) => {
-            return res;
-          })
-          .catch(async () => {
-            return null;
-          });
-
-        if (res && res.data) {
-          await startCall({
-            stream: streams,
-            roomId: res.data.room_id,
-          });
-        } else {
-          RNCallKeep.endAllCalls();
-          Alert.alert(translations.somethingWentWrong);
-          NavigationService.goBack();
-        }
+        startCall({
+          stream: streams,
+          roomId: courseRoom?.roomId,
+        });
       }
     } catch (error: any) {
-      RNCallKeep.endAllCalls();
-      Alert.alert(
-        error?.response?.data?.message || translations.somethingWentWrong,
-      );
-      NavigationService.goBack();
+      console.log(error)
     }
   };
 
@@ -284,67 +252,34 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
     }
     closePeer();
     RNCallKeep.endAllCalls();
-    ringingRef.current?.stopSound();
-    NavigationService.navigate(SCREENS.CHAT);
-
-    try {
-      if (!isMakeCall) {
-        await endCall(
-          data?.to_user?._id,
-          callType,
-          callTime.current,
-          data?.chat_room_id,
-        );
-      } else {
-        await endCall(
-          item?.partner_id?._id,
-          callType,
-          callTime.current,
-          item?.chat_room_id?._id,
-        );
-      }
-    } catch (error: any) {
-      Alert.alert(
-        error?.response?.data?.message || translations.somethingWentWrong,
-      );
-    }
-  };
-
-  const msgToUser = async (d: any) => {
-    const dataMsg = JSON.parse(d);
-    if (
-      (dataMsg?.media_ids?.[0]?.media_meta || []).find(
-        (i: any) => i.key == "end_time",
-      )?.value
-    ) {
-      try {
-        RNCallKeep.endAllCalls();
-        closePeer();
-        await endCall(
-          data?.to_user?._id,
-          callType,
-          callTime.current,
-          data?.chat_room_id,
-        );
-        setTimeout(() => {
-          //   const route = navigationHelper.getRouteName()
-          //   if (route == NAVIGATION_VIDEO_CALL) {
-          //     navigationHelper.goBack()
-          //   }
-        }, 500);
-      } catch (error) {
-        Alert.alert(translations.somethingWentWrong);
-      }
-    }
+    // try {
+    //   if (!isMakeCall) {
+    //     await endCall(
+    //       data?.to_user?._id,
+    //       callType,
+    //       callTime.current,
+    //       data?.chat_room_id,
+    //     );
+    //   } else {
+    //     await endCall(
+    //       item?.partner_id?._id,
+    //       callType,
+    //       callTime.current,
+    //       item?.chat_room_id?._id,
+    //     );
+    //   }
+    // } catch (error: any) {
+    //   Alert.alert(
+    //     error?.response?.data?.message || translations.somethingWentWrong,
+    //   );
+    // }
   };
 
   useEffect(() => {
     if (remoteStreams?.id) {
       ringingRef.current?.stopSound();
       startTimer.current = true;
-      intervalTimer.current = setInterval(() => {
-        setTimer((current) => current + 1);
-      }, 1000);
+      intervalTimer.current = setInterval(() => {}, 1000);
       if (timeoutEndCall.current) {
         clearTimeout(timeoutEndCall.current);
       }
@@ -360,7 +295,6 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
   }) => {
     peerConnection.current = new RTCPeerConnection(servers);
     emitSocket("joinCall", roomId);
-
     peerConnection.current.addEventListener("icecandidate", (event) => {
       // When you find a null candidate then there are no more candidates.
       // Gathering of candidates has finished.
@@ -371,7 +305,6 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
         return;
       }
       const dataToSend = { id: uuidv4(), candidate: event.candidate.toJSON() };
-      // console.log("emitOfferCandidates", dataToSend);
 
       emitSocket("emitOfferCandidates", {
         room_id: roomId,
@@ -386,15 +319,15 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
         Object.keys(remoteStreams).length === 0
           ? new MediaStream()
           : remoteStreams;
-      if (newRemoteStream) {
-        newRemoteStream.addTrack(event.track, newRemoteStream);
-        setRemoteStreams(newRemoteStream);
-      }
+      // if (newRemoteStream) {
+      newRemoteStream.addTrack(event.track, newRemoteStream);
+      setRemoteStreams(newRemoteStream);
+      // }
     });
 
     // Add our stream to the peer connection.
     stream.getTracks().forEach((track: any) => {
-      peerConnection.current?.addTrack(track, stream);
+      trackRef.current = peerConnection.current?.addTrack(track, stream);
     });
 
     //create offer
@@ -412,8 +345,9 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
       room_id: roomId,
       payload: JSON.stringify(offer),
     };
-    alert("emit offer client");
+
     emitSocket("emitOffer", dataToEmitSocket);
+
     onSocket("answerClient", (d: any) => {
       // console.log("START 02", typeof d)
       if (!d) {
@@ -473,7 +407,6 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
           break;
       }
     });
-
     peerConnection.current?.addEventListener(
       "icecandidate",
       async (event: any) => {
@@ -493,18 +426,15 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
     );
 
     peerConnection.current.addEventListener("track", (event) => {
-      const newRemoteStream =
-        Object.keys(remoteStreams).length === 0
-          ? new MediaStream()
-          : remoteStreams;
-      if (newRemoteStream) {
-        newRemoteStream.addTrack(event.track, newRemoteStream);
-        setRemoteStreams(newRemoteStream);
-      }
+      const newRemoteStream = new MediaStream();
+      // if (!remote.current) {
+      remote.current = newRemoteStream;
+      newRemoteStream.addTrack(event.track, newRemoteStream);
+      setRemoteStreams(newRemoteStream);
+      // }
     });
 
     onSocket("offerCandidatesClient", (r: any) => {
-      // console.log(r, 'rrrrr ne')
       if (!r) {
         return;
       }
@@ -535,7 +465,6 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
       }
     });
 
-    alert("onSocket offer client");
     onSocket("offerClient", async (d: any) => {
       // console.log(d, 'JOIN 01')
       if (!d) {
@@ -639,19 +568,18 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
 
   const viewVideo = useAnimatedStyle(() => {
     return {
-      backgroundColor: "red",
-      height: splitView.value ? "50%" : "100%",
+      height: "100%",
       marginTop: 0,
     };
   });
 
   const localVideoStyle = useAnimatedStyle(() => {
     return {
-      position: splitView.value == 0 ? "absolute" : "relative",
-      width: splitView.value ? Device.width : 80,
-      height: splitView.value ? "50%" : 120,
-      top: splitView.value ? 0 : 76,
-      right: splitView.value ? 0 : 20,
+      position: "absolute",
+      width: Device.width,
+      height: Device.height / 2,
+      top: 0,
+      right: splitView.value ? 0 : 0,
     };
   });
 
@@ -672,155 +600,160 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
     };
   });
 
-  const onPressSplitView = () => {
-    splitView.value = withTiming(splitView.value > 0 ? 0 : 1, {
-      duration: 500,
+  const openChatRoomModal = () => {
+    showSuperModal({
+      contentModalType: EnumModalContentType.ChatRoom,
+      styleModalType: EnumStyleModalType.Bottom,
+      data: {
+        id: courseRoom?.chatRoomId,
+      },
     });
-    optionFilter.value = withTiming(0, { duration: 300 });
-  };
-
-  const formatTime = (seconds: number) => {
-    if (seconds <= 0) {
-      return "";
-    }
-    const mins = Math.floor(seconds / 60);
-    seconds = seconds % 60;
-    return (
-      (mins < 10 ? "0" + mins : mins) +
-      ":" +
-      (seconds < 10 ? "0" + seconds : seconds)
-    );
   };
 
   return (
-    <View style={styles.container}>
-      <Pressable
-        style={styles.headerIcon}
-        hitSlop={HIT_SLOP_EXPAND_20}
-        onPress={onPressEndCall}
-      >
-        <BackIcon width={MHS._24} height={MHS._24} color={palette.background} />
-      </Pressable>
+    <>
+      <ClassOneOneRoomTopView switchCamera={switchCamera} data={event} />
+      <View style={styles.container}>
+        <LinearGradient
+          colors={[
+            "rgba(0,0,0, 1)",
+            "rgba(0,0,0, 0.6)",
+            "rgba(0,0,0, 0.4)",
+            "rgba(0,0,0, 0.2)",
+            "rgba(0,0,0, 0.1)",
+            "rgba(0,0,0, 0)",
+          ]}
+          style={styles.topHeaderCall}
+        />
+        <Animated.View style={[styles.viewLocalVideo, localVideoStyle]}>
+          {streams?.id && configActions.localCamera ? (
+            <RTCView
+              streamURL={streams?.toURL()}
+              style={{ ...StyleSheet.absoluteFillObject }}
+              objectFit="cover"
+              mirror={true}
+              zOrder={2}
+            />
+          ) : (
+            <ImageLoad
+              source={{
+                uri: account.user_avatar_thumbnail || account.user_avatar || "",
+              }}
+              width={"100%"}
+              height={"100%"}
+            />
+          )}
+        </Animated.View>
 
-      <LinearGradient
-        colors={[
-          "rgba(0,0,0, 1)",
-          "rgba(0,0,0, 0.6)",
-          "rgba(0,0,0, 0.4)",
-          "rgba(0,0,0, 0.2)",
-          "rgba(0,0,0, 0.1)",
-          "rgba(0,0,0, 0)",
-        ]}
-        style={styles.topHeaderCall}
-      />
-      <View style={styles.topHeaderTimer}>
-        <TextBase
-          title={formatTime(timer)}
-          fontSize={18}
-          fontWeight="700"
-          color={palette.background}
+        <Animated.View
+          style={[
+            viewVideo,
+            {
+              bottom: 0,
+              top: Device.height / 2,
+            },
+          ]}
+        >
+          {remoteStreams?.id ? (
+            <RTCView
+              streamURL={remoteStreams?.toURL()}
+              style={{ ...StyleSheet.absoluteFillObject }}
+              objectFit="cover"
+              mirror={true}
+              zOrder={1}
+            />
+          ) : (
+            <ImageLoad
+              source={{
+                uri:
+                  data?.partner_id?.user_avatar_thumbnail ||
+                  item.partner_id?.user_avatar ||
+                  "",
+              }}
+              width={Device.width}
+              height={Device.height / 2}
+            />
+          )}
+        </Animated.View>
+        <LinearGradient
+          colors={[
+            "rgba(0,0,0, 0)",
+            "rgba(0,0,0, 0.1)",
+            "rgba(0,0,0, 0.2)",
+            "rgba(0,0,0, 0.4)",
+            "rgba(0,0,0, 0.6)",
+            "rgba(0,0,0, 1)",
+          ]}
+          style={styles.topFooterCall}
+        />
+        <SafeAreaView style={styles.safeAreaView}>
+          <CallClassOneOneBottomView
+            switchCamera={switchCamera}
+            configActions={configActions}
+            optionStyle={optionStyle}
+            setMute={setMute}
+            toggleCamera={toggleCamera}
+            openChatRoomModal={openChatRoomModal}
+          />
+        </SafeAreaView>
+        <SoundComponent
+          ref={ringingRef}
+          source={require("../assets/sound/ringback.wav")}
         />
       </View>
-      <Animated.View style={[styles.viewLocalVideo, localVideoStyle]}>
-        {streams?.id && configActions.localCamera ? (
-          <RTCView
-            streamURL={streams?.toURL()}
-            style={{ ...StyleSheet.absoluteFillObject }}
-            objectFit="cover"
-            mirror={true}
-            zOrder={2}
-          />
-        ) : (
-          <ImageLoad
-            source={{
-              uri: account.user_avatar_thumbnail || account.user_avatar || "",
-            }}
-            width={"100%"}
-            height={"100%"}
-          />
-        )}
-      </Animated.View>
-
-      <Animated.View style={[viewVideo]}>
-        {remoteStreams?.id ? (
-          <RTCView
-            streamURL={remoteStreams?.toURL()}
-            style={{ ...StyleSheet.absoluteFillObject }}
-            objectFit="cover"
-            mirror={true}
-            zOrder={1}
-          />
-        ) : (
-          <ImageLoad
-            source={{
-              uri:
-                data?.partner_id?.user_avatar_thumbnail ||
-                item.partner_id?.user_avatar ||
-                "",
-            }}
-            width={Device.width}
-            height={"100%"}
-          />
-        )}
-      </Animated.View>
-      <LinearGradient
-        colors={[
-          "rgba(0,0,0, 0)",
-          "rgba(0,0,0, 0.1)",
-          "rgba(0,0,0, 0.2)",
-          "rgba(0,0,0, 0.4)",
-          "rgba(0,0,0, 0.6)",
-          "rgba(0,0,0, 1)",
-        ]}
-        style={styles.topFooterCall}
-      />
-      <SafeAreaView style={styles.safeAreaView}>
-        <Animated.View style={[styles.options, optionStyle]}>
-          <Animated.View style={[styles.viewActions]}>
-            <Pressable style={styles.viewIcon} onPress={switchCamera}>
-              <RotateIcon
-                width={MHS._20}
-                height={MHS._20}
-                color={palette.background}
-              />
-            </Pressable>
-            <Pressable style={styles.viewIcon} onPress={toggleCamera}>
-              <IconCameraCall
-                width={MHS._20}
-                height={MHS._20}
-                color={palette.background}
-              />
-              {!configActions.localCamera ? <View style={styles.line} /> : null}
-            </Pressable>
-            <Pressable style={styles.iconCall} onPress={onPressEndCall}>
-              <AcceptCall color="red" width={MHS._24} height={MHS._24} />
-            </Pressable>
-            <Pressable style={styles.viewIcon} onPress={setMute}>
-              <IconSpeakerCall
-                width={MHS._20}
-                height={MHS._20}
-                color={palette.background}
-              />
-              {!configActions.localMic ? <View style={styles.line} /> : null}
-            </Pressable>
-            <TouchableWithoutFeedback onPress={onPressSplitView}>
-              <View style={styles.viewIcon}>
-                <SplitView
-                  width={MHS._20}
-                  height={MHS._20}
-                  color={palette.background}
-                />
-              </View>
-            </TouchableWithoutFeedback>
-          </Animated.View>
-        </Animated.View>
-      </SafeAreaView>
-      <SoundComponent
-        ref={ringingRef}
-        source={require("./assets/sound/ringback.wav")}
-      />
-    </View>
+    </>
   );
 };
 
-export default CallPageScreen;
+const CallClassOneOneBottomView = ({
+  switchCamera,
+  configActions,
+  optionStyle,
+  setMute,
+  toggleCamera,
+  openChatRoomModal,
+}: any) => {
+  const theme = useTheme();
+  const styles = useMemo(() => createStyles(theme), [theme]);
+
+  return (
+    <Animated.View style={[styles.options, optionStyle]}>
+      <Animated.View style={[styles.viewActions]}>
+        <PressableBtn style={styles.viewIcon} onPress={switchCamera}>
+          <RotateIcon
+            width={MHS._20}
+            height={MHS._20}
+            color={palette.background}
+          />
+        </PressableBtn>
+        <PressableBtn style={styles.viewIcon} onPress={toggleCamera}>
+          <IconCameraCall
+            width={MHS._20}
+            height={MHS._20}
+            color={palette.background}
+          />
+          {!configActions.localCamera ? <View style={styles.line} /> : null}
+        </PressableBtn>
+
+        <PressableBtn style={styles.viewIcon} onPress={setMute}>
+          <IconSpeakerCall
+            width={MHS._20}
+            height={MHS._20}
+            color={palette.background}
+          />
+          {!configActions.localMic ? <View style={styles.line} /> : null}
+        </PressableBtn>
+        <PressableBtn style={styles.viewIcon} onPress={openChatRoomModal}>
+          <IconBtn
+            type={IconType.MaterialCommunityIcons}
+            name="message"
+            color={palette.white}
+            size={22}
+          />
+        </PressableBtn>
+      </Animated.View>
+    </Animated.View>
+  );
+};
+
+export default OneOneRtcView;
