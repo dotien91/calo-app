@@ -132,6 +132,7 @@ export const SCREENS = {
   MANAGE_CLUB: "ManageClub",
   CREATE_SUBSCRIPTION: "CreateSubscription",
   LIST_CREATORS: "ListCreators",
+  ONEONE_SCREEN: "OneOneScreen",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

@@ -1599,5 +1599,6 @@ export default {
     start: "Start",
   },
   creator: "Content creator",
+  loadingRoom: "are entering the classroom",
 };
 /* eslint-disable max-len */

@@ -100,7 +100,6 @@ const ItemList = ({
     () => listAudioWatched.includes(_id),
     [listAudioWatched],
   );
-
   const renderInfo = () => {
     return (
       <View style={[styles.viewInfo, styleInfo]}>
@@ -203,7 +202,6 @@ const ItemList = ({
   };
 
   const openPreviewCourse = () => {
-    console.log("subscription_id", is_premium, isActiveSubscription);
     if (is_premium && !isActiveSubscription) {
       showSuperModal({
         styleModalType: EnumStyleModalType.Bottom,

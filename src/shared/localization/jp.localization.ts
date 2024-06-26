@@ -2014,4 +2014,5 @@ export default {
     start: "開始",
   },
   creator: "コンテンツクリエーター",
+  loadingRoom: "教室に入っています",
 };

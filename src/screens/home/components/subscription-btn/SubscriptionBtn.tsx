@@ -17,7 +17,7 @@ const SubscriptionBtn = () => {
   const userData = useStore((state) => state.userData);
   const [loading, setLoading] = useState(false);
   const extraUserData = useStore((state) => state.extraUserData);
-  const { subscription_sell, subscriptions } = extraUserData;
+  const { subscription_sell } = extraUserData;
   const { isActiveSubscription } = useUserHelper();
   const planInfo = useMemo(() => {
     if (isAndroid())
@@ -61,7 +61,6 @@ const SubscriptionBtn = () => {
       }, 3000);
     }
   };
-  if (!subscription_sell || !planInfo || !subscriptions?.length) return null;
   const subText = React.useMemo(() => {
     if (isAndroid()) {
       console.log("planInfo", planInfo);
