@@ -344,13 +344,11 @@ const TeacherCourse = () => {
             navigate(SCREENS.ONEONE_SCREEN, params);
             // alert("Bắt đầu cuộc gọi call11");
           } else {
-            
-           navigate(SCREENS.CALL_CLASS, {
+            navigate(SCREENS.CALL_CLASS, {
               courseRoom,
               courseData: { type: event.type, user_id: event.teacher_id },
             });
           }
-    
         };
         const copyLink = () => {
           Clipboard.setString(

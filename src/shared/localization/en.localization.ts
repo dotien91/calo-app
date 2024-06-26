@@ -1030,6 +1030,7 @@ export default {
     errorpaymentmethod: "You haven’t chosen the payment method",
     couresfree: "Course free",
     coursePrice: "Course price",
+    livePrice: "Livestream price",
     completecheckout: "Complete Checkout",
     promotion: "Promotion",
     notePurchase:
@@ -1598,6 +1599,7 @@ export default {
     subscribe: "Subscribe for",
     start: "Start",
   },
+  free: "Free",
   creator: "Content creator",
   loadingRoom: "are entering the classroom",
 };

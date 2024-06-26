@@ -1567,6 +1567,7 @@ export default {
     errorpaymentmethod: "Bạn chưa chọn phương thức thanh toán",
     couresfree: "Khoá học miễn phí",
     coursePrice: "Giá khoá học",
+    livePrice: "Giá livestream",
     completecheckout: "Hoàn tất thanh toán",
     promotion: "Khuyến mãi",
     notePurchase:

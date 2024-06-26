@@ -47,6 +47,7 @@ import AboutHome from "./components/about-home/about.home";
 import {
   EnumModalContentType,
   EnumStyleModalType,
+  closeSuperModal,
   showSuperModal,
   showWarningLogin,
 } from "@helpers/super.modal.helper";
@@ -104,6 +105,9 @@ const ListPostNew = ({ id }: ListPostProps) => {
     if (listData.length === 1 && !isLoading) return <>{renderEmpty()}</>;
     return renderFooterComponent;
   };
+  useEffect(() => {
+    closeSuperModal();
+  }, [listData]);
 
   useEffect(() => {
     setFilter("forYou");
@@ -403,8 +407,8 @@ class List extends Component {
       listData,
       onScroll,
       renderItem,
-      onEndReach,
-      HEADER_HEIGHT,
+      onEndReached,
+      progressViewOffset,
       onScrollBeginDrag,
       TAB_HEIGHT,
       onLayoutFilter,
@@ -426,13 +430,13 @@ class List extends Component {
           ListHeaderComponent={ListHeaderComponent}
           renderItem={renderItem}
           onEndReachedThreshold={0.8}
-          onEndReached={onEndReach}
+          onEndReached={onEndReached}
           showsVerticalScrollIndicator={false}
           removeClippedSubviews={true}
           keyExtractor={(item) => item?._id + ""}
           refreshControl={refreshControl()}
           ListFooterComponent={ListFooterComponent()}
-          progressViewOffset={HEADER_HEIGHT}
+          progressViewOffset={progressViewOffset}
           onScrollBeginDrag={onScrollBeginDrag}
           contentContainerStyle={{
             paddingTop: TAB_HEIGHT,
