@@ -1,70 +1,71 @@
-import { SCREEN_WIDTH } from '@gorhom/bottom-sheet';
-import { showToast } from '@helpers/super.modal.helper';
-import { translations } from '@localization';
-import IconSvgBtn from '@screens/audio/components/IconSvgBtn';
-import { getCourseRoomV2, getPlanStudent, getPlanTeacher } from '@services/api/course.api';
-import PressableBtn from '@shared-components/button/PressableBtn';
-import ImageLoad from '@shared-components/image-load/ImageLoad';
-import Avatar from '@shared-components/user/Avatar';
-import CS from '@theme/styles';
-import { palette } from '@theme/themes';
-import { formatCalendarDateTime, formatDate } from '@utils/date.utils';
-import IconSvg from 'assets/svg';
-import { SCREENS } from 'constants';
-import { EnumClassType } from 'models/course.model';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Clipboard } from 'react-native';
-import { Mode } from 'react-native-big-calendar';
-import { Agenda, DateData, AgendaEntry, AgendaSchedule } from 'react-native-calendars';
-import Icon, { IconType } from 'react-native-dynamic-vector-icons';
-import { getStatusBarHeight } from 'react-native-safearea-height';
-import { navigate } from 'react-navigation-helpers';
-import ModalCalendar from './ModalCalendar';
-import LottieComponent from '@shared-components/lottie/LottieComponent';
-import Header from '@shared-components/header/Header';
-const today = formatDate(new Date());
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import {
+  SafeAreaView,
+  Text,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  Clipboard,
+} from "react-native";
+import {
+  Calendar,
+  CalendarTouchableOpacityProps,
+  ICalendarEventBase,
+  Mode,
+} from "react-native-big-calendar";
+import { getStatusBarHeight } from "react-native-safearea-height";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
-interface State {
-  items?: AgendaSchedule;
+import Header from "@shared-components/header/Header";
+import CS from "@theme/styles";
+import { translations } from "@localization";
+import { palette } from "@theme/themes";
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from "@gorhom/bottom-sheet";
+import ModalCalendar from "./ModalCalendar";
+import PressableBtn from "@shared-components/button/PressableBtn";
+import IconSvg from "assets/svg";
+import {
+  formatCalendarDateTime,
+  formatDate,
+  formatTimeHHMM,
+  getHoursAndDate,
+} from "@utils/date.utils";
+import IconSvgBtn from "@screens/audio/components/IconSvgBtn";
+import {
+  getCourseRoomV2,
+  getPlanStudent,
+  getPlanTeacher,
+} from "@services/api/course.api";
+import { getBottomSpace } from "react-native-iphone-screen-helper";
+import { navigate } from "@helpers/navigation.helper";
+import { SCREENS } from "constants";
+import { EnumClassType } from "models/course.model";
+import { showToast } from "@helpers/super.modal.helper";
+import EmptyResultView from "@shared-components/empty.data.component";
+import LottieComponent from "@shared-components/lottie/LottieComponent";
+import {Component} from 'react';
+import {Agenda} from 'react-native-calendars';
+interface MyCustomEventType extends ICalendarEventBase {
+  color: string;
 }
-const testIDs = {
-  menu: {
-    CONTAINER: 'menu',
-    CALENDARS: 'calendars_btn',
-    CALENDAR_LIST: 'calendar_list_btn',
-    HORIZONTAL_LIST: 'horizontal_list_btn',
-    AGENDA: 'agenda_btn',
-    EXPANDABLE_CALENDAR: 'expandable_calendar_btn',
-    WEEK_CALENDAR: 'week_calendar_btn',
-    TIMELINE_CALENDAR: 'timeline_calendar_btn',
-    PLAYGROUND: 'playground_btn'
-  },
-  calendars: {
-    CONTAINER: 'calendars',
-    FIRST: 'first_calendar',
-    LAST: 'last_calendar'
-  },
-  calendarList: { CONTAINER: 'calendarList' },
-  horizontalList: { CONTAINER: 'horizontalList' },
-  agenda: {
-    CONTAINER: 'agenda',
-    ITEM: 'item'
-  },
-  expandableCalendar: { CONTAINER: 'expandableCalendar' },
-  weekCalendar: { CONTAINER: 'weekCalendar' }
-};
-const AgendaScreen = () => {
-  const [items, setItems] = React.useState([])
-  const [rawData, setRawData] = React.useState<any>(null);
+
+const TeacherCourse = () => {
   const [date, setDate] = React.useState(new Date());
   const [mode, setMode] = React.useState<Mode>("schedule");
+  const [eventsSelect, setEventsSelect] = React.useState<any>(null);
   const [modalVisible, setModalVisible] = React.useState(false);
+
   const [eventTeacher, setEventTeacher] = useState<any>([]);
   const [eventUser, setEventUser] = useState<any[]>([]);
   const isFetchingStudent = useRef(true);
   const isFetchingTeacher = useRef(true);
   const today = formatDate(new Date());
-  const [eventsSelect, setEventsSelect] = React.useState<any>(null);
 
   const getListEventStudent = async () => {
     const listEventStudent: any[] = [];
@@ -102,8 +103,6 @@ const AgendaScreen = () => {
                 partner_name: element.teacher_id.display_name,
                 plan_id: element._id,
                 course_name: element.course_id.title,
-                partner: element.teacher_id
-
               };
               listEventStudent.push(dataAdd);
             }
@@ -165,7 +164,6 @@ const AgendaScreen = () => {
                 teacher_id: element.teacher_id._id,
                 plan_id: element._id,
                 course_name: element.course_id.title,
-                partner: element.student_id
               };
               listEventTeacher.push(dataAdd);
             }
@@ -210,160 +208,169 @@ const AgendaScreen = () => {
     //   newItems[formatDate(event[key].start)] = event[key];
     // });
     // console.log("...evevt...", newItems);
-    setRawData(groupedData);
+    setItems(groupedData);
   }, [eventTeacher, eventUser, currentTime]);
 
-  const loadItems = (day: DateData) => {
-    console.log("daydayday", day)
-    console.log("itemsitemsitems", items)
-    const _items = { ...items }
-
-    setTimeout(() => {
-      for (let i = -15; i < 85; i++) {
-        const time = day.timestamp + i * 24 * 60 * 60 * 1000;
-        const strTime = timeToString(time);
-
-        if (!_items[strTime]) {
-          _items[strTime] = [];
-
-          const numItems = 1;
-          for (let j = 0; j < numItems; j++) {
-            const findData =
-              _items[strTime].push({
-                name: 'Item for ' + strTime + ' #' + j,
-                // height: Math.max(50, Math.floor(Math.random() * 150)),
-                day: strTime
-              });
-          }
-        }
-      }
-
-      const newItems: AgendaSchedule = {};
-      Object.keys(_items).forEach(key => {
-        newItems[key] = _items[key];
-      });
-      console.log("newItemsnewItems", newItems)
-      console.log("...old...newItemsnewItems", newItems);
-
-      setItems(newItems)
-    }, 1000);
-  };
-
-  const renderDay = (day) => {
-    if (day) {
-      return <Text style={styles.customDay}>{day.getDay()}</Text>;
-    }
-    return <View style={styles.dayItem} />;
-  };
-
-  const renderItem = (reservation: AgendaEntry, isFirst: boolean) => {
-    const fontSize = isFirst ? 16 : 14;
-    const color = isFirst ? 'black' : '#43515c';
-    const isToday = reservation?.isToday
-    const findData = rawData?.[reservation.day]
-    console.log("reservation", findData)
+  const ItemCheck = ({ item }: { item: { color: string; title: string } }) => {
     return (
-      <View
-        testID={testIDs.agenda.ITEM}
-        style={[styles.item]}
-      >
-        {!findData && <View style={{ ...CS.flexStart, alignItems: "center" }}><Text style={{ fontSize, color }}>Empty</Text></View>}
-        <View style={{ flex: 1 }}>
-          {!!findData && findData.map(item => renderPlan(item))}
-        </View>
-        {isToday && <View style={{ ...CS.row, marginTop: 8, position: "absolute", bottom: 0, left: 0, right: 0 }}>
-          <View
-            style={{
-              width: 4,
-              height: 4,
-              borderRadius: 2,
-              backgroundColor: palette.red,
-            }}
-          />
-          <View
-            style={{
-              flex: 1,
-              height: 1,
-              borderRadius: 2,
-              backgroundColor: palette.red,
-            }}
-          />
-        </View>}
+      <View style={styles.itemSelectTypeCalendar}>
+        <IconSvg name="icCheck" color={item.color} size={20} />
+        <Text style={CS.hnRegular}>{item.title}</Text>
       </View>
     );
   };
 
-  const renderPlan = (item) => {
+  const ItemTypeDate = ({
+    item,
+  }: {
+    item: { title: string; icon: string; type: Mode };
+  }) => {
+    const selected = item.type === mode;
+    const onPress = () => {
+      setModalVisible(false);
+      setMode(item.type);
+    };
+    return (
+      <PressableBtn
+        style={{
+          ...styles.containerItemSelectType,
+          backgroundColor: selected
+            ? palette.backgroundColorGrey
+            : palette.background,
+        }}
+        onPress={onPress}
+      >
+        <IconSvg name={item.icon} color={palette.textOpacity8} size={32} />
+        <Text style={{ ...CS.hnRegular, fontSize: 12 }}>{item.title}</Text>
+      </PressableBtn>
+    );
+  };
+
+  // const addLeave = () => {};
+
+  // const _onPressCell = (e) => {
+  //   // alert(e);
+  // };
+
+  const [items, setItems] = useState({});
+
+  // const loadItems = (day) => {
+  //   const itemsCopy = { ...items };
+  //   setTimeout(() => {
+  //     for (let i = -15; i < 85; i++) {
+  //       const time = day.timestamp + i * 24 * 60 * 60 * 1000;
+  //       const strTime = timeToString(time);
+  //       if (!itemsCopy[strTime]) {
+  //         itemsCopy[strTime] = [];
+  //         const numItems = Math.floor(Math.random() * 3 + 1);
+  //         for (let j = 0; j < numItems; j++) {
+  //           itemsCopy[strTime].push({
+  //             name: `Item ${i} ${j} for ${strTime}`,
+  //             height: Math.max(50, Math.floor(Math.random() * 150)),
+  //           });
+  //         }
+  //       }
+  //     }
+  //     const newItems = {};
+  //     Object.keys(itemsCopy).forEach((key) => {
+  //       newItems[key] = itemsCopy[key];
+  //     });
+  //     console.log("new item...", newItems);
+  //     // setItems(newItems);
+  //   }, 1000);
+  // };
+
+  const renderItem = (item) => {
     const onPress = () => {
       setEventsSelect(item);
       console.log("eventSelected...", item);
     };
-    console.log("item...", item);
+    if (item.timeAlive) {
+      console.log("item...", item);
+    }
 
     return (
-      <TouchableOpacity
-        style={{
-          ...CS.row,
-          marginTop: 8,
-          backgroundColor: `${item.color}30`,
-          gap: 8,
-          alignItems: 'flex-start'
-        }}
-        onPress={onPress}
-      >
-        <View
-          style={{
-            ...styles.viewSticky,
-            backgroundColor: item.color,
-          }}
-        />
-        <ImageLoad
-          isAvatar
-          style={{
-            width: 32,
-            height: 32,
-            borderRadius: 99,
-            marginTop: 8,
-          }}
-          source={{
-            uri: item?.partner?.user_avatar,
-          }}
-          resizeMode={"cover"}
-        />
-        <View style={{ ...CS.flex1, gap: 4, paddingVertical: 4 }}>
-          <Text numberOfLines={1} style={[styles.txtItemEvent]}>
-            {item.title}
-          </Text>
-          <Text numberOfLines={2} style={[styles.txtItemEvent]}>
-            {formatCalendarDateTime({
-              start: item?.start,
-              end: item?.end,
-            })}
-          </Text>
-          <Text numberOfLines={2} style={[styles.txtItemEvent]}>
-            {item.course_name}
-          </Text>
-        </View>
-      </TouchableOpacity>
-    );
-  };
-
-
-  const renderEmptyDate = () => {
-    return (
-      <View style={styles.emptyDate}>
-        <Text>This is empty date1!</Text>
+      <View style={{height: 100}} key={item.date}>
+        {item.timeAlive ? (
+          <View style={{ ...CS.row, marginTop: 8 }}>
+            <View
+              style={{
+                width: 4,
+                height: 4,
+                borderRadius: 2,
+                backgroundColor: palette.red,
+              }}
+            />
+            <View
+              style={{
+                flex: 1,
+                height: 1,
+                borderRadius: 2,
+                backgroundColor: palette.red,
+              }}
+            />
+          </View>
+        ) : (
+          <TouchableOpacity
+            style={{
+              ...CS.row,
+              marginTop: 8,
+              backgroundColor: `${item.color}30`,
+              gap: 8,
+            }}
+            onPress={onPress}
+          >
+            <View
+              style={{
+                ...styles.viewSticky,
+                backgroundColor: item.color,
+              }}
+            />
+            <View style={{ ...CS.flex1, gap: 4, paddingVertical: 4 }}>
+              <Text numberOfLines={1} style={[styles.txtItemEvent]}>
+                {item.title}
+              </Text>
+              <Text numberOfLines={2} style={[styles.txtItemEvent]}>
+                {formatCalendarDateTime({
+                  start: item?.start,
+                  end: item?.end,
+                })}
+              </Text>
+              <Text numberOfLines={2} style={[styles.txtItemEvent]}>
+                {item.course_name}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        )}
       </View>
     );
   };
 
-  const rowHasChanged = (r1: AgendaEntry, r2: AgendaEntry) => {
-    return r1.name !== r2.name;
+  const renderEmpty = () => {
+    return (
+      <EmptyResultView
+        height={200}
+        title="Ngày bạn chọn không có lịch"
+        desc="Chọn ngày được đánh dấu trên lịch để xem chi tiết"
+      />
+    );
   };
 
-  const timeToString = (time: number) => {
-    const date = new Date(time);
-    return date.toISOString().split('T')[0];
+  function renderCalendar() {
+    console.log("items", items)
+    return (
+      <Agenda
+        items={items}
+        // loadItemsForMonth={loadItems}
+        selected={today}
+        renderItem={renderItem}
+        // loadItemsForMonth={(month) => {
+        //   console.log("trigger items loading", month);
+        // }}
+        showClosingKnob={true} // hiện close khi full lịch
+        renderEmptyData={renderEmpty}
+      />
+    );
   }
 
   const closeModalDetail = () => setEventsSelect(null);
@@ -550,58 +557,9 @@ const AgendaScreen = () => {
     [eventsSelect],
   );
 
-
-  const ItemCheck = ({ item }: { item: { color: string; title: string } }) => {
-    return (
-      <View style={styles.itemSelectTypeCalendar}>
-        <IconSvg name="icCheck" color={item.color} size={20} />
-        <Text style={CS.hnRegular}>{item.title}</Text>
-      </View>
-    );
-  };
-
-  const ItemTypeDate = ({
-    item,
-  }: {
-    item: { title: string; icon: string; type: Mode };
-  }) => {
-    const selected = item.type === mode;
-    const onPress = () => {
-      setModalVisible(false);
-      setMode(item.type);
-    };
-    return (
-      <PressableBtn
-        style={{
-          ...styles.containerItemSelectType,
-          backgroundColor: selected
-            ? palette.backgroundColorGrey
-            : palette.background,
-        }}
-        onPress={onPress}
-      >
-        <IconSvg name={item.icon} color={palette.textOpacity8} size={32} />
-        <Text style={{ ...CS.hnRegular, fontSize: 12 }}>{item.title}</Text>
-      </PressableBtn>
-    );
-  };
-
   const SelectTypeCalendar = useCallback(() => {
-    return (<>
+    return (
       <SafeAreaView style={styles.bottomInner}>
-        <Header
-          text={translations.course.manageClass}
-          iconNameRight="calendar"
-          onPressRight={() => setModalVisible(true)}
-        />
-        {isFetchingStudent.current || isFetchingTeacher.current ? (
-          <LottieComponent
-            resizeMode="contain"
-            height={120}
-            customStyle={{}}
-            lottieJson={require("assets/lotties/loading-circle.json")}
-          />
-        ) : null}
         <View style={styles.viewTypeCalendar}>
           <ItemTypeDate
             item={{
@@ -655,75 +613,32 @@ const AgendaScreen = () => {
           </View>
         </View>
       </SafeAreaView>
-      <ModalCalendar
-        isVisible={modalVisible}
-        onBackdropPress={() => setModalVisible(false)}
-        propagateSwipe={true}
-        style={styles.modal}
-      >
-        <SelectTypeCalendar />
-      </ModalCalendar>
-      <ModalCalendar
-        isVisible={eventsSelect !== null}
-        onBackdropPress={closeModalDetail}
-        propagateSwipe={(event) => {
-          console.log("event", event);
-          return true;
-        }}
-        swipeDirection={["left", "right"]}
-        style={styles.modal}
-        swipeThreshold={100}
-        onSwipeComplete={closeModalDetail}
-      >
-        <DetailEvent event={eventsSelect} />
-      </ModalCalendar>
-    </>
     );
   }, [mode, modalVisible]);
 
-
-  return (<>
-    <SafeAreaView style={CS.safeAreaView}>
-      <Header
-        text={translations.course.manageClass}
-        iconNameRight="calendar"
-        onPressRight={() => setModalVisible(true)}
-      />
-      <Agenda
-        testID={testIDs.agenda.CONTAINER}
-        items={items}
-        loadItemsForMonth={loadItems}
-        selected={today}
-        renderItem={renderItem}
-        renderEmptyDate={renderEmptyDate}
-        rowHasChanged={rowHasChanged}
-        showClosingKnob={true}
-      // markingType={'period'}
-      // markedDates={{
-      //    '2024-06-26': {startingDay: true, endingDay: true, color: 'blue'},
-      //    '2017-05-09': {textColor: '#43515c'},
-      //    '2017-05-14': {startingDay: true, endingDay: true, color: 'blue'},
-      //    '2017-05-21': {startingDay: true, color: 'blue'},
-      //    '2017-05-22': {endingDay: true, color: 'gray'},
-      //    '2017-05-24': {startingDay: true, color: 'gray'},
-      //    '2017-05-25': {color: 'gray'},
-      //    '2017-05-26': {endingDay: true, color: 'gray'}
-      //   }}
-      // monthFormat={'yyyy'}
-      // theme={{calendarBackground: 'red', agendaKnobColor: 'green'}}
-      // renderDay={this.renderDay}
-      // hideExtraDays={false}
-      // showOnlySelectedDayItems
-      // reservationsKeyExtractor={this.reservationsKeyExtractor}
-      />
-      {/* {isFetchingStudent.current || isFetchingTeacher.current ? (
-        <LottieComponent
-          resizeMode="contain"
-          height={120}
-          customStyle={{}}
-          lottieJson={require("assets/lotties/loading-circle.json")}
+  return (
+    <>
+      <SafeAreaView style={CS.safeAreaView}>
+        <Header
+          text={translations.course.manageClass}
+          iconNameRight="calendar"
+          onPressRight={() => setModalVisible(true)}
         />
-      ) : null} */}
+        {isFetchingStudent.current || isFetchingTeacher.current ? (
+          <LottieComponent
+            resizeMode="contain"
+            height={120}
+            customStyle={{}}
+            lottieJson={require("assets/lotties/loading-circle.json")}
+          />
+        ) : null}
+        {/* {[...eventTeacher, ...eventUser].length == 0 &&
+          mode == "schedule" &&
+          !isFetchingStudent.current &&
+          !isFetchingTeacher.current &&
+          renderEmpty()} */}
+        {renderCalendar()}
+      </SafeAreaView>
       <ModalCalendar
         isVisible={modalVisible}
         onBackdropPress={() => setModalVisible(false)}
@@ -746,42 +661,17 @@ const AgendaScreen = () => {
       >
         <DetailEvent event={eventsSelect} />
       </ModalCalendar>
-      </SafeAreaView>
     </>
-    )
-}
+  );
+};
 
-
-
-    export default AgendaScreen
-
-    const styles = StyleSheet.create({
-      item: {
-      backgroundColor: 'white',
-    borderRadius: 5,
-    padding: 10,
-    marginRight: 10,
-    marginTop: 17,
+const styles = StyleSheet.create({
+  modal: {
+    ...CS.flexCenter,
   },
-    emptyDate: {
-      height: 15,
-    flex: 1,
-    paddingTop: 30
-  },
-    customDay: {
-      margin: 10,
-    fontSize: 24,
-    color: 'green'
-  },
-    dayItem: {
-      marginLeft: 34
-  },
-    modal: {
-      ...CS.flexCenter,
-  },
-    bottomInner: {
-      ...CS.safeAreaView,
-      backgroundColor: palette.background,
+  bottomInner: {
+    ...CS.safeAreaView,
+    backgroundColor: palette.background,
     paddingHorizontal: 16,
     paddingVertical: 16,
     left: SCREEN_WIDTH / 5,
@@ -789,102 +679,102 @@ const AgendaScreen = () => {
     right: 0,
     top: 0,
   },
-    bottomFull: {
-      ...CS.flex1,
-      backgroundColor: palette.background,
+  bottomFull: {
+    ...CS.flex1,
+    backgroundColor: palette.background,
     left: 0,
     bottom: 0,
     right: 0,
     top: 0,
   },
-    viewHeader: {
-      paddingTop: getStatusBarHeight(),
+  viewHeader: {
+    paddingTop: getStatusBarHeight(),
     paddingHorizontal: 16,
     paddingBottom: 8,
   },
-    viewTypeCalendar: {
-      ...CS.flexStart,
-      gap: 8,
+  viewTypeCalendar: {
+    ...CS.flexStart,
+    gap: 8,
     paddingHorizontal: 8,
   },
-    viewBtn: {
-      paddingVertical: 8,
+  viewBtn: {
+    paddingVertical: 8,
     ...CS.row,
     gap: 8,
   },
-    viewBorder: {
-      height: 1,
+  viewBorder: {
+    height: 1,
     backgroundColor: palette.borderColor,
     marginVertical: 8,
   },
-    btnDetailEvent: {
-      padding: 8,
+  btnDetailEvent: {
+    padding: 8,
     borderRadius: 8,
     borderWidth: 1,
     alignSelf: "flex-start",
   },
-    txtBtnDeatilEvent: {
-      ...CS.hnRegular,
-      fontSize: 14,
+  txtBtnDeatilEvent: {
+    ...CS.hnRegular,
+    fontSize: 14,
   },
-    viewRect: {
-      width: 20,
+  viewRect: {
+    width: 20,
     height: 20,
     borderRadius: 8,
   },
-    viewIcon: {
-      ...CS.center,
-      width: 25,
+  viewIcon: {
+    ...CS.center,
+    width: 25,
     height: 25,
   },
-    headerDetail: {
-      ...CS.row,
-      height: 40,
+  headerDetail: {
+    ...CS.row,
+    height: 40,
     justifyContent: "space-between",
   },
-    itemSelectTypeCalendar: {
-      ...CS.row,
-      gap: 8,
+  itemSelectTypeCalendar: {
+    ...CS.row,
+    gap: 8,
     marginTop: 8,
   },
-    viewTitle: {
-      ...CS.row,
-      gap: 16,
+  viewTitle: {
+    ...CS.row,
+    gap: 16,
   },
-    containerItemSelectType: {
-      width: SCREEN_WIDTH / 5 - 10,
+  containerItemSelectType: {
+    width: SCREEN_WIDTH / 5 - 10,
     alignItems: "center",
     padding: 8,
     borderRadius: 8,
   },
-    viewSticky: {
-      height: "100%",
+  viewSticky: {
+    height: "100%",
     width: 4,
     borderTopLeftRadius: 8,
     borderBottomLeftRadius: 8,
   },
-    txtItemEvent: {
-      ...CS.hnRegular,
-      fontSize: 16,
+  txtItemEvent: {
+    ...CS.hnRegular,
+    fontSize: 16,
   },
-    eventCellStyle: {
-      borderRadius: 8,
+  eventCellStyle: {
+    borderRadius: 8,
     backgroundColor: palette.background,
     borderWidth: 1,
     borderColor: palette.borderColor,
     padding: 0,
     flexDirection: "row",
   },
-    paddingH: {
-      paddingHorizontal: 16,
+  paddingH: {
+    paddingHorizontal: 16,
   },
-    containerItemDetail: {
-      ...CS.row,
-      gap: 8,
+  containerItemDetail: {
+    ...CS.row,
+    gap: 8,
     marginTop: 8,
   },
-    item: {
-      backgroundColor: "white",
+  item: {
+    backgroundColor: "white",
     flex: 1,
     borderRadius: 5,
     padding: 10,
@@ -893,27 +783,29 @@ const AgendaScreen = () => {
     flexDirection: "row",
     alignItems: "center",
   },
-    time: {
-      fontWeight: "bold",
+  time: {
+    fontWeight: "bold",
     marginRight: 10,
     color: "#333",
   },
-    dayContainer: {
-      backgroundColor: "#f0f0f0",
+  dayContainer: {
+    backgroundColor: "#f0f0f0",
     padding: 10,
     borderRadius: 5,
     marginBottom: 5,
   },
-    todayContainer: {
-      backgroundColor: "#e0f7fa",
+  todayContainer: {
+    backgroundColor: "#e0f7fa",
   },
-    dayText: {
-      fontSize: 16,
+  dayText: {
+    fontSize: 16,
     fontWeight: "bold",
   },
-    currentTimeMarker: {
-      fontSize: 14,
+  currentTimeMarker: {
+    fontSize: 14,
     color: "#ff1744",
     marginTop: 5,
   },
 });
+
+export default TeacherCourse;
