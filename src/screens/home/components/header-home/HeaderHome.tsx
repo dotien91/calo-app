@@ -34,6 +34,7 @@ const HeaderHome = () => {
     getCount({
       read_count: "unread",
     }).then((res) => {
+      console.log(22222, res)
       if (!res.isError) {
         setUnreadNumber(res?.data?.count ?? 0);
       }

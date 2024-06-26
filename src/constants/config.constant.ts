@@ -20,9 +20,7 @@ export const isProduction =
 
 //dev domain api
 // const DEVELOPER_DOMAIN_DEV = __DEV__ ?  "http://192.168.1.35:3900" : "https://dev.api.ikigai.ikigroup.vn";
-const DEVELOPER_DOMAIN_DEV = __DEV__
-  ? "http://192.168.1.55:3900"
-  : "https://dev.api.ikigai.ikigroup.vn";
+const DEVELOPER_DOMAIN_DEV = __DEV__ ? "http://192.168.1.55:3900" : "https://dev.api.ikigai.ikigroup.vn";
 // const DEVELOPER_DOMAIN_DEV = "https://dev.api.ikigai.ikigroup.vn";
 
 const DEVELOPER_DOMAIN_SOCKET_DEV = "https://socket.api.ikigroup.vn";
