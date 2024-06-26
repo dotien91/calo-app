@@ -138,10 +138,10 @@ export const useInAppPurchase = () => {
                 _setJson("current_product_id", "");
                 _setJson("current_product_type", "");
               } else {
-                showToast({
-                  message: res.message,
-                  type: "error",
-                });
+                // showToast({
+                //   message: res.message,
+                //   type: "error",
+                // });
               }
             });
           }
@@ -157,15 +157,15 @@ export const useInAppPurchase = () => {
         console.log("error", error);
 
         if (error instanceof PurchaseError) {
-          showToast({
-            type: "error",
-            message: error.message,
-          });
+          // showToast({
+          //   type: "error",
+          //   message: error.message,
+          // });
         } else {
-          showToast({
-            type: "error",
-            message: error?.toString(),
-          });
+          // showToast({
+          //   type: "error",
+          //   message: error?.toString(),
+          // });
         }
       }
     };
@@ -209,7 +209,7 @@ export const useInAppPurchase = () => {
 
   const createOrder = async (data) => {
     return createVnpayUrl(data).then(async (res) => {
-      console.log("ress", res);
+      console.log("ress VNPAY", res.data._id);
       if (!res.isError) {
         local_order_id.current = res.data?._id;
         return res.data?._id;
