@@ -233,7 +233,6 @@ const ThirdRoute = () => {
     />
   );
 };
-
 const ProfileUser = (props: ProfileUserProps) => {
   const userData = useStore((store) => store.userData);
   const _id = props.route?.params?._id || userData?._id;
