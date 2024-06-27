@@ -214,11 +214,10 @@ const AgendaScreen = () => {
 
           const numItems = 1;
           for (let j = 0; j < numItems; j++) {
-            const findData = _items[strTime].push({
+            _items[strTime].push({
               name: "Item for " + strTime + " #" + j,
               day: strTime,
             });
-            console.log(findData);
           }
         }
       }

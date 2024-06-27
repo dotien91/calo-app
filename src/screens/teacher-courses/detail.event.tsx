@@ -9,7 +9,7 @@ import { formatCalendarDateTime } from "@utils/date.utils";
 import IconSvg from "assets/svg";
 import { SCREENS } from "constants";
 import { EnumClassType } from "models/course.model";
-import React, { memo, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Clipboard, Text, View } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { navigate } from "react-navigation-helpers";
@@ -25,8 +25,8 @@ const DetailEvent = ({ event, closeModalDetail }) => {
   const getInfoCall = () => {
     getCourseRoomV2({
       course_plan_student_id: event?.plan_id,
-      student_id: event?.student_id,
-      teacher_id: event?.teacher_id,
+      student_id: event?.student_id._id,
+      teacher_id: event?.teacher_id._id,
     }).then((res) => {
       if (!res.isError) {
         const data = res.data;
@@ -41,11 +41,7 @@ const DetailEvent = ({ event, closeModalDetail }) => {
   const startCall = () => {
     if (event.type === EnumClassType.Call11) {
       closeModalDetail();
-      navigate(SCREENS.CALL_CLASS, {
-        course_id: event.course_id,
-        courseData: { type: event.type, user_id: event.teacher_id },
-        courseRoom: room,
-      });
+      navigate(SCREENS.ONEONE_SCREEN, event);
       // alert("Bắt đầu cuộc gọi call11");
     }
     if (event.type === EnumClassType.CallGroup) {
@@ -167,7 +163,7 @@ const DetailEvent = ({ event, closeModalDetail }) => {
   );
 };
 
-export default memo(DetailEvent);
+export default DetailEvent;
 
 const ItemDetailEvent = ({
   onPress,
