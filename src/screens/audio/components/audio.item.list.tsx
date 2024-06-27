@@ -192,7 +192,7 @@ const ItemList = ({
             style={{
               position: "absolute",
               top: 4,
-              right: 4,
+              left: 4,
               zIndex: 1000,
             }}
           />

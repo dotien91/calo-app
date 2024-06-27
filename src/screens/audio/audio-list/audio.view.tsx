@@ -35,8 +35,17 @@ const AudioView = ({
   const { listData, isLoading, noData } = useListData<IAudioItem>(
     {
       ...extraParams,
-      limit: "6",
+      limit: "10",
       auth_id: userData?._id,
+      // type: "suggestion",
+    },
+    GetPodCastList,
+  );
+  const { listData: listData2, noData: noData2 } = useListData<IAudioItem>(
+    {
+      limit: "10",
+      auth_id: userData?._id,
+      sort_by: "createdAt",
       // type: "suggestion",
     },
     GetPodCastList,
@@ -113,7 +122,7 @@ const AudioView = ({
     );
   };
 
-  if (noData) return null;
+  if (noData && noData2) return null;
 
   const renderLoading = () => {
     return <LoadingItem />;
@@ -136,7 +145,7 @@ const AudioView = ({
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
-          data={listData}
+          data={[...listData, ...listData2].slice(0, 10)}
           renderItem={renderItem}
           scrollEventThrottle={16}
           contentContainerStyle={{

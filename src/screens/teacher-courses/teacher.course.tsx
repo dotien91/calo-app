@@ -78,7 +78,7 @@ const AgendaScreen = () => {
                   "teacher",
                   element.teacher_id.display_name,
                 ),
-                date: date,
+                date: formatDate(date),
                 start: new Date(new Date(date).setHours(hours, minutes)),
                 end: new Date(new Date(date).setHours(hoursEnd, minutesEnd)),
                 color: ind > 0 || i > 0 ? palette.call11 : palette.newClass,
@@ -98,8 +98,8 @@ const AgendaScreen = () => {
           }
         }
       }
+      setEventUser(listEventStudent);
     });
-    setEventUser(listEventStudent);
   };
   const [currentTime, setCurrentTime] = useState([]);
 
@@ -147,9 +147,9 @@ const AgendaScreen = () => {
                 student_name: element.student_id.display_name,
                 student_id: element.student_id,
                 teacher_name: element.teacher_id.display_name,
+                teacher_id: element.teacher_id,
                 partner_id: element.student_id,
                 partner_name: element.student_id.display_name,
-                teacher_id: element.teacher_id,
                 plan_id: element._id,
                 course_name: element.course_id.title,
                 partner: element.student_id,
@@ -162,7 +162,6 @@ const AgendaScreen = () => {
       // console.log("listEventTeacher", listEventTeacher);
       setEventTeacher(listEventTeacher);
     });
-    // return listEventTeacher;
   };
 
   const getListEvent = () => {
@@ -176,7 +175,7 @@ const AgendaScreen = () => {
 
   useEffect(() => {
     const event = [...eventTeacher, ...eventUser, ...currentTime];
-    // console.log("event...", event);
+    console.log("event...", event);
     const eve = event
       .sort((a, b) => new Date(a.date) - new Date(b.date))
       .sort((a, b) => {

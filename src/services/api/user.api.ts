@@ -132,7 +132,6 @@ export async function getUserById(id: string) {
 }
 
 export async function getListUser(params: { search: string }) {
-  console.log("paramsparams", params);
   return request({
     method: METHOD.GET,
     urlPath: "user/list",
