@@ -73,7 +73,6 @@ const AgendaScreen = () => {
               const ele = e[ind];
               const [hours, minutes] = ele.time_start.split(":");
               const [hoursEnd, minutesEnd] = ele.time_end.split(":");
-
               const dataAdd = {
                 title: translations.course.call11With(
                   "teacher",
@@ -85,10 +84,10 @@ const AgendaScreen = () => {
                 color: ind > 0 || i > 0 ? palette.call11 : palette.newClass,
                 type: EnumClassType.Call11,
                 student_name: element.student_id.display_name,
-                student_id: element.student_id._id,
+                student_id: element.student_id,
                 teacher_name: element.teacher_id.display_name,
-                teacher_id: element.teacher_id._id,
-                partner_id: element.teacher_id._id,
+                teacher_id: element.teacher_id,
+                partner_id: element.teacher_id,
                 partner_name: element.teacher_id.display_name,
                 plan_id: element._id,
                 course_name: element.course_id.title,
@@ -146,11 +145,11 @@ const AgendaScreen = () => {
                 color: ind > 0 || i > 0 ? palette.call11 : palette.newClass,
                 type: EnumClassType.Call11,
                 student_name: element.student_id.display_name,
-                student_id: element.student_id._id,
+                student_id: element.student_id,
                 teacher_name: element.teacher_id.display_name,
-                partner_id: element.student_id._id,
+                partner_id: element.student_id,
                 partner_name: element.student_id.display_name,
-                teacher_id: element.teacher_id._id,
+                teacher_id: element.teacher_id,
                 plan_id: element._id,
                 course_name: element.course_id.title,
                 partner: element.student_id,

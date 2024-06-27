@@ -1495,6 +1495,7 @@ export default {
     errorpaymentmethod: "支払い方法を選択していません",
     couresfree: "無料コース",
     coursePrice: "コース価格",
+    livePrice: "ライブ配信価格",
     completecheckout: "支払い完了",
     promotion: "プロモーション",
     notePurchase:
@@ -2015,4 +2016,5 @@ export default {
     start: "開始",
   },
   creator: "コンテンツクリエーター",
+  loadingRoom: "教室に入っています",
 };

@@ -258,6 +258,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 8,
     color: palette.white,
+    paddingRight: 40,
   },
   iconSend: {
     position: "absolute",

@@ -203,7 +203,7 @@ const CourseItem = ({
         //   uri: media_thumbnail,
         // }}
         source={{
-          uri: avatar?.media_thumbnail,
+          uri: avatar?.media_thumbnail || avatar?.media_url,
           headers: { Authorization: "someAuthToken" },
           priority: FastImage.priority.normal,
         }}

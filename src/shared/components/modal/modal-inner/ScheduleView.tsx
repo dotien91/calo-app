@@ -56,7 +56,7 @@ const ScheduleView = ({ cb, title, cover }: IScheduleView) => {
       <View style={{ marginBottom: 16, zIndex: 3 }}>
         <View style={[CS.flexRear, { marginBottom: 8 }]}>
           <TextBase fontWeight="500" color={EnumColors.text}>
-            {translations.payment.coursePrice}
+            {translations.payment.livePrice}
           </TextBase>
           {Number(priceInput) <= 0 && (
             <TextBase fontSize={12}>{translations.free}</TextBase>
@@ -66,7 +66,7 @@ const ScheduleView = ({ cb, title, cover }: IScheduleView) => {
           value={priceInput}
           setValue={setPriceInput}
           items={priceIdsLiveStream}
-          placeholder={translations.payment.coursePrice}
+          placeholder={translations.payment.livePrice}
           customStyle={{ maxHeight: 22, marginHorizontal: 0 }}
         />
       </View>

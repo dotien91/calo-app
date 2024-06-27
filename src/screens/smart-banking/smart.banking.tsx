@@ -29,6 +29,7 @@ import {
 import { SCREENS } from "constants";
 import CS from "@theme/styles";
 import { genQr } from "@services/api/bank.api";
+import { formatPrice } from "@helpers/string.helper";
 
 const SmartBanking = () => {
   // const [fileImage, setfileImage] = useState("");
@@ -210,6 +211,9 @@ const SmartBanking = () => {
         </Text>
         <Text numberOfLines={2} style={styles.styleTextNameBank}>
           Chi nhánh: THĂNG LONG
+        </Text>
+        <Text numberOfLines={2} style={styles.styleTextNameBank}>
+          Số tiền : {formatPrice(price)}
         </Text>
         <TouchableOpacity
           style={{ flexDirection: "row", justifyContent: "center" }}

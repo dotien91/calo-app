@@ -465,6 +465,7 @@ const CheckoutScreen = () => {
       };
       // console.log("call11", newData);
       createOrderCallOneOne(newData).then((res) => {
+        closeSuperModal();
         if (!res.isError) {
           const url = res.data?.redirect_url;
           const tradeId = res.data._id;
@@ -472,7 +473,7 @@ const CheckoutScreen = () => {
             Linking.openURL(url);
             setTradeId(tradeId);
           } else {
-            console.log("tradeIdtradeIdtradeId", tradeId);
+            // console.log("tradeIdtradeIdtradeId", tradeId);
             NavigationService.navigate(SCREENS.SMARTBANKING, {
               tradeId,
               short_id: res.data?.short_id,
