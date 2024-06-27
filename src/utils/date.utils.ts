@@ -294,7 +294,7 @@ export const getHoursAndDate = (date) => {
     }`,
     date: `${day < 10 ? `0${day}` : day}-${
       month < 10 ? `0${month}` : month
-    }-${year} `,
+    }-${year}`,
   };
 };
 

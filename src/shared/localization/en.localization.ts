@@ -1261,6 +1261,7 @@ export default {
     emptyUser: "Empty user",
   },
   emptyList: "Empty list",
+  emptyCalendar: "Empty calendar",
   withDraw: {
     header: "Withdraw",
     your_money: "Your money",

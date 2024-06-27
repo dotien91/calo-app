@@ -1800,6 +1800,7 @@ export default {
     emptyUser: "Danh sách người dùng trống",
   },
   emptyList: "Danh sách trống",
+  emptyCalendar: "Không có lịch",
   withDraw: {
     header: "Rút tiền",
     your_money: "Số tiền của bạn",

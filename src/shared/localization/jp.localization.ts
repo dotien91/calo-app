@@ -1728,6 +1728,7 @@ export default {
     emptyUser: "ユーザーリストは空です",
   },
   emptyList: "リストは空です",
+  emptyCalendar: "空のカレンダー",
   withDraw: {
     header: "出金",
     your_money: "あなたの金額",
