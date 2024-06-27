@@ -325,6 +325,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
       <StickBottomModal
         isVisible={visible}
         onBackdropPress={closeModal}
+        backdropOpacity={data?.backdropOpacity}
         // swipeDirection={["down"]}
         // onSwipeComplete={closeModal}
       >
