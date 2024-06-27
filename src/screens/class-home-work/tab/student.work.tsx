@@ -99,7 +99,7 @@ const StudentWorkTab = () => {
         onPress={() => openStudentWork({ isHandedIn, user_id, mark, ...res })}
         style={{ ...CS.row, paddingVertical: 12, gap: 8 }}
       >
-        
+        <Avatar
           style={styles.viewAvatar}
           sourceUri={{ uri: user_id.user_avatar_thumbnail }}
         />

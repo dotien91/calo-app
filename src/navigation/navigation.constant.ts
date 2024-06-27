@@ -114,8 +114,6 @@ import TeacherScreen from "@screens/profile.screen/ikiCoachTeacher.screen";
 import MyAudioScreen from "@screens/audio/my-audio/my.audio.screen";
 import AllCreatorScreen from "@screens/audio/all.creator.screen";
 // import CreateSubscriptionScreen from "@screens/profile.screen/create-subscription.tsx/create.subscription.screen";
-import TeacherCourse2 from "@screens/teacher-courses/teacher.course2";
-import TeacherCourse3 from "@screens/teacher-courses/teacher.course3";
 
 export const DiscoveryStackData = [
   {
