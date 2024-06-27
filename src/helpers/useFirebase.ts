@@ -69,7 +69,6 @@ const useFirebase = () => {
   };
 
   const _pressNotification = (item) => {
-    console.log("pressItemNotification...", item?.router);
     // const params = {
     //   _id: item?._id,
     //   read_status: "1",
@@ -80,7 +79,7 @@ const useFirebase = () => {
         break;
       case "NAVIGATION_CHAT_ROOM":
         NavigationService.navigate(SCREENS.CHAT_ROOM, {
-          id: item.chat_room_id,
+          id: item?.chat_room_id,
           partner_name: item?.title,
         });
         break;
