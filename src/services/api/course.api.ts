@@ -631,3 +631,13 @@ export async function getPlanTeacher() {
     return response;
   });
 }
+
+export async function getPlanDetail(params) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "course/v2/plan-student/detail/",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}

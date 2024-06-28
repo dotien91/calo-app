@@ -2017,4 +2017,5 @@ export default {
   },
   creator: "コンテンツクリエーター",
   loadingRoom: "教室に入っています",
+  leaving: (v) => v + " は部屋を去りました",
 };
