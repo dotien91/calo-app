@@ -35,7 +35,7 @@ const ClassOneOneRoomTopView = ({
       },
     });
   };
-
+  console.log("datadatadata", data);
   return (
     <View
       style={{

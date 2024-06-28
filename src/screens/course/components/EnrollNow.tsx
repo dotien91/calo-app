@@ -8,6 +8,8 @@ import { EnumClassType, ICourseItem } from "models/course.model";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import { SCREENS } from "constants";
+import { getCourseRoomV2, getPlanDetail } from "@services/api/course.api";
+import useStore from "@services/zustand/store";
 
 interface EnrollNowProps {
   data?: ICourseItem;
@@ -22,6 +24,45 @@ const EnrollNow = ({
   courseRoom,
   fromBottom,
 }: EnrollNowProps) => {
+  const [event, setEvent] = React.useState(null);
+
+  const userData = useStore((state) => state.userData);
+
+  React.useEffect(() => {
+    getInfoCall();
+  }, []);
+
+  const getInfoCall = () => {
+    if (!userData?._id) return;
+    getPlanDetail({
+      student_id: userData?._id,
+      teacher_id: data?.user_id._id,
+    }).then((res) => {
+      if (!res.isError) {
+        const event = res.data;
+        console.log("data", data);
+        getCourseRoomV2({
+          course_plan_student_id: event?._id,
+          student_id: event?.student_id?._id,
+          teacher_id: event?.teacher_id?._id,
+        }).then((_res) => {
+          if (!res.isError) {
+            const roomId = (_res.data?.redirect_url || "").match(/[^\/]+$/,)?.[0];
+            const courseRoom = {
+              roomId,
+              chatRoomId: _res.data?.chat_room_id,
+              classId: _res.data?._id,
+            };
+            setEvent({
+              event: { ...event, course_name: data?.title },
+              courseRoom,
+            });
+          }
+        });
+      }
+    });
+  };
+
   const _goToListVideo = () => {
     console.log("courseRoomcourseRoom", courseRoom);
     if (data?.type == EnumClassType.SelfLearning) {
@@ -29,6 +70,9 @@ const EnrollNow = ({
         course_id: course_id,
         courseData: data,
       });
+    } else if (data?.type == EnumClassType.Call11) {
+      if (!event) return;
+      NavigationService.navigate(SCREENS.ONEONE_SCREEN, event);
     } else {
       NavigationService.navigate(SCREENS.CALL_CLASS, {
         course_id: course_id,

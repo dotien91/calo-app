@@ -1603,5 +1603,6 @@ export default {
   free: "Free",
   creator: "Content creator",
   loadingRoom: "are entering the classroom",
+  leaving: (v) => v + " has left the room",
 };
 /* eslint-disable max-len */

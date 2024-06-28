@@ -18,6 +18,7 @@ import { Device } from "../ui/device.ui";
 
 import RNCallKeep from "react-native-callkeep";
 import KeepAwake from "react-native-keep-awake";
+
 interface OneOneRtcViewProps {}
 import createStyles from "../call.page.screen.style";
 import {
@@ -63,6 +64,16 @@ import {
   showSuperModal,
 } from "@helpers/super.modal.helper";
 
+const servers = {
+  iceServers: [
+    {
+      urls: ["stun:stun.oncenter.vn:3478", "turn:stun.oncenter.vn:3478"],
+      username: "ikigroup",
+      credential: "ikigroup",
+    },
+  ],
+};
+
 const OneOneRtcView: React.FC<OneOneRtcViewProps> = () => {
   const route = useRoute<any>();
   const intervalTimer = useRef<ReturnType<typeof setInterval> | null>();
@@ -90,6 +101,7 @@ const OneOneRtcView: React.FC<OneOneRtcViewProps> = () => {
 
   const leaveOneoneClient = () => {
     setRemoteStreams({});
+    alert(translations.leaving(event.partner_id?.display_name));
   };
   useEffect(() => {
     if (!userData) return;
@@ -119,15 +131,6 @@ const OneOneRtcView: React.FC<OneOneRtcViewProps> = () => {
   });
 
   const [account] = useState<any>(userData);
-  const servers = {
-    iceServers: [
-      {
-        urls: ["stun:stun.oncenter.vn:3478", "turn:stun.oncenter.vn:3478"],
-        username: "ikigroup",
-        credential: "ikigroup",
-      },
-    ],
-  };
 
   useEffect(() => {
     if (streams?.id) {
@@ -181,7 +184,6 @@ const OneOneRtcView: React.FC<OneOneRtcViewProps> = () => {
       setDataCall({});
     };
   }, []);
-  // {"chatRoomId": "66700320570c57a537c7ad80", "roomId": "667002fd570c57a537c7ad2e"}
 
   const createRoom = async () => {
     if (Platform.OS === "android") {

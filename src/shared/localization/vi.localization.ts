@@ -2089,4 +2089,5 @@ export default {
   },
   creator: "Nhà sáng tạo nội dung",
   loadingRoom: "đang vào lớp học",
+  leaving: (v) => v + " đã rời khỏi phòng",
 };

@@ -41,7 +41,7 @@ const DetailEvent = ({ event, closeModalDetail }) => {
   const startCall = () => {
     if (event.type === EnumClassType.Call11) {
       closeModalDetail();
-      navigate(SCREENS.ONEONE_SCREEN, event);
+      navigate(SCREENS.ONEONE_SCREEN, { event, courseRoom: room });
       // alert("Bắt đầu cuộc gọi call11");
     }
     if (event.type === EnumClassType.CallGroup) {
