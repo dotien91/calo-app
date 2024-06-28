@@ -16,19 +16,27 @@ import { useLastActiveTrack } from "./hook/useLastActiveTrack";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
 import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
 import { palette } from "@theme/themes";
+import { useRoute } from "@react-navigation/native";
 
 const RecommendBookScreen = () => {
   const userData = useStore((state) => state.userData);
   // const setListAudio = useStore((state) => state.setListAudio);
+  const route = useRoute();
+  const header = route?.params?.header;
+  const params1 = route?.params?.params;
 
   const params = {
+    ...params1,
     auth_id: userData?._id,
     // order_by: "DESC",
     sort_by: "createdAt",
   };
   if (userData?._id) {
-    params.type = "suggestion";
+    if (!params1) {
+      params.type = "suggestion";
+    }
   }
+
   const { listData, isLoading } = useListData<TypeTrackLocal>(
     params,
     GetPodCastList,
@@ -71,7 +79,7 @@ const RecommendBookScreen = () => {
 
   return (
     <SafeAreaView style={CS.safeAreaView}>
-      <Header text={translations.audio.recommendBook} />
+      <Header text={header || translations.audio.recommendBook} />
       {!isLoading && listData.length == 0 && renderEmptyCourseOfMe()}
       {isLoading && listData.length == 0 && renderLoading()}
       <FlatList
