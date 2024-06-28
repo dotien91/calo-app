@@ -1628,7 +1628,7 @@ export default {
     course: "Khoá học",
     tutor: "Chuyên gia",
     club: "Câu lạc bộ",
-    affiliate: "Tiếp thị",
+    affiliate: "Affiliate",
     descriptionTitle: "Khám phá các tính năng",
   },
   recommendCourse: "Đề xuất khoá học",

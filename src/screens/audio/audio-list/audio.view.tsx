@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
@@ -123,6 +123,7 @@ const AudioView = ({
   };
 
   if (noData && noData2) return null;
+  if (noData && fromTeacherScreen) return null;
 
   const renderLoading = () => {
     return <LoadingItem />;
@@ -145,7 +146,11 @@ const AudioView = ({
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
-          data={[...listData, ...listData2].slice(0, 10)}
+          data={
+            fromTeacherScreen
+              ? [...listData]
+              : [...listData, ...listData2].slice(0, 10)
+          }
           renderItem={renderItem}
           scrollEventThrottle={16}
           contentContainerStyle={{
@@ -163,7 +168,7 @@ const AudioView = ({
   );
 };
 
-export default AudioView;
+export default memo(AudioView);
 
 const styles = StyleSheet.create({
   container: {
