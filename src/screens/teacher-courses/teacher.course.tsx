@@ -62,7 +62,6 @@ const AgendaScreen = () => {
       isFetchingStudent.current = false;
       if (!res.isError) {
         const dataStudent = res.data;
-        // console.log("res.student..", res.data);
         for (let index = 0; index < dataStudent.length; index++) {
           const element = dataStudent[index];
           const schedule = element.schedule;
@@ -76,22 +75,22 @@ const AgendaScreen = () => {
               const dataAdd = {
                 title: translations.course.call11With(
                   "teacher",
-                  element.teacher_id.display_name,
+                  element.teacher_id?.display_name || "",
                 ),
                 date: formatDate(date),
                 start: new Date(new Date(date).setHours(hours, minutes)),
                 end: new Date(new Date(date).setHours(hoursEnd, minutesEnd)),
                 color: ind > 0 || i > 0 ? palette.call11 : palette.newClass,
                 type: EnumClassType.Call11,
-                student_name: element.student_id.display_name,
-                student_id: element.student_id,
-                teacher_name: element.teacher_id.display_name,
-                teacher_id: element.teacher_id,
-                partner_id: element.teacher_id,
-                partner_name: element.teacher_id.display_name,
+                student_name: element.student_id?.display_name,
+                student_id: element.student_id || {},
+                teacher_name: element.teacher_id?.display_name,
+                teacher_id: element.teacher_id || {},
+                partner_id: element.teacher_id || {},
+                partner_name: element.teacher_id?.display_name,
                 plan_id: element._id,
-                course_name: element.course_id.title,
-                partner: element.teacher_id,
+                course_name: element.course_id?.title || "",
+                partner: element.teacher_id || {},
               };
               listEventStudent.push(dataAdd);
             }
@@ -144,15 +143,15 @@ const AgendaScreen = () => {
                 end: new Date(new Date(date).setHours(hoursEnd, minutesEnd)),
                 color: ind > 0 || i > 0 ? palette.call11 : palette.newClass,
                 type: EnumClassType.Call11,
-                student_name: element.student_id.display_name,
-                student_id: element.student_id,
-                teacher_name: element.teacher_id.display_name,
+                student_name: element.student_id?.display_name || "",
+                student_id: element.student_id || {},
+                teacher_name: element.teacher_id?.display_name || "",
                 teacher_id: element.teacher_id,
                 partner_id: element.student_id,
-                partner_name: element.student_id.display_name,
+                partner_name: element.student_id?.display_name || "",
                 plan_id: element._id,
-                course_name: element.course_id.title,
-                partner: element.student_id,
+                course_name: element.course_id?.title || "",
+                partner: element.student_id || {},
               };
               listEventTeacher.push(dataAdd);
             }
