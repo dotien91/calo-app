@@ -87,7 +87,11 @@ const CourseItem = ({
     if (is_join)
       return (
         <>
-          <Text style={styles.courseTitle}>{title}</Text>
+          <View style={isSliderItem ? { height: 50 } : {}}>
+            <Text numberOfLines={2} style={styles.courseTitle}>
+              {title}
+            </Text>
+          </View>
           <Text style={styles.courseAuthorTxt}>{user_id?.display_name}</Text>
           {isCourseVideo && (
             <CourseProgressBar
@@ -101,7 +105,11 @@ const CourseItem = ({
 
     return (
       <>
-        <Text style={styles.courseTitle}>{title}</Text>
+        <View style={isSliderItem ? { height: 50 } : {}}>
+          <Text numberOfLines={2} style={styles.courseTitle}>
+            {title}
+          </Text>
+        </View>
         <Text style={styles.courseAuthorTxt}>{user_id?.display_name}</Text>
         <View style={styles.viewPrice}>
           <Text style={styles.coursePriceTxt}>
@@ -120,7 +128,7 @@ const CourseItem = ({
           )}
         </View>
         {rating ? (
-          <View style={[CS.flexStart, { marginBottom: 6 }]}>
+          <View style={[CS.flexStart, { height: 30 }]}>
             <Icon
               name="star"
               type={IconType.Ionicons}
@@ -133,9 +141,11 @@ const CourseItem = ({
             </Text>
           </View>
         ) : (
-          <Text style={styles.textNoReview}>
-            {translations.course.noreview}
-          </Text>
+          <View style={[CS.flexStart, { height: 30 }]}>
+            <Text style={styles.textNoReview}>
+              {translations.course.noreview}
+            </Text>
+          </View>
         )}
         <View style={{ marginTop: 6, flexDirection: "row", gap: 8 }}>
           <Badge title="Best-seller" />

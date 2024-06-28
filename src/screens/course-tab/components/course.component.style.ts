@@ -30,7 +30,6 @@ export default (theme: ExtendedTheme) => {
     courseTitle: {
       ...CS.hnSemiBold,
       color: colors.text,
-      marginBottom: 4,
     },
     boxContent: {
       marginLeft: 12,
