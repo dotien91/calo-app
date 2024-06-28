@@ -22,7 +22,6 @@ const OneoneScreen: React.FC<OneoneScreenProps> = () => {
   const route = useRoute<any>();
   const event = route.params?.event;
   const courseRoom = route.params?.courseRoom;
-
   const reloadOneOneView = () => {
     setVisible(false);
   };

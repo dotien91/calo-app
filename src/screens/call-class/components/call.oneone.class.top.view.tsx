@@ -79,7 +79,7 @@ const ClassOneOneRoomTopView = ({
           }}
         >
           {/* todo */}
-          {data?.course_name}
+          {data?.course_name || data?.title}
         </Text>
       </View>
       <PressableBtn

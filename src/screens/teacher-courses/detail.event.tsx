@@ -15,9 +15,11 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { navigate } from "react-navigation-helpers";
 import CS from "@theme/styles";
 import { styles } from "./styles";
+import useStore from "@services/zustand/store";
 
 const DetailEvent = ({ event, closeModalDetail }) => {
   const [room, setRoom] = useState();
+  const userData = useStore((state) => state.userData);
   useEffect(() => {
     getInfoCall();
   }, [event]);
@@ -32,6 +34,8 @@ const DetailEvent = ({ event, closeModalDetail }) => {
         const data = res.data;
         //eslint-disable-next-line
         const roomId = (data?.redirect_url || "").match(/[^\/]+$/)?.[0];
+        alert(roomId)
+
         const courseRoom = { roomId, chatRoomId: data?.chat_room_id };
         setRoom(courseRoom);
       }
@@ -39,9 +43,10 @@ const DetailEvent = ({ event, closeModalDetail }) => {
   };
 
   const startCall = () => {
+    console.log(({ event, courseRoom: room, isMakeCall: userData?._id == event?.teacher_id?._id }))
     if (event.type === EnumClassType.Call11) {
       closeModalDetail();
-      navigate(SCREENS.ONEONE_SCREEN, { event, courseRoom: room });
+      navigate(SCREENS.ONEONE_SCREEN, { event, courseRoom: room, isMakeCall: userData?._id == event?.teacher_id?._id });
       // alert("Bắt đầu cuộc gọi call11");
     }
     if (event.type === EnumClassType.CallGroup) {

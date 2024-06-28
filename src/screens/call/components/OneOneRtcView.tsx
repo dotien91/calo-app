@@ -84,15 +84,10 @@ const OneOneRtcView: React.FC<OneOneRtcViewProps> = () => {
   const timeoutEndCall = useRef<ReturnType<typeof setInterval> | null>();
   const startTimer = useRef(false);
 
-  const item = route.params?.item || {};
   const event = route.params?.event || {};
-
   const optionFilter = useSharedValue(0);
   const isMakeCall = route.params?.isMakeCall;
   const courseRoom = route.params?.courseRoom;
-  const [data, setDataCall] = useState<any>({
-    room_id: courseRoom?.roomId,
-  });
   const [callType] = useState(route.params?.type || "video_call");
   const userData = useStore((state) => state.userData);
 
@@ -181,7 +176,6 @@ const OneOneRtcView: React.FC<OneOneRtcViewProps> = () => {
       if (timeoutEndCall.current) {
         clearTimeout(timeoutEndCall.current);
       }
-      setDataCall({});
     };
   }, []);
 
@@ -611,7 +605,7 @@ const OneOneRtcView: React.FC<OneOneRtcViewProps> = () => {
       },
     });
   };
-
+console.log("eventeventevent", event)
   return (
     <>
       <ClassOneOneRoomTopView switchCamera={switchCamera} data={event} />
@@ -639,7 +633,7 @@ const OneOneRtcView: React.FC<OneOneRtcViewProps> = () => {
           ) : (
             <ImageLoad
               source={{
-                uri: account.user_avatar_thumbnail || account.user_avatar || "",
+                uri: userData?.user_avatar_thumbnail || userData?.user_avatar || "",
               }}
               width={"100%"}
               height={"100%"}
@@ -667,10 +661,7 @@ const OneOneRtcView: React.FC<OneOneRtcViewProps> = () => {
           ) : (
             <ImageLoad
               source={{
-                uri:
-                  data?.partner_id?.user_avatar_thumbnail ||
-                  item.partner_id?.user_avatar ||
-                  "",
+                uri: event?.partner_id?.user_avatar_thumbnail || event?.partner_id?.user_avatar || "",
               }}
               width={Device.width}
               height={Device.height / 2}

@@ -37,6 +37,7 @@ const EnrollNow = ({
     getPlanDetail({
       student_id: userData?._id,
       teacher_id: data?.user_id._id,
+      course_id: data?._id
     }).then((res) => {
       if (!res.isError) {
         const event = res.data;
@@ -53,9 +54,11 @@ const EnrollNow = ({
               chatRoomId: _res.data?.chat_room_id,
               classId: _res.data?._id,
             };
+            const isMakeCall = event?.teacher_id?._id == userData?._id
             setEvent({
-              event: { ...event, course_name: data?.title },
+              event: { ...event, course_name: data?.title, partner_id: isMakeCall ? event.student_id : event.teacher_id,  },
               courseRoom,
+              isMakeCall
             });
           }
         });
@@ -72,6 +75,7 @@ const EnrollNow = ({
       });
     } else if (data?.type == EnumClassType.Call11) {
       if (!event) return;
+      console.log("eventevent", event)
       NavigationService.navigate(SCREENS.ONEONE_SCREEN, event);
     } else {
       NavigationService.navigate(SCREENS.CALL_CLASS, {
@@ -83,7 +87,6 @@ const EnrollNow = ({
   };
 
   const _goToHomeWork = () => {
-    console.log("courseRoom", data, courseRoom);
     NavigationService.navigate(SCREENS.CLASSHOMEWORK, {
       course_id: course_id,
       courseData: data,
