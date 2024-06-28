@@ -242,6 +242,7 @@ const AudioPreview = () => {
       data: {
         hideCloseIcon: true,
         id: id,
+        backdropOpacity: 0.01,
       },
     });
   };

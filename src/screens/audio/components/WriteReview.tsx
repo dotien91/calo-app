@@ -23,11 +23,11 @@ const WriteReview = ({ data }: WriteReviewProps) => {
 
   const onPressSend = () => {
     if (title.trim().length < 10) {
-      alert(translations.podcast.warningReviewShort);
-      // showToast({
-      //   type: "info",
-      //   message: translations.podcast.warningReviewShort,
-      // });
+      // alert(translations.podcast.warningReviewShort);
+      showToast({
+        type: "info",
+        message: translations.podcast.warningReviewShort,
+      });
     } else {
       const dataPost = {
         podcast_id: data.id,

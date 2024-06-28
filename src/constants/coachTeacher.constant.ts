@@ -118,7 +118,7 @@ export const utilities = [
       {
         title: translations.profileTeacher.guide,
         uri: HuongDan,
-        url: "https://docs.ikigaicoach.net",
+        url: "https://docs.ikigaicoach.net/danh-cho-giao-vien/huong-dan-dang-tai-khoa-hoc",
       },
       {
         title: translations.profileTeacher.Security,

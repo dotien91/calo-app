@@ -5,6 +5,7 @@ import Avatar from "@shared-components/user/Avatar";
 import { TypedChatHistory } from "models/chat.model";
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
+import { ScreenWidth } from "@freakycoder/react-native-helpers";
 
 const avatarSize = 30;
 
@@ -40,10 +41,12 @@ const LiveStreamMessageItem = ({
 
 const styles: any = StyleSheet.create({
   box: {
+    flex: 1,
     paddingHorizontal: 12,
     marginBottom: 10,
-    ...CommonStyle.flexStart,
-    flex: 1,
+    // ...CommonStyle.flexStart,
+    flexDirection: "row",
+    width: ScreenWidth * 0.86,
   },
   txt: {
     ...CommonStyle.hnRegular,

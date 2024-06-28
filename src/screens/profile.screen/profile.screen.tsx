@@ -74,7 +74,7 @@ const SettingProfileScreen = () => {
     item: any;
     index: number;
   }) => {
-    if (item.hide) return null;
+    // if (item.hide) return null;
     return (
       <PressableBtn
         onPress={item.onPress}
