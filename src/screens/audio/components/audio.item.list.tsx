@@ -30,8 +30,8 @@ interface ItemListProps {
   data: IAudioItem;
   listData?: any[];
   colorText?: string;
-  borderColorPlay?: string;
   styleInfo?: ViewStyle;
+  isParent?: boolean;
 }
 const widthImage = 111;
 const heightImage = 140;
@@ -43,7 +43,7 @@ const ItemList = ({
   listData,
   styleInfo,
   colorText,
-  borderColorPlay,
+  isParent,
 }: ItemListProps) => {
   const {
     title,
@@ -138,22 +138,21 @@ const ItemList = ({
           </Text>
         )}
         <View style={styles.viewHastag}>
-          <PressableBtn
-            style={[
-              styles.btnPlay,
-              borderColorPlay ? { borderColor: borderColorPlay } : {},
-            ]}
-            onPress={playAudio}
-          >
-            <View style={styles.viewIconPlay}>
-              <IconSvg name="icPlay" color={palette.white} size={8} />
-            </View>
-            <Text
-              style={[styles.txtPlay, colorText ? { color: colorText } : {}]}
+          {data?.attach_files.length > 0 && (
+            <PressableBtn
+              style={[
+                styles.btnPlay,
+                // borderColorPlay ? { borderColor: borderColorPlay } : {},
+                isParent ? { backgroundColor: palette.white } : {},
+              ]}
+              onPress={playAudio}
             >
-              {translations.audio.play}
-            </Text>
-          </PressableBtn>
+              <View style={styles.viewIconPlay}>
+                <IconSvg name="icPlay" color={palette.white} size={8} />
+              </View>
+              <Text style={[styles.txtPlay]}>{translations.audio.play}</Text>
+            </PressableBtn>
+          )}
           <Text style={styles.txtSlug}>
             #{podcast_category?.category_title}
           </Text>
