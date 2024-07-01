@@ -187,7 +187,7 @@ const CodeActivationsScreen = () => {
   };
   return (
     <SafeAreaView>
-      <Header text={translations.settingUser.codeActivations} />
+      <Header text={translations.codeActivations.referrerList} />
       {/* {renderHeader()} */}
       {!listUserRef.length && renderEmpty()}
       <ScrollView showsVerticalScrollIndicator={false}>

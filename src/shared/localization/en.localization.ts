@@ -689,6 +689,8 @@ export default {
     copyCodeSuccsess: "Copied",
     activate: "Activate code",
     goTo: "Go to",
+    referrerCode: "Referrer code",
+    referrerList: "List invite",
   },
   profile: {
     editProfile: "Edit Profile",

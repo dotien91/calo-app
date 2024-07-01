@@ -1081,6 +1081,8 @@ export default {
     copyCodeSuccsess: "コードのコピーに成功",
     activate: "アクティベート",
     goTo: "移動",
+    referrerCode: "紹介コード",
+    referrerList: "紹介者リスト",
   },
   mentor: {
     user: "ユーザー",

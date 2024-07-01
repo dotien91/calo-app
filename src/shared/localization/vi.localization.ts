@@ -1150,6 +1150,8 @@ export default {
     copyCodeSuccsess: "Sao chép mã thành công",
     activate: "Kích hoạt mã",
     goTo: "Đi đến",
+    referrerCode: "Mã giới thiệu",
+    referrerList: "Danh sách người giới thiệu",
   },
   mentor: {
     user: "Người dùng",
