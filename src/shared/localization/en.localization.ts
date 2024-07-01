@@ -690,7 +690,7 @@ export default {
     activate: "Activate code",
     goTo: "Go to",
     referrerCode: "Referrer code",
-    referrerList: "List invite",
+    referrerList: "Invite list",
   },
   profile: {
     editProfile: "Edit Profile",
@@ -906,7 +906,7 @@ export default {
     enterCodeFaild: "The referral code is incorrect, please try again.",
     send: "Send",
     codeActivations: "Code activations",
-    emptyListInvite: "List invite is empty",
+    emptyListInvite: "Invite list is empty",
   },
   categories: {
     addCategory: "Add Category",
@@ -1072,7 +1072,7 @@ export default {
   },
   aboutUs: {
     aboutUs: "About us",
-    termofus: "Term of us",
+    termofus: "Term and conditions",
     privacy: "Privacy Policy",
     cookie: "Cookie policy",
     return: "Return policy",
