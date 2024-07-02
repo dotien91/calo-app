@@ -1238,7 +1238,7 @@ export default {
     emptyTransaction: "Empty transaction",
     fromDate: "From date",
     toDate: "To date",
-    commission: "Commission",
+    commission: "Revenua",
     commissionSale: "Sales Commission: 20%",
     desCommission:
       "When a user you refer purchases a course, you will receive a 20% commission on the course. For example, if a course costs 10,000,000 VND, you will receive 2,000,000 VND when the user successfully buys the course!",
@@ -1261,6 +1261,7 @@ export default {
     totalCoin: "Total Coin",
     emptyProduct: "Empty Product",
     emptyUser: "Empty user",
+    filter: "filter by"
   },
   emptyList: "Empty list",
   emptyCalendar: "Empty calendar",
