@@ -278,18 +278,24 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
                 ></Icon>
               </TouchableOpacity>
             </View>
-            <Text
-              numberOfLines={1}
-              style={{
-                fontSize: 16,
-                color: colors.text,
-                fontWeight: "600",
-                marginTop: 8,
-                paddingHorizontal: 16,
-              }}
-            >
-              {userData?.display_name}
-            </Text>
+            <TouchableOpacity onPress={() => {
+                  NavigationService.navigate(SCREENS.PROFILE_CURRENT_USER, {
+                    _id: userData?._id,
+                  });
+                }}>
+              <Text
+                numberOfLines={1}
+                style={{
+                  fontSize: 16,
+                  color: colors.text,
+                  fontWeight: "600",
+                  marginTop: 8,
+                  paddingHorizontal: 16,
+                }}
+              >
+                {userData?.display_name}
+              </Text>
+            </TouchableOpacity>
             {!isTeacher && (
               <TouchableOpacity onPress={becomeATutorial}>
                 <Text
