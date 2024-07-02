@@ -404,6 +404,8 @@ export default {
     add: "Add",
     maxLesson: (num: string | number) =>
       `The maximum number of lessons is ${num}`,
+    warningSelectLesson: (num: string | number) =>
+      `Please select ${num} lessons`,
     emptyLesson: "The teacher is fully booked for the day.",
     call11With: (type: "teacher" | "student", name: string) =>
       `Call 1-1 with ${type === "student" ? "student" : "teacher"} ${name}`,

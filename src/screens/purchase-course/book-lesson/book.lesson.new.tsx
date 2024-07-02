@@ -115,30 +115,37 @@ const BookLessonNew = () => {
   };
 
   const goToCheckout = () => {
-    const timeSelected = listTimeSelected
-      .sort((a, b) => new Date(a.day) - new Date(b.day))
-      .sort((a, b) => {
-        if (a.day === b.day) {
-          return a.time_start.localeCompare(b.time_start);
-        }
-        return new Date(a.day) - new Date(b.day);
+    const isActive = listTimeSelected.length === sumday;
+    if (isActive) {
+      const timeSelected = listTimeSelected
+        .sort((a, b) => new Date(a.day) - new Date(b.day))
+        .sort((a, b) => {
+          if (a.day === b.day) {
+            return a.time_start.localeCompare(b.time_start);
+          }
+          return new Date(a.day) - new Date(b.day);
+        });
+      const params = {
+        courseData,
+        listTimeSelected: timeSelected,
+        duration: courseData.class_duration || "-",
+      };
+      // console.log("params...", params);
+      navigate(SCREENS.PAYMENT_COURES, params);
+    } else {
+      showToast({
+        type: "error",
+        message: translations.course.warningSelectLesson(sumday),
       });
-    const params = {
-      courseData,
-      listTimeSelected: timeSelected,
-      duration: "0.5",
-    };
-    // console.log("params...", params);
-    navigate(SCREENS.PAYMENT_COURES, params);
+    }
   };
 
   const renderPurchaseBtn = () => {
-    const isActive = listTimeSelected.length === sumday;
     return (
       <View style={styles.viewBtn}>
         <Button
           text={translations.purchase.orderNow}
-          type={isActive ? "primary" : "disabled"}
+          type={"primary"}
           onPress={goToCheckout}
         />
       </View>

@@ -401,6 +401,8 @@ export default {
     course: "コース",
     add: "追加",
     maxLesson: (num: string | number) => `最大授業数は${num}回です。`,
+    warningSelectLesson: (num: string | number) =>
+      `${num}回のセッションを選択してください`,
     emptyLesson: "先生はその日の予定がいっぱいです。",
     call11With: (type: "teacher" | "student", name: string) =>
       `${name}と1対1の${type === "student" ? "生徒" : "先生"}通話`,
