@@ -65,18 +65,7 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
         NavigationService.navigate(SCREENS.TEACHER_COURSES);
       },
     },
-    {
-      title: translations.purchase.restore,
-      id: 1,
-      iconName: "icBookFull",
-      action: () => {
-        eventEmitter.emit("get_avaiable_purchase");
-        showSuperModal({
-          contentModalType: EnumModalContentType.Loading,
-          styleModalType: EnumStyleModalType.Middle,
-        });
-      },
-    },
+
     {
       title: translations.settings.calendar,
       id: 1,
@@ -154,6 +143,13 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
       id: 3,
       action: () => {
         deleteUser();
+      },
+    },
+    {
+      title: translations.purchase.restore,
+      // iconName: "icBookFull",
+      action: () => {
+        eventEmitter.emit("get_avaiable_purchase");
       },
     },
     // {

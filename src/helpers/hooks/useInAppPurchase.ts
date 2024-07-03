@@ -1,7 +1,7 @@
 import { isIOS } from "@freakycoder/react-native-helpers";
 import * as NavigationService from "react-navigation-helpers";
 
-import { closeSuperModal, showToast } from "@helpers/super.modal.helper";
+import { closeSuperModal, showLoading, showToast } from "@helpers/super.modal.helper";
 import { translations } from "@localization";
 import { createVnpayUrl, requestIapBackend } from "@services/api/payment.api";
 import eventEmitter from "@services/event-emitter";
@@ -191,7 +191,12 @@ export const useInAppPurchase = () => {
     };
   }, []);
 
-  const _getAvailablePurchases = () => {};
+  const _getAvailablePurchases = async () => {
+    showLoading()
+    await getAvailablePurchases()
+    closeSuperModal()
+    alert("Purchase restoration successful")
+  };
 
   const initIAP = async (productIds?: string[]) => {
     try {
