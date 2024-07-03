@@ -8,6 +8,8 @@ import { palette } from "@theme/themes";
 import { translations } from "@localization";
 import formatMoney from "@shared-components/input-money/format.money";
 import { formatCoin } from "@helpers/string.helper";
+import PressableBtn from "@shared-components/button/PressableBtn";
+import { formatVNDate } from "@utils/date.utils";
 interface ItemAffiliateProps {
   item: any;
 }
@@ -26,6 +28,7 @@ const ItemAffiliate = ({ item }: ItemAffiliateProps) => {
     ? `${translations.affiliate.customer}: ${item.from_user?.display_name}`
     : "system";
   const refType = item.ref_type;
+  const createAt = formatVNDate(item.createdAt);
   const price =
     (typeToken && formatMoney(item?.ref_id?.price, { suffix: " đ" })) || "";
   const title = item?.ref_id?.title || item.note;
@@ -33,8 +36,27 @@ const ItemAffiliate = ({ item }: ItemAffiliateProps) => {
     item?.ref_id?.media_id?.media_thumbnail ||
     item?.ref_id?.avatar?.media_thumbnail;
 
+  const getStatus = () => {
+    switch (item.status) {
+      case "processing":
+        return translations.settings.pending;
+      case "done":
+        return translations.settings.paid;
+      case "reject":
+        return translations.settings.reject;
+
+      default:
+        return "";
+    }
+  };
+
   return (
-    <View style={styles.container}>
+    <PressableBtn
+      onPress={() => {
+        console.log("item...", item.status);
+      }}
+      style={styles.container}
+    >
       <ImageBackground
         style={styles.styleImage}
         source={require("../../assets/images/money.png")}
@@ -68,6 +90,13 @@ const ItemAffiliate = ({ item }: ItemAffiliateProps) => {
         >
           {`${fullname}`}
         </TextBase>
+        <TextBase
+          fontSize={16}
+          fontWeight="400"
+          color={EnumColors.textOpacity8}
+        >
+          {`${createAt}`}
+        </TextBase>
       </View>
       <View style={styles.viewPercentage}>
         <TextBase
@@ -75,15 +104,9 @@ const ItemAffiliate = ({ item }: ItemAffiliateProps) => {
           fontWeight="400"
           color={item?.method === "plus" ? "green2" : "primary"}
         >{`${item?.method === "plus" ? "+" : "-"}${commission}`}</TextBase>
-        <TextBase>
-          {item.method === "minus"
-            ? item.status === "processing"
-              ? translations.settings.pending
-              : translations.settings.billing
-            : ""}
-        </TextBase>
+        <TextBase>{item.method === "minus" ? getStatus() : ""}</TextBase>
       </View>
-    </View>
+    </PressableBtn>
   );
 };
 

@@ -38,8 +38,8 @@ const HeaderAffiliate = ({ fromHomepage }: { fromHomepage: boolean }) => {
     NavigationService.navigate(SCREENS.WITHDRAW);
   };
 
-  const isSwitch =
-    userData?.user_role === "teacher" || userData?.user_role === "admin";
+  const isSwitch = true;
+  // userData?.user_role === "teacher" || userData?.user_role === "admin";
 
   return (
     <View style={CS.center}>
@@ -73,7 +73,7 @@ const HeaderAffiliate = ({ fromHomepage }: { fromHomepage: boolean }) => {
             />
           )}
           <Text numberOfLines={1} style={styles.txtHeader}>
-            {translations.affiliate.yourIncome}
+            {translations.affiliate.currentlyAvailable}
           </Text>
           <View style={{ width: 25, ...CS.center }}>
             {isSwitch && (
