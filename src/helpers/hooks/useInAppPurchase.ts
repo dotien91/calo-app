@@ -181,13 +181,17 @@ export const useInAppPurchase = () => {
   useEffect(() => {
     eventEmitter.on("emit_buy_product", buyProduct);
     eventEmitter.on("emit_buy_subscription", buySubscription);
+    eventEmitter.on("get_avaiable_purchase", _getAvailablePurchases);
 
     return () => {
       eventEmitter.off("emit_buy_product", buyProduct);
       eventEmitter.on("emit_buy_subscription", buySubscription);
+      eventEmitter.on("get_avaiable_purchase", _getAvailablePurchases);
       endConnection();
     };
   }, []);
+
+  const _getAvailablePurchases = () => {};
 
   const initIAP = async (productIds?: string[]) => {
     try {

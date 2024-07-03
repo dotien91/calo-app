@@ -999,12 +999,14 @@ export default {
     shareAudio: (txt: string) =>
       `Download the IKIGAI Coach app now to listen to the best audiobooks: ${txt}`,
     listened: "Listened",
+    watched: "Continue listening to the podcast"
   },
   livestream: {
     hello: "Hello!",
     inputTitle: "Input title for livestream",
   },
   purchase: {
+    restore: "Restore purchase",
     headerBookLesson: "Book lesson",
     headerChooseClass: "Choose a class",
 
@@ -1432,7 +1434,7 @@ export default {
     createPlaylist: "Create playlist",
     createPodcast: "Create podcast",
     myPodcast: "My podcast",
-    uploadePodcast: "Upload podcast",
+    uploadePodcast: "Upload playlist",
     selectPodcast: "Please select the podcast list",
     warningSelectCover: "Upload podcast cover image",
     warningUploadPodcast: "Select podcast file to upload",

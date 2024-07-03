@@ -1402,7 +1402,7 @@ export default {
     createPlaylist: "Tạo playlist",
     createPodcast: "Tạo podcast",
     myPodcast: "Podcast của tôi",
-    uploadePodcast: "Tải lên podcast",
+    uploadePodcast: "Tải lên playlist",
     selectPodcast: "Vui lòng chọn danh sách podcast",
     warningSelectCover: "Tải lên ảnh nền podcast",
     warningUploadPodcast: "Chọn file podcast cần tải lên",
@@ -1536,12 +1536,14 @@ export default {
     shareAudio: (txt: string) =>
       `Tải ngay ứng dụng IKIGAI Coach về để nghe những bản podcast hay nhất: ${txt}`,
     listened: "Đã nghe",
+    watched: "Tiếp tục nghe podcast"
   },
   livestream: {
     hello: "Xin chào",
     inputTitle: "Nhập tiêu đề cho phiên livestream",
   },
   purchase: {
+    restore: "Khôi phục thanh toán",
     headerBookLesson: "Đặt lịch học",
     headerChooseClass: "Chọn lớp",
 
