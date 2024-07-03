@@ -1,19 +1,28 @@
 import { StoreSlice } from "@zustand";
 import { TypeTrackLocal } from "models/audio.modal";
 import { Track } from "react-native-track-player";
+import { TypedMedia } from "shared/models";
 
 interface TrackAudio extends Track {
   position?: number;
 }
-
+export interface TypeAudioWatched{
+  id: string;
+  title: string;
+  user_id: object;
+  view_number: number;
+  post_avatar: object;
+  podcast_category: object;
+  attach_files: TypedMedia[];
+}
 export interface AudioSlice {
   listAudioHistory: TrackAudio[];
   addAudio: (track: TrackAudio) => void;
   updateAudio: (track: TrackAudio) => void;
   listAudio: TypeTrackLocal[];
   setListAudio: (list: TypeTrackLocal[]) => void;
-  listAudioWatched: string[];
-  updateListAudioWatched: (_id: string) => void;
+  listAudioWatched: TypeAudioWatched[];
+  updateListAudioWatched: (params : TypeAudioWatched) => void;
 }
 
 const createAudioSlice: StoreSlice<AudioSlice> = (set, get) => ({
@@ -56,11 +65,11 @@ const createAudioSlice: StoreSlice<AudioSlice> = (set, get) => ({
     set({ listAudio: list });
   },
   listAudioWatched: [],
-  updateListAudioWatched: (_id: string) => {
+  updateListAudioWatched: (v: TypeAudioWatched) => {
     const { listAudioWatched } = get();
-    const index = listAudioWatched.findIndex((item) => item === _id);
+    const index = listAudioWatched.findIndex((item) => item.id === v.id);
     if (index < 0) {
-      set({ listAudioWatched: [...listAudioWatched, _id] });
+      set({ listAudioWatched: [v, ...listAudioWatched] });
     }
   },
 });

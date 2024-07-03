@@ -25,6 +25,8 @@ const AllBookScreen = () => {
   const route = useRoute();
   const id = route.params?.id || "";
   const name = route.params?.name;
+  const fromPodcastWatched = route.params?.fromPodcastWatched || false;
+  const listAudioWatched = useStore((state) => state.listAudioWatched);
 
   const { listData, isLoading } = useListData<TypeTrackLocal>(
     {
@@ -68,11 +70,11 @@ const AllBookScreen = () => {
   return (
     <SafeAreaView style={CS.safeAreaView}>
       <Header text={name || translations.audio.allAudio} />
-      {!isLoading && listData.length == 0 && renderEmptyCourseOfMe()}
-      {isLoading && listData.length == 0 && renderLoading()}
+      {!isLoading && listData.length == 0 && !fromPodcastWatched && renderEmptyCourseOfMe()}
+      {isLoading && listData.length == 0 && !fromPodcastWatched && renderLoading()}
       <FlatList
         showsHorizontalScrollIndicator={false}
-        data={listData}
+        data={fromPodcastWatched? listAudioWatched:  listData}
         renderItem={renderItem}
         scrollEventThrottle={16}
         contentContainerStyle={{

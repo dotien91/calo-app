@@ -230,8 +230,16 @@ const AudioPreview = () => {
     //     await TrackPlayer.add(track1);
     //   }
     // }, 1000);
-    updateListAudioWatched(id);
-    _setJson("Audio", JSON.stringify(listAudioWatched));
+    updateListAudioWatched({
+      id: data._id,
+      title: data.title,
+      user_id: data.user_id,
+      view_number: data.view_number,
+      post_avatar: data.post_avatar,
+      podcast_category: data.podcast_category,
+      attach_files: data.attach_files
+    });
+    // _setJson("Audio", JSON.stringify(listAudioWatched));
   };
 
   const showWriteReview = () => {

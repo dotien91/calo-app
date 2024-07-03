@@ -14,6 +14,7 @@ import LoadingList from "@shared-components/loading.list.component";
 import AudioQuickFilter from "../components/audio.quick.filter";
 import AudioView from "./audio.view";
 import EmptyResultView from "@shared-components/empty.data.component";
+import AudioListWatched from "./audio.list.watched";
 
 const AudioList = () => {
   const userData = useStore((state) => state.userData);
@@ -60,6 +61,7 @@ const AudioList = () => {
       <View style={{ marginHorizontal: -16 }}>
         <AudioQuickFilter />
         <AudioView extraParams={userData?._id ? { type: "suggestion" } : {}} />
+        <AudioListWatched />
         <AudioCategoryTitle
           hideViewAll={false}
           onPress={onSeeAll}

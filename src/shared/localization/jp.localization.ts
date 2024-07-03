@@ -1329,7 +1329,7 @@ export default {
     createPlaylist: "プレイリストを作成",
     createPodcast: "ポッドキャストを作成",
     myPodcast: "私のポッドキャスト",
-    uploadePodcast: "ポッドキャストをアップロード",
+    uploadePodcast: "プレイリストをアップロードする",
     selectPodcast: "ポッドキャストリストを選択してください",
     warningSelectCover: "ポッドキャストのカバー画像をアップロード",
     warningUploadPodcast: "アップロードするポッドキャストファイルを選択",
@@ -1463,6 +1463,7 @@ export default {
     shareAudio: (txt: string) =>
       `IKIGAI Coachアプリをダウンロードして、最高のオーディオブックを聴こう: ${txt}`,
     listened: "聞いた",
+    watched: "ポッドキャストを聞き続ける"
   },
   livestream: {
     hello: "こんにちは",

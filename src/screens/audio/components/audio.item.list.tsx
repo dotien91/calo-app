@@ -97,9 +97,10 @@ const ItemList = ({
   };
 
   const isWatched = useMemo(
-    () => listAudioWatched.includes(_id),
-    [listAudioWatched],
+    () => listAudioWatched.filter(item => item.id === _id),
+    [listAudioWatched, _id],
   );
+
   const renderInfo = () => {
     return (
       <View style={[styles.viewInfo, styleInfo]}>
@@ -177,7 +178,7 @@ const ItemList = ({
           }}
           resizeMode={FastImage.resizeMode.cover}
         />
-        {isWatched && (
+        {isWatched.length > 0 && (
           <View style={styles.viewIsWatched}>
             <TextBase fontSize={12} fontWeight="600" color={"white"}>
               {translations.audio.listened}
