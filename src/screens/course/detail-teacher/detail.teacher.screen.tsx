@@ -123,7 +123,7 @@ const DetailTeacherScreen = () => {
           fromTeacherScreen
           extraParams={{
             user_id: data?._id,
-            is_premium: true,
+            // is_premium: true,
           }}
         />
         <View style={{ paddingHorizontal: 16, marginBottom: 8 }}>

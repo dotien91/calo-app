@@ -55,7 +55,12 @@ const AudioView = ({
     if (onPress) {
       onPress();
     } else {
-      NavigationService.navigate(SCREENS.RECOMMEND_AUDIO_BOOK);
+      NavigationService.navigate(SCREENS.RECOMMEND_AUDIO_BOOK, {
+        header: fromTeacherScreen
+          ? translations.audio.teacherPodcast
+          : translations.audio.recommendBook,
+        params: extraParams,
+      });
     }
   };
 

@@ -330,9 +330,9 @@ const styles = StyleSheet.create({
   textTitle: {
     ...CS.hnRegular,
     fontSize: 28,
-    lineHeight: 32,
+    lineHeight: 36,
     marginTop: 16,
-    minHeight: 32,
+    minHeight: 36,
   },
   viewUpdate: {
     flexDirection: "row",

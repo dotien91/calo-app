@@ -160,12 +160,12 @@ const CourseCreate = () => {
 
   useEffect(() => {
     if (data) {
-      setValue("title", data.title);
-      setValue("description", data.description);
-      setValue("long_description", data.long_description);
+      setValue("title", data.title || "");
+      setValue("description", data.description || "");
+      setValue("long_description", data.long_description || "");
       setValue("price", data.price.toString());
-      setValue("lession_count", data.lession_count.toString());
-      setDurationCall11(data.class_duration);
+      setValue("lession_count", data.lession_count?.toString() || 0);
+      setDurationCall11(data.class_duration || "");
       setDateStart(new Date(data.start_time));
       setIsSwitchStart(data?.start_time ? true : false);
       setDateEnd(data?.end_time ? new Date(data.end_time) : "");

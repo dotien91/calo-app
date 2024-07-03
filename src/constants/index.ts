@@ -133,6 +133,7 @@ export const SCREENS = {
   CREATE_SUBSCRIPTION: "CreateSubscription",
   LIST_CREATORS: "ListCreators",
   ONEONE_SCREEN: "OneOneScreen",
+  AUDIO_FILTER: "AudioFilter",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

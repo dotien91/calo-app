@@ -388,6 +388,8 @@ export default {
     at: "at",
   },
   course: {
+    requestBuyCourse: "Buy the course to watch all videos",
+    isPreview: "Preview",
     warningPrice: "Please select a course price",
     referUserGuideHere: "Refer to the user guide here",
     publicMode: "Public mode",
@@ -404,6 +406,8 @@ export default {
     add: "Add",
     maxLesson: (num: string | number) =>
       `The maximum number of lessons is ${num}`,
+    warningSelectLesson: (num: string | number) =>
+      `Please select ${num} lessons`,
     emptyLesson: "The teacher is fully booked for the day.",
     call11With: (type: "teacher" | "student", name: string) =>
       `Call 1-1 with ${type === "student" ? "student" : "teacher"} ${name}`,
@@ -631,6 +635,8 @@ export default {
     metrics: "Metrics",
     gamification: "Gamifications",
     links: "Links",
+    reject: "Reject",
+    paid: "Paid",
     billing: "Billing & referrals",
     pending: "Pending",
     block: "Block",
@@ -689,6 +695,8 @@ export default {
     copyCodeSuccsess: "Copied",
     activate: "Activate code",
     goTo: "Go to",
+    referrerCode: "Referrer code",
+    referrerList: "Invite list",
   },
   profile: {
     editProfile: "Edit Profile",
@@ -904,7 +912,7 @@ export default {
     enterCodeFaild: "The referral code is incorrect, please try again.",
     send: "Send",
     codeActivations: "Code activations",
-    emptyListInvite: "List invite is empty",
+    emptyListInvite: "Invite list is empty",
   },
   categories: {
     addCategory: "Add Category",
@@ -1070,7 +1078,7 @@ export default {
   },
   aboutUs: {
     aboutUs: "About us",
-    termofus: "Term of us",
+    termofus: "Term and conditions",
     privacy: "Privacy Policy",
     cookie: "Cookie policy",
     return: "Return policy",
@@ -1218,6 +1226,7 @@ export default {
       "Earn more point and grow your level by doing tasks and improving your skill.",
   },
   affiliate: {
+    currentlyAvailable: "Currently available",
     shareCode: "Share code",
     saleNow: "Sale now",
     saleCourse: "Sales",
@@ -1236,7 +1245,7 @@ export default {
     emptyTransaction: "Empty transaction",
     fromDate: "From date",
     toDate: "To date",
-    commission: "Commission",
+    commission: "Revenua",
     commissionSale: "Sales Commission: 20%",
     desCommission:
       "When a user you refer purchases a course, you will receive a 20% commission on the course. For example, if a course costs 10,000,000 VND, you will receive 2,000,000 VND when the user successfully buys the course!",
@@ -1259,6 +1268,8 @@ export default {
     totalCoin: "Total Coin",
     emptyProduct: "Empty Product",
     emptyUser: "Empty user",
+    filter: "filter by",
+    money: "Money",
   },
   emptyList: "Empty list",
   emptyCalendar: "Empty calendar",

@@ -5,7 +5,10 @@ interface DateFilterType {
   from: string;
   to: string;
 }
-
+interface MoneyFilterType{
+  id: string,
+  name: string
+}
 export interface AffiliateSlice {
   dateFilter: DateFilterType;
   setDateFilter: (data: DateFilterType) => void;
@@ -17,6 +20,8 @@ export interface AffiliateSlice {
   setType: (stringType: "coin" | "token") => void;
   listUserRef: TypedUser[];
   setListUserRef: (data: TypedUser[]) => void;
+  typeFilter: MoneyFilterType,
+  setTypeFilter: (params: MoneyFilterType) => void;
 }
 
 const createAffiliateSlice: StoreSlice<AffiliateSlice> = (set) => ({
@@ -53,6 +58,8 @@ const createAffiliateSlice: StoreSlice<AffiliateSlice> = (set) => ({
       listUserRef: data,
     });
   },
+  typeFilter: {id: "", name: ""},
+  setTypeFilter: (v: MoneyFilterType) => set({typeFilter: v})
 });
 
 export default createAffiliateSlice;

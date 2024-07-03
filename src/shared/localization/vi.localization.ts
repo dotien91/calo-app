@@ -456,6 +456,8 @@ export default {
     at: "lúc",
   },
   course: {
+    requestBuyCourse: "Mua khoá học để xem đầy đủ các video",
+    isPreview: "Cho xem trước",
     warningPrice: "Vui lòng chọn giá khoá học",
     referUserGuideHere: "Tham khảo hướng dẫn sử dụng tại đây",
     publicMode: "Chế độ công khai",
@@ -470,6 +472,8 @@ export default {
     course: "Khóa học",
     add: "Thêm",
     maxLesson: (num: string | number) => `Số buổi học tối đa là ${num} buổi`,
+    warningSelectLesson: (num: string | number) =>
+      `Vui lòng chọn đủ ${num} buổi`,
     emptyLesson: "Giáo viên đã kín lịch trong ngày",
     call11With: (type: "teacher" | "student", name: string) =>
       `Call 1-1 với ${type === "student" ? "học sinh" : "giáo viên"} ${name}`,
@@ -735,6 +739,8 @@ export default {
     gamification: "Trò chơi hóa",
     links: "Liên kết",
     linksInvite: "Liên kết giới thiệu",
+    reject: "Từ chối",
+    paid: "Đã thanh toán",
     billing: "Thanh toán ",
     pending: "Đang chờ",
     block: "Khóa",
@@ -1150,6 +1156,8 @@ export default {
     copyCodeSuccsess: "Sao chép mã thành công",
     activate: "Kích hoạt mã",
     goTo: "Đi đến",
+    referrerCode: "Mã giới thiệu",
+    referrerList: "Danh sách người giới thiệu",
   },
   mentor: {
     user: "Người dùng",
@@ -1757,6 +1765,7 @@ export default {
       "Nhận thêm điểm và thăng cấp bằng cách làm nhiêm vụ và cải thiện các kỹ năng của bạn.",
   },
   affiliate: {
+    currentlyAvailable: "Hiện tại đang có",
     shareCode: "Chia sẻ mã",
     saleNow: "Bán ngay",
     saleCourse: "Bán hàng",
@@ -1775,7 +1784,7 @@ export default {
     emptyTransaction: "Danh sách giao dịch trống",
     fromDate: "Từ ngày",
     toDate: "Đến ngày",
-    commission: "Hoa hồng",
+    commission: "Doanh thu",
     commissionSale: "Hoa hồng bán hàng: 20%",
     desCommission:
       "Khi người dùng bạn giới thiệu mua khoá học, bạn sẽ nhận được 20% hoa hồng của khoá học. Ví dụ khoá học có giá 10,000,000đ, bạn sẽ nhận được 2,000,000đ khi người dùng mua khoá học thành công!",
@@ -1798,6 +1807,8 @@ export default {
     totalCoin: "Tổng số coin",
     emptyProduct: "Danh sách sản phẩn trống",
     emptyUser: "Danh sách người dùng trống",
+    filter: "Lọc theo",
+    money: "Tiền",
   },
   emptyList: "Danh sách trống",
   emptyCalendar: "Không có lịch",

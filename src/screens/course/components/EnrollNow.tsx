@@ -37,7 +37,7 @@ const EnrollNow = ({
     getPlanDetail({
       student_id: userData?._id,
       teacher_id: data?.user_id._id,
-      course_id: data?._id
+      course_id: data?._id,
     }).then((res) => {
       if (!res.isError) {
         const event = res.data;
@@ -48,17 +48,23 @@ const EnrollNow = ({
           teacher_id: event?.teacher_id?._id,
         }).then((_res) => {
           if (!res.isError) {
-            const roomId = (_res.data?.redirect_url || "").match(/[^\/]+$/,)?.[0];
+            const roomId = (_res.data?.redirect_url || "").match(
+              /[^\/]+$/,
+            )?.[0];
             const courseRoom = {
               roomId,
               chatRoomId: _res.data?.chat_room_id,
               classId: _res.data?._id,
             };
-            const isMakeCall = event?.teacher_id?._id == userData?._id
+            const isMakeCall = event?.teacher_id?._id == userData?._id;
             setEvent({
-              event: { ...event, course_name: data?.title, partner_id: isMakeCall ? event.student_id : event.teacher_id,  },
+              event: {
+                ...event,
+                course_name: data?.title,
+                partner_id: isMakeCall ? event.student_id : event.teacher_id,
+              },
               courseRoom,
-              isMakeCall
+              isMakeCall,
             });
           }
         });
@@ -75,7 +81,7 @@ const EnrollNow = ({
       });
     } else if (data?.type == EnumClassType.Call11) {
       if (!event) return;
-      console.log("eventevent", event)
+      console.log("eventevent", event);
       NavigationService.navigate(SCREENS.ONEONE_SCREEN, event);
     } else {
       NavigationService.navigate(SCREENS.CALL_CLASS, {

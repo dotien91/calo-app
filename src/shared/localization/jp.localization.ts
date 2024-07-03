@@ -387,6 +387,8 @@ export default {
     at: "時",
   },
   course: {
+    requestBuyCourse: "すべてのビデオを見るためにコースを購入してください",
+    isPreview: "プレビュー",
     warningPrice: "コースの価格を選択してください",
     referUserGuideHere: "使用ガイドはこちらを参照してください",
     publicMode: "公開モード",
@@ -401,6 +403,8 @@ export default {
     course: "コース",
     add: "追加",
     maxLesson: (num: string | number) => `最大授業数は${num}回です。`,
+    warningSelectLesson: (num: string | number) =>
+      `${num}回のセッションを選択してください`,
     emptyLesson: "先生はその日の予定がいっぱいです。",
     call11With: (type: "teacher" | "student", name: string) =>
       `${name}と1対1の${type === "student" ? "生徒" : "先生"}通話`,
@@ -665,6 +669,8 @@ export default {
     gamification: "ゲーミフィケーション",
     links: "リンク",
     linksInvite: "招待リンク",
+    reject: "拒否",
+    paid: "支払済み",
     billing: "支払い",
     pending: "保留",
     block: "ブロック",
@@ -1081,6 +1087,8 @@ export default {
     copyCodeSuccsess: "コードのコピーに成功",
     activate: "アクティベート",
     goTo: "移動",
+    referrerCode: "紹介コード",
+    referrerList: "紹介者リスト",
   },
   mentor: {
     user: "ユーザー",
@@ -1685,6 +1693,7 @@ export default {
       "ミッションを完了し、スキルを向上させてポイントとレベルを上げます。",
   },
   affiliate: {
+    currentlyAvailable: "現在利用可能",
     shareCode: "コードを共有",
     saleNow: "今すぐ販売",
     saleCourse: "販売", // Hanbai
@@ -1703,7 +1712,7 @@ export default {
     emptyTransaction: "トランザクションリストは空です",
     fromDate: "開始日",
     toDate: "終了日",
-    commission: "手数料",
+    commission: "レヴェヌア",
     commissionSale: "販売手数料: 20%",
     desCommission:
       "あなたが紹介したユーザーがコースを購入すると、コースの20%の手数料を受け取ります。例えば、コースの価格が10,000,000 VNDの場合、ユーザーがコースを成功裏に購入すると2,000,000 VNDを受け取ります！",
@@ -1726,6 +1735,8 @@ export default {
     totalCoin: "合計コイン",
     emptyProduct: "製品リストは空です",
     emptyUser: "ユーザーリストは空です",
+    filter: "フィルターする",
+    money: "お金",
   },
   emptyList: "リストは空です",
   emptyCalendar: "空のカレンダー",

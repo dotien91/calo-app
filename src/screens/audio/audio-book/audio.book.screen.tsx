@@ -37,9 +37,16 @@ const AudioBookScreen = () => {
 
   const [showMore, setShowMore] = React.useState(false);
 
+  const onPress = () => {
+    navigate(SCREENS.AUDIO_FILTER);
+  };
   return (
     <SafeAreaView style={CS.safeAreaView}>
-      <Header text={translations.audio.audioBook} />
+      <Header
+        text={translations.audio.audioBook}
+        iconNameRight="search"
+        onPressRight={onPress}
+      />
       <AudioList />
       {isLoggedIn() && isTeacher && (
         <>

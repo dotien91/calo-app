@@ -113,6 +113,7 @@ import CreateCertificateScreen from "@screens/user-profile/manage-certificate/cr
 import TeacherScreen from "@screens/profile.screen/ikiCoachTeacher.screen";
 import MyAudioScreen from "@screens/audio/my-audio/my.audio.screen";
 import AllCreatorScreen from "@screens/audio/all.creator.screen";
+import AudioFilterResultScreen from "@screens/audio/audio-filter-result/audio.filter.result.screen";
 // import CreateSubscriptionScreen from "@screens/profile.screen/create-subscription.tsx/create.subscription.screen";
 
 export const DiscoveryStackData = [
@@ -327,6 +328,7 @@ export const CommonStackData = [
     name: SCREENS.AUDIO_PLAY,
     screen: AudioPlayScreen,
   },
+  { name: SCREENS.AUDIO_FILTER, screen: AudioFilterResultScreen },
   {
     name: SCREENS.LIVESTREAM_PREVIEW,
     screen: LiveStreamPreviewScreem,

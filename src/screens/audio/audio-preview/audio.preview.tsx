@@ -84,6 +84,9 @@ const AudioPreview = () => {
       GetPodCastDetail(id).then((res) => {
         if (!res.isError) {
           setTrack(res.data);
+          if (res.data.attach_files.length == 0) {
+            setDuration(0);
+          }
           const whoosh = new Sound(
             res.data?.attach_files[0].media_url,
             "",
@@ -133,7 +136,7 @@ const AudioPreview = () => {
     return (
       <View style={styles.categoryContainer}>
         <ItemCategory
-          title={track?.podcast_category.category_title || " "}
+          title={track?.podcast_category?.category_title || " "}
           des={translations.podcast.category}
         />
         <ItemCategory
@@ -292,14 +295,16 @@ const AudioPreview = () => {
           </View>
         </View>
         {renderCategory()}
-        <View style={styles.viewBtn}>
-          <TouchableOpacity style={styles.btnPlay} onPress={playAudio}>
-            <IconSvg name="icHeadphone" size={20} color={palette.black} />
-            <Text style={styles.txtListen}>
-              {translations.podcast.listenNow}
-            </Text>
-          </TouchableOpacity>
-        </View>
+        {data?.attach_files.length > 0 && (
+          <View style={styles.viewBtn}>
+            <TouchableOpacity style={styles.btnPlay} onPress={playAudio}>
+              <IconSvg name="icHeadphone" size={20} color={palette.black} />
+              <Text style={styles.txtListen}>
+                {translations.podcast.listenNow}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        )}
         <View style={styles.viewDes}>
           <Text style={[CS.hnBold, { color: palette.white }]}>
             {translations.podcast.description}
@@ -344,11 +349,12 @@ const AudioPreview = () => {
     return (
       <AudioItemList
         isSliderItem
+        isParent={true}
         data={item}
         key={index}
-        style={{ backgroundColor: "#00000030" }}
+        style={{ backgroundColor: "#00000000" }}
         colorText={palette.white8}
-        borderColorPlay={palette.primary}
+        // borderColorPlay={palette.primary}
       />
     );
   };

@@ -28,6 +28,7 @@ interface CourseItemProps {
   isSliderItem?: boolean;
   style?: ViewStyle;
   data: ICourseItem;
+  fromHome?: boolean;
 }
 
 const CourseItem = ({
@@ -35,6 +36,7 @@ const CourseItem = ({
   isHorizontalStyle,
   style,
   data,
+  fromHome
 }: CourseItemProps) => {
   const {
     _id,
@@ -49,7 +51,7 @@ const CourseItem = ({
     public_status,
   } = data;
   const userData = useStore((state) => state.userData);
-  let widthImage = Device.width - 32;
+  let widthImage = fromHome ? Device.width - 20 : Device.width - 32;
   if (isHorizontalStyle) {
     widthImage = widthImage / 1.5;
   }
@@ -165,7 +167,17 @@ const CourseItem = ({
           }}
         >
           <TouchableOpacity
-            style={{
+            style={
+            fromHome ?{
+              width: widthImage,
+              backgroundColor: palette.yellow20,
+              ...CS.center,
+              borderRadius: 8,
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 4,
+            }: {
               flex: 1,
               backgroundColor: palette.yellow20,
               ...CS.center,
@@ -238,7 +250,7 @@ const CourseItem = ({
       onPress={openPreviewCourse}
       style={[
         styles.courseItem,
-        isSliderItem && { padding: 0, width: widthImage, marginRight: 16 },
+        isSliderItem && !fromHome && { padding: 0, width: widthImage, marginRight: 16 },
         style ? style : {},
       ]}
     >

@@ -62,6 +62,7 @@ import {
   EnumModalContentType,
   EnumStyleModalType,
   showSuperModal,
+  showToast,
 } from "@helpers/super.modal.helper";
 
 const servers = {
@@ -96,7 +97,11 @@ const OneOneRtcView: React.FC<OneOneRtcViewProps> = () => {
 
   const leaveOneoneClient = () => {
     setRemoteStreams({});
-    alert(translations.leaving(event.partner_id?.display_name));
+    // alert(translations.leaving(event.partner_id?.display_name));
+    showToast({
+      type: "info",
+      message: translations.leaving(event.partner_id?.display_name),
+    });
   };
   useEffect(() => {
     if (!userData) return;
@@ -605,7 +610,7 @@ const OneOneRtcView: React.FC<OneOneRtcViewProps> = () => {
       },
     });
   };
-console.log("eventeventevent", event)
+  console.log("eventeventevent", event);
   return (
     <>
       <ClassOneOneRoomTopView switchCamera={switchCamera} data={event} />
@@ -633,7 +638,10 @@ console.log("eventeventevent", event)
           ) : (
             <ImageLoad
               source={{
-                uri: userData?.user_avatar_thumbnail || userData?.user_avatar || "",
+                uri:
+                  userData?.user_avatar_thumbnail ||
+                  userData?.user_avatar ||
+                  "",
               }}
               width={"100%"}
               height={"100%"}
@@ -661,7 +669,10 @@ console.log("eventeventevent", event)
           ) : (
             <ImageLoad
               source={{
-                uri: event?.partner_id?.user_avatar_thumbnail || event?.partner_id?.user_avatar || "",
+                uri:
+                  event?.partner_id?.user_avatar_thumbnail ||
+                  event?.partner_id?.user_avatar ||
+                  "",
               }}
               width={Device.width}
               height={Device.height / 2}

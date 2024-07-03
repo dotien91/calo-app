@@ -110,11 +110,12 @@ const styles = StyleSheet.create({
     // flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    borderColor: palette.mainColor2,
+    borderColor: palette.borderColor,
     height: 48,
     width: 48,
-    // borderWidth: 1,
+    borderWidth: 1,
     borderRadius: 10,
+    gap: 0,
   },
 });
 

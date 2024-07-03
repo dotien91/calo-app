@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TextInput, StyleSheet, SafeAreaView } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  SafeAreaView,
+  Switch,
+} from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import { useRoute } from "@react-navigation/native";
 
@@ -17,6 +24,8 @@ import Header from "@shared-components/header/Header";
 import { addModuleToCourse, updateModule } from "@services/api/course.api";
 import eventEmitter from "@services/event-emitter";
 import SelectFileHook from "./components/select.file";
+import TextBase from "@shared-components/TextBase";
+import { EnumColors } from "models";
 
 const CourseAddModuleScreen = () => {
   const route = useRoute();
@@ -26,6 +35,7 @@ const CourseAddModuleScreen = () => {
   const data = route.params?.["data"];
   const [title, setTitle] = useState("");
   const [idUpdate, setIdUpdate] = useState("");
+  const [isPreview, setIsPreview] = useState(data?.is_preview || false);
   const { idVideo, renderSelectVideo, updatingVid } = SelectVideoHook({
     id: data?.media_id?._id || "",
     link: data?.media_id?.media_thumbnail || "",
@@ -77,7 +87,8 @@ const CourseAddModuleScreen = () => {
           const dataPost = {
             course_id: course_id,
             parent_id: parent_id,
-            media_id: idVideo || idFile,
+            is_preview: isPreview,
+            media_id: idVideo || idFile || "",
             type: type === "file" ? "file" : "video",
             title: title,
           };
@@ -201,6 +212,30 @@ const CourseAddModuleScreen = () => {
         )}
         {parent_id &&
           (type === "file" ? renderSelectFile() : renderSelectVideo())}
+        {parent_id && type !== "file" && (
+          <View style={styles.viewTitle}>
+            <TextBase
+              fontSize={16}
+              fontWeight="500"
+              color={EnumColors.text}
+              style={{
+                flex: 1,
+              }}
+            >
+              {translations.course.isPreview}
+            </TextBase>
+            <Switch
+              trackColor={{
+                false: palette.btnInactive,
+                true: palette.lightBlue,
+              }}
+              value={isPreview}
+              onChange={() => {
+                setIsPreview(!isPreview);
+              }}
+            />
+          </View>
+        )}
         <Button
           style={styles.styleBtn}
           onPress={_createPart}
@@ -235,6 +270,10 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingHorizontal: 16,
+  },
+  viewTitle: {
+    ...CS.row,
+    marginTop: 8,
   },
 });
 

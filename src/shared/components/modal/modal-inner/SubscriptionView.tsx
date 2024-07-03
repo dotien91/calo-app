@@ -12,6 +12,7 @@ import SubscriptionBtn from "@screens/home/components/subscription-btn/Subscript
 import { translations } from "@localization";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { EnumColors } from "models";
+import CS from "@theme/styles";
 
 const SubscriptionView = () => {
   const extraUserData = useStore((state) => state.extraUserData);
@@ -24,6 +25,9 @@ const SubscriptionView = () => {
 
   const onPressPolicy = () => {
     OpenURLButton("https://guides.ikigai.vn/privacy-policy");
+  };
+  const onPressTermOfUs = () => {
+    OpenURLButton("https://guides.ikigai.vn/term-and-conditions");
   };
   return (
     <ScrollView
@@ -64,14 +68,24 @@ const SubscriptionView = () => {
           style={{ textAlign: "center" }}
           color={EnumColors.textOpacity4}
         />
-        <PressableBtn onPress={onPressPolicy}>
-          <TextBase
-            title={translations.aboutUs.privacy}
-            fontSize={12}
-            style={styles.policy}
-            color={EnumColors.textOpacity4}
-          />
-        </PressableBtn>
+        <View style={styles.viewTerm}>
+          <PressableBtn onPress={onPressPolicy}>
+            <TextBase
+              title={translations.aboutUs.privacy}
+              fontSize={12}
+              style={styles.policy}
+              color={EnumColors.textOpacity4}
+            />
+          </PressableBtn>
+          <PressableBtn onPress={onPressTermOfUs}>
+            <TextBase
+              title={translations.aboutUs.termofus}
+              fontSize={12}
+              style={styles.policy}
+              color={EnumColors.textOpacity4}
+            />
+          </PressableBtn>
+        </View>
       </View>
     </ScrollView>
   );
@@ -87,6 +101,10 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
     textAlign: "center",
     marginTop: 12,
+  },
+  viewTerm: {
+    ...CS.row,
+    gap: 8,
   },
 });
 

@@ -148,7 +148,7 @@ const ListCodeActive = () => {
     <View style={{ marginVertical: 16 }}>
       <ItemCodeActive
         icon="iconBookNote"
-        title={translations.codeActivations.header}
+        title={translations.codeActivations.referrerList}
         backgroundIcon={palette.lightBlue}
         onPress={pressCodeActivations}
         count={referralByMe?.length}
