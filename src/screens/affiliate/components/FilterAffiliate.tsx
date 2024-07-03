@@ -90,10 +90,11 @@ const FilterAffiliate = ({ data }: FilterAffiliateProps) => {
         fontWeight="600"
         style={{ marginTop: 10 }}
         color={EnumColors.text}
-      >{`${translations.course.sortBy} ${
-        data?.type === "date"
-          ? translations.affiliate.date.toLocaleLowerCase()
-          : data?.type === "product"
+      >{data?.type === "date"
+          ? `${translations.affiliate.filter} ${translations.affiliate.date.toLocaleLowerCase()}`
+          :
+          `${translations.course.sortBy} ${
+       data?.type === "product"
           ? translations.affiliate.product.toLocaleLowerCase()
           : data?.type === "user"
           ? translations.affiliate.user.toLocaleLowerCase()

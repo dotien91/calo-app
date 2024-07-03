@@ -65,6 +65,7 @@ const FirstRoute = () => {
     limit: 5,
     auth_id: userData?._id || "",
     user_id: userData?._id,
+    order_by:"DESC"
   };
   const {
     listData,
@@ -194,6 +195,7 @@ const ThirdRoute = () => {
     limit: 5,
     auth_id: userData?._id || "",
     user_id: userData?._id || "",
+    order_by:"DESC"
   };
 
   const {
@@ -253,6 +255,8 @@ const ProfileUser = (props: ProfileUserProps) => {
     limit: 5,
     auth_id: userData?._id || "",
     user_id: _id,
+    order_by:"DESC"
+
   };
   const listRef = useRef(null);
 

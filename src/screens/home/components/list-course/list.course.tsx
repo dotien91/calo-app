@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import {FlatList, StyleSheet, View } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
 import { translations } from "@localization";
@@ -11,6 +11,7 @@ import useStore from "@services/zustand/store";
 import { getCourseSuggest } from "@services/api/course.api";
 import CourseCategoryTitle from "@screens/course-tab/course-list/course.category.title";
 import LoadingItem from "@shared-components/loading.item";
+import { ScreenWidth } from "@freakycoder/react-native-helpers";
 
 const CourseView = () => {
   const userData = useStore((state) => state.userData);
@@ -38,7 +39,13 @@ const CourseView = () => {
     } else {
       return (
         <>
-          <CourseItem isSliderItem data={item.item} key={index} />
+          <CourseItem
+          style={{
+            width: ScreenWidth,
+            
+          }}
+          fromHome
+          isSliderItem data={item.item} key={index} />
         </>
       );
     }
@@ -55,6 +62,7 @@ const CourseView = () => {
       />
       {isLoading && <LoadingItem />}
       <FlatList
+        pagingEnabled={true}
         horizontal
         showsHorizontalScrollIndicator={false}
         data={data}

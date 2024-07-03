@@ -1781,7 +1781,7 @@ export default {
     emptyTransaction: "Danh sách giao dịch trống",
     fromDate: "Từ ngày",
     toDate: "Đến ngày",
-    commission: "Hoa hồng",
+    commission: "Doanh thu",
     commissionSale: "Hoa hồng bán hàng: 20%",
     desCommission:
       "Khi người dùng bạn giới thiệu mua khoá học, bạn sẽ nhận được 20% hoa hồng của khoá học. Ví dụ khoá học có giá 10,000,000đ, bạn sẽ nhận được 2,000,000đ khi người dùng mua khoá học thành công!",
@@ -1804,6 +1804,7 @@ export default {
     totalCoin: "Tổng số coin",
     emptyProduct: "Danh sách sản phẩn trống",
     emptyUser: "Danh sách người dùng trống",
+    filter: "Lọc theo"
   },
   emptyList: "Danh sách trống",
   emptyCalendar: "Không có lịch",
