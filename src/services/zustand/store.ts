@@ -90,6 +90,7 @@ const useStore = create<StoreState>()(
                 "listFollow",
                 "listBlock",
                 "setIsMutedAll",
+                "typeFilter",
               ].includes(key),
           ),
         ),

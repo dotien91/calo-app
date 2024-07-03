@@ -1261,7 +1261,8 @@ export default {
     totalCoin: "Total Coin",
     emptyProduct: "Empty Product",
     emptyUser: "Empty user",
-    filter: "filter by"
+    filter: "filter by",
+    money: "Money"
   },
   emptyList: "Empty list",
   emptyCalendar: "Empty calendar",

@@ -1800,7 +1800,8 @@ export default {
     totalCoin: "Tổng số coin",
     emptyProduct: "Danh sách sản phẩn trống",
     emptyUser: "Danh sách người dùng trống",
-    filter: "Lọc theo"
+    filter: "Lọc theo",
+    money: "Tiền"
   },
   emptyList: "Danh sách trống",
   emptyCalendar: "Không có lịch",

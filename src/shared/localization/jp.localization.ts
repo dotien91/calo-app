@@ -1728,7 +1728,8 @@ export default {
     totalCoin: "合計コイン",
     emptyProduct: "製品リストは空です",
     emptyUser: "ユーザーリストは空です",
-    filter: "フィルターする"
+    filter: "フィルターする",
+    money: "お金"
   },
   emptyList: "リストは空です",
   emptyCalendar: "空のカレンダー",

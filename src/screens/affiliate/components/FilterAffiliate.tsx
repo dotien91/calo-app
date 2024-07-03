@@ -12,6 +12,7 @@ import { closeSuperModal } from "@helpers/super.modal.helper";
 import { EnumColors } from "models";
 import { palette } from "@theme/themes";
 import EmptyResultView from "@shared-components/empty.data.component";
+import SelectBox from "@shared-components/modal/modal-inner/SelectBox";
 
 interface dataType {
   listFilter?: any[];
@@ -19,6 +20,8 @@ interface dataType {
   listSelected?: string[];
   date?: any;
   cb: (list: any) => void;
+  defaultItem:  any;
+  options: any[]
 }
 interface FilterAffiliateProps {
   data: dataType;
@@ -93,7 +96,9 @@ const FilterAffiliate = ({ data }: FilterAffiliateProps) => {
       >{data?.type === "date"
           ? `${translations.affiliate.filter} ${translations.affiliate.date.toLocaleLowerCase()}`
           :
-          `${translations.course.sortBy} ${
+        data?.type === "money"
+          ? `${translations.affiliate.filter} ${translations.affiliate.money.toLocaleLowerCase()}`
+          :`${translations.course.sortBy} ${
        data?.type === "product"
           ? translations.affiliate.product.toLocaleLowerCase()
           : data?.type === "user"
@@ -182,6 +187,18 @@ const FilterAffiliate = ({ data }: FilterAffiliateProps) => {
             />
           </View>
         </>
+      )}
+      {data?.type === "money" && (
+        <View>
+          <SelectBox  defaultItem={data.defaultItem} options={data.options} callback={data.cb}/>
+          <Button
+              onPress={onPressReset}
+              text={translations.reset}
+              type={data.defaultItem.id? "primary": "disabled"}
+              style={CS.flex1}
+            />
+        </View>
+          
       )}
     </View>
   );

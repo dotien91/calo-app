@@ -45,6 +45,8 @@ const AffiliatePage = () => {
   const setType = useStore((state) => state.setType);
   const route = useRoute();
   const type = route?.params?.["type"] || undefined;
+  const typeFilter = useStore((state) => state.typeFilter);
+  const setTypeFilter = useStore((state) => state.setTypeFilter);
 
   const { getUserData } = useUserHook();
 
@@ -98,12 +100,16 @@ const AffiliatePage = () => {
       listSelected,
       cb,
       date,
+      defaultItem,
+      options
     }: {
       type: string;
       cb?: any;
       date?: any;
       listFilter?: any[];
       listSelected?: string[];
+      defaultItem?:  any,
+      options?: any[]
     }) => {
       showSuperModal({
         contentModalType: EnumModalContentType.FilterAffiliate,
@@ -114,6 +120,8 @@ const AffiliatePage = () => {
           listSelected: listSelected,
           cb: cb,
           date: date,
+          defaultItem: defaultItem,
+          options: options
         },
       });
     };
@@ -136,6 +144,19 @@ const AffiliatePage = () => {
     const sortByDate = () => {
       showFilter({ type: "date", cb: setDate, date: date });
     };
+    const sortByMoney = () =>{
+      showFilter({type: "money", cb: setTypeFilter, defaultItem: typeFilter, options:[
+      {
+        name: "VND",
+        id: "token"
+      },
+      {
+        name: "ICC",
+        id: "coin"
+      }
+    ]})
+    };
+    
     return (
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         <View style={styles.scrollHorizontal}>
@@ -149,6 +170,12 @@ const AffiliatePage = () => {
             badge={listCourseSelected.length}
             textPlaceholder={translations.affiliate.product}
             onPress={sortByProduct}
+          />
+          <ItemSortBy
+            text=""
+              // badge={listUserSelected.length}
+            textPlaceholder={translations.affiliate.money}
+            onPress={sortByMoney}
           />
           <ItemSortBy
             text=""
@@ -252,6 +279,7 @@ const FirstRoute = () => {
     getListAffiliate,
     [],
   );
+  console.log("lisData=============", listData)
   useEffect(() => {
     eventEmitter.on("refresh_list_affiliate", _requestData);
     return () => {

@@ -123,6 +123,8 @@ const CodeActivationsScreen = () => {
     data: ICourseItem;
   }) => {
     // console.log("data...", data);
+    const title = data?.ref_id?.title || data?.note;
+    const day = formatDate(data?.billing_on) || "";
     return (
       <Animatable.View duration={300} key={index} style={styles.viewCourse}>
         <ImageBackground
@@ -136,7 +138,7 @@ const CodeActivationsScreen = () => {
         </ImageBackground>
         <View style={CS.flex1}>
           <Text style={{ ...CS.hnMedium, color: colors.text }}>
-            {data?.note || ""}
+            {title}
           </Text>
           <Text style={styles.txtPriceCourse}>
             {data.transaction_value_type === "coin"
@@ -144,6 +146,9 @@ const CodeActivationsScreen = () => {
               : formatMoney(data?.transaction_value || 0, {
                   suffix: " đ",
                 })}
+          </Text>
+          <Text style={styles.txtPriceCourse}>
+            {day}
           </Text>
         </View>
       </Animatable.View>

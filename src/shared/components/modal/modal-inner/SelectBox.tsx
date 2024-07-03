@@ -14,7 +14,7 @@ interface IItem {
   id: string;
   _id?: string;
   order_by?: string;
-  iconImg: string;
+  iconImg?: string;
 }
 
 interface SelectBoxProps {
