@@ -30,6 +30,7 @@ import { deleteUserById } from "@services/api/user.api";
 import { SafeAreaView } from "react-native-safe-area-context";
 import IconSvg from "assets/svg";
 import { palette } from "@theme/themes";
+import eventEmitter from "@services/event-emitter";
 
 interface SettingScreenProps {}
 
@@ -62,6 +63,18 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
       iconName: "icBookFull",
       action: () => {
         NavigationService.navigate(SCREENS.TEACHER_COURSES);
+      },
+    },
+    {
+      title: translations.purchase.restore,
+      id: 1,
+      iconName: "icBookFull",
+      action: () => {
+        eventEmitter.emit("get_avaiable_purchase");
+        showSuperModal({
+          contentModalType: EnumModalContentType.Loading,
+          styleModalType: EnumStyleModalType.Middle,
+        });
       },
     },
     {
@@ -278,11 +291,13 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
                 ></Icon>
               </TouchableOpacity>
             </View>
-            <TouchableOpacity onPress={() => {
-                  NavigationService.navigate(SCREENS.PROFILE_CURRENT_USER, {
-                    _id: userData?._id,
-                  });
-                }}>
+            <TouchableOpacity
+              onPress={() => {
+                NavigationService.navigate(SCREENS.PROFILE_CURRENT_USER, {
+                  _id: userData?._id,
+                });
+              }}
+            >
               <Text
                 numberOfLines={1}
                 style={{

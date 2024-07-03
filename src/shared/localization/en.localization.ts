@@ -1006,6 +1006,7 @@ export default {
     inputTitle: "Input title for livestream",
   },
   purchase: {
+    restore: "Restore purchase",
     headerBookLesson: "Book lesson",
     headerChooseClass: "Choose a class",
 

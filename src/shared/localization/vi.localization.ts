@@ -1543,6 +1543,7 @@ export default {
     inputTitle: "Nhập tiêu đề cho phiên livestream",
   },
   purchase: {
+    restore: "Khôi phục thanh toán",
     headerBookLesson: "Đặt lịch học",
     headerChooseClass: "Chọn lớp",
 

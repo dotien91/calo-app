@@ -1472,6 +1472,7 @@ export default {
     inputTitle: "ライブストリームのタイトルを入力",
   },
   purchase: {
+    restore: "復元する",
     headerBookLesson: "レッスンを予約",
     headerChooseClass: "クラスを選択",
     timeDuration: "学習時間",
