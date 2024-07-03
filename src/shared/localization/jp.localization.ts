@@ -387,6 +387,8 @@ export default {
     at: "時",
   },
   course: {
+    requestBuyCourse: "すべてのビデオを見るためにコースを購入してください",
+    isPreview: "プレビュー",
     warningPrice: "コースの価格を選択してください",
     referUserGuideHere: "使用ガイドはこちらを参照してください",
     publicMode: "公開モード",
@@ -401,6 +403,8 @@ export default {
     course: "コース",
     add: "追加",
     maxLesson: (num: string | number) => `最大授業数は${num}回です。`,
+    warningSelectLesson: (num: string | number) =>
+      `${num}回のセッションを選択してください`,
     emptyLesson: "先生はその日の予定がいっぱいです。",
     call11With: (type: "teacher" | "student", name: string) =>
       `${name}と1対1の${type === "student" ? "生徒" : "先生"}通話`,

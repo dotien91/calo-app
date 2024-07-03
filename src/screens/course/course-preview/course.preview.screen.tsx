@@ -219,6 +219,22 @@ const CoursePreviewScreen = () => {
         course_id: course_id,
         isTeacher: data?.user_id._id && data?.user_id._id === userData?._id,
       });
+    } else {
+      if (item?.is_preview) {
+        showSuperModal({
+          contentModalType: EnumModalContentType.Library,
+          styleModalType: EnumStyleModalType.Middle,
+          data: {
+            listMedia: [item?.media_id],
+            index: 0,
+          },
+        });
+      } else {
+        showToast({
+          message: translations.course.requestBuyCourse,
+          type: "info",
+        });
+      }
     }
   };
   const _gotoEdit = () => {
@@ -392,7 +408,7 @@ const CoursePreviewScreen = () => {
         />
         {data?.type === EnumClassType.SelfLearning && (
           <PartView
-            // isJoin={true}
+            isJoin={data.is_join}
             id={course_id}
             hide={tabSelected == 1}
             onPressItem={_pressItem}

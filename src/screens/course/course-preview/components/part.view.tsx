@@ -28,6 +28,7 @@ interface PartViewProps {
   isLearnScreen?: boolean;
   itemSelected?: any;
   courseData?: ICourseItem;
+  isJoin?: boolean;
 }
 
 const PartView = ({
@@ -36,7 +37,8 @@ const PartView = ({
   onPressItem,
   isLearnScreen,
   itemSelected,
-  setCurrentProgressData,
+  isJoin,
+  // setCurrentProgressData,
   courseData,
 }: // setSource
 PartViewProps) => {
@@ -62,7 +64,7 @@ PartViewProps) => {
     // console.log("watchingVideoswatchingVideos", currentProgressData)
 
     if (!currentProgressData) return;
-    setCurrentProgressData(currentProgressData);
+    // setCurrentProgressData(currentProgressData);
     console.log("currentProgressDatacurrentProgressData", currentProgressData);
     let findSourceByUrl = null;
     sectionList.some((element) => {
@@ -169,6 +171,7 @@ PartViewProps) => {
         <View key={i}>
           {section.children?.map((item, index) => (
             <Lession
+              isJoin={isJoin}
               key={item._id}
               index={index}
               data={item}
@@ -215,10 +218,18 @@ interface LessionProps {
   index: number;
   isLearnScreen?: boolean;
   itemSelected?: any;
+  isJoin?: boolean;
 }
 
 const Lession = React.memo(
-  ({ data, pressItem, index, isLearnScreen, itemSelected }: LessionProps) => {
+  ({
+    data,
+    pressItem,
+    index,
+    isLearnScreen,
+    itemSelected,
+    isJoin,
+  }: LessionProps) => {
     const media_duration =
       data?.media_id?.media_meta?.find((i) => i.key === "duration")?.value || 0;
     // const fileCourseLocal = useStore((state) => state.fileCourseLocal);
@@ -289,13 +300,15 @@ const Lession = React.memo(
             </Animatable.Text>
           )}
         </View>
-        {data.type === "video" && !isLearnScreen && (
-          <Icon
-            type={IconType.Ionicons}
-            name={"play-circle-outline"}
-            size={20}
-          />
-        )}
+        {data.type === "video" &&
+          !isLearnScreen &&
+          (data?.is_preview || isJoin) && (
+            <Icon
+              type={IconType.Ionicons}
+              name={"play-circle-outline"}
+              size={20}
+            />
+          )}
         {/* {data.type !== "video" && isLearnScreen && (
           <PressableBtn
             style={{
