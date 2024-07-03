@@ -43,11 +43,11 @@ export const useInAppPurchase = () => {
   const setExtraUserData = useStore((state) => state.setExtraUserData);
   const userData = useStore((state) => state.userData);
 
-  console.log("subscriptions22222", subscriptions);
 
   useEffect(() => {
     setExtraUserData({ subscriptions });
   }, [subscriptions]);
+  
 
   useEffect(() => {
     console.log("currentPurchase", currentPurchase);
@@ -58,11 +58,16 @@ export const useInAppPurchase = () => {
           (isIosStorekit2() && currentPurchase?.transactionId) ||
           currentPurchase?.transactionReceipt
         ) {
-          const currentProductPurchaseType = _getJson(
+          let currentProductPurchaseType = _getJson(
             "current_product_purchase_type",
           );
-          const currentProductType = _getJson("current_product_type");
+          let currentProductType = _getJson("current_product_type");
+            if (!currentProductType) {
+              currentProductType = (currentPurchase?.productId == "com.coach.podcasttest2" || currentPurchase?.productId == "com.coach.podcasttest3") ? "subscription" : "product"
+              currentProductPurchaseType = currentProductType
+            }
 
+            console.log("currentProductTypecurrentProductType", currentProductType)
           const paramsFinishTransaction = {
             purchase: currentPurchase,
             isConsumable: isIOS || currentProductPurchaseType == "product",
@@ -202,10 +207,12 @@ export const useInAppPurchase = () => {
         });
       }
       // await getAvailablePurchases();
+
     } catch (error) {
       console.log("error initIAP", error);
     }
   };
+  console.log("availablePurchases", availablePurchases)
 
   const createOrder = async (data) => {
     return createVnpayUrl(data).then(async (res) => {
