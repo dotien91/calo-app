@@ -61,7 +61,7 @@ const CourseItemProgessbar = ({
           fontSize: 14,
         }}
       >
-        {progress * 100}%
+        {Math.round(progress * 100)}%
       </Text>
     </View>
   );

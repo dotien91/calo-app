@@ -387,6 +387,8 @@ export default {
     at: "時",
   },
   course: {
+    requestBuyCourse: "すべてのビデオを見るためにコースを購入してください",
+    isPreview: "プレビュー",
     warningPrice: "コースの価格を選択してください",
     referUserGuideHere: "使用ガイドはこちらを参照してください",
     publicMode: "公開モード",

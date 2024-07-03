@@ -456,6 +456,8 @@ export default {
     at: "lúc",
   },
   course: {
+    requestBuyCourse: "Mua khoá học để xem đầy đủ các video",
+    isPreview: "Cho xem trước",
     warningPrice: "Vui lòng chọn giá khoá học",
     referUserGuideHere: "Tham khảo hướng dẫn sử dụng tại đây",
     publicMode: "Chế độ công khai",

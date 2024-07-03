@@ -388,6 +388,8 @@ export default {
     at: "at",
   },
   course: {
+    requestBuyCourse: "Buy the course to watch all videos",
+    isPreview: "Preview",
     warningPrice: "Please select a course price",
     referUserGuideHere: "Refer to the user guide here",
     publicMode: "Public mode",
