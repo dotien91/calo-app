@@ -618,6 +618,7 @@ export async function getPlanStudent() {
   return request({
     method: METHOD.GET,
     urlPath: "course/v2/plan-student",
+    params: {status: "success"}
   }).then((response) => {
     return response;
   });
@@ -627,6 +628,7 @@ export async function getPlanTeacher() {
   return request({
     method: METHOD.GET,
     urlPath: "course/v2/plan-teacher",
+    params: {status: "success"}
   }).then((response) => {
     return response;
   });

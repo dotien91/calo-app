@@ -45,6 +45,7 @@ export default (theme: ExtendedTheme) => {
       borderRadius: 8,
       paddingHorizontal: 16,
       paddingVertical: 12,
+      justifyContent: "space-between",
     },
     styleViewLine: {
       flex: 1,

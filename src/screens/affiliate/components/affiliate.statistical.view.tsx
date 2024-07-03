@@ -22,11 +22,12 @@ interface UserIncomeType {
   last_month?: ItemIncomeType;
   today?: ItemIncomeType;
   yesterday?: ItemIncomeType;
+  income?: ItemIncomeType;
 }
 const AffiliateStatisticalView = ({
   fromHomepage,
 }: {
-  fromHomepage: boolean;
+  fromHomepage?: boolean;
 }) => {
   const [userIncome, setUserIncome] = useState<UserIncomeType>();
   const userData = useStore((state) => state.userData);
@@ -87,14 +88,30 @@ const AffiliateStatisticalView = ({
             imageStyle={{ borderRadius: 8 }}
             style={[styles.styleImageBg2, fromHomepage && { height: 120 }]}
           >
-            <Text style={styles.txtToday}>{translations.affiliate.today}</Text>
-            <Text style={styles.txtCommissionToday}>
-              {type === "coin"
-                ? formatCoin(userIncome?.today?.total_coin || 0)
-                : formatMoney(userIncome?.today?.total_token, {
-                    suffix: " đ",
-                  })}
-            </Text>
+            <View>
+              <Text style={styles.txtToday}>
+                {translations.affiliate.today}
+              </Text>
+              <Text style={styles.txtCommissionToday}>
+                {type === "coin"
+                  ? formatCoin(userIncome?.today?.total_coin || 0)
+                  : formatMoney(userIncome?.today?.total_token, {
+                      suffix: " đ",
+                    })}
+              </Text>
+            </View>
+            <View>
+              <Text style={styles.txtToday}>
+                {translations.affiliate.yourIncome}
+              </Text>
+              <Text style={styles.txtCommissionToday}>
+                {type === "coin"
+                  ? formatCoin(userIncome?.income?.total_coin || 0)
+                  : formatMoney(userIncome?.income?.total_token, {
+                      suffix: " đ",
+                    })}
+              </Text>
+            </View>
           </ImageBackground>
         )}
       </View>

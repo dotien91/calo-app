@@ -635,6 +635,8 @@ export default {
     metrics: "Metrics",
     gamification: "Gamifications",
     links: "Links",
+    reject: "Reject",
+    paid: "Paid",
     billing: "Billing & referrals",
     pending: "Pending",
     block: "Block",
@@ -1225,6 +1227,7 @@ export default {
       "Earn more point and grow your level by doing tasks and improving your skill.",
   },
   affiliate: {
+    currentlyAvailable: "Currently available",
     shareCode: "Share code",
     saleNow: "Sale now",
     saleCourse: "Sales",
@@ -1267,7 +1270,7 @@ export default {
     emptyProduct: "Empty Product",
     emptyUser: "Empty user",
     filter: "filter by",
-    money: "Money"
+    money: "Money",
   },
   emptyList: "Empty list",
   emptyCalendar: "Empty calendar",

@@ -739,6 +739,8 @@ export default {
     gamification: "Trò chơi hóa",
     links: "Liên kết",
     linksInvite: "Liên kết giới thiệu",
+    reject: "Từ chối",
+    paid: "Đã thanh toán",
     billing: "Thanh toán ",
     pending: "Đang chờ",
     block: "Khóa",
@@ -1764,6 +1766,7 @@ export default {
       "Nhận thêm điểm và thăng cấp bằng cách làm nhiêm vụ và cải thiện các kỹ năng của bạn.",
   },
   affiliate: {
+    currentlyAvailable: "Hiện tại đang có",
     shareCode: "Chia sẻ mã",
     saleNow: "Bán ngay",
     saleCourse: "Bán hàng",
@@ -1806,7 +1809,7 @@ export default {
     emptyProduct: "Danh sách sản phẩn trống",
     emptyUser: "Danh sách người dùng trống",
     filter: "Lọc theo",
-    money: "Tiền"
+    money: "Tiền",
   },
   emptyList: "Danh sách trống",
   emptyCalendar: "Không có lịch",

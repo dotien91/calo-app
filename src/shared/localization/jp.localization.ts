@@ -669,6 +669,8 @@ export default {
     gamification: "ゲーミフィケーション",
     links: "リンク",
     linksInvite: "招待リンク",
+    reject: "拒否",
+    paid: "支払済み",
     billing: "支払い",
     pending: "保留",
     block: "ブロック",
@@ -1692,6 +1694,7 @@ export default {
       "ミッションを完了し、スキルを向上させてポイントとレベルを上げます。",
   },
   affiliate: {
+    currentlyAvailable: "現在利用可能",
     shareCode: "コードを共有",
     saleNow: "今すぐ販売",
     saleCourse: "販売", // Hanbai
@@ -1734,7 +1737,7 @@ export default {
     emptyProduct: "製品リストは空です",
     emptyUser: "ユーザーリストは空です",
     filter: "フィルターする",
-    money: "お金"
+    money: "お金",
   },
   emptyList: "リストは空です",
   emptyCalendar: "空のカレンダー",

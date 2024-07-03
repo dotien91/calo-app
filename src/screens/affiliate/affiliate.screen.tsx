@@ -101,15 +101,15 @@ const AffiliatePage = () => {
       cb,
       date,
       defaultItem,
-      options
+      options,
     }: {
       type: string;
       cb?: any;
       date?: any;
       listFilter?: any[];
       listSelected?: string[];
-      defaultItem?:  any,
-      options?: any[]
+      defaultItem?: any;
+      options?: any[];
     }) => {
       showSuperModal({
         contentModalType: EnumModalContentType.FilterAffiliate,
@@ -121,7 +121,7 @@ const AffiliatePage = () => {
           cb: cb,
           date: date,
           defaultItem: defaultItem,
-          options: options
+          options: options,
         },
       });
     };
@@ -144,19 +144,24 @@ const AffiliatePage = () => {
     const sortByDate = () => {
       showFilter({ type: "date", cb: setDate, date: date });
     };
-    const sortByMoney = () =>{
-      showFilter({type: "money", cb: setTypeFilter, defaultItem: typeFilter, options:[
-      {
-        name: "VND",
-        id: "token"
-      },
-      {
-        name: "ICC",
-        id: "coin"
-      }
-    ]})
+    const sortByMoney = () => {
+      showFilter({
+        type: "money",
+        cb: setTypeFilter,
+        defaultItem: typeFilter,
+        options: [
+          {
+            name: "VND",
+            id: "token",
+          },
+          {
+            name: "ICC",
+            id: "coin",
+          },
+        ],
+      });
     };
-    
+
     return (
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         <View style={styles.scrollHorizontal}>
@@ -172,8 +177,8 @@ const AffiliatePage = () => {
             onPress={sortByProduct}
           />
           <ItemSortBy
-            text=""
-              // badge={listUserSelected.length}
+            text={typeFilter.name || ""}
+            // badge={listUserSelected.length}
             textPlaceholder={translations.affiliate.money}
             onPress={sortByMoney}
           />
@@ -256,6 +261,7 @@ const FirstRoute = () => {
   const date = useStore((state) => state.dateFilter);
   const listCourseSelected = useStore((state) => state.listCourseSelected);
   const listUserSelected = useStore((state) => state.listUserSelected);
+  const typeFilter = useStore((state) => state.typeFilter);
 
   const {
     listData,
@@ -275,11 +281,12 @@ const FirstRoute = () => {
       to: date.to,
       from_user_ids: listUserSelected.toString(),
       ref_ids: listCourseSelected.toString(),
+      type: typeFilter.id || "",
     },
     getListAffiliate,
     [],
   );
-  console.log("lisData=============", listData)
+  console.log("lisData=============", listData);
   useEffect(() => {
     eventEmitter.on("refresh_list_affiliate", _requestData);
     return () => {
