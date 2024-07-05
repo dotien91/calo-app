@@ -241,9 +241,9 @@ export default {
     uploadImageFaild: "Tải ảnh lên thất bại. Vui lòng thử lại!",
     uploadVideoFaild: "Tải video lên thất bại. Vui lòng thử lại!",
     sharePost:
-      "Tham gia cộng đồng IKIGAI Coach ngay hôm nay và nhận thưởng lên tới 1000 Point",
+      "Tham gia cộng đồng IELTS Hunter ngay hôm nay và nhận thưởng lên tới 1000 Point",
     shareCode: (txt: string) =>
-      `Tham gia cộng đồng IKIGAI Coach cùng tớ để nhận thưởng lên tới 10000 Point nhé, truy cập "${txt}" để nhận thưởng.`,
+      `Tham gia cộng đồng IELTS Hunter cùng tớ để nhận thưởng lên tới 10000 Point nhé, truy cập "${txt}" để nhận thưởng.`,
   },
   navigation: {
     dashboard: "Trang chủ",
@@ -700,7 +700,7 @@ export default {
     durationCall11: "Thời lượng buổi học",
     lessionCount: "Số buổi học",
     messagePublic:
-      "Khi bạn chọn công khai khóa học, trước khi hiển thị khóa học sẽ được đội ngũ Admin của Ikigai Coach kiểm duyệt, thời gian duyệt khóa học không quá một ngày làm việc.",
+      "Khi bạn chọn công khai khóa học, trước khi hiển thị khóa học sẽ được đội ngũ Admin của IELTS Hunter kiểm duyệt, thời gian duyệt khóa học không quá một ngày làm việc.",
     draft: "Bản nháp",
     public: "Công khai",
   },
@@ -1534,7 +1534,7 @@ export default {
     isFirst: "Đã ở đầu danh sách",
     isLast: "Đã ở cuối danh sách",
     shareAudio: (txt: string) =>
-      `Tải ngay ứng dụng IKIGAI Coach về để nghe những bản podcast hay nhất: ${txt}`,
+      `Tải ngay ứng dụng IELTS Hunter về để nghe những bản podcast hay nhất: ${txt}`,
     listened: "Đã nghe",
     watched: "Tiếp tục nghe podcast"
   },
@@ -1602,7 +1602,7 @@ export default {
     space: "Đơn vị khoảng cách",
     deletecache: "Xoá bộ nhớ đệm",
     noti: "Thông báo",
-    hidden: "Tạm ẩn tôi khỏi Ikigai Coach",
+    hidden: "Tạm ẩn tôi khỏi IELTS Hunter",
     block: "Chặn tin nhắn từ người lạ",
     blackList: "Danh sách đen",
     setting: "Cài đặt",
@@ -1642,7 +1642,7 @@ export default {
     descriptionTitle: "Khám phá các tính năng",
   },
   recommendCourse: "Đề xuất khoá học",
-  ieltsHunterLive: "IKIGAI Coach Live",
+  ieltsHunterLive: "IELTS Hunter Live",
   nameTutor: (name: string) => `Khoá học của ${name}`,
   titleLive: "Lớp viết IELTS của Nguyễn Trung Kiên",
   titleName: "IELTS Nghe [MASTERCLASS]: Đạt Band 7+ vào năm 2024",
@@ -1744,7 +1744,7 @@ export default {
       "Khám phá khóa học về khởi nghiệp, tiếp thị và quản lý. Nâng cao kỹ năng của bạn và phát triển trong thế giới kinh doanh",
     text51: "Chăm Sóc Sức Khỏe Của Bạn Bất Cứ Lúc Nào, Bất Cứ Nơi Đâu",
     text52:
-      "Khám phá các khóa học sức khỏe hàng đầu trong IKIGAI Coach. Đây là nơi bạn có thể tự quản lý sức khỏe và phát triển bản thân",
+      "Khám phá các khóa học sức khỏe hàng đầu trong IELTS Hunter. Đây là nơi bạn có thể tự quản lý sức khỏe và phát triển bản thân",
   },
   discover: {
     study: "Học",
@@ -1801,7 +1801,7 @@ export default {
     description3:
       "). Ví dụ: Nếu thành viên giới thiệu mua khóa học có giá 1.000.000 đồng → Hoa hồng nhận được: 80.000 đồng → 80 ",
     whyJoin: "Tại sao nên tham gia Tiếp thị liên kết?",
-    text1: "Tăng thêm thu nhập từ việc bán hàng cùng IKIGAI COACH",
+    text1: "Tăng thêm thu nhập từ việc bán hàng cùng IELTS Hunter",
     text2: "Tiền được cộng ngay khi khách hàng mua khoá học",
     text3: "Quản lý doanh thu theo thời gian thực",
     text4: "Rút tiền về tài khoản ngân hàng",
@@ -1976,7 +1976,7 @@ export default {
     orientation: "Định hướng",
     health: "Sức khỏe",
     charity: "Từ thiện",
-    title2: "Bạn muốn sử dụng IKIGAI Coach để làm gì?",
+    title2: "Bạn muốn sử dụng IELTS Hunter để làm gì?",
     des: "Chúng tôi cần biết điều này vì lý do quy định. Và cũng vì chúng tôi tò mò!",
     lifeCoaching: "Huấn luyện cuộc sống",
     personalDevelopment: "Phát triển cá nhân",
@@ -1994,7 +1994,7 @@ export default {
     entre: "Khởi nghiệp",
     leaderSkill: "Kỹ năng lãnh đạo",
     workLife: "Cân bằng giữa công việc và cuộc sống",
-    title3: "Bạn đến với IKIGAI Coach vì lý do gì?",
+    title3: "Bạn đến với IELTS Hunter vì lý do gì?",
     seeking: "Tìm kiếm sự cân bằng",
     expl: "Khám phá mục đích",
     needing: "Cần sự hỗ trợ",
@@ -2063,10 +2063,10 @@ export default {
       "Đăng ký sẽ được tính phí thông qua tài khoản iTunes của bạn. Đăng ký của bạn sẽ tự động được gia hạn trừ khi bạn hủy đăng ký trong vòng 24 giờ trước khi kết thúc thời hạn đăng ký hiện tại trong cài đặt iTunes Store của bạn. Để trở thành thành viên có nghĩa là bạn đồng ý với các điều khoản và thỏa thuận sau đây.",
     des2Android:
       "Đăng ký sẽ được tính phí thông qua tài khoản Google Play của bạn. Đăng ký của bạn sẽ tự động được gia hạn trừ khi bạn hủy đăng ký trong vòng 24 giờ trước khi kết thúc thời hạn đăng ký hiện tại trong cài đặt Google Play Store của bạn. Để trở thành thành viên có nghĩa là bạn đồng ý với các điều khoản và thỏa thuận sau đây.",
-    des3: "Thời hạn dịch vụ giá trị gia tăng của Ikigai Coach Chính sách quyền riêng tư Thời hạn gia hạn đăng ký tự động",
+    des3: "Thời hạn dịch vụ giá trị gia tăng của IELTS Hunter Chính sách quyền riêng tư Thời hạn gia hạn đăng ký tự động",
     error: "Lỗi",
     getServiceFail: "Lấy dịch vụ thất bại",
-    whiteGPro: "Ikigai Coach PREMIUM",
+    whiteGPro: "IELTS Hunter PREMIUM",
     proDes:
       "Nâng cấp lên PREMIUM để có giao diện, nhắn tin và gọi điện không giới hạn, bật chế độ du lịch và xem những người thích mình!",
     getPro: "Nâng cấp Premium",

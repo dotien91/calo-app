@@ -4,12 +4,12 @@
 <dict>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
-		<string>com.ikigroup.ikicoach</string>
+		<string>com.ikigroup.ieltshunter</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Ikigai Coach</string>
+	<string>IELTS Hunter</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -86,15 +86,15 @@
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Play using while you are learning</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Ikigai Coach need to take a look at your camera, to put the photo up as a social asset for other users to see</string>
+	<string>IELTS Hunter need to take a look at your camera, to put the photo up as a social asset for other users to see</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Ikigai Coach need to take a look at your microphone, to put the photo up as a social asset for other users to see</string>
+	<string>IELTS Hunter need to take a look at your microphone, to put the photo up as a social asset for other users to see</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Ikigai Coach need to take a look at your photo album, to put the photo up as a social asset for other users to see</string>
+	<string>IELTS Hunter need to take a look at your photo album, to put the photo up as a social asset for other users to see</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Ikigai Coach need to take a look at your photo album, to put the photo up as a social asset for other users to see</string>
+	<string>IELTS Hunter need to take a look at your photo album, to put the photo up as a social asset for other users to see</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>

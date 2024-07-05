@@ -850,7 +850,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ikigroup.ikicoach;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ikigroup.ieltshunter;
 				PRODUCT_NAME = "Ikigai Coach";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1015,7 +1015,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ikigroup.ikicoach;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ikigroup.ieltshunter;
 				PRODUCT_NAME = "Ikigai Coach";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;

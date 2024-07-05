@@ -9,30 +9,28 @@ const ReadDinamicLink = () => {
   useEffect(() => {
     const handleDynamicLink = async () => {
       const link: string = await dynamicLinks().getInitialLink();
+      console.log(link);
       if (link) {
         // Handle the initial link
         // navigate(link.url);
-        console.log("link...", link);
         const code = link
-          .replace("https://ikigai.vn/", "")
-          .replace("https://ikigaicoach.net/", "")
-          .replace("&isi=6484263984&ibi=com.ikigroup.ikicoach", "");
-        console.log(code);
+          .replace("https://ieltshunter.io/", "")
+          .replace("&isi=6478486893&ibi=com.ikigroup.ieltshunterpro", "");
         if (codeInvite === "") {
           setCodeInvite(code);
+          console.log(code);
         }
       }
 
       const unsubscribe = dynamicLinks().onLink(({ url }) => {
         if (url) {
           // navigate(url);
-          console.log("url 2...", url);
-          const code = url
-            .replace("https://ikigai.vn/", "")
-            .replace("https://ikigaicoach.net/", "");
-          console.log(code);
+          const code = url.replace("https://ieltshunter.io/", "");
+          console.log(url);
+
           if (codeInvite === "") {
             setCodeInvite(code);
+            console.log(code);
           }
         }
       });

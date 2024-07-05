@@ -233,9 +233,9 @@ export default {
     uploadImageFaild: "Image upload failed. Please try again!",
     uploadVideoFaild: "Video upload failed. Please try again!",
     sharePost:
-      "Join the IKIGAI Coach community today and receive rewards of up to 1000 Points.",
+      "Join the IELTS Hunter community today and receive rewards of up to 1000 Points.",
     shareCode: (txt: string) =>
-      `Join the IKIGAI Coach community with me to receive rewards of up to 10,000 points. Visit "${txt}" to claim your rewards.`,
+      `Join the IELTS Hunter community with me to receive rewards of up to 10,000 points. Visit "${txt}" to claim your rewards.`,
   },
   navigation: {
     dashboard: "Dashboard",
@@ -613,7 +613,7 @@ export default {
     durationCall11: "Course duration",
     lessionCount: "Number of lessions",
     messagePublic:
-      "When you choose to make the course public, it will be reviewed by the Ikigai Coach Admin team before being displayed. The review process will take no more than one working day.",
+      "When you choose to make the course public, it will be reviewed by the IELTS Hunter Admin team before being displayed. The review process will take no more than one working day.",
     draft: "Draft",
     public: "Public",
   },
@@ -783,7 +783,7 @@ export default {
     course: "COURSE",
     teacherPage: "TEACHER PAGE",
     guideUse: "GUIDE",
-    titleBtn: "IkigaiCoach Teacher",
+    titleBtn: "IELTS Hunter Teacher",
     desBtn: "Access the page reserved for teachers",
     profile: "Profile",
     balance: "Balance",
@@ -997,7 +997,7 @@ export default {
     isFirst: "Already at the beginning of the list",
     isLast: "Already at the end of the list",
     shareAudio: (txt: string) =>
-      `Download the IKIGAI Coach app now to listen to the best audiobooks: ${txt}`,
+      `Download the IELTS Hunter app now to listen to the best audiobooks: ${txt}`,
     listened: "Listened",
     watched: "Continue listening to the podcast"
   },
@@ -1065,7 +1065,7 @@ export default {
     space: "Space",
     deletecache: "Delete memory",
     noti: "Notification",
-    hidden: "Hidden me from Ikigai Coach",
+    hidden: "Hidden me from IELTS Hunter",
     block: "Block message from strangers",
     blackList: "List Black",
     setting: "Setting",
@@ -1103,7 +1103,7 @@ export default {
     descriptionTitle: "Explore App Features?",
   },
   recommendCourse: "Recommend course",
-  ieltsHunterLive: "IKIGAI Coach Live",
+  ieltsHunterLive: "IELTS Hunter Live",
   nameTutor: (name: string) => `${name}'s course`,
   titleLive: "Nguyen Trung Kien's IELTS Writing class",
   titleName: "IELTS Listening [MASTERCLASS]: Get Band 7+ in 2024",
@@ -1205,7 +1205,7 @@ export default {
       "Explore entrepreneurship, marketing, and management courses. Elevate your skills and thrive in the business world",
     text51: "Take Care of Your Health Anytime, Anywhere",
     text52:
-      "Explore top-notch health courses within IKIGAI Coach. It's where you can take charge of your health and self-development",
+      "Explore top-notch health courses within IELTS Hunter. It's where you can take charge of your health and self-development",
   },
   discover: {
     study: "Study",
@@ -1262,7 +1262,7 @@ export default {
     description3:
       "). For example: If a member refers a purchase of a course priced at 1,000,000 VND → Commission received: 80,000 VND → 80 ",
     whyJoin: "Why join affiliate?",
-    text1: "Increase your income by selling with IKIGAI COACH",
+    text1: "Increase your income by selling with IELTS Hunter",
     text2: "Money is credited immediately when a customer purchases a course",
     text3: "Manage revenue in real-time",
     text4: "Withdraw money to your bank account",
@@ -1488,7 +1488,7 @@ export default {
     orientation: "Orientation",
     health: "Health",
     charity: "Charity",
-    title2: "What do you want to use IKIGAI Coach for?",
+    title2: "What do you want to use IELTS Hunter for?",
     des: "We need to know this for regulatory reasons. And also, we’re curious!",
     lifeCoaching: "Life Coaching",
     personalDevelopment: "Personal Development",
@@ -1506,7 +1506,7 @@ export default {
     entre: "Entrepreneurship",
     leaderSkill: "Leadership Skills",
     workLife: "Work-Life Balance",
-    title3: "What brings you to IKIGAI Coach?",
+    title3: "What brings you to IELTS Hunter?",
     seeking: "Seeking balance",
     expl: "Exploring purpose",
     needing: "Needing support",
@@ -1576,7 +1576,7 @@ export default {
       "The subscription will be charged through your iTunes account. Your subscription will be automatically renewed unless you cancel it within 24 hours prior to the end of the current subscription period in your iTunes Store settings. To get membership mean you agree to the following terns and agreements.",
     des2Android:
       "The subscription will be charged through your Google Play account. Your subscription will be automatically renewed unless you cancel it within 24 hours prior to the end of the current subscription period in your Google Play Store settings. To get membership mean you agree to the following terns and agreements.",
-    des3: "Value-Added Service Term of Ikigai Coach Privacy Policy Term of Automatic Subscription Renewal",
+    des3: "Value-Added Service Term of IELTS Hunter Privacy Policy Term of Automatic Subscription Renewal",
     error: "Error",
     getServiceFail: "Get Service Failed",
     whiteGPro: "Premium",

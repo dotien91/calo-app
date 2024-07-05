@@ -105,9 +105,9 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    namespace "com.ikigroup.ikigaiextra"
+    namespace 'com.ikigroup.ieltshunterpro'
     defaultConfig {
-        applicationId 'com.ikigroup.ikigaiextra'
+        applicationId 'com.ikigroup.ieltshunterpro'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 2
@@ -132,7 +132,7 @@ android {
             keyPassword 'android'
         }
         release {
-            storeFile file('release-keystore-ikigaiextra')
+            storeFile file('release-keystore')
             storePassword 'exam24h'
             keyAlias 'exam24h'
             keyPassword 'exam24h'

@@ -3,23 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>543656532685-ea3og352pgjtb382rlhmhdl983upijma.apps.googleusercontent.com</string>
+	<string>409582649419-j3ler20j0fklont9ivpeud6lmq7hkkqn.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.543656532685-ea3og352pgjtb382rlhmhdl983upijma</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>543656532685-2frchamcsscg7alj5vpfsu5vgn3qr2mj.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.409582649419-j3ler20j0fklont9ivpeud6lmq7hkkqn</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCGLuu5bszXL87fejvqbgXbcBPllvBbzWQ</string>
+	<string>AIzaSyCpM03LmVkPjfoczW0H27qVMlUQcshRxkw</string>
 	<key>GCM_SENDER_ID</key>
-	<string>543656532685</string>
+	<string>409582649419</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.ikigroup.ikicoach</string>
+	<string>com.exam24h.ieltshunter</string>
 	<key>PROJECT_ID</key>
-	<string>ikigai-coach</string>
+	<string>ieltshunter-65a03</string>
 	<key>STORAGE_BUCKET</key>
-	<string>ikigai-coach.appspot.com</string>
+	<string>ieltshunter-65a03.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:543656532685:ios:8806647b070745bad0a784</string>
+	<string>1:409582649419:ios:7e29c04221204b234c0dce</string>
 </dict>
 </plist>

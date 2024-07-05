@@ -138,7 +138,7 @@ const SmartBanking = () => {
       accountName: "CÔNG TY CỔ PHẦN IKIGROUP",
       acqId: 970422,
       amount: price,
-      addInfo: `IKIGAI Coach ${short_id}`,
+      addInfo: `IELTS Hunter ${short_id}`,
       format: "text",
       template: "compact",
     };
@@ -218,12 +218,12 @@ const SmartBanking = () => {
         <TouchableOpacity
           style={{ flexDirection: "row", justifyContent: "center" }}
           onPress={() => {
-            copyToClipboard(`IKIGAI Coach ${short_id}`);
+            copyToClipboard(`IELTS Hunter ${short_id}`);
             showToast({ type: "info", message: "Coppied" });
           }}
         >
           <Text numberOfLines={2} style={styles.styleTextNameBank}>
-            {translations.payment.content}: IKIGAI Coach {short_id}
+            {translations.payment.content}: IELTS Hunter {short_id}
           </Text>
           <Image
             style={{ height: 15.3, width: 13.79, marginLeft: 5 }}

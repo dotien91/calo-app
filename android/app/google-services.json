@@ -1,73 +1,73 @@
 {
   "project_info": {
-    "project_number": "543656532685",
-    "project_id": "ikigai-coach",
-    "storage_bucket": "ikigai-coach.appspot.com"
+    "project_number": "329708522429",
+    "project_id": "ielts-hunter-6db1e",
+    "storage_bucket": "ielts-hunter-6db1e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:543656532685:android:2a45374c1a703a2dd0a784",
+        "mobilesdk_app_id": "1:329708522429:android:794ddc4e1762d973c520d4",
         "android_client_info": {
-          "package_name": "com.ikigroup.ikicoach"
+          "package_name": "com.ikigroup.ieltshunter"
         }
       },
       "oauth_client": [
         {
-          "client_id": "543656532685-2frchamcsscg7alj5vpfsu5vgn3qr2mj.apps.googleusercontent.com",
+          "client_id": "329708522429-0bh4qgukdsuampv1j93jhg2p229opael.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.ikigroup.ikicoach",
+            "package_name": "com.ikigroup.ieltshunter",
+            "certificate_hash": "cba9a039c8505fd67e968a6d76471d2594e3b0ba"
+          }
+        },
+        {
+          "client_id": "329708522429-70tqrqnq4gd4obv406svc87ck784t4vv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ikigroup.ieltshunter",
+            "certificate_hash": "7b1c4a1ec86fc4102165038b5c4aef661be5502c"
+          }
+        },
+        {
+          "client_id": "329708522429-ee5ng34sgu7gtqc23ff3dospevslcjuq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ikigroup.ieltshunter",
             "certificate_hash": "2b1f34c90ad7897a635ed3b62ce9a24e5c9739ce"
           }
         },
         {
-          "client_id": "543656532685-fc4n7pou3ba3dpko7jkqjfpu8t1kgitt.apps.googleusercontent.com",
+          "client_id": "329708522429-pnnnpnnren9h43qspvuito9p2hpq7j8o.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.ikigroup.ikicoach",
-            "certificate_hash": "a998798307f6d429dd20d8d78e54bfee599b207f"
+            "package_name": "com.ikigroup.ieltshunter",
+            "certificate_hash": "9337d4bd4a04789ec038086b9a3b339008cda81f"
           }
         },
         {
-          "client_id": "543656532685-i1lb6n9i3g8te8hfgprr1ee00gk34fp9.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.ikigroup.ikicoach",
-            "certificate_hash": "56703ce21286bb4a44df6301d270bb5bbed43eef"
-          }
-        },
-        {
-          "client_id": "543656532685-kh80u4uinedpi9jhdklot68j44qdat1m.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.ikigroup.ikicoach",
-            "certificate_hash": "458872d2e3131e0c0aef71d0d2addfa41e779076"
-          }
-        },
-        {
-          "client_id": "543656532685-oh1fjl1fhvc1dcdc32agqrotf28vjj69.apps.googleusercontent.com",
+          "client_id": "329708522429-t56qqqgo9kasu9rqtomf1aj8al55obbo.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDBpU-ARq-vS4SJOlnhwyAoba5NP5ppl9g"
+          "current_key": "AIzaSyB0PNST3hmbS9TchbkgYwgVA0zOMNmMZWo"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "543656532685-oh1fjl1fhvc1dcdc32agqrotf28vjj69.apps.googleusercontent.com",
+              "client_id": "329708522429-t56qqqgo9kasu9rqtomf1aj8al55obbo.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "543656532685-ea3og352pgjtb382rlhmhdl983upijma.apps.googleusercontent.com",
+              "client_id": "329708522429-tb80b2s4u8k8r3p2ocn5rfa5ofr78kbl.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.ikigroup.ikicoach",
-                "app_store_id": "6484263984"
+                "bundle_id": "com.ikigroup.ieltshunter",
+                "app_store_id": "6478486893"
               }
             }
           ]
@@ -76,210 +76,51 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:543656532685:android:f52c9a80fc0e8442d0a784",
+        "mobilesdk_app_id": "1:329708522429:android:f76f0b92dd86aacec520d4",
         "android_client_info": {
-          "package_name": "com.ikigroup.ikigaicoach"
+          "package_name": "com.ikigroup.ieltshunterpro"
         }
       },
       "oauth_client": [
         {
-          "client_id": "543656532685-0kcgll3fcni3e6f6pgp5l91fj8erckfu.apps.googleusercontent.com",
+          "client_id": "329708522429-8dfvga2ak4e5hi6e9b1otjhd0l4vghvg.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.ikigroup.ikigaicoach",
-            "certificate_hash": "e120aa99860150d90434a5809df77c4ea21647e4"
+            "package_name": "com.ikigroup.ieltshunterpro",
+            "certificate_hash": "27d4fb19ca06b965e315a55acd79c46ce792a2a4"
           }
         },
         {
-          "client_id": "543656532685-n057j3ha61n32gm3h9dcjc2gnahu0qv9.apps.googleusercontent.com",
+          "client_id": "329708522429-rh2oc0uqcqhss697l66phbpoc1s2mfs9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.ikigroup.ikigaicoach",
-            "certificate_hash": "bf726b653a1dc4053f77f04d93a38e332400b324"
+            "package_name": "com.ikigroup.ieltshunterpro",
+            "certificate_hash": "b6f642694ad088f23339676a962c1206f6e36dd3"
           }
         },
         {
-          "client_id": "543656532685-nivt10vnlmcg1t1oj4etnlhnlamo1rof.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.ikigroup.ikigaicoach",
-            "certificate_hash": "561af48862058c3edb32b3b71e87d820fafd8d9c"
-          }
-        },
-        {
-          "client_id": "543656532685-oh1fjl1fhvc1dcdc32agqrotf28vjj69.apps.googleusercontent.com",
+          "client_id": "329708522429-t56qqqgo9kasu9rqtomf1aj8al55obbo.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDBpU-ARq-vS4SJOlnhwyAoba5NP5ppl9g"
+          "current_key": "AIzaSyB0PNST3hmbS9TchbkgYwgVA0zOMNmMZWo"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "543656532685-oh1fjl1fhvc1dcdc32agqrotf28vjj69.apps.googleusercontent.com",
+              "client_id": "329708522429-t56qqqgo9kasu9rqtomf1aj8al55obbo.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "543656532685-ea3og352pgjtb382rlhmhdl983upijma.apps.googleusercontent.com",
+              "client_id": "329708522429-tb80b2s4u8k8r3p2ocn5rfa5ofr78kbl.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.ikigroup.ikicoach",
-                "app_store_id": "6484263984"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:543656532685:android:41c599c5e61e0aeed0a784",
-        "android_client_info": {
-          "package_name": "com.ikigroup.ikigaicoachlite"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "543656532685-1p4sbjp76qu5gqa3ncjf3qorgvhdjnqo.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.ikigroup.ikigaicoachlite",
-            "certificate_hash": "8aa88da9132c6900913f7852dae24b20fddb49f4"
-          }
-        },
-        {
-          "client_id": "543656532685-7ghfn170ill82gg2513arop4hbc2je3p.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.ikigroup.ikigaicoachlite",
-            "certificate_hash": "6a851c5d02613c133c70cf4b33ab2ff6f8abbd66"
-          }
-        },
-        {
-          "client_id": "543656532685-fnhocg90jufokuapbu06p1kj20k7lcvn.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.ikigroup.ikigaicoachlite",
-            "certificate_hash": "51dffa4e0d41a259dea73f2f7f684d994b6e59f1"
-          }
-        },
-        {
-          "client_id": "543656532685-oh1fjl1fhvc1dcdc32agqrotf28vjj69.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDBpU-ARq-vS4SJOlnhwyAoba5NP5ppl9g"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "543656532685-oh1fjl1fhvc1dcdc32agqrotf28vjj69.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "543656532685-ea3og352pgjtb382rlhmhdl983upijma.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.ikigroup.ikicoach",
-                "app_store_id": "6484263984"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:543656532685:android:f56bd8ed99a6ebb4d0a784",
-        "android_client_info": {
-          "package_name": "com.ikigroup.ikigaicoachpro"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "543656532685-oh1fjl1fhvc1dcdc32agqrotf28vjj69.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDBpU-ARq-vS4SJOlnhwyAoba5NP5ppl9g"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "543656532685-oh1fjl1fhvc1dcdc32agqrotf28vjj69.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "543656532685-ea3og352pgjtb382rlhmhdl983upijma.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.ikigroup.ikicoach",
-                "app_store_id": "6484263984"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:543656532685:android:1d1d1d9fcf107d3cd0a784",
-        "android_client_info": {
-          "package_name": "com.ikigroup.ikigaiextra"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "543656532685-gtug48vsaoocsoh1hrnnqpvjl5q9hlel.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.ikigroup.ikigaiextra",
-            "certificate_hash": "b14ff98860e82d4f8397d02e33e824615ff92637"
-          }
-        },
-        {
-          "client_id": "543656532685-m4sgdte89h073kjdv30o9iukitukvc8q.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.ikigroup.ikigaiextra",
-            "certificate_hash": "c129aea515d8f7d4989ecb924b617287a65d8823"
-          }
-        },
-        {
-          "client_id": "543656532685-oh1fjl1fhvc1dcdc32agqrotf28vjj69.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDBpU-ARq-vS4SJOlnhwyAoba5NP5ppl9g"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "543656532685-oh1fjl1fhvc1dcdc32agqrotf28vjj69.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "543656532685-ea3og352pgjtb382rlhmhdl983upijma.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.ikigroup.ikicoach",
-                "app_store_id": "6484263984"
+                "bundle_id": "com.ikigroup.ieltshunter",
+                "app_store_id": "6478486893"
               }
             }
           ]
