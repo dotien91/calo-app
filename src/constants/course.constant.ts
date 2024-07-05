@@ -21,10 +21,6 @@ export const filterCourseKeys = [
         name: translations.course.callGroup,
         id: "Call group",
       },
-      {
-        name: translations.course.offline,
-        id: "Offline",
-      },
     ],
   },
   {
@@ -36,24 +32,20 @@ export const filterCourseKeys = [
         id: "All skills",
       },
       {
-        name: translations.course.health,
-        id: "Health",
+        name: translations.course.listening,
+        id: "Listening",
       },
       {
-        name: translations.course.life,
-        id: "Life",
+        name: translations.course.reading,
+        id: "Reading",
       },
       {
-        name: translations.course.business,
-        id: "Business",
+        name: translations.course.writing,
+        id: "Writing",
       },
       {
-        name: translations.course.finance,
-        id: "Finance",
-      },
-      {
-        name: translations.course.careerGuidance,
-        id: "Career Guidance",
+        name: translations.course.Speaking,
+        id: "Speaking",
       },
     ],
   },
@@ -61,40 +53,40 @@ export const filterCourseKeys = [
     name: translations.course.pricePerCourse,
     id: "price",
   },
-  // {
-  //   name: translations.course.levelsOfStudy,
-  //   id: "levels",
-  //   keyFilters: [
-  //     {
-  //       name: "4+",
-  //       id: "4+",
-  //     },
-  //     {
-  //       name: "5+",
-  //       id: "5+",
-  //     },
-  //     {
-  //       name: "6+",
-  //       id: "6+",
-  //     },
-  //     {
-  //       name: "7+",
-  //       id: "7+",
-  //     },
-  //     {
-  //       name: "8+",
-  //       id: "8+",
-  //     },
-  //     {
-  //       name: "9",
-  //       id: "9",
-  //     },
-  //   ],
-  // },
-  // {
-  //   name: translations.course.onlyEnglish,
-  //   id: "onlyEnglishNativeSpeakers",
-  // },
+  {
+    name: translations.course.levelsOfStudy,
+    id: "levels",
+    keyFilters: [
+      {
+        name: "4+",
+        id: "4+",
+      },
+      {
+        name: "5+",
+        id: "5+",
+      },
+      {
+        name: "6+",
+        id: "6+",
+      },
+      {
+        name: "7+",
+        id: "7+",
+      },
+      {
+        name: "8+",
+        id: "8+",
+      },
+      {
+        name: "9",
+        id: "9",
+      },
+    ],
+  },
+  {
+    name: translations.course.onlyEnglish,
+    id: "onlyEnglishNativeSpeakers",
+  },
 ];
 
 export const filterTeacherKeys = [
@@ -118,10 +110,6 @@ export const filterTeacherKeys = [
         name: translations.course.callGroup,
         id: "Call group",
       },
-      {
-        name: translations.course.offline,
-        id: "Offline",
-      },
     ],
   },
   {
@@ -133,148 +121,139 @@ export const filterTeacherKeys = [
         id: "All skills",
       },
       {
-        name: translations.course.careerGuidance,
-        id: "Career Guidance",
+        name: translations.course.listening,
+        id: "Listening",
       },
       {
-        name: translations.course.life,
-        id: "Life",
+        name: translations.course.reading,
+        id: "Reading",
       },
       {
-        name: translations.course.finance,
-        id: "Finance",
+        name: translations.course.writing,
+        id: "Writing",
       },
       {
-        name: translations.course.health,
-        id: "Health",
-      },
-      {
-        name: translations.course.business,
-        id: "Business",
+        name: translations.course.Speaking,
+        id: "Speaking",
       },
     ],
   },
-  // {
-  //   name: translations.course.timeAvailable,
-  //   id: "timeAvailable",
-  //   keyFilters: [
-  //     {
-  //       name: "9 - 12",
-  //       id: {
-  //         time_start: "9:00",
-  //         time_end: "12:00",
-  //       },
-  //     },
-  //     {
-  //       name: "12 - 15",
-  //       id: {
-  //         time_start: "12:00",
-  //         time_end: "15:00",
-  //       },
-  //     },
-  //     {
-  //       name: "15 - 18",
-  //       id: {
-  //         time_start: "15:00",
-  //         time_end: "18:00",
-  //       },
-  //     },
-  //     {
-  //       name: "18 - 21",
-  //       id: {
-  //         time_start: "18:00",
-  //         time_end: "21:00",
-  //       },
-  //     },
-  //     {
-  //       name: "21 - 0",
-  //       id: {
-  //         time_start: "21:00",
-  //         time_end: "0:00",
-  //       },
-  //     },
-  //     {
-  //       name: "0 - 3",
-  //       id: {
-  //         time_start: "0:00",
-  //         time_end: "3:00",
-  //       },
-  //     },
-  //   ],
-  // },
-  // {
-  //   name: translations.course.onlyEnglish,
-  //   id: "onlyEnglishNativeSpeakers",
-  // },
-  // {
-  //   name: translations.course.levelsOfTutor,
-  //   id: "levelOfTutor",
-  //   keyFilters: [
-  //     {
-  //       name: "8",
-  //       id: "8",
-  //     },
-  //     {
-  //       name: "8.5",
-  //       id: "8.5",
-  //     },
-  //     {
-  //       name: "9",
-  //       id: "9",
-  //     },
-  //   ],
-  // },
+  {
+    name: translations.course.timeAvailable,
+    id: "timeAvailable",
+    keyFilters: [
+      {
+        name: "9 - 12",
+        id: {
+          time_start: "9:00",
+          time_end: "12:00",
+        },
+      },
+      {
+        name: "12 - 15",
+        id: {
+          time_start: "12:00",
+          time_end: "15:00",
+        },
+      },
+      {
+        name: "15 - 18",
+        id: {
+          time_start: "15:00",
+          time_end: "18:00",
+        },
+      },
+      {
+        name: "18 - 21",
+        id: {
+          time_start: "18:00",
+          time_end: "21:00",
+        },
+      },
+      {
+        name: "21 - 0",
+        id: {
+          time_start: "21:00",
+          time_end: "0:00",
+        },
+      },
+      {
+        name: "0 - 3",
+        id: {
+          time_start: "0:00",
+          time_end: "3:00",
+        },
+      },
+    ],
+  },
+  {
+    name: translations.course.onlyEnglish,
+    id: "onlyEnglishNativeSpeakers",
+  },
+  {
+    name: translations.course.levelsOfTutor,
+    id: "levelOfTutor",
+    keyFilters: [
+      {
+        name: "8",
+        id: "8",
+      },
+      {
+        name: "8.5",
+        id: "8.5",
+      },
+      {
+        name: "9",
+        id: "9",
+      },
+    ],
+  },
 ];
 
 export const quickFilterCourse = [
-  // {
-  //   name: translations.course.allForms,
-  //   id: "All forms",
-  //   type: "types",
-  // },
-  // {
-  //   name: translations.course.callOneVsOne,
-  //   id: "Call 1-1",
-  //   type: "types",
-  // },
-  // {
-  //   name: translations.course.salfLearning,
-  //   id: "Self-learning",
-  //   type: "types",
-  // },
-  // {
-  //   name: translations.course.callGroup,
-  //   id: "Call group",
-  //   type: "types",
-  // },
+  {
+    name: translations.course.allForms,
+    id: "All forms",
+    type: "types",
+  },
+  {
+    name: translations.course.callOneVsOne,
+    id: "Call 1-1",
+    type: "types",
+  },
+  {
+    name: translations.course.salfLearning,
+    id: "Self-learning",
+    type: "types",
+  },
+  {
+    name: translations.course.callGroup,
+    id: "Call group",
+    type: "types",
+  },
   {
     name: translations.course.allSkills,
     id: "All skills",
     type: "skills",
   },
   {
-    name: translations.course.health,
-    id: "Health",
+    name: translations.course.listening,
+    id: "Listening",
     type: "skills",
   },
   {
-    name: translations.course.life,
-    id: "Life",
+    name: translations.course.Speaking,
+    id: "Speaking",
     type: "skills",
   },
   {
-    name: translations.course.business,
-    id: "Business",
+    name: translations.course.reading,
+    id: "Reading",
     type: "skills",
   },
   {
-    name: translations.course.finance,
-    id: "Finance",
-    type: "skills",
-  },
-  {
-    name: translations.course.careerGuidance,
-    id: "Career Guidance",
+    name: translations.course.writing,
+    id: "Writing",
     type: "skills",
   },
 ];
@@ -323,31 +302,31 @@ export const sortTutorSelectData = [
 
 export const daysOfWeek = [
   {
-    value: 0,
+    value: 1,
     label: "Mon",
   },
   {
-    value: 1,
+    value: 2,
     label: "Tue",
   },
   {
-    value: 2,
+    value: 3,
     label: "Wed",
   },
   {
-    value: 3,
+    value: 4,
     label: "Thu",
   },
   {
-    value: 4,
+    value: 5,
     label: "Fri",
   },
   {
-    value: 5,
+    value: 6,
     label: "Sat",
   },
   {
-    value: 6,
+    value: 0,
     label: "Sun",
   },
 ];
@@ -742,355 +721,141 @@ export const listLevel = [
 ];
 
 export const listSkill = [
-  { id: "Health", value: translations.course.health },
-  { id: "Life", value: translations.course.life },
-  { id: "Business", value: translations.course.business },
-  { id: "Finance", value: translations.course.finance },
-  { id: "Career Guidance", value: translations.course.careerGuidance },
-];
-
-export const listLang = [
-  { value: "vi", label: translations.vi },
-  { value: "en", label: translations.en },
-  { value: "jp", label: translations.jp },
+  { value: "Listening", index: 1 },
+  { value: "Reading", index: 2 },
+  { value: "Writing", index: 3 },
+  { value: "Speaking", index: 4 },
 ];
 
 export const timesInUtc = [
   {
-    label: "0:00 - 0:30",
+    label: "0:00 - 1:00",
     is_picked: false,
-    time_start: "00:00",
+    time_start: "0:00",
   },
   {
-    label: "0:30 - 1:00",
+    label: "1:00 - 2:00",
     is_picked: false,
-    time_start: "00:30",
+    time_start: "1:00",
   },
   {
-    label: "1:00 - 1:30",
+    label: "2:00 - 3:00",
     is_picked: false,
-    time_start: "01:00",
+    time_start: "2:00",
   },
   {
-    label: "1:30 - 2:00",
+    label: "3:00 - 4:00",
     is_picked: false,
-    time_start: "01:30",
+    time_start: "3:00",
   },
   {
-    label: "2:00 - 2:30",
+    label: "4:00 - 5:00",
     is_picked: false,
-    time_start: "02:00",
+    time_start: "4:00",
   },
   {
-    label: "2:30 - 3:00",
-    is_picked: false,
-    time_start: "02:30",
-  },
-  {
-    label: "3:00 - 3:30",
-    is_picked: false,
-    time_start: "03:00",
-  },
-  {
-    label: "3:30 - 4:00",
-    is_picked: false,
-    time_start: "03:30",
-  },
-  {
-    label: "4:00 - 4:30",
-    is_picked: false,
-    time_start: "04:00",
-  },
-  {
-    label: "4:30 - 5:00",
-    is_picked: false,
-    time_start: "04:30",
-  },
-  {
-    label: "5:00 - 5:30",
+    label: "5:00 - 6:00",
     is_picked: false,
     time_start: "05:00",
   },
   {
-    label: "5:30 - 6:00",
+    label: "6:00 - 7:00",
     is_picked: false,
-    time_start: "05:30",
+    time_start: "6:00",
   },
   {
-    label: "6:00 - 6:30",
+    label: "7:00 - 8:00",
     is_picked: false,
-    time_start: "06:00",
+    time_start: "7:00",
   },
   {
-    label: "6:30 - 7:00",
+    label: "8:00 - 9:00",
     is_picked: false,
-    time_start: "06:30",
+    time_start: "8:00",
   },
   {
-    label: "7:00 - 7:30",
+    label: "9:00 - 10:00",
     is_picked: false,
-    time_start: "07:00",
+    time_start: "9:00",
   },
   {
-    label: "7:30 - 8:00",
-    is_picked: false,
-    time_start: "07:30",
-  },
-  {
-    label: "8:00 - 8:30",
-    is_picked: false,
-    time_start: "08:00",
-  },
-  {
-    label: "8:30 - 9:00",
-    is_picked: false,
-    time_start: "08:30",
-  },
-  {
-    label: "9:00 - 9:30",
-    is_picked: false,
-    time_start: "09:00",
-  },
-  {
-    label: "9:30 - 10:00",
-    is_picked: false,
-    time_start: "09:30",
-  },
-  {
-    label: "10:00 - 10:30",
+    label: "10:00 - 11:00",
     is_picked: false,
     time_start: "10:00",
   },
   {
-    label: "10:30 - 11:00",
-    is_picked: false,
-    time_start: "10:30",
-  },
-  {
-    label: "11:00 - 11:30",
+    label: "11:00 - 12:00",
     is_picked: false,
     time_start: "11:00",
   },
   {
-    label: "11:30 - 12:00",
-    is_picked: false,
-    time_start: "11:30",
-  },
-  {
-    label: "12:00 - 12:30",
+    label: "12:00 - 13:00",
     is_picked: false,
     time_start: "12:00",
   },
   {
-    label: "12:30 - 13:00",
-    is_picked: false,
-    time_start: "12:30",
-  },
-  {
-    label: "13:00 - 13:30",
+    label: "13:00 - 14:00",
     is_picked: false,
     time_start: "13:00",
   },
   {
-    label: "13:30 - 14:00",
-    is_picked: false,
-    time_start: "13:30",
-  },
-  {
-    label: "14:00 - 14:30",
+    label: "14:00 - 15:00",
     is_picked: false,
     time_start: "14:00",
   },
   {
-    label: "14:30 - 15:00",
-    is_picked: false,
-    time_start: "14:30",
-  },
-  {
-    label: "15:00 - 15:30",
+    label: "15:00 - 16:00",
     is_picked: false,
     time_start: "15:00",
   },
   {
-    label: "15:30 - 16:00",
-    is_picked: false,
-    time_start: "15:30",
-  },
-  {
-    label: "16:00 - 16:30",
+    label: "16:00 - 17:00",
     is_picked: false,
     time_start: "16:00",
   },
   {
-    label: "16:30 - 17:00",
-    is_picked: false,
-    time_start: "16:30",
-  },
-  {
-    label: "17:00 - 17:30",
+    label: "17:00 - 18:00",
     is_picked: false,
     time_start: "17:00",
   },
   {
-    label: "17:30 - 18:00",
-    is_picked: false,
-    time_start: "17:30",
-  },
-  {
-    label: "18:00 - 18:30",
+    label: "18:00 - 19:00",
     is_picked: false,
     time_start: "18:00",
   },
   {
-    label: "18:30 - 19:00",
-    is_picked: false,
-    time_start: "18:30",
-  },
-  {
-    label: "19:00 - 19:30",
+    label: "19:00 - 20:00",
     is_picked: false,
     time_start: "19:00",
   },
   {
-    label: "19:30 - 20:00",
-    is_picked: false,
-    time_start: "19:30",
-  },
-  {
-    label: "20:00 - 20:30",
+    label: "20:00 - 21:00",
     is_picked: false,
     time_start: "20:00",
   },
   {
-    label: "20:30 - 21:00",
-    is_picked: false,
-    time_start: "20:30",
-  },
-  {
-    label: "21:00 - 21:30",
+    label: "21:00 - 22:00",
     is_picked: false,
     time_start: "21:00",
   },
   {
-    label: "21:30 - 22:00",
-    is_picked: false,
-    time_start: "21:30",
-  },
-  {
-    label: "22:00 - 22:30",
+    label: "22:00 - 23:00",
     is_picked: false,
     time_start: "22:00",
   },
   {
-    label: "22:30 - 23:00",
-    is_picked: false,
-    time_start: "22:30",
-  },
-  {
-    label: "23:00 - 23:30",
+    label: "23:00 - 24:00",
     is_picked: false,
     time_start: "23:00",
-  },
-  {
-    label: "23:30 - 00:00",
-    is_picked: false,
-    time_start: "23:30",
   },
 ];
 
 export const timeFullWeek = [
-  { value: 0, label: "Mon", times: timesInUtc },
-  { value: 1, label: "Tue", times: timesInUtc },
-  { value: 2, label: "Wed", times: timesInUtc },
-  { value: 3, label: "Thu", times: timesInUtc },
-  { value: 4, label: "Fri", times: timesInUtc },
-  { value: 5, label: "Sat", times: timesInUtc },
-  { value: 6, label: "Sun", times: timesInUtc },
-];
-
-export const quickFilterLife = [
-  {
-    name: translations.setup.lifeCoaching,
-    id: "Life coaching",
-    type: "skills",
-  },
-
-  {
-    name: translations.setup.personalDevelopment,
-    id: "Personal development",
-    type: "skills",
-  },
-  {
-    name: translations.setup.goalSetting,
-    id: "Goal Setting",
-    type: "skills",
-  },
-  {
-    name: translations.setup.timeMana,
-    id: "Time Management",
-    type: "skills",
-  },
-  {
-    name: translations.setup.stressMana,
-    id: "Stress management",
-    type: "skills",
-  },
-];
-
-export const quickFilterHealthAndWell = [
-  {
-    name: translations.setup.healthAndWell,
-    id: "Health & wellness",
-    type: "skills",
-  },
-
-  {
-    name: translations.setup.nutri,
-    id: "Nutri & diet",
-    type: "skills",
-  },
-  {
-    name: translations.setup.fitness,
-    id: "Fitness & exercise",
-    type: "skills",
-  },
-  {
-    name: translations.setup.mental,
-    id: "Mental health",
-    type: "skills",
-  },
-  {
-    name: translations.setup.sleep,
-    id: "Sleep improvement",
-    type: "skills",
-  },
-];
-
-export const quickFilterBusinessAndCareer = [
-  {
-    name: translations.setup.businessCoa,
-    id: "Business coaching",
-    type: "skills",
-  },
-
-  {
-    name: translations.setup.careerDeve,
-    id: "Career development",
-    type: "skills",
-  },
-  {
-    name: translations.setup.entre,
-    id: "Entrepreneurship",
-    type: "skills",
-  },
-  {
-    name: translations.setup.leaderSkill,
-    id: "Leadership skills",
-    type: "skills",
-  },
-  {
-    name: translations.setup.workLife,
-    id: "Work-life balance",
-    type: "skills",
-  },
+  { value: 0, label: "Sun", times: timesInUtc },
+  { value: 1, label: "Mon", times: timesInUtc },
+  { value: 2, label: "Tue", times: timesInUtc },
+  { value: 3, label: "Wed", times: timesInUtc },
+  { value: 4, label: "Thu", times: timesInUtc },
+  { value: 5, label: "Fri", times: timesInUtc },
+  { value: 6, label: "Sat", times: timesInUtc },
 ];
