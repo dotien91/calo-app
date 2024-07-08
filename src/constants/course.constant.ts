@@ -721,10 +721,10 @@ export const listLevel = [
 ];
 
 export const listSkill = [
-  { value: "Listening", index: 1 },
-  { value: "Reading", index: 2 },
-  { value: "Writing", index: 3 },
-  { value: "Speaking", index: 4 },
+  { id: "Listening", value: "Listening", index: 1 },
+  { id: "Reading", value: "Reading", index: 2 },
+  { id: "Writing", value: "Writing", index: 3 },
+  { id: "Speaking", value: "Speaking", index: 4 },
 ];
 
 export const timesInUtc = [

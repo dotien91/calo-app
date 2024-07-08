@@ -42,6 +42,8 @@ const CourseView = () => {
           <CourseItem
           style={{
             width: ScreenWidth,
+            paddingHorizontal: 0,
+            paddingRight: 0,
             
           }}
           fromHome
