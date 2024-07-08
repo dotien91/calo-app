@@ -29,13 +29,14 @@ const HeaderTab = () => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const userData = useStore((state) => state.userData);
+
   const listCategorys = [
     {
       title: translations.listCategory.course,
       textColor: "#E14242",
       iconColor: "#E14242",
       icon: "icBook",
-      screen: SCREENS.COURSE_LIST,
+      screen: SCREENS.COURSE_TAB,
       color: "#FFEDED",
       id: "course",
     },
@@ -45,7 +46,7 @@ const HeaderTab = () => {
       textColor: "#FFA347",
       iconColor: "#FFA347",
       icon: "icGraduate",
-      screen: SCREENS.COURSE_LIST,
+      screen: SCREENS.COURSE_TAB,
       color: "#FFF3DA",
     },
     {
