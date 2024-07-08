@@ -1536,7 +1536,7 @@ export default {
     shareAudio: (txt: string) =>
       `Tải ngay ứng dụng IELTS Hunter về để nghe những bản podcast hay nhất: ${txt}`,
     listened: "Đã nghe",
-    watched: "Tiếp tục nghe podcast"
+    watched: "Tiếp tục nghe podcast",
   },
   livestream: {
     hello: "Xin chào",

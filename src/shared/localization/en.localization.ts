@@ -999,7 +999,7 @@ export default {
     shareAudio: (txt: string) =>
       `Download the IELTS Hunter app now to listen to the best audiobooks: ${txt}`,
     listened: "Listened",
-    watched: "Continue listening to the podcast"
+    watched: "Continue listening to the podcast",
   },
   livestream: {
     hello: "Hello!",

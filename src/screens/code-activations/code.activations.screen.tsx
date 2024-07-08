@@ -137,9 +137,7 @@ const CodeActivationsScreen = () => {
           />
         </ImageBackground>
         <View style={CS.flex1}>
-          <Text style={{ ...CS.hnMedium, color: colors.text }}>
-            {title}
-          </Text>
+          <Text style={{ ...CS.hnMedium, color: colors.text }}>{title}</Text>
           <Text style={styles.txtPriceCourse}>
             {data.transaction_value_type === "coin"
               ? formatCoin(data.transaction_value)
@@ -147,9 +145,7 @@ const CodeActivationsScreen = () => {
                   suffix: " đ",
                 })}
           </Text>
-          <Text style={styles.txtPriceCourse}>
-            {day}
-          </Text>
+          <Text style={styles.txtPriceCourse}>{day}</Text>
         </View>
       </Animatable.View>
     );

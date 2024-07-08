@@ -6,7 +6,7 @@ import { TypedMedia } from "shared/models";
 interface TrackAudio extends Track {
   position?: number;
 }
-export interface TypeAudioWatched{
+export interface TypeAudioWatched {
   id: string;
   title: string;
   user_id: object;
@@ -22,7 +22,7 @@ export interface AudioSlice {
   listAudio: TypeTrackLocal[];
   setListAudio: (list: TypeTrackLocal[]) => void;
   listAudioWatched: TypeAudioWatched[];
-  updateListAudioWatched: (params : TypeAudioWatched) => void;
+  updateListAudioWatched: (params: TypeAudioWatched) => void;
 }
 
 const createAudioSlice: StoreSlice<AudioSlice> = (set, get) => ({

@@ -1465,7 +1465,7 @@ export default {
     shareAudio: (txt: string) =>
       `IELTS Hunterアプリをダウンロードして、最高のオーディオブックを聴こう: ${txt}`,
     listened: "聞いた",
-    watched: "ポッドキャストを聞き続ける"
+    watched: "ポッドキャストを聞き続ける",
   },
   livestream: {
     hello: "こんにちは",

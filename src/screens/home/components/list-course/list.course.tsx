@@ -1,5 +1,5 @@
 import React from "react";
-import {FlatList, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
 import { translations } from "@localization";
@@ -40,12 +40,14 @@ const CourseView = () => {
       return (
         <>
           <CourseItem
-          style={{
-            width: ScreenWidth,
-            
-          }}
-          fromHome
-          isSliderItem data={item.item} key={index} />
+            style={{
+              width: ScreenWidth,
+            }}
+            fromHome
+            isSliderItem
+            data={item.item}
+            key={index}
+          />
         </>
       );
     }

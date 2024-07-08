@@ -12,7 +12,7 @@ import useStore from "@services/zustand/store";
 import { EnumCourseType } from "models/course.model";
 import InviteView from "../invite-me/invite";
 import ListLiveStream from "../list-livestream/list.liveStream";
-import TextBase from "@shared-components/TextBase";
+// import TextBase from "@shared-components/TextBase";
 // import { useUserHook } from "@helpers/hooks/useUserHook";
 // import { getStatusBarHeight } from "react-native-safearea-height";
 // import ListLiveStream from "../list-livestream/list.liveStream";
@@ -20,9 +20,10 @@ import TextBase from "@shared-components/TextBase";
 // import FastImage from "react-native-fast-image";
 import AudioView from "@screens/audio/audio-list/audio.view";
 import { navigate } from "@helpers/navigation.helper";
-import AfiliateShortcut from "@screens/affiliate/components/afiliate.shortcut";
-import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
+// import AfiliateShortcut from "@screens/affiliate/components/afiliate.shortcut";
+// import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
 import CourseView from "../list-course/list.course";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 const HeaderTab = () => {
   const theme = useTheme();
@@ -31,26 +32,29 @@ const HeaderTab = () => {
   const listCategorys = [
     {
       title: translations.listCategory.course,
-      icon: "icCard",
-      screen: SCREENS.COURSE_TAB,
+      textColor: "#E14242",
+      iconColor: "#E14242",
+      icon: "icBook",
+      screen: SCREENS.COURSE_LIST,
+      color: "#FFEDED",
       id: "course",
     },
     {
       id: "tutor",
       title: translations.listCategory.tutor,
-      icon: "icCard1",
-      screen: SCREENS.COURSE_TAB,
+      textColor: "#FFA347",
+      iconColor: "#FFA347",
+      icon: "icGraduate",
+      screen: SCREENS.COURSE_LIST,
+      color: "#FFF3DA",
     },
     {
+      id: "affiliate",
       title: translations.listCategory.affiliate,
-      icon: "icCard2",
+      textColor: "#2BC456",
+      iconColor: "#2BC456",
+      icon: "icAffiliate",
       screen: SCREENS.HOME_AFFILIATE,
-      color: "#E8F7EF",
-    },
-    {
-      title: translations.listCategory.club,
-      icon: "icCard3",
-      screen: SCREENS.CLUB_TAB,
       color: "#E8F7EF",
     },
   ];
@@ -81,21 +85,36 @@ const HeaderTab = () => {
     return (
       <TouchableOpacity
         onPress={() => _onPress(item)}
-        style={styles.styleItemNaviCategory}
+        style={[styles.styleItemNaviCategory, { backgroundColor: item.color }]}
         key={index}
       >
-        <IconSvg
-          style={{
-            ...CommonStyle.flexCenter,
-            marginHorizontal: 2,
-          }}
-          color={item.iconColor}
-          name={item.icon}
-          size={(SCREEN_WIDTH - 56) / 5}
-        />
-        <TextBase textAlign="center" fontSize={14}>
-          {item.title}
-        </TextBase>
+        <View style={CommonStyle.flexStart}>
+          <IconSvg
+            style={{
+              paddingRight: 2,
+              alignContent: "center",
+              justifyContent: "center",
+              marginRight: 8,
+            }}
+            color={item.iconColor}
+            name={item.icon}
+            size={24}
+          />
+          <Text style={[styles.styleTextItemTitle, { color: item.textColor }]}>
+            {item.title}
+          </Text>
+        </View>
+
+        <View
+          style={[styles.styleViewIcon, { backgroundColor: item.iconColor }]}
+        >
+          <Icon
+            name="chevron-forward-outline"
+            type={IconType.Ionicons}
+            color="#FFF"
+            size={24}
+          ></Icon>
+        </View>
       </TouchableOpacity>
     );
   };
@@ -126,16 +145,16 @@ const HeaderTab = () => {
         </Text>
       </View>
       <View
-        style={[
-          CommonStyle.flexRear,
-          { paddingHorizontal: 16, marginBottom: 8 },
-        ]}
+      // style={[
+      //   CommonStyle.flexRear,
+      //   { paddingHorizontal: 16, marginBottom: 8 },
+      // ]}
       >
         {listCategorys.map((item, index) => {
           return renderItem(item, index);
         })}
       </View>
-      <AfiliateShortcut />
+      {/* <AfiliateShortcut /> */}
       <AudioView
         extraParams={userData?._id ? { type: "suggestion" } : {}}
         onPress={gotoAudioBook}

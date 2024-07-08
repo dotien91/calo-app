@@ -4,7 +4,7 @@ import { ExtendedTheme } from "@react-navigation/native";
 import { StyleSheet, TextStyle, ViewStyle } from "react-native";
 import { ScreenWidth } from "@freakycoder/react-native-helpers";
 import { palette } from "@theme/themes";
-import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
+// import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
 
 interface Style {
   viewHeaderStyle: ViewStyle;
@@ -46,8 +46,13 @@ export default (theme: ExtendedTheme) => {
       marginBottom: 8,
     },
     styleItemNaviCategory: {
-      width: (SCREEN_WIDTH - 50) / 4,
-      alignItems: "center",
+      ...CS.flexRear,
+      marginHorizontal: 16,
+      gap: 8,
+      height: 56,
+      borderRadius: 8,
+      marginTop: 8,
+      paddingHorizontal: 16,
     },
     styleViewItemTitle: {
       flexDirection: "row",

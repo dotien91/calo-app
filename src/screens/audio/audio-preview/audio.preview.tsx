@@ -237,7 +237,7 @@ const AudioPreview = () => {
       view_number: data.view_number,
       post_avatar: data.post_avatar,
       podcast_category: data.podcast_category,
-      attach_files: data.attach_files
+      attach_files: data.attach_files,
     });
     // _setJson("Audio", JSON.stringify(listAudioWatched));
   };
