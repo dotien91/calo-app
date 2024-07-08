@@ -35,7 +35,7 @@ export default function LoginScreen() {
       <View style={styles.container}>
         <View style={[CommonStyle.center]}>
           <IconSvg
-            name="logoIkigaiCoach"
+            name="logoIeltsHunter"
             width={108}
             height={95}
             color={colors.primary}

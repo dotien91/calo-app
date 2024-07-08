@@ -97,7 +97,7 @@ const ItemList = ({
   };
 
   const isWatched = useMemo(
-    () => listAudioWatched.filter(item => item.id === _id),
+    () => listAudioWatched.filter((item) => item.id === _id),
     [listAudioWatched, _id],
   );
 

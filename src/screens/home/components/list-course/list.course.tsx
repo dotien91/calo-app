@@ -1,5 +1,5 @@
 import React from "react";
-import {FlatList, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
 import { translations } from "@localization";
@@ -71,7 +71,7 @@ const CourseView = () => {
         renderItem={renderItem}
         scrollEventThrottle={16}
         contentContainerStyle={{
-          paddingLeft: 16,
+          // paddingLeft: 16,
           paddingBottom: 16,
         }}
         initialNumToRender={2}

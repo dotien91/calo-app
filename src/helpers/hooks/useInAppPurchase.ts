@@ -1,7 +1,11 @@
 import { isIOS } from "@freakycoder/react-native-helpers";
 import * as NavigationService from "react-navigation-helpers";
 
-import { closeSuperModal, showLoading, showToast } from "@helpers/super.modal.helper";
+import {
+  closeSuperModal,
+  showLoading,
+  showToast,
+} from "@helpers/super.modal.helper";
 import { translations } from "@localization";
 import { createVnpayUrl, requestIapBackend } from "@services/api/payment.api";
 import eventEmitter from "@services/event-emitter";
@@ -43,11 +47,9 @@ export const useInAppPurchase = () => {
   const setExtraUserData = useStore((state) => state.setExtraUserData);
   const userData = useStore((state) => state.userData);
 
-
   useEffect(() => {
     setExtraUserData({ subscriptions });
   }, [subscriptions]);
-  
 
   useEffect(() => {
     console.log("currentPurchase", currentPurchase);
@@ -62,12 +64,19 @@ export const useInAppPurchase = () => {
             "current_product_purchase_type",
           );
           let currentProductType = _getJson("current_product_type");
-            if (!currentProductType) {
-              currentProductType = (currentPurchase?.productId == "com.coach.podcasttest2" || currentPurchase?.productId == "com.coach.podcasttest3") ? "subscription" : "product"
-              currentProductPurchaseType = currentProductType
-            }
+          if (!currentProductType) {
+            currentProductType =
+              currentPurchase?.productId == "com.coach.podcasttest2" ||
+              currentPurchase?.productId == "com.coach.podcasttest3"
+                ? "subscription"
+                : "product";
+            currentProductPurchaseType = currentProductType;
+          }
 
-            console.log("currentProductTypecurrentProductType", currentProductType)
+          console.log(
+            "currentProductTypecurrentProductType",
+            currentProductType,
+          );
           const paramsFinishTransaction = {
             purchase: currentPurchase,
             isConsumable: isIOS || currentProductPurchaseType == "product",
@@ -192,10 +201,10 @@ export const useInAppPurchase = () => {
   }, []);
 
   const _getAvailablePurchases = async () => {
-    showLoading()
-    await getAvailablePurchases()
-    closeSuperModal()
-    alert("Purchase restoration successful")
+    showLoading();
+    await getAvailablePurchases();
+    closeSuperModal();
+    alert("Purchase restoration successful");
   };
 
   const initIAP = async (productIds?: string[]) => {
@@ -216,12 +225,11 @@ export const useInAppPurchase = () => {
         });
       }
       // await getAvailablePurchases();
-
     } catch (error) {
       console.log("error initIAP", error);
     }
   };
-  console.log("availablePurchases", availablePurchases)
+  console.log("availablePurchases", availablePurchases);
 
   const createOrder = async (data) => {
     return createVnpayUrl(data).then(async (res) => {

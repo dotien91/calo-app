@@ -36,7 +36,7 @@ const CourseItem = ({
   isHorizontalStyle,
   style,
   data,
-  fromHome
+  fromHome,
 }: CourseItemProps) => {
   const {
     _id,
@@ -51,7 +51,7 @@ const CourseItem = ({
     public_status,
   } = data;
   const userData = useStore((state) => state.userData);
-  let widthImage = fromHome ? Device.width - 20 : Device.width - 32;
+  let widthImage = fromHome ? Device.width + 8 : Device.width - 32;
   if (isHorizontalStyle) {
     widthImage = widthImage / 1.5;
   }
@@ -168,25 +168,28 @@ const CourseItem = ({
         >
           <TouchableOpacity
             style={
-            fromHome ?{
-              width: widthImage,
-              backgroundColor: palette.yellow20,
-              ...CS.center,
-              borderRadius: 8,
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: 4,
-            }: {
-              flex: 1,
-              backgroundColor: palette.yellow20,
-              ...CS.center,
-              borderRadius: 8,
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: 4,
-            }}
+              fromHome
+                ? {
+                    width: widthImage,
+                    backgroundColor: palette.yellow20,
+                    ...CS.center,
+                    borderRadius: 8,
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: 4,
+                  }
+                : {
+                    flex: 1,
+                    backgroundColor: palette.yellow20,
+                    ...CS.center,
+                    borderRadius: 8,
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: 4,
+                  }
+            }
             onPress={() => shareCourse(userData?.invitation_code, data.title)}
           >
             <IconSvg name="icDollar" size={16} />
@@ -250,7 +253,8 @@ const CourseItem = ({
       onPress={openPreviewCourse}
       style={[
         styles.courseItem,
-        isSliderItem && !fromHome && { padding: 0, width: widthImage, marginRight: 16 },
+        isSliderItem &&
+          !fromHome && { padding: 0, width: widthImage, marginRight: 16 },
         style ? style : {},
       ]}
     >

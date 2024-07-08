@@ -70,11 +70,17 @@ const AllBookScreen = () => {
   return (
     <SafeAreaView style={CS.safeAreaView}>
       <Header text={name || translations.audio.allAudio} />
-      {!isLoading && listData.length == 0 && !fromPodcastWatched && renderEmptyCourseOfMe()}
-      {isLoading && listData.length == 0 && !fromPodcastWatched && renderLoading()}
+      {!isLoading &&
+        listData.length == 0 &&
+        !fromPodcastWatched &&
+        renderEmptyCourseOfMe()}
+      {isLoading &&
+        listData.length == 0 &&
+        !fromPodcastWatched &&
+        renderLoading()}
       <FlatList
         showsHorizontalScrollIndicator={false}
-        data={fromPodcastWatched? listAudioWatched:  listData}
+        data={fromPodcastWatched ? listAudioWatched : listData}
         renderItem={renderItem}
         scrollEventThrottle={16}
         contentContainerStyle={{

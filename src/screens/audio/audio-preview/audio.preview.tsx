@@ -40,7 +40,7 @@ import { useLastActiveTrack } from "../hook/useLastActiveTrack";
 import eventEmitter from "@services/event-emitter";
 import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
-import { _setJson } from "@services/local-storage";
+// import { _setJson } from "@services/local-storage";
 import * as NavigationService from "react-navigation-helpers";
 import { IconType } from "react-native-dynamic-vector-icons";
 import IconBtn from "@shared-components/button/IconBtn";
@@ -67,7 +67,7 @@ const AudioPreview = () => {
   const lastActiveTrack = useLastActiveTrack();
 
   const displayedTrack = activeTrack ?? lastActiveTrack;
-  const listAudioWatched = useStore((store) => store.listAudioWatched);
+  // const listAudioWatched = useStore((store) => store.listAudioWatched);
   const updateListAudioWatched = useStore(
     (store) => store.updateListAudioWatched,
   );
@@ -237,7 +237,7 @@ const AudioPreview = () => {
       view_number: data.view_number,
       post_avatar: data.post_avatar,
       podcast_category: data.podcast_category,
-      attach_files: data.attach_files
+      attach_files: data.attach_files,
     });
     // _setJson("Audio", JSON.stringify(listAudioWatched));
   };

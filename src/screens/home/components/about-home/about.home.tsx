@@ -1,14 +1,12 @@
 import React from "react";
-import { ImageBackground } from "react-native";
-
 import HeaderHome from "../header-home/HeaderHome";
 import { Device } from "@utils/device.ui.utils";
 import { getStatusBarHeight } from "react-native-safearea-height";
+import { View } from "react-native";
 
 const AboutHome = () => {
   return (
-    <ImageBackground
-      source={require("../../../../assets/images/home_header.png")}
+    <View
       style={{
         width: Device.width,
         // // position: "absolute",
@@ -28,7 +26,7 @@ const AboutHome = () => {
           <Text style={styles.styleTxtText}>{translations.welcomeBack}</Text>
         </View>
       )} */}
-    </ImageBackground>
+    </View>
   );
 };
 
