@@ -1730,21 +1730,15 @@ export default {
     emptyTask: "Chưa có bài tập nào",
   },
   introwelcome: {
-    text11: "Nâng Cao Hành Trình Cuộc Sống Của Bạn",
+    text11: "Chào mừng bạn đến với thế giới ngôn ngữ",
     text12:
-      "Bắt đầu một trải nghiệm biến đổi với các khóa học về phát triển cá nhân, tâm lý học và kỹ năng sống. Tự quyền lực bản thân và phát triển",
-    text21: "Mở Khóa Tiềm Năng Nghề Nghiệp Của Bạn",
+      "Bạn đã sẵn sàng tham gia vào cuộc phiêu lưu phong phú này chưa? Hãy bắt đầu cuộc phiêu lưu học tập của bạn ngay bây giờ!",
+    text21: "Tham gia cộng đồng IELTS sôi động của chúng tôi",
     text22:
-      "Khám phá một loạt các khóa học hướng nghiệp ngay tại ngón tay bạn. Đây là cánh cửa của bạn đến sự phát triển chuyên nghiệp và thành công",
-    text31: "Tự Quyền Lực Tương Lai Tài Chính Của Bạn",
+      "Một không gian để kết nối với những người học khác, chia sẻ thông tin chi tiết và thúc đẩy hành trình chuẩn bị của bạn cùng nhau!",
+    text31: "Hình thức học tập đa dạng",
     text32:
-      "Mở khóa bí mật của tài chính thông qua các khóa học do các chuyên gia dẫn dắt về ngân sách, đầu tư và lập kế hoạch tài chính. Kiểm soát tài chính và xây dựng một tương lai an toàn",
-    text41: "Mở Khóa Thành Công Kinh Doanh",
-    text42:
-      "Khám phá khóa học về khởi nghiệp, tiếp thị và quản lý. Nâng cao kỹ năng của bạn và phát triển trong thế giới kinh doanh",
-    text51: "Chăm Sóc Sức Khỏe Của Bạn Bất Cứ Lúc Nào, Bất Cứ Nơi Đâu",
-    text52:
-      "Khám phá các khóa học sức khỏe hàng đầu trong IELTS Hunter. Đây là nơi bạn có thể tự quản lý sức khỏe và phát triển bản thân",
+      "Chọn cuộc phiêu lưu học tập của bạn: đi sâu vào các mô-đun video theo nhịp độ riêng, nhận hướng dẫn được cá nhân hóa trong các phiên 1v1 và thúc đẩy cộng tác nhóm.",
   },
   discover: {
     study: "Học",

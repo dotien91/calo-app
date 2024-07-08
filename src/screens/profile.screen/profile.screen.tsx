@@ -1,5 +1,12 @@
-import React, { useEffect, useMemo } from "react";
-import { FlatList, SafeAreaView, ScrollView, Text, View } from "react-native";
+import React, { useEffect, useMemo, useState } from "react";
+import {
+  FlatList,
+  Pressable,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  View,
+} from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 // import Clipboard from "@react-native-community/clipboard";
@@ -10,6 +17,7 @@ import CS from "@theme/styles";
 import Avatar from "@shared-components/user/Avatar";
 import useStore from "@services/zustand/store";
 import IconBtn from "@shared-components/button/IconBtn";
+import PieChartCommon from "@shared-components/pie-chart/pie.chart";
 import IconSvg from "assets/svg";
 import { translations } from "@localization";
 import { getListTaskByUser } from "@services/api/task.api";
@@ -24,8 +32,7 @@ import ListCodeActive from "@shared-components/code-active/list.code.active";
 import InviteCode from "@shared-components/code-share/code.invite.share";
 import eventEmitter from "@services/event-emitter";
 import TashListItem from "@shared-components/task-item/task.list.item";
-import ChartIkigai from "./chart.ikigai";
-import TextBase from "@shared-components/TextBase";
+import { getListScore } from "@services/api/pie.chart.api";
 
 const SettingProfileScreen = () => {
   const theme = useTheme();
@@ -34,7 +41,7 @@ const SettingProfileScreen = () => {
   const userInfo = useStore((state) => state.userInfo);
   const userMedia = useStore((state) => state.userMedia);
   const { renderViewRequestLogin } = useUserHook();
-  const { changeUserMedia, isTeacher } = useUserHelper();
+  const { changeUserMedia } = useUserHelper();
 
   const styles = useMemo(() => createStyles(theme), [theme]);
   const listrenderPointCoin = [
@@ -52,18 +59,103 @@ const SettingProfileScreen = () => {
     {
       icon: "icCoinStar",
       title: userInfo?.point || 0,
-      onPress: () => NavigationService.navigate(SCREENS.DISCOVERSCREEN_TAB),
-      end: (userInfo?.point || 0) > 1 ? "Points" : "Point",
+      onPress: () => NavigationService.navigate(SCREENS.DISCOVERSCREEN),
+      end: "Points",
     },
     {
       icon: "icCoin",
       title: userInfo?.current_coin || 0,
       onPress: () =>
         NavigationService.navigate(SCREENS.AFFILIATE, { type: "coin" }),
-      end: "ICC",
+      end: "IHC",
     },
   ];
 
+  const [data, setData] = useState([]);
+  const [point, setPoint] = useState([]);
+
+  const _getListScore = () => {
+    const paramsRequest = {};
+    getListScore(paramsRequest).then((res) => {
+      if (!res.isError) {
+        const {
+          listening_percentage_average = 0,
+          speaking_percentage_average = 0,
+          reading_percentage_average = 0,
+          writing_percentage_average = 0,
+        } = res.data;
+        const sum =
+          listening_percentage_average +
+          speaking_percentage_average +
+          reading_percentage_average +
+          writing_percentage_average;
+
+        const average = sum / 4;
+        setPoint(average ? average.toFixed(3) : 0);
+        const data = [
+          {
+            percentage: Number(
+              ((listening_percentage_average * 100) / (sum || 1)).toFixed(2),
+            ),
+            color: palette.btnRedPrimary,
+            title: translations.task.listening,
+          },
+          {
+            percentage: Number(
+              ((speaking_percentage_average * 100) / (sum || 1)).toFixed(2),
+            ),
+            color: palette.gold,
+            title: translations.task.speaking,
+          },
+          {
+            percentage: Number(
+              ((reading_percentage_average * 100) / (sum || 1)).toFixed(2),
+            ),
+            color: palette.blueChart,
+            title: translations.task.reading,
+          },
+          {
+            percentage: Number(
+              ((writing_percentage_average * 100) / (sum || 1)).toFixed(2),
+            ),
+            color: palette.greenChart,
+            title: translations.task.writing,
+          },
+        ];
+        setData(data);
+      } else {
+        setPoint(0);
+        setData([
+          {
+            percentage: 0,
+            color: palette.btnRedPrimary,
+            title: translations.task.listening,
+          },
+          {
+            percentage: 0,
+            color: palette.gold,
+            title: translations.task.speaking,
+          },
+          {
+            percentage: 0,
+            color: palette.blueChart,
+            title: translations.task.reading,
+          },
+          {
+            percentage: 0,
+            color: palette.greenChart,
+            title: translations.task.writing,
+          },
+        ]);
+      }
+    });
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      _getListScore();
+    }, []),
+  );
   const onPressHeaderRight = () => {
     NavigationService.navigate(SCREENS.SETTING);
   };
@@ -74,7 +166,7 @@ const SettingProfileScreen = () => {
     item: any;
     index: number;
   }) => {
-    // if (item.hide) return null;
+    if (item.hide) return null;
     return (
       <PressableBtn
         onPress={item.onPress}
@@ -93,7 +185,6 @@ const SettingProfileScreen = () => {
       </PressableBtn>
     );
   };
-
   const openSetting = () => {
     NavigationService.navigate(SCREENS.SETTING);
   };
@@ -162,8 +253,20 @@ const SettingProfileScreen = () => {
     );
   };
 
+  const openHiddenPage = () => {
+    NavigationService.navigate(SCREENS.HIDDEN_PAGE);
+  };
   const renderPieChart = () => {
-    return <ChartIkigai />;
+    return (
+      <View style={{ marginHorizontal: 16 }}>
+        <Text style={styles.textYourScore}>{translations.task.yourscore}</Text>
+        <PieChartCommon sections={data} point={point}></PieChartCommon>
+        <Pressable onLongPress={openHiddenPage} style={styles.viewPowered}>
+          <Text style={styles.textPoweredBy}>{translations.task.powered}</Text>
+          <IconSvg name="logoIeltsHunter" width={32} height={18} />
+        </Pressable>
+      </View>
+    );
   };
 
   const renderInviteFriend = () => {
@@ -190,50 +293,6 @@ const SettingProfileScreen = () => {
       </SafeAreaView>
     );
   }
-  const renderButtonTeacherScreen = () => {
-    if (!isTeacher) return null;
-    return (
-      <PressableBtn
-        onPress={() => NavigationService.navigate(SCREENS.TEACHER_SCREEN)}
-      >
-        <View
-          style={{
-            backgroundColor: colors.greenTh2,
-            flexDirection: "row",
-            padding: 6,
-            alignItems: "center",
-            marginBottom: 10,
-          }}
-        >
-          <IconSvg
-            size={48}
-            name="icTeacher"
-            style={{
-              marginHorizontal: 13,
-            }}
-          />
-          <View>
-            <TextBase fontWeight="600" color="white">
-              {translations.profileTeacher.titleBtn}
-            </TextBase>
-            <TextBase fontSize={12} color="white">
-              {translations.profileTeacher.desBtn}
-            </TextBase>
-          </View>
-          <Icon
-            name="chevron-forward-outline"
-            type={IconType.Ionicons}
-            color={colors.white}
-            size={30}
-            style={{
-              position: "absolute",
-              right: 10,
-            }}
-          />
-        </View>
-      </PressableBtn>
-    );
-  };
 
   return (
     <SafeAreaView style={CS.container}>
@@ -245,7 +304,6 @@ const SettingProfileScreen = () => {
       />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ flex: 1, marginBottom: 20 }}>
-          {renderButtonTeacherScreen()}
           {renderScrollPointCoin()}
           {renderPieChart()}
           <Tasks />
@@ -256,82 +314,72 @@ const SettingProfileScreen = () => {
     </SafeAreaView>
   );
 };
-interface TaskProps {
-  numberOfTasks?: number;
-  title?: string;
-}
-export const Tasks: React.FC<TaskProps> = React.memo(
-  ({ numberOfTasks, title }) => {
-    const theme = useTheme();
-    const { colors } = theme;
-    const styles = useMemo(() => createStyles(theme), [theme]);
 
-    const onSeeAll = () => {
-      NavigationService.navigate(SCREENS.TASK_SCREEN);
+const Tasks = React.memo(() => {
+  const theme = useTheme();
+  const { colors } = theme;
+  const styles = useMemo(() => createStyles(theme), [theme]);
+
+  const onSeeAll = () => {
+    NavigationService.navigate(SCREENS.TASK_SCREEN);
+  };
+
+  const [listData, setListData] = React.useState([]);
+  useFocusEffect(
+    React.useCallback(() => {
+      getTask();
+    }, []),
+  );
+
+  useEffect(() => {
+    eventEmitter.on("reload_list_task", getTask);
+    return () => {
+      eventEmitter.off("reload_list_task", getTask);
     };
+  }, []);
 
-    const [listData, setListData] = React.useState([]);
+  const getTask = () => {
+    getListTaskByUser({ order_by: "DESC" }).then((res) => {
+      if (!res.isError) {
+        setListData((res.data?.[0]?.missions || []).reverse());
+      }
+    });
+  };
 
-    useFocusEffect(
-      React.useCallback(() => {
-        getTask();
-      }, []),
-    );
-
-    useEffect(() => {
-      eventEmitter.on("reload_list_task", getTask);
-      return () => {
-        eventEmitter.off("reload_list_task", getTask);
-      };
-    }, []);
-
-    const getTask = () => {
-      getListTaskByUser({ order_by: "DESC" }).then((res) => {
-        if (!res.isError) {
-          setListData((res.data?.[0]?.missions || []).reverse());
-        }
-      });
-    };
-
-    if (!listData.length) return null;
-
-    return (
-      <View style={{ marginTop: 5, marginHorizontal: 16 }}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginVertical: 16,
-          }}
-        >
-          <Text style={styles.textTasks}>
-            {title || translations.task.task}
-          </Text>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <PressableBtn onPress={onSeeAll}>
-              <Text style={styles.textSeeAll}>{translations.seeAll}</Text>
-            </PressableBtn>
-            <Icon
-              name="chevron-forward-outline"
-              type={IconType.Ionicons}
-              color={colors.btnRedPrimary}
-              size={16}
-            ></Icon>
-          </View>
-        </View>
-        <View
-          style={{
-            backgroundColor: colors.backgroundColorGrey,
-            borderRadius: 8,
-          }}
-        >
-          {listData.slice(0, numberOfTasks || 5).map((item, index) => {
-            return <TashListItem key={index} item={item} />;
-          })}
+  return (
+    <View style={{ marginTop: 16, marginHorizontal: 16 }}>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginVertical: 16,
+        }}
+      >
+        <Text style={styles.textTasks}>{translations.task.task}</Text>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <PressableBtn onPress={onSeeAll}>
+            <Text style={styles.textSeeAll}>{translations.seeAll}</Text>
+          </PressableBtn>
+          <Icon
+            name="chevron-forward-outline"
+            type={IconType.Ionicons}
+            color={colors.btnRedPrimary}
+            size={16}
+          ></Icon>
         </View>
       </View>
-    );
-  },
-);
+      <View
+        style={{
+          backgroundColor: colors.backgroundColorGrey,
+          borderRadius: 8,
+        }}
+      >
+        {listData.slice(0, 5).map((item, index) => {
+          return <TashListItem key={index} item={item} />;
+        })}
+      </View>
+    </View>
+  );
+});
 
 export default SettingProfileScreen;

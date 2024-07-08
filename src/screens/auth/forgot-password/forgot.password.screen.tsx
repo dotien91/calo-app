@@ -89,7 +89,7 @@ export default function ForgotPasswordScreen() {
           <GoBackButton />
           <View style={[{ alignItems: "center" }]}>
             <IconSvg
-              name="logoIkigaiCoach"
+              name="logoIeltsHunter"
               width={108}
               height={95}
               color={colors.primary}

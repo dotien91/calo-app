@@ -69,7 +69,7 @@ const CourseView = () => {
         renderItem={renderItem}
         scrollEventThrottle={16}
         contentContainerStyle={{
-          paddingLeft: 16,
+          // paddingLeft: 16,
           paddingBottom: 16,
         }}
         initialNumToRender={2}
