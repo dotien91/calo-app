@@ -32,13 +32,14 @@ import eventEmitter from "@services/event-emitter";
 import NewHomeScreen from "@screens/home/new.screen.home";
 import BottomSheetPanResponder from "@screens/audio/components/BottomSheetPanResponder";
 import OneoneScreen from "@screens/call/oneone.screen";
+import chatListScreen from "@screens/chat/list-chat/chat.list.screen";
 
 // import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 const DiscoverStack = createStackNavigator();
-const ClubStack = createStackNavigator();
+// const ClubStack = createStackNavigator();
 const HomeStack = createStackNavigator();
 const CourseStack = createStackNavigator();
 
@@ -61,9 +62,9 @@ const Navigation = () => {
       case SCREENS.COURSE_TAB:
         iconName = focused ? "icCourse" : "icCourse";
         break;
-      // case SCREENS.CHAT:
-      //   iconName = focused ? "icCoach" : "icCoachBlur";
-      //   break;
+      case SCREENS.CHAT:
+        iconName = focused ? "icChat" : "icChat";
+        break;
       case SCREENS.NOTIFICATION:
         iconName = focused ? "bell" : "bell";
         break;
@@ -169,7 +170,7 @@ const Navigation = () => {
             }}
           />
           <Tab.Screen name={SCREENS.COURSE_TAB} component={CourseStackScreen} />
-          <Tab.Screen name={SCREENS.CLUB_TAB} component={ClubStackScreen} />
+          {/* <Tab.Screen name={SCREENS.CLUB_TAB} component={ClubStackScreen} /> */}
           <Tab.Screen
             name={SCREENS.DISCOVERSCREEN_TAB}
             component={DiscoveryStackScreen}
@@ -179,6 +180,7 @@ const Navigation = () => {
               },
             }}
           />
+          <Tab.Screen name={SCREENS.CHAT} component={chatListScreen} />
 
           <Tab.Screen
             name={SCREENS.SETTINGPROFILESCREEN_TAB}
@@ -235,7 +237,7 @@ const Navigation = () => {
   const DiscoveryStackScreen = () => {
     return (
       <DiscoverStack.Navigator screenOptions={{ headerShown: false }}>
-        {DiscoveryStackData.map((item) => (
+        {[...DiscoveryStackData, ...ClubStackData].map((item) => (
           <Stack.Screen
             key={item.name}
             name={item.name}
@@ -247,20 +249,20 @@ const Navigation = () => {
     );
   };
 
-  const ClubStackScreen = () => {
-    return (
-      <ClubStack.Navigator screenOptions={{ headerShown: false }}>
-        {ClubStackData.map((item) => (
-          <Stack.Screen
-            key={item.name}
-            name={item.name}
-            component={item.screen}
-          />
-        ))}
-        {/* {renderCommonStack()} */}
-      </ClubStack.Navigator>
-    );
-  };
+  // const ClubStackScreen = () => {
+  //   return (
+  //     <ClubStack.Navigator screenOptions={{ headerShown: false }}>
+  //       {ClubStackData.map((item) => (
+  //         <Stack.Screen
+  //           key={item.name}
+  //           name={item.name}
+  //           component={item.screen}
+  //         />
+  //       ))}
+  //       {/* {renderCommonStack()} */}
+  //     </ClubStack.Navigator>
+  //   );
+  // };
 
   const CourseStackScreen = () => {
     return (

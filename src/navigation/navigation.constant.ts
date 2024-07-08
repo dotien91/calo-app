@@ -93,7 +93,7 @@ import ClassHomeWorkScreen from "@screens/class-home-work/class.home.work.screen
 import CreateWorkScreen from "@screens/class-home-work/create.work.screen";
 import DetailTaskScreen from "@screens/class-home-work/detail.task.screen";
 import AddWorkStudentScreen from "@screens/class-home-work/add.work.student.screen";
-import ChatListScreen from "@screens/chat/list-chat/chat.list.screen";
+// import ChatListScreen from "@screens/chat/list-chat/chat.list.screen";
 import NotificationScreen from "@screens/notification/NotificationScreen";
 import TaskScreen from "@screens/profile.screen/task.screen";
 import TeacherCourse from "@screens/teacher-courses/teacher.course";
@@ -246,7 +246,7 @@ export const CommonStackData = [
   { name: SCREENS.COURSE_RATE, screen: CourseRate },
   { name: SCREENS.COURSE_SEARCH, screen: CourseSearchScreen },
   { name: SCREENS.TEACHER_DETAIL, screen: DetailTeacherScreen },
-  { name: SCREENS.CHAT, screen: ChatListScreen },
+  // { name: SCREENS.CHAT, screen: ChatListScreen },
   { name: SCREENS.POST_SCREEN, screen: PostScreen },
   { name: SCREENS.EDIT_COMMENT, screen: EditCommentScreen },
   { name: SCREENS.PROFILE_CURRENT_USER, screen: ProfileUserScreen },
