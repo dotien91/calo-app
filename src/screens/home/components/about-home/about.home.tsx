@@ -3,12 +3,14 @@ import HeaderHome from "../header-home/HeaderHome";
 import { Device } from "@utils/device.ui.utils";
 import { getStatusBarHeight } from "react-native-safearea-height";
 import { View } from "react-native";
+import { palette } from "@theme/themes";
 
 const AboutHome = () => {
   return (
     <View
       style={{
         width: Device.width,
+        backgroundColor: palette.white,
         // // position: "absolute",
         // left: 0,
         // top: 0,

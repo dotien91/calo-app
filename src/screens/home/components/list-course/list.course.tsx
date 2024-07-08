@@ -40,14 +40,16 @@ const CourseView = () => {
       return (
         <>
           <CourseItem
-          style={{
-            width: ScreenWidth,
-            paddingHorizontal: 0,
-            paddingRight: 0,
-            
-          }}
-          fromHome
-          isSliderItem data={item.item} key={index} />
+            style={{
+              width: ScreenWidth,
+              paddingHorizontal: 16,
+              paddingRight: 0,
+            }}
+            fromHome
+            isSliderItem
+            data={item.item}
+            key={index}
+          />
         </>
       );
     }
