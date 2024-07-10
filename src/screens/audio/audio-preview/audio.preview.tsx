@@ -258,7 +258,7 @@ const AudioPreview = () => {
     });
   };
   const onPressShare = () => {
-    shareAudio("https://ikigaicoach.net");
+    shareAudio("https://ieltshunter.io");
   };
   const hide =
     !displayedTrack ||

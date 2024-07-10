@@ -100,3 +100,17 @@ export const shareCodeInvite = async (code: string) => {
       err && console.log(err);
     });
 };
+
+export const shareAudio = (link: string) => {
+  const shareOptions = {
+    title: translations.post.share,
+    message: translations.audio.shareAudio(link),
+  };
+  Share.open(shareOptions)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      err && console.log(err);
+    });
+};
