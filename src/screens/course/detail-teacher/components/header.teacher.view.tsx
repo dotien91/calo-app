@@ -142,7 +142,7 @@ const HeaderDetailTeacher = ({ data }: HeaderDetailTeacherProps) => {
               textColor={palette.white}
             />
             <View style={{ height: 12 }} />
-            {!!data?.is_creator && <SubscriptionBtn />}
+            {/* {!!data?.is_creator && <SubscriptionBtn />} */}
           </View>
           {!!data?._id &&
             (linkFb !== "" || linkWebsite !== "" || linkYoutube !== "") && (

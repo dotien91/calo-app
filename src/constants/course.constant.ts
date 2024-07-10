@@ -211,26 +211,26 @@ export const filterTeacherKeys = [
 ];
 
 export const quickFilterCourse = [
-  {
-    name: translations.course.allForms,
-    id: "All forms",
-    type: "types",
-  },
-  {
-    name: translations.course.callOneVsOne,
-    id: "Call 1-1",
-    type: "types",
-  },
-  {
-    name: translations.course.salfLearning,
-    id: "Self-learning",
-    type: "types",
-  },
-  {
-    name: translations.course.callGroup,
-    id: "Call group",
-    type: "types",
-  },
+  // {
+  //   name: translations.course.allForms,
+  //   id: "All forms",
+  //   type: "types",
+  // },
+  // {
+  //   name: translations.course.callOneVsOne,
+  //   id: "Call 1-1",
+  //   type: "types",
+  // },
+  // {
+  //   name: translations.course.salfLearning,
+  //   id: "Self-learning",
+  //   type: "types",
+  // },
+  // {
+  //   name: translations.course.callGroup,
+  //   id: "Call group",
+  //   type: "types",
+  // },
   {
     name: translations.course.allSkills,
     id: "All skills",
