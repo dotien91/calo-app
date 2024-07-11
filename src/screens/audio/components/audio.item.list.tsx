@@ -129,7 +129,10 @@ const ItemList = ({
             ]}
           >
             {`${formatNumber(view_number) + " " || ""}`}
-            <Text style={styles.textNoReview}>{translations.audio.listen}</Text>
+            {parseInt(formatNumber(view_number)) > 1 
+            ? <Text style={styles.textNoReview}>{`${translations.audio.listen}s`}</Text>
+            : <Text style={styles.textNoReview}>{translations.audio.listen}</Text>
+            }
           </Text>
         ) : (
           <Text

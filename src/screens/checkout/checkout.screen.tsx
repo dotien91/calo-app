@@ -414,7 +414,7 @@ const CheckoutScreen = () => {
 
     const data = {
       payment_method: isVnPayMethod ? "vn_pay" : "smart_banking",
-      deep_link: "ikicoach://payment",
+      deep_link: "ieltshunter://payment",
       plan_objects: [
         {
           amount_of_package: "1",
@@ -443,7 +443,7 @@ const CheckoutScreen = () => {
 
       const newData = {
         payment_method: isVnPayMethod ? "vn_pay" : "smart_banking",
-        deep_link: "ikicoach://payment",
+        deep_link: "ieltshunter://payment",
         plan_objects: [
           {
             amount_of_package: "1",

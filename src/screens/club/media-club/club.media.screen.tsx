@@ -1,7 +1,6 @@
 import React from "react";
 import {
   View,
-  SafeAreaView,
   Text,
   useWindowDimensions,
   StyleSheet,
@@ -19,6 +18,7 @@ import { translations } from "@localization";
 import { palette } from "@theme/themes";
 import ClubMediaImageView from "./club.media.image.view";
 import ClubMediaFilesView from "./club.media.files.view";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const renderScene = SceneMap({
   file: () => <ClubMediaFilesView />,
