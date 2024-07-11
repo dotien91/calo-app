@@ -66,6 +66,7 @@ const ListLiveStream = ({ group_id }: { group_id: string }) => {
     await TrackPlayer.play();
     setTimeout(() => {
       TrackPlayer.stop();
+      TrackPlayer.reset();
     }, 2000);
   };
 

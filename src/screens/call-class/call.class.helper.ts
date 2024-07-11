@@ -21,5 +21,6 @@ export const setSpeakerByTrick = async () => {
   await TrackPlayer.play();
   setTimeout(() => {
     TrackPlayer.stop();
+    TrackPlayer.reset();
   }, 2000);
 };
