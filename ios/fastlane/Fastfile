@@ -1,0 +1,29 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "Push a new beta build to TestFlight"
+  lane :beta do
+    ENV['FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD'] = "sqkq-opuk-wyee-arar"
+    # Enable automatic code signing
+    automatic_code_signing(
+      use_automatic_signing: true,
+      team_id: "N3W324GKBJ" # Thay thế bằng Team ID thực tế của bạn
+    )
+    increment_build_number(xcodeproj: "ieltshunter.xcodeproj")
+    build_app(
+      workspace: "IeltsHunter.xcworkspace",
+      scheme: "IeltsHunter",
+      export_method: "app-store",
+      # export_options: {
+      #   signingStyle: "automatic",
+      #   provisioningProfiles: {
+      #     "com.ikigroup.ieltshunter" => "ieltshunter_provision_prod_110724"
+      #   }
+      # }
+    )
+    upload_to_testflight(
+      username: "info@ikigroup.vn", # Thay thế bằng Apple ID của bạn
+      app_identifier: "com.ikigroup.ieltshunter" # Thay thế bằng Bundle ID của ứng dụng của bạn
+    )
+  end
+end
