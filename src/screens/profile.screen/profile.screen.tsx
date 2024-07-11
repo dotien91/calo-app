@@ -33,6 +33,7 @@ import InviteCode from "@shared-components/code-share/code.invite.share";
 import eventEmitter from "@services/event-emitter";
 import TashListItem from "@shared-components/task-item/task.list.item";
 import { getListScore } from "@services/api/pie.chart.api";
+import TextBase from "@shared-components/TextBase";
 
 const SettingProfileScreen = () => {
   const theme = useTheme();
@@ -41,8 +42,7 @@ const SettingProfileScreen = () => {
   const userInfo = useStore((state) => state.userInfo);
   const userMedia = useStore((state) => state.userMedia);
   const { renderViewRequestLogin } = useUserHook();
-  const { changeUserMedia } = useUserHelper();
-
+  const { changeUserMedia, isTeacher } = useUserHelper();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const listrenderPointCoin = [
     {
@@ -290,7 +290,50 @@ const SettingProfileScreen = () => {
       </SafeAreaView>
     );
   }
-
+  const renderButtonTeacherScreen = () => {
+    if (!isTeacher) return null;
+    return (
+      <PressableBtn
+        onPress={() => NavigationService.navigate(SCREENS.TEACHER_SCREEN)}
+      >
+        <View
+          style={{
+            backgroundColor: colors.greenTh2,
+            flexDirection: "row",
+            padding: 6,
+            alignItems: "center",
+            marginBottom: 10,
+          }}
+        >
+          <IconSvg
+            size={48}
+            name="icTeacher"
+            style={{
+              marginHorizontal: 13,
+            }}
+          />
+          <View>
+            <TextBase fontWeight="600" color="white">
+              {translations.profileTeacher.titleBtn}
+            </TextBase>
+            <TextBase fontSize={12} color="white">
+              {translations.profileTeacher.desBtn}
+            </TextBase>
+          </View>
+          <Icon
+            name="chevron-forward-outline"
+            type={IconType.Ionicons}
+            color={colors.white}
+            size={30}
+            style={{
+              position: "absolute",
+              right: 10,
+            }}
+          />
+        </View>
+      </PressableBtn>
+    );
+  };
   return (
     <SafeAreaView style={CS.container}>
       <Header
@@ -301,6 +344,7 @@ const SettingProfileScreen = () => {
       />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ flex: 1, marginBottom: 20 }}>
+          {renderButtonTeacherScreen()}
           {renderScrollPointCoin()}
           {renderPieChart()}
           <Tasks />
@@ -312,7 +356,7 @@ const SettingProfileScreen = () => {
   );
 };
 
-const Tasks = React.memo(() => {
+export const Tasks = React.memo(() => {
   const theme = useTheme();
   const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);

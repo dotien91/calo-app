@@ -28,7 +28,7 @@ interface CourseItemProps {
   isSliderItem?: boolean;
   style?: ViewStyle;
   data: ICourseItem;
-  fromHome?: boolean;
+  // fromHome?: boolean;
 }
 
 const CourseItem = ({
@@ -36,7 +36,7 @@ const CourseItem = ({
   isHorizontalStyle,
   style,
   data,
-  fromHome,
+  // fromHome,
 }: CourseItemProps) => {
   const {
     _id,
@@ -51,7 +51,7 @@ const CourseItem = ({
     public_status,
   } = data;
   const userData = useStore((state) => state.userData);
-  let widthImage = fromHome ? Device.width + 8 : Device.width - 32;
+  let widthImage =  Device.width - 32;
   if (isHorizontalStyle) {
     widthImage = widthImage / 1.5;
   }
@@ -149,7 +149,7 @@ const CourseItem = ({
             </Text>
           </View>
         )}
-        <View style={{ marginTop: 6, flexDirection: "row", gap: 8 }}>
+        <View style={{ marginTop: 6, flexDirection: "row", gap: 8 , flexWrap: 'wrap', height: 50}}>
           <Badge title="Best-seller" />
           {public_status !== "active" && <Badge title={public_status} />}
           {skills.map((item, index) => {
@@ -163,32 +163,21 @@ const CourseItem = ({
             height: 40,
             justifyContent: "space-between",
             gap: 16,
-            marginTop: 8,
+            marginTop: 4,
           }}
         >
           <TouchableOpacity
             style={
-              fromHome
-                ? {
-                    width: widthImage,
-                    backgroundColor: palette.yellow20,
-                    ...CS.center,
-                    borderRadius: 8,
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: 4,
-                  }
-                : {
-                    flex: 1,
-                    backgroundColor: palette.yellow20,
-                    ...CS.center,
-                    borderRadius: 8,
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: 4,
-                  }
+              {
+                flex: 1,
+                backgroundColor: palette.yellow20,
+                ...CS.center,
+                borderRadius: 8,
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: 4,
+              }
             }
             onPress={() => shareCourse(userData?.invitation_code, data.title)}
           >
@@ -254,7 +243,7 @@ const CourseItem = ({
       style={[
         styles.courseItem,
         isSliderItem &&
-          !fromHome && { padding: 0, width: widthImage, marginRight: 16 },
+         { padding: 0, width: widthImage, marginRight: 16 },
         style ? style : {},
       ]}
     >
