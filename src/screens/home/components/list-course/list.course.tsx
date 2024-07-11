@@ -40,6 +40,7 @@ const CourseView = () => {
       return (
         <>
           <CourseItem
+            fromHome
             isSliderItem
             data={item.item}
             key={index}

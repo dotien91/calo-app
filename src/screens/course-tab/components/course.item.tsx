@@ -28,7 +28,7 @@ interface CourseItemProps {
   isSliderItem?: boolean;
   style?: ViewStyle;
   data: ICourseItem;
-  // fromHome?: boolean;
+  fromHome?: boolean;
 }
 
 const CourseItem = ({
@@ -36,7 +36,7 @@ const CourseItem = ({
   isHorizontalStyle,
   style,
   data,
-  // fromHome,
+  fromHome,
 }: CourseItemProps) => {
   const {
     _id,
@@ -149,7 +149,7 @@ const CourseItem = ({
             </Text>
           </View>
         )}
-        <View style={{ marginTop: 6, flexDirection: "row", gap: 8 , flexWrap: 'wrap', height: 50}}>
+        <View style={{ marginTop: 6, flexDirection: "row", gap: 8 , flexWrap: 'wrap', height: fromHome ? 50: 25 }}>
           <Badge title="Best-seller" />
           {public_status !== "active" && <Badge title={public_status} />}
           {skills.map((item, index) => {
