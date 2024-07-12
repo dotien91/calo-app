@@ -1780,7 +1780,8 @@ export default {
     emptyTransaction: "Danh sách giao dịch trống",
     fromDate: "Từ ngày",
     toDate: "Đến ngày",
-    commission: "Doanh thu",
+    commission: "Hoa hồng",
+    revenua: "Doanh thu",
     commissionSale: "Hoa hồng bán hàng: 20%",
     desCommission:
       "Khi người dùng bạn giới thiệu mua khoá học, bạn sẽ nhận được 20% hoa hồng của khoá học. Ví dụ khoá học có giá 10,000,000đ, bạn sẽ nhận được 2,000,000đ khi người dùng mua khoá học thành công!",

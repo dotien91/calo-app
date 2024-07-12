@@ -1714,7 +1714,8 @@ export default {
     emptyTransaction: "トランザクションリストは空です",
     fromDate: "開始日",
     toDate: "終了日",
-    commission: "レヴェヌア",
+    commission: "手数料",
+    revenua: "収益",
     commissionSale: "販売手数料: 20%",
     desCommission:
       "あなたが紹介したユーザーがコースを購入すると、コースの20%の手数料を受け取ります。例えば、コースの価格が10,000,000 VNDの場合、ユーザーがコースを成功裏に購入すると2,000,000 VNDを受け取ります！",

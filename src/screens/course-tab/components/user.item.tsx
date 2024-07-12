@@ -85,7 +85,8 @@ const UserItem = ({
             borderRadius: 99,
             marginRight: 10,
           }}
-          sourceUri={{ uri: user_avatar_thumbnail }}
+          sourceUri={{ uri: user_avatar_thumbnail}}
+          
         />
       </View>
     );
