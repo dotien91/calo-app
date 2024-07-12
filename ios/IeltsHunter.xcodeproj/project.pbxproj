@@ -702,7 +702,7 @@
 				CODE_SIGN_ENTITLEMENTS = ieltshunter/ieltshunter.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.1.0;
+				CURRENT_PROJECT_VERSION = 37;
 				DEVELOPMENT_TEAM = N3W324GKBJ;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
@@ -844,7 +844,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.27;
+				MARKETING_VERSION = 0.1.15;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -868,7 +868,7 @@
 				CODE_SIGN_ENTITLEMENTS = ieltshunter/ieltshunter.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.1.0;
+				CURRENT_PROJECT_VERSION = 37;
 				DEVELOPMENT_TEAM = N3W324GKBJ;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1009,7 +1009,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.27;
+				MARKETING_VERSION = 0.1.15;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
