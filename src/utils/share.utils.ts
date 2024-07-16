@@ -63,14 +63,16 @@ export const shareProfile = (profileId: string) => {
       err && console.log(err);
     });
 };
-export const shareCourse = async (courseId: string) => {
+export const shareCourse = async (courseId: string, courseName: string) => {
   const linkDynamic = await createDynamicLink(
     // slug,
     `${BASEURL}/${courseId}`,
   );
   const shareOptions = {
     title: translations.post.share,
-    message: `${translations.course.shareThisCourse} ${linkDynamic}`,
+    message: `${translations.course.shareThisCourse(
+      courseName,
+    )} ${linkDynamic}`,
     // message: `${translations.course.shareThisCourse} ${BASEURL}/course/detail/${courseId}`,
   };
   Share.open(shareOptions)
