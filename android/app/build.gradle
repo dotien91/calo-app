@@ -132,7 +132,7 @@ android {
             keyPassword 'android'
         }
         release {
-            storeFile file('release-keystore')
+            storeFile file('release-keystore-ieltshunter')
             storePassword 'exam24h'
             keyAlias 'exam24h'
             keyPassword 'exam24h'
