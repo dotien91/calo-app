@@ -412,7 +412,7 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
       room_id: roomId,
       payload: JSON.stringify(offer),
     };
-    alert("emit offer client");
+    // alert("emit offer client");
     emitSocket("emitOffer", dataToEmitSocket);
     onSocket("answerClient", (d: any) => {
       // console.log("START 02", typeof d)

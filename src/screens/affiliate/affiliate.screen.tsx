@@ -195,7 +195,7 @@ const AffiliatePage = () => {
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: "first", title: translations.affiliate.commission },
+    { key: "first", title: translations.affiliate.revenua },
     { key: "second", title: translations.affiliate.withdraw },
   ]);
   const renderScene = SceneMap({
