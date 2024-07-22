@@ -1433,6 +1433,7 @@ export default {
     sending: "送信中...",
   },
   audio: {
+    caption: "キャプション",
     titlePodcast: "ポッドキャストのタイトル",
     description: "説明",
     playlist: "プレイリスト",

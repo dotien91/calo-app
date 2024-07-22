@@ -1504,6 +1504,7 @@ export default {
     sending: "Đang gửi...",
   },
   audio: {
+    caption: "Nội dung",
     titlePodcast: "Tiêu đề podcast",
     description: "Mô tả",
     playlist: "Danh sách phát",

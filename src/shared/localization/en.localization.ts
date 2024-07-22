@@ -967,6 +967,7 @@ export default {
     takeAPhoto: "Take a photo",
   },
   audio: {
+    caption: "Caption",
     titlePodcast: "Podcast episode title",
     description: "Description",
     playlist: "Playlist",

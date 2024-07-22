@@ -76,6 +76,7 @@ interface ICreatePodcast {
   post_avatar: string;
   attach_files: string;
   parent_id?: string;
+  caption?: string;
 }
 
 export async function CreatePodcast(data: ICreatePodcast) {

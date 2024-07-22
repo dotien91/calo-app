@@ -42,6 +42,7 @@ const CreateAudio = () => {
     defaultValues: {
       title: "",
       description: "",
+      caption: "",
     },
   });
 
@@ -70,7 +71,7 @@ const CreateAudio = () => {
           label: i.title,
         };
       });
-      console.log("dataset...", dataSet);
+      // console.log("dataset...", dataSet);
       setListPlaylist(dataSet);
     });
   };
@@ -128,6 +129,7 @@ const CreateAudio = () => {
       podcast_category: "661393d1d29bd7cb5f9bc9ce",
       is_premium: typePodcast === "member",
       // parent_id: playlist,
+      caption: dataHook.caption || "",
     };
     //  const data = {"attach_files": "[\"6672a4e703108bc71a6b4ff5\"]", "content": "Mo ta 1", "is_premium": false, "podcast_category": "661393d1d29bd7cb5f9bc9ce", "podcast_language": "en", "post_avatar": "6672a4bb03108bc71a6b4fce", "title": "Tieu de 1"}
     if (isChild || parent_id) {
@@ -201,6 +203,22 @@ const CreateAudio = () => {
           multiline
           errorTxt={errors.description?.message}
           maxLength={10000}
+          countLength
+          showPlaceholder
+        />
+        <InputHook
+          name="caption"
+          customStyle={CS.flex1}
+          inputProps={{
+            type: "text",
+            defaultValue: "",
+            placeholder: translations.audio.caption,
+          }}
+          control={control}
+          rules={{}}
+          multiline
+          errorTxt={errors.caption?.message}
+          maxLength={50000}
           countLength
           showPlaceholder
         />
