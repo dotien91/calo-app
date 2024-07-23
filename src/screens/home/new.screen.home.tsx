@@ -505,7 +505,7 @@ const NewHomeScreen = () => {
       "https://ia801304.us.archive.org/32/items/SilentRingtone/silence.mp3";
 
   useEffect(() => {
-    if (isLoggedIn() && (!userData?.target_point || !userData?.current_point)) {
+    if (isLoggedIn() && (!userData?.target_point && !userData?.current_point)) {
       setTimeout(() => {
         NavigationService.navigate(SCREENS.UPLOAD_CERTIFICATE);
       }, 30);

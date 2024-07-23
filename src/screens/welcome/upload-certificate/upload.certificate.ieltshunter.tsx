@@ -66,8 +66,8 @@ const UploadCertificate = () => {
       const params = {
         _id: userData?._id,
         certificate_list: JSON.stringify(listFile.map((i) => i._id)),
-        target_point: ieltsPoint,
-        current_point: currentIeltsPoint,
+        target_point: ieltsPoint !== "0.0" ? ieltsPoint: "",
+        current_point: currentIeltsPoint !== "0.0" ? currentIeltsPoint: "",
       };
       console.log(params);
       updateProfile(
