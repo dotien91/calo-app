@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import {
   FlatList,
   View,
-  useWindowDimensions,
+  // useWindowDimensions,
   TouchableOpacity,
   StyleSheet,
   Text,
 } from "react-native";
-import { TabView, SceneMap } from "react-native-tab-view";
+// import { TabView, SceneMap } from "react-native-tab-view";
 import * as NavigationService from "react-navigation-helpers";
 /**
  * ? Local Imports
@@ -33,43 +33,44 @@ import { translations } from "@localization";
 import CS from "@theme/styles";
 import EmptyResultView from "@shared-components/empty.data.component";
 import CourseView from "@screens/home/components/list-course/list.course";
+import { useFocusEffect } from "@react-navigation/native";
 
 interface CourseListScreenProps {}
 
-const renderScene = SceneMap({
-  first: () => <ListCourse isTabCourse={true} />,
-  second: () => <ListCourse isTabCourse={false} />,
-});
 
 const CourseListScreen: React.FC<CourseListScreenProps> = () => {
-  const courseCurrentType = useStore((state) => state.courseCurrentType);
-  const layout = useWindowDimensions();
+  // const courseCurrentType = useStore((state) => state.courseCurrentType);
+  // const layout = useWindowDimensions();
   const userData = useStore((state) => state.userData);
+  const setCourseCurrentType = useStore((state) => state.setCourseCurrentType);
+  // const [index, setIndex] = React.useState(0);
+  // const [routes] = React.useState([{ key: "first" }, { key: "second" }]);
 
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([{ key: "first" }, { key: "second" }]);
-
-  useEffect(() => {
-    const newIndex = courseCurrentType.id != EnumCourseType.tutor ? 0 : 1;
-    if (newIndex == index) return;
-    setIndex(courseCurrentType.id != EnumCourseType.tutor ? 0 : 1);
-  }, [courseCurrentType, index]);
-
-  const renderTabBar = () => <View />;
+  useFocusEffect(
+    // const newIndex = courseCurrentType.id != EnumCourseType.tutor ? 0 : 1;
+    // if (newIndex == index) return;
+    // setIndex(courseCurrentType.id != EnumCourseType.tutor ? 0 : 1);
+   useCallback(() => {
+    setCourseCurrentType({id: EnumCourseType.course, name: "Course"})
+   },[])
+  );
+  
+  // const renderTabBar = () => <View />;
   const { isLoggedIn } = useUserHook();
   const theme = useTheme();
   const { colors } = theme;
   return (
     <View style={{ flex: 1, paddingTop: getStatusBarHeight() }}>
       <CourseToolbar />
-      <TabView
+      {/* <TabView
         swipeEnabled={false}
         renderTabBar={renderTabBar}
         navigationState={{ index, routes }}
         renderScene={renderScene}
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}
-      />
+      /> */}
+      <ListCourse isTabCourse={true} />
       {isLoggedIn() &&
         (userData?.user_role === "teacher" ||
           userData?.user_role === "admin") && (
@@ -89,7 +90,7 @@ const CourseListScreen: React.FC<CourseListScreenProps> = () => {
   );
 };
 
-const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
+export const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
   const {
     isLoading,
     listData,
@@ -104,6 +105,7 @@ const ListCourse = React.memo(({ isTabCourse }: { isTabCourse: boolean }) => {
           sort_by: "createdAt",
           order_by: "DESC",
           public_status: "active",
+          types: ["Call group", "Self-learning"]
         },
     !isTabCourse ? getListTutor : getCourseList,
   );

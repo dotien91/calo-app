@@ -1,6 +1,6 @@
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import CS from "@theme/styles";
-import React from "react";
+import React, { useEffect } from "react";
 import { View, TouchableOpacity } from "react-native";
 import ListPostNew from "./new.list.post";
 import { palette } from "@theme/themes";
@@ -9,6 +9,9 @@ import { navigate } from "@helpers/navigation.helper";
 import { SCREENS } from "constants";
 import { useActiveTrack } from "react-native-track-player";
 import { useLastActiveTrack } from "@screens/audio/hook/useLastActiveTrack";
+import useStore from "@services/zustand/store";
+import * as NavigationService from "react-navigation-helpers";
+
 // import useStore from "@services/zustand/store";
 // import { EnumModalContentType, EnumStyleModalType, showSuperModal } from "@helpers/super.modal.helper";
 // const params = {
@@ -493,6 +496,7 @@ const NewHomeScreen = () => {
   const { isLoggedIn } = useUserHook();
   const activeTrack = useActiveTrack();
   const lastActiveTrack = useLastActiveTrack();
+  const userData = useStore((state) => state.userData);
 
   const displayedTrack = activeTrack ?? lastActiveTrack;
   const hide =
@@ -500,6 +504,14 @@ const NewHomeScreen = () => {
     displayedTrack.url ===
       "https://ia801304.us.archive.org/32/items/SilentRingtone/silence.mp3";
 
+    useEffect(() => {
+      if(isLoggedIn() && (!userData?.target_point || !userData?.current_point))
+        {
+          setTimeout(() => {
+            NavigationService.navigate(SCREENS.UPLOAD_CERTIFICATE)
+          }, 30)
+        };
+    }, [userData]);
   // const _showSuperModalCourse = () => {
   //   showSuperModal({
   //     styleModalType: EnumStyleModalType.Bottom,

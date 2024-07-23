@@ -23,6 +23,18 @@ interface TutorItemProps extends TypedUser {
   isHorizontalStyle: boolean;
   isSliderItem: boolean;
 }
+const mentorLable = (exp_time) => {
+  switch (true) {
+    case (exp_time >= 1 && exp_time <= 7000):
+        return {label: "Pre Master", color: palette.green};
+    case (exp_time > 7000 && exp_time <= 10000):
+        return {label: "Master", color: palette.red};
+    case (exp_time > 10000):
+        return {label: "Master Pro", color: palette.orange};
+    default:
+        return {label: "", color: palette.text}
+}
+}
 
 const TutorItem = ({
   display_name,
@@ -35,6 +47,7 @@ const TutorItem = ({
   rating,
   course_count,
   isSliderItem,
+  exp_time,
   ...res
 }: TutorItemProps) => {
   const theme = useTheme();
@@ -86,6 +99,14 @@ const TutorItem = ({
               <Text numberOfLines={2} style={styles.tutorName}>
                 {display_name}
               </Text>
+              {exp_time && (
+                <Text style={{
+                  paddingTop: 2,
+                  color: mentorLable(exp_time).color
+                }}>
+                  {mentorLable(exp_time).label}
+                </Text>
+              )}
               {tutor_level && (
                 <View style={CS.flexStart}>
                   <IconBtn name={"book"} customStyle={{ marginRight: 12 }} />

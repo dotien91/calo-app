@@ -191,6 +191,7 @@ import icHeartPost from "./icon-heart-pos.svg";
 import icHeartPostSolid from "./icon-heart-pos-solid.svg";
 import icCalendar from "./icon-calendar.svg";
 import icCalendarFilled from "./icon-calendar-filled.svg";
+import icBuble from "./icon-buble2d.svg";
 
 const Icons = {
   icHeartPostSolid,
@@ -384,6 +385,7 @@ const Icons = {
   icCalendar,
   icCalendarFilled,
   icPrivate,
+  icBuble
 };
 
 interface IconSvgProps {

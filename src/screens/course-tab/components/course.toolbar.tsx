@@ -17,7 +17,7 @@ import {
   showSuperModal,
 } from "@helpers/super.modal.helper";
 import { SCREENS } from "constants";
-import { EnumCourseType } from "models/course.model";
+// import { EnumCourseType } from "models/course.model";
 import { translations } from "@localization";
 import IconSvg from "assets/svg";
 
@@ -28,7 +28,7 @@ const CourseToolbar = () => {
   const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
 
-  const setCourseCurrentType = useStore((state) => state.setCourseCurrentType);
+  // const setCourseCurrentType = useStore((state) => state.setCourseCurrentType);
 
   const courseCurrentType = useStore((state) => state.courseCurrentType);
 
@@ -51,31 +51,31 @@ const CourseToolbar = () => {
     });
   };
 
-  const openSelectTypeCourseModal = () => {
-    console.log("openSelectTypeCourseModal...", courseCurrentType);
-    showSuperModal({
-      contentModalType: EnumModalContentType.FilterTypeCourse,
-      styleModalType: EnumStyleModalType.Bottom,
-      data: {
-        defaultItem: courseCurrentType,
-        title: translations.course.selectModal,
-        options: [
-          {
-            name: translations.course.course,
-            id: EnumCourseType.course,
-            iconSvg: "icBook",
-          },
-          {
-            name: translations.course.teacher,
-            id: EnumCourseType.tutor,
-            iconSvg: "icGraduate",
-          },
-        ],
+  // const openSelectTypeCourseModal = () => {
+  //   console.log("openSelectTypeCourseModal...", courseCurrentType);
+  //   showSuperModal({
+  //     contentModalType: EnumModalContentType.FilterTypeCourse,
+  //     styleModalType: EnumStyleModalType.Bottom,
+  //     data: {
+  //       defaultItem: courseCurrentType,
+  //       title: translations.course.selectModal,
+  //       options: [
+  //         {
+  //           name: translations.course.course,
+  //           id: EnumCourseType.course,
+  //           iconSvg: "icBook",
+  //         },
+  //         {
+  //           name: translations.course.teacher,
+  //           id: EnumCourseType.tutor,
+  //           iconSvg: "icGraduate",
+  //         },
+  //       ],
 
-        callback: setCourseCurrentType,
-      },
-    });
-  };
+  //       callback: setCourseCurrentType,
+  //     },
+  //   });
+  // };
 
   const openSearchCourse = () => {
     NavigationService.navigate(SCREENS.COURSE_CATEGORY);
@@ -83,21 +83,21 @@ const CourseToolbar = () => {
 
   return (
     <View style={styles.selectView}>
-      <TouchableOpacity onPress={openSelectTypeCourseModal}>
+      {/* <TouchableOpacity onPress={openSelectTypeCourseModal}> */}
         <View style={styles.viewTitle}>
           <Text style={styles.txtSelect}>
             {courseCurrentType.id === "course"
               ? translations.course.course
               : translations.course.teacher}
-            <Icon
+            {/* <Icon
               name={"chevron-down"}
               type={IconType.Feather}
               size={20}
               style={{ color: colors.primary }}
-            />
+            /> */}
           </Text>
         </View>
-      </TouchableOpacity>
+      {/* </TouchableOpacity> */}
       <View style={CS.flexEnd}>
         <PressableBtn onPress={openSearchCourse} style={styles.headerIcon}>
           <Icon

@@ -46,7 +46,7 @@ const HeaderTab = () => {
       textColor: "#FFA347",
       iconColor: "#FFA347",
       icon: "icGraduate",
-      screen: SCREENS.COURSE_TAB,
+      screen: SCREENS.MENTOR_TAB,
       color: "#FFF3DA",
     },
     {

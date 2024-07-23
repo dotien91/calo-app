@@ -114,6 +114,7 @@ import TeacherScreen from "@screens/profile.screen/ikiCoachTeacher.screen";
 import MyAudioScreen from "@screens/audio/my-audio/my.audio.screen";
 import AllCreatorScreen from "@screens/audio/all.creator.screen";
 import AudioFilterResultScreen from "@screens/audio/audio-filter-result/audio.filter.result.screen";
+import UploadCertificate from "@screens/welcome/upload-certificate/upload.certificate.ieltshunter";
 // import CreateSubscriptionScreen from "@screens/profile.screen/create-subscription.tsx/create.subscription.screen";
 
 export const DiscoveryStackData = [
@@ -240,6 +241,7 @@ export const ClubStackData = [
 ];
 
 export const CommonStackData = [
+  {name: SCREENS.UPLOAD_CERTIFICATE, screen: UploadCertificate},
   { name: SCREENS.POST_DETAIL, screen: PostDetailScreen },
   { name: SCREENS.COURSE_CATEGORY, screen: CourseFilterResultScreen },
   { name: SCREENS.COURSE_DETAIL, screen: CoursePreviewScreen },

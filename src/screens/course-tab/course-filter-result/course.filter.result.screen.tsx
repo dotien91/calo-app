@@ -183,7 +183,7 @@ const ListSearch = ({ type }: { type: string }) => {
   const listCourseFilterParams = useStore(
     (state) => state.listCourseFilterParams,
   );
-
+  // console.log("aaaaaaaaa", listCourseFilterParams)
   const setCourseCurrentSort = useStore((state) => state.setCourseCurrentSort);
 
   const paramRequest = React.useMemo(() => {

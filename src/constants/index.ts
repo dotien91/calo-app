@@ -38,7 +38,9 @@ export const SCREENS = {
   PROFILE_CURRENT_USER: "ProfileCurentUser",
   EDIT_PROFILE: "EditProfile",
   COURSE_LIST: "Course",
+  MENTOR_LIST: "Mentor",
   COURSE_TAB: "CourseTab",
+  MENTOR_TAB: "MentorTab",
   COURSE_SEARCH: "CourseSearch",
   COURSE_CATEGORY: "CourseCategory",
   BOOK_LESSON: "BookLesson",
@@ -134,6 +136,7 @@ export const SCREENS = {
   LIST_CREATORS: "ListCreators",
   ONEONE_SCREEN: "OneOneScreen",
   AUDIO_FILTER: "AudioFilter",
+  UPLOAD_CERTIFICATE:"UploadCertificate",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

@@ -173,6 +173,48 @@ export function useUploadFile(
     );
   }, [listFileLocal, listFile, isUpLoadingFile]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const renderFile3 = React.useCallback(() => {
+    return (
+      <View style={styles.viewImage2}>
+        {listFileLocal.slice(0, 4).map((item: any, index: number) => {
+          if (index < 3) {
+            return (
+              <FileViewComponent
+                style={styles.viewFile2}
+                item={item}
+                key={`listFileLocal - ${index}`}
+                onPressClear={() => onRemove(item)}
+                isDone={!isUpLoadingFile}
+              />
+            );
+          }
+          if (listFileLocal.length >= 4) {
+            return (
+              <View
+                style={[
+                  styles.viewFile2,
+                  {
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderWidth: 1,
+                    borderColor: colors.borderColor,
+                    borderRadius: 10,
+                  },
+                ]}
+                key={`listFileLocal - ${index}`}
+              >
+                <Text style={{ color: colors.textInput }}>
+                  +{listFileLocal.length - 3}
+                </Text>
+              </View>
+            );
+          }
+          return;
+        })}
+      </View>
+    );
+  }, [listFileLocal, listFile, isUpLoadingFile]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const onRemove = ({ uri, _id }: { uri: string; _id: string }) => {
     setListFileLocal(listFileLocal.filter((i) => i.uri !== uri));
     if (listFile?.length) {
@@ -343,6 +385,7 @@ export function useUploadFile(
     onSelectFile,
     renderFile,
     renderFile2,
+    renderFile3,
     isUpLoadingFile,
     uploadRecord,
     setListFile,

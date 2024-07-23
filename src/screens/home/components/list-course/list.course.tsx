@@ -21,6 +21,7 @@ const CourseView = () => {
       order_by: "DESC",
       sort_by: "createdAt",
       public_status: "active",
+      types: ["Call group", "Self-learning"]
     },
     getCourseSuggest,
   );

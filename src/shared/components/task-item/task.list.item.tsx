@@ -66,7 +66,7 @@ const TashListItem = ({ item }) => {
           </Text>
         </View>
         <View style={styles.viewPoint}>
-          {item.point && item.point > 0 && (
+          {item.point && item.point > 0 ? (
             <View style={CS.row}>
               <Text style={styles.txtPoint}>{item.point}</Text>
               <IconSvg
@@ -76,8 +76,8 @@ const TashListItem = ({ item }) => {
                 size={15}
               />
             </View>
-          )}
-          {item.coin && item.coin > 0 && (
+          ): null}
+          {item.coin && item.coin > 0 ? (
             <View style={CS.row}>
               <Text style={styles.txtPoint}>{item.coin}</Text>
               <IconSvg
@@ -87,7 +87,7 @@ const TashListItem = ({ item }) => {
                 size={15}
               />
             </View>
-          )}
+          ): null}
         </View>
         <Icon
           name="chevron-forward-outline"

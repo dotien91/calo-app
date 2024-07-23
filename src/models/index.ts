@@ -127,6 +127,11 @@ export interface TypedUser {
   invitation_code?: string;
   current_coin?: number;
   background_image?: string;
+  target_point?: number;
+  current_point?: number;
+  fullname?: string;
+  leave_message?: string;
+  exp_time?: number;
 }
 
 export interface TypedFollowUser {
