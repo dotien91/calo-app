@@ -427,6 +427,7 @@ export default {
     uploadCoverImage: "背景画像をアップロード",
     addCourse: "コースを追加",
     courseName: "コース名",
+    className: "クラス名",
     courseDescription: "コースの説明",
     courseLongDescription: "コースの詳細",
     whoCanAccessThisCourse: "コースにアクセスできるメンバー",
@@ -975,10 +976,12 @@ export default {
     selectTargetPoint: "希望するIELTSスコア",
     uploadCertificate: "証明書をアップロード",
     tapToUpload: "左のアイコンをタップして証明書をアップロードしてください",
-    subTitle: "最適なプランをご提案するために、いくつかの情報を共有してください",
+    subTitle:
+      "最適なプランをご提案するために、いくつかの情報を共有してください",
     titleHeader: "インストラクターとして登録",
     titleHeaderMentor: "メンターとして登録",
-    subTitleHeaderMentor: "メンターとなり、私たちと協力してください。あなたのコースは国内外の何千人もの学生に届きます",
+    subTitleHeaderMentor:
+      "メンターとなり、私たちと協力してください。あなたのコースは国内外の何千人もの学生に届きます",
     leaveMessage: "メッセージを残してください",
     selectCategory: "トレーニングカテゴリを選択",
     registerNow: "今すぐ登録",
@@ -989,8 +992,8 @@ export default {
     beMaster: "マスターになりたい",
     upgradeBand: "IELTSバンドをアップグレードしたい",
     errorMessage: "先に進むには証明書をアップロードしてください",
-    next: "次"
-},
+    next: "次",
+  },
   startChatDesc:
     "彼らの学習の旅や共通の趣味について質問するメッセージを送信して、会話を開始しましょう",
   challenge: {

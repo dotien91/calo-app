@@ -347,15 +347,17 @@ export default {
     urlInvalid: "Đường dẫn không hợp lệ",
     requiredEmailEdit: "Vui lòng điền email",
   },
-  uploadCertificate:{
+  uploadCertificate: {
     selectIeltsPoint: "Điểm số IELTS của bạn",
     selectTargetPoint: "Điểm IELTS mong muốn",
     uploadCertificate: "Tải lên chứng chỉ",
     tapToUpload: "Nhấn vào biểu tượng bên trái để tải lên chứng chỉ",
-    subTitle: "Hãy chia sẻ cho chúng tôi một số thông tin để chúng tôi hỗ trợ bạn có một lộ trình tốt nhất",
+    subTitle:
+      "Hãy chia sẻ cho chúng tôi một số thông tin để chúng tôi hỗ trợ bạn có một lộ trình tốt nhất",
     titleHeader: "Đăng ký người hướng dẫn",
     titleHeaderMentor: "Đăng ký trở thành Mentor",
-    subTitleHeaderMentor: "Trở thành Mentor và tham gia hợp tác cùng chúng tôi. Khóa học của bạn sẽ được tiếp cận tới hàng ngàn học sinh trên cả nước và học sinh ở thị trường Quốc tế",
+    subTitleHeaderMentor:
+      "Trở thành Mentor và tham gia hợp tác cùng chúng tôi. Khóa học của bạn sẽ được tiếp cận tới hàng ngàn học sinh trên cả nước và học sinh ở thị trường Quốc tế",
     leaveMessage: "Để lại lời nhắn cho chúng tôi",
     selectCategory: "Chọn loại hình đào tạo",
     registerNow: "Đăng ký ngay",
@@ -363,10 +365,10 @@ export default {
     haveNoIelts: "Chưa có chứng chỉ IELTS",
     title1: "Bạn đã có chứng chỉ IELTS hay chưa?",
     title2: "Bạn có muốn trở thành master hay không?",
-    beMaster:"Tôi muốn trở thành Master",
+    beMaster: "Tôi muốn trở thành Master",
     upgradeBand: "Tôi muốn nâng cấp Band IELTS",
     errorMessage: "vui lòng tải chứng chỉ của bạn lên để tiếp tục",
-    next: "Tiếp tục"
+    next: "Tiếp tục",
   },
   home: {
     whatonYourMind: "Bạn đang nghĩ gì?",
@@ -518,6 +520,7 @@ export default {
     uploadCoverImage: "Tải lên ảnh nền",
     addCourse: "Thêm khóa học",
     courseName: "Tên khóa học",
+    className: "Tên lớp",
     courseDescription: "Mô tả khóa học",
     courseLongDescription: "Chi tiết khoá học",
     whoCanAccessThisCourse: "Thành viên có thể truy cập khóa học",

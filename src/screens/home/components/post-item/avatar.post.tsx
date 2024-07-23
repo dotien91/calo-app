@@ -34,6 +34,7 @@ const AvatarPost = ({
       userInfo: data,
     });
   };
+  console.log("data...", data);
 
   return (
     <Component
@@ -52,10 +53,21 @@ const AvatarPost = ({
           borderRadius: BORDER_AVATAR,
         }}
       />
-      {showLevel && (
+      {showLevel && (data?.current_point || data?.target_point) && (
         <View style={styles.viewLevelAbsolute}>
-          <View style={styles.viewLevel}>
-            <Text style={styles.txtLevel}>{data?.level || 1}</Text>
+          <View
+            style={[
+              styles.viewLevel,
+              {
+                backgroundColor: data?.target_point
+                  ? palette.red
+                  : palette.green,
+              },
+            ]}
+          >
+            <Text style={styles.txtLevel}>
+              {data?.target_point || data?.current_point}
+            </Text>
           </View>
         </View>
       )}

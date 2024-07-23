@@ -504,14 +504,13 @@ const NewHomeScreen = () => {
     displayedTrack.url ===
       "https://ia801304.us.archive.org/32/items/SilentRingtone/silence.mp3";
 
-    useEffect(() => {
-      if(isLoggedIn() && (!userData?.target_point || !userData?.current_point))
-        {
-          setTimeout(() => {
-            NavigationService.navigate(SCREENS.UPLOAD_CERTIFICATE)
-          }, 30)
-        };
-    }, [userData]);
+  useEffect(() => {
+    if (isLoggedIn() && (!userData?.target_point || !userData?.current_point)) {
+      setTimeout(() => {
+        NavigationService.navigate(SCREENS.UPLOAD_CERTIFICATE);
+      }, 30);
+    }
+  }, [userData]);
   // const _showSuperModalCourse = () => {
   //   showSuperModal({
   //     styleModalType: EnumStyleModalType.Bottom,

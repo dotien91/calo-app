@@ -241,7 +241,7 @@ export const ClubStackData = [
 ];
 
 export const CommonStackData = [
-  {name: SCREENS.UPLOAD_CERTIFICATE, screen: UploadCertificate},
+  { name: SCREENS.UPLOAD_CERTIFICATE, screen: UploadCertificate },
   { name: SCREENS.POST_DETAIL, screen: PostDetailScreen },
   { name: SCREENS.COURSE_CATEGORY, screen: CourseFilterResultScreen },
   { name: SCREENS.COURSE_DETAIL, screen: CoursePreviewScreen },

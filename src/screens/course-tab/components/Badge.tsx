@@ -15,10 +15,10 @@ const Badge = ({ title }: IBadge) => {
   const setListCourseFilterParams = useStore(
     (state) => state.setListCourseFilterParams,
   );
-  const onPressBtnFilter = () =>{
-    setListCourseFilterParams({["skills"] : [title]});
-    navigate(SCREENS.COURSE_CATEGORY)
-  }
+  const onPressBtnFilter = () => {
+    setListCourseFilterParams({ ["skills"]: [title] });
+    navigate(SCREENS.COURSE_CATEGORY);
+  };
 
   return (
     <TouchableOpacity

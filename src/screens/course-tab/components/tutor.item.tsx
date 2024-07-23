@@ -25,16 +25,16 @@ interface TutorItemProps extends TypedUser {
 }
 const mentorLable = (exp_time) => {
   switch (true) {
-    case (exp_time >= 1 && exp_time <= 7000):
-        return {label: "Pre Master", color: palette.green};
-    case (exp_time > 7000 && exp_time <= 10000):
-        return {label: "Master", color: palette.red};
-    case (exp_time > 10000):
-        return {label: "Master Pro", color: palette.orange};
+    case exp_time >= 1 && exp_time <= 7000:
+      return { label: "Pre Master", color: palette.green };
+    case exp_time > 7000 && exp_time <= 10000:
+      return { label: "Master", color: palette.red };
+    case exp_time > 10000:
+      return { label: "Master Pro", color: palette.orange };
     default:
-        return {label: "", color: palette.text}
-}
-}
+      return { label: "", color: palette.text };
+  }
+};
 
 const TutorItem = ({
   display_name,
@@ -100,10 +100,12 @@ const TutorItem = ({
                 {display_name}
               </Text>
               {exp_time && (
-                <Text style={{
-                  paddingTop: 2,
-                  color: mentorLable(exp_time).color
-                }}>
+                <Text
+                  style={{
+                    paddingTop: 2,
+                    color: mentorLable(exp_time).color,
+                  }}
+                >
                   {mentorLable(exp_time).label}
                 </Text>
               )}

@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import * as NavigationService from "react-navigation-helpers";
@@ -84,19 +84,19 @@ const CourseToolbar = () => {
   return (
     <View style={styles.selectView}>
       {/* <TouchableOpacity onPress={openSelectTypeCourseModal}> */}
-        <View style={styles.viewTitle}>
-          <Text style={styles.txtSelect}>
-            {courseCurrentType.id === "course"
-              ? translations.course.course
-              : translations.course.teacher}
-            {/* <Icon
+      <View style={styles.viewTitle}>
+        <Text style={styles.txtSelect}>
+          {courseCurrentType.id === "course"
+            ? translations.course.course
+            : translations.course.teacher}
+          {/* <Icon
               name={"chevron-down"}
               type={IconType.Feather}
               size={20}
               style={{ color: colors.primary }}
             /> */}
-          </Text>
-        </View>
+        </Text>
+      </View>
       {/* </TouchableOpacity> */}
       <View style={CS.flexEnd}>
         <PressableBtn onPress={openSearchCourse} style={styles.headerIcon}>

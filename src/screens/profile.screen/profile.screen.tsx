@@ -239,11 +239,23 @@ const SettingProfileScreen = () => {
                 size={24}
               />
             </View>
-            <View style={styles.boxLevel}>
-              <Text style={styles.textLevel}>
-                {translations.task.level} {userData?.level}
-              </Text>
-            </View>
+            {(userData?.target_point || userData?.current_point) && (
+              <View
+                style={[
+                  styles.boxLevel,
+                  {
+                    backgroundColor: userData?.target_point
+                      ? palette.red
+                      : palette.green,
+                  },
+                ]}
+              >
+                <Text style={styles.textLevel}>
+                  {"IELTS "}
+                  {userData?.target_point || userData?.current_point}
+                </Text>
+              </View>
+            )}
           </View>
         </PressableBtn>
       </View>

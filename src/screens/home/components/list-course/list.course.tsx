@@ -21,7 +21,7 @@ const CourseView = () => {
       order_by: "DESC",
       sort_by: "createdAt",
       public_status: "active",
-      types: ["Call group", "Self-learning"]
+      types: ["Call group", "Self-learning"],
     },
     getCourseSuggest,
   );
@@ -40,12 +40,7 @@ const CourseView = () => {
     } else {
       return (
         <>
-          <CourseItem
-            fromHome
-            isSliderItem
-            data={item.item}
-            key={index}
-          />
+          <CourseItem fromHome isSliderItem data={item.item} key={index} />
         </>
       );
     }
@@ -55,11 +50,9 @@ const CourseView = () => {
 
   const snap = React.useMemo(() => {
     const prevCount = 1;
-    const widthItem = SCREEN_WIDTH/(prevCount + 0.165);
+    const widthItem = SCREEN_WIDTH / (prevCount + 0.165);
     const startScroll = widthItem * 0.94;
-    return data.map((x, i) =>(
-      (i * widthItem) + startScroll
-    ))
+    return data.map((x, i) => i * widthItem + startScroll);
   }, [listData]);
   // console.log(snap)
   return (

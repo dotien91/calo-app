@@ -385,7 +385,7 @@ const Icons = {
   icCalendar,
   icCalendarFilled,
   icPrivate,
-  icBuble
+  icBuble,
 };
 
 interface IconSvgProps {

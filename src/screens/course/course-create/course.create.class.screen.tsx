@@ -81,7 +81,7 @@ const CourseCreateClass = () => {
           inputProps={{
             type: "text",
             defaultValue: "",
-            placeholder: translations.course.courseName,
+            placeholder: translations.course.className,
           }}
           control={control}
           rules={{

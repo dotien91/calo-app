@@ -76,7 +76,7 @@ const TashListItem = ({ item }) => {
                 size={15}
               />
             </View>
-          ): null}
+          ) : null}
           {item.coin && item.coin > 0 ? (
             <View style={CS.row}>
               <Text style={styles.txtPoint}>{item.coin}</Text>
@@ -87,7 +87,7 @@ const TashListItem = ({ item }) => {
                 size={15}
               />
             </View>
-          ): null}
+          ) : null}
         </View>
         <Icon
           name="chevron-forward-outline"

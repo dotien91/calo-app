@@ -65,10 +65,15 @@ const AudioItem = ({
         {view_number ? (
           <Text style={styles.audioRatingTxt}>
             {`${formatNumber(view_number) + " " || ""}`}
-            {parseInt(formatNumber(view_number)) > 1 
-            ? <Text style={styles.textNoReview}>{`${translations.audio.listen}s`}</Text>
-            : <Text style={styles.textNoReview}>{translations.audio.listen}</Text>
-            }
+            {parseInt(formatNumber(view_number)) > 1 ? (
+              <Text
+                style={styles.textNoReview}
+              >{`${translations.audio.listen}s`}</Text>
+            ) : (
+              <Text style={styles.textNoReview}>
+                {translations.audio.listen}
+              </Text>
+            )}
           </Text>
         ) : (
           <Text style={styles.textNoReview}>{translations.audio.noListen}</Text>

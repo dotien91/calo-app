@@ -425,6 +425,7 @@ export default {
     uploadCoverImage: "Upload cover image",
     addCourse: "Add Course",
     courseName: "Course Name",
+    className: "Class name",
     courseDescription: "Course description",
     courseLongDescription: "Detail course",
     whoCanAccessThisCourse: "Who can access this course",
@@ -794,10 +795,12 @@ export default {
     selectTargetPoint: "Desired IELTS Score",
     uploadCertificate: "Upload Certificate",
     tapToUpload: "Tap the icon on the left to upload the certificate",
-    subTitle: "Share some information with us so we can help you with the best plan",
+    subTitle:
+      "Share some information with us so we can help you with the best plan",
     titleHeader: "Register as an Instructor",
     titleHeaderMentor: "Register to Become a Mentor",
-    subTitleHeaderMentor: "Become a Mentor and collaborate with us. Your course will reach thousands of students nationwide and students in the international market",
+    subTitleHeaderMentor:
+      "Become a Mentor and collaborate with us. Your course will reach thousands of students nationwide and students in the international market",
     leaveMessage: "Leave us a message",
     selectCategory: "Select Training Category",
     registerNow: "Register Now",
@@ -808,8 +811,8 @@ export default {
     beMaster: "I want to become a Master",
     upgradeBand: "I want to upgrade my IELTS band",
     errorMessage: "please upload your certificate to move on",
-    next: "Next"
-},
+    next: "Next",
+  },
   member: {
     chat: "chat",
     membership: "membership",

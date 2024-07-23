@@ -374,7 +374,7 @@ const Tasks = React.memo(() => {
           borderRadius: 8,
         }}
       >
-        {listData.slice(0, 5).map((item, index) => {
+        {listData.map((item, index) => {
           return <TashListItem key={index} item={item} />;
         })}
       </View>
