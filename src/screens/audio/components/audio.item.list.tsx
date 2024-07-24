@@ -23,6 +23,7 @@ import {
   EnumStyleModalType,
   showSuperModal,
 } from "@helpers/super.modal.helper";
+import { GetPodCastDetailv2 } from "@services/api/podcast.api";
 
 interface ItemListProps {
   isSliderItem: boolean;
@@ -94,6 +95,7 @@ const ItemList = ({
     await TrackPlayer.add(track);
     await playTrack(track);
     addAudio(track);
+    GetPodCastDetailv2(_id);
   };
 
   const isWatched = useMemo(
@@ -130,9 +132,9 @@ const ItemList = ({
           >
             {`${formatNumber(view_number) + " " || ""}`}
             {parseInt(formatNumber(view_number)) > 1 ? (
-              <Text
-                style={styles.textNoReview}
-              >{translations.audio.listens}</Text>
+              <Text style={styles.textNoReview}>
+                {translations.audio.listens}
+              </Text>
             ) : (
               <Text style={styles.textNoReview}>
                 {translations.audio.listen}

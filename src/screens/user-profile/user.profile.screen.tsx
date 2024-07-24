@@ -450,6 +450,26 @@ const ProfileUser = (props: ProfileUserProps) => {
     return (
       <View>
         <AvatarProfile userInfo={userInfo} />
+        {userInfo?.current_point || userInfo?.target_point ? (
+          <View style={styles.viewPoint}>
+            {userInfo?.current_point ? (
+              <View
+                style={{ ...styles.btnPoint, backgroundColor: palette.green }}
+              >
+                <Text style={styles.txtPoint}>{userInfo?.current_point}</Text>
+              </View>
+            ) : null}
+            {userInfo?.target_point ? (
+              <View
+                style={{ ...styles.btnPoint, backgroundColor: palette.red }}
+              >
+                <Text style={styles.txtPoint}>{userInfo?.target_point}</Text>
+              </View>
+            ) : null}
+          </View>
+        ) : (
+          <View style={{ height: 40 }} />
+        )}
         <CountFollow
           id={_id}
           postCount={totalCount}
@@ -644,5 +664,22 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 22,
     color: palette.textOpacity8,
+  },
+  viewPoint: {
+    flexDirection: "row",
+    gap: 10,
+    justifyContent: "center",
+    marginTop: 40,
+  },
+  btnPoint: {
+    minWidth: 80,
+    height: 40,
+    ...CommonStyle.center,
+    borderRadius: 8,
+  },
+  txtPoint: {
+    ...CommonStyle.hnSemiBold,
+    fontSize: 16,
+    color: palette.white,
   },
 });
