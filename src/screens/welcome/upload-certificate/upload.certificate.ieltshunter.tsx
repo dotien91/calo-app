@@ -1,4 +1,12 @@
-import { View, Text, StyleSheet, Keyboard } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Keyboard,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { palette } from "@theme/themes";
@@ -10,7 +18,7 @@ import { useUploadFile } from "@helpers/hooks/useUploadFile";
 import CS from "@theme/styles";
 import IconSvg from "assets/svg";
 import * as NavigationService from "react-navigation-helpers";
-import PressableBtn from "@shared-components/button/PressableBtn";
+// import PressableBtn from "@shared-components/button/PressableBtn";
 import { ScreenWidth } from "@freakycoder/react-native-helpers";
 // import DropDownItem from '@shared-components/dropdown/DropDownItem';
 import BottomSheet, {
@@ -45,6 +53,7 @@ const UploadCertificate = () => {
   const [currentIeltsPoint, setCurrentIeltsPoint] = React.useState("0.0");
   // const [typeCoaching, setTypeCoaching] = React.useState(typeCoachingList[0].value);
   const userData = useStore((state) => state.userData);
+  const setUserData = useStore((state) => state.setUserData);
   const { listFile, listFileLocal, onSelectPicture, renderFile2 } =
     useUploadFile([]);
   const {
@@ -108,13 +117,13 @@ const UploadCertificate = () => {
 
     return (
       <View style={styles.btnContainer}>
-        <PressableBtn onPress={_onPress} style={styles.pressableBtn}>
+        <TouchableOpacity onPress={_onPress} style={styles.pressableBtn}>
           <Text
             style={{ ...CS.hnSemiBold, fontSize: 16, color: palette.white }}
           >
             {translations.uploadCertificate.next}
           </Text>
-        </PressableBtn>
+        </TouchableOpacity>
       </View>
     );
   };
@@ -171,7 +180,7 @@ const UploadCertificate = () => {
                 }}
               >
                 {ieltsPointList.map((i) => (
-                  <PressableBtn
+                  <TouchableOpacity
                     key={i.index}
                     style={
                       i.value === ieltsPoint
@@ -193,7 +202,7 @@ const UploadCertificate = () => {
                         color: palette.primary,
                       }}
                     >{`${i.value}`}</Text>
-                  </PressableBtn>
+                  </TouchableOpacity>
                 ))}
               </BottomSheetScrollView>
             </View>
@@ -210,7 +219,7 @@ const UploadCertificate = () => {
             ? translations.uploadCertificate.selectTargetPoint
             : translations.uploadCertificate.selectIeltsPoint}
         </Text>
-        <PressableBtn onPress={openListIeltsPoint}>
+        <TouchableOpacity onPress={openListIeltsPoint}>
           <View
             style={{
               padding: 8,
@@ -228,7 +237,7 @@ const UploadCertificate = () => {
             </Text>
             <Icon size={24} name={"chevron-down"} type={IconType.Ionicons} />
           </View>
-        </PressableBtn>
+        </TouchableOpacity>
       </View>
     );
   };
@@ -253,7 +262,7 @@ const UploadCertificate = () => {
                       {listFileLocal.length > 0 ? (
                         <View style={{ flexDirection: "row" }}>
                           {renderFile2()}
-                          <PressableBtn
+                          <TouchableOpacity
                             style={styles.uploadBtn}
                             onPress={onSelectPicture}
                           >
@@ -262,7 +271,7 @@ const UploadCertificate = () => {
                               size={FONTSIZE + 6}
                               color={palette.textOpacity8}
                             />
-                          </PressableBtn>
+                          </TouchableOpacity>
                         </View>
                       ) : (
                         <View style={styles.uploadIconContainer}>
@@ -344,139 +353,153 @@ const UploadCertificate = () => {
             type: "success",
             message: translations.course.updateModuleSuccess,
           });
+          setUserData({
+            ...userData,
+            target_point: ieltsPoint,
+            current_point: currentIeltsPoint,
+            user_email: DataHook.user_email,
+            fullname: DataHook?.fullname,
+            phone_number: DataHook.phone_number,
+            leave_message: DataHook?.leave_message,
+          });
         }
       });
     };
     return (
-      <SafeAreaView style={{ flex: 1 }}>
-        <Text style={styles.textHeader}>
-          {translations.uploadCertificate.titleHeader}
-        </Text>
-        <View
-          style={{
-            marginTop: ScreenWidth / 6,
-            alignSelf: "center",
-            paddingHorizontal: 24,
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 26,
-              fontWeight: "700",
-              color: palette.text,
-              paddingVertical: 10,
-            }}
-          >
-            {translations.uploadCertificate.titleHeaderMentor}
-          </Text>
-          <Text
-            style={{
-              color: palette.text,
-              paddingVertical: 16,
-            }}
-          >
-            {translations.uploadCertificate.subTitleHeaderMentor}
-          </Text>
-          <View
-            style={{
-              position: "absolute",
-              zIndex: -1,
-              marginTop: 10,
-              marginHorizontal: 24,
-            }}
-          >
-            <IconSvg size={30} name="icBuble" />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "height" : undefined}
+        style={CS.flex1}
+      >
+        <SafeAreaView style={CS.flex1}>
+          <ScrollView style={[CS.flex1]} showsVerticalScrollIndicator={false}>
+            <Text style={styles.textHeader}>
+              {translations.uploadCertificate.titleHeader}
+            </Text>
             <View
               style={{
-                position: "absolute",
-                marginLeft: 8,
-                marginTop: 10,
-                zIndex: -1,
-                marginHorizontal: 24,
+                marginTop: ScreenWidth / 6,
+                alignSelf: "center",
+                paddingHorizontal: 24,
               }}
             >
-              <IconSvg size={60} name="icBuble" />
+              <Text
+                style={{
+                  fontSize: 26,
+                  fontWeight: "700",
+                  color: palette.text,
+                  paddingVertical: 10,
+                }}
+              >
+                {translations.uploadCertificate.titleHeaderMentor}
+              </Text>
+              <Text
+                style={{
+                  color: palette.text,
+                  paddingVertical: 16,
+                }}
+              >
+                {translations.uploadCertificate.subTitleHeaderMentor}
+              </Text>
+              <View
+                style={{
+                  position: "absolute",
+                  zIndex: -1,
+                  marginTop: 10,
+                  marginHorizontal: 24,
+                }}
+              >
+                <IconSvg size={30} name="icBuble" />
+                <View
+                  style={{
+                    position: "absolute",
+                    marginLeft: 8,
+                    marginTop: 10,
+                    zIndex: -1,
+                    marginHorizontal: 24,
+                  }}
+                >
+                  <IconSvg size={60} name="icBuble" />
+                </View>
+              </View>
             </View>
-          </View>
-        </View>
-        <View>
-          <InputHook
-            viewStyle={{ marginVertical: 6, borderRadius: 0 }}
-            name="fullname"
-            customStyle={{ flex: 1 }}
-            inputProps={{
-              type: "text",
-              defaultValue: "",
-              placeholder: translations.fullname,
-            }}
-            control={control}
-            rules={{
-              required: {
-                value: true,
-                message: translations.required,
-              },
-            }}
-            errorTxt={errors.fullname?.message}
-          />
-          <InputHook
-            viewStyle={{ marginVertical: 6, borderRadius: 0 }}
-            name="user_email"
-            customStyle={{ flex: 1 }}
-            inputProps={{
-              type: "email",
-              defaultValue: "",
-              placeholder: translations.placeholderEmail,
-            }}
-            control={control}
-            rules={{
-              required: {
-                value: true,
-                message: translations.required,
-              },
-            }}
-            errorTxt={errors.user_email?.message}
-          />
-          <InputHook
-            viewStyle={{ marginVertical: 6, borderRadius: 0 }}
-            name="phone_number"
-            customStyle={{ flex: 1 }}
-            inputProps={{
-              type: "number",
-              defaultValue: "",
-              placeholder: translations.club.phoneNumber,
-              keyboardType: "numeric",
-            }}
-            control={control}
-            rules={{
-              required: {
-                value: true,
-                message: translations.required,
-              },
-            }}
-            errorTxt={errors.phone_number?.message}
-          />
-          <InputHook
-            viewStyle={{ marginVertical: 6, borderRadius: 0 }}
-            name="leave_message"
-            customStyle={CS.flex1}
-            inputProps={{
-              type: "text",
-              defaultValue: "",
-              placeholder: translations.uploadCertificate.leaveMessage,
-            }}
-            control={control}
-            rules={{
-              required: {
-                value: true,
-                message: translations.required,
-              },
-            }}
-            multiline
-            errorTxt={errors.leave_message?.message}
-            required
-          />
-        </View>
-        {/* <View style={{paddingHorizontal: 20, marginTop: 10}}>
+            <View>
+              <InputHook
+                viewStyle={{ marginVertical: 6, borderRadius: 0 }}
+                name="fullname"
+                customStyle={{ flex: 1 }}
+                inputProps={{
+                  type: "text",
+                  defaultValue: "",
+                  placeholder: translations.fullname,
+                }}
+                control={control}
+                rules={{
+                  required: {
+                    value: true,
+                    message: translations.required,
+                  },
+                }}
+                errorTxt={errors.fullname?.message}
+              />
+              <InputHook
+                viewStyle={{ marginVertical: 6, borderRadius: 0 }}
+                name="user_email"
+                customStyle={{ flex: 1 }}
+                inputProps={{
+                  type: "email",
+                  defaultValue: "",
+                  placeholder: translations.placeholderEmail,
+                }}
+                control={control}
+                rules={{
+                  required: {
+                    value: true,
+                    message: translations.required,
+                  },
+                }}
+                errorTxt={errors.user_email?.message}
+              />
+              <InputHook
+                viewStyle={{ marginVertical: 6, borderRadius: 0 }}
+                name="phone_number"
+                customStyle={{ flex: 1 }}
+                inputProps={{
+                  type: "number",
+                  defaultValue: "",
+                  placeholder: translations.club.phoneNumber,
+                  keyboardType: "numeric",
+                }}
+                control={control}
+                rules={{
+                  required: {
+                    value: true,
+                    message: translations.required,
+                  },
+                }}
+                errorTxt={errors.phone_number?.message}
+              />
+              <InputHook
+                viewStyle={{ marginVertical: 6, borderRadius: 0 }}
+                name="leave_message"
+                customStyle={CS.flex1}
+                inputProps={{
+                  type: "text",
+                  defaultValue: "",
+                  placeholder: translations.uploadCertificate.leaveMessage,
+                }}
+                control={control}
+                rules={{
+                  required: {
+                    value: true,
+                    message: translations.required,
+                  },
+                }}
+                multiline
+                errorTxt={errors.leave_message?.message}
+                required
+              />
+            </View>
+            {/* <View style={{paddingHorizontal: 20, marginTop: 10}}>
               <DropDownItem 
                 customStyle={{borderRadius: 0}}
                 value={typeCoaching}
@@ -485,17 +508,19 @@ const UploadCertificate = () => {
                 placeholder={translations.uploadCertificate.selectCategory}
               />
             </View> */}
-        <Button
-          style={{
-            width: ScreenWidth * 0.9,
-            borderRadius: 0,
-            alignSelf: "center",
-            marginTop: ScreenWidth / 6,
-          }}
-          text={translations.uploadCertificate.registerNow}
-          onPress={handleSubmit(onSubmit)}
-        />
-      </SafeAreaView>
+            <Button
+              style={{
+                width: ScreenWidth * 0.9,
+                borderRadius: 0,
+                alignSelf: "center",
+                marginTop: ScreenWidth / 6,
+              }}
+              text={translations.uploadCertificate.registerNow}
+              onPress={handleSubmit(onSubmit)}
+            />
+          </ScrollView>
+        </SafeAreaView>
+      </KeyboardAvoidingView>
     );
   }
   return (
