@@ -993,6 +993,7 @@ export default {
     upgradeBand: "IELTSバンドをアップグレードしたい",
     errorMessage: "先に進むには証明書をアップロードしてください",
     next: "次",
+    select: "ポイントを選んでください"
   },
   startChatDesc:
     "彼らの学習の旅や共通の趣味について質問するメッセージを送信して、会話を開始しましょう",
@@ -1399,6 +1400,7 @@ export default {
     send: "送信",
     title: "タイトル",
     review: "レビュー（オプション）",
+    caption: "キャプション"
   },
   faq: {
     titleFaq:
@@ -1477,6 +1479,7 @@ export default {
     episodeList: "エピソードリスト",
     continueListen: "続けて聴く",
     listen: "再生回数",
+    listens: "再生回数",
     allAudio: "すべてのオーディオ",
     noListen: "再生回数なし",
     orientation: "オリエンテーション",

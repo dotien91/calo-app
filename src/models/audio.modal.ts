@@ -19,6 +19,7 @@ export interface IAudioItem {
   createdAt: string;
   updatedAt: string;
   __v: number;
+  caption?:string;
 }
 
 export interface IUserAudio {

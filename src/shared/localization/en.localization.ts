@@ -812,6 +812,7 @@ export default {
     upgradeBand: "I want to upgrade my IELTS band",
     errorMessage: "please upload your certificate to move on",
     next: "Next",
+    select: "Select your point"
   },
   member: {
     chat: "chat",
@@ -1011,6 +1012,7 @@ export default {
     episodeList: "EPISODE LIST",
     continueListen: "Continue listening",
     listen: "Listen",
+    listens: "Listens",
     allAudio: "All audio book",
     noListen: "No listening",
     orientation: "Orientation",
@@ -1498,6 +1500,7 @@ export default {
     title: "Title",
     review: "Review (Optional)",
     sendRequest: "Send information successfully",
+    caption: "Caption"
   },
   close: "Close",
   setup: {

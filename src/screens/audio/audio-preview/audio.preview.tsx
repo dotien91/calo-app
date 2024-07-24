@@ -323,6 +323,16 @@ const AudioPreview = () => {
             textColor="red"
           />
         </View>
+        {data?.caption ? (<View style={styles.viewDes}>
+          <Text style={[CS.hnBold, { color: palette.white }]}>
+            {translations.podcast.caption}
+          </Text>
+          <TextViewCollapsed
+            text={data?.caption || ""}
+            styleText={styles.des}
+            textColor="red"
+          />
+        </View>): null}
         {listData.length > 0 && (
           <View style={styles.viewDes}>
             <Text style={[CS.hnBold, { color: palette.white }]}>

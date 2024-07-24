@@ -61,7 +61,24 @@ const UploadCertificate = () => {
   });
 
   React.useEffect(() => {
-    if (index?.id === "upgrade" || index?.id === "enterIELTS") {
+
+    if (index?.id === "enterIELTS") {
+      NavigationService.goBack();
+      const params = {
+        _id: userData?._id,
+        target_point: ieltsPoint !== "0.0" ? ieltsPoint: "",
+      };
+      updateProfile(params).then((res) => {
+        if (!res.isError) {
+          showToast({
+            type: "success",
+            message: translations.course.updateModuleSuccess,
+          });
+        }
+      });
+    };
+
+    if (index?.id === "upgrade") {
       NavigationService.goBack();
       const params = {
         _id: userData?._id,
@@ -70,15 +87,7 @@ const UploadCertificate = () => {
         current_point: currentIeltsPoint !== "0.0" ? currentIeltsPoint: "",
       };
       console.log(params);
-      updateProfile(
-        params,
-        // {
-        //   _id: userData?._id,
-        //   certificate_list: "[\"669f0ae2e2bf578f524a5936\"]",
-        //   current_point: "7.5",
-        //   target_point: "0.0"
-        // }
-      ).then((res) => {
+      updateProfile(params).then((res) => {
         if (!res.isError) {
           showToast({
             type: "success",
@@ -86,7 +95,8 @@ const UploadCertificate = () => {
           });
         }
       });
-    }
+    };
+
   }, [index]);
 
   const renderBtn = (_onPress) => {
@@ -104,7 +114,7 @@ const UploadCertificate = () => {
           <Text
             style={{ ...CS.hnSemiBold, fontSize: 16, color: palette.white }}
           >
-            next
+            {translations.uploadCertificate.next}
           </Text>
         </PressableBtn>
       </View>
@@ -154,7 +164,7 @@ const UploadCertificate = () => {
                   color: palette.primary,
                 }}
               >
-                Select your point
+                {translations.uploadCertificate.select}
               </Text>
               <BottomSheetScrollView
                 style={{

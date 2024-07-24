@@ -369,6 +369,7 @@ export default {
     upgradeBand: "Tôi muốn nâng cấp Band IELTS",
     errorMessage: "vui lòng tải chứng chỉ của bạn lên để tiếp tục",
     next: "Tiếp tục",
+    select: "Chọn điểm của bạn"
   },
   home: {
     whatonYourMind: "Bạn đang nghĩ gì?",
@@ -1470,6 +1471,7 @@ export default {
     send: "Gửi",
     title: "Tiêu đề",
     review: "Đánh giá (Tuỳ chọn)",
+    caption: "Chú thích"
   },
   faq: {
     titleFaq:
@@ -1548,6 +1550,7 @@ export default {
     episodeList: "DANH SÁCH CÁC TẬP",
     continueListen: "Tiếp tục nghe",
     listen: "Lượt nghe",
+    listens: "Lượt nghe",
     allAudio: "Tất cả podcast",
     noListen: "Chưa có lượt nghe",
     orientation: "Định hướng",
