@@ -812,7 +812,8 @@ export default {
     upgradeBand: "I want to upgrade my IELTS band",
     errorMessage: "please upload your certificate to move on",
     next: "Next",
-    select: "Select your point"
+    select: "Select your point",
+    skip: "Skip >>"
   },
   member: {
     chat: "chat",

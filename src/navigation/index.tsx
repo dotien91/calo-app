@@ -188,7 +188,7 @@ const Navigation = () => {
               },
             }}
           />
-          <Tab.Screen name={SCREENS.CHAT} component={chatListScreen} />
+          {/* <Tab.Screen name={SCREENS.CHAT} component={chatListScreen} /> */}
 
           <Tab.Screen
             name={SCREENS.SETTINGPROFILESCREEN_TAB}

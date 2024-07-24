@@ -369,7 +369,8 @@ export default {
     upgradeBand: "Tôi muốn nâng cấp Band IELTS",
     errorMessage: "vui lòng tải chứng chỉ của bạn lên để tiếp tục",
     next: "Tiếp tục",
-    select: "Chọn điểm của bạn"
+    select: "Chọn điểm của bạn",
+    skip: "Bỏ qua >>"
   },
   home: {
     whatonYourMind: "Bạn đang nghĩ gì?",

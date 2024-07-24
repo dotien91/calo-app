@@ -28,9 +28,9 @@ const mentorLable = (exp_time) => {
     case exp_time >= 1 && exp_time <= 7000:
       return { label: "Pre Master", color: palette.green };
     case exp_time > 7000 && exp_time <= 10000:
-      return { label: "Master", color: palette.red };
+      return { label: "Master", color: palette.orange };
     case exp_time > 10000:
-      return { label: "Master Pro", color: palette.orange };
+      return { label: "Master Pro", color: palette.primary };
     default:
       return { label: "", color: palette.text };
   }
@@ -54,7 +54,7 @@ const TutorItem = ({
   // const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
   // const [isLike, setIsLike] = React.useState(false);
-
+  const labelMaster = mentorLable(exp_time);
   // const toggleLike = () => {
   //   setIsLike((old) => !old);
   // };
@@ -100,14 +100,27 @@ const TutorItem = ({
                 {display_name}
               </Text>
               {exp_time && (
-                <Text
+                <View
                   style={{
-                    paddingTop: 2,
-                    color: mentorLable(exp_time).color,
+                    backgroundColor: labelMaster.color,
+                    borderRadius: 3,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginVertical: 2,
                   }}
                 >
-                  {mentorLable(exp_time).label}
-                </Text>
+                  <Text
+                    style={{
+                      paddingTop: 2,
+                      color: palette.white,
+                      fontSize: 12,
+                      paddingVertical: 1,
+                      paddingHorizontal: 2,
+                    }}
+                  >
+                    {labelMaster.label}
+                  </Text>
+                </View>
               )}
               {tutor_level && (
                 <View style={CS.flexStart}>

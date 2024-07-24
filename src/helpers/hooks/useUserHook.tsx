@@ -42,6 +42,8 @@ export const useUserHook = () => {
   const handleLogin = (token: string) => {
     _setJson(USER_TOKEN, token);
 
+    _setJson("is_still_login", true);
+
     getCurrentUser().then((res) => {
       console.log("current user data", res);
       if (!res.isError) {

@@ -212,7 +212,7 @@ const CreateAudio = () => {
           inputProps={{
             type: "text",
             defaultValue: "",
-            placeholder: translations.audio.caption,
+            placeholder: translations.podcast.caption,
           }}
           control={control}
           rules={{}}
