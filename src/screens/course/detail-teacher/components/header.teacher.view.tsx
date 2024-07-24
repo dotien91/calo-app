@@ -23,7 +23,7 @@ import {
   EnumStyleModalType,
   showSuperModal,
 } from "@helpers/super.modal.helper";
-// import SubscriptionBtn from "@screens/home/components/subscription-btn/SubscriptionBtn";
+import SubscriptionBtn from "@screens/home/components/subscription-btn/SubscriptionBtn";
 // import Button from "@shared-components/button/Button";
 
 interface HeaderDetailTeacherProps {
@@ -142,7 +142,7 @@ const HeaderDetailTeacher = ({ data }: HeaderDetailTeacherProps) => {
               textColor={palette.white}
             />
             <View style={{ height: 12 }} />
-            {/* {!!data?.is_creator && <SubscriptionBtn />} */}
+            {!!data?.is_creator && <SubscriptionBtn />}
           </View>
           {!!data?._id &&
             (linkFb !== "" || linkWebsite !== "" || linkYoutube !== "") && (

@@ -30,6 +30,13 @@ const CourseView = () => {
     return listData.slice(0, 10);
   }, [listData]);
 
+  const snap = React.useMemo(() => {
+    const prevCount = 1;
+    const widthItem = SCREEN_WIDTH / (prevCount + 0.165);
+    const startScroll = widthItem * 0.94;
+    return data.map((x, i) => i * widthItem + startScroll);
+  }, [listData]);
+
   const onSeeAll = () => {
     NavigationService.navigate(SCREENS.COURSE_RECOMMEND);
   };
@@ -48,12 +55,6 @@ const CourseView = () => {
 
   if (!listData.length && !isLoading) return null;
 
-  const snap = React.useMemo(() => {
-    const prevCount = 1;
-    const widthItem = SCREEN_WIDTH / (prevCount + 0.165);
-    const startScroll = widthItem * 0.94;
-    return data.map((x, i) => i * widthItem + startScroll);
-  }, [listData]);
   // console.log(snap)
   return (
     <View style={styles.container}>

@@ -61,12 +61,11 @@ const UploadCertificate = () => {
   });
 
   React.useEffect(() => {
-
     if (index?.id === "enterIELTS") {
       NavigationService.goBack();
       const params = {
         _id: userData?._id,
-        target_point: ieltsPoint !== "0.0" ? ieltsPoint: "",
+        target_point: ieltsPoint !== "0.0" ? ieltsPoint : "",
       };
       updateProfile(params).then((res) => {
         if (!res.isError) {
@@ -76,15 +75,15 @@ const UploadCertificate = () => {
           });
         }
       });
-    };
+    }
 
     if (index?.id === "upgrade") {
       NavigationService.goBack();
       const params = {
         _id: userData?._id,
         certificate_list: JSON.stringify(listFile.map((i) => i._id)),
-        target_point: ieltsPoint !== "0.0" ? ieltsPoint: "",
-        current_point: currentIeltsPoint !== "0.0" ? currentIeltsPoint: "",
+        target_point: ieltsPoint !== "0.0" ? ieltsPoint : "",
+        current_point: currentIeltsPoint !== "0.0" ? currentIeltsPoint : "",
       };
       console.log(params);
       updateProfile(params).then((res) => {
@@ -95,8 +94,7 @@ const UploadCertificate = () => {
           });
         }
       });
-    };
-
+    }
   }, [index]);
 
   const renderBtn = (_onPress) => {
