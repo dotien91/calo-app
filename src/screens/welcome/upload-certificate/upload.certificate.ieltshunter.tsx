@@ -100,7 +100,6 @@ const UploadCertificate = () => {
         target_point: ieltsPoint !== "0.0" ? ieltsPoint : "",
         current_point: currentIeltsPoint !== "0.0" ? currentIeltsPoint : "",
       };
-      console.log("params=====", params);
       updateProfile(params).then((res) => {
         if (!res.isError) {
           showToast({
@@ -117,6 +116,12 @@ const UploadCertificate = () => {
     }
   }, [index]);
 
+  const subArray = React.useMemo(() => {
+    const _index = ieltsPointList.findIndex(
+      (item) => item.value === currentIeltsPoint,
+    );
+    return ieltsPointList.slice(_index + 1);
+  }, [index]);
   const renderBtn = (_onPress) => {
     if (itemSelected?.id === "uploadCertificate" && listFile.length == 0) {
       _onPress = () =>
@@ -148,7 +153,7 @@ const UploadCertificate = () => {
 
   const refBottomSheet = React.useRef<BottomSheet>(null);
   const snapPoints = React.useMemo(() => [300], []);
-  const renderBottomSheet = () => {
+  const renderBottomSheet = (ieltsPointList) => {
     return (
       <>
         {ieltsPointList.length > 0 && (
@@ -355,7 +360,7 @@ const UploadCertificate = () => {
         </View>
         {renderSelectBox(chooseOptions[1])}
         {renderBtn(() => setIndex(itemSelected))}
-        {renderBottomSheet(ieltsPointList)}
+        {renderBottomSheet(subArray)}
       </SafeAreaView>
     );
   }
