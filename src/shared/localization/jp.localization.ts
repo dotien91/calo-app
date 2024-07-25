@@ -993,7 +993,8 @@ export default {
     upgradeBand: "IELTSバンドをアップグレードしたい",
     errorMessage: "先に進むには証明書をアップロードしてください",
     next: "次",
-    select: "ポイントを選んでください"
+    select: "ポイントを選んでください",
+    skip: "スキップ >>"
   },
   startChatDesc:
     "彼らの学習の旅や共通の趣味について質問するメッセージを送信して、会話を開始しましょう",

@@ -9,10 +9,10 @@ export const filterCourseKeys = [
         name: translations.course.allForms,
         id: "All forms",
       },
-      {
-        name: translations.course.callOneVsOne,
-        id: "Call 1-1",
-      },
+      // {
+      //   name: translations.course.callOneVsOne,
+      //   id: "Call 1-1",
+      // },
       {
         name: translations.course.salfLearning,
         id: "Self-learning",
@@ -98,10 +98,10 @@ export const filterTeacherKeys = [
         name: translations.course.allForms,
         id: "All forms",
       },
-      {
-        name: translations.course.callOneVsOne,
-        id: "Call 1-1",
-      },
+      // {
+      //   name: translations.course.callOneVsOne,
+      //   id: "Call 1-1",
+      // },
       {
         name: translations.course.salfLearning,
         id: "Self-learning",

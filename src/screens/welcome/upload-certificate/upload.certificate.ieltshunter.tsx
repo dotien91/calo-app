@@ -7,7 +7,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { palette } from "@theme/themes";
 import {
@@ -39,6 +39,7 @@ import Button from "@shared-components/button/Button";
 // import { getStatusBarHeight } from "react-native-safearea-height";
 import { updateProfile } from "@services/api/user.api";
 import { showToast } from "@helpers/super.modal.helper";
+import { _setJson } from "@services/local-storage";
 
 interface props {
   id: string;
@@ -51,6 +52,7 @@ const UploadCertificate = () => {
   const [itemSelected, setItemSelected] = React.useState<props>();
   const [ieltsPoint, setIeltsPoint] = React.useState("0.0");
   const [currentIeltsPoint, setCurrentIeltsPoint] = React.useState("0.0");
+
   // const [typeCoaching, setTypeCoaching] = React.useState(typeCoachingList[0].value);
   const userData = useStore((state) => state.userData);
   const setUserData = useStore((state) => state.setUserData);
@@ -82,6 +84,10 @@ const UploadCertificate = () => {
             type: "success",
             message: translations.course.updateModuleSuccess,
           });
+          setUserData({
+            ...userData,
+            target_point: ieltsPoint !== "0.0" ? ieltsPoint : "",
+          });
         }
       });
     }
@@ -94,7 +100,6 @@ const UploadCertificate = () => {
         target_point: ieltsPoint !== "0.0" ? ieltsPoint : "",
         current_point: currentIeltsPoint !== "0.0" ? currentIeltsPoint : "",
       };
-      console.log(params);
       updateProfile(params).then((res) => {
         if (!res.isError) {
           showToast({
@@ -102,10 +107,21 @@ const UploadCertificate = () => {
             message: translations.course.updateModuleSuccess,
           });
         }
+        setUserData({
+          ...userData,
+          target_point: ieltsPoint !== "0.0" ? ieltsPoint : "",
+          current_point: currentIeltsPoint !== "0.0" ? currentIeltsPoint : "",
+        });
       });
     }
   }, [index]);
 
+  const subArray = React.useMemo(() => {
+    const _index = ieltsPointList.findIndex(
+      (item) => item.value === currentIeltsPoint,
+    );
+    return ieltsPointList.slice(_index + 1);
+  }, [index]);
   const renderBtn = (_onPress) => {
     if (itemSelected?.id === "uploadCertificate" && listFile.length == 0) {
       _onPress = () =>
@@ -137,7 +153,7 @@ const UploadCertificate = () => {
 
   const refBottomSheet = React.useRef<BottomSheet>(null);
   const snapPoints = React.useMemo(() => [300], []);
-  const renderBottomSheet = () => {
+  const renderBottomSheet = (ieltsPointList) => {
     return (
       <>
         {ieltsPointList.length > 0 && (
@@ -322,9 +338,29 @@ const UploadCertificate = () => {
   if (index?.id === "uploadCertificate") {
     return (
       <SafeAreaView style={{ flex: 1 }}>
+        <View
+          style={{
+            alignItems: "flex-end",
+            paddingHorizontal: 24,
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              _setJson("is_still_login", false);
+              NavigationService.goBack();
+            }}
+          >
+            <Text
+              style={{ ...CS.hnSemiBold, fontSize: 16, color: palette.text }}
+            >
+              {translations.uploadCertificate.skip}
+            </Text>
+            <View style={{ backgroundColor: palette.black, height: 2 }} />
+          </TouchableOpacity>
+        </View>
         {renderSelectBox(chooseOptions[1])}
         {renderBtn(() => setIndex(itemSelected))}
-        {renderBottomSheet()}
+        {renderBottomSheet(subArray)}
       </SafeAreaView>
     );
   }
@@ -340,7 +376,7 @@ const UploadCertificate = () => {
       const params = {
         _id: userData?._id,
         certificate_list: JSON.stringify(listFile.map((i) => i._id)),
-        target_point: ieltsPoint,
+        // target_point: ieltsPoint,
         current_point: currentIeltsPoint,
         user_email: DataHook.user_email,
         fullname: DataHook?.fullname,
@@ -355,7 +391,7 @@ const UploadCertificate = () => {
           });
           setUserData({
             ...userData,
-            target_point: ieltsPoint,
+            // target_point: ieltsPoint,
             current_point: currentIeltsPoint,
             user_email: DataHook.user_email,
             fullname: DataHook?.fullname,
@@ -525,9 +561,27 @@ const UploadCertificate = () => {
   }
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <View
+        style={{
+          alignItems: "flex-end",
+          paddingHorizontal: 24,
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            _setJson("is_still_login", false);
+            NavigationService.goBack();
+          }}
+        >
+          <Text style={{ ...CS.hnSemiBold, fontSize: 16, color: palette.blue }}>
+            {translations.uploadCertificate.skip}
+          </Text>
+          <View style={{ backgroundColor: palette.blue, height: 2 }} />
+        </TouchableOpacity>
+      </View>
       {renderSelectBox(chooseOptions[0])}
       {renderBtn(() => setIndex(itemSelected))}
-      {renderBottomSheet()}
+      {renderBottomSheet(ieltsPointList)}
     </SafeAreaView>
   );
 };
@@ -537,16 +591,18 @@ const styles = StyleSheet.create({
     // flex: 1,
     flexDirection: "row",
     justifyContent: "flex-end",
-    right: 10,
+    // right: 10,
     alignItems: "center",
-    padding: 16,
+    // padding: 24,
+    paddingHorizontal: 24,
+    marginBottom: 24,
   },
   pressableBtn: {
     backgroundColor: palette.btnRedPrimary,
     alignItems: "center",
     justifyContent: "center",
-    paddingHorizontal: 24,
-    paddingVertical: 12,
+    // paddingHorizontal: 24,
+    // paddingVertical: 12,
     borderRadius: 10,
     height: 50,
     width: 120,
