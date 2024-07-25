@@ -367,7 +367,7 @@ export default {
     title2: "Bạn có muốn trở thành master hay không?",
     beMaster: "Tôi muốn trở thành Master",
     upgradeBand: "Tôi muốn nâng cấp Band IELTS",
-    errorMessage: "vui lòng tải chứng chỉ của bạn lên để tiếp tục",
+    errorMessage: "Vui lòng tải chứng chỉ của bạn lên để tiếp tục",
     next: "Tiếp tục",
     select: "Chọn điểm của bạn",
     skip: "Bỏ qua >>"

@@ -199,7 +199,7 @@ const UploadCertificate = () => {
                   <TouchableOpacity
                     key={i.index}
                     style={
-                      i.value === ieltsPoint
+                      i.value === ieltsPoint || i.value === currentIeltsPoint
                         ? styles.categorySelected
                         : styles.category
                     }

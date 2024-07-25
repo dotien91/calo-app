@@ -810,7 +810,7 @@ export default {
     title2: "Do you want to become a master?",
     beMaster: "I want to become a Master",
     upgradeBand: "I want to upgrade my IELTS band",
-    errorMessage: "please upload your certificate to move on",
+    errorMessage: "Please upload your certificate to move on",
     next: "Next",
     select: "Select your point",
     skip: "Skip >>"

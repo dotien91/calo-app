@@ -112,7 +112,7 @@ const DetailTeacherScreen = () => {
       </View>
     );
   };
-
+  // console.log("daddga", listData);
   return (
     <View style={CS.flex1}>
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>

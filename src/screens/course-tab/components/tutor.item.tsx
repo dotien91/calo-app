@@ -54,7 +54,7 @@ const TutorItem = ({
   // const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
   // const [isLike, setIsLike] = React.useState(false);
-  const labelMaster = mentorLable(exp_time);
+  const labelMaster = useMemo(() => mentorLable(exp_time), [exp_time]);
   // const toggleLike = () => {
   //   setIsLike((old) => !old);
   // };
