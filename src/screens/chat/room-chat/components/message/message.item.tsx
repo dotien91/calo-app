@@ -28,7 +28,7 @@ interface IMessageBubble {
   chatRoomId: string;
 }
 
-const MessageBubble = ({ chatRoomId, ...props }: IMessageBubble) => {
+const MessageBubble = ({ chatRoomId, listMedia, ...props }: IMessageBubble) => {
   const getInnerComponentProps = () => {
     return {
       ...props,
@@ -68,7 +68,9 @@ const MessageBubble = ({ chatRoomId, ...props }: IMessageBubble) => {
     if (props.renderBubble) {
       return props.renderBubble(bubbleProps);
     }
-    return <Bubble chatRoomId={chatRoomId} {...bubbleProps} />;
+    return (
+      <Bubble listMedia={listMedia} chatRoomId={chatRoomId} {...bubbleProps} />
+    );
   };
 
   const checkIsMe = (currentMessage: TypedMessageGiftedChat) => {

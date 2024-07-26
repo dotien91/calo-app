@@ -15,7 +15,6 @@ import {
 } from "models/chat.model";
 import VideoPlayer from "../../../../../shared/components/video.player.component";
 import MessageAudio from "@screens/chat/room-chat/components/audio/MessageAudio";
-import useStore from "@services/zustand/store";
 import {
   EnumModalContentType,
   EnumStyleModalType,
@@ -28,6 +27,7 @@ import { openUrl } from "@helpers/file.helper";
 import CS from "@theme/styles";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { Device } from "@utils/device.ui.utils";
+import { TypedMedia } from "shared/models";
 
 interface IMediasView {
   data: TypedChatMediaLocal[];
@@ -38,6 +38,7 @@ interface IMediasView {
   chatRoomId: string;
   fromMediaScreen: boolean;
   disabled?: boolean;
+  listMedia: TypedMedia[];
 }
 const IMG_WIDTH = 76;
 const IMG_HEIGHT = 76;
@@ -50,22 +51,14 @@ const MessageMediaView = ({
   status,
   width,
   customStyleBox,
-  chatRoomId,
   fromMediaScreen,
+  listMedia,
   disabled = false,
 }: IMediasView) => {
-  const currentMediaIds = useStore((state) => state.currentMediaIds);
   const isPending = React.useMemo(() => {
     return status == EnumMessageStatus.Pending;
   }, [status]);
   const openMediaModal = (item: TypedChatMediaLocal) => {
-    const currentMediaData =
-      currentMediaIds.find((item) => item?.id == chatRoomId)?.data || [];
-    const listMedia = currentMediaData.filter(
-      (i: TypedDataMediaChatHistory) =>
-        (i?.media_mime_type || "").includes("image") ||
-        (i?.media_mime_type || "").includes("video"),
-    );
     const index = (fromMediaScreen ? data : listMedia).findIndex(
       (_item: TypedDataMediaChatHistory) => _item.media_url == item.media_url,
     );

@@ -130,8 +130,6 @@ const OneOneRtcView: React.FC<OneOneRtcViewProps> = () => {
     remoteStreams: {},
   });
 
-  // const [account] = useState<any>(userData);
-
   useEffect(() => {
     if (streams?.id) {
       createRoom();
