@@ -28,6 +28,8 @@ import { Device } from "@utils/device.ui.utils";
 import eventEmitter from "@services/event-emitter";
 import Header from "@shared-components/header/Header";
 import { navigate } from "@helpers/navigation.helper";
+import { useListData } from "@helpers/hooks/useListData";
+import { getMediaChat } from "@services/api/club.api";
 
 const widthMedia = (Device.width - 3 * 8 - 24) / 4;
 
@@ -111,10 +113,6 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
   const isGroup = route.params?.["isGroup"];
   const { partner_id, chat_room_id } = roomDetail;
   const { group_partners } = chat_room_id;
-  const currentMediaIds = useStore((state) => state.currentMediaIds);
-  const mediaIds =
-    currentMediaIds.find((item) => item?.id == chat_room_id._id)?.data || [];
-  const mediaIdsShow = mediaIds.reverse().slice(mediaIds, numberItemsMediaShow);
   const userData = useStore((state) => state.userData);
   const setSearchModeChat = useStore((state) => state.setSearchModeChat);
 
@@ -122,6 +120,17 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
     setSearchModeChat(true);
     NavigationService.goBack();
   };
+
+  const { listData: currentMediaIds, totalCount } = useListData<any>(
+    {
+      chat_room_id: chat_room_id?._id,
+      order_by: "DESC",
+      sort_by: "createdAt",
+      limit: 10,
+    },
+    getMediaChat,
+  );
+  const mediaIdsShow = currentMediaIds.slice(0, numberItemsMediaShow);
 
   const openReport = () => {
     showSuperModal({
@@ -183,7 +192,9 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
   };
 
   const openMediaChatScreen = () => {
-    NavigationService.navigate(SCREENS.MEDIA_CHAT_SCREEN, { roomDetail });
+    NavigationService.navigate(SCREENS.MEDIA_CHAT_SCREEN, {
+      chat_room_id: chat_room_id?._id,
+    });
   };
 
   const leaveGroup = () => {
@@ -310,7 +321,7 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
       <TouchableOpacity onPress={openMediaChatScreen} style={styles.section}>
         <Text style={styles.titleSection}>{item.title}</Text>
         <View style={styles.wrapMedia}>
-          {mediaIds.length > numberItemsMediaShow && (
+          {currentMediaIds.length > numberItemsMediaShow && (
             <View
               style={[
                 styles.viewMoreMedia,
@@ -318,7 +329,7 @@ const ProfileChatScreen: React.FC<ProfileChatScreenProps> = () => {
               ]}
             >
               <Text style={styles.txtViewMoreMedia}>
-                + {mediaIds.length - numberItemsMediaShow}
+                + {totalCount - (mediaIdsShow?.length || 0)}
               </Text>
             </View>
           )}

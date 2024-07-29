@@ -53,7 +53,6 @@ import EditCommentScreen from "@screens/home/edit-comment/edit.comment.screen";
 import SearchPostScreen from "@screens/search/search.post.screen";
 import ProfileChatScreen from "@screens/chat/profile-chat/chat.profile.screen";
 import CreateGroupChatScreen from "@screens/chat/create-group-chat/create.group.chat.screen";
-import MediaChatScreen from "@screens/chat/profile-chat/chat.media.screen";
 import AddUserGroupChatScreen from "@screens/chat/add-user-to-group-chat/add.user.group.chat.screen";
 import ProfileUserScreen from "@screens/user-profile/user.profile.screen";
 import EditProfileScreen from "@screens/user-profile/edit-profile/edit.profile.screen";
@@ -115,6 +114,7 @@ import MyAudioScreen from "@screens/audio/my-audio/my.audio.screen";
 import AllCreatorScreen from "@screens/audio/all.creator.screen";
 import AudioFilterResultScreen from "@screens/audio/audio-filter-result/audio.filter.result.screen";
 import UploadCertificate from "@screens/welcome/upload-certificate/upload.certificate.ieltshunter";
+import ChatRoomMediaScreen from "@screens/chat/media-club/chat.media.screen";
 // import CreateSubscriptionScreen from "@screens/profile.screen/create-subscription.tsx/create.subscription.screen";
 
 export const DiscoveryStackData = [
@@ -296,7 +296,7 @@ export const CommonStackData = [
   { name: SCREENS.COUPON_CREATE, screen: CouponCreateScreen },
   { name: SCREENS.PROFILE_CHAT, screen: ProfileChatScreen },
   { name: SCREENS.ADD_USER_TO_GROUP, screen: AddUserGroupChatScreen },
-  { name: SCREENS.MEDIA_CHAT_SCREEN, screen: MediaChatScreen },
+  { name: SCREENS.MEDIA_CHAT_SCREEN, screen: ChatRoomMediaScreen },
   { name: SCREENS.CREATE_GROUP_CHAT, screen: CreateGroupChatScreen },
   { name: SCREENS.VIEW_LIVE_STREAM, screen: ViewStreamScreen },
   { name: SCREENS.LIVE_STREAM, screen: LiveStreamScreen },

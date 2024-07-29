@@ -58,6 +58,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
     isEmptyMessage,
     isLoadmore,
     loading,
+    listMedia,
   } = useChatHistory(txtSearch, searchModeChat);
   const {
     uploadRecord,
@@ -156,6 +157,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = () => {
         chatRoomId={chatRoomId}
         {...props}
         messageTextStyle={messageTextStyle}
+        listMedia={listMedia}
       />
     );
   };

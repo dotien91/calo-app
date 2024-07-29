@@ -20,6 +20,7 @@ import MessageMediaView from "./message.media.view";
 import { sliceString } from "@helpers/string.helper";
 import useStore from "@services/zustand/store";
 import { translations } from "@localization";
+import { MediaType } from "react-native-image-picker";
 
 interface IBubble {
   touchableProps: () => void;
@@ -43,6 +44,7 @@ interface IBubble {
   containerToPreviousStyle: ViewStyle;
   textStyle: ViewStyle;
   chatRoomId: string;
+  listMedia: MediaType[];
 }
 
 const Bubble = (props: IBubble) => {
@@ -59,6 +61,7 @@ const Bubble = (props: IBubble) => {
     // renderMessageImage,
     tickStyle,
     chatRoomId,
+    listMedia,
   } = props;
 
   const _onLongPress = () => {
@@ -134,6 +137,7 @@ const Bubble = (props: IBubble) => {
     if (!mediaIds?.length) return null;
     return (
       <MessageMediaView
+        listMedia={listMedia}
         chatRoomId={chatRoomId}
         data={mediaIds}
         status={props.currentMessage.status}

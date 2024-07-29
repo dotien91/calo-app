@@ -28,6 +28,7 @@ const AudioListWatched = () => {
   const onSeeAll = () => {
     navigate(SCREENS.ALL_AUDIO_BOOk, {
       fromPodcastWatched: true,
+      name: translations.audio.watched,
     });
   };
   return (
