@@ -116,8 +116,10 @@ const ListPostNew = ({ id }: ListPostProps) => {
   useEffect(() => {
     const typeEmit = "reload_home_page";
     eventEmitter.on(typeEmit, onRefresh);
+    eventEmitter.on("reload_list_post", _requestData);
     return () => {
       eventEmitter.off(typeEmit, onRefresh);
+      eventEmitter.off("reload_list_post", _requestData);
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
   const onRefresh = () => {
