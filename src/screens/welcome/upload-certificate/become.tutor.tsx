@@ -51,7 +51,7 @@ const BecomeTutorScreen = () => {
     phone_number: string;
     user_email: string;
   }) => {
-    NavigationService.replace(SCREENS.HOME);
+    NavigationService.navigate(SCREENS.HOME);
     const params = {
       _id: userData?._id,
       certificate_list: JSON.stringify(listFile.map((i) => i._id)),
