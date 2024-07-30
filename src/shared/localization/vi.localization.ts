@@ -351,7 +351,7 @@ export default {
     selectIeltsPoint: "Điểm số IELTS của bạn",
     selectTargetPoint: "Điểm IELTS mong muốn",
     uploadCertificate: "Tải lên chứng chỉ",
-    tapToUpload: "Nhấn vào biểu tượng bên trái để tải lên chứng chỉ",
+    tapToUpload: "Thêm lên chứng chỉ",
     subTitle:
       "Hãy chia sẻ cho chúng tôi một số thông tin để chúng tôi hỗ trợ bạn có một lộ trình tốt nhất",
     titleHeader: "Đăng ký người hướng dẫn",
@@ -370,7 +370,7 @@ export default {
     errorMessage: "Vui lòng tải chứng chỉ của bạn lên để tiếp tục",
     next: "Tiếp tục",
     select: "Chọn điểm của bạn",
-    skip: "Bỏ qua >>"
+    skip: "Bỏ qua"
   },
   home: {
     whatonYourMind: "Bạn đang nghĩ gì?",

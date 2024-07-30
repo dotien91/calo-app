@@ -192,6 +192,10 @@ import icHeartPostSolid from "./icon-heart-pos-solid.svg";
 import icCalendar from "./icon-calendar.svg";
 import icCalendarFilled from "./icon-calendar-filled.svg";
 import icBuble from "./icon-buble2d.svg";
+import icCertificate from "./certificate.svg";
+import icHaveNoCertificate from "./haveNoCertificate.svg";
+import icCrown from "./crown.svg";
+import icUpgrade from "./upgrade.svg";
 
 const Icons = {
   icHeartPostSolid,
@@ -386,6 +390,10 @@ const Icons = {
   icCalendarFilled,
   icPrivate,
   icBuble,
+  icCertificate,
+  icHaveNoCertificate,
+  icCrown,
+  icUpgrade,
 };
 
 interface IconSvgProps {

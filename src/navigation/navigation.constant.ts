@@ -114,7 +114,11 @@ import MyAudioScreen from "@screens/audio/my-audio/my.audio.screen";
 import AllCreatorScreen from "@screens/audio/all.creator.screen";
 import AudioFilterResultScreen from "@screens/audio/audio-filter-result/audio.filter.result.screen";
 import UploadCertificate from "@screens/welcome/upload-certificate/upload.certificate.ieltshunter";
+<<<<<<< Updated upstream
 import ChatRoomMediaScreen from "@screens/chat/media-club/chat.media.screen";
+=======
+import BecomeTutorScreen from "@screens/welcome/upload-certificate/become.tutor";
+>>>>>>> Stashed changes
 // import CreateSubscriptionScreen from "@screens/profile.screen/create-subscription.tsx/create.subscription.screen";
 
 export const DiscoveryStackData = [
@@ -375,5 +379,9 @@ export const CommonStackData = [
   {
     name: SCREENS.LIST_CREATORS,
     screen: AllCreatorScreen,
+  },
+  {
+    name: SCREENS.BECOME_TUTOR,
+    screen: BecomeTutorScreen,
   },
 ];

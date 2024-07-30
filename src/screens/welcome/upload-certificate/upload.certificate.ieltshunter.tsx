@@ -1,25 +1,13 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  Keyboard,
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native";
-import React, { useEffect } from "react";
+import { View, Text, StyleSheet, Keyboard, Image } from "react-native";
+import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { palette } from "@theme/themes";
-import {
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-} from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import { useUploadFile } from "@helpers/hooks/useUploadFile";
 import CS from "@theme/styles";
 import IconSvg from "assets/svg";
 import * as NavigationService from "react-navigation-helpers";
-// import PressableBtn from "@shared-components/button/PressableBtn";
-import { ScreenWidth } from "@freakycoder/react-native-helpers";
+import { ScreenHeight, ScreenWidth } from "@freakycoder/react-native-helpers";
 // import DropDownItem from '@shared-components/dropdown/DropDownItem';
 import BottomSheet, {
   BottomSheetBackdrop,
@@ -29,50 +17,41 @@ import CustomBackground from "@shared-components/CustomBackgroundBottomSheet";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import {
   chooseOptions,
+  EnumScreenType,
   ieltsPointList,
 } from "constants/upload.certificate.constant";
 import useStore from "@services/zustand/store";
 import { translations } from "@localization";
-import { useForm } from "react-hook-form";
-import InputHook from "@shared-components/form/InputHookForm";
-import Button from "@shared-components/button/Button";
-// import { getStatusBarHeight } from "react-native-safearea-height";
 import { updateProfile } from "@services/api/user.api";
 import { showToast } from "@helpers/super.modal.helper";
 import { _setJson } from "@services/local-storage";
+import { SCREENS } from "constants";
 
 interface props {
   id: string;
   name: string;
 }
-const FONTSIZE = ScreenWidth / 7 - 30;
+const FONTSIZE = ScreenWidth / 6 - 33;
 
 const UploadCertificate = () => {
   const [index, setIndex] = React.useState<props>();
   const [itemSelected, setItemSelected] = React.useState<props>();
   const [ieltsPoint, setIeltsPoint] = React.useState("0.0");
   const [currentIeltsPoint, setCurrentIeltsPoint] = React.useState("0.0");
+  const prevScreen = React.useRef<string>();
 
-  // const [typeCoaching, setTypeCoaching] = React.useState(typeCoachingList[0].value);
   const userData = useStore((state) => state.userData);
   const setUserData = useStore((state) => state.setUserData);
-  const { listFile, listFileLocal, onSelectPicture, renderFile2 } =
-    useUploadFile([]);
   const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      leave_message: userData?.leave_message || "",
-      fullname: userData?.fullname || userData?.display_name || "",
-      phone_number: userData?.user_phone || "",
-      user_email: userData?.user_email || "",
-    },
-  });
+    listFile,
+    listFileLocal,
+    onSelectPicture,
+    renderFile2,
+    setListFileLocal,
+  } = useUploadFile([]);
 
   React.useEffect(() => {
-    if (index?.id === "enterIELTS") {
+    if (index?.id === EnumScreenType.enterIELTS) {
       NavigationService.goBack();
       const params = {
         _id: userData?._id,
@@ -92,7 +71,7 @@ const UploadCertificate = () => {
       });
     }
 
-    if (index?.id === "upgrade") {
+    if (index?.id === EnumScreenType.upgrade) {
       NavigationService.goBack();
       const params = {
         _id: userData?._id,
@@ -116,30 +95,77 @@ const UploadCertificate = () => {
     }
   }, [index]);
 
+  React.useEffect(() => {
+    if (index?.id != undefined) {
+      prevScreen.current = index?.id;
+    }
+  }, [index]);
   const subArray = React.useMemo(() => {
     const _index = ieltsPointList.findIndex(
       (item) => item.value === currentIeltsPoint,
     );
     return ieltsPointList.slice(_index + 1);
   }, [index]);
+
   const renderBtn = (_onPress) => {
-    if (itemSelected?.id === "uploadCertificate" && listFile.length == 0) {
+    if (
+      itemSelected?.id !== EnumScreenType.enterIELTS &&
+      listFileLocal.length == 0
+    ) {
       _onPress = () =>
         showToast({
           type: "error",
           message: translations.uploadCertificate.errorMessage,
         });
     }
-
+    const gotoPrevScreen = () => {
+      setListFileLocal([]);
+      setIndex(prevScreen.current);
+    };
     return (
       <View style={styles.btnContainer}>
-        <TouchableOpacity onPress={_onPress} style={styles.pressableBtn}>
+        <TouchableOpacity
+          onPress={() => {
+            _setJson("is_still_login", false);
+            NavigationService.goBack();
+          }}
+          style={styles.pressableBtn}
+        >
           <Text
-            style={{ ...CS.hnSemiBold, fontSize: 16, color: palette.white }}
+            style={{
+              ...CS.hnSemiBold,
+              fontSize: FONTSIZE - 16,
+              color: palette.text,
+            }}
           >
-            {translations.uploadCertificate.next}
+            {translations.uploadCertificate.skip}
           </Text>
         </TouchableOpacity>
+        <View
+          style={{
+            flexDirection: "row",
+          }}
+        >
+          <TouchableOpacity onPress={gotoPrevScreen}>
+            <Icon
+              type={IconType.AntDesign}
+              name="leftcircle"
+              size={FONTSIZE + 10}
+              color={palette.primary}
+              style={{
+                paddingHorizontal: 16,
+              }}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={_onPress}>
+            <Icon
+              type={IconType.AntDesign}
+              name="rightcircle"
+              size={FONTSIZE + 10}
+              color={palette.primary}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
     );
   };
@@ -151,9 +177,48 @@ const UploadCertificate = () => {
     }, 300);
   };
 
+  const renderSelectCertificate = () => {
+    return (
+      <>
+        {listFileLocal.length > 0 ? (
+          <View style={{ flexDirection: "row" }}>
+            {renderFile2()}
+            <TouchableOpacity
+              style={styles.uploadBtn}
+              onPress={onSelectPicture}
+            >
+              <IconSvg
+                name="icAdd"
+                size={FONTSIZE + 6}
+                color={palette.textOpacity8}
+              />
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <TouchableOpacity
+            onPress={onSelectPicture}
+            style={styles.uploadIconContainer}
+          >
+            <Text style={styles.uploadIconText}>
+              {translations.uploadCertificate.tapToUpload}
+            </Text>
+            <View style={styles.uploadIcon}>
+              <IconSvg
+                name="icImage"
+                size={FONTSIZE + 5}
+                color={palette.textOpacity6}
+              />
+            </View>
+          </TouchableOpacity>
+        )}
+      </>
+    );
+  };
   const refBottomSheet = React.useRef<BottomSheet>(null);
-  const snapPoints = React.useMemo(() => [300], []);
+  const snapPoints = React.useMemo(() => [ScreenHeight * 0.8], []);
+
   const renderBottomSheet = (ieltsPointList) => {
+    if (itemSelected?.id === EnumScreenType.master) return null;
     return (
       <>
         {ieltsPointList.length > 0 && (
@@ -179,22 +244,25 @@ const UploadCertificate = () => {
             backgroundComponent={CustomBackground}
           >
             <View style={[{ paddingHorizontal: 16, ...CS.flex1 }]}>
-              <Text
-                style={{
-                  ...CS.hnSemiBold,
-                  textAlign: "center",
-                  fontSize: 20,
-                  color: palette.primary,
-                }}
-              >
-                {translations.uploadCertificate.select}
-              </Text>
               <BottomSheetScrollView
                 style={{
                   ...CS.flex1,
                   backgroundColor: palette.background,
                 }}
               >
+                {itemSelected?.id === EnumScreenType.uploadCertificate ? (
+                  <View style={styles.uploadContainer}>
+                    <Text style={styles.uploadText}>
+                      {translations.uploadCertificate.uploadCertificate}
+                    </Text>
+                    {renderSelectCertificate()}
+                  </View>
+                ) : null}
+                <Text style={styles.uploadText}>
+                  {itemSelected?.id === EnumScreenType.uploadCertificate
+                    ? translations.uploadCertificate.selectIeltsPoint
+                    : translations.uploadCertificate.selectTargetPoint}
+                </Text>
                 {ieltsPointList.map((i) => (
                   <TouchableOpacity
                     key={i.index}
@@ -205,18 +273,23 @@ const UploadCertificate = () => {
                     }
                     onPress={() => {
                       refBottomSheet.current?.close();
-                      itemSelected?.id === "uploadCertificate"
+                      itemSelected?.id === EnumScreenType.uploadCertificate
                         ? setCurrentIeltsPoint(i.value)
                         : setIeltsPoint(i.value);
-                      //   setPriceInput("");
                     }}
                   >
                     <Text
-                      style={{
-                        ...CS.hnSemiBold,
-                        fontSize: 16,
-                        color: palette.primary,
-                      }}
+                      style={
+                        i.value === ieltsPoint || i.value === currentIeltsPoint
+                          ? {
+                              fontSize: 16,
+                              color: palette.primary,
+                            }
+                          : {
+                              fontSize: 16,
+                              color: palette.text,
+                            }
+                      }
                     >{`${i.value}`}</Text>
                   </TouchableOpacity>
                 ))}
@@ -227,16 +300,57 @@ const UploadCertificate = () => {
       </>
     );
   };
-  const renderDropDownItem = () => {
+  const renderDropDownItem = (item, isActive) => {
     return (
-      <View style={{ paddingBottom: 16, paddingHorizontal: 5 }}>
-        <Text style={[styles.uploadText, { paddingVertical: 5 }]}>
-          {itemSelected?.id !== "uploadCertificate"
-            ? translations.uploadCertificate.selectTargetPoint
-            : translations.uploadCertificate.selectIeltsPoint}
-        </Text>
-        <TouchableOpacity onPress={openListIeltsPoint}>
+      <View>
+        <TouchableOpacity
+          onPress={() => {
+            openListIeltsPoint();
+            setItemSelected(item);
+          }}
+          style={isActive ? styles.activeItem : styles.inactiveItem}
+        >
           <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              padding: 8,
+            }}
+          >
+            <IconSvg name={item.svgName} size={ScreenWidth / 4} />
+            <View
+              style={{
+                flexDirection: "row",
+                // marginTop: 10,
+                paddingHorizontal: 16,
+              }}
+            >
+              <Text style={styles.itemText}>{item.name}</Text>
+              {isActive ? (
+                <View>
+                  <Icon
+                    name="checkcircle"
+                    size={25}
+                    type={IconType.AntDesign}
+                    style={{
+                      borderRadius: 30,
+                    }}
+                    color={palette.primary}
+                  />
+                </View>
+              ) : (
+                <View
+                  style={{
+                    height: 25,
+                    width: 25,
+                    borderRadius: 30,
+                    borderWidth: 1,
+                  }}
+                ></View>
+              )}
+            </View>
+          </View>
+          {/* <View
             style={{
               padding: 8,
               borderWidth: 1,
@@ -252,70 +366,23 @@ const UploadCertificate = () => {
                 : ieltsPoint}
             </Text>
             <Icon size={24} name={"chevron-down"} type={IconType.Ionicons} />
-          </View>
+          </View> */}
         </TouchableOpacity>
       </View>
     );
   };
   const SelectBox = ({ options }) => {
     return (
-      <View>
+      <View
+        style={{
+          marginTop: 16,
+        }}
+      >
         {options.map((item, _index) => {
           const isActive = itemSelected?.id === item?.id;
           return (
-            <View
-              key={_index}
-              style={isActive ? styles.activeItem : styles.inactiveItem}
-            >
-              <TouchableWithoutFeedback onPress={() => setItemSelected(item)}>
-                <Text style={styles.itemText}>{item.name}</Text>
-                {itemSelected?.id === "uploadCertificate" && isActive ? (
-                  <>
-                    <View style={styles.uploadContainer}>
-                      <Text style={styles.uploadText}>
-                        {translations.uploadCertificate.uploadCertificate}
-                      </Text>
-                      {listFileLocal.length > 0 ? (
-                        <View style={{ flexDirection: "row" }}>
-                          {renderFile2()}
-                          <TouchableOpacity
-                            style={styles.uploadBtn}
-                            onPress={onSelectPicture}
-                          >
-                            <IconSvg
-                              name="icAdd"
-                              size={FONTSIZE + 6}
-                              color={palette.textOpacity8}
-                            />
-                          </TouchableOpacity>
-                        </View>
-                      ) : (
-                        <View style={styles.uploadIconContainer}>
-                          <TouchableOpacity
-                            onPress={onSelectPicture}
-                            style={styles.uploadIcon}
-                          >
-                            <IconSvg
-                              name="icImage"
-                              size={50}
-                              color={palette.textOpacity6}
-                            />
-                          </TouchableOpacity>
-                          <Text style={styles.uploadIconText}>
-                            {translations.uploadCertificate.tapToUpload}
-                          </Text>
-                        </View>
-                      )}
-                    </View>
-                    {renderDropDownItem()}
-                  </>
-                ) : null}
-                {(itemSelected?.id === "upgrade" ||
-                  itemSelected?.id === "enterIELTS") &&
-                isActive ? (
-                  <>{renderDropDownItem()}</>
-                ) : null}
-              </TouchableWithoutFeedback>
+            <View style={{}} key={_index}>
+              <View>{renderDropDownItem(item, isActive)}</View>
             </View>
           );
         })}
@@ -335,29 +402,9 @@ const UploadCertificate = () => {
     );
   };
 
-  if (index?.id === "uploadCertificate") {
+  if (index?.id === EnumScreenType.uploadCertificate) {
     return (
       <SafeAreaView style={{ flex: 1 }}>
-        <View
-          style={{
-            alignItems: "flex-end",
-            paddingHorizontal: 24,
-          }}
-        >
-          <TouchableOpacity
-            onPress={() => {
-              _setJson("is_still_login", false);
-              NavigationService.goBack();
-            }}
-          >
-            <Text
-              style={{ ...CS.hnSemiBold, fontSize: 16, color: palette.text }}
-            >
-              {translations.uploadCertificate.skip}
-            </Text>
-            <View style={{ backgroundColor: palette.black, height: 2 }} />
-          </TouchableOpacity>
-        </View>
         {renderSelectBox(chooseOptions[1])}
         {renderBtn(() => setIndex(itemSelected))}
         {renderBottomSheet(subArray)}
@@ -365,220 +412,16 @@ const UploadCertificate = () => {
     );
   }
 
-  if (index?.id === "master") {
-    const onSubmit = (DataHook: {
-      leave_message: string;
-      fullname: string;
-      phone_number: string;
-      user_email: string;
-    }) => {
-      NavigationService.goBack();
-      const params = {
-        _id: userData?._id,
-        certificate_list: JSON.stringify(listFile.map((i) => i._id)),
-        // target_point: ieltsPoint,
-        current_point: currentIeltsPoint,
-        user_email: DataHook.user_email,
-        fullname: DataHook?.fullname,
-        phone_number: DataHook.phone_number,
-        leave_message: DataHook?.leave_message,
-      };
-      updateProfile(params).then((res) => {
-        if (!res.isError) {
-          showToast({
-            type: "success",
-            message: translations.course.updateModuleSuccess,
-          });
-          setUserData({
-            ...userData,
-            // target_point: ieltsPoint,
-            current_point: currentIeltsPoint,
-            user_email: DataHook.user_email,
-            fullname: DataHook?.fullname,
-            phone_number: DataHook.phone_number,
-            leave_message: DataHook?.leave_message,
-          });
-        }
-      });
-    };
-    return (
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "height" : undefined}
-        style={CS.flex1}
-      >
-        <SafeAreaView style={CS.flex1}>
-          <ScrollView style={[CS.flex1]} showsVerticalScrollIndicator={false}>
-            <Text style={styles.textHeader}>
-              {translations.uploadCertificate.titleHeader}
-            </Text>
-            <View
-              style={{
-                marginTop: ScreenWidth / 6,
-                alignSelf: "center",
-                paddingHorizontal: 24,
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 26,
-                  fontWeight: "700",
-                  color: palette.text,
-                  paddingVertical: 10,
-                }}
-              >
-                {translations.uploadCertificate.titleHeaderMentor}
-              </Text>
-              <Text
-                style={{
-                  color: palette.text,
-                  paddingVertical: 16,
-                }}
-              >
-                {translations.uploadCertificate.subTitleHeaderMentor}
-              </Text>
-              <View
-                style={{
-                  position: "absolute",
-                  zIndex: -1,
-                  marginTop: 10,
-                  marginHorizontal: 24,
-                }}
-              >
-                <IconSvg size={30} name="icBuble" />
-                <View
-                  style={{
-                    position: "absolute",
-                    marginLeft: 8,
-                    marginTop: 10,
-                    zIndex: -1,
-                    marginHorizontal: 24,
-                  }}
-                >
-                  <IconSvg size={60} name="icBuble" />
-                </View>
-              </View>
-            </View>
-            <View>
-              <InputHook
-                viewStyle={{ marginVertical: 6, borderRadius: 0 }}
-                name="fullname"
-                customStyle={{ flex: 1 }}
-                inputProps={{
-                  type: "text",
-                  defaultValue: "",
-                  placeholder: translations.fullname,
-                }}
-                control={control}
-                rules={{
-                  required: {
-                    value: true,
-                    message: translations.required,
-                  },
-                }}
-                errorTxt={errors.fullname?.message}
-              />
-              <InputHook
-                viewStyle={{ marginVertical: 6, borderRadius: 0 }}
-                name="user_email"
-                customStyle={{ flex: 1 }}
-                inputProps={{
-                  type: "email",
-                  defaultValue: "",
-                  placeholder: translations.placeholderEmail,
-                }}
-                control={control}
-                rules={{
-                  required: {
-                    value: true,
-                    message: translations.required,
-                  },
-                }}
-                errorTxt={errors.user_email?.message}
-              />
-              <InputHook
-                viewStyle={{ marginVertical: 6, borderRadius: 0 }}
-                name="phone_number"
-                customStyle={{ flex: 1 }}
-                inputProps={{
-                  type: "number",
-                  defaultValue: "",
-                  placeholder: translations.club.phoneNumber,
-                  keyboardType: "numeric",
-                }}
-                control={control}
-                rules={{
-                  required: {
-                    value: true,
-                    message: translations.required,
-                  },
-                }}
-                errorTxt={errors.phone_number?.message}
-              />
-              <InputHook
-                viewStyle={{ marginVertical: 6, borderRadius: 0 }}
-                name="leave_message"
-                customStyle={CS.flex1}
-                inputProps={{
-                  type: "text",
-                  defaultValue: "",
-                  placeholder: translations.uploadCertificate.leaveMessage,
-                }}
-                control={control}
-                rules={{
-                  required: {
-                    value: true,
-                    message: translations.required,
-                  },
-                }}
-                multiline
-                errorTxt={errors.leave_message?.message}
-                required
-              />
-            </View>
-            {/* <View style={{paddingHorizontal: 20, marginTop: 10}}>
-              <DropDownItem 
-                customStyle={{borderRadius: 0}}
-                value={typeCoaching}
-                setValue={setTypeCoaching}
-                items={typeCoachingList}
-                placeholder={translations.uploadCertificate.selectCategory}
-              />
-            </View> */}
-            <Button
-              style={{
-                width: ScreenWidth * 0.9,
-                borderRadius: 0,
-                alignSelf: "center",
-                marginTop: ScreenWidth / 6,
-              }}
-              text={translations.uploadCertificate.registerNow}
-              onPress={handleSubmit(onSubmit)}
-            />
-          </ScrollView>
-        </SafeAreaView>
-      </KeyboardAvoidingView>
-    );
+  if (index?.id === EnumScreenType.master) {
+    NavigationService.navigate(SCREENS.BECOME_TUTOR, {
+      listFile: listFile,
+      currentIeltsPoint: currentIeltsPoint,
+    });
+    return;
   }
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View
-        style={{
-          alignItems: "flex-end",
-          paddingHorizontal: 24,
-        }}
-      >
-        <TouchableOpacity
-          onPress={() => {
-            _setJson("is_still_login", false);
-            NavigationService.goBack();
-          }}
-        >
-          <Text style={{ ...CS.hnSemiBold, fontSize: 16, color: palette.blue }}>
-            {translations.uploadCertificate.skip}
-          </Text>
-          <View style={{ backgroundColor: palette.blue, height: 2 }} />
-        </TouchableOpacity>
-      </View>
       {renderSelectBox(chooseOptions[0])}
       {renderBtn(() => setIndex(itemSelected))}
       {renderBottomSheet(ieltsPointList)}
@@ -588,53 +431,51 @@ const UploadCertificate = () => {
 
 const styles = StyleSheet.create({
   btnContainer: {
-    // flex: 1,
     flexDirection: "row",
-    justifyContent: "flex-end",
-    // right: 10,
+    justifyContent: "space-between",
     alignItems: "center",
-    // padding: 24,
     paddingHorizontal: 24,
     marginBottom: 24,
   },
   pressableBtn: {
-    backgroundColor: palette.btnRedPrimary,
     alignItems: "center",
     justifyContent: "center",
-    // paddingHorizontal: 24,
-    // paddingVertical: 12,
-    borderRadius: 10,
-    height: 50,
-    width: 120,
   },
   activeItem: {
-    paddingHorizontal: 16,
-    borderBottomWidth: 2,
-    borderWidth: 1,
+    borderWidth: 2,
     borderRadius: 10,
     marginVertical: 16,
     borderColor: palette.primary,
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.1,
+    elevation: 10,
+    shadowRadius: 8,
+    shadowColor: palette.primary,
+    // zIndex: 99,
+    backgroundColor: palette.white,
   },
   inactiveItem: {
-    paddingHorizontal: 16,
-    borderWidth: 0.8,
+    borderWidth: 1,
     borderRadius: 10,
     marginVertical: 16,
     borderColor: palette.text,
   },
   itemText: {
-    paddingVertical: 16,
+    marginTop: 8,
     color: palette.text,
-    fontSize: FONTSIZE - 8,
+    fontSize: FONTSIZE - 13,
     fontWeight: "500",
+    paddingHorizontal: 10,
+    width: ScreenWidth * 0.5,
   },
   uploadContainer: {
-    paddingHorizontal: 5,
+    // paddingHorizontal: 5,
   },
   uploadText: {
-    fontSize: FONTSIZE - 10,
+    fontSize: FONTSIZE - 12,
     color: palette.text,
-    paddingVertical: 10,
+    paddingVertical: 5,
+    fontWeight: "500",
   },
   uploadBtn: {
     ...CS.center,
@@ -645,22 +486,25 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   uploadIconContainer: {
-    width: ScreenWidth * 0.75,
-    // flexWrap: "wrap",
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 8,
+    marginTop: 5,
   },
   uploadIcon: {
     ...CS.center,
     height: 50,
     width: 50,
-    borderWidth: 1,
-    marginVertical: 5,
+    // marginVertical: 5,
     borderRadius: 5,
   },
   uploadIconText: {
     paddingHorizontal: 16,
     fontStyle: "italic",
+    fontSize: FONTSIZE - 16,
   },
   // dropDownContainer: {
   //   // flex: 1,
@@ -679,13 +523,16 @@ const styles = StyleSheet.create({
   },
   selectBoxTitle: {
     fontSize: FONTSIZE,
-    fontWeight: "600",
+    // fontWeight: "700",
     color: palette.text,
+    // fontFamily: "SVN-Outfit-Bold",
+    fontWeight: "700",
   },
   selectBoxSubtitle: {
-    fontSize: FONTSIZE - 8,
+    fontSize: FONTSIZE - 14,
     color: palette.text,
     marginTop: 10,
+    // fontFamily: "SVN-Outfit-Regular",
   },
   category: {
     marginTop: 10,
@@ -700,11 +547,12 @@ const styles = StyleSheet.create({
     backgroundColor: palette.highlight,
   },
   textHeader: {
-    fontSize: FONTSIZE - 6,
+    fontSize: FONTSIZE - 10,
     color: palette.text,
-    alignSelf: "center",
+    // alignSelf: "center",
     fontWeight: "600",
     paddingVertical: 10,
+    paddingHorizontal: 16,
   },
 });
 

@@ -13,6 +13,13 @@ export const ieltsPointList = [
   { index: 10, value: "8.5" },
   { index: 11, value: "9.0" },
 ];
+export enum EnumScreenType {
+  uploadCertificate = "uploadCertificate",
+  enterIELTS = "enterIELTS",
+  master = "master",
+  upgrade = "upgrade"
+};
+
 export const chooseOptions = [
   {
     title: translations.uploadCertificate.title1,
@@ -20,10 +27,12 @@ export const chooseOptions = [
       {
         id: "uploadCertificate",
         name: translations.uploadCertificate.haveIelts,
+        svgName: "icCertificate"
       },
       {
         id: "enterIELTS",
         name: translations.uploadCertificate.haveNoIelts,
+        svgName: "icHaveNoCertificate"
       },
     ],
   },
@@ -33,10 +42,12 @@ export const chooseOptions = [
       {
         id: "master",
         name: translations.uploadCertificate.beMaster,
+        svgName: "icCrown"
       },
       {
         id: "upgrade",
         name: translations.uploadCertificate.upgradeBand,
+        svgName: "icUpgrade"
       },
     ],
   },

@@ -975,7 +975,7 @@ export default {
     selectIeltsPoint: "あなたのIELTSスコア",
     selectTargetPoint: "希望するIELTSスコア",
     uploadCertificate: "証明書をアップロード",
-    tapToUpload: "左のアイコンをタップして証明書をアップロードしてください",
+    tapToUpload: "証明書をアップロードしてください。",
     subTitle:
       "最適なプランをご提案するために、いくつかの情報を共有してください",
     titleHeader: "インストラクターとして登録",
@@ -994,7 +994,7 @@ export default {
     errorMessage: "先に進むには証明書をアップロードしてください",
     next: "次",
     select: "ポイントを選んでください",
-    skip: "スキップ >>"
+    skip: "スキップ"
   },
   startChatDesc:
     "彼らの学習の旅や共通の趣味について質問するメッセージを送信して、会話を開始しましょう",

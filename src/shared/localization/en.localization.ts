@@ -794,7 +794,7 @@ export default {
     selectIeltsPoint: "Your IELTS Score",
     selectTargetPoint: "Desired IELTS Score",
     uploadCertificate: "Upload Certificate",
-    tapToUpload: "Tap the icon on the left to upload the certificate",
+    tapToUpload: "Upload the certificate",
     subTitle:
       "Share some information with us so we can help you with the best plan",
     titleHeader: "Register as an Instructor",
@@ -813,7 +813,7 @@ export default {
     errorMessage: "Please upload your certificate to move on",
     next: "Next",
     select: "Select your point",
-    skip: "Skip >>"
+    skip: "Skip"
   },
   member: {
     chat: "chat",
