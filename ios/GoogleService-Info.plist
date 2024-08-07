@@ -3,21 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>409582649419-j3ler20j0fklont9ivpeud6lmq7hkkqn.apps.googleusercontent.com</string>
+	<string>329708522429-tb80b2s4u8k8r3p2ocn5rfa5ofr78kbl.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.409582649419-j3ler20j0fklont9ivpeud6lmq7hkkqn</string>
+	<string>com.googleusercontent.apps.329708522429-tb80b2s4u8k8r3p2ocn5rfa5ofr78kbl</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>329708522429-0bh4qgukdsuampv1j93jhg2p229opael.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCpM03LmVkPjfoczW0H27qVMlUQcshRxkw</string>
+	<string>AIzaSyBb13-myvfPRgtj51w0VWX_PfpvMEBK9p0</string>
 	<key>GCM_SENDER_ID</key>
-	<string>409582649419</string>
+	<string>329708522429</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.exam24h.ieltshunter</string>
+	<string>com.ikigroup.ieltshunter</string>
 	<key>PROJECT_ID</key>
-	<string>ieltshunter-65a03</string>
+	<string>ielts-hunter-6db1e</string>
 	<key>STORAGE_BUCKET</key>
-	<string>ieltshunter-65a03.appspot.com</string>
+	<string>ielts-hunter-6db1e.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:409582649419:ios:7e29c04221204b234c0dce</string>
+	<string>1:329708522429:ios:c3e1923869ca3077c520d4</string>
 </dict>
 </plist>

@@ -137,13 +137,13 @@ export const SCREENS = {
   ONEONE_SCREEN: "OneOneScreen",
   AUDIO_FILTER: "AudioFilter",
   UPLOAD_CERTIFICATE: "UploadCertificate",
-  BECOME_TUTOR: "BecomeTutor"
+  BECOME_TUTOR: "BecomeTutor",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =
-  "543656532685-ea3og352pgjtb382rlhmhdl983upijma.apps.googleusercontent.com";
+  "329708522429-tb80b2s4u8k8r3p2ocn5rfa5ofr78kbl.apps.googleusercontent.com";
 export const WEB_CLIENT_ID_GOOGLE =
-  "543656532685-oh1fjl1fhvc1dcdc32agqrotf28vjj69.apps.googleusercontent.com";
+  "329708522429-t56qqqgo9kasu9rqtomf1aj8al55obbo.apps.googleusercontent.com";
 
 export enum SERVICE_UNIT {
   second = "second",
