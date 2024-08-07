@@ -51,6 +51,7 @@ const CourseItem = ({
     public_status,
   } = data;
   const userData = useStore((state) => state.userData);
+
   let widthImage = Device.width - 32;
   if (isHorizontalStyle) {
     widthImage = widthImage / 1.5;
@@ -62,6 +63,9 @@ const CourseItem = ({
   const theme = useTheme();
   // const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
+  const setListCourseFilterParams = useStore(
+    (state) => state.setListCourseFilterParams,
+  );
   const isCourseVideo = EnumClassType.SelfLearning == type;
   const openPreviewCourse = () => {
     if (is_join && data.type == EnumClassType.SelfLearning) {
@@ -84,7 +88,10 @@ const CourseItem = ({
   };
 
   // const avatarUrl = () => {};
-
+  const onPressBtnFilter = (item) => {
+    setListCourseFilterParams({ skills: [item] });
+    NavigationService.navigate(SCREENS.COURSE_CATEGORY);
+  };
   const renderInfo = () => {
     if (is_join)
       return (
@@ -162,7 +169,13 @@ const CourseItem = ({
           {public_status !== "active" && <Badge title={public_status} />}
           {skills.map((item, index) => {
             const txt = listSkill.filter((i) => i.id === item);
-            return <Badge key={index} title={txt?.[0]?.value} />;
+            return (
+              <Badge
+                _onPress={() => onPressBtnFilter(item)}
+                key={index}
+                title={txt?.[0]?.value}
+              />
+            );
           })}
         </View>
         <View

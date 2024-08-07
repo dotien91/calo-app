@@ -631,7 +631,7 @@ const OneOneRtcView: React.FC<OneOneRtcViewProps> = () => {
               style={{ ...StyleSheet.absoluteFillObject }}
               objectFit="cover"
               mirror={true}
-              zOrder={2}
+              zOrder={1}
             />
           ) : (
             <ImageLoad

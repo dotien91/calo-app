@@ -28,16 +28,17 @@ const AllBookScreen = () => {
   const fromPodcastWatched = route.params?.fromPodcastWatched || false;
   const listAudioWatched = useStore((state) => state.listAudioWatched);
 
-  const { listData, isLoading } = useListData<TypeTrackLocal>(
-    {
-      auth_id: userData?._id,
-      order_by: "DESC",
-      sort_by: "createdAt",
-      podcast_category: id,
-      limit: "10",
-    },
-    GetPodCastList,
-  );
+  const { listData, isLoading, onEndReach, renderFooterComponent } =
+    useListData<TypeTrackLocal>(
+      {
+        auth_id: userData?._id,
+        order_by: "DESC",
+        sort_by: "createdAt",
+        podcast_category: id,
+        limit: "10",
+      },
+      GetPodCastList,
+    );
 
   useEffect(() => {
     setListAudio(listData);
@@ -91,6 +92,8 @@ const AllBookScreen = () => {
         onEndReachedThreshold={0}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item?._id + ""}
+        onEndReached={onEndReach}
+        ListFooterComponent={renderFooterComponent()}
       />
       {!hide && (
         <View

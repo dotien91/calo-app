@@ -193,6 +193,11 @@ const Navigation = () => {
           <Tab.Screen
             name={SCREENS.SETTINGPROFILESCREEN_TAB}
             component={SettingProfileScreen}
+            listeners={{
+              tabPress: () => {
+                eventEmitter.emit("reload_list_task");
+              },
+            }}
           />
         </Tab.Navigator>
       </>

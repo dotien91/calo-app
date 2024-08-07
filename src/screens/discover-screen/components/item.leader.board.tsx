@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import {
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { useTheme } from "@react-navigation/native";
 
 import CS from "@theme/styles";
@@ -9,6 +15,8 @@ import { translations } from "@localization";
 import Avatar from "@shared-components/user/Avatar";
 import { getListLeaderBoard } from "@services/api/user.api";
 import { ScreenWidth } from "@freakycoder/react-native-helpers";
+import { navigate } from "react-navigation-helpers";
+import { SCREENS } from "constants";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -40,7 +48,14 @@ const ItemLeaderBoard = () => {
   return (
     <View style={styles.viewTop}>
       <View style={{ flex: 1, flexDirection: "row" }}>
-        <View style={styles.viewStyle}>
+        <TouchableOpacity
+          onPress={() =>
+            navigate(SCREENS.PROFILE_CURRENT_USER, {
+              _id: listRank[1]?._id,
+            })
+          }
+          style={styles.viewStyle}
+        >
           <View style={{ zIndex: 1 }}>
             <Avatar
               style={styles.avatarTop2}
@@ -65,9 +80,16 @@ const ItemLeaderBoard = () => {
               </Text>
             </View>
           </View>
-        </View>
+        </TouchableOpacity>
 
-        <View style={styles.viewStyle}>
+        <TouchableOpacity
+          onPress={() =>
+            navigate(SCREENS.PROFILE_CURRENT_USER, {
+              _id: listRank[0]?._id,
+            })
+          }
+          style={styles.viewStyle}
+        >
           <View style={{ zIndex: 1 }}>
             <Avatar
               style={styles.avatarTop1}
@@ -98,9 +120,16 @@ const ItemLeaderBoard = () => {
               </Text>
             </View>
           </View>
-        </View>
+        </TouchableOpacity>
 
-        <View style={styles.viewStyle}>
+        <TouchableOpacity
+          onPress={() =>
+            navigate(SCREENS.PROFILE_CURRENT_USER, {
+              _id: listRank[2]?._id,
+            })
+          }
+          style={styles.viewStyle}
+        >
           <View style={{ zIndex: 1 }}>
             <Avatar
               style={styles.avatarTop3}
@@ -124,7 +153,7 @@ const ItemLeaderBoard = () => {
               </Text>
             </View>
           </View>
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
