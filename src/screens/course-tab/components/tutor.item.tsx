@@ -62,6 +62,7 @@ const TutorItem = ({
     NavigationService.navigate(SCREENS.TEACHER_DETAIL, {
       _id: res._id,
       userInfo: res.user_id,
+      user_avatar: user_avatar || user_avatar_thumbnail,
     });
   };
   const objectToString = (data) => {

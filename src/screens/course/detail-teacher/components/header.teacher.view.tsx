@@ -27,10 +27,11 @@ import SubscriptionBtn from "@screens/home/components/subscription-btn/Subscript
 // import Button from "@shared-components/button/Button";
 
 interface HeaderDetailTeacherProps {
+  urlImage?: string;
   data?: TypedUser;
 }
 
-const HeaderDetailTeacher = ({ data }: HeaderDetailTeacherProps) => {
+const HeaderDetailTeacher = ({ data, urlImage }: HeaderDetailTeacherProps) => {
   console.log("datadatadata", data);
   const linkFb = (data?.links?.[0]?.facebook || "").trim();
   const linkYoutube = (data?.links?.[0]?.youtube || "").trim();
@@ -66,7 +67,7 @@ const HeaderDetailTeacher = ({ data }: HeaderDetailTeacherProps) => {
   return (
     <View style={{ flex: 1 }}>
       <Avatar
-        sourceUri={{ uri: data?.user_avatar }}
+        sourceUri={{ uri: urlImage }}
         style={styles.avatar}
         resizeMode="cover"
       />

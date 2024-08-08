@@ -28,7 +28,10 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
-import { getStatusBarHeight } from "@freakycoder/react-native-helpers";
+import {
+  getStatusBarHeight,
+  ScreenHeight,
+} from "@freakycoder/react-native-helpers";
 
 import ItemPost from "./components/post-item/post.item";
 import eventEmitter from "@services/event-emitter";
@@ -394,6 +397,7 @@ const ListPostNew = ({ id }: ListPostProps) => {
 class List extends Component {
   componentDidMount(): void {
     eventEmitter.on("scroll_home_to_top", this.scrollToTop);
+    eventEmitter.on("scroll_home_to_offset", this.srollToOffset);
   }
 
   componentWillUnmount(): void {
@@ -402,6 +406,15 @@ class List extends Component {
 
   scrollToTop = () => {
     this.flatListRef.scrollToOffset({ animated: true, offset: 0 });
+  };
+
+  srollToOffset = () => {
+    if (this.flatListRef) {
+      this.flatListRef.scrollToOffset({
+        animated: true,
+        offset: ScreenHeight + 150,
+      });
+    }
   };
   render() {
     const {

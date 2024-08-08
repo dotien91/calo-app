@@ -26,7 +26,11 @@ const AvatarPost = ({
 }: AvatarPostProps) => {
   const BORDER_AVATAR = sizeAvatar / 2;
   const Component = canPress ? PressableBtn : View;
+  const [urlImage, setUrlImage] = React.useState<any>();
 
+  React.useEffect(() => {
+    setUrlImage(data?.user_avatar);
+  }, [data?._id]);
   const onPressAvatar = () => {
     if (_onPress) return _onPress();
     NavigationService.navigate(SCREENS.PROFILE_CURRENT_USER, {
@@ -46,12 +50,21 @@ const AvatarPost = ({
       }}
     >
       <Image
-        source={{ uri: data?.user_avatar || data?.user_avatar_thumbnail }}
+        source={{
+          uri: urlImage
+            ? urlImage
+            : "https://st.depositphotos.com/2218212/2938/i/450/depositphotos_29387653-stock-photo-facebook-profile.jpg",
+        }}
         style={{
           width: sizeAvatar,
           height: sizeAvatar,
           borderRadius: BORDER_AVATAR,
         }}
+        onError={() =>
+          setUrlImage(
+            "https://st.depositphotos.com/2218212/2938/i/450/depositphotos_29387653-stock-photo-facebook-profile.jpg",
+          )
+        }
       />
       {showLevel && (data?.current_point || data?.target_point) && (
         <View style={styles.viewLevelAbsolute}>
