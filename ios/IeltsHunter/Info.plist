@@ -62,9 +62,9 @@
 	<key>FacebookClientToken</key>
 	<string>6054f4c2e7bae8d01389715aea05e97b</string>
 	<key>FacebookDisplayName</key>
-	<string>ikigaicoach</string>
+	<string>ieltshunter</string>
 	<key>FacebookUrlSchemeSuffix</key>
-	<string>ikicoach</string>
+	<string>ieltshunter</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
@@ -168,7 +168,7 @@
 	<false/>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:ikicoach.page.link</string>
+		<string>applinks:ieltshunter.page.link</string>
 	</array>
 </dict>
 </plist>
