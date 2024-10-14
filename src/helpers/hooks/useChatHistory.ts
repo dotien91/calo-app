@@ -15,6 +15,9 @@ import {
   viewRoom,
 } from "@services/api/chat.api";
 import { EnumMessageStatus } from "constants/chat.constant";
+import { useListData } from "./useListData";
+import { MediaType } from "react-native-image-picker";
+import { getMediaChat } from "@services/api/club.api";
 
 const limit = 20;
 
@@ -29,9 +32,6 @@ export const useChatHistory = (txtSearch: string, searchModeChat: boolean) => {
   const [isTyping, setIsTyping] = useState(false);
   const [isLoadmore, setIsLoadmore] = useState(false);
   const setSearchModeChat = useStore((state) => state.setSearchModeChat);
-  const updateCurrentMediaIds = useStore(
-    (state) => state.updateCurrentMediaIds,
-  );
   const [loading, setLoading] = useState(false);
 
   const pageNumber = useRef(1);
@@ -101,6 +101,7 @@ export const useChatHistory = (txtSearch: string, searchModeChat: boolean) => {
   const loadMoreMessage = () => {
     if (isFetching.current || noMoredata.current) return;
     setIsLoadmore(true);
+    loadMoreMedia();
     _getChatHistory();
   };
 
@@ -200,20 +201,17 @@ export const useChatHistory = (txtSearch: string, searchModeChat: boolean) => {
     });
   };
 
-  useEffect(() => {
-    const mediaIds = [...messages]
-      .reverse()
-      .filter((item) => !item?.text && !!item?._id)
-      .reduce((ids, currentItem) => {
-        return ids.concat(currentItem.media_ids);
-      }, []);
-    updateCurrentMediaIds({ data: mediaIds, id: chatRoomId });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [messages, chatRoomId]);
-
-  const productToClient = (data) => {
-    console.log("productToClient======", data);
-  };
+  const { listData: listMedia, onEndReach: loadMoreMedia } =
+    useListData<MediaType>(
+      {
+        chat_room_id: chatRoomId,
+        media_type: "image",
+        order_by: "DESC",
+        sort_by: "createdAt",
+        limit: 18,
+      },
+      getMediaChat,
+    );
 
   useEffect(() => {
     if (!chatRoomId) {
@@ -231,15 +229,10 @@ export const useChatHistory = (txtSearch: string, searchModeChat: boolean) => {
     }
     getRoomDetail();
     _getChatHistory();
-    onSocket("productToClient", productToClient);
     onSocket("msgToClient", msgToClient);
-
     onSocket("typingToClient", typingToClient);
     emitSocket("joinRoom", "room_" + chatRoomId);
-
     return () => {
-      offSocket("productToClient", productToClient);
-
       offSocket("msgToClient", msgToClient);
       offSocket("typingToClient", typingToClient);
       setSearchModeChat(false);
@@ -271,5 +264,6 @@ export const useChatHistory = (txtSearch: string, searchModeChat: boolean) => {
     isEmptyMessage,
     isLoadmore,
     loading,
+    listMedia,
   };
 };

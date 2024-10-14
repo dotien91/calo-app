@@ -15,7 +15,11 @@ import Sound from "react-native-sound";
 import { ScreenHeight } from "@freakycoder/react-native-helpers";
 import { translations } from "@localization";
 import TextViewCollapsed from "@screens/course/components/text.view.collapsed";
-import { GetPodCastDetail, GetPodCastList } from "@services/api/podcast.api";
+import {
+  GetPodCastDetail,
+  GetPodCastDetailv2,
+  GetPodCastList,
+} from "@services/api/podcast.api";
 import useStore from "@services/zustand/store";
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
@@ -239,6 +243,7 @@ const AudioPreview = () => {
       podcast_category: data.podcast_category,
       attach_files: data.attach_files,
     });
+    GetPodCastDetailv2(id);
     // _setJson("Audio", JSON.stringify(listAudioWatched));
   };
 
@@ -323,6 +328,18 @@ const AudioPreview = () => {
             textColor="red"
           />
         </View>
+        {data?.caption ? (
+          <View style={styles.viewDes}>
+            <Text style={[CS.hnBold, { color: palette.white }]}>
+              {translations.podcast.caption}
+            </Text>
+            <TextViewCollapsed
+              text={data?.caption || ""}
+              styleText={styles.des}
+              textColor="red"
+            />
+          </View>
+        ) : null}
         {listData.length > 0 && (
           <View style={styles.viewDes}>
             <Text style={[CS.hnBold, { color: palette.white }]}>

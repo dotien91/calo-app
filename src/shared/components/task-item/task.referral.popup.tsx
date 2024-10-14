@@ -10,6 +10,7 @@ import IconSvg from "assets/svg";
 import { ActionTypeTask } from "constants/task.constant";
 import { SCREENS } from "constants";
 import { closeSuperModal } from "@helpers/super.modal.helper";
+import eventEmitter from "@services/event-emitter";
 
 interface ReferralPopupProps {
   data: TypedUser;
@@ -19,22 +20,25 @@ const ReferralPopupTask = ({ data }: ReferralPopupProps) => {
   const onClickItemTask = (item) => {
     switch (item.action_type) {
       case ActionTypeTask.LIKE:
-        NavigationService.navigate(SCREENS.HOME);
+        eventEmitter.emit("scroll_home_to_offset");
+        NavigationService.navigate(SCREENS.HOME_TAB);
         break;
       case ActionTypeTask.POST:
         NavigationService.navigate(SCREENS.POST_SCREEN);
         break;
       case ActionTypeTask.COMMENT:
-        NavigationService.navigate(SCREENS.HOME);
+        eventEmitter.emit("scroll_home_to_offset");
+        NavigationService.navigate(SCREENS.HOME_TAB);
         break;
       case ActionTypeTask.REFERRAL:
-        NavigationService.navigate(SCREENS.HOME);
+        NavigationService.navigate(SCREENS.HOME_TAB);
         break;
       case ActionTypeTask.BUY:
-        NavigationService.navigate(SCREENS.COURSE_LIST);
+        NavigationService.navigate(SCREENS.COURSE_TAB);
         break;
       case ActionTypeTask.SHARE:
         NavigationService.navigate(SCREENS.HOME);
+        eventEmitter.emit("scroll_home_to_offset");
         break;
       case ActionTypeTask.COMPLETE:
         NavigationService.navigate(SCREENS.MY_COURES);
@@ -46,10 +50,10 @@ const ReferralPopupTask = ({ data }: ReferralPopupProps) => {
         NavigationService.navigate(SCREENS.MY_COURES);
         break;
       case ActionTypeTask.JOIN:
-        NavigationService.navigate(SCREENS.COURSE_LIST);
+        NavigationService.navigate(SCREENS.COURSE_TAB);
         break;
       default:
-        NavigationService.navigate(SCREENS.HOME);
+        NavigationService.navigate(SCREENS.HOME_TAB);
         break;
     }
     closeSuperModal();

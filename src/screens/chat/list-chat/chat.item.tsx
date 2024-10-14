@@ -38,7 +38,7 @@ const ChatItem = ({
       setReadCount(0);
     }
     const groupName = chat_room_id?.room_name;
-
+    console.log("chat_room_idchat_room_id", chat_room_id);
     NavigationService.navigate(SCREENS.CHAT_ROOM, {
       id: chat_room_id?._id,
       partner_name: groupName || partner_id?.display_name,

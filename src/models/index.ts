@@ -120,13 +120,18 @@ export interface TypedUser {
   is_follow?: boolean;
   is_validate_phone?: boolean;
   is_verify_email?: boolean;
-  phone_number: string;
+  phone_number?: string;
   default_language?: string;
   point?: number;
   level?: number;
   invitation_code?: string;
   current_coin?: number;
   background_image?: string;
+  target_point?: string;
+  current_point?: string;
+  fullname?: string;
+  leave_message?: string;
+  exp_time?: number;
 }
 
 export interface TypedFollowUser {

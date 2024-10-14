@@ -22,7 +22,7 @@ interface CourseLearnActionProps {
   course_id: string;
 }
 
-const CourseLearnAction = ({ course_id }: CourseLearnActionProps) => {
+const CourseLearnAction = ({ course_id, item }: CourseLearnActionProps) => {
   const listFavourites = useStore((state) => state.listFavourites);
   const addToFavourites = useStore((state) => state.addToFavourites);
   const [isLike, setIsLike] = React.useState(false);
@@ -41,8 +41,7 @@ const CourseLearnAction = ({ course_id }: CourseLearnActionProps) => {
     });
   };
   const _onPressShareThisCourse = () => {
-    shareCourse(userData?.invitation_code);
-    s;
+    shareCourse(userData?.invitation_code, item?.title);
   };
   // const _onPressResources = () => {};
   const _onPressAddCourseToFavourites = () => {

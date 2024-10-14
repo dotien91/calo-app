@@ -427,6 +427,7 @@ export default {
     uploadCoverImage: "背景画像をアップロード",
     addCourse: "コースを追加",
     courseName: "コース名",
+    className: "クラス名",
     courseDescription: "コースの説明",
     courseLongDescription: "コースの詳細",
     whoCanAccessThisCourse: "コースにアクセスできるメンバー",
@@ -970,6 +971,31 @@ export default {
     likes: "いいね",
     streamPending: "ライブストリーム セッションが間もなく始まります",
   },
+  uploadCertificate: {
+    selectIeltsPoint: "あなたのIELTSスコア",
+    selectTargetPoint: "希望するIELTSスコア",
+    uploadCertificate: "証明書をアップロード",
+    tapToUpload: "証明書をアップロードしてください。",
+    subTitle:
+      "最適なプランをご提案するために、いくつかの情報を共有してください",
+    titleHeader: "インストラクターとして登録",
+    titleHeaderMentor: "メンターとして登録",
+    subTitleHeaderMentor:
+      "メンターとなり、私たちと協力してください。あなたのコースは国内外の何千人もの学生に届きます",
+    leaveMessage: "メッセージを残してください",
+    selectCategory: "トレーニングカテゴリを選択",
+    registerNow: "今すぐ登録",
+    haveIelts: "IELTS証明書を持っています",
+    haveNoIelts: "IELTS証明書を持っていません",
+    title1: "IELTS証明書を持っていますか？",
+    title2: "マスターになりたいですか？",
+    beMaster: "マスターになりたい",
+    upgradeBand: "IELTSバンドをアップグレードしたい",
+    errorMessage: "先に進むには証明書をアップロードしてください",
+    next: "次",
+    select: "ポイントを選んでください",
+    skip: "スキップ"
+  },
   startChatDesc:
     "彼らの学習の旅や共通の趣味について質問するメッセージを送信して、会話を開始しましょう",
   challenge: {
@@ -1375,6 +1401,7 @@ export default {
     send: "送信",
     title: "タイトル",
     review: "レビュー（オプション）",
+    caption: "キャプション"
   },
   faq: {
     titleFaq:
@@ -1433,6 +1460,7 @@ export default {
     sending: "送信中...",
   },
   audio: {
+    caption: "キャプション",
     titlePodcast: "ポッドキャストのタイトル",
     description: "説明",
     playlist: "プレイリスト",
@@ -1452,6 +1480,7 @@ export default {
     episodeList: "エピソードリスト",
     continueListen: "続けて聴く",
     listen: "再生回数",
+    listens: "再生回数",
     allAudio: "すべてのオーディオ",
     noListen: "再生回数なし",
     orientation: "オリエンテーション",
@@ -1714,7 +1743,8 @@ export default {
     emptyTransaction: "トランザクションリストは空です",
     fromDate: "開始日",
     toDate: "終了日",
-    commission: "レヴェヌア",
+    commission: "手数料",
+    revenua: "収益",
     commissionSale: "販売手数料: 20%",
     desCommission:
       "あなたが紹介したユーザーがコースを購入すると、コースの20%の手数料を受け取ります。例えば、コースの価格が10,000,000 VNDの場合、ユーザーがコースを成功裏に購入すると2,000,000 VNDを受け取ります！",

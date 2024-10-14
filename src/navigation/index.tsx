@@ -33,6 +33,7 @@ import NewHomeScreen from "@screens/home/new.screen.home";
 import BottomSheetPanResponder from "@screens/audio/components/BottomSheetPanResponder";
 import OneoneScreen from "@screens/call/oneone.screen";
 import chatListScreen from "@screens/chat/list-chat/chat.list.screen";
+import MentorListScreen from "@screens/tutor-tab/tutor.list.screen";
 
 // import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 // ? If you want to use stack or tab or both
@@ -61,6 +62,9 @@ const Navigation = () => {
     switch (route.name) {
       case SCREENS.COURSE_TAB:
         iconName = focused ? "icCourse" : "icCourse";
+        break;
+      case SCREENS.MENTOR_TAB:
+        iconName = focused ? "icGraduate" : "icGraduate";
         break;
       case SCREENS.CHAT:
         iconName = focused ? "icChat" : "icChat";
@@ -95,6 +99,9 @@ const Navigation = () => {
     switch (route.name) {
       case SCREENS.COURSE_TAB:
         label = translations.courses;
+        break;
+      case SCREENS.MENTOR_TAB:
+        label = translations.course.teacher;
         break;
       case SCREENS.CHAT:
         label = translations.chats;
@@ -170,6 +177,7 @@ const Navigation = () => {
             }}
           />
           <Tab.Screen name={SCREENS.COURSE_TAB} component={CourseStackScreen} />
+          <Tab.Screen name={SCREENS.MENTOR_TAB} component={MentorStackScreen} />
           {/* <Tab.Screen name={SCREENS.CLUB_TAB} component={ClubStackScreen} /> */}
           <Tab.Screen
             name={SCREENS.DISCOVERSCREEN_TAB}
@@ -180,11 +188,16 @@ const Navigation = () => {
               },
             }}
           />
-          <Tab.Screen name={SCREENS.CHAT} component={chatListScreen} />
+          {/* <Tab.Screen name={SCREENS.CHAT} component={chatListScreen} /> */}
 
           <Tab.Screen
             name={SCREENS.SETTINGPROFILESCREEN_TAB}
             component={SettingProfileScreen}
+            listeners={{
+              tabPress: () => {
+                eventEmitter.emit("reload_list_task");
+              },
+            }}
           />
         </Tab.Navigator>
       </>
@@ -272,6 +285,14 @@ const Navigation = () => {
       </CourseStack.Navigator>
     );
   };
+  const MentorStackScreen = () => {
+    return (
+      <CourseStack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name={SCREENS.MENTOR_LIST} component={MentorListScreen} />
+        {/* {renderCommonStack()} */}
+      </CourseStack.Navigator>
+    );
+  };
 
   const HomeStackScreen = () => {
     return (
@@ -318,7 +339,6 @@ const Navigation = () => {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {renderStackIntro()}
         {/* <Stack.Screen name={SCREENS.VIEW_LIVE_STREAM} component={ViewStreamScreen} /> */}
-
         <Stack.Screen name={SCREENS.TABS} component={TabNavigation} />
         {renderCommonStack()}
         <Stack.Screen

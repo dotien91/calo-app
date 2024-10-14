@@ -168,6 +168,19 @@ export async function getMediaClub(params: { group_id: string; type: string }) {
   });
 }
 
+export async function getMediaChat(params: {
+  chat_room_id: string;
+  type: string;
+}) {
+  return request({
+    method: METHOD.GET,
+    urlPath: `media/room/${params.chat_room_id}`,
+    params,
+  }).then((response) => {
+    return response;
+  });
+}
+
 export async function requestEliteClub(data) {
   return request({
     method: METHOD.POST,

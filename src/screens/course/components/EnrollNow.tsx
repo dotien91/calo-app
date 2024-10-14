@@ -48,6 +48,7 @@ const EnrollNow = ({
           teacher_id: event?.teacher_id?._id,
         }).then((_res) => {
           if (!res.isError) {
+            //eslint-disable-next-line
             const roomId = (_res.data?.redirect_url || "").match(
               /[^\/]+$/,
             )?.[0];

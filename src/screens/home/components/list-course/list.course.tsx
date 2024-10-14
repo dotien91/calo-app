@@ -11,7 +11,7 @@ import useStore from "@services/zustand/store";
 import { getCourseSuggest } from "@services/api/course.api";
 import CourseCategoryTitle from "@screens/course-tab/course-list/course.category.title";
 import LoadingItem from "@shared-components/loading.item";
-import { ScreenWidth } from "@freakycoder/react-native-helpers";
+import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
 
 const CourseView = () => {
   const userData = useStore((state) => state.userData);
@@ -21,6 +21,7 @@ const CourseView = () => {
       order_by: "DESC",
       sort_by: "createdAt",
       public_status: "active",
+      types: ["Call group", "Self-learning"],
     },
     getCourseSuggest,
   );
@@ -29,6 +30,16 @@ const CourseView = () => {
     return listData.slice(0, 10);
   }, [listData]);
 
+  const snap = React.useMemo(() => {
+    const preCount = 1;
+    const widthItem = SCREEN_WIDTH / (preCount + 0.165);
+    const startScroll = SCREEN_WIDTH * 0.81;
+    return data.map((x, i) => {
+      return i * widthItem + startScroll;
+    });
+  }, [listData]);
+  console.log("re-render");
+  // console.log(snap)
   const onSeeAll = () => {
     NavigationService.navigate(SCREENS.COURSE_RECOMMEND);
   };
@@ -39,17 +50,7 @@ const CourseView = () => {
     } else {
       return (
         <>
-          <CourseItem
-            style={{
-              width: ScreenWidth,
-              paddingHorizontal: 16,
-              paddingRight: 0,
-            }}
-            fromHome
-            isSliderItem
-            data={item.item}
-            key={index}
-          />
+          <CourseItem fromHome isSliderItem data={item.item} key={index} />
         </>
       );
     }
@@ -57,6 +58,7 @@ const CourseView = () => {
 
   if (!listData.length && !isLoading) return null;
 
+  // console.log(snap)
   return (
     <View style={styles.container}>
       <CourseCategoryTitle
@@ -73,9 +75,10 @@ const CourseView = () => {
         renderItem={renderItem}
         scrollEventThrottle={16}
         contentContainerStyle={{
-          // paddingLeft: 16,
+          paddingLeft: 16,
           paddingBottom: 16,
         }}
+        snapToOffsets={snap}
         initialNumToRender={2}
         onEndReachedThreshold={0}
         showsVerticalScrollIndicator={false}
@@ -85,7 +88,7 @@ const CourseView = () => {
   );
 };
 
-export default CourseView;
+export default React.memo(CourseView);
 
 const styles = StyleSheet.create({
   container: {

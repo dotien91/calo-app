@@ -91,6 +91,14 @@
           }
         },
         {
+          "client_id": "329708522429-a5bajo6dfl0jimemlaj505j506o0kdqp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ikigroup.ieltshunterpro",
+            "certificate_hash": "bf726b653a1dc4053f77f04d93a38e332400b324"
+          }
+        },
+        {
           "client_id": "329708522429-rh2oc0uqcqhss697l66phbpoc1s2mfs9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

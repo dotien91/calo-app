@@ -110,7 +110,7 @@ android {
         applicationId 'com.ikigroup.ieltshunterpro'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
+        versionCode 10
         versionName "0.1.1"
         missingDimensionStrategy "store", "play"
     }
@@ -132,7 +132,7 @@ android {
             keyPassword 'android'
         }
         release {
-            storeFile file('release-keystore')
+            storeFile file('release-keystore-ieltshunter')
             storePassword 'exam24h'
             keyAlias 'exam24h'
             keyPassword 'exam24h'

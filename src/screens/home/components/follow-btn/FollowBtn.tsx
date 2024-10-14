@@ -12,6 +12,7 @@ import { palette } from "@theme/themes";
 import { TypedUser } from "models";
 import { translations } from "@localization";
 import { followUser, unFollowUser } from "@services/api/post.api";
+import eventEmitter from "@services/event-emitter";
 
 interface FollowBtnProps {
   data: TypedUser;
@@ -41,6 +42,7 @@ const FollowBtn = (props: FollowBtnProps) => {
       if (listFollow.indexOf(id) >= 0) {
         unFollowUser(params).then((resUnfollow) => {
           if (!resUnfollow.isError) {
+            eventEmitter.emit("reload_count_follow");
             updateListFollow([...listFollow.filter((i) => i !== id)]);
             showToast({
               type: "success",
@@ -55,6 +57,7 @@ const FollowBtn = (props: FollowBtnProps) => {
       } else {
         followUser(params).then((resFollow) => {
           if (!resFollow.isError) {
+            eventEmitter.emit("reload_count_follow");
             updateListFollow([...listFollow, id]);
             showToast({
               type: "success",

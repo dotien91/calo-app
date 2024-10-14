@@ -31,7 +31,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.543656532685-ea3og352pgjtb382rlhmhdl983upijma</string>
+				<string>com.googleusercontent.apps.329708522429-tb80b2s4u8k8r3p2ocn5rfa5ofr78kbl</string>
 			</array>
 		</dict>
 		<dict>
@@ -39,17 +39,17 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb908606980666349ikicoach</string>
+				<string>fb908606980666349ieltshunter</string>
 			</array>
 		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.ikigroup.ikicoach</string>
+			<string>com.ikigroup.ieltshunter</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>ikicoach</string>
+				<string>ieltshunter</string>
 			</array>
 		</dict>
 	</array>
@@ -62,9 +62,9 @@
 	<key>FacebookClientToken</key>
 	<string>6054f4c2e7bae8d01389715aea05e97b</string>
 	<key>FacebookDisplayName</key>
-	<string>ikigaicoach</string>
+	<string>ieltshunter</string>
 	<key>FacebookUrlSchemeSuffix</key>
-	<string>ikicoach</string>
+	<string>ieltshunter</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
@@ -90,7 +90,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>IELTS Hunter need to take a look at your microphone, to put the photo up as a social asset for other users to see</string>
+	<string>IELTS Hunter needs access to the microphone to make calls, record, and send audio files to other users.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>IELTS Hunter need to take a look at your photo album, to put the photo up as a social asset for other users to see</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -157,14 +157,18 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
+		<string>UIInterfaceOrientationPortrait</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:ikicoach.page.link</string>
+		<string>applinks:ieltshunter.page.link</string>
 	</array>
 </dict>
 </plist>

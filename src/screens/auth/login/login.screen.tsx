@@ -14,6 +14,7 @@ import FBLoginButton from "@shared-components/button/FBLoginButton";
 import AppleLoginButton from "@shared-components/button/AppleLoginButton";
 import { palette } from "@theme/themes";
 import Header from "@shared-components/header/Header";
+import TermPolicyView from "../components/TermPolicyView";
 
 export default function LoginScreen() {
   const theme = useTheme();
@@ -69,7 +70,7 @@ export default function LoginScreen() {
             </Text>
           </Text>
         </View>
-        {/* <ViewTermPolicy style={{ paddingHorizontal: 20, marginTop: 36 }} /> */}
+        <TermPolicyView style={{ paddingHorizontal: 20, marginTop: 36 }} />
       </View>
     </SafeAreaView>
   );

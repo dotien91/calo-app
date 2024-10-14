@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  useWindowDimensions,
-  StyleSheet,
-} from "react-native";
+import { View, Text, useWindowDimensions, StyleSheet } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 

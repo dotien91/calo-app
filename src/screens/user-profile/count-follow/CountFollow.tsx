@@ -9,6 +9,7 @@ import { getCountFollow } from "@services/api/user.api";
 import { translations } from "@localization";
 import { WINDOW_WIDTH } from "@gorhom/bottom-sheet";
 import { EnumTypeRelationship } from "constants/profile.constant";
+import eventEmitter from "@services/event-emitter";
 
 interface CountFollowProps {
   id: string;
@@ -34,6 +35,12 @@ const CountFollow = ({ id, postCount, name = "" }: CountFollowProps) => {
     }
   }, [id]);
 
+  useEffect(() => {
+    eventEmitter.on("reload_count_follow", () => _getUserInfo(id));
+    return () => {
+      eventEmitter.off("reload_count_follow", () => _getUserInfo(id));
+    };
+  }, []);
   const ItemFollow = ({
     title,
     des,
@@ -78,7 +85,7 @@ const CountFollow = ({ id, postCount, name = "" }: CountFollowProps) => {
         gap: 12,
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 50,
+        marginTop: 10,
       }}
     >
       <TouchableOpacity

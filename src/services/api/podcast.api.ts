@@ -60,6 +60,15 @@ export async function GetPodCastDetail(id: string) {
   });
 }
 
+export async function GetPodCastDetailv2(id: string) {
+  return request({
+    method: METHOD.GET,
+    urlPath: `podcast/v2/detail/${id}`,
+  }).then((response) => {
+    return response;
+  });
+}
+
 export async function GetPodCastSuggest(id: string) {
   return request({
     method: METHOD.GET,
@@ -76,6 +85,7 @@ interface ICreatePodcast {
   post_avatar: string;
   attach_files: string;
   parent_id?: string;
+  caption?: string;
 }
 
 export async function CreatePodcast(data: ICreatePodcast) {

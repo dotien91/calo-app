@@ -35,6 +35,7 @@ import FBLoginButton from "@shared-components/button/FBLoginButton";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import AppleLoginButton from "@shared-components/button/AppleLoginButton";
 import Header from "@shared-components/header/Header";
+import TermPolicyView from "../components/TermPolicyView";
 // import { regexMail } from "constants/regex.constant";
 
 // interface ButtonSocialProps {
@@ -204,9 +205,9 @@ export default function LoginWithEmailScreen() {
                 <GoogleLoginButton />
                 <FBLoginButton />
               </View>
-              {/* <ViewTermPolicy
+              <TermPolicyView
                 style={{ paddingHorizontal: 20, marginTop: 36 }}
-              /> */}
+              />
               <Text style={styles.textRegister}>
                 {translations.needAnAccount}
                 <Text

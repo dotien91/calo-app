@@ -18,6 +18,7 @@ import { translations } from "@localization";
 import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
 import { TypedUser } from "models";
+import eventEmitter from "@services/event-emitter";
 
 export const useUserHook = () => {
   const setUserData = useStore((state) => state.setUserData);
@@ -42,10 +43,13 @@ export const useUserHook = () => {
   const handleLogin = (token: string) => {
     _setJson(USER_TOKEN, token);
 
+    _setJson("is_still_login", true);
+
     getCurrentUser().then((res) => {
       console.log("current user data", res);
       if (!res.isError) {
         initData(res.data, true);
+        eventEmitter.emit("reload_list_post");
         NavigationService.navigate(SCREENS.HOME_TAB, { screen: SCREENS.HOME });
         showToast({
           type: "success",
@@ -160,6 +164,7 @@ export const useUserHook = () => {
     NavigationService.navigate(SCREENS.HOME_TAB, { screen: SCREENS.HOME });
     setUnreadNumber(0);
     // RNRestart.restart();
+    eventEmitter.emit("reload_list_post");
   };
 
   const renderViewRequestLogin = () => {

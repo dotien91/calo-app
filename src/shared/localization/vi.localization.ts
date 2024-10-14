@@ -347,6 +347,31 @@ export default {
     urlInvalid: "Đường dẫn không hợp lệ",
     requiredEmailEdit: "Vui lòng điền email",
   },
+  uploadCertificate: {
+    selectIeltsPoint: "Điểm số IELTS của bạn",
+    selectTargetPoint: "Điểm IELTS mong muốn",
+    uploadCertificate: "Tải lên chứng chỉ",
+    tapToUpload: "Thêm lên chứng chỉ",
+    subTitle:
+      "Hãy chia sẻ cho chúng tôi một số thông tin để chúng tôi hỗ trợ bạn có một lộ trình tốt nhất",
+    titleHeader: "Đăng ký người hướng dẫn",
+    titleHeaderMentor: "Đăng ký trở thành Mentor",
+    subTitleHeaderMentor:
+      "Trở thành Mentor và tham gia hợp tác cùng chúng tôi. Khóa học của bạn sẽ được tiếp cận tới hàng ngàn học sinh trên cả nước và học sinh ở thị trường Quốc tế",
+    leaveMessage: "Để lại lời nhắn cho chúng tôi",
+    selectCategory: "Chọn loại hình đào tạo",
+    registerNow: "Đăng ký ngay",
+    haveIelts: "Đã có chứng chỉ IELTS",
+    haveNoIelts: "Chưa có chứng chỉ IELTS",
+    title1: "Bạn đã có chứng chỉ IELTS hay chưa?",
+    title2: "Bạn có muốn trở thành master hay không?",
+    beMaster: "Tôi muốn trở thành Master",
+    upgradeBand: "Tôi muốn nâng cấp Band IELTS",
+    errorMessage: "Vui lòng tải chứng chỉ của bạn lên để tiếp tục",
+    next: "Tiếp tục",
+    select: "Chọn điểm của bạn",
+    skip: "Bỏ qua"
+  },
   home: {
     whatonYourMind: "Bạn đang nghĩ gì?",
     dontHasPermissionToCreate: "Bạn không thể tạo bài viết mới",
@@ -497,6 +522,7 @@ export default {
     uploadCoverImage: "Tải lên ảnh nền",
     addCourse: "Thêm khóa học",
     courseName: "Tên khóa học",
+    className: "Tên lớp",
     courseDescription: "Mô tả khóa học",
     courseLongDescription: "Chi tiết khoá học",
     whoCanAccessThisCourse: "Thành viên có thể truy cập khóa học",
@@ -1446,6 +1472,7 @@ export default {
     send: "Gửi",
     title: "Tiêu đề",
     review: "Đánh giá (Tuỳ chọn)",
+    caption: "Chú thích"
   },
   faq: {
     titleFaq:
@@ -1504,6 +1531,7 @@ export default {
     sending: "Đang gửi...",
   },
   audio: {
+    caption: "Nội dung",
     titlePodcast: "Tiêu đề podcast",
     description: "Mô tả",
     playlist: "Danh sách phát",
@@ -1523,6 +1551,7 @@ export default {
     episodeList: "DANH SÁCH CÁC TẬP",
     continueListen: "Tiếp tục nghe",
     listen: "Lượt nghe",
+    listens: "Lượt nghe",
     allAudio: "Tất cả podcast",
     noListen: "Chưa có lượt nghe",
     orientation: "Định hướng",
@@ -1780,7 +1809,8 @@ export default {
     emptyTransaction: "Danh sách giao dịch trống",
     fromDate: "Từ ngày",
     toDate: "Đến ngày",
-    commission: "Doanh thu",
+    commission: "Hoa hồng",
+    revenua: "Doanh thu",
     commissionSale: "Hoa hồng bán hàng: 20%",
     desCommission:
       "Khi người dùng bạn giới thiệu mua khoá học, bạn sẽ nhận được 20% hoa hồng của khoá học. Ví dụ khoá học có giá 10,000,000đ, bạn sẽ nhận được 2,000,000đ khi người dùng mua khoá học thành công!",

@@ -35,6 +35,7 @@ import GoogleLoginButton from "@shared-components/button/GoogleLoginButton";
 import AppleLoginButton from "@shared-components/button/AppleLoginButton";
 import FBLoginButton from "@shared-components/button/FBLoginButton";
 import { SCREENS } from "constants";
+import TermPolicyView from "../components/TermPolicyView";
 
 // interface ButtonSocialProps {
 //   onPress: () => void;
@@ -257,9 +258,9 @@ export default function SignUpScreen() {
                 <GoogleLoginButton />
                 <FBLoginButton />
               </View>
-              {/* <ViewTermPolicy
+              <TermPolicyView
                 style={{ paddingHorizontal: 20, marginTop: 36 }}
-              /> */}
+              />
               <Text style={styles.textRegister}>
                 {translations.haveAnAccount}
                 <Text

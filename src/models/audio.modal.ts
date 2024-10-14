@@ -1,10 +1,26 @@
 import { TypedMedia, TypedUser } from "shared/models";
 
+export interface IPodcastCategories {
+  _id: string;
+  user_id?: string;
+  category_language?: string;
+  category_content?: string;
+  category_excerpt?: string;
+  category_parent?: string;
+  category_slug?: string;
+  category_status?: string;
+  category_avatar?: string;
+  category_title?: string;
+  category_type?: string;
+  category_view?: string | number;
+  version?: number;
+  public_status?: number;
+}
 export interface IAudioItem {
   _id: string;
-  user_id: object;
+  user_id: TypedUser;
   podcast_language: string;
-  podcast_category: object;
+  podcast_category: IPodcastCategories;
   title: string;
   content: string;
   excerpt: string;
@@ -19,6 +35,9 @@ export interface IAudioItem {
   createdAt: string;
   updatedAt: string;
   __v: number;
+  caption?: string;
+  is_premium?: boolean;
+  subscription_id?: string;
 }
 
 export interface IUserAudio {

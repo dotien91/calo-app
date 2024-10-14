@@ -44,7 +44,7 @@ const DetailTeacherScreen = () => {
   };
   const userData = useStore((state) => state.userData);
   const isMe = idTeacher === userData?._id;
-
+  const urlImageAvatar = route.params?.["user_avatar"];
   const [data, setData] = useState<TypedUser | null>(route.params?.["data"]);
 
   const _getUserById = (id: string) => {
@@ -112,12 +112,12 @@ const DetailTeacherScreen = () => {
       </View>
     );
   };
-
+  // console.log("daddga", listData);
   return (
     <View style={CS.flex1}>
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         {renderHeader()}
-        <HeaderDetailTeacher data={data} />
+        <HeaderDetailTeacher urlImage={urlImageAvatar} data={data} />
         <AboutTeacher data={data} />
         <AudioView
           fromTeacherScreen

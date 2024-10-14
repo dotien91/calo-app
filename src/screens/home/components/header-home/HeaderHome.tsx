@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { View, Image, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Image, TouchableOpacity, StyleSheet, Text } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import * as NavigationService from "react-navigation-helpers";
@@ -74,9 +74,27 @@ const HeaderHome = () => {
             borderRadius: BORDER_AVATAR,
           }}
         />
+        {(userData?.current_point || userData?.target_point) && (
+          <View style={stylex.viewLevelAbsolute}>
+            <View
+              style={[
+                stylex.viewLevel,
+                {
+                  backgroundColor: userData?.target_point
+                    ? palette.red
+                    : palette.green,
+                },
+              ]}
+            >
+              <Text style={stylex.txtLevel}>
+                {userData?.target_point || userData?.current_point}
+              </Text>
+            </View>
+          </View>
+        )}
       </PressableBtn>
     );
-  }, [userMedia]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [userData]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const goToSearchScreen = () => {
     NavigationService.navigate(SCREENS.COURSE_CATEGORY, {
@@ -140,6 +158,25 @@ const stylex = StyleSheet.create({
     zIndex: 1,
     backgroundColor: palette.primary,
     ...CS.center,
+  },
+  viewLevelAbsolute: {
+    position: "absolute",
+    bottom: -5,
+    left: 0,
+    right: 0,
+    height: 10,
+    zIndex: 1,
+    ...CS.center,
+  },
+  viewLevel: {
+    borderRadius: 5,
+    backgroundColor: palette.red,
+    paddingHorizontal: 8,
+    ...CS.center,
+  },
+  txtLevel: {
+    fontSize: 8,
+    color: palette.white,
   },
 });
 

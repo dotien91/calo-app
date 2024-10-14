@@ -425,6 +425,7 @@ export default {
     uploadCoverImage: "Upload cover image",
     addCourse: "Add Course",
     courseName: "Course Name",
+    className: "Class name",
     courseDescription: "Course description",
     courseLongDescription: "Detail course",
     whoCanAccessThisCourse: "Who can access this course",
@@ -789,6 +790,31 @@ export default {
     balance: "Balance",
     task: "TASKS",
   },
+  uploadCertificate: {
+    selectIeltsPoint: "Your IELTS Score",
+    selectTargetPoint: "Desired IELTS Score",
+    uploadCertificate: "Upload Certificate",
+    tapToUpload: "Upload the certificate",
+    subTitle:
+      "Share some information with us so we can help you with the best plan",
+    titleHeader: "Register as an Instructor",
+    titleHeaderMentor: "Register to Become a Mentor",
+    subTitleHeaderMentor:
+      "Become a Mentor and collaborate with us. Your course will reach thousands of students nationwide and students in the international market",
+    leaveMessage: "Leave us a message",
+    selectCategory: "Select Training Category",
+    registerNow: "Register Now",
+    haveIelts: "I have an IELTS certificate",
+    haveNoIelts: "I do not have an IELTS certificate",
+    title1: "Do you have an IELTS certificate?",
+    title2: "Do you want to become a master?",
+    beMaster: "I want to become a Master",
+    upgradeBand: "I want to upgrade my IELTS band",
+    errorMessage: "Please upload your certificate to move on",
+    next: "Next",
+    select: "Select your point",
+    skip: "Skip"
+  },
   member: {
     chat: "chat",
     membership: "membership",
@@ -967,6 +993,7 @@ export default {
     takeAPhoto: "Take a photo",
   },
   audio: {
+    caption: "Caption",
     titlePodcast: "Podcast episode title",
     description: "Description",
     playlist: "Playlist",
@@ -986,6 +1013,7 @@ export default {
     episodeList: "EPISODE LIST",
     continueListen: "Continue listening",
     listen: "Listen",
+    listens: "Listens",
     allAudio: "All audio book",
     noListen: "No listening",
     orientation: "Orientation",
@@ -1241,7 +1269,8 @@ export default {
     emptyTransaction: "Empty transaction",
     fromDate: "From date",
     toDate: "To date",
-    commission: "Revenua",
+    commission: "Commission",
+    revenua: "Revenua",
     commissionSale: "Sales Commission: 20%",
     desCommission:
       "When a user you refer purchases a course, you will receive a 20% commission on the course. For example, if a course costs 10,000,000 VND, you will receive 2,000,000 VND when the user successfully buys the course!",
@@ -1472,6 +1501,7 @@ export default {
     title: "Title",
     review: "Review (Optional)",
     sendRequest: "Send information successfully",
+    caption: "Caption"
   },
   close: "Close",
   setup: {

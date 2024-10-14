@@ -51,7 +51,8 @@ const CourseItem = ({
     public_status,
   } = data;
   const userData = useStore((state) => state.userData);
-  let widthImage = fromHome ? Device.width + 8 : Device.width - 32;
+
+  let widthImage = Device.width - 32;
   if (isHorizontalStyle) {
     widthImage = widthImage / 1.5;
   }
@@ -62,6 +63,9 @@ const CourseItem = ({
   const theme = useTheme();
   // const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
+  const setListCourseFilterParams = useStore(
+    (state) => state.setListCourseFilterParams,
+  );
   const isCourseVideo = EnumClassType.SelfLearning == type;
   const openPreviewCourse = () => {
     if (is_join && data.type == EnumClassType.SelfLearning) {
@@ -84,7 +88,10 @@ const CourseItem = ({
   };
 
   // const avatarUrl = () => {};
-
+  const onPressBtnFilter = (item) => {
+    setListCourseFilterParams({ skills: [item] });
+    NavigationService.navigate(SCREENS.COURSE_CATEGORY);
+  };
   const renderInfo = () => {
     if (is_join)
       return (
@@ -149,12 +156,26 @@ const CourseItem = ({
             </Text>
           </View>
         )}
-        <View style={{ marginTop: 6, flexDirection: "row", gap: 8 }}>
+        <View
+          style={{
+            marginTop: 6,
+            flexDirection: "row",
+            gap: 8,
+            flexWrap: "wrap",
+            height: fromHome ? 50 : 25,
+          }}
+        >
           <Badge title="Best-seller" />
           {public_status !== "active" && <Badge title={public_status} />}
           {skills.map((item, index) => {
             const txt = listSkill.filter((i) => i.id === item);
-            return <Badge key={index} title={txt?.[0]?.value} />;
+            return (
+              <Badge
+                _onPress={() => onPressBtnFilter(item)}
+                key={index}
+                title={txt?.[0]?.value}
+              />
+            );
           })}
         </View>
         <View
@@ -163,33 +184,20 @@ const CourseItem = ({
             height: 40,
             justifyContent: "space-between",
             gap: 16,
-            marginTop: 8,
+            marginTop: 4,
           }}
         >
           <TouchableOpacity
-            style={
-              fromHome
-                ? {
-                    width: widthImage,
-                    backgroundColor: palette.yellow20,
-                    ...CS.center,
-                    borderRadius: 8,
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: 4,
-                  }
-                : {
-                    flex: 1,
-                    backgroundColor: palette.yellow20,
-                    ...CS.center,
-                    borderRadius: 8,
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: 4,
-                  }
-            }
+            style={{
+              flex: 1,
+              backgroundColor: palette.yellow20,
+              ...CS.center,
+              borderRadius: 8,
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 4,
+            }}
             onPress={() => shareCourse(userData?.invitation_code, data.title)}
           >
             <IconSvg name="icDollar" size={16} />
@@ -253,8 +261,7 @@ const CourseItem = ({
       onPress={openPreviewCourse}
       style={[
         styles.courseItem,
-        isSliderItem &&
-          !fromHome && { padding: 0, width: widthImage, marginRight: 16 },
+        isSliderItem && { padding: 0, width: widthImage, marginRight: 16 },
         style ? style : {},
       ]}
     >

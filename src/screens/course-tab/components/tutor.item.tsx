@@ -23,6 +23,18 @@ interface TutorItemProps extends TypedUser {
   isHorizontalStyle: boolean;
   isSliderItem: boolean;
 }
+const mentorLable = (exp_time) => {
+  switch (true) {
+    case exp_time >= 1 && exp_time <= 7000:
+      return { label: "Pre Master", color: palette.green };
+    case exp_time > 7000 && exp_time <= 10000:
+      return { label: "Master", color: palette.orange };
+    case exp_time > 10000:
+      return { label: "Master Pro", color: palette.primary };
+    default:
+      return { label: "", color: palette.text };
+  }
+};
 
 const TutorItem = ({
   display_name,
@@ -35,13 +47,14 @@ const TutorItem = ({
   rating,
   course_count,
   isSliderItem,
+  exp_time,
   ...res
 }: TutorItemProps) => {
   const theme = useTheme();
   // const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
   // const [isLike, setIsLike] = React.useState(false);
-
+  const labelMaster = useMemo(() => mentorLable(exp_time), [exp_time]);
   // const toggleLike = () => {
   //   setIsLike((old) => !old);
   // };
@@ -49,6 +62,7 @@ const TutorItem = ({
     NavigationService.navigate(SCREENS.TEACHER_DETAIL, {
       _id: res._id,
       userInfo: res.user_id,
+      user_avatar: user_avatar || user_avatar_thumbnail,
     });
   };
   const objectToString = (data) => {
@@ -86,6 +100,29 @@ const TutorItem = ({
               <Text numberOfLines={2} style={styles.tutorName}>
                 {display_name}
               </Text>
+              {exp_time && (
+                <View
+                  style={{
+                    backgroundColor: labelMaster.color,
+                    borderRadius: 3,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginVertical: 2,
+                  }}
+                >
+                  <Text
+                    style={{
+                      paddingTop: 2,
+                      color: palette.white,
+                      fontSize: 12,
+                      paddingVertical: 1,
+                      paddingHorizontal: 2,
+                    }}
+                  >
+                    {labelMaster.label}
+                  </Text>
+                </View>
+              )}
               {tutor_level && (
                 <View style={CS.flexStart}>
                   <IconBtn name={"book"} customStyle={{ marginRight: 12 }} />

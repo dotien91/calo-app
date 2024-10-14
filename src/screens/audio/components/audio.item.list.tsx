@@ -23,6 +23,7 @@ import {
   EnumStyleModalType,
   showSuperModal,
 } from "@helpers/super.modal.helper";
+import { GetPodCastDetailv2 } from "@services/api/podcast.api";
 
 interface ItemListProps {
   isSliderItem: boolean;
@@ -59,6 +60,9 @@ const ItemList = ({
   const addAudio = useStore((store) => store.addAudio);
   const listAudioHistory = useStore((store) => store.listAudioHistory);
   const listAudioWatched = useStore((store) => store.listAudioWatched);
+  const updateListAudioWatched = useStore(
+    (state) => state.updateListAudioWatched,
+  );
 
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
@@ -94,6 +98,16 @@ const ItemList = ({
     await TrackPlayer.add(track);
     await playTrack(track);
     addAudio(track);
+    GetPodCastDetailv2(_id);
+    updateListAudioWatched({
+      id: data.id || data._id,
+      title: data.title,
+      user_id: data.user_id,
+      view_number: data.view_number,
+      post_avatar: data.post_avatar,
+      podcast_category: data.podcast_category,
+      attach_files: data.attach_files,
+    });
   };
 
   const isWatched = useMemo(
@@ -129,10 +143,15 @@ const ItemList = ({
             ]}
           >
             {`${formatNumber(view_number) + " " || ""}`}
-            {parseInt(formatNumber(view_number)) > 1 
-            ? <Text style={styles.textNoReview}>{`${translations.audio.listen}s`}</Text>
-            : <Text style={styles.textNoReview}>{translations.audio.listen}</Text>
-            }
+            {parseInt(formatNumber(view_number)) > 1 ? (
+              <Text
+                style={styles.textNoReview}
+              >{`${translations.audio.listens}`}</Text>
+            ) : (
+              <Text style={styles.textNoReview}>
+                {translations.audio.listen}
+              </Text>
+            )}
           </Text>
         ) : (
           <Text
