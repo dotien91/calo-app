@@ -35,6 +35,7 @@ import {
 } from "@helpers/super.modal.helper";
 import { listBanks } from "shared/json/bank";
 import eventEmitter from "@services/event-emitter";
+import { useUserHook } from "@helpers/hooks/useUserHook";
 
 interface WithdrawProps {}
 
@@ -45,6 +46,7 @@ const WithdrawScreen: React.FC<WithdrawProps> = () => {
   const setMyBankAccount = useStore((state) => state.setMyBankAccount);
   const setBankSelected = useStore((state) => state.setBankSelected);
   const bankSelected = useStore((state) => state.bankSelected);
+  const { getUserData } = useUserHook();
 
   const userData = useStore((state) => state.userData);
   const maxToken = userData?.current_token || 0;
@@ -185,6 +187,7 @@ const WithdrawScreen: React.FC<WithdrawProps> = () => {
     });
     postWithDrawal(data).then((res) => {
       if (!res.isError) {
+        getUserData()
         showToast({
           type: "success",
           message: translations.withDraw.withDrawSuccess,

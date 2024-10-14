@@ -46,6 +46,15 @@ const HiddenPaage = () => {
     }, 1000);
   };
 
+  const hardCodeTokenCustom = () => {
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTQzODY1MzEsImRhdGEiOnsiX2lkIjoiNjVlZmY5YWI5MGI2YjBjMjJhYzk5MWQ1Iiwia2V5IjoiZjRkYTkxMTZkMTJkZmM3Zjc3YWM1YjJiNDg2N2IyNWUiLCJzaWduYXR1cmUiOiI4ZTJmODFmZjY1NmRjMjUyYzZhNmVlZGFkN2U3ZTc3OCIsInNlc3Npb24iOiI2NmIwOWNlM2JjYzQ5ODI5NTVkZTExOTMifSwiaWF0IjoxNzIyODUwNTMxfQ.liaunvhdJpGpqqSF3kKQdATn03AWqymlFEinW4G2wqY";
+    _setJson(USER_TOKEN, token);
+    setTimeout(() => {
+      RNRestart.Restart();
+    }, 1000);
+  };
+
   const switchEnv = () => {
     logout();
     _setJson("env", isProduction ? ENVIRONMENT.DEVELOP : ENVIRONMENT.PRODUCT);
@@ -108,6 +117,12 @@ const HiddenPaage = () => {
           style={{ marginBottom: 16 }}
           type="primary"
           text={"Hard code token student dev"}
+        />
+        <Button
+          onPress={hardCodeTokenCustom}
+          style={{ marginBottom: 16 }}
+          type="primary"
+          text={"Hard code token custom"}
         />
         <View style={{ marginBottom: 16 }}>
           <TextBase fontWeight="600">codepush info:</TextBase>
