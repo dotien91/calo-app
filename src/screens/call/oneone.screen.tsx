@@ -25,7 +25,6 @@ const OneoneScreen: React.FC<OneoneScreenProps> = () => {
   const reloadOneOneView = () => {
     setVisible(false);
   };
-
   useEffect(() => {
     if (!userData) return;
     if (!visible) {

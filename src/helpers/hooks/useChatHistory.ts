@@ -159,7 +159,6 @@ export const useChatHistory = (txtSearch: string, searchModeChat: boolean) => {
     }
 
     const lastMessageLocal = giftedMessages[0];
-
     sendChatToChatRoom(data).then((res) => {
       let newMessages = [];
       if (!res.isError) {
@@ -217,10 +216,9 @@ export const useChatHistory = (txtSearch: string, searchModeChat: boolean) => {
     if (!chatRoomId) {
       //create chat room from listfriend
       createChatRoom({
-        partner_id: partnerId,
+        partner_id: partnerId?._id || partnerId,
         chat_type: "personal",
       }).then((res) => {
-        console.log("create room====", partnerId, res);
         if (!res.isError) {
           setChatRoomId(res.data.chat_room_id._id);
         }
