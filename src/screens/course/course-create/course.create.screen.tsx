@@ -54,6 +54,8 @@ import IconSvg from "assets/svg";
 import { useUploadFile } from "@helpers/hooks/useUploadFile";
 import { ScreenWidth } from "@freakycoder/react-native-helpers";
 import useSelectTime from "./components/useSelectTime";
+import { useNavigation } from "@react-navigation/native";
+import { StackActions } from "@react-navigation/native";
 
 interface ILevel {
   value: string;
@@ -82,6 +84,8 @@ const CourseCreate = () => {
     },
   });
   const route = useRoute();
+  const navigation = useNavigation();
+
   const data = route.params?.["data"];
   const course_id = route.params?.["course_id"];
   const theme = useTheme();
@@ -289,10 +293,16 @@ const CourseCreate = () => {
             message: translations.course.createCourseSuccess,
           });
           eventEmitter.emit("reload_list_course");
-          NavigationService.navigate(SCREENS.COURSE_DETAIL, {
-            course_id: res?.data?._id,
-            fromScreen: "createCourse",
-          });
+          // NavigationService.navigate(SCREENS.COURSE_DETAIL, {
+          //   course_id: res?.data?._id,
+          //   fromScreen: "createCourse",
+          // });
+          navigation.dispatch(
+            StackActions.replace(SCREENS.COURSE_DETAIL, {
+              course_id: res?.data?._id,
+              fromScreen: "createCourse",
+            }),
+          );
           setUpdating(false);
           closeSuperModal();
         } else {

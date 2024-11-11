@@ -141,6 +141,8 @@ const ChooseClassSelectView: React.FC<ChooseClassSelectViewProps> = ({
       productId: courseData?.price_id,
       // cb: _addMemberToClass,
       data,
+      typeProduct: "course",
+      local_id: courseData?.price_id,
     });
     return;
   };

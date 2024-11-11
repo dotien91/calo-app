@@ -56,7 +56,7 @@ const CoursePreviewScreen = () => {
   // const [isLoading, setIsLoading] = useState(true);
   React.useEffect(() => {
     _getCourseDetail();
-    return () => goToListCourse();
+    // return () => goToListCourse();
   }, []);
 
   const [data, setData] = useState<ICourseItem>();

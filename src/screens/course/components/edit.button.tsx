@@ -15,7 +15,7 @@ interface EditButtonProps {
 
 const EditButton = ({ data, type }: EditButtonProps) => {
   const goToBuyScreen = () => {
-    NavigationService.navigate(SCREENS.COURSE_CREATE, {
+    NavigationService.push(SCREENS.COURSE_CREATE, {
       course_id: data?._id,
       data: data,
     });
