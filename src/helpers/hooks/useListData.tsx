@@ -18,7 +18,7 @@ interface TypedUseListData<T> {
   _requestData: (showRefreshing?: boolean) => void;
   initData: T[];
   renderFooterComponent: () => void;
-  onEndReach: () => void;
+  onEndReach: (data?: any) => void;
   refreshControl: any;
   noData: boolean;
   totalCount: number;
@@ -97,11 +97,10 @@ export function useListData<T>(
     });
   };
 
-  async function onEndReach() {
-    if (!stateListData.isLastPage && !isFetching.current) {
+  async function onEndReach({forceCallApi} : {forceCallApi?: boolean}){
+    if ((!stateListData.isLastPage && !isFetching.current ) || forceCallApi) {
       isFetching.current = true;
       setIsLoadmore(true);
-
       await requestData({ page: stateListData.nextPage + "", ...params }).then(
         (res: any) => {
           setIsLoadmore(false);
@@ -116,7 +115,6 @@ export function useListData<T>(
             } else {
               nextPage = stateListData.nextPage + 1;
             }
-
             setStateListData((oldState) => ({
               ...oldState,
               isLastPage,

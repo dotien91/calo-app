@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRoute } from "@react-navigation/native";
 
 import {
@@ -15,9 +15,9 @@ import {
   viewRoom,
 } from "@services/api/chat.api";
 import { EnumMessageStatus } from "constants/chat.constant";
-import { useListData } from "./useListData";
-import { MediaType } from "react-native-image-picker";
-import { getMediaChat } from "@services/api/club.api";
+// import { useListData } from "./useListData";
+// import { MediaType } from "react-native-image-picker";
+// import { getMediaChat } from "@services/api/club.api";
 
 const limit = 20;
 
@@ -101,7 +101,7 @@ export const useChatHistory = (txtSearch: string, searchModeChat: boolean) => {
   const loadMoreMessage = () => {
     if (isFetching.current || noMoredata.current) return;
     setIsLoadmore(true);
-    loadMoreMedia();
+    // loadMoreMedia();
     _getChatHistory();
   };
 
@@ -200,17 +200,27 @@ export const useChatHistory = (txtSearch: string, searchModeChat: boolean) => {
     });
   };
 
-  const { listData: listMedia, onEndReach: loadMoreMedia } =
-    useListData<MediaType>(
-      {
-        chat_room_id: chatRoomId,
-        media_type: "image",
-        order_by: "DESC",
-        sort_by: "createdAt",
-        limit: 18,
-      },
-      getMediaChat,
-    );
+  const listMedia = useMemo(() => {
+    const mediaIds = [...messages]
+      .reverse()
+      .filter((item) => !item?.text && !!item?._id)
+      .reduce((ids, currentItem) => {
+        return ids.concat(currentItem.media_ids);
+      }, []);
+    return mediaIds
+  }, [messages])
+
+  // const { listData: listMedia2, onEndReach: loadMoreMedia } =
+  //   useListData<MediaType>(
+  //     {
+  //       chat_room_id: chatRoomId,
+  //       media_type: "image",
+  //       order_by: "DESC",
+  //       sort_by: "createdAt",
+  //       limit: 18,
+  //     },
+  //     getMediaChat,
+  //   );
 
   useEffect(() => {
     if (!chatRoomId) {
