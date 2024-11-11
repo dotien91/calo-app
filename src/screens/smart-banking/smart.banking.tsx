@@ -79,7 +79,7 @@ const SmartBanking = () => {
   };
 
   const goBackHome = () => {
-    NavigationService.navigate(SCREENS.COURSE_LIST);
+    NavigationService.popToTop();
   };
 
   const copyToClipboard = (text: string) => {

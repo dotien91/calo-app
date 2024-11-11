@@ -162,7 +162,7 @@ const CourseItem = ({
             flexDirection: "row",
             gap: 8,
             flexWrap: "wrap",
-            height: fromHome ? 50 : 25,
+            minHeight: 25,
           }}
         >
           <Badge title="Best-seller" />
