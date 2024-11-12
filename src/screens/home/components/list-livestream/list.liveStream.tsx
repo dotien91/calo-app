@@ -6,7 +6,6 @@ import StreamCard from "./stream.card";
 import eventEmitter from "@services/event-emitter";
 import { PaginationProps, SwiperFlatList } from "react-native-swiper-flatlist";
 import { useFocusEffect } from "@react-navigation/native";
-import TrackPlayer from "react-native-track-player";
 import CourseCategoryTitle from "@screens/course-tab/course-list/course.category.title";
 import { navigate } from "@helpers/navigation.helper";
 import { SCREENS } from "constants";
@@ -42,7 +41,6 @@ const ListLiveStream = ({ group_id }: { group_id: string }) => {
   }, [userData]);
 
   useEffect(() => {
-    PlayAudio();
     if (group_id) {
       _getListLiveStream();
     }
@@ -51,24 +49,6 @@ const ListLiveStream = ({ group_id }: { group_id: string }) => {
       eventEmitter.off("reload_list_stream", onRefresh);
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const PlayAudio = async () => {
-    const track = {
-      // url: "https://files.exam24h.com/upload/2024/05/10_1715327584971/661768ce52c681916687c57c/sound.m4a",
-      url: "https://ia801304.us.archive.org/32/items/SilentRingtone/silence.mp3",
-      title: "",
-      artist: "",
-      artwork: "",
-    };
-    await TrackPlayer.reset();
-    await TrackPlayer.seekBy(1);
-    await TrackPlayer.add(track);
-    await TrackPlayer.play();
-    setTimeout(() => {
-      TrackPlayer.stop();
-      TrackPlayer.reset();
-    }, 2000);
-  };
 
   const onRefresh = () => {
     _getListLiveStream();

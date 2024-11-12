@@ -17,6 +17,7 @@ import { getListMemberCourse } from "@services/api/course.api";
 import useStore from "@services/zustand/store";
 import { translations } from "@localization";
 import { BOTTOM_CLASS_HEIGHT } from "../call.class.constant";
+import RNSwitchAudioOutput from 'react-native-switch-audio-output';
 
 const ClassRoomBottomView = ({
   toggleMute,
@@ -29,10 +30,18 @@ const ClassRoomBottomView = ({
   const { colors } = theme;
   const { mute, video } = config;
   const [roomDetail, setRoomDetail] = useState(null);
+  const [speaker, setSpeaker] = useState(true);
+
   const [listMember, setListMember] = useState([]);
   const setCurrentMemberVideoRoom = useStore(
     (state) => state.setCurrentMemberVideoRoom,
   );
+
+  const toggleSpeaker = () => {
+    RNSwitchAudioOutput.selectAudioOutput(speaker ? RNSwitchAudioOutput.AUDIO_HEADPHONE : RNSwitchAudioOutput.AUDIO_SPEAKER)
+    setSpeaker(old => !old);
+
+  };
 
   const _getListMemberCourse = () => {
     getListMemberCourse({
@@ -119,6 +128,28 @@ const ClassRoomBottomView = ({
           }}
         >
           {!mute ? "Mute" : "Unmute"}
+        </Text>
+      </PressableBtn>
+      <PressableBtn
+        onPress={toggleMute}
+        style={{
+          ...CS.center,
+          flex: 1,
+        }}
+      >
+        <IconBtn
+          name={speaker ? "speaker" : "headphones"}
+          color={mute ? colors.danger : colors.white}
+          onPress={toggleSpeaker}
+        />
+        <Text
+          style={{
+            ...CS.hnRegular,
+            fontSize: 14,
+            color: colors.white,
+          }}
+        >
+          {!speaker ? "speaker" : "headphone"}
         </Text>
       </PressableBtn>
       <PressableBtn

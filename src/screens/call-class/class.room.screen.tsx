@@ -64,6 +64,17 @@ const ClassRoomScreen = () => {
     };
   }, []);
 
+  React.useEffect(() => {
+    return () => {
+      if (selfViewSrc) {
+        selfViewSrc.getTracks().forEach((track) => {
+          track.stop()
+        });
+        selfViewSrc?.release()
+      }
+    };
+  }, [selfViewSrc]);
+
   const updateListParticipants = useStore(
     (state) => state.updateListParticipants,
   );
@@ -105,6 +116,8 @@ const ClassRoomScreen = () => {
               audio_active_packets: 50,
               audio_level_average: 40,
               bitrate: 800 * 1000,
+              audioSend: true,
+              audioRecv: true,
             };
             sfutest.send({
               message: create,
@@ -114,6 +127,8 @@ const ClassRoomScreen = () => {
                   room: roomId,
                   bitrate: 800 * 1000,
                   ptype: "publisher",
+                  audioSend: true,
+                  audioRecv: true,
                   display: JSON.stringify({
                     isTeacher,
                     isMe: false,
@@ -242,9 +257,13 @@ const ClassRoomScreen = () => {
       },
     });
   };
+  console.log("selfViewSrcselfViewSrc", selfViewSrc)
 
   const endCall = () => {
-    janus.destroy();
+    sfutest.hangup(); // Kết thúc phiên Janus
+    sfutest.detach(); // Tháo plugin
+    sfutest = null;
+
   };
 
   const publishOwnFeed = (useAudio) => {
@@ -255,18 +274,19 @@ const ClassRoomScreen = () => {
         media: {
           audioRecv: true,
           videoRecv: true,
-          audioSend: useAudio,
+          audioSend: true,
           videoSend: true,
         },
         success: (jsep) => {
           const publish = {
             request: "configure",
-            audio: useAudio,
+            audio: true,
             video: true,
           };
           sfutest.send({ message: publish, jsep: jsep });
         },
         error: (error) => {
+          alert(3)
           console.log("WebRTC error:", error);
           // if (useAudio) {
           //   publishOwnFeed(false);
@@ -303,10 +323,10 @@ const ClassRoomScreen = () => {
         remoteFeed.simulcastStarted = false;
         Janus.log(
           "Plugin attached! (" +
-            remoteFeed.getPlugin() +
-            ", id=" +
-            remoteFeed.getId() +
-            ")",
+          remoteFeed.getPlugin() +
+          ", id=" +
+          remoteFeed.getId() +
+          ")",
         );
         Janus.log("  -- This is a subscriber", pluginHandle);
         // We wait for the plugin to send us an offer

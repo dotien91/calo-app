@@ -30,7 +30,6 @@ import { palette } from "@theme/themes";
 import { getStatusBarHeight } from "react-native-iphone-screen-helper";
 import { translations } from "@localization";
 import TextBase from "@shared-components/TextBase";
-import TrackPlayer from "react-native-track-player";
 import Avatar from "@shared-components/user/Avatar";
 import CS from "@theme/styles";
 import { getHoursAndDate } from "@utils/date.utils";
@@ -57,11 +56,6 @@ function StreamViewScreen() {
     if (seconds > 60) clearInterval(checkReadyTmp.current);
     return seconds > 13;
   };
-
-  React.useEffect(() => {
-    playAudio();
-  }, []);
-
   React.useEffect(() => {
     if (!liveData) return;
     checkReadyTmp.current = setInterval(() => {
@@ -72,24 +66,6 @@ function StreamViewScreen() {
       }
     }, 500);
   }, [liveData]);
-
-  const playAudio = async () => {
-    const track = {
-      // url: "https://files.exam24h.com/upload/2024/05/10_1715327584971/661768ce52c681916687c57c/sound.m4a",
-      url: "https://ia801304.us.archive.org/32/items/SilentRingtone/silence.mp3",
-      title: "",
-      artist: "",
-      artwork: "",
-    };
-    await TrackPlayer.reset();
-    await TrackPlayer.seekBy(1);
-    await TrackPlayer.add(track);
-    await TrackPlayer.play();
-    setTimeout(() => {
-      TrackPlayer.stop();
-      TrackPlayer.reset();
-    }, 2000);
-  };
 
   React.useEffect(() => {
     requestViewStream({ livestream_id: liveStreamId });

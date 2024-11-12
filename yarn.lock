@@ -8079,6 +8079,11 @@ react-native-swiper-flatlist@^3.2.3:
   resolved "https://registry.yarnpkg.com/react-native-swiper-flatlist/-/react-native-swiper-flatlist-3.2.3.tgz#c96d71cf260a5d7e3759a95d33e1eac38eadfb35"
   integrity sha512-L4KSy4X1mzUx9a/gZa+lBpY7agS/GHCSzSjHjpIDQB7qh03jKm4PsKyYE5KfFzJRzBMm/srfrixfWzHncZmhkQ==
 
+react-native-switch-audio-output@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-switch-audio-output/-/react-native-switch-audio-output-1.1.2.tgz#df47dac3124723bde26eaed476f296b7d6e142d7"
+  integrity sha512-vfoW0mX5vSRO3u4lgHJSGNUzW2F1XCea+uqZVoiIDYImJHfdMLT6aG+NGQ+uw0P542oomyY6i9JBGorXBUBROg==
+
 react-native-switch@^1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/react-native-switch/-/react-native-switch-1.5.1.tgz#da032f66547053aa004c7a159422dbca8fadd944"
@@ -8144,10 +8149,10 @@ react-native-video@^5.2.1:
     prop-types "^15.7.2"
     shaka-player "^2.5.9"
 
-react-native-webrtc@^118.0.7:
-  version "118.0.7"
-  resolved "https://registry.yarnpkg.com/react-native-webrtc/-/react-native-webrtc-118.0.7.tgz#8984810f02fff26e2c3784c854e1d4380d092917"
-  integrity sha512-odgd4CNSGQmI8n/pEbxlUtJBTJ8uqE51B1/NUEAvO1AQbeXsyFNHEG0H2T27eMefo5u0GKcRpNkZpXi6fctTkQ==
+react-native-webrtc@^124.0.4:
+  version "124.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-webrtc/-/react-native-webrtc-124.0.4.tgz#6346e25451cb6f04432ace48b6b127499fc2d4ea"
+  integrity sha512-ZbhSz1f+kc1v5VE0B84+v6ujIWTHa2fIuocrYzGUIFab7E5izmct7PNHb9dzzs0xhBGqh4c2rUa49jbL+P/e2w==
   dependencies:
     base64-js "1.5.1"
     debug "4.3.4"
