@@ -135,7 +135,9 @@ export const useInAppPurchase = () => {
                     });
                   }, 1000);
                 } else if (currentProductType == "course") {
-                  NavigationService.navigate(SCREENS.MY_COURES);
+                  setTimeout(() => {
+                    NavigationService.navigate(SCREENS.MY_COURES);
+                  }, 1000);
                 } else {
                   setTimeout(() => {
                     getUserSuscription(userData?._id).then((res) => {
