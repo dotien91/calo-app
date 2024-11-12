@@ -178,7 +178,7 @@ PODS:
   - hermes-engine (0.72.3):
     - hermes-engine/Pre-built (= 0.72.3)
   - hermes-engine/Pre-built (0.72.3)
-  - JitsiWebRTC (118.0.0)
+  - JitsiWebRTC (124.0.0)
   - JWT (3.0.0-beta.14):
     - Base64 (~> 1.1.2)
   - libevent (2.1.12)
@@ -559,6 +559,8 @@ PODS:
     - React-Core
   - react-native-splash-screen (3.3.0):
     - React-Core
+  - react-native-switch-audio-output (1.1.2):
+    - React
   - react-native-track-player (4.0.1):
     - React-Core
     - SwiftAudioEx (= 1.0.0)
@@ -567,8 +569,8 @@ PODS:
     - react-native-video/Video (= 5.2.1)
   - react-native-video/Video (5.2.1):
     - React-Core
-  - react-native-webrtc (118.0.7):
-    - JitsiWebRTC (~> 118.0.0)
+  - react-native-webrtc (124.0.4):
+    - JitsiWebRTC (~> 124.0.0)
     - React-Core
   - react-native-webview (13.6.4):
     - RCT-Folly (= 2021.07.22.00)
@@ -831,6 +833,7 @@ DEPENDENCIES:
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
+  - react-native-switch-audio-output (from `../node_modules/react-native-switch-audio-output`)
   - react-native-track-player (from `../node_modules/react-native-track-player`)
   - react-native-video (from `../node_modules/react-native-video`)
   - react-native-webrtc (from `../node_modules/react-native-webrtc`)
@@ -1012,6 +1015,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/slider"
   react-native-splash-screen:
     :path: "../node_modules/react-native-splash-screen"
+  react-native-switch-audio-output:
+    :path: "../node_modules/react-native-switch-audio-output"
   react-native-track-player:
     :path: "../node_modules/react-native-track-player"
   react-native-video:
@@ -1152,7 +1157,7 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 0e876eea9782ec6462e91ab872711c357322c94f
   HaishinKit: 88ec811972c07b5efe8d0c973d0b93de2e0c10f3
   hermes-engine: 10fbd3f62405c41ea07e71973ea61e1878d07322
-  JitsiWebRTC: 3a41671ef65a51d7204323814b055a2690b921c7
+  JitsiWebRTC: 37fb2fb70d42cac58c06948527a5f9e1b3f50812
   JWT: ef71dfb03e1f842081e64dc42eef0e164f35d251
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   libwebp: 1786c9f4ff8a279e4dac1e8f385004d5fc253009
@@ -1195,9 +1200,10 @@ SPEC CHECKSUMS:
   react-native-safe-area-context: 0ee144a6170530ccc37a0fd9388e28d06f516a89
   react-native-slider: 33b8d190b59d4f67a541061bb91775d53d617d9d
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
+  react-native-switch-audio-output: d435f857bfe73f9b6263c7101432ea2785b854d7
   react-native-track-player: 97d76dbbd35f27cc709e5f04540615e54264b3f9
   react-native-video: c26780b224543c62d5e1b2a7244a5cd1b50e8253
-  react-native-webrtc: 8b024c7bb9a005d2b9efeba4c691172dbd00268d
+  react-native-webrtc: 48295e7228279470c4f5acb38570e170723bd3b2
   react-native-webview: 107961c73db53d66549c867a3b64eaa20d34c41f
   React-NativeModulesApple: c57f3efe0df288a6532b726ad2d0322a9bf38472
   React-perflogger: 6bd153e776e6beed54c56b0847e1220a3ff92ba5
