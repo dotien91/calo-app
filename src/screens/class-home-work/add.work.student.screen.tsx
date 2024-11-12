@@ -4,6 +4,9 @@ import {
   SafeAreaView,
   ActivityIndicator,
   Image,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import React, { useMemo, useState } from "react";
 import { useTheme, useRoute } from "@react-navigation/native";
@@ -153,23 +156,26 @@ export default function AddWorkStudentScreen() {
           position: "absolute",
           left: 16,
           right: 16,
-          bottom: 0,
+          bottom: 10,
         }}
       >
         {isTeacher && data?.max_mark == 100 && (
           <View>
-            <View style={CS.flexRear}>
+            <View style={{ ...CS.flexRear, gap: 16 }}>
               <Input
                 keyboardType="numeric"
                 placeholder={translations.homework.mark}
                 cb={setText}
               />
-              <Button
+              {/* <Button
                 onPress={_onHandIn}
                 text={translations.login.send}
                 type={isValidate ? "primary" : "disabled"}
                 style={{ marginLeft: 8 }}
-              />
+              /> */}
+              <TouchableOpacity style={styles.viewBtn} onPress={_onHandIn}>
+                <Text style={styles.txtBtn}>{translations.login.send}</Text>
+              </TouchableOpacity>
             </View>
             {!isValidate && !!text.length && (
               <TextBase
@@ -202,42 +208,49 @@ export default function AddWorkStudentScreen() {
   };
 
   return (
-    <SafeAreaView style={CS.safeAreaView}>
-      <Header
-        text={isTeacher ? data?.thread_title : translations.homework.yourWork}
-      ></Header>
-      <View style={{ flex: 1 }}>
-        <View style={styles.container}>
-          {isUpLoadingFile && <ActivityIndicator style={{ marginLeft: 16 }} />}
-          <Text style={styles.labelInput}>
-            {translations.homework.attachment}
-          </Text>
-          {!listFile.length && (
-            <View
-              style={{
-                flex: 1,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Image
-                style={{ height: 152, width: 192, marginBottom: 50 }}
-                source={require("assets/images/emptyIcon.png")}
-              ></Image>
-            </View>
-          )}
-          {renderFileUpload()}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "height" : undefined}
+      style={CS.flex1}
+    >
+      <SafeAreaView style={CS.safeAreaView}>
+        <Header
+          text={isTeacher ? data?.thread_title : translations.homework.yourWork}
+        ></Header>
+        <View style={{ flex: 1 }}>
+          <View style={styles.container}>
+            {isUpLoadingFile && (
+              <ActivityIndicator style={{ marginLeft: 16 }} />
+            )}
+            <Text style={styles.labelInput}>
+              {translations.homework.attachment}
+            </Text>
+            {!listFile.length && (
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Image
+                  style={{ height: 152, width: 192, marginBottom: 50 }}
+                  source={require("assets/images/emptyIcon.png")}
+                ></Image>
+              </View>
+            )}
+            {renderFileUpload()}
 
-          <ThreadCommentsView
-            studentId={studentWork?.user_id?._id}
-            isTeacher={isTeacher}
-            isPrivate
-            onHandIn={_onHandIn}
-          />
+            <ThreadCommentsView
+              studentId={studentWork?.user_id?._id}
+              isTeacher={isTeacher}
+              isPrivate
+              onHandIn={_onHandIn}
+            />
 
-          {renderBottomView()}
+            {renderBottomView()}
+          </View>
         </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }

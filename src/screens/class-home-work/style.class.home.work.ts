@@ -1,5 +1,5 @@
 import { ExtendedTheme } from "@react-navigation/native";
-import { ViewStyle, StyleSheet } from "react-native";
+import { ViewStyle, StyleSheet, TextStyle } from "react-native";
 import CS from "@theme/styles";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
 
@@ -7,6 +7,8 @@ interface Style {
   container: ViewStyle;
   userContainer: ViewStyle;
   userButton: ViewStyle;
+  viewBtn: ViewStyle;
+  txtBtn: TextStyle;
 }
 
 export default (theme: ExtendedTheme) => {
@@ -100,6 +102,17 @@ export default (theme: ExtendedTheme) => {
       ...CS.flexStart,
       marginBottom: 2,
       flex: 1,
+    },
+    viewBtn: {
+      height: 40,
+      backgroundColor: colors.primary,
+      ...CS.center,
+      paddingHorizontal: 16,
+      borderRadius: 8,
+    },
+    txtBtn: {
+      ...CS.hnRegular,
+      color: colors.white,
     },
     //     <PressableBtn onPress={gotoTaskDetail} style={styles.taskBox}>
     //     <View style={styles.taskInner}>
