@@ -110,8 +110,8 @@ android {
         applicationId 'com.ikigroup.ieltshunterpro'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 10
-        versionName "0.1.1"
+        versionCode 13
+        versionName "0.1.2"
         missingDimensionStrategy "store", "play"
     }
 
