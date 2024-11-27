@@ -42,6 +42,7 @@ import {
   IconWow,
 } from "./utils";
 import { MHS } from "@utils/size.utils";
+import CS from "@theme/styles";
 
 const reactionData = [
   {
@@ -142,7 +143,19 @@ const InputChatLive: React.FC<InputChatLiveProps> = ({
       },
     });
   };
-
+  const _showSuperModalGifting = () => {
+    showSuperModal({
+      contentModalType: EnumModalContentType.GiftingLive,
+      styleModalType: EnumStyleModalType.Bottom,
+      data: {
+        hideCloseIcon: true,
+        style: {
+          backgroundColor: "#242323",
+          maxHeight: (Device.height / 5) * 3,
+        },
+      },
+    });
+  };
   const renderShop = () => {
     return (
       <PressableBtn onPress={_showSuperModalCourse} style={styles.imageShop}>
@@ -154,6 +167,20 @@ const InputChatLive: React.FC<InputChatLiveProps> = ({
             </TextBase>
           </View>
         )}
+      </PressableBtn>
+    );
+  };
+  const renderGifting = () => {
+    return (
+      <PressableBtn onPress={_showSuperModalGifting} style={styles.imageShop}>
+        <IconSvg name="icGift" size={24} color={palette.primary} />
+        {/* {!!totalCount && (
+          <View style={styles.totalBox}>
+            <TextBase fontSize={10} color={EnumColors.white}>
+              {totalCount > 99 ? "99+" : totalCount}
+            </TextBase>
+          </View>
+        )} */}
       </PressableBtn>
     );
   };
@@ -206,7 +233,10 @@ const InputChatLive: React.FC<InputChatLiveProps> = ({
             (isKeyboardVisible || isPublisher) && { width: Device.width - 30 },
           ]}
         >
-          {renderShop()}
+          <View style={{ ...CS.row, gap: 8 }}>
+            {renderGifting()}
+            {renderShop()}
+          </View>
           <Input
             ref={inputRef}
             placeholder={translations.chat.typeMessage}

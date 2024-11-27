@@ -53,6 +53,7 @@ import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 import ScheduleView from "./modal-inner/ScheduleView";
 import ViewMore from "./modal-inner/ViewMore";
 import SubscriptionView from "./modal-inner/SubscriptionView";
+import GiftingLiveStream from "@screens/stream/stream-modal/stream.modal.gifting";
 
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
@@ -315,6 +316,9 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         )}
         {contentModalType == EnumModalContentType.SubscriptionView && (
           <SubscriptionView />
+        )}
+        {contentModalType == EnumModalContentType.GiftingLive && (
+          <GiftingLiveStream />
         )}
       </>
     );
