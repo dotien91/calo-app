@@ -11,6 +11,9 @@ import CS from "@theme/styles";
 import { Device } from "@utils/device.ui.utils";
 import { palette } from "@theme/themes";
 import IconSvg from "assets/svg";
+import useStore from "@services/zustand/store";
+import { showToast } from "@helpers/super.modal.helper";
+import { translations } from "@localization";
 
 interface TypedData {
   id: number;
@@ -120,33 +123,61 @@ const data = [
 ];
 const GiftingLiveStream = () => {
   const [selectedGift, setSelectedGift] = React.useState<TypedData>();
-  const handleSend = () => {};
+  const userInfo = useStore((state) => state.userInfo);
+  const handleSend = () => {
+    if (selectedGift.price_coin > (userInfo?.point ?? 0)) {
+      showToast({
+        message: translations.liveStream.messageErrorCoin,
+        type: "error",
+      });
+    }
+  };
   const renderHeader = () => {
     return (
       <View style={styles.viewHeader}>
-        <View style={{ flexDirection: "row", gap: 8 }}>
-          <Text style={styles.text}>Quà tặng:</Text>
-          {!!selectedGift?.image_url ? (
-            <Image
-              source={{ uri: selectedGift?.image_url }}
-              style={{
-                height: 25,
-                width: 25,
-              }}
-            />
-          ) : (
-            <Text
-              style={[
-                styles.text,
-                { fontSize: 12, alignSelf: "flex-end", fontStyle: "italic" },
-              ]}
-            >
-              Chưa chọn
+        <View style={{ ...CS.row, gap: 16 }}>
+          <View style={{ flexDirection: "row", gap: 8 }}>
+            <Text style={styles.text}>{translations.liveStream.gift}:</Text>
+            {!!selectedGift?.image_url ? (
+              <Image
+                source={{ uri: selectedGift?.image_url }}
+                style={{
+                  height: 25,
+                  width: 25,
+                }}
+              />
+            ) : (
+              <Text
+                style={[
+                  styles.text,
+                  { fontSize: 14, alignSelf: "flex-end", fontStyle: "italic" },
+                ]}
+              >
+                {translations.liveStream.notSelected}
+              </Text>
+            )}
+          </View>
+          <View style={{ ...CS.row, gap: 2 }}>
+            <Text style={styles.text}>
+              {translations.liveStream.priceGift}:{" "}
             </Text>
-          )}
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "flex-end",
+                gap: 2,
+                marginVertical: 2,
+              }}
+            >
+              <IconSvg name="icCoin" size={20} color={palette.yellow} />
+              <Text style={{ ...styles.text, fontSize: 12 }}>
+                {selectedGift?.price_coin}
+              </Text>
+            </View>
+          </View>
         </View>
         <View style={{ ...CS.row, gap: 2 }}>
-          <Text style={styles.text}>Mệnh giá: </Text>
+          <Text style={styles.text}>{translations.liveStream.totalCoin}: </Text>
           <View
             style={{
               flexDirection: "row",
@@ -157,7 +188,7 @@ const GiftingLiveStream = () => {
           >
             <IconSvg name="icCoin" size={20} color={palette.yellow} />
             <Text style={{ ...styles.text, fontSize: 12 }}>
-              {selectedGift?.price_coin}
+              {userInfo?.point || 0}
             </Text>
           </View>
         </View>
@@ -176,9 +207,8 @@ const GiftingLiveStream = () => {
           style={[
             styles.viewImage,
             activeItem && {
-              borderWidth: 2,
+              // borderWidth: 2,
               borderColor: palette.primary,
-              padding: 4,
             },
           ]}
         >
@@ -240,7 +270,7 @@ const styles = StyleSheet.create({
     // paddingHorizontal: 16,
   },
   viewHeader: {
-    ...CS.row,
+    // ...CS.row,
     gap: 16,
     paddingLeft: 8,
   },
@@ -257,7 +287,7 @@ const styles = StyleSheet.create({
     // ...CS.row,
     flexDirection: "row",
     width: Device.width,
-    paddingBottom: 50,
+    paddingBottom: 80,
     flexWrap: "wrap",
   },
   viewItemListGift: {
@@ -285,6 +315,9 @@ const styles = StyleSheet.create({
   viewImage: {
     ...CS.center,
     width: Device.width / 4,
+    borderWidth: 2,
+    borderColor: "#242323",
+    padding: 4,
   },
 });
 export default GiftingLiveStream;

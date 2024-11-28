@@ -370,7 +370,7 @@ export default {
     errorMessage: "Vui lòng tải chứng chỉ của bạn lên để tiếp tục",
     next: "Tiếp tục",
     select: "Chọn điểm của bạn",
-    skip: "Bỏ qua"
+    skip: "Bỏ qua",
   },
   home: {
     whatonYourMind: "Bạn đang nghĩ gì?",
@@ -1064,6 +1064,11 @@ export default {
     warning: "Chọn ảnh trước khi bắt đầu live stream",
     likes: "lượt thích",
     streamPending: "Phiên livestream sẽ bắt đầu trong giây lát",
+    messageErrorCoin: "Số coin của bạn không đủ",
+    gift: "Quà tặng",
+    priceGift: "Mệnh giá",
+    totalCoin: "Tổng coin của bạn",
+    notSelected: "Chưa chọn",
   },
   startChatDesc:
     "Gửi một tin nhắn hỏi về hành trình học tập của họ hoặc thảo luận về một sở thích chung để bắt đầu một cuộc trò chuyện",
@@ -1472,7 +1477,7 @@ export default {
     send: "Gửi",
     title: "Tiêu đề",
     review: "Đánh giá (Tuỳ chọn)",
-    caption: "Chú thích"
+    caption: "Chú thích",
   },
   faq: {
     titleFaq:

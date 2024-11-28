@@ -153,6 +153,7 @@ const InputChatLive: React.FC<InputChatLiveProps> = ({
           backgroundColor: "#242323",
           maxHeight: (Device.height / 5) * 3,
         },
+        backdropOpacity: 0.01,
       },
     });
   };

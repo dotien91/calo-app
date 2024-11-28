@@ -813,7 +813,7 @@ export default {
     errorMessage: "Please upload your certificate to move on",
     next: "Next",
     select: "Select your point",
-    skip: "Skip"
+    skip: "Skip",
   },
   member: {
     chat: "chat",
@@ -965,6 +965,11 @@ export default {
     warning: "Select photos before going live",
     likes: "likes",
     streamPending: "The livestream session will begin shortly",
+    messageErrorCoin: "Your coins are not sufficient",
+    gift: "Gift",
+    priceGift: "Denomination",
+    totalCoin: "Your total coins",
+    notSelected: "Not selected",
   },
   noResult: "No result found!",
   results: "results",
@@ -1501,7 +1506,7 @@ export default {
     title: "Title",
     review: "Review (Optional)",
     sendRequest: "Send information successfully",
-    caption: "Caption"
+    caption: "Caption",
   },
   close: "Close",
   setup: {
