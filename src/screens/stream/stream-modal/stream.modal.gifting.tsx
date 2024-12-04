@@ -14,121 +14,43 @@ import IconSvg from "assets/svg";
 import useStore from "@services/zustand/store";
 import { showToast } from "@helpers/super.modal.helper";
 import { translations } from "@localization";
+import { getUserById, sendGiftLivestream } from "@services/api/user.api";
+import { IGiftDonate } from "@services/zustand/user/UserSlice";
 
-interface TypedData {
-  id: number;
-  name: string;
-  price_coin: number;
-  image_url: string;
+interface GiftingLiveStreamProps {
+  live_id: string;
+  partner_id: string;
 }
-const data = [
-  {
-    id: 1,
-    name: "Quỳnh",
-    price_coin: 10,
-    image_url:
-      "https://images.vexels.com/media/users/3/140022/isolated/preview/ae688f131dfb50ecff10efc8a86def6a-crocodile-cartoon.png?w=360",
-  },
-  {
-    id: 2,
-    name: "Huệ",
-    price_coin: 9,
-    image_url:
-      "https://static.vecteezy.com/system/resources/previews/011/288/627/non_2x/crocodile-coloring-cartoon-design-on-transparent-background-png.png",
-  },
-  {
-    id: 3,
-    name: "Hoa",
-    price_coin: 8,
-    image_url:
-      "https://png.pngtree.com/png-vector/20220915/ourmid/pngtree-alligator-crocodile-cartoon-clipart-png-image_6176697.png",
-  },
-  {
-    id: 4,
-    name: "Súng",
-    price_coin: 7,
-    image_url:
-      "https://image.similarpng.com/very-thumbnail/2020/09/Green-crocodile-standing-on-transparent-background-PNG.png",
-  },
-  {
-    id: 5,
-    name: "Hoa",
-    price_coin: 8,
-    image_url:
-      "https://image.similarpng.com/very-thumbnail/2020/09/Green-crocodile-standing-on-transparent-background-PNG.png",
-  },
-  {
-    id: 6,
-    name: "Súng",
-    price_coin: 7,
-    image_url:
-      "https://image.similarpng.com/very-thumbnail/2020/09/Green-crocodile-standing-on-transparent-background-PNG.png",
-  },
-  {
-    id: 7,
-    name: "Hoa",
-    price_coin: 8,
-    image_url:
-      "https://image.similarpng.com/very-thumbnail/2020/09/Green-crocodile-standing-on-transparent-background-PNG.png",
-  },
-  {
-    id: 8,
-    name: "Súng",
-    price_coin: 7,
-    image_url:
-      "https://image.similarpng.com/very-thumbnail/2020/09/Green-crocodile-standing-on-transparent-background-PNG.png",
-  },
-  {
-    id: 9,
-    name: "Súng",
-    price_coin: 7,
-    image_url:
-      "https://image.similarpng.com/very-thumbnail/2020/09/Green-crocodile-standing-on-transparent-background-PNG.png",
-  },
-  {
-    id: 10,
-    name: "Súng",
-    price_coin: 7,
-    image_url:
-      "https://image.similarpng.com/very-thumbnail/2020/09/Green-crocodile-standing-on-transparent-background-PNG.png",
-  },
-  {
-    id: 11,
-    name: "Súng",
-    price_coin: 7,
-    image_url:
-      "https://image.similarpng.com/very-thumbnail/2020/09/Green-crocodile-standing-on-transparent-background-PNG.png",
-  },
-  {
-    id: 12,
-    name: "Súng",
-    price_coin: 7,
-    image_url:
-      "https://image.similarpng.com/very-thumbnail/2020/09/Green-crocodile-standing-on-transparent-background-PNG.png",
-  },
-  {
-    id: 13,
-    name: "Súng",
-    price_coin: 7,
-    image_url:
-      "https://image.similarpng.com/very-thumbnail/2020/09/Green-crocodile-standing-on-transparent-background-PNG.png",
-  },
-  {
-    id: 14,
-    name: "Súng",
-    price_coin: 7,
-    image_url:
-      "https://image.similarpng.com/very-thumbnail/2020/09/Green-crocodile-standing-on-transparent-background-PNG.png",
-  },
-];
-const GiftingLiveStream = () => {
-  const [selectedGift, setSelectedGift] = React.useState<TypedData>();
+
+const GiftingLiveStream = ({ partner_id, live_id }: GiftingLiveStreamProps) => {
+  const [selectedGift, setSelectedGift] = React.useState<IGiftDonate>();
   const userInfo = useStore((state) => state.userInfo);
-  const handleSend = () => {
-    if (selectedGift.price_coin > (userInfo?.point ?? 0)) {
+  const setUserInfo = useStore((state) => state.setUserInfo);
+  const listGift = useStore((state) => state.listGift);
+  const handleSend = (gift_code: string) => {
+    if (selectedGift.price_coin > (userInfo?.current_coin ?? 0)) {
       showToast({
         message: translations.liveStream.messageErrorCoin,
         type: "error",
+      });
+    } else {
+      const data = {
+        gift_code: gift_code,
+        partner_id: partner_id,
+        livestream_id: live_id,
+      };
+      sendGiftLivestream(data).then((res) => {
+        if (res.isError) {
+          showToast({
+            type: "error",
+            message: "error",
+          });
+        } else {
+          // lấy lại thông tin user
+          getUserById(userInfo?._id).then((res) => {
+            setUserInfo(res.data);
+          });
+        }
       });
     }
   };
@@ -138,9 +60,9 @@ const GiftingLiveStream = () => {
         <View style={{ ...CS.row, gap: 16 }}>
           <View style={{ flexDirection: "row", gap: 8 }}>
             <Text style={styles.text}>{translations.liveStream.gift}:</Text>
-            {!!selectedGift?.image_url ? (
+            {!!selectedGift?.image ? (
               <Image
-                source={{ uri: selectedGift?.image_url }}
+                source={{ uri: selectedGift?.image }}
                 style={{
                   height: 25,
                   width: 25,
@@ -171,7 +93,7 @@ const GiftingLiveStream = () => {
             >
               <IconSvg name="icCoin" size={20} color={palette.yellow} />
               <Text style={{ ...styles.text, fontSize: 12 }}>
-                {selectedGift?.price_coin}
+                {selectedGift?.value}
               </Text>
             </View>
           </View>
@@ -188,15 +110,15 @@ const GiftingLiveStream = () => {
           >
             <IconSvg name="icCoin" size={20} color={palette.yellow} />
             <Text style={{ ...styles.text, fontSize: 12 }}>
-              {userInfo?.point || 0}
+              {userInfo?.current_coin || 0}
             </Text>
           </View>
         </View>
       </View>
     );
   };
-  const renderItemListGift = (item: TypedData, index: number) => {
-    const activeItem = selectedGift?.id === item?.id;
+  const renderItemListGift = (item: IGiftDonate, index: number) => {
+    const activeItem = selectedGift?.key === item?.key;
     return (
       <TouchableOpacity
         onPress={() => setSelectedGift(item)}
@@ -214,7 +136,7 @@ const GiftingLiveStream = () => {
         >
           <Image
             resizeMode="contain"
-            source={{ uri: item?.image_url }}
+            source={{ uri: item?.image }}
             style={styles.imageStyle}
           />
           <View
@@ -226,19 +148,20 @@ const GiftingLiveStream = () => {
             }}
           >
             <IconSvg name="icCoin" size={20} color={palette.yellow} />
-            <Text style={{ ...styles.text, fontSize: 12 }}>
-              {item.price_coin}
-            </Text>
+            <Text style={{ ...styles.text, fontSize: 12 }}>{item.value}</Text>
           </View>
           {activeItem && (
-            <TouchableOpacity onPress={handleSend} style={styles.btnSend}>
+            <TouchableOpacity
+              onPress={() => handleSend(item.key)}
+              style={styles.btnSend}
+            >
               <Text style={styles.text}>Gửi</Text>
             </TouchableOpacity>
           )}
         </View>
         {!activeItem && (
           <Text style={[styles.textGift, { textAlign: "center" }]}>
-            {item.name}
+            {item.des}
           </Text>
         )}
       </TouchableOpacity>
@@ -250,7 +173,7 @@ const GiftingLiveStream = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.viewListGift}
       >
-        {data.map((item, index) => (
+        {listGift.map((item, index) => (
           <View key={index}>{renderItemListGift(item, index)}</View>
         ))}
       </ScrollView>

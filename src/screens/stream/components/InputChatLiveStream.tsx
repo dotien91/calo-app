@@ -42,7 +42,6 @@ import {
   IconWow,
 } from "./utils";
 import { MHS } from "@utils/size.utils";
-import CS from "@theme/styles";
 
 const reactionData = [
   {
@@ -154,6 +153,8 @@ const InputChatLive: React.FC<InputChatLiveProps> = ({
           maxHeight: (Device.height / 5) * 3,
         },
         backdropOpacity: 0.01,
+        live_id: liveData._id,
+        partner_id: liveData?.user_id?._id,
       },
     });
   };
@@ -234,8 +235,8 @@ const InputChatLive: React.FC<InputChatLiveProps> = ({
             (isKeyboardVisible || isPublisher) && { width: Device.width - 30 },
           ]}
         >
-          <View style={{ ...CS.row, gap: 8 }}>
-            {renderGifting()}
+          <View style={{ ...CommonStyle.row, gap: 8 }}>
+            {!isPublisher && renderGifting()}
             {renderShop()}
           </View>
           <Input

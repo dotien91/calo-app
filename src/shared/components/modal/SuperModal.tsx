@@ -318,7 +318,7 @@ const SuperModal: React.FC<SuperModalProps> = () => {
           <SubscriptionView />
         )}
         {contentModalType == EnumModalContentType.GiftingLive && (
-          <GiftingLiveStream />
+          <GiftingLiveStream {...data} />
         )}
       </>
     );
