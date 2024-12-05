@@ -7,7 +7,4 @@
    <FileRef
       location = "group:IELTSHunter.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:IeltsHunter.xcodeproj">
-   </FileRef>
 </Workspace>

@@ -17,11 +17,14 @@ import toastConfig from "@shared-components/toastConfig/toastconfig";
 import TrackPlayer, { Capability, Event } from "react-native-track-player";
 import AudioProgress from "@screens/audio/hook/AudioProgress";
 import ReadDinamicLink from "@screens/read-dynamic-link/read.dinamic.link";
+import RNScreenshotPrevent, { addListener } from 'react-native-screenshot-prevent';
 
 LogBox.ignoreAllLogs();
 
 const App = () => {
   React.useEffect(() => {
+    RNScreenshotPrevent.enabled(true);
+    RNScreenshotPrevent.enableSecureView()
     NetworkManager.getInstance().configure();
     return () => {
       NetworkManager.getInstance().cleanup();
