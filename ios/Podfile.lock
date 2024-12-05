@@ -764,6 +764,8 @@ PODS:
   - RNScreens (3.29.0):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
+  - RNScreenshotPrevent (1.2.1):
+    - React
   - RNSha1 (1.2.3):
     - React
   - RNShare (10.0.2):
@@ -880,6 +882,7 @@ DEPENDENCIES:
   - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNScreenshotPrevent (from `../node_modules/react-native-screenshot-prevent`)
   - RNSha1 (from `../node_modules/react-native-sha1`)
   - RNShare (from `../node_modules/react-native-share`)
   - RNSound (from `../node_modules/react-native-sound`)
@@ -1109,6 +1112,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNScreenshotPrevent:
+    :path: "../node_modules/react-native-screenshot-prevent"
   RNSha1:
     :path: "../node_modules/react-native-sha1"
   RNShare:
@@ -1247,6 +1252,7 @@ SPEC CHECKSUMS:
   RNPermissions: 1d885d5f2b68ef8ff0ee251555bcc397dfdda6dd
   RNReanimated: fdbaa9c964bbab7fac50c90862b6cc5f041679b9
   RNScreens: 3c5b9f4a9dcde752466854b6109b79c0e205dad3
+  RNScreenshotPrevent: 105cddf74799cbd81aac76e56a4025a345db8967
   RNSha1: 6de589cd0b0397d0f6248a2e5ee9e5f0d7da38dc
   RNShare: 859ff710211285676b0bcedd156c12437ea1d564
   RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
