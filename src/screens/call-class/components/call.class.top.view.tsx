@@ -22,6 +22,8 @@ import {
 import { translations } from "@localization";
 import { TypedCourse } from "shared/models";
 import { TOP_CLASS_HEIGHT } from "../call.class.constant";
+import { SCREENS } from "constants";
+import eventEmitter from "@services/event-emitter";
 
 Janus.setDependencies({
   RTCPeerConnection,
@@ -40,13 +42,45 @@ const ClassRoomTopView = ({
   const theme = useTheme();
   const { colors } = theme;
 
+  // const showConfirmEndCall = () => {
+  //   showSuperModal({
+  //     contentModalType: EnumModalContentType.Confirm,
+  //     styleModalType: EnumStyleModalType.Middle,
+  //     data: {
+  //       title: translations.event.eventConfirm,
+  //       cb: () => NavigationService.goBack(),
+  //     },
+  //   });
+  // };
+
   const showConfirmEndCall = () => {
     showSuperModal({
-      contentModalType: EnumModalContentType.Confirm,
+      contentModalType: EnumModalContentType.ConfirmEvaluation,
       styleModalType: EnumStyleModalType.Middle,
       data: {
         title: translations.event.eventConfirm,
-        cb: () => NavigationService.goBack(),
+        cb: () => {
+          NavigationService.goBack();
+          eventEmitter.emit("close_super_modal");
+          setTimeout(() => {
+            showSuperModal({
+              contentModalType: EnumModalContentType.ConfirmEvaluation,
+              styleModalType: EnumStyleModalType.Middle,
+              data: {
+                title: translations.evaluation.evaluation,
+                desc: translations.evaluation.desc,
+                toEvaluation: () => {
+                  NavigationService.navigate(SCREENS.LIST_STUDENTS, {
+                    classId: data.classes[0]._id,
+                    auth_id: data.user_id._id,
+                    course_id: data._id,
+                  }),
+                    eventEmitter.emit("close_super_modal");
+                },
+              },
+            });
+          }, 1000);
+        },
       },
     });
   };

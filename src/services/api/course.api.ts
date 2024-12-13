@@ -643,3 +643,30 @@ export async function getPlanDetail(params) {
     return response;
   });
 }
+export async function getListAvaluation(params) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "course/list-evaluation",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}
+export async function createAvaluation(data) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "course/create-evaluation",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+export async function updateAvaluation(data) {
+  return request({
+    method: METHOD.PATCH,
+    urlPath: "course/update-evaluation",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}

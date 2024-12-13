@@ -100,6 +100,12 @@ const PopupCourseDetail = ({
     });
     closeSuperModal();
   };
+  const gotoEvualation = () => {
+    NavigationService.navigate(SCREENS.LIST_EVALUATION, {
+      classId: courseRoom?.classId,
+    });
+    closeSuperModal();
+  };
   const goToHomeWork = () => {
     NavigationService.navigate(SCREENS.CLASSHOMEWORK, {
       course_id: dataCourse?._id,
@@ -176,6 +182,13 @@ const PopupCourseDetail = ({
           icName="icAdd"
           onPress={gotoUpdateModules}
           title={translations.course.updateModule}
+        />
+      )}
+      {isTeacher && (
+        <ItemPopup
+          icName="icEvaluation"
+          onPress={gotoEvualation}
+          title={"Evaluation"}
         />
       )}
       {isTeacher && (

@@ -28,6 +28,7 @@ interface HeaderProps {
   hideBackBtn?: boolean;
   rightComponent?: JSX.Element;
   isVIP?: boolean;
+  iconType?: string;
 }
 
 const Header = ({
@@ -42,6 +43,7 @@ const Header = ({
   hideBackBtn = false,
   rightComponent,
   isVIP,
+  iconType,
 }: HeaderProps) => {
   const theme = useTheme();
   const { colors } = theme;
@@ -89,7 +91,7 @@ const Header = ({
           <IconBtn
             onPress={onPressRight}
             name={iconNameRight || "ellipsis-horizontal"}
-            type={IconType.Feather}
+            type={iconType || IconType.Feather}
             size={25}
             color={colors.text}
           />

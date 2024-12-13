@@ -48,6 +48,7 @@ export enum EnumModalContentType {
   ViewMore = "view-more",
   SubscriptionView = "subscription-view",
   GiftingLive = "gifting-live",
+  ConfirmEvaluation = "ConfirmEvaluation",
 }
 
 export enum EnumStyleModalType {

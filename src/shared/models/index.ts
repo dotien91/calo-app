@@ -303,6 +303,7 @@ export interface TypedCourse {
   coin_value: number;
   is_join: boolean;
   lession_count?: number;
+  classes?: any;
 }
 
 export interface TypedModule {

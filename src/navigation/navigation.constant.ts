@@ -116,6 +116,9 @@ import AudioFilterResultScreen from "@screens/audio/audio-filter-result/audio.fi
 import UploadCertificate from "@screens/welcome/upload-certificate/upload.certificate.ieltshunter";
 import ChatRoomMediaScreen from "@screens/chat/media-club/chat.media.screen";
 import BecomeTutorScreen from "@screens/welcome/upload-certificate/become.tutor";
+import ListEvaluationStudents from "@screens/evaluation-class/list.evaluation.students";
+import EvaluationStudentScreen from "@screens/evaluation-class/evaluation.student.screen";
+import ListStudents from "@screens/evaluation-class/list.students";
 // import CreateSubscriptionScreen from "@screens/profile.screen/create-subscription.tsx/create.subscription.screen";
 
 export const DiscoveryStackData = [
@@ -380,5 +383,17 @@ export const CommonStackData = [
   {
     name: SCREENS.BECOME_TUTOR,
     screen: BecomeTutorScreen,
+  },
+  {
+    name: SCREENS.LIST_EVALUATION,
+    screen: ListEvaluationStudents,
+  },
+  {
+    name: SCREENS.EVALUATION_SCREEN,
+    screen: EvaluationStudentScreen,
+  },
+  {
+    name: SCREENS.LIST_STUDENTS,
+    screen: ListStudents,
   },
 ];

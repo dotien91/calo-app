@@ -1,4 +1,5 @@
 import { EnumRole } from "constants/system.constant";
+import { IClassRoom } from "./course.model";
 
 export interface IUser {
   name: string;
@@ -142,6 +143,22 @@ export interface TypedFollowUser {
   updatedAt: string;
   user_id: string;
   partner_id: TypedUser;
+}
+
+export interface TypedEvaluation {
+  _id?: string;
+  studentId: TypedUser;
+  user_id?: TypedUser;
+  classId: IClassRoom;
+  date?: string;
+  onTime?: string;
+  goodAttitude?: boolean;
+  lessonParticipation?: string;
+  takesNotes?: boolean;
+  doesHomework?: boolean;
+  improvementPoints?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export enum EnumColors {

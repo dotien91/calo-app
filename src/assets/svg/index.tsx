@@ -196,6 +196,7 @@ import icCertificate from "./certificate.svg";
 import icHaveNoCertificate from "./haveNoCertificate.svg";
 import icCrown from "./crown.svg";
 import icUpgrade from "./upgrade.svg";
+import icEvaluation from "./assessment.svg";
 
 const Icons = {
   icHeartPostSolid,
@@ -394,6 +395,7 @@ const Icons = {
   icHaveNoCertificate,
   icCrown,
   icUpgrade,
+  icEvaluation,
 };
 
 interface IconSvgProps {
