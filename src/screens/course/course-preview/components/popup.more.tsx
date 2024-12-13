@@ -101,7 +101,7 @@ const PopupCourseDetail = ({
     closeSuperModal();
   };
   const gotoEvualation = () => {
-    NavigationService.navigate(SCREENS.LIST_EVALUATION, {
+    NavigationService.navigate(SCREENS.LIST_STUDENTS, {
       classId: courseRoom?.classId,
     });
     closeSuperModal();

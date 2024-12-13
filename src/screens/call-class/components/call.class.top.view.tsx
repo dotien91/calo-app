@@ -24,6 +24,7 @@ import { TypedCourse } from "shared/models";
 import { TOP_CLASS_HEIGHT } from "../call.class.constant";
 import { SCREENS } from "constants";
 import eventEmitter from "@services/event-emitter";
+import { useClassRoom } from "../useClassRoom";
 
 Janus.setDependencies({
   RTCPeerConnection,
@@ -41,7 +42,7 @@ const ClassRoomTopView = ({
 }) => {
   const theme = useTheme();
   const { colors } = theme;
-
+  const { isTeacher } = useClassRoom();
   // const showConfirmEndCall = () => {
   //   showSuperModal({
   //     contentModalType: EnumModalContentType.Confirm,
@@ -62,24 +63,26 @@ const ClassRoomTopView = ({
         cb: () => {
           NavigationService.goBack();
           eventEmitter.emit("close_super_modal");
-          setTimeout(() => {
-            showSuperModal({
-              contentModalType: EnumModalContentType.ConfirmEvaluation,
-              styleModalType: EnumStyleModalType.Middle,
-              data: {
-                title: translations.evaluation.evaluation,
-                desc: translations.evaluation.desc,
-                toEvaluation: () => {
-                  NavigationService.navigate(SCREENS.LIST_STUDENTS, {
-                    classId: data.classes[0]._id,
-                    auth_id: data.user_id._id,
-                    course_id: data._id,
-                  }),
-                    eventEmitter.emit("close_super_modal");
-                },
-              },
-            });
-          }, 1000);
+          isTeacher
+            ? setTimeout(() => {
+                showSuperModal({
+                  contentModalType: EnumModalContentType.ConfirmEvaluation,
+                  styleModalType: EnumStyleModalType.Middle,
+                  data: {
+                    title: translations.evaluation.evaluation,
+                    desc: translations.evaluation.desc,
+                    toEvaluation: () => {
+                      NavigationService.navigate(SCREENS.LIST_STUDENTS, {
+                        classId: data.classes[0]._id,
+                        auth_id: data.user_id._id,
+                        course_id: data._id,
+                      }),
+                        eventEmitter.emit("close_super_modal");
+                    },
+                  },
+                });
+              }, 1000)
+            : null;
         },
       },
     });
