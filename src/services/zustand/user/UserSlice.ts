@@ -6,6 +6,13 @@ interface IUserMedia {
   user_cover?: string;
 }
 
+export interface IGiftDonate {
+  key: string;
+  image: string;
+  des: string;
+  value: number;
+}
+
 export interface UserSlice {
   userData: TypedUser | null;
   setUserData: (user: TypedUser) => void;
@@ -31,6 +38,8 @@ export interface UserSlice {
   setCodeInvite: (str: string) => void;
   extraUserData: any;
   setExtraUserData: (data: any) => void;
+  listGift: IGiftDonate[];
+  setListGift: (data: IGiftDonate[]) => void;
 }
 
 const createUserSlice: StoreSlice<UserSlice> = (set) => ({
@@ -93,6 +102,10 @@ const createUserSlice: StoreSlice<UserSlice> = (set) => ({
     set((state) => {
       return { extraUserData: { ...state.extraUserData, ...data } };
     });
+  },
+  listGift: [],
+  setListGift: (data: IGiftDonate[]) => {
+    set({ listGift: data });
   },
 });
 

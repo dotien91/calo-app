@@ -15,6 +15,7 @@ import { useInAppPurchase } from "@helpers/hooks/useInAppPurchase";
 import { priceIds } from "constants/iap.constant";
 import { _getJson } from "@services/local-storage";
 import { ENVIRONMENT, setUrlEnv } from "constants/config.constant";
+import { getConfigGift } from "@services/api/user.api";
 
 Settings.setAppID("908606980666349");
 
@@ -22,11 +23,20 @@ LogBox.ignoreAllLogs();
 
 const InitView = () => {
   const isDarkMode = useStore((state) => state.isDarkMode);
+  const setListGift = useStore((state) => state.setListGift);
   const { getUserData } = useUserHook();
+  const getListGift = () => {
+    getConfigGift().then((res) => {
+      if (!res.isError) {
+        setListGift(res.data.config.option_content);
+      }
+    });
+  };
 
   React.useEffect(() => {
     SplashScreen.hide();
     initData();
+    getListGift();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const { initIAP } = useInAppPurchase();
