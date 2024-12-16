@@ -7,11 +7,11 @@ export function disconnectSocket() {
   SocketHelperRef.current?.disconnect?.();
 }
 
-export function onSocket(topic: string, callback: () => void) {
+export function onSocket(topic: string, callback: (data: any) => void) {
   SocketHelperRef.current?.on?.(topic, callback);
 }
 
-export function offSocket(topic: string, callback?: () => void) {
+export function offSocket(topic: string, callback?: (data?: any) => void) {
   SocketHelperRef.current?.off?.(topic, callback);
 }
 
