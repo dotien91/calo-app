@@ -1,11 +1,10 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 
 import {
   View,
   KeyboardAvoidingView,
   Platform,
   Keyboard,
-  StyleSheet,
   TouchableWithoutFeedback,
   ActivityIndicator,
   ImageBackground,
@@ -14,7 +13,6 @@ import {
 import { useTheme, useRoute } from "@react-navigation/native";
 import KeepAwake from "react-native-keep-awake";
 import LiveBadge from "./components/LiveBadge";
-import Video from "react-native-video";
 
 // import MicrophoneSelectModal from './components/MicrophoneSelectModal';
 
@@ -36,10 +34,7 @@ import TextBase from "@shared-components/TextBase";
 import Avatar from "@shared-components/user/Avatar";
 import CS from "@theme/styles";
 import { getHoursAndDate } from "@utils/date.utils";
-import { RTCView } from "react-native-webrtc";
-import { WhepClientView } from "react-native-whip-whep";
-import Whep from "./whep";
-import WhepLive from "./whep";
+import DetailWebrtcLivestream from "./detail.webrtc.livestream";
 
 function StreamViewScreen() {
   const theme = useTheme();
@@ -48,6 +43,11 @@ function StreamViewScreen() {
   const [isReady, setIsReady] = React.useState(false);
   const checkReadyTmp = React.useRef(null);
   const retryTmp = React.useRef(false);
+  const [{ isMuted, isSpeaker, hasCamera }, setConfig] = useState({
+    isMuted: false,
+    isSpeaker: true,
+    hasCamera: true,
+  });
 
   const liveStreamId = route.params?.["liveStreamId"];
   const { liveData, isCommingSoon } = useLiveStream({
@@ -64,6 +64,8 @@ function StreamViewScreen() {
     return seconds > 13;
   };
   React.useEffect(() => {
+    console.log(hasCamera, setConfig);
+
     if (!liveData) return;
     checkReadyTmp.current = setInterval(() => {
       if (isStreamReady(liveData)) {
@@ -169,46 +171,13 @@ function StreamViewScreen() {
         </View>
       );
     const streamRTC = liveData?.cloudflare_livestream_data?.webRTCPlayback?.url;
-    console.log("streamRTC...", streamRTC);
-    // streamRTC... https://customer-qwbe1nm2wo4maj5l.cloudflarestream.com/c48ec4271a41468c88030d2122fc8f37/webRTC/play
-    // cloudflare_livestream_data.url.... https://customer-qwbe1nm2wo4maj5l.cloudflarestream.com/c48ec4271a41468c88030d2122fc8f37/webRTC/play
     if (streamRTC) {
       return (
-        // Video Error: {"error": {"code": -1008, "domain": "NSURLErrorDomain", "localizedDescription": "resource unavailable", "localizedFailureReason": "", "localizedRecoverySuggestion": ""}, "target": 3093}
-        // <Video
-        //   source={{
-        //     uri: streamRTC,
-        //   }}
-        //   style={{ width: Device.width, height: Device.height }}
-        //   resizeMode="contain"
-        //   controls={true}
-        //   playInBackground={false}
-        //   playWhenInactive={false}
-        //   onError={(error) => console.log("Video Error:", error)}
-        // />
-        <RTCView
-          streamURL={streamRTC}
-          style={{
-            ...StyleSheet.absoluteFillObject,
-            backgroundColor: "red",
-            flex: 1,
-          }}
-          objectFit="cover"
-          mirror={true}
-          zOrder={2}
+        <DetailWebrtcLivestream
+          livestream={streamRTC}
+          isSpeaker={isSpeaker}
+          isMuted={isMuted}
         />
-        // <WhepLive urlPlayback={streamRTC} />
-        // <WhepClientView
-        //   style={{
-        //     width: "100%",
-        //     height: 300,
-        //   }}
-        //   url="https://customer-qwbe1nm2wo4maj5l.cloudflarestream.com/e02f9201d393a784984e95b5024f765f/webRTC/play"
-        //   onConnected={() => console.log("Connected to stream")}
-        //   onDisconnected={() => console.log("Disconnected from stream")}
-        //   onError={(error) => console.error("Stream error:", error)}
-        // />
-        // <Whep  />
       );
     }
     return (

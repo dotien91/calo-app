@@ -1,3 +1,5 @@
+import { RTCPeerConnection, RTCSessionDescription } from "react-native-webrtc";
+
 /**
  * Performs the actual SDP exchange.
  *
@@ -10,48 +12,59 @@
  * https://developer.mozilla.org/en-US/docs/Glossary/SDP
  * https://www.ietf.org/archive/id/draft-ietf-wish-whip-01.html#name-protocol-operation
  */
-export default async function negotiateConnectionWithClientOffer(peerConnection, endpoint) {
+export default async function negotiateConnectionWithClientOffer(
+	peerConnection: RTCPeerConnection,
+	endpoint: string
+) {
+	let timeCount = 0
 	/** https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/createOffer */
-	const offer = await peerConnection.createOffer();
+	const offer = await peerConnection.createOffer({});
 	/** https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/setLocalDescription */
 	await peerConnection.setLocalDescription(offer);
 	/** Wait for ICE gathering to complete */
 	let ofr = await waitToCompleteICEGathering(peerConnection);
 	if (!ofr) {
-		throw Error('failed to gather ICE candidates for offer');
+		throw Error("failed to gather ICE candidates for offer");
 	}
 	/**
 	 * As long as the connection is open, attempt to...
 	 */
-	while (peerConnection.connectionState !== 'closed') {
+	while (peerConnection.connectionState !== "closed") {
+		console.log("peerConnection.connectionState1", peerConnection.connectionState, timeCount);
+		if (peerConnection.connectionState === "new") {
+			timeCount += 1
+		}
+
 		/**
 		 * This response contains the server's SDP offer.
 		 * This specifies how the client should communicate,
 		 * and what kind of media client and server have negotiated to exchange.
 		 */
 		let response = await postSDPOffer(endpoint, ofr.sdp);
+
 		if (response.status === 201) {
 			let answerSDP = await response.text();
 			await peerConnection.setRemoteDescription(
-				new RTCSessionDescription({ type: 'answer', sdp: answerSDP })
+				new RTCSessionDescription({ type: "answer", sdp: answerSDP })
 			);
-			return response.headers.get('Location');
-		} else if (response.status === 405) {
-			console.error('Update the URL passed into the WHIP or WHEP client');
+			return response.headers.get("Location");
+		}
+		timeCount = 0
+		if (response.status === 405) {
+			console.error("Update the URL passed into the WHIP or WHEP client");
 		} else {
 			const errorMessage = await response.text();
 			console.error(errorMessage);
 		}
 		/** Limit reconnection attempts to at-most once every 5 seconds */
-		await new Promise(r => setTimeout(r, 5000));
+		await new Promise((r) => setTimeout(r, 5000));
 	}
 }
-async function postSDPOffer(endpoint, data) {
+export async function postSDPOffer(endpoint, data) {
 	return await fetch(endpoint, {
-		method: 'POST',
-		mode: 'cors',
+		method: "POST",
 		headers: {
-			'content-type': 'application/sdp',
+			"content-type": "application/sdp",
 		},
 		body: data,
 	});
@@ -64,13 +77,14 @@ async function postSDPOffer(endpoint, data) {
  * https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/iceGatheringState
  * https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/icegatheringstatechange_event
  */
-async function waitToCompleteICEGathering(peerConnection) {
-	return new Promise(resolve => {
+export async function waitToCompleteICEGathering(peerConnection: RTCPeerConnection): Promise<RTCSessionDescription | null> {
+	return new Promise((resolve) => {
 		/** Wait at most 1 second for ICE gathering. */
 		setTimeout(function () {
 			resolve(peerConnection.localDescription);
 		}, 1000);
-		peerConnection.onicegatheringstatechange = ev =>
-			peerConnection.iceGatheringState === 'complete' && resolve(peerConnection.localDescription);
+		peerConnection.onicegatheringstatechange = (ev) =>
+			peerConnection.iceGatheringState === "complete" &&
+			resolve(peerConnection.localDescription);
 	});
 }
