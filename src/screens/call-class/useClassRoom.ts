@@ -4,7 +4,7 @@ import React from "react";
 import { StatusBar } from "react-native";
 import KeepAwake from "react-native-keep-awake";
 import inCallManager from "react-native-incall-manager";
-import RNSwitchAudioOutput from 'react-native-switch-audio-output';
+import RNSwitchAudioOutput from "react-native-switch-audio-output";
 
 export const useClassRoom = () => {
   const userData = useStore((state) => state.userData);
@@ -18,10 +18,10 @@ export const useClassRoom = () => {
     StatusBar.setTranslucent(true);
     KeepAwake.activate();
     if (!!RNSwitchAudioOutput && RNSwitchAudioOutput?.selectAudioOutput) {
-      RNSwitchAudioOutput.selectAudioOutput(RNSwitchAudioOutput.AUDIO_SPEAKER)
+      RNSwitchAudioOutput.selectAudioOutput(RNSwitchAudioOutput.AUDIO_SPEAKER);
     }
     return () => {
-      inCallManager.stop()
+      inCallManager.stop();
       StatusBar.setBackgroundColor("white");
       StatusBar.setBarStyle("dark-content");
       KeepAwake.deactivate();

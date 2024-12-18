@@ -68,9 +68,9 @@ const ClassRoomScreen = () => {
     return () => {
       if (selfViewSrc) {
         selfViewSrc.getTracks().forEach((track) => {
-          track.stop()
+          track.stop();
         });
-        selfViewSrc?.release()
+        selfViewSrc?.release();
       }
     };
   }, [selfViewSrc]);
@@ -257,13 +257,12 @@ const ClassRoomScreen = () => {
       },
     });
   };
-  console.log("selfViewSrcselfViewSrc", selfViewSrc)
+  console.log("selfViewSrcselfViewSrc", selfViewSrc);
 
   const endCall = () => {
     sfutest.hangup(); // Kết thúc phiên Janus
     sfutest.detach(); // Tháo plugin
     sfutest = null;
-
   };
 
   const publishOwnFeed = (useAudio) => {
@@ -286,7 +285,7 @@ const ClassRoomScreen = () => {
           sfutest.send({ message: publish, jsep: jsep });
         },
         error: (error) => {
-          alert(3)
+          alert(3);
           console.log("WebRTC error:", error);
           // if (useAudio) {
           //   publishOwnFeed(false);
@@ -323,10 +322,10 @@ const ClassRoomScreen = () => {
         remoteFeed.simulcastStarted = false;
         Janus.log(
           "Plugin attached! (" +
-          remoteFeed.getPlugin() +
-          ", id=" +
-          remoteFeed.getId() +
-          ")",
+            remoteFeed.getPlugin() +
+            ", id=" +
+            remoteFeed.getId() +
+            ")",
         );
         Janus.log("  -- This is a subscriber", pluginHandle);
         // We wait for the plugin to send us an offer
