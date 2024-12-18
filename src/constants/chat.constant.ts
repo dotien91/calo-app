@@ -33,6 +33,7 @@ export enum EnumMediaTypeFile {
 export enum PaymentMethod {
   VNPay = "VNPay",
   SmartBanking = "SmartBanking",
+  Coin = "Coin",
   NotChoose = "NotChoose",
   Init = "Init",
 }

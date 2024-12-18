@@ -323,6 +323,41 @@ const CheckoutScreen = () => {
             </View>
           </View>
         </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => {
+            setPaymentMethod(PaymentMethod.Coin);
+          }}
+          style={styles.styleViewItemPayment}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Image
+              style={{
+                height: 28,
+                width: 28,
+                marginRight: 8,
+                resizeMode: "contain",
+              }}
+              source={require("assets/images/CoinIcon.png")}
+            />
+            <Text style={styles.styleItemOfPaymentMethod}>Coin</Text>
+          </View>
+          <View style={styles.styleTouchableRadioButton}>
+            <View style={styles.styleViewCustomRadioButtom}>
+              <View
+                style={[
+                  styles.styleViewAdotRadioButton,
+                  {
+                    backgroundColor:
+                      paymentMethod === PaymentMethod.Coin
+                        ? colors.red
+                        : colors.white,
+                  },
+                ]}
+              />
+            </View>
+          </View>
+        </TouchableOpacity>
       </View>
     );
   };
@@ -396,6 +431,7 @@ const CheckoutScreen = () => {
 
   const createOrder = () => {
     const isVnPayMethod = PaymentMethod.VNPay == paymentMethod;
+    const isSmartBankingMethod = PaymentMethod.SmartBanking == paymentMethod;
     countCheckPaymentSuccess.current = 0;
     setTradeId("");
     let dataPayload = null;
@@ -413,7 +449,11 @@ const CheckoutScreen = () => {
     }
 
     const data = {
-      payment_method: isVnPayMethod ? "vn_pay" : "smart_banking",
+      payment_method: isVnPayMethod
+        ? "vn_pay"
+        : isSmartBankingMethod
+        ? "smart_banking"
+        : "coin",
       deep_link: "ieltshunter://payment",
       plan_objects: [
         {
