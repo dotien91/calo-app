@@ -481,7 +481,11 @@ const CheckoutScreen = () => {
       });
 
       const newData = {
-        payment_method: isVnPayMethod ? "vn_pay" : "smart_banking",
+        payment_method: isVnPayMethod
+          ? "vn_pay"
+          : isSmartBankingMethod
+          ? "smart_banking"
+          : "coin",
         deep_link: "ieltshunter://payment",
         plan_objects: [
           {
