@@ -108,7 +108,7 @@ export const useLiveStreamAdmin = () => {
     peerConnectionRef.current.addEventListener(
       "negotiationneeded",
       async (ev) => {
-        console.log("Connection negotiation starting");
+        console.log("Connection negotiation starting", ev);
         if (peerConnectionRef.current) {
           await negotiateConnectionWithClientOffer(
             peerConnectionRef.current,
@@ -129,7 +129,7 @@ export const useLiveStreamAdmin = () => {
           isAlreadyConnected.current &&
           peerConnectionRef.current?.connectionState === "disconnected"
         ) {
-          console.log("vao day");
+          console.log("vao day", ev);
 
           isAlreadyConnected.current = false;
           peerConnectionRef.current?.close();
@@ -270,7 +270,7 @@ export const useLiveStreamUser = () => {
           isAlreadyConnected.current &&
           peerConnectionRef.current?.connectionState === "disconnected"
         ) {
-          console.log("vao day");
+          console.log("vao day", ev);
 
           isAlreadyConnected.current = false;
           peerConnectionRef.current?.close();
@@ -305,6 +305,7 @@ export const useLiveStreamUser = () => {
         console.log(
           "signalingstatechange",
           peerConnectionRef.current?.signalingState,
+          event,
         );
       },
     );

@@ -1,7 +1,7 @@
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import React from "react";
 import { createStyle } from "./evaluation.student.style";
-import { useTheme } from "@react-navigation/native";
+import { useTheme, useRoute } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "@shared-components/header/Header";
 import FastImage from "react-native-fast-image";
@@ -10,7 +10,6 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { SCREENS } from "constants";
 import { navigate } from "@helpers/navigation.helper";
 import { getListMemberCourse } from "@services/api/course.api";
-import { useRoute } from "@react-navigation/native";
 import LoadingList from "@shared-components/loading.list.component";
 import EmptyResultView from "@shared-components/empty.data.component";
 import { translations } from "@localization";

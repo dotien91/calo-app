@@ -10,7 +10,12 @@ import {
   TextInput,
   Linking,
 } from "react-native";
-import { useTheme, useRoute } from "@react-navigation/native";
+import {
+  useTheme,
+  useRoute,
+  StackActions,
+  useNavigation,
+} from "@react-navigation/native";
 import { useForm } from "react-hook-form";
 import BottomSheet, {
   BottomSheetBackdrop,
@@ -54,8 +59,6 @@ import IconSvg from "assets/svg";
 import { useUploadFile } from "@helpers/hooks/useUploadFile";
 import { ScreenWidth } from "@freakycoder/react-native-helpers";
 import useSelectTime from "./components/useSelectTime";
-import { useNavigation } from "@react-navigation/native";
-import { StackActions } from "@react-navigation/native";
 
 interface ILevel {
   value: string;

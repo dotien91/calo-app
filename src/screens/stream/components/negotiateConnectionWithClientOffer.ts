@@ -22,7 +22,7 @@ export default async function negotiateConnectionWithClientOffer(
   /** https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/setLocalDescription */
   await peerConnection.setLocalDescription(offer);
   /** Wait for ICE gathering to complete */
-  let ofr = await waitToCompleteICEGathering(peerConnection);
+  const ofr = await waitToCompleteICEGathering(peerConnection);
   if (!ofr) {
     throw Error("failed to gather ICE candidates for offer");
   }
@@ -44,10 +44,10 @@ export default async function negotiateConnectionWithClientOffer(
      * This specifies how the client should communicate,
      * and what kind of media client and server have negotiated to exchange.
      */
-    let response = await postSDPOffer(endpoint, ofr.sdp);
+    const response = await postSDPOffer(endpoint, ofr.sdp);
 
     if (response.status === 201) {
-      let answerSDP = await response.text();
+      const answerSDP = await response.text();
       await peerConnection.setRemoteDescription(
         new RTCSessionDescription({ type: "answer", sdp: answerSDP }),
       );
@@ -89,7 +89,7 @@ export async function waitToCompleteICEGathering(
     setTimeout(function () {
       resolve(peerConnection.localDescription);
     }, 1000);
-    peerConnection.onicegatheringstatechange = (ev) =>
+    peerConnection.onicegatheringstatechange = () =>
       peerConnection.iceGatheringState === "complete" &&
       resolve(peerConnection.localDescription);
   });

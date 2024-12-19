@@ -83,21 +83,21 @@ const DetailWebrtcLivestream = ({
   // );
 };
 
-const createStyles = () => {
-  return StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: palette.background,
-    },
-    viewAction: {
-      flexDirection: "row",
-      alignItems: "center",
-      gap: HS._10,
-      position: "absolute",
-      right: HS._40,
-      bottom: VS._10,
-    },
-  });
-};
+// const createStyles = () => {
+//   return StyleSheet.create({
+//     container: {
+//       flex: 1,
+//       backgroundColor: palette.background,
+//     },
+//     viewAction: {
+//       flexDirection: "row",
+//       alignItems: "center",
+//       gap: HS._10,
+//       position: "absolute",
+//       right: HS._40,
+//       bottom: VS._10,
+//     },
+//   });
+// };
 
 export default DetailWebrtcLivestream;
