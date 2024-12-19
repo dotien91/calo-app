@@ -13,6 +13,14 @@ export interface IGiftDonate {
   value: number;
 }
 
+export interface IAffiliate {
+  AFFILIATE_COMMISSION?: number;
+  REFERALL_COMMISSION?: number;
+  TEACHER_SHARE?: number;
+  PAYMENT_FEE?: number;
+  NET_REVENUE?: number;
+}
+
 export interface UserSlice {
   userData: TypedUser | null;
   setUserData: (user: TypedUser) => void;
@@ -40,6 +48,8 @@ export interface UserSlice {
   setExtraUserData: (data: any) => void;
   listGift: IGiftDonate[];
   setListGift: (data: IGiftDonate[]) => void;
+  affiliate: IAffiliate;
+  setAffiliate: (data: IAffiliate) => void;
 }
 
 const createUserSlice: StoreSlice<UserSlice> = (set) => ({
@@ -106,6 +116,10 @@ const createUserSlice: StoreSlice<UserSlice> = (set) => ({
   listGift: [],
   setListGift: (data: IGiftDonate[]) => {
     set({ listGift: data });
+  },
+  affiliate: {},
+  setAffiliate: (data: IAffiliate) => {
+    set({ affiliate: data });
   },
 });
 

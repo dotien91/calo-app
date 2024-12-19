@@ -140,7 +140,7 @@ export const getPriceCourse = (item: any) => {
   };
 };
 
-export const formatPriceCourse = (data) => {
+export const formatPriceCourse = (data, percent = 20) => {
   if (!data) {
     return {
       newPrice: "",
@@ -153,7 +153,7 @@ export const formatPriceCourse = (data) => {
     return {
       newPrice: "",
       oldPrice: formatPrice(data.price),
-      commition: formatPrice(data.price / 5),
+      commition: formatPrice((data.price * percent) / 100),
     };
   }
   if (data?.coupon_id) {
@@ -166,7 +166,7 @@ export const formatPriceCourse = (data) => {
       return {
         newPrice: "",
         oldPrice: formatPrice(data.price),
-        commition: formatPrice(data.price / 5),
+        commition: formatPrice((data.price * percent) / 100),
       };
     } else {
       oldPrice = formatPrice(data.price);
@@ -177,8 +177,9 @@ export const formatPriceCourse = (data) => {
           ),
           oldPrice: oldPrice,
           commition: formatPrice(
-            (data?.price - (data?.price * data?.coupon_id?.promotion) / 100) /
-              5,
+            ((data?.price - (data?.price * data?.coupon_id?.promotion) / 100) *
+              percent) /
+              100,
           ),
         };
       } else {
@@ -186,7 +187,7 @@ export const formatPriceCourse = (data) => {
           newPrice: formatPrice(data?.price - data?.coupon_id?.promotion),
           oldPrice: oldPrice,
           commition: formatPrice(
-            (data?.price - data?.coupon_id?.promotion) / 5,
+            ((data?.price - data?.coupon_id?.promotion) * percent) / 100,
           ),
         };
       }
@@ -195,7 +196,7 @@ export const formatPriceCourse = (data) => {
     return {
       newPrice: "",
       oldPrice: formatPrice(data.price),
-      commition: formatPrice(data.price / 5),
+      commition: formatPrice((data.price * percent) / 100),
     };
   }
 };

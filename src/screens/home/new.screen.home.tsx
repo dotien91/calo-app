@@ -12,6 +12,7 @@ import { useLastActiveTrack } from "@screens/audio/hook/useLastActiveTrack";
 import useStore from "@services/zustand/store";
 import * as NavigationService from "react-navigation-helpers";
 import { _getJson } from "@services/local-storage";
+import { getCommission } from "@services/api/affiliate.api";
 
 // import useStore from "@services/zustand/store";
 // import { EnumModalContentType, EnumStyleModalType, showSuperModal } from "@helpers/super.modal.helper";
@@ -498,6 +499,7 @@ const NewHomeScreen = () => {
   const activeTrack = useActiveTrack();
   const lastActiveTrack = useLastActiveTrack();
   const userData = useStore((state) => state.userData);
+  const setAffiliate = useStore((state) => state.setAffiliate);
   const isStillLogin = _getJson("is_still_login");
   const displayedTrack = activeTrack ?? lastActiveTrack;
   const hide =
@@ -505,7 +507,19 @@ const NewHomeScreen = () => {
     displayedTrack.url ===
       "https://ia801304.us.archive.org/32/items/SilentRingtone/silence.mp3";
 
+  const getConfigAffiliate = () => {
+    console.log("config...");
+    getCommission().then((res) => {
+      const configAff = res?.data?.config?.data;
+      if (configAff) {
+        setAffiliate(configAff);
+      }
+      console.log("res config...", configAff);
+    });
+  };
+
   useEffect(() => {
+    getConfigAffiliate();
     if (
       isLoggedIn() &&
       !userData?.target_point &&

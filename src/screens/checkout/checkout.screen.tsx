@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 // import CS from "@theme/styles";
 import { useTheme, useRoute } from "@react-navigation/native";
 import createStyles from "./checkout.style";
@@ -64,13 +64,17 @@ const CheckoutScreen = () => {
   const isClassCourse = type == EnumClassType.CallGroup;
   const isVideoCourse = type == EnumClassType.SelfLearning;
   const isCallOneOne = type == EnumClassType.Call11;
-  const priceCourse = formatPriceCourse(courseData);
+  const userData = useStore((state) => state.userData);
+  const affiliate = useStore((state) => state.affiliate);
+  const priceCourse = useMemo(
+    () => formatPriceCourse(courseData, affiliate.AFFILIATE_COMMISSION),
+    [courseData, affiliate.AFFILIATE_COMMISSION],
+  );
 
   const countCheckPaymentSuccess = React.useRef(0);
 
   const [tradeId, setTradeId] = useState("");
   const { appStateStatus } = useAppStateCheck();
-  const userData = useStore((state) => state.userData);
 
   React.useEffect(() => {
     console.log("tradeId || appStateStatus", tradeId, appStateStatus);
@@ -503,6 +507,7 @@ const CheckoutScreen = () => {
             },
           },
         ],
+        bank_code: "VNBANK",
         // invitation_code: userData?.ref_invitation_code || undefined,
       };
       // console.log("call11", newData);
