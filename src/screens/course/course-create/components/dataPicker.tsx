@@ -3,7 +3,7 @@ import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import { formatVNDate } from "@utils/date.utils";
 import React, { useState } from "react";
-import { Text, ViewStyle } from "react-native";
+import { Text, View, ViewStyle } from "react-native";
 import DatePicker from "react-native-date-picker";
 
 interface SelectDateTimeProps {
@@ -12,6 +12,7 @@ interface SelectDateTimeProps {
   style?: ViewStyle;
   timeDefault: string;
   warning?: boolean;
+  disable?: boolean;
 }
 
 const SelectDateTime = ({
@@ -20,13 +21,14 @@ const SelectDateTime = ({
   style,
   timeDefault = "",
   warning,
+  disable,
 }: SelectDateTimeProps) => {
   const [date, setDate] = useState<Date>();
   const [open, setOpen] = useState(false);
-
+  const CustomView = !disable ? PressableBtn : View;
   return (
     <>
-      <PressableBtn
+      <CustomView
         style={[
           {
             height: 48,
@@ -42,22 +44,37 @@ const SelectDateTime = ({
         ]}
         onPress={() => setOpen(true)}
       >
-        <Text
-          style={{
-            ...CS.hnRegular,
-            color:
-              date || timeDefault !== ""
-                ? palette.mainColor2
-                : palette.placeholder,
-          }}
-        >
-          {date
-            ? formatVNDate(date)
-            : timeDefault !== ""
-            ? formatVNDate(timeDefault)
-            : placeholder}
-        </Text>
-      </PressableBtn>
+        {!disable ? (
+          <Text
+            style={{
+              ...CS.hnRegular,
+              color:
+                date || timeDefault !== ""
+                  ? palette.mainColor2
+                  : palette.placeholder,
+            }}
+          >
+            {date
+              ? formatVNDate(date)
+              : timeDefault !== ""
+              ? formatVNDate(timeDefault)
+              : placeholder}
+          </Text>
+        ) : (
+          <Text
+            style={{
+              ...CS.hnRegular,
+              color: palette.placeholder,
+            }}
+          >
+            {date
+              ? formatVNDate(date)
+              : timeDefault !== ""
+              ? formatVNDate(timeDefault)
+              : placeholder}
+          </Text>
+        )}
+      </CustomView>
       <DatePicker
         modal
         open={open}

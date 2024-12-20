@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Keyboard, Image } from "react-native";
+import { View, Text, StyleSheet, Keyboard } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { palette } from "@theme/themes";
@@ -546,14 +546,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: palette.highlight,
   },
-  textHeader: {
-    fontSize: FONTSIZE - 10,
-    color: palette.text,
-    // alignSelf: "center",
-    fontWeight: "600",
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-  },
+  // textHeader: {
+  //   fontSize: FONTSIZE - 10,
+  //   color: palette.text,
+  //   // alignSelf: "center",
+  //   fontWeight: "600",
+  //   paddingVertical: 10,
+  //   paddingHorizontal: 16,
+  // },
 });
 
 export default UploadCertificate;

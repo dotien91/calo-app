@@ -17,8 +17,8 @@ export enum EnumScreenType {
   uploadCertificate = "uploadCertificate",
   enterIELTS = "enterIELTS",
   master = "master",
-  upgrade = "upgrade"
-};
+  upgrade = "upgrade",
+}
 
 export const chooseOptions = [
   {
@@ -27,12 +27,12 @@ export const chooseOptions = [
       {
         id: "uploadCertificate",
         name: translations.uploadCertificate.haveIelts,
-        svgName: "icCertificate"
+        svgName: "icCertificate",
       },
       {
         id: "enterIELTS",
         name: translations.uploadCertificate.haveNoIelts,
-        svgName: "icHaveNoCertificate"
+        svgName: "icHaveNoCertificate",
       },
     ],
   },
@@ -42,12 +42,12 @@ export const chooseOptions = [
       {
         id: "master",
         name: translations.uploadCertificate.beMaster,
-        svgName: "icCrown"
+        svgName: "icCrown",
       },
       {
         id: "upgrade",
         name: translations.uploadCertificate.upgradeBand,
-        svgName: "icUpgrade"
+        svgName: "icUpgrade",
       },
     ],
   },

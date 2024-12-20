@@ -19,7 +19,7 @@ const HEIGHT_IMAGE = (SCREEN_WIDTH - 56) / 4;
 
 const AlbumView = ({ data }: AlbumViewProps) => {
   const allbum = data?.media_album;
-  console.log("album...", allbum);
+  // console.log("album...", allbum);
 
   const showImageVideo = (index: number) => {
     showSuperModal({

@@ -87,8 +87,12 @@ const SocketConnect = (_, ref: React.Ref<TypedSocket>) => {
         // .on("cointToClient", cointToClient)
         .on("pointToClient", pointToClient)
         .on("redeemToClient", redeemToClient)
+        .on("giftToClient", giftToClient)
         .on("joinOneoneClient", joinOneoneClient);
     }
+  };
+  const giftToClient = (data: any) => {
+    eventEmitter.emit("show_gift_in_live", data);
   };
   const joinOneoneClient = () => {
     eventEmitter.emit("reload_oneone_screen");

@@ -53,6 +53,7 @@ import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 import ScheduleView from "./modal-inner/ScheduleView";
 import ViewMore from "./modal-inner/ViewMore";
 import SubscriptionView from "./modal-inner/SubscriptionView";
+import GiftingLiveStream from "@screens/stream/stream-modal/stream.modal.gifting";
 
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
@@ -201,6 +202,55 @@ const SuperModal: React.FC<SuperModalProps> = () => {
     );
   };
 
+  const renderConfirmEvaluationView = () => {
+    const showCancelBtn = !data?.hideCancelBtn;
+    const linkLotties = !!data?.linkLotties;
+    return (
+      <View style={styles.modalInner}>
+        <Text style={styles.title}>{data?.title}</Text>
+        <Text style={styles.desc}>{data?.desc}</Text>
+        <View style={styles.viewLotties}>
+          {linkLotties && (
+            <AnimatedLottieView
+              source={data?.linkLotties}
+              style={styles.lotties}
+              loop
+              speed={1.5}
+              autoPlay
+            />
+          )}
+        </View>
+        <View style={CommonStyle.flexRear}>
+          {showCancelBtn && (
+            <TouchableOpacity
+              style={[styles.btnStyle, { flex: 1 }]}
+              onPress={closeModal}
+            >
+              <Text style={[styles.txtBtn, { color: palette.textOpacity6 }]}>
+                {data?.textCancel || translations.cancel}
+              </Text>
+            </TouchableOpacity>
+          )}
+          {showCancelBtn && <View style={{ width: 10 }} />}
+          <TouchableOpacity
+            style={[
+              styles.btnStyle,
+              { backgroundColor: palette.primary, flex: 1 },
+            ]}
+            onPress={() => {
+              if (data.cb) data.cb();
+              if (data.toEvaluation) data.toEvaluation();
+              // closeModal();
+            }}
+          >
+            <Text style={styles.txtBtn}>
+              {data?.textApprove || translations.permissions.positive}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  };
   const renderContentModal = () => {
     return (
       <>
@@ -283,6 +333,8 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         )}
         {contentModalType == EnumModalContentType.Confirm &&
           renderConfirmView()}
+        {contentModalType == EnumModalContentType.ConfirmEvaluation &&
+          renderConfirmEvaluationView()}
         {contentModalType == EnumModalContentType.Loading && renderLoading()}
         {contentModalType == EnumModalContentType.Library && (
           <ImageSlideShow {...data} closeModal={closeModal} />
@@ -315,6 +367,9 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         )}
         {contentModalType == EnumModalContentType.SubscriptionView && (
           <SubscriptionView />
+        )}
+        {contentModalType == EnumModalContentType.GiftingLive && (
+          <GiftingLiveStream {...data} />
         )}
       </>
     );

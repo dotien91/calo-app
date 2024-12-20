@@ -32,13 +32,12 @@ const CourseView = () => {
 
   const snap = React.useMemo(() => {
     const preCount = 1;
-    const widthItem = SCREEN_WIDTH / (preCount + 0.165);
-    const startScroll = SCREEN_WIDTH * 0.81;
-    return data.map((x, i) => {
+    const widthItem = SCREEN_WIDTH / (preCount + 1 / 7);
+    const startScroll = (SCREEN_WIDTH - 6) * (5 / 6);
+    return data.map((_, i) => {
       return i * widthItem + startScroll;
     });
   }, [listData]);
-  console.log("re-render");
   // console.log(snap)
   const onSeeAll = () => {
     NavigationService.navigate(SCREENS.COURSE_RECOMMEND);

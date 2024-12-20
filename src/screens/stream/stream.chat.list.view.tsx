@@ -26,6 +26,7 @@ import { translations } from "@localization";
 import IconSvg from "assets/svg";
 import IconBtn from "@shared-components/button/IconBtn";
 import { updateLivestream2 } from "@services/api/stream.api";
+import DonateLiveStreamComponent from "./components/DonateLiveStreamComponent";
 
 interface ChatViewProps {
   liveStreamId: string;
@@ -44,6 +45,7 @@ const ListChatLiveStream: React.FC<ChatViewProps> = ({
 }) => {
   const userData = useStore((state) => state.userData);
   const refReaction = React.useRef(null);
+  const refDonate = React.useRef(null);
   const { setMessages, messages, sendChatMessage, _getChatHistory } =
     useLiveChatHistory({ liveStreamId, isPublisher });
   const [showReactionAnimation, setShowReactionAnimation] =
@@ -73,10 +75,12 @@ const ListChatLiveStream: React.FC<ChatViewProps> = ({
   React.useEffect(() => {
     eventEmitter.on("show_reaction_animation", showReact);
     eventEmitter.on("show_reaction_animation_live", showReactLive);
+    eventEmitter.on("show_gift_in_live", showDonate);
 
     return () => {
       eventEmitter.off("show_reaction_animation", showReact);
       eventEmitter.off("show_reaction_animation_live", showReactLive);
+      eventEmitter.off("show_gift_in_live", showDonate);
     };
   }, []);
 
@@ -87,6 +91,14 @@ const ListChatLiveStream: React.FC<ChatViewProps> = ({
   };
   const showReact = (type: string) => {
     refReaction.current?.newReaction({ react_type: type, user_id: userData });
+  };
+
+  const showDonate = (data) => {
+    const dataParse = JSON.parse(data);
+    refDonate.current?.newDonate({
+      gift_code: dataParse.gift_code,
+      user_id: dataParse.user_id,
+    });
   };
 
   return (
@@ -111,6 +123,7 @@ const ListChatLiveStream: React.FC<ChatViewProps> = ({
         isTeacher={isPublisher}
       />
       <ReactionLiveStreamComponent ref={refReaction} />
+      <DonateLiveStreamComponent ref={refDonate} />
       <InputChatLive
         chatRoomId={liveStreamId}
         sendChatMessage={_sendChatMessage}

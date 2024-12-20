@@ -322,3 +322,26 @@ export async function getUserSuscription(id: string) {
     return response;
   });
 }
+
+export async function sendGiftLivestream(data: {
+  gift_code: string | number;
+  partner_id: string | undefined;
+  livestream_id: string;
+}) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "user/send-gift",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function getConfigGift() {
+  return request({
+    method: METHOD.GET,
+    urlPath: "config/list/gift",
+  }).then((response) => {
+    return response;
+  });
+}

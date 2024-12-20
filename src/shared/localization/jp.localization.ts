@@ -88,6 +88,33 @@ export default {
     negative: "キャンセル",
     positive: "承認",
   },
+  evaluation: {
+    day: "日",
+    onTime: "時間通りに通学する",
+    attitude: "学習態度",
+    lessonParticipation: "授業への参加",
+    improvementPoints: "改善点",
+    doesHomework: "宿題をする",
+    takeNotes: "授業でノートを取る",
+    send: "評価を送信する",
+    listEvalua: "評価リスト",
+    listStudents: "学生リスト",
+    success: "評価が送信されました",
+    updated: "評価が更新されました",
+    evaluation: "学生評価",
+    desc: "各授業ごとに生徒を評価して、学習効果を向上させる。",
+    onTimeVal1: "時間通り",
+    onTimeVal2: "遅刻",
+    onTimeVal3: "許可ありの休み",
+    onTimeVal4: "無断欠勤",
+    attitudePos: "良い",
+    attitudeNeg: "良くない",
+    takeNoteVal1: "はい",
+    takeNoteVal2: "いいえ",
+    doesHomeworkVal1: "完了済み",
+    doesHomeworkVal2: "未完了",
+  },
+
   channelLocked: "一時的にチャンネルがロックされています",
   channelLockedDes: "ウェブサイトにアクセスしてチャンネルをアクティブにします",
   create_Channel: "チャンネルを作成",
@@ -970,6 +997,11 @@ export default {
     warning: "ライブストリームを開始する前に画像を選択してください",
     likes: "いいね",
     streamPending: "ライブストリーム セッションが間もなく始まります",
+    messageErrorCoin: "あなたのコインが足りません",
+    gift: "ギフト",
+    priceGift: "額面",
+    totalCoin: "あなたの合計コイン",
+    notSelected: "未選択",
   },
   uploadCertificate: {
     selectIeltsPoint: "あなたのIELTSスコア",
@@ -994,7 +1026,7 @@ export default {
     errorMessage: "先に進むには証明書をアップロードしてください",
     next: "次",
     select: "ポイントを選んでください",
-    skip: "スキップ"
+    skip: "スキップ",
   },
   startChatDesc:
     "彼らの学習の旅や共通の趣味について質問するメッセージを送信して、会話を開始しましょう",
@@ -1401,7 +1433,7 @@ export default {
     send: "送信",
     title: "タイトル",
     review: "レビュー（オプション）",
-    caption: "キャプション"
+    caption: "キャプション",
   },
   faq: {
     titleFaq:

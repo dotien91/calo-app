@@ -187,7 +187,7 @@ const WithdrawScreen: React.FC<WithdrawProps> = () => {
     });
     postWithDrawal(data).then((res) => {
       if (!res.isError) {
-        getUserData()
+        getUserData();
         showToast({
           type: "success",
           message: translations.withDraw.withDrawSuccess,

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   StyleSheet,
   ScrollView,
@@ -53,6 +53,7 @@ import BookLessonNew from "../components/book-lesson-new/book.lesson.new";
 
 const CoursePreviewScreen = () => {
   const userData = useStore((state) => state.userData);
+  const affiliate = useStore((state) => state.affiliate);
   // const [isLoading, setIsLoading] = useState(true);
   React.useEffect(() => {
     _getCourseDetail();
@@ -60,11 +61,11 @@ const CoursePreviewScreen = () => {
   }, []);
 
   const [data, setData] = useState<ICourseItem>();
-  const [courseRoom, setCourseRoom] = useState();
+  const [courseRoom, setCourseRoom] = useState<any>();
   const route = useRoute();
   const course_id = route.params?.["course_id"];
   const dataCourse = route.params?.["dataCourse"];
-  const fromScreen = route.params?.["fromScreen"] || "";
+  // const fromScreen = route.params?.["fromScreen"] || "";
   // const course_id = "65b773efb11a3c94cc62c5e2";
   // const course_id = "65b77490b11a3c94cc62c69a"; //class room
 
@@ -129,6 +130,7 @@ const CoursePreviewScreen = () => {
           roomId,
           chatRoomId: data?.chat_room_id,
           classId: id,
+          google_meet_data: data.google_meet_data,
         });
       }
     });
@@ -138,22 +140,15 @@ const CoursePreviewScreen = () => {
   const _goBack = () => {
     NavigationService.goBack();
   };
-  const goToListCourse = () => {
-    if (fromScreen === "createCourse") {
-      NavigationService.popToTop();
-    }
-  };
+  // const goToListCourse = () => {
+  //   if (fromScreen === "createCourse") {
+  //     NavigationService.popToTop();
+  //   }
+  // };
 
   const TabSelect = () => {
     return (
-      <View
-        style={{
-          flexDirection: "row",
-          marginHorizontal: 16,
-          height: 48,
-          marginTop: 20,
-        }}
-      >
+      <View style={styles.viewTab}>
         <PressableBtn style={{ flex: 1 }} onPress={() => setTabSelected(1)}>
           <View style={{ flex: 1, ...CS.center }}>
             <Text
@@ -285,8 +280,10 @@ const CoursePreviewScreen = () => {
     });
   };
   // const commition = formatPrice(data?.price / 5);
-  const priceCourse = formatPriceCourse(data);
-
+  const priceCourse = useMemo(
+    () => formatPriceCourse(data, affiliate.AFFILIATE_COMMISSION),
+    [data, affiliate.AFFILIATE_COMMISSION],
+  );
   const pressMore = () => {
     showSuperModal({
       contentModalType: EnumModalContentType.MoreCourse,
@@ -321,25 +318,11 @@ const CoursePreviewScreen = () => {
           <BuyButton courseRoom={courseRoom} data={data} type="full" />
         )}
         <TouchableOpacity
-          style={{
-            flex: 1,
-            backgroundColor: palette.yellow20,
-            borderRadius: 8,
-            marginHorizontal: 16,
-            marginTop: 16,
-            minHeight: 40,
-            paddingHorizontal: 16,
-            paddingVertical: 8,
-            gap: 8,
-          }}
+          style={styles.viewShare}
           onPress={() => shareCourse(userData?.invitation_code, data?.title)}
         >
-          <View
-            style={{ flexDirection: "row", justifyContent: "space-between" }}
-          >
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 8 }}
-            >
+          <View style={styles.headerShare}>
+            <View style={styles.leftHeader}>
               <IconSvg name="icDollar" size={16} />
               <Text style={CS.hnSemiBold}>
                 {`${translations.affiliate.commission}: ${priceCourse.commition}`}
@@ -446,5 +429,31 @@ const styles = StyleSheet.create({
     marginTop: 8,
     paddingVertical: 0,
     height: 40,
+  },
+  viewTab: {
+    flexDirection: "row",
+    marginHorizontal: 16,
+    height: 48,
+    marginTop: 20,
+  },
+  viewShare: {
+    flex: 1,
+    backgroundColor: palette.yellow20,
+    borderRadius: 8,
+    marginHorizontal: 16,
+    marginTop: 16,
+    minHeight: 40,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    gap: 8,
+  },
+  headerShare: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  leftHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
   },
 });

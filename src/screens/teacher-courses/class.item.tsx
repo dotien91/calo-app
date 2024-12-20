@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { Linking, StyleSheet, View } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
 import CS from "@theme/styles";
@@ -21,10 +21,18 @@ const widthImage = Device.width - 32;
 
 const ClassItem = ({ item }) => {
   const userData = useStore((state) => state.userData);
+  const typeCallGroup = useStore((state) => state.typeCallGroup);
+
   const { courseData } = item;
   const [courseRoom, setCourseRoom] = React.useState(null);
 
   const openVideoRoom = (item) => {
+    const { google_meet_data } = item;
+    if (google_meet_data && typeCallGroup === "google-meet") {
+      // chuyen den google meet
+      Linking.openURL(google_meet_data.hangoutLink);
+      return;
+    }
     if (courseRoom) {
       NavigationService.navigate(SCREENS.CALL_CLASS, {
         courseRoom,

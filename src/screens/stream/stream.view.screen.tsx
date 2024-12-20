@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 
 import {
   View,
@@ -13,6 +13,7 @@ import {
 import { useTheme, useRoute } from "@react-navigation/native";
 import KeepAwake from "react-native-keep-awake";
 import LiveBadge from "./components/LiveBadge";
+
 // import MicrophoneSelectModal from './components/MicrophoneSelectModal';
 
 import VideoPlayer from "@shared-components/video.player.component";
@@ -33,6 +34,7 @@ import TextBase from "@shared-components/TextBase";
 import Avatar from "@shared-components/user/Avatar";
 import CS from "@theme/styles";
 import { getHoursAndDate } from "@utils/date.utils";
+import DetailWebrtcLivestream from "./detail.webrtc.livestream";
 
 function StreamViewScreen() {
   const theme = useTheme();
@@ -41,6 +43,11 @@ function StreamViewScreen() {
   const [isReady, setIsReady] = React.useState(false);
   const checkReadyTmp = React.useRef(null);
   const retryTmp = React.useRef(false);
+  const [{ isMuted, isSpeaker, hasCamera }, setConfig] = useState({
+    isMuted: false,
+    isSpeaker: true,
+    hasCamera: true,
+  });
 
   const liveStreamId = route.params?.["liveStreamId"];
   const { liveData, isCommingSoon } = useLiveStream({
@@ -57,6 +64,8 @@ function StreamViewScreen() {
     return seconds > 13;
   };
   React.useEffect(() => {
+    console.log(hasCamera, setConfig);
+
     if (!liveData) return;
     checkReadyTmp.current = setInterval(() => {
       if (isStreamReady(liveData)) {
@@ -161,6 +170,16 @@ function StreamViewScreen() {
           </View>
         </View>
       );
+    const streamRTC = liveData?.cloudflare_livestream_data?.webRTCPlayback?.url;
+    if (streamRTC) {
+      return (
+        <DetailWebrtcLivestream
+          livestream={streamRTC}
+          isSpeaker={isSpeaker}
+          isMuted={isMuted}
+        />
+      );
+    }
     return (
       <VideoPlayer
         mediaUrl={liveData.livestream_data?.m3u8_url}

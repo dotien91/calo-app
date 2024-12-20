@@ -62,18 +62,18 @@ const ClubPostScreen = () => {
     });
   };
 
-  const navigateCourse = () => {
-    navigate(SCREENS.LIST_COURSE_CLUB, {
-      club_id,
-      tier: dataGroup?.attend_data?.tier || "1",
-    });
-  };
-  const navigateEvent = () => {
-    navigate(SCREENS.EVENTSLISTSCREEN, {
-      club_id,
-      tier: dataGroup?.attend_data?.tier || "1",
-    });
-  };
+  // const navigateCourse = () => {
+  //   navigate(SCREENS.LIST_COURSE_CLUB, {
+  //     club_id,
+  //     tier: dataGroup?.attend_data?.tier || "1",
+  //   });
+  // };
+  // const navigateEvent = () => {
+  //   navigate(SCREENS.EVENTSLISTSCREEN, {
+  //     club_id,
+  //     tier: dataGroup?.attend_data?.tier || "1",
+  //   });
+  // };
   const navigateFile = () => {
     navigate(SCREENS.MEDIA_CLUB, {
       club_id,
@@ -135,8 +135,8 @@ const ClubPostScreen = () => {
           showsHorizontalScrollIndicator={false}
           style={styles.listAction}
         >
-          <BtnGroup txt={translations.club.course} onPress={navigateCourse} />
-          <BtnGroup txt={translations.club.event} onPress={navigateEvent} />
+          {/* <BtnGroup txt={translations.club.course} onPress={navigateCourse} /> */}
+          {/* <BtnGroup txt={translations.club.event} onPress={navigateEvent} /> */}
           <BtnGroup txt={translations.club.file} onPress={navigateFile} />
           <BtnGroup txt={translations.club.member} onPress={navigateMember} />
         </ScrollView>

@@ -207,8 +207,8 @@ export const useChatHistory = (txtSearch: string, searchModeChat: boolean) => {
       .reduce((ids, currentItem) => {
         return ids.concat(currentItem.media_ids);
       }, []);
-    return mediaIds
-  }, [messages])
+    return mediaIds;
+  }, [messages]);
 
   // const { listData: listMedia2, onEndReach: loadMoreMedia } =
   //   useListData<MediaType>(

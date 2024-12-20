@@ -97,8 +97,8 @@ export function useListData<T>(
     });
   };
 
-  async function onEndReach({forceCallApi} : {forceCallApi?: boolean}){
-    if ((!stateListData.isLastPage && !isFetching.current ) || forceCallApi) {
+  async function onEndReach({ forceCallApi }: { forceCallApi?: boolean }) {
+    if ((!stateListData.isLastPage && !isFetching.current) || forceCallApi) {
       isFetching.current = true;
       setIsLoadmore(true);
       await requestData({ page: stateListData.nextPage + "", ...params }).then(

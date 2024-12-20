@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { View, Text, ViewStyle, TouchableOpacity } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import FastImage from "react-native-fast-image";
@@ -51,6 +51,7 @@ const CourseItem = ({
     public_status,
   } = data;
   const userData = useStore((state) => state.userData);
+  const affiliate = useStore((state) => state.affiliate);
 
   let widthImage = Device.width - 32;
   if (isHorizontalStyle) {
@@ -80,7 +81,10 @@ const CourseItem = ({
       dataCourse: data,
     });
   };
-  const priceCourse = formatPriceCourse(data);
+  const priceCourse = useMemo(
+    () => formatPriceCourse(data, affiliate.AFFILIATE_COMMISSION),
+    [data, affiliate.AFFILIATE_COMMISSION],
+  );
 
   const moduleViewedData = {
     module_child_count: data?.module_child_count,

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 // import CS from "@theme/styles";
 import { useTheme, useRoute } from "@react-navigation/native";
 import createStyles from "./checkout.style";
@@ -64,13 +64,17 @@ const CheckoutScreen = () => {
   const isClassCourse = type == EnumClassType.CallGroup;
   const isVideoCourse = type == EnumClassType.SelfLearning;
   const isCallOneOne = type == EnumClassType.Call11;
-  const priceCourse = formatPriceCourse(courseData);
+  const userData = useStore((state) => state.userData);
+  const affiliate = useStore((state) => state.affiliate);
+  const priceCourse = useMemo(
+    () => formatPriceCourse(courseData, affiliate.AFFILIATE_COMMISSION),
+    [courseData, affiliate.AFFILIATE_COMMISSION],
+  );
 
   const countCheckPaymentSuccess = React.useRef(0);
 
   const [tradeId, setTradeId] = useState("");
   const { appStateStatus } = useAppStateCheck();
-  const userData = useStore((state) => state.userData);
 
   React.useEffect(() => {
     console.log("tradeId || appStateStatus", tradeId, appStateStatus);
@@ -323,6 +327,41 @@ const CheckoutScreen = () => {
             </View>
           </View>
         </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => {
+            setPaymentMethod(PaymentMethod.Coin);
+          }}
+          style={styles.styleViewItemPayment}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Image
+              style={{
+                height: 28,
+                width: 28,
+                marginRight: 8,
+                resizeMode: "contain",
+              }}
+              source={require("assets/images/CoinIcon.png")}
+            />
+            <Text style={styles.styleItemOfPaymentMethod}>Coin</Text>
+          </View>
+          <View style={styles.styleTouchableRadioButton}>
+            <View style={styles.styleViewCustomRadioButtom}>
+              <View
+                style={[
+                  styles.styleViewAdotRadioButton,
+                  {
+                    backgroundColor:
+                      paymentMethod === PaymentMethod.Coin
+                        ? colors.red
+                        : colors.white,
+                  },
+                ]}
+              />
+            </View>
+          </View>
+        </TouchableOpacity>
       </View>
     );
   };
@@ -396,6 +435,7 @@ const CheckoutScreen = () => {
 
   const createOrder = () => {
     const isVnPayMethod = PaymentMethod.VNPay == paymentMethod;
+    const isSmartBankingMethod = PaymentMethod.SmartBanking == paymentMethod;
     countCheckPaymentSuccess.current = 0;
     setTradeId("");
     let dataPayload = null;
@@ -413,7 +453,11 @@ const CheckoutScreen = () => {
     }
 
     const data = {
-      payment_method: isVnPayMethod ? "vn_pay" : "smart_banking",
+      payment_method: isVnPayMethod
+        ? "vn_pay"
+        : isSmartBankingMethod
+        ? "smart_banking"
+        : "coin",
       deep_link: "ieltshunter://payment",
       plan_objects: [
         {
@@ -441,7 +485,11 @@ const CheckoutScreen = () => {
       });
 
       const newData = {
-        payment_method: isVnPayMethod ? "vn_pay" : "smart_banking",
+        payment_method: isVnPayMethod
+          ? "vn_pay"
+          : isSmartBankingMethod
+          ? "smart_banking"
+          : "coin",
         deep_link: "ieltshunter://payment",
         plan_objects: [
           {
@@ -459,6 +507,7 @@ const CheckoutScreen = () => {
             },
           },
         ],
+        bank_code: "VNBANK",
         // invitation_code: userData?.ref_invitation_code || undefined,
       };
       // console.log("call11", newData);

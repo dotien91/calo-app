@@ -138,6 +138,9 @@ export const SCREENS = {
   AUDIO_FILTER: "AudioFilter",
   UPLOAD_CERTIFICATE: "UploadCertificate",
   BECOME_TUTOR: "BecomeTutor",
+  LIST_STUDENTS: "ListStudents",
+  LIST_EVALUATION: "ListEvaluation",
+  EVALUATION_SCREEN: "EvaluationScreen",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

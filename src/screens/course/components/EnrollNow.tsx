@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, StyleSheet, View } from "react-native";
+import { Text, StyleSheet, View, Linking } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 
 import { translations } from "@localization";
@@ -15,7 +15,7 @@ interface EnrollNowProps {
   data?: ICourseItem;
   course_id?: string;
   courseRoom: any;
-  fromBottom: boolean;
+  fromBottom?: boolean;
 }
 
 const EnrollNow = ({
@@ -27,6 +27,7 @@ const EnrollNow = ({
   const [event, setEvent] = React.useState(null);
 
   const userData = useStore((state) => state.userData);
+  const typeCallGroup = useStore((state) => state.typeCallGroup);
 
   React.useEffect(() => {
     getInfoCall();
@@ -85,6 +86,13 @@ const EnrollNow = ({
       console.log("eventevent", event);
       NavigationService.navigate(SCREENS.ONEONE_SCREEN, event);
     } else {
+      if (
+        typeCallGroup === "google-meet" &&
+        courseRoom?.google_meet_data?.hangoutLink
+      ) {
+        Linking.openURL(courseRoom.google_meet_data.hangoutLink);
+        return;
+      }
       NavigationService.navigate(SCREENS.CALL_CLASS, {
         course_id: course_id,
         courseData: data,
