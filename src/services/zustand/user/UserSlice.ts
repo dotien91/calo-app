@@ -50,6 +50,8 @@ export interface UserSlice {
   setListGift: (data: IGiftDonate[]) => void;
   affiliate: IAffiliate;
   setAffiliate: (data: IAffiliate) => void;
+  typeCallGroup: string;
+  setTypeCallGroup: (data: string) => void;
 }
 
 const createUserSlice: StoreSlice<UserSlice> = (set) => ({
@@ -120,6 +122,10 @@ const createUserSlice: StoreSlice<UserSlice> = (set) => ({
   affiliate: {},
   setAffiliate: (data: IAffiliate) => {
     set({ affiliate: data });
+  },
+  typeCallGroup: "",
+  setTypeCallGroup: (data: string) => {
+    set({ typeCallGroup: data });
   },
 });
 

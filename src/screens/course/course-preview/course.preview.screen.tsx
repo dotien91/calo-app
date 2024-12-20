@@ -61,7 +61,7 @@ const CoursePreviewScreen = () => {
   }, []);
 
   const [data, setData] = useState<ICourseItem>();
-  const [courseRoom, setCourseRoom] = useState();
+  const [courseRoom, setCourseRoom] = useState<any>();
   const route = useRoute();
   const course_id = route.params?.["course_id"];
   const dataCourse = route.params?.["dataCourse"];
@@ -130,6 +130,7 @@ const CoursePreviewScreen = () => {
           roomId,
           chatRoomId: data?.chat_room_id,
           classId: id,
+          google_meet_data: data.google_meet_data,
         });
       }
     });

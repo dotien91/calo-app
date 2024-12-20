@@ -87,3 +87,13 @@ export async function getCommission(params?: any) {
     return response;
   });
 }
+
+export async function getTypeCallGroup(params?: any) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "config/list/callgroup",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}
