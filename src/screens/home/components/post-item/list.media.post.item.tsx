@@ -130,7 +130,9 @@ const ListFile = ({ listFile, styleContainer = {} }: ListFileProps) => {
       >
         <Image
           style={styles.image11}
-          source={{ uri: listMedia[0].media_thumbnail }}
+          source={{
+            uri: listMedia[0].media_thumbnail || listMedia[0].media_url,
+          }}
         />
         {listMedia[0].media_mime_type.includes("video") && <PlayVideo />}
       </Pressable>
@@ -142,14 +144,18 @@ const ListFile = ({ listFile, styleContainer = {} }: ListFileProps) => {
         <Pressable onPress={showImage0} style={styles.imageNormal}>
           <Image
             style={styles.imageNormal}
-            source={{ uri: listMedia[0].media_thumbnail }}
+            source={{
+              uri: listMedia[0].media_thumbnail || listMedia[0].media_url,
+            }}
           />
           {listMedia[0].media_mime_type.includes("video") && <PlayVideo />}
         </Pressable>
         <Pressable onPress={showImage1} style={styles.imageNormal}>
           <Image
             style={styles.imageNormal}
-            source={{ uri: listMedia[1].media_thumbnail }}
+            source={{
+              uri: listMedia[1].media_thumbnail || listMedia[1].media_url,
+            }}
           />
           {listMedia[1].media_mime_type.includes("video") && <PlayVideo />}
         </Pressable>
@@ -162,7 +168,9 @@ const ListFile = ({ listFile, styleContainer = {} }: ListFileProps) => {
         <Pressable onPress={showImage0} style={styles.imageNormal}>
           <Image
             style={styles.imageNormal}
-            source={{ uri: listMedia[0].media_thumbnail }}
+            source={{
+              uri: listMedia[0].media_thumbnail || listMedia[0].media_url,
+            }}
           />
           {listMedia[0].media_mime_type.includes("video") && <PlayVideo />}
         </Pressable>
@@ -170,14 +178,18 @@ const ListFile = ({ listFile, styleContainer = {} }: ListFileProps) => {
           <Pressable onPress={showImage1} style={CommonStyle.flex1}>
             <Image
               style={styles.imageNormal}
-              source={{ uri: listMedia[1].media_thumbnail }}
+              source={{
+                uri: listMedia[1].media_thumbnail || listMedia[1].media_url,
+              }}
             />
             {listMedia[1].media_mime_type.includes("video") && <PlayVideo />}
           </Pressable>
           <Pressable onPress={showImage2} style={CommonStyle.flex1}>
             <Image
               style={styles.imageNormal}
-              source={{ uri: listMedia[2].media_thumbnail }}
+              source={{
+                uri: listMedia[2].media_thumbnail || listMedia[2].media_url,
+              }}
             />
             {listMedia.length > 3 && (
               <View style={styles.viewMore}>
