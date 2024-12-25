@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">IELTS Hunter</string>
+    <string name="app_name">iKes</string>
     <string name="facebook_app_id">908606980666349</string>
     <string name="facebook_client_token">6054f4c2e7bae8d01389715aea05e97b</string>
     <string moduleConfig="true" name="CodePushDeploymentKey">_TsPxohp8L9wJ-vIYJAAViGf_-06roKvCjvAm</string>

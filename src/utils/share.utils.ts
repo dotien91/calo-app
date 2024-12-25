@@ -18,7 +18,7 @@ const createDynamicLink = async (str: string) => {
           appStoreId: "6478486893",
         },
         android: {
-          packageName: "com.ikigroup.ieltshunterpro",
+          packageName: "com.app.ielts.ikes",
           minimumVersion: "1",
         },
       },

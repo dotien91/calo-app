@@ -78,7 +78,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:329708522429:android:f76f0b92dd86aacec520d4",
         "android_client_info": {
-          "package_name": "com.ikigroup.ieltshunterpro"
+          "package_name": "com.app.ielts.ikes"
         }
       },
       "oauth_client": [
@@ -86,7 +86,7 @@
           "client_id": "329708522429-8dfvga2ak4e5hi6e9b1otjhd0l4vghvg.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.ikigroup.ieltshunterpro",
+            "package_name": "com.app.ielts.ikes",
             "certificate_hash": "27d4fb19ca06b965e315a55acd79c46ce792a2a4"
           }
         },
@@ -94,7 +94,7 @@
           "client_id": "329708522429-a5bajo6dfl0jimemlaj505j506o0kdqp.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.ikigroup.ieltshunterpro",
+            "package_name": "com.app.ielts.ikes",
             "certificate_hash": "bf726b653a1dc4053f77f04d93a38e332400b324"
           }
         },
@@ -102,7 +102,7 @@
           "client_id": "329708522429-rh2oc0uqcqhss697l66phbpoc1s2mfs9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.ikigroup.ieltshunterpro",
+            "package_name": "com.app.ielts.ikes",
             "certificate_hash": "b6f642694ad088f23339676a962c1206f6e36dd3"
           }
         },

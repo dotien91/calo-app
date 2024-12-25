@@ -1,4 +1,4 @@
-package com.ikigroup.ieltshunterpro;
+package com.app.ielts.ikes;
 
 
 import com.facebook.react.ReactActivity;

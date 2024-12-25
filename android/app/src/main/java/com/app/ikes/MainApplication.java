@@ -1,4 +1,4 @@
-package com.ikigroup.ieltshunterpro;
+package com.app.ielts.ikes;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

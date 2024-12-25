@@ -105,9 +105,9 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    namespace 'com.ikigroup.ieltshunterpro'
+    namespace 'com.app.ielts.ikes'
     defaultConfig {
-        applicationId 'com.ikigroup.ieltshunterpro'
+        applicationId 'com.app.ielts.ikes'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 13
