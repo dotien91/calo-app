@@ -15,6 +15,7 @@ interface DateTimePickerLocalProps {
   timeDefault: string;
   warning?: boolean;
   label?: string;
+  minuteInterval?: number;
 }
 
 const DateTimePickerLocal = ({
@@ -25,6 +26,7 @@ const DateTimePickerLocal = ({
   timeDefault = "",
   warning,
   label,
+  minuteInterval,
 }: DateTimePickerLocalProps) => {
   const [date, setDate] = useState<Date>();
   const [open, setOpen] = useState(false);
@@ -81,6 +83,7 @@ const DateTimePickerLocal = ({
         onCancel={() => {
           setOpen(false);
         }}
+        minuteInterval={minuteInterval || 1}
       />
     </View>
   );

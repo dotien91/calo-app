@@ -141,6 +141,9 @@ export const SCREENS = {
   LIST_STUDENTS: "ListStudents",
   LIST_EVALUATION: "ListEvaluation",
   EVALUATION_SCREEN: "EvaluationScreen",
+  LIST_SPEAKING_STUDENT: "ListSpeakingStudent",
+  LIST_SPEAKING_TEACHER: "ListSpeakingTeacher",
+  CREATE_SPEAKING: "CreateSpeaking",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =
