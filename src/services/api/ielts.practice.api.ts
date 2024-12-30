@@ -79,7 +79,7 @@ export async function getListSpeakingTeacher() {
 export async function updateSpeaking(data) {
   return request({
     method: METHOD.PATCH,
-    urlPath: "test/speaking/update",
+    urlPath: "test/speaking/student/update",
     data: data,
   }).then((response) => {
     return response;

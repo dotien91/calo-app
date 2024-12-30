@@ -1,7 +1,18 @@
-import { showToast } from "@helpers/super.modal.helper";
+import {
+  closeSuperModal,
+  EnumModalContentType,
+  EnumStyleModalType,
+  showSuperModal,
+  showToast,
+} from "@helpers/super.modal.helper";
 import { translations } from "@localization";
 import { useRoute } from "@react-navigation/native";
 import DateTimePickerLocal from "@screens/club/components/date.time.picker.local";
+import {
+  registerSpeaking,
+  updateSpeaking,
+} from "@services/api/ielts.practice.api";
+import eventEmitter from "@services/event-emitter";
 import useStore from "@services/zustand/store";
 import Button from "@shared-components/button/Button";
 import InputHook from "@shared-components/form/InputHookForm";
@@ -12,6 +23,7 @@ import { phoneRegex, regexEmail } from "constants/regex.constant";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { goBack } from "react-navigation-helpers";
 
 interface TypeCreate {
   full_name: string;
@@ -31,7 +43,7 @@ const IelstPracticeSpeakingCreate = () => {
 
   const userData = useStore((state) => state.userData);
 
-  const [datePicker, setDatePicker] = useState<string>();
+  const [datePicker, setDatePicker] = useState<string>(data?.date_time || "");
   const [updating, setUpdating] = useState(false);
 
   const {
@@ -46,13 +58,13 @@ const IelstPracticeSpeakingCreate = () => {
       phoneNumber: data?.phone_number || userData?.phone_number || "",
     },
   });
-
   const onSubmit = (dataSend) => {
     // check validate
     if (!datePicker) {
       showToast({ type: "error", message: "Vui lòng chọn thời gian thi" });
       return;
     }
+
     let dataCreate = {};
     dataCreate = {
       full_name: dataSend.fullname,
@@ -60,15 +72,66 @@ const IelstPracticeSpeakingCreate = () => {
       phone_number: dataSend.phoneNumber,
       date_time: datePicker,
     };
+    showSuperModal({
+      styleModalType: EnumStyleModalType.Middle,
+      contentModalType: EnumModalContentType.Loading,
+    });
     setUpdating(true);
 
     if (data._id) {
       dataCreate._id = data._id;
+      // dataCreate.status = data.status;
       console.log("dataCreate..2.", dataCreate);
+      updateSpeaking(dataCreate)
+        .then((res) => {
+          if (!res.isError) {
+            showToast({
+              type: "success",
+              message: "Updated successfully",
+            });
+            eventEmitter.emit("reload_list_speaking_student");
+          } else {
+            showToast({
+              type: "error",
+              message: res.message,
+            });
+          }
+        })
+        .catch((error) => {
+          showToast({ type: "error", message: error });
+        })
+        .finally(() => {
+          goBack();
+          closeSuperModal();
+          setUpdating(false);
+        });
     } else {
+      registerSpeaking(dataCreate)
+        .then((res) => {
+          if (!res.isError) {
+            showToast({
+              type: "success",
+              message: "Created successfully",
+            });
+            eventEmitter.emit("reload_list_speaking_student");
+          } else {
+            showToast({
+              type: "error",
+              message: res.message,
+            });
+          }
+        })
+        .catch((error) => {
+          showToast({ type: "error", message: error });
+        })
+        .finally(() => {
+          goBack();
+          closeSuperModal();
+          setUpdating(false);
+        });
+
       console.log("dataCreate...3", dataCreate);
     }
-    setUpdating(false);
   };
 
   const type = data?._id ? "Update" : "Create";
