@@ -12,9 +12,9 @@ const createDynamicLink = async (str: string) => {
     const link = await dynamicLinks().buildShortLink(
       {
         link: str, // Your deep link URL
-        domainUriPrefix: "https://ieltshunter.page.link",
+        domainUriPrefix: "https://ikes.page.link",
         ios: {
-          bundleId: "com.ikigroup.ieltshunter",
+          bundleId: "com.app.ielts.ikes",
           appStoreId: "6478486893",
         },
         android: {

@@ -181,7 +181,7 @@ const TeacherScreen = () => {
             }}
           />
           <TextBase fontSize={15} color="white" style={{ marginTop: 5 }}>
-            IELTS Hunter Teacher
+            Ikes Teacher
           </TextBase>
         </TouchableOpacity>
         <View
