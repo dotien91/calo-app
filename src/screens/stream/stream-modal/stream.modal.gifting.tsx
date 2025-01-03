@@ -60,7 +60,7 @@ const GiftingLiveStream = ({ partner_id, live_id }: GiftingLiveStreamProps) => {
         <View style={{ ...CS.row, gap: 16 }}>
           <View style={{ flexDirection: "row", gap: 8 }}>
             <Text style={styles.text}>{translations.liveStream.gift}:</Text>
-            {!!selectedGift?.image ? (
+            {selectedGift?.image ? (
               <Image
                 source={{ uri: selectedGift?.image }}
                 style={{

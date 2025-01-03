@@ -270,9 +270,9 @@ export default {
     uploadVideoFaild:
       "ビデオのアップロードに失敗しました。再試行してください！",
     sharePost:
-      "今日からIELTS Hunterコミュニティに参加して、最大1000ポイントの報酬を受け取りましょう。",
+      "今日からIkesコミュニティに参加して、最大1000ポイントの報酬を受け取りましょう。",
     shareCode: (txt: string) =>
-      `一緒にIELTS Hunterコーチコミュニティに参加して、最大10000ポイントのボーナスを受け取りましょう。ボーナスを受け取るには、「${txt}」にアクセスしてください。`,
+      `一緒にIkesコーチコミュニティに参加して、最大10000ポイントのボーナスを受け取りましょう。ボーナスを受け取るには、「${txt}」にアクセスしてください。`,
   },
   navigation: {
     dashboard: "ダッシュボード",
@@ -658,7 +658,7 @@ export default {
     durationCall11: "コースの期間",
     lessionCount: "レッスンの数",
     messagePublic:
-      "コースを公開することを選択した場合、表示される前にIELTS Hunterの管理チームによって審査されます。審査には営業日で1日以内がかかります。",
+      "コースを公開することを選択した場合、表示される前にIkesの管理チームによって審査されます。審査には営業日で1日以内がかかります。",
     draft: "下書き",
     public: "公開",
   },
@@ -1524,7 +1524,7 @@ export default {
     isFirst: "リストの先頭です",
     isLast: "リストの最後です",
     shareAudio: (txt: string) =>
-      `IELTS Hunterアプリをダウンロードして、最高のオーディオブックを聴こう: ${txt}`,
+      `Ikesアプリをダウンロードして、最高のオーディオブックを聴こう: ${txt}`,
     listened: "聞いた",
     watched: "ポッドキャストを聞き続ける",
   },
@@ -1591,7 +1591,7 @@ export default {
     space: "距離の単位",
     deletecache: "キャッシュを削除",
     noti: "通知",
-    hidden: "IELTS Hunter Gから一時的に非表示",
+    hidden: "Ikes Gから一時的に非表示",
     block: "未知の人からのメッセージをブロック",
     blackList: "ブラックリスト",
     setting: "設定",
@@ -1631,7 +1631,7 @@ export default {
     descriptionTitle: "機能を探索",
   },
   recommendCourse: "おすすめコース",
-  ieltsHunterLive: "IELTS Hunter Live",
+  ieltsHunterLive: "Ikes Live",
   nameTutor: (name: string) => `${name}のコース`,
   titleLive: "Nguyễn Trung KiênのIELTSライティングクラス",
   titleName: "IELTS Listening [MASTERCLASS]: 2024年にBand 7+を達成",
@@ -1733,7 +1733,7 @@ export default {
       "起業、マーケティング、管理に関するコースを探索してください。ビジネスの世界でスキルを向上させ、成長する",
     text51: "どこでもいつでも健康をケアする",
     text52:
-      "IELTS Hunterでトップの健康コースを探索してください。あなた自身の健康を管理し、自己成長を促進する場所",
+      "Ikesでトップの健康コースを探索してください。あなた自身の健康を管理し、自己成長を促進する場所",
   },
   discover: {
     study: "学習",
@@ -1791,7 +1791,7 @@ export default {
     description3:
       "). 例: 価格が1,000,000ドンのコースを紹介すると、報酬は80,000ドン → 80 ",
     whyJoin: "なぜアフィリエイトに参加するのか？",
-    text1: "IELTS Hunter と一緒に販売して収入を増やしましょう",
+    text1: "Ikes と一緒に販売して収入を増やしましょう",
     text2: "お客様がコースを購入するとすぐにお金が入金されます",
     text3: "リアルタイムで収益を管理",
     text4: "銀行口座に引き出し",
@@ -1965,7 +1965,7 @@ export default {
     orientation: "オリエンテーション",
     health: "健康",
     charity: "チャリティ",
-    title2: "IELTS Hunterをどのように使用したいですか？",
+    title2: "Ikesをどのように使用したいですか？",
     des: "規制上の理由と、私たちが好奇心から知りたいからです！",
     lifeCoaching: "ライフコーチング",
     personalDevelopment: "個人的成長",
@@ -1983,7 +1983,7 @@ export default {
     entre: "起業",
     leaderSkill: "リーダーシップスキル",
     workLife: "ワークライフバランス",
-    title3: "IELTS Hunterに来た理由は何ですか？",
+    title3: "Ikesに来た理由は何ですか？",
     seeking: "バランスを求める",
     expl: "目的を探求する",
     needing: "サポートが必要",
@@ -2053,7 +2053,7 @@ export default {
       "サブスクリプションはiTunesアカウントを通じて課金されます。現在のサブスクリプション期間が終了する24時間前にキャンセルしない限り、サブスクリプションは自動的に更新されます。メンバーシップを取得することは、以下の条件と契約に同意することを意味します。",
     des2Android:
       "サブスクリプションはGoogle Playアカウントを通じて課金されます。現在のサブスクリプション期間が終了する24時間前にキャンセルしない限り、サブスクリプションは自動的に更新されます。メンバーシップを取得することは、以下の条件と契約に同意することを意味します。",
-    des3: "付加価値サービス規約、IELTS Hunter プライバシーポリシー、自動更新サブスクリプションの規約",
+    des3: "付加価値サービス規約、Ikes プライバシーポリシー、自動更新サブスクリプションの規約",
     error: "エラー",
     getServiceFail: "サービス取得に失敗しました",
     whiteGPro: "プレミアム",

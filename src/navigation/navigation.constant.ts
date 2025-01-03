@@ -119,6 +119,8 @@ import BecomeTutorScreen from "@screens/welcome/upload-certificate/become.tutor"
 import ListEvaluationStudents from "@screens/evaluation-class/list.evaluation.students";
 import EvaluationStudentScreen from "@screens/evaluation-class/evaluation.student.screen";
 import ListStudents from "@screens/evaluation-class/list.students";
+import IeltsPracticeSpeakingList from "@screens/ielts-practice/ielts.practice.speaking.list";
+import IelstPracticeSpeakingCreate from "@screens/ielts-practice/ielst.practice.speaking.create";
 // import CreateSubscriptionScreen from "@screens/profile.screen/create-subscription.tsx/create.subscription.screen";
 
 export const DiscoveryStackData = [
@@ -396,4 +398,6 @@ export const CommonStackData = [
     name: SCREENS.LIST_STUDENTS,
     screen: ListStudents,
   },
+  { name: SCREENS.LIST_SPEAKING_STUDENT, screen: IeltsPracticeSpeakingList },
+  { name: SCREENS.CREATE_SPEAKING, screen: IelstPracticeSpeakingCreate },
 ];

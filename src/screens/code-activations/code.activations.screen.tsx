@@ -56,7 +56,7 @@ const CodeActivationsScreen = () => {
         const data = sectionList;
         const i = data.findIndex((i) => i._id == index);
         data[i].children = res.data || [];
-        console.log("data...", i, data);
+        // console.log("data...", i, data);
         setSectionList(data);
         _updateSections(index);
       }

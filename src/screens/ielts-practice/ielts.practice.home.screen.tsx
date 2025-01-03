@@ -35,6 +35,13 @@ const PracticeHomeScreen = () => {
       type: EnumTestType.Reading,
     });
   };
+  const gotoSpeaking = () => {
+    if (!isLoggedIn()) {
+      showWarningLogin();
+      return;
+    }
+    NavigationService.navigate(SCREENS.LIST_SPEAKING_STUDENT);
+  };
 
   return (
     <SafeAreaView style={CS.safeAreaView}>
@@ -60,7 +67,7 @@ const PracticeHomeScreen = () => {
         <ItemView
           iconName={"icSpeaking"}
           title={"Speaking"}
-          onPress={() => gotoTest(EnumTestType.Speaking)}
+          onPress={gotoSpeaking}
         />
       </View>
     </SafeAreaView>

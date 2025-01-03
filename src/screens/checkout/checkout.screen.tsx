@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState, useMemo } from "react";
 // import CS from "@theme/styles";
 import { useTheme, useRoute } from "@react-navigation/native";
 import createStyles from "./checkout.style";

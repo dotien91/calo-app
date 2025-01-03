@@ -49,10 +49,9 @@ const EnrollNow = ({
           teacher_id: event?.teacher_id?._id,
         }).then((_res) => {
           if (!res.isError) {
-            //eslint-disable-next-line
-            const roomId = (_res.data?.redirect_url || "").match(
-              /[^\/]+$/,
-            )?.[0];
+            const redirectUrl = _res.data?.redirect_url || "";
+            const match = redirectUrl.match(/[^/]+$/);
+            const roomId = match ? match[0] : null;
             const courseRoom = {
               roomId,
               chatRoomId: _res.data?.chat_room_id,

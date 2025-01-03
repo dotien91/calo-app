@@ -4,7 +4,7 @@
 <dict>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
-		<string>com.ikigroup.ieltshunter</string>
+		<string>com.app.ielts.ikes</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
@@ -31,7 +31,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.329708522429-tb80b2s4u8k8r3p2ocn5rfa5ofr78kbl</string>
+				<string>com.googleusercontent.apps.324230645762-jp5bnjfqm2f4uv4riqb1g16rfida70if</string>
 			</array>
 		</dict>
 		<dict>
@@ -39,17 +39,17 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb908606980666349ieltshunter</string>
+				<string>fb908606980666349ikes</string>
 			</array>
 		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.ikigroup.ieltshunter</string>
+			<string>com.app.ielts.ikes</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>ieltshunter</string>
+				<string>ikes</string>
 			</array>
 		</dict>
 	</array>
@@ -62,9 +62,9 @@
 	<key>FacebookClientToken</key>
 	<string>6054f4c2e7bae8d01389715aea05e97b</string>
 	<key>FacebookDisplayName</key>
-	<string>ieltshunter</string>
+	<string>ikes</string>
 	<key>FacebookUrlSchemeSuffix</key>
-	<string>ieltshunter</string>
+	<string>ikes</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
@@ -168,7 +168,7 @@
 	<false/>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:ieltshunter.page.link</string>
+		<string>applinks:ikes.page.link</string>
 	</array>
 </dict>
 </plist>

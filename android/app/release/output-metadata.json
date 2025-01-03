@@ -4,15 +4,15 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.ikigroup.ieltshunterpro",
+  "applicationId": "com.app.ielts.ikes",
   "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 4,
-      "versionName": "0.1.3",
+      "versionCode": 13,
+      "versionName": "0.1.2",
       "outputFile": "app-release.apk"
     }
   ],

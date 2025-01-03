@@ -266,6 +266,7 @@ const ClassRoomScreen = () => {
   };
 
   const publishOwnFeed = (useAudio) => {
+    console.log(useAudio);
     if (!publish) {
       setPusblish(true);
       // this.setState({ publish: true });

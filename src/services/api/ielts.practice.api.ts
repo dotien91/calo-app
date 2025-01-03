@@ -57,3 +57,41 @@ export async function getAllSubmitTest(params: any) {
     return response;
   });
 }
+
+export async function getListSpeakingStudent() {
+  return request({
+    method: METHOD.GET,
+    urlPath: "test/speaking/list/student",
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function getListSpeakingTeacher() {
+  return request({
+    method: METHOD.GET,
+    urlPath: "test/speaking/list/teacher",
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function updateSpeaking(data) {
+  return request({
+    method: METHOD.PATCH,
+    urlPath: "test/speaking/student/update",
+    data: data,
+  }).then((response) => {
+    return response;
+  });
+}
+
+export async function registerSpeaking(data) {
+  return request({
+    method: METHOD.POST,
+    urlPath: "test/speaking/create",
+    data: data,
+  }).then((response) => {
+    return response;
+  });
+}
