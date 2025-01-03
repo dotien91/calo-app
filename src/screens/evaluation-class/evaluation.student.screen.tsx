@@ -181,7 +181,7 @@ const EvaluationStudentScreen = () => {
                   setDate(time.toISOString());
                 }}
                 timeDefault={date}
-                disable={!!data.date ? true : false}
+                disable={Boolean(data.date)}
               />
             </View>
             <View style={styles.gap}>

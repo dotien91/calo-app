@@ -1,5 +1,5 @@
 import { palette } from "@theme/themes";
-import { HS, VS } from "@utils/size.utils";
+import { VS } from "@utils/size.utils";
 import React, { useEffect, useRef } from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 import { RTCView } from "react-native-webrtc";
@@ -66,7 +66,6 @@ const DetailWebrtcLivestream = ({
   // if (hasCamera) {
   return (
     <RTCView
-      //@ts-ignore
       streamURL={remoteStream?.toURL()}
       style={{ ...StyleSheet.absoluteFillObject }}
       objectFit="contain"

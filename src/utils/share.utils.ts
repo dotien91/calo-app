@@ -15,7 +15,7 @@ const createDynamicLink = async (str: string) => {
         domainUriPrefix: "https://ikes.page.link",
         ios: {
           bundleId: "com.app.ielts.ikes",
-          appStoreId: "6478486893",
+          appStoreId: "6740073425",
         },
         android: {
           packageName: "com.app.ielts.ikes",

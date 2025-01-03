@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useMemo } from "react";
 import { View, Text, ViewStyle, TouchableOpacity } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import FastImage from "react-native-fast-image";
@@ -36,8 +36,8 @@ const CourseItem = ({
   isHorizontalStyle,
   style,
   data,
-  fromHome,
-}: CourseItemProps) => {
+}: // fromHome,
+CourseItemProps) => {
   const {
     _id,
     title,

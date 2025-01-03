@@ -107,8 +107,8 @@ const IeltsPracticeSpeakingList = () => {
           <Text
             style={[styles.text, { fontStyle: "italic", textAlign: "center" }]}
           >
-            You need to wait for the status to change to 'active' to take the
-            test.
+            {`You need to wait for the status to change to 'active' to take the
+            test.`}
           </Text>
           <Button
             text="Take the test now"

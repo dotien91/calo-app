@@ -32,7 +32,6 @@ import eventEmitter from "@services/event-emitter";
 import NewHomeScreen from "@screens/home/new.screen.home";
 import BottomSheetPanResponder from "@screens/audio/components/BottomSheetPanResponder";
 import OneoneScreen from "@screens/call/oneone.screen";
-import chatListScreen from "@screens/chat/list-chat/chat.list.screen";
 import MentorListScreen from "@screens/tutor-tab/tutor.list.screen";
 
 // import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";

@@ -22,7 +22,7 @@ export interface ChatSlice {
   setUnreadNumber: (viewNumber: number) => void;
 }
 
-const createChatSlice: StoreSlice<ChatSlice> = (set, get) => ({
+const createChatSlice: StoreSlice<ChatSlice> = (set) => ({
   searchFriendTxt: "",
   setSearchFriendTxt: (value: string) => set({ searchFriendTxt: value }),
   viewNumber: 0,

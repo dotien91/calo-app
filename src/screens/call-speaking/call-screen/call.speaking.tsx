@@ -1,10 +1,10 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 
 const CallSpeaking = () => {
   return <View></View>;
 };
 
-const styles = StyleSheet.create({});
+// const styles = StyleSheet.create({});
 
 export default CallSpeaking;
