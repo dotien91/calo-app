@@ -74,8 +74,8 @@ const ClassRoomTopView = ({
                     toEvaluation: () => {
                       NavigationService.navigate(SCREENS.LIST_STUDENTS, {
                         classId: data.classes[0]._id,
-                        auth_id: data.user_id._id,
-                        course_id: data._id,
+                        // auth_id: data.user_id._id,
+                        // course_id: data._id,
                       }),
                         eventEmitter.emit("close_super_modal");
                     },
