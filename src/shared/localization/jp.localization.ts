@@ -127,6 +127,8 @@ export default {
   confirm: "確認",
   somethingWentWrong:
     "システムにエラーが発生しました。後で再試行してください。",
+  somethingWentWrongInternet:
+    "ネットワーク接続がありません。後でもう一度お試しください",
   notFound: "リストは空です",
   offlineNetwork: "ネットワーク接続がオフラインです",
   onlineNetwork: "データネットワークが再接続されました",

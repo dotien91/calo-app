@@ -30,6 +30,8 @@ import { goBack } from "@helpers/navigation.helper";
 const CreateAudio = () => {
   const route = useRoute();
   const type = route?.params?.type || "full";
+  const txtHeader =
+    route?.params?.header || translations.podcast.uploadePodcast;
 
   const isChild = route?.params?.isChild || false;
   const parent_id = route?.params?.parent_id || null;
@@ -162,7 +164,7 @@ const CreateAudio = () => {
 
   return (
     <SafeAreaView style={CS.safeAreaView}>
-      <Header text={translations.podcast.uploadePodcast} />
+      <Header text={txtHeader} />
       <ScrollView style={CS.flex1}>
         <View style={styles.containerImage}>
           <View style={styles.viewImage}>{renderSelectImageAudio()}</View>
@@ -315,7 +317,7 @@ const CreateAudio = () => {
             backgroundColor:
               uploading || updatingImg ? palette.placeholder : palette.primary,
           }}
-          text={translations.podcast.uploadePodcast}
+          text={txtHeader}
           disabled={uploading || updatingImg}
           onPress={handleSubmit(onSubmit)}
         />

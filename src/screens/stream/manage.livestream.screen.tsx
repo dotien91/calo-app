@@ -5,7 +5,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 /**
  * ? Local Imports
  */
-import { ICourseItem } from "models/course.model";
 import EmptyResultView from "@shared-components/empty.data.component";
 import { translations } from "@localization";
 
@@ -16,12 +15,14 @@ import { useListData } from "@helpers/hooks/useListData";
 import Header from "@shared-components/header/Header";
 import useStore from "@services/zustand/store";
 import eventEmitter from "@services/event-emitter";
+import CS from "@theme/styles";
+import { IStreamItem } from "models/stream.model";
 
 interface ManageLivestreamScreenProps {}
 
 const ManageLivestreamScreen: React.FC<ManageLivestreamScreenProps> = () => {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={CS.safeAreaView}>
       <Header text={translations.updateLivestream.list} />
       <ListSearch type={["schedule"]} />
     </SafeAreaView>
@@ -54,9 +55,15 @@ const ListSearch = ({ type }: { type: string[] }) => {
     onEndReach,
     renderFooterComponent,
     _requestData,
-  } = useListData<ICourseItem>(paramRequest, getListLiveStream, []);
+  } = useListData<IStreamItem>(paramRequest, getListLiveStream, []);
 
-  const renderItem = ({ item }: { item: ICourseItem }, index: number) => {
+  const renderItem = ({
+    item,
+    index,
+  }: {
+    item: IStreamItem;
+    index: number;
+  }) => {
     return <StreamCard isEditMode data={item} key={index} />;
   };
 
@@ -82,7 +89,7 @@ const ListSearch = ({ type }: { type: string[] }) => {
         onEndReachedThreshold={0}
         onEndReached={onEndReach}
         removeClippedSubviews={true}
-        keyExtractor={(item) => item?._id + "" || item?.last_active}
+        keyExtractor={(item) => item?._id + ""}
         ListFooterComponent={renderFooterComponent()}
       />
     </View>

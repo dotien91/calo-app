@@ -17,7 +17,7 @@ interface TypedUseListData<T> {
   setListData: (newListData: T[]) => void;
   _requestData: (showRefreshing?: boolean) => void;
   initData: T[];
-  renderFooterComponent: () => void;
+  renderFooterComponent: () => React.ReactElement;
   onEndReach: (data?: any) => void;
   refreshControl: any;
   noData: boolean;

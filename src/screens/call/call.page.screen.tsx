@@ -225,14 +225,15 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
           });
         } else {
           RNCallKeep.endAllCalls();
-          Alert.alert(translations.somethingWentWrong);
+          Alert.alert(translations.somethingWentWrongInternet);
           NavigationService.goBack();
         }
       }
     } catch (error: any) {
       RNCallKeep.endAllCalls();
       Alert.alert(
-        error?.response?.data?.message || translations.somethingWentWrong,
+        error?.response?.data?.message ||
+          translations.somethingWentWrongInternet,
       );
       NavigationService.goBack();
     }
@@ -535,7 +536,7 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
       }
     });
 
-    alert("onSocket offer client");
+    // alert("onSocket offer client");
     onSocket("offerClient", async (d: any) => {
       // console.log(d, 'JOIN 01')
       if (!d) {
@@ -574,27 +575,31 @@ const CallPageScreen: React.FC<HomeScreenProps> = () => {
   };
 
   const toggleCamera = () => {
-    const currentLocalCamera = configActions.localCamera;
+    // const currentLocalCamera = configActions.localCamera;
     if (streams && streams.id) {
-      setConfigActions((prev) => ({
-        ...prev,
-        localCamera: !currentLocalCamera,
-      }));
-      streams.getVideoTracks().forEach((track: any) => {
-        track.enabled = !currentLocalCamera;
+      setConfigActions((prev) => {
+        streams.getVideoTracks().forEach((track: any) => {
+          track.enabled = !prev.localCamera;
+        });
+        return {
+          ...prev,
+          localCamera: !prev.localCamera,
+        };
       });
     }
   };
 
   const setMute = () => {
-    const currentLocalMic = configActions.localMic;
+    // const currentLocalMic = configActions.localMic;
     if (streams && streams.id) {
-      setConfigActions((prev) => ({
-        ...prev,
-        localMic: !currentLocalMic,
-      }));
-      streams.getAudioTracks().forEach((track: any) => {
-        track.enabled = !currentLocalMic;
+      setConfigActions((prev) => {
+        streams.getAudioTracks().forEach((track: any) => {
+          track.enabled = !prev.localMic;
+        });
+        return {
+          ...prev,
+          localMic: !prev.localMic,
+        };
       });
     }
   };

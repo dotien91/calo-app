@@ -65,13 +65,14 @@ const CouponCreateScreen = () => {
   const [showModal, setShowModal] = useState(false);
   const [itemSelected, setItemSelected] = useState<string[]>([]);
   const [listCourse, setListCourse] = useState<string[]>([]);
-  const [search, setSearch] = useState<string>();
+  const [search, setSearch] = useState<string>("");
 
   const paramsRequest = {
     limit: "10",
     created_user_id: userData?._id,
     order_by: "DESC",
     sort_by: "createdAt",
+    search: search,
   };
   const {
     listData,
@@ -79,6 +80,8 @@ const CouponCreateScreen = () => {
     refreshControl,
     renderFooterComponent,
     refreshing,
+    isLoading,
+    noData,
   } = useListData<TypedCourse>(paramsRequest, getMyCourse);
 
   const _getCourseSale = (params) => {
@@ -467,13 +470,15 @@ const CouponCreateScreen = () => {
       </View>
       <Modal visible={showModal}>
         <ListCourseSelect
-          search={search}
+          // search={search}
           setSearch={setSearch}
           itemSelected={itemSelected}
           setItemSelected={setItemSelected}
           hideModal={() => {
             setShowModal(false);
           }}
+          isLoading={isLoading}
+          noData={noData}
           listData={listData}
           onEndReach={onEndReach}
           refreshControl={refreshControl}

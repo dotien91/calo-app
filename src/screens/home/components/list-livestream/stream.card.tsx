@@ -36,6 +36,8 @@ const StreamCard = ({
   isEditMode = false,
 }: {
   data: IStreamItem;
+  isSliderItem?: boolean;
+  isEditMode?: boolean;
 }) => {
   const userData = useStore((state) => state.userData);
   const IconText = ({ nameIcon, text }: { nameIcon: string; text: string }) => {
