@@ -50,7 +50,7 @@ const CreateAudio = () => {
 
   const [playlist, setPlaylist] = useState(parent_id || "");
   const [listPlaylist, setListPlaylist] = useState([]);
-  const [typePodcast, setTypePodcast] = useState<"public" | "member">("public");
+  const [typePodcast] = useState<"public" | "member">("public");
   const { file, pickAudio, uploading } = useUploadAudio();
   const { renderSelectImageAudio, idImage, updatingImg } = SelectImageHook({
     width: 900,
@@ -98,12 +98,12 @@ const CreateAudio = () => {
       </View>
     );
   };
-  const setTypeFull = () => {
-    setTypePodcast("public");
-  };
-  const setTypeTrailer = () => {
-    setTypePodcast("member");
-  };
+  // const setTypeFull = () => {
+  //   setTypePodcast("public");
+  // };
+  // const setTypeTrailer = () => {
+  //   setTypePodcast("member");
+  // };
 
   const onSubmit = (dataHook) => {
     if (!idImage) {
@@ -224,9 +224,9 @@ const CreateAudio = () => {
           countLength
           showPlaceholder
         />
-        {type === "full" && (
+        {isChild && !parent_id && renderPlaylist()}
+        {/* {type === "full" && (
           <View>
-            {isChild && !parent_id && renderPlaylist()}
             <Text style={styles.txtTitle}>
               {translations.audio.typeOfPodcast}
             </Text>
@@ -277,7 +277,7 @@ const CreateAudio = () => {
               </TouchableOpacity>
             </View>
           </View>
-        )}
+        )} */}
         <Text style={styles.txtTitle}>{translations.audio.uploadAudio}</Text>
         <View style={{ flexDirection: "row", paddingHorizontal: 20 }}>
           <TouchableOpacity
