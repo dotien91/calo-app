@@ -10,7 +10,6 @@ import { EnumTestType, IQuestion } from "models/course.model";
 import { palette } from "@theme/themes";
 import AnswerChildReading from "../answer/answer.child.reading";
 import HtmlView from "../HtmlView";
-import TextBase from "@shared-components/TextBase";
 // import { isIOS } from "@freakycoder/react-native-helpers";
 
 interface QuestionItemProps extends IQuestion {
@@ -25,13 +24,12 @@ interface QuestionItemProps extends IQuestion {
 const QuestionItem = ({
   part,
   index,
-  title,
+  // title,
   content,
   child,
   isTimeout,
   setAnsweData,
   answer,
-  options
 }: QuestionItemProps) => {
   const isWriting = part == EnumTestType.Writing;
   const isReading = part == EnumTestType.Reading;
@@ -40,6 +38,7 @@ const QuestionItem = ({
   };
 
   const renderInput = () => {
+    if (!isWriting) return null;
     return (
       <View>
         <TextInput
@@ -47,32 +46,20 @@ const QuestionItem = ({
           onChangeText={_onChangeText}
           style={[styles.input, isTimeout && styles.inputDisabled]}
           multiline={true}
-          numberOfLines={1}
+          numberOfLines={4}
         />
         {/* <Button isFullWidth={false} type={"outline"} text={translations.save} /> */}
       </View>
     );
   };
 
-  const renderSelectBox = () => {
-    if (options?.length)
-      return (
-        <AnswerChildReading
-          setAnsweData={setAnsweData}
-          isTimeout={isTimeout}
-          data={child}
-          answer={answer}
-        />
-      );
-    return null;
-  };
+
   return (
     <View style={styles.box}>
-      <TextBase color="text" fontWeight="600">
-        {title}
-      </TextBase>
+      {/* <TextBase color="text" fontWeight="600">
+            {title}
+          </TextBase> */}
       <HtmlView content={content} showViewMore={isReading} />
-      {renderSelectBox()}
       {renderInput()}
     </View>
   );
@@ -89,7 +76,10 @@ const styles = StyleSheet.create({
     ...CS.borderStyle,
     borderRadius: 8,
     padding: 16,
-    minHeight: 40,
+    marginBottom: 12,
+    marginTop: 12,
+    minHeight: 120,
+    paddingTop: 16,
   },
   inputDisabled: {
     backgroundColor: palette.btnInactive,

@@ -115,10 +115,10 @@ const IeltsPraticeList = () => {
         height={8}
       ></Progress.Bar>
       {isLoading && <LoadingList numberItem={2} />}
-      {!isLoading && listTestParent.length == 0 && renderEmpty()}
+      {!isLoading && data.length == 0 && renderEmpty()}
 
       <FlatList
-        data={listTestParent}
+        data={data}
         renderItem={renderItem}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
@@ -142,8 +142,8 @@ const ItemPracticeTest = React.memo(({ item }) => {
       practiceDetail: item,
     });
   };
-  const renderTestChild = (item, index) => {
-    return (
+  return (
+    <View style={styles.formTask}>
       <PressableBtn
         onPress={() => openPraticeTest(item)}
         key={item?.id}
@@ -152,7 +152,8 @@ const ItemPracticeTest = React.memo(({ item }) => {
         <IconSvg
           name="iconWriting"
           size={32}
-          color={index % 2 ? palette.primary : palette.yellow}
+          // color={index % 2 ? palette.primary : palette.yellow}
+          color={palette.primary}
         />
         <TextBase color="text" style={CS.flex1}>
           {item.title}
@@ -171,27 +172,27 @@ const ItemPracticeTest = React.memo(({ item }) => {
           )}
         </View>
       </PressableBtn>
-    );
-  };
-
-  return (
-    <View style={styles.viewItem}>
-      <View style={styles.headerItem}>
-        <View style={CS.flexStart}>
-          {item.is_done && (
-            <IconSvg name="icCheck" size={16} color={palette.green} />
-          )}
-          <TextBase color={"text"} fontWeight="600">
-            {item.title}
-          </TextBase>
-        </View>
-      </View>
-
-      <View style={styles.formTask}>
-        {item.child.map((item, index) => renderTestChild(item, index))}
-      </View>
     </View>
   );
+
+  // return (
+  //   <View style={styles.viewItem}>
+  //     <View style={styles.headerItem}>
+  //       <View style={CS.flexStart}>
+  //         {item.is_done && (
+  //           <IconSvg name="icCheck" size={16} color={palette.green} />
+  //         )}
+  //         <TextBase color={"text"} fontWeight="600">
+  //           {item.title}
+  //         </TextBase>
+  //       </View>
+  //     </View>
+
+  //     <View style={styles.formTask}>
+  //       {item.child.map((item, index) => renderTestChild(item, index))}
+  //     </View>
+  //   </View>
+  // );
 });
 
 export default IeltsPraticeList;

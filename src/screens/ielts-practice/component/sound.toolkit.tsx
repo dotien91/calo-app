@@ -262,7 +262,7 @@ export default class AppSound extends Component<Props, State> {
                 />
               </PressableBtn>
             ))}
-          <TextBase fontSize={12} style={{ width: 28, textAlign: "left" }}>
+          <TextBase fontSize={12} style={{ width: 30, textAlign: "left" }}>
             {this.fancyTimeFormat(this.player?.currentTime / 1000)}
           </TextBase>
           <TextBase></TextBase>

@@ -1,6 +1,5 @@
 import React from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
-import Carousel from "react-native-snap-carousel";
+import { FlatList, SafeAreaView, StyleSheet, View } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 
@@ -35,6 +34,7 @@ import eventEmitter from "@services/event-emitter";
 import LoadingList from "@shared-components/loading.list.component";
 import AppSound from "./component/sound.toolkit";
 import lotieSuccess from "assets/lotties/success.json";
+import QuestionWritingItem from "./component/question/question.writing.item";
 
 const itemWidth = Device.width;
 interface IeltsPacticeScreenProps {}
@@ -155,6 +155,7 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
   console.log("parentQuestion", parentQuestion);
   const renderBottomComponent = () => {
     const showTimer = !isSpeaking() && !!practiceDetail.duration_time;
+    const showBackBtn = false
     if (!showBackBtn && !showNextBtn && !showTimer) return null;
     return (
       <View style={styles.arrowBox}>
@@ -172,16 +173,16 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
             duration_time={practiceDetail.duration_time}
           />
         )}
-        {showNextBtn && (
+        {/* {showNextBtn && (
           <PressableBtn onPress={snapNextItem}>
             <IconSvg size={24} name="icCircleArrowRight" />
           </PressableBtn>
-        )}
+        )} */}
       </View>
     );
   };
 
-  const _renderItem = ({ item }: { item: IQuestion; index: number }) => {
+  const _renderItem = ({ item, index }: { item: IQuestion; index: number }) => {
     if (isSpeaking())
       return (
         <QuestionSpeakingItem
@@ -198,6 +199,14 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
           {...item}
         />
       );
+    if (practiceDetail.type === "writing") {
+      return <QuestionWritingItem
+      setAnsweData={setAnsweData}
+      {...item}
+      part={practiceDetail.type}
+      isTimeout={isTimeout}
+    />
+    } 
     return (
       <QuestionItem
         setAnsweData={setAnsweData}
@@ -207,21 +216,23 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
       />
     );
   };
-
+  
   const renderContent = () => {
     if (isLoading) return <LoadingList numberItem={2} />;
+  
     return (
-      <Carousel
-        ref={(c) => {
-          carouselRef.current = c;
-        }}
-        data={parentQuestion || []}
+      <FlatList
+        data={data || []}
         renderItem={_renderItem}
-        sliderWidth={itemWidth}
-        itemWidth={itemWidth}
-        onSnapToItem={_onSnapToItem}
-        scrollEnabled={false}
-        laz
+        keyExtractor={(item, index) => `question-${index}`}
+        showsHorizontalScrollIndicator={false}
+        pagingEnabled={true}
+        contentContainerStyle={{paddingBottom: 120}}
+        onMomentumScrollEnd={(e) => {
+          const offset = e.nativeEvent.contentOffset.x;
+          const index = Math.round(offset / itemWidth);
+          _onSnapToItem(index);
+        }}
       />
     );
   };
@@ -258,10 +269,8 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
       />
       <View style={CS.flex1}>
         {renderAudio()}
-
         {renderContent()}
-
-        {isLatestitem && renderBtn()}
+        {renderBtn()}
       </View>
     </SafeAreaView>
   );

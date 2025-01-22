@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, ViewStyle } from "react-native";
 
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
@@ -11,19 +11,24 @@ interface CustomRadioProps {
   isSelected: boolean;
   callback: () => void;
   disabled?: boolean;
+  customStyle?: ViewStyle;
+  labelStyle?: ViewStyle;
 }
 
 // eslint-disable-next-line react/display-name
 const CustomRadio = ({
   isSelected,
   label,
+  content,
   callback,
   disabled,
+  customStyle,
+  labelStyle,
 }: CustomRadioProps) => {
   return (
-    <PressableBtn disable={disabled} style={CS.flexStart} onPress={callback}>
+    <PressableBtn style={[CS.flexStart, customStyle ? customStyle : {}]} disable={disabled} onPress={callback}>
       {!!label && (
-        <TextBase style={{ marginRight: 4 }} fontWeight="600">
+        <TextBase style={[{ marginRight: 4 }, labelStyle && labelStyle]} fontWeight="600">
           {label}
         </TextBase>
       )}
@@ -33,6 +38,7 @@ const CustomRadio = ({
           disabled && { borderColor: palette.btnInactive },
         ]}
       >
+
         {isSelected && (
           <View
             style={[
@@ -42,6 +48,11 @@ const CustomRadio = ({
           ></View>
         )}
       </View>
+      {!!content && (
+        <TextBase style={{ marginRight: 4 }} fontWeight="600">
+          {content}
+        </TextBase>
+      )}
     </PressableBtn>
   );
 };
@@ -57,6 +68,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: palette.primary,
     ...CS.flexCenter,
+    marginRight: 12,
   },
   dot: {
     width: 12,
