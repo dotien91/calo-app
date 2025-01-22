@@ -44,5 +44,9 @@ export default (theme: ExtendedTheme) => {
       color: colors.text,
       marginLeft: 8,
     },
+    link: {
+      color: "blue",
+      textDecorationLine: "underline",
+    },
   });
 };

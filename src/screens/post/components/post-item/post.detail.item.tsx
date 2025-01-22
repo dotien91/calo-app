@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 
 import React, { useMemo } from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Image, Linking, Text, TouchableOpacity, View } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { useTheme } from "@react-navigation/native";
 
@@ -20,6 +20,7 @@ import CS from "@theme/styles";
 import ListFilePostItem from "@screens/home/components/post-item/list.file.post.item copy";
 import { navigate } from "@helpers/navigation.helper";
 import { SCREENS } from "constants";
+import Hyperlink from "react-native-hyperlink";
 
 const SIZE_AVATAR = 32;
 const FONT_SIZE = 16;
@@ -59,15 +60,20 @@ const ItemPost = ({ data, pressComment, scrollToCmt }: ItemPostProps) => {
 
   const ContentStatus = useMemo(() => {
     return (
-      <Text
-        style={{
-          ...CS.hnRegular,
-          fontSize: FONT_SIZE,
-          marginBottom: 4,
-        }}
+      <Hyperlink
+        linkStyle={styles.link}
+        onPress={(url) => Linking.openURL(url)}
       >
-        {data?.post_content}
-      </Text>
+        <Text
+          style={{
+            ...CS.hnRegular,
+            fontSize: FONT_SIZE,
+            marginBottom: 4,
+          }}
+        >
+          {data?.post_content}
+        </Text>
+      </Hyperlink>
     );
   }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
 

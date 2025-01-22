@@ -1,8 +1,9 @@
 /* eslint-disable camelcase */
 import React, { useMemo } from "react";
-import { Text, View } from "react-native";
+import { Linking, Text, View } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
+import Hyperlink from "react-native-hyperlink";
 
 import createStyles from "./post.item.style";
 import HeaderItempost from "./header.post.item";
@@ -64,17 +65,22 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
 
   const ContentStatus = useMemo(() => {
     return (
-      <Text
-        numberOfLines={2}
-        style={{
-          ...CommonStyle.hnRegular,
-          color: colors.mainColor2,
-          fontSize: FONT_SIZE,
-          marginBottom: 4,
-        }}
+      <Hyperlink
+        linkStyle={styles.link}
+        onPress={(url) => Linking.openURL(url)}
       >
-        {data?.post_content}
-      </Text>
+        <Text
+          numberOfLines={2}
+          style={{
+            ...CommonStyle.hnRegular,
+            color: colors.mainColor2,
+            fontSize: FONT_SIZE,
+            marginBottom: 4,
+          }}
+        >
+          {data?.post_content}
+        </Text>
+      </Hyperlink>
     );
   }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
 

@@ -73,6 +73,7 @@
     "react-native-get-random-values": "^1.10.0",
     "react-native-gifted-chat": "^2.4.0",
     "react-native-head-tab-view": "4.0.0-rc.13",
+    "react-native-hyperlink": "^0.0.22",
     "react-native-iap": "^12.13.0",
     "react-native-image-crop-picker": "^0.40.2",
     "react-native-image-modal": "^2.0.4",

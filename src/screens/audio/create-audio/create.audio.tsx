@@ -29,7 +29,7 @@ import { goBack } from "@helpers/navigation.helper";
 
 const CreateAudio = () => {
   const route = useRoute();
-  const type = route?.params?.type || "full";
+  // const type = route?.params?.type || "full";
   const txtHeader =
     route?.params?.header || translations.podcast.uploadePodcast;
 
@@ -355,11 +355,11 @@ const styles = StyleSheet.create({
   txtBtn: {
     ...CS.hnSemiBold,
   },
-  viewStyle: {
-    marginHorizontal: 20,
-    flexDirection: "row",
-    gap: 16,
-  },
+  // viewStyle: {
+  //   marginHorizontal: 20,
+  //   flexDirection: "row",
+  //   gap: 16,
+  // },
   viewBtn: {
     marginTop: 8,
     height: 40,
