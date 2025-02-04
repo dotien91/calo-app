@@ -31,7 +31,7 @@ const QuestionItem = ({
   isTimeout,
   setAnsweData,
   answer,
-  options
+  options,
 }: QuestionItemProps) => {
   const isWriting = part == EnumTestType.Writing;
   const isReading = part == EnumTestType.Reading;
@@ -68,10 +68,10 @@ const QuestionItem = ({
   };
   return (
     <View style={styles.box}>
+      <HtmlView content={content} showViewMore={isReading} />
       <TextBase color="text" fontWeight="600">
         {title}
       </TextBase>
-      <HtmlView content={content} showViewMore={isReading} />
       {renderSelectBox()}
       {renderInput()}
     </View>

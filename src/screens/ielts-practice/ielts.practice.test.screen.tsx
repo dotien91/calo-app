@@ -56,7 +56,9 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
     params: { test_id: practiceDetail._id },
     requestData: getQuestionsPractice,
   });
-
+  const arrangedData = React.useMemo(() => {
+    return data?.sort((item1, item2) => item1?.index - item2?.index);
+  }, [data]);
   const setAnsweData = React.useCallback(
     ({ index, content }: { index: number; content: string }) => {
       answerData.current[index] = content;
@@ -155,7 +157,7 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
   console.log("parentQuestion", parentQuestion);
   const renderBottomComponent = () => {
     const showTimer = !isSpeaking() && !!practiceDetail.duration_time;
-    const showBackBtn = false
+    const showBackBtn = false;
     if (!showBackBtn && !showNextBtn && !showTimer) return null;
     return (
       <View style={styles.arrowBox}>
@@ -200,13 +202,15 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
         />
       );
     if (practiceDetail.type === "writing") {
-      return <QuestionWritingItem
-      setAnsweData={setAnsweData}
-      {...item}
-      part={practiceDetail.type}
-      isTimeout={isTimeout}
-    />
-    } 
+      return (
+        <QuestionWritingItem
+          setAnsweData={setAnsweData}
+          {...item}
+          part={practiceDetail.type}
+          isTimeout={isTimeout}
+        />
+      );
+    }
     return (
       <QuestionItem
         setAnsweData={setAnsweData}
@@ -216,18 +220,18 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
       />
     );
   };
-  
+
   const renderContent = () => {
     if (isLoading) return <LoadingList numberItem={2} />;
-  
+
     return (
       <FlatList
-        data={data || []}
+        data={arrangedData || []}
         renderItem={_renderItem}
         keyExtractor={(item, index) => `question-${index}`}
         showsHorizontalScrollIndicator={false}
         pagingEnabled={true}
-        contentContainerStyle={{paddingBottom: 120}}
+        contentContainerStyle={{ paddingBottom: 120 }}
         onMomentumScrollEnd={(e) => {
           const offset = e.nativeEvent.contentOffset.x;
           const index = Math.round(offset / itemWidth);

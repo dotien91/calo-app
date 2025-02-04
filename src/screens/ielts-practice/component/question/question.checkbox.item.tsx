@@ -9,6 +9,7 @@ import { EnumTestType, IQuestion } from "models/course.model";
 import { palette } from "@theme/themes";
 import TextBase from "@shared-components/TextBase";
 import CustomRadio from "@shared-components/form/CustomRadio";
+import HtmlView from "../HtmlView";
 // import { isIOS } from "@freakycoder/react-native-helpers";
 
 interface QuestionCheckboxItemProps extends IQuestion {
@@ -22,7 +23,6 @@ interface QuestionCheckboxItemProps extends IQuestion {
   options: string[];
 }
 
-
 const QuestionCheckboxItem = ({
   index,
   isTimeout,
@@ -31,11 +31,13 @@ const QuestionCheckboxItem = ({
   typeAnswer,
   title,
   options,
+  ...rest
 }: QuestionCheckboxItemProps) => {
+  const isRadio = typeAnswer === "radio";
   const _onChangeText = (v) => {
     setAnsweData({ index, content: v });
   };
-  console.log("typetype", typeAnswer)
+  console.log("typetype", typeAnswer);
   const renderInput = () => {
     return (
       <View>
@@ -50,9 +52,8 @@ const QuestionCheckboxItem = ({
       </View>
     );
   };
-
   const renderSelectBox = () => {
-    console.log("optionsoptions", options)
+    console.log("optionsoptions", options);
     return (
       <RadioButtons
         isTimeout={isTimeout}
@@ -60,19 +61,20 @@ const QuestionCheckboxItem = ({
         extraParam={{
           index,
           answer,
-          title
+          title,
+          isRadio,
         }}
         options={options}
-      // data={data?.[index]}
+        // data={data?.[index]}
       />
     );
   };
   return (
     <View style={styles.box}>
-      <TextBase fontWeight="600"> {title}
-      </TextBase>
+      {!!rest?.content && <HtmlView content={rest.content} />}
+      <TextBase fontWeight="600"> {title}</TextBase>
       {typeAnswer == "text" && renderInput()}
-      {typeAnswer == "checkbox" && renderSelectBox()}
+      {(isRadio || typeAnswer === "checkbox") && renderSelectBox()}
     </View>
   );
 };
@@ -102,11 +104,11 @@ const RadioButtons = ({
       });
     } else {
       onSelectItem((old) => {
-        const newData = [item, ...old];
-        if (newData.length > extraParam?.answer?.length) {
-          newData.pop();
-        }
-        console.log("setAnsweData", newData.join(""))
+        const newData = extraParam?.isRadio ? [item] : [item, ...old];
+        // if (newData.length > extraParam?.answer?.length) {
+        //   newData.pop();
+        // }
+        console.log("setAnsweData", newData.join(""));
 
         setAnsweData({
           index: extraParam?.index,
@@ -118,13 +120,12 @@ const RadioButtons = ({
   };
 
   const convertToLetter = (value) => {
-    const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'];
+    const letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"];
     return value >= 0 && value <= 10 ? letters[value] : null;
-  }
-
+  };
 
   const renderRadio = (item: string, index: number) => {
-    const label = convertToLetter(index)
+    const label = convertToLetter(index);
     const isSelected = selectItem.find((_item) => _item == label);
     return (
       <CustomRadio
@@ -136,10 +137,11 @@ const RadioButtons = ({
         labelStyle={{ width: 18 }}
         isSelected={isSelected}
         customStyle={{ marginBottom: 6 }}
+        isRadio={extraParam?.isRadio}
       />
     );
-  }
-  console.log("optionsoptions", extraParam?.title, options)
+  };
+  // console.log("optionsoptions", extraParam?.title, options);
   return (
     <View style={CS.flex1}>
       {options.map((item, index) => renderRadio(item, index))}

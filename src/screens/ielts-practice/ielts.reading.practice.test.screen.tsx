@@ -50,7 +50,9 @@ const IeltsReadingPacticeScreen = () => {
     params: { test_id: practiceDetail._id },
     requestData: getQuestionsPractice,
   });
-
+  const arrangedData = React.useMemo(() => {
+    return data?.sort((item1, item2) => item1?.index - item2?.index);
+  }, [data]);
   const setAnsweData = React.useCallback(
     ({ index, content }: { index: number; content: string }) => {
       answerData.current[index] = content;
@@ -123,28 +125,30 @@ const IeltsReadingPacticeScreen = () => {
   };
 
   const _renderItem = ({ item, index }: { item: IQuestion; index: number }) => {
-    return <QuestionCheckboxItem
-      isTimeout={isTimeout}
-      index={index + 1}
-      setAnsweData={setAnsweData}
-      {...item}
-      type={practiceDetail.type}
-      typeAnswer={item.type}
-    />
+    return (
+      <QuestionCheckboxItem
+        isTimeout={isTimeout}
+        index={index + 1}
+        setAnsweData={setAnsweData}
+        {...item}
+        type={practiceDetail.type}
+        typeAnswer={item.type}
+      />
+    );
   };
 
   const renderContent = () => {
     if (isLoading) return <LoadingList numberItem={2} />;
     return (
       <FlatList
-        data={data || []}
+        data={arrangedData || []}
         renderItem={_renderItem}
         keyExtractor={(item, index) => `${item.id || index}`}
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{paddingBottom: 80}}
+        contentContainerStyle={{ paddingBottom: 80 }}
         onMomentumScrollEnd={(event) => {
           const index = Math.round(
-            event.nativeEvent.contentOffset.x / itemWidth
+            event.nativeEvent.contentOffset.x / itemWidth,
           );
           _onSnapToItem(index);
         }}
@@ -152,7 +156,6 @@ const IeltsReadingPacticeScreen = () => {
       />
     );
   };
-
 
   const renderBtn = () => {
     return (
@@ -180,7 +183,6 @@ const IeltsReadingPacticeScreen = () => {
       </View>
     </SafeAreaView>
   );
-
 };
 
 const styles = StyleSheet.create({

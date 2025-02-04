@@ -34,7 +34,7 @@ const IeltsPraticeList = () => {
   }, []);
 
   const initData = () => {
-    getListTest({ type }).then((res) => {
+    getListTest({ type, order_by: "DESC" }).then((res) => {
       setIsLoading(false);
       if (!res.isError) {
         setData(res.data);
