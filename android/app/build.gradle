@@ -105,13 +105,13 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    namespace 'com.app.ielts.ikes'
+    namespace 'com.ikigroup.chunter'
     defaultConfig {
-        applicationId 'com.app.ielts.ikes'
+        applicationId 'com.ikigroup.chunter'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 14
-        versionName "0.1.2"
+        versionCode 12
+        versionName "0.1.9"
         missingDimensionStrategy "store", "play"
     }
 

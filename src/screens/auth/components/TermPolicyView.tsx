@@ -13,11 +13,11 @@ const TermPolicyView = ({ style }: TermPolicyViewProps) => {
   const theme = useTheme();
   const { colors } = theme;
   const pressPolicy = () => {
-    Linking.openURL("https://docs.ieltshunter.io/privacy-policy");
+    Linking.openURL("https://tutorials.ikigroup.vn/ikes/privacy-policy");
   };
 
   const pressTerms = () => {
-    Linking.openURL("https://docs.ieltshunter.io/term-and-conditions");
+    Linking.openURL("https://tutorials.ikigroup.vn/ikes/term-and-conditions");
   };
   return (
     <View style={style}>
