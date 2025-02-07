@@ -9,8 +9,8 @@ export const createStyle = (theme: ExtendedTheme) => {
       backgroundColor: colors.white,
     },
     imageStyle: {
-      height: 60,
-      width: 60,
+      height: 50,
+      width: 50,
       borderRadius: 40,
     },
     viewItem: {
@@ -27,7 +27,7 @@ export const createStyle = (theme: ExtendedTheme) => {
     },
     textName: {
       ...CS.hnBold,
-      fontSize: 18,
+      // fontSize: 18,
     },
     textReview: {
       ...CS.hnRegular,
@@ -40,7 +40,7 @@ export const createStyle = (theme: ExtendedTheme) => {
     },
     textHeader: {
       ...CS.hnBold,
-      fontSize: 20,
+      // fontSize: 16,
     },
     gap: {
       gap: 8,

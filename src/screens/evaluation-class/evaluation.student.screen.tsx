@@ -29,21 +29,20 @@ import SelectBox from "./components/SelectBox";
 import SelectDateTime from "@screens/course/course-create/components/dataPicker";
 import eventEmitter from "@services/event-emitter";
 import { translations } from "@localization";
+import { palette } from "@theme/themes";
 const EvaluationStudentScreen = () => {
   const route = useRoute();
   const studentId = route.params?.["studentId"];
   const classId = route.params?.["classId"];
   const displayName = route.params?.["displayName"];
   const data = route.params?.["data"];
-  const isEdit =
-    !!data.onTime ||
-    !!data.date ||
-    data.goodAttitude ||
-    !!data.lessonParticipation ||
-    data.takesNotes ||
-    data.doesHomework ||
-    !!data.improvementPoints;
-  const { control, handleSubmit, setValue } = useForm({
+  const isEdit = !!data.date;
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       lessonParticipation: "",
       improvementPoints: "",
@@ -62,14 +61,17 @@ const EvaluationStudentScreen = () => {
     value: data.doesHomework,
   });
   const [date, setDate] = React.useState(data.date || new Date().toISOString());
-
+  const canSubmit =
+    !!onTime &&
+    attitude.value !== undefined &&
+    takesNotes.value !== undefined &&
+    doesHomework.value !== undefined;
   const theme = useTheme();
   const styles = React.useMemo(() => createStyle(theme), []);
   React.useEffect(() => {
     setValue("lessonParticipation", data?.lessonParticipation);
     setValue("improvementPoints", data?.improvementPoints);
   }, []);
-  console.log("asdddgsdd", data);
   const onSubmit = React.useCallback(
     (dataHook: { lessonParticipation: string; improvementPoints: string }) => {
       const dataParams = {
@@ -221,14 +223,14 @@ const EvaluationStudentScreen = () => {
                   // placeholder: translations.course.longDescription,
                 }}
                 control={control}
-                // rules={{
-                //   required: {
-                //     value: true,
-                //     message: translations.required,
-                //   },
-                // }}
+                rules={{
+                  required: {
+                    value: true,
+                    message: translations.required,
+                  },
+                }}
                 multiline
-                // errorTxt={errors.long_description?.message}
+                errorTxt={errors.lessonParticipation?.message}
                 maxLength={10000}
                 countLength
                 // showPlaceholder
@@ -293,13 +295,23 @@ const EvaluationStudentScreen = () => {
               />
             </View>
           </ScrollView>
-          <TouchableOpacity
-            onPress={handleSubmit(onSubmit)}
-            style={styles.viewBtn}
-          >
-            <IconSvg name="icEvaluation" size={30} color="white" />
-            <Text style={styles.textBtn}>{translations.evaluation.send}</Text>
-          </TouchableOpacity>
+          {canSubmit ? (
+            <TouchableOpacity
+              onPress={handleSubmit(onSubmit)}
+              style={styles.viewBtn}
+            >
+              <IconSvg name="icEvaluation" size={30} color="white" />
+              <Text style={styles.textBtn}>{translations.evaluation.send}</Text>
+            </TouchableOpacity>
+          ) : (
+            <View
+              // onPress={handleSubmit(onSubmit)}
+              style={[styles.viewBtn, { backgroundColor: palette.btnInactive }]}
+            >
+              <IconSvg name="icEvaluation" size={30} color="white" />
+              <Text style={styles.textBtn}>{translations.evaluation.send}</Text>
+            </View>
+          )}
         </View>
       </TouchableWithoutFeedback>
     </SafeAreaView>

@@ -13,11 +13,11 @@ export const priceIds = [
   { id: "com.ikes.tier11", label: "999,000", value: 999000 },
   { id: "com.ikes.tier12", label: "1,999,000", value: 1999000 },
   { id: "com.ikes.tier13", label: "2,499,000", value: 2499000 },
-  // { id: "com.course.tier14", label: "3,999,000", value: 3999000 },
-  // { id: "com.course.tier15", label: "4,999,000", value: 4999000 },
-  // { id: "com.course.tier16", label: "9,999,000", value: 9999000 },
-  // { id: "com.course.tier17", label: "18,999,000", value: 18999000 },
-  // { id: "com.course.tier18", label: "26,999,000", value: 26999000 },
+  // { id: "com.ikes.tier14", label: "3,999,000", value: 3999000 },
+  // { id: "com.ikes.tier15", label: "4,999,000", value: 4999000 },
+  // { id: "com.ikes.tier16", label: "9,999,000", value: 9999000 },
+  // { id: "com.ikes.tier17", label: "18,999,000", value: 18999000 },
+  // { id: "com.ikes.tier18", label: "26,999,000", value: 26999000 },
 ];
 
 export const durationCall11List = [
@@ -37,14 +37,14 @@ export const priceIdsLiveStream = [
 
 export const subscriptionIds = Platform.select({
   ios: () => [
-    // { id: "com.coach.podcasttest", label: "39,000", value: 39000 },
+    // { id: "com.ikes.podcasttest", label: "39,000", value: 39000 },
     { id: "com.ikes.podcasttest2", label: "39,000", value: 39000 },
-    // { id: "com.coach.podcasttest3", label: "59,000", value: 59000 },
+    // { id: "com.ikes.podcasttest3", label: "59,000", value: 59000 },
   ],
   android: () => [
-    // { id: "com.coach.podcasttest", label: "39,000", value: 39000 },
+    // { id: "com.ikes.podcasttest", label: "39,000", value: 39000 },
     { id: "com.ikes.podcasttest3", label: "39,000", value: 39000 },
-    // { id: "com.coach.podcasttest3", label: "59,000", value: 59000 },
+    // { id: "com.ikes.podcasttest3", label: "59,000", value: 59000 },
   ],
 });
 export const priceIdSubscription = {

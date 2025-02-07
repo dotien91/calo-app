@@ -1,29 +1,44 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, ViewStyle } from "react-native";
 
 import CS from "@theme/styles";
 import { palette } from "@theme/themes";
 import TextBase from "@shared-components/TextBase";
 import PressableBtn from "@shared-components/button/PressableBtn";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 interface CustomRadioProps {
   label?: string;
   isSelected: boolean;
   callback: () => void;
   disabled?: boolean;
+  customStyle?: ViewStyle;
+  labelStyle?: ViewStyle;
+  isRadio?: boolean;
 }
 
 // eslint-disable-next-line react/display-name
 const CustomRadio = ({
   isSelected,
   label,
+  content,
   callback,
   disabled,
+  customStyle,
+  labelStyle,
+  isRadio,
 }: CustomRadioProps) => {
   return (
-    <PressableBtn disable={disabled} style={CS.flexStart} onPress={callback}>
+    <PressableBtn
+      style={[CS.flexStart, customStyle ? customStyle : {}]}
+      disable={disabled}
+      onPress={callback}
+    >
       {!!label && (
-        <TextBase style={{ marginRight: 4 }} fontWeight="600">
+        <TextBase
+          style={[{ marginRight: 4 }, labelStyle && labelStyle]}
+          fontWeight="600"
+        >
           {label}
         </TextBase>
       )}
@@ -31,17 +46,34 @@ const CustomRadio = ({
         style={[
           styles.circle,
           disabled && { borderColor: palette.btnInactive },
+          !isRadio && { borderRadius: 2 },
         ]}
       >
         {isSelected && (
-          <View
-            style={[
-              styles.dot,
-              disabled && { backgroundColor: palette.btnInactive },
-            ]}
-          ></View>
+          <>
+            {isRadio ? (
+              <View
+                style={[
+                  styles.dot,
+                  disabled && { backgroundColor: palette.btnInactive },
+                ]}
+              ></View>
+            ) : (
+              <Icon
+                name="check"
+                type={IconType.Feather}
+                size={20}
+                color={palette.primary}
+              />
+            )}
+          </>
         )}
       </View>
+      {!!content && (
+        <TextBase style={{ marginRight: 4, flex: 1 }} fontWeight="600">
+          {content}
+        </TextBase>
+      )}
     </PressableBtn>
   );
 };
@@ -57,6 +89,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: palette.primary,
     ...CS.flexCenter,
+    marginRight: 12,
   },
   dot: {
     width: 12,

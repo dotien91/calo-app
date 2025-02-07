@@ -366,7 +366,14 @@ export async function getListMemberCourse(params: {
     return response;
   });
 }
-
+export async function getListMemberClass(id: string) {
+  return request({
+    method: METHOD.GET,
+    urlPath: `course/class/${id}`,
+  }).then((response) => {
+    return response;
+  });
+}
 export async function getMyCourse(data: {
   created_user_id: string;
   auth_id: string;

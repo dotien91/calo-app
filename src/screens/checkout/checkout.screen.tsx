@@ -512,6 +512,7 @@ const CheckoutScreen = () => {
       };
       // console.log("call11", newData);
       createOrderCallOneOne(newData).then((res) => {
+        console.log("resresres", res)
         closeSuperModal();
         if (!res.isError) {
           const url = res.data?.redirect_url;

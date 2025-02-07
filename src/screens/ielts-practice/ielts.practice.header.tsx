@@ -49,7 +49,6 @@ const IeltsPracticeHeader = ({
       NavigationService.goBack();
     }
   };
-
   return (
     <View style={styles.container}>
       <View style={CommonStyle.flexRear}>

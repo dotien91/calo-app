@@ -121,6 +121,7 @@ import EvaluationStudentScreen from "@screens/evaluation-class/evaluation.studen
 import ListStudents from "@screens/evaluation-class/list.students";
 import IeltsPracticeSpeakingList from "@screens/ielts-practice/ielts.practice.speaking.list";
 import IelstPracticeSpeakingCreate from "@screens/ielts-practice/ielst.practice.speaking.create";
+import IeltsReadingPacticeScreen from "@screens/ielts-practice/ielts.reading.practice.test.screen";
 // import CreateSubscriptionScreen from "@screens/profile.screen/create-subscription.tsx/create.subscription.screen";
 
 export const DiscoveryStackData = [
@@ -158,6 +159,10 @@ export const PracticeTestData = [
   {
     name: SCREENS.IELTS_PRACTICE,
     screen: IeltsPacticeScreen,
+  },
+  {
+    name: SCREENS.IELTS_READING_PRACTICE,
+    screen: IeltsReadingPacticeScreen,
   },
 ];
 

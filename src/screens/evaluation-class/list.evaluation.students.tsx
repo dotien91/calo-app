@@ -64,14 +64,8 @@ const ListEvaluationStudents = () => {
         />
         <View style={styles.viewInfor}>
           <Text style={styles.textName}>{item.studentId.display_name}</Text>
-          {/* <Text numberOfLines={2} style={styles.textReview}>
-            {item.onTime}
-          </Text> */}
           <Text numberOfLines={2} style={styles.textReview}>
-            {item.lessonParticipation}
-          </Text>
-          <Text numberOfLines={2} style={styles.textReview}>
-            {item.improvementPoints}
+            {item.onTime} .{item.lessonParticipation}. {item.improvementPoints}
           </Text>
           <Text numberOfLines={2} style={styles.textReview}>
             {formatVNDate(item.date)}

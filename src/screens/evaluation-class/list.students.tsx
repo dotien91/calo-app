@@ -9,7 +9,7 @@ import { TypedEvaluation, TypedUser } from "models";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { SCREENS } from "constants";
 import { navigate } from "@helpers/navigation.helper";
-import { getListMemberCourse } from "@services/api/course.api";
+import { getListMemberClass } from "@services/api/course.api";
 import LoadingList from "@shared-components/loading.list.component";
 import EmptyResultView from "@shared-components/empty.data.component";
 import { translations } from "@localization";
@@ -18,8 +18,6 @@ const ListStudents = () => {
   const theme = useTheme();
   const route = useRoute();
   const classId = route.params?.["classId"];
-  const auth_id = route.params?.["auth_id"];
-  const course_id = route.params?.["course_id"];
   const [isLoading, setIsLoading] = React.useState(false);
   const [listData, setListData] = React.useState([]);
   const styles = React.useMemo(() => createStyle(theme), []);
@@ -28,18 +26,16 @@ const ListStudents = () => {
   }, []);
   const _getListMemberCourse = () => {
     setIsLoading(true);
-    getListMemberCourse({
-      auth_id: auth_id,
-      course_id: course_id,
-    }).then((res) => {
+    getListMemberClass(classId).then((res) => {
       setIsLoading(false);
       if (!res.isError) {
-        setListData(res.data.map((item) => item.user_id));
+        setListData(res.data.members);
       }
     });
   };
   const renderItem = (item: TypedUser, index: number) => {
     if (isLoading) return <LoadingList />;
+    if (index == 0) return null;
     return (
       <TouchableOpacity
         onPress={() =>
@@ -72,7 +68,7 @@ const ListStudents = () => {
         {/* <View style={{}}>
           <Text>Chưa đánh giá</Text>
         </View> */}
-        <Icon name="chevron-right" type={IconType.Feather} size={30} />
+        <Icon name="chevron-right" type={IconType.Feather} size={26} />
       </TouchableOpacity>
     );
   };
@@ -81,7 +77,7 @@ const ListStudents = () => {
       <Header
         text={translations.evaluation.listStudents}
         iconNameRight="history"
-        iconType={IconType.Fontisto}
+        iconType={IconType.MaterialCommunityIcons}
         onPressRight={() =>
           navigate(SCREENS.LIST_EVALUATION, {
             classId: classId,

@@ -30,6 +30,7 @@ import { SCREENS } from "constants";
 import CS from "@theme/styles";
 import { genQr } from "@services/api/bank.api";
 import { formatPrice } from "@helpers/string.helper";
+import { getBankInfo, getListBank } from "@services/api/affiliate.api";
 
 const SmartBanking = () => {
   // const [fileImage, setfileImage] = useState("");
@@ -42,11 +43,21 @@ const SmartBanking = () => {
   const price = route.params?.["price"] as number;
   const countCheckPaymentSuccess = React.useRef(null);
   const intervalCheckPaymentSuccess = React.useRef(null);
+  const [bankInfo, setBankInfo] = useState(null)
   const [qrcode, setqrCode] = useState();
 
   const callbackPaymentSuccess = () => {
     NavigationService.navigate(SCREENS.PAYMENT_SUCCESS);
   };
+
+  useEffect(() => {
+    getBankInfo().then(res => {
+      if (!res.isError) {
+        setBankInfo(res?.data?.config?.data)
+        getQr(res?.data?.config?.data)
+      }
+    })
+  }, [])
 
   React.useEffect(() => {
     return () => {
@@ -128,15 +139,13 @@ const SmartBanking = () => {
     });
   };
 
-  useEffect(() => {
-    getData();
-  }, []);
 
-  const getData = () => {
+  const getQr = (bankInfo) => {
+    console.log("bankInfobankInfo", bankInfo)
     const data = {
-      accountNo: 818187777,
-      accountName: "CÔNG TY CỔ PHẦN IKIGROUP",
-      acqId: 970422,
+      accountNo: bankInfo?.card_id,
+      accountName: bankInfo?.card_name,
+      acqId: bankInfo?.bank_code,
       amount: price,
       addInfo: `Ikes ${short_id}`,
       format: "text",
@@ -198,19 +207,19 @@ const SmartBanking = () => {
             }}
             style={CS.row}
           >
-            <Text style={styles.styleTextNumberBank}>818187777</Text>
+            <Text style={styles.styleTextNumberBank}>{bankInfo?.bank_code || "---"}</Text>
             <Image
               style={{ height: 15.3, width: 13.79 }}
               source={require("assets/images/CopyIcon.png")}
             ></Image>
           </TouchableOpacity>
         </View>
-        <Text style={styles.styleTextName}>CÔNG TY CỔ PHẦN IKIGROUP</Text>
+        <Text style={styles.styleTextName}>{bankInfo?.card_name || "---"}</Text>
         <Text numberOfLines={2} style={styles.styleTextNameBank}>
-          NGÂN HÀNG MBBANK
+        {bankInfo?.bank_name || "---"}
         </Text>
         <Text numberOfLines={2} style={styles.styleTextNameBank}>
-          Chi nhánh: THĂNG LONG
+        {bankInfo?.bank_branch || "---"}
         </Text>
         <Text numberOfLines={2} style={styles.styleTextNameBank}>
           Số tiền : {formatPrice(price)}

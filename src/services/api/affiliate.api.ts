@@ -97,3 +97,13 @@ export async function getTypeCallGroup(params?: any) {
     return response;
   });
 }
+
+export async function getBankInfo(params?: any) {
+  return request({
+    method: METHOD.GET,
+    urlPath: "config/list/bank",
+    params,
+  }).then((response) => {
+    return response;
+  });
+}
