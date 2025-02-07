@@ -84,5 +84,9 @@ export default (theme: ExtendedTheme) => {
       backgroundColor: colors.blackOverlay,
       borderRadius: 4,
     },
+    link: {
+      color: "blue",
+      textDecorationLine: "underline",
+    },
   });
 };

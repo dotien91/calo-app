@@ -29,7 +29,9 @@ import { goBack } from "@helpers/navigation.helper";
 
 const CreateAudio = () => {
   const route = useRoute();
-  const type = route?.params?.type || "full";
+  // const type = route?.params?.type || "full";
+  const txtHeader =
+    route?.params?.header || translations.podcast.uploadePodcast;
 
   const isChild = route?.params?.isChild || false;
   const parent_id = route?.params?.parent_id || null;
@@ -48,7 +50,7 @@ const CreateAudio = () => {
 
   const [playlist, setPlaylist] = useState(parent_id || "");
   const [listPlaylist, setListPlaylist] = useState([]);
-  const [typePodcast, setTypePodcast] = useState<"public" | "member">("public");
+  const [typePodcast] = useState<"public" | "member">("public");
   const { file, pickAudio, uploading } = useUploadAudio();
   const { renderSelectImageAudio, idImage, updatingImg } = SelectImageHook({
     width: 900,
@@ -96,12 +98,12 @@ const CreateAudio = () => {
       </View>
     );
   };
-  const setTypeFull = () => {
-    setTypePodcast("public");
-  };
-  const setTypeTrailer = () => {
-    setTypePodcast("member");
-  };
+  // const setTypeFull = () => {
+  //   setTypePodcast("public");
+  // };
+  // const setTypeTrailer = () => {
+  //   setTypePodcast("member");
+  // };
 
   const onSubmit = (dataHook) => {
     if (!idImage) {
@@ -162,7 +164,7 @@ const CreateAudio = () => {
 
   return (
     <SafeAreaView style={CS.safeAreaView}>
-      <Header text={translations.podcast.uploadePodcast} />
+      <Header text={txtHeader} />
       <ScrollView style={CS.flex1}>
         <View style={styles.containerImage}>
           <View style={styles.viewImage}>{renderSelectImageAudio()}</View>
@@ -222,9 +224,9 @@ const CreateAudio = () => {
           countLength
           showPlaceholder
         />
-        {type === "full" && (
+        {isChild && !parent_id && renderPlaylist()}
+        {/* {type === "full" && (
           <View>
-            {isChild && !parent_id && renderPlaylist()}
             <Text style={styles.txtTitle}>
               {translations.audio.typeOfPodcast}
             </Text>
@@ -275,7 +277,7 @@ const CreateAudio = () => {
               </TouchableOpacity>
             </View>
           </View>
-        )}
+        )} */}
         <Text style={styles.txtTitle}>{translations.audio.uploadAudio}</Text>
         <View style={{ flexDirection: "row", paddingHorizontal: 20 }}>
           <TouchableOpacity
@@ -315,7 +317,7 @@ const CreateAudio = () => {
             backgroundColor:
               uploading || updatingImg ? palette.placeholder : palette.primary,
           }}
-          text={translations.podcast.uploadePodcast}
+          text={txtHeader}
           disabled={uploading || updatingImg}
           onPress={handleSubmit(onSubmit)}
         />
@@ -353,11 +355,11 @@ const styles = StyleSheet.create({
   txtBtn: {
     ...CS.hnSemiBold,
   },
-  viewStyle: {
-    marginHorizontal: 20,
-    flexDirection: "row",
-    gap: 16,
-  },
+  // viewStyle: {
+  //   marginHorizontal: 20,
+  //   flexDirection: "row",
+  //   gap: 16,
+  // },
   viewBtn: {
     marginTop: 8,
     height: 40,

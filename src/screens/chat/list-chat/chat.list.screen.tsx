@@ -204,7 +204,7 @@ const ListChatScreen: React.FC<ListScreenProps> = () => {
         >
           {lastNoti && <ChatNotification item={lastNoti} />}
           {isLoading && <LoadingList numberItem={3} />}
-          {noData && (
+          {noData && listData.length == 0 && (
             <EmptyResultView
               title={translations.noNewMessageTittle}
               desc={translations.noNewMessageDesc}

@@ -1,4 +1,4 @@
-package com.app.ielts.ikes;
+package com.ikigroup.chunter;
 
 
 import com.facebook.react.ReactActivity;

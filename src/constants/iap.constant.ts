@@ -2,7 +2,7 @@ import { Platform } from "react-native";
 
 export const priceIds = [
   { id: "com.ikes.tier1", label: "99,000", value: 99000 },
-  { id: "com.ikesonline.tier2", label: "199,000", value: 199000 },
+  { id: "com.ikes.tier2", label: "199,000", value: 199000 },
   { id: "com.ikes.tier4", label: "249,000", value: 249000 },
   { id: "com.ikes.tier5", label: "299,000", value: 299000 },
   { id: "com.ikes.tier6", label: "399,000", value: 399000 },

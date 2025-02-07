@@ -12,6 +12,7 @@ import CS from "@theme/styles";
 import { TypedCourse } from "shared/models";
 import SearchInput from "@shared-components/search-input.tsx/search.input";
 import CustomCheckbox from "@shared-components/form/CustomCheckbox";
+import EmptyResultView from "@shared-components/empty.data.component";
 
 interface ListCourseSelectProps {
   setItemSelected: (list: string[]) => void;
@@ -23,6 +24,8 @@ interface ListCourseSelectProps {
   renderFooterComponent: any;
   refreshing: any;
   setSearch: (text: string) => void;
+  isLoading: boolean;
+  noData: boolean;
 }
 
 const ListCourseSelect = ({
@@ -35,6 +38,8 @@ const ListCourseSelect = ({
   renderFooterComponent,
   refreshing,
   setSearch,
+  isLoading,
+  noData,
 }: ListCourseSelectProps) => {
   // goij API lay danh sach lop
   const theme = useTheme();
@@ -111,7 +116,9 @@ const ListCourseSelect = ({
       <View style={{ backgroundColor: colors.background, paddingVertical: 8 }}>
         <SearchInput setTxtSearch={setSearch} autoFocus />
       </View>
-
+      {!listData?.length && !isLoading && noData && (
+        <EmptyResultView title={translations.emptyList} />
+      )}
       <FlatList
         style={{ backgroundColor: colors.background }}
         scrollToOverflowEnabled

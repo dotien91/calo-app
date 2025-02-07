@@ -25,7 +25,7 @@ const DateTimePickerLocal = ({
   const [date, setDate] = useState<Date>();
   const [open, setOpen] = useState(false);
 
-  console.log("valueeee", date);
+  // console.log("valueeee", date);
   return (
     <>
       <PressableBtn

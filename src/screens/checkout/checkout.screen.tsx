@@ -458,7 +458,7 @@ const CheckoutScreen = () => {
         : isSmartBankingMethod
         ? "smart_banking"
         : "coin",
-      deep_link: "ieltshunter://payment",
+      deep_link: "ikes://payment",
       plan_objects: [
         {
           amount_of_package: "1",
@@ -490,7 +490,7 @@ const CheckoutScreen = () => {
           : isSmartBankingMethod
           ? "smart_banking"
           : "coin",
-        deep_link: "ieltshunter://payment",
+        deep_link: "ikes://payment",
         plan_objects: [
           {
             amount_of_package: "1",

@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "logo-ieltsHunter.png",
+      "filename" : "Icon-App-83.5x83.5@2x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "logo-ieltsHunter 1.png",
+      "filename" : "Icon-App-83.5x83.5@2x 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "logo-ieltsHunter 2.png",
+      "filename" : "Icon-App-83.5x83.5@2x 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

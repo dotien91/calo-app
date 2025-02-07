@@ -71,7 +71,11 @@ const AudioBookScreen = () => {
                   ...styles.btn2,
                   bottom: !hide ? 140 : 70,
                 }}
-                onPress={() => navigate(SCREENS.CREATE_AUDIO)}
+                onPress={() =>
+                  navigate(SCREENS.CREATE_AUDIO, {
+                    header: translations.podcast.createPlaylist,
+                  })
+                }
               >
                 <Icon
                   name={"musical-note-outline"}
@@ -95,7 +99,10 @@ const AudioBookScreen = () => {
                   bottom: !hide ? 190 : 120,
                 }}
                 onPress={() =>
-                  navigate(SCREENS.CREATE_AUDIO, { isChild: true })
+                  navigate(SCREENS.CREATE_AUDIO, {
+                    isChild: true,
+                    header: translations.podcast.createPodcast,
+                  })
                 }
               >
                 <Icon

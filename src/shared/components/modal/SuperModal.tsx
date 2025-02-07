@@ -93,12 +93,12 @@ const SuperModal: React.FC<SuperModalProps> = () => {
     };
   }, []);
 
-  useEffect(() => {
-    console.log({
-      styleModalType,
-      contentModalType,
-    });
-  }, [styleModalType, contentModalType]);
+  // useEffect(() => {
+  //   console.log({
+  //     styleModalType,
+  //     contentModalType,
+  //   });
+  // }, [styleModalType, contentModalType]);
 
   const showModal = ({
     contentModalType,

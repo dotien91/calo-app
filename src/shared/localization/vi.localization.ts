@@ -126,6 +126,7 @@ export default {
   placeholderContent: "Bạn đang nghĩ gì vậy?",
   confirm: "Xác nhận",
   somethingWentWrong: "Hệ thống xảy ra lỗi. Vui lòng thử lại sau.",
+  somethingWentWrongInternet: "Không có kết nối mạng, vui lòng thử lại sau",
   notFound: "Danh sách trống",
   offlineNetwork: "Mất kết nối mạng",
   onlineNetwork: "Mạng dữ liệu đã được kết nối lại",
