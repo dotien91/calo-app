@@ -18,7 +18,7 @@ const createDynamicLink = async (str: string) => {
           appStoreId: "6740073425",
         },
         android: {
-          packageName: "com.ikigroup.chunter",
+          packageName: "com.app.ielts.ikes2",
           minimumVersion: "1",
         },
       },

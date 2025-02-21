@@ -9,7 +9,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>IKES</string>
+	<string>IELTS IKES</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -86,15 +86,15 @@
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Play using while you are learning</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Ikes need to take a look at your camera, to put the photo up as a social asset for other users to see</string>
+	<string>IELTS IKES need to take a look at your camera, to put the photo up as a social asset for other users to see</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Ikes needs access to the microphone to make calls, record, and send audio files to other users.</string>
+	<string>IELTS IKES needs access to the microphone to make calls, record, and send audio files to other users.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Ikes need to take a look at your photo album, to put the photo up as a social asset for other users to see</string>
+	<string>IELTS IKES need to take a look at your photo album, to put the photo up as a social asset for other users to see</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Ikes need to take a look at your photo album, to put the photo up as a social asset for other users to see</string>
+	<string>IELTS IKES need to take a look at your photo album, to put the photo up as a social asset for other users to see</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
