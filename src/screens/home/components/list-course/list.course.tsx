@@ -11,7 +11,8 @@ import useStore from "@services/zustand/store";
 import { getCourseSuggest } from "@services/api/course.api";
 import CourseCategoryTitle from "@screens/course-tab/course-list/course.category.title";
 import LoadingItem from "@shared-components/loading.item";
-import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
+// import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
+// const { width } = Dimensions.get("window");
 
 const CourseView = () => {
   const userData = useStore((state) => state.userData);
@@ -30,14 +31,14 @@ const CourseView = () => {
     return listData.slice(0, 10);
   }, [listData]);
 
-  const snap = React.useMemo(() => {
-    const preCount = 1;
-    const widthItem = SCREEN_WIDTH / (preCount + 1 / 7);
-    const startScroll = (SCREEN_WIDTH - 6) * (5 / 6);
-    return data.map((_, i) => {
-      return i * widthItem + startScroll;
-    });
-  }, [listData]);
+  // const snap = React.useMemo(() => {
+  //   const preCount = 1;
+  //   const widthItem = width / (preCount + 0.5);
+  //   const startScroll = (widthItem * 3) / 4;
+  //   return data.map((_, i) => {
+  //     return i * widthItem + startScroll;
+  //   });
+  // }, [listData]);
   // console.log(snap)
   const onSeeAll = () => {
     NavigationService.navigate(SCREENS.COURSE_RECOMMEND);
@@ -77,11 +78,13 @@ const CourseView = () => {
           paddingLeft: 16,
           paddingBottom: 16,
         }}
-        snapToOffsets={snap}
+        // snapToOffsets={snap}
         initialNumToRender={2}
         onEndReachedThreshold={0}
+        decelerationRate={0.9}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item?._id + ""}
+        snapToAlignment={"center"}
       />
     </View>
   );
