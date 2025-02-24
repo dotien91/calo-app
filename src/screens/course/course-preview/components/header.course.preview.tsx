@@ -109,7 +109,7 @@ const HeaderCourse = ({ data }: HeaderCourseProps) => {
             marginHorizontal: -16,
           }}
           source={{
-            uri: data?.avatar?.media_thumbnail,
+            uri: data?.avatar?.media_thumbnail || data?.avatar?.media_url,
           }}
         />
         {isVideo && <PlayVideo onPress={_playVideo} />}

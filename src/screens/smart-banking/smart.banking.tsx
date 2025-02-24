@@ -43,21 +43,22 @@ const SmartBanking = () => {
   const price = route.params?.["price"] as number;
   const countCheckPaymentSuccess = React.useRef(null);
   const intervalCheckPaymentSuccess = React.useRef(null);
-  const [bankInfo, setBankInfo] = useState(null)
+  const [bankInfo, setBankInfo] = useState(null);
   const [qrcode, setqrCode] = useState();
+  const [updated, setUpdated] = useState(false);
 
   const callbackPaymentSuccess = () => {
     NavigationService.navigate(SCREENS.PAYMENT_SUCCESS);
   };
 
   useEffect(() => {
-    getBankInfo().then(res => {
+    getBankInfo().then((res) => {
       if (!res.isError) {
-        setBankInfo(res?.data?.config?.data)
-        getQr(res?.data?.config?.data)
+        setBankInfo(res?.data?.config?.data);
+        getQr(res?.data?.config?.data);
       }
-    })
-  }, [])
+    });
+  }, []);
 
   React.useEffect(() => {
     return () => {
@@ -125,10 +126,11 @@ const SmartBanking = () => {
     updateUserOrder(data).then((res) => {
       closeSuperModal();
       if (!res.isError) {
-        showToast({
-          type: "success",
-          message: translations.payment.sendImageSuccess,
-        });
+        // showToast({
+        //   type: "success",
+        //   message: translations.payment.sendImageSuccess,
+        // });
+        setUpdated(true);
         checkPaymentSuccess();
       } else {
         showToast({
@@ -139,9 +141,8 @@ const SmartBanking = () => {
     });
   };
 
-
   const getQr = (bankInfo) => {
-    console.log("bankInfobankInfo", bankInfo)
+    // console.log("bankInfobankInfo", bankInfo);
     const data = {
       accountNo: bankInfo?.card_id,
       accountName: bankInfo?.card_name,
@@ -196,99 +197,124 @@ const SmartBanking = () => {
     <SafeAreaView style={{ ...CS.safeAreaView }}>
       <Header text="Smart Banking" />
       <View style={{ marginHorizontal: 16, alignItems: "center" }}>
-        <Text numberOfLines={2} style={styles.styleTextToComplete}>
-          {translations.payment.tocomplete}
-        </Text>
-        <View style={styles.styleViewCopyNumberBank}>
-          <TouchableOpacity
-            onPress={() => {
-              copyToClipboard("818187777");
-              showToast({ type: "info", message: "Coppied" });
-            }}
-            style={CS.row}
-          >
-            <Text style={styles.styleTextNumberBank}>{bankInfo?.bank_code || "---"}</Text>
-            <Image
-              style={{ height: 15.3, width: 13.79 }}
-              source={require("assets/images/CopyIcon.png")}
-            ></Image>
-          </TouchableOpacity>
-        </View>
-        <Text style={styles.styleTextName}>{bankInfo?.card_name || "---"}</Text>
-        <Text numberOfLines={2} style={styles.styleTextNameBank}>
-        {bankInfo?.bank_name || "---"}
-        </Text>
-        <Text numberOfLines={2} style={styles.styleTextNameBank}>
-        {bankInfo?.bank_branch || "---"}
-        </Text>
-        <Text numberOfLines={2} style={styles.styleTextNameBank}>
-          Số tiền : {formatPrice(price)}
-        </Text>
-        <TouchableOpacity
-          style={{ flexDirection: "row", justifyContent: "center" }}
-          onPress={() => {
-            copyToClipboard(`Ikes ${short_id}`);
-            showToast({ type: "info", message: "Coppied" });
-          }}
-        >
-          <Text numberOfLines={2} style={styles.styleTextNameBank}>
-            {translations.payment.content}: Ikes {short_id}
-          </Text>
-          <Image
-            style={{ height: 15.3, width: 13.79, marginLeft: 5 }}
-            source={require("assets/images/CopyIcon.png")}
-          ></Image>
-        </TouchableOpacity>
-        <View style={{ marginBottom: 16 }}>
-          <QRCode value={qrcode} getRef={(c) => (refQr = c)} />
-          <Text style={styles.styleTextSaveQRcode} onPress={shareQR}>
-            {translations.payment.saveQRCode}
-          </Text>
-        </View>
-        <Text style={styles.styleTextSendProvement}>
-          {translations.payment.sendPro}
-        </Text>
-        {listFile.length ? (
-          <TouchableOpacity
-            onPress={onSelectPicture}
-            style={styles.styleViewImageSelected}
-          >
-            <Image
-              style={{ height: 20, width: 20, marginRight: 8 }}
-              source={require("assets/images/iconMedia.png")}
-            />
-            <Text numberOfLines={1}>{listFile[0]?.uri}</Text>
-          </TouchableOpacity>
-        ) : null}
-        {listFile.length ? (
-          <TouchableOpacity onPress={actionSend} style={styles.styleBtnSend}>
-            <Text style={styles.styleTextSend}>
-              {translations.payment.send}
+        {updated ? (
+          <>
+            <Text numberOfLines={2} style={{ ...styles.styleTextNameBank }}>
+              {translations.payment.sendImageSuccess}
             </Text>
-          </TouchableOpacity>
+            <Text numberOfLines={4} style={styles.styleTextToComplete}>
+              {
+                "Thông tin chuyển khoản đã được gửi thành công, khoá học sẽ được mở khoá trong thời gian sớm nhất!"
+              }
+            </Text>
+            <Text numberOfLines={2} style={styles.styleTextToComplete}>
+              {"Vui lòng giữ lại thông tin chuyển khoản khoá học!"}
+            </Text>
+          </>
         ) : (
-          <TouchableOpacity
-            disabled={isUpLoadingFile}
-            onPress={onSelectPicture}
-            style={[
-              styles.styleBtnUploadFile,
-              isUpLoadingFile && { opacity: 0.5 },
-            ]}
-          >
-            {isUpLoadingFile ? (
-              <ActivityIndicator size={"small"} />
-            ) : (
-              <>
-                <Image
-                  style={{ height: 12, width: 12, marginRight: 16 }}
-                  source={require("assets/images/plus.png")}
-                />
-                <Text style={styles.styleTextHadPaid}>
-                  {translations.payment.uploadfile}
+          <>
+            <Text numberOfLines={2} style={styles.styleTextToComplete}>
+              {translations.payment.tocomplete}
+            </Text>
+            <View style={styles.styleViewCopyNumberBank}>
+              <TouchableOpacity
+                onPress={() => {
+                  copyToClipboard(bankInfo?.bank_code || "---");
+                  showToast({ type: "info", message: "Coppied" });
+                }}
+                style={CS.row}
+              >
+                <Text style={styles.styleTextNumberBank}>
+                  {bankInfo?.bank_code || "---"}
                 </Text>
-              </>
+                <Image
+                  style={{ height: 15.3, width: 13.79 }}
+                  source={require("assets/images/CopyIcon.png")}
+                ></Image>
+              </TouchableOpacity>
+            </View>
+            <Text style={styles.styleTextName}>
+              {bankInfo?.card_name || "---"}
+            </Text>
+            <Text numberOfLines={2} style={styles.styleTextNameBank}>
+              {bankInfo?.bank_name || "---"}
+            </Text>
+            <Text numberOfLines={2} style={styles.styleTextNameBank}>
+              {bankInfo?.bank_branch || "---"}
+            </Text>
+            <Text numberOfLines={2} style={styles.styleTextNameBank}>
+              Số tiền : {formatPrice(price)}
+            </Text>
+            <TouchableOpacity
+              style={{ flexDirection: "row", justifyContent: "center" }}
+              onPress={() => {
+                copyToClipboard(`Ikes ${short_id}`);
+                showToast({ type: "info", message: "Coppied" });
+              }}
+            >
+              <Text numberOfLines={2} style={styles.styleTextNameBank}>
+                {translations.payment.content}: Ikes {short_id}
+              </Text>
+              <Image
+                style={{ height: 15.3, width: 13.79, marginLeft: 5 }}
+                source={require("assets/images/CopyIcon.png")}
+              ></Image>
+            </TouchableOpacity>
+            <View style={{ marginBottom: 16 }}>
+              <QRCode value={qrcode} getRef={(c) => (refQr = c)} />
+              <Text style={styles.styleTextSaveQRcode} onPress={shareQR}>
+                {translations.payment.saveQRCode}
+              </Text>
+            </View>
+            <Text style={styles.styleTextSendProvement}>
+              {translations.payment.sendPro}
+            </Text>
+            {listFile.length ? (
+              <TouchableOpacity
+                onPress={onSelectPicture}
+                style={styles.styleViewImageSelected}
+              >
+                <Image
+                  style={{ height: 20, width: 20, marginRight: 8 }}
+                  source={require("assets/images/iconMedia.png")}
+                />
+                <Text numberOfLines={1}>{listFile[0]?.uri}</Text>
+              </TouchableOpacity>
+            ) : null}
+            {listFile.length ? (
+              <TouchableOpacity
+                onPress={actionSend}
+                style={styles.styleBtnSend}
+              >
+                <Text style={styles.styleTextSend}>
+                  {translations.payment.send}
+                </Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                disabled={isUpLoadingFile}
+                onPress={onSelectPicture}
+                style={[
+                  styles.styleBtnUploadFile,
+                  isUpLoadingFile && { opacity: 0.5 },
+                ]}
+              >
+                {isUpLoadingFile ? (
+                  <ActivityIndicator size={"small"} />
+                ) : (
+                  <>
+                    <Image
+                      style={{ height: 12, width: 12, marginRight: 16 }}
+                      source={require("assets/images/plus.png")}
+                    />
+                    <Text style={styles.styleTextHadPaid}>
+                      {translations.payment.uploadfile}
+                    </Text>
+                  </>
+                )}
+              </TouchableOpacity>
             )}
-          </TouchableOpacity>
+          </>
         )}
         <View style={{ height: 12 }} />
         <TouchableOpacity onPress={goBackHome} style={styles.styleBtnSend}>

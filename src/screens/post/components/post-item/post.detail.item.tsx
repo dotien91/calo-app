@@ -133,7 +133,7 @@ const ItemPost = ({ data, pressComment, scrollToCmt }: ItemPostProps) => {
             >
               <Image
                 style={styles.image11}
-                source={{ uri: item.media_thumbnail }}
+                source={{ uri: item.media_thumbnail || item?.media_url }}
               />
               {item.media_mime_type.includes("video") && <PlayVideo />}
             </TouchableOpacity>
