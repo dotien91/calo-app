@@ -470,6 +470,7 @@ const CheckoutScreen = () => {
           },
         },
       ],
+      external_app_name: "ikes",
       invitation_code: userData?.ref_invitation_code || undefined,
     };
 

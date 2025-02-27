@@ -22,10 +22,10 @@ export const isProduction =
 // const DEVELOPER_DOMAIN_DEV = __DEV__
 //   ? "http://192.168.1.85:3009"
 //   : "https://dev.api.ikigai.ikigroup.vn";
-// const DEVELOPER_DOMAIN_DEV = __DEV__
-//   ? "http://192.168.1.55:3900"
-//   : "https://dev.api.ikigai.ikigroup.vn";
-const DEVELOPER_DOMAIN_DEV = "https://api.ikes.ikigroup.vn";
+const DEVELOPER_DOMAIN_DEV = __DEV__
+  ? "http://localhost:6200"
+  : "https://api.ikes.ikigroup.vn";
+// const DEVELOPER_DOMAIN_DEV = "https://api.ikes.ikigroup.vn";
 
 const DEVELOPER_DOMAIN_SOCKET_DEV = "https://socket.ikes.ikigroup.vn";
 // const UPLOAD_URL = "https://media.exam24h.com/";

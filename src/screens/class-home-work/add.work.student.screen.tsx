@@ -31,6 +31,8 @@ import ThreadCommentsView from "./thread.comments.view";
 import Input from "@shared-components/form/Input";
 import TextBase from "@shared-components/TextBase";
 import { EnumColors } from "models";
+import PressableBtn from "@shared-components/button/PressableBtn";
+import { openUrl } from "@helpers/file.helper";
 
 export default function AddWorkStudentScreen() {
   const theme = useTheme();
@@ -97,7 +99,8 @@ export default function AddWorkStudentScreen() {
     return (
       <View style={{ marginBottom: 16 }}>
         {listFile.map((item, index) => (
-          <View
+          <PressableBtn
+            onPress={() => openUrl(item.media_url) }
             key={index}
             style={[
               styles.fakeInput,
@@ -124,7 +127,7 @@ export default function AddWorkStudentScreen() {
                 />
               )}
             </View>
-          </View>
+          </PressableBtn>
         ))}
       </View>
     );
