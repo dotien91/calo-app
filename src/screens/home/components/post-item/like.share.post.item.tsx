@@ -75,11 +75,11 @@ const CountComment = ({ data }) => {
   );
 };
 
-const BtnShare = () => {
+const BtnShare = ({ data }) => {
   const userData = useStore((store) => store.userData);
 
   const _sharePost = () => {
-    sharePost(userData?.invitation_code);
+    sharePost(data._id);
     // shareCodeInvite(userData?.invitation_code || "");
   };
   const theme = useTheme();
@@ -105,7 +105,7 @@ const LikeSharePostItem = ({ data, pressComment }: LikeSharePostItemProps) => {
       <View style={styles.containerLikeShare}>
         <LikeBtn data={data} />
         <CommentBtn pressComment={pressComment} />
-        <BtnShare />
+        <BtnShare data={data} />
       </View>
     </>
   );

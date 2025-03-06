@@ -5,7 +5,7 @@ import { translations } from "@localization";
 import Share from "react-native-share";
 import dynamicLinks, { firebase } from "@react-native-firebase/dynamic-links";
 
-const BASEURL = "https://ieltshunter.io";
+const BASEURL = "https://app.ikes.edu.vn";
 
 const createDynamicLink = async (str: string) => {
   try {
@@ -33,11 +33,11 @@ const createDynamicLink = async (str: string) => {
   }
 };
 
-export const sharePost = (post_slug: string) => {
+export const sharePost = (post_id: string) => {
   const shareOptions = {
     title: translations.post.share,
     message: translations.post.sharePost,
-    url: `${BASEURL}/post/detail/${post_slug}`,
+    url: `${BASEURL}/dashboard/community/?postId=${post_id}`,
   };
   Share.open(shareOptions)
     .then((res) => {
