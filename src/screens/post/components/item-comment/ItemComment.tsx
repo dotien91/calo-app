@@ -25,6 +25,7 @@ import PressableBtn from "@shared-components/button/PressableBtn";
 import AvatarPost from "@screens/home/components/post-item/avatar.post";
 import { navigate } from "react-navigation-helpers";
 import { SCREENS } from "constants";
+import FastImage from "react-native-fast-image";
 
 const SIZE_AVATAR = 32;
 const PADDING_LEFT = 12;
@@ -125,7 +126,15 @@ const ItemReply = ({ item, onPressReplyChild, repCmtId }: ItemReplyProps) => {
   const ContentStatus = useMemo(() => {
     return (
       <View style={styles.viewContentComment}>
-        <Text style={styles.txtContentComment}>{item?.content}</Text>
+        <View>
+          {(item?.media_id?.media_url || item?.media_id?.uri) && (
+            <FastImage
+              style={styles.viewImage}
+              source={{ uri: item?.media_id?.media_url || item?.media_id?.uri }}
+            />
+          )}
+          <Text style={styles.txtContentComment}>{item?.content}</Text>
+        </View>
         {item.sending && (
           <ActivityIndicator
             color={colors.text}
@@ -135,7 +144,7 @@ const ItemReply = ({ item, onPressReplyChild, repCmtId }: ItemReplyProps) => {
         )}
       </View>
     );
-  }, [item, item.content]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [item, item.content, item.media_id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const LikeCommentReply = () => {
     const replyItem = item;
@@ -246,7 +255,15 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
   const ContentStatus = useMemo(() => {
     return (
       <View style={styles.viewContentComment}>
-        <Text style={styles.txtContentComment}>{data?.content}</Text>
+        <View>
+          {(data?.media_id?.media_url || data?.media_id?.uri) && (
+            <FastImage
+              style={styles.viewImage}
+              source={{ uri: data?.media_id?.media_url || data?.media_id?.uri }}
+            />
+          )}
+          <Text style={styles.txtContentComment}>{data?.content}</Text>
+        </View>
         {data.sending && (
           <ActivityIndicator
             color={colors.text}
@@ -256,7 +273,7 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
         )}
       </View>
     );
-  }, [data, data.content]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [data, data.content, data.media_id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const pressLikeComment = async () => {
     if (!userData) {

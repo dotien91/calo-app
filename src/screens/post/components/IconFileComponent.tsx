@@ -14,7 +14,7 @@ interface TypeIconFileComponent {
 }
 
 const IconFileComponent = ({ file, sizeIcon = 32 }: TypeIconFileComponent) => {
-  if (file.type.includes(types.audio.slice(0, types.audio.length - 1))) {
+  if (file?.type?.includes(types.audio.slice(0, types.audio.length - 1))) {
     return (
       <View style={styles.container}>
         <IconSvg name="icAudio" size={sizeIcon} />
@@ -22,7 +22,7 @@ const IconFileComponent = ({ file, sizeIcon = 32 }: TypeIconFileComponent) => {
     );
   }
 
-  if (file.type.includes(types.csv.slice(0, types.csv.length - 1))) {
+  if (file?.type?.includes(types.csv.slice(0, types.csv.length - 1))) {
     return (
       <View style={styles.container}>
         <IconSvg name="icCsv" size={sizeIcon} />
@@ -30,8 +30,8 @@ const IconFileComponent = ({ file, sizeIcon = 32 }: TypeIconFileComponent) => {
     );
   }
   if (
-    file.type.includes(types.doc.slice(0, types.doc.length - 1)) ||
-    file.type.includes(types.docx.slice(0, types.docx.length - 1))
+    file?.type?.includes(types.doc.slice(0, types.doc.length - 1)) ||
+    file?.type?.includes(types.docx.slice(0, types.docx.length - 1))
   ) {
     return (
       <View style={styles.container}>
@@ -40,7 +40,7 @@ const IconFileComponent = ({ file, sizeIcon = 32 }: TypeIconFileComponent) => {
     );
   }
 
-  if (file.type.includes(types.pdf.slice(0, types.pdf.length - 1))) {
+  if (file?.type?.includes(types.pdf.slice(0, types.pdf.length - 1))) {
     return (
       <View style={styles.container}>
         <IconSvg name="icPdf" size={sizeIcon} />
@@ -49,7 +49,7 @@ const IconFileComponent = ({ file, sizeIcon = 32 }: TypeIconFileComponent) => {
   }
 
   if (
-    file.type.includes(types.plainText.slice(0, types.plainText.length - 1))
+    file?.type?.includes(types.plainText.slice(0, types.plainText.length - 1))
   ) {
     return (
       <View style={styles.container}>
@@ -59,8 +59,8 @@ const IconFileComponent = ({ file, sizeIcon = 32 }: TypeIconFileComponent) => {
   }
 
   if (
-    file.type.includes(types.ppt.slice(0, types.ppt.length - 1)) ||
-    file.type.includes(types.pptx.slice(0, types.pptx.length - 1))
+    file?.type?.includes(types.ppt.slice(0, types.ppt.length - 1)) ||
+    file?.type?.includes(types.pptx.slice(0, types.pptx.length - 1))
   ) {
     return (
       <View style={styles.container}>
@@ -70,8 +70,8 @@ const IconFileComponent = ({ file, sizeIcon = 32 }: TypeIconFileComponent) => {
   }
 
   if (
-    file.type.includes(types.xls.slice(0, types.xls.length - 1)) ||
-    file.type.includes(types.xlsx.slice(0, types.xlsx.length - 1))
+    file?.type?.includes(types.xls.slice(0, types.xls.length - 1)) ||
+    file?.type?.includes(types.xlsx.slice(0, types.xlsx.length - 1))
   ) {
     return (
       <View style={styles.container}>
@@ -80,7 +80,7 @@ const IconFileComponent = ({ file, sizeIcon = 32 }: TypeIconFileComponent) => {
     );
   }
 
-  if (file.type.includes(types.zip.slice(0, types.zip.length - 1))) {
+  if (file?.type?.includes(types.zip.slice(0, types.zip.length - 1))) {
     return (
       <View style={styles.container}>
         <IconSvg name="icZip" size={sizeIcon} />
@@ -114,7 +114,7 @@ const IconFileComponent = ({ file, sizeIcon = 32 }: TypeIconFileComponent) => {
     );
   }
 
-  if (file.type.includes("image")) {
+  if (file?.type?.includes("image")) {
     return (
       <View style={styles.container}>
         <ImageLoad

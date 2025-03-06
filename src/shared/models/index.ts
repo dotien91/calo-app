@@ -270,6 +270,7 @@ export interface TypedComment {
   local_id?: string;
   sending?: boolean;
   community_id?: string;
+  media_id?: any;
 }
 
 export interface TypedCourse {

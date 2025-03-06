@@ -214,6 +214,23 @@ export function useUploadFile(
       </View>
     );
   }, [listFileLocal, listFile, isUpLoadingFile]); // eslint-disable-line react-hooks/exhaustive-deps
+  const renderFileSingle = React.useCallback(() => {
+    return listFileLocal.length > 0 ? (
+      <View style={{ ...styles.viewImage2, marginLeft: 10, marginTop: 10 }}>
+        {listFileLocal.slice(0, 1).map((item: any, index: number) => {
+          return (
+            <FileViewComponent
+              style={styles.viewFile2}
+              item={item}
+              key={`listFileLocal - ${index}`}
+              onPressClear={clearAll}
+              isDone={!isUpLoadingFile}
+            />
+          );
+        })}
+      </View>
+    ) : null;
+  }, [listFileLocal, listFile, isUpLoadingFile]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onRemove = ({ uri, _id }: { uri: string; _id: string }) => {
     setListFileLocal(listFileLocal.filter((i) => i.uri !== uri));
@@ -221,11 +238,15 @@ export function useUploadFile(
       setListFile(listFile.filter((i) => i._id !== _id));
     }
   };
+  const clearAll = () => {
+    setListFileLocal([]);
+    setListFile([]);
+  };
 
   const onSelectVideo = async () => {
     setIsUpLoadingFile(true);
     selectMedia({
-      config: { mediaType: "video", selectionLimit: 30 },
+      config: { mediaType: "video", selectionLimit: selectionLimit || 30 },
       callback: async (images: any) => {
         if (!images?.[0]) {
           return;
@@ -386,6 +407,7 @@ export function useUploadFile(
     renderFile,
     renderFile2,
     renderFile3,
+    renderFileSingle,
     isUpLoadingFile,
     uploadRecord,
     setListFile,

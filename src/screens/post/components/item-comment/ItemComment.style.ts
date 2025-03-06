@@ -81,5 +81,10 @@ export default (theme: ExtendedTheme) => {
       width: "100%",
       marginTop: 4,
     },
+    viewImage: {
+      width: 150,
+      minHeight: 90,
+      borderRadius: 8,
+    },
   });
 };

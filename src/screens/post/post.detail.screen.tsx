@@ -43,6 +43,7 @@ import { trim } from "@helpers/string.helper";
 import uuid from "react-native-uuid";
 import { TypedComment, TypedPost } from "shared/models";
 import LoadingList from "@shared-components/loading.list.component";
+import { useUploadFile } from "@helpers/hooks/useUploadFile";
 
 interface PostDetailProps {
   route: any;
@@ -191,14 +192,18 @@ const PostDetail = (props: PostDetailProps) => {
         const indexChild = newData[index].child.findIndex(
           (item: TypedComment) => item._id === itemUpdate._id,
         );
-        if (indexChild >= 0)
+        if (indexChild >= 0) {
           newData[index].child[indexChild].content = itemUpdate?.content || "";
+          newData[index].child[indexChild].media_id =
+            itemUpdate?.media_id || null;
+        }
       }
       return [...newData];
     } else {
       const index = newData.findIndex((i) => i._id === itemUpdate._id);
       if (index >= 0) {
         newData[index].content = itemUpdate?.content || "";
+        newData[index].media_id = itemUpdate?.media_id || null;
       }
       return [...newData];
     }
@@ -216,6 +221,8 @@ const PostDetail = (props: PostDetailProps) => {
     const params = {
       community_id: id,
       content: trim(value),
+      // media_id: "67c911e224f551d95bca9407",
+      media_id: listFile?.[0]?._id || null,
       parent_id: replyItem?.parent_id || replyItem?._id || null,
     };
     const _uuid = uuid.v4().toString();
@@ -260,6 +267,8 @@ const PostDetail = (props: PostDetailProps) => {
     }
 
     setValue("");
+    setListFile([]);
+    setListFileLocal([]);
     deleteReplying();
     refInput.current?.blur();
     postComment(params).then((resComment) => {
@@ -357,6 +366,16 @@ const PostDetail = (props: PostDetailProps) => {
     );
   };
 
+  const {
+    onSelectPicture,
+    onSelectVideo,
+    listFile,
+    listFileLocal,
+    setListFile,
+    setListFileLocal,
+    renderFileSingle,
+  } = useUploadFile([], 1);
+
   const _focusRepInput = () => {
     if (!userData) {
       showWarningLogin();
@@ -427,6 +446,30 @@ const PostDetail = (props: PostDetailProps) => {
                 <Text style={{ color: colors.text, fontSize: 14 }}>
                   {translations.cancel}
                 </Text>
+              </TouchableOpacity>
+            </View>
+          )}
+          {renderFileSingle()}
+          {listFileLocal.length == 0 && (
+            <View style={styles.listBtnMedia}>
+              <TouchableOpacity
+                onPress={onSelectPicture}
+                style={styles.btnMedia}
+              >
+                <Icon
+                  size={20}
+                  type={IconType.Feather}
+                  name="image"
+                  color={colors.black}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={onSelectVideo} style={styles.btnMedia}>
+                <Icon
+                  size={20}
+                  type={IconType.Feather}
+                  name="play-circle"
+                  color={colors.black}
+                />
               </TouchableOpacity>
             </View>
           )}

@@ -311,6 +311,14 @@ const createStyles = (theme: ExtendedTheme) => {
     viewFlatList: {
       minHeight: (ScreenHeight * 3) / 5,
     },
+    btnMedia: {
+      marginRight: 12,
+    },
+    listBtnMedia: {
+      flexDirection: "row",
+      justifyContent: "flex-start",
+      marginLeft: 10,
+    },
   });
 };
 export default createStyles;

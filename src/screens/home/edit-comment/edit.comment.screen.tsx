@@ -1,6 +1,13 @@
 /* eslint-disable camelcase */
 import React, { useEffect, useState } from "react";
-import { Keyboard, Text, View, TextInput } from "react-native";
+import {
+  Keyboard,
+  Text,
+  View,
+  TextInput,
+  SafeAreaView,
+  StyleSheet,
+} from "react-native";
 import { useTheme } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 
@@ -11,6 +18,9 @@ import CommonStyle from "@theme/styles";
 import { showToast } from "@helpers/super.modal.helper";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import Header from "@shared-components/header/Header";
+import { useUploadFile } from "@helpers/hooks/useUploadFile";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 interface EditCommentProps {
   route: any;
@@ -18,11 +28,30 @@ interface EditCommentProps {
 
 const EditComment = (props: EditCommentProps) => {
   const data = props.route?.params?.data;
+  const listMedia = data.media_id ? [data.media_id] : [];
   const [txtEdit, setTxtEdit] = useState("");
-  const [edited, setEdited] = useState(false);
+  const [edited, setEdited] = useState(true);
   const theme = useTheme();
   const { colors } = theme;
   const setItemUpdate = useStore((state) => state.setItemUpdate);
+
+  const {
+    onSelectPicture,
+    onSelectVideo,
+    listFile,
+    listFileLocal,
+    renderFileSingle,
+  } = useUploadFile(
+    listMedia.map(
+      (i) =>
+        ({
+          uri: i.media_url,
+          type: i.media_type,
+          _id: i._id,
+        } || []),
+    ),
+    1,
+  );
 
   useEffect(() => {
     setTxtEdit(data.content);
@@ -34,13 +63,19 @@ const EditComment = (props: EditCommentProps) => {
 
   const _updateComment = () => {
     if (edited) {
-      const params = { _id: data._id, content: txtEdit };
+      const params = {
+        _id: data._id,
+        content: txtEdit,
+        media_id: listFile?.[0]?._id || null,
+      };
       Keyboard.dismiss();
       const itemupdate = {
         _id: data._id,
         content: txtEdit,
         parent_id: data.parent_id || "",
+        media_id: listFile?.[0] || null,
       };
+      console.log("itemupdate...", itemupdate);
       updateCommentWithId(params).then((res) => {
         if (!res.isError) {
           setItemUpdate(itemupdate);
@@ -55,7 +90,7 @@ const EditComment = (props: EditCommentProps) => {
     }
   };
   return (
-    <View
+    <SafeAreaView
       style={{
         ...CommonStyle.safeAreaView,
         backgroundColor: colors.background,
@@ -81,6 +116,28 @@ const EditComment = (props: EditCommentProps) => {
         <View style={{ width: 24 }} />
       </View> */}
       <Header text={`${translations.edit} ${translations.comment}`} />
+
+      {renderFileSingle()}
+      {listFileLocal.length == 0 && (
+        <View style={styles.listBtnMedia}>
+          <TouchableOpacity onPress={onSelectPicture} style={styles.btnMedia}>
+            <Icon
+              size={20}
+              type={IconType.Feather}
+              name="image"
+              color={colors.black}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onSelectVideo} style={styles.btnMedia}>
+            <Icon
+              size={20}
+              type={IconType.Feather}
+              name="play-circle"
+              color={colors.black}
+            />
+          </TouchableOpacity>
+        </View>
+      )}
       <View
         style={{
           flexDirection: "row",
@@ -139,8 +196,19 @@ const EditComment = (props: EditCommentProps) => {
           </Text>
         </PressableBtn>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  btnMedia: {
+    marginRight: 12,
+  },
+  listBtnMedia: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    marginLeft: 20,
+  },
+});
 
 export default EditComment;
