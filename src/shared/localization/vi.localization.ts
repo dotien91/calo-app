@@ -1743,6 +1743,7 @@ export default {
     get: "Nhận",
     complete: "Hoàn thành",
     notComplete: "Chưa hoàn thành",
+    emptyTask: "Danh sách nhiệm vụ trống",
   },
   homework: {
     header: "Danh sách bài về nhà",

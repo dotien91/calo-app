@@ -1203,6 +1203,7 @@ export default {
     get: "Get",
     complete: "Complete",
     notComplete: "Not complete",
+    emptyTask: "Empty task",
   },
   homework: {
     header: "Task list",

@@ -1673,6 +1673,7 @@ export default {
     get: "取得",
     complete: "完了",
     notComplete: "未完了",
+    emptyTask: "Empty task",
   },
   homework: {
     header: "宿題リスト",
