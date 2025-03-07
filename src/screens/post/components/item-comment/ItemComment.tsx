@@ -25,7 +25,7 @@ import PressableBtn from "@shared-components/button/PressableBtn";
 import AvatarPost from "@screens/home/components/post-item/avatar.post";
 import { navigate } from "react-navigation-helpers";
 import { SCREENS } from "constants";
-import FastImage from "react-native-fast-image";
+import FileMedia from "./media.comment";
 
 const SIZE_AVATAR = 32;
 const PADDING_LEFT = 12;
@@ -128,9 +128,9 @@ const ItemReply = ({ item, onPressReplyChild, repCmtId }: ItemReplyProps) => {
       <View style={styles.viewContentComment}>
         <View>
           {(item?.media_id?.media_url || item?.media_id?.uri) && (
-            <FastImage
-              style={styles.viewImage}
-              source={{ uri: item?.media_id?.media_url || item?.media_id?.uri }}
+            <FileMedia
+              listFile={[item.media_id]}
+              styleContainer={{ width: "50%" }}
             />
           )}
           <Text style={styles.txtContentComment}>{item?.content}</Text>
@@ -257,9 +257,9 @@ const ItemComment = ({ data, onPressReply }: ItemCommentProps) => {
       <View style={styles.viewContentComment}>
         <View>
           {(data?.media_id?.media_url || data?.media_id?.uri) && (
-            <FastImage
-              style={styles.viewImage}
-              source={{ uri: data?.media_id?.media_url || data?.media_id?.uri }}
+            <FileMedia
+              listFile={[data.media_id]}
+              styleContainer={{ width: "50%" }}
             />
           )}
           <Text style={styles.txtContentComment}>{data?.content}</Text>
