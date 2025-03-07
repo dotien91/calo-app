@@ -63,10 +63,12 @@ export const shareProfile = (profileId: string) => {
       err && console.log(err);
     });
 };
+
+// Đang bỏ id khoá học
 export const shareCourse = async (courseId: string, courseName: string) => {
   const linkDynamic = await createDynamicLink(
     // slug,
-    `${BASEURL}/${courseId}`,
+    `${BASEURL}`,
   );
   const shareOptions = {
     title: translations.post.share,
@@ -83,12 +85,15 @@ export const shareCourse = async (courseId: string, courseName: string) => {
       err && console.log(err);
     });
 };
+
+// đang bỏ invite code
 export const shareCodeInvite = async (code: string) => {
   const linkDynamic =
     (await createDynamicLink(
       // slug,
-      `${BASEURL}/${code}`,
+      `${BASEURL}`,
     )) || "";
+  // console.log("link...", linkDynamic);
   const shareOptions = {
     title: translations.post.share,
     message: translations.post.shareCode(linkDynamic),

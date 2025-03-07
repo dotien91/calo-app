@@ -1259,7 +1259,7 @@ export default {
       "A space to connect with fellow learners, share insights, and boost your preparation journey together!",
     text31: "Diverse Learning Forms",
     text32:
-      "Choose your learning adventure: dive into self-paced video modules, receive personalized guidance in 1v1 sessions, and foster group collaboration.",
+      "Choose your learning adventure: dive into self-paced video modules, receive personalized guidance in 1-1 sessions, and foster group collaboration.",
   },
   discover: {
     study: "Study",

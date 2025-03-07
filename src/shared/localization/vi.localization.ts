@@ -1799,7 +1799,7 @@ export default {
       "Một không gian để kết nối với những người học khác, chia sẻ thông tin chi tiết và thúc đẩy hành trình chuẩn bị của bạn cùng nhau!",
     text31: "Hình thức học tập đa dạng",
     text32:
-      "Chọn cuộc phiêu lưu học tập của bạn: đi sâu vào các mô-đun video theo nhịp độ riêng, nhận hướng dẫn được cá nhân hóa trong các phiên 1v1 và thúc đẩy cộng tác nhóm.",
+      "Chọn cuộc phiêu lưu học tập của bạn: đi sâu vào các mô-đun video theo nhịp độ riêng, nhận hướng dẫn được cá nhân hóa trong các phiên 1-1 và thúc đẩy cộng tác nhóm.",
   },
   discover: {
     study: "Học",
