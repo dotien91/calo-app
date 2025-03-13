@@ -1,13 +1,7 @@
 /* eslint-disable camelcase */
 /*eslint no-unsafe-optional-chaining: "error"*/
 
-import React, {
-  Component,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   FlatList,
   NativeScrollEvent,
@@ -28,10 +22,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
-import {
-  getStatusBarHeight,
-  ScreenHeight,
-} from "@freakycoder/react-native-helpers";
+import { getStatusBarHeight } from "@freakycoder/react-native-helpers";
 
 import ItemPost from "./components/post-item/post.item";
 import eventEmitter from "@services/event-emitter";
@@ -50,7 +41,6 @@ import AboutHome from "./components/about-home/about.home";
 import {
   EnumModalContentType,
   EnumStyleModalType,
-  closeSuperModal,
   showSuperModal,
   showWarningLogin,
 } from "@helpers/super.modal.helper";
@@ -64,6 +54,7 @@ interface ListPostProps {
 type filterProp = "forYou" | "following" | "trending" | "most_popular";
 
 const HEADER_HEIGHT = getStatusBarHeight() + 56;
+const TAB_HEIGHT = 56;
 
 const ListPostNew = ({ id }: ListPostProps) => {
   const listRef = useRef<any>(null);
@@ -79,7 +70,6 @@ const ListPostNew = ({ id }: ListPostProps) => {
   };
   const [filter, setFilter] = useState<filterProp>("forYou");
   const [isFirst, setIsFirst] = useState<boolean>(true);
-  const isScrollToTop = useSharedValue(0);
 
   const paramsRequest = {
     limit: 10,
@@ -108,36 +98,24 @@ const ListPostNew = ({ id }: ListPostProps) => {
     if (listData.length === 1 && !isLoading) return <>{renderEmpty()}</>;
     return renderFooterComponent;
   };
-  useEffect(() => {
-    closeSuperModal();
-  }, [listData]);
 
   useEffect(() => {
     setFilter("forYou");
   }, [userData?._id]);
 
   useEffect(() => {
-    const typeEmit = "reload_home_page";
+    const typeEmit = "reload_list_post";
     eventEmitter.on(typeEmit, onRefresh);
-    eventEmitter.on("reload_list_post", _requestData);
     return () => {
       eventEmitter.off(typeEmit, onRefresh);
-      eventEmitter.off("reload_list_post", _requestData);
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
   const onRefresh = () => {
-    if (isScrollToTop.value == 1) {
-      _requestData();
-    }
-    setTimeout(() => {
-      listRef.current &&
-        listRef.current.scrollToOffset({ animated: true, offset: 0 });
-      isScrollToTop.value = 1;
-      // scrollToFilter();
-    }, 200);
-    setTimeout(() => {
-      isScrollToTop.value = 0;
-    }, 3000);
+    _requestData();
+    // setTimeout(() => {
+    //   // listRef && listRef.current?.scrollToOffset({ animated: true, offset: 0 });
+    //   scrollToFilter();
+    // }, 200);
   };
 
   const currentPositionFilter = useSharedValue(0);
@@ -275,7 +253,7 @@ const ListPostNew = ({ id }: ListPostProps) => {
       contentModalType: EnumModalContentType.Loading,
       styleModalType: EnumStyleModalType.Middle,
     });
-    listRef.current?.scrollToOffset({
+    listRef.current.scrollToOffset({
       animated: true,
       offset: currentPositionFilter.value + 5 - 70,
     });
@@ -370,102 +348,44 @@ const ListPostNew = ({ id }: ListPostProps) => {
       </Animated.View>
       <View style={[CS.flex1, { marginTop: getStatusBarHeight() }]}>
         <Viewport.Tracker>
-          <List
+          <FlatList
             StickyHeaderComponent={StickyHeaderComponent}
             stickyHeaderIndices={[1]}
-            listData={listData}
+            stickyHeaderHiddenOnScroll={true}
+            ref={listRef}
+            data={listData}
             onScroll={onScroll}
             ListHeaderComponent={renderHeaderTab}
             renderItem={renderItem}
+            onEndReachedThreshold={0.8}
             onEndReached={onEndReach}
-            refreshControl={refreshControl}
-            ListFooterComponent={customFooter}
+            showsVerticalScrollIndicator={false}
+            removeClippedSubviews={true}
+            keyExtractor={(item) => item?._id + ""}
+            refreshControl={refreshControl()}
+            ListFooterComponent={customFooter()}
             progressViewOffset={HEADER_HEIGHT}
             onScrollBeginDrag={(e) => {
               onScrollBeginDrag?.(e);
               hasScrolled.current = true;
             }}
+            contentContainerStyle={{ paddingTop: TAB_HEIGHT, marginTop: 16 }}
+            // decelerationRate={'fast'}
+
             onLayoutFilter={onLayoutFilter}
+            // ContentFilter={ContentFilter}
+            // onPressFilter={onPressFilter}
             scrollToFilter={scrollToFilter}
           />
         </Viewport.Tracker>
       </View>
     </View>
   );
+
+  // const onScrollEndDrag = (event) => {
+  //   console.log("event...", event.nativeEvent.contentOffset);
+  // };
 };
-
-class List extends Component {
-  componentDidMount(): void {
-    eventEmitter.on("scroll_home_to_top", this.scrollToTop);
-    eventEmitter.on("scroll_home_to_offset", this.srollToOffset);
-  }
-
-  componentWillUnmount(): void {
-    eventEmitter.off("scroll_home_to_top", this.scrollToTop);
-  }
-
-  scrollToTop = () => {
-    this.flatListRef.scrollToOffset({ animated: true, offset: 0 });
-  };
-
-  srollToOffset = () => {
-    if (this.flatListRef) {
-      this.flatListRef.scrollToOffset({
-        animated: true,
-        offset: ScreenHeight + 150,
-      });
-    }
-  };
-  render() {
-    const {
-      StickyHeaderComponent,
-      listData,
-      onScroll,
-      renderItem,
-      onEndReached,
-      progressViewOffset,
-      onScrollBeginDrag,
-      TAB_HEIGHT,
-      onLayoutFilter,
-      scrollToFilter,
-      ListHeaderComponent,
-      ListFooterComponent,
-      refreshControl,
-    } = this.props;
-
-    return (
-      <>
-        <FlatList
-          StickyHeaderComponent={StickyHeaderComponent}
-          stickyHeaderIndices={[1]}
-          stickyHeaderHiddenOnScroll={true}
-          ref={(node) => (this.flatListRef = node)}
-          data={listData}
-          onScroll={onScroll}
-          ListHeaderComponent={ListHeaderComponent}
-          renderItem={renderItem}
-          onEndReachedThreshold={0.8}
-          onEndReached={onEndReached}
-          showsVerticalScrollIndicator={false}
-          removeClippedSubviews={true}
-          keyExtractor={(item) => item?._id + ""}
-          refreshControl={refreshControl()}
-          ListFooterComponent={ListFooterComponent()}
-          progressViewOffset={progressViewOffset}
-          onScrollBeginDrag={onScrollBeginDrag}
-          contentContainerStyle={{
-            paddingTop: TAB_HEIGHT,
-            marginTop: 16,
-            paddingBottom: 100,
-            paddingTop: 60,
-          }}
-          onLayoutFilter={onLayoutFilter}
-          scrollToFilter={scrollToFilter}
-        />
-      </>
-    );
-  }
-}
 
 export default ListPostNew;
 

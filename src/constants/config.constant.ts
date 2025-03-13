@@ -22,8 +22,8 @@ export const isProduction =
 // const DEVELOPER_DOMAIN_DEV = __DEV__
 //   ? "http://192.168.1.85:3009"
 //   : "https://dev.api.ikigai.ikigroup.vn";
-const DEVELOPER_DOMAIN_DEV = __DEV__
-  ? "http://localhost:6200"
+const DEVELOPER_DOMAIN_DEV = !__DEV__
+  ? "https://api.ikes.ikigroup.vn"
   : "https://api.ikes.ikigroup.vn";
 // const DEVELOPER_DOMAIN_DEV = "https://api.ikes.ikigroup.vn";
 
