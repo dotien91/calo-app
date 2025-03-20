@@ -114,7 +114,10 @@ const CourseSearchScreen: React.FC<CourseSearchScreenProps> = () => {
   );
 };
 
-const ListSearch = React.memo(({ txtSearch, isTeacherTab }) => {
+const ListSearch = React.memo(({ txtSearch, isTeacherTab } : {
+  txtSearch: string;
+  isTeacherTab?: boolean;
+}) => {
   console.log("txtSearchtxtSearch", txtSearch);
   const { listData, isLoading, onEndReach, renderFooterComponent } =
     useListSearch<ICourseItem>(
@@ -157,7 +160,9 @@ const ListSearch = React.memo(({ txtSearch, isTeacherTab }) => {
   );
 });
 
-const ListPost = React.memo(({ txtSearch }) => {
+const ListPost = React.memo(({ txtSearch } : {
+  txtSearch: string;
+}) => {
   console.log("txtSearchtxtSearch", txtSearch);
   const { listData, isLoading, onEndReach, renderFooterComponent } =
     useListSearch<TypedPost>(

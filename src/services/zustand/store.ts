@@ -91,6 +91,7 @@ const useStore = create<StoreState>()(
                 "listBlock",
                 "setIsMutedAll",
                 "typeFilter",
+                "idFocusVideo",
               ].includes(key),
           ),
         ),

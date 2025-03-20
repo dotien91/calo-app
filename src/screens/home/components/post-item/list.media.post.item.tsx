@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useTheme, useIsFocused } from "@react-navigation/native";
+import { useTheme } from "@react-navigation/native";
 import { Text, View, Pressable, Image, ViewStyle } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import Video from "react-native-video";
@@ -13,16 +13,13 @@ import {
   showSuperModal,
 } from "@helpers/super.modal.helper";
 import { palette } from "@theme/themes";
-import { Viewport } from "@skele/components";
-
-const ViewportAwareImage = Viewport.Aware(View);
 
 interface ListFileProps {
   listFile: TypedMedia[];
   styleContainer?: ViewStyle;
 }
 
-const ListFile = ({ listFile, styleContainer = {} }: ListFileProps) => {
+const ListFile = ({ isActive, listFile, styleContainer = {}, index }: ListFileProps) => {
   const listMedia = listFile.filter(
     (i: any) =>
       i.media_mime_type.includes("image") ||
@@ -33,32 +30,43 @@ const ListFile = ({ listFile, styleContainer = {} }: ListFileProps) => {
   const styles = React.useMemo(() => createStyles(theme), [theme]);
   const refVideo = React.useRef<Video>();
   const [pause, setPause] = React.useState(true);
-  const isVisible = React.useRef(false);
 
-  const isFocused = useIsFocused();
+
+  // React.useEffect(() => {
+  //   if (!isFocused) {
+  //     refVideo.current?.setNativeProps({ paused: true });
+  //     setPause(true);
+  //   } else {
+  //     console.log("focuss", index)
+  //     if (isVisible.current) {
+  //     console.log("focuss2222", index)
+
+  //       playVideo();
+  //     }
+  //   }
+  // }, [isFocused, listMedia?.[0]?.media_url]);
 
   React.useEffect(() => {
-    if (!isFocused) {
+    if (isActive) {
+      setPause(false);
+      refVideo.current?.setNativeProps({ paused: false });
+    } else {
       refVideo.current?.setNativeProps({ paused: true });
       setPause(true);
-    } else {
-      if (isVisible.current) {
-        playVideo();
-      }
     }
-  }, [isFocused]);
+  }, [isActive])
 
-  const playVideo = () => {
-    isVisible.current = true;
-    setPause(false);
-    refVideo.current?.setNativeProps({ paused: false });
-  };
 
-  const stopVideo = () => {
-    isVisible.current = false;
-    setPause(true);
-    refVideo.current?.setNativeProps({ paused: true });
-  };
+  // const playVideo = () => {
+  //   setPause(false);
+  //   isVisible.current = true;
+  // };
+
+  // const stopVideo = () => {
+  //   isVisible.current = false;
+  //   setPause(true);
+  //   refVideo.current?.setNativeProps({ paused: true });
+  // };
 
   const showImageVideo = (index: number) => {
     const listMedia = listFile.filter(
@@ -115,13 +123,7 @@ const ListFile = ({ listFile, styleContainer = {} }: ListFileProps) => {
   if (listMedia.length == 1) {
     if (listMedia[0].media_mime_type.includes("video"))
       return (
-        <ViewportAwareImage
-          onViewportEnter={playVideo}
-          onViewportLeave={stopVideo}
-          style={styles.image11}
-        >
-          {renderVideoPlayer()}
-        </ViewportAwareImage>
+          renderVideoPlayer()
       );
     return (
       <Pressable

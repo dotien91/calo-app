@@ -35,7 +35,6 @@ import EmptyResultView from "@shared-components/empty.data.component";
 import { TypedPost } from "shared/models";
 import HeaderTab from "./components/header-home/HeaderTab";
 import { palette } from "@theme/themes";
-import { Viewport } from "@skele/components";
 
 import AboutHome from "./components/about-home/about.home";
 import {
@@ -65,8 +64,9 @@ const ListPostNew = ({ id }: ListPostProps) => {
 
   const userData = useStore((state) => state.userData);
 
-  const renderItem = ({ item }: any) => {
-    return <ItemPost key={item._id} data={item} isProfile={id?.length > 0} />;
+  const renderItem = ({ item, index }: any) => {
+    const isActive = activeItem == item._id
+    return <ItemPost isActive={isActive} key={item._id} viewed={false} data={item} index1={index} isProfile={id?.length > 0} />
   };
   const [filter, setFilter] = useState<filterProp>("forYou");
   const [isFirst, setIsFirst] = useState<boolean>(true);
@@ -205,28 +205,28 @@ const ListPostNew = ({ id }: ListPostProps) => {
       ),
     };
   }, []);
-  const viewFilterRef = useAnimatedRef<any>();
 
   const renderHeaderTab = useCallback(() => {
     return (
       <>
         <HeaderTab />
+        {ContentFilter()}
       </>
     );
   }, []);
-  const StickyHeaderComponent = () => {
-    return (
-      <>
-        <AniPressable
-          ref={viewFilterRef}
-          style={[styles.filter]}
-          onLayout={onLayoutFilter}
-        >
-          {ContentFilter()}
-        </AniPressable>
-      </>
-    );
-  };
+  // const StickyHeaderComponent = () => {
+  //   return (
+  //     <>
+  //       <AniPressable
+  //         ref={viewFilterRef}
+  //         style={[styles.filter]}
+  //         onLayout={onLayoutFilter}
+  //       >
+  //         {ContentFilter()}
+  //       </AniPressable>
+  //     </>
+  //   );
+  // };
   const renderEmpty = () => {
     if (isLoading) return null;
     return (
@@ -332,7 +332,18 @@ const ListPostNew = ({ id }: ListPostProps) => {
       </ScrollView>
     );
   }
+  const [activeItem, setActiveItem] = useState(null);
 
+
+  const onViewableItemsChanged = useRef(({ viewableItems }) => {
+    if (viewableItems.length > 0) {
+      setActiveItem(viewableItems[0].item._id);
+    }
+  }).current;
+
+  const viewabilityConfig = useRef({
+    viewAreaCoveragePercentThreshold: 50,
+  }).current;
   return (
     <View
       style={{
@@ -347,11 +358,11 @@ const ListPostNew = ({ id }: ListPostProps) => {
         </Animated.View>
       </Animated.View>
       <View style={[CS.flex1, { marginTop: getStatusBarHeight() }]}>
-        <Viewport.Tracker>
+        {/* <Viewport.Tracker> */}
           <FlatList
-            StickyHeaderComponent={StickyHeaderComponent}
-            stickyHeaderIndices={[1]}
-            stickyHeaderHiddenOnScroll={true}
+            // StickyHeaderComponent={StickyHeaderComponent}
+            // stickyHeaderIndices={[1]}
+            // stickyHeaderHiddenOnScroll={true}
             ref={listRef}
             data={listData}
             onScroll={onScroll}
@@ -361,7 +372,7 @@ const ListPostNew = ({ id }: ListPostProps) => {
             onEndReached={onEndReach}
             showsVerticalScrollIndicator={false}
             removeClippedSubviews={true}
-            keyExtractor={(item) => item?._id + ""}
+            keyExtractor={(item) => item?._id}
             refreshControl={refreshControl()}
             ListFooterComponent={customFooter()}
             progressViewOffset={HEADER_HEIGHT}
@@ -376,15 +387,15 @@ const ListPostNew = ({ id }: ListPostProps) => {
             // ContentFilter={ContentFilter}
             // onPressFilter={onPressFilter}
             scrollToFilter={scrollToFilter}
+            onViewableItemsChanged={onViewableItemsChanged}
+            viewabilityConfig={viewabilityConfig}
+            // viewabilityConfig={viewConfigRef.current}
           />
-        </Viewport.Tracker>
+        {/* </Viewport.Tracker> */}
       </View>
     </View>
   );
 
-  // const onScrollEndDrag = (event) => {
-  //   console.log("event...", event.nativeEvent.contentOffset);
-  // };
 };
 
 export default ListPostNew;

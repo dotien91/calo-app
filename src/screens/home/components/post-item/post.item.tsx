@@ -16,7 +16,6 @@ import { SCREENS } from "constants";
 import { TypedPost } from "shared/models";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import ListFilePostItem from "./list.file.post.item copy";
-import VisibilitySensor from "visibility-sensor-react-native";
 const a =
   "https://files.exam24h.com/short/2024/06/03_1717383863099/6617c4568eb0c7a297dea6a5/IMG_4040.mov";
 
@@ -28,7 +27,7 @@ interface ItemPostProps {
   isProfile?: boolean;
 }
 
-const ItemPost = ({ data, isProfile }: ItemPostProps) => {
+const ItemPost = ({ data, isProfile, index1, viewed, isActive }: ItemPostProps) => {
   const theme = useTheme();
   const { colors } = theme;
   const styles = React.useMemo(() => createStyles(theme), [theme]);
@@ -94,18 +93,11 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
     NavigationService.push(SCREENS.POST_DETAIL, param);
   };
 
-  const handleImageVisibility = (v) => {
-    if ((data?.attach_files || [])[0]?.media_url != a) return;
-    if (v) {
-      console.log("show");
-    } else {
-      console.log("hidden");
-    }
-  };
-
+if (viewed) return <View style={{height: 300, width: 100, backgroundColor: "red", marginBottom: 20}} />
   if ((data?.attach_files || [])[0]?.media_url == a)
     return (
       <View>
+
         <View style={styles.container}>
           <AvatarPost
             data={data?.user_id}
@@ -135,7 +127,6 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
       </View>
     );
   return (
-    <VisibilitySensor onChange={handleImageVisibility}>
       <View>
         <View style={styles.container}>
           <AvatarPost
@@ -159,12 +150,13 @@ const ItemPost = ({ data, isProfile }: ItemPostProps) => {
           <ListFile
             listFile={data?.attach_files || []}
             styleContainer={styles.viewImage1}
+            index={index1}
+            isActive={isActive}
           />
           <ListFilePostItem listFile={data?.attach_files || []} />
           <LikeSharePostItem data={data} pressComment={pressComment} />
         </PressableBtn>
       </View>
-    </VisibilitySensor>
   );
 };
 
