@@ -79,8 +79,8 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
   }, [data]);
 
   const audioUrl = React.useMemo(() => {
-    return data?.[0]?.media_id?.media_url;
-  }, [data]);
+    return practiceDetail.media_id?.media_url;
+  }, [practiceDetail]);
 
   const parentQuestion = React.useMemo(() => {
     const list = data?.filter((item) => !item.parent_id);
@@ -154,7 +154,7 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
     });
   };
 
-  console.log("parentQuestion", parentQuestion);
+  // console.log("parentQuestion", parentQuestion);
   const renderBottomComponent = () => {
     const showTimer = !isSpeaking() && !!practiceDetail.duration_time;
     const showBackBtn = false;
