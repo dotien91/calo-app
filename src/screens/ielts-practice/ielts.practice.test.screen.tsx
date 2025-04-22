@@ -35,6 +35,7 @@ import LoadingList from "@shared-components/loading.list.component";
 import AppSound from "./component/sound.toolkit";
 import lotieSuccess from "assets/lotties/success.json";
 import QuestionWritingItem from "./component/question/question.writing.item";
+import SoundTrackPlayer from "./component/sound.track.player";
 
 const itemWidth = Device.width;
 interface IeltsPacticeScreenProps {}
@@ -248,8 +249,9 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
   // https://files.exam24h.com/upload/2024/04/03_1712133331026/6588f61a8d8b13bb432f8276-1712133331026-783FF173-59AF-4428-8E77-657B4556C1D6.png
   const renderAudio = () => {
     if (!audioUrl) return null;
-    console.log("audioUrl", audioUrl);
-    return <AppSound autoplay={true} disabled={true} url={audioUrl} />;
+    // console.log("audioUrl", audioUrl);
+    // return <AppSound autoplay={true} disabled={true} url={audioUrl} />;
+    return <SoundTrackPlayer audioUrl={audioUrl} />;
   };
 
   const renderBtn = () => {
