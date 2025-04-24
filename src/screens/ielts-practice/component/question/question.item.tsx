@@ -1,6 +1,6 @@
 import React from "react";
-import { ScrollView, StyleSheet, TextInput, View } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { StyleSheet, TextInput, View } from "react-native";
+// import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 /**
  * ? Local Imports
@@ -38,7 +38,6 @@ const QuestionItem = ({
   const _onChangeText = (v) => {
     setAnsweData({ index, content: v });
   };
-
   const renderInput = () => {
     return (
       <View>
@@ -53,18 +52,15 @@ const QuestionItem = ({
       </View>
     );
   };
-
   const renderSelectBox = () => {
-    if (options?.length)
-      return (
-        <AnswerChildReading
-          setAnsweData={setAnsweData}
-          isTimeout={isTimeout}
-          data={child}
-          answer={answer}
-        />
-      );
-    return null;
+    return (
+      <AnswerChildReading
+        setAnsweData={setAnsweData}
+        isTimeout={isTimeout}
+        data={child}
+        answer={answer}
+      />
+    );
   };
   return (
     <View style={styles.box}>
@@ -72,8 +68,7 @@ const QuestionItem = ({
       <TextBase color="text" fontWeight="600">
         {title}
       </TextBase>
-      {renderSelectBox()}
-      {renderInput()}
+      {options?.length > 0 ? renderSelectBox() : renderInput()}
     </View>
   );
 };

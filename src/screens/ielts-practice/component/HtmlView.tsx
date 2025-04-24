@@ -37,7 +37,7 @@ const HtmlView = ({ showViewMore = false, content }: IHtmlView) => {
     );
 
   return (
-    <View style={[CS.center, !expand && { maxHeight: 0 }]}>
+    <View style={[!expand && { maxHeight: 0 }]}>
       <RenderHtml
         contentWidth={width - 32}
         source={{ html: content }}
