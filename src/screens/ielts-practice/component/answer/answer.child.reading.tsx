@@ -1,17 +1,17 @@
 import React from "react";
-import { FlatList, ScrollView, StyleSheet, View } from "react-native";
-import RenderHtml from "react-native-render-html";
+import { ScrollView, StyleSheet, View } from "react-native";
+// import RenderHtml from "react-native-render-html";
 
 /**
  * ? Local Imports
  */
-import CS from "@theme/styles";
+// import CS from "@theme/styles";
 import { IDetailPractice, IQuestion } from "models/course.model";
 import { Device } from "@utils/device.ui.utils";
-import TextBase from "@shared-components/TextBase";
 import Input from "@shared-components/form/Input";
 import CustomRadio from "@shared-components/form/CustomRadio";
-import { styleHtml } from "@screens/ielts-practice/styles/html.styles";
+// import { styleHtml } from "@screens/ielts-practice/styles/html.styles";
+// import TextBase from "@shared-components/TextBase";
 
 // const dropdownContent =
 //   "<menu><li>A: Coffee</li><li>B: Tea</li><li>C: Milk</li></menu><p><b>7  </b>A geographer documents Viking culture as it happens.</p><p><b>8  </b>A geographer documents Viking culture as it happens.</p><p><b>9  </b>A geographer documents Viking culture as it happens.</p>";
@@ -33,18 +33,12 @@ const AnswerChildDropdown = ({
   const _onChangeText = (v, { index }) => {
     setAnsweData({ index, content: v });
   };
-
-  const renderInput = ({
-    item,
-  }: // index,
-  {
-    item: IDetailPractice;
-    index: string;
-  }) => {
-    const amountOfOptions = item?.amount_of_option || 4;
+  const renderInput = (item: IDetailPractice) => {
+    const amountOfOptions = item?.options.length || 4;
+    const isRadio = item?.type === "radio";
     return (
       <View style={{ marginBottom: 12 }}>
-        {!!item?.content && (
+        {/* {!!item?.content && (
           <>
             <RenderHtml
               contentWidth={width - 32}
@@ -53,20 +47,22 @@ const AnswerChildDropdown = ({
             />
             <View style={{ height: 16 }} />
           </>
-        )}
-        <TextBase marginBottom={4}>{item?.title || item.index}</TextBase>
-        {item.type == "checkbox" ? (
+        )} */}
+        {/* <TextBase marginBottom={4}>{item?.title || item?.index}</TextBase> */}
+        {item?.type == "checkbox" || isRadio ? (
           <RadioButtons
             isTimeout={isTimeout}
             setAnsweData={setAnsweData}
             extraParam={item}
             amountOfOptions={amountOfOptions}
+            isRadio={isRadio}
+            options={item?.options}
             // data={data?.[index]}
           />
         ) : (
           <Input
             disabled={isTimeout}
-            extraParam={{ index: item.index }}
+            extraParam={{ index: item?.index }}
             cb={_onChangeText}
           />
         )}
@@ -80,7 +76,7 @@ const AnswerChildDropdown = ({
         {/* <TextBase marginBottom={16} color="text" fontWeight="600">
       {translations.ieltsPractice.answers}
     </TextBase> */}
-        <FlatList
+        {/* <FlatList
           data={data}
           renderItem={renderInput}
           showsHorizontalScrollIndicator={false}
@@ -88,7 +84,8 @@ const AnswerChildDropdown = ({
           removeClippedSubviews={true}
           initialNumToRender={8}
           keyExtractor={(item) => item._id}
-        />
+        /> */}
+        {renderInput(data)}
       </View>
     </ScrollView>
   );
@@ -99,11 +96,15 @@ const RadioButtons = ({
   extraParam,
   setAnsweData,
   isTimeout,
+  isRadio,
+  options,
 }: {
   isTimeout: boolean;
   setAnsweData: (v: any) => void;
   amountOfOptions: number;
   extraParam: IQuestion;
+  options: any[];
+  isRadio: boolean;
 }) => {
   const [selectItem, onSelectItem] = React.useState([]);
   const _onSelectItem = (item: IQuestion, isSelected) => {
@@ -118,10 +119,10 @@ const RadioButtons = ({
       });
     } else {
       onSelectItem((old) => {
-        const newData = [item, ...old];
-        if (newData.length > extraParam?.answer?.length) {
-          newData.pop();
+        if (isRadio) {
+          old.pop();
         }
+        const newData = [item, ...old];
         setAnsweData({
           index: extraParam?.index,
           content: newData.join(""),
@@ -137,7 +138,7 @@ const RadioButtons = ({
     );
   }, [amountOfOptions]);
 
-  const renderRadio = (item) => {
+  const renderRadio = (item, index) => {
     const isSelected = item == selectItem.find((_item) => _item == item);
     return (
       <CustomRadio
@@ -146,12 +147,14 @@ const RadioButtons = ({
         callback={() => _onSelectItem(item, isSelected)}
         label={item}
         isSelected={isSelected}
+        isRadio={isRadio}
+        answer={options[index]}
       />
     );
   };
   return (
-    <View style={[CS.flexRear, { width: "100%" }]}>
-      {array.map((item) => renderRadio(item))}
+    <View style={[styles.radioBtnContainer, { width: "100%" }]}>
+      {array.map((item, index) => renderRadio(item, index))}
     </View>
   );
 };
@@ -160,6 +163,10 @@ const styles = StyleSheet.create({
   box: {
     flex: 1,
     overflow: "hidden",
+    marginTop: 4,
+  },
+  radioBtnContainer: {
+    gap: 8,
   },
 });
 

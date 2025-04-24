@@ -15,6 +15,7 @@ interface CustomRadioProps {
   customStyle?: ViewStyle;
   labelStyle?: ViewStyle;
   isRadio?: boolean;
+  answer: string;
 }
 
 // eslint-disable-next-line react/display-name
@@ -27,6 +28,7 @@ const CustomRadio = ({
   customStyle,
   labelStyle,
   isRadio,
+  answer,
 }: CustomRadioProps) => {
   return (
     <PressableBtn
@@ -36,7 +38,7 @@ const CustomRadio = ({
     >
       {!!label && (
         <TextBase
-          style={[{ marginRight: 4 }, labelStyle && labelStyle]}
+          style={[{ marginRight: 4, width: 20 }, labelStyle && labelStyle]}
           fontWeight="600"
         >
           {label}
@@ -69,6 +71,11 @@ const CustomRadio = ({
           </>
         )}
       </View>
+      {!!answer && (
+        <TextBase style={{ marginRight: 4, flex: 1 }} fontWeight="450">
+          {answer}
+        </TextBase>
+      )}
       {!!content && (
         <TextBase style={{ marginRight: 4, flex: 1 }} fontWeight="600">
           {content}

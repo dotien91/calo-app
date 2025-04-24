@@ -95,25 +95,25 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
     return data?.filter((item) => !item.parent_id);
   }, [data, childQuestion]);
 
-  const showBackBtn = React.useMemo(() => {
-    return index > 0 && parentQuestion?.length > 1;
-  }, [index, parentQuestion]);
+  // const showBackBtn = React.useMemo(() => {
+  //   return index > 0 && parentQuestion?.length > 1;
+  // }, [index, parentQuestion]);
 
   const showNextBtn = React.useMemo(() => {
     return index < parentQuestion?.length - 1 && parentQuestion?.length > 1;
   }, [index, parentQuestion]);
 
-  const snapNextItem = () => {
-    carouselRef.current?.snapToItem(index + 1);
-  };
+  // const snapNextItem = () => {
+  //   carouselRef.current?.snapToItem(index + 1);
+  // };
 
   const snapBackItem = () => {
     carouselRef.current?.snapToItem(index - 1);
   };
 
-  const isLatestitem = React.useMemo(() => {
-    return index == parentQuestion?.length - 1;
-  }, [index, data]);
+  // const isLatestitem = React.useMemo(() => {
+  //   return index == parentQuestion?.length - 1;
+  // }, [index, data]);
 
   const onSubmit = () => {
     const answers = Object.keys(answerData.current).map((item) => ({
@@ -127,6 +127,7 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
       answers,
       finished_time: secs,
     };
+    // console.log("dataSubmit======", dataSubmit);
     submitTest(dataSubmit).then((res) => {
       if (!res.isError) {
         // showToast({
@@ -215,6 +216,7 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
       <QuestionItem
         setAnsweData={setAnsweData}
         {...item}
+        child={item}
         part={practiceDetail.type}
         isTimeout={isTimeout}
       />
@@ -230,7 +232,7 @@ const IeltsPacticeScreen: React.FC<IeltsPacticeScreenProps> = () => {
         renderItem={_renderItem}
         keyExtractor={(item, index) => `question-${index}`}
         showsHorizontalScrollIndicator={false}
-        pagingEnabled={true}
+        // pagingEnabled={true}
         contentContainerStyle={{ paddingBottom: 120 }}
         onMomentumScrollEnd={(e) => {
           const offset = e.nativeEvent.contentOffset.x;
