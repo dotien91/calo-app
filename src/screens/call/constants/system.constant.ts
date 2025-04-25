@@ -4,7 +4,7 @@ export const CACHE_MEDIA_FOLDER = fs.CachesDirectoryPath + "/media/";
 export const CACHE_MEDIA_CHAT_FOLDER = fs.CachesDirectoryPath + "/media_chat/";
 
 export const WEB_CLIENT_ID_GOOGLE =
-  "543656532685-0kcgll3fcni3e6f6pgp5l91fj8erckfu.apps.googleusercontent.com";
+  "543656532685-oh1fjl1fhvc1dcdc32agqrotf28vjj69.apps.googleusercontent.com";
 export const IOS_CLIENT_ID_GOOGLE =
   "543656532685-ea3og352pgjtb382rlhmhdl983upijma.apps.googleusercontent.com";
 
