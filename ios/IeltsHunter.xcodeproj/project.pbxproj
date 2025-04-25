@@ -63,11 +63,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00E356EE1AD99517003FC87E /* ikes.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ikes.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* Ikigai Coach.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Ikigai Coach.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* IELTSHunterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IELTSHunterTests.m; sourceTree = "<group>"; };
 		0B485689F1BC4CD684F10659 /* SVN-Outfit-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Outfit-Thin.ttf"; path = "../src/assets/fonts/Outfit/SVN-Outfit-Thin.ttf"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* ikes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ikes.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* Ikigai Coach.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ikigai Coach.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = IELTSHunter/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = IELTSHunter/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = IELTSHunter/Images.xcassets; sourceTree = "<group>"; };
@@ -244,8 +244,8 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* ikes.app */,
-				00E356EE1AD99517003FC87E /* ikes.xctest */,
+				13B07F961A680F5B00A75B9A /* Ikigai Coach.app */,
+				00E356EE1AD99517003FC87E /* Ikigai Coach.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -282,7 +282,7 @@
 			);
 			name = ieltshunterTests;
 			productName = ieltshunterTests;
-			productReference = 00E356EE1AD99517003FC87E /* ikes.xctest */;
+			productReference = 00E356EE1AD99517003FC87E /* Ikigai Coach.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		13B07F861A680F5B00A75B9A /* ieltshunter */ = {
@@ -307,7 +307,7 @@
 			);
 			name = ieltshunter;
 			productName = ieltshunter;
-			productReference = 13B07F961A680F5B00A75B9A /* ikes.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* Ikigai Coach.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -662,7 +662,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ikigroup.ieltshunter;
-				PRODUCT_NAME = ikes;
+				PRODUCT_NAME = "Ikigai Coach";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ieltshunter.app/ieltshunter";
 			};
@@ -688,7 +688,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ikigroup.ikicoach;
-				PRODUCT_NAME = ikes;
+				PRODUCT_NAME = "Ikigai Coach";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ieltshunter.app/ieltshunter";
 			};
 			name = Release;
@@ -698,11 +698,12 @@
 			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-ieltshunter.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ieltshunter/ieltshunter.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 0.1.0;
 				DEVELOPMENT_TEAM = N3W324GKBJ;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
@@ -839,22 +840,25 @@
 					"\"$(SRCROOT)/../node_modules/react-native-restart\"",
 				);
 				INFOPLIST_FILE = ieltshunter/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = ikes;
+				INFOPLIST_KEY_CFBundleDisplayName = ikicoach;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 0.1.32;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ikigroup.ikicoach;
-				PRODUCT_NAME = ikes;
+				PRODUCT_NAME = "Ikigai Coach";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -864,11 +868,12 @@
 			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-ieltshunter.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ieltshunter/ieltshunter.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 0.1.0;
 				DEVELOPMENT_TEAM = N3W324GKBJ;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1004,21 +1009,24 @@
 					"\"$(SRCROOT)/../node_modules/react-native-restart\"",
 				);
 				INFOPLIST_FILE = ieltshunter/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = ikes;
+				INFOPLIST_KEY_CFBundleDisplayName = ikicoach;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 0.1.32;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ikigroup.ikicoach;
-				PRODUCT_NAME = ikes;
+				PRODUCT_NAME = "Ikigai Coach";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
