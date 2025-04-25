@@ -13,11 +13,11 @@ const TermPolicyView = ({ style }: TermPolicyViewProps) => {
   const theme = useTheme();
   const { colors } = theme;
   const pressPolicy = () => {
-    Linking.openURL("https://tutorials.ikigroup.vn/ikes/privacy-policy");
+    Linking.openURL("https://guides.ikigai.vn/privacy-policy");
   };
 
   const pressTerms = () => {
-    Linking.openURL("https://tutorials.ikigroup.vn/ikes/term-and-conditions");
+    Linking.openURL("https://guides.ikigai.vn/term-and-conditions");
   };
   return (
     <View style={style}>

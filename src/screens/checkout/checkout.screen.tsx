@@ -458,7 +458,7 @@ const CheckoutScreen = () => {
         : isSmartBankingMethod
         ? "smart_banking"
         : "coin",
-      deep_link: "ikes://payment",
+      deep_link: "ikicoach://payment",
       plan_objects: [
         {
           amount_of_package: "1",
@@ -470,7 +470,7 @@ const CheckoutScreen = () => {
           },
         },
       ],
-      external_app_name: "ikes",
+      external_app_name: "ikicoach",
       invitation_code: userData?.ref_invitation_code || undefined,
     };
 
@@ -491,7 +491,7 @@ const CheckoutScreen = () => {
           : isSmartBankingMethod
           ? "smart_banking"
           : "coin",
-        deep_link: "ikes://payment",
+        deep_link: "ikicoach://payment",
         plan_objects: [
           {
             amount_of_package: "1",
@@ -513,7 +513,7 @@ const CheckoutScreen = () => {
       };
       // console.log("call11", newData);
       createOrderCallOneOne(newData).then((res) => {
-        console.log("resresres", res)
+        console.log("resresres", res);
         closeSuperModal();
         if (!res.isError) {
           const url = res.data?.redirect_url;

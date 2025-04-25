@@ -93,7 +93,7 @@ const ItemNotification = ({ item, pressDelete }: ItemNotificationProps) => {
       />
     ) : (
       <View style={styles.viewAvatar}>
-        <IconSvg name="logoIeltsHunter" size={32} color={palette.primary} />
+        <IconSvg name="logoIkigaiCoach" size={32} color={palette.primary} />
       </View>
     );
   };

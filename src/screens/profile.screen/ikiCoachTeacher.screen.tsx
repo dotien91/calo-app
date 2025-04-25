@@ -181,7 +181,7 @@ const TeacherScreen = () => {
             }}
           />
           <TextBase fontSize={15} color="white" style={{ marginTop: 5 }}>
-            Ikes Teacher
+            Ikigai Coach Teacher
           </TextBase>
         </TouchableOpacity>
         <View

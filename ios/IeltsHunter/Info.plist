@@ -4,12 +4,12 @@
 <dict>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
-		<string>com.app.ielts.ikes</string>
+		<string>com.ikigroup.ikicoach</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>IELTS IKES</string>
+	<string>Ikigai Coach</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -31,7 +31,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.324230645762-jp5bnjfqm2f4uv4riqb1g16rfida70if</string>
+				<string>com.googleusercontent.apps.543656532685-ea3og352pgjtb382rlhmhdl983upijma</string>
 			</array>
 		</dict>
 		<dict>
@@ -39,17 +39,17 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb908606980666349ikes</string>
+				<string>fb908606980666349ikicoach</string>
 			</array>
 		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.app.ielts.ikes</string>
+			<string>com.ikigroup.ikicoach</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>ikes</string>
+				<string>ikicoach</string>
 			</array>
 		</dict>
 	</array>
@@ -62,9 +62,9 @@
 	<key>FacebookClientToken</key>
 	<string>6054f4c2e7bae8d01389715aea05e97b</string>
 	<key>FacebookDisplayName</key>
-	<string>ikes</string>
+	<string>ikigaicoach</string>
 	<key>FacebookUrlSchemeSuffix</key>
-	<string>ikes</string>
+	<string>ikicoach</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
@@ -86,15 +86,15 @@
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Play using while you are learning</string>
 	<key>NSCameraUsageDescription</key>
-	<string>IELTS IKES need to take a look at your camera, to put the photo up as a social asset for other users to see</string>
+	<string>Ikigai Coach need to take a look at your camera, to put the photo up as a social asset for other users to see</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>IELTS IKES needs access to the microphone to make calls, record, and send audio files to other users.</string>
+	<string>Ikigai Coach needs access to the microphone to make calls, record, and send audio files to other users.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>IELTS IKES need to take a look at your photo album, to put the photo up as a social asset for other users to see</string>
+	<string>Ikigai Coach need to take a look at your photo album, to put the photo up as a social asset for other users to see</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>IELTS IKES need to take a look at your photo album, to put the photo up as a social asset for other users to see</string>
+	<string>Ikigai Coach need to take a look at your photo album, to put the photo up as a social asset for other users to see</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
@@ -168,7 +168,7 @@
 	<false/>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:ikes.page.link</string>
+		<string>applinks:ikicoach.page.link</string>
 	</array>
 </dict>
 </plist>

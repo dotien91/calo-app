@@ -5,20 +5,20 @@ import { translations } from "@localization";
 import Share from "react-native-share";
 import dynamicLinks, { firebase } from "@react-native-firebase/dynamic-links";
 
-const BASEURL = "https://app.ikes.edu.vn";
+const BASEURL = "https://ikigaicoach.net";
 
 const createDynamicLink = async (str: string) => {
   try {
     const link = await dynamicLinks().buildShortLink(
       {
         link: str, // Your deep link URL
-        domainUriPrefix: "https://ikes.page.link",
+        domainUriPrefix: "https://ikigaicoach.page.link",
         ios: {
-          bundleId: "com.app.ielts.ikes",
-          appStoreId: "6740073425",
+          bundleId: "com.ikigroup.ikicoach",
+          appStoreId: "6484263984",
         },
         android: {
-          packageName: "com.app.ielts.ikes2",
+          packageName: "com.ikigroup.ikigaiextra",
           minimumVersion: "1",
         },
       },

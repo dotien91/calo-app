@@ -28,7 +28,7 @@ const InitView = () => {
   const getListGift = () => {
     getConfigGift().then((res) => {
       if (!res.isError) {
-        setListGift(res.data.config.option_content);
+        setListGift(res?.data?.config?.option_content);
       }
     });
   };

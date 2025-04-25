@@ -10,8 +10,8 @@
 	</array>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:ikes.page.link</string>
-		<string>https://ikes.page.link</string>
+		<string>applinks:ikicoach.page.link</string>
+		<string>https://ikicoach.page.link</string>
 	</array>
 </dict>
 </plist>

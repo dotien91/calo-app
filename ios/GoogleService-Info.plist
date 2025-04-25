@@ -3,21 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>324230645762-jp5bnjfqm2f4uv4riqb1g16rfida70if.apps.googleusercontent.com</string>
+	<string>543656532685-ea3og352pgjtb382rlhmhdl983upijma.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.324230645762-jp5bnjfqm2f4uv4riqb1g16rfida70if</string>
+	<string>com.googleusercontent.apps.543656532685-ea3og352pgjtb382rlhmhdl983upijma</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>543656532685-0kcgll3fcni3e6f6pgp5l91fj8erckfu.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAao_gInXz_ph4IPoCv1aCqa7PCtKn6_is</string>
+	<string>AIzaSyCGLuu5bszXL87fejvqbgXbcBPllvBbzWQ</string>
 	<key>GCM_SENDER_ID</key>
-	<string>324230645762</string>
+	<string>543656532685</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.app.ielts.ikes</string>
+	<string>com.ikigroup.ikicoach</string>
 	<key>PROJECT_ID</key>
-	<string>ikes-1ffb5</string>
+	<string>ikigai-coach</string>
 	<key>STORAGE_BUCKET</key>
-	<string>ikes-1ffb5.firebasestorage.app</string>
+	<string>ikigai-coach.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:324230645762:ios:a5b67ac72c6991b6b27f1b</string>
+	<string>1:543656532685:ios:8806647b070745bad0a784</string>
 </dict>
 </plist>

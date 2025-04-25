@@ -268,9 +268,9 @@ export default {
     uploadImageFaild: "Tải ảnh lên thất bại. Vui lòng thử lại!",
     uploadVideoFaild: "Tải video lên thất bại. Vui lòng thử lại!",
     sharePost:
-      "Tham gia cộng đồng Ikes ngay hôm nay và nhận thưởng lên tới 1000 Point",
+      "Tham gia cộng đồng Ikigai Coach ngay hôm nay và nhận thưởng lên tới 1000 Point",
     shareCode: (txt: string) =>
-      `Tham gia cộng đồng Ikes cùng tớ để nhận thưởng lên tới 10000 Point nhé, truy cập "${txt}" để nhận thưởng.`,
+      `Tham gia cộng đồng Ikigai Coach cùng tớ để nhận thưởng lên tới 10000 Point nhé, truy cập "${txt}" để nhận thưởng.`,
   },
   navigation: {
     dashboard: "Trang chủ",
@@ -753,7 +753,7 @@ export default {
     durationCall11: "Thời lượng buổi học",
     lessionCount: "Số buổi học",
     messagePublic:
-      "Khi bạn chọn công khai khóa học, trước khi hiển thị khóa học sẽ được đội ngũ Admin của Ikes kiểm duyệt, thời gian duyệt khóa học không quá một ngày làm việc.",
+      "Khi bạn chọn công khai khóa học, trước khi hiển thị khóa học sẽ được đội ngũ Admin của Ikigai Coach kiểm duyệt, thời gian duyệt khóa học không quá một ngày làm việc.",
     draft: "Bản nháp",
     public: "Công khai",
   },
@@ -1595,7 +1595,7 @@ export default {
     isFirst: "Đã ở đầu danh sách",
     isLast: "Đã ở cuối danh sách",
     shareAudio: (txt: string) =>
-      `Tải ngay ứng dụng Ikes về để nghe những bản podcast hay nhất: ${txt}`,
+      `Tải ngay ứng dụng Ikigai Coach về để nghe những bản podcast hay nhất: ${txt}`,
     listened: "Đã nghe",
     watched: "Tiếp tục nghe podcast",
   },
@@ -1663,7 +1663,7 @@ export default {
     space: "Đơn vị khoảng cách",
     deletecache: "Xoá bộ nhớ đệm",
     noti: "Thông báo",
-    hidden: "Tạm ẩn tôi khỏi Ikes",
+    hidden: "Tạm ẩn tôi khỏi Ikigai Coach",
     block: "Chặn tin nhắn từ người lạ",
     blackList: "Danh sách đen",
     setting: "Cài đặt",
@@ -1703,7 +1703,7 @@ export default {
     descriptionTitle: "Khám phá các tính năng",
   },
   recommendCourse: "Đề xuất khoá học",
-  ieltsHunterLive: "Ikes Live",
+  ieltsHunterLive: "Ikigai Coach Live",
   nameTutor: (name: string) => `Khoá học của ${name}`,
   titleLive: "Lớp viết IELTS của Nguyễn Trung Kiên",
   titleName: "IELTS Nghe [MASTERCLASS]: Đạt Band 7+ vào năm 2024",
@@ -1792,15 +1792,21 @@ export default {
     emptyTask: "Chưa có bài tập nào",
   },
   introwelcome: {
-    text11: "Chào mừng bạn đến với thế giới ngôn ngữ",
+    text11: "Nâng Cao Hành Trình Cuộc Sống Của Bạn",
     text12:
-      "Bạn đã sẵn sàng tham gia vào cuộc phiêu lưu phong phú này chưa? Hãy bắt đầu cuộc phiêu lưu học tập của bạn ngay bây giờ!",
-    text21: "Tham gia cộng đồng IELTS sôi động của chúng tôi",
+      "Bắt đầu một trải nghiệm biến đổi với các khóa học về phát triển cá nhân, tâm lý học và kỹ năng sống. Tự quyền lực bản thân và phát triển",
+    text21: "Mở Khóa Tiềm Năng Nghề Nghiệp Của Bạn",
     text22:
-      "Một không gian để kết nối với những người học khác, chia sẻ thông tin chi tiết và thúc đẩy hành trình chuẩn bị của bạn cùng nhau!",
-    text31: "Hình thức học tập đa dạng",
+      "Khám phá một loạt các khóa học hướng nghiệp ngay tại ngón tay bạn. Đây là cánh cửa của bạn đến sự phát triển chuyên nghiệp và thành công",
+    text31: "Tự Quyền Lực Tương Lai Tài Chính Của Bạn",
     text32:
-      "Chọn cuộc phiêu lưu học tập của bạn: đi sâu vào các mô-đun video theo nhịp độ riêng, nhận hướng dẫn được cá nhân hóa trong các phiên 1-1 và thúc đẩy cộng tác nhóm.",
+      "Mở khóa bí mật của tài chính thông qua các khóa học do các chuyên gia dẫn dắt về ngân sách, đầu tư và lập kế hoạch tài chính. Kiểm soát tài chính và xây dựng một tương lai an toàn",
+    text41: "Mở Khóa Thành Công Kinh Doanh",
+    text42:
+      "Khám phá khóa học về khởi nghiệp, tiếp thị và quản lý. Nâng cao kỹ năng của bạn và phát triển trong thế giới kinh doanh",
+    text51: "Chăm Sóc Sức Khỏe Của Bạn Bất Cứ Lúc Nào, Bất Cứ Nơi Đâu",
+    text52:
+      "Khám phá các khóa học sức khỏe hàng đầu trong IKIGAI Coach. Đây là nơi bạn có thể tự quản lý sức khỏe và phát triển bản thân",
   },
   discover: {
     study: "Học",
@@ -1858,7 +1864,7 @@ export default {
     description3:
       "). Ví dụ: Nếu thành viên giới thiệu mua khóa học có giá 1.000.000 đồng → Hoa hồng nhận được: 80.000 đồng → 80 ",
     whyJoin: "Tại sao nên tham gia Tiếp thị liên kết?",
-    text1: "Tăng thêm thu nhập từ việc bán hàng cùng Ikes",
+    text1: "Tăng thêm thu nhập từ việc bán hàng cùng Ikigai Coach",
     text2: "Tiền được cộng ngay khi khách hàng mua khoá học",
     text3: "Quản lý doanh thu theo thời gian thực",
     text4: "Rút tiền về tài khoản ngân hàng",
@@ -2033,7 +2039,7 @@ export default {
     orientation: "Định hướng",
     health: "Sức khỏe",
     charity: "Từ thiện",
-    title2: "Bạn muốn sử dụng Ikes để làm gì?",
+    title2: "Bạn muốn sử dụng Ikigai Coach để làm gì?",
     des: "Chúng tôi cần biết điều này vì lý do quy định. Và cũng vì chúng tôi tò mò!",
     lifeCoaching: "Huấn luyện cuộc sống",
     personalDevelopment: "Phát triển cá nhân",
@@ -2051,7 +2057,7 @@ export default {
     entre: "Khởi nghiệp",
     leaderSkill: "Kỹ năng lãnh đạo",
     workLife: "Cân bằng giữa công việc và cuộc sống",
-    title3: "Bạn đến với Ikes vì lý do gì?",
+    title3: "Bạn đến với Ikigai Coach vì lý do gì?",
     seeking: "Tìm kiếm sự cân bằng",
     expl: "Khám phá mục đích",
     needing: "Cần sự hỗ trợ",
@@ -2120,10 +2126,10 @@ export default {
       "Đăng ký sẽ được tính phí thông qua tài khoản iTunes của bạn. Đăng ký của bạn sẽ tự động được gia hạn trừ khi bạn hủy đăng ký trong vòng 24 giờ trước khi kết thúc thời hạn đăng ký hiện tại trong cài đặt iTunes Store của bạn. Để trở thành thành viên có nghĩa là bạn đồng ý với các điều khoản và thỏa thuận sau đây.",
     des2Android:
       "Đăng ký sẽ được tính phí thông qua tài khoản Google Play của bạn. Đăng ký của bạn sẽ tự động được gia hạn trừ khi bạn hủy đăng ký trong vòng 24 giờ trước khi kết thúc thời hạn đăng ký hiện tại trong cài đặt Google Play Store của bạn. Để trở thành thành viên có nghĩa là bạn đồng ý với các điều khoản và thỏa thuận sau đây.",
-    des3: "Thời hạn dịch vụ giá trị gia tăng của Ikes Chính sách quyền riêng tư Thời hạn gia hạn đăng ký tự động",
+    des3: "Thời hạn dịch vụ giá trị gia tăng của Ikigai Coach Chính sách quyền riêng tư Thời hạn gia hạn đăng ký tự động",
     error: "Lỗi",
     getServiceFail: "Lấy dịch vụ thất bại",
-    whiteGPro: "Ikes PREMIUM",
+    whiteGPro: "Ikigai Coach PREMIUM",
     proDes:
       "Nâng cấp lên PREMIUM để có giao diện, nhắn tin và gọi điện không giới hạn, bật chế độ du lịch và xem những người thích mình!",
     getPro: "Nâng cấp Premium",

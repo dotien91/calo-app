@@ -1,4 +1,4 @@
-package com.app.ielts.ikes2;
+package com.ikigroup.ikigaiextra;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

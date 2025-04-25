@@ -4,9 +4,9 @@ export const CACHE_MEDIA_FOLDER = fs.CachesDirectoryPath + "/media/";
 export const CACHE_MEDIA_CHAT_FOLDER = fs.CachesDirectoryPath + "/media_chat/";
 
 export const WEB_CLIENT_ID_GOOGLE =
-  "329708522429-t56qqqgo9kasu9rqtomf1aj8al55obbo.apps.googleusercontent.com";
+  "543656532685-0kcgll3fcni3e6f6pgp5l91fj8erckfu.apps.googleusercontent.com";
 export const IOS_CLIENT_ID_GOOGLE =
-  "1099367863423-2upf825dpucjgoikro0381r9rq6uq8vf.apps.googleusercontent.com";
+  "543656532685-ea3og352pgjtb382rlhmhdl983upijma.apps.googleusercontent.com";
 
 export const HIT_SLOP_EXPAND_20 = { top: 20, left: 20, right: 20, bottom: 20 };
 export const HIT_SLOP_EXPAND_10 = { top: 10, left: 10, right: 10, bottom: 10 };

@@ -1,4 +1,4 @@
-package com.app.ielts.ikes2;
+package com.ikigroup.ikigaiextra;
 
 
 import com.facebook.react.ReactActivity;

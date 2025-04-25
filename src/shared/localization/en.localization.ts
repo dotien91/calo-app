@@ -260,9 +260,9 @@ export default {
     uploadImageFaild: "Image upload failed. Please try again!",
     uploadVideoFaild: "Video upload failed. Please try again!",
     sharePost:
-      "Join the Ikes community today and receive rewards of up to 1000 Points.",
+      "Join the Ikigai Coach community today and receive rewards of up to 1000 Points.",
     shareCode: (txt: string) =>
-      `Join the Ikes community with me to receive rewards of up to 10,000 points. Visit "${txt}" to claim your rewards.`,
+      `Join the Ikigai Coach community with me to receive rewards of up to 10,000 points. Visit "${txt}" to claim your rewards.`,
   },
   navigation: {
     dashboard: "Dashboard",
@@ -641,7 +641,7 @@ export default {
     durationCall11: "Course duration",
     lessionCount: "Number of lessions",
     messagePublic:
-      "When you choose to make the course public, it will be reviewed by the Ikes Admin team before being displayed. The review process will take no more than one working day.",
+      "When you choose to make the course public, it will be reviewed by the Ikigai Coach Admin team before being displayed. The review process will take no more than one working day.",
     draft: "Draft",
     public: "Public",
   },
@@ -811,7 +811,7 @@ export default {
     course: "COURSE",
     teacherPage: "TEACHER PAGE",
     guideUse: "GUIDE",
-    titleBtn: "Ikes Teacher",
+    titleBtn: "Ikigai Coach Teacher",
     desBtn: "Access the page reserved for teachers",
     profile: "Profile",
     balance: "Balance",
@@ -1057,7 +1057,7 @@ export default {
     isFirst: "Already at the beginning of the list",
     isLast: "Already at the end of the list",
     shareAudio: (txt: string) =>
-      `Download the Ikes app now to listen to the best audiobooks: ${txt}`,
+      `Download the Ikigai Coach app now to listen to the best audiobooks: ${txt}`,
     listened: "Listened",
     watched: "Continue listening to the podcast",
   },
@@ -1125,7 +1125,7 @@ export default {
     space: "Space",
     deletecache: "Delete memory",
     noti: "Notification",
-    hidden: "Hidden me from Ikes",
+    hidden: "Hidden me from Ikigai Coach",
     block: "Block message from strangers",
     blackList: "List Black",
     setting: "Setting",
@@ -1163,7 +1163,7 @@ export default {
     descriptionTitle: "Explore App Features?",
   },
   recommendCourse: "Recommend course",
-  ieltsHunterLive: "Ikes Live",
+  ieltsHunterLive: "Ikigai Coach Live",
   nameTutor: (name: string) => `${name}'s course`,
   titleLive: "Nguyen Trung Kien's IELTS Writing class",
   titleName: "IELTS Listening [MASTERCLASS]: Get Band 7+ in 2024",
@@ -1252,15 +1252,21 @@ export default {
     emptyTask: "Empty task",
   },
   introwelcome: {
-    text11: "Welcome to the world of language",
+    text11: "Elevate Your Life Journey",
     text12:
-      "Ready to embark on this enriching adventure? Let's start your learning odyssey now!",
-    text21: "Join our vibrant IELTS community",
+      "Embark on a transformative experience with courses in personal development, mindfulness, and life skills. Empower yourself and thrive",
+    text21: "Unlock Your Career Potential",
     text22:
-      "A space to connect with fellow learners, share insights, and boost your preparation journey together!",
-    text31: "Diverse Learning Forms",
+      "Discover a wide range of career-oriented courses right at your fingertips. It's your gateway to professional growth and success",
+    text31: "Empower Your Financial Future",
     text32:
-      "Choose your learning adventure: dive into self-paced video modules, receive personalized guidance in 1-1 sessions, and foster group collaboration.",
+      "Unlock the secrets of finance through our expert-led courses covering budgeting, investing, and financial planning. Take control of your finances and build a secure future",
+    text41: "Unlock Business Success",
+    text42:
+      "Explore entrepreneurship, marketing, and management courses. Elevate your skills and thrive in the business world",
+    text51: "Take Care of Your Health Anytime, Anywhere",
+    text52:
+      "Explore top-notch health courses within IKIGAI Coach. It's where you can take charge of your health and self-development",
   },
   discover: {
     study: "Study",
@@ -1318,7 +1324,7 @@ export default {
     description3:
       "). For example: If a member refers a purchase of a course priced at 1,000,000 VND → Commission received: 80,000 VND → 80 ",
     whyJoin: "Why join affiliate?",
-    text1: "Increase your income by selling with Ikes",
+    text1: "Increase your income by selling with Ikigai Coach",
     text2: "Money is credited immediately when a customer purchases a course",
     text3: "Manage revenue in real-time",
     text4: "Withdraw money to your bank account",
@@ -1545,7 +1551,7 @@ export default {
     orientation: "Orientation",
     health: "Health",
     charity: "Charity",
-    title2: "What do you want to use Ikes for?",
+    title2: "What do you want to use Ikigai Coach for?",
     des: "We need to know this for regulatory reasons. And also, we’re curious!",
     lifeCoaching: "Life Coaching",
     personalDevelopment: "Personal Development",
@@ -1563,7 +1569,7 @@ export default {
     entre: "Entrepreneurship",
     leaderSkill: "Leadership Skills",
     workLife: "Work-Life Balance",
-    title3: "What brings you to Ikes?",
+    title3: "What brings you to Ikigai Coach?",
     seeking: "Seeking balance",
     expl: "Exploring purpose",
     needing: "Needing support",

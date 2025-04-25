@@ -11,6 +11,7 @@ import useStore from "@services/zustand/store";
 import { getCourseSuggest } from "@services/api/course.api";
 import CourseCategoryTitle from "@screens/course-tab/course-list/course.category.title";
 import LoadingItem from "@shared-components/loading.item";
+import { WindowWidth } from "@freakycoder/react-native-helpers";
 // import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
 // const { width } = Dimensions.get("window");
 
@@ -31,14 +32,14 @@ const CourseView = () => {
     return listData.slice(0, 10);
   }, [listData]);
 
-  // const snap = React.useMemo(() => {
-  //   const preCount = 1;
-  //   const widthItem = width / (preCount + 0.5);
-  //   const startScroll = (widthItem * 3) / 4;
-  //   return data.map((_, i) => {
-  //     return i * widthItem + startScroll;
-  //   });
-  // }, [listData]);
+  const snap = React.useMemo(() => {
+    const preCount = 1;
+    const widthItem = WindowWidth / (preCount + 0.5);
+    const startScroll = (widthItem * 3) / 4;
+    return data.map((_, i) => {
+      return i * widthItem + startScroll;
+    });
+  }, [listData]);
   // console.log(snap)
   const onSeeAll = () => {
     NavigationService.navigate(SCREENS.COURSE_RECOMMEND);
@@ -68,7 +69,7 @@ const CourseView = () => {
       />
       {isLoading && <LoadingItem />}
       <FlatList
-        pagingEnabled={true}
+        // pagingEnabled={true}
         horizontal
         showsHorizontalScrollIndicator={false}
         data={data}

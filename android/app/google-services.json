@@ -1,118 +1,195 @@
 {
   "project_info": {
-    "project_number": "324230645762",
-    "project_id": "ikes-1ffb5",
-    "storage_bucket": "ikes-1ffb5.firebasestorage.app"
+    "project_number": "543656532685",
+    "project_id": "ikigai-coach",
+    "storage_bucket": "ikigai-coach.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:324230645762:android:c0250cfde5cb7e78b27f1b",
+        "mobilesdk_app_id": "1:543656532685:android:2a45374c1a703a2dd0a784",
         "android_client_info": {
-          "package_name": "com.app.ielts.ikes"
+          "package_name": "com.ikigroup.ikicoach"
         }
       },
       "oauth_client": [
         {
-          "client_id": "324230645762-5eau95jkpe6ig4q8d8i1lhe2ukjk6tjf.apps.googleusercontent.com",
+          "client_id": "543656532685-2frchamcsscg7alj5vpfsu5vgn3qr2mj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.app.ielts.ikes",
+            "package_name": "com.ikigroup.ikicoach",
+            "certificate_hash": "2b1f34c90ad7897a635ed3b62ce9a24e5c9739ce"
+          }
+        },
+        {
+          "client_id": "543656532685-fc4n7pou3ba3dpko7jkqjfpu8t1kgitt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ikigroup.ikicoach",
+            "certificate_hash": "a998798307f6d429dd20d8d78e54bfee599b207f"
+          }
+        },
+        {
+          "client_id": "543656532685-i1lb6n9i3g8te8hfgprr1ee00gk34fp9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ikigroup.ikicoach",
+            "certificate_hash": "56703ce21286bb4a44df6301d270bb5bbed43eef"
+          }
+        },
+        {
+          "client_id": "543656532685-kh80u4uinedpi9jhdklot68j44qdat1m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ikigroup.ikicoach",
+            "certificate_hash": "458872d2e3131e0c0aef71d0d2addfa41e779076"
+          }
+        },
+        {
+          "client_id": "543656532685-oh1fjl1fhvc1dcdc32agqrotf28vjj69.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBpU-ARq-vS4SJOlnhwyAoba5NP5ppl9g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "543656532685-oh1fjl1fhvc1dcdc32agqrotf28vjj69.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "543656532685-ea3og352pgjtb382rlhmhdl983upijma.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ikigroup.ikicoach",
+                "app_store_id": "6484263984"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:543656532685:android:f52c9a80fc0e8442d0a784",
+        "android_client_info": {
+          "package_name": "com.ikigroup.ikigaicoach"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "543656532685-0kcgll3fcni3e6f6pgp5l91fj8erckfu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ikigroup.ikigaicoach",
+            "certificate_hash": "e120aa99860150d90434a5809df77c4ea21647e4"
+          }
+        },
+        {
+          "client_id": "543656532685-n057j3ha61n32gm3h9dcjc2gnahu0qv9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ikigroup.ikigaicoach",
             "certificate_hash": "bf726b653a1dc4053f77f04d93a38e332400b324"
           }
         },
         {
-          "client_id": "324230645762-lasklbv0gh4n05t03m7g8ac6faedb96f.apps.googleusercontent.com",
+          "client_id": "543656532685-nivt10vnlmcg1t1oj4etnlhnlamo1rof.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.app.ielts.ikes",
-            "certificate_hash": "60bd1e266e0d45f71f535fedbd9aac3035c65aa2"
+            "package_name": "com.ikigroup.ikigaicoach",
+            "certificate_hash": "561af48862058c3edb32b3b71e87d820fafd8d9c"
           }
         },
         {
-          "client_id": "324230645762-nqld88fkfsddn37vmh301outotbpkc9m.apps.googleusercontent.com",
+          "client_id": "543656532685-oh1fjl1fhvc1dcdc32agqrotf28vjj69.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBpU-ARq-vS4SJOlnhwyAoba5NP5ppl9g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "543656532685-oh1fjl1fhvc1dcdc32agqrotf28vjj69.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "543656532685-ea3og352pgjtb382rlhmhdl983upijma.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ikigroup.ikicoach",
+                "app_store_id": "6484263984"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:543656532685:android:41c599c5e61e0aeed0a784",
+        "android_client_info": {
+          "package_name": "com.ikigroup.ikigaicoachlite"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "543656532685-1p4sbjp76qu5gqa3ncjf3qorgvhdjnqo.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.app.ielts.ikes",
-            "certificate_hash": "2eab571ed9f1f59bcf7ff71e031a455751ed32d0"
+            "package_name": "com.ikigroup.ikigaicoachlite",
+            "certificate_hash": "8aa88da9132c6900913f7852dae24b20fddb49f4"
           }
         },
         {
-          "client_id": "324230645762-tk3q7r7q1pto2c5ibscpijdqf41asopo.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCKigxPskLYyXFxobKqb5QgiwFVgC29qnw"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "324230645762-tk3q7r7q1pto2c5ibscpijdqf41asopo.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "324230645762-6eoifvqrr7grtolmj8t4t3do4dv2nluf.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.ikgroup.dongtienquantri",
-                "app_store_id": "6740808525"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:324230645762:android:a44c5e75fbb4b0d5b27f1b",
-        "android_client_info": {
-          "package_name": "com.app.ielts.ikes2"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "324230645762-6phr7vp2rdi90gkh62g34b4aff70uch5.apps.googleusercontent.com",
+          "client_id": "543656532685-7ghfn170ill82gg2513arop4hbc2je3p.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.app.ielts.ikes2",
-            "certificate_hash": "ebfd61b0c93825c740be20b065c89f4098ecd4d4"
+            "package_name": "com.ikigroup.ikigaicoachlite",
+            "certificate_hash": "6a851c5d02613c133c70cf4b33ab2ff6f8abbd66"
           }
         },
         {
-          "client_id": "324230645762-8e75a12r3u4a3jrh0f75do6tg9t2id9n.apps.googleusercontent.com",
+          "client_id": "543656532685-fnhocg90jufokuapbu06p1kj20k7lcvn.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.app.ielts.ikes2",
-            "certificate_hash": "6d80570a4a97835c8b5c84509cd16fd5b359b387"
+            "package_name": "com.ikigroup.ikigaicoachlite",
+            "certificate_hash": "51dffa4e0d41a259dea73f2f7f684d994b6e59f1"
           }
         },
         {
-          "client_id": "324230645762-tk3q7r7q1pto2c5ibscpijdqf41asopo.apps.googleusercontent.com",
+          "client_id": "543656532685-oh1fjl1fhvc1dcdc32agqrotf28vjj69.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCKigxPskLYyXFxobKqb5QgiwFVgC29qnw"
+          "current_key": "AIzaSyDBpU-ARq-vS4SJOlnhwyAoba5NP5ppl9g"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "324230645762-tk3q7r7q1pto2c5ibscpijdqf41asopo.apps.googleusercontent.com",
+              "client_id": "543656532685-oh1fjl1fhvc1dcdc32agqrotf28vjj69.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "324230645762-6eoifvqrr7grtolmj8t4t3do4dv2nluf.apps.googleusercontent.com",
+              "client_id": "543656532685-ea3og352pgjtb382rlhmhdl983upijma.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.ikgroup.dongtienquantri",
-                "app_store_id": "6740808525"
+                "bundle_id": "com.ikigroup.ikicoach",
+                "app_store_id": "6484263984"
               }
             }
           ]
@@ -121,236 +198,88 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:324230645762:android:68119bed485e4e29b27f1b",
+        "mobilesdk_app_id": "1:543656532685:android:f56bd8ed99a6ebb4d0a784",
         "android_client_info": {
-          "package_name": "com.becare.customer"
+          "package_name": "com.ikigroup.ikigaicoachpro"
         }
       },
       "oauth_client": [
         {
-          "client_id": "324230645762-17oto479l2rjgkug8r4jeah2lp73tkt4.apps.googleusercontent.com",
+          "client_id": "543656532685-oh1fjl1fhvc1dcdc32agqrotf28vjj69.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBpU-ARq-vS4SJOlnhwyAoba5NP5ppl9g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "543656532685-oh1fjl1fhvc1dcdc32agqrotf28vjj69.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "543656532685-ea3og352pgjtb382rlhmhdl983upijma.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ikigroup.ikicoach",
+                "app_store_id": "6484263984"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:543656532685:android:1d1d1d9fcf107d3cd0a784",
+        "android_client_info": {
+          "package_name": "com.ikigroup.ikigaiextra"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "543656532685-gtug48vsaoocsoh1hrnnqpvjl5q9hlel.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.becare.customer",
-            "certificate_hash": "9cd634b0c45f26fe68d906a25e907c07e6ad28bb"
+            "package_name": "com.ikigroup.ikigaiextra",
+            "certificate_hash": "b14ff98860e82d4f8397d02e33e824615ff92637"
           }
         },
         {
-          "client_id": "324230645762-bqft2m07dlaf57of8nrrd6nft10qinfc.apps.googleusercontent.com",
+          "client_id": "543656532685-m4sgdte89h073kjdv30o9iukitukvc8q.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.becare.customer",
-            "certificate_hash": "915d4c87db5253427da4a921cdd6e837fb77e3ba"
+            "package_name": "com.ikigroup.ikigaiextra",
+            "certificate_hash": "c129aea515d8f7d4989ecb924b617287a65d8823"
           }
         },
         {
-          "client_id": "324230645762-tk3q7r7q1pto2c5ibscpijdqf41asopo.apps.googleusercontent.com",
+          "client_id": "543656532685-oh1fjl1fhvc1dcdc32agqrotf28vjj69.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCKigxPskLYyXFxobKqb5QgiwFVgC29qnw"
+          "current_key": "AIzaSyDBpU-ARq-vS4SJOlnhwyAoba5NP5ppl9g"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "324230645762-tk3q7r7q1pto2c5ibscpijdqf41asopo.apps.googleusercontent.com",
+              "client_id": "543656532685-oh1fjl1fhvc1dcdc32agqrotf28vjj69.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "324230645762-6eoifvqrr7grtolmj8t4t3do4dv2nluf.apps.googleusercontent.com",
+              "client_id": "543656532685-ea3og352pgjtb382rlhmhdl983upijma.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.ikgroup.dongtienquantri",
-                "app_store_id": "6740808525"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:324230645762:android:fe83c33527ef71f7b27f1b",
-        "android_client_info": {
-          "package_name": "com.doapp.store.dongtienbakery"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "324230645762-tk3q7r7q1pto2c5ibscpijdqf41asopo.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCKigxPskLYyXFxobKqb5QgiwFVgC29qnw"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "324230645762-tk3q7r7q1pto2c5ibscpijdqf41asopo.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "324230645762-6eoifvqrr7grtolmj8t4t3do4dv2nluf.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.ikgroup.dongtienquantri",
-                "app_store_id": "6740808525"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:324230645762:android:1e31a915e6868a53b27f1b",
-        "android_client_info": {
-          "package_name": "com.doapp.store.khkcare"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "324230645762-tk3q7r7q1pto2c5ibscpijdqf41asopo.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCKigxPskLYyXFxobKqb5QgiwFVgC29qnw"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "324230645762-tk3q7r7q1pto2c5ibscpijdqf41asopo.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "324230645762-6eoifvqrr7grtolmj8t4t3do4dv2nluf.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.ikgroup.dongtienquantri",
-                "app_store_id": "6740808525"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:324230645762:android:4f900296e56b1583b27f1b",
-        "android_client_info": {
-          "package_name": "com.doapp.store.luonghang"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "324230645762-tk3q7r7q1pto2c5ibscpijdqf41asopo.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCKigxPskLYyXFxobKqb5QgiwFVgC29qnw"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "324230645762-tk3q7r7q1pto2c5ibscpijdqf41asopo.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "324230645762-6eoifvqrr7grtolmj8t4t3do4dv2nluf.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.ikgroup.dongtienquantri",
-                "app_store_id": "6740808525"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:324230645762:android:71823a45735c0518b27f1b",
-        "android_client_info": {
-          "package_name": "com.ikgroup.dongtienquantri"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "324230645762-tk3q7r7q1pto2c5ibscpijdqf41asopo.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCKigxPskLYyXFxobKqb5QgiwFVgC29qnw"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "324230645762-tk3q7r7q1pto2c5ibscpijdqf41asopo.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "324230645762-6eoifvqrr7grtolmj8t4t3do4dv2nluf.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.ikgroup.dongtienquantri",
-                "app_store_id": "6740808525"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:324230645762:android:2963f6223987b26ab27f1b",
-        "android_client_info": {
-          "package_name": "com.ikigroup.chunter"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "324230645762-tk3q7r7q1pto2c5ibscpijdqf41asopo.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCKigxPskLYyXFxobKqb5QgiwFVgC29qnw"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "324230645762-tk3q7r7q1pto2c5ibscpijdqf41asopo.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "324230645762-6eoifvqrr7grtolmj8t4t3do4dv2nluf.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.ikgroup.dongtienquantri",
-                "app_store_id": "6740808525"
+                "bundle_id": "com.ikigroup.ikicoach",
+                "app_store_id": "6484263984"
               }
             }
           ]

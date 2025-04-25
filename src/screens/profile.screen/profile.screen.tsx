@@ -272,7 +272,7 @@ const SettingProfileScreen = () => {
         <PieChartCommon sections={data} point={point}></PieChartCommon>
         <Pressable onLongPress={openHiddenPage} style={styles.viewPowered}>
           <Text style={styles.textPoweredBy}>{translations.task.powered}</Text>
-          <IconSvg name="logoIeltsHunter" width={32} height={18} />
+          <IconSvg name="logoIkigaiCoach" width={32} height={18} />
         </Pressable>
       </View>
     );
