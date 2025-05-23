@@ -34,6 +34,7 @@ import eventEmitter from "@services/event-emitter";
 import TashListItem from "@shared-components/task-item/task.list.item";
 import { getListScore } from "@services/api/pie.chart.api";
 import TextBase from "@shared-components/TextBase";
+import ChartIkigai from "./chart.ikigai";
 
 const SettingProfileScreen = () => {
   const theme = useTheme();
@@ -358,7 +359,8 @@ const SettingProfileScreen = () => {
         <View style={{ flex: 1, marginBottom: 20 }}>
           {renderButtonTeacherScreen()}
           {renderScrollPointCoin()}
-          {renderPieChart()}
+          {/* {renderPieChart()} */}
+          <ChartIkigai />
           <Tasks />
           {renderInviteFriend()}
           <ListCodeActive />

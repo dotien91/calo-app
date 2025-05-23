@@ -145,7 +145,7 @@ const Navigation = () => {
             tabBarStyle: {
               borderTopColor: palette.borderColor,
               backgroundColor: isDarkMode ? palette.black : palette.white,
-              height: getBottomSpace() + 48,
+              // height: getBottomSpace() + 48,
               marginTop: 4,
             },
             // tabBarButton: (props) => (
