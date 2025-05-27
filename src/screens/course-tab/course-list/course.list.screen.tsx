@@ -104,7 +104,7 @@ export const ListCourse = React.memo(
             sort_by: "createdAt",
             order_by: "DESC",
             public_status: "active",
-            types: ["Call group", "Self-learning"],
+            // types: ["Call group", "Self-learning"],
           },
       !isTabCourse ? getListTutor : getCourseList,
     );
