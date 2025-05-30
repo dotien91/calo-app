@@ -32,20 +32,20 @@ export const filterCourseKeys = [
         id: "All skills",
       },
       {
-        name: translations.course.listening,
-        id: "Listening",
+        name: translations.course.health,
+        id: "Health",
       },
       {
-        name: translations.course.reading,
-        id: "Reading",
+        name: translations.course.business,
+        id: "Business",
       },
       {
-        name: translations.course.writing,
-        id: "Writing",
+        name: translations.course.life,
+        id: "Life",
       },
       {
-        name: translations.course.Speaking,
-        id: "Speaking",
+        name: translations.course.finance,
+        id: "Finance",
       },
     ],
   },
@@ -53,40 +53,40 @@ export const filterCourseKeys = [
     name: translations.course.pricePerCourse,
     id: "price",
   },
-  {
-    name: translations.course.levelsOfStudy,
-    id: "levels",
-    keyFilters: [
-      {
-        name: "4+",
-        id: "4+",
-      },
-      {
-        name: "5+",
-        id: "5+",
-      },
-      {
-        name: "6+",
-        id: "6+",
-      },
-      {
-        name: "7+",
-        id: "7+",
-      },
-      {
-        name: "8+",
-        id: "8+",
-      },
-      {
-        name: "9",
-        id: "9",
-      },
-    ],
-  },
-  {
-    name: translations.course.onlyEnglish,
-    id: "onlyEnglishNativeSpeakers",
-  },
+  // {
+  //   name: translations.course.levelsOfStudy,
+  //   id: "levels",
+  //   keyFilters: [
+  //     {
+  //       name: "4+",
+  //       id: "4+",
+  //     },
+  //     {
+  //       name: "5+",
+  //       id: "5+",
+  //     },
+  //     {
+  //       name: "6+",
+  //       id: "6+",
+  //     },
+  //     {
+  //       name: "7+",
+  //       id: "7+",
+  //     },
+  //     {
+  //       name: "8+",
+  //       id: "8+",
+  //     },
+  //     {
+  //       name: "9",
+  //       id: "9",
+  //     },
+  //   ],
+  // },
+  // {
+  //   name: translations.course.onlyEnglish,
+  //   id: "onlyEnglishNativeSpeakers",
+  // },
 ];
 
 export const filterTeacherKeys = [
@@ -121,20 +121,20 @@ export const filterTeacherKeys = [
         id: "All skills",
       },
       {
-        name: translations.course.listening,
-        id: "Listening",
+        name: translations.course.health,
+        id: "Helth",
       },
       {
-        name: translations.course.reading,
-        id: "Reading",
+        name: translations.course.business,
+        id: "Business",
       },
       {
-        name: translations.course.writing,
-        id: "Writing",
+        name: translations.course.life,
+        id: "Life",
       },
       {
-        name: translations.course.Speaking,
-        id: "Speaking",
+        name: translations.course.finance,
+        id: "Finance",
       },
     ],
   },
@@ -186,28 +186,28 @@ export const filterTeacherKeys = [
       },
     ],
   },
-  {
-    name: translations.course.onlyEnglish,
-    id: "onlyEnglishNativeSpeakers",
-  },
-  {
-    name: translations.course.levelsOfTutor,
-    id: "levelOfTutor",
-    keyFilters: [
-      {
-        name: "8",
-        id: "8",
-      },
-      {
-        name: "8.5",
-        id: "8.5",
-      },
-      {
-        name: "9",
-        id: "9",
-      },
-    ],
-  },
+  // {
+  //   name: translations.course.onlyEnglish,
+  //   id: "onlyEnglishNativeSpeakers",
+  // },
+  // {
+  //   name: translations.course.levelsOfTutor,
+  //   id: "levelOfTutor",
+  //   keyFilters: [
+  //     {
+  //       name: "8",
+  //       id: "8",
+  //     },
+  //     {
+  //       name: "8.5",
+  //       id: "8.5",
+  //     },
+  //     {
+  //       name: "9",
+  //       id: "9",
+  //     },
+  //   ],
+  // },
 ];
 
 export const quickFilterCourse = [
@@ -237,23 +237,23 @@ export const quickFilterCourse = [
     type: "skills",
   },
   {
-    name: translations.course.listening,
-    id: "Listening",
+    name: translations.course.health,
+    id: "Health",
     type: "skills",
   },
   {
-    name: translations.course.Speaking,
-    id: "Speaking",
+    name: translations.course.business,
+    id: "Business",
     type: "skills",
   },
   {
-    name: translations.course.reading,
-    id: "Reading",
+    name: translations.course.life,
+    id: "Life",
     type: "skills",
   },
   {
-    name: translations.course.writing,
-    id: "Writing",
+    name: translations.course.finance,
+    id: "Finance",
     type: "skills",
   },
 ];

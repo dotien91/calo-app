@@ -41,7 +41,7 @@ export const MultiCheckBox = React.memo(
           style={[
             styles.btnFilter,
             isActive && styles.btnFilterActive,
-            useFlexOne && { flex: 1, ...CS.flexCenter },
+            // useFlexOne && { flex: 1, ...CS.flexCenter },
             // isDisabled && { opacity: 0.5 },
           ]}
           // disabled={isDisabled}
