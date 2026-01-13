@@ -19,41 +19,23 @@ import ListActionOfComment from "@shared-components/action-bottomsheet/ListActio
 import StickBottomModal from "@shared-components/stick-bottom/StickBottomModal";
 
 import ReportView from "./modal-inner/ReportView";
-import CourseFilterModalInnter from "@screens/course-tab/components/course.filter.modal.inner";
 import IconBtn from "@shared-components/button/IconBtn";
 import SelectBox from "@shared-components/modal/modal-inner/SelectBox";
 import LottieComponent from "@shared-components/lottie/LottieComponent";
-import ActionMore from "@screens/course/detail-teacher/components/ActionMore";
-import ChatRoomClass from "@screens/chat/room-chat/chat.room.class.video";
 import ListUser from "./modal-inner/ListUser";
-import PopupCreateLesson from "@screens/course/course-create/components/PartViewCreate/popup.create.lesson";
 import InputViewModal from "@shared-components/input-modal/input.modal";
 import ListActionInner from "./modal-inner/ListActionInner";
 import GamificationView from "./modal-inner/GamificationView";
 import EarnPointView from "./modal-inner/EarnPointView";
-import ListCourseLiveStream from "@screens/stream/stream-modal/stream.modal.list.course";
-import FilterAffiliate from "@screens/affiliate/components/FilterAffiliate";
 import ListBank from "./modal-inner/ListBank";
-import SelectRadioButton from "@screens/code-activations/select.radio.button";
-import ReferralPopup from "@screens/profile.screen/referral.popup";
-import TeacherClassModalInner from "@screens/teacher-courses/teacher.class.modal.inner";
 import { ScreenHeight } from "@freakycoder/react-native-helpers";
-import PopupCourseDetail from "@screens/course/course-preview/components/popup.more";
-import PopupCoupon from "@screens/course/course-preview/components/popup.coupon";
 import ReferralPopupTask from "@shared-components/task-item/task.referral.popup";
 import { translations } from "@localization";
-import WriteReview from "@screens/audio/components/WriteReview";
-import PopupMember from "@screens/club/list-member/popup.member";
 import SelectCourseView from "./modal-inner/SelectCourseView";
-import PopupListFriend from "@screens/club/list-member/popup.list.friend";
-import PopupMoreEvent from "@screens/events/components/popup.more.event";
 import ConfirmViewBottom from "@shared-components/comfirm-view-bottom/comfirm.view.bottom";
-import PopupClubPost from "@screens/club/club/pupup.club.post";
-import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 import ScheduleView from "./modal-inner/ScheduleView";
 import ViewMore from "./modal-inner/ViewMore";
 import SubscriptionView from "./modal-inner/SubscriptionView";
-import GiftingLiveStream from "@screens/stream/stream-modal/stream.modal.gifting";
 
 // Super modal help you create a modal with a title, a content and a button
 // Usage:
@@ -75,11 +57,11 @@ import GiftingLiveStream from "@screens/stream/stream-modal/stream.modal.gifting
 interface SuperModalProps {}
 
 const SuperModal: React.FC<SuperModalProps> = () => {
-  const [data, setData] = useState();
-  const [visible, setVisible] = useState(true);
-  const [styleModalType, setStyleModalType] = useState<EnumStyleModalType>();
+  const [data, setData] = useState<any>();
+  const [visible, setVisible] = useState(false);
+  const [styleModalType, setStyleModalType] = useState<EnumStyleModalType | undefined>();
   const [contentModalType, setContentModalType] =
-    useState<EnumModalContentType>();
+    useState<EnumModalContentType | undefined>();
   // const [contentModalType, setContentModalType] =
   //   useState<EnumModalContentType>(EnumModalContentType.SubscriptionView);
   // const [styleModalType, setStyleModalType] = useState<EnumStyleModalType>("middle");
@@ -114,8 +96,8 @@ const SuperModal: React.FC<SuperModalProps> = () => {
   useEffect(() => {
     if (!visible) {
       setTimeout(() => {
-        setStyleModalType("");
-        setContentModalType("");
+        setStyleModalType(undefined);
+        setContentModalType(undefined);
       }, 300);
     }
   }, [visible]);
@@ -128,17 +110,12 @@ const SuperModal: React.FC<SuperModalProps> = () => {
 
   const getStyleModal = () => {
     switch (contentModalType) {
-      case EnumModalContentType.ChatRoom:
-        return styles.chatView;
       case EnumModalContentType.Loading:
         return styles.loadingView;
-        break;
       case EnumModalContentType.Library:
         return styles.modalMedia;
-        break;
       default:
         return styles.modal;
-        break;
     }
   };
 
@@ -254,9 +231,6 @@ const SuperModal: React.FC<SuperModalProps> = () => {
   const renderContentModal = () => {
     return (
       <>
-        {contentModalType == EnumModalContentType.PlayPodcast && (
-          <AudioPlayScreen />
-        )}
         {contentModalType == EnumModalContentType.Report && (
           <ReportView {...data} />
         )}
@@ -266,20 +240,11 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         {contentModalType == EnumModalContentType.CommentAction && (
           <ListActionOfComment data={data} />
         )}
-        {contentModalType == EnumModalContentType.FilterListCourse && (
-          <CourseFilterModalInnter {...data} />
-        )}
         {contentModalType == EnumModalContentType.FilterTypeCourse && (
           <SelectBox {...data} />
         )}
-        {contentModalType == EnumModalContentType.MoreTeacher && (
-          <ActionMore data={data} />
-        )}
         {contentModalType == EnumModalContentType.ListUser && (
           <ListUser {...data} />
-        )}
-        {contentModalType == EnumModalContentType.AddLesson && (
-          <PopupCreateLesson {...data} />
         )}
         {contentModalType == EnumModalContentType.ConfirmBottom && (
           <ConfirmViewBottom {...data} closeModal={closeModal} />
@@ -294,39 +259,15 @@ const SuperModal: React.FC<SuperModalProps> = () => {
           <GamificationView {...data} closeModal={closeModal} />
         )}
         {contentModalType == EnumModalContentType.CustomView &&
-          data.customView()}
-        {contentModalType == EnumModalContentType.FilterAffiliate && (
-          <FilterAffiliate data={data} />
-        )}
+          data?.customView?.()}
         {contentModalType == EnumModalContentType.SearchBank && (
           <ListBank {...data} closeModal={closeModal} />
-        )}
-        {contentModalType == EnumModalContentType.SelectSort && (
-          <SelectRadioButton data={data} />
-        )}
-        {contentModalType == EnumModalContentType.Referral && (
-          <ReferralPopup data={data} />
-        )}
-        {contentModalType == EnumModalContentType.TeacherClass && (
-          <TeacherClassModalInner {...data} />
-        )}
-        {contentModalType == EnumModalContentType.MoreCourse && (
-          <PopupCourseDetail {...data} />
-        )}
-        {contentModalType == EnumModalContentType.AddCouponToCourse && (
-          <PopupCoupon {...data} />
         )}
         {contentModalType == EnumModalContentType.RefferralTask && (
           <ReferralPopupTask data={data} />
         )}
         {contentModalType == EnumModalContentType.FilterSortClub && (
           <SelectBox {...data} />
-        )}
-        {contentModalType == EnumModalContentType.ReviewAudio && (
-          <WriteReview data={data} />
-        )}
-        {contentModalType == EnumModalContentType.MemberAction && (
-          <PopupMember {...data} />
         )}
         {contentModalType == EnumModalContentType.LottieAnimation && (
           <EarnPointView {...data} />
@@ -339,25 +280,8 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         {contentModalType == EnumModalContentType.Library && (
           <ImageSlideShow {...data} closeModal={closeModal} />
         )}
-        {contentModalType == EnumModalContentType.CustomView &&
-          data.customView()}
-        {contentModalType == EnumModalContentType.ListCourse && (
-          <ListCourseLiveStream {...data} />
-        )}
-        {contentModalType == EnumModalContentType.ChatRoom && (
-          <ChatRoomClass {...data} />
-        )}
         {contentModalType == EnumModalContentType.SelectCourse && (
           <SelectCourseView {...data} />
-        )}
-        {contentModalType == EnumModalContentType.MoreEventDetail && (
-          <PopupMoreEvent {...data} />
-        )}
-        {contentModalType == EnumModalContentType.AddToGroup && (
-          <PopupListFriend {...data} />
-        )}
-        {contentModalType == EnumModalContentType.ClubAttended && (
-          <PopupClubPost {...data} />
         )}
         {contentModalType == EnumModalContentType.Schedule && (
           <ScheduleView {...data} />
@@ -367,9 +291,6 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         )}
         {contentModalType == EnumModalContentType.SubscriptionView && (
           <SubscriptionView />
-        )}
-        {contentModalType == EnumModalContentType.GiftingLive && (
-          <GiftingLiveStream {...data} />
         )}
       </>
     );
@@ -381,8 +302,11 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         isVisible={visible}
         onBackdropPress={closeModal}
         backdropOpacity={data?.backdropOpacity}
-        // swipeDirection={["down"]}
-        // onSwipeComplete={closeModal}
+        animationIn="slideInUp"
+        animationInTiming={200}
+        animationOut="slideOutDown"
+        animationOutTiming={200}
+        {...({} as any)}
       >
         <View style={[styles.bottomInner, data?.style ? data.style : {}]}>
           {!data?.hideCloseIcon && (
@@ -416,8 +340,11 @@ const SuperModal: React.FC<SuperModalProps> = () => {
       <StickBottomModal
         isVisible={visible}
         onBackdropPress={closeModal}
-        // swipeDirection={["down"]}
-        // onSwipeComplete={closeModal}
+        animationIn="slideInUp"
+        animationInTiming={200}
+        animationOut="slideOutDown"
+        animationOutTiming={200}
+        {...({} as any)}
       >
         <View style={styles.fullModal}>
           {/* <View
@@ -457,6 +384,8 @@ const SuperModal: React.FC<SuperModalProps> = () => {
       </Modal>
     );
   }
+  
+  return null;
 };
 
 const styles = StyleSheet.create({

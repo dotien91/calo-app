@@ -31,7 +31,6 @@ import { navigate } from "@helpers/navigation.helper";
 import eventEmitter from "@services/event-emitter";
 import NewHomeScreen from "@screens/home/new.screen.home";
 import BottomSheetPanResponder from "@screens/audio/components/BottomSheetPanResponder";
-import OneoneScreen from "@screens/call/oneone.screen";
 import MentorListScreen from "@screens/tutor-tab/tutor.list.screen";
 
 // import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
@@ -80,9 +79,6 @@ const Navigation = () => {
       case SCREENS.DISCOVERSCREEN_TAB:
         iconName = focused ? "icDiscovery" : "icDiscovery";
         break;
-      case SCREENS.CLUB_TAB:
-        iconName = focused ? "icCoach" : "icCoachBlur";
-        break;
       default:
         iconName = focused ? "icHome" : "icHome";
         break;
@@ -116,9 +112,6 @@ const Navigation = () => {
         break;
       case SCREENS.SETTING:
         label = translations.setting;
-        break;
-      case SCREENS.CLUB_TAB:
-        label = translations.club.club;
         break;
       default:
         label = translations.homes;
@@ -249,7 +242,7 @@ const Navigation = () => {
   const DiscoveryStackScreen = () => {
     return (
       <DiscoverStack.Navigator screenOptions={{ headerShown: false }}>
-        {[...DiscoveryStackData, ...ClubStackData].map((item) => (
+        {DiscoveryStackData.map((item) => (
           <Stack.Screen
             key={item.name}
             name={item.name}
@@ -340,13 +333,6 @@ const Navigation = () => {
         {/* <Stack.Screen name={SCREENS.VIEW_LIVE_STREAM} component={ViewStreamScreen} /> */}
         <Stack.Screen name={SCREENS.TABS} component={TabNavigation} />
         {renderCommonStack()}
-        <Stack.Screen
-          options={{
-            animationEnabled: false,
-          }}
-          name={SCREENS.ONEONE_SCREEN}
-          component={OneoneScreen}
-        />
       </Stack.Navigator>
       <BottomSheetPanResponder />
     </NavigationContainer>

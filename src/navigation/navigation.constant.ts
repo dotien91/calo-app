@@ -14,27 +14,10 @@ import WithdrawScreen from "@screens/withdraw/withdraw.screen";
 import { SCREENS } from "constants";
 import IntroScreen from "@screens/welcome/intro/intro.screen";
 import AudioBookScreen from "@screens/audio/audio-book/audio.book.screen";
-import ClassRoomScreen from "@screens/call-class/class.room.screen";
 import WebviewScreen from "@screens/webview/Webview";
 import CourseRecommendScreen from "@screens/course/course-recommend/course.recommend";
 import HomeAffilite from "@screens/affiliate/intro.affiliate.screen";
-import ClubScreen from "@screens/club/home-club/club.screen";
 import showAllReview from "@screens/audio/audio-preview/show.all.review";
-import EliteClubScreen from "@screens/club/elite-club/elite.club.screen";
-import CreateEventScreen from "@screens/club/create-event/create.event.screen";
-import CreateClubScreen from "@screens/club/create-club/create.club.screen";
-import EventsListScreen from "@screens/events/events.list.screen";
-import DetailScreenEvent from "@screens/events/components/detail.screen.event";
-import ListImageScreen from "@screens/club/elite-club/components/list.image.screen";
-import BecomEliteClub from "@screens/club/elite-club/components/becom.elite.club";
-import ClubPostScreen from "@screens/club/club/club.post.screen";
-import ListMemberScreen from "@screens/club/list-member/list.member";
-import UpdateEventScreen from "@screens/events/update-event/update.event.screen";
-import ListCourseClub from "@screens/home/components/list-course-club/list.course.club.screen";
-import SettingClubScreen from "@screens/club/setting-club/setting.club.screen";
-import SearchClubScreen from "@screens/club/search-club/search.club.screen";
-import ClubByCategoryScreen from "@screens/club/search-club/club.by.category.screen";
-import ClubMediaScreen from "@screens/club/media-club/club.media.screen";
 import DetailScreen from "@screens/detail/DetailScreen";
 import LoginScreen from "@screens/auth/login/login.screen";
 import LoginWithEmailScreen from "@screens/auth/login/login.with.email.screen";
@@ -72,8 +55,6 @@ import ChangeLanguage from "@screens/change-language/change.language";
 import SmartBanking from "@screens/smart-banking/smart.banking";
 import PaymentSuccess from "@screens/payment-success/payment.success";
 import CourseLearnScreen from "@screens/course/course-learn-video/course.learn.video.screen";
-import InComingCall from "@screens/call/in.coming.call";
-import CallPageScreen from "@screens/call/call.page.screen";
 // import CourseCategoryDetailScreen from "@screens/course-list/course-filter-result/course.filter.result.screen";
 // import PaymentCoures from "@screens/payment-coures/payment.coures";
 // import CourseCategoryDetailScreen from "@screens/course-list/course-filter-result/course.filter.result.screen";
@@ -88,10 +69,6 @@ import CourseAddModuleScreen from "@screens/course/course-create/course.add.modu
 import ListCouponForMyCourse from "@screens/coupon/coupon.list";
 import CouponCreateScreen from "@screens/coupon/coupon.create";
 import TabFollow from "@screens/tab-follow/tab.follow";
-import ClassHomeWorkScreen from "@screens/class-home-work/class.home.work.screen";
-import CreateWorkScreen from "@screens/class-home-work/create.work.screen";
-import DetailTaskScreen from "@screens/class-home-work/detail.task.screen";
-import AddWorkStudentScreen from "@screens/class-home-work/add.work.student.screen";
 import ChatListScreen from "@screens/chat/list-chat/chat.list.screen";
 import NotificationScreen from "@screens/notification/NotificationScreen";
 import TaskScreen from "@screens/profile.screen/task.screen";
@@ -116,11 +93,6 @@ import AudioFilterResultScreen from "@screens/audio/audio-filter-result/audio.fi
 import UploadCertificate from "@screens/welcome/upload-certificate/upload.certificate.ieltshunter";
 import ChatRoomMediaScreen from "@screens/chat/media-club/chat.media.screen";
 import BecomeTutorScreen from "@screens/welcome/upload-certificate/become.tutor";
-import ListEvaluationStudents from "@screens/evaluation-class/list.evaluation.students";
-import EvaluationStudentScreen from "@screens/evaluation-class/evaluation.student.screen";
-import ListStudents from "@screens/evaluation-class/list.students";
-import IeltsPracticeSpeakingList from "@screens/ielts-practice/ielts.practice.speaking.list";
-import IelstPracticeSpeakingCreate from "@screens/ielts-practice/ielst.practice.speaking.create";
 import IeltsReadingPacticeScreen from "@screens/ielts-practice/ielts.reading.practice.test.screen";
 // import CreateSubscriptionScreen from "@screens/profile.screen/create-subscription.tsx/create.subscription.screen";
 
@@ -200,56 +172,7 @@ export const StackIntroData = [
   },
 ];
 
-export const ClubStackData = [
-  {
-    name: SCREENS.CLUB_SCREEN,
-    screen: ClubScreen,
-  },
-  {
-    name: SCREENS.SETTING_CLUB_SCREEN,
-    screen: SettingClubScreen,
-  },
-  {
-    name: SCREENS.CLUB_HOME,
-    screen: ClubPostScreen,
-  },
-  {
-    name: SCREENS.CREATE_CLUB_SCREEN,
-    screen: CreateClubScreen,
-  },
-  {
-    name: SCREENS.ELITE_CLUB,
-    screen: EliteClubScreen,
-  },
-  {
-    name: SCREENS.LIST_MEMBER_CLUB,
-    screen: ListMemberScreen,
-  },
-  {
-    name: SCREENS.LIST_COURSE_CLUB,
-    screen: ListCourseClub,
-  },
-  {
-    name: SCREENS.EVENTSLISTSCREEN,
-    screen: EventsListScreen,
-  },
-  {
-    name: SCREENS.DETAILEVENTSCREEN,
-    screen: DetailScreenEvent,
-  },
-  {
-    name: SCREENS.LIST_IMAGE_SCREEN,
-    screen: ListImageScreen,
-  },
-  {
-    name: SCREENS.BECOME_ELITE_CLUB,
-    screen: BecomEliteClub,
-  },
-  {
-    name: SCREENS.MEDIA_CLUB,
-    screen: ClubMediaScreen,
-  },
-];
+export const ClubStackData: any[] = [];
 
 export const CommonStackData = [
   { name: SCREENS.UPLOAD_CERTIFICATE, screen: UploadCertificate },
@@ -277,15 +200,9 @@ export const CommonStackData = [
   { name: SCREENS.SETTING_USER, screen: SettingUser },
   { name: SCREENS.CHANGELANGUAGE, screen: ChangeLanguage },
   { name: SCREENS.SMARTBANKING, screen: SmartBanking },
-  { name: SCREENS.CALL_PAGE, screen: CallPageScreen },
-  { name: SCREENS.IN_COMING_CALL, screen: InComingCall },
   { name: SCREENS.PAYMENT_SUCCESS, screen: PaymentSuccess },
   { name: SCREENS.TAB_FOLLOW, screen: TabFollow },
-  { name: SCREENS.CALL_CLASS, screen: ClassRoomScreen },
   { name: SCREENS.TEACHER_COURSES, screen: TeacherCourse },
-  { name: SCREENS.ADD_WORK_STUDENT, screen: AddWorkStudentScreen },
-  { name: SCREENS.DETAIL_TASK, screen: DetailTaskScreen },
-  { name: SCREENS.CREATE_WORK, screen: CreateWorkScreen },
   { name: SCREENS.TASK_SCREEN, screen: TaskScreen },
   { name: SCREENS.MY_COURES, screen: MyCourse },
   { name: SCREENS.SETTING, screen: SettingScreen },
@@ -320,11 +237,8 @@ export const CommonStackData = [
   { name: SCREENS.HIDDEN_PAGE, screen: HiddenPaage },
   { name: SCREENS.WEBVIEW_SCREEN, screen: WebviewScreen },
   { name: SCREENS.SHOW_ALL_REVIEW, screen: showAllReview },
-  { name: SCREENS.CLUB_BY_CATEGORY, screen: ClubByCategoryScreen },
-  { name: SCREENS.SEARCH_CLUB, screen: SearchClubScreen },
   { name: SCREENS.LEADERBOARD, screen: LeaderBoard },
   { name: SCREENS.COURSE_RECOMMEND, screen: CourseRecommendScreen },
-  { name: SCREENS.CLASSHOMEWORK, screen: ClassHomeWorkScreen },
   {
     name: SCREENS.ALL_AUDIO_BOOk,
     screen: AllBookScreen,
@@ -371,14 +285,6 @@ export const CommonStackData = [
     screen: AudioBookScreen,
   },
   {
-    name: SCREENS.UPDATE_EVENT_SCREEN,
-    screen: UpdateEventScreen,
-  },
-  {
-    name: SCREENS.CREATEEVENT,
-    screen: CreateEventScreen,
-  },
-  {
     name: SCREENS.MY_AUDIO,
     screen: MyAudioScreen,
   },
@@ -391,18 +297,4 @@ export const CommonStackData = [
     name: SCREENS.BECOME_TUTOR,
     screen: BecomeTutorScreen,
   },
-  {
-    name: SCREENS.LIST_EVALUATION,
-    screen: ListEvaluationStudents,
-  },
-  {
-    name: SCREENS.EVALUATION_SCREEN,
-    screen: EvaluationStudentScreen,
-  },
-  {
-    name: SCREENS.LIST_STUDENTS,
-    screen: ListStudents,
-  },
-  { name: SCREENS.LIST_SPEAKING_STUDENT, screen: IeltsPracticeSpeakingList },
-  { name: SCREENS.CREATE_SPEAKING, screen: IelstPracticeSpeakingCreate },
 ];

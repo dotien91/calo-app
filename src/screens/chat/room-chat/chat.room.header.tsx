@@ -14,8 +14,6 @@ import { translations } from "@localization";
 import GoBackButton from "@screens/auth/components/GoBackButton";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { SCREENS } from "constants";
-import { PERMISSION } from "@screens/call/utils";
-import { grantPermission } from "@screens/call/permission.helper";
 
 interface ChatHeaderProps {
   messages: any;
@@ -48,18 +46,12 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
     }
   };
 
-  const handleOpenCallPage = async (callType: string) => {
-    // NavigationService.push(SCREENS.CALL_PAGE);
-    // console.log(PERMISSION.permissionMedia, "PERMISSION.permissionMedia");
-    const grantedPermission = grantPermission(PERMISSION.permissionMedia);
-    const res = await grantedPermission(true, true);
-    if (!res) {
-      return;
-    }
-    NavigationService.navigate(SCREENS.CALL_PAGE, {
-      item: roomDetail,
-      type: callType,
-    });
+  const handleOpenCallPage = async (_callType?: string) => {
+    // Call functionality removed
+    // NavigationService.navigate(SCREENS.CALL_PAGE, {
+    //   item: roomDetail,
+    //   type: callType,
+    // });
   };
 
   return (
