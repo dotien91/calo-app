@@ -57,6 +57,16 @@ export default {
   discovers: "Discover",
   profile: "Profile",
   courses: "Course",
+  statistics: {
+    title: "Statistics",
+    overview: "Overview",
+    comingSoon: "Feature coming soon",
+  },
+  health: {
+    title: "Health",
+    overview: "Overview",
+    comingSoon: "Feature coming soon",
+  },
   error: {
     unknown: "Unknow error!",
     invalidPhoneEmail: "Phone/Email invalid",

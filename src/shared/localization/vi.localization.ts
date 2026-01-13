@@ -57,6 +57,16 @@ export default {
   discovers: "Khám phá",
   profile: "Hồ sơ",
   courses: "Khoá học",
+  statistics: {
+    title: "Thống kê",
+    overview: "Tổng quan",
+    comingSoon: "Tính năng đang được phát triển",
+  },
+  health: {
+    title: "Sức khoẻ",
+    overview: "Tổng quan",
+    comingSoon: "Tính năng đang được phát triển",
+  },
   error: {
     unknown: "Có lỗi không xác định xảy ra!",
     invalidPhoneEmail: "SĐT/Email không hợp lệ",

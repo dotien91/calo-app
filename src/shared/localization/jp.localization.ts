@@ -57,6 +57,16 @@ export default {
   discovers: "発見",
   profile: "プロフィール",
   courses: "コース",
+  statistics: {
+    title: "統計",
+    overview: "概要",
+    comingSoon: "機能は開発中です",
+  },
+  health: {
+    title: "健康",
+    overview: "概要",
+    comingSoon: "機能は開発中です",
+  },
   error: {
     unknown: "未知のエラーが発生しました！",
     invalidPhoneEmail: "無効な電話番号/メールアドレス",

@@ -30,6 +30,8 @@ import { navigate } from "@helpers/navigation.helper";
 import eventEmitter from "@services/event-emitter";
 import NewHomeScreen from "@screens/home/new.screen.home";
 import MentorListScreen from "@screens/tutor-tab/tutor.list.screen";
+import StatisticsScreen from "@screens/statistics/StatisticsScreen";
+import HealthScreen from "@screens/health/HealthScreen";
 
 // import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 // ? If you want to use stack or tab or both
@@ -39,6 +41,8 @@ const DiscoverStack = createStackNavigator();
 // const ClubStack = createStackNavigator();
 const HomeStack = createStackNavigator();
 const CourseStack = createStackNavigator();
+const StatisticsStack = createStackNavigator();
+const HealthStack = createStackNavigator();
 
 const Navigation = () => {
   const isDarkMode = useStore((state) => state.isDarkMode);
@@ -56,6 +60,18 @@ const Navigation = () => {
   ) => {
     let iconName = "home";
     switch (route.name) {
+      case SCREENS.HOME_TAB:
+        iconName = focused ? "icHome" : "icHome";
+        break;
+      case SCREENS.STATISTICS_TAB:
+        iconName = focused ? "icPoints" : "icPoints";
+        break;
+      case SCREENS.HEALTH_TAB:
+        iconName = focused ? "icHeart" : "icHeart";
+        break;
+      case SCREENS.SETTINGPROFILESCREEN_TAB:
+        iconName = focused ? "icProfile" : "icProfile";
+        break;
       case SCREENS.COURSE_TAB:
         iconName = focused ? "icCourse" : "icCourse";
         break;
@@ -67,9 +83,6 @@ const Navigation = () => {
         break;
       case SCREENS.NOTIFICATION:
         iconName = focused ? "bell" : "bell";
-        break;
-      case SCREENS.SETTINGPROFILESCREEN_TAB:
-        iconName = focused ? "icProfile" : "icProfile";
         break;
       case SCREENS.SETTING:
         iconName = focused ? "settings" : "settings";
@@ -87,6 +100,18 @@ const Navigation = () => {
   const renderLable = (route: any, color: any) => {
     let label = translations.homes;
     switch (route.name) {
+      case SCREENS.HOME_TAB:
+        label = translations.homes;
+        break;
+      case SCREENS.STATISTICS_TAB:
+        label = translations.statistics.title;
+        break;
+      case SCREENS.HEALTH_TAB:
+        label = translations.health.title;
+        break;
+      case SCREENS.SETTINGPROFILESCREEN_TAB:
+        label = translations.profile.profile;
+        break;
       case SCREENS.COURSE_TAB:
         label = translations.courses;
         break;
@@ -98,9 +123,6 @@ const Navigation = () => {
         break;
       case SCREENS.NOTIFICATION:
         label = translations.notifications.notifications;
-        break;
-      case SCREENS.SETTINGPROFILESCREEN_TAB:
-        label = translations.profile.profile;
         break;
       case SCREENS.SETTING:
         label = translations.setting;
@@ -160,12 +182,11 @@ const Navigation = () => {
               },
             }}
           />
-          <Tab.Screen name={SCREENS.COURSE_TAB} component={CourseStackScreen} />
-          <Tab.Screen name={SCREENS.MENTOR_TAB} component={MentorStackScreen} />
-          {/* <Tab.Screen name={SCREENS.CLUB_TAB} component={ClubStackScreen} /> */}
-          {/* <Tab.Screen name={SCREENS.DISCOVERSCREEN_TAB} component={DiscoveryStackScreen} /> */}
-          {/* <Tab.Screen name={SCREENS.CHAT} component={chatListScreen} /> */}
-
+          <Tab.Screen
+            name={SCREENS.STATISTICS_TAB}
+            component={StatisticsStackScreen}
+          />
+          <Tab.Screen name={SCREENS.HEALTH_TAB} component={HealthStackScreen} />
           <Tab.Screen
             name={SCREENS.SETTINGPROFILESCREEN_TAB}
             component={SettingProfileScreen}
@@ -263,6 +284,22 @@ const Navigation = () => {
         <Stack.Screen name={SCREENS.HOME} component={NewHomeScreen} />
         {/* {renderCommonStack()} */}
       </HomeStack.Navigator>
+    );
+  };
+
+  const StatisticsStackScreen = () => {
+    return (
+      <StatisticsStack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name={SCREENS.STATISTICS} component={StatisticsScreen} />
+      </StatisticsStack.Navigator>
+    );
+  };
+
+  const HealthStackScreen = () => {
+    return (
+      <HealthStack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name={SCREENS.HEALTH} component={HealthScreen} />
+      </HealthStack.Navigator>
     );
   };
 
