@@ -44,8 +44,6 @@ import LoadingList from "@shared-components/loading.list.component";
 import { ICourseItem } from "models/course.model";
 import { formatVNDate } from "@utils/date.utils";
 import IconSvg from "assets/svg";
-import TextViewCollapsed from "@screens/course/components/text.view.collapsed";
-// import SubscriptionBtn from "@screens/home/components/subscription-btn/SubscriptionBtn";
 
 const initialLayout = WindowWidth;
 interface ProfileUserProps {
@@ -418,7 +416,7 @@ const ProfileUser = (props: ProfileUserProps) => {
             },
           )
         ) : (
-          <TextViewCollapsed text={translations.noCertificates} />
+          null
         )}
       </View>
     );

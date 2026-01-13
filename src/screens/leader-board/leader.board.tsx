@@ -16,7 +16,6 @@ import { translations } from "@localization";
 import createStyles from "./leader.board.style";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import { SCREENS } from "constants";
-import ItemLeaderBoard from "@screens/discover-screen/components/item.leader.board";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 
 const LeaderBoard = () => {
@@ -97,7 +96,6 @@ const LeaderBoard = () => {
     // if (!rankUser.length) return null;
     return (
       <>
-        <ItemLeaderBoard />
         {isLoading && <LoadingList numberItem={2} />}
       </>
     );
