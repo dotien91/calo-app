@@ -76,9 +76,6 @@ const Navigation = () => {
       case SCREENS.SETTING:
         iconName = focused ? "settings" : "settings";
         break;
-      case SCREENS.DISCOVERSCREEN_TAB:
-        iconName = focused ? "icDiscovery" : "icDiscovery";
-        break;
       default:
         iconName = focused ? "icHome" : "icHome";
         break;
@@ -106,9 +103,6 @@ const Navigation = () => {
         break;
       case SCREENS.SETTINGPROFILESCREEN_TAB:
         label = translations.profile.profile;
-        break;
-      case SCREENS.DISCOVERSCREEN_TAB:
-        label = translations.discovers;
         break;
       case SCREENS.SETTING:
         label = translations.setting;
@@ -171,15 +165,7 @@ const Navigation = () => {
           <Tab.Screen name={SCREENS.COURSE_TAB} component={CourseStackScreen} />
           <Tab.Screen name={SCREENS.MENTOR_TAB} component={MentorStackScreen} />
           {/* <Tab.Screen name={SCREENS.CLUB_TAB} component={ClubStackScreen} /> */}
-          <Tab.Screen
-            name={SCREENS.DISCOVERSCREEN_TAB}
-            component={DiscoveryStackScreen}
-            listeners={{
-              tabPress: () => {
-                navigate(SCREENS.DISCOVERSCREEN_TAB);
-              },
-            }}
-          />
+          {/* <Tab.Screen name={SCREENS.DISCOVERSCREEN_TAB} component={DiscoveryStackScreen} /> */}
           {/* <Tab.Screen name={SCREENS.CHAT} component={chatListScreen} /> */}
 
           <Tab.Screen

@@ -2,7 +2,6 @@ import AllBookScreen from "@screens/audio/all.book.screen";
 import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 import AudioPreview from "@screens/audio/audio-preview/audio.preview";
 import RecommendBookScreen from "@screens/audio/recommend.book.screen";
-import DiscoverScreen from "@screens/discover-screen/discover.screen";
 import PracticeHomeScreen from "@screens/ielts-practice/ielts.practice.home.screen";
 import IeltsPraticeList from "@screens/ielts-practice/ielts.practice.list";
 import IeltsPacticeScreen from "@screens/ielts-practice/ielts.practice.test.screen";
@@ -97,10 +96,6 @@ import IeltsReadingPacticeScreen from "@screens/ielts-practice/ielts.reading.pra
 // import CreateSubscriptionScreen from "@screens/profile.screen/create-subscription.tsx/create.subscription.screen";
 
 export const DiscoveryStackData = [
-  {
-    name: SCREENS.DISCOVERSCREEN,
-    screen: DiscoverScreen,
-  },
   {
     name: SCREENS.ALL_AUDIO_BOOk,
     screen: AllBookScreen,
