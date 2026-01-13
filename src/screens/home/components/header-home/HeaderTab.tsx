@@ -12,16 +12,8 @@ import useStore from "@services/zustand/store";
 import { EnumCourseType } from "models/course.model";
 import InviteView from "../invite-me/invite";
 import ListLiveStream from "../list-livestream/list.liveStream";
-// import TextBase from "@shared-components/TextBase";
-// import { useUserHook } from "@helpers/hooks/useUserHook";
-// import { getStatusBarHeight } from "react-native-safearea-height";
-// import ListLiveStream from "../list-livestream/list.liveStream";
-// import CourseView from "../list-course/list.course";
-// import FastImage from "react-native-fast-image";
-import AudioView from "@screens/audio/audio-list/audio.view";
+
 import { navigate } from "@helpers/navigation.helper";
-// import AfiliateShortcut from "@screens/affiliate/components/afiliate.shortcut";
-// import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
 import CourseView from "../list-course/list.course";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
@@ -156,13 +148,8 @@ const HeaderTab = () => {
         })}
       </View>
       {/* <AfiliateShortcut /> */}
-      <AudioView
-        extraParams={userData?._id ? { type: "suggestion" } : {}}
-        onPress={gotoAudioBook}
-      />
       <CourseView />
       <InviteView />
-      <ListLiveStream group_id={null} />
       {/* <View style={{ paddingTop: 10 }}>
         <FastImage
           source={require("../../../../assets/images/coverhome.png")}

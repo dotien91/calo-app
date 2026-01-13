@@ -3,7 +3,6 @@ import ImageViewer from "react-native-image-zoom-viewer";
 
 import { Device } from "@utils/device.ui.utils";
 import { closeSuperModal } from "@helpers/super.modal.helper";
-import VideoPreview from "@screens/course/course-learn-video/components/video.preview";
 import { useSharedValue, withTiming } from "react-native-reanimated";
 import { StyleSheet, View } from "react-native";
 import CS from "@theme/styles";
@@ -60,23 +59,7 @@ const Media = ({ item }: Media) => {
   const onPressMarkDone = () => {};
 
   const renderVideo = () => {
-    return (
-      <VideoPreview
-        onPressLanscape={onPressLanscape}
-        // url={
-        //   "https://live-par-2-cdn-alt.livepush.io/live/bigbuckbunnyclip/index.m3u8"
-        // }
-        url={item?.media_url}
-        ref={videoRef}
-        changeOrientation={false}
-        markDoneCourse={onPressMarkDone}
-        thumbnail={item?.media_url.media_thumbnail}
-        // currentProgressData={currentProgressData}
-        source={item}
-        setSource={onPressItem}
-        fromSlideShow={true}
-      />
-    );
+    return null;
   };
   if (
     (item?.media_mime_type || "").includes("image") ||

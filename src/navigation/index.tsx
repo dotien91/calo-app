@@ -19,7 +19,6 @@ import { translations } from "@localization";
 import { getBottomSpace } from "react-native-iphone-screen-helper";
 import IconSvg from "assets/svg";
 import {
-  BankStackData,
   ClubStackData,
   CommonStackData,
   DiscoveryStackData,
@@ -30,7 +29,6 @@ import analytics from "@react-native-firebase/analytics";
 import { navigate } from "@helpers/navigation.helper";
 import eventEmitter from "@services/event-emitter";
 import NewHomeScreen from "@screens/home/new.screen.home";
-import BottomSheetPanResponder from "@screens/audio/components/BottomSheetPanResponder";
 import MentorListScreen from "@screens/tutor-tab/tutor.list.screen";
 
 // import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
@@ -197,19 +195,6 @@ const Navigation = () => {
     );
   };
 
-  const renderBanksStack = () => {
-    return (
-      <>
-        {BankStackData.map((item) => (
-          <Stack.Screen
-            key={item.name}
-            name={item.name}
-            component={item.screen}
-          />
-        ))}
-      </>
-    );
-  };
 
   const renderPracticeTestStack = () => {
     return (
@@ -292,7 +277,6 @@ const Navigation = () => {
           />
         ))}
         {renderPracticeTestStack()}
-        {renderBanksStack()}
       </>
     );
   };
@@ -320,7 +304,6 @@ const Navigation = () => {
         <Stack.Screen name={SCREENS.TABS} component={TabNavigation} />
         {renderCommonStack()}
       </Stack.Navigator>
-      <BottomSheetPanResponder />
     </NavigationContainer>
   );
 };
