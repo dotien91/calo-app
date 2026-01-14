@@ -1,29 +1,30 @@
-import {
-  View,
-  Text,
-  TouchableWithoutFeedback,
-  Keyboard,
-  Pressable,
-} from "react-native";
-import React, { useMemo, useState } from "react";
+import React, { useState, useMemo } from "react";
+import { View, StyleSheet, Pressable, Text, SafeAreaView } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
-
-import IconSvg from "assets/svg";
-import createStyles from "./choose.language.screen.style";
-import { SCREENS } from "constants";
-import { translations } from "@localization";
 import useStore from "@services/zustand/store";
-import { updateSession } from "@services/api/notification.api";
-import { palette } from "@theme/themes";
+import { translations } from "@localization";
+import {
+  getBottomSpace,
+  getStatusBarHeight,
+} from "react-native-iphone-screen-helper";
+import { isAndroid } from "@freakycoder/react-native-helpers";
+
 import TextBase from "@shared-components/TextBase";
+import Button from "@shared-components/button/Button";
+import CS from "@theme/styles";
+import { palette } from "@theme/themes";
+import IconSvg from "assets/svg";
+import { updateSession } from "@services/api/notification.api";
 import { LANG, _setJson } from "@services/local-storage";
+import { SCREENS } from "constants";
 
 interface TypeItemLanguage {
   label: string;
   value: string;
   flag: React.JSX.Element;
 }
+
 export default function ChooseLanguageScreen() {
   const languageList: TypeItemLanguage[] = [
     {
@@ -51,9 +52,10 @@ export default function ChooseLanguageScreen() {
     translations.setLanguage(value);
     setLanguage(value);
     _setJson(LANG, value);
-    NavigationService.replace(SCREENS.INTRO);
     updateSession({ picked_language: value });
+    NavigationService.replace(SCREENS.ONBOARDING);
   };
+
   const ItemLanguage = ({ item }: { item: TypeItemLanguage }) => {
     const isSelect: boolean = item.value == selected;
     return (
@@ -75,34 +77,94 @@ export default function ChooseLanguageScreen() {
       </Pressable>
     );
   };
+
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    <SafeAreaView style={CS.safeAreaView}>
       <View style={styles.container}>
-        <View style={[{ alignItems: "center" }]}>
-          <IconSvg
-            name="logoIkigaiCoach"
-            width={108}
-            height={95}
-            color={palette.primary}
-          />
+        <View style={styles.header}>
+          <TextBase
+            fontSize={28}
+            fontWeight="700"
+            color="text"
+            style={styles.title}
+          >
+            {translations.changeLanguage}
+          </TextBase>
+          <TextBase
+            fontSize={16}
+            fontWeight="400"
+            color="textOpacity8"
+            style={styles.subtitle}
+          >
+            Chọn ngôn ngữ bạn muốn sử dụng
+          </TextBase>
         </View>
-        <View style={{ flex: 1 }}>
-          <View style={{ alignItems: "center", marginTop: 40 }}>
-            <TextBase
-              title={translations.changeLanguage}
-              fontSize={24}
-              fontWeight="700"
-            />
-          </View>
-          <View style={styles.child}>
-            <View style={styles.viewItem}>
-              {languageList.map((item, index: number) => {
-                return <ItemLanguage key={index} item={item} />;
-              })}
-            </View>
-          </View>
+
+        <View style={styles.content}>
+          {languageList.map((item, index) => (
+            <ItemLanguage key={index} item={item} />
+          ))}
         </View>
       </View>
-    </TouchableWithoutFeedback>
+    </SafeAreaView>
   );
 }
+
+const createStyles = (theme: any) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      paddingHorizontal: 16,
+      paddingTop: getStatusBarHeight() + 20,
+    },
+    header: {
+      marginBottom: 40,
+      alignItems: "center",
+    },
+    title: {
+      textAlign: "center",
+      marginBottom: 12,
+    },
+    subtitle: {
+      textAlign: "center",
+    },
+    content: {
+      flex: 1,
+      gap: 16,
+    },
+    itemLanguageSelected: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      padding: 20,
+      borderRadius: 12,
+      backgroundColor: palette.secondColor,
+      borderWidth: 2,
+      borderColor: palette.primary,
+    },
+    itemLanguageNotSelected: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      padding: 20,
+      borderRadius: 12,
+      backgroundColor: palette.white,
+      borderWidth: 2,
+      borderColor: palette.grey1,
+    },
+    contentItem: {
+      flexDirection: "row",
+      alignItems: "center",
+      flex: 1,
+    },
+    leftItem: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 12,
+    },
+    textLanguage: {
+      fontSize: 18,
+      fontWeight: "600",
+      color: palette.text,
+    },
+  });

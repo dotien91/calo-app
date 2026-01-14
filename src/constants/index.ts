@@ -148,6 +148,15 @@ export const SCREENS = {
   LIST_SPEAKING_STUDENT: "ListSpeakingStudent",
   LIST_SPEAKING_TEACHER: "ListSpeakingTeacher",
   CREATE_SPEAKING: "CreateSpeaking",
+  ONBOARDING: "Onboarding",
+  PLAN_RESULT: "PlanResult",
+  CURRENT_WEIGHT: "CurrentWeight",
+  HEIGHT: "Height",
+  AGE: "Age",
+  TARGET_WEIGHT: "TargetWeight",
+  GENDER: "Gender",
+  ACTIVITY_LEVEL: "ActivityLevel",
+  PACE: "Pace",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

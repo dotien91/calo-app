@@ -12,7 +12,7 @@ import { DarkTheme, LightTheme, palette } from "@theme/themes";
 import useStore from "@services/zustand/store";
 import CourseListScreen from "@screens/course-tab/course-list/course.list.screen";
 // import HomeScreen from "@screens/home/home.screen";
-import { _getJson } from "@services/local-storage";
+import { _getJson, _setJson } from "@services/local-storage";
 import SettingProfileScreen from "@screens/profile.screen/profile.screen";
 import TextBase from "@shared-components/TextBase";
 import { translations } from "@localization";
@@ -47,7 +47,7 @@ const HealthStack = createStackNavigator();
 const Navigation = () => {
   const isDarkMode = useStore((state) => state.isDarkMode);
   // const isFirstOpenApp = useStore((state) => state.isFirstOpenApp);
-  const isFirstOpenApp = _getJson("is_first_open_app") == null ? true : false;
+  const isFirstOpenApp = _getJson("is_first_open_app") ? true : false;
   React.useEffect((): any => {
     return () => (isReadyRef.current = false);
   }, []);
@@ -335,7 +335,10 @@ const Navigation = () => {
         // Save the current route name for later comparison
       }}
     >
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator 
+        screenOptions={{ headerShown: false }}
+        initialRouteName={isFirstOpenApp ? SCREENS.ONBOARDING : SCREENS.TABS}
+      >
         {renderStackIntro()}
         {/* <Stack.Screen name={SCREENS.VIEW_LIVE_STREAM} component={ViewStreamScreen} /> */}
         <Stack.Screen name={SCREENS.TABS} component={TabNavigation} />

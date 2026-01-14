@@ -1,10 +1,7 @@
 import PracticeHomeScreen from "@screens/ielts-practice/ielts.practice.home.screen";
 import IeltsPraticeList from "@screens/ielts-practice/ielts.practice.list";
 import IeltsPacticeScreen from "@screens/ielts-practice/ielts.practice.test.screen";
-import ChooseLanguageScreen from "@screens/welcome/choose-language/choose.language.screen";
-import WelcomeScreen from "@screens/welcome/welcome.screen";
 import { SCREENS } from "constants";
-import IntroScreen from "@screens/welcome/intro/intro.screen";
 import WebviewScreen from "@screens/webview/Webview";
 import HomeAffilite from "@screens/affiliate/intro.affiliate.screen";
 import DetailScreen from "@screens/detail/DetailScreen";
@@ -56,7 +53,6 @@ import AffiliatePage from "@screens/affiliate/affiliate.screen";
 import CodeActivationsScreen from "@screens/code-activations/code.activations.screen";
 import HiddenPaage from "@screens/hidden-page/hidden.page";
 import BlackList from "@screens/black-list/black.list";
-import AccountSetupScreen from "@screens/welcome/account-setup/account.setup.screen";
 import LiveStreamPreviewScreem from "@screens/livestream-preview/livestream.preview.screen";
 import LivestreamListScreen from "@screens/stream/list.livestream.screen";
 import ManageLivestreamScreen from "@screens/stream/manage.livestream.screen";
@@ -65,6 +61,15 @@ import UploadCertificate from "@screens/welcome/upload-certificate/upload.certif
 import ChatRoomMediaScreen from "@screens/chat/media-club/chat.media.screen";
 import BecomeTutorScreen from "@screens/welcome/upload-certificate/become.tutor";
 import IeltsReadingPacticeScreen from "@screens/ielts-practice/ielts.reading.practice.test.screen";
+import OnboardingScreen from "@screens/welcome/onboarding/onboarding.screen";
+import PlanResultScreen from "@screens/welcome/onboarding/plan.result.screen";
+import CurrentWeightScreen from "@screens/welcome/onboarding/current.weight.screen";
+import HeightScreen from "@screens/welcome/onboarding/height.screen";
+import AgeScreen from "@screens/welcome/onboarding/age.screen";
+import TargetWeightScreen from "@screens/welcome/onboarding/target.weight.screen";
+import GenderScreen from "@screens/welcome/onboarding/gender.screen";
+import ActivityLevelScreen from "@screens/welcome/onboarding/activity.level.screen";
+import PaceScreen from "@screens/welcome/onboarding/pace.screen";
 // import CreateSubscriptionScreen from "@screens/profile.screen/create-subscription.tsx/create.subscription.screen";
 
 export const DiscoveryStackData: any[] = [];
@@ -92,26 +97,46 @@ export const BankStackData: any[] = [];
 
 export const StackIntroData = [
   {
-    name: SCREENS.CHOOSE_LANGUAGE,
-    screen: ChooseLanguageScreen,
+    name: SCREENS.ONBOARDING,
+    screen: OnboardingScreen,
+  },
+];
+
+export const OnboardingStackData = [
+  {
+    name: SCREENS.CURRENT_WEIGHT,
+    screen: CurrentWeightScreen,
   },
   {
-    name: SCREENS.INTRO,
-    screen: IntroScreen,
+    name: SCREENS.HEIGHT,
+    screen: HeightScreen,
   },
   {
-    name: SCREENS.WELCOME,
-    screen: WelcomeScreen,
+    name: SCREENS.AGE,
+    screen: AgeScreen,
   },
   {
-    name: SCREENS.ACCOUNT_SETUP_SCREEN,
-    screen: AccountSetupScreen,
+    name: SCREENS.TARGET_WEIGHT,
+    screen: TargetWeightScreen,
+  },
+  {
+    name: SCREENS.GENDER,
+    screen: GenderScreen,
+  },
+  {
+    name: SCREENS.ACTIVITY_LEVEL,
+    screen: ActivityLevelScreen,
+  },
+  {
+    name: SCREENS.PACE,
+    screen: PaceScreen,
   },
 ];
 
 export const ClubStackData: any[] = [];
 
 export const CommonStackData = [
+  ...OnboardingStackData,
   { name: SCREENS.UPLOAD_CERTIFICATE, screen: UploadCertificate },
   { name: SCREENS.POST_DETAIL, screen: PostDetailScreen },
   { name: SCREENS.COURSE_CATEGORY, screen: CourseFilterResultScreen },
@@ -179,5 +204,9 @@ export const CommonStackData = [
   {
     name: SCREENS.BECOME_TUTOR,
     screen: BecomeTutorScreen,
+  },
+  {
+    name: SCREENS.PLAN_RESULT,
+    screen: PlanResultScreen,
   },
 ];
