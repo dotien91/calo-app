@@ -7,14 +7,15 @@ import React, {
   useState,
 } from "react";
 import { StyleSheet } from "react-native";
-import Animated, {
-  Extrapolate,
-  interpolate,
-  runOnJS,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from "react-native-reanimated";
+// import Animated, {
+//   Extrapolate,
+//   interpolate,
+//   runOnJS,
+//   useAnimatedStyle,
+//   useSharedValue,
+//   withTiming,
+// } from "react-native-reanimated"; // Removed reanimated
+import { Animated } from "react-native"; // Fallback to React Native Animated
 
 import { MHS } from "@utils/size.utils";
 import uuid from "react-native-uuid";

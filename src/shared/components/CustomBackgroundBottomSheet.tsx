@@ -1,9 +1,10 @@
 import React, { useMemo } from "react";
 import { BottomSheetBackgroundProps } from "@gorhom/bottom-sheet";
-import Animated, {
-  useAnimatedStyle,
-  interpolateColor,
-} from "react-native-reanimated";
+// import Animated, {
+//   useAnimatedStyle,
+//   interpolateColor,
+// } from "react-native-reanimated"; // Removed reanimated
+import { Animated } from "react-native"; // Fallback - Note: @gorhom/bottom-sheet requires reanimated
 import { useTheme } from "@react-navigation/native";
 
 const CustomBackground: React.FC<BottomSheetBackgroundProps> = ({

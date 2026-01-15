@@ -1,14 +1,15 @@
 import React, { useEffect } from "react";
 import { ActivityIndicator, Pressable, StyleSheet, View } from "react-native";
 import FastImage, { FastImageProps } from "react-native-fast-image";
-import Animated, {
-  Extrapolate,
-  interpolate,
-  useAnimatedStyle,
-  useSharedValue,
-  withDelay,
-  withTiming,
-} from "react-native-reanimated";
+// import Animated, {
+//   Extrapolate,
+//   interpolate,
+//   useAnimatedStyle,
+//   useSharedValue,
+//   withDelay,
+//   withTiming,
+// } from "react-native-reanimated"; // Removed reanimated
+import { Animated } from "react-native"; // Fallback to React Native Animated
 
 interface Props extends FastImageProps {
   width?: number;

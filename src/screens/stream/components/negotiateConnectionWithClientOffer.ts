@@ -1,4 +1,4 @@
-import { RTCPeerConnection, RTCSessionDescription } from "react-native-webrtc";
+// import { RTCPeerConnection, RTCSessionDescription } from "react-native-webrtc"; // Removed RTC
 
 /**
  * Performs the actual SDP exchange.
@@ -13,9 +13,12 @@ import { RTCPeerConnection, RTCSessionDescription } from "react-native-webrtc";
  * https://www.ietf.org/archive/id/draft-ietf-wish-whip-01.html#name-protocol-operation
  */
 export default async function negotiateConnectionWithClientOffer(
-  peerConnection: RTCPeerConnection,
+  peerConnection: any, // RTCPeerConnection removed
   endpoint: string,
 ) {
+  console.warn("RTC functionality removed - negotiateConnectionWithClientOffer disabled");
+  return null;
+  /* Removed RTC code
   let timeCount = 0;
   /** https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/createOffer */
   const offer = await peerConnection.createOffer({});
@@ -65,6 +68,9 @@ export default async function negotiateConnectionWithClientOffer(
   }
 }
 export async function postSDPOffer(endpoint, data) {
+  console.warn("RTC functionality removed - postSDPOffer disabled");
+  return null as any;
+  /* Removed RTC code
   return await fetch(endpoint, {
     method: "POST",
     headers: {
@@ -72,6 +78,7 @@ export async function postSDPOffer(endpoint, data) {
     },
     body: data,
   });
+  */
 }
 /**
  * Receives an RTCPeerConnection and waits until
@@ -82,10 +89,12 @@ export async function postSDPOffer(endpoint, data) {
  * https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/icegatheringstatechange_event
  */
 export async function waitToCompleteICEGathering(
-  peerConnection: RTCPeerConnection,
-): Promise<RTCSessionDescription | null> {
+  peerConnection: any, // RTCPeerConnection removed
+): Promise<any | null> { // RTCSessionDescription removed
+  console.warn("RTC functionality removed - waitToCompleteICEGathering disabled");
+  return null;
+  /* Removed RTC code
   return new Promise((resolve) => {
-    /** Wait at most 1 second for ICE gathering. */
     setTimeout(function () {
       resolve(peerConnection.localDescription);
     }, 1000);
@@ -93,4 +102,5 @@ export async function waitToCompleteICEGathering(
       peerConnection.iceGatheringState === "complete" &&
       resolve(peerConnection.localDescription);
   });
+  */
 }

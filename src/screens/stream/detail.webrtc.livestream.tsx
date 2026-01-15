@@ -2,8 +2,9 @@ import { palette } from "@theme/themes";
 import { VS } from "@utils/size.utils";
 import React, { useEffect, useRef } from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
-import { RTCView } from "react-native-webrtc";
+// import { RTCView } from "react-native-webrtc"; // Removed RTC
 import { useLiveStreamUser } from "./utils";
+import { View } from "react-native"; // Fallback
 import TextBase from "@shared-components/TextBase";
 
 const DetailWebrtcLivestream = ({
@@ -63,15 +64,26 @@ const DetailWebrtcLivestream = ({
       </View>
     );
   }
-  // if (hasCamera) {
+  // RTC functionality removed - return placeholder
   return (
-    <RTCView
-      streamURL={remoteStream?.toURL()}
-      style={{ ...StyleSheet.absoluteFillObject }}
-      objectFit="contain"
-      mirror={false}
-    />
+    <View style={{ ...StyleSheet.absoluteFillObject, justifyContent: "center", alignItems: "center" }}>
+      <TextBase
+        title={"RTC functionality removed"}
+        color={palette.textLight}
+        fontSize={16}
+        fontWeight="600"
+      />
+    </View>
   );
+  // if (hasCamera) {
+  // return (
+  //   <RTCView
+  //     streamURL={remoteStream?.toURL()}
+  //     style={{ ...StyleSheet.absoluteFillObject }}
+  //     objectFit="contain"
+  //     mirror={false}
+  //   />
+  // );
   // }
   // return (
   //   <ImageLoad

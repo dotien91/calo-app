@@ -8,16 +8,17 @@ import {
   TapGestureHandler,
   TapGestureHandlerStateChangeEvent,
 } from "react-native-gesture-handler";
-import Animated, {
-  interpolate,
-  interpolateColor,
-  runOnJS,
-  useAnimatedGestureHandler,
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-} from "react-native-reanimated";
-import { clamp, snapPoint } from "react-native-redash";
+// import Animated, {
+//   interpolate,
+//   interpolateColor,
+//   runOnJS,
+//   useAnimatedGestureHandler,
+//   useAnimatedStyle,
+//   useSharedValue,
+//   withSpring,
+// } from "react-native-reanimated"; // Removed reanimated
+// import { clamp, snapPoint } from "react-native-redash"; // Removed (depends on reanimated)
+import { Animated } from "react-native"; // Fallback to React Native Animated
 import { scale } from "react-native-size-matters";
 import { useMemo } from "use-memo-one";
 

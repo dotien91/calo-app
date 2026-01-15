@@ -1,13 +1,14 @@
 import React from "react";
 import { ActivityIndicator } from "react-native";
-import Animated, {
-  cancelAnimation,
-  useSharedValue,
-  useAnimatedReaction,
-  withRepeat,
-  withTiming,
-  Easing,
-} from "react-native-reanimated";
+// import Animated, {
+//   cancelAnimation,
+//   useSharedValue,
+//   useAnimatedReaction,
+//   withRepeat,
+//   withTiming,
+//   Easing,
+// } from "react-native-reanimated"; // Removed reanimated
+import { Animated, Easing } from "react-native"; // Fallback to React Native Animated
 import { RefreshControlProps } from "react-native-head-tab-view";
 const config = {
   duration: 1000,

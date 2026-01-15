@@ -8,13 +8,14 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 import { Device } from "@utils/device.utils";
 import { EnumMessageStatus } from "constants/chat.constant";
-import Animated, {
-  Easing,
-  interpolate,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from "react-native-reanimated";
+// import Animated, {
+//   Easing,
+//   interpolate,
+//   useAnimatedStyle,
+//   useSharedValue,
+//   withTiming,
+// } from "react-native-reanimated"; // Removed reanimated
+import { Animated, Easing } from "react-native"; // Fallback to React Native Animated
 import { palette } from "@theme/themes";
 import CommonStyle from "@theme/styles";
 import PressableBtn from "@shared-components/button/PressableBtn";

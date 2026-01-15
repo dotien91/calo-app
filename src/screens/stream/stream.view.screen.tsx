@@ -34,7 +34,7 @@ import TextBase from "@shared-components/TextBase";
 import Avatar from "@shared-components/user/Avatar";
 import CS from "@theme/styles";
 import { getHoursAndDate } from "@utils/date.utils";
-import DetailWebrtcLivestream from "./detail.webrtc.livestream";
+// import DetailWebrtcLivestream from "./detail.webrtc.livestream"; // Removed RTC
 
 function StreamViewScreen() {
   const theme = useTheme();
@@ -170,16 +170,17 @@ function StreamViewScreen() {
           </View>
         </View>
       );
-    const streamRTC = liveData?.cloudflare_livestream_data?.webRTCPlayback?.url;
-    if (streamRTC) {
-      return (
-        <DetailWebrtcLivestream
-          livestream={streamRTC}
-          isSpeaker={isSpeaker}
-          isMuted={isMuted}
-        />
-      );
-    }
+    // RTC functionality removed
+    // const streamRTC = liveData?.cloudflare_livestream_data?.webRTCPlayback?.url;
+    // if (streamRTC) {
+    //   return (
+    //     <DetailWebrtcLivestream
+    //       livestream={streamRTC}
+    //       isSpeaker={isSpeaker}
+    //       isMuted={isMuted}
+    //     />
+    //   );
+    // }
     return (
       <VideoPlayer
         mediaUrl={liveData.livestream_data?.m3u8_url}

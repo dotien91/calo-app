@@ -3,7 +3,7 @@ import ImageViewer from "react-native-image-zoom-viewer";
 
 import { Device } from "@utils/device.ui.utils";
 import { closeSuperModal } from "@helpers/super.modal.helper";
-import { useSharedValue, withTiming } from "react-native-reanimated";
+// import { useSharedValue, withTiming } from "react-native-reanimated"; // Removed reanimated
 import { StyleSheet, View } from "react-native";
 import CS from "@theme/styles";
 
@@ -27,14 +27,15 @@ const Media = ({ item }: Media) => {
     },
   ];
 
-  const showFloatButtonDailyMission = useSharedValue(1);
+  // const showFloatButtonDailyMission = useSharedValue(1); // Removed reanimated
   const videoRef = useRef<any>();
   const [isLanscape, setIsLanscape] = useState(false);
 
   const onPressLanscape = (isFullScreen: boolean) => {
-    showFloatButtonDailyMission.value = withTiming(isFullScreen ? 0 : 1, {
-      duration: 0,
-    });
+    // Removed reanimated - need to implement alternative animation
+    // showFloatButtonDailyMission.value = withTiming(isFullScreen ? 0 : 1, {
+    //   duration: 0,
+    // });
     setIsLanscape(isFullScreen);
   };
 

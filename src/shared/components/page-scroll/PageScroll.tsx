@@ -5,11 +5,12 @@ import React, {
   useMemo,
   useRef,
 } from "react";
-import Animated, {
-  useAnimatedScrollHandler,
-  useSharedValue,
-  withSpring,
-} from "react-native-reanimated";
+// import Animated, {
+//   useAnimatedScrollHandler,
+//   useSharedValue,
+//   withSpring,
+// } from "react-native-reanimated"; // Removed reanimated
+import { Animated } from "react-native"; // Fallback to React Native Animated
 import { Dimensions, Platform, StyleSheet, ViewProps } from "react-native";
 import CommonStyle from "@theme/styles";
 const { width } = Dimensions.get("screen");

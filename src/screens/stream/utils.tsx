@@ -1,13 +1,13 @@
 import { TypedUser } from "models";
 import React, { useEffect, useRef, useState } from "react";
-import InCallManager from "react-native-incall-manager";
+// import InCallManager from "react-native-incall-manager"; // Removed RTC
 import { SvgXml } from "react-native-svg";
-import {
-  MediaStream,
-  RTCPeerConnection,
-  mediaDevices,
-} from "react-native-webrtc";
-import negotiateConnectionWithClientOffer from "./components/negotiateConnectionWithClientOffer";
+// import {
+//   MediaStream,
+//   RTCPeerConnection,
+//   mediaDevices,
+// } from "react-native-webrtc"; // Removed RTC
+// import negotiateConnectionWithClientOffer from "./components/negotiateConnectionWithClientOffer"; // Removed RTC
 
 export enum EnumReaction {
   Like = "like",
@@ -53,145 +53,134 @@ const ICE_SERVER = {
 };
 
 export const useLiveStreamAdmin = () => {
-  const [streams, setStreams] = useState<MediaStream | null>(null);
-  const peerConnectionRef = useRef<RTCPeerConnection | null>(null);
+  // RTC functionality removed
+  const [streams, setStreams] = useState<any | null>(null); // MediaStream removed
+  const peerConnectionRef = useRef<any | null>(null); // RTCPeerConnection removed
   const [connectionState, setConnectionState] = useState("");
   const isAlreadyConnected = useRef(false);
   const urlLivestreamRef = useRef("");
 
-  useEffect(() => {
-    InCallManager.start({ media: "video" });
-    return () => {
-      InCallManager.stop();
-    };
-  }, []);
+  // useEffect(() => {
+  //   InCallManager.start({ media: "video" }); // Removed RTC
+  //   return () => {
+  //     InCallManager.stop();
+  //   };
+  // }, []);
 
-  useEffect(() => {
-    accessLocalMediaSources()
-      .then((stream) => {
-        if (stream) {
-          setStreams(stream);
-        }
-      })
-      .catch(console.error);
-  }, []);
+  // useEffect(() => {
+  //   accessLocalMediaSources()
+  //     .then((stream) => {
+  //       if (stream) {
+  //         setStreams(stream);
+  //       }
+  //     })
+  //     .catch(console.error);
+  // }, []);
 
-  const accessLocalMediaSources = async () => {
-    try {
-      const stream = await mediaDevices.getUserMedia({
-        audio: true,
-        video: {
-          facingMode: "user",
-          width: { exact: 1920 },
-          height: { exact: 1080 },
-        },
-      });
-      return stream;
-    } catch (error) {
-      return undefined;
-    }
-  };
+  // const accessLocalMediaSources = async () => {
+  //   try {
+  //     const stream = await mediaDevices.getUserMedia({
+  //       audio: true,
+  //       video: {
+  //         facingMode: "user",
+  //         width: { exact: 1920 },
+  //         height: { exact: 1080 },
+  //       },
+  //     });
+  //     return stream;
+  //   } catch (error) {
+  //     return undefined;
+  //   }
+  // }; // Removed RTC
 
+  // RTC functionality removed - all functions disabled
   const startLivestream = async ({
     urlLivestream,
   }: {
     urlLivestream: string;
   }) => {
-    urlLivestreamRef.current = urlLivestream;
-    peerConnectionRef.current = new RTCPeerConnection(ICE_SERVER);
-    /**
-     * Listen for negotiationneeded events, and use WHIP as the signaling protocol to establish a connection
-     *
-     * https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/negotiationneeded_event
-     * https://www.ietf.org/archive/id/draft-ietf-wish-whip-01.html
-     */
-    peerConnectionRef.current.addEventListener(
-      "negotiationneeded",
-      async (ev) => {
-        console.log("Connection negotiation starting", ev);
-        if (peerConnectionRef.current) {
-          await negotiateConnectionWithClientOffer(
-            peerConnectionRef.current,
-            urlLivestream,
-          );
-        }
-        console.log("Connection negotiation ended");
-      },
-    );
-
-    peerConnectionRef.current.addEventListener(
-      "connectionstatechange",
-      (ev) => {
-        if (peerConnectionRef.current?.connectionState === "connected") {
-          isAlreadyConnected.current = true;
-        }
-        if (
-          isAlreadyConnected.current &&
-          peerConnectionRef.current?.connectionState === "disconnected"
-        ) {
-          console.log("vao day", ev);
-
-          isAlreadyConnected.current = false;
-          peerConnectionRef.current?.close();
-          startLivestream({ urlLivestream });
-          return;
-        }
-        setConnectionState(peerConnectionRef.current?.connectionState || "");
-      },
-    );
-    /**
-     * While the connection is being initialized,
-     * connect the video stream to the provided <video> element.
-     */
-    streams?.getTracks().forEach((track) => {
-      peerConnectionRef.current?.addTransceiver(track, {
-        /** WHIP is only for sending streaming media */
-        direction: "sendonly",
-      });
-      // if (track.kind == "video" && transceiver.sender.track) {
-      //   transceiver.sender.track.applyConstraints({
-      //     width: 1280,
-      //     height: 720,
-      //   });
-      // }
-    });
+    console.warn("RTC functionality removed - startLivestream disabled");
+    // urlLivestreamRef.current = urlLivestream;
+    // peerConnectionRef.current = new RTCPeerConnection(ICE_SERVER);
+    // peerConnectionRef.current.addEventListener(
+    //   "negotiationneeded",
+    //   async (ev) => {
+    //     console.log("Connection negotiation starting", ev);
+    //     if (peerConnectionRef.current) {
+    //       await negotiateConnectionWithClientOffer(
+    //         peerConnectionRef.current,
+    //         urlLivestream,
+    //       );
+    //     }
+    //     console.log("Connection negotiation ended");
+    //   },
+    // );
+    // peerConnectionRef.current.addEventListener(
+    //   "connectionstatechange",
+    //   (ev) => {
+    //     if (peerConnectionRef.current?.connectionState === "connected") {
+    //       isAlreadyConnected.current = true;
+    //     }
+    //     if (
+    //       isAlreadyConnected.current &&
+    //       peerConnectionRef.current?.connectionState === "disconnected"
+    //     ) {
+    //       console.log("vao day", ev);
+    //       isAlreadyConnected.current = false;
+    //       peerConnectionRef.current?.close();
+    //       startLivestream({ urlLivestream });
+    //       return;
+    //     }
+    //     setConnectionState(peerConnectionRef.current?.connectionState || "");
+    //   },
+    // );
+    // streams?.getTracks().forEach((track) => {
+    //   peerConnectionRef.current?.addTransceiver(track, {
+    //     direction: "sendonly",
+    //   });
+    // });
   };
 
   const disconnect = async () => {
-    fetch(urlLivestreamRef.current, {
-      method: "DELETE",
-      mode: "cors",
-    }).finally(() => {
-      urlLivestreamRef.current = "";
-      peerConnectionRef.current?.close();
-      peerConnectionRef.current = null;
-      releaseCamera();
-    });
+    console.warn("RTC functionality removed - disconnect disabled");
+    // fetch(urlLivestreamRef.current, {
+    //   method: "DELETE",
+    //   mode: "cors",
+    // }).finally(() => {
+    //   urlLivestreamRef.current = "";
+    //   peerConnectionRef.current?.close();
+    //   peerConnectionRef.current = null;
+    //   releaseCamera();
+    // });
   };
 
   const releaseCamera = () => {
-    if (streams) {
-      streams?.release();
-      setStreams(null);
-    }
+    console.warn("RTC functionality removed - releaseCamera disabled");
+    // if (streams) {
+    //   streams?.release();
+    //   setStreams(null);
+    // }
   };
 
   const switchCamera = () => {
-    streams?.getVideoTracks().forEach((track) => {
-      track._switchCamera();
-    });
+    console.warn("RTC functionality removed - switchCamera disabled");
+    // streams?.getVideoTracks().forEach((track) => {
+    //   track._switchCamera();
+    // });
   };
 
   function toggleCamera(status: any) {
-    streams?.getVideoTracks().forEach((track) => {
-      track.enabled = status;
-    });
+    console.warn("RTC functionality removed - toggleCamera disabled");
+    // streams?.getVideoTracks().forEach((track) => {
+    //   track.enabled = status;
+    // });
   }
 
   function toggleMic(status: any) {
-    streams?.getAudioTracks().forEach((track) => {
-      track.enabled = status;
-    });
+    console.warn("RTC functionality removed - toggleMic disabled");
+    // streams?.getAudioTracks().forEach((track) => {
+    //   track.enabled = status;
+    // });
   }
 
   return {
@@ -207,119 +196,113 @@ export const useLiveStreamAdmin = () => {
 };
 
 export const useLiveStreamUser = () => {
-  const [remoteStream] = useState<MediaStream>(new MediaStream(undefined));
-  const peerConnectionRef = useRef<RTCPeerConnection | null>(null);
+  // RTC functionality removed
+  const [remoteStream] = useState<any>(null); // MediaStream removed
+  const peerConnectionRef = useRef<any | null>(null); // RTCPeerConnection removed
   const [connectionState, setConnectionState] = useState("");
   const isAlreadyConnected = useRef(false);
 
-  useEffect(() => {
-    InCallManager.start({ media: "video" });
-    return () => {
-      InCallManager.stop();
-    };
-  }, []);
+  // useEffect(() => {
+  //   InCallManager.start({ media: "video" }); // Removed RTC
+  //   return () => {
+  //     InCallManager.stop();
+  //   };
+  // }, []);
 
   const startWatch = ({ urlLiveStream }: { urlLiveStream: string }) => {
-    peerConnectionRef.current = new RTCPeerConnection(ICE_SERVER);
-    peerConnectionRef.current.addTransceiver("video", {
-      direction: "recvonly",
-    });
-    peerConnectionRef.current.addTransceiver("audio", {
-      direction: "recvonly",
-    });
-    /**
-     * When new tracks are received in the connection, store local references,
-     * so that they can be added to a MediaStream, and to the <video> element.
-     *
-     * https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/track_event
-     */
-
-    peerConnectionRef.current?.addEventListener("track", (event: any) => {
-      const track = event.track;
-      const currentTracks = remoteStream.getTracks();
-      const streamAlreadyHasVideoTrack = currentTracks.some(
-        (track) => track.kind === "video",
-      );
-      const streamAlreadyHasAudioTrack = currentTracks.some(
-        (track) => track.kind === "audio",
-      );
-      switch (track.kind) {
-        case "video":
-          if (streamAlreadyHasVideoTrack) {
-            break;
-          }
-          remoteStream.addTrack(track);
-          break;
-        case "audio":
-          if (streamAlreadyHasAudioTrack) {
-            break;
-          }
-          remoteStream.addTrack(track);
-          break;
-        default:
-          console.log("got unknown track " + track);
-      }
-    });
-    peerConnectionRef.current.addEventListener(
-      "connectionstatechange",
-      (ev) => {
-        if (peerConnectionRef.current?.connectionState === "connected") {
-          isAlreadyConnected.current = true;
-        }
-        if (
-          isAlreadyConnected.current &&
-          peerConnectionRef.current?.connectionState === "disconnected"
-        ) {
-          console.log("vao day", ev);
-
-          isAlreadyConnected.current = false;
-          peerConnectionRef.current?.close();
-          startWatch({ urlLiveStream });
-          return;
-        }
-
-        setConnectionState(peerConnectionRef.current?.connectionState || "");
-      },
-    );
-    peerConnectionRef.current.addEventListener(
-      "negotiationneeded",
-      async (ev) => {
-        console.log("negotiationneeded", ev);
-
-        if (peerConnectionRef.current) {
-          try {
-            await negotiateConnectionWithClientOffer(
-              peerConnectionRef.current,
-              urlLiveStream,
-            );
-          } catch (error) {
-            setConnectionState("disconnected");
-          }
-        }
-      },
-    );
-
-    peerConnectionRef.current.addEventListener(
-      "signalingstatechange",
-      (event) => {
-        console.log(
-          "signalingstatechange",
-          peerConnectionRef.current?.signalingState,
-          event,
-        );
-      },
-    );
+    console.warn("RTC functionality removed - startWatch disabled");
+    setConnectionState("disconnected");
+    // peerConnectionRef.current = new RTCPeerConnection(ICE_SERVER);
+    // peerConnectionRef.current.addTransceiver("video", {
+    //   direction: "recvonly",
+    // });
+    // peerConnectionRef.current.addTransceiver("audio", {
+    //   direction: "recvonly",
+    // });
+    // peerConnectionRef.current?.addEventListener("track", (event: any) => {
+    //   const track = event.track;
+    //   const currentTracks = remoteStream.getTracks();
+    //   const streamAlreadyHasVideoTrack = currentTracks.some(
+    //     (track) => track.kind === "video",
+    //   );
+    //   const streamAlreadyHasAudioTrack = currentTracks.some(
+    //     (track) => track.kind === "audio",
+    //   );
+    //   switch (track.kind) {
+    //     case "video":
+    //       if (streamAlreadyHasVideoTrack) {
+    //         break;
+    //       }
+    //       remoteStream.addTrack(track);
+    //       break;
+    //     case "audio":
+    //       if (streamAlreadyHasAudioTrack) {
+    //         break;
+    //       }
+    //       remoteStream.addTrack(track);
+    //       break;
+    //     default:
+    //       console.log("got unknown track " + track);
+    //   }
+    // });
+    // peerConnectionRef.current.addEventListener(
+    //   "connectionstatechange",
+    //   (ev) => {
+    //     if (peerConnectionRef.current?.connectionState === "connected") {
+    //       isAlreadyConnected.current = true;
+    //     }
+    //     if (
+    //       isAlreadyConnected.current &&
+    //       peerConnectionRef.current?.connectionState === "disconnected"
+    //     ) {
+    //       console.log("vao day", ev);
+    //       isAlreadyConnected.current = false;
+    //       peerConnectionRef.current?.close();
+    //       startWatch({ urlLiveStream });
+    //       return;
+    //     }
+    //     setConnectionState(peerConnectionRef.current?.connectionState || "");
+    //   },
+    // );
+    // peerConnectionRef.current.addEventListener(
+    //   "negotiationneeded",
+    //   async (ev) => {
+    //     console.log("negotiationneeded", ev);
+    //     if (peerConnectionRef.current) {
+    //       try {
+    //         await negotiateConnectionWithClientOffer(
+    //           peerConnectionRef.current,
+    //           urlLiveStream,
+    //         );
+    //       } catch (error) {
+    //         setConnectionState("disconnected");
+    //       }
+    //     }
+    //   },
+    // );
+    // peerConnectionRef.current.addEventListener(
+    //   "signalingstatechange",
+    //   (event) => {
+    //     console.log(
+    //       "signalingstatechange",
+    //       peerConnectionRef.current?.signalingState,
+    //       event,
+    //     );
+    //   },
+    // );
   };
 
   const disconnect = () => {
-    remoteStream?.release();
-    peerConnectionRef.current?.close();
+    console.warn("RTC functionality removed - disconnect disabled");
+    // remoteStream?.release();
+    // peerConnectionRef.current?.close();
   };
 
   function toggleMic(status) {
-    remoteStream?.getAudioTracks().forEach((track) => {
-      track.enabled = status;
-    });
+    console.warn("RTC functionality removed - toggleMic disabled");
+    // remoteStream?.getAudioTracks().forEach((track) => {
+    //   track.enabled = status;
+    // });
   }
 
   return { startWatch, remoteStream, connectionState, disconnect, toggleMic };

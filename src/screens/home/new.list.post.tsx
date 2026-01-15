@@ -13,14 +13,15 @@ import {
   Text,
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
-import Animated, {
-  Extrapolate,
-  interpolate,
-  useAnimatedRef,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from "react-native-reanimated";
+// import Animated, {
+//   Extrapolate,
+//   interpolate,
+//   useAnimatedRef,
+//   useAnimatedStyle,
+//   useSharedValue,
+//   withTiming,
+// } from "react-native-reanimated"; // Removed reanimated
+import { Animated } from "react-native"; // Fallback to React Native Animated
 import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
 import { getStatusBarHeight } from "@freakycoder/react-native-helpers";
 
