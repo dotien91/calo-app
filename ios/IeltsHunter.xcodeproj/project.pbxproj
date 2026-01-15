@@ -28,7 +28,7 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		91170F79E29F4EB49271A420 /* SVN-Outfit-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8F08A0F0F58A4434BF0635E7 /* SVN-Outfit-Medium.ttf */; };
 		9827501159E5411D9B2A78D7 /* Montserrat-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FDBEA33FAFB247818A88F753 /* Montserrat-Italic.ttf */; };
-		982FEC52F02E4A8EB5B4C9EA /* BuildFile in Resources */ = {isa = PBXBuildFile; };
+		982FEC52F02E4A8EB5B4C9EA /* (null) in Resources */ = {isa = PBXBuildFile; };
 		9A18F8C8AF6849969945F3E1 /* SVN-Outfit-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6576E46DE6B04E22AC75D4B5 /* SVN-Outfit-Black.ttf */; };
 		9CC8B92271A446149597973B /* Montserrat-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CA1B23CC722249B2AB3DDB7B /* Montserrat-Black.ttf */; };
 		A81D902BC5E84B16AB584405 /* SVN-Outfit-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0B485689F1BC4CD684F10659 /* SVN-Outfit-Thin.ttf */; };
@@ -85,7 +85,7 @@
 		3B4392A12AC88292D35C810B /* Pods-ieltshunter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ieltshunter.debug.xcconfig"; path = "Target Support Files/Pods-ieltshunter/Pods-ieltshunter.debug.xcconfig"; sourceTree = "<group>"; };
 		3DA8350E378A4182B0DA00A4 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Bold.ttf"; path = "../src/assets/fonts/Montserrat/Montserrat-Bold.ttf"; sourceTree = "<group>"; };
 		419CE8F7E95045B8AF4F6FC6 /* SVN-Outfit-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Outfit-Regular.ttf"; path = "../src/assets/fonts/Outfit/SVN-Outfit-Regular.ttf"; sourceTree = "<group>"; };
-		45C8AFCFBB027BC490562408 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = IELTSHunter/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		45C8AFCFBB027BC490562408 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = IELTSHunter/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		46319665C432432E940BD78F /* SVN-Outfit-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Outfit-Light.ttf"; path = "../src/assets/fonts/Outfit/SVN-Outfit-Light.ttf"; sourceTree = "<group>"; };
 		54608C581FB44DEA82C4C421 /* Montserrat-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-ExtraBold.ttf"; path = "../src/assets/fonts/Montserrat/Montserrat-ExtraBold.ttf"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-ieltshunter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ieltshunter.release.xcconfig"; path = "Target Support Files/Pods-ieltshunter/Pods-ieltshunter.release.xcconfig"; sourceTree = "<group>"; };
@@ -330,7 +330,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "IeltsHunter" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "IELTSHunter" */;
 			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -384,7 +384,7 @@
 				59EDAA8F714D4D2FA9A131BF /* Montserrat-Bold.ttf in Resources */,
 				A905B21784944019A2F3057A /* Montserrat-BoldItalic.ttf in Resources */,
 				20858F262F7248898FF79136 /* Montserrat-ExtraBold.ttf in Resources */,
-				982FEC52F02E4A8EB5B4C9EA /* BuildFile in Resources */,
+				982FEC52F02E4A8EB5B4C9EA /* (null) in Resources */,
 				13D8A0B4A7144175BF657930 /* Montserrat-ExtraLight.ttf in Resources */,
 				023B5BBCCBA54AFEB2D78FF1 /* Montserrat-ExtraLightItalic.ttf in Resources */,
 				9827501159E5411D9B2A78D7 /* Montserrat-Italic.ttf in Resources */,
@@ -845,6 +845,7 @@
 				);
 				INFOPLIST_FILE = ieltshunter/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ikicoach;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1014,6 +1015,7 @@
 				);
 				INFOPLIST_FILE = ieltshunter/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ikicoach;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1222,7 +1224,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "IeltsHunter" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "IELTSHunter" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
