@@ -1,48 +1,35 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-def node_require(script)
-  # Resolve script with node to allow for hoisting
-  require Pod::Executable.execute_command('node', ['-p',
-    "require.resolve(
-      '#{script}',
-      {paths: [process.argv[1]]},
-    )", __dir__]).strip
-end
-
-node_require('react-native/scripts/react_native_pods.rb')
-node_require('react-native-permissions/scripts/setup.rb')
-
 platform :ios, min_ios_version_supported
 prepare_react_native_project!
 
-# Cấu hình quyền truy cập cho react-native-permissions
-setup_permissions([
-  'Camera',
-  'MediaLibrary',
-  'Microphone',
-  'PhotoLibrary',
-  'PhotoLibraryAddOnly',
-])
+# 1. Permissions
+permissions_path = '../node_modules/react-native-permissions/scripts/setup.rb'
+if File.exist?(permissions_path)
+  require_relative permissions_path
+  setup_permissions([
+    'Camera',
+    'MediaLibrary',
+    'Microphone',
+    'PhotoLibrary',
+    'PhotoLibraryAddOnly',
+  ])
+end
+
+# 2. Static Framework (Bắt buộc cho Firebase & Nitro hoạt động chung)
+use_frameworks! :linkage => :static
 
 use_modular_headers!
-
-linkage = ENV['USE_FRAMEWORKS']
-if linkage != nil
-  Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
-  use_frameworks! :linkage => linkage.to_sym
-end
 
 target 'ieltshunter' do
   config = use_native_modules!
 
-  flags = get_default_flags()
-
+  # --- ĐÃ SỬA: Bỏ các flag thừa, chỉ giữ new_arch_enabled ---
   use_react_native!(
     :path => config[:reactNativePath],
-    :hermes_enabled => flags[:hermes_enabled],
-    :fabric_enabled => flags[:fabric_enabled],
-    :app_path => "#{Pod::Config.instance.installation_root}/.."
+    :app_path => "#{Pod::Config.instance.installation_root}/..",
+    :new_arch_enabled => false # Tắt New Architecture (Fabric/TurboModules) tại đây
   )
 
   target 'ieltshunterTests' do
@@ -50,58 +37,48 @@ target 'ieltshunter' do
   end
 
   post_install do |installer|
-    # 1. Thực hiện các thiết lập mặc định của React Native
+    # Sửa lỗi Folly Coroutine cũ (Giữ nguyên để an toàn)
+    system("chmod -R u+w Pods/RCT-Folly")
+    Dir.glob("Pods/RCT-Folly/folly/Portability.h").each do |file|
+      text = File.read(file)
+      if text.include? "#define FOLLY_HAS_COROUTINES 1"
+        new_contents = text.gsub('#define FOLLY_HAS_COROUTINES 1', '#define FOLLY_HAS_COROUTINES 0')
+        File.open(file, "w") { |file| file.puts new_contents }
+      end
+    end
+
     react_native_post_install(
       installer,
       config[:reactNativePath],
       :mac_catalyst_enabled => false
     )
 
-    # 2. Vòng lặp cấu hình từng Target trong Pods
     installer.pods_project.targets.each do |target|
       target.build_configurations.each do |config|
-        
-        # Sửa lỗi PhaseScriptExecution bằng cách tắt Sandboxing
+        # --- FIX 1: Tắt Sandboxing (Cho Hermes) ---
         config.build_settings['ENABLE_USER_SCRIPT_SANDBOXING'] = 'NO'
         
-        # Ép sử dụng chuẩn C++20 cho Folly (yêu cầu của RN 0.76 và Folly 2024)
-        if target.name.include?('RCT-Folly') || target.name.include?('folly')
-          config.build_settings['CLANG_CXX_LANGUAGE_STANDARD'] = 'c++20'
-          
-          # Fix lỗi 'folly/experimental/coro/Coroutine.h' file not found
-          header_search_paths = config.build_settings['HEADER_SEARCH_PATHS'] || ['$(inherited)']
-          header_search_paths << '"$(PODS_ROOT)/Headers/Public/RCT-Folly"'
-          config.build_settings['HEADER_SEARCH_PATHS'] = header_search_paths.join(' ')
-        end
-
-        # Fix lỗi kiến trúc cho Simulator trên máy Mac Chip Apple (M1, M2, M3)
-        config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+        # --- FIX 2: CẤU HÌNH QUAN TRỌNG CHO NITRO MODULES ---
+        # Ép toàn bộ project dùng C++20 (để khớp với Folly RN 0.76)
+        config.build_settings['CLANG_CXX_LANGUAGE_STANDARD'] = 'c++20'
+        
+        # --- FIX 3: SỬA LỖI 'folly/folly-config.h' NOT FOUND ---
+        search_paths = config.build_settings['HEADER_SEARCH_PATHS'] || ['$(inherited)']
+        
+        # Thêm đường dẫn gốc nơi chứa folly-config.h
+        search_paths << '"$(PODS_ROOT)/RCT-Folly"'
+        
+        # Thêm các đường dẫn Public Header khác cho chắc chắn
+        search_paths << '"$(PODS_ROOT)/Headers/Public/RCT-Folly"'
+        search_paths << '"$(PODS_ROOT)/Headers/Public/folly"'
+        search_paths << '"$(PODS_ROOT)/Headers/Public/react-native-nitro-modules"'
+        
+        # Loại bỏ trùng lặp và lưu lại
+        config.build_settings['HEADER_SEARCH_PATHS'] = search_paths.uniq.join(' ')
+        
+        # Đảm bảo thiết bị hỗ trợ
+        config.build_settings['TARGETED_DEVICE_FAMILY'] = '1,2'
       end
-    end
-
-    # 3. Xử lý Stripping Bitcode (Phần tùy chỉnh cũ của bạn)
-    bitcode_strip_path = `xcrun --find bitcode_strip`.chop!
-    def strip_bitcode_from_framework(bitcode_strip_path, framework_relative_path)
-      framework_path = File.join(Dir.pwd, framework_relative_path)
-      if File.exist?(framework_path)
-        command = "#{bitcode_strip_path} #{framework_path} -r -o #{framework_path}"
-        puts "Stripping bitcode: #{command}"
-        system(command)
-      else
-        puts "Skip stripping: File not found tại #{framework_path}"
-      end
-    end
-
-    framework_paths = [
-      "Pods/LogRocket/LogRocket.xcframework/ios-arm64/LogRocket.framework/LogRocket",
-      "Pods/hermes-engine/destroot/Library/Frameworks/macosx/hermes.framework/hermes",
-      "Pods/hermes-engine/destroot/Library/Frameworks/macosx/hermes.framework/Versions/Current/hermes",
-      "Pods/hermes-engine/destroot/Library/Frameworks/universal/hermes.xcframework/ios-arm64/hermes.framework/hermes",
-      "Pods/hermes-engine/destroot/Library/Frameworks/universal/hermes.xcframework/ios-arm64_x86_64-maccatalyst/hermes.framework/hermes"
-    ]
-
-    framework_paths.each do |path|
-      strip_bitcode_from_framework(bitcode_strip_path, path)
     end
   end
 end
