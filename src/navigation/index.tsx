@@ -16,15 +16,14 @@ import { _getJson, _setJson } from "@services/local-storage";
 import SettingProfileScreen from "@screens/profile.screen/profile.screen";
 import TextBase from "@shared-components/TextBase";
 import { translations } from "@localization";
-import { getBottomSpace } from "react-native-iphone-screen-helper";
 import IconSvg from "assets/svg";
 import {
-  ClubStackData,
-  CommonStackData,
   DiscoveryStackData,
+  OnboardingStackData,
   PracticeTestData,
   StackIntroData,
 } from "./navigation.constant";
+import PlanResultScreen from "@screens/welcome/onboarding/plan.result.screen";
 import { navigate } from "@helpers/navigation.helper";
 import eventEmitter from "@services/event-emitter";
 import NewHomeScreen from "@screens/home/new.screen.home";
@@ -46,7 +45,8 @@ const HealthStack = createStackNavigator();
 const Navigation = () => {
   const isDarkMode = useStore((state) => state.isDarkMode);
   // const isFirstOpenApp = useStore((state) => state.isFirstOpenApp);
-  const isFirstOpenApp = _getJson("is_first_open_app") ? true : false;
+  // Hardcode to always show onboarding flow
+  const isFirstOpenApp = true; // _getJson("is_first_open_app") ? true : false;
   React.useEffect((): any => {
     return () => (isReadyRef.current = false);
   }, []);
@@ -215,6 +215,21 @@ const Navigation = () => {
     );
   };
 
+  const renderOnboardingStack = () => {
+    return (
+      <>
+        {OnboardingStackData.map((item) => (
+          <Stack.Screen
+            key={item.name}
+            name={item.name}
+            component={item.screen}
+          />
+        ))}
+        <Stack.Screen name={SCREENS.PLAN_RESULT} component={PlanResultScreen} />
+      </>
+    );
+  };
+
 
   const renderPracticeTestStack = () => {
     return (
@@ -335,6 +350,7 @@ const Navigation = () => {
         initialRouteName={isFirstOpenApp ? SCREENS.ONBOARDING : SCREENS.TABS}
       >
         {renderStackIntro()}
+        {renderOnboardingStack()}
         {/* <Stack.Screen name={SCREENS.VIEW_LIVE_STREAM} component={ViewStreamScreen} /> */}
         <Stack.Screen name={SCREENS.TABS} component={TabNavigation} />
         {/* {renderCommonStack()} */}

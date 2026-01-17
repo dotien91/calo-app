@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from "react";
 import { View, StyleSheet, Pressable, Text, SafeAreaView } from "react-native";
-import { useTheme } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 import useStore from "@services/zustand/store";
 import { translations } from "@localization";
@@ -8,7 +7,6 @@ import {
   getBottomSpace,
   getStatusBarHeight,
 } from "react-native-iphone-screen-helper";
-import { isAndroid } from "@freakycoder/react-native-helpers";
 
 import TextBase from "@shared-components/TextBase";
 import Button from "@shared-components/button/Button";
@@ -43,16 +41,20 @@ export default function ChooseLanguageScreen() {
       flag: <IconSvg name="icFlagen" size={20} />,
     },
   ];
-  const [selected] = useState(useStore((state) => state.language));
-  const theme = useTheme();
-  const styles = useMemo(() => createStyles(theme), [theme]);
+  const currentLanguage = useStore((state) => state.language);
+  const [selected, setSelected] = useState(currentLanguage);
+  const styles = useMemo(() => createStyles(), []);
   const setLanguage = useStore((state) => state.setLanguage);
 
-  const handleKeepGoing = (value: string) => {
-    translations.setLanguage(value);
-    setLanguage(value);
-    _setJson(LANG, value);
-    updateSession({ picked_language: value });
+  const handleLanguageSelect = (value: string) => {
+    setSelected(value);
+  };
+
+  const handleNext = () => {
+    translations.setLanguage(selected);
+    setLanguage(selected);
+    _setJson(LANG, selected);
+    updateSession({ picked_language: selected });
     NavigationService.replace(SCREENS.ONBOARDING);
   };
 
@@ -60,7 +62,7 @@ export default function ChooseLanguageScreen() {
     const isSelect: boolean = item.value == selected;
     return (
       <Pressable
-        onPress={() => handleKeepGoing(item.value)}
+        onPress={() => handleLanguageSelect(item.value)}
         style={
           isSelect
             ? styles.itemLanguageSelected
@@ -77,7 +79,6 @@ export default function ChooseLanguageScreen() {
       </Pressable>
     );
   };
-
   return (
     <SafeAreaView style={CS.safeAreaView}>
       <View style={styles.container}>
@@ -105,12 +106,22 @@ export default function ChooseLanguageScreen() {
             <ItemLanguage key={index} item={item} />
           ))}
         </View>
+
+        <View style={styles.footer}>
+          <Button
+            text={translations.next || "Tiếp tục"}
+            backgroundColor={palette.primary}
+            textColor={palette.white}
+            onPress={handleNext}
+            style={styles.nextButton}
+          />
+        </View>
       </View>
     </SafeAreaView>
   );
 }
 
-const createStyles = (theme: any) =>
+const createStyles = () =>
   StyleSheet.create({
     container: {
       flex: 1,
@@ -166,5 +177,13 @@ const createStyles = (theme: any) =>
       fontSize: 18,
       fontWeight: "600",
       color: palette.text,
+    },
+    footer: {
+      paddingBottom: getBottomSpace() + 20,
+      paddingTop: 20,
+    },
+    nextButton: {
+      borderRadius: 12,
+      height: 50,
     },
   });

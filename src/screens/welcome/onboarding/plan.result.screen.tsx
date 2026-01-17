@@ -25,6 +25,25 @@ const PlanResultScreen: React.FC<PlanResultScreenProps> = () => {
     return null;
   }
 
+  // Mapping labels
+  const genderLabels: Record<string, string> = {
+    MALE: "Nam",
+    FEMALE: "Nữ",
+  };
+
+  const activityLabels: Record<string, string> = {
+    SEDENTARY: "Ít vận động",
+    LIGHTLY_ACTIVE: "Vận động nhẹ",
+    MODERATELY_ACTIVE: "Vận động vừa",
+    VERY_ACTIVE: "Vận động nhiều",
+  };
+
+  const paceLabels: Record<string, string> = {
+    SLOW: "Chậm (0.25 kg/tuần)",
+    NORMAL: "Bình thường (0.5 kg/tuần)",
+    FAST: "Nhanh (1 kg/tuần)",
+  };
+
   const handleFinish = () => {
     // _setJson("is_first_open_app", false);
     NavigationService.replace(SCREENS.TABS);
@@ -49,6 +68,56 @@ const PlanResultScreen: React.FC<PlanResultScreenProps> = () => {
           >
             Dựa trên thông tin bạn cung cấp, đây là kế hoạch dinh dưỡng phù hợp
           </TextBase>
+        </View>
+
+        <View style={styles.card}>
+          <View style={styles.cardHeader}>
+            <TextBase fontSize={20} fontWeight="700" color="text">
+              Thông tin của bạn
+            </TextBase>
+          </View>
+          <View style={styles.infoGrid}>
+            <View style={styles.infoRow}>
+              <TextBase fontSize={14} fontWeight="400" color="textOpacity8">
+                Giới tính:
+              </TextBase>
+              <TextBase fontSize={14} fontWeight="600" color="text">
+                {genderLabels[planResult.gender]}
+              </TextBase>
+            </View>
+            <View style={styles.infoRow}>
+              <TextBase fontSize={14} fontWeight="400" color="textOpacity8">
+                Tuổi:
+              </TextBase>
+              <TextBase fontSize={14} fontWeight="600" color="text">
+                {planResult.age} tuổi
+              </TextBase>
+            </View>
+            <View style={styles.infoRow}>
+              <TextBase fontSize={14} fontWeight="400" color="textOpacity8">
+                Chiều cao:
+              </TextBase>
+              <TextBase fontSize={14} fontWeight="600" color="text">
+                {planResult.height} cm
+              </TextBase>
+            </View>
+            <View style={styles.infoRow}>
+              <TextBase fontSize={14} fontWeight="400" color="textOpacity8">
+                Mức độ hoạt động:
+              </TextBase>
+              <TextBase fontSize={14} fontWeight="600" color="text">
+                {activityLabels[planResult.activityLevel]}
+              </TextBase>
+            </View>
+            <View style={styles.infoRow}>
+              <TextBase fontSize={14} fontWeight="400" color="textOpacity8">
+                Tốc độ thay đổi:
+              </TextBase>
+              <TextBase fontSize={14} fontWeight="600" color="text">
+                {paceLabels[planResult.pace]}
+              </TextBase>
+            </View>
+          </View>
         </View>
 
         <View style={styles.card}>
@@ -241,6 +310,14 @@ const styles = StyleSheet.create({
   },
   goalInfo: {
     marginTop: 12,
+    alignItems: "center",
+  },
+  infoGrid: {
+    gap: 12,
+  },
+  infoRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
   },
   caloriesContainer: {
