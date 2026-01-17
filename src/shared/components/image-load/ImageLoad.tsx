@@ -38,29 +38,49 @@ const ImageLoad = (props: Props) => {
   } = props;
   const _borderRadius = borderRadius || style?.borderRadius || 0;
 
-  const loaded = useSharedValue(0);
+  // Removed: react-native-reanimated functionality
+  // const loaded = useSharedValue(0);
   const [loading, setLoading] = React.useState(false);
+  const opacity = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     if (
       (typeof source === "object" && source?.uri) ||
       typeof source !== "object"
     ) {
-      loaded.value = withDelay(5000, withTiming(1, { duration: 2000 }));
+      // Removed: react-native-reanimated functionality
+      // loaded.value = withDelay(5000, withTiming(1, { duration: 2000 }));
+      Animated.timing(opacity, {
+        toValue: 1,
+        duration: 2000,
+        useNativeDriver: true,
+        delay: 5000,
+      }).start();
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      opacity: interpolate(loaded.value, [0, 1], [0, 1], Extrapolate.CLAMP),
-    };
-  });
+  // Removed: react-native-reanimated functionality
+  // const animatedStyle = useAnimatedStyle(() => {
+  //   return {
+  //     opacity: interpolate(loaded.value, [0, 1], [0, 1], Extrapolate.CLAMP),
+  //   };
+  // });
+  const animatedStyle = {
+    opacity,
+  };
 
-  const blurhashStyle = useAnimatedStyle(() => {
-    return {
-      opacity: interpolate(loaded.value, [0, 1], [1, 0], Extrapolate.CLAMP),
-    };
-  });
+  // Removed: react-native-reanimated functionality
+  // const blurhashStyle = useAnimatedStyle(() => {
+  //   return {
+  //     opacity: interpolate(loaded.value, [0, 1], [1, 0], Extrapolate.CLAMP),
+  //   };
+  // });
+  const blurhashStyle = {
+    opacity: opacity.interpolate({
+      inputRange: [0, 1],
+      outputRange: [1, 0],
+    }),
+  };
 
   const ViewComponent = onPress ? Pressable : View;
 
@@ -115,12 +135,24 @@ const ImageLoad = (props: Props) => {
           <FastImage
             onLoadStart={() => {
               setLoading(true);
-              loaded.value = withTiming(0, { duration: 500 });
+              // Removed: react-native-reanimated functionality
+              // loaded.value = withTiming(0, { duration: 500 });
+              Animated.timing(opacity, {
+                toValue: 0,
+                duration: 500,
+                useNativeDriver: true,
+              }).start();
               onLoadStart?.();
             }}
             onLoadEnd={() => setLoading(false)}
             onLoad={(evt) => {
-              loaded.value = withTiming(1, { duration: 500 });
+              // Removed: react-native-reanimated functionality
+              // loaded.value = withTiming(1, { duration: 500 });
+              Animated.timing(opacity, {
+                toValue: 1,
+                duration: 500,
+                useNativeDriver: true,
+              }).start();
               onLoad?.(evt);
             }}
             style={{

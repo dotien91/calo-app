@@ -44,27 +44,30 @@ const PageScroll = (props: Props, ref: React.Ref<PagerScrollRef>) => {
     scrollToIndex,
   }));
 
-  const percent = useSharedValue((1 / length) * 100);
+  // Removed: react-native-reanimated functionality
+  // const percent = useSharedValue((1 / length) * 100);
   const totalWidth = useMemo(() => {
     return length * widthI;
   }, [length]);
 
-  const scrollHandler = useAnimatedScrollHandler({
-    onEndDrag: (event) => {
-      percent.value = withSpring(
-        ((widthI + event.contentOffset.x) / totalWidth) * 100,
-      );
-    },
-  });
+  // Removed: react-native-reanimated scroll handler
+  // const scrollHandler = useAnimatedScrollHandler({
+  //   onEndDrag: (event) => {
+  //     percent.value = withSpring(
+  //       ((widthI + event.contentOffset.x) / totalWidth) * 100,
+  //     );
+  //   },
+  // });
 
   const scrollToFirstPage = useCallback(() => {
     scrollViewRef.current?.scrollTo({ y: 0, x: 0 });
   }, []);
 
   const onMomentumScrollEnd = (event) => {
-    percent.value = withSpring(
-      ((widthI + event.nativeEvent.contentOffset.x) / totalWidth) * 100,
-    );
+    // Removed: react-native-reanimated functionality
+    // percent.value = withSpring(
+    //   ((widthI + event.nativeEvent.contentOffset.x) / totalWidth) * 100,
+    // );
   };
 
   const scrollToLeft = () => {
@@ -75,9 +78,10 @@ const PageScroll = (props: Props, ref: React.Ref<PagerScrollRef>) => {
         animated: true,
       });
       indexRef.current -= 1;
-      if (isAndroid) {
-        percent.value = (indexRef.current / length) * 100;
-      }
+      // Removed: react-native-reanimated functionality
+      // if (isAndroid) {
+      //   percent.value = (indexRef.current / length) * 100;
+      // }
     }
   };
 
@@ -89,9 +93,10 @@ const PageScroll = (props: Props, ref: React.Ref<PagerScrollRef>) => {
         animated: true,
       });
       indexRef.current += 1;
-      if (isAndroid) {
-        percent.value = (indexRef.current / length) * 100;
-      }
+      // Removed: react-native-reanimated functionality
+      // if (isAndroid) {
+      //   percent.value = (indexRef.current / length) * 100;
+      // }
     }
   };
 
@@ -123,7 +128,8 @@ const PageScroll = (props: Props, ref: React.Ref<PagerScrollRef>) => {
       style={styles.content}
       scrollEventThrottle={16}
       onMomentumScrollEnd={onMomentumScrollEnd}
-      onScroll={scrollHandler}
+      // Removed: react-native-reanimated scroll handler
+      // onScroll={scrollHandler}
       scrollEnabled={scrollEnabled}
       keyboardShouldPersistTaps="handled"
     >

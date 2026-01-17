@@ -19,43 +19,45 @@ const CustomRefreshControl: React.FC<RefreshControlProps> = ({
   refreshType,
   progress,
 }) => {
-  const rotateValue = useSharedValue("0deg");
+  // Removed: react-native-reanimated functionality
+  // const rotateValue = useSharedValue("0deg");
 
-  useAnimatedReaction(
-    () => {
-      return refreshType.value === "refreshing";
-    },
-    (isStart) => {
-      if (!isStart) return;
-      cancelAnimation(rotateValue);
-      rotateValue.value = "0deg";
-      rotateValue.value = withRepeat(
-        withTiming(`${360}deg`, config),
-        -1,
-        false,
-      );
-    },
-  );
+  // Removed: react-native-reanimated reactions
+  // useAnimatedReaction(
+  //   () => {
+  //     return refreshType.value === "refreshing";
+  //   },
+  //   (isStart) => {
+  //     if (!isStart) return;
+  //     cancelAnimation(rotateValue);
+  //     rotateValue.value = "0deg";
+  //     rotateValue.value = withRepeat(
+  //       withTiming(`${360}deg`, config),
+  //       -1,
+  //       false,
+  //     );
+  //   },
+  // );
 
-  useAnimatedReaction(
-    () => {
-      return refreshType.value === "finish";
-    },
-    (isStart) => {
-      if (!isStart) return;
-      cancelAnimation(rotateValue);
-    },
-  );
+  // useAnimatedReaction(
+  //   () => {
+  //     return refreshType.value === "finish";
+  //   },
+  //   (isStart) => {
+  //     if (!isStart) return;
+  //     cancelAnimation(rotateValue);
+  //   },
+  // );
 
-  useAnimatedReaction(
-    () => {
-      return refreshType.value === "pullToRefresh" && progress;
-    },
-    (isStart) => {
-      if (!isStart) return;
-      rotateValue.value = `${progress.value * 360}deg`;
-    },
-  );
+  // useAnimatedReaction(
+  //   () => {
+  //     return refreshType.value === "pullToRefresh" && progress;
+  //   },
+  //   (isStart) => {
+  //     if (!isStart) return;
+  //     rotateValue.value = `${progress.value * 360}deg`;
+  //   },
+  // );
 
   return (
     <Animated.View

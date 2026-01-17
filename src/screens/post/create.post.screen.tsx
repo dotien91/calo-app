@@ -87,7 +87,6 @@ export default function PostScreen() {
     item.post_content || "",
   );
   const {
-    onSelectFile,
     onSelectPicture,
     onSelectVideo,
     listFile,

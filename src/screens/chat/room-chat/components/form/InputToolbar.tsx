@@ -19,7 +19,7 @@ interface InputToolbarProps {
   sendChatMessage: () => void;
   onSelectPicture?: () => void;
   onSelectVideo?: () => void;
-  onSelectFile?: () => void;
+  // onSelectFile removed - react-native-document-picker functionality removed
   fromLiveStream?: boolean;
   chatRoomId: string;
 }
@@ -30,7 +30,6 @@ const InputToolbar: React.FC<InputToolbarProps> = ({
   onSelectPicture,
   onSelectVideo,
   fromLiveStream,
-  onSelectFile,
   chatRoomId,
 }) => {
   const theme = useTheme();
@@ -87,14 +86,7 @@ const InputToolbar: React.FC<InputToolbarProps> = ({
                 color={colors.black}
               />
             </TouchableOpacity>
-            <TouchableOpacity onPress={onSelectFile} style={styles.btnMedia}>
-              <Icon
-                size={20}
-                type={IconType.Feather}
-                name="file"
-                color={colors.black}
-              />
-            </TouchableOpacity>
+            {/* File picker button removed - react-native-document-picker functionality removed */}
           </View>
         )}
       </View>

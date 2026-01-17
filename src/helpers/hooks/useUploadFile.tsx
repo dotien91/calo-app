@@ -3,7 +3,6 @@ import FileViewComponent from "@screens/post/components/FileView";
 import { uploadMultiFile, uploadMultiMedia } from "@services/api/post.api";
 import * as React from "react";
 import { Platform, StyleSheet, Text, View, Dimensions } from "react-native";
-import { pick, types } from "react-native-document-picker";
 import { selectMedia } from "@helpers/file.helper";
 import getPath from "@flyerhq/react-native-android-uri-path";
 import { showToast } from "@helpers/super.modal.helper";
@@ -292,71 +291,10 @@ export function useUploadFile(
     });
   };
 
+  // Removed onSelectFile - react-native-document-picker functionality removed
   const onSelectFile = async () => {
-    try {
-      const pickerResult = await pick({
-        presentationStyle: "fullScreen",
-        type: [
-          types.doc,
-          types.docx,
-          types.pdf,
-          types.plainText,
-          types.xls,
-          types.xlsx,
-          types.ppt,
-          types.pptx,
-          isIos ? "public.mp3" : "audio/mpeg",
-        ],
-      });
-      setIsUpLoadingFile(true);
-      console.log("pickerResultpickerResult", pickerResult);
-      if (pickerResult.length > 0) {
-        const fileUp = pickerResult.reduce((list: any[], current) => {
-          return listFile.find((i) => i.uri === current.uri)
-            ? list
-            : [...list, current];
-        }, []);
-        console.log("fileUpfileUp", fileUp);
-        const fileLocal = fileUp.map((i) => ({
-          uri: isIos ? i.uri?.replace("file://", "") : i.uri,
-          type: i.type,
-          name: i?.name,
-        }));
-        setListFileLocal((listFileLocal) => [...listFileLocal, ...fileLocal]);
-        const res = await uploadMultiFile(
-          fileUp.map((i) => ({
-            name:
-              i.fileName ||
-              i.name ||
-              (i.uri || "")?.split("/")?.reverse()?.[0] ||
-              "",
-            uri: isIos ? i.uri?.replace("file://", "") : i.uri,
-            type: i.type,
-          })),
-        );
-        if (Array.isArray(res)) {
-          const data = fileUp.map((i, index) => ({
-            name:
-              i.fileName ||
-              i.name ||
-              (i.uri || "")?.split("/")?.reverse()?.[0] ||
-              "",
-            uri: isIos ? i.uri?.replace("file://", "") : i.uri,
-            type: i.type,
-            _id: res[index].callback?._id,
-          }));
-          setListFile((listFile) => [...listFile, ...data]);
-        } else {
-          showToast({
-            type: "error",
-            message: translations.post.uploadFileFaild,
-          });
-        }
-        setIsUpLoadingFile(false);
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    // Functionality removed
+    console.warn("onSelectFile is no longer available - react-native-document-picker was removed");
   };
 
   const uploadRecord = React.useCallback(async (recordPaths: string) => {
@@ -403,7 +341,7 @@ export function useUploadFile(
     listFile,
     onSelectPicture,
     onSelectVideo,
-    onSelectFile,
+    // onSelectFile removed - react-native-document-picker functionality removed
     renderFile,
     renderFile2,
     renderFile3,

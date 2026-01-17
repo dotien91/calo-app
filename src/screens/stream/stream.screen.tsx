@@ -12,7 +12,8 @@ import {
   Keyboard,
   StyleSheet,
 } from "react-native";
-import RTMPPublisher, { RTMPPublisherRefProps } from "react-native-publisher";
+// Removed: react-native-publisher package removed
+// import RTMPPublisher, { RTMPPublisherRefProps } from "react-native-publisher";
 import { useTheme, useFocusEffect, useRoute } from "@react-navigation/native";
 import { IconType } from "react-native-dynamic-vector-icons";
 import KeepAwake from "react-native-keep-awake";
@@ -53,7 +54,9 @@ import useStore from "@services/zustand/store";
 import eventEmitter from "@services/event-emitter";
 
 function App() {
-  const publisherRef = useRef<RTMPPublisherRefProps>(null);
+  // Removed: react-native-publisher package removed
+  // const publisherRef = useRef<RTMPPublisherRefProps>(null);
+  const publisherRef = useRef<any>(null);
   // const [isMuted, setIsMuted] = useState<boolean>(false);
   // const [hasBluetoothDevice, setHasBluetoothDevice] = useState<boolean>(false);
   // const [microphoneModalVisibility, setMicrophoneModalVisibility] =
@@ -86,16 +89,18 @@ function App() {
     if (appStateStatus == "active" && !show) {
       // ensureStartStream()
       setShow(true);
-      setTimeout(() => {
-        !_.isEmpty(publisherRef.current) &&
-          publisherRef.current?.startStream?.();
-      }, 1000);
+      // Removed: react-native-publisher functionality
+      // setTimeout(() => {
+      //   !_.isEmpty(publisherRef.current) &&
+      //     publisherRef.current?.startStream?.();
+      // }, 1000);
     }
     if (
       (appStateStatus == "background" || appStateStatus == "inactive") &&
       show
     ) {
-      !_.isEmpty(publisherRef.current) && publisherRef.current?.stopStream?.();
+      // Removed: react-native-publisher functionality
+      // !_.isEmpty(publisherRef.current) && publisherRef.current?.stopStream?.();
       setShow(false);
     }
   }, [appStateStatus, show, liveData]);
@@ -112,9 +117,10 @@ function App() {
   const showLiveStream = () => {
     setShow(true);
     if (isStreaming) {
-      setTimeout(() => {
-        !_.isEmpty(publisherRef.current) && publisherRef.current?.startStream();
-      }, 1000);
+      // Removed: react-native-publisher functionality
+      // setTimeout(() => {
+      //   !_.isEmpty(publisherRef.current) && publisherRef.current?.startStream();
+      // }, 1000);
     }
   };
 
@@ -142,19 +148,21 @@ function App() {
     KeepAwake.activate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     return () => {
-      !_.isEmpty(publisherRef.current) && publisherRef.current?.stopStream?.();
+      // Removed: react-native-publisher functionality
+      // !_.isEmpty(publisherRef.current) && publisherRef.current?.stopStream?.();
       KeepAwake.deactivate();
       updateLivestream("end", liveData?._id);
-      !_.isEmpty(publisherRef.current) && publisherRef.current?.mute?.();
+      // !_.isEmpty(publisherRef.current) && publisherRef.current?.mute?.();
       // setShow(false);
     };
   }, []);
 
   useEffect(() => {
-    if (!_.isEmpty(publisherRef.current)) {
-      publisherRef.current.startStream();
-      publisherRef.current.setAudioInput(1);
-    }
+    // Removed: react-native-publisher functionality
+    // if (!_.isEmpty(publisherRef.current)) {
+    //   publisherRef.current.startStream();
+    //   publisherRef.current.setAudioInput(1);
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     return () => {
       updateLivestream("end", liveData?._id);
@@ -219,7 +227,9 @@ function App() {
   // };
 
   const handleSwitchCamera = () => {
-    !_.isEmpty(publisherRef.current) && publisherRef.current.switchCamera();
+    // Removed: react-native-publisher functionality
+    // !_.isEmpty(publisherRef.current) && publisherRef.current.switchCamera();
+    console.warn("Switch camera functionality removed - react-native-publisher was removed");
   };
 
   // const handleToggleMicrophoneModal = () => {
@@ -275,7 +285,8 @@ function App() {
   };
   const closeLiveStream = () => {
     // updateLivestream("end");
-    publisherRef.current && publisherRef.current.stopStream();
+    // Removed: react-native-publisher functionality
+    // publisherRef.current && publisherRef.current.stopStream();
     NavigationService.popToTop();
     // NavigationService.navigate(SCREENS.HOME);
     if (!group_id) {
@@ -492,7 +503,8 @@ function App() {
       >
         <View style={styles.container}>
           {renderTopView()}
-          {permissionGranted &&
+          {/* Removed: react-native-publisher component */}
+          {/* {permissionGranted &&
             (!isAndroid() || show) &&
             (isAndroid() ? (
               <RTMPPublisher
@@ -532,7 +544,7 @@ function App() {
                 onStreamStateChanged={handleOnStreamStateChanged}
                 // onBluetoothDeviceStatusChanged={handleBluetoothDeviceStatusChange}
               />
-            ))}
+            ))} */}
           {isStreaming && renderChatView()}
           {isStreaming && <LiveBadge />}
           {!go_live_id && !isStreaming && (

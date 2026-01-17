@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, ViewStyle } from "react-native";
-import DatePicker from "react-native-date-picker";
+// Removed: datepicker package removed
+// import DatePicker from "react-native-date-picker";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 import PressableBtn from "@shared-components/button/PressableBtn";
@@ -46,7 +47,8 @@ const DateTimePickerLocal = ({
           />
         </View>
       </PressableBtn>
-      <DatePicker
+      {/* Removed: datepicker package removed */}
+      {/* <DatePicker
         modal
         open={open}
         mode="date"
@@ -58,7 +60,8 @@ const DateTimePickerLocal = ({
         onCancel={() => {
           setOpen(false);
         }}
-      />
+      /> */}
+      {open && console.warn("DatePicker functionality removed - datepicker packages were removed")}
     </>
   );
 };

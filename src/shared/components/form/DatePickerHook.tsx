@@ -5,7 +5,8 @@ import { Controller } from "react-hook-form";
 import { palette } from "@theme/themes";
 import { formatVNDate } from "@utils/date.utils";
 import CS from "@theme/styles";
-import DatePicker from "react-native-date-picker";
+// Removed: datepicker package removed
+// import DatePicker from "react-native-date-picker";
 
 interface DatePickerHookProps {
   control: any;
@@ -64,7 +65,8 @@ const DatePickerHook: React.FC<DatePickerHookProps> = ({
               >
                 {date ? formatVNDate(date) : placeholder}
               </Text>
-              <DatePicker
+              {/* Removed: datepicker package removed */}
+              {/* <DatePicker
                 modal
                 open={open}
                 mode="date"
@@ -79,7 +81,8 @@ const DatePickerHook: React.FC<DatePickerHookProps> = ({
                 onCancel={() => {
                   setOpen(false);
                 }}
-              />
+              /> */}
+              {open && console.warn("DatePicker functionality removed - datepicker packages were removed")}
             </View>
           )}
           name={name}

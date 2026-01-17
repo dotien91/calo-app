@@ -1,6 +1,6 @@
 import { View, StyleSheet } from "react-native";
 import React, { useEffect, useState } from "react";
-import TrackPlayer, { useProgress } from "react-native-track-player";
+// import TrackPlayer, { useProgress } from "react-native-track-player";
 import * as Progress from "react-native-progress";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
@@ -10,9 +10,9 @@ import CS from "@theme/styles";
 import { Device } from "@utils/device.ui.utils";
 import PressableBtn from "@shared-components/button/PressableBtn";
 import eventEmitter from "@services/event-emitter";
-import { setupPlayer } from "react-native-track-player/lib/trackPlayer";
+// import { setupPlayer } from "react-native-track-player/lib/trackPlayer";
 import { uniqueId } from "lodash";
-import { addTracks } from "@services/audio/TrackPlayerService";
+// import { addTracks } from "@services/audio/TrackPlayerService";
 
 interface ISoundPlayer {
   url: string;
@@ -39,15 +39,15 @@ const SoundPlayer = ({ url, disabled = false }: ISoundPlayer) => {
   // };
 
   const onPause = () => {
-    TrackPlayer.pause();
+    // TrackPlayer.pause();
     setIsPlaying(false);
   };
 
   const onPlay = () => {
-    if (progress.position > 0 && progress.position == progress.duration) {
-      TrackPlayer.seekTo(0);
-    }
-    TrackPlayer.play();
+    // if (progress.position > 0 && progress.position == progress.duration) {
+    //   TrackPlayer.seekTo(0);
+    // }
+    // TrackPlayer.play();
     setIsPlaying(true);
   };
 
@@ -71,42 +71,44 @@ const SoundPlayer = ({ url, disabled = false }: ISoundPlayer) => {
   };
 
   const initPlayer = async () => {
-    await setupPlayer();
-    const track1 = {
-      url: url, // Load media from the network
-      id: uniqueId(),
-      // title: 'Avaritia',
-      // artist: 'deadmau5',
-      // album: 'while(1<2)',
-      // genre: 'Progressive House, Electro House',
-      // date: '2014-05-20T07:00:00+00:00', // RFC 3339
-      // artwork: 'http://example.com/cover.png', // Load artwork from the network
-      // duration: 402 // Duration in seconds
-    };
-    addTracks(track1);
+    // TrackPlayer removed - component disabled
+    // await setupPlayer();
+    // const track1 = {
+    //   url: url, // Load media from the network
+    //   id: uniqueId(),
+    //   // title: 'Avaritia',
+    //   // artist: 'deadmau5',
+    //   // album: 'while(1<2)',
+    //   // genre: 'Progressive House, Electro House',
+    //   // date: '2014-05-20T07:00:00+00:00', // RFC 3339
+    //   // artwork: 'http://example.com/cover.png', // Load artwork from the network
+    //   // duration: 402 // Duration in seconds
+    // };
+    // addTracks(track1);
     // await TrackPlayer.add(1][track);
-    setIsReady(true);
-    if (disabled) {
-      setIsPlaying(true);
-      TrackPlayer.play();
-    }
+    setIsReady(false); // Disabled
+    // if (disabled) {
+    //   setIsPlaying(true);
+    //   TrackPlayer.play();
+    // }
   };
 
   useEffect(() => {
     initPlayer();
     eventEmitter.on("stopRecordingPratice", _stopPlay);
     return () => {
-      TrackPlayer.stop();
+      // TrackPlayer.stop();
       eventEmitter.off("stopRecordingPratice", _stopPlay);
     };
   }, []);
 
   const _stopPlay = () => {
-    TrackPlayer.stop();
+    // TrackPlayer.stop();
     setIsPlaying(false);
   };
 
-  const progress = useProgress();
+  // const progress = useProgress();
+  const progress = { position: 0, duration: 0, buffered: 0 };
 
   useEffect(() => {
     console.log("progressprogress", progress);

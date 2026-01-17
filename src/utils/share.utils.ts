@@ -2,7 +2,8 @@
 
 import { translations } from "@localization";
 // import { postShare } from "@services/api/post.api";
-import Share from "react-native-share";
+// Removed: react-native-share package removed
+// import Share from "react-native-share";
 import dynamicLinks, { firebase } from "@react-native-firebase/dynamic-links";
 
 const BASEURL = "https://ikigaicoach.net";
@@ -33,91 +34,106 @@ const createDynamicLink = async (str: string) => {
   }
 };
 
+// Removed: react-native-share functionality
 export const sharePost = (post_id: string) => {
-  const shareOptions = {
-    title: translations.post.share,
-    message: translations.post.sharePost,
-    url: `${BASEURL}/dashboard/community/?postId=${post_id}`,
-  };
-  Share.open(shareOptions)
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      err && console.log(err);
-    });
+  // Removed: react-native-share package removed
+  // const shareOptions = {
+  //   title: translations.post.share,
+  //   message: translations.post.sharePost,
+  //   url: `${BASEURL}/dashboard/community/?postId=${post_id}`,
+  // };
+  // Share.open(shareOptions)
+  //   .then((res) => {
+  //     console.log(res);
+  //   })
+  //   .catch((err) => {
+  //     err && console.log(err);
+  //   });
+  console.warn("Share functionality removed - react-native-share was removed");
 };
 
+// Removed: react-native-share functionality
 export const shareProfile = (profileId: string) => {
-  const linkProfile = `${BASEURL}/user/detail/${profileId}`;
-  const shareOptions = {
-    title: translations.post.share,
-    // message: `${translations.profile.shareProfile} ${BASEURL}/user/detail/${profileId}`
-    message: `${translations.profile.shareProfile} ${linkProfile}`,
-  };
-  Share.open(shareOptions)
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      err && console.log(err);
-    });
+  // Removed: react-native-share package removed
+  // const linkProfile = `${BASEURL}/user/detail/${profileId}`;
+  // const shareOptions = {
+  //   title: translations.post.share,
+  //   // message: `${translations.profile.shareProfile} ${BASEURL}/user/detail/${profileId}`
+  //   message: `${translations.profile.shareProfile} ${linkProfile}`,
+  // };
+  // Share.open(shareOptions)
+  //   .then((res) => {
+  //     console.log(res);
+  //   })
+  //   .catch((err) => {
+  //     err && console.log(err);
+  //   });
+  console.warn("Share functionality removed - react-native-share was removed");
 };
 
+// Removed: react-native-share functionality
 // Đang bỏ id khoá học
 export const shareCourse = async (courseId: string, courseName: string) => {
-  const linkDynamic = await createDynamicLink(
-    // slug,
-    `${BASEURL}`,
-  );
-  const shareOptions = {
-    title: translations.post.share,
-    message: `${translations.course.shareThisCourse(
-      courseName,
-    )} ${linkDynamic}`,
-    // message: `${translations.course.shareThisCourse} ${BASEURL}/course/detail/${courseId}`,
-  };
-  Share.open(shareOptions)
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      err && console.log(err);
-    });
+  // Removed: react-native-share package removed
+  // const linkDynamic = await createDynamicLink(
+  //   // slug,
+  //   `${BASEURL}`,
+  // );
+  // const shareOptions = {
+  //   title: translations.post.share,
+  //   message: `${translations.course.shareThisCourse(
+  //     courseName,
+  //   )} ${linkDynamic}`,
+  //   // message: `${translations.course.shareThisCourse} ${BASEURL}/course/detail/${courseId}`,
+  // };
+  // Share.open(shareOptions)
+  //   .then((res) => {
+  //     console.log(res);
+  //   })
+  //   .catch((err) => {
+  //     err && console.log(err);
+  //   });
+  console.warn("Share functionality removed - react-native-share was removed");
 };
 
+// Removed: react-native-share functionality
 // đang bỏ invite code
 export const shareCodeInvite = async (code: string) => {
-  const linkDynamic =
-    (await createDynamicLink(
-      // slug,
-      `${BASEURL}`,
-    )) || "";
-  // console.log("link...", linkDynamic);
-  const shareOptions = {
-    title: translations.post.share,
-    message: translations.post.shareCode(linkDynamic),
-    // message: translations.post.shareCode(code),
-  };
-  Share.open(shareOptions)
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      err && console.log(err);
-    });
+  // Removed: react-native-share package removed
+  // const linkDynamic =
+  //   (await createDynamicLink(
+  //     // slug,
+  //     `${BASEURL}`,
+  //   )) || "";
+  // // console.log("link...", linkDynamic);
+  // const shareOptions = {
+  //   title: translations.post.share,
+  //   message: translations.post.shareCode(linkDynamic),
+  //   // message: translations.post.shareCode(code),
+  // };
+  // Share.open(shareOptions)
+  //   .then((res) => {
+  //     console.log(res);
+  //   })
+  //   .catch((err) => {
+  //     err && console.log(err);
+  //   });
+  console.warn("Share functionality removed - react-native-share was removed");
 };
 
+// Removed: react-native-share functionality
 export const shareAudio = (link: string) => {
-  const shareOptions = {
-    title: translations.post.share,
-    message: translations.audio.shareAudio(link),
-  };
-  Share.open(shareOptions)
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      err && console.log(err);
-    });
+  // Removed: react-native-share package removed
+  // const shareOptions = {
+  //   title: translations.post.share,
+  //   message: translations.audio.shareAudio(link),
+  // };
+  // Share.open(shareOptions)
+  //   .then((res) => {
+  //     console.log(res);
+  //   })
+  //   .catch((err) => {
+  //     err && console.log(err);
+  //   });
+  console.warn("Share functionality removed - react-native-share was removed");
 };

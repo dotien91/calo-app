@@ -7,7 +7,8 @@ import {
 } from "@helpers/super.modal.helper";
 import { translations } from "@localization";
 import { useRoute } from "@react-navigation/native";
-import DateTimePickerLocal from "@screens/club/components/date.time.picker.local";
+// Removed: datepicker package removed
+// import DateTimePickerLocal from "@screens/club/components/date.time.picker.local";
 import {
   registerSpeaking,
   updateSpeaking,
@@ -214,7 +215,8 @@ const IelstPracticeSpeakingCreate = () => {
         {translations.affiliate.toDate}
         <Text style={{ color: palette.primary }}> *</Text>
       </Text>
-      <DateTimePickerLocal
+      {/* Removed: datepicker package removed */}
+      {/* <DateTimePickerLocal
         style={{
           marginHorizontal: 20,
           paddingVertical: 8,
@@ -227,7 +229,12 @@ const IelstPracticeSpeakingCreate = () => {
         setTime={(time) => setDatePicker(time.toISOString())}
         timeDefault={datePicker || ""}
         minuteInterval={30}
-      />
+      /> */}
+      <View style={{ marginHorizontal: 20, marginTop: 8 }}>
+        <Text style={{ color: palette.placeholder }}>
+          {translations.affiliate.toDate} (DatePicker removed)
+        </Text>
+      </View>
       <View
         style={{
           padding: 20,

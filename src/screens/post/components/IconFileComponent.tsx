@@ -1,7 +1,6 @@
 import Video from "react-native-video";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { types } from "react-native-document-picker";
 
 import ImageLoad from "./ImageLoad";
 
@@ -14,7 +13,10 @@ interface TypeIconFileComponent {
 }
 
 const IconFileComponent = ({ file, sizeIcon = 32 }: TypeIconFileComponent) => {
-  if (file?.type?.includes(types.audio.slice(0, types.audio.length - 1))) {
+  // Check file types using MIME type strings instead of react-native-document-picker types
+  const fileType = file?.type || "";
+  
+  if (fileType.includes("audio")) {
     return (
       <View style={styles.container}>
         <IconSvg name="icAudio" size={sizeIcon} />
@@ -22,7 +24,7 @@ const IconFileComponent = ({ file, sizeIcon = 32 }: TypeIconFileComponent) => {
     );
   }
 
-  if (file?.type?.includes(types.csv.slice(0, types.csv.length - 1))) {
+  if (fileType.includes("csv") || fileType.includes("text/csv")) {
     return (
       <View style={styles.container}>
         <IconSvg name="icCsv" size={sizeIcon} />
@@ -30,8 +32,9 @@ const IconFileComponent = ({ file, sizeIcon = 32 }: TypeIconFileComponent) => {
     );
   }
   if (
-    file?.type?.includes(types.doc.slice(0, types.doc.length - 1)) ||
-    file?.type?.includes(types.docx.slice(0, types.docx.length - 1))
+    fileType.includes("msword") ||
+    fileType.includes("application/msword") ||
+    fileType.includes("application/vnd.openxmlformats-officedocument.wordprocessingml.document")
   ) {
     return (
       <View style={styles.container}>
@@ -40,7 +43,7 @@ const IconFileComponent = ({ file, sizeIcon = 32 }: TypeIconFileComponent) => {
     );
   }
 
-  if (file?.type?.includes(types.pdf.slice(0, types.pdf.length - 1))) {
+  if (fileType.includes("pdf") || fileType.includes("application/pdf")) {
     return (
       <View style={styles.container}>
         <IconSvg name="icPdf" size={sizeIcon} />
@@ -48,9 +51,7 @@ const IconFileComponent = ({ file, sizeIcon = 32 }: TypeIconFileComponent) => {
     );
   }
 
-  if (
-    file?.type?.includes(types.plainText.slice(0, types.plainText.length - 1))
-  ) {
+  if (fileType.includes("text/plain") || fileType.includes("text")) {
     return (
       <View style={styles.container}>
         <IconSvg name="icPlanText" size={sizeIcon} />
@@ -59,8 +60,8 @@ const IconFileComponent = ({ file, sizeIcon = 32 }: TypeIconFileComponent) => {
   }
 
   if (
-    file?.type?.includes(types.ppt.slice(0, types.ppt.length - 1)) ||
-    file?.type?.includes(types.pptx.slice(0, types.pptx.length - 1))
+    fileType.includes("application/vnd.ms-powerpoint") ||
+    fileType.includes("application/vnd.openxmlformats-officedocument.presentationml.presentation")
   ) {
     return (
       <View style={styles.container}>
@@ -70,8 +71,8 @@ const IconFileComponent = ({ file, sizeIcon = 32 }: TypeIconFileComponent) => {
   }
 
   if (
-    file?.type?.includes(types.xls.slice(0, types.xls.length - 1)) ||
-    file?.type?.includes(types.xlsx.slice(0, types.xlsx.length - 1))
+    fileType.includes("application/vnd.ms-excel") ||
+    fileType.includes("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
   ) {
     return (
       <View style={styles.container}>
@@ -80,7 +81,7 @@ const IconFileComponent = ({ file, sizeIcon = 32 }: TypeIconFileComponent) => {
     );
   }
 
-  if (file?.type?.includes(types.zip.slice(0, types.zip.length - 1))) {
+  if (fileType.includes("zip") || fileType.includes("application/zip")) {
     return (
       <View style={styles.container}>
         <IconSvg name="icZip" size={sizeIcon} />

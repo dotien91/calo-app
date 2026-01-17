@@ -20,7 +20,8 @@ import PressableBtn from "@shared-components/button/PressableBtn";
 import { formatPriceCourse } from "@helpers/string.helper";
 import { listSkill } from "constants/course.constant";
 import useStore from "@services/zustand/store";
-import { shareCourse } from "@utils/share.utils";
+// Removed: react-native-share functionality
+// import { shareCourse } from "@utils/share.utils";
 import IconSvg from "assets/svg";
 
 interface CourseItemProps {
@@ -202,7 +203,9 @@ CourseItemProps) => {
               alignItems: "center",
               gap: 4,
             }}
-            onPress={() => shareCourse(userData?.invitation_code, data.title)}
+            // Removed: react-native-share functionality
+            // onPress={() => shareCourse(userData?.invitation_code, data.title)}
+            onPress={() => console.warn("Share functionality removed - react-native-share was removed")}
           >
             <IconSvg name="icDollar" size={16} />
             <Text style={CS.hnSemiBold}>

@@ -1,9 +1,15 @@
 import { StoreSlice } from "@zustand";
 import { TypeTrackLocal } from "models/audio.modal";
-import { Track } from "react-native-track-player";
+// import { Track } from "react-native-track-player";
 import { TypedMedia } from "shared/models";
 
-interface TrackAudio extends Track {
+interface TrackAudio {
+  url?: string;
+  title?: string;
+  artist?: string;
+  artwork?: string;
+  id?: string;
+  duration?: number;
   position?: number;
 }
 export interface TypeAudioWatched {

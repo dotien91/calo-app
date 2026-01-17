@@ -12,7 +12,8 @@ import {
 import { useTheme, useRoute } from "@react-navigation/native";
 import * as NavigationService from "react-navigation-helpers";
 import QRCode from "react-native-qrcode-svg";
-import Share from "react-native-share";
+// Removed: react-native-share package removed
+// import Share from "react-native-share";
 
 import { translations } from "@localization";
 import createStyles from "./smart.banking.style";
@@ -167,12 +168,14 @@ const SmartBanking = () => {
   const shareQR = () => {
     // const newPath = `${fs.DocumentDirectoryPath}/${short_id}`;
     refQr.toDataURL((data) => {
-      const shareImageBase64 = {
-        title: "QR",
-        message: "Save QR code",
-        url: `data:image/png;base64,${data}`,
-      };
-      Share.open(shareImageBase64);
+      // Removed: react-native-share functionality
+      // const shareImageBase64 = {
+      //   title: "QR",
+      //   message: "Save QR code",
+      //   url: `data:image/png;base64,${data}`,
+      // };
+      // Share.open(shareImageBase64);
+      console.warn("Share functionality removed - react-native-share was removed");
 
       // fs.writeFile(
       //   `${CACHE_IMAGE_FOLDER}/${short_id}.png`,

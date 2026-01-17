@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import TrackPlayer, { useProgress } from "react-native-track-player";
+// import TrackPlayer, { useProgress } from "react-native-track-player";
 import dayjs from "dayjs";
 import * as Progress from "react-native-progress";
 import { Device } from "@utils/device.ui.utils";
@@ -9,42 +9,45 @@ import TextBase from "@shared-components/TextBase";
 import CS from "@theme/styles";
 
 const SoundTrackPlayer = ({ audioUrl }: { audioUrl: string }) => {
-  const { position, duration } = useProgress(); // update mỗi 250ms
+  // const { position, duration } = useProgress(); // update mỗi 250ms
+  const [position, setPosition] = useState(0);
+  const [duration, setDuration] = useState(0);
 
   useEffect(() => {
-    const setup = async () => {
-      try {
-        await TrackPlayer.reset();
-        const track = {
-          url: audioUrl,
-          title: "trackId1",
-          artist: "ikes",
-          artwork: "ikes",
-          id: "ikes",
-        };
-        console.log("soundTrackPlayer.1..", audioUrl);
+    // TrackPlayer removed - component disabled
+    // const setup = async () => {
+    //   try {
+    //     await TrackPlayer.reset();
+    //     const track = {
+    //       url: audioUrl,
+    //       title: "trackId1",
+    //       artist: "ikes",
+    //       artwork: "ikes",
+    //       id: "ikes",
+    //     };
+    //     console.log("soundTrackPlayer.1..", audioUrl);
 
-        await TrackPlayer.add(track);
+    //     await TrackPlayer.add(track);
 
-        await TrackPlayer.play();
-      } catch (err) {
-        console.log("TrackPlayer error:", err);
-      }
-    };
+    //     await TrackPlayer.play();
+    //   } catch (err) {
+    //     console.log("TrackPlayer error:", err);
+    //   }
+    // };
 
-    setup();
+    // setup();
 
-    return () => {
-      const cleanup = async () => {
-        await TrackPlayer.stop();
-        await TrackPlayer.reset();
-        await TrackPlayer.updateOptions({
-          stopWithApp: true,
-        });
-      };
+    // return () => {
+    //   const cleanup = async () => {
+    //     await TrackPlayer.stop();
+    //     await TrackPlayer.reset();
+    //     await TrackPlayer.updateOptions({
+    //       stopWithApp: true,
+    //     });
+    //   };
 
-      cleanup();
-    };
+    //   cleanup();
+    // };
   }, []);
 
   const formatTime = (seconds) =>

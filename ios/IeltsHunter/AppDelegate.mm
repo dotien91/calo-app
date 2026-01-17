@@ -72,9 +72,7 @@
     return YES;
   }
 
-  // 3. Xử lý Deep Link mặc định của React Native
-  return [super application:app openURL:url options:options];
-}
+  return [RCTLinkingManager application:app openURL:url options:options];}
 
 // --- Hàm hỗ trợ Audio (Giữ nguyên) ---
 - (void)configureAudioSession

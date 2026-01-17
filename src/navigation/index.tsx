@@ -25,7 +25,6 @@ import {
   PracticeTestData,
   StackIntroData,
 } from "./navigation.constant";
-import analytics from "@react-native-firebase/analytics";
 import { navigate } from "@helpers/navigation.helper";
 import eventEmitter from "@services/event-emitter";
 import NewHomeScreen from "@screens/home/new.screen.home";
@@ -142,10 +141,10 @@ const Navigation = () => {
     return (
       <>
         <Tab.Navigator
-          screenOptions={({ route }) => ({
+          screenOptions={({ route }: { route: any }) => ({
             headerShown: false,
-            tabBarLabel: ({ color }) => renderLable(route, color),
-            tabBarIcon: ({ focused, color }) =>
+            tabBarLabel: ({ color }: { color: string }) => renderLable(route, color),
+            tabBarIcon: ({ focused, color }: { focused: boolean; color: string }) =>
               renderTabIcon(route, focused, color, 24),
             tabBarActiveTintColor: palette.primary,
             tabBarInactiveTintColor: "gray",
@@ -303,20 +302,20 @@ const Navigation = () => {
     );
   };
 
-  const renderCommonStack = () => {
-    return (
-      <>
-        {CommonStackData.map((item) => (
-          <Stack.Screen
-            key={item.name}
-            name={item.name}
-            component={item.screen}
-          />
-        ))}
-        {renderPracticeTestStack()}
-      </>
-    );
-  };
+  // const renderCommonStack = () => {
+  //   return (
+  //     <>
+  //       {CommonStackData.map((item) => (
+  //         <Stack.Screen
+  //           key={item.name}
+  //           name={item.name}
+  //           component={item.screen}
+  //         />
+  //       ))}
+  //       {renderPracticeTestStack()}
+  //     </>
+  //   );
+  // };
 
   return (
     <NavigationContainer
@@ -328,10 +327,6 @@ const Navigation = () => {
       onStateChange={async () => {
         const currentRouteName = navigationRef.current.getCurrentRoute().name;
         eventEmitter.emit("screen_active", { screen: currentRouteName });
-        await analytics().logScreenView({
-          screen_name: currentRouteName,
-          screen_class: currentRouteName,
-        });
         // Save the current route name for later comparison
       }}
     >
@@ -342,7 +337,7 @@ const Navigation = () => {
         {renderStackIntro()}
         {/* <Stack.Screen name={SCREENS.VIEW_LIVE_STREAM} component={ViewStreamScreen} /> */}
         <Stack.Screen name={SCREENS.TABS} component={TabNavigation} />
-        {renderCommonStack()}
+        {/* {renderCommonStack()} */}
       </Stack.Navigator>
     </NavigationContainer>
   );

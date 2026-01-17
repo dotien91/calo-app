@@ -1,35 +1,34 @@
-require_relative '../node_modules/react-native/scripts/react_native_pods'
-require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+# Resolve react_native_pods.rb with node to allow for hoisting
+require Pod::Executable.execute_command('node', ['-p',
+  'require.resolve(
+    "react-native/scripts/react_native_pods.rb",
+    {paths: [process.argv[1]]},
+  )', __dir__]).strip
 
-platform :ios, min_ios_version_supported
+platform :ios, '15.1' # Nâng version tối thiểu lên 15.1 ngay từ đầu
 prepare_react_native_project!
 
-# 1. Permissions
-permissions_path = '../node_modules/react-native-permissions/scripts/setup.rb'
-if File.exist?(permissions_path)
-  require_relative permissions_path
-  setup_permissions([
-    'Camera',
-    'MediaLibrary',
-    'Microphone',
-    'PhotoLibrary',
-    'PhotoLibraryAddOnly',
-  ])
+linkage = ENV['USE_FRAMEWORKS']
+if linkage != nil
+  Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
+  use_frameworks! :linkage => linkage.to_sym
 end
-
-# 2. Static Framework (Bắt buộc cho Firebase & Nitro hoạt động chung)
-use_frameworks! :linkage => :static
-
-use_modular_headers!
 
 target 'ieltshunter' do
   config = use_native_modules!
 
-  # --- ĐÃ SỬA: Bỏ các flag thừa, chỉ giữ new_arch_enabled ---
+  # Firebase Pods với Modular Headers để tránh lỗi xung đột với Swift/New Arch
+  pod 'GoogleUtilities', :modular_headers => true
+  pod 'nanopb', :modular_headers => true
+  pod 'GoogleDataTransport', :modular_headers => true
+  pod 'FirebaseCore', :modular_headers => true
+  pod 'FirebaseInstallations', :modular_headers => true
+
   use_react_native!(
     :path => config[:reactNativePath],
-    :app_path => "#{Pod::Config.instance.installation_root}/..",
-    :new_arch_enabled => false # Tắt New Architecture (Fabric/TurboModules) tại đây
+    :hermes_enabled => true,
+    :new_arch_enabled => true, # BẬT NEW ARCHITECTURE
+    :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
   target 'ieltshunterTests' do
@@ -37,47 +36,26 @@ target 'ieltshunter' do
   end
 
   post_install do |installer|
-    # Sửa lỗi Folly Coroutine cũ (Giữ nguyên để an toàn)
-    system("chmod -R u+w Pods/RCT-Folly")
-    Dir.glob("Pods/RCT-Folly/folly/Portability.h").each do |file|
-      text = File.read(file)
-      if text.include? "#define FOLLY_HAS_COROUTINES 1"
-        new_contents = text.gsub('#define FOLLY_HAS_COROUTINES 1', '#define FOLLY_HAS_COROUTINES 0')
-        File.open(file, "w") { |file| file.puts new_contents }
-      end
-    end
-
+    # React Native standard post install
     react_native_post_install(
       installer,
       config[:reactNativePath],
       :mac_catalyst_enabled => false
     )
-
+  
     installer.pods_project.targets.each do |target|
       target.build_configurations.each do |config|
-        # --- FIX 1: Tắt Sandboxing (Cho Hermes) ---
-        config.build_settings['ENABLE_USER_SCRIPT_SANDBOXING'] = 'NO'
+        # 1. Đồng bộ Deployment Target cho tất cả các Pods (Sửa lỗi appTransactionID)
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.1'
         
-        # --- FIX 2: CẤU HÌNH QUAN TRỌNG CHO NITRO MODULES ---
-        # Ép toàn bộ project dùng C++20 (để khớp với Folly RN 0.76)
-        config.build_settings['CLANG_CXX_LANGUAGE_STANDARD'] = 'c++20'
+        # 2. Đảm bảo Swift 5 cho các module Nitro/IAP
+        config.build_settings['SWIFT_VERSION'] = '5.0'
         
-        # --- FIX 3: SỬA LỖI 'folly/folly-config.h' NOT FOUND ---
-        search_paths = config.build_settings['HEADER_SEARCH_PATHS'] || ['$(inherited)']
-        
-        # Thêm đường dẫn gốc nơi chứa folly-config.h
-        search_paths << '"$(PODS_ROOT)/RCT-Folly"'
-        
-        # Thêm các đường dẫn Public Header khác cho chắc chắn
-        search_paths << '"$(PODS_ROOT)/Headers/Public/RCT-Folly"'
-        search_paths << '"$(PODS_ROOT)/Headers/Public/folly"'
-        search_paths << '"$(PODS_ROOT)/Headers/Public/react-native-nitro-modules"'
-        
-        # Loại bỏ trùng lặp và lưu lại
-        config.build_settings['HEADER_SEARCH_PATHS'] = search_paths.uniq.join(' ')
-        
-        # Đảm bảo thiết bị hỗ trợ
-        config.build_settings['TARGETED_DEVICE_FAMILY'] = '1,2'
+        # 3. Cấu hình cho StoreKit 2 và New Arch compatibility
+        config.build_settings['OTHER_SWIFT_FLAGS'] ||= ['$(inherited)']
+        if target.name == 'react-native-iap'
+          config.build_settings['OTHER_SWIFT_FLAGS'] << '-DSTOREKIT2_ENABLED'
+        end
       end
     end
   end

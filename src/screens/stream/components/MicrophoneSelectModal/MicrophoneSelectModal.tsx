@@ -1,6 +1,15 @@
 import React, { useState } from "react";
 import { View, Text, Modal, TouchableOpacity, Platform } from "react-native";
-import { AudioInputType } from "react-native-rtmp-publisher";
+// Removed: react-native-rtmp-publisher package removed
+// import { AudioInputType } from "react-native-rtmp-publisher";
+
+// Define AudioInputType enum locally
+enum AudioInputType {
+  SPEAKER = 0,
+  BLUETOOTH_HEADSET = 1,
+  WIRED_HEADSET = 2,
+}
+
 import Button from "../Button";
 
 import styles, { itemStyles } from "./MicrophoneSelectModal.styles";

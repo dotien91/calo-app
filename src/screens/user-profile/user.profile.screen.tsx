@@ -34,7 +34,8 @@ import { TypedPost } from "shared/models";
 import { TypedUser } from "models";
 import FollowBtn from "@screens/home/components/follow-btn/FollowBtn";
 import EmptyResultView from "@shared-components/empty.data.component";
-import { shareProfile } from "@utils/share.utils";
+// Removed: react-native-share functionality
+// import { shareProfile } from "@utils/share.utils";
 import AvatarProfile from "./avatar.profile";
 import SkeletonPlaceholder from "@shared-components/skeleton";
 import { getMyCourse } from "@services/api/course.api";
@@ -320,8 +321,10 @@ const ProfileUser = (props: ProfileUserProps) => {
     NavigationService.push(SCREENS.EDIT_PROFILE, { bio: true });
   };
 
+  // Removed: react-native-share functionality
   const _shareProfile = () => {
-    shareProfile(userData?.invitation_code);
+    // shareProfile(userData?.invitation_code);
+    console.warn("Share functionality removed - react-native-share was removed");
   };
 
   const ListAction = () => {

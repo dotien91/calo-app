@@ -40,67 +40,93 @@ const config: Animated.WithSpringConfig = {
 };
 const SwitchComponent = ({ value, onChange }: SwitchComponentProps) => {
   const [isToggled, setIsToggled] = useState(value);
-  const translateX = useSharedValue(!value ? 0 : TRACK_CIRCLE_WIDTH);
+  // Removed: react-native-reanimated functionality
+  // const translateX = useSharedValue(!value ? 0 : TRACK_CIRCLE_WIDTH);
+  const translateX = useRef(new Animated.Value(!value ? 0 : TRACK_CIRCLE_WIDTH)).current;
+  
   useEffect(() => {
     setTimeout(() => {
       onChange(isToggled);
     }, 100);
   }, [isToggled]);
+
+  useEffect(() => {
+    Animated.spring(translateX, {
+      toValue: isToggled ? TRACK_CIRCLE_WIDTH : 0,
+      useNativeDriver: false,
+      ...config,
+    }).start();
+  }, [isToggled]);
+
   const onPress = ({
     nativeEvent: { state },
   }: TapGestureHandlerStateChangeEvent) => {
     if (state !== State.ACTIVE) return;
     setIsToggled((prevstate) => !prevstate);
-    translateX.value = withSpring(isToggled ? 0 : TRACK_CIRCLE_WIDTH, config);
+    // Removed: react-native-reanimated functionality
+    // translateX.value = withSpring(isToggled ? 0 : TRACK_CIRCLE_WIDTH, config);
   };
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{ translateX: translateX.value }],
-      width: interpolate(
-        translateX.value,
-        [0, TRACK_CIRCLE_WIDTH / 3, TRACK_CIRCLE_WIDTH],
-        [CIRCLE_WIDTH, (CIRCLE_WIDTH / 2) * 2.5, CIRCLE_WIDTH],
-      ),
-    };
-  });
-  const animatedContainerStyle = useAnimatedStyle(() => {
-    return {
-      backgroundColor: interpolateColor(
-        translateX.value,
-        [0, TRACK_CIRCLE_WIDTH],
-        ["white", palette.primary],
-      ),
-    };
-  });
 
-  const animatedStyles = useMemo(() => animatedContainerStyle, []);
+  // Removed: react-native-reanimated functionality
+  // const animatedStyle = useAnimatedStyle(() => {
+  //   return {
+  //     transform: [{ translateX: translateX.value }],
+  //     width: interpolate(
+  //       translateX.value,
+  //       [0, TRACK_CIRCLE_WIDTH / 3, TRACK_CIRCLE_WIDTH],
+  //       [CIRCLE_WIDTH, (CIRCLE_WIDTH / 2) * 2.5, CIRCLE_WIDTH],
+  //     ),
+  //   };
+  // });
+  // const animatedContainerStyle = useAnimatedStyle(() => {
+  //   return {
+  //     backgroundColor: interpolateColor(
+  //       translateX.value,
+  //       [0, TRACK_CIRCLE_WIDTH],
+  //       ["white", palette.primary],
+  //     ),
+  //   };
+  // });
 
-  const onGestureEvent = useAnimatedGestureHandler<
-    PanGestureHandlerGestureEvent,
-    { x: number }
-  >({
-    onStart: (_e, ctx) => {
-      ctx.x = translateX.value;
-    },
-    onActive: ({ translationX }, ctx) => {
-      translateX.value = clamp(translationX + ctx.x, 0, TRACK_CIRCLE_WIDTH);
-    },
-    onEnd: ({ velocityX }) => {
-      const selectedSnapPoint = snapPoint(translateX.value, velocityX, [
-        0,
-        TRACK_CIRCLE_WIDTH,
-      ]);
-      translateX.value = withSpring(selectedSnapPoint, config);
-      runOnJS(setIsToggled)(selectedSnapPoint !== 0);
-    },
-  });
+  const animatedStyle = {
+    transform: [{ translateX }],
+    width: CIRCLE_WIDTH,
+  };
+
+  const animatedContainerStyle = {
+    backgroundColor: isToggled ? palette.primary : "white",
+  };
+
+  const animatedStyles = useMemo(() => animatedContainerStyle, [isToggled]);
+
+  // Removed: react-native-reanimated gesture handler
+  // const onGestureEvent = useAnimatedGestureHandler<
+  //   PanGestureHandlerGestureEvent,
+  //   { x: number }
+  // >({
+  //   onStart: (_e, ctx) => {
+  //     ctx.x = translateX.value;
+  //   },
+  //   onActive: ({ translationX }, ctx) => {
+  //     translateX.value = clamp(translationX + ctx.x, 0, TRACK_CIRCLE_WIDTH);
+  //   },
+  //   onEnd: ({ velocityX }) => {
+  //     const selectedSnapPoint = snapPoint(translateX.value, velocityX, [
+  //       0,
+  //       TRACK_CIRCLE_WIDTH,
+  //     ]);
+  //     translateX.value = withSpring(selectedSnapPoint, config);
+  //     runOnJS(setIsToggled)(selectedSnapPoint !== 0);
+  //   },
+  // });
 
   const panRef = useRef<PanGestureHandler>(null);
 
   return (
     <TapGestureHandler waitFor={panRef} onHandlerStateChange={onPress}>
       <Animated.View style={[animatedStyles, styles.switchContainer]}>
-        <PanGestureHandler ref={panRef} onGestureEvent={onGestureEvent}>
+        {/* Removed: Pan gesture handler - react-native-reanimated functionality */}
+        {/* <PanGestureHandler ref={panRef} onGestureEvent={onGestureEvent}> */}
           <Animated.View
             style={[
               animatedStyle,
@@ -108,7 +134,7 @@ const SwitchComponent = ({ value, onChange }: SwitchComponentProps) => {
               { borderColor: "transparent" },
             ]}
           />
-        </PanGestureHandler>
+        {/* </PanGestureHandler> */}
       </Animated.View>
     </TapGestureHandler>
   );

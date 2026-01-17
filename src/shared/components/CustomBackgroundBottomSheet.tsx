@@ -14,16 +14,18 @@ const CustomBackground: React.FC<BottomSheetBackgroundProps> = ({
   //#region styles
   const theme = useTheme();
   const { colors } = theme;
-  const containerAnimatedStyle = useAnimatedStyle(() => ({
-    backgroundColor: interpolateColor(
-      animatedIndex.value,
-      [0, 1],
-      [colors.background, colors.background],
-    ),
-  }));
+  // Removed: react-native-reanimated functionality
+  // Note: @gorhom/bottom-sheet requires reanimated, this component may not work correctly
+  // const containerAnimatedStyle = useAnimatedStyle(() => ({
+  //   backgroundColor: interpolateColor(
+  //     animatedIndex.value,
+  //     [0, 1],
+  //     [colors.background, colors.background],
+  //   ),
+  // }));
   const containerStyle = useMemo(
-    () => [style, containerAnimatedStyle],
-    [style, containerAnimatedStyle],
+    () => [style, { backgroundColor: colors.background }],
+    [style, colors.background],
   );
   //#endregion
 
