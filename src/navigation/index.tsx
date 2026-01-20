@@ -26,7 +26,7 @@ import {
 import PlanResultScreen from "@screens/welcome/onboarding/plan.result.screen";
 import { navigate } from "@helpers/navigation.helper";
 import eventEmitter from "@services/event-emitter";
-import NewHomeScreen from "@screens/home/new.screen.home";
+import HomeScreen from "@screens/home/home.screen";
 import MentorListScreen from "@screens/tutor-tab/tutor.list.screen";
 import StatisticsScreen from "@screens/statistics/StatisticsScreen";
 import HealthScreen from "@screens/health/HealthScreen";
@@ -284,7 +284,7 @@ const Navigation = () => {
   const HomeStackScreen = () => {
     return (
       <HomeStack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name={SCREENS.HOME} component={NewHomeScreen} />
+        <Stack.Screen name={SCREENS.HOME} component={HomeScreen} />
         {/* {renderCommonStack()} */}
       </HomeStack.Navigator>
     );

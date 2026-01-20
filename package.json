@@ -50,6 +50,7 @@
     "axios-hooks": "^4.0.0",
     "babel-plugin-module-resolver": "^5.0.2",
     "babel-plugin-transform-remove-console": "^6.9.4",
+    "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
     "emoji-utils": "^1.0.1",
     "events": "^3.3.0",

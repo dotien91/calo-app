@@ -78,7 +78,7 @@ export const CustomTabBar: React.FC<BottomTabBarProps> = ({
       <CustomBottomTab
         tabs={tabs} // Truyền mảng tabs đã xử lý xuống UI
         fabOnPress={handleFabPress}
-        activeColor="#57A686"
+        activeColor="#84CC16"
         inactiveColor="#A0A0A0"
       />
     </View>
