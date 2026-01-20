@@ -30,7 +30,7 @@ import NewHomeScreen from "@screens/home/new.screen.home";
 import MentorListScreen from "@screens/tutor-tab/tutor.list.screen";
 import StatisticsScreen from "@screens/statistics/StatisticsScreen";
 import HealthScreen from "@screens/health/HealthScreen";
-import {CustomBottomTab} from "@shared-components/bottom-tab/CustomTabBar";
+import { CustomTabBar } from "@shared-components/bottom-tab/CustomTabBar";
 
 // import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 // ? If you want to use stack or tab or both
@@ -144,9 +144,19 @@ const Navigation = () => {
         <Tab.Navigator
           screenOptions={{
             headerShown: false,
+            // Quan trọng: Đặt background tab bar trong suốt để thấy nút nổi
+            tabBarStyle: {
+              position: "absolute",
+              backgroundColor: "transparent",
+              elevation: 0,
+              borderTopWidth: 0,
+            },
           }}
-          tabBar={(props: any) => <CustomBottomTab {...props} />}
+          // Truyền CustomTabBar vào props tabBar
+          tabBar={(props: any) => <CustomTabBar {...props} />}
         >
+          {/* Thứ tự khai báo Tab rất quan trọng để chia đều 2 bên nút FAB */}
+          {/* 2 Tab Bên Trái */}
           <Tab.Screen
             name={SCREENS.HOME_TAB}
             component={HomeStackScreen}
@@ -162,6 +172,8 @@ const Navigation = () => {
             name={SCREENS.STATISTICS_TAB}
             component={StatisticsStackScreen}
           />
+
+          {/* 2 Tab Bên Phải */}
           <Tab.Screen name={SCREENS.HEALTH_TAB} component={HealthStackScreen} />
           <Tab.Screen
             name={SCREENS.SETTINGPROFILESCREEN_TAB}
