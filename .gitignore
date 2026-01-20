@@ -81,6 +81,8 @@ DerivedData
 *.ipa
 *.xcuserstate
 *.zip
+/ios/.xcode.env.local
+/ios/.xcode.env
 /ios/build/
 /ios/Pods/
 /ios/Index/
@@ -145,3 +147,5 @@ android/app/build/
 # react-native-config codegen
 ios/tmp.xcconfig
 android/app/release/output-metadata.json
+ios/.xcode.env
+ios/.xcode.env.local

@@ -30,6 +30,7 @@ import NewHomeScreen from "@screens/home/new.screen.home";
 import MentorListScreen from "@screens/tutor-tab/tutor.list.screen";
 import StatisticsScreen from "@screens/statistics/StatisticsScreen";
 import HealthScreen from "@screens/health/HealthScreen";
+import {CustomBottomTab} from "@shared-components/bottom-tab/CustomTabBar";
 
 // import AudioPlayScreen from "@screens/audio/audio-play/audio.play.screen";
 // ? If you want to use stack or tab or both
@@ -46,7 +47,7 @@ const Navigation = () => {
   const isDarkMode = useStore((state) => state.isDarkMode);
   // const isFirstOpenApp = useStore((state) => state.isFirstOpenApp);
   // Hardcode to always show onboarding flow
-  const isFirstOpenApp = true; // _getJson("is_first_open_app") ? true : false;
+  const isFirstOpenApp = false; // _getJson("is_first_open_app") ? true : false;
   React.useEffect((): any => {
     return () => (isReadyRef.current = false);
   }, []);
@@ -141,34 +142,10 @@ const Navigation = () => {
     return (
       <>
         <Tab.Navigator
-          screenOptions={({ route }: { route: any }) => ({
+          screenOptions={{
             headerShown: false,
-            tabBarLabel: ({ color }: { color: string }) => renderLable(route, color),
-            tabBarIcon: ({ focused, color }: { focused: boolean; color: string }) =>
-              renderTabIcon(route, focused, color, 24),
-            tabBarActiveTintColor: palette.primary,
-            tabBarInactiveTintColor: "gray",
-            tabBarStyle: {
-              borderTopColor: palette.borderColor,
-              backgroundColor: isDarkMode ? palette.black : palette.white,
-              // height: getBottomSpace() + 48,
-              marginTop: 4,
-            },
-            // tabBarButton: (props) => (
-            //   <TouchableOpacity
-            //     {...props}
-            //     onPress={() => {
-            //       navigate(route.name);
-            //       if (
-            //         route.name == "HomeTab" &&
-            //         props.accessibilityState.selected
-            //       ) {
-            //         eventEmitter.emit("reload_home_page");
-            //       }
-            //     }}
-            //   />
-            // ),
-          })}
+          }}
+          tabBar={(props: any) => <CustomBottomTab {...props} />}
         >
           <Tab.Screen
             name={SCREENS.HOME_TAB}
