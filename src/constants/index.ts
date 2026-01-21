@@ -157,6 +157,7 @@ export const SCREENS = {
   GENDER: "Gender",
   ACTIVITY_LEVEL: "ActivityLevel",
   PACE: "Pace",
+  GOAL: "Goal",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

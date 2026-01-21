@@ -1,440 +1,288 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useState, useMemo } from 'react';
 import {
-  FlatList,
-  Pressable,
-  SafeAreaView,
-  ScrollView,
-  Text,
   View,
-} from "react-native";
-import * as NavigationService from "react-navigation-helpers";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
-// import Clipboard from "@react-native-community/clipboard";
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  Switch,
+  SafeAreaView,
+  StatusBar,
+  Platform,
+} from 'react-native';
+import { useNavigation, useTheme } from '@react-navigation/native';
+import { SCREENS } from 'constants';
 
-import Header from "@shared-components/header/Header";
-import { useTheme, useFocusEffect } from "@react-navigation/native";
-import CS from "@theme/styles";
-import Avatar from "@shared-components/user/Avatar";
-import useStore from "@services/zustand/store";
-import IconBtn from "@shared-components/button/IconBtn";
-import PieChartCommon from "@shared-components/pie-chart/pie.chart";
-import IconSvg from "assets/svg";
-import { translations } from "@localization";
-import { getListTaskByUser } from "@services/api/task.api";
-import createStyles from "./profile.screen.style";
-import { SCREENS } from "constants";
-import PressableBtn from "@shared-components/button/PressableBtn";
-import formatMoney from "@shared-components/input-money/format.money";
-import { useUserHook } from "@helpers/hooks/useUserHook";
-import useUserHelper from "@helpers/hooks/useUserHelper";
-import { palette } from "@theme/themes";
-import ListCodeActive from "@shared-components/code-active/list.code.active";
-import InviteCode from "@shared-components/code-share/code.invite.share";
-import eventEmitter from "@services/event-emitter";
-import TashListItem from "@shared-components/task-item/task.list.item";
-import { getListScore } from "@services/api/pie.chart.api";
-import TextBase from "@shared-components/TextBase";
-import ChartIkigai from "./chart.ikigai";
+// --- Import Phosphor Icons ---
+import {
+  Scales,
+  Fire,
+  ChartPieSlice,
+  ForkKnife,
+  Footprints,
+  Drop,
+  ArrowCounterClockwise,
+  Bell,
+  Translate,
+  Ruler,
+  Star,
+  Gift,
+  ChatCircleDots,
+  ShieldCheck,
+  Info,
+  FileText,
+  Trash,
+  Fingerprint,
+  TiktokLogo,
+  FacebookLogo,
+  CaretRight,
+  ArrowSquareOut,
+  Aperture,
+  FireSimple,
+  Moon, // <--- Icon Mặt trăng cho Dark Mode
+} from 'phosphor-react-native';
 
-const SettingProfileScreen = () => {
-  const theme = useTheme();
-  const { colors } = theme;
-  const userData = useStore((state) => state.userData);
-  const userInfo = useStore((state) => state.userInfo);
-  const userMedia = useStore((state) => state.userMedia);
-  const { renderViewRequestLogin } = useUserHook();
-  const { changeUserMedia, isTeacher } = useUserHelper();
-  const styles = useMemo(() => createStyles(theme), [theme]);
-  const listrenderPointCoin = [
-    {
-      icon: "icMoney",
-      title: formatMoney(userInfo?.current_token || 0),
-      onPress: () =>
-        NavigationService.navigate(SCREENS.HOME_AFFILIATE, { type: "token" }),
-      end: "VND",
-      color: palette.colorMoney,
-    },
-    {
-      icon: "icCoinStar",
-      title: userInfo?.point || 0,
-      onPress: () => NavigationService.navigate(SCREENS.DISCOVERSCREEN),
-      end: "Points",
-    },
-    {
-      icon: "icCoin",
-      title: userInfo?.current_coin || 0,
-      onPress: () =>
-        NavigationService.navigate(SCREENS.AFFILIATE, { type: "coin" }),
-      end: "IHC",
-    },
-  ];
+// --- Import Styles ---
+import { createStyles } from './profile.screen.style';
+import useStore from '@services/zustand/store'; // Store của bạn
 
-  const [data, setData] = useState([]);
-  const [point, setPoint] = useState([]);
+// --- Component: ListItem (Hỗ trợ Switch) ---
+interface ListItemProps {
+  Icon?: any;
+  title: string;
+  value?: string | React.ReactNode;
+  hasArrow?: boolean;
+  isSwitch?: boolean;
+  switchValue?: boolean;
+  onSwitchChange?: (val: boolean) => void;
+  color?: string;
+  isLast?: boolean;
+  theme: any;
+  styles: any;
+  onPress?: () => void;
+}
 
-  const _getListScore = () => {
-    const paramsRequest = {};
-    getListScore(paramsRequest).then((res) => {
-      if (!res.isError) {
-        const {
-          listening_percentage_average = 0,
-          speaking_percentage_average = 0,
-          reading_percentage_average = 0,
-          writing_percentage_average = 0,
-        } = res.data;
-        const sum =
-          listening_percentage_average +
-          speaking_percentage_average +
-          reading_percentage_average +
-          writing_percentage_average;
+const ListItem = ({ 
+  Icon, title, value, hasArrow = true, isSwitch = false, 
+  switchValue, onSwitchChange, color, isLast = false, theme, styles, onPress 
+}: ListItemProps) => {
+  const { colors, dark } = theme;
+  const defaultIconColor = colors.text; 
+  const secondaryColor = dark ? '#8E8E93' : '#888888';
 
-        const average = sum / 4;
-        setPoint(average ? average.toFixed(3) : 0);
-        const data = [
-          {
-            percentage: Number(
-              ((listening_percentage_average * 100) / (sum || 1)).toFixed(2),
-            ),
-            color: palette.btnRedPrimary,
-            title: translations.task.listening,
-          },
-          {
-            percentage: Number(
-              ((speaking_percentage_average * 100) / (sum || 1)).toFixed(2),
-            ),
-            color: palette.gold,
-            title: translations.task.speaking,
-          },
-          {
-            percentage: Number(
-              ((reading_percentage_average * 100) / (sum || 1)).toFixed(2),
-            ),
-            color: palette.blueChart,
-            title: translations.task.reading,
-          },
-          {
-            percentage: Number(
-              ((writing_percentage_average * 100) / (sum || 1)).toFixed(2),
-            ),
-            color: palette.greenChart,
-            title: translations.task.writing,
-          },
-        ];
-        setData(data);
-      } else {
-        setPoint(0);
-        setData([
-          {
-            percentage: 0,
-            color: palette.btnRedPrimary,
-            title: translations.task.listening,
-          },
-          {
-            percentage: 0,
-            color: palette.gold,
-            title: translations.task.speaking,
-          },
-          {
-            percentage: 0,
-            color: palette.blueChart,
-            title: translations.task.reading,
-          },
-          {
-            percentage: 0,
-            color: palette.greenChart,
-            title: translations.task.writing,
-          },
-        ]);
-      }
-    });
-  };
+  // Nếu là Switch thì không cho bấm vào View cha
+  const Container = (isSwitch || !onPress) ? View : TouchableOpacity;
 
-  useFocusEffect(
-    React.useCallback(() => {
-      _getListScore();
-    }, []),
-  );
-  const onPressHeaderRight = () => {
-    NavigationService.navigate(SCREENS.SETTING);
-  };
-  const renderItemSelected = ({
-    item,
-    index,
-  }: {
-    item: any;
-    index: number;
-  }) => {
-    if (item.hide) return null;
-    return (
-      <PressableBtn
-        onPress={item.onPress}
-        key={index}
-        style={[styles.viewItemScrollMoney]}
-      >
-        <IconSvg
-          style={{ marginHorizontal: 12 }}
-          name={item.icon}
-          color={item.color || colors.gold}
-          size={26}
-        ></IconSvg>
-        <Text
-          style={styles.textNumberMoney}
-        >{`${item.title} ${item.end}`}</Text>
-      </PressableBtn>
-    );
-  };
-  const openSetting = () => {
-    NavigationService.navigate(SCREENS.SETTING);
-  };
-
-  const renderScrollPointCoin = () => {
-    return (
-      <View>
-        <FlatList
-          style={{ paddingHorizontal: 16 }}
-          showsHorizontalScrollIndicator={false}
-          horizontal
-          data={listrenderPointCoin}
-          renderItem={renderItemSelected}
-        />
-        <PressableBtn onPress={openSetting} style={styles.viewInforuser}>
-          <View>
-            <Avatar
-              style={{
-                width: 48,
-                height: 48,
-                borderRadius: 24,
-              }}
-              sourceUri={{
-                uri: userMedia?.user_avatar,
-              }}
-              resizeMode={"cover"}
-            ></Avatar>
-            <IconBtn
-              name="camera"
-              color={colors.white}
-              onPress={() => changeUserMedia("user_avatar")}
-              customStyle={{
-                position: "absolute",
-                zIndex: 1,
-                bottom: 0,
-                backgroundColor: colors.textOpacity6,
-                borderRadius: 99,
-                right: 0,
-                padding: 4,
-                width: "auto",
-                height: "auto",
-              }}
-              size={12}
-            />
-          </View>
-          <View style={{ flex: 1, marginLeft: 16 }}>
-            <View style={styles.viewDisplayname}>
-              <Text style={styles.textDisplayName}>
-                {userData?.display_name}
-              </Text>
-              <Icon
-                type={IconType.Ionicons}
-                name="chevron-forward"
-                color={colors.black}
-                size={24}
-              />
-            </View>
-            {(userData?.target_point || userData?.current_point) && (
-              <View
-                style={[
-                  styles.boxLevel,
-                  {
-                    backgroundColor: userData?.target_point
-                      ? palette.red
-                      : palette.green,
-                  },
-                ]}
-              >
-                <Text style={styles.textLevel}>
-                  {"IELTS "}
-                  {userData?.target_point || userData?.current_point}
-                </Text>
-              </View>
-            )}
-          </View>
-        </PressableBtn>
-      </View>
-    );
-  };
-
-  const openHiddenPage = () => {
-    NavigationService.navigate(SCREENS.HIDDEN_PAGE);
-  };
-  const renderPieChart = () => {
-    return (
-      <View style={{ marginHorizontal: 16 }}>
-        <Text style={styles.textYourScore}>{translations.task.yourscore}</Text>
-        <PieChartCommon sections={data} point={point}></PieChartCommon>
-        <Pressable onLongPress={openHiddenPage} style={styles.viewPowered}>
-          <Text style={styles.textPoweredBy}>{translations.task.powered}</Text>
-          <IconSvg name="logoIkigaiCoach" width={32} height={18} />
-        </Pressable>
-      </View>
-    );
-  };
-
-  const renderInviteFriend = () => {
-    return (
-      <View style={{ marginHorizontal: 16 }}>
-        <Text style={styles.textInviteFriend}>
-          {translations.task.inviteFriend}
-        </Text>
-        <InviteCode />
-      </View>
-    );
-  };
-
-  if (!userData?._id) {
-    return (
-      <SafeAreaView style={CS.container}>
-        <Header
-          hideBackBtn
-          onPressRight={onPressHeaderRight}
-          iconNameRight="settings"
-          text={translations.profile.profile}
-        />
-        {renderViewRequestLogin()}
-      </SafeAreaView>
-    );
-  }
-  const renderButtonTeacherScreen = () => {
-    if (!isTeacher) return null;
-    return (
-      <PressableBtn
-        onPress={() => NavigationService.navigate(SCREENS.TEACHER_SCREEN)}
-      >
-        <View
-          style={{
-            backgroundColor: colors.greenTh2,
-            flexDirection: "row",
-            padding: 6,
-            alignItems: "center",
-            marginBottom: 10,
-          }}
-        >
-          <IconSvg
-            size={48}
-            name="icTeacher"
-            style={{
-              marginHorizontal: 13,
-            }}
-          />
-          <View>
-            <TextBase fontWeight="600" color="white">
-              {translations.profileTeacher.titleBtn}
-            </TextBase>
-            <TextBase fontSize={12} color="white">
-              {translations.profileTeacher.desBtn}
-            </TextBase>
-          </View>
-          <Icon
-            name="chevron-forward-outline"
-            type={IconType.Ionicons}
-            color={colors.white}
-            size={30}
-            style={{
-              position: "absolute",
-              right: 10,
-            }}
-          />
-        </View>
-      </PressableBtn>
-    );
-  };
   return (
-    <SafeAreaView style={CS.container}>
-      <Header
-        hideBackBtn
-        onPressRight={onPressHeaderRight}
-        iconNameRight="settings"
-        text={translations.profile.profile}
-      />
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={{ flex: 1, marginBottom: 20 }}>
-          {renderButtonTeacherScreen()}
-          {renderScrollPointCoin()}
-          {/* {renderPieChart()} */}
-          <ChartIkigai />
-          <Tasks />
-          {renderInviteFriend()}
-          <ListCodeActive />
+    <View>
+      <Container 
+        style={styles.itemContainer} 
+        activeOpacity={0.7}
+        onPress={onPress}
+      >
+        <View style={styles.itemLeft}>
+          {Icon && (
+            <Icon size={24} color={color || defaultIconColor} weight="regular" style={styles.itemIcon} />
+          )}
+          <Text style={[styles.itemTitle, color && { color: color }]}>{title}</Text>
         </View>
-      </ScrollView>
-    </SafeAreaView>
+
+        <View style={styles.itemRight}>
+          {typeof value === 'string' ? <Text style={styles.itemValue}>{value}</Text> : value}
+          
+          {isSwitch ? (
+            <Switch
+              trackColor={{ false: "#3e3e3e", true: colors.primary }}
+              thumbColor={Platform.OS === 'ios' ? "#fff" : colors.primary} 
+              onValueChange={onSwitchChange}
+              value={switchValue}
+            />
+          ) : (
+            hasArrow && <CaretRight size={20} color={secondaryColor} />
+          )}
+        </View>
+      </Container>
+      {!isLast && <View style={styles.divider} />}
+    </View>
   );
 };
 
-export const Tasks = React.memo(() => {
-  const theme = useTheme();
-  const { colors } = theme;
-  const styles = useMemo(() => createStyles(theme), [theme]);
+// --- Component: SectionGroup ---
+const SectionGroup = ({ title, children, styles }: { title?: string, children: React.ReactNode, styles: any }) => {
+  return (
+    <View style={styles.sectionWrapper}>
+      {title && <Text style={styles.sectionHeader}>{title}</Text>}
+      <View style={styles.sectionContainer}>{children}</View>
+    </View>
+  );
+};
 
-  const onSeeAll = () => {
-    NavigationService.navigate(SCREENS.TASK_SCREEN);
+const SettingProfileScreen = () => {
+  const navigation = useNavigation<any>();
+  const theme = useTheme();
+  const { colors, dark } = theme;
+  const styles = useMemo(() => createStyles(theme), [theme]);
+  
+  // Lấy hàm set theme từ store (nếu có)
+  const setTheme = useStore((state) => state.setTheme); 
+
+  // --- States ---
+  const [isEnabledBurn, setIsEnabledBurn] = useState(false);
+  const [isEnabledMetric, setIsEnabledMetric] = useState(true);
+  
+  // State hiển thị Darkmode (Khởi tạo bằng giá trị theme hiện tại)
+  const [isDarkMode, setIsDarkMode] = useState(dark);
+
+  const arrowIconColor = dark ? '#8E8E93' : '#888888';
+
+  // --- Logic Toggle Dark Mode ---
+  const handleToggleDarkMode = (value: boolean) => {
+    setIsDarkMode(value);
+    // Cập nhật vào Global Store để app render lại
+    // Nếu store của bạn dùng string 'dark'/'light':
+    if (setTheme) {
+        setTheme(value ? 'dark' : 'light'); 
+    }
   };
 
-  const [listData, setListData] = React.useState([]);
-  useFocusEffect(
-    React.useCallback(() => {
-      getTask();
-    }, []),
-  );
-
-  useEffect(() => {
-    eventEmitter.on("reload_list_task", getTask);
-    return () => {
-      eventEmitter.off("reload_list_task", getTask);
-    };
-  }, []);
-
-  const getTask = () => {
-    getListTaskByUser({ order_by: "DESC" }).then((res) => {
-      if (!res.isError) {
-        setListData((res.data?.[0]?.missions || []).reverse());
-      }
-    });
+  // --- Navigation Logic ---
+  const handleNavigateToGoal = (key: string) => {
+    let params = {};
+    switch (key) {
+      case 'WEIGHT':
+        params = { type: 'WEIGHT', title: 'Mục tiêu cân nặng', initialValue: 70.0, unit: 'kg' };
+        break;
+      case 'CALO':
+        params = { type: 'INPUT', title: 'Mục tiêu Calo', description: '...', initialValue: '2045', unit: 'kcal', iconType: 'fire' };
+        break;
+      case 'DIET':
+        params = { type: 'DIET', title: 'Chế độ ăn', initialValue: '1' };
+        break;
+      case 'STEP':
+        params = { type: 'INPUT', title: 'Mục tiêu bước chân', description: '...', initialValue: '10000', unit: 'bước / ngày', iconType: 'step' };
+        break;
+      case 'WATER':
+        params = { type: 'INPUT', title: 'Mục tiêu nước uống', description: '...', initialValue: '2000', unit: 'ml', iconType: 'water' };
+        break;
+      default: return; 
+    }
+    navigation.navigate(SCREENS.GOAL, params);
   };
 
   return (
-    <View style={{ marginTop: 16, marginHorizontal: 16 }}>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          marginVertical: 16,
-        }}
-      >
-        <Text style={styles.textTasks}>{translations.task.task}</Text>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <PressableBtn onPress={onSeeAll}>
-            <Text style={styles.textSeeAll}>{translations.seeAll}</Text>
-          </PressableBtn>
-          <Icon
-            name="chevron-forward-outline"
-            type={IconType.Ionicons}
-            color={colors.btnRedPrimary}
-            size={16}
-          ></Icon>
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle={dark ? "light-content" : "dark-content"} backgroundColor={colors.background} />
+      
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Hồ sơ</Text>
+      </View>
+
+      <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
+        
+        {/* Banner PRO */}
+        <View style={styles.proBanner}>
+          <View style={styles.proHeaderRow}>
+            <Aperture size={28} color={colors.primary} weight="duotone" />
+            <Text style={styles.proTitle}>CalSnap</Text>
+            <View style={styles.proBadge}>
+              <Text style={styles.proBadgeText}>PRO</Text>
+            </View>
+          </View>
+          <Text style={styles.proDescription}>
+            Trải nghiệm AI thông minh không lo bị gián đoạn - Nhanh chóng đạt được mục tiêu.
+          </Text>
+          <TouchableOpacity style={styles.proButton}>
+            <Text style={styles.proButtonText}>Dùng thử miễn phí</Text>
+          </TouchableOpacity>
         </View>
-      </View>
-      <View
-        style={{
-          backgroundColor: colors.backgroundColorGrey,
-          borderRadius: 8,
-        }}
-      >
-        {listData.slice(0, 5).map((item, index) => {
-          return <TashListItem key={index} item={item} />;
-        })}
-      </View>
-    </View>
+
+        {/* Section: Mục tiêu */}
+        <SectionGroup title="Mục tiêu" styles={styles}>
+          <ListItem theme={theme} styles={styles} Icon={Scales} title="Cân nặng" value="70 kg" onPress={() => handleNavigateToGoal('WEIGHT')} />
+          <ListItem theme={theme} styles={styles} Icon={Fire} title="Calo" value="2045 kcal" onPress={() => handleNavigateToGoal('CALO')} />
+          <ListItem theme={theme} styles={styles} Icon={ChartPieSlice} title="Dinh dưỡng" value="256/102/68 g" />
+          <ListItem theme={theme} styles={styles} Icon={ForkKnife} title="Chế độ ăn" value="Cân bằng" onPress={() => handleNavigateToGoal('DIET')} />
+          <ListItem theme={theme} styles={styles} Icon={Footprints} title="Bước chân" value="10000 bước" onPress={() => handleNavigateToGoal('STEP')} />
+          <ListItem theme={theme} styles={styles} Icon={Drop} title="Nước" value="2000 ml" isLast onPress={() => handleNavigateToGoal('WATER')} />
+        </SectionGroup>
+
+        {/* Section: Tùy chỉnh */}
+        <SectionGroup title="Tùy chỉnh" styles={styles}>
+          <ListItem theme={theme} styles={styles} Icon={ArrowCounterClockwise} title="Bắt đầu lại" />
+          <ListItem theme={theme} styles={styles} Icon={Bell} title="Nhắc nhở" />
+          
+          {/* --- TOGGLE DARK MODE HIỂN THỊ Ở NGOÀI --- */}
+          <ListItem 
+            theme={theme} styles={styles}
+            Icon={Moon} 
+            title="Chế độ tối" 
+            isSwitch 
+            switchValue={isDarkMode}
+            onSwitchChange={handleToggleDarkMode}
+          />
+          
+          <ListItem theme={theme} styles={styles} Icon={Translate} title="Ngôn ngữ" value="Tiếng Việt" />
+          
+          <View style={styles.toggleItemWrapper}>
+            <ListItem 
+              theme={theme} styles={styles}
+              Icon={FireSimple} 
+              title="Cộng calo tiêu hao" 
+              isSwitch 
+              switchValue={isEnabledBurn}
+              onSwitchChange={setIsEnabledBurn}
+              isLast
+            />
+            <Text style={styles.subText}>Tăng giới hạn calo hàng ngày dựa trên hoạt động</Text>
+          </View>
+           <View style={styles.divider} />
+
+          <View style={styles.toggleItemWrapper}>
+            <ListItem 
+              theme={theme} styles={styles}
+              Icon={Ruler} 
+              title="Hệ mét" 
+              isSwitch 
+              switchValue={isEnabledMetric}
+              onSwitchChange={setIsEnabledMetric}
+              isLast
+            />
+             <Text style={styles.subText}>Tắt để sử dụng đơn vị đo lường Imperial</Text>
+          </View>
+        </SectionGroup>
+
+        {/* Section: Khác */}
+        <SectionGroup title="Khác" styles={styles}>
+          <ListItem theme={theme} styles={styles} Icon={Star} title="Đánh giá CalSnap" />
+          <ListItem theme={theme} styles={styles} Icon={Gift} title="Hạn mức miễn phí" />
+          <ListItem theme={theme} styles={styles} Icon={ChatCircleDots} title="Hỗ trợ" />
+          <ListItem theme={theme} styles={styles} Icon={ShieldCheck} title="Chính sách bảo mật" value={<ArrowSquareOut size={18} color={arrowIconColor} />} hasArrow={false} />
+          <ListItem theme={theme} styles={styles} Icon={Info} title="Điều khoản sử dụng" value={<ArrowSquareOut size={18} color={arrowIconColor} />} hasArrow={false} />
+          <ListItem theme={theme} styles={styles} Icon={FileText} title="Nguồn thông tin y tế" />
+          <ListItem theme={theme} styles={styles} Icon={Trash} title="Xóa tài khoản" color={colors.notification} isLast hasArrow={false} />
+          <View style={{paddingHorizontal: 16, paddingBottom: 12}}>
+             <Text style={styles.subText}>Xóa tất cả dữ liệu và khởi tạo lại</Text>
+          </View>
+        </SectionGroup>
+
+        {/* Section: Tài khoản */}
+        <SectionGroup title="Tài khoản" styles={styles}>
+           <ListItem theme={theme} styles={styles} Icon={Fingerprint} title="ID" value="cdd420...6bf0" hasArrow={false} isLast />
+        </SectionGroup>
+
+        {/* Section: Theo dõi */}
+        <SectionGroup title="Theo dõi CalSnap" styles={styles}>
+          <ListItem theme={theme} styles={styles} Icon={TiktokLogo} title="TikTok" value={<ArrowSquareOut size={18} color={arrowIconColor} />} hasArrow={false} />
+          <ListItem theme={theme} styles={styles} Icon={FacebookLogo} title="Facebook" value={<ArrowSquareOut size={18} color={arrowIconColor} />} hasArrow={false} isLast />
+        </SectionGroup>
+
+        <View style={styles.footerInfo}>
+          <Text style={styles.footerText}>CalSnap 1.6.18+63</Text>
+          <Text style={styles.footerText}>© 2025 CalSnap. All rights reserved.</Text>
+        </View>
+
+      </ScrollView>
+    </SafeAreaView>
   );
-});
+}
 
 export default SettingProfileScreen;

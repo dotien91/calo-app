@@ -234,7 +234,6 @@ const SettingScreen: React.FC<SettingScreenProps> = () => {
       </View>
     );
   };
-
   const editProfile = () => {
     NavigationService.navigate(SCREENS.EDIT_PROFILE);
   };

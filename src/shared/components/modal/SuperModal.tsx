@@ -25,11 +25,9 @@ import LottieComponent from "@shared-components/lottie/LottieComponent";
 import ListUser from "./modal-inner/ListUser";
 import InputViewModal from "@shared-components/input-modal/input.modal";
 import ListActionInner from "./modal-inner/ListActionInner";
-import GamificationView from "./modal-inner/GamificationView";
 import EarnPointView from "./modal-inner/EarnPointView";
 import ListBank from "./modal-inner/ListBank";
 import { ScreenHeight } from "@freakycoder/react-native-helpers";
-import ReferralPopupTask from "@shared-components/task-item/task.referral.popup";
 import { translations } from "@localization";
 import SelectCourseView from "./modal-inner/SelectCourseView";
 import ConfirmViewBottom from "@shared-components/comfirm-view-bottom/comfirm.view.bottom";
@@ -255,16 +253,10 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         {contentModalType == EnumModalContentType.TextInput && (
           <InputViewModal {...data} closeModal={closeModal} />
         )}
-        {contentModalType == EnumModalContentType.GamificationView && (
-          <GamificationView {...data} closeModal={closeModal} />
-        )}
         {contentModalType == EnumModalContentType.CustomView &&
           data?.customView?.()}
         {contentModalType == EnumModalContentType.SearchBank && (
           <ListBank {...data} closeModal={closeModal} />
-        )}
-        {contentModalType == EnumModalContentType.RefferralTask && (
-          <ReferralPopupTask data={data} />
         )}
         {contentModalType == EnumModalContentType.FilterSortClub && (
           <SelectBox {...data} />

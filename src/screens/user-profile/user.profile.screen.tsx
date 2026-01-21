@@ -7,7 +7,10 @@ import {
   FlatList,
   SafeAreaView,
 } from "react-native";
-import * as NavigationService from "react-navigation-helpers";
+import {
+  navigate,
+  push,
+} from "react-navigation-helpers";
 import { useTheme, useRoute } from "@react-navigation/native";
 import { CollapsibleHeaderTabView } from "react-native-tab-view-collapsible-header";
 import { SceneMap, TabBar } from "react-native-tab-view";
@@ -75,7 +78,7 @@ const FirstRoute = () => {
     isFirstLoading,
     isLoading,
     refreshing,
-  } = useListData<TypedRequest>(paramsRequest, getListPost);
+  } = useListData<TypedPost>(paramsRequest, getListPost);
   useEffect(() => {
     eventEmitter.on("reload_list_post", _requestData);
     return () => {
@@ -136,7 +139,7 @@ const SecondRoute = () => {
     renderFooterComponent,
     _requestData,
     refreshing,
-  } = useListData<TypedRequest>(paramsRequest, getMyCourse);
+  } = useListData<ICourseItem>(paramsRequest, getMyCourse);
 
   const reloadListCourse = () => {
     _requestData(false);
@@ -202,7 +205,7 @@ const ThirdRoute = () => {
     refreshControl,
     renderFooterComponent,
     // refreshing,
-  } = useListData<TypedRequest>(paramsRequest, getListPost);
+  } = useListData<TypedPost>(paramsRequest, getListPost);
   const renderEmpty = () => {
     return (
       <EmptyResultView
@@ -308,17 +311,17 @@ const ProfileUser = (props: ProfileUserProps) => {
   };
 
   const openChatRoom = () => {
-    NavigationService.navigate(SCREENS.CHAT_ROOM, {
+    navigate(SCREENS.CHAT_ROOM, {
       partner_id: userInfo?._id,
       partner_name: userInfo?.display_name,
     });
   };
 
   const gotoEditProfile = () => {
-    NavigationService.push(SCREENS.EDIT_PROFILE);
+    push(SCREENS.EDIT_PROFILE);
   };
   const gotoEditBio = () => {
-    NavigationService.push(SCREENS.EDIT_PROFILE, { bio: true });
+    push(SCREENS.EDIT_PROFILE, { bio: true });
   };
 
   // Removed: react-native-share functionality

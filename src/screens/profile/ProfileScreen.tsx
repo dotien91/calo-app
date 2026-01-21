@@ -252,7 +252,6 @@ const SettingProfileScreen = () => {
       </View>
     );
   };
-
   const openHiddenPage = () => {
     NavigationService.navigate(SCREENS.HIDDEN_PAGE);
   };
@@ -279,7 +278,6 @@ const SettingProfileScreen = () => {
       </View>
     );
   };
-
   if (!userData?._id) {
     return (
       <SafeAreaView style={CS.container}>

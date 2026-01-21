@@ -137,7 +137,7 @@ export const useLiveStreamAdmin = () => {
     // streams?.getTracks().forEach((track) => {
     //   peerConnectionRef.current?.addTransceiver(track, {
     //     direction: "sendonly",
-    //   });
+      //   });
     // });
   };
 
@@ -211,7 +211,7 @@ export const useLiveStreamUser = () => {
 
   const startWatch = ({ urlLiveStream }: { urlLiveStream: string }) => {
     console.warn("RTC functionality removed - startWatch disabled");
-    setConnectionState("disconnected");
+            setConnectionState("disconnected");
     // peerConnectionRef.current = new RTCPeerConnection(ICE_SERVER);
     // peerConnectionRef.current.addTransceiver("video", {
     //   direction: "recvonly",

@@ -1,11 +1,11 @@
 import React from 'react';
-import { 
+import {
   View, 
-  Text, 
+  Text,
   StyleSheet, 
   ScrollView, 
   Image, 
-  TouchableOpacity, 
+  TouchableOpacity,
   Dimensions,
   StatusBar
 } from 'react-native';
@@ -425,7 +425,7 @@ const HomeScreen = () => {
             {/* Nút info/close nhỏ ở góc */}
             <TouchableOpacity style={{marginLeft: 10}}>
                 <Info size={16} color={COLORS.subText} />
-            </TouchableOpacity>
+        </TouchableOpacity>
           </View>
           <Text style={[styles.premiumText, { color: COLORS.subText }]}>Tạm biệt quảng cáo. <Text style={{ color: COLORS.primary }}>Nâng cấp Premium</Text></Text>
         </View>
@@ -439,7 +439,7 @@ const HomeScreen = () => {
             <Text style={[styles.emptyTitle, { color: COLORS.text }]}>Chưa có bữa ăn nào!</Text>
             <Text style={[styles.emptySub, { color: COLORS.subText }]}>Nhấn + để thêm bữa ăn đầu tiên trong ngày.</Text>
           </View>
-        </View>
+    </View>
 
       </ScrollView>
     </SafeAreaView>

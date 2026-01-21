@@ -1,21 +1,33 @@
-import PracticeHomeScreen from "@screens/ielts-practice/ielts.practice.home.screen";
-import IeltsPraticeList from "@screens/ielts-practice/ielts.practice.list";
-import IeltsPacticeScreen from "@screens/ielts-practice/ielts.practice.test.screen";
 import { SCREENS } from "constants";
+
+// ? Screens - General & Social
 import WebviewScreen from "@screens/webview/Webview";
 import HomeAffilite from "@screens/affiliate/intro.affiliate.screen";
 import DetailScreen from "@screens/detail/DetailScreen";
+import SettingScreen from "@screens/setting/setting.screen";
+import AboutMe from "@screens/about-me/about.me";
+import SettingUser from "@screens/setting-user/setting.user";
+import ChangeLanguage from "@screens/change-language/change.language";
+import SmartBanking from "@screens/smart-banking/smart.banking";
+import PaymentSuccess from "@screens/payment-success/payment.success";
+import TabFollow from "@screens/tab-follow/tab.follow";
+import NotificationScreen from "@screens/notification/NotificationScreen";
+import CodeActivationsScreen from "@screens/code-activations/code.activations.screen";
+import HiddenPaage from "@screens/hidden-page/hidden.page";
+import BlackList from "@screens/black-list/black.list";
+
+// ? Screens - Auth
 import LoginScreen from "@screens/auth/login/login.screen";
 import LoginWithEmailScreen from "@screens/auth/login/login.with.email.screen";
 import SignUpScreen from "@screens/auth/sign-up/signup.screen";
 import ForgotPasswordScreen from "@screens/auth/forgot-password/forgot.password.screen";
 import NewPasswordScreen from "@screens/auth/forgot-password/create.new.password";
 import VerifyCodeScreen from "@screens/auth/forgot-password/VerifyCodeScreen";
+
+// ? Screens - Social (Post/Chat/Stream)
 import SearchRoomChatScreen from "@screens/chat/search-room/search.room.view";
 import ChatRoomScreen from "@screens/chat/room-chat/chat.room.screen";
-import LiveStreamScreen from "@screens/stream/stream.screen";
 import ViewStreamScreen from "@screens/stream/stream.view.screen";
-import SettingScreen from "@screens/setting/setting.screen";
 import PostScreen from "@screens/post/create.post.screen";
 import PostDetailScreen from "@screens/post/post.detail.screen";
 import EditCommentScreen from "@screens/home/edit-comment/edit.comment.screen";
@@ -25,42 +37,13 @@ import CreateGroupChatScreen from "@screens/chat/create-group-chat/create.group.
 import AddUserGroupChatScreen from "@screens/chat/add-user-to-group-chat/add.user.group.chat.screen";
 import ProfileUserScreen from "@screens/user-profile/user.profile.screen";
 import EditProfileScreen from "@screens/user-profile/edit-profile/edit.profile.screen";
-import CourseSearchScreen from "@screens/course-tab/course-search/course.search.screen";
-import CourseFilterResultScreen from "@screens/course-tab/course-filter-result/course.filter.result.screen";
-import BookLessonScreen from "@screens/purchase-course/book-lesson/book.lesson.screen";
-import ChooseClassScreen from "@screens/purchase-course/choose-class/choose.class.screen";
-import PaymentCoures from "@screens/checkout/checkout.screen";
-// import CourseCategoryDetailScreen from "@screens/course-list/course-filter-result/course.filter.result.screen";
-import AboutMe from "@screens/about-me/about.me";
-import SettingUser from "@screens/setting-user/setting.user";
-import ChangeLanguage from "@screens/change-language/change.language";
-import SmartBanking from "@screens/smart-banking/smart.banking";
-import PaymentSuccess from "@screens/payment-success/payment.success";
-// import CourseCategoryDetailScreen from "@screens/course-list/course-filter-result/course.filter.result.screen";
-// import PaymentCoures from "@screens/payment-coures/payment.coures";
-// import CourseCategoryDetailScreen from "@screens/course-list/course-filter-result/course.filter.result.screen";
-// import PaymentCoures from "@screens/payment-coures/payment.coures";
-import MyCourse from "@screens/my-course/my.course";
-import ListCouponForMyCourse from "@screens/coupon/coupon.list";
-import CouponCreateScreen from "@screens/coupon/coupon.create";
-import TabFollow from "@screens/tab-follow/tab.follow";
 import ChatListScreen from "@screens/chat/list-chat/chat.list.screen";
-import NotificationScreen from "@screens/notification/NotificationScreen";
-import TaskScreen from "@screens/profile.screen/task.screen";
-import LeaderBoard from "@screens/leader-board/leader.board";
-
-import AffiliatePage from "@screens/affiliate/affiliate.screen";
-import CodeActivationsScreen from "@screens/code-activations/code.activations.screen";
-import HiddenPaage from "@screens/hidden-page/hidden.page";
-import BlackList from "@screens/black-list/black.list";
 import LiveStreamPreviewScreem from "@screens/livestream-preview/livestream.preview.screen";
 import LivestreamListScreen from "@screens/stream/list.livestream.screen";
 import ManageLivestreamScreen from "@screens/stream/manage.livestream.screen";
-import TeacherScreen from "@screens/profile.screen/ikiCoachTeacher.screen";
-import UploadCertificate from "@screens/welcome/upload-certificate/upload.certificate.ieltshunter";
 import ChatRoomMediaScreen from "@screens/chat/media-club/chat.media.screen";
-import BecomeTutorScreen from "@screens/welcome/upload-certificate/become.tutor";
-import IeltsReadingPacticeScreen from "@screens/ielts-practice/ielts.reading.practice.test.screen";
+
+// ? Screens - Health & Onboarding (Calorie App Core)
 import OnboardingScreen from "@screens/welcome/onboarding/onboarding.screen";
 import PlanResultScreen from "@screens/welcome/onboarding/plan.result.screen";
 import CurrentWeightScreen from "@screens/welcome/onboarding/current.weight.screen";
@@ -70,28 +53,12 @@ import TargetWeightScreen from "@screens/welcome/onboarding/target.weight.screen
 import GenderScreen from "@screens/welcome/onboarding/gender.screen";
 import ActivityLevelScreen from "@screens/welcome/onboarding/activity.level.screen";
 import PaceScreen from "@screens/welcome/onboarding/pace.screen";
-// import CreateSubscriptionScreen from "@screens/profile.screen/create-subscription.tsx/create.subscription.screen";
+import GoalDetailScreen from "@screens/on-boarding/goal.screen";
 
 export const DiscoveryStackData: any[] = [];
 
-export const PracticeTestData = [
-  {
-    name: SCREENS.IELTS_PRACTICE_HOME,
-    screen: PracticeHomeScreen,
-  },
-  {
-    name: SCREENS.IELTS_PRACTICE_LIST,
-    screen: IeltsPraticeList,
-  },
-  {
-    name: SCREENS.IELTS_PRACTICE,
-    screen: IeltsPacticeScreen,
-  },
-  {
-    name: SCREENS.IELTS_READING_PRACTICE,
-    screen: IeltsReadingPacticeScreen,
-  },
-];
+// Đã xóa IELTS Practice vì không liên quan App Calo
+export const PracticeTestData: any[] = [];
 
 export const BankStackData: any[] = [];
 
@@ -102,6 +69,7 @@ export const StackIntroData = [
   },
 ];
 
+// Giữ nguyên luồng nhập chỉ số cơ thể
 export const OnboardingStackData = [
   {
     name: SCREENS.CURRENT_WEIGHT,
@@ -136,11 +104,9 @@ export const OnboardingStackData = [
 export const ClubStackData: any[] = [];
 
 export const CommonStackData = [
-  ...OnboardingStackData,
-  { name: SCREENS.UPLOAD_CERTIFICATE, screen: UploadCertificate },
+  ...OnboardingStackData, // Import luồng nhập liệu sức khỏe vào Common
+  { name: SCREENS.GOAL, screen: GoalDetailScreen },
   { name: SCREENS.POST_DETAIL, screen: PostDetailScreen },
-  { name: SCREENS.COURSE_CATEGORY, screen: CourseFilterResultScreen },
-  { name: SCREENS.COURSE_SEARCH, screen: CourseSearchScreen },
   { name: SCREENS.CHAT, screen: ChatListScreen },
   { name: SCREENS.POST_SCREEN, screen: PostScreen },
   { name: SCREENS.EDIT_COMMENT, screen: EditCommentScreen },
@@ -154,36 +120,26 @@ export const CommonStackData = [
   { name: SCREENS.FORGOT_PASSWORD, screen: ForgotPasswordScreen },
   { name: SCREENS.VERIFY_CODE, screen: VerifyCodeScreen },
   { name: SCREENS.NEW_PASSWORD, screen: NewPasswordScreen },
-  { name: SCREENS.PAYMENT_COURES, screen: PaymentCoures },
   { name: SCREENS.ABOUT_ME, screen: AboutMe },
   { name: SCREENS.SETTING_USER, screen: SettingUser },
   { name: SCREENS.CHANGELANGUAGE, screen: ChangeLanguage },
   { name: SCREENS.SMARTBANKING, screen: SmartBanking },
   { name: SCREENS.PAYMENT_SUCCESS, screen: PaymentSuccess },
   { name: SCREENS.TAB_FOLLOW, screen: TabFollow },
-  { name: SCREENS.TASK_SCREEN, screen: TaskScreen },
-  { name: SCREENS.MY_COURES, screen: MyCourse },
   { name: SCREENS.SETTING, screen: SettingScreen },
   { name: SCREENS.NOTIFICATION, screen: NotificationScreen },
-  { name: SCREENS.CHOOSE_CLASS, screen: ChooseClassScreen },
-  { name: SCREENS.BOOK_LESSON, screen: BookLessonScreen },
-  { name: SCREENS.COUPON_LIST, screen: ListCouponForMyCourse },
-  { name: SCREENS.COUPON_CREATE, screen: CouponCreateScreen },
   { name: SCREENS.PROFILE_CHAT, screen: ProfileChatScreen },
   { name: SCREENS.ADD_USER_TO_GROUP, screen: AddUserGroupChatScreen },
   { name: SCREENS.MEDIA_CHAT_SCREEN, screen: ChatRoomMediaScreen },
   { name: SCREENS.CREATE_GROUP_CHAT, screen: CreateGroupChatScreen },
   { name: SCREENS.VIEW_LIVE_STREAM, screen: ViewStreamScreen },
-  { name: SCREENS.LIVE_STREAM, screen: LiveStreamScreen },
   { name: SCREENS.DETAIL, screen: DetailScreen },
   { name: SCREENS.LOGIN_PAGE, screen: LoginScreen },
-  { name: SCREENS.AFFILIATE, screen: AffiliatePage },
   { name: SCREENS.BLACK_LIST, screen: BlackList },
   { name: SCREENS.HOME_AFFILIATE, screen: HomeAffilite },
   { name: SCREENS.CODE_ACTIVATIONS_SCREEN, screen: CodeActivationsScreen },
   { name: SCREENS.HIDDEN_PAGE, screen: HiddenPaage },
   { name: SCREENS.WEBVIEW_SCREEN, screen: WebviewScreen },
-  { name: SCREENS.LEADERBOARD, screen: LeaderBoard },
   {
     name: SCREENS.LIVESTREAM_PREVIEW,
     screen: LiveStreamPreviewScreem,
@@ -196,15 +152,7 @@ export const CommonStackData = [
     name: SCREENS.MANAGE_LIVESTREAM,
     screen: ManageLivestreamScreen,
   },
-  {
-    name: SCREENS.TEACHER_SCREEN,
-    screen: TeacherScreen,
-  },
   ...ClubStackData,
-  {
-    name: SCREENS.BECOME_TUTOR,
-    screen: BecomeTutorScreen,
-  },
   {
     name: SCREENS.PLAN_RESULT,
     screen: PlanResultScreen,
