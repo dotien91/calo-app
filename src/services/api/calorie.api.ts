@@ -136,7 +136,8 @@ export async function submitOnboarding(
     method: METHOD.POST,
     urlPath: "calorie/onboarding",
     data,
-  }).then((response) => {
+  }).then((response: any) => {
+     if (response.isError) throw response;
     return response.data;
   });
 }
@@ -149,8 +150,8 @@ export async function getOnboarding(): Promise<GetOnboardingResponse> {
   return request({
     method: METHOD.GET,
     urlPath: "calorie/onboarding",
-  }).then((response) => {
-    return response.data;
+  }).then((response: any) => {
+    return response;
   });
 }
 
@@ -166,7 +167,8 @@ export async function updateOnboardingGoals(
     method: METHOD.PATCH,
     urlPath: "calorie/onboarding",
     data,
-  }).then((response) => {
+  }).then((response: any) => {
+     if (response.isError) throw response;
     return response.data;
   });
 }
@@ -191,7 +193,8 @@ export async function analyzeFoodImage(
     customHeader: {
       "Content-Type": "multipart/form-data",
     } as any,
-  }).then((response) => {
+  }).then((response: any) => {
+     if (response.isError) throw response;
     return response.data;
   });
 }
@@ -212,7 +215,8 @@ export async function createManualCalorie(data: {
     method: METHOD.POST,
     urlPath: "calorie/manual",
     data,
-  }).then((response) => {
+  }).then((response: any) => {
+     if (response.isError) throw response;
     return response.data;
   });
 }
@@ -232,7 +236,8 @@ export async function getCalorieList(params?: {
     method: METHOD.GET,
     urlPath: "calorie/list",
     params,
-  }).then((response) => {
+  }).then((response: any) => {
+     if (response.isError) throw response;
     return response.data;
   });
 }
@@ -246,7 +251,8 @@ export async function getCalorieDetail(id: string): Promise<any> {
   return request({
     method: METHOD.GET,
     urlPath: `calorie/detail/${id}`,
-  }).then((response) => {
+  }).then((response: any) => {
+     if (response.isError) throw response;
     return response.data;
   });
 }
@@ -260,7 +266,8 @@ export async function deleteCalorie(id: string): Promise<any> {
   return request({
     method: METHOD.DELETE,
     urlPath: `calorie/delete/${id}`,
-  }).then((response) => {
+  }).then((response: any) => {
+     if (response.isError) throw response;
     return response.data;
   });
 }
@@ -278,7 +285,25 @@ export async function getCalorieStats(params?: {
     method: METHOD.GET,
     urlPath: "calorie/stats",
     params,
-  }).then((response) => {
+  }).then((response: any) => {
+     if (response.isError) throw response;
+    return response.data;
+  });
+}
+
+/**
+ * Get calorie data for a specific day (defaults to today)
+ * @param date YYYY-MM-DD
+ * @returns { records: any[], totals: { calories, protein, carbs, fat, meals } }
+ */
+export async function getCalorieDay(date?: string): Promise<any> {
+  return request({
+    method: METHOD.GET,
+    urlPath: `calorie/day${date ? `?date=${date}` : ""}`,
+  }).then((response: any) => {
+     if (response.isError) throw response;
+    // New backend returns { week: [...] }
+    if (response.data && response.data.week) return response.data;
     return response.data;
   });
 }

@@ -6,43 +6,47 @@ import { Plus } from "phosphor-react-native";
 
 const { width } = Dimensions.get("window");
 
-// Định nghĩa props để code rõ ràng hơn
 interface CustomBottomTabProps {
   tabs: any[];
   fabOnPress: () => void;
   activeColor: string;
   inactiveColor: string;
+  backgroundColor: string;
 }
 
 export const CustomBottomTab = ({ 
   tabs = [], 
   fabOnPress, 
   activeColor, 
-  inactiveColor 
+  inactiveColor,
+  backgroundColor
 }: CustomBottomTabProps) => {
   const insets = useSafeAreaInsets();
-  const TAB_BAR_HEIGHT = 64;
+  
+  // 1. Giảm chiều cao một chút để gọn hơn (64 -> 60)
+  const TAB_BAR_HEIGHT = 60; 
+  
+  // 2. Tính tổng chiều cao bao gồm cả phần tai thỏ dưới đáy (Safe Area)
+  // Để SVG vẽ phủ kín xuống đáy, không bị hở
+  const totalHeight = TAB_BAR_HEIGHT + insets.bottom;
 
-  // 1. Kiểm tra an toàn để tránh lỗi "slice of undefined"
   if (!tabs || tabs.length < 4) {
-    return <View style={{ height: TAB_BAR_HEIGHT + insets.bottom }} />;
+    return <View style={{ height: totalHeight }} />;
   }
 
-  // 2. Chia tab: 2 trái, 2 phải
   const leftTabs = tabs.slice(0, 2);
   const rightTabs = tabs.slice(2, 4);
 
-  // 3. FIX VISUAL: Mở rộng đường cong và làm sâu hơn
-  // - width/2 - 60: Mở rộng miệng (cũ là 50)
-  // - depth 42: Làm sâu đáy (cũ là 35)
+  // 3. Cập nhật đường vẽ SVG
+  // Thay đổi: Kéo dài nét vẽ cuối cùng xuống `totalHeight` thay vì `TAB_BAR_HEIGHT`
   const d = `
     M 0 0
     L ${width / 2 - 60} 0
     C ${width / 2 - 40} 0 ${width / 2 - 40} 42 ${width / 2} 42
     C ${width / 2 + 40} 42 ${width / 2 + 40} 0 ${width / 2 + 60} 0
     L ${width} 0
-    L ${width} ${TAB_BAR_HEIGHT}
-    L 0 ${TAB_BAR_HEIGHT}
+    L ${width} ${totalHeight} 
+    L 0 ${totalHeight}
     Z
   `;
 
@@ -69,27 +73,26 @@ export const CustomBottomTab = ({
   };
 
   return (
-    <View style={[styles.container, { height: TAB_BAR_HEIGHT + insets.bottom }]}>
-      {/* Background SVG */}
-      <View style={StyleSheet.absoluteFill}>
-        <Svg width={width} height={TAB_BAR_HEIGHT} style={styles.shadow}>
-          <Path d={d} fill="white" />
+    // Container bao bọc toàn bộ
+    <View style={[styles.container, { height: totalHeight }]}>
+      
+      {/* Background SVG: Vẽ full chiều cao */}
+      <View style={[StyleSheet.absoluteFill, styles.shadow]}>
+        <Svg width={width} height={totalHeight}>
+          <Path d={d} fill={backgroundColor} />
         </Svg>
       </View>
 
       {/* Nội dung Tab */}
-      <View style={styles.content}>
+      <View style={[styles.content, { height: TAB_BAR_HEIGHT }]}>
         {leftTabs.map(renderTabItem)}
-        
-        {/* Khoảng trống ở giữa (đã tăng lên 80 để né nút FAB) */}
         <View style={{ width: 80 }} /> 
-        
         {rightTabs.map(renderTabItem)}
       </View>
 
-      {/* 4. FIX VISUAL: Đẩy nút lên cao (tăng bottom lên 35) */}
+      {/* FAB Button: Hạ thấp xuống một chút cho khớp với chiều cao mới */}
       <TouchableOpacity 
-        style={[styles.fab, { bottom: insets.bottom + 35 }]} 
+        style={[styles.fab, { bottom: insets.bottom + 26 }]} 
         onPress={fabOnPress}
         activeOpacity={0.9}
       >
@@ -109,17 +112,20 @@ const styles = StyleSheet.create({
   },
   shadow: {
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: -2 },
+    shadowOffset: {
+      width: 0,
+      height: -4, // Bóng đổ lên trên
+    },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 10,
+    zIndex: 0,
   },
   content: {
     flexDirection: 'row',
-    height: 64,
     width: width,
     alignItems: 'flex-start',
-    paddingTop: 12, // Căn chỉnh icon xuống một chút cho cân đối
+    paddingTop: 10, // Giảm padding top một chút (12 -> 10) để icon cân đối với chiều cao mới
   },
   tabItem: {
     flex: 1,
@@ -129,10 +135,10 @@ const styles = StyleSheet.create({
   },
   fab: {
     position: 'absolute',
-    left: width / 2 - 28, // Căn giữa
-    width: 56,
-    height: 56,
-    borderRadius: 28,
+    left: width / 2 - 31,
+    width: 62,
+    height: 62,
+    borderRadius: 31,
     backgroundColor: '#84CC16',
     alignItems: 'center',
     justifyContent: 'center',
@@ -141,5 +147,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
+    zIndex: 1,
   },
 });

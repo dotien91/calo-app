@@ -16,6 +16,7 @@ import { priceIds } from "constants/iap.constant";
 import { _getJson } from "@services/local-storage";
 import { ENVIRONMENT, setUrlEnv } from "constants/config.constant";
 import { getConfigGift } from "@services/api/user.api";
+import { getOnboarding } from "@services/api/calorie.api";
 
 Settings.setAppID("908606980666349");
 
@@ -24,6 +25,8 @@ LogBox.ignoreAllLogs();
 const InitView = () => {
   const isDarkMode = useStore((state) => state.isDarkMode);
   const setListGift = useStore((state) => state.setListGift);
+  const setOnboardingData = useStore((state) => state.setOnboardingData);
+  const setIsLoadingOnboarding = useStore((state) => state.setIsLoadingOnboarding);
   const { getUserData } = useUserHook();
   const getListGift = () => {
     getConfigGift().then((res) => {
@@ -33,13 +36,34 @@ const InitView = () => {
     });
   };
 
+  const getOnboardingData = async () => {
+    try {
+      setIsLoadingOnboarding(true);
+      const response = await getOnboarding();
+      console.log("response", response);
+      if (response.data) {
+        console.log("Onboarding data loaded:", response.data);
+        setOnboardingData(response.data);
+      } else {
+        console.log("No onboarding data found for user");
+        setOnboardingData(null);
+      }
+    } catch (error: any) {
+      console.error("Error loading onboarding data:", error);
+      // If user hasn't completed onboarding yet, set to null
+      setOnboardingData(null);
+    } finally {
+      setIsLoadingOnboarding(false);
+    }
+  };
+
   React.useEffect(() => {
     SplashScreen.hide();
     initData();
     getListGift();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const { initIAP } = useInAppPurchase();
+  // const { initIAP } = useInAppPurchase();
 
   React.useEffect(() => {
     // StatusBar.setBarStyle(!isDarkMode ? "dark-content" : "light-content");
@@ -53,9 +77,10 @@ const InitView = () => {
   const initData = () => {
     setEnv();
     getUserData();
+    getOnboardingData(); // Load onboarding data when app starts
     setDeviceInfo();
     // initIAP(["com.course.tier2"]);
-    initIAP(priceIds.map((i) => i.id));
+    // initIAP(priceIds.map((i) => i.id));
   };
 
   const setEnv = () => {

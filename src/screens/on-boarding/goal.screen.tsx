@@ -18,15 +18,17 @@ import { useNavigation, useRoute, useTheme } from '@react-navigation/native';
 import { CaretLeft, PersonSimpleRun, Fire, Drop, Check } from 'phosphor-react-native';
 import { createStyles } from './goal.screen.style';
 import { updateOnboardingGoals } from '@services/api/calorie.api';
+import { translations } from '@localization';
+import useStore from '@services/zustand/store';
 
 // --- DATA ---
 const DIET_OPTIONS = [
-  { id: '1', title: 'Cân bằng', desc: 'Cách tiếp cận cân bằng về dinh dưỡng', macros: '20% protein, 50% carbs, 30% fat' },
-  { id: '2', title: 'Ít Carb', desc: 'Giảm lượng carbohydrate', macros: '40% protein, 20% carbs, 40% fat' },
-  { id: '3', title: 'Ít Chất béo', desc: 'Giảm lượng chất béo', macros: '30% protein, 55% carbs, 15% fat' },
-  { id: '4', title: 'Nhiều Protein', desc: 'Tăng lượng protein', macros: '45% protein, 30% carbs, 25% fat' },
-  { id: '5', title: 'Keto', desc: 'Chế độ ăn ít carb, nhiều chất béo', macros: '25% protein, 5% carbs, 70% fat' },
-  { id: '6', title: 'Chay', desc: 'Không ăn thịt, cá hoặc gia cầm', macros: '25% protein, 50% carbs, 25% fat' },
+  { id: '1', key: 'BALANCED', title: translations.dietTypes.BALANCED, desc: 'Balanced approach to nutrition', macros: '20% protein, 50% carbs, 30% fat' },
+  { id: '2', key: 'LOW_CARB', title: translations.dietTypes.LOW_CARB, desc: 'Reduced carbohydrate intake', macros: '40% protein, 20% carbs, 40% fat' },
+  { id: '3', key: 'LOW_FAT', title: translations.dietTypes.LOW_FAT, desc: 'Reduced fat intake', macros: '30% protein, 55% carbs, 15% fat' },
+  { id: '4', key: 'HIGH_PROTEIN', title: translations.dietTypes.HIGH_PROTEIN, desc: 'Increased protein intake', macros: '45% protein, 30% carbs, 25% fat' },
+  { id: '5', key: 'KETO', title: translations.dietTypes.KETO, desc: 'Low carb, high fat diet', macros: '25% protein, 5% carbs, 70% fat' },
+  { id: '6', key: 'VEGETARIAN', title: translations.dietTypes.VEGETARIAN, desc: 'No meat, fish or poultry', macros: '25% protein, 50% carbs, 25% fat' },
 ];
 
 // --- INTERFACES ---
@@ -47,6 +49,8 @@ const GoalDetailScreen = () => {
   const theme = useTheme();
   const { colors, dark } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
+  const onboardingData = useStore((state) => state.onboardingData);
+  const setOnboardingData = useStore((state) => state.setOnboardingData);
 
   // Lấy Params truyền sang, có fallback mặc định để tránh crash
   const params = (route.params as GoalDetailParams) || {
@@ -56,11 +60,36 @@ const GoalDetailScreen = () => {
   };
 
   // State
-  const [inputValue, setInputValue] = useState(params.initialValue);
-  const [selectedDietId, setSelectedDietId] = useState(params.initialValue);
+  const [inputValue, setInputValue] = useState(params.initialValue || getInitialValue());
+  const [selectedDietId, setSelectedDietId] = useState(params.initialValue || getInitialValue());
   const [weightInt, setWeightInt] = useState(70);
   const [weightDec, setWeightDec] = useState(0);
   const [loading, setLoading] = useState(false);
+
+  // Helper function to get initial value from onboarding data
+  function getInitialValue(): string {
+    if (!onboardingData) return '';
+
+    switch (params.iconType) {
+      case 'step':
+        return onboardingData.target_steps?.toString() || '10000';
+      case 'water':
+        return onboardingData.target_water?.toString() || '2000';
+      case 'fire':
+        return onboardingData.target_calories?.toString() || '2045';
+      default:
+        if (params.type === 'DIET') {
+          // Map diet type back to ID for selection
+          const diet = DIET_OPTIONS.find(d => d.key === onboardingData.diet_type);
+          return diet?.id || '1';
+        }
+        if (params.type === 'WEIGHT') {
+          const weight = onboardingData.target_weight || 70;
+          return weight.toString();
+        }
+        return '';
+    }
+  }
 
   // --- HELPER: Render Icon ---
   const renderHeaderIcon = () => {
@@ -236,9 +265,9 @@ const GoalDetailScreen = () => {
     } else if (params.iconType === 'fire') {
       updateData.target_calories = parseInt(result, 10);
     } else if (params.type === 'DIET') {
-      // Map diet ID to diet type name
+      // Map diet ID to diet type key
       const selectedDiet = DIET_OPTIONS.find(d => d.id === result);
-      updateData.diet_type = selectedDiet?.title || result;
+      updateData.diet_type = selectedDiet?.key || result;
     } else if (params.type === 'WEIGHT') {
       updateData.target_weight = parseFloat(result);
     }
@@ -247,9 +276,12 @@ const GoalDetailScreen = () => {
     try {
       setLoading(true);
       const response = await updateOnboardingGoals(updateData);
-      
       if (response.success) {
         console.log("Update success:", response.data);
+        
+        // Update onboarding data in store
+        setOnboardingData(response.data);
+        
         Alert.alert("Thành công", "Mục tiêu đã được cập nhật!");
         navigation.goBack();
       } else {
@@ -257,9 +289,15 @@ const GoalDetailScreen = () => {
       }
     } catch (error: any) {
       console.error("Error updating goal:", error);
+      
+      const message = error?.message || "Có lỗi xảy ra khi cập nhật mục tiêu.";
+      
       Alert.alert(
-        "Lỗi", 
-        error?.message || "Có lỗi xảy ra khi cập nhật mục tiêu."
+        "Thông báo", 
+        message,
+        [
+            { text: "Đóng", style: "cancel" }
+        ]
       );
     } finally {
       setLoading(false);

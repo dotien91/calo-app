@@ -52,6 +52,11 @@ export interface UserSlice {
   setAffiliate: (data: IAffiliate) => void;
   typeCallGroup: string;
   setTypeCallGroup: (data: string) => void;
+  // Onboarding data
+  onboardingData: any | null;
+  setOnboardingData: (data: any) => void;
+  isLoadingOnboarding: boolean;
+  setIsLoadingOnboarding: (loading: boolean) => void;
 }
 
 const createUserSlice: StoreSlice<UserSlice> = (set) => ({
@@ -126,6 +131,15 @@ const createUserSlice: StoreSlice<UserSlice> = (set) => ({
   typeCallGroup: "",
   setTypeCallGroup: (data: string) => {
     set({ typeCallGroup: data });
+  },
+  // Onboarding data
+  onboardingData: null,
+  setOnboardingData: (data: any) => {
+    set({ onboardingData: data });
+  },
+  isLoadingOnboarding: false,
+  setIsLoadingOnboarding: (loading: boolean) => {
+    set({ isLoadingOnboarding: loading });
   },
 });
 

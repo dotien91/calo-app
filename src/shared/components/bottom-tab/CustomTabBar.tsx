@@ -11,6 +11,7 @@ import {
   Heart,
   User,
 } from "phosphor-react-native";
+import useStore from "@services/zustand/store";
 
 // Hàm map tên route sang Icon Component
 const getIconComponent = (routeName: string) => {
@@ -33,6 +34,12 @@ export const CustomTabBar: React.FC<BottomTabBarProps> = ({
   descriptors,
   navigation,
 }) => {
+  const isDarkMode = useStore((state) => state.isDarkMode);
+  
+  // Colors based on dark mode
+  const activeColor = "#84CC16"; // Keep green for active
+  const inactiveColor = isDarkMode ? "#A0A0A0" : "#666666";
+  const backgroundColor = isDarkMode ? "#1C1C1E" : "#FFFFFF";
   // Xử lý chuyển đổi dữ liệu từ Navigation thành mảng tabs
   const tabs = state.routes.map((route, index) => {
     const isFocused = state.index === index;
@@ -67,7 +74,7 @@ export const CustomTabBar: React.FC<BottomTabBarProps> = ({
 
   const handleFabPress = () => {
     // Logic khi bấm nút cộng
-    navigate(SCREENS.POST_SCREEN);
+    navigate(SCREENS.ADD_MEAL_SCREEN);
   };
 
   return (
@@ -78,8 +85,9 @@ export const CustomTabBar: React.FC<BottomTabBarProps> = ({
       <CustomBottomTab
         tabs={tabs} // Truyền mảng tabs đã xử lý xuống UI
         fabOnPress={handleFabPress}
-        activeColor="#84CC16"
-        inactiveColor="#A0A0A0"
+        activeColor={activeColor}
+        inactiveColor={inactiveColor}
+        backgroundColor={backgroundColor}
       />
     </View>
   );

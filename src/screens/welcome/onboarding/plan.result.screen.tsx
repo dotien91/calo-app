@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   StyleSheet,
   ScrollView,
   SafeAreaView,
+  Alert,
+  ActivityIndicator,
 } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import { useRoute } from "@react-navigation/native";
@@ -14,12 +16,16 @@ import { SCREENS } from "constants";
 import { palette } from "@theme/themes";
 import { PlanResult } from "@utils/plan.utils";
 import { _setJson } from "@services/local-storage";
+import { submitOnboarding, OnboardingData, Gender, ActivityLevel, WeightGoalPace } from "@services/api/calorie.api";
+import useStore from '@services/zustand/store';
 
 interface PlanResultScreenProps {}
 
 const PlanResultScreen: React.FC<PlanResultScreenProps> = () => {
   const route = useRoute();
   const planResult = (route.params as any)?.planResult as PlanResult;
+  const [loading, setLoading] = useState(false);
+  const setOnboardingData = useStore((state) => state.setOnboardingData);
 
   if (!planResult) {
     return null;
@@ -44,9 +50,55 @@ const PlanResultScreen: React.FC<PlanResultScreenProps> = () => {
     FAST: "Nhanh (1 kg/tuần)",
   };
 
-  const handleFinish = () => {
+  const handleFinish = async () => {
     // _setJson("is_first_open_app", false);
-    NavigationService.replace(SCREENS.TABS);
+    
+    // Prepare data
+    const onboardingData: OnboardingData = {
+      gender: planResult.gender as Gender,
+      age: planResult.age,
+      height: planResult.height,
+      currentWeight: planResult.currentWeight,
+      targetWeight: planResult.targetWeight,
+      activityLevel: planResult.activityLevel as ActivityLevel,
+      pace: planResult.pace as WeightGoalPace,
+    };
+
+    try {
+      setLoading(true);
+      const response = await submitOnboarding(onboardingData);
+      
+      if (response.success) {
+        console.log("Onboarding submitted successfully");
+        
+        // Save onboarding data to store
+        setOnboardingData(response.data.onboarding);
+        
+        NavigationService.replace(SCREENS.TABS);
+      }
+    } catch (error: any) {
+      console.error("Error submitting onboarding:", error);
+      Alert.alert(
+        "Lỗi", 
+        error?.message || "Có lỗi xảy ra khi lưu thông tin. Vui lòng thử lại!"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRestart = () => {
+    NavigationService.navigate(SCREENS.CURRENT_WEIGHT, {
+       formData: {
+        currentWeight: planResult.currentWeight,
+        height: planResult.height,
+        age: planResult.age.toString(),
+        targetWeight: planResult.targetWeight,
+        gender: planResult.gender,
+        activityLevel: planResult.activityLevel,
+        pace: planResult.pace,
+       }
+    });
   };
 
   return (
@@ -242,6 +294,17 @@ const PlanResultScreen: React.FC<PlanResultScreenProps> = () => {
           backgroundColor={palette.primary}
           textColor={palette.white}
           onPress={handleFinish}
+          isLoading={loading}
+          disabled={loading}
+        />
+        
+        <Button
+          style={[styles.button, styles.restartButton]}
+          text="Bắt đầu lại"
+          backgroundColor={palette.white}
+          textColor={palette.primary}
+          onPress={handleRestart}
+          disabled={loading}
         />
       </View>
     </SafeAreaView>
@@ -260,7 +323,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     padding: 16,
-    paddingBottom: 100,
+    paddingBottom: 160, // Tăng padding bottom để tránh button
   },
   header: {
     marginBottom: 24,
@@ -370,4 +433,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 12,
   },
+  restartButton: {
+    marginTop: 12,
+    borderWidth: 1,
+    borderColor: palette.primary,
+  }
 });

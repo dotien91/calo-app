@@ -27,7 +27,6 @@ import VerifyCodeScreen from "@screens/auth/forgot-password/VerifyCodeScreen";
 // ? Screens - Social (Post/Chat/Stream)
 import SearchRoomChatScreen from "@screens/chat/search-room/search.room.view";
 import ChatRoomScreen from "@screens/chat/room-chat/chat.room.screen";
-import ViewStreamScreen from "@screens/stream/stream.view.screen";
 import PostScreen from "@screens/post/create.post.screen";
 import PostDetailScreen from "@screens/post/post.detail.screen";
 import EditCommentScreen from "@screens/home/edit-comment/edit.comment.screen";
@@ -38,9 +37,6 @@ import AddUserGroupChatScreen from "@screens/chat/add-user-to-group-chat/add.use
 import ProfileUserScreen from "@screens/user-profile/user.profile.screen";
 import EditProfileScreen from "@screens/user-profile/edit-profile/edit.profile.screen";
 import ChatListScreen from "@screens/chat/list-chat/chat.list.screen";
-import LiveStreamPreviewScreem from "@screens/livestream-preview/livestream.preview.screen";
-import LivestreamListScreen from "@screens/stream/list.livestream.screen";
-import ManageLivestreamScreen from "@screens/stream/manage.livestream.screen";
 import ChatRoomMediaScreen from "@screens/chat/media-club/chat.media.screen";
 
 // ? Screens - Health & Onboarding (Calorie App Core)
@@ -54,6 +50,8 @@ import GenderScreen from "@screens/welcome/onboarding/gender.screen";
 import ActivityLevelScreen from "@screens/welcome/onboarding/activity.level.screen";
 import PaceScreen from "@screens/welcome/onboarding/pace.screen";
 import GoalDetailScreen from "@screens/on-boarding/goal.screen";
+import ChooseLanguageScreen from "@screens/welcome/choose-language/choose.language.screen";
+import AddMealScreen from "@screens/add-meal";
 
 export const DiscoveryStackData: any[] = [];
 
@@ -106,9 +104,11 @@ export const ClubStackData: any[] = [];
 export const CommonStackData = [
   ...OnboardingStackData, // Import luồng nhập liệu sức khỏe vào Common
   { name: SCREENS.GOAL, screen: GoalDetailScreen },
+  { name: SCREENS.CHOOSE_LANGUAGE, screen: ChooseLanguageScreen },
   { name: SCREENS.POST_DETAIL, screen: PostDetailScreen },
   { name: SCREENS.CHAT, screen: ChatListScreen },
   { name: SCREENS.POST_SCREEN, screen: PostScreen },
+  { name: SCREENS.ADD_MEAL_SCREEN, screen: AddMealScreen },
   { name: SCREENS.EDIT_COMMENT, screen: EditCommentScreen },
   { name: SCREENS.PROFILE_CURRENT_USER, screen: ProfileUserScreen },
   { name: SCREENS.SEARCH_CHAT, screen: SearchRoomChatScreen },
@@ -132,7 +132,6 @@ export const CommonStackData = [
   { name: SCREENS.ADD_USER_TO_GROUP, screen: AddUserGroupChatScreen },
   { name: SCREENS.MEDIA_CHAT_SCREEN, screen: ChatRoomMediaScreen },
   { name: SCREENS.CREATE_GROUP_CHAT, screen: CreateGroupChatScreen },
-  { name: SCREENS.VIEW_LIVE_STREAM, screen: ViewStreamScreen },
   { name: SCREENS.DETAIL, screen: DetailScreen },
   { name: SCREENS.LOGIN_PAGE, screen: LoginScreen },
   { name: SCREENS.BLACK_LIST, screen: BlackList },
@@ -140,19 +139,6 @@ export const CommonStackData = [
   { name: SCREENS.CODE_ACTIVATIONS_SCREEN, screen: CodeActivationsScreen },
   { name: SCREENS.HIDDEN_PAGE, screen: HiddenPaage },
   { name: SCREENS.WEBVIEW_SCREEN, screen: WebviewScreen },
-  {
-    name: SCREENS.LIVESTREAM_PREVIEW,
-    screen: LiveStreamPreviewScreem,
-  },
-  {
-    name: SCREENS.LIVESTREAM_LIST,
-    screen: LivestreamListScreen,
-  },
-  {
-    name: SCREENS.MANAGE_LIVESTREAM,
-    screen: ManageLivestreamScreen,
-  },
-  ...ClubStackData,
   {
     name: SCREENS.PLAN_RESULT,
     screen: PlanResultScreen,

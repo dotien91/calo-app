@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { View, StyleSheet, Pressable, Text, SafeAreaView } from "react-native";
-import * as NavigationService from "react-navigation-helpers";
+import { useNavigation } from "@react-navigation/native";
 import useStore from "@services/zustand/store";
 import { translations } from "@localization";
 import {
@@ -24,6 +24,7 @@ interface TypeItemLanguage {
 }
 
 export default function ChooseLanguageScreen() {
+  const navigation = useNavigation();
   const languageList: TypeItemLanguage[] = [
     {
       label: "Vietnamese",
@@ -55,7 +56,7 @@ export default function ChooseLanguageScreen() {
     setLanguage(selected);
     _setJson(LANG, selected);
     updateSession({ picked_language: selected });
-    NavigationService.replace(SCREENS.ONBOARDING);
+    navigation.goBack();
   };
 
   const ItemLanguage = ({ item }: { item: TypeItemLanguage }) => {
@@ -97,7 +98,7 @@ export default function ChooseLanguageScreen() {
             color="textOpacity8"
             style={styles.subtitle}
           >
-            Chọn ngôn ngữ bạn muốn sử dụng
+            {translations.chooseLanguageSubtitle}
           </TextBase>
         </View>
 

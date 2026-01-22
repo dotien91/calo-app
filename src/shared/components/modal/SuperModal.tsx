@@ -31,7 +31,6 @@ import { ScreenHeight } from "@freakycoder/react-native-helpers";
 import { translations } from "@localization";
 import SelectCourseView from "./modal-inner/SelectCourseView";
 import ConfirmViewBottom from "@shared-components/comfirm-view-bottom/comfirm.view.bottom";
-import ScheduleView from "./modal-inner/ScheduleView";
 import ViewMore from "./modal-inner/ViewMore";
 import SubscriptionView from "./modal-inner/SubscriptionView";
 
@@ -274,9 +273,6 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         )}
         {contentModalType == EnumModalContentType.SelectCourse && (
           <SelectCourseView {...data} />
-        )}
-        {contentModalType == EnumModalContentType.Schedule && (
-          <ScheduleView {...data} />
         )}
         {contentModalType == EnumModalContentType.ViewMore && (
           <ViewMore {...data} />
