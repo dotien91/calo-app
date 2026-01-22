@@ -1,11 +1,19 @@
-# Resolve react_native_pods.rb with node to allow for hoisting
-require Pod::Executable.execute_command('node', ['-p',
-  'require.resolve(
-    "react-native/scripts/react_native_pods.rb",
-    {paths: [process.argv[1]]},
-  )', __dir__]).strip
+# Define a helper to require scripts from node_modules
+def node_require(script)
+  require Pod::Executable.execute_command('node', ['-p',
+    "require.resolve(
+      '#{script}',
+      {paths: [process.argv[1]]},
+    )", __dir__]).strip
+end
 
-platform :ios, '15.1' # Nâng version tối thiểu lên 15.1 ngay từ đầu
+# Require React Native's scripts
+node_require('react-native/scripts/react_native_pods.rb')
+
+# Require React Native Permissions' setup script
+node_require('react-native-permissions/scripts/setup.rb')
+
+platform :ios, '15.1'
 prepare_react_native_project!
 
 linkage = ENV['USE_FRAMEWORKS']
@@ -17,7 +25,16 @@ end
 target 'ieltshunter' do
   config = use_native_modules!
 
-  # Firebase Pods với Modular Headers để tránh lỗi xung đột với Swift/New Arch
+  # --- PERMISSIONS SETUP ---
+  # Only uncomment the permissions you actually need
+  setup_permissions([
+    'Camera',
+    'PhotoLibrary',
+    'PhotoLibraryAddOnly', # Required if you want to save photos to gallery
+  ])
+  # -------------------------
+
+  # Firebase Pods
   pod 'GoogleUtilities', :modular_headers => true
   pod 'nanopb', :modular_headers => true
   pod 'GoogleDataTransport', :modular_headers => true
@@ -27,7 +44,7 @@ target 'ieltshunter' do
   use_react_native!(
     :path => config[:reactNativePath],
     :hermes_enabled => true,
-    :new_arch_enabled => true, # BẬT NEW ARCHITECTURE
+    :new_arch_enabled => true,
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
@@ -36,7 +53,6 @@ target 'ieltshunter' do
   end
 
   post_install do |installer|
-    # React Native standard post install
     react_native_post_install(
       installer,
       config[:reactNativePath],
@@ -45,13 +61,8 @@ target 'ieltshunter' do
   
     installer.pods_project.targets.each do |target|
       target.build_configurations.each do |config|
-        # 1. Đồng bộ Deployment Target cho tất cả các Pods (Sửa lỗi appTransactionID)
         config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.1'
-        
-        # 2. Đảm bảo Swift 5 cho các module Nitro/IAP
         config.build_settings['SWIFT_VERSION'] = '5.0'
-        
-        # 3. Cấu hình cho StoreKit 2 và New Arch compatibility
         config.build_settings['OTHER_SWIFT_FLAGS'] ||= ['$(inherited)']
         if target.name == 'react-native-iap'
           config.build_settings['OTHER_SWIFT_FLAGS'] << '-DSTOREKIT2_ENABLED'

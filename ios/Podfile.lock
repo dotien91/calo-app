@@ -206,7 +206,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - NitroModules (0.33.1):
+  - NitroModules (0.33.2):
     - boost
     - DoubleConversion
     - fast_float
@@ -2174,7 +2174,7 @@ PODS:
     - React-Core
   - react-native-switch-audio-output (1.1.2):
     - React
-  - react-native-video (6.18.0):
+  - react-native-video (6.19.0):
     - boost
     - DoubleConversion
     - fast_float
@@ -2193,7 +2193,7 @@ PODS:
     - React-hermes
     - React-ImageManager
     - React-jsi
-    - react-native-video/Video (= 6.18.0)
+    - react-native-video/Video (= 6.19.0)
     - React-NativeModulesApple
     - React-RCTFabric
     - React-renderercss
@@ -2204,7 +2204,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - react-native-video/Fabric (6.18.0):
+  - react-native-video/Fabric (6.19.0):
     - boost
     - DoubleConversion
     - fast_float
@@ -2233,7 +2233,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - react-native-video/Video (6.18.0):
+  - react-native-video/Video (6.19.0):
     - boost
     - DoubleConversion
     - fast_float
@@ -3737,7 +3737,7 @@ SPEC CHECKSUMS:
   lottie-react-native: b0cc5095b267be53169a098c2ded99119c5c498f
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   NitroIap: 6b6786c535c86ac88ff01a83b4e8b7477d4de4bd
-  NitroModules: 3265afc25ca13b4f9477bbfac7444db5d838f75d
+  NitroModules: d4fc3f74242b46fffa10471ddbf5bb5e2d68ef8d
   openiap: 809316b97d2a92f7de56c7242529b84bb1aa9acf
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   RCT-Folly: 846fda9475e61ec7bcbf8a3fe81edfcaeb090669
@@ -3788,7 +3788,7 @@ SPEC CHECKSUMS:
   react-native-safe-area-context: 01f6d357d42395422eed7c3bfe715614728f2989
   react-native-splash-screen: 95994222cc95c236bd3cdc59fe45ed5f27969594
   react-native-switch-audio-output: 1879482689f7e783c4292bcde9874dc30c575e69
-  react-native-video: 389feacd63630a77e5b7e9369335cda9d438e7ac
+  react-native-video: 89a0225550f20c6b2cfc4b61d87f457153ff9802
   react-native-webview: 38b7d49cbe748b6fa02381be0a097d3922caf94a
   React-NativeModulesApple: e16d5c133019987285f001fbf1461a861e40426f
   React-oscompat: 7c0a341cc31e350da71ddf2e46de0a845d1d1626
@@ -3841,7 +3841,7 @@ SPEC CHECKSUMS:
   RNGoogleSignin: b8f09e3ec56e09497e1e53b0ff66d5a45916c6b1
   RNImageCropPicker: d5387003612dd08d52fb062760136e0e473df186
   RNNotifee: 271cfeb505183d2cd1b858c14c3968b6ca30a642
-  RNPermissions: 3fed9dcdbc6570f62d91576225a40df34e909fbf
+  RNPermissions: 98c9a5555e3a3cfe1958810bad05349c19896f69
   RNReanimated: 028d25ae4031eb5a9aeb5febbe2c2cd0c744aa9c
   RNScreens: f2d25398e36a2bd6d4356b1bb5693de4c0a8190f
   RNScreenshotPrevent: 5f8473abaa2db2476561ef8f3704b66491ce7b01
@@ -3857,6 +3857,6 @@ SPEC CHECKSUMS:
   TOCropViewController: 80b8985ad794298fb69d3341de183f33d1853654
   Yoga: 0c4b7d2aacc910a1f702694fa86be830386f4ceb
 
-PODFILE CHECKSUM: 0da937cfb88efe21961d02e24f15c8aa7f23335d
+PODFILE CHECKSUM: 2524f544335905c14ba4a178fab7f20f5a42bd22
 
 COCOAPODS: 1.16.2

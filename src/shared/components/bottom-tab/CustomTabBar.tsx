@@ -12,6 +12,8 @@ import {
   User,
 } from "phosphor-react-native";
 import useStore from "@services/zustand/store";
+import { showSuperModal } from "@helpers/super.modal.helper";
+import { EnumModalContentType, EnumStyleModalType } from "@helpers/super.modal.helper";
 
 // Hàm map tên route sang Icon Component
 const getIconComponent = (routeName: string) => {
@@ -73,8 +75,46 @@ export const CustomTabBar: React.FC<BottomTabBarProps> = ({
   });
 
   const handleFabPress = () => {
-    // Logic khi bấm nút cộng
-    navigate(SCREENS.ADD_MEAL_SCREEN);
+    // Show QuickActionMenu modal
+    showSuperModal({
+      contentModalType: EnumModalContentType.QuickActionMenu,
+      styleModalType: EnumStyleModalType.Bottom,
+      data: {
+        onNavigate: (screenId: string) => {
+          // Handle navigation based on selected action
+          switch (screenId) {
+            case 'activity':
+              // Navigate to activity screen
+              console.log('Navigate to Activity Log');
+              // navigate(SCREENS.ACTIVITY_SCREEN); // Uncomment when screen exists
+              break;
+            case 'water':
+              // Navigate to water screen
+              console.log('Navigate to Water');
+              // navigate(SCREENS.WATER_SCREEN); // Uncomment when screen exists
+              break;
+            case 'weight':
+              // Navigate to weight screen
+              console.log('Navigate to Weight');
+              // navigate(SCREENS.WEIGHT_SCREEN); // Uncomment when screen exists
+              break;
+            case 'breakfast':
+            case 'lunch':
+            case 'dinner':
+            case 'snacks':
+              // Navigate to add meal screen with meal type
+              navigate(SCREENS.ADD_MEAL_SCREEN);
+              break;
+            case 'scanner':
+              // Navigate to calorie scanner
+              navigate(SCREENS.CALORIER_SCANNER);
+              break;
+            default:
+              console.log('Unknown action:', screenId);
+          }
+        }
+      }
+    });
   };
 
   return (

@@ -15,19 +15,18 @@ interface MediaAsset extends TypedCropImage, Asset {
 
 export async function uploadMedia(file: MediaAsset, onUploadProgress?: any) {
   const newForm = new FormData();
-  newForm.append("file[]", file);
+  console.log("file", file);
+  newForm.append("file", file);
   return request({
     method: METHOD.POST,
-    url: `${UPLOAD_URL}upload-media?callback=${BASEURL}media/create`,
+    url: `${BASEURL}media/upload-food`,
     data: newForm,
     customHeader: { "Content-Type": "multipart/form-data" },
     onUploadProgress: onUploadProgress ? onUploadProgress : () => {},
-    timeOut: 1800000,
+    timeOut: 10000,
   }).then((response) => {
-    if (Array.isArray(response.data)) {
-      return response.data;
-    }
-    return [];
+    console.log("res", response);
+    return response;
   });
 }
 
@@ -80,11 +79,12 @@ export async function uploadMultiMedia(files: MediaAsset[]): Promise<any> {
   });
   return request({
     method: METHOD.POST,
-    url: `${UPLOAD_URL}upload-media?callback=${BASEURL}media/create`,
+    url: `${BASEURL}media/upload-food`,
     data: newForm,
     customHeader: { "Content-Type": "multipart/form-data" },
     timeOut: 1800000,
   }).then((response) => {
+    console.log("resss", response);
     if (Array.isArray(response.data)) {
       return response.data;
     }

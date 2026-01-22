@@ -36,7 +36,7 @@ apiClient.interceptors.request.use(
     const userToken = _getJson(USER_TOKEN);
     // const userToken =
     // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDcxMDMxMzMsImRhdGEiOnsiX2lkIjoiNjYxNzkxOTk1MmM2ODE5MTY2ODdlMzJlIiwia2V5IjoiYjM4MTgzODdiM2U3YmRjOTNiNDg1ZTU4ZGM4ZjA4YzIiLCJzaWduYXR1cmUiOiIwN2E1YWY4YzhkYmRkZWRmMTE2OWE0MTA4MDlmNTIwZCIsInNlc3Npb24iOiI2NjQxN2ExZDkyODE2OGY0YmEyOGE0NjQifSwiaWF0IjoxNzE1NTY3MTMzfQ.HZ26Wto9VAYMd4pTb6svh5Q59PPGTInemjZ1anDmnvk";
-    if (userToken) config.headers["X-Authorization"] = userToken;
+    if (userToken) config.headers["Authorization"] = "Bearer " + userToken;
     return config;
   },
   function (error) {
@@ -67,7 +67,7 @@ interface IRequest {
   data?: any;
   method?: string;
   option?: RequestOption;
-  customHeader?: Headers;
+  customHeader?: Record<string, string>;
   onUploadProgress?: any;
   timeOut?: number;
 }

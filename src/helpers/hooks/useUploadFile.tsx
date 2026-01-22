@@ -1,38 +1,23 @@
-import { useTheme } from "@react-navigation/native";
-import FileViewComponent from "@screens/post/components/FileView";
-import { uploadMultiFile, uploadMultiMedia } from "@services/api/post.api";
+import { uploadMedia } from "@services/api/post.api";
 import * as React from "react";
-import { Platform, StyleSheet, Text, View, Dimensions } from "react-native";
+import { Platform } from "react-native";
 import { selectMedia } from "@helpers/file.helper";
-import getPath from "@flyerhq/react-native-android-uri-path";
 import { showToast } from "@helpers/super.modal.helper";
 import { translations } from "@localization";
 
-const { width } = Dimensions.get("screen");
 const isIos = Platform.OS === "ios";
 
-interface IExtraParams {
-  cbFinaly: () => void;
-}
+export type UploadStatus = 'idle' | 'uploading' | 'success' | 'error';
 
-export function useUploadFile(
-  initData?: any[],
-  selectionLimit = 30,
-  extraParam?: IExtraParams,
-) {
-  const [listFile, setListFile] = React.useState<any[]>(initData || []);
-  const [isUpLoadingFile, setIsUpLoadingFile] = React.useState(false);
-  const [listFileLocal, setListFileLocal] = React.useState<any[]>(
-    initData || [],
-  );
-  const theme = useTheme();
-  const { colors } = theme;
+export function useUploadFile(selectionLimit = 1) {
+  const [image, setImage] = React.useState<any | null>(null);
+  const [status, setStatus] = React.useState<UploadStatus>('idle');
+
   const getFileName = (i: any) => {
-    return (
-      i.fileName || i.name || (i.uri || "")?.split("/")?.reverse()?.[0] || ""
-    );
+    return i.fileName || i.name || (i.uri || "")?.split("/")?.reverse()?.[0] || "";
   };
-  const getLinkUri = (i) => {
+
+  const getLinkUri = (i: any) => {
     if (i.src) return i.src;
     if (isIos) {
       return i.uri?.replace("file://", "");
@@ -41,340 +26,92 @@ export function useUploadFile(
   };
 
   const onSelectPicture = async () => {
-    setIsUpLoadingFile(true);
     selectMedia({
-      config: { mediaType: "photo", selectionLimit: selectionLimit || 30 },
-      callback: async (images: any) => {
-        if (!images?.[0]) {
-          return;
-        }
-        const listImage = images.map((i: any) => ({
-          uri: i.uri || "",
-          fileName: i.name || "",
-          type: i.type || "",
-        }));
-        const fileLocal = listImage.map((i: any) => ({
-          uri: getLinkUri(i),
-          type: i.type,
-        }));
-        setListFileLocal((listFileLocal) => [...listFileLocal, ...fileLocal]);
-        const res = await uploadMultiMedia(
-          listImage.map((i: any) => ({
-            name: getFileName(i),
-            uri: getLinkUri(i),
-            type: i.type,
-          })),
-        );
-        if (Array.isArray(res)) {
-          const data = res.map((i: any) => ({
-            uri: i?.src,
-            type: i?.callback?.media_mime_type,
-            _id: i?.callback?._id,
-          }));
-          setListFile((listFile) => [...listFile, ...data]);
-        } else {
-          setListFileLocal(listFile);
-          showToast({
-            type: "error",
-            message: translations.post.uploadImageFaild,
-          });
-        }
-        setIsUpLoadingFile(false);
+      config: { 
+        mediaType: "photo", 
+        selectionLimit: 1 
       },
+      callback: async (images: any) => {
+        if (!images?.[0]) return;
+        
+        const imageObj = images[0];
+        
+        const fileData = {
+          uri: imageObj.uri || "",
+          fileName: imageObj.name || "",
+          type: imageObj.type || "",
+        };
+
+        // Ảnh local (Preview tạm)
+        const localImage = {
+          uri: getLinkUri(fileData),
+          type: fileData.type,
+          name: getFileName(fileData),
+          isLocal: true 
+        };
+        
+        setImage(localImage);
+        setStatus('uploading');
+
+        try {
+            const res = await uploadMedia({
+                name: localImage.name,
+                uri: localImage.uri,
+                type: localImage.type,
+            });
+
+            console.log("Server Response:", res); // Debug log
+
+            // --- SỬA LOGIC MAP RESPONSE TẠI ĐÂY ---
+            // Kiểm tra nếu có _id là thành công
+            if (!res.isError) {
+              const data = res.data
+              const remoteImage = {
+                // Ưu tiên lấy link gốc (original) để AI đọc rõ nhất
+                uri: data.media_url || data.urls?.original || data.media_thumbnail, 
+                type: data.media_mime_type, // "image/jpeg"
+                _id: data._id,              // "6971..."
+                isLocal: false             // Đánh dấu đã lên server
+              };
+              
+              console.log("Mapped Image:", remoteImage); // Debug log kết quả map
+              
+              setImage(remoteImage);
+              setStatus('success');
+            } else {
+              // Trường hợp server trả về lỗi hoặc không có _id
+              console.log("Upload failed response:", res);
+              setStatus('error');
+              showToast({
+                type: "error",
+                message: translations.post.uploadImageFaild,
+              });
+            }
+            // --------------------------------------
+
+        } catch (error) {
+            console.error("Upload Error:", error);
+            setStatus('error');
+            showToast({ type: "error", message: "Error uploading image" });
+        }
+      },
+      croping: false,
       _finally: () => {
-        extraParam?.cbFinaly?.();
-      },
-      croping: false,
+        // Required by selectMedia
+      }
     });
   };
 
-  const renderFile = React.useCallback(() => {
-    return (
-      <View style={styles.viewImage}>
-        {listFileLocal.slice(0, 4).map((item: any, index: number) => {
-          if (index < 3) {
-            return (
-              <FileViewComponent
-                style={styles.viewFile}
-                item={item}
-                key={`listFileLocal - ${index}`}
-                onPressClear={() => onRemove(item)}
-                isDone={!isUpLoadingFile}
-              />
-            );
-          }
-          if (listFileLocal.length >= 4) {
-            return (
-              <View
-                style={[
-                  styles.viewFile,
-                  {
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderWidth: 1,
-                    borderColor: colors.borderColor,
-                    borderRadius: 10,
-                  },
-                ]}
-                key={`listFileLocal - ${index}`}
-              >
-                <Text style={{ color: colors.textInput }}>
-                  +{listFileLocal.length - 3}
-                </Text>
-              </View>
-            );
-          }
-          return;
-        })}
-      </View>
-    );
-  }, [listFileLocal, listFile, isUpLoadingFile]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const renderFile2 = React.useCallback(() => {
-    return (
-      <View style={styles.viewImage2}>
-        {listFileLocal.slice(0, 4).map((item: any, index: number) => {
-          if (index < 3) {
-            return (
-              <FileViewComponent
-                style={styles.viewFile2}
-                item={item}
-                key={`listFileLocal - ${index}`}
-                onPressClear={() => onRemove(item)}
-                isDone={!isUpLoadingFile}
-              />
-            );
-          }
-          if (listFileLocal.length >= 4) {
-            return (
-              <View
-                style={[
-                  styles.viewFile2,
-                  {
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderWidth: 1,
-                    borderColor: colors.borderColor,
-                    borderRadius: 10,
-                  },
-                ]}
-                key={`listFileLocal - ${index}`}
-              >
-                <Text style={{ color: colors.textInput }}>
-                  +{listFileLocal.length - 3}
-                </Text>
-              </View>
-            );
-          }
-          return;
-        })}
-      </View>
-    );
-  }, [listFileLocal, listFile, isUpLoadingFile]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const renderFile3 = React.useCallback(() => {
-    return (
-      <View style={styles.viewImage2}>
-        {listFileLocal.slice(0, 4).map((item: any, index: number) => {
-          if (index < 3) {
-            return (
-              <FileViewComponent
-                style={styles.viewFile2}
-                item={item}
-                key={`listFileLocal - ${index}`}
-                onPressClear={() => onRemove(item)}
-                isDone={!isUpLoadingFile}
-              />
-            );
-          }
-          if (listFileLocal.length >= 4) {
-            return (
-              <View
-                style={[
-                  styles.viewFile2,
-                  {
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderWidth: 1,
-                    borderColor: colors.borderColor,
-                    borderRadius: 10,
-                  },
-                ]}
-                key={`listFileLocal - ${index}`}
-              >
-                <Text style={{ color: colors.textInput }}>
-                  +{listFileLocal.length - 3}
-                </Text>
-              </View>
-            );
-          }
-          return;
-        })}
-      </View>
-    );
-  }, [listFileLocal, listFile, isUpLoadingFile]); // eslint-disable-line react-hooks/exhaustive-deps
-  const renderFileSingle = React.useCallback(() => {
-    return listFileLocal.length > 0 ? (
-      <View style={{ ...styles.viewImage2, marginLeft: 10, marginTop: 10 }}>
-        {listFileLocal.slice(0, 1).map((item: any, index: number) => {
-          return (
-            <FileViewComponent
-              style={styles.viewFile2}
-              item={item}
-              key={`listFileLocal - ${index}`}
-              onPressClear={clearAll}
-              isDone={!isUpLoadingFile}
-            />
-          );
-        })}
-      </View>
-    ) : null;
-  }, [listFileLocal, listFile, isUpLoadingFile]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const onRemove = ({ uri, _id }: { uri: string; _id: string }) => {
-    setListFileLocal(listFileLocal.filter((i) => i.uri !== uri));
-    if (listFile?.length) {
-      setListFile(listFile.filter((i) => i._id !== _id));
-    }
+  const clearImage = () => {
+    setImage(null);
+    setStatus('idle');
   };
-  const clearAll = () => {
-    setListFileLocal([]);
-    setListFile([]);
-  };
-
-  const onSelectVideo = async () => {
-    setIsUpLoadingFile(true);
-    selectMedia({
-      config: { mediaType: "video", selectionLimit: selectionLimit || 30 },
-      callback: async (images: any) => {
-        if (!images?.[0]) {
-          return;
-        }
-        const listVideo = images.map((i: any) => ({
-          uri: i.uri || "",
-          fileName: i.name || "",
-          type: i.type || "",
-        }));
-        const fileLocal = listVideo.map((i: any) => ({
-          uri: getLinkUri(i),
-          type: i.type,
-        }));
-
-        setListFileLocal((listFileLocal) => [...listFileLocal, ...fileLocal]);
-        console.log("imagesimagesimages", fileLocal);
-
-        const res = await uploadMultiMedia(
-          listVideo.map((i: any) => ({
-            name: getFileName(i),
-            uri: getLinkUri(i),
-            type: i.type,
-          })),
-        );
-        if (Array.isArray(res)) {
-          const data = listVideo.map((i: any, index: number) => ({
-            uri: getLinkUri(i),
-            type: i.type,
-            _id: res[index]?.callback?._id,
-          }));
-
-          setListFile((listFile) => [...listFile, ...data]);
-        } else {
-          setListFileLocal(listFile);
-          showToast({
-            type: "error",
-            message: translations.post.uploadVideoFaild,
-          });
-        }
-        setIsUpLoadingFile(false);
-      },
-      croping: false,
-    });
-  };
-
-  // Removed onSelectFile - react-native-document-picker functionality removed
-  const onSelectFile = async () => {
-    // Functionality removed
-    console.warn("onSelectFile is no longer available - react-native-document-picker was removed");
-  };
-
-  const uploadRecord = React.useCallback(async (recordPaths: string) => {
-    setIsUpLoadingFile(true);
-
-    const recordLocalData = [
-      {
-        uri: (!isIos ? "file://" : "") + getPath(recordPaths || ""),
-        name: Platform.select({
-          ios: "sound.m4a",
-          android: "sound.mp4",
-        }),
-        type: "audio/mpeg",
-      },
-    ];
-
-    setListFileLocal(recordLocalData);
-
-    const res = await uploadMultiFile(recordLocalData);
-    setIsUpLoadingFile(false);
-    if (Array.isArray(res)) {
-      const data = recordLocalData.map((i, index) => ({
-        name: getFileName(i),
-        uri: res[index]?.src,
-        type: i.type,
-        _id: res[index].callback?._id,
-      }));
-      setListFile(data);
-    }
-    setIsUpLoadingFile(false);
-  }, []);
-
-  const deleteFile = (_id) => {
-    setListFile((old) => old.filter((item) => item._id != _id));
-  };
-
-  // React.useEffect(() => {
-  //   if (listFile?.length) {
-  //     setIsUpLoadingFile(false);
-  //   }
-  // }, [listFile]);
 
   return {
-    listFile,
+    image,
+    setImage,
+    status,
     onSelectPicture,
-    onSelectVideo,
-    // onSelectFile removed - react-native-document-picker functionality removed
-    renderFile,
-    renderFile2,
-    renderFile3,
-    renderFileSingle,
-    isUpLoadingFile,
-    uploadRecord,
-    setListFile,
-    setListFileLocal,
-    listFileLocal,
-    deleteFile,
+    clearImage,
   };
 }
-
-const styles = StyleSheet.create({
-  viewImage: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 10,
-    paddingHorizontal: 14,
-    height: (width - 30 - 30) / 4,
-  },
-  viewImage2: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 10,
-    height: (width - 40 - 40) / 4,
-  },
-  viewFile: {
-    width: (width - 30 - 30) / 4,
-    height: (width - 30 - 30) / 4,
-  },
-  viewFile2: {
-    width: (width - 30 - 30) / 5,
-    height: (width - 30 - 30) / 5,
-  },
-});

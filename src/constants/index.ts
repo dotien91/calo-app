@@ -32,6 +32,7 @@ export const SCREENS = {
   VIEW_LIVE_STREAM: "ViewLiveStream",
   POST_SCREEN: "PostScreen",
   ADD_MEAL_SCREEN: "AddMealScreen",
+  CALORIER_SCANNER: "CalorierScanner",
   LIST_POST: "ListPost",
   POST_DETAIL: "PostDetail",
   EDIT_COMMENT: "EditComment",

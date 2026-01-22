@@ -52,6 +52,7 @@ import PaceScreen from "@screens/welcome/onboarding/pace.screen";
 import GoalDetailScreen from "@screens/on-boarding/goal.screen";
 import ChooseLanguageScreen from "@screens/welcome/choose-language/choose.language.screen";
 import AddMealScreen from "@screens/add-meal";
+import CalorierScannerScreen from "@screens/calorier-scanner/calorier.scanner.screen";
 
 export const DiscoveryStackData: any[] = [];
 
@@ -109,6 +110,7 @@ export const CommonStackData = [
   { name: SCREENS.CHAT, screen: ChatListScreen },
   { name: SCREENS.POST_SCREEN, screen: PostScreen },
   { name: SCREENS.ADD_MEAL_SCREEN, screen: AddMealScreen },
+  { name: SCREENS.CALORIER_SCANNER, screen: CalorierScannerScreen },
   { name: SCREENS.EDIT_COMMENT, screen: EditCommentScreen },
   { name: SCREENS.PROFILE_CURRENT_USER, screen: ProfileUserScreen },
   { name: SCREENS.SEARCH_CHAT, screen: SearchRoomChatScreen },
