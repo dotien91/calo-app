@@ -17,13 +17,13 @@ platform :ios do
       # export_options: {
       #   signingStyle: "automatic",
       #   provisioningProfiles: {
-      #     "com.ikigroup.ieltshunter" => "ieltshunter_provision_prod_110724"
+      #     "com.apporastudio.calosnap" => "calosnap_provision_prod_110724"
       #   }
       # }
     )
     upload_to_testflight(
       username: "info@ikigroup.vn", # Thay thế bằng Apple ID của bạn
-      app_identifier: "com.ikigroup.ieltshunter" # Thay thế bằng Bundle ID của ứng dụng của bạn
+      app_identifier: "com.apporastudio.calosnap" # Thay thế bằng Bundle ID của ứng dụng của bạn
     )
   end
 end

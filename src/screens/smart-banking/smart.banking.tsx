@@ -149,7 +149,7 @@ const SmartBanking = () => {
       accountName: bankInfo?.card_name,
       acqId: bankInfo?.bank_code,
       amount: price,
-      addInfo: `Ikigai Coach ${short_id}`,
+      addInfo: `CaloSnap ${short_id}`,
       format: "text",
       template: "compact",
     };
@@ -251,12 +251,12 @@ const SmartBanking = () => {
             <TouchableOpacity
               style={{ flexDirection: "row", justifyContent: "center" }}
               onPress={() => {
-                copyToClipboard(`Ikigai Coach ${short_id}`);
+                copyToClipboard(`CaloSnap ${short_id}`);
                 showToast({ type: "info", message: "Coppied" });
               }}
             >
               <Text numberOfLines={2} style={styles.styleTextNameBank}>
-                {translations.payment.content}: Ikigai Coach {short_id}
+                {translations.payment.content}: CaloSnap {short_id}
               </Text>
               <Image
                 style={{ height: 15.3, width: 13.79, marginLeft: 5 }}

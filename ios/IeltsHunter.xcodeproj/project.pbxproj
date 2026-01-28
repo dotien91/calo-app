@@ -652,7 +652,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ikigroup.ieltshunter;
+				PRODUCT_BUNDLE_IDENTIFIER = com.apporastudio.calosnap;
 				PRODUCT_NAME = "Ikigai Coach";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ieltshunter.app/ieltshunter";
@@ -678,7 +678,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ikigroup.ikicoach;
+				PRODUCT_BUNDLE_IDENTIFIER = com.apporastudio.calosnap;
 				PRODUCT_NAME = "Ikigai Coach";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ieltshunter.app/ieltshunter";
 			};
@@ -842,7 +842,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ikigroup.ikicoach;
+				PRODUCT_BUNDLE_IDENTIFIER = com.apporastudio.calosnap;
 				PRODUCT_NAME = "Ikigai Coach";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1012,7 +1012,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ikigroup.ikicoach;
+				PRODUCT_BUNDLE_IDENTIFIER = com.apporastudio.calosnap;
 				PRODUCT_NAME = "Ikigai Coach";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

@@ -1,4 +1,4 @@
-app_identifier("com.ikigroup.ieltshunter") # The bundle identifier of your app
+app_identifier("com.apporastudio.calosnap") # The bundle identifier of your app
 apple_id("info@ikigroup.vn") # Your Apple Developer Portal username
 
 itc_team_id("126935078") # App Store Connect Team ID

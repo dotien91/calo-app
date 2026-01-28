@@ -104,9 +104,9 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    namespace 'com.ikigroup.ikigaiextra'
+    namespace 'com.apporastudio.calosnap'
     defaultConfig {
-        applicationId 'com.ikigroup.ikigaiextra'
+        applicationId 'com.apporastudio.calosnap'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 12

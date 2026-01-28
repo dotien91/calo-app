@@ -4,12 +4,12 @@
 <dict>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
-		<string>com.ikigroup.ikicoach</string>
+		<string>com.apporastudio.calosnap</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Ikigai Coach</string>
+	<string>CaloSnap</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -46,10 +46,10 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.ikigroup.ikicoach</string>
+			<string>com.apporastudio.calosnap</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>ikicoach</string>
+				<string>calosnap</string>
 			</array>
 		</dict>
 	</array>

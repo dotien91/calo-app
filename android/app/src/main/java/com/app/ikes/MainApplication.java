@@ -1,4 +1,4 @@
-package com.ikigroup.ikigaiextra;
+package com.apporastudio.calosnap;
 
 import android.app.Application;
 import com.facebook.react.PackageList;
