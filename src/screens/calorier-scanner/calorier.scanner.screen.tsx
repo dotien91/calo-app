@@ -1,198 +1,244 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  ActivityIndicator,
-  Alert,
-  Dimensions,
-} from 'react-native';
-import FastImage from 'react-native-fast-image';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useTheme } from '@react-navigation/native';
 
-// Import hook mới
-import { useUploadFile } from '@helpers/hooks/useUploadFile';
+// 1. IMPORT COMPONENTS UI
+import ScanningView from './components/ScanningView';
+import ScanResultView from './components/ScanResultView';
+
+// 2. IMPORT HOOKS & HELPERS
+import { useAnalysisImageFood } from '@helpers/hooks/useAnalysisImageFood';
 import { showToast } from '@helpers/super.modal.helper';
+import { goBack } from '@helpers/navigation.helper';
+import eventEmitter from '@services/event-emitter';
+import { createManualCalorie } from '@services/api/calorie.api';
 
-const { width } = Dimensions.get('window');
+// --- ĐỊNH NGHĨA TYPES CHO UI ---
+// (Dùng riêng cho việc hiển thị, khác với Type của API)
+
+export type IngredientUI = {
+  id: number | string; // ID để xử lý xóa
+  name: string;
+  weight: number;
+  unit?: string;
+  cal: number;
+  c: number; // Carb
+  p: number; // Protein
+  f: number; // Fat
+};
+
+export type FoodResultUI = {
+  name: string;
+  time: string;
+  healthScore: number;
+  image: string;
+  total: {
+    weight: number;
+    calories: number;
+    carbs: number;
+    protein: number;
+    fat: number;
+  };
+  ingredients: IngredientUI[];
+};
+
+type ViewMode = 'SCANNING' | 'RESULT';
 
 const CalorieScannerScreen = () => {
-  const theme = useTheme();
-  const { colors } = theme;
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  // --- STATE QUẢN LÝ MÀN HÌNH ---
+  const [viewMode, setViewMode] = useState<ViewMode>('SCANNING');
+  
+  // State chứa dữ liệu món ăn đang hiển thị (Local State)
+  // Ta cần state này để user có thể Xóa thành phần mà không làm hỏng dữ liệu gốc từ API
+  const [foodResult, setFoodResult] = useState<FoodResultUI | null>(null);
 
-  // 1. KHỞI TẠO HOOK MỚI
+  // --- SỬ DỤNG HOOK LOGIC ---
   const {
-    image,           // Object ảnh hiện tại (chứa uri, isLocal...)
-    status,          // 'idle' | 'uploading' | 'success' | 'error'
-    onSelectPicture, // Hàm mở thư viện/camera
-    clearImage,      // Hàm xóa ảnh
-  } = useUploadFile(1);
+    image,
+    status,         // 'idle' | 'uploading' | 'success' | 'error'
+    analysisResult, // Dữ liệu gốc từ API trả về
+    onSelectPicture,
+    clearImage,
+  } = useAnalysisImageFood(1);
 
-  // 2. HÀM CHỌN ẢNH MỚI
-  const handleCapture = () => {
-    if (isAnalyzing) return;
-    
-    // Xóa ảnh cũ & reset status trước khi chụp mới
-    clearImage();
-    
-    // Gọi hàm chọn ảnh
-    onSelectPicture();
-  };
+  console.log("analysisResult", analysisResult);
 
-  // 3. HÀM TÍNH CALO (GỌI AI)
-  const onAnalyzeFood = async () => {
-    // Check trạng thái upload từ hook
-    if (status === 'uploading') {
-      showToast({ type: 'info', message: 'Đang tải ảnh lên server, vui lòng đợi...' });
-      return;
-    }
-
-    if (status === 'error') {
-      showToast({ type: 'error', message: 'Upload ảnh thất bại, vui lòng thử lại' });
-      return;
-    }
-
-    // Nếu chưa có ảnh hoặc ảnh chưa lên server (vẫn là local)
-    if (!image || image.isLocal) {
-      showToast({ type: 'error', message: 'Vui lòng đợi ảnh upload xong' });
-      return;
-    }
-
-    // Lấy URL Remote
-    const remoteUrl = image.uri;
-    if (!remoteUrl) {
-      showToast({ type: 'error', message: 'Lỗi: Không tìm thấy đường dẫn ảnh' });
-      return;
-    }
-
-    setIsAnalyzing(true);
-    try {
-      console.log('🔗 Sending URL to AI:', remoteUrl);
-
-      // --- KHU VỰC GỌI API AI ---
-      // Ví dụ: const res = await aiService.scanFood(remoteUrl);
+  // =================================================================
+  // 1. EFFECT: LẮNG NGHE KẾT QUẢ TỪ API -> CHUYỂN MÀN HÌNH
+  // =================================================================
+  useEffect(() => {
+    // Chỉ chạy khi status thành công VÀ đang ở màn hình Scan
+    if (status === 'success' && analysisResult && viewMode === 'SCANNING') {
       
-      // Giả lập delay
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
-      const mockResult = {
-        foodName: 'Cơm Tấm Sườn Bì',
-        calories: 650,
-        protein: '35g',
-        fat: '20g',
-        carbs: '80g',
+      // MAP DATA: Chuyển từ API Response (analysisResult) -> UI State (foodResult)
+      const mappedData: FoodResultUI = {
+        name: analysisResult.food_name,
+        // Lấy giờ hiện tại
+        time: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }),
+        healthScore: analysisResult.health_score || 0,
+        
+        // Ưu tiên ảnh URL từ server (đã crop/xử lý), nếu không có thì dùng ảnh local
+        image: analysisResult.image_url || image?.uri, 
+        
+        total: {
+          weight: analysisResult.total_weight,
+          calories: analysisResult.total_calories,
+          carbs: analysisResult.total_carbs,
+          protein: analysisResult.total_protein,
+          fat: analysisResult.total_fat,
+        },
+        
+        // Map ingredients và thêm ID tạm để thao tác xóa
+        ingredients: analysisResult.ingredients.map((ing, index) => ({
+          id: index, // Dùng index làm ID tạm
+          name: ing.name,
+          weight: ing.weight,
+          unit: ing.unit,
+          cal: ing.calories,
+          c: ing.carbs,
+          p: ing.protein,
+          f: ing.fat,
+        }))
       };
 
-      Alert.alert(
-        '🥗 Kết quả Phân Tích',
-        `Món: ${mockResult.foodName}\n🔥 Calo: ${mockResult.calories} kcal\n💪 Protein: ${mockResult.protein}`
-      );
-      // ---------------------------
+      setFoodResult(mappedData);
+      setViewMode('RESULT');
+      showToast({ type: 'success', message: 'Phân tích thành công!' });
+    }
 
-    } catch (error) {
-      console.error(error);
-      showToast({ type: 'error', message: 'Không thể phân tích ảnh này. Thử lại sau.' });
-    } finally {
-      setIsAnalyzing(false);
+    // Xử lý lỗi
+    if (status === 'error') {
+      // Logic clear ảnh hoặc giữ lại tùy UX bạn muốn
+      // clearImage(); 
+    }
+  }, [status, analysisResult]); // Chạy lại khi status hoặc data thay đổi
+
+  console.log("foodResult", foodResult);
+
+  // =================================================================
+  // 2. LOGIC: XÓA THÀNH PHẦN & TÍNH LẠI (RECALCULATE)
+  // =================================================================
+  const handleRemoveIngredient = (idToRemove: number | string) => {
+    if (!foodResult) return;
+
+    Alert.alert(
+      "Xóa thành phần", 
+      "Bạn có chắc muốn xóa thành phần này khỏi món ăn?",
+      [
+        { text: "Hủy", style: "cancel" },
+        { 
+          text: "Xóa", 
+          style: "destructive",
+          onPress: () => {
+            // A. Lọc bỏ thành phần có id tương ứng
+            const newIngredients = foodResult.ingredients.filter(item => item.id !== idToRemove);
+
+            // B. Tính toán lại tổng dinh dưỡng (Reduce)
+            const newTotal = newIngredients.reduce((acc, curr) => ({
+              weight: acc.weight + curr.weight,
+              calories: acc.calories + curr.cal,
+              carbs: acc.carbs + curr.c,
+              protein: acc.protein + curr.p,
+              fat: acc.fat + curr.f,
+            }), { weight: 0, calories: 0, carbs: 0, protein: 0, fat: 0 });
+
+            // C. Cập nhật State UI
+            setFoodResult({
+              ...foodResult,
+              ingredients: newIngredients,
+              total: {
+                weight: Math.round(newTotal.weight),
+                calories: Math.round(newTotal.calories),
+                // Làm tròn 1 chữ số thập phân để hiển thị đẹp
+                carbs: Number(newTotal.carbs.toFixed(1)),
+                protein: Number(newTotal.protein.toFixed(1)),
+                fat: Number(newTotal.fat.toFixed(1)),
+              }
+            });
+          }
+        }
+      ]
+    );
+  };
+
+  // =================================================================
+  // 3. CÁC ACTION KHÁC (BACK / SAVE)
+  // =================================================================
+  
+  // Quay lại màn hình chụp (Reset toàn bộ)
+  const handleBackToScan = () => {
+    setViewMode('SCANNING');
+    clearImage();       // Reset hook upload
+    setFoodResult(null); // Clear data cũ
+  };
+
+  // Lưu vào nhật ký (Gọi API Save)
+  const handleSave = async () => {
+    if (!foodResult) return;
+
+    try {
+      console.log('💾 Saving Food Log:', foodResult);
+      
+      // Chuẩn bị dữ liệu để gửi lên API
+      const apiData = {
+        food_name: foodResult.name,
+        // Lưu luôn image_url để backend có thể hiển thị lại ảnh món ăn
+        image_url: foodResult.image,
+        total_weight: foodResult.total.weight,
+        total_calories: foodResult.total.calories,
+        total_carbs: foodResult.total.carbs,
+        total_protein: foodResult.total.protein,
+        total_fat: foodResult.total.fat,
+        ingredients: foodResult.ingredients.map(ing => ({
+          name: ing.name,
+          weight: ing.weight,
+          unit: (ing.unit as "g" | "ml") || "g",
+          calories: ing.cal,
+          carbs: ing.c,
+          protein: ing.p,
+          fat: ing.f,
+        })),
+      };
+
+      console.log("apiData", apiData);
+
+      // Gọi API lưu nhật ký
+      await createManualCalorie(apiData);
+      
+      showToast({ type: 'success', message: 'Đã lưu bữa ăn vào nhật ký!' });
+      
+      // Về home và báo home refresh data
+      eventEmitter.emit('reload_home_page');
+      goBack();
+    } catch (error: any) {
+      console.error('Error saving food log:', error);
+      const errorMessage = error?.response?.data?.message || error?.message || 'Lỗi khi lưu dữ liệu.';
+      showToast({ type: 'error', message: errorMessage });
     }
   };
 
-  console.log("image", image);
-
+  // =================================================================
+  // 4. RENDER
+  // =================================================================
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background || '#F8F9FA' }]}>
-      {/* HEADER */}
-      <View style={[styles.header, { borderBottomColor: colors.border || '#EEE' }]}>
-        <Text style={[styles.headerTitle, { color: colors.text }]}>AI Calorie Scanner 🥗</Text>
-      </View>
-
-      <View style={styles.content}>
-        {/* KHUNG HIỂN THỊ ẢNH */}
-        <View style={[styles.imageCard, { backgroundColor: colors.card || '#FFF', borderColor: colors.border || '#DDD' }]}>
-          {image ? (
-            <>
-              <FastImage
-                style={styles.image}
-                source={{ uri: image.uri }}
-                resizeMode={FastImage.resizeMode.cover}
-              />
-
-              {/* Nút Xóa Ảnh */}
-              <TouchableOpacity
-                style={styles.closeButton}
-                onPress={clearImage}
-                disabled={isAnalyzing || status === 'uploading'}
-              >
-                <Icon name="close-circle" size={30} color="#FF5252" />
-              </TouchableOpacity>
-
-              {/* Loading Overlay khi đang Upload */}
-              {status === 'uploading' && (
-                <View style={styles.loadingOverlay}>
-                  <ActivityIndicator size="large" color="#FFF" />
-                  <Text style={styles.loadingText}>Đang tải ảnh lên...</Text>
-                </View>
-              )}
-            </>
-          ) : (
-            // Giao diện khi chưa có ảnh
-            <TouchableOpacity style={styles.placeholder} onPress={handleCapture}>
-              <Icon name="camera-plus-outline" size={60} color={colors.text || '#999'} />
-              <Text style={[styles.placeholderText, { color: colors.text || '#666' }]}>
-                Chạm để chụp ảnh món ăn
-              </Text>
-            </TouchableOpacity>
-          )}
-        </View>
-
-        {/* KHU VỰC NÚT BẤM */}
-        <View style={styles.actionContainer}>
-          {/* Trường hợp 1: Chưa có ảnh -> Nút Chụp */}
-          {!image && (
-            <TouchableOpacity style={styles.captureBtn} onPress={handleCapture}>
-              <Icon name="camera" size={24} color="#FFF" />
-              <Text style={styles.btnText}>Chụp / Chọn Ảnh</Text>
-            </TouchableOpacity>
-          )}
-
-          {/* Trường hợp 2: Có ảnh & Upload thành công -> Nút Tính Calo */}
-          {image && status === 'success' && (
-            <TouchableOpacity
-              style={styles.analyzeBtn}
-              onPress={onAnalyzeFood}
-              disabled={isAnalyzing}
-            >
-              {isAnalyzing ? (
-                <ActivityIndicator color="#FFF" />
-              ) : (
-                <>
-                  <Icon name="fire" size={24} color="#FFF" style={{ marginRight: 8 }} />
-                  <Text style={styles.btnText}>Tính Calo Ngay</Text>
-                </>
-              )}
-            </TouchableOpacity>
-          )}
-
-          {/* Trường hợp 3: Upload lỗi -> Nút Thử lại */}
-          {image && status === 'error' && (
-             <TouchableOpacity style={[styles.captureBtn, { backgroundColor: '#FF5252' }]} onPress={handleCapture}>
-               <Icon name="refresh" size={24} color="#FFF" />
-               <Text style={styles.btnText}>Thử lại</Text>
-             </TouchableOpacity>
-          )}
-        </View>
-
-        {/* Hướng dẫn nhỏ */}
-        {!image && (
-          <Text style={[styles.hintText, { color: colors.text || '#888' }]}>
-            * Mẹo: Hãy chụp rõ món ăn và chụp từ trên xuống để AI nhận diện tốt nhất.
-          </Text>
-        )}
-      </View>
+    <SafeAreaView style={styles.container}>
+      {viewMode === 'SCANNING' ? (
+        <ScanningView 
+          image={image}
+          // Hook trả về 'uploading' khi đang xử lý -> Map sang UI status
+          status={status === 'uploading' ? 'uploading' : 'idle'} 
+          onCapture={onSelectPicture}
+          onClose={clearImage}
+        />
+      ) : (
+        <ScanResultView 
+          data={foodResult} 
+          onBack={handleBackToScan}
+          onSave={handleSave}
+          // Truyền hàm xóa xuống component con
+          onRemoveItem={handleRemoveIngredient} 
+        />
+      )}
     </SafeAreaView>
   );
 };
@@ -200,110 +246,7 @@ const CalorieScannerScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  header: {
-    paddingVertical: 16,
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    backgroundColor: 'rgba(255,255,255,0.5)',
-  },
-  headerTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  content: {
-    flex: 1,
-    padding: 20,
-    alignItems: 'center',
-  },
-  imageCard: {
-    width: '100%',
-    height: width * 0.9,
-    borderRadius: 24,
-    borderWidth: 1,
-    overflow: 'hidden',
-    justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 4,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.15,
-    shadowRadius: 10,
-    marginBottom: 30,
-  },
-  image: {
-    width: '100%',
-    height: '100%',
-  },
-  placeholder: {
-    width: '100%',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.02)',
-  },
-  placeholderText: {
-    marginTop: 12,
-    fontSize: 16,
-    fontWeight: '500',
-  },
-  closeButton: {
-    position: 'absolute',
-    top: 15,
-    right: 15,
-    zIndex: 10,
-    backgroundColor: '#FFF',
-    borderRadius: 20,
-  },
-  loadingOverlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  loadingText: {
-    color: '#FFF',
-    marginTop: 10,
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  actionContainer: {
-    width: '100%',
-    paddingHorizontal: 10,
-  },
-  captureBtn: {
-    backgroundColor: '#333',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 16,
-    borderRadius: 16,
-  },
-  analyzeBtn: {
-    backgroundColor: '#FF6B6B',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 16,
-    borderRadius: 16,
-    elevation: 5,
-    shadowColor: '#FF6B6B',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-  },
-  btnText: {
-    color: '#FFF',
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginLeft: 8,
-  },
-  hintText: {
-    marginTop: 24,
-    fontSize: 13,
-    textAlign: 'center',
-    fontStyle: 'italic',
-    opacity: 0.7,
+    backgroundColor: '#101214', // Màu nền đen chủ đạo
   },
 });
 

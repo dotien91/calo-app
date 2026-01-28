@@ -205,11 +205,22 @@ export async function analyzeFoodImage(
  * @returns Created entry
  */
 export async function createManualCalorie(data: {
+  food_name?: string;
+  image_url?: string;
   total_weight: number;
   total_calories: number;
   total_protein: number;
   total_carbs: number;
   total_fat: number;
+  ingredients?: Array<{
+    name: string;
+    weight: number;
+    unit?: "g" | "ml";
+    calories: number;
+    carbs: number;
+    protein: number;
+    fat: number;
+  }>;
 }): Promise<any> {
   return request({
     method: METHOD.POST,

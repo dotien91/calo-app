@@ -1,20 +1,20 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { View, ScrollView, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import useStore from '@services/zustand/store';
 import { format } from 'date-fns';
-import { Fire, ForkKnife } from 'phosphor-react-native';
 import { translations } from '@localization';
 import { getCalorieDay } from '@services/api/calorie.api';
+import eventEmitter from '@services/event-emitter';
 import { MacroType } from '../../constants/macro.enum';
 
 import { createStyles } from './home.screen.style';
 import MacroCard from './components/MacroCard';
 import DashboardCard from './components/DashboardCard';
-import DailyProgressItem from './components/DailyProgressItem';
 import BannerCard from './components/BannerCard';
-import EmptyState from './components/EmptyState';
 import HeaderSection from './components/HeaderSection'; 
+import RecentActivity from './components/RecentActivity';
+import { IconCarb, IconProtein, IconFat } from '@assets/svg/CustomeSvg';
 
 const HomeScreen = () => {
   const isDarkMode = useStore((state) => state.isDarkMode);
@@ -28,22 +28,33 @@ const HomeScreen = () => {
   // 2. State lưu dữ liệu cả tuần từ API
   const [weeklyData, setWeeklyData] = useState<any[]>([]);
 
-  useEffect(() => {
-    const fetchWeekData = async () => {
-      try {
-        // Luôn fetch dữ liệu dựa trên ngày hiện tại để lấy week context
-        const today = format(new Date(), 'yyyy-MM-dd');
-        const res = await getCalorieDay(today);
-        
-        if (res && Array.isArray(res.week)) {
-          setWeeklyData(res.week);
-        }
-      } catch (err) {
-        console.log('Error fetching calories:', err);
+  const fetchWeekData = useCallback(async () => {
+    try {
+      const today = format(new Date(), 'yyyy-MM-dd');
+      const res = await getCalorieDay(today);
+      if (res && Array.isArray(res.week)) {
+        setWeeklyData(res.week);
       }
-    };
-    fetchWeekData();
+    } catch (err) {
+      console.log('Error fetching calories:', err);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchWeekData();
+  }, [fetchWeekData]);
+
+  // Lắng nghe khi cần refresh (vd: sau khi lưu món từ scanner)
+  useEffect(() => {
+    const onReload = () => {
+      // Reset về ngày hôm nay và refresh data
+      const today = format(new Date(), 'yyyy-MM-dd');
+      setSelectedDate(today);
+      fetchWeekData();
+    };
+    eventEmitter.on('reload_home_page', onReload);
+    return () => eventEmitter.off('reload_home_page', onReload);
+  }, [fetchWeekData]);
 
   // 3. [MỚI] Tự động tính toán Totals dựa trên selectedDate
   // Khi user chọn ngày khác, biến này tự update -> DashboardCard tự update -> AvocadoIcon tự đổi màu/hình
@@ -56,6 +67,8 @@ const HomeScreen = () => {
   // Lấy target và current
   const targetCalories = onboardingData?.target_calories || 2000;
   const currentCalories = dayTotals?.calories || 0;
+
+  console.log("weeklyData", weeklyData);
 
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
@@ -88,6 +101,7 @@ const HomeScreen = () => {
           <MacroCard
             styles={styles} COLORS={COLORS}
             title={translations.home?.macros?.[MacroType.CARBS] || 'Tinh bột'}
+            icon={<IconCarb size={16} color={COLORS.subText} />}
             current={Math.round(dayTotals.carbs || 0)}
             total={onboardingData?.target_carbs || 256}
             color={COLORS.subText} progressBarBg={COLORS.progressBarBg}
@@ -95,6 +109,7 @@ const HomeScreen = () => {
           <MacroCard
             styles={styles} COLORS={COLORS}
             title={translations.home?.macros?.[MacroType.PROTEIN] || 'Đạm'}
+            icon={<IconProtein size={16} color={COLORS.subText} />}
             current={Math.round(dayTotals.protein || 0)}
             total={onboardingData?.target_protein || 102}
             color={COLORS.subText} progressBarBg={COLORS.progressBarBg}
@@ -102,6 +117,7 @@ const HomeScreen = () => {
           <MacroCard
             styles={styles} COLORS={COLORS}
             title={translations.home?.macros?.[MacroType.FAT] || 'Béo'}
+            icon={<IconFat size={16} color={COLORS.subText} />}
             current={Math.round(dayTotals.fat || 0)}
             total={onboardingData?.target_fat || 68}
             color={COLORS.subText} progressBarBg={COLORS.progressBarBg}
@@ -109,7 +125,7 @@ const HomeScreen = () => {
         </View>
 
         <BannerCard styles={styles} COLORS={COLORS} />
-        <EmptyState styles={styles} COLORS={COLORS} />
+        <RecentActivity data={weeklyData} selectedDate={selectedDate} />
 
       </ScrollView>
     </SafeAreaView>

@@ -30,6 +30,22 @@ export async function uploadMedia(file: MediaAsset, onUploadProgress?: any) {
   });
 }
 
+export async function analysisFoodImage(file: MediaAsset, onUploadProgress?: any) {
+  const newForm = new FormData();
+  newForm.append("image", file);
+  return request({
+    method: METHOD.POST,
+    url: `${BASEURL}calorie/analyze`,
+    data: newForm,
+    customHeader: { "Content-Type": "multipart/form-data" },
+    onUploadProgress: onUploadProgress ? onUploadProgress : () => {},
+    timeOut: 10000,
+  }).then((response) => {
+    console.log("res", response);
+    return response;
+  });
+}
+
 export async function uploadFile(file: MediaAsset) {
   const newForm = new FormData();
   newForm.append("file[]", file);

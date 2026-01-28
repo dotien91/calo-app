@@ -1,4 +1,4 @@
-import { analysisFoodImage, uploadMedia } from "@services/api/post.api";
+import { analysisFoodImage } from "@services/api/post.api";
 import * as React from "react";
 import { Platform } from "react-native";
 import { selectMedia } from "@helpers/file.helper";
@@ -9,8 +9,34 @@ const isIos = Platform.OS === "ios";
 
 export type UploadStatus = 'idle' | 'uploading' | 'success' | 'error';
 
-export function useUploadFile(selectionLimit = 1) {
+// 1. Định nghĩa Type cho dữ liệu trả về từ AI
+export interface Ingredient {
+  name: string;
+  weight: number;
+  unit: string;
+  calories: number;
+  carbs: number;
+  protein: number;
+  fat: number;
+}
+
+export interface FoodAnalysisResult {
+  food_name: string;
+  health_score: number;
+  health_reason: string;
+  total_weight: number;
+  total_calories: number;
+  total_carbs: number;
+  total_protein: number;
+  total_fat: number;
+  ingredients: Ingredient[];
+  image_url: string;
+}
+
+export function useAnalysisImageFood(selectionLimit = 1) {
   const [image, setImage] = React.useState<any | null>(null);
+  // Thêm state để lưu kết quả phân tích
+  const [analysisResult, setAnalysisResult] = React.useState<FoodAnalysisResult | null>(null);
   const [status, setStatus] = React.useState<UploadStatus>('idle');
 
   const getFileName = (i: any) => {
@@ -42,7 +68,7 @@ export function useUploadFile(selectionLimit = 1) {
           type: imageObj.type || "",
         };
 
-        // Ảnh local (Preview tạm)
+        // Ảnh local (Preview tạm thời trong lúc upload)
         const localImage = {
           uri: getLinkUri(fileData),
           type: fileData.type,
@@ -51,64 +77,68 @@ export function useUploadFile(selectionLimit = 1) {
         };
         
         setImage(localImage);
+        setAnalysisResult(null); // Reset kết quả cũ
         setStatus('uploading');
 
         try {
+            // Gọi API phân tích
             const res = await analysisFoodImage({
                 name: localImage.name,
                 uri: localImage.uri,
                 type: localImage.type,
             });
 
-            console.log("Server Response:", res); // Debug log
+            console.log("Server Response:", res); 
 
-            // --- SỬA LOGIC MAP RESPONSE TẠI ĐÂY ---
-            // Kiểm tra nếu có _id là thành công
-            if (!res.isError) {
-              const data = res.data
+            // --- XỬ LÝ DATA TRẢ VỀ TỪ AI ---
+            if (!res.isError && res.data) {
+              const data = res.data as FoodAnalysisResult;
+              
+              // 1. Lưu toàn bộ dữ liệu phân tích
+              setAnalysisResult(data);
+
+              // 2. Cập nhật lại ảnh từ URL server trả về (để đảm bảo ảnh chuẩn)
               const remoteImage = {
-                // Ưu tiên lấy link gốc (original) để AI đọc rõ nhất
-                uri: data.media_url || data.urls?.original || data.media_thumbnail, 
-                type: data.media_mime_type, // "image/jpeg"
-                _id: data._id,              // "6971..."
-                isLocal: false             // Đánh dấu đã lên server
+                uri: data.image_url, // Lấy từ field image_url trong JSON
+                name: data.food_name,
+                isLocal: false
               };
               
-              console.log("Mapped Image:", remoteImage); // Debug log kết quả map
+              console.log("Analysis Success:", data.food_name);
               
               setImage(remoteImage);
               setStatus('success');
             } else {
-              // Trường hợp server trả về lỗi hoặc không có _id
-              console.log("Upload failed response:", res);
+              console.log("Analysis failed response:", res);
               setStatus('error');
               showToast({
                 type: "error",
-                message: translations.post.uploadImageFaild,
+                message: translations.post.uploadImageFaild || "Không thể phân tích ảnh",
               });
             }
             // --------------------------------------
 
         } catch (error) {
-            console.error("Upload Error:", error);
+            console.error("Analysis Error:", error);
             setStatus('error');
-            showToast({ type: "error", message: "Error uploading image" });
+            showToast({ type: "error", message: "Error analyzing image" });
         }
       },
       croping: false,
       _finally: () => {
-        // Required by selectMedia
       }
     });
   };
 
   const clearImage = () => {
     setImage(null);
+    setAnalysisResult(null);
     setStatus('idle');
   };
 
   return {
-    image,
+    image,      // Object ảnh (uri, name...)
+    analysisResult, // Object chứa data dinh dưỡng (calories, ingredients...)
     setImage,
     status,
     onSelectPicture,

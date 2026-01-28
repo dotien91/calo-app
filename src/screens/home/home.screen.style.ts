@@ -165,7 +165,6 @@ export const createStyles = (isDarkMode: boolean) => {
       color: COLORS.text,
       fontSize: 15,
       fontWeight: 'bold',
-      marginBottom: 10,
     },
     progressBarBg: {
       height: 5,

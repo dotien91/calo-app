@@ -3,6 +3,7 @@ import { View, Text, Animated, Easing } from 'react-native';
 
 type MacroCardProps = {
   title: string;
+  icon?: React.ReactNode;
   current?: number;
   total?: number;
   color?: string;
@@ -13,6 +14,7 @@ type MacroCardProps = {
 
 const MacroCard = ({
   title,
+  icon,
   current = 0,
   total = 100,
   color,
@@ -62,13 +64,16 @@ const MacroCard = ({
   return (
     <View style={[styles.macroCard, { backgroundColor: COLORS.card }]}>
       <Text style={[styles.macroTitle, { color: color || COLORS.subText }]}>{title}</Text>
-      
-      <Text style={[
-        styles.macroValue, 
-        { color: COLORS.text }
-      ]}>
-        {current}/{total}
-      </Text>
+
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 6 }}>
+        {icon ? <View style={{ marginRight: 6 }}>{icon}</View> : null}
+        <Text style={[
+          styles.macroValue,
+          { color: COLORS.text }
+        ]}>
+          {current}/{total}
+        </Text>
+      </View>
 
       {/* Thanh Progress Background */}
       <View style={[
