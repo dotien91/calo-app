@@ -40,6 +40,7 @@ import {
   Aperture,
   FireSimple,
   Moon, // <--- Icon Mặt trăng cho Dark Mode
+  SignIn,
 } from 'phosphor-react-native';
 
 // --- Import Styles ---
@@ -302,7 +303,8 @@ const SettingProfileScreen = () => {
 
         {/* Section: Tài khoản */}
         <SectionGroup title={translations.profile.account} styles={styles}>
-           <ListItem theme={theme} styles={styles} Icon={Fingerprint} title={translations.profile.id} value="cdd420...6bf0" hasArrow={false} isLast />
+          {/* <ListItem theme={theme} styles={styles} Icon={SignIn} title={translations.profile?.login ?? 'Đăng nhập'} onPress={() => navigation.navigate(SCREENS.LOGIN_PAGE)} /> */}
+          <ListItem theme={theme} styles={styles} Icon={Fingerprint} title={translations.profile.id} value="cdd420...6bf0" hasArrow={false} isLast />
         </SectionGroup>
 
         {/* Section: Theo dõi */}

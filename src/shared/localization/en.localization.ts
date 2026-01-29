@@ -38,8 +38,8 @@ export default {
   fullname: "Fullname",
   haveAnAccount: "Have an account? ",
   loginNow: "Login now!",
-  welcomeHeader: "Welcome to CalSnap",
-  welcomeDescription: "Tracking calories has never been easier! With CalSnap you will...",
+  welcomeHeader: "Welcome to CaloSnap",
+  welcomeDescription: "Tracking calories has never been easier! With CaloSnap you will...",
   startNow: "Start Now",
   sendingError: "An error occurred!",
   createPassSuccess: "Create new password success!",
@@ -236,8 +236,38 @@ export default {
     },
   },
 
+  // --- Calorie Scanner / Result ---
+  scanner: {
+    title: "CaloSnap",
+    analysisSuccess: "Analysis successful!",
+    saveSuccess: "Meal saved!",
+    saveError: "Failed to save data.",
+    deleteIngredientTitle: "Remove ingredient",
+    deleteIngredientMessage: "Are you sure you want to remove it?",
+    cancel: "Cancel",
+    delete: "Delete",
+    cameraPermissionTitle: "Camera permission required",
+    cameraPermissionMessage: "Please grant camera permission...",
+    openSettings: "Settings",
+    health: "Health",
+    nutritionTitle: "Calories & Nutrition",
+    quantity: "Quantity",
+    calories: "Calories",
+    carbs: "Carbs",
+    protein: "Protein",
+    fat: "Fat",
+    ingredients: "Ingredients",
+    addIngredient: "Add new ingredient",
+    tweakHint: 'Want to refine your result? Tap "Edit result" and tell us!',
+    editResult: "Edit result",
+    save: "Save",
+    mealDetail: "Meal details",
+    result: "Result",
+  },
+
   // --- Login / Auth ---
   login: {
+    requireLogin: "Please log in to continue",
     continueFacebook: "Continue with Facebook",
     continueGoogle: "Continue with Google",
     continueApple: "Continue with Apple",
@@ -291,7 +321,7 @@ export default {
     deleteacount: "Delete Account",
   },
 
-  // --- Profile Screen specific (CalSnap style) ---
+  // --- Profile Screen specific (CaloSnap style) ---
   profile: {
     title: "Profile",
     editProfile: "Edit Profile",
@@ -305,7 +335,7 @@ export default {
     goals: "Goals",
     customization: "Customization",
     other: "Other",
-    followUs: "Follow CalSnap",
+    followUs: "Follow CaloSnap",
     
     // Goal Items
     weight: "Weight",
@@ -324,7 +354,7 @@ export default {
     metricSystem: "Metric system",
     
     // Other Items
-    rateApp: "Rate CalSnap",
+    rateApp: "Rate CaloSnap",
     freeQuota: "Free quota",
     support: "Support",
     privacyPolicy: "Privacy Policy",
@@ -333,6 +363,7 @@ export default {
     deleteAccount: "Delete account",
     
     // Social & Account
+    login: "Login",
     id: "ID",
     tiktok: "TikTok",
     facebook: "Facebook",
@@ -343,14 +374,14 @@ export default {
     deleteAccountDesc: "Delete all data and reset",
     
     // Pro Banner
-    proBannerTitle: "CalSnap",
+    proBannerTitle: "CaloSnap",
     proBadge: "PRO",
     proDescription: "Experience uninterrupted smart AI - Quickly achieve your goals.",
     proButton: "Try free",
     
     // Footer
-    footerVersion: "CalSnap 1.6.18+63",
-    footerCopyright: "© 2025 CalSnap. All rights reserved.",
+    footerVersion: "CaloSnap 1.6.18+63",
+    footerCopyright: "© 2025 CaloSnap. All rights reserved.",
     
     // Goal Details
     weightGoalTitle: "Weight Goal",

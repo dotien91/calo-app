@@ -11,8 +11,6 @@ import useStore from "@services/zustand/store";
 import { setDeviceInfo } from "@helpers/device.info.helper";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import useFirebase from "@helpers/useFirebase";
-import { useInAppPurchase } from "@helpers/hooks/useInAppPurchase";
-import { priceIds } from "constants/iap.constant";
 import { _getJson } from "@services/local-storage";
 import { ENVIRONMENT, setUrlEnv } from "constants/config.constant";
 import { getConfigGift } from "@services/api/user.api";
@@ -27,7 +25,7 @@ const InitView = () => {
   const setListGift = useStore((state) => state.setListGift);
   const setOnboardingData = useStore((state) => state.setOnboardingData);
   const setIsLoadingOnboarding = useStore((state) => state.setIsLoadingOnboarding);
-  const { getUserData } = useUserHook();
+  const { loginDeviceOnStart } = useUserHook();
   const getListGift = () => {
     getConfigGift().then((res) => {
       if (!res.isError) {
@@ -66,19 +64,18 @@ const InitView = () => {
   // const { initIAP } = useInAppPurchase();
 
   React.useEffect(() => {
-    // StatusBar.setBarStyle(!isDarkMode ? "dark-content" : "light-content");
-    StatusBar.setBarStyle("dark-content");
+    StatusBar.setBarStyle(!isDarkMode ? "dark-content" : "light-content");
     if (isAndroid) {
       StatusBar.setBackgroundColor("rgba(0,0,0,0)");
       StatusBar.setTranslucent(true);
     }
   }, [isDarkMode]);
 
-  const initData = () => {
+  const initData = async () => {
+    await setDeviceInfo();
     setEnv();
-    getUserData();
-    getOnboardingData(); // Load onboarding data when app starts
-    setDeviceInfo();
+    await loginDeviceOnStart();
+    await getOnboardingData(); // Load onboarding data when app starts
     // initIAP(["com.course.tier2"]);
     // initIAP(priceIds.map((i) => i.id));
   };

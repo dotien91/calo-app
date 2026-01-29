@@ -11,7 +11,6 @@ import { SCREENS } from "constants";
 import { DarkTheme, LightTheme } from "@theme/themes";
 // ? Screens
 import useStore from "@services/zustand/store";
-import SettingProfileScreen from "@screens/profile.screen/profile.screen";
 import {
   OnboardingStackData,
   StackIntroData,
@@ -103,15 +102,6 @@ const Navigation = () => {
 
           {/* 2 Tab Bên Phải */}
           <Tab.Screen name={SCREENS.HEALTH_TAB} component={HealthStackScreen} />
-          <Tab.Screen
-            name={SCREENS.SETTINGPROFILESCREEN_TAB}
-            component={SettingProfileScreen}
-            listeners={{
-              tabPress: () => {
-                eventEmitter.emit("reload_list_task");
-              },
-            }}
-          />
         </Tab.Navigator>
       </>
     );

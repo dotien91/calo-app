@@ -8,9 +8,11 @@ import {
 } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 import { format } from 'date-fns';
-import { ForkKnife } from 'phosphor-react-native'; // Giữ icon này cho EmptyState
+import { ForkKnife, GrainsIcon } from 'phosphor-react-native'; // Giữ icon này cho EmptyState
 import { translations } from '@localization';
 import { IconCarb, IconProtein, IconFat } from '../../../assets/svg/CustomeSvg';
+import { SCREENS } from 'constants';
+import { navigate } from '@helpers/navigation.helper';
 
 
 // --- TYPES ---
@@ -18,11 +20,23 @@ type RecentActivityRecord = {
   _id: string;
   food_name?: string;
   image_url?: string;
+  health_score?: number;
+  total_weight?: number;
   total_calories?: number;
   total_carbs?: number;
   total_protein?: number;
   total_fat?: number;
   createdAt?: string;
+  ingredients?: Array<{
+    _id?: string;
+    name: string;
+    weight: number;
+    unit?: string;
+    calories: number;
+    carbs: number;
+    protein: number;
+    fat: number;
+  }>;
 };
 
 type DayEntry = {
@@ -38,7 +52,13 @@ type DayEntry = {
 };
 
 // --- 1. Sub-Component: Item Món Ăn ---
-const FoodItem = ({ item }: { item: RecentActivityRecord }) => {
+const FoodItem = ({
+  item,
+  onPress,
+}: {
+  item: RecentActivityRecord;
+  onPress?: () => void;
+}) => {
   const { colors } = useTheme();
 
   const formatTime = (isoString?: string) => {
@@ -60,7 +80,11 @@ const FoodItem = ({ item }: { item: RecentActivityRecord }) => {
   };
 
   return (
-    <TouchableOpacity activeOpacity={0.8} style={[styles.cardContainer, { backgroundColor: colors.card }]}>
+    <TouchableOpacity
+      activeOpacity={0.8}
+      onPress={onPress}
+      style={[styles.cardContainer, { backgroundColor: colors.card }]}
+    >
       {/* Ảnh món ăn */}
       <Image 
         source={{ uri: item.image_url }} 
@@ -85,7 +109,7 @@ const FoodItem = ({ item }: { item: RecentActivityRecord }) => {
           
           {/* Carb (Icon Tự Vẽ) */}
           <View style={styles.macroItem}>
-            <IconCarb size={20} color={MACRO_COLORS.carb} />
+            <GrainsIcon size={20} color={MACRO_COLORS.carb} />
             <Text style={[styles.macroText, { color: colors.textOpacity8 }]}>
               {item.total_carbs}
             </Text>
@@ -161,6 +185,38 @@ const RecentActivity = ({
   const records = dayEntry?.records || [];
   const hasData = records.length > 0;
 
+  const openResult = (record: RecentActivityRecord) => {
+    const mappedData = {
+      name: record.food_name,
+      time: record.createdAt
+        ? new Date(record.createdAt).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
+        : '--:--',
+      healthScore: record.health_score || 0,
+      image: record.image_url,
+      total: {
+        weight: record.total_weight || 0,
+        calories: record.total_calories || 0,
+        carbs: record.total_carbs || 0,
+        protein: record.total_protein || 0,
+        fat: record.total_fat || 0,
+      },
+      ingredients: (record.ingredients || []).map((ing, index) => ({
+        id: index,
+        name: ing.name,
+        weight: ing.weight,
+        unit: ing.unit,
+        cal: ing.calories,
+        c: ing.carbs,
+        p: ing.protein,
+        f: ing.fat,
+      })),
+    };
+
+    navigate(SCREENS.CALORIE_RESULT, {
+      data: mappedData,
+    });
+  };
+
   return (
     <View style={styles.sectionContainer}>
       <Text style={[styles.sectionTitle, { color: colors.text }]}>
@@ -170,7 +226,7 @@ const RecentActivity = ({
       {hasData ? (
         <View>
           {records.map((item: RecentActivityRecord) => (
-            <FoodItem key={item._id} item={item} />
+            <FoodItem key={item._id} item={item} onPress={() => openResult(item)} />
           ))}
         </View>
       ) : (

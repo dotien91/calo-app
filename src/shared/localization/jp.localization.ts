@@ -38,8 +38,8 @@ export default {
   fullname: "氏名",
   haveAnAccount: "すでにアカウントをお持ちですか？ ",
   loginNow: "ログイン",
-  welcomeHeader: "CalSnapへようこそ",
-  welcomeDescription: "カロリー管理がこれまでになく簡単になりました！CalSnapを使えば...",
+  welcomeHeader: "CaloSnapへようこそ",
+  welcomeDescription: "カロリー管理がこれまでになく簡単になりました！CaloSnapを使えば...",
   startNow: "今すぐ始める",
   sendingError: "エラーが発生しました！",
   createPassSuccess: "新しいパスワードを作成しました！",
@@ -236,8 +236,38 @@ export default {
     },
   },
 
+  // --- Calorie Scanner / Result ---
+  scanner: {
+    title: "CaloSnap",
+    analysisSuccess: "解析に成功しました！",
+    saveSuccess: "食事を保存しました！",
+    saveError: "データの保存に失敗しました。",
+    deleteIngredientTitle: "材料を削除",
+    deleteIngredientMessage: "削除してもよろしいですか？",
+    cancel: "キャンセル",
+    delete: "削除",
+    cameraPermissionTitle: "カメラ権限が必要です",
+    cameraPermissionMessage: "カメラの権限を許可してください…",
+    openSettings: "設定",
+    health: "健康",
+    nutritionTitle: "カロリー＆栄養",
+    quantity: "量",
+    calories: "カロリー",
+    carbs: "炭水化物",
+    protein: "タンパク質",
+    fat: "脂質",
+    ingredients: "材料",
+    addIngredient: "材料を追加",
+    tweakHint: '結果を調整しますか？「結果を編集」をタップして教えてください！',
+    editResult: "結果を編集",
+    save: "保存",
+    mealDetail: "食事の詳細",
+    result: "結果",
+  },
+
   // --- Login / Auth ---
   login: {
+    requireLogin: "続行するにはログインしてください",
     continueFacebook: "Facebookで続ける",
     continueGoogle: "Googleで続ける",
     continueApple: "Appleで続ける",
@@ -291,7 +321,7 @@ export default {
     deleteacount: "アカウント削除",
   },
 
-  // --- Profile Screen specific (CalSnap style) ---
+  // --- Profile Screen specific (CaloSnap style) ---
   profile: {
     title: "プロフィール",
     editProfile: "プロフィール編集",
@@ -305,7 +335,7 @@ export default {
     goals: "目標",
     customization: "カスタマイズ",
     other: "その他",
-    followUs: "CalSnapをフォロー",
+    followUs: "CaloSnapをフォロー",
     
     // Goal Items
     weight: "体重",
@@ -324,7 +354,7 @@ export default {
     metricSystem: "メートル法",
     
     // Other Items
-    rateApp: "CalSnapを評価",
+    rateApp: "CaloSnapを評価",
     freeQuota: "無料枠",
     support: "サポート",
     privacyPolicy: "プライバシーポリシー",
@@ -333,6 +363,7 @@ export default {
     deleteAccount: "アカウント削除",
     
     // Social & Account
+    login: "ログイン",
     id: "ID",
     tiktok: "TikTok",
     facebook: "Facebook",
@@ -343,14 +374,14 @@ export default {
     deleteAccountDesc: "すべてのデータを削除してリセットします",
     
     // Pro Banner
-    proBannerTitle: "CalSnap",
+    proBannerTitle: "CaloSnap",
     proBadge: "PRO",
     proDescription: "スマートAIを中断なく体験 - 目標を素早く達成しましょう。",
     proButton: "無料で試す",
     
     // Footer
-    footerVersion: "CalSnap 1.6.18+63",
-    footerCopyright: "© 2025 CalSnap. All rights reserved.",
+    footerVersion: "CaloSnap 1.6.18+63",
+    footerCopyright: "© 2025 CaloSnap. All rights reserved.",
     
     // Goal Details
     weightGoalTitle: "目標体重",

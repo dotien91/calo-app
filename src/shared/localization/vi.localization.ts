@@ -38,8 +38,8 @@ export default {
   fullname: "Họ và tên",
   haveAnAccount: "Đã có tài khoản? ",
   loginNow: "Đăng nhập ngay!",
-  welcomeHeader: "Chào mừng đến với CalSnap",
-  welcomeDescription: "Theo dõi calo chưa bao giờ dễ dàng đến thế! Với CalSnap bạn sẽ...",
+  welcomeHeader: "Chào mừng đến với CaloSnap",
+  welcomeDescription: "Theo dõi calo chưa bao giờ dễ dàng đến thế! Với CaloSnap bạn sẽ...",
   startNow: "Bắt đầu ngay",
   sendingError: "Đã xảy ra lỗi!",
   createPassSuccess: "Tạo mật khẩu mới thành công!",
@@ -236,8 +236,38 @@ export default {
     },
   },
 
+  // --- Calorie Scanner / Result ---
+  scanner: {
+    title: "CaloSnap",
+    analysisSuccess: "Phân tích thành công!",
+    saveSuccess: "Đã lưu bữa ăn!",
+    saveError: "Lỗi khi lưu dữ liệu.",
+    deleteIngredientTitle: "Xóa thành phần",
+    deleteIngredientMessage: "Bạn có chắc muốn xóa?",
+    cancel: "Hủy",
+    delete: "Xóa",
+    cameraPermissionTitle: "Cần quyền Camera",
+    cameraPermissionMessage: "Vui lòng cấp quyền...",
+    openSettings: "Cài đặt",
+    health: "Sức Khỏe",
+    nutritionTitle: "Calo & Dinh dưỡng",
+    quantity: "Số lượng",
+    calories: "Calo",
+    carbs: "Tinh bột",
+    protein: "Chất đạm",
+    fat: "Chất béo",
+    ingredients: "Thành phần",
+    addIngredient: "Thêm thành phần mới",
+    tweakHint: 'Muốn tinh chỉnh kết quả của bạn? Nhấn "Sửa kết quả" và cho chúng tôi biết!',
+    editResult: "Sửa kết quả",
+    save: "Lưu",
+    mealDetail: "Chi tiết bữa ăn",
+    result: "Kết quả",
+  },
+
   // --- Login / Auth ---
   login: {
+    requireLogin: "Vui lòng đăng nhập để tiếp tục",
     continueFacebook: "Tiếp tục với Facebook",
     continueGoogle: "Tiếp tục với Google",
     continueApple: "Tiếp tục với Apple",
@@ -291,7 +321,7 @@ export default {
     deleteacount: "Xóa tài khoản",
   },
 
-  // --- Profile Screen specific (CalSnap style) ---
+  // --- Profile Screen specific (CaloSnap style) ---
   profile: {
     title: "Hồ sơ",
     editProfile: "Chỉnh sửa hồ sơ",
@@ -305,7 +335,7 @@ export default {
     goals: "Mục tiêu",
     customization: "Tùy chỉnh",
     other: "Khác",
-    followUs: "Theo dõi CalSnap",
+    followUs: "Theo dõi CaloSnap",
     
     // Goal Items
     weight: "Cân nặng",
@@ -324,7 +354,7 @@ export default {
     metricSystem: "Hệ mét",
     
     // Other Items
-    rateApp: "Đánh giá CalSnap",
+    rateApp: "Đánh giá CaloSnap",
     freeQuota: "Hạn mức miễn phí",
     support: "Hỗ trợ",
     privacyPolicy: "Chính sách bảo mật",
@@ -333,6 +363,7 @@ export default {
     deleteAccount: "Xóa tài khoản",
     
     // Social & Account
+    login: "Đăng nhập",
     id: "ID",
     tiktok: "TikTok",
     facebook: "Facebook",
@@ -343,14 +374,14 @@ export default {
     deleteAccountDesc: "Xóa tất cả dữ liệu và khởi tạo lại",
     
     // Pro Banner
-    proBannerTitle: "CalSnap",
+    proBannerTitle: "CaloSnap",
     proBadge: "PRO",
     proDescription: "Trải nghiệm AI thông minh không lo bị gián đoạn - Nhanh chóng đạt được mục tiêu.",
     proButton: "Dùng thử miễn phí",
     
     // Footer
-    footerVersion: "CalSnap 1.6.18+63",
-    footerCopyright: "© 2025 CalSnap. All rights reserved.",
+    footerVersion: "CaloSnap 1.6.18+63",
+    footerCopyright: "© 2025 CaloSnap. All rights reserved.",
     
     // Goal Details
     weightGoalTitle: "Mục tiêu cân nặng",

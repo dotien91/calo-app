@@ -8,6 +8,7 @@ import {
   getCurrentUser,
   getListBlock,
   getUserSuscription,
+  loginWithDevice,
   postInvitationCode,
   requestListSubscriptionSell,
 } from "@services/api/user.api";
@@ -19,6 +20,7 @@ import CommonStyle from "@theme/styles";
 import { palette } from "@theme/themes";
 import { TypedUser } from "models";
 import eventEmitter from "@services/event-emitter";
+import { getDeviceId } from "@helpers/device.info.helper";
 
 export const useUserHook = () => {
   const setUserData = useStore((state) => state.setUserData);
@@ -97,22 +99,40 @@ export const useUserHook = () => {
     });
   };
 
+  const loginDeviceOnStart = async () => {
+    const device_uuid = getDeviceId();
+    if (!device_uuid) return;
+
+    const res = await loginWithDevice({ device_uuid });
+    if (!res?.isError) {
+      const token =
+        res?.headers?.["x-authorization"] ||
+        res?.headers?.["X-Authorization"];
+      if (token) {
+        _setJson(USER_TOKEN, token);
+      }
+    }
+
+    // Always try to refresh current user after device login
+    getUserData(true);
+  };
+
   const initData = (data: TypedUser, initUserData: boolean) => {
     initUserData && setUserData(data);
     setUserInfo(data);
-    setLinkAvatar(data.user_avatar_thumbnail);
+    setLinkAvatar((data as any).user_avatar_thumbnail || "");
 
     setUserMedia({
       user_avatar: data.user_avatar || "",
       user_cover: data.user_cover || "",
     });
-    initListFollow(data.follow_users);
+    initListFollow(((data as any).follow_users as string[]) || []);
     initListBlock();
     initUserSubscription(data._id);
-    initSubscriptionSell(data._id);
+    initSubscriptionSell();
   };
 
-  const initUserSubscription = (id) => {
+  const initUserSubscription = (id: any) => {
     getUserSuscription(id).then((res) => {
       console.log("ressss", id, res.data);
 
@@ -186,7 +206,7 @@ export const useUserHook = () => {
             marginBottom: 12,
           }}
         >
-          {translations.login.requireLogin}
+          {(translations as any).login.requireLogin}
         </Text>
         <TouchableOpacity
           style={CommonStyle.btnActive}
@@ -203,6 +223,7 @@ export const useUserHook = () => {
   return {
     handleLogin,
     getUserData,
+    loginDeviceOnStart,
     isLoggedIn,
     logout,
     renderViewRequestLogin,

@@ -2,82 +2,49 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-// 1. IMPORT COMPONENTS UI
+// 1. IMPORT COMPONENTS
 import ScanningView from './components/ScanningView';
-import ScanResultView from './components/ScanResultView';
+import ScanResultView from './components/ScanResultView'; // Giả sử bạn đã có file này
 
-// 2. IMPORT HOOKS & HELPERS
+// 2. IMPORT HOOKS & SERVICES
 import { useAnalysisImageFood } from '@helpers/hooks/useAnalysisImageFood';
 import { showToast } from '@helpers/super.modal.helper';
 import { goBack } from '@helpers/navigation.helper';
 import eventEmitter from '@services/event-emitter';
 import { createManualCalorie } from '@services/api/calorie.api';
+import Header from '@shared-components/header/Header';
+import { translations } from '@localization';
 
-// --- ĐỊNH NGHĨA TYPES CHO UI ---
-// (Dùng riêng cho việc hiển thị, khác với Type của API)
-
-export type IngredientUI = {
-  id: number | string; // ID để xử lý xóa
-  name: string;
-  weight: number;
-  unit?: string;
-  cal: number;
-  c: number; // Carb
-  p: number; // Protein
-  f: number; // Fat
-};
-
-export type FoodResultUI = {
-  name: string;
-  time: string;
-  healthScore: number;
-  image: string;
-  total: {
-    weight: number;
-    calories: number;
-    carbs: number;
-    protein: number;
-    fat: number;
-  };
-  ingredients: IngredientUI[];
-};
-
+// --- TYPES MAPPING (Nếu file hook chưa export đủ type UI) ---
+// Nếu bạn đã định nghĩa type trong hook thì import vào, nếu chưa thì định nghĩa tại đây để map.
 type ViewMode = 'SCANNING' | 'RESULT';
 
 const CalorieScannerScreen = () => {
-  // --- STATE QUẢN LÝ MÀN HÌNH ---
+  // State quản lý màn hình
   const [viewMode, setViewMode] = useState<ViewMode>('SCANNING');
-  
-  // State chứa dữ liệu món ăn đang hiển thị (Local State)
-  // Ta cần state này để user có thể Xóa thành phần mà không làm hỏng dữ liệu gốc từ API
-  const [foodResult, setFoodResult] = useState<FoodResultUI | null>(null);
+  const [foodResult, setFoodResult] = useState<any | null>(null);
 
-  // --- SỬ DỤNG HOOK LOGIC ---
+  // --- SỬ DỤNG HOOK (Logic chính nằm ở đây) ---
   const {
-    image,
-    status,         // 'idle' | 'uploading' | 'success' | 'error'
-    analysisResult, // Dữ liệu gốc từ API trả về
-    onSelectPicture,
-    clearImage,
+    image,             // Ảnh preview
+    status,            // Trạng thái upload
+    analysisResult,    // Kết quả API
+    onSelectPicture,   // Hàm mở thư viện
+    onTakePhoto,       // Hàm nhận ảnh từ Camera
+    clearImage,        // Hàm reset
   } = useAnalysisImageFood(1);
 
-  console.log("analysisResult", analysisResult);
-
-  // =================================================================
-  // 1. EFFECT: LẮNG NGHE KẾT QUẢ TỪ API -> CHUYỂN MÀN HÌNH
-  // =================================================================
+  // --- EFFECT: LẮNG NGHE KẾT QUẢ TỪ HOOK ---
   useEffect(() => {
-    // Chỉ chạy khi status thành công VÀ đang ở màn hình Scan
+    // Khi API thành công VÀ đang ở màn hình Scan -> Chuyển sang màn Result
     if (status === 'success' && analysisResult && viewMode === 'SCANNING') {
       
-      // MAP DATA: Chuyển từ API Response (analysisResult) -> UI State (foodResult)
-      const mappedData: FoodResultUI = {
+      // Map Data từ API Response -> UI Format
+      const mappedData = {
         name: analysisResult.food_name,
-        // Lấy giờ hiện tại
         time: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }),
         healthScore: analysisResult.health_score || 0,
-        
-        // Ưu tiên ảnh URL từ server (đã crop/xử lý), nếu không có thì dùng ảnh local
+        // Ưu tiên ảnh từ server (đã crop), fallback về ảnh local
         image: analysisResult.image_url || image?.uri, 
         
         total: {
@@ -87,10 +54,8 @@ const CalorieScannerScreen = () => {
           protein: analysisResult.total_protein,
           fat: analysisResult.total_fat,
         },
-        
-        // Map ingredients và thêm ID tạm để thao tác xóa
         ingredients: analysisResult.ingredients.map((ing, index) => ({
-          id: index, // Dùng index làm ID tạm
+          id: index, // ID tạm để xóa trên UI
           name: ing.name,
           weight: ing.weight,
           unit: ing.unit,
@@ -103,38 +68,22 @@ const CalorieScannerScreen = () => {
 
       setFoodResult(mappedData);
       setViewMode('RESULT');
-      showToast({ type: 'success', message: 'Phân tích thành công!' });
+      showToast({ type: 'success', message: (translations as any).scanner.analysisSuccess });
     }
+  }, [status, analysisResult]);
 
-    // Xử lý lỗi
-    if (status === 'error') {
-      // Logic clear ảnh hoặc giữ lại tùy UX bạn muốn
-      // clearImage(); 
-    }
-  }, [status, analysisResult]); // Chạy lại khi status hoặc data thay đổi
-
-  console.log("foodResult", foodResult);
-
-  // =================================================================
-  // 2. LOGIC: XÓA THÀNH PHẦN & TÍNH LẠI (RECALCULATE)
-  // =================================================================
+  // --- LOGIC: XÓA THÀNH PHẦN (Ở màn hình kết quả) ---
   const handleRemoveIngredient = (idToRemove: number | string) => {
     if (!foodResult) return;
-
-    Alert.alert(
-      "Xóa thành phần", 
-      "Bạn có chắc muốn xóa thành phần này khỏi món ăn?",
-      [
-        { text: "Hủy", style: "cancel" },
+    Alert.alert((translations as any).scanner.deleteIngredientTitle, (translations as any).scanner.deleteIngredientMessage, [
+        { text: (translations as any).scanner.cancel, style: "cancel" },
         { 
-          text: "Xóa", 
-          style: "destructive",
+          text: (translations as any).scanner.delete, style: "destructive",
           onPress: () => {
-            // A. Lọc bỏ thành phần có id tương ứng
-            const newIngredients = foodResult.ingredients.filter(item => item.id !== idToRemove);
-
-            // B. Tính toán lại tổng dinh dưỡng (Reduce)
-            const newTotal = newIngredients.reduce((acc, curr) => ({
+            const newIngredients = foodResult.ingredients.filter((item: any) => item.id !== idToRemove);
+            
+            // Tính lại tổng dinh dưỡng
+            const newTotal = newIngredients.reduce((acc: any, curr: any) => ({
               weight: acc.weight + curr.weight,
               calories: acc.calories + curr.cal,
               carbs: acc.carbs + curr.c,
@@ -142,14 +91,12 @@ const CalorieScannerScreen = () => {
               fat: acc.fat + curr.f,
             }), { weight: 0, calories: 0, carbs: 0, protein: 0, fat: 0 });
 
-            // C. Cập nhật State UI
             setFoodResult({
               ...foodResult,
               ingredients: newIngredients,
               total: {
                 weight: Math.round(newTotal.weight),
                 calories: Math.round(newTotal.calories),
-                // Làm tròn 1 chữ số thập phân để hiển thị đẹp
                 carbs: Number(newTotal.carbs.toFixed(1)),
                 protein: Number(newTotal.protein.toFixed(1)),
                 fat: Number(newTotal.fat.toFixed(1)),
@@ -157,86 +104,79 @@ const CalorieScannerScreen = () => {
             });
           }
         }
-      ]
-    );
+    ]);
   };
 
-  // =================================================================
-  // 3. CÁC ACTION KHÁC (BACK / SAVE)
-  // =================================================================
-  
-  // Quay lại màn hình chụp (Reset toàn bộ)
+  // --- ACTION: QUAY LẠI CHỤP ---
   const handleBackToScan = () => {
     setViewMode('SCANNING');
-    clearImage();       // Reset hook upload
-    setFoodResult(null); // Clear data cũ
+    clearImage();       // Reset hook
+    setFoodResult(null); // Clear UI data
   };
 
-  // Lưu vào nhật ký (Gọi API Save)
+  // --- ACTION: LƯU NHẬT KÝ ---
   const handleSave = async () => {
     if (!foodResult) return;
-
     try {
-      console.log('💾 Saving Food Log:', foodResult);
-      
-      // Chuẩn bị dữ liệu để gửi lên API
+      // Map UI Data -> API Payload
       const apiData = {
         food_name: foodResult.name,
-        // Lưu luôn image_url để backend có thể hiển thị lại ảnh món ăn
         image_url: foodResult.image,
         total_weight: foodResult.total.weight,
         total_calories: foodResult.total.calories,
         total_carbs: foodResult.total.carbs,
         total_protein: foodResult.total.protein,
         total_fat: foodResult.total.fat,
-        ingredients: foodResult.ingredients.map(ing => ({
+        ingredients: foodResult.ingredients.map((ing: any) => ({
           name: ing.name,
           weight: ing.weight,
-          unit: (ing.unit as "g" | "ml") || "g",
+          unit: ing.unit || "g",
           calories: ing.cal,
-          carbs: ing.c,
-          protein: ing.p,
-          fat: ing.f,
+          carbs: ing.c, protein: ing.p, fat: ing.f,
         })),
       };
 
-      console.log("apiData", apiData);
-
-      // Gọi API lưu nhật ký
       await createManualCalorie(apiData);
-      
-      showToast({ type: 'success', message: 'Đã lưu bữa ăn vào nhật ký!' });
-      
-      // Về home và báo home refresh data
+      showToast({ type: 'success', message: (translations as any).scanner.saveSuccess });
       eventEmitter.emit('reload_home_page');
       goBack();
     } catch (error: any) {
-      console.error('Error saving food log:', error);
-      const errorMessage = error?.response?.data?.message || error?.message || 'Lỗi khi lưu dữ liệu.';
-      showToast({ type: 'error', message: errorMessage });
+      showToast({ type: 'error', message: (translations as any).scanner.saveError });
     }
   };
 
-  // =================================================================
-  // 4. RENDER
-  // =================================================================
+  // --- RENDER ---
   return (
     <SafeAreaView style={styles.container}>
+      <Header
+        text={viewMode === 'SCANNING' ? (translations as any).scanner.title : (translations as any).scanner.result}
+        onPressLeft={viewMode === 'SCANNING' ? goBack : handleBackToScan}
+        customStyle={{ backgroundColor: '#000', marginBottom: 0, shadowOpacity: 0, elevation: 0 }}
+      />
       {viewMode === 'SCANNING' ? (
         <ScanningView 
+          // Truyền state từ Hook
           image={image}
-          // Hook trả về 'uploading' khi đang xử lý -> Map sang UI status
           status={status === 'uploading' ? 'uploading' : 'idle'} 
-          onCapture={onSelectPicture}
-          onClose={clearImage}
+          
+          // Truyền Action từ Hook
+          onCapture={onTakePhoto}        // Hook tự xử lý PhotoFile
+          onSelectLibrary={onSelectPicture} // Hook tự xử lý Library
+          hideHeader
+          onClose={() => {
+            clearImage();
+            setViewMode('SCANNING');
+            setFoodResult(null);
+            goBack();
+          }}
         />
       ) : (
         <ScanResultView 
           data={foodResult} 
           onBack={handleBackToScan}
           onSave={handleSave}
-          // Truyền hàm xóa xuống component con
           onRemoveItem={handleRemoveIngredient} 
+          hideHeaderNav
         />
       )}
     </SafeAreaView>
@@ -246,7 +186,7 @@ const CalorieScannerScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#101214', // Màu nền đen chủ đạo
+    backgroundColor: '#000', // Nền đen cho trải nghiệm Camera tốt nhất
   },
 });
 

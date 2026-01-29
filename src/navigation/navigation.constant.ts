@@ -5,7 +5,6 @@ import WebviewScreen from "@screens/webview/Webview";
 import HomeAffilite from "@screens/affiliate/intro.affiliate.screen";
 import DetailScreen from "@screens/detail/DetailScreen";
 import SettingScreen from "@screens/setting/setting.screen";
-import AboutMe from "@screens/about-me/about.me";
 import SettingUser from "@screens/setting-user/setting.user";
 import ChangeLanguage from "@screens/change-language/change.language";
 import SmartBanking from "@screens/smart-banking/smart.banking";
@@ -34,8 +33,6 @@ import SearchPostScreen from "@screens/search/search.post.screen";
 import ProfileChatScreen from "@screens/chat/profile-chat/chat.profile.screen";
 import CreateGroupChatScreen from "@screens/chat/create-group-chat/create.group.chat.screen";
 import AddUserGroupChatScreen from "@screens/chat/add-user-to-group-chat/add.user.group.chat.screen";
-import ProfileUserScreen from "@screens/user-profile/user.profile.screen";
-import EditProfileScreen from "@screens/user-profile/edit-profile/edit.profile.screen";
 import ChatListScreen from "@screens/chat/list-chat/chat.list.screen";
 import ChatRoomMediaScreen from "@screens/chat/media-club/chat.media.screen";
 
@@ -53,6 +50,7 @@ import GoalDetailScreen from "@screens/on-boarding/goal.screen";
 import ChooseLanguageScreen from "@screens/welcome/choose-language/choose.language.screen";
 import AddMealScreen from "@screens/add-meal";
 import CalorierScannerScreen from "@screens/calorier-scanner/calorier.scanner.screen";
+import CalorieResultScreen from "@screens/calorier-scanner/calorie.result.screen";
 
 export const DiscoveryStackData: any[] = [];
 
@@ -111,10 +109,9 @@ export const CommonStackData = [
   { name: SCREENS.POST_SCREEN, screen: PostScreen },
   { name: SCREENS.ADD_MEAL_SCREEN, screen: AddMealScreen },
   { name: SCREENS.CALORIER_SCANNER, screen: CalorierScannerScreen },
+  { name: SCREENS.CALORIE_RESULT, screen: CalorieResultScreen },
   { name: SCREENS.EDIT_COMMENT, screen: EditCommentScreen },
-  { name: SCREENS.PROFILE_CURRENT_USER, screen: ProfileUserScreen },
   { name: SCREENS.SEARCH_CHAT, screen: SearchRoomChatScreen },
-  { name: SCREENS.EDIT_PROFILE, screen: EditProfileScreen },
   { name: SCREENS.SEARCH, screen: SearchPostScreen },
   { name: SCREENS.CHAT_ROOM, screen: ChatRoomScreen },
   { name: SCREENS.LOGIN_WITH_EMAIL, screen: LoginWithEmailScreen },
@@ -122,7 +119,6 @@ export const CommonStackData = [
   { name: SCREENS.FORGOT_PASSWORD, screen: ForgotPasswordScreen },
   { name: SCREENS.VERIFY_CODE, screen: VerifyCodeScreen },
   { name: SCREENS.NEW_PASSWORD, screen: NewPasswordScreen },
-  { name: SCREENS.ABOUT_ME, screen: AboutMe },
   { name: SCREENS.SETTING_USER, screen: SettingUser },
   { name: SCREENS.CHANGELANGUAGE, screen: ChangeLanguage },
   { name: SCREENS.SMARTBANKING, screen: SmartBanking },

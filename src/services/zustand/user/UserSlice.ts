@@ -23,7 +23,7 @@ export interface IAffiliate {
 
 export interface UserSlice {
   userData: TypedUser | null;
-  setUserData: (user: TypedUser) => void;
+  setUserData: (user: TypedUser | null) => void;
   userToken: string | null;
   setUserToken: (userToken: string) => void;
   resetUserData: () => void;
@@ -37,7 +37,7 @@ export interface UserSlice {
   userMedia: IUserMedia;
   setUserMedia: (v: IUserMedia) => void;
   userInfo: TypedUser | null;
-  setUserInfo: (user: TypedUser) => void;
+  setUserInfo: (user: TypedUser | null) => void;
   showInvite: boolean;
   setShowInvite: (bol: boolean) => void;
   isSendEliteClub: boolean;
@@ -61,9 +61,9 @@ export interface UserSlice {
 
 const createUserSlice: StoreSlice<UserSlice> = (set) => ({
   userData: null,
-  setUserData: (user: TypedUser) => set({ userData: user }),
+  setUserData: (user: TypedUser | null) => set({ userData: user }),
   userInfo: null,
-  setUserInfo: (user: TypedUser) => set({ userInfo: user }),
+  setUserInfo: (user: TypedUser | null) => set({ userInfo: user }),
   userToken: null,
   setUserToken: (value: string) => set({ userToken: value }),
   resetUserData: () => set({ userData: null }),

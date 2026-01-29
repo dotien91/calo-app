@@ -12,17 +12,23 @@ import {
   Heart, 
   Plus, 
   DotsThree, 
-  Grains,      
-  FishSimple,  
-  Drop,        
-  MinusCircle
+  MinusCircle,
 } from 'phosphor-react-native';
 
 // Import Custom Icons
 import { IconCarb, IconProtein, IconFat } from '../../../assets/svg/CustomeSvg';
+import { translations } from '@localization';
 
 // --- SUB-COMPONENT NHỎ (Nội bộ file này) ---
-const IngredientRow = ({ item, onRemoveItem }: { item: any, onRemoveItem: (id: string) => void }) => (
+const IngredientRow = ({
+  item,
+  onRemoveItem,
+  readOnly = false,
+}: {
+  item: any;
+  onRemoveItem: (id: string) => void;
+  readOnly?: boolean;
+}) => (
   <View style={styles.ingredientRow}>
     <View style={{ flex: 1 }}>
       <Text style={styles.ingName}>{item.name}</Text>
@@ -34,44 +40,59 @@ const IngredientRow = ({ item, onRemoveItem }: { item: any, onRemoveItem: (id: s
         
         {/* Macros nhỏ */}
         <View style={styles.miniMacro}>
-          <Grains size={12} color="#F4D03F" weight="fill" />
+          <IconCarb size={12} color="#F4D03F" />
           <Text style={styles.miniMacroText}>{item.c}</Text>
         </View>
         <View style={styles.miniMacro}>
-          <FishSimple size={12} color="#E74C3C" weight="fill" />
+          <IconProtein size={12} color="#E74C3C" />
           <Text style={styles.miniMacroText}>{item.p}</Text>
         </View>
         <View style={styles.miniMacro}>
-          <Drop size={12} color="#2ECC71" weight="fill" />
+          <IconFat size={12} color="#2ECC71" />
           <Text style={styles.miniMacroText}>{item.f}</Text>
         </View>
       </View>
     </View>
-    <TouchableOpacity onPress={() => onRemoveItem(item.id)}>
-   <MinusCircle size={24} color="#3A3A3C" weight="fill" /> 
-</TouchableOpacity>
+    {!readOnly && (
+      <TouchableOpacity onPress={() => onRemoveItem(item.id)}>
+        <MinusCircle size={24} color="#3A3A3C" weight="fill" />
+      </TouchableOpacity>
+    )}
   </View>
 );
 
 interface ScanResultViewProps {
   data: any;
   onBack: () => void;
-  onSave: () => void;
-  onRemoveItem: (id: string) => void;
+  onSave?: () => void;
+  onRemoveItem?: (id: string) => void;
+  readOnly?: boolean;
+  hideHeaderNav?: boolean;
 }
 
-const ScanResultView = ({ data, onBack, onSave, onRemoveItem }: ScanResultViewProps) => {
+const ScanResultView = ({
+  data,
+  onBack,
+  onSave,
+  onRemoveItem,
+  readOnly = false,
+  hideHeaderNav = false,
+}: ScanResultViewProps) => {
   return (
     <View style={styles.resultContainer}>
       {/* HEADER NAV */}
-      <View style={styles.headerNav}>
-        <TouchableOpacity onPress={onBack}>
-          <ArrowLeft size={24} color="#FFF" />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <DotsThree size={24} color="#FFF" weight="bold" />
-        </TouchableOpacity>
-      </View>
+      {!hideHeaderNav && (
+        <View style={styles.headerNav}>
+          <TouchableOpacity onPress={onBack}>
+            <ArrowLeft size={24} color="#FFF" />
+          </TouchableOpacity>
+          {!readOnly && (
+            <TouchableOpacity>
+              <DotsThree size={24} color="#FFF" weight="bold" />
+            </TouchableOpacity>
+          )}
+        </View>
+      )}
 
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         {/* HEADER MÓN ĂN */}
@@ -81,21 +102,29 @@ const ScanResultView = ({ data, onBack, onSave, onRemoveItem }: ScanResultViewPr
             <Text style={styles.foodName}>{data.name}</Text>
             <View style={styles.healthRow}>
               <Heart size={16} color="#FF453A" weight="fill" />
-              <Text style={styles.healthText}>Sức Khỏe: {data.healthScore}/10</Text>
+              <Text style={styles.healthText}>
+                {(translations as any).scanner.health}: {data.healthScore}/10
+              </Text>
             </View>
           </View>
           <FastImage source={{ uri: data.image }} style={styles.foodThumbnail} />
         </View>
 
         {/* TỔNG QUAN DINH DƯỠNG */}
-        <Text style={styles.sectionTitle}>Calo & Dinh dưỡng</Text>
+        <Text style={styles.sectionTitle}>
+          {(translations as any).scanner.nutritionTitle}
+        </Text>
         <View style={styles.macroRow}>
           <View style={styles.macroCard}>
-             <Text style={styles.macroLabel}>Số lượng</Text>
+             <Text style={styles.macroLabel}>
+               {(translations as any).scanner.quantity}
+             </Text>
              <Text style={styles.macroValueBig}>{data.total.weight}<Text style={{fontSize:16, color:'#8E8E93'}}>g</Text></Text>
           </View>
           <View style={styles.macroCard}>
-             <Text style={styles.macroLabel}>Calo</Text>
+             <Text style={styles.macroLabel}>
+               {(translations as any).scanner.calories}
+             </Text>
              <Text style={styles.macroValueBig}>{data.total.calories}</Text>
           </View>
         </View>
@@ -103,15 +132,19 @@ const ScanResultView = ({ data, onBack, onSave, onRemoveItem }: ScanResultViewPr
         {/* Macros Detail */}
         <View style={styles.macroRow}>
           <View style={styles.macroCardSmall}>
-             <Text style={styles.macroLabel}>Tinh bột</Text>
+             <Text style={styles.macroLabel}>
+               {(translations as any).scanner.carbs}
+             </Text>
              <View style={styles.macroValueRow}>
-                <IconCarb size={18} color="#F4D03F" /> 
+                <IconCarb size={18} color="#F4D03F" />
                 <Text style={styles.macroValueSmall}>{data.total.carbs}</Text>
                 <Text style={styles.unitSmall}>g</Text>
              </View>
           </View>
           <View style={styles.macroCardSmall}>
-             <Text style={styles.macroLabel}>Chất đạm</Text>
+             <Text style={styles.macroLabel}>
+               {(translations as any).scanner.protein}
+             </Text>
              <View style={styles.macroValueRow}>
                 <IconProtein size={18} color="#E74C3C" />
                 <Text style={styles.macroValueSmall}>{data.total.protein}</Text>
@@ -119,7 +152,9 @@ const ScanResultView = ({ data, onBack, onSave, onRemoveItem }: ScanResultViewPr
              </View>
           </View>
           <View style={styles.macroCardSmall}>
-             <Text style={styles.macroLabel}>Chất béo</Text>
+             <Text style={styles.macroLabel}>
+               {(translations as any).scanner.fat}
+             </Text>
              <View style={styles.macroValueRow}>
                 <IconFat size={18} color="#2ECC71" />
                 <Text style={styles.macroValueSmall}>{data.total.fat}</Text>
@@ -129,37 +164,57 @@ const ScanResultView = ({ data, onBack, onSave, onRemoveItem }: ScanResultViewPr
         </View>
 
         {/* DANH SÁCH THÀNH PHẦN */}
-        <Text style={[styles.sectionTitle, { marginTop: 24 }]}>Thành phần</Text>
+        <Text style={[styles.sectionTitle, { marginTop: 24 }]}>
+          {(translations as any).scanner.ingredients}
+        </Text>
         <View style={styles.ingredientsContainer}>
           {data.ingredients.map((item: any) => (
             <React.Fragment key={item.id}>
-              <IngredientRow item={item} onRemoveItem={onRemoveItem} />
+              <IngredientRow
+                item={item}
+                onRemoveItem={readOnly ? () => {} : (onRemoveItem || (() => {}))}
+                readOnly={readOnly}
+              />
               <View style={styles.separator} />
             </React.Fragment>
           ))}
         </View>
 
-        <TouchableOpacity style={styles.addIngredientBtn}>
-           <Plus size={16} color="#2ECC71" weight="bold"/>
-           <Text style={styles.addIngredientText}>Thêm thành phần mới</Text>
-        </TouchableOpacity>
+        {!readOnly && (
+          <TouchableOpacity style={styles.addIngredientBtn}>
+            <Plus size={16} color="#2ECC71" weight="bold"/>
+            <Text style={styles.addIngredientText}>
+              {(translations as any).scanner.addIngredient}
+            </Text>
+          </TouchableOpacity>
+        )}
 
-        <Text style={styles.helperText}>
-          Muốn tinh chỉnh kết quả của bạn? Nhấn "Sửa kết quả" và cho chúng tôi biết!
-        </Text>
+        {!readOnly && (
+          <Text style={styles.helperText}>
+            {(translations as any).scanner.tweakHint}
+          </Text>
+        )}
 
-        <TouchableOpacity style={styles.editBtn}>
-          <Text style={styles.editBtnText}>Sửa kết quả</Text>
-        </TouchableOpacity>
+        {!readOnly && (
+          <TouchableOpacity style={styles.editBtn}>
+            <Text style={styles.editBtnText}>
+              {(translations as any).scanner.editResult}
+            </Text>
+          </TouchableOpacity>
+        )}
         <View style={{ height: 100 }} /> 
       </ScrollView>
 
       {/* FOOTER FIXED */}
-      <View style={styles.fixedFooter}>
-        <TouchableOpacity style={styles.saveBtn} onPress={onSave}>
-          <Text style={styles.saveBtnText}>Lưu</Text>
-        </TouchableOpacity>
-      </View>
+      {!readOnly && onSave ? (
+        <View style={styles.fixedFooter}>
+          <TouchableOpacity style={styles.saveBtn} onPress={onSave}>
+            <Text style={styles.saveBtnText}>
+              {(translations as any).scanner.save}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      ) : null}
     </View>
   );
 };
@@ -191,7 +246,7 @@ const styles = StyleSheet.create({
   healthRow: { flexDirection: 'row', alignItems: 'center' },
   healthText: { color: '#8E8E93', fontSize: 14, marginLeft: 6 },
   foodThumbnail: {
-    width: 100, height: 70, borderRadius: 12, borderWidth: 2, borderColor: '#333',
+    width: 150, height: 100, borderRadius: 12, borderWidth: 2, borderColor: '#333',
   },
   sectionTitle: { color: '#8E8E93', fontSize: 16, marginBottom: 12 },
   macroRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 },

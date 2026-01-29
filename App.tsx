@@ -14,12 +14,14 @@ import SuperModal from "@shared-components/modal/SuperModal";
 // import { SocketHelperRef } from "@helpers/socket.helper";
 import InitView from "./InitView";
 import toastConfig from "@shared-components/toastConfig/toastconfig";
+import { getDeviceInfo, setDeviceInfo } from "@helpers/device.info.helper";
 // import ReadDinamicLink from "@screens/read-dynamic-link/read.dinamic.link";
 
 LogBox.ignoreAllLogs();
 
 const App = () => {
   React.useEffect(() => {
+     setDeviceInfo();
     NetworkManager.getInstance().configure();
     return () => {
       NetworkManager.getInstance().cleanup();

@@ -15,6 +15,7 @@ import BannerCard from './components/BannerCard';
 import HeaderSection from './components/HeaderSection'; 
 import RecentActivity from './components/RecentActivity';
 import { IconCarb, IconProtein, IconFat } from '@assets/svg/CustomeSvg';
+import { GrainsIcon } from 'phosphor-react-native';
 
 const HomeScreen = () => {
   const isDarkMode = useStore((state) => state.isDarkMode);
@@ -101,7 +102,7 @@ const HomeScreen = () => {
           <MacroCard
             styles={styles} COLORS={COLORS}
             title={translations.home?.macros?.[MacroType.CARBS] || 'Tinh bột'}
-            icon={<IconCarb size={16} color={COLORS.subText} />}
+            icon={<GrainsIcon size={16} color={COLORS.subText} />}
             current={Math.round(dayTotals.carbs || 0)}
             total={onboardingData?.target_carbs || 256}
             color={COLORS.subText} progressBarBg={COLORS.progressBarBg}

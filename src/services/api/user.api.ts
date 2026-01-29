@@ -73,6 +73,17 @@ export async function loginWithPass(data: ILoginWithPass) {
   });
 }
 
+export async function loginWithDevice(data: { device_uuid: string }) {
+  _setJson(USER_TOKEN, "");
+  return request({
+    method: METHOD.POST,
+    urlPath: "user/login/device",
+    data,
+  }).then((response) => {
+    return response;
+  });
+}
+
 export async function requestNewPassWithEmail(data: IRequestNewPass) {
   return request({
     method: METHOD.POST,
