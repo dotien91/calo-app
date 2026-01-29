@@ -23,6 +23,7 @@ import HomeScreen from "@screens/home/home.screen";
 import StatisticsScreen from "@screens/statistics/StatisticsScreen";
 import HealthScreen from "@screens/health/HealthScreen";
 import { CustomTabBar } from "@shared-components/bottom-tab/CustomTabBar";
+import SettingProfileScreen from "@screens/profile/profile.screen";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -102,6 +103,15 @@ const Navigation = () => {
 
           {/* 2 Tab Bên Phải */}
           <Tab.Screen name={SCREENS.HEALTH_TAB} component={HealthStackScreen} />
+          <Tab.Screen
+            name={SCREENS.SETTINGPROFILESCREEN_TAB}
+            component={SettingProfileScreen}
+            listeners={{
+              tabPress: () => {
+                eventEmitter.emit("reload_list_task");
+              },
+            }}
+          />
         </Tab.Navigator>
       </>
     );
