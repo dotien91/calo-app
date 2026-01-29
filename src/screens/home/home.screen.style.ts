@@ -2,25 +2,25 @@ import { StyleSheet, Dimensions } from 'react-native';
 
 const { width } = Dimensions.get('window');
 
-export const createStyles = (isDarkMode: boolean) => {
-  // Màu sắc động dựa trên dark mode
+export const createStyles = (isLightMode: boolean) => {
+  // Màu sắc động dựa trên light/dark mode
   const COLORS = {
-    bg: isDarkMode ? '#000000' : '#FFFFFF',
-    card: isDarkMode ? '#1C1C1E' : '#F5F5F5',
-    text: isDarkMode ? '#FFFFFF' : '#000000',
-    subText: isDarkMode ? '#A0A0A0' : '#666666',
+    bg: isLightMode ? '#FFFFFF' : '#000000',
+    card: isLightMode ? '#F5F5F5' : '#1C1C1E',
+    text: isLightMode ? '#000000' : '#FFFFFF',
+    subText: isLightMode ? '#666666' : '#A0A0A0',
     primary: '#84CC16',   // Xanh lá (Lime) - giữ nguyên
     accent: '#FACC15',    // Vàng - giữ nguyên
     blue: '#3B82F6',
     red: '#EF4444',
-    borderColor: isDarkMode ? '#333' : '#E5E7EB',
-    activeDateBg: isDarkMode ? '#2C2C2E' : '#E5E7EB',
-    activeDateText: isDarkMode ? '#FFFFFF' : '#000000',
-    progressBarBg: isDarkMode ? '#333' : '#E5E7EB',
-    iconBadgeBg: isDarkMode ? '#333' : '#F0F0F0',
-    bannerBg: isDarkMode ? '#1C1C1E' : '#FFFFFF',
-    bannerText: isDarkMode ? '#FFFFFF' : '#000000',
-    emptyIconColor: isDarkMode ? '#333' : '#CCCCCC',
+    borderColor: isLightMode ? '#E5E7EB' : '#333',
+    activeDateBg: isLightMode ? '#E5E7EB' : '#2C2C2E',
+    activeDateText: isLightMode ? '#000000' : '#FFFFFF',
+    progressBarBg: isLightMode ? '#E5E7EB' : '#333',
+    iconBadgeBg: isLightMode ? '#F0F0F0' : '#333',
+    bannerBg: isLightMode ? '#FFFFFF' : '#1C1C1E',
+    bannerText: isLightMode ? '#000000' : '#FFFFFF',
+    emptyIconColor: isLightMode ? '#CCCCCC' : '#333',
   };
 
   const styles = StyleSheet.create({

@@ -125,7 +125,7 @@ const SettingProfileScreen = () => {
   const styles = useMemo(() => createStyles(theme), [theme]);
   
   // Lấy hàm set theme từ store (nếu có)
-  const setDarkMode = useStore((state) => state.setDarkMode); 
+  const setLightMode = useStore((state) => state.setLightMode); 
   const onboardingData = useStore((state) => state.onboardingData);
   const currentLanguage = useStore((state) => state.language);
 
@@ -143,18 +143,14 @@ const SettingProfileScreen = () => {
   const [isEnabledBurn, setIsEnabledBurn] = useState(false);
   const [isEnabledMetric, setIsEnabledMetric] = useState(true);
   
-  // State hiển thị Darkmode (Khởi tạo bằng giá trị theme hiện tại)
-  const [isDarkMode, setIsDarkMode] = useState(dark);
+  // Giá trị từ store: isLightMode false = dark theme
+  const isLightMode = useStore((state) => state.isLightMode);
 
   const arrowIconColor = dark ? '#8E8E93' : '#888888';
 
-  // --- Logic Toggle Dark Mode ---
+  // --- Logic Toggle Dark Mode (switch ON = dark mode = setLightMode(false)) ---
   const handleToggleDarkMode = (value: boolean) => {
-    setIsDarkMode(value);
-    // Cập nhật vào Global Store để app render lại
-    if (setDarkMode) {
-        setDarkMode(value); 
-    }
+    if (setLightMode) setLightMode(!value);
   };
 
   // --- Navigation Logic ---
@@ -253,7 +249,7 @@ const SettingProfileScreen = () => {
             Icon={Moon} 
             title={translations.profile.darkMode} 
             isSwitch 
-            switchValue={isDarkMode}
+            switchValue={!isLightMode}
             onSwitchChange={handleToggleDarkMode}
           />
           

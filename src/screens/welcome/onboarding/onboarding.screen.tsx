@@ -25,8 +25,8 @@ interface OnboardingScreenProps {}
 const OnboardingScreen: React.FC<OnboardingScreenProps> = () => {
   const setLanguage = useStore((state) => state.setLanguage);
   const currentLanguage = useStore((state) => state.language);
-  const isDarkMode = useStore((state) => state.isDarkMode);
-  const { COLORS } = useMemo(() => createStyles(isDarkMode), [isDarkMode]);
+  const isLightMode = useStore((state) => state.isLightMode);
+  const { COLORS } = useMemo(() => createStyles(isLightMode), [isLightMode]);
 
   const languageList = [
     {

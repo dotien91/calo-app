@@ -15,8 +15,8 @@ import { createStyles } from './add-meal.screen.style';
 import { goBack } from '@helpers/navigation.helper';
 
 const AddMealScreen = () => {
-  const isDarkMode = useStore((state) => state.isDarkMode);
-  const { COLORS, styles } = createStyles(isDarkMode);
+  const isLightMode = useStore((state) => state.isLightMode);
+  const { COLORS, styles } = createStyles(isLightMode);
 
   const [foodName, setFoodName] = useState('');
   const [calories, setCalories] = useState('');

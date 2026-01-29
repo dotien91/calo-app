@@ -27,7 +27,6 @@ import ListActionInner from "./modal-inner/ListActionInner";
 import EarnPointView from "./modal-inner/EarnPointView";
 import ListBank from "./modal-inner/ListBank";
 import { ScreenHeight } from "@freakycoder/react-native-helpers";
-import { translations } from "@localization";
 import SelectCourseView from "./modal-inner/SelectCourseView";
 import ConfirmViewBottom from "@shared-components/comfirm-view-bottom/comfirm.view.bottom";
 import ViewMore from "./modal-inner/ViewMore";
@@ -76,17 +75,6 @@ const SuperModal: React.FC<SuperModalProps> = () => {
   };
 
   if (!contentModalType || !styleModalType) return null;
-
-  const getStyleModal = () => {
-    switch (contentModalType) {
-      case EnumModalContentType.Loading:
-        return styles.loadingView;
-      case EnumModalContentType.Library:
-        return styles.modalMedia;
-      default:
-        return styles.modal;
-    }
-  };
 
   const renderLoading = () => {
     return (

@@ -36,12 +36,12 @@ export const CustomTabBar: React.FC<BottomTabBarProps> = ({
   descriptors,
   navigation,
 }) => {
-  const isDarkMode = useStore((state) => state.isDarkMode);
+  const isLightMode = useStore((state) => state.isLightMode);
   
   // Colors based on dark mode
   const activeColor = "#84CC16"; // Keep green for active
-  const inactiveColor = isDarkMode ? "#A0A0A0" : "#666666";
-  const backgroundColor = isDarkMode ? "#1C1C1E" : "#FFFFFF";
+  const inactiveColor = isLightMode ? "#666666" : "#A0A0A0";
+  const backgroundColor = isLightMode ? "#FFFFFF" : "#1C1C1E";
   // Xử lý chuyển đổi dữ liệu từ Navigation thành mảng tabs
   const tabs = state.routes.map((route, index) => {
     const isFocused = state.index === index;

@@ -18,10 +18,10 @@ import { IconCarb, IconProtein, IconFat } from '@assets/svg/CustomeSvg';
 import { GrainsIcon } from 'phosphor-react-native';
 
 const HomeScreen = () => {
-  const isDarkMode = useStore((state) => state.isDarkMode);
+  const isLightMode = useStore((state) => state.isLightMode);
   const onboardingData = useStore((state) => state.onboardingData);
   
-  const { COLORS, styles } = createStyles(isDarkMode);
+  const { COLORS, styles } = createStyles(isLightMode);
 
   // 1. [MỚI] State lưu ngày đang được chọn (Mặc định là hôm nay)
   const [selectedDate, setSelectedDate] = useState<string>(format(new Date(), 'yyyy-MM-dd'));
@@ -77,7 +77,7 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
-      <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} backgroundColor={COLORS.bg} />
+      <StatusBar barStyle={isLightMode ? "dark-content" : "light-content"} backgroundColor={COLORS.bg} />
       
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100 }}>
         

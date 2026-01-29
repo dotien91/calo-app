@@ -13,30 +13,55 @@ import Button from "@shared-components/button/Button";
 import TextBase from "@shared-components/TextBase";
 import { SCREENS } from "constants";
 import { palette } from "@theme/themes";
-import { PlanCalculationData, calculatePlan } from "@utils/plan.utils";
+import { PlanCalculationData, PlanResult, calculatePlan } from "@utils/plan.utils";
 import useStore from "@services/zustand/store";
 import { createStyles } from "./onboarding.screen.style";
 
-const PaceScreen: React.FC = () => {
+const defaultFormData: PlanCalculationData = {
+  currentWeight: "",
+  height: "",
+  age: "",
+  targetWeight: "",
+  gender: "MALE",
+  activityLevel: "MODERATELY_ACTIVE",
+  pace: "NORMAL",
+};
+
+export interface PaceScreenProps {
+  formData?: PlanCalculationData;
+  /** Khi dùng trong flow: nhận planResult, không navigate */
+  onNext?: (planResult: PlanResult) => void;
+  onBack?: () => void;
+}
+
+const paces = [
+  { key: "SLOW" as const, label: "Chậm", desc: "0.25 kg/tuần - An toàn và bền vững" },
+  { key: "NORMAL" as const, label: "Bình thường", desc: "0.5 kg/tuần - Cân bằng" },
+  { key: "FAST" as const, label: "Nhanh", desc: "1 kg/tuần - Cần kiên trì" },
+];
+
+const PaceScreen: React.FC<PaceScreenProps> = (props) => {
   const route = useRoute();
-  const formData = (route.params as any)?.formData as PlanCalculationData || {};
+  const fromRoute = (route.params as any)?.formData as PlanCalculationData | undefined;
+  const formData: PlanCalculationData = {
+    ...defaultFormData,
+    ...(props.formData ?? fromRoute ?? {}),
+  };
   const [pace, setPace] = useState<PlanCalculationData["pace"]>(
     formData.pace || "NORMAL"
   );
-  const isDarkMode = useStore((state) => state.isDarkMode);
-  const { COLORS } = useMemo(() => createStyles(isDarkMode), [isDarkMode]);
+  const isLightMode = useStore((state) => state.isLightMode);
+  const { COLORS } = useMemo(() => createStyles(isLightMode), [isLightMode]);
 
   const handleFinish = () => {
-    const updatedData = { ...formData, pace };
+    const updatedData: PlanCalculationData = { ...formData, pace };
     const result = calculatePlan(updatedData);
-    NavigationService.navigate(SCREENS.PLAN_RESULT, { planResult: result });
+    if (props.onNext) {
+      props.onNext(result);
+    } else {
+      NavigationService.navigate(SCREENS.PLAN_RESULT, { planResult: result });
+    }
   };
-
-  const paces = [
-    { key: "SLOW", label: "Chậm", desc: "0.25 kg/tuần - An toàn và bền vững" },
-    { key: "NORMAL", label: "Bình thường", desc: "0.5 kg/tuần - Cân bằng" },
-    { key: "FAST", label: "Nhanh", desc: "1 kg/tuần - Cần kiên trì" },
-  ];
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: COLORS.bg }]}>

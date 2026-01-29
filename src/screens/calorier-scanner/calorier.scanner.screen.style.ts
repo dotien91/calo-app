@@ -1,19 +1,19 @@
 import { StyleSheet } from 'react-native';
 
-export const createStyles = (isDarkMode: boolean) => {
+export const createStyles = (isLightMode: boolean) => {
   const COLORS = {
-    bg: isDarkMode ? '#000000' : '#FFFFFF',
-    card: isDarkMode ? '#1C1C1E' : '#F5F5F5',
-    text: isDarkMode ? '#FFFFFF' : '#000000',
-    subText: isDarkMode ? '#8E8E93' : '#666666',
-    border: isDarkMode ? '#2C2C2E' : '#E5E7EB',
-    separator: isDarkMode ? '#2C2C2E' : '#E5E7EB',
-    cardSecondary: isDarkMode ? '#2C2C2E' : '#EEEEEE',
-    textSecondary: isDarkMode ? '#D1D1D6' : '#333333',
-    saveBtnBg: isDarkMode ? '#FFFFFF' : '#000000',
-    saveBtnText: isDarkMode ? '#000000' : '#FFFFFF',
+    bg: isLightMode ? '#FFFFFF' : '#000000',
+    card: isLightMode ? '#F5F5F5' : '#1C1C1E',
+    text: isLightMode ? '#000000' : '#FFFFFF',
+    subText: isLightMode ? '#666666' : '#8E8E93',
+    border: isLightMode ? '#E5E7EB' : '#2C2C2E',
+    separator: isLightMode ? '#E5E7EB' : '#2C2C2E',
+    cardSecondary: isLightMode ? '#EEEEEE' : '#2C2C2E',
+    textSecondary: isLightMode ? '#333333' : '#D1D1D6',
+    saveBtnBg: isLightMode ? '#000000' : '#FFFFFF',
+    saveBtnText: isLightMode ? '#FFFFFF' : '#000000',
     accent: '#2ECC71',
-    iconMuted: isDarkMode ? '#3A3A3C' : '#888888',
+    iconMuted: isLightMode ? '#888888' : '#3A3A3C',
   };
 
   const styles = StyleSheet.create({

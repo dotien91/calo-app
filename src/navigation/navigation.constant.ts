@@ -38,14 +38,7 @@ import ChatRoomMediaScreen from "@screens/chat/media-club/chat.media.screen";
 
 // ? Screens - Health & Onboarding (Calorie App Core)
 import OnboardingScreen from "@screens/welcome/onboarding/onboarding.screen";
-import PlanResultScreen from "@screens/welcome/onboarding/plan.result.screen";
-import CurrentWeightScreen from "@screens/welcome/onboarding/current.weight.screen";
-import HeightScreen from "@screens/welcome/onboarding/height.screen";
-import AgeScreen from "@screens/welcome/onboarding/age.screen";
-import TargetWeightScreen from "@screens/welcome/onboarding/target.weight.screen";
-import GenderScreen from "@screens/welcome/onboarding/gender.screen";
-import ActivityLevelScreen from "@screens/welcome/onboarding/activity.level.screen";
-import PaceScreen from "@screens/welcome/onboarding/pace.screen";
+import OnboardingFlowScreen from "@screens/welcome/onboarding/onboarding.flow.screen";
 import GoalDetailScreen from "@screens/on-boarding/goal.screen";
 import ChooseLanguageScreen from "@screens/welcome/choose-language/choose.language.screen";
 import AddMealScreen from "@screens/add-meal";
@@ -66,35 +59,11 @@ export const StackIntroData = [
   },
 ];
 
-// Giữ nguyên luồng nhập chỉ số cơ thể
+// Một màn onboarding duy nhất, chuyển bước bằng view (không navigate)
 export const OnboardingStackData = [
   {
     name: SCREENS.CURRENT_WEIGHT,
-    screen: CurrentWeightScreen,
-  },
-  {
-    name: SCREENS.HEIGHT,
-    screen: HeightScreen,
-  },
-  {
-    name: SCREENS.AGE,
-    screen: AgeScreen,
-  },
-  {
-    name: SCREENS.TARGET_WEIGHT,
-    screen: TargetWeightScreen,
-  },
-  {
-    name: SCREENS.GENDER,
-    screen: GenderScreen,
-  },
-  {
-    name: SCREENS.ACTIVITY_LEVEL,
-    screen: ActivityLevelScreen,
-  },
-  {
-    name: SCREENS.PACE,
-    screen: PaceScreen,
+    screen: OnboardingFlowScreen,
   },
 ];
 
@@ -137,8 +106,4 @@ export const CommonStackData = [
   { name: SCREENS.CODE_ACTIVATIONS_SCREEN, screen: CodeActivationsScreen },
   { name: SCREENS.HIDDEN_PAGE, screen: HiddenPaage },
   { name: SCREENS.WEBVIEW_SCREEN, screen: WebviewScreen },
-  {
-    name: SCREENS.PLAN_RESULT,
-    screen: PlanResultScreen,
-  },
 ];

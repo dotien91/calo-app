@@ -17,16 +17,27 @@ import { PlanCalculationData } from "@utils/plan.utils";
 import useStore from "@services/zustand/store";
 import { createStyles } from "./onboarding.screen.style";
 
-const GenderScreen: React.FC = () => {
+export interface GenderScreenProps {
+  formData?: PlanCalculationData;
+  onNext?: (updatedData: PlanCalculationData) => void;
+  onBack?: () => void;
+}
+
+const GenderScreen: React.FC<GenderScreenProps> = (props) => {
   const route = useRoute();
-  const formData = (route.params as any)?.formData as PlanCalculationData || {};
+  const fromRoute = (route.params as any)?.formData as PlanCalculationData | undefined;
+  const formData = props.formData ?? fromRoute ?? {};
   const [gender, setGender] = useState<"MALE" | "FEMALE">(formData.gender || "MALE");
-  const isDarkMode = useStore((state) => state.isDarkMode);
-  const { COLORS } = useMemo(() => createStyles(isDarkMode), [isDarkMode]);
+  const isLightMode = useStore((state) => state.isLightMode);
+  const { COLORS } = useMemo(() => createStyles(isLightMode), [isLightMode]);
 
   const handleNext = () => {
     const updatedData = { ...formData, gender };
-    NavigationService.navigate(SCREENS.ACTIVITY_LEVEL, { formData: updatedData });
+    if (props.onNext) {
+      props.onNext(updatedData);
+    } else {
+      NavigationService.navigate(SCREENS.ACTIVITY_LEVEL, { formData: updatedData });
+    }
   };
 
   return (

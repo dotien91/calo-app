@@ -17,38 +17,37 @@ import { PlanCalculationData } from "@utils/plan.utils";
 import useStore from "@services/zustand/store";
 import { createStyles } from "./onboarding.screen.style";
 
-const ActivityLevelScreen: React.FC = () => {
+export interface ActivityLevelScreenProps {
+  formData?: PlanCalculationData;
+  onNext?: (updatedData: PlanCalculationData) => void;
+  onBack?: () => void;
+}
+
+const activities = [
+  { key: "SEDENTARY" as const, label: "Ít vận động", desc: "Ngồi nhiều, ít tập thể dục" },
+  { key: "LIGHTLY_ACTIVE" as const, label: "Vận động nhẹ", desc: "Tập thể dục 1-3 lần/tuần" },
+  { key: "MODERATELY_ACTIVE" as const, label: "Vận động vừa", desc: "Tập thể dục 3-5 lần/tuần" },
+  { key: "VERY_ACTIVE" as const, label: "Vận động nhiều", desc: "Tập thể dục 6-7 lần/tuần" },
+];
+
+const ActivityLevelScreen: React.FC<ActivityLevelScreenProps> = (props) => {
   const route = useRoute();
-  const formData = (route.params as any)?.formData as PlanCalculationData || {};
+  const fromRoute = (route.params as any)?.formData as PlanCalculationData | undefined;
+  const formData = props.formData ?? fromRoute ?? {};
   const [activityLevel, setActivityLevel] = useState<PlanCalculationData["activityLevel"]>(
     formData.activityLevel || "MODERATELY_ACTIVE"
   );
-  const isDarkMode = useStore((state) => state.isDarkMode);
-  const { COLORS } = useMemo(() => createStyles(isDarkMode), [isDarkMode]);
+  const isLightMode = useStore((state) => state.isLightMode);
+  const { COLORS } = useMemo(() => createStyles(isLightMode), [isLightMode]);
 
   const handleNext = () => {
     const updatedData = { ...formData, activityLevel };
-    NavigationService.navigate(SCREENS.PACE, { formData: updatedData });
+    if (props.onNext) {
+      props.onNext(updatedData);
+    } else {
+      NavigationService.navigate(SCREENS.PACE, { formData: updatedData });
+    }
   };
-
-  const activities = [
-    { key: "SEDENTARY", label: "Ít vận động", desc: "Ngồi nhiều, ít tập thể dục" },
-    {
-      key: "LIGHTLY_ACTIVE",
-      label: "Vận động nhẹ",
-      desc: "Tập thể dục 1-3 lần/tuần",
-    },
-    {
-      key: "MODERATELY_ACTIVE",
-      label: "Vận động vừa",
-      desc: "Tập thể dục 3-5 lần/tuần",
-    },
-    {
-      key: "VERY_ACTIVE",
-      label: "Vận động nhiều",
-      desc: "Tập thể dục 6-7 lần/tuần",
-    },
-  ];
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: COLORS.bg }]}>

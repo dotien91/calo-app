@@ -11,8 +11,8 @@ import { createStyles } from './calorier.scanner.screen.style';
 const CalorieResultScreen = () => {
   const route = getRoute() as any;
   const data = route?.params?.data;
-  const isDarkMode = useStore((state) => state.isDarkMode);
-  const { COLORS, styles } = useMemo(() => createStyles(isDarkMode), [isDarkMode]);
+  const isLightMode = useStore((state) => state.isLightMode);
+  const { COLORS, styles } = useMemo(() => createStyles(isLightMode), [isLightMode]);
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: COLORS.bg }]}>

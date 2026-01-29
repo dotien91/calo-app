@@ -1,12 +1,12 @@
 import { StyleSheet } from 'react-native';
 
-export const createStyles = (isDarkMode: boolean) => {
+export const createStyles = (isLightMode: boolean) => {
   const COLORS = {
-    background: isDarkMode ? '#000000' : '#FFFFFF',
-    card: isDarkMode ? '#1C1C1E' : '#F5F5F5',
-    text: isDarkMode ? '#FFFFFF' : '#000000',
-    subText: isDarkMode ? '#A0A0A0' : '#666666',
-    border: isDarkMode ? '#333333' : '#E5E7EB',
+    background: isLightMode ? '#FFFFFF' : '#000000',
+    card: isLightMode ? '#F5F5F5' : '#1C1C1E',
+    text: isLightMode ? '#000000' : '#FFFFFF',
+    subText: isLightMode ? '#666666' : '#A0A0A0',
+    border: isLightMode ? '#E5E7EB' : '#333333',
     primary: '#84CC16',
   };
 

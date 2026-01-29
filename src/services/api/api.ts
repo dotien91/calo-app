@@ -4,7 +4,6 @@ import lodash from "lodash";
 import { APP_URL } from "constants/config.constant";
 import { USER_TOKEN, _getJson } from "@services/local-storage";
 
-// export const BASEURL = "https://api.edu-like.exam24h.com/api/";
 export const BASEURL = APP_URL.BASEURL;
 export const UPLOAD_URL = "https://media.exam24h.com/";
 

@@ -4,7 +4,6 @@ import {
   StyleSheet,
   ScrollView,
   SafeAreaView,
-  Alert,
 } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import { useRoute } from "@react-navigation/native";
@@ -18,16 +17,26 @@ import { _setJson, HAS_COMPLETED_ONBOARDING } from "@services/local-storage";
 import { submitOnboarding, OnboardingData, Gender, ActivityLevel, WeightGoalPace } from "@services/api/calorie.api";
 import useStore from "@services/zustand/store";
 import { createStyles } from "./onboarding.screen.style";
+import { showToast } from "@helpers/super.modal.helper";
 
-interface PlanResultScreenProps {}
+export interface PlanResultScreenProps {
+  /** Khi có props: dùng như view trong flow */
+  planResult?: PlanResult | null;
+  onFinish?: () => void | Promise<void>;
+  onRestart?: () => void;
+  /** Loading từ parent (flow) khi gọi API */
+  loading?: boolean;
+}
 
-const PlanResultScreen: React.FC<PlanResultScreenProps> = () => {
+const PlanResultScreen: React.FC<PlanResultScreenProps> = (props) => {
   const route = useRoute();
-  const planResult = (route.params as any)?.planResult as PlanResult;
-  const [loading, setLoading] = useState(false);
+  const fromRoute = (route.params as any)?.planResult as PlanResult | undefined;
+  const planResult = props.planResult ?? fromRoute;
+  const [internalLoading, setInternalLoading] = useState(false);
+  const loading = props.loading ?? internalLoading;
   const setOnboardingData = useStore((state) => state.setOnboardingData);
-  const isDarkMode = useStore((state) => state.isDarkMode);
-  const { COLORS } = useMemo(() => createStyles(isDarkMode), [isDarkMode]);
+  const isLightMode = useStore((state) => state.isLightMode);
+  const { COLORS } = useMemo(() => createStyles(isLightMode), [isLightMode]);
 
   if (!planResult) {
     return null;
@@ -53,9 +62,10 @@ const PlanResultScreen: React.FC<PlanResultScreenProps> = () => {
   };
 
   const handleFinish = async () => {
-    // _setJson("is_first_open_app", false);
-    
-    // Prepare data
+    if (props.onFinish) {
+      await props.onFinish();
+      return;
+    }
     const onboardingData: OnboardingData = {
       gender: planResult.gender as Gender,
       age: planResult.age,
@@ -65,30 +75,28 @@ const PlanResultScreen: React.FC<PlanResultScreenProps> = () => {
       activityLevel: planResult.activityLevel as ActivityLevel,
       pace: planResult.pace as WeightGoalPace,
     };
-
     try {
-      setLoading(true);
+      setInternalLoading(true);
       const response = await submitOnboarding(onboardingData);
-      
       if (response.success) {
         setOnboardingData(response.data.onboarding);
         _setJson(HAS_COMPLETED_ONBOARDING, true);
         NavigationService.replace(SCREENS.TABS);
+      } else {
+        showToast({ type: "error", message: response.message });
       }
-    } catch (error: any) {
-      console.error("Error submitting onboarding:", error);
-      Alert.alert(
-        "Lỗi", 
-        error?.message || "Có lỗi xảy ra khi lưu thông tin. Vui lòng thử lại!"
-      );
     } finally {
-      setLoading(false);
+      setInternalLoading(false);
     }
   };
 
   const handleRestart = () => {
+    if (props.onRestart) {
+      props.onRestart();
+      return;
+    }
     NavigationService.navigate(SCREENS.CURRENT_WEIGHT, {
-       formData: {
+      formData: {
         currentWeight: planResult.currentWeight,
         height: planResult.height,
         age: planResult.age.toString(),
@@ -96,7 +104,7 @@ const PlanResultScreen: React.FC<PlanResultScreenProps> = () => {
         gender: planResult.gender,
         activityLevel: planResult.activityLevel,
         pace: planResult.pace,
-       }
+      },
     });
   };
 

@@ -21,7 +21,7 @@ Settings.setAppID("908606980666349");
 LogBox.ignoreAllLogs();
 
 const InitView = () => {
-  const isDarkMode = useStore((state) => state.isDarkMode);
+  const isLightMode = useStore((state) => state.isLightMode);
   const setListGift = useStore((state) => state.setListGift);
   const setOnboardingData = useStore((state) => state.setOnboardingData);
   const setIsLoadingOnboarding = useStore((state) => state.setIsLoadingOnboarding);
@@ -60,12 +60,12 @@ const InitView = () => {
   // const { initIAP } = useInAppPurchase();
 
   React.useEffect(() => {
-    StatusBar.setBarStyle(!isDarkMode ? "dark-content" : "light-content");
+    StatusBar.setBarStyle(isLightMode ? "dark-content" : "light-content");
     if (isAndroid) {
       StatusBar.setBackgroundColor("rgba(0,0,0,0)");
       StatusBar.setTranslucent(true);
     }
-  }, [isDarkMode]);
+  }, [isLightMode]);
 
   const initData = async () => {
     await setDeviceInfo();

@@ -20,8 +20,8 @@ const LoadingList = ({
   numberItem?: number;
   hideAvatar?: boolean;
 }) => {
-  const isDarkMode = useStore((state) => state.isDarkMode);
-  const skeletonColors = isDarkMode ? DARK_SKELETON : LIGHT_SKELETON;
+  const isLightMode = useStore((state) => state.isLightMode);
+  const skeletonColors = isLightMode ? LIGHT_SKELETON : DARK_SKELETON;
   const array = Array.from(Array(numberItem - 1).keys());
 
   return (

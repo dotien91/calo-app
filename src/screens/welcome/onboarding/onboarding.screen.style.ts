@@ -1,19 +1,19 @@
 import { palette } from "@theme/themes";
 
-export const createStyles = (isDarkMode: boolean) => {
+export const createStyles = (isLightMode: boolean) => {
   const COLORS = {
-    bg: isDarkMode ? "#000000" : "#FFFFFF",
-    card: isDarkMode ? "#1C1C1E" : "#FFFFFF",
-    cardSelected: isDarkMode ? "#2C2C2E" : palette.secondColor,
-    border: isDarkMode ? "#333333" : palette.grey1,
+    bg: isLightMode ? "#FFFFFF" : "#000000",
+    card: isLightMode ? "#FFFFFF" : "#1C1C1E",
+    cardSelected: isLightMode ? palette.secondColor : "#2C2C2E",
+    border: isLightMode ? palette.grey1 : "#333333",
     borderSelected: palette.primary,
-    text: isDarkMode ? "#FFFFFF" : palette.text,
-    subText: isDarkMode ? "#A0A0A0" : palette.textOpacity8,
+    text: isLightMode ? palette.text : "#FFFFFF",
+    subText: isLightMode ? palette.textOpacity8 : "#A0A0A0",
     primary: palette.primary,
     white: palette.white,
-    footerBg: isDarkMode ? "#000000" : "#FFFFFF",
-    footerBorder: isDarkMode ? "#333333" : palette.grey1,
-    infoCardBg: isDarkMode ? "#1C1C1E" : palette.grey1 + "20",
+    footerBg: isLightMode ? "#FFFFFF" : "#000000",
+    footerBorder: isLightMode ? palette.grey1 : "#333333",
+    infoCardBg: isLightMode ? palette.grey1 + "20" : "#1C1C1E",
   };
   return { COLORS };
 };

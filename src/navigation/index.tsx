@@ -29,7 +29,7 @@ const StatisticsStack = createStackNavigator();
 const HealthStack = createStackNavigator();
 
 const Navigation = () => {
-  const isDarkMode = useStore((state) => state.isDarkMode);
+  const isLightMode = useStore((state) => state.isLightMode);
   const hasCompletedOnboarding = _getJson(HAS_COMPLETED_ONBOARDING) === true; 
   React.useEffect((): any => {
     // _setJson(HAS_COMPLETED_ONBOARDING, false);
@@ -147,7 +147,7 @@ const Navigation = () => {
       onReady={() => {
         isReadyRef.current = true;
       }}
-      theme={isDarkMode ? DarkTheme : LightTheme}
+      theme={isLightMode ? LightTheme : DarkTheme}
       onStateChange={async () => {
         const currentRouteName = navigationRef.current.getCurrentRoute().name;
         eventEmitter.emit("screen_active", { screen: currentRouteName });

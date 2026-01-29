@@ -22,8 +22,8 @@ import { createStyles } from './calorier.scanner.screen.style';
 type ViewMode = 'SCANNING' | 'RESULT';
 
 const CalorieScannerScreen = () => {
-  const isDarkMode = useStore((state) => state.isDarkMode);
-  const { COLORS, styles } = useMemo(() => createStyles(isDarkMode), [isDarkMode]);
+  const isLightMode = useStore((state) => state.isLightMode);
+  const { COLORS, styles } = useMemo(() => createStyles(isLightMode), [isLightMode]);
 
   const [viewMode, setViewMode] = useState<ViewMode>('SCANNING');
   const [foodResult, setFoodResult] = useState<any | null>(null);
