@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   View,
   StyleSheet,
@@ -8,13 +8,14 @@ import {
 } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import { useRoute } from "@react-navigation/native";
-import { ScreenWidth } from "@freakycoder/react-native-helpers";
 
 import Button from "@shared-components/button/Button";
 import TextBase from "@shared-components/TextBase";
 import { SCREENS } from "constants";
 import { palette } from "@theme/themes";
 import { PlanCalculationData } from "@utils/plan.utils";
+import useStore from "@services/zustand/store";
+import { createStyles } from "./onboarding.screen.style";
 
 const ActivityLevelScreen: React.FC = () => {
   const route = useRoute();
@@ -22,6 +23,8 @@ const ActivityLevelScreen: React.FC = () => {
   const [activityLevel, setActivityLevel] = useState<PlanCalculationData["activityLevel"]>(
     formData.activityLevel || "MODERATELY_ACTIVE"
   );
+  const isDarkMode = useStore((state) => state.isDarkMode);
+  const { COLORS } = useMemo(() => createStyles(isDarkMode), [isDarkMode]);
 
   const handleNext = () => {
     const updatedData = { ...formData, activityLevel };
@@ -48,7 +51,7 @@ const ActivityLevelScreen: React.FC = () => {
   ];
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: COLORS.bg }]}>
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.contentContainer}
@@ -72,7 +75,10 @@ const ActivityLevelScreen: React.FC = () => {
               key={item.key}
               style={[
                 styles.optionCard,
-                activityLevel === item.key && styles.optionCardSelected,
+                {
+                  borderColor: activityLevel === item.key ? COLORS.borderSelected : COLORS.border,
+                  backgroundColor: activityLevel === item.key ? COLORS.cardSelected : COLORS.card,
+                },
               ]}
               onPress={() =>
                 setActivityLevel(item.key as PlanCalculationData["activityLevel"])
@@ -98,7 +104,7 @@ const ActivityLevelScreen: React.FC = () => {
         </View>
       </ScrollView>
 
-      <View style={styles.footer}>
+      <View style={[styles.footer, { borderTopColor: COLORS.footerBorder }]}>
         <Button
           style={styles.button}
           text="Tiếp tục"
@@ -114,51 +120,14 @@ const ActivityLevelScreen: React.FC = () => {
 export default ActivityLevelScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: palette.white,
-  },
-  scrollView: {
-    flex: 1,
-  },
-  contentContainer: {
-    padding: 16,
-    paddingTop: 40,
-  },
-  title: {
-    textAlign: "center",
-    marginBottom: 12,
-  },
-  subtitle: {
-    textAlign: "center",
-    marginBottom: 32,
-  },
-  optionsContainer: {
-    gap: 16,
-    marginTop: 20,
-  },
-  optionCard: {
-    padding: 20,
-    borderRadius: 12,
-    borderWidth: 2,
-    borderColor: palette.grey1,
-    backgroundColor: palette.white,
-  },
-  optionCardSelected: {
-    borderColor: palette.primary,
-    backgroundColor: palette.secondColor,
-  },
-  optionDesc: {
-    marginTop: 4,
-  },
-  footer: {
-    padding: 16,
-    borderTopWidth: 1,
-    borderTopColor: palette.grey1,
-  },
-  button: {
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 12,
-  },
+  container: { flex: 1 },
+  scrollView: { flex: 1 },
+  contentContainer: { padding: 16, paddingTop: 40 },
+  title: { textAlign: "center", marginBottom: 12 },
+  subtitle: { textAlign: "center", marginBottom: 32 },
+  optionsContainer: { gap: 16, marginTop: 20 },
+  optionCard: { padding: 20, borderRadius: 12, borderWidth: 2 },
+  optionDesc: { marginTop: 4 },
+  footer: { padding: 16, borderTopWidth: 1 },
+  button: { alignItems: "center", justifyContent: "center", borderRadius: 12 },
 });

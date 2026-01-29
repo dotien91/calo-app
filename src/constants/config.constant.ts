@@ -11,10 +11,9 @@ export enum ENVIRONMENT {
 }
 
 // Xác định môi trường (ưu tiên DEV để test localhost)
-export const isProduction = false; 
-// export const isProduction =
-//   (_getJson("env") || (__DEV__ ? ENVIRONMENT.DEVELOP : ENVIRONMENT.PRODUCT)) ===
-//   ENVIRONMENT.PRODUCT;
+export const isProduction =
+  (_getJson("env") || (__DEV__ ? ENVIRONMENT.DEVELOP : ENVIRONMENT.PRODUCT)) ===
+  ENVIRONMENT.PRODUCT;
 
 // --------------------------------------------------------
 // CẤU HÌNH DOMAIN LOCALHOST
@@ -36,7 +35,7 @@ const DEVELOPER_DOMAIN_SOCKET_DEV = "http://localhost:3900";
 // --------------------------------------------------------
 // DOMAIN PRODUCTION (Giữ nguyên)
 // --------------------------------------------------------
-const PRODUCTION_DOMAIN_PRODUCTION = "https://api.ikigai.ikigroup.vn";
+const PRODUCTION_DOMAIN_PRODUCTION = "https://api.food.apporastudio.com";
 const PRODUCTION_DOMAIN_SOCKET_PRODUCTION = "https://socket.api.ikigroup.vn";
 
 // Logic chọn Domain

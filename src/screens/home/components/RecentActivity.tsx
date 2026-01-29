@@ -4,15 +4,16 @@ import {
   Text, 
   Image, 
   StyleSheet, 
-  TouchableOpacity // Thêm TouchableOpacity để bấm vào món ăn nếu cần
+  TouchableOpacity,
 } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 import { format } from 'date-fns';
-import { ForkKnife, GrainsIcon } from 'phosphor-react-native'; // Giữ icon này cho EmptyState
+import { ForkKnife, GrainsIcon } from 'phosphor-react-native';
 import { translations } from '@localization';
-import { IconCarb, IconProtein, IconFat } from '../../../assets/svg/CustomeSvg';
+import { IconProtein, IconFat } from '../../../assets/svg/CustomeSvg';
 import { SCREENS } from 'constants';
 import { navigate } from '@helpers/navigation.helper';
+import LoadingList from '@shared-components/loading.list.component';
 
 
 // --- TYPES ---
@@ -168,9 +169,11 @@ const EmptyState = () => {
 const RecentActivity = ({
   data,
   selectedDate,
+  loading = false,
 }: {
   data?: DayEntry[] | { records?: RecentActivityRecord[] };
   selectedDate?: string;
+  loading?: boolean;
 }) => {
   const { colors } = useTheme();
   
@@ -223,7 +226,9 @@ const RecentActivity = ({
         {translations.home?.recentActivity ?? 'Gần đây'}
       </Text>
 
-      {hasData ? (
+      {loading ? (
+        <LoadingList numberItem={4} />
+      ) : hasData ? (
         <View>
           {records.map((item: RecentActivityRecord) => (
             <FoodItem key={item._id} item={item} onPress={() => openResult(item)} />

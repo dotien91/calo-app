@@ -11,7 +11,7 @@ import useStore from "@services/zustand/store";
 import { setDeviceInfo } from "@helpers/device.info.helper";
 import { useUserHook } from "@helpers/hooks/useUserHook";
 import useFirebase from "@helpers/useFirebase";
-import { _getJson } from "@services/local-storage";
+import { _getJson, _setJson, HAS_COMPLETED_ONBOARDING } from "@services/local-storage";
 import { ENVIRONMENT, setUrlEnv } from "constants/config.constant";
 import { getConfigGift } from "@services/api/user.api";
 import { getOnboarding } from "@services/api/calorie.api";
@@ -38,17 +38,13 @@ const InitView = () => {
     try {
       setIsLoadingOnboarding(true);
       const response = await getOnboarding();
-      console.log("response", response);
       if (response.data) {
-        console.log("Onboarding data loaded:", response.data);
         setOnboardingData(response.data);
       } else {
-        console.log("No onboarding data found for user");
         setOnboardingData(null);
       }
     } catch (error: any) {
       console.error("Error loading onboarding data:", error);
-      // If user hasn't completed onboarding yet, set to null
       setOnboardingData(null);
     } finally {
       setIsLoadingOnboarding(false);
@@ -75,7 +71,7 @@ const InitView = () => {
     await setDeviceInfo();
     setEnv();
     await loginDeviceOnStart();
-    await getOnboardingData(); // Load onboarding data when app starts
+    await getOnboardingData();
     // initIAP(["com.course.tier2"]);
     // initIAP(priceIds.map((i) => i.id));
   };

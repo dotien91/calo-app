@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   View,
   StyleSheet,
@@ -11,6 +11,15 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { palette } from "@theme/themes";
 import Button from "@shared-components/button/Button";
 import TextBase from "@shared-components/TextBase";
+import useStore from "@services/zustand/store";
+
+const getColors = (isDarkMode: boolean) => ({
+  bg: isDarkMode ? "#000000" : "#FFFFFF",
+  text: isDarkMode ? "#FFFFFF" : palette.text,
+  subText: isDarkMode ? "#A0A0A0" : palette.textOpacity8,
+  progressBg: isDarkMode ? "#333333" : palette.grey1,
+  footerBorder: isDarkMode ? "#333333" : palette.grey1,
+});
 
 interface MeasurePickerProps {
   type: "HEIGHT" | "WEIGHT" | "AGE";
@@ -29,6 +38,8 @@ export const MeasurePicker: React.FC<MeasurePickerProps> = ({
   onBack,
   progress = 0,
 }) => {
+  const isDarkMode = useStore((state) => state.isDarkMode);
+  const COLORS = useMemo(() => getColors(isDarkMode), [isDarkMode]);
   const isDecimal = type === "WEIGHT";
   const isAge = type === "AGE";
 
@@ -66,18 +77,18 @@ export const MeasurePicker: React.FC<MeasurePickerProps> = ({
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: COLORS.bg }]}>
       <View style={styles.header}>
         <TouchableOpacity onPress={onBack} style={styles.backButton}>
           <Icon
             name="chevron-left"
             type={IconType.Feather}
             size={28}
-            color={palette.text}
+            color={COLORS.text}
           />
         </TouchableOpacity>
 
-        <View style={styles.progressBg}>
+        <View style={[styles.progressBg, { backgroundColor: COLORS.progressBg }]}>
           <View
             style={[styles.progressFill, { width: `${progress}%` }]}
           />
@@ -106,35 +117,35 @@ export const MeasurePicker: React.FC<MeasurePickerProps> = ({
             selectedValue={selectedInt}
             pickerData={integers}
             onValueChange={setSelectedInt}
-            textColor={palette.text}
+            textColor={COLORS.text}
             textSize={32}
             selectTextColor={palette.primary}
             isShowSelectBackground={false}
-            selectBackgroundColor={palette.secondColor}
+            selectBackgroundColor={isDarkMode ? "#2C2C2E" : palette.secondColor}
           />
 
           {isDecimal && (
             <>
-              <Text style={styles.dot}>.</Text>
+              <Text style={[styles.dot, { color: COLORS.text }]}>.</Text>
               <Picker
                 style={styles.pickerDecimal}
                 selectedValue={selectedDec}
                 pickerData={decimals}
                 onValueChange={setSelectedDec}
-                textColor={palette.text}
+                textColor={COLORS.text}
                 textSize={32}
                 selectTextColor={palette.primary}
                 isShowSelectBackground={false}
-                selectBackgroundColor={palette.secondColor}
+                selectBackgroundColor={isDarkMode ? "#2C2C2E" : palette.secondColor}
               />
             </>
           )}
 
-          <Text style={styles.unitLabel}>{unit}</Text>
+          <Text style={[styles.unitLabel, { color: COLORS.subText }]}>{unit}</Text>
         </View>
       </View>
 
-      <View style={styles.footer}>
+      <View style={[styles.footer, { borderTopColor: COLORS.footerBorder }]}>
         <Button
           style={styles.button}
           text="Tiếp theo"
@@ -150,7 +161,6 @@ export const MeasurePicker: React.FC<MeasurePickerProps> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: palette.white,
   },
   header: {
     flexDirection: "row",
@@ -165,7 +175,6 @@ const styles = StyleSheet.create({
   progressBg: {
     flex: 1,
     height: 4,
-    backgroundColor: palette.grey1,
     marginHorizontal: 20,
     borderRadius: 2,
   },
@@ -209,20 +218,17 @@ const styles = StyleSheet.create({
   },
   dot: {
     fontSize: 32,
-    color: palette.text,
     fontWeight: "600",
     marginTop: 10,
   },
   unitLabel: {
     fontSize: 18,
-    color: palette.textOpacity8,
     marginLeft: 10,
     marginTop: 10,
   },
   footer: {
     padding: 16,
     borderTopWidth: 1,
-    borderTopColor: palette.grey1,
   },
   button: {
     alignItems: "center",

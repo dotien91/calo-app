@@ -19,43 +19,58 @@ import {
 import { IconCarb, IconProtein, IconFat } from '../../../assets/svg/CustomeSvg';
 import { translations } from '@localization';
 
+const DEFAULT_COLORS = {
+  bg: '#000000',
+  card: '#1C1C1E',
+  text: '#FFFFFF',
+  subText: '#8E8E93',
+  border: '#2C2C2E',
+  separator: '#2C2C2E',
+  cardSecondary: '#2C2C2E',
+  textSecondary: '#D1D1D6',
+  saveBtnBg: '#FFFFFF',
+  saveBtnText: '#000000',
+  accent: '#2ECC71',
+  iconMuted: '#3A3A3C',
+};
+
 // --- SUB-COMPONENT NHỎ (Nội bộ file này) ---
 const IngredientRow = ({
   item,
   onRemoveItem,
   readOnly = false,
+  c,
 }: {
   item: any;
   onRemoveItem: (id: string) => void;
   readOnly?: boolean;
+  c: typeof DEFAULT_COLORS;
 }) => (
   <View style={styles.ingredientRow}>
     <View style={{ flex: 1 }}>
-      <Text style={styles.ingName}>{item.name}</Text>
+      <Text style={[styles.ingName, { color: c.text }]}>{item.name}</Text>
       <View style={styles.ingMetaRow}>
-        <Text style={styles.ingWeight}>{item.weight}{item.unit || 'g'}</Text>
-        <Text style={styles.ingDot}>•</Text>
-        <Text style={styles.ingCal}>{item.cal}kcal</Text>
-        <View style={styles.verticalLine} />
-        
-        {/* Macros nhỏ */}
+        <Text style={[styles.ingWeight, { color: c.textSecondary }]}>{item.weight}{item.unit || 'g'}</Text>
+        <Text style={[styles.ingDot, { color: c.subText }]}>•</Text>
+        <Text style={[styles.ingCal, { color: c.subText }]}>{item.cal}kcal</Text>
+        <View style={[styles.verticalLine, { backgroundColor: c.border }]} />
         <View style={styles.miniMacro}>
           <IconCarb size={12} color="#F4D03F" />
-          <Text style={styles.miniMacroText}>{item.c}</Text>
+          <Text style={[styles.miniMacroText, { color: c.textSecondary }]}>{item.c}</Text>
         </View>
         <View style={styles.miniMacro}>
           <IconProtein size={12} color="#E74C3C" />
-          <Text style={styles.miniMacroText}>{item.p}</Text>
+          <Text style={[styles.miniMacroText, { color: c.textSecondary }]}>{item.p}</Text>
         </View>
         <View style={styles.miniMacro}>
           <IconFat size={12} color="#2ECC71" />
-          <Text style={styles.miniMacroText}>{item.f}</Text>
+          <Text style={[styles.miniMacroText, { color: c.textSecondary }]}>{item.f}</Text>
         </View>
       </View>
     </View>
     {!readOnly && (
       <TouchableOpacity onPress={() => onRemoveItem(item.id)}>
-        <MinusCircle size={24} color="#3A3A3C" weight="fill" />
+        <MinusCircle size={24} color={c.iconMuted} weight="fill" />
       </TouchableOpacity>
     )}
   </View>
@@ -68,6 +83,7 @@ interface ScanResultViewProps {
   onRemoveItem?: (id: string) => void;
   readOnly?: boolean;
   hideHeaderNav?: boolean;
+  COLORS?: typeof DEFAULT_COLORS;
 }
 
 const ScanResultView = ({
@@ -77,94 +93,94 @@ const ScanResultView = ({
   onRemoveItem,
   readOnly = false,
   hideHeaderNav = false,
+  COLORS: COLORSProp,
 }: ScanResultViewProps) => {
+  const c = COLORSProp ?? DEFAULT_COLORS;
+
   return (
-    <View style={styles.resultContainer}>
-      {/* HEADER NAV */}
+    <View style={[styles.resultContainer, { backgroundColor: c.bg }]}>
       {!hideHeaderNav && (
         <View style={styles.headerNav}>
           <TouchableOpacity onPress={onBack}>
-            <ArrowLeft size={24} color="#FFF" />
+            <ArrowLeft size={24} color={c.text} />
           </TouchableOpacity>
           {!readOnly && (
             <TouchableOpacity>
-              <DotsThree size={24} color="#FFF" weight="bold" />
+              <DotsThree size={24} color={c.text} weight="bold" />
             </TouchableOpacity>
           )}
         </View>
       )}
 
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-        {/* HEADER MÓN ĂN */}
         <View style={styles.foodHeader}>
           <View style={{ flex: 1 }}>
-            <Text style={styles.timeText}>{data.time}</Text>
-            <Text style={styles.foodName}>{data.name}</Text>
+            <Text style={[styles.timeText, { color: c.subText }]}>{data.time}</Text>
+            <Text style={[styles.foodName, { color: c.text }]}>{data.name}</Text>
             <View style={styles.healthRow}>
               <Heart size={16} color="#FF453A" weight="fill" />
-              <Text style={styles.healthText}>
+              <Text style={[styles.healthText, { color: c.subText }]}>
                 {(translations as any).scanner.health}: {data.healthScore}/10
               </Text>
             </View>
           </View>
-          <FastImage source={{ uri: data.image }} style={styles.foodThumbnail} />
+          <FastImage source={{ uri: data.image }} style={[styles.foodThumbnail, { borderColor: c.border }]} />
         </View>
 
-        {/* TỔNG QUAN DINH DƯỠNG */}
-        <Text style={styles.sectionTitle}>
+        <Text style={[styles.sectionTitle, { color: c.subText }]}>
           {(translations as any).scanner.nutritionTitle}
         </Text>
         <View style={styles.macroRow}>
-          <View style={styles.macroCard}>
-             <Text style={styles.macroLabel}>
+          <View style={[styles.macroCard, { backgroundColor: c.card }]}>
+             <Text style={[styles.macroLabel, { color: c.subText }]}>
                {(translations as any).scanner.quantity}
              </Text>
-             <Text style={styles.macroValueBig}>{data.total.weight}<Text style={{fontSize:16, color:'#8E8E93'}}>g</Text></Text>
+             <Text style={[styles.macroValueBig, { color: c.text }]}>
+               {data.total.weight}<Text style={{ fontSize: 16, color: c.subText }}>g</Text>
+             </Text>
           </View>
-          <View style={styles.macroCard}>
-             <Text style={styles.macroLabel}>
+          <View style={[styles.macroCard, { backgroundColor: c.card }]}>
+             <Text style={[styles.macroLabel, { color: c.subText }]}>
                {(translations as any).scanner.calories}
              </Text>
-             <Text style={styles.macroValueBig}>{data.total.calories}</Text>
+             <Text style={[styles.macroValueBig, { color: c.text }]}>{data.total.calories}</Text>
           </View>
         </View>
 
-        {/* Macros Detail */}
         <View style={styles.macroRow}>
-          <View style={styles.macroCardSmall}>
-             <Text style={styles.macroLabel}>
+          <View style={[styles.macroCardSmall, { backgroundColor: c.card }]}>
+             <Text style={[styles.macroLabel, { color: c.subText }]}>
                {(translations as any).scanner.carbs}
              </Text>
              <View style={styles.macroValueRow}>
                 <IconCarb size={18} color="#F4D03F" />
-                <Text style={styles.macroValueSmall}>{data.total.carbs}</Text>
-                <Text style={styles.unitSmall}>g</Text>
+                <Text style={[styles.macroValueSmall, { color: c.text }]}>{data.total.carbs}</Text>
+                <Text style={[styles.unitSmall, { color: c.subText }]}>g</Text>
              </View>
           </View>
-          <View style={styles.macroCardSmall}>
-             <Text style={styles.macroLabel}>
+          <View style={[styles.macroCardSmall, { backgroundColor: c.card }]}>
+             <Text style={[styles.macroLabel, { color: c.subText }]}>
                {(translations as any).scanner.protein}
              </Text>
              <View style={styles.macroValueRow}>
                 <IconProtein size={18} color="#E74C3C" />
-                <Text style={styles.macroValueSmall}>{data.total.protein}</Text>
-                <Text style={styles.unitSmall}>g</Text>
+                <Text style={[styles.macroValueSmall, { color: c.text }]}>{data.total.protein}</Text>
+                <Text style={[styles.unitSmall, { color: c.subText }]}>g</Text>
              </View>
           </View>
-          <View style={styles.macroCardSmall}>
-             <Text style={styles.macroLabel}>
+          <View style={[styles.macroCardSmall, { backgroundColor: c.card }]}>
+             <Text style={[styles.macroLabel, { color: c.subText }]}>
                {(translations as any).scanner.fat}
              </Text>
              <View style={styles.macroValueRow}>
                 <IconFat size={18} color="#2ECC71" />
-                <Text style={styles.macroValueSmall}>{data.total.fat}</Text>
-                <Text style={styles.unitSmall}>g</Text>
+                <Text style={[styles.macroValueSmall, { color: c.text }]}>{data.total.fat}</Text>
+                <Text style={[styles.unitSmall, { color: c.subText }]}>g</Text>
              </View>
           </View>
         </View>
 
-        {/* DANH SÁCH THÀNH PHẦN */}
-        <Text style={[styles.sectionTitle, { marginTop: 24 }]}>
+        <Text style={[styles.sectionTitle, { marginTop: 24, color: c.subText }]}>
           {(translations as any).scanner.ingredients}
         </Text>
         <View style={styles.ingredientsContainer}>
@@ -174,30 +190,31 @@ const ScanResultView = ({
                 item={item}
                 onRemoveItem={readOnly ? () => {} : (onRemoveItem || (() => {}))}
                 readOnly={readOnly}
+                c={c}
               />
-              <View style={styles.separator} />
+              <View style={[styles.separator, { backgroundColor: c.separator }]} />
             </React.Fragment>
           ))}
         </View>
 
         {!readOnly && (
           <TouchableOpacity style={styles.addIngredientBtn}>
-            <Plus size={16} color="#2ECC71" weight="bold"/>
-            <Text style={styles.addIngredientText}>
+            <Plus size={16} color={c.accent} weight="bold"/>
+            <Text style={[styles.addIngredientText, { color: c.accent }]}>
               {(translations as any).scanner.addIngredient}
             </Text>
           </TouchableOpacity>
         )}
 
         {!readOnly && (
-          <Text style={styles.helperText}>
+          <Text style={[styles.helperText, { color: c.subText }]}>
             {(translations as any).scanner.tweakHint}
           </Text>
         )}
 
         {!readOnly && (
-          <TouchableOpacity style={styles.editBtn}>
-            <Text style={styles.editBtnText}>
+          <TouchableOpacity style={[styles.editBtn, { backgroundColor: c.cardSecondary }]}>
+            <Text style={[styles.editBtnText, { color: c.text }]}>
               {(translations as any).scanner.editResult}
             </Text>
           </TouchableOpacity>
@@ -205,11 +222,10 @@ const ScanResultView = ({
         <View style={{ height: 100 }} /> 
       </ScrollView>
 
-      {/* FOOTER FIXED */}
       {!readOnly && onSave ? (
-        <View style={styles.fixedFooter}>
-          <TouchableOpacity style={styles.saveBtn} onPress={onSave}>
-            <Text style={styles.saveBtnText}>
+        <View style={[styles.fixedFooter, { backgroundColor: c.bg, borderTopColor: c.border }]}>
+          <TouchableOpacity style={[styles.saveBtn, { backgroundColor: c.saveBtnBg }]} onPress={onSave}>
+            <Text style={[styles.saveBtnText, { color: c.saveBtnText }]}>
               {(translations as any).scanner.save}
             </Text>
           </TouchableOpacity>
@@ -220,20 +236,14 @@ const ScanResultView = ({
 };
 
 const styles = StyleSheet.create({
-  resultContainer: {
-    flex: 1,
-    backgroundColor: '#000000',
-  },
+  resultContainer: { flex: 1 },
   headerNav: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 16,
     paddingVertical: 10,
   },
-  scrollContent: {
-    paddingHorizontal: 16,
-    paddingBottom: 20,
-  },
+  scrollContent: { paddingHorizontal: 16, paddingBottom: 20 },
   foodHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -241,58 +251,58 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginTop: 10,
   },
-  timeText: { color: '#8E8E93', fontSize: 14, marginBottom: 4 },
-  foodName: { color: '#FFF', fontSize: 28, fontWeight: 'bold', marginBottom: 8 },
+  timeText: { fontSize: 14, marginBottom: 4 },
+  foodName: { fontSize: 28, fontWeight: 'bold', marginBottom: 8 },
   healthRow: { flexDirection: 'row', alignItems: 'center' },
-  healthText: { color: '#8E8E93', fontSize: 14, marginLeft: 6 },
-  foodThumbnail: {
-    width: 150, height: 100, borderRadius: 12, borderWidth: 2, borderColor: '#333',
-  },
-  sectionTitle: { color: '#8E8E93', fontSize: 16, marginBottom: 12 },
+  healthText: { fontSize: 14, marginLeft: 6 },
+  foodThumbnail: { width: 150, height: 100, borderRadius: 12, borderWidth: 2 },
+  sectionTitle: { fontSize: 16, marginBottom: 12 },
   macroRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 },
-  macroCard: {
-    backgroundColor: '#1C1C1E', borderRadius: 16, padding: 16, width: '48%', alignItems: 'center',
-  },
-  macroCardSmall: {
-    backgroundColor: '#1C1C1E', borderRadius: 16, padding: 12, width: '31%', alignItems: 'center',
-  },
-  macroLabel: { color: '#8E8E93', fontSize: 13, marginBottom: 4 },
-  macroValueBig: { color: '#FFF', fontSize: 24, fontWeight: 'bold' },
+  macroCard: { borderRadius: 16, padding: 16, width: '48%', alignItems: 'center' },
+  macroCardSmall: { borderRadius: 16, padding: 12, width: '31%', alignItems: 'center' },
+  macroLabel: { fontSize: 13, marginBottom: 4 },
+  macroValueBig: { fontSize: 24, fontWeight: 'bold' },
   macroValueRow: { flexDirection: 'row', alignItems: 'flex-end', marginTop: 4 },
-  macroValueSmall: { color: '#FFF', fontSize: 18, fontWeight: 'bold', marginLeft: 4 },
-  unitSmall: { color: '#8E8E93', fontSize: 12, marginLeft: 2, marginBottom: 2 },
-  
+  macroValueSmall: { fontSize: 18, fontWeight: 'bold', marginLeft: 4 },
+  unitSmall: { fontSize: 12, marginLeft: 2, marginBottom: 2 },
   ingredientsContainer: {},
   ingredientRow: {
-    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 12,
   },
-  separator: { height: 1, backgroundColor: '#2C2C2E' },
-  ingName: { color: '#FFF', fontSize: 16, fontWeight: '500', marginBottom: 6 },
+  separator: { height: 1 },
+  ingName: { fontSize: 16, fontWeight: '500', marginBottom: 6 },
   ingMetaRow: { flexDirection: 'row', alignItems: 'center' },
-  ingWeight: { color: '#EBEBF5', fontSize: 13, fontWeight: '500' },
-  ingDot: { color: '#8E8E93', marginHorizontal: 4, fontSize: 10 },
-  ingCal: { color: '#8E8E93', fontSize: 13 },
-  verticalLine: { width: 1, height: 12, backgroundColor: '#444', marginHorizontal: 8 },
+  ingWeight: { fontSize: 13, fontWeight: '500' },
+  ingDot: { marginHorizontal: 4, fontSize: 10 },
+  ingCal: { fontSize: 13 },
+  verticalLine: { width: 1, height: 12, marginHorizontal: 8 },
   miniMacro: { flexDirection: 'row', alignItems: 'center', marginRight: 8 },
-  miniMacroText: { color: '#D1D1D6', fontSize: 12, marginLeft: 2 },
-  
+  miniMacroText: { fontSize: 12, marginLeft: 2 },
   addIngredientBtn: { flexDirection: 'row', alignItems: 'center', marginTop: 16 },
-  addIngredientText: { color: '#2ECC71', fontSize: 15, fontWeight: '600', marginLeft: 8 },
+  addIngredientText: { fontSize: 15, fontWeight: '600', marginLeft: 8 },
   helperText: {
-    color: '#8E8E93', fontSize: 13, textAlign: 'center', marginTop: 30, marginBottom: 12, paddingHorizontal: 20,
+    fontSize: 13,
+    textAlign: 'center',
+    marginTop: 30,
+    marginBottom: 12,
+    paddingHorizontal: 20,
   },
-  editBtn: {
-    backgroundColor: '#2C2C2E', paddingVertical: 14, borderRadius: 24, alignItems: 'center', marginBottom: 20,
-  },
-  editBtnText: { color: '#FFF', fontSize: 16, fontWeight: '600' },
+  editBtn: { paddingVertical: 14, borderRadius: 24, alignItems: 'center', marginBottom: 20 },
+  editBtnText: { fontSize: 16, fontWeight: '600' },
   fixedFooter: {
-    position: 'absolute', bottom: 0, left: 0, right: 0, padding: 16, paddingBottom: 30,
-    backgroundColor: '#000', borderTopWidth: 1, borderTopColor: '#1C1C1E',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: 16,
+    paddingBottom: 30,
+    borderTopWidth: 1,
   },
-  saveBtn: {
-    backgroundColor: '#FFF', paddingVertical: 16, borderRadius: 30, alignItems: 'center',
-  },
-  saveBtnText: { color: '#000', fontSize: 16, fontWeight: 'bold' },
+  saveBtn: { paddingVertical: 16, borderRadius: 30, alignItems: 'center' },
+  saveBtnText: { fontSize: 16, fontWeight: 'bold' },
 });
 
 export default ScanResultView;

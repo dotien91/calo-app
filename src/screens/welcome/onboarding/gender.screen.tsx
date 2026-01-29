@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   View,
   StyleSheet,
@@ -8,18 +8,21 @@ import {
 } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import { useRoute } from "@react-navigation/native";
-import { ScreenWidth } from "@freakycoder/react-native-helpers";
 
 import Button from "@shared-components/button/Button";
 import TextBase from "@shared-components/TextBase";
 import { SCREENS } from "constants";
 import { palette } from "@theme/themes";
 import { PlanCalculationData } from "@utils/plan.utils";
+import useStore from "@services/zustand/store";
+import { createStyles } from "./onboarding.screen.style";
 
 const GenderScreen: React.FC = () => {
   const route = useRoute();
   const formData = (route.params as any)?.formData as PlanCalculationData || {};
   const [gender, setGender] = useState<"MALE" | "FEMALE">(formData.gender || "MALE");
+  const isDarkMode = useStore((state) => state.isDarkMode);
+  const { COLORS } = useMemo(() => createStyles(isDarkMode), [isDarkMode]);
 
   const handleNext = () => {
     const updatedData = { ...formData, gender };
@@ -27,7 +30,7 @@ const GenderScreen: React.FC = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: COLORS.bg }]}>
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.contentContainer}
@@ -49,7 +52,10 @@ const GenderScreen: React.FC = () => {
           <TouchableOpacity
             style={[
               styles.optionButton,
-              gender === "MALE" && styles.optionButtonSelected,
+              {
+                borderColor: gender === "MALE" ? COLORS.borderSelected : COLORS.border,
+                backgroundColor: gender === "MALE" ? COLORS.primary : COLORS.card,
+              },
             ]}
             onPress={() => setGender("MALE")}
           >
@@ -65,7 +71,10 @@ const GenderScreen: React.FC = () => {
           <TouchableOpacity
             style={[
               styles.optionButton,
-              gender === "FEMALE" && styles.optionButtonSelected,
+              {
+                borderColor: gender === "FEMALE" ? COLORS.borderSelected : COLORS.border,
+                backgroundColor: gender === "FEMALE" ? COLORS.primary : COLORS.card,
+              },
             ]}
             onPress={() => setGender("FEMALE")}
           >
@@ -80,7 +89,7 @@ const GenderScreen: React.FC = () => {
         </View>
       </ScrollView>
 
-      <View style={styles.footer}>
+      <View style={[styles.footer, { borderTopColor: COLORS.footerBorder }]}>
         <Button
           style={styles.button}
           text="Tiếp tục"
@@ -96,50 +105,19 @@ const GenderScreen: React.FC = () => {
 export default GenderScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: palette.white,
-  },
-  scrollView: {
-    flex: 1,
-  },
-  contentContainer: {
-    padding: 16,
-    paddingTop: 40,
-  },
-  title: {
-    textAlign: "center",
-    marginBottom: 12,
-  },
-  subtitle: {
-    textAlign: "center",
-    marginBottom: 32,
-  },
-  optionsContainer: {
-    gap: 16,
-    marginTop: 20,
-  },
+  container: { flex: 1 },
+  scrollView: { flex: 1 },
+  contentContainer: { padding: 16, paddingTop: 40 },
+  title: { textAlign: "center", marginBottom: 12 },
+  subtitle: { textAlign: "center", marginBottom: 32 },
+  optionsContainer: { gap: 16, marginTop: 20 },
   optionButton: {
     paddingVertical: 20,
     paddingHorizontal: 24,
     borderRadius: 12,
     borderWidth: 2,
-    borderColor: palette.grey1,
     alignItems: "center",
-    backgroundColor: palette.white,
   },
-  optionButtonSelected: {
-    backgroundColor: palette.primary,
-    borderColor: palette.primary,
-  },
-  footer: {
-    padding: 16,
-    borderTopWidth: 1,
-    borderTopColor: palette.grey1,
-  },
-  button: {
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 12,
-  },
+  footer: { padding: 16, borderTopWidth: 1 },
+  button: { alignItems: "center", justifyContent: "center", borderRadius: 12 },
 });

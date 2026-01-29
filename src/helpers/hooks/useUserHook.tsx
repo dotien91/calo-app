@@ -79,42 +79,31 @@ export const useUserHook = () => {
     getCurrentUser().then((res) => {
       console.log("current user data", res?.data);
       if (!res.isError) {
-        console.log("token", _getJson(USER_TOKEN), res.data);
         initData(res.data, initUserData);
-      }
-      if (codeInvite && codeInvite !== "") {
-        const data = {
-          invitation_code: codeInvite,
-        };
-        postInvitationCode(data).then((res) => {
-          if (!res.isError) {
-            console.log("data,", res.data);
-            setShowInvite(false);
-            setCodeInvite("");
-          } else {
-            console.log("data,", res.message);
-          }
-        });
       }
     });
   };
 
   const loginDeviceOnStart = async () => {
-    const device_uuid = getDeviceId();
-    if (!device_uuid) return;
+    try {
+  
+      const device_uuid = getDeviceId();
+      if (!device_uuid) return;
 
-    const res = await loginWithDevice({ device_uuid });
-    if (!res?.isError) {
-      const token =
-        res?.headers?.["x-authorization"] ||
-        res?.headers?.["X-Authorization"];
-      if (token) {
-        _setJson(USER_TOKEN, token);
+      const res = await loginWithDevice({ device_uuid });
+      initData(res.data, true);
+      console.log("res loginDeviceOnStart", res);
+      if (!res?.isError) {
+        const token =
+          res?.headers?.["x-authorization"] ||
+          res?.headers?.["X-Authorization"];
+        if (token) {
+          _setJson(USER_TOKEN, token);
+        }
       }
+    } catch (error) {
+        
     }
-
-    // Always try to refresh current user after device login
-    getUserData(true);
   };
 
   const initData = (data: TypedUser, initUserData: boolean) => {

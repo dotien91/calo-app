@@ -3,8 +3,8 @@ import { Theme } from "@react-navigation/native";
 // Định nghĩa các màu gốc (Base Palette)
 export const palette = {
   // --- Brand Colors (CaloSnap) ---
-  primary: "#A2E737", // Màu xanh nõn chuối (Lime Green)
-  primaryDark: "#8BC34A",
+  primary: "#457a08", // Màu xanh nõn chuối (Lime Green)
+  primaryDark: "#457a08",
   accent: "#A2E737",
   
   // --- Basic Colors ---

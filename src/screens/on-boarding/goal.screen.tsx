@@ -276,7 +276,8 @@ const GoalDetailScreen = () => {
     try {
       setLoading(true);
       const response = await updateOnboardingGoals(updateData);
-      if (response.success) {
+      console.log("responseresponse", response);
+      if (!response.isError) {
         console.log("Update success:", response.data);
         
         // Update onboarding data in store

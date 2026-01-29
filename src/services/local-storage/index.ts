@@ -5,6 +5,7 @@ export const LocalStorage = new MMKV();
 
 export const USER_TOKEN = "userToken";
 export const LANG = "language";
+export const HAS_COMPLETED_ONBOARDING = "has_completed_onboarding";
 
 export const _getJson = (key: string) => {
   const data: string = LocalStorage.getString(key) || "";

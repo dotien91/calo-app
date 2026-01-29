@@ -28,8 +28,10 @@ const HomeScreen = () => {
 
   // 2. State lưu dữ liệu cả tuần từ API
   const [weeklyData, setWeeklyData] = useState<any[]>([]);
+  const [loadingWeekly, setLoadingWeekly] = useState(true);
 
   const fetchWeekData = useCallback(async () => {
+    setLoadingWeekly(true);
     try {
       const today = format(new Date(), 'yyyy-MM-dd');
       const res = await getCalorieDay(today);
@@ -38,6 +40,8 @@ const HomeScreen = () => {
       }
     } catch (err) {
       console.log('Error fetching calories:', err);
+    } finally {
+      setLoadingWeekly(false);
     }
   }, []);
 
@@ -126,7 +130,7 @@ const HomeScreen = () => {
         </View>
 
         <BannerCard styles={styles} COLORS={COLORS} />
-        <RecentActivity data={weeklyData} selectedDate={selectedDate} />
+        <RecentActivity data={weeklyData} selectedDate={selectedDate} loading={loadingWeekly} />
 
       </ScrollView>
     </SafeAreaView>

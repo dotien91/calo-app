@@ -137,8 +137,7 @@ export async function submitOnboarding(
     urlPath: "calorie/onboarding",
     data,
   }).then((response: any) => {
-     if (response.isError) throw response;
-    return response.data;
+    return response;
   });
 }
 
@@ -168,8 +167,7 @@ export async function updateOnboardingGoals(
     urlPath: "calorie/onboarding",
     data,
   }).then((response: any) => {
-     if (response.isError) throw response;
-    return response.data;
+    return response;
   });
 }
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   View,
   StyleSheet,
@@ -18,12 +18,15 @@ import Button from "@shared-components/button/Button";
 import TextBase from "@shared-components/TextBase";
 import { SCREENS } from "constants";
 import { palette } from "@theme/themes";
+import { createStyles } from "./onboarding.screen.style";
 
 interface OnboardingScreenProps {}
 
 const OnboardingScreen: React.FC<OnboardingScreenProps> = () => {
   const setLanguage = useStore((state) => state.setLanguage);
   const currentLanguage = useStore((state) => state.language);
+  const isDarkMode = useStore((state) => state.isDarkMode);
+  const { COLORS } = useMemo(() => createStyles(isDarkMode), [isDarkMode]);
 
   const languageList = [
     {
@@ -66,7 +69,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: COLORS.bg }]}>
       <ScrollView
         style={styles.screenContainer}
         contentContainerStyle={styles.screenContent}
@@ -97,14 +100,17 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = () => {
                 key={item.value}
                 style={[
                   styles.optionCard,
-                  isSelected && styles.optionCardSelected,
+                  {
+                    borderColor: isSelected ? COLORS.borderSelected : COLORS.border,
+                    backgroundColor: isSelected ? COLORS.cardSelected : COLORS.card,
+                  },
                 ]}
                 onPress={() => handleLanguageSelect(item.value)}
               >
                 <View style={styles.languageItem}>
                   <View style={styles.languageLeft}>
                     {item.flag}
-                    <Text style={styles.languageText}>{item.label}</Text>
+                    <Text style={[styles.languageText, { color: COLORS.text }]}>{item.label}</Text>
                   </View>
                   {isSelected && <IconSvg name="icCheckCircleFill" size={24} />}
                 </View>
@@ -132,7 +138,6 @@ export default OnboardingScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: palette.white,
   },
   screenContainer: {
     flex: 1,
@@ -157,12 +162,6 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 12,
     borderWidth: 2,
-    borderColor: palette.grey1,
-    backgroundColor: palette.white,
-  },
-  optionCardSelected: {
-    borderColor: palette.primary,
-    backgroundColor: palette.secondColor,
   },
   languageItem: {
     flexDirection: "row",
@@ -178,7 +177,6 @@ const styles = StyleSheet.create({
   languageText: {
     fontSize: 18,
     fontWeight: "600",
-    color: palette.text,
   },
   footer: {
     paddingTop: 24,

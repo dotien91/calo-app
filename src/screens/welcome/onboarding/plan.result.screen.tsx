@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   View,
   StyleSheet,
   ScrollView,
   SafeAreaView,
   Alert,
-  ActivityIndicator,
 } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import { useRoute } from "@react-navigation/native";
@@ -15,9 +14,10 @@ import TextBase from "@shared-components/TextBase";
 import { SCREENS } from "constants";
 import { palette } from "@theme/themes";
 import { PlanResult } from "@utils/plan.utils";
-import { _setJson } from "@services/local-storage";
+import { _setJson, HAS_COMPLETED_ONBOARDING } from "@services/local-storage";
 import { submitOnboarding, OnboardingData, Gender, ActivityLevel, WeightGoalPace } from "@services/api/calorie.api";
-import useStore from '@services/zustand/store';
+import useStore from "@services/zustand/store";
+import { createStyles } from "./onboarding.screen.style";
 
 interface PlanResultScreenProps {}
 
@@ -26,6 +26,8 @@ const PlanResultScreen: React.FC<PlanResultScreenProps> = () => {
   const planResult = (route.params as any)?.planResult as PlanResult;
   const [loading, setLoading] = useState(false);
   const setOnboardingData = useStore((state) => state.setOnboardingData);
+  const isDarkMode = useStore((state) => state.isDarkMode);
+  const { COLORS } = useMemo(() => createStyles(isDarkMode), [isDarkMode]);
 
   if (!planResult) {
     return null;
@@ -69,11 +71,8 @@ const PlanResultScreen: React.FC<PlanResultScreenProps> = () => {
       const response = await submitOnboarding(onboardingData);
       
       if (response.success) {
-        console.log("Onboarding submitted successfully");
-        
-        // Save onboarding data to store
         setOnboardingData(response.data.onboarding);
-        
+        _setJson(HAS_COMPLETED_ONBOARDING, true);
         NavigationService.replace(SCREENS.TABS);
       }
     } catch (error: any) {
@@ -102,7 +101,7 @@ const PlanResultScreen: React.FC<PlanResultScreenProps> = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: COLORS.bg }]}>
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.contentContainer}
@@ -122,7 +121,7 @@ const PlanResultScreen: React.FC<PlanResultScreenProps> = () => {
           </TextBase>
         </View>
 
-        <View style={styles.card}>
+        <View style={[styles.card, { backgroundColor: COLORS.card, borderColor: COLORS.border }]}>
           <View style={styles.cardHeader}>
             <TextBase fontSize={20} fontWeight="700" color="text">
               Thông tin của bạn
@@ -172,7 +171,7 @@ const PlanResultScreen: React.FC<PlanResultScreenProps> = () => {
           </View>
         </View>
 
-        <View style={styles.card}>
+        <View style={[styles.card, { backgroundColor: COLORS.card, borderColor: COLORS.border }]}>
           <View style={styles.cardHeader}>
             <TextBase fontSize={20} fontWeight="700" color="text">
               Mục tiêu
@@ -209,7 +208,7 @@ const PlanResultScreen: React.FC<PlanResultScreenProps> = () => {
           </View>
         </View>
 
-        <View style={styles.card}>
+        <View style={[styles.card, { backgroundColor: COLORS.card, borderColor: COLORS.border }]}>
           <View style={styles.cardHeader}>
             <TextBase fontSize={20} fontWeight="700" color="text">
               Calories hàng ngày
@@ -225,7 +224,7 @@ const PlanResultScreen: React.FC<PlanResultScreenProps> = () => {
           </View>
         </View>
 
-        <View style={styles.card}>
+        <View style={[styles.card, { backgroundColor: COLORS.card, borderColor: COLORS.border }]}>
           <View style={styles.cardHeader}>
             <TextBase fontSize={20} fontWeight="700" color="text">
               Phân bổ Macro
@@ -279,7 +278,7 @@ const PlanResultScreen: React.FC<PlanResultScreenProps> = () => {
           </View>
         </View>
 
-        <View style={styles.infoCard}>
+        <View style={[styles.infoCard, { backgroundColor: COLORS.infoCardBg }]}>
           <TextBase fontSize={14} fontWeight="400" color="textOpacity8" style={styles.infoText}>
             💡 Lưu ý: Đây là kế hoạch tham khảo dựa trên công thức Mifflin-St Jeor. 
             Kết quả có thể khác nhau tùy theo cơ địa và chế độ tập luyện của bạn.
@@ -287,21 +286,20 @@ const PlanResultScreen: React.FC<PlanResultScreenProps> = () => {
         </View>
       </ScrollView>
 
-      <View style={styles.footer}>
+      <View style={[styles.footer, { backgroundColor: COLORS.footerBg, borderTopColor: COLORS.footerBorder }]}>
         <Button
           style={styles.button}
           text="Bắt đầu"
           backgroundColor={palette.primary}
           textColor={palette.white}
           onPress={handleFinish}
-          isLoading={loading}
           disabled={loading}
         />
         
         <Button
-          style={[styles.button, styles.restartButton]}
+          style={[styles.button, styles.restartButton, { borderColor: COLORS.borderSelected }] as any}
           text="Bắt đầu lại"
-          backgroundColor={palette.white}
+          backgroundColor={COLORS.card}
           textColor={palette.primary}
           onPress={handleRestart}
           disabled={loading}
@@ -316,14 +314,13 @@ export default PlanResultScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: palette.white,
   },
   scrollView: {
     flex: 1,
   },
   contentContainer: {
     padding: 16,
-    paddingBottom: 160, // Tăng padding bottom để tránh button
+    paddingBottom: 160,
   },
   header: {
     marginBottom: 24,
@@ -337,12 +334,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   card: {
-    backgroundColor: palette.white,
     borderRadius: 16,
     padding: 20,
     marginBottom: 16,
     borderWidth: 1,
-    borderColor: palette.grey1,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -410,7 +405,6 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   infoCard: {
-    backgroundColor: palette.grey1 + "20",
     borderRadius: 12,
     padding: 16,
     marginTop: 8,
@@ -424,9 +418,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     padding: 16,
-    backgroundColor: palette.white,
     borderTopWidth: 1,
-    borderTopColor: palette.grey1,
   },
   button: {
     alignItems: "center",
@@ -436,6 +428,5 @@ const styles = StyleSheet.create({
   restartButton: {
     marginTop: 12,
     borderWidth: 1,
-    borderColor: palette.primary,
-  }
+  },
 });

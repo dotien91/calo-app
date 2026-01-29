@@ -4,8 +4,6 @@ import { StoreSlice } from "@zustand";
 export interface AppSlice {
   isDarkMode: boolean;
   setDarkMode: (value: boolean) => void;
-  isFirstOpenApp: boolean;
-  setIsFirstOpenApp: (value: boolean) => void;
   language: string;
   setLanguage: (language: string) => void;
   isShowWelcome: boolean;
@@ -13,10 +11,8 @@ export interface AppSlice {
 }
 
 const createAppSlice: StoreSlice<AppSlice> = (set) => ({
-  isDarkMode: false,
+  isDarkMode: true,
   setDarkMode: (value: boolean) => set({ isDarkMode: value }),
-  isFirstOpenApp: true,
-  setIsFirstOpenApp: (value: boolean) => set({ isFirstOpenApp: value }),
   language: _getLang(),
   setLanguage: (value: string) => set({ language: value }),
   isShowWelcome: true,

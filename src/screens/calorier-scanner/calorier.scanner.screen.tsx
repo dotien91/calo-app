@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Alert } from 'react-native';
+import React, { useState, useEffect, useMemo } from 'react';
+import { Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 // 1. IMPORT COMPONENTS
 import ScanningView from './components/ScanningView';
-import ScanResultView from './components/ScanResultView'; // Giả sử bạn đã có file này
+import ScanResultView from './components/ScanResultView';
 
 // 2. IMPORT HOOKS & SERVICES
 import { useAnalysisImageFood } from '@helpers/hooks/useAnalysisImageFood';
@@ -14,13 +14,17 @@ import eventEmitter from '@services/event-emitter';
 import { createManualCalorie } from '@services/api/calorie.api';
 import Header from '@shared-components/header/Header';
 import { translations } from '@localization';
+import useStore from '@services/zustand/store';
+import { createStyles } from './calorier.scanner.screen.style';
 
 // --- TYPES MAPPING (Nếu file hook chưa export đủ type UI) ---
 // Nếu bạn đã định nghĩa type trong hook thì import vào, nếu chưa thì định nghĩa tại đây để map.
 type ViewMode = 'SCANNING' | 'RESULT';
 
 const CalorieScannerScreen = () => {
-  // State quản lý màn hình
+  const isDarkMode = useStore((state) => state.isDarkMode);
+  const { COLORS, styles } = useMemo(() => createStyles(isDarkMode), [isDarkMode]);
+
   const [viewMode, setViewMode] = useState<ViewMode>('SCANNING');
   const [foodResult, setFoodResult] = useState<any | null>(null);
 
@@ -147,11 +151,11 @@ const CalorieScannerScreen = () => {
 
   // --- RENDER ---
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: COLORS.bg }]}>
       <Header
         text={viewMode === 'SCANNING' ? (translations as any).scanner.title : (translations as any).scanner.result}
         onPressLeft={viewMode === 'SCANNING' ? goBack : handleBackToScan}
-        customStyle={{ backgroundColor: '#000', marginBottom: 0, shadowOpacity: 0, elevation: 0 }}
+        customStyle={{ backgroundColor: COLORS.bg, marginBottom: 0, shadowOpacity: 0, elevation: 0 }}
       />
       {viewMode === 'SCANNING' ? (
         <ScanningView 
@@ -177,17 +181,11 @@ const CalorieScannerScreen = () => {
           onSave={handleSave}
           onRemoveItem={handleRemoveIngredient} 
           hideHeaderNav
+          COLORS={COLORS}
         />
       )}
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#000', // Nền đen cho trải nghiệm Camera tốt nhất
-  },
-});
 
 export default CalorieScannerScreen;

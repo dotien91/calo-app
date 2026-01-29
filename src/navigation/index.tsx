@@ -11,12 +11,8 @@ import { SCREENS } from "constants";
 import { DarkTheme, LightTheme } from "@theme/themes";
 // ? Screens
 import useStore from "@services/zustand/store";
-import {
-  OnboardingStackData,
-  StackIntroData,
-  CommonStackData, // <--- 1. Thêm import này
-} from "./navigation.constant";
-import PlanResultScreen from "@screens/welcome/onboarding/plan.result.screen";
+import { _getJson, _setJson, HAS_COMPLETED_ONBOARDING } from "@services/local-storage";
+import { StackIntroData, CommonStackData } from "./navigation.constant";
 import { navigate } from "@helpers/navigation.helper";
 import eventEmitter from "@services/event-emitter";
 import HomeScreen from "@screens/home/home.screen";
@@ -34,11 +30,9 @@ const HealthStack = createStackNavigator();
 
 const Navigation = () => {
   const isDarkMode = useStore((state) => state.isDarkMode);
-  
-  // Hardcode to always show onboarding flow or logic here
-  const isFirstOpenApp = false; 
-
+  const hasCompletedOnboarding = _getJson(HAS_COMPLETED_ONBOARDING) === true; 
   React.useEffect((): any => {
+    // _setJson(HAS_COMPLETED_ONBOARDING, false);
     return () => (isReadyRef.current = false);
   }, []);
 
@@ -118,7 +112,7 @@ const Navigation = () => {
   };
 
   const renderStackIntro = () => {
-    if (!isFirstOpenApp) return null;
+    if (hasCompletedOnboarding) return null;
     return (
       <>
         {StackIntroData.map((item) => (
@@ -128,21 +122,6 @@ const Navigation = () => {
             component={item.screen}
           />
         ))}
-      </>
-    );
-  };
-
-  const renderOnboardingStack = () => {
-    return (
-      <>
-        {OnboardingStackData.map((item) => (
-          <Stack.Screen
-            key={item.name}
-            name={item.name}
-            component={item.screen}
-          />
-        ))}
-        <Stack.Screen name={SCREENS.PLAN_RESULT} component={PlanResultScreen} />
       </>
     );
   };
@@ -176,11 +155,9 @@ const Navigation = () => {
     >
       <Stack.Navigator 
         screenOptions={{ headerShown: false }}
-        initialRouteName={isFirstOpenApp ? SCREENS.ONBOARDING : SCREENS.TABS}
+        initialRouteName={hasCompletedOnboarding ? SCREENS.TABS : SCREENS.ONBOARDING}
       >
         {renderStackIntro()}
-        {/* {renderOnboardingStack()} */}
-        
         {/* Main Tab */}
         <Stack.Screen name={SCREENS.TABS} component={TabNavigation} />
         
