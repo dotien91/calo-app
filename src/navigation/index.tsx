@@ -155,7 +155,7 @@ const Navigation = () => {
     >
       <Stack.Navigator 
         screenOptions={{ headerShown: false }}
-        initialRouteName={hasCompletedOnboarding ? SCREENS.TABS : SCREENS.ONBOARDING}
+        initialRouteName={hasCompletedOnboarding ? SCREENS.TABS : SCREENS.INTRO}
       >
         {renderStackIntro()}
         {/* Main Tab */}

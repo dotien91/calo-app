@@ -1,21 +1,19 @@
 import React, { useState, useMemo } from "react";
 import {
   View,
-  StyleSheet,
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
 } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
-import { useRoute } from "@react-navigation/native";
+import { useRoute, useTheme } from "@react-navigation/native";
 
 import Button from "@shared-components/button/Button";
 import TextBase from "@shared-components/TextBase";
 import { SCREENS } from "constants";
 import { palette } from "@theme/themes";
 import { PlanCalculationData, PlanResult, calculatePlan } from "@utils/plan.utils";
-import useStore from "@services/zustand/store";
-import { createStyles } from "./onboarding.screen.style";
+import { createStyles, getOnboardingColors } from "./onboarding.screen.style";
 
 const defaultFormData: PlanCalculationData = {
   currentWeight: "",
@@ -41,6 +39,7 @@ const paces = [
 ];
 
 const PaceScreen: React.FC<PaceScreenProps> = (props) => {
+  const theme = useTheme();
   const route = useRoute();
   const fromRoute = (route.params as any)?.formData as PlanCalculationData | undefined;
   const formData: PlanCalculationData = {
@@ -50,8 +49,9 @@ const PaceScreen: React.FC<PaceScreenProps> = (props) => {
   const [pace, setPace] = useState<PlanCalculationData["pace"]>(
     formData.pace || "NORMAL"
   );
-  const isLightMode = useStore((state) => state.isLightMode);
-  const { COLORS } = useMemo(() => createStyles(isLightMode), [isLightMode]);
+  const styles = useMemo(() => createStyles(theme), [theme]);
+  const { cardSelected, borderSelected } = useMemo(() => getOnboardingColors(theme), [theme]);
+  const { colors } = theme;
 
   const handleFinish = () => {
     const updatedData: PlanCalculationData = { ...formData, pace };
@@ -63,8 +63,11 @@ const PaceScreen: React.FC<PaceScreenProps> = (props) => {
     }
   };
 
+  const fromRouter = props.onNext == null;
+  const Wrapper = fromRouter ? SafeAreaView : View;
+
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: COLORS.bg }]}>
+    <Wrapper style={styles.container}>
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.contentContainer}
@@ -89,8 +92,8 @@ const PaceScreen: React.FC<PaceScreenProps> = (props) => {
               style={[
                 styles.optionCard,
                 {
-                  borderColor: pace === item.key ? COLORS.borderSelected : COLORS.border,
-                  backgroundColor: pace === item.key ? COLORS.cardSelected : COLORS.card,
+                  borderColor: pace === item.key ? borderSelected : colors.border,
+                  backgroundColor: pace === item.key ? cardSelected : colors.card,
                 },
               ]}
               onPress={() =>
@@ -117,7 +120,7 @@ const PaceScreen: React.FC<PaceScreenProps> = (props) => {
         </View>
       </ScrollView>
 
-      <View style={[styles.footer, { borderTopColor: COLORS.footerBorder }]}>
+      <View style={styles.footer}>
         <Button
           style={styles.button}
           text="Xem kết quả"
@@ -126,21 +129,8 @@ const PaceScreen: React.FC<PaceScreenProps> = (props) => {
           onPress={handleFinish}
         />
       </View>
-    </SafeAreaView>
+    </Wrapper>
   );
 };
 
 export default PaceScreen;
-
-const styles = StyleSheet.create({
-  container: { flex: 1 },
-  scrollView: { flex: 1 },
-  contentContainer: { padding: 16, paddingTop: 40 },
-  title: { textAlign: "center", marginBottom: 12 },
-  subtitle: { textAlign: "center", marginBottom: 32 },
-  optionsContainer: { gap: 16, marginTop: 20 },
-  optionCard: { padding: 20, borderRadius: 12, borderWidth: 2 },
-  optionDesc: { marginTop: 4 },
-  footer: { padding: 16, borderTopWidth: 1 },
-  button: { alignItems: "center", justifyContent: "center", borderRadius: 12 },
-});

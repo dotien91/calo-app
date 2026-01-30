@@ -265,6 +265,14 @@ export default {
     result: "Kết quả",
   },
 
+  // --- Intro (first-time welcome) ---
+  intro: {
+    title: "Theo dõi calo\ndễ dàng hơn",
+    getStarted: "Bắt đầu",
+    alreadyHaveAccount: "Đã có tài khoản? ",
+    signIn: "Đăng nhập",
+  },
+
   // --- Login / Auth ---
   login: {
     requireLogin: "Vui lòng đăng nhập để tiếp tục",

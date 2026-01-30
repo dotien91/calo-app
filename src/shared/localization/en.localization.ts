@@ -265,6 +265,14 @@ export default {
     result: "Result",
   },
 
+  // --- Intro (first-time welcome) ---
+  intro: {
+    title: "Calorie tracking\nmade easy",
+    getStarted: "Get Started",
+    alreadyHaveAccount: "Already have an account? ",
+    signIn: "Sign In",
+  },
+
   // --- Login / Auth ---
   login: {
     requireLogin: "Please log in to continue",

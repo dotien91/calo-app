@@ -50,6 +50,7 @@ export enum EnumModalContentType {
   GiftingLive = "gifting-live",
   QuickActionMenu = "quick-action-menu",
   ConfirmEvaluation = "ConfirmEvaluation",
+  ChooseLanguage = "choose-language",
 }
 
 export enum EnumStyleModalType {

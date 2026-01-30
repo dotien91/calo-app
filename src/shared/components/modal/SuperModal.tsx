@@ -4,6 +4,7 @@ import Modal from "react-native-modal";
 import AnimatedLottieView from "lottie-react-native";
 
 import eventEmitter from "@services/event-emitter";
+import useStore from "@services/zustand/store";
 import { palette } from "@theme/themes";
 import {
   EnumModalContentType,
@@ -32,10 +33,12 @@ import ConfirmViewBottom from "@shared-components/comfirm-view-bottom/comfirm.vi
 import ViewMore from "./modal-inner/ViewMore";
 import SubscriptionView from "./modal-inner/SubscriptionView";
 import QuickActionMenu from "./modal-inner/QuickActionMenu";
+import ChooseLanguageView from "./modal-inner/ChooseLanguageView";
 
 interface SuperModalProps {}
 
 const SuperModal: React.FC<SuperModalProps> = () => {
+  const isLightMode = useStore((state) => state.isLightMode);
   const [data, setData] = useState<any>();
   const [visible, setVisible] = useState(false);
   const [styleModalType, setStyleModalType] = useState<EnumStyleModalType | undefined>();
@@ -124,14 +127,19 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         {contentModalType == EnumModalContentType.QuickActionMenu && (
           <QuickActionMenu onClose={closeModal} onNavigate={data?.onNavigate} />
         )}
+        {/* Render Choose Language (bottom sheet) */}
+        {contentModalType == EnumModalContentType.ChooseLanguage && (
+          <ChooseLanguageView closeModal={closeModal} />
+        )}
       </>
     );
   };
 
   // --- XỬ LÝ BOTTOM MODAL ---
   if (styleModalType == EnumStyleModalType.Bottom) {
-    // Kiểm tra xem có phải là QuickAction không
     const isQuickAction = contentModalType === EnumModalContentType.QuickActionMenu;
+    const isChooseLanguage = contentModalType === EnumModalContentType.ChooseLanguage;
+    const bottomBg = !isQuickAction && isChooseLanguage && !isLightMode ? "#000000" : undefined;
 
     return (
       <StickBottomModal

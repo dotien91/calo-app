@@ -2,33 +2,45 @@ import { StyleSheet, Dimensions } from 'react-native';
 
 const { width } = Dimensions.get('window');
 
-export const createStyles = (isLightMode: boolean) => {
-  // Màu sắc động dựa trên light/dark mode
-  const COLORS = {
-    bg: isLightMode ? '#FFFFFF' : '#000000',
-    card: isLightMode ? '#F5F5F5' : '#1C1C1E',
-    text: isLightMode ? '#000000' : '#FFFFFF',
-    subText: isLightMode ? '#666666' : '#A0A0A0',
-    primary: '#84CC16',   // Xanh lá (Lime) - giữ nguyên
-    accent: '#FACC15',    // Vàng - giữ nguyên
+type ThemeLike = { dark?: boolean; colors: Record<string, string> };
+
+/**
+ * Best practice: useTheme() + createStyles(theme) — single source from navigation theme.
+ * Same pattern as ChooseLanguageView / onboarding flow.
+ */
+export const getHomeColors = (theme: ThemeLike) => {
+  const c = theme.colors;
+  const dark = theme.dark ?? false;
+  return {
+    bg: c.background ?? (dark ? '#000000' : '#FFFFFF'),
+    card: c.card ?? (dark ? '#1C1C1E' : '#F5F5F5'),
+    text: c.text ?? (dark ? '#FFFFFF' : '#000000'),
+    subText: c.textOpacity8 ?? c.text ?? (dark ? '#A0A0A0' : '#666666'),
+    primary: c.primary ?? '#84CC16',
+    accent: '#FACC15',
     blue: '#3B82F6',
     red: '#EF4444',
-    borderColor: isLightMode ? '#E5E7EB' : '#333',
-    activeDateBg: isLightMode ? '#E5E7EB' : '#2C2C2E',
-    activeDateText: isLightMode ? '#000000' : '#FFFFFF',
-    progressBarBg: isLightMode ? '#E5E7EB' : '#333',
-    iconBadgeBg: isLightMode ? '#F0F0F0' : '#333',
-    bannerBg: isLightMode ? '#FFFFFF' : '#1C1C1E',
-    bannerText: isLightMode ? '#000000' : '#FFFFFF',
-    emptyIconColor: isLightMode ? '#CCCCCC' : '#333',
+    borderColor: c.border ?? (dark ? '#333' : '#E5E7EB'),
+    activeDateBg: dark ? '#2C2C2E' : '#E5E7EB',
+    activeDateText: dark ? '#FFFFFF' : '#000000',
+    progressBarBg: dark ? '#333' : (c.grey1 ?? '#E5E7EB'),
+    iconBadgeBg: dark ? '#333' : (c.grey1 ?? '#F0F0F0'),
+    iconBg: dark ? '#3A3A3C' : (c.grey1 ?? '#F0F0F0'),
+    cardBg: dark ? '#2C2C2E' : (c.grey1 ?? '#E5E7EB'),
+    bannerBg: c.card ?? (dark ? '#1C1C1E' : '#FFFFFF'),
+    bannerText: c.text ?? (dark ? '#FFFFFF' : '#000000'),
+    emptyIconColor: dark ? '#333' : '#CCCCCC',
   };
+};
 
-  const styles = StyleSheet.create({
+export const createStyles = (theme: ThemeLike) => {
+  const COLORS = getHomeColors(theme);
+
+  return StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: COLORS.bg,
     },
-    // Header
     headerSection: {
       paddingHorizontal: 12,
       marginBottom: 12,
@@ -63,7 +75,6 @@ export const createStyles = (isLightMode: boolean) => {
       fontSize: 16,
       fontWeight: 'bold',
     },
-    // Calendar
     calendarRow: {
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -84,20 +95,18 @@ export const createStyles = (isLightMode: boolean) => {
       alignItems: 'center',
       justifyContent: 'center',
       borderWidth: 1,
-      borderColor: '#333', // Viền mờ cho ngày thường
+      borderColor: COLORS.borderColor,
       backgroundColor: 'transparent',
     },
     activeDate: {
-      backgroundColor: '#E5E7EB', // Màu trắng xám
-      borderColor: '#E5E7EB',
+      backgroundColor: COLORS.activeDateBg,
+      borderColor: COLORS.activeDateBg,
     },
     dateText: {
       color: COLORS.subText,
       fontSize: 14,
       fontWeight: '500',
     },
-
-    // Dashboard Card
     dashboardCard: {
       backgroundColor: COLORS.card,
       marginHorizontal: 12,
@@ -141,8 +150,6 @@ export const createStyles = (isLightMode: boolean) => {
       color: COLORS.subText,
       marginLeft: 2,
     },
-
-    // Macros
     macroRow: {
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -151,7 +158,7 @@ export const createStyles = (isLightMode: boolean) => {
     },
     macroCard: {
       backgroundColor: COLORS.card,
-      width: (width - 48) / 3, // Updated for marginHorizontal: 12 (24 total margin + 24 spacing)
+      width: (width - 48) / 3,
       padding: 14,
       borderRadius: 16,
       justifyContent: 'center',
@@ -175,8 +182,6 @@ export const createStyles = (isLightMode: boolean) => {
       height: 5,
       borderRadius: 10,
     },
-
-    // Daily Progress
     dailyProgressRow: {
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -188,7 +193,7 @@ export const createStyles = (isLightMode: boolean) => {
       alignItems: 'center',
       padding: 16,
       borderRadius: 16,
-      width: (width - 40) / 2, // Updated for marginHorizontal: 12 (24 total margin + 16 spacing)
+      width: (width - 40) / 2,
     },
     dailyProgressInfo: {
       marginLeft: 12,
@@ -202,8 +207,6 @@ export const createStyles = (isLightMode: boolean) => {
       fontSize: 16,
       fontWeight: 'bold',
     },
-
-    // Banner
     bannerContainer: {
       marginHorizontal: 12,
       marginBottom: 30,
@@ -231,6 +234,7 @@ export const createStyles = (isLightMode: boolean) => {
       fontWeight: 'bold',
       marginLeft: 10,
       fontSize: 14,
+      color: COLORS.bannerText,
     },
     downloadBtn: {
       backgroundColor: COLORS.blue,
@@ -250,8 +254,6 @@ export const createStyles = (isLightMode: boolean) => {
       marginTop: 10,
       fontSize: 12,
     },
-
-    // Recent Section
     recentSection: {
       paddingHorizontal: 12,
     },
@@ -280,6 +282,4 @@ export const createStyles = (isLightMode: boolean) => {
       textAlign: 'center',
     },
   });
-
-  return { COLORS, styles };
 };

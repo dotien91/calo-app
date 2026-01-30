@@ -1,37 +1,34 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect, useRef } from "react";
 import {
   View,
   StyleSheet,
   TouchableOpacity,
-  SafeAreaView,
   Text,
   Platform,
+  Animated,
 } from "react-native";
 import { Picker } from "react-native-wheel-pick";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import { useTheme } from "@react-navigation/native";
 import { palette } from "@theme/themes";
 import Button from "@shared-components/button/Button";
 import TextBase from "@shared-components/TextBase";
-import useStore from "@services/zustand/store";
 
-import Animated, { 
-  FadeInDown, 
-  FadeInUp, 
-  useAnimatedStyle, 
-  withTiming,
-  Easing
-} from "react-native-reanimated";
-
-// --- CẤU HÌNH MÀU SẮC ---
-export const getColors = (isLightMode: boolean) => ({
-  bg: isLightMode ? "#FFFFFF" : "#000000",
-  text: isLightMode ? "#000000" : "#FFFFFF",
-  subText: isLightMode ? palette.textOpacity8 : "#A0A0A0",
-  progressBg: isLightMode ? palette.grey1 : "#333333",
-  footerBorder: isLightMode ? palette.grey1 : "#333333",
+// --- Theme-based colors (best practice: single source from navigation theme) ---
+type ThemeLike = { dark?: boolean; colors: Record<string, string> };
+export const getColorsFromTheme = (theme: ThemeLike) => ({
+  bg: theme.colors.background ?? (theme.dark ? "#000000" : "#FFFFFF"),
+  text: theme.colors.text ?? (theme.dark ? "#FFFFFF" : "#000000"),
+  subText: theme.colors.textOpacity8 ?? theme.colors.text ?? (theme.dark ? "#A0A0A0" : palette.textOpacity8),
+  progressBg: theme.dark ? "#333333" : (theme.colors.grey1 ?? palette.grey1),
+  footerBorder: theme.colors.border ?? (theme.dark ? "#333333" : palette.grey1),
 });
 
-// --- COMPONENT HEADER ---
+/** @deprecated Use getColorsFromTheme(useTheme()) instead */
+export const getColors = (isLightMode: boolean) =>
+  getColorsFromTheme({ dark: !isLightMode, colors: {} });
+
+// --- COMPONENT HEADER (Có Animation) ---
 export interface MeasurePickerHeaderProps {
   onBack: () => void;
   progress: number;
@@ -41,16 +38,25 @@ export const MeasurePickerHeader: React.FC<MeasurePickerHeaderProps> = ({
   onBack,
   progress,
 }) => {
-  const isLightMode = useStore((state) => state.isLightMode);
-  const COLORS = useMemo(() => getColors(isLightMode), [isLightMode]);
+  const theme = useTheme();
+  const COLORS = getColorsFromTheme(theme);
 
-  const animatedProgressStyle = useAnimatedStyle(() => {
-    return {
-      width: withTiming(`${progress}%`, {
-        duration: 500,
-        easing: Easing.bezier(0.25, 0.1, 0.25, 1),
-      }),
-    };
+  // 1. Tạo giá trị Animated khởi tạo bằng progress hiện tại
+  const progressAnim = useRef(new Animated.Value(progress)).current;
+
+  // 2. Chạy Animation khi progress thay đổi
+  useEffect(() => {
+    Animated.timing(progressAnim, {
+      toValue: progress,
+      duration: 500, // Thời gian chạy animation (ms)
+      useNativeDriver: false, // Bắt buộc false vì ta đang animate thuộc tính layout (width)
+    }).start();
+  }, [progress]);
+
+  // 3. Chuyển đổi giá trị số (0-100) sang phần trăm ('0%' - '100%')
+  const widthInterpolated = progressAnim.interpolate({
+    inputRange: [0, 100],
+    outputRange: ["0%", "100%"],
   });
 
   return (
@@ -64,8 +70,12 @@ export const MeasurePickerHeader: React.FC<MeasurePickerHeaderProps> = ({
         />
       </TouchableOpacity>
       <View style={[headerStyles.progressBg, { backgroundColor: COLORS.progressBg }]}>
+        {/* Dùng Animated.View thay vì View thường */}
         <Animated.View
-          style={[headerStyles.progressFill, animatedProgressStyle]}
+          style={[
+            headerStyles.progressFill,
+            { width: widthInterpolated }, 
+          ]}
         />
       </View>
       <View style={headerStyles.spacer} />
@@ -113,17 +123,18 @@ export const MeasurePicker: React.FC<MeasurePickerProps> = ({
   onNext,
   title: titleOverride,
 }) => {
-  const isLightMode = useStore((state) => state.isLightMode);
-  const COLORS = useMemo(() => getColors(isLightMode), [isLightMode]);
-  const pickerTextColor = isLightMode ? "#000000" : "#FFFFFF";
+  const theme = useTheme();
+  const COLORS = getColorsFromTheme(theme);
+  const pickerTextColor = COLORS.text;
   
   const isDecimal = type === "WEIGHT";
   const isAge = type === "AGE";
 
-  // --- CẤU HÌNH CỠ CHỮ ---
-  const FONT_SIZE = 18; // Đã giảm từ 32 xuống 23
-  const ITEM_SPACE = 28; // Khoảng cách giữa các số
+  // Cấu hình hiển thị
+  const FONT_SIZE = 23; 
+  const ITEM_SPACE = 28; 
 
+  // Logic tạo mảng dữ liệu
   const minVal = isAge ? 10 : type === "HEIGHT" ? 100 : 30;
   const maxVal = isAge ? 100 : type === "HEIGHT" ? 250 : 300;
   
@@ -161,32 +172,28 @@ export const MeasurePicker: React.FC<MeasurePickerProps> = ({
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: COLORS.bg }]}>
+    <View style={[styles.container, { backgroundColor: COLORS.bg }]}>
       
-      <Animated.View
-        style={styles.textContainer}
-        entering={FadeInDown.delay(100).duration(500).springify()}
-      >
+      {/* Text Section - Không dùng Animated */}
+      <View style={styles.textContainer}>
         <TextBase 
             fontSize={24} 
             fontWeight="700" 
-            style={[styles.title, { color: COLORS.text }]}
+            style={{ ...styles.title, color: COLORS.text }}
         >
           {getTitle()}
         </TextBase>
         <TextBase 
             fontSize={16} 
             fontWeight="400" 
-            style={[styles.subtitle, { color: COLORS.subText }]}
+            style={{ ...styles.subtitle, color: COLORS.subText }}
         >
           Đừng lo lắng, bạn có thể thay đổi điều này bất cứ lúc nào
         </TextBase>
-      </Animated.View>
+      </View>
 
-      <Animated.View
-        style={styles.pickerWrapper}
-        entering={FadeInUp.delay(300).duration(600).springify()}
-      >
+      {/* Picker Section */}
+      <View style={styles.pickerWrapper}>
         <View style={styles.row}>
           
           {/* Picker SỐ NGUYÊN */}
@@ -201,19 +208,17 @@ export const MeasurePicker: React.FC<MeasurePickerProps> = ({
             backgroundColor="transparent"
             isShowSelectBackground={false}
             
-            // --- SỬA CỠ CHỮ Ở ĐÂY ---
             textSize={FONT_SIZE} 
             itemSpace={ITEM_SPACE}
             itemStyle={{
                 color: pickerTextColor, 
-                fontSize: FONT_SIZE, // Cập nhật style item
+                fontSize: FONT_SIZE, 
                 fontWeight: '600'
             }}
           />
 
           {isDecimal && (
             <>
-              {/* Dấu chấm cũng phải nhỏ theo */}
               <Text style={[styles.dot, { color: COLORS.text, fontSize: FONT_SIZE }]}>.</Text>
               
               {/* Picker THẬP PHÂN */}
@@ -228,7 +233,6 @@ export const MeasurePicker: React.FC<MeasurePickerProps> = ({
                 backgroundColor="transparent"
                 isShowSelectBackground={false}
                 
-                // --- SỬA CỠ CHỮ Ở ĐÂY ---
                 textSize={FONT_SIZE}
                 itemSpace={ITEM_SPACE}
                 itemStyle={{
@@ -242,11 +246,11 @@ export const MeasurePicker: React.FC<MeasurePickerProps> = ({
 
           <Text style={[styles.unitLabel, { color: COLORS.subText }]}>{unit}</Text>
         </View>
-      </Animated.View>
+      </View>
 
-      <Animated.View
+      {/* Footer Button */}
+      <View
         style={[styles.footer, { borderTopColor: COLORS.footerBorder }]}
-        entering={FadeInUp.delay(500).duration(500)}
       >
         <Button
           style={styles.button}
@@ -255,8 +259,8 @@ export const MeasurePicker: React.FC<MeasurePickerProps> = ({
           textColor="#FFFFFF"
           onPress={handleNextPress}
         />
-      </Animated.View>
-    </SafeAreaView>
+      </View>
+    </View>
   );
 };
 
@@ -300,7 +304,6 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
   },
   dot: {
-    // fontSize sẽ được ghi đè bởi style inline trong component
     fontWeight: "600",
     marginBottom: 8,
     marginHorizontal: 5,

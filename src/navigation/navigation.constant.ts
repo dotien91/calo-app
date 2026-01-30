@@ -6,7 +6,6 @@ import HomeAffilite from "@screens/affiliate/intro.affiliate.screen";
 import DetailScreen from "@screens/detail/DetailScreen";
 import SettingScreen from "@screens/setting/setting.screen";
 import SettingUser from "@screens/setting-user/setting.user";
-import ChangeLanguage from "@screens/change-language/change.language";
 import SmartBanking from "@screens/smart-banking/smart.banking";
 import PaymentSuccess from "@screens/payment-success/payment.success";
 import TabFollow from "@screens/tab-follow/tab.follow";
@@ -40,7 +39,7 @@ import ChatRoomMediaScreen from "@screens/chat/media-club/chat.media.screen";
 import OnboardingScreen from "@screens/welcome/onboarding/onboarding.screen";
 import OnboardingFlowScreen from "@screens/welcome/onboarding/onboarding.flow.screen";
 import GoalDetailScreen from "@screens/on-boarding/goal.screen";
-import ChooseLanguageScreen from "@screens/welcome/choose-language/choose.language.screen";
+import IntroScreen from "@screens/welcome/intro/intro.screen";
 import AddMealScreen from "@screens/add-meal";
 import CalorierScannerScreen from "@screens/calorier-scanner/calorier.scanner.screen";
 import CalorieResultScreen from "@screens/calorier-scanner/calorie.result.screen";
@@ -53,16 +52,14 @@ export const PracticeTestData: any[] = [];
 export const BankStackData: any[] = [];
 
 export const StackIntroData = [
-  {
-    name: SCREENS.ONBOARDING,
-    screen: OnboardingScreen,
-  },
+  { name: SCREENS.INTRO, screen: IntroScreen },
+  { name: SCREENS.ONBOARDING, screen: OnboardingScreen },
 ];
 
 // Một màn onboarding duy nhất, chuyển bước bằng view (không navigate)
 export const OnboardingStackData = [
   {
-    name: SCREENS.CURRENT_WEIGHT,
+    name: SCREENS.ONBOARDING_FLOW,
     screen: OnboardingFlowScreen,
   },
 ];
@@ -72,7 +69,6 @@ export const ClubStackData: any[] = [];
 export const CommonStackData = [
   ...OnboardingStackData, // Import luồng nhập liệu sức khỏe vào Common
   { name: SCREENS.GOAL, screen: GoalDetailScreen },
-  { name: SCREENS.CHOOSE_LANGUAGE, screen: ChooseLanguageScreen },
   { name: SCREENS.POST_DETAIL, screen: PostDetailScreen },
   { name: SCREENS.CHAT, screen: ChatListScreen },
   { name: SCREENS.POST_SCREEN, screen: PostScreen },
@@ -89,7 +85,6 @@ export const CommonStackData = [
   { name: SCREENS.VERIFY_CODE, screen: VerifyCodeScreen },
   { name: SCREENS.NEW_PASSWORD, screen: NewPasswordScreen },
   { name: SCREENS.SETTING_USER, screen: SettingUser },
-  { name: SCREENS.CHANGELANGUAGE, screen: ChangeLanguage },
   { name: SCREENS.SMARTBANKING, screen: SmartBanking },
   { name: SCREENS.PAYMENT_SUCCESS, screen: PaymentSuccess },
   { name: SCREENS.TAB_FOLLOW, screen: TabFollow },

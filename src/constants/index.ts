@@ -161,6 +161,8 @@ export const SCREENS = {
   ACTIVITY_LEVEL: "ActivityLevel",
   PACE: "Pace",
   GOAL: "Goal",
+  ONBOARDING_FLOW: "OnboardingFlow",
+  ONBOARDING_CURRENT_WEIGHT_HEIGHT: "OnboardingCurrentWeightHeight",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

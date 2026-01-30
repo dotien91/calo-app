@@ -265,6 +265,14 @@ export default {
     result: "結果",
   },
 
+  // --- Intro (first-time welcome) ---
+  intro: {
+    title: "カロリー管理を\nもっと簡単に",
+    getStarted: "始める",
+    alreadyHaveAccount: "すでにアカウントをお持ちですか？ ",
+    signIn: "ログイン",
+  },
+
   // --- Login / Auth ---
   login: {
     requireLogin: "続行するにはログインしてください",

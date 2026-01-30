@@ -11,10 +11,11 @@ import Header from "@shared-components/header/Header";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import useStore from "@services/zustand/store";
 import createStyles from "./setting.user.style";
-import { translations } from "@localization";
-import * as NavigationService from "react-navigation-helpers";
-import { SCREENS } from "constants";
 import CS from "@theme/styles";
+import { showSuperModal } from "@helpers/super.modal.helper";
+import { EnumModalContentType } from "@helpers/super.modal.helper";
+import { EnumStyleModalType } from "@helpers/super.modal.helper";
+import { translations } from "@localization";
 
 const SettingUser = () => {
   const theme = useTheme();
@@ -45,7 +46,10 @@ const SettingUser = () => {
       title: translations.settingUser.language,
       detail: language === "vi" ? "Vietnamese" : "English",
       action: () => {
-        NavigationService.navigate(SCREENS.CHANGELANGUAGE);
+        showSuperModal({
+          contentModalType: EnumModalContentType.ChooseLanguage,
+          styleModalType: EnumStyleModalType.Bottom,
+        });
       },
     },
     // {

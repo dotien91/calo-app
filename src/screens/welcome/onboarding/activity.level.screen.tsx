@@ -1,21 +1,19 @@
 import React, { useState, useMemo } from "react";
 import {
   View,
-  StyleSheet,
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
 } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
-import { useRoute } from "@react-navigation/native";
+import { useRoute, useTheme } from "@react-navigation/native";
 
 import Button from "@shared-components/button/Button";
 import TextBase from "@shared-components/TextBase";
 import { SCREENS } from "constants";
 import { palette } from "@theme/themes";
 import { PlanCalculationData } from "@utils/plan.utils";
-import useStore from "@services/zustand/store";
-import { createStyles } from "./onboarding.screen.style";
+import { createStyles, getOnboardingColors } from "./onboarding.screen.style";
 
 export interface ActivityLevelScreenProps {
   formData?: PlanCalculationData;
@@ -31,14 +29,16 @@ const activities = [
 ];
 
 const ActivityLevelScreen: React.FC<ActivityLevelScreenProps> = (props) => {
+  const theme = useTheme();
   const route = useRoute();
   const fromRoute = (route.params as any)?.formData as PlanCalculationData | undefined;
   const formData = props.formData ?? fromRoute ?? {};
   const [activityLevel, setActivityLevel] = useState<PlanCalculationData["activityLevel"]>(
     formData.activityLevel || "MODERATELY_ACTIVE"
   );
-  const isLightMode = useStore((state) => state.isLightMode);
-  const { COLORS } = useMemo(() => createStyles(isLightMode), [isLightMode]);
+  const styles = useMemo(() => createStyles(theme), [theme]);
+  const { cardSelected, borderSelected } = useMemo(() => getOnboardingColors(theme), [theme]);
+  const { colors } = theme;
 
   const handleNext = () => {
     const updatedData = { ...formData, activityLevel };
@@ -49,8 +49,11 @@ const ActivityLevelScreen: React.FC<ActivityLevelScreenProps> = (props) => {
     }
   };
 
+  const fromRouter = props.onNext == null;
+  const Wrapper = fromRouter ? SafeAreaView : View;
+
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: COLORS.bg }]}>
+    <Wrapper style={styles.container}>
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.contentContainer}
@@ -75,8 +78,8 @@ const ActivityLevelScreen: React.FC<ActivityLevelScreenProps> = (props) => {
               style={[
                 styles.optionCard,
                 {
-                  borderColor: activityLevel === item.key ? COLORS.borderSelected : COLORS.border,
-                  backgroundColor: activityLevel === item.key ? COLORS.cardSelected : COLORS.card,
+                  borderColor: activityLevel === item.key ? borderSelected : colors.border,
+                  backgroundColor: activityLevel === item.key ? cardSelected : colors.card,
                 },
               ]}
               onPress={() =>
@@ -103,7 +106,7 @@ const ActivityLevelScreen: React.FC<ActivityLevelScreenProps> = (props) => {
         </View>
       </ScrollView>
 
-      <View style={[styles.footer, { borderTopColor: COLORS.footerBorder }]}>
+      <View style={styles.footer}>
         <Button
           style={styles.button}
           text="Tiếp tục"
@@ -112,21 +115,8 @@ const ActivityLevelScreen: React.FC<ActivityLevelScreenProps> = (props) => {
           onPress={handleNext}
         />
       </View>
-    </SafeAreaView>
+    </Wrapper>
   );
 };
 
 export default ActivityLevelScreen;
-
-const styles = StyleSheet.create({
-  container: { flex: 1 },
-  scrollView: { flex: 1 },
-  contentContainer: { padding: 16, paddingTop: 40 },
-  title: { textAlign: "center", marginBottom: 12 },
-  subtitle: { textAlign: "center", marginBottom: 32 },
-  optionsContainer: { gap: 16, marginTop: 20 },
-  optionCard: { padding: 20, borderRadius: 12, borderWidth: 2 },
-  optionDesc: { marginTop: 4 },
-  footer: { padding: 16, borderTopWidth: 1 },
-  button: { alignItems: "center", justifyContent: "center", borderRadius: 12 },
-});

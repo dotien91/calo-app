@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { View, ScrollView, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTheme } from '@react-navigation/native';
 import useStore from '@services/zustand/store';
 import { format } from 'date-fns';
 import { translations } from '@localization';
@@ -8,20 +9,21 @@ import { getCalorieDay } from '@services/api/calorie.api';
 import eventEmitter from '@services/event-emitter';
 import { MacroType } from '../../constants/macro.enum';
 
-import { createStyles } from './home.screen.style';
+import { createStyles, getHomeColors } from './home.screen.style';
 import MacroCard from './components/MacroCard';
 import DashboardCard from './components/DashboardCard';
 import BannerCard from './components/BannerCard';
-import HeaderSection from './components/HeaderSection'; 
+import HeaderSection from './components/HeaderSection';
 import RecentActivity from './components/RecentActivity';
-import { IconCarb, IconProtein, IconFat } from '@assets/svg/CustomeSvg';
+import { IconProtein, IconFat } from '@assets/svg/CustomeSvg';
 import { GrainsIcon } from 'phosphor-react-native';
 
 const HomeScreen = () => {
-  const isLightMode = useStore((state) => state.isLightMode);
+  const theme = useTheme();
   const onboardingData = useStore((state) => state.onboardingData);
-  
-  const { COLORS, styles } = createStyles(isLightMode);
+
+  const styles = useMemo(() => createStyles(theme), [theme]);
+  const COLORS = useMemo(() => getHomeColors(theme), [theme]);
 
   // 1. [MỚI] State lưu ngày đang được chọn (Mặc định là hôm nay)
   const [selectedDate, setSelectedDate] = useState<string>(format(new Date(), 'yyyy-MM-dd'));
@@ -73,11 +75,9 @@ const HomeScreen = () => {
   const targetCalories = onboardingData?.target_calories || 2000;
   const currentCalories = dayTotals?.calories || 0;
 
-  console.log("weeklyData", weeklyData);
-
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
-      <StatusBar barStyle={isLightMode ? "dark-content" : "light-content"} backgroundColor={COLORS.bg} />
+      <StatusBar barStyle={theme.dark ? "light-content" : "dark-content"} backgroundColor={COLORS.bg} />
       
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100 }}>
         

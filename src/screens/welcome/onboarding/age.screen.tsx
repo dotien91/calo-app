@@ -1,14 +1,12 @@
 import React, { useMemo } from "react";
 import { SafeAreaView, View } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
-import { useRoute } from "@react-navigation/native";
+import { useRoute, useTheme } from "@react-navigation/native";
 import { SCREENS } from "constants";
 import { PlanCalculationData } from "@utils/plan.utils";
-import useStore from "@services/zustand/store";
 import {
   MeasurePicker,
   MeasurePickerHeader,
-  getColors,
 } from "@shared-components/wheel-picker/MeasurePicker";
 
 export interface AgeScreenProps {
@@ -25,8 +23,8 @@ const AgeScreen: React.FC<AgeScreenProps> = (props) => {
   const formData = (props.formData ?? fromRoute ?? {}) as PlanCalculationData;
   const initialValue = parseFloat(String(formData.age)) || 25;
   const progress = props.progress ?? 42;
-  const isLightMode = useStore((state) => state.isLightMode);
-  const COLORS = useMemo(() => getColors(isLightMode), [isLightMode]);
+  const theme = useTheme();
+  const bgColor = theme.colors.background;
 
   const handleNext = (value: number) => {
     if (props.onNext) {
@@ -55,12 +53,18 @@ const AgeScreen: React.FC<AgeScreenProps> = (props) => {
     return <View style={{ flex: 1 }}>{picker}</View>;
   }
 
-  return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.bg }}>
+  const fromRouter = fromRoute != null;
+  const content = (
+    <>
       <MeasurePickerHeader onBack={handleBack} progress={progress} />
       {picker}
-    </SafeAreaView>
+    </>
   );
+  const containerStyle = { flex: 1, backgroundColor: bgColor };
+  if (fromRouter) {
+    return <SafeAreaView style={containerStyle}>{content}</SafeAreaView>;
+  }
+  return <View style={containerStyle}>{content}</View>;
 };
 
 export default AgeScreen;

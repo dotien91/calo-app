@@ -1,7 +1,7 @@
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
-import { useRoute } from "@react-navigation/native";
+import { useRoute, useTheme } from "@react-navigation/native";
 import { SCREENS } from "constants";
 import { PlanCalculationData, PlanResult } from "@utils/plan.utils";
 import { _setJson, HAS_COMPLETED_ONBOARDING } from "@services/local-storage";
@@ -14,10 +14,10 @@ import {
 } from "@services/api/calorie.api";
 import useStore from "@services/zustand/store";
 import { showToast } from "@helpers/super.modal.helper";
-import { MeasurePickerHeader, getColors } from "@shared-components/wheel-picker/MeasurePicker";
+import { MeasurePickerHeader } from "@shared-components/wheel-picker/MeasurePicker";
 
-import CurrentWeightScreen from "./current.weight.screen";
-import HeightScreen from "./height.screen";
+// --- IMPORT CÁC MÀN HÌNH CON ---
+import HeightWeightScreen from "./height.weight.screen"; // Màn hình mới gộp
 import AgeScreen from "./age.screen";
 import TargetWeightScreen from "./target.weight.screen";
 import GenderScreen from "./gender.screen";
@@ -25,7 +25,9 @@ import ActivityLevelScreen from "./activity.level.screen";
 import PaceScreen from "./pace.screen";
 import PlanResultScreen from "./plan.result.screen";
 
-const PROGRESS_BY_STEP = [14, 28, 42, 57, 71, 85, 100, 100]; // 8 bước (0–7)
+// Cập nhật lại thanh progress (7 bước: 0 -> 6)
+// Tỉ lệ % tương ứng: 15%, 30%, 45%, 60%, 75%, 90%, 100%
+const PROGRESS_BY_STEP = [15, 30, 45, 60, 75, 90, 100]; 
 
 const defaultFormData: PlanCalculationData = {
   currentWeight: "",
@@ -40,6 +42,7 @@ const defaultFormData: PlanCalculationData = {
 const OnboardingFlowScreen: React.FC = () => {
   const route = useRoute();
   const initialParams = (route.params as any)?.formData as PlanCalculationData | undefined;
+  
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState<PlanCalculationData>(() =>
     initialParams ? { ...defaultFormData, ...initialParams } : defaultFormData
@@ -48,14 +51,20 @@ const OnboardingFlowScreen: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   const setOnboardingData = useStore((state) => state.setOnboardingData);
-  const isLightMode = useStore((state) => state.isLightMode);
-  const COLORS = useMemo(() => getColors(isLightMode), [isLightMode]);
+  const theme = useTheme();
+  const { colors } = theme;
+
+  // --- ACTIONS ---
 
   const handleBack = () => {
-    if (step > 0) setStep(step - 1);
-    else NavigationService.goBack();
+    if (step > 0) {
+      setStep(step - 1);
+    } else {
+      NavigationService.goBack();
+    }
   };
 
+  // Helper cập nhật form và next step
   const updateFormAndNext = (updates: Partial<PlanCalculationData>) => {
     setFormData((prev) => ({ ...prev, ...updates }));
     setStep((prev) => prev + 1);
@@ -88,6 +97,7 @@ const OnboardingFlowScreen: React.FC = () => {
   };
 
   const handleRestartResult = () => {
+    // Reset lại form với dữ liệu hiện tại để người dùng sửa nếu muốn
     setFormData({
       currentWeight: planResult!.currentWeight,
       height: planResult!.height,
@@ -98,53 +108,68 @@ const OnboardingFlowScreen: React.FC = () => {
       pace: planResult!.pace,
     });
     setPlanResult(null);
-    setStep(0);
+    setStep(0); // Quay về bước đầu tiên
   };
 
-  // Một layout chung: thanh progress cho tất cả 8 bước, content bên dưới
+  // Lấy giá trị progress bar hiện tại
   const progressValue = PROGRESS_BY_STEP[step] ?? 100;
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.bg }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
+      {/* Header chung cho toàn bộ flow */}
       <MeasurePickerHeader onBack={handleBack} progress={progressValue} />
+      
+      {/* STEP 0: Height & Weight (Gộp) */}
       {step === 0 && (
-        <CurrentWeightScreen
+        <HeightWeightScreen
           formData={formData}
-          onNext={(value) => updateFormAndNext({ currentWeight: value })}
+          onNext={(height, weight) => updateFormAndNext({ 
+            height: height, 
+            currentWeight: weight 
+          })}
           onBack={handleBack}
           progress={PROGRESS_BY_STEP[0]}
-          skipHeader
+          skipHeader // Header đã render ở trên
         />
       )}
+
+      {/* STEP 1: Age */}
       {step === 1 && (
-        <HeightScreen
+        <AgeScreen
           formData={formData}
-          onNext={(value) => updateFormAndNext({ height: value })}
+          onNext={(value) => updateFormAndNext({ age: value })}
           onBack={handleBack}
           progress={PROGRESS_BY_STEP[1]}
           skipHeader
         />
       )}
+
+      {/* STEP 2: Target Weight */}
       {step === 2 && (
-        <AgeScreen
+        <TargetWeightScreen
           formData={formData}
-          onNext={(value) => updateFormAndNext({ age: value })}
+          onNext={(value) => updateFormAndNext({ targetWeight: value })}
           onBack={handleBack}
           progress={PROGRESS_BY_STEP[2]}
           skipHeader
         />
       )}
+
+      {/* STEP 3: Gender */}
       {step === 3 && (
-        <TargetWeightScreen
+        <GenderScreen
           formData={formData}
-          onNext={(value) => updateFormAndNext({ targetWeight: value })}
+          onNext={(updatedData) => {
+            setFormData(updatedData);
+            setStep(4);
+          }}
           onBack={handleBack}
-          progress={PROGRESS_BY_STEP[3]}
-          skipHeader
         />
       )}
+
+      {/* STEP 4: Activity Level */}
       {step === 4 && (
-        <GenderScreen
+        <ActivityLevelScreen
           formData={formData}
           onNext={(updatedData) => {
             setFormData(updatedData);
@@ -153,27 +178,21 @@ const OnboardingFlowScreen: React.FC = () => {
           onBack={handleBack}
         />
       )}
+
+      {/* STEP 5: Pace (Tốc độ giảm cân) */}
       {step === 5 && (
-        <ActivityLevelScreen
+        <PaceScreen
           formData={formData}
-          onNext={(updatedData) => {
-            setFormData(updatedData);
+          onNext={(result) => {
+            setPlanResult(result);
             setStep(6);
           }}
           onBack={handleBack}
         />
       )}
-      {step === 6 && (
-        <PaceScreen
-          formData={formData}
-          onNext={(result) => {
-            setPlanResult(result);
-            setStep(7);
-          }}
-          onBack={handleBack}
-        />
-      )}
-      {step === 7 && planResult && (
+
+      {/* STEP 6: Result & Calculate */}
+      {step === 6 && planResult && (
         <PlanResultScreen
           planResult={planResult}
           onFinish={handleFinishResult}
