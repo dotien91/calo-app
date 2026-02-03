@@ -66,6 +66,25 @@ export default {
     comingSoon: "近日公開予定",
   },
 
+  // --- BMI (by type) ---
+  bmi: {
+    UNDERWEIGHT: "低体重",
+    NORMAL: "普通",
+    OVERWEIGHT: "肥満気味",
+    OBESE: "肥満",
+    estimateLabel: "推定BMI",
+    waitingHeight: "身長データを待っています...",
+  },
+
+  // --- Onboarding ---
+  onboarding: {
+    heightTitle: "身長は何cmですか？",
+    currentWeightTitle: "現在の体重は何kgですか？",
+    targetWeightTitle: "目標体重は何kgですか？",
+    ageTitle: "おいくつですか？",
+    changeAnytimeHint: "ご安心ください。いつでも変更できます",
+  },
+
   // --- Errors ---
   error: {
     unknown: "不明なエラーです！",

@@ -17,7 +17,8 @@ import { showToast } from "@helpers/super.modal.helper";
 import { MeasurePickerHeader } from "@shared-components/wheel-picker/MeasurePicker";
 
 // --- IMPORT CÁC MÀN HÌNH CON ---
-import HeightWeightScreen from "./height.weight.screen"; // Màn hình mới gộp
+import CurrentWeightScreen from "./current.weight.screen";
+import HeightScreen from "./height.screen";
 import AgeScreen from "./age.screen";
 import TargetWeightScreen from "./target.weight.screen";
 import GenderScreen from "./gender.screen";
@@ -25,9 +26,8 @@ import ActivityLevelScreen from "./activity.level.screen";
 import PaceScreen from "./pace.screen";
 import PlanResultScreen from "./plan.result.screen";
 
-// Cập nhật lại thanh progress (7 bước: 0 -> 6)
-// Tỉ lệ % tương ứng: 15%, 30%, 45%, 60%, 75%, 90%, 100%
-const PROGRESS_BY_STEP = [15, 30, 45, 60, 75, 90, 100]; 
+// 8 bước: Height -> Weight -> Age -> TargetWeight -> Gender -> Activity -> Pace -> Result
+const PROGRESS_BY_STEP = [14, 28, 42, 57, 71, 85, 100, 100];
 
 const defaultFormData: PlanCalculationData = {
   currentWeight: "",
@@ -119,57 +119,53 @@ const OnboardingFlowScreen: React.FC = () => {
       {/* Header chung cho toàn bộ flow */}
       <MeasurePickerHeader onBack={handleBack} progress={progressValue} />
       
-      {/* STEP 0: Height & Weight (Gộp) */}
+      {/* STEP 0: Height */}
       {step === 0 && (
-        <HeightWeightScreen
+        <HeightScreen
           formData={formData}
-          onNext={(height, weight) => updateFormAndNext({ 
-            height: height, 
-            currentWeight: weight 
-          })}
+          onNext={(value) => updateFormAndNext({ height: value })}
           onBack={handleBack}
           progress={PROGRESS_BY_STEP[0]}
-          skipHeader // Header đã render ở trên
+          skipHeader
         />
       )}
 
-      {/* STEP 1: Age */}
+      {/* STEP 1: Current Weight */}
       {step === 1 && (
-        <AgeScreen
+        <CurrentWeightScreen
           formData={formData}
-          onNext={(value) => updateFormAndNext({ age: value })}
+          onNext={(value) => updateFormAndNext({ currentWeight: value })}
           onBack={handleBack}
           progress={PROGRESS_BY_STEP[1]}
           skipHeader
         />
       )}
 
-      {/* STEP 2: Target Weight */}
+      {/* STEP 2: Age */}
       {step === 2 && (
-        <TargetWeightScreen
+        <AgeScreen
           formData={formData}
-          onNext={(value) => updateFormAndNext({ targetWeight: value })}
+          onNext={(value) => updateFormAndNext({ age: value })}
           onBack={handleBack}
           progress={PROGRESS_BY_STEP[2]}
           skipHeader
         />
       )}
 
-      {/* STEP 3: Gender */}
+      {/* STEP 3: Target Weight */}
       {step === 3 && (
-        <GenderScreen
+        <TargetWeightScreen
           formData={formData}
-          onNext={(updatedData) => {
-            setFormData(updatedData);
-            setStep(4);
-          }}
+          onNext={(value) => updateFormAndNext({ targetWeight: value })}
           onBack={handleBack}
+          progress={PROGRESS_BY_STEP[3]}
+          skipHeader
         />
       )}
 
-      {/* STEP 4: Activity Level */}
+      {/* STEP 4: Gender */}
       {step === 4 && (
-        <ActivityLevelScreen
+        <GenderScreen
           formData={formData}
           onNext={(updatedData) => {
             setFormData(updatedData);
@@ -179,20 +175,32 @@ const OnboardingFlowScreen: React.FC = () => {
         />
       )}
 
-      {/* STEP 5: Pace (Tốc độ giảm cân) */}
+      {/* STEP 5: Activity Level */}
       {step === 5 && (
-        <PaceScreen
+        <ActivityLevelScreen
           formData={formData}
-          onNext={(result) => {
-            setPlanResult(result);
+          onNext={(updatedData) => {
+            setFormData(updatedData);
             setStep(6);
           }}
           onBack={handleBack}
         />
       )}
 
-      {/* STEP 6: Result & Calculate */}
-      {step === 6 && planResult && (
+      {/* STEP 6: Pace */}
+      {step === 6 && (
+        <PaceScreen
+          formData={formData}
+          onNext={(result) => {
+            setPlanResult(result);
+            setStep(7);
+          }}
+          onBack={handleBack}
+        />
+      )}
+
+      {/* STEP 7: Result & Calculate */}
+      {step === 7 && planResult && (
         <PlanResultScreen
           planResult={planResult}
           onFinish={handleFinishResult}

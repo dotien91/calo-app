@@ -66,6 +66,25 @@ export default {
     comingSoon: "Feature coming soon",
   },
 
+  // --- BMI (by type) ---
+  bmi: {
+    UNDERWEIGHT: "Underweight",
+    NORMAL: "Normal",
+    OVERWEIGHT: "Overweight",
+    OBESE: "Obese",
+    estimateLabel: "Estimated BMI",
+    waitingHeight: "Waiting for height data...",
+  },
+
+  // --- Onboarding ---
+  onboarding: {
+    heightTitle: "What is your height?",
+    currentWeightTitle: "What is your current weight?",
+    targetWeightTitle: "What is your target weight?",
+    ageTitle: "How old are you?",
+    changeAnytimeHint: "Don't worry, you can change this anytime",
+  },
+
   // --- Errors ---
   error: {
     unknown: "Unknown error!",

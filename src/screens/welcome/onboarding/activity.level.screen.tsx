@@ -89,14 +89,14 @@ const ActivityLevelScreen: React.FC<ActivityLevelScreenProps> = (props) => {
               <TextBase
                 fontSize={18}
                 fontWeight="600"
-                color={activityLevel === item.key ? "primary" : "text"}
+                color={activityLevel === item.key ? "white" : "text"}
               >
                 {item.label}
               </TextBase>
               <TextBase
                 fontSize={14}
                 fontWeight="400"
-                color={activityLevel === item.key ? "primary" : "textOpacity8"}
+                color={activityLevel === item.key ? "white" : "textOpacity8"}
                 style={styles.optionDesc}
               >
                 {item.desc}

@@ -50,12 +50,24 @@ apiClient.interceptors.response.use(
     return response;
   },
   (error) => {
-    console.log("error interceptors", error);
+    const requestUrl = error.config?.url; // URL endpoint (vd: /api/login)
+    const requestMethod = error.config?.method?.toUpperCase(); // Method (vd: GET, POST)
+    
+    console.log(`❌ [API Error] ${requestMethod} ${requestUrl}`, error);
+    // ----------------------------
+
     let message: string = error?.response?.data?.message;
+    
     if (lodash.isArray(message)) {
       message = error?.response?.data?.message?.[0] || "";
     }
-    return Promise.reject({ ...error, message, isError: true });
+    
+    return Promise.reject({ 
+      ...error, 
+      message, 
+      isError: true,
+      failedUrl: requestUrl // Optional: trả về url lỗi
+    });
   },
 );
 

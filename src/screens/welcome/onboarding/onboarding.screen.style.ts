@@ -8,7 +8,6 @@ type ThemeLike = { colors: Record<string, string>; dark?: boolean };
  */
 export const createStyles = (theme: ThemeLike) => {
   const { colors } = theme;
-  const footerBorder = colors.border ?? colors.grey1;
 
   return StyleSheet.create({
     container: {
@@ -43,13 +42,13 @@ export const createStyles = (theme: ThemeLike) => {
     optionDesc: { marginTop: 4 },
     footer: {
       padding: 16,
-      borderTopWidth: 1,
-      borderTopColor: footerBorder,
     },
     button: {
+      width: "100%",
+      height: 56,
+      borderRadius: 28,
       alignItems: "center",
       justifyContent: "center",
-      borderRadius: 12,
     },
     // PlanResultScreen styles (with theme colors where needed)
     header: { marginBottom: 24, alignItems: "center" },
@@ -103,16 +102,14 @@ export const createStyles = (theme: ThemeLike) => {
       left: 0,
       right: 0,
       padding: 16,
-      borderTopWidth: 1,
-      borderTopColor: footerBorder,
       backgroundColor: colors.background ?? colors.card,
     },
     restartButton: { marginTop: 12, borderWidth: 1 },
   });
 };
 
-/** Derived colors for inline use (e.g. selected state). Use theme.colors + this where needed. */
+/** Derived colors for inline use (e.g. selected state). Active bg = primaryDark, border = primary. */
 export const getOnboardingColors = (theme: ThemeLike) => ({
-  cardSelected: theme.dark ? (theme.colors.grey3 ?? "#2C2C2E") : (theme.colors.secondColor ?? "#FFEDED"),
+  cardSelected: theme.colors.primaryDark ?? theme.colors.primary,
   borderSelected: theme.colors.primary,
 });

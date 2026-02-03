@@ -4,7 +4,7 @@ import { Theme } from "@react-navigation/native";
 export const palette = {
   // --- Brand Colors (CaloSnap) ---
   primary: "#457a08", // Màu xanh nõn chuối (Lime Green)
-  primaryDark: "#457a08",
+  primaryDark: "#1F3303",
   accent: "#A2E737",
   
   // --- Basic Colors ---

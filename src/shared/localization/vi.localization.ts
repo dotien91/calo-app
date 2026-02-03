@@ -66,6 +66,25 @@ export default {
     comingSoon: "Tính năng sắp ra mắt",
   },
 
+  // --- BMI (theo type) ---
+  bmi: {
+    UNDERWEIGHT: "Thiếu cân",
+    NORMAL: "Bình thường",
+    OVERWEIGHT: "Thừa cân",
+    OBESE: "Béo phì",
+    estimateLabel: "BMI ước tính",
+    waitingHeight: "Đang chờ dữ liệu chiều cao...",
+  },
+
+  // --- Onboarding ---
+  onboarding: {
+    heightTitle: "Chiều cao của bạn là bao nhiêu?",
+    currentWeightTitle: "Cân nặng hiện tại của bạn là bao nhiêu?",
+    targetWeightTitle: "Cân nặng mục tiêu của bạn là bao nhiêu?",
+    ageTitle: "Bạn bao nhiêu tuổi?",
+    changeAnytimeHint: "Đừng lo lắng, bạn có thể thay đổi điều này bất cứ lúc nào",
+  },
+
   // --- Errors ---
   error: {
     unknown: "Lỗi không xác định!",

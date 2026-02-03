@@ -4,15 +4,14 @@ import {
   StyleSheet,
   TouchableOpacity,
   Text,
-  Platform,
   Animated,
 } from "react-native";
 import { Picker } from "react-native-wheel-pick";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { useTheme } from "@react-navigation/native";
 import { palette } from "@theme/themes";
-import Button from "@shared-components/button/Button";
 import TextBase from "@shared-components/TextBase";
+import { translations } from "@localization";
 
 // --- Theme-based colors (best practice: single source from navigation theme) ---
 type ThemeLike = { dark?: boolean; colors: Record<string, string> };
@@ -21,7 +20,6 @@ export const getColorsFromTheme = (theme: ThemeLike) => ({
   text: theme.colors.text ?? (theme.dark ? "#FFFFFF" : "#000000"),
   subText: theme.colors.textOpacity8 ?? theme.colors.text ?? (theme.dark ? "#A0A0A0" : palette.textOpacity8),
   progressBg: theme.dark ? "#333333" : (theme.colors.grey1 ?? palette.grey1),
-  footerBorder: theme.colors.border ?? (theme.dark ? "#333333" : palette.grey1),
 });
 
 /** @deprecated Use getColorsFromTheme(useTheme()) instead */
@@ -108,11 +106,13 @@ const headerStyles = StyleSheet.create({
 });
 
 // --- COMPONENT CHÍNH ---
-interface MeasurePickerProps {
+export interface MeasurePickerProps {
   type: "HEIGHT" | "WEIGHT" | "AGE";
   unit: string;
   initialValue: number;
   onNext: (value: number) => void;
+  /** Gọi khi giá trị picker thay đổi — dùng ở component cha để render nút "Tiếp theo" */
+  onValueChange?: (value: number) => void;
   title?: string;
 }
 
@@ -120,7 +120,8 @@ export const MeasurePicker: React.FC<MeasurePickerProps> = ({
   type,
   unit,
   initialValue,
-  onNext,
+  onNext: _onNext,
+  onValueChange,
   title: titleOverride,
 }) => {
   const theme = useTheme();
@@ -131,7 +132,7 @@ export const MeasurePicker: React.FC<MeasurePickerProps> = ({
   const isAge = type === "AGE";
 
   // Cấu hình hiển thị
-  const FONT_SIZE = 23; 
+  const FONT_SIZE = 23;
   const ITEM_SPACE = 28; 
 
   // Logic tạo mảng dữ liệu
@@ -154,21 +155,20 @@ export const MeasurePicker: React.FC<MeasurePickerProps> = ({
     Math.round(((initialValue || 0) - Math.floor(initialValue || 0)) * 10).toString()
   );
 
-  const handleNextPress = () => {
-    let finalValue: number;
-    if (isDecimal) {
-      finalValue = parseFloat(`${selectedInt}.${selectedDec}`);
-    } else {
-      finalValue = parseInt(selectedInt);
-    }
-    onNext(finalValue);
-  };
+  const currentValue = useMemo(() => {
+    if (isDecimal) return parseFloat(`${selectedInt}.${selectedDec}`);
+    return parseInt(selectedInt, 10);
+  }, [isDecimal, selectedInt, selectedDec]);
+
+  useEffect(() => {
+    onValueChange?.(currentValue);
+  }, [currentValue, onValueChange]);
 
   const getTitle = () => {
     if (titleOverride) return titleOverride;
-    if (type === "HEIGHT") return "Bạn cao bao nhiêu?";
-    if (type === "WEIGHT") return "Cân nặng hiện tại của bạn là bao nhiêu?";
-    return "Bạn bao nhiêu tuổi?";
+    if (type === "HEIGHT") return translations.onboarding?.heightTitle ?? "Chiều cao của bạn là bao nhiêu?";
+    if (type === "WEIGHT") return translations.onboarding?.currentWeightTitle ?? "Cân nặng hiện tại của bạn là bao nhiêu?";
+    return translations.onboarding?.ageTitle ?? "Bạn bao nhiêu tuổi?";
   };
 
   return (
@@ -183,13 +183,13 @@ export const MeasurePicker: React.FC<MeasurePickerProps> = ({
         >
           {getTitle()}
         </TextBase>
-        <TextBase 
+        {type === "WEIGHT" && <TextBase 
             fontSize={16} 
             fontWeight="400" 
             style={{ ...styles.subtitle, color: COLORS.subText }}
         >
-          Đừng lo lắng, bạn có thể thay đổi điều này bất cứ lúc nào
-        </TextBase>
+          {translations.onboarding?.changeAnytimeHint ?? "Đừng lo lắng, bạn có thể thay đổi điều này bất cứ lúc nào"}
+        </TextBase>}
       </View>
 
       {/* Picker Section */}
@@ -247,19 +247,6 @@ export const MeasurePicker: React.FC<MeasurePickerProps> = ({
           <Text style={[styles.unitLabel, { color: COLORS.subText }]}>{unit}</Text>
         </View>
       </View>
-
-      {/* Footer Button */}
-      <View
-        style={[styles.footer, { borderTopColor: COLORS.footerBorder }]}
-      >
-        <Button
-          style={styles.button}
-          text="Tiếp theo"
-          backgroundColor={palette.primary}
-          textColor="#FFFFFF"
-          onPress={handleNextPress}
-        />
-      </View>
     </View>
   );
 };
@@ -313,16 +300,5 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     marginBottom: 5,
     fontWeight: "500",
-  },
-  footer: {
-    padding: 16,
-    borderTopWidth: 1,
-    marginBottom: Platform.OS === "android" ? 10 : 0,
-  },
-  button: {
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 12,
-    height: 50,
   },
 });

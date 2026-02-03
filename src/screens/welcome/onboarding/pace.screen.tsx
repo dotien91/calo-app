@@ -103,14 +103,14 @@ const PaceScreen: React.FC<PaceScreenProps> = (props) => {
               <TextBase
                 fontSize={18}
                 fontWeight="600"
-                color={pace === item.key ? "primary" : "text"}
+                color={pace === item.key ? "white" : "text"}
               >
                 {item.label}
               </TextBase>
               <TextBase
                 fontSize={14}
                 fontWeight="400"
-                color={pace === item.key ? "primary" : "textOpacity8"}
+                color={pace === item.key ? "white" : "textOpacity8"}
                 style={styles.optionDesc}
               >
                 {item.desc}

@@ -7,10 +7,8 @@ import useStore from "@services/zustand/store";
 import {
   getCurrentUser,
   getListBlock,
-  getUserSuscription,
   loginWithDevice,
   postInvitationCode,
-  requestListSubscriptionSell,
 } from "@services/api/user.api";
 import { showToast } from "../super.modal.helper";
 import { SCREENS } from "constants";
@@ -117,30 +115,6 @@ export const useUserHook = () => {
     });
     initListFollow(((data as any).follow_users as string[]) || []);
     initListBlock();
-    initUserSubscription(data._id);
-    initSubscriptionSell();
-  };
-
-  const initUserSubscription = (id: any) => {
-    getUserSuscription(id).then((res) => {
-      console.log("ressss", id, res.data);
-
-      if (!res.isError) {
-        setExtraUserData({
-          user_subscription: res.data,
-        });
-      }
-    });
-  };
-
-  const initSubscriptionSell = () => {
-    requestListSubscriptionSell().then((res) => {
-      if (!res.isError) {
-        setExtraUserData({
-          subscription_sell: res.data?.[0],
-        });
-      }
-    });
   };
 
   const initListBlock = () => {
@@ -217,6 +191,5 @@ export const useUserHook = () => {
     logout,
     renderViewRequestLogin,
     initListBlock,
-    initSubscriptionSell,
   };
 };

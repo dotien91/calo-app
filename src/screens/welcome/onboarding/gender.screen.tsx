@@ -29,6 +29,7 @@ const GenderScreen: React.FC<GenderScreenProps> = (props) => {
   const [gender, setGender] = useState<"MALE" | "FEMALE">(formData.gender || "MALE");
   const styles = useMemo(() => createStyles(theme), [theme]);
   const { colors } = theme;
+  const primaryDark = colors.primaryDark ?? colors.primary;
 
   const handleNext = () => {
     const updatedData = { ...formData, gender };
@@ -67,7 +68,7 @@ const GenderScreen: React.FC<GenderScreenProps> = (props) => {
               styles.optionButton,
               {
                 borderColor: gender === "MALE" ? colors.primary : colors.border,
-                backgroundColor: gender === "MALE" ? colors.primary : colors.card,
+                backgroundColor: gender === "MALE" ? primaryDark : colors.card,
               },
             ]}
             onPress={() => setGender("MALE")}
@@ -86,7 +87,7 @@ const GenderScreen: React.FC<GenderScreenProps> = (props) => {
               styles.optionButton,
               {
                 borderColor: gender === "FEMALE" ? colors.primary : colors.border,
-                backgroundColor: gender === "FEMALE" ? colors.primary : colors.card,
+                backgroundColor: gender === "FEMALE" ? primaryDark : colors.card,
               },
             ]}
             onPress={() => setGender("FEMALE")}

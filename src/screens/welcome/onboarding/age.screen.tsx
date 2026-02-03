@@ -1,13 +1,16 @@
-import React, { useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import { SafeAreaView, View } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import { useRoute, useTheme } from "@react-navigation/native";
 import { SCREENS } from "constants";
 import { PlanCalculationData } from "@utils/plan.utils";
+import { palette } from "@theme/themes";
 import {
   MeasurePicker,
   MeasurePickerHeader,
 } from "@shared-components/wheel-picker/MeasurePicker";
+import Button from "@shared-components/button/Button";
+import { createStyles } from "./onboarding.screen.style";
 
 export interface AgeScreenProps {
   formData?: PlanCalculationData;
@@ -25,6 +28,8 @@ const AgeScreen: React.FC<AgeScreenProps> = (props) => {
   const progress = props.progress ?? 42;
   const theme = useTheme();
   const bgColor = theme.colors.background;
+  const [currentValue, setCurrentValue] = useState(initialValue);
+  const styles = useMemo(() => createStyles(theme), [theme]);
 
   const handleNext = (value: number) => {
     if (props.onNext) {
@@ -46,11 +51,29 @@ const AgeScreen: React.FC<AgeScreenProps> = (props) => {
       unit="tuổi"
       initialValue={initialValue}
       onNext={handleNext}
+      onValueChange={setCurrentValue}
     />
   );
 
+  const footerButton = (
+    <View style={styles.footer}>
+      <Button
+        style={styles.button}
+        text="Tiếp theo"
+        backgroundColor={palette.primary}
+        textColor="#FFFFFF"
+        onPress={() => handleNext(currentValue)}
+      />
+    </View>
+  );
+
   if (props.skipHeader) {
-    return <View style={{ flex: 1 }}>{picker}</View>;
+    return (
+      <View style={{ flex: 1, backgroundColor: bgColor }}>
+        {picker}
+        {footerButton}
+      </View>
+    );
   }
 
   const fromRouter = fromRoute != null;
@@ -58,6 +81,7 @@ const AgeScreen: React.FC<AgeScreenProps> = (props) => {
     <>
       <MeasurePickerHeader onBack={handleBack} progress={progress} />
       {picker}
+      {footerButton}
     </>
   );
   const containerStyle = { flex: 1, backgroundColor: bgColor };
