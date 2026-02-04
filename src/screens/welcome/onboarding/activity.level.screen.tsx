@@ -23,6 +23,7 @@ import { SCREENS } from "constants";
 import { palette } from "@theme/themes";
 import { PlanCalculationData } from "@utils/plan.utils";
 import { createStyles, getOnboardingColors } from "./onboarding.screen.style";
+import { translations } from "@localization";
 
 export interface ActivityLevelScreenProps {
   formData?: PlanCalculationData;
@@ -30,33 +31,10 @@ export interface ActivityLevelScreenProps {
   onBack?: () => void;
 }
 
-// 2. THÊM ICON VÀO DATA
-const activities = [
-  { 
-    key: "SEDENTARY" as const, 
-    label: "Ít vận động", 
-    desc: "Ngồi nhiều, ít tập thể dục",
-    Icon: Armchair 
-  },
-  { 
-    key: "LIGHTLY_ACTIVE" as const, 
-    label: "Vận động nhẹ", 
-    desc: "Tập thể dục 1-3 lần/tuần",
-    Icon: PersonSimpleWalk 
-  },
-  { 
-    key: "MODERATELY_ACTIVE" as const, 
-    label: "Vận động vừa", 
-    desc: "Tập thể dục 3-5 lần/tuần",
-    Icon: Barbell 
-  },
-  { 
-    key: "VERY_ACTIVE" as const, 
-    label: "Vận động nhiều", 
-    desc: "Tập thể dục 6-7 lần/tuần",
-    Icon: Lightning 
-  },
-];
+// 2. DATA: key + Icon (label/desc lấy từ translations)
+const ACTIVITY_KEYS = ["SEDENTARY", "LIGHTLY_ACTIVE", "MODERATELY_ACTIVE", "VERY_ACTIVE"] as const;
+const ACTIVITY_ICONS = [Armchair, PersonSimpleWalk, Barbell, Lightning];
+const activities = ACTIVITY_KEYS.map((key, i) => ({ key, Icon: ACTIVITY_ICONS[i] }));
 
 const ActivityLevelScreen: React.FC<ActivityLevelScreenProps> = (props) => {
   const theme = useTheme();
@@ -90,7 +68,7 @@ const ActivityLevelScreen: React.FC<ActivityLevelScreenProps> = (props) => {
         showsVerticalScrollIndicator={false}
       >
         <TextBase fontSize={24} fontWeight="700" color="text" style={styles.title}>
-          Mức độ hoạt động
+          {translations.onboarding?.activityTitle ?? "Mức độ hoạt động"}
         </TextBase>
         <TextBase
           fontSize={16}
@@ -98,7 +76,7 @@ const ActivityLevelScreen: React.FC<ActivityLevelScreenProps> = (props) => {
           color="textOpacity8"
           style={styles.subtitle}
         >
-          Mô tả mức độ hoạt động hàng ngày của bạn
+          {translations.onboarding?.activitySubtitle ?? "Mô tả mức độ hoạt động hàng ngày của bạn"}
         </TextBase>
 
         <View style={styles.optionsContainer}>
@@ -143,7 +121,7 @@ const ActivityLevelScreen: React.FC<ActivityLevelScreenProps> = (props) => {
                     fontWeight="600"
                     color={textColor}
                   >
-                    {item.label}
+                    {translations.planResult?.activityLabels?.[item.key] ?? item.key}
                   </TextBase>
                   <TextBase
                     fontSize={14}
@@ -151,7 +129,7 @@ const ActivityLevelScreen: React.FC<ActivityLevelScreenProps> = (props) => {
                     color={subTextColor}
                     style={styles.optionDesc}
                   >
-                    {item.desc}
+                    {translations.onboarding?.activityDescs?.[item.key] ?? ""}
                   </TextBase>
                 </View>
               </TouchableOpacity>
@@ -163,7 +141,7 @@ const ActivityLevelScreen: React.FC<ActivityLevelScreenProps> = (props) => {
       <View style={styles.footer}>
         <Button
           style={styles.button}
-          text="Tiếp tục"
+          text={translations.onboarding?.continue ?? "Tiếp tục"}
           backgroundColor={palette.primary}
           textColor={palette.white}
           onPress={handleNext}

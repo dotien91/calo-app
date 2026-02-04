@@ -3,7 +3,7 @@ import { SafeAreaView, View } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import { useRoute, useTheme } from "@react-navigation/native";
 import { SCREENS } from "constants";
-import { PlanCalculationData } from "@utils/plan.utils"; // Bỏ import calculateBMI ở đây
+import { PlanCalculationData } from "@utils/plan.utils";
 import { palette } from "@theme/themes";
 import {
   MeasurePicker,
@@ -12,6 +12,9 @@ import {
 import Button from "@shared-components/button/Button";
 import { createStyles } from "./onboarding.screen.style";
 import { translations } from "@localization";
+import { updateOnboardingGoals } from "@services/api/calorie.api";
+import useStore from "@services/zustand/store";
+import { showToast } from "@helpers/super.modal.helper";
 
 // Import Component mới vừa tạo (nhớ chỉnh đường dẫn import cho đúng vị trí file)
 import BMIStatusView from "@shared-components/BMIStatusView"; 
@@ -27,27 +30,48 @@ export interface TargetWeightScreenProps {
 const TargetWeightScreen: React.FC<TargetWeightScreenProps> = (props) => {
   const route = useRoute();
   const theme = useTheme();
+  const setOnboardingData = useStore((state) => state.setOnboardingData);
   const styles = useMemo(() => createStyles(theme), [theme]);
   const bgColor = theme.colors.background;
 
-  // Lấy dữ liệu
-  const fromRoute = (route.params as any)?.formData as PlanCalculationData | undefined;
+  const params = route.params as any;
+  const fromRoute = params?.formData as PlanCalculationData | undefined;
+  const fromProfile = params?.fromProfile === true;
   const formData = (props.formData ?? fromRoute ?? {}) as PlanCalculationData;
 
   const initialValue = parseFloat(String(formData.targetWeight)) || 65;
-  const heightVal = parseFloat(String(formData.height)) || 165; // Fallback height
+  const heightVal = parseFloat(String(formData.height)) || 165;
 
   const [currentValue, setCurrentValue] = useState(initialValue);
+  const [saving, setSaving] = useState(false);
   const progress = props.progress ?? 57;
 
-  // --- LOGIC NAVIGATION ---
-  const handleNext = (value: number) => {
+  // --- LOGIC NAVIGATION / SAVE ---
+  const handleNext = async (value: number) => {
     if (props.onNext) {
       props.onNext(value);
-    } else {
-      const updatedData = { ...formData, targetWeight: value };
-      NavigationService.navigate(SCREENS.GENDER, { formData: updatedData });
+      return;
     }
+    if (fromProfile) {
+      try {
+        setSaving(true);
+        const response = await updateOnboardingGoals({ target_weight: value }) as any;
+        if (!response?.isError && response?.data) {
+          setOnboardingData(response.data);
+          showToast({ type: "success", message: "Mục tiêu đã được cập nhật" });
+          NavigationService.goBack();
+        } else {
+          showToast({ type: "error", message: translations.error?.unknown ?? "Không thể cập nhật" });
+        }
+      } catch (e) {
+        showToast({ type: "error", message: translations.error?.unknown ?? "Không thể cập nhật" });
+      } finally {
+        setSaving(false);
+      }
+      return;
+    }
+    const updatedData = { ...formData, targetWeight: value };
+    NavigationService.navigate(SCREENS.GENDER, { formData: updatedData });
   };
 
   const handleBack = () => {
@@ -75,10 +99,11 @@ const TargetWeightScreen: React.FC<TargetWeightScreenProps> = (props) => {
     <View style={styles.footer}>
       <Button
         style={styles.button}
-        text={translations.next ?? "Tiếp theo"}
+        text={saving ? (translations.save ?? "Đang lưu...") : (translations.next ?? "Tiếp theo")}
         backgroundColor={palette.primary}
         textColor="#FFFFFF"
         onPress={() => handleNext(currentValue)}
+        disabled={saving}
       />
     </View>
   );
@@ -87,7 +112,7 @@ const TargetWeightScreen: React.FC<TargetWeightScreenProps> = (props) => {
   const content = (
     <>
       {!props.skipHeader && (
-        <MeasurePickerHeader onBack={handleBack} progress={progress} />
+        <MeasurePickerHeader onBack={handleBack} progress={progress} step={3} />
       )}
       
       {picker}

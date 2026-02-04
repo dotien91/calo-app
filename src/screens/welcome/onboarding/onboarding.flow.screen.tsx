@@ -79,6 +79,16 @@ const OnboardingFlowScreen: React.FC = () => {
   const theme = useTheme();
   const { colors } = theme;
 
+  // Khi Profile gửi restart: true — reset state như mới vào flow (sạch như vừa cài app)
+  useEffect(() => {
+    const params = route.params as any;
+    if (params?.restart === true && params?.formData) {
+      setStep(0);
+      setFormData({ ...defaultFormData, ...params.formData });
+      setPlanResult(null);
+    }
+  }, [(route.params as any)?.restart, (route.params as any)?.formData]);
+
   // Lưu draft mỗi khi formData hoặc step thay đổi (để mở app lại vào đúng màn)
   useEffect(() => {
     _setJson(ONBOARDING_DRAFT, { formData, step });

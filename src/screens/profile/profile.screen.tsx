@@ -12,6 +12,12 @@ import {
 import { useNavigation, useTheme } from '@react-navigation/native';
 import { SCREENS } from 'constants';
 import { translations } from '@localization';
+import { _setJson, HAS_COMPLETED_ONBOARDING, ONBOARDING_DRAFT } from '@services/local-storage';
+import {
+  showSuperModal,
+  EnumModalContentType,
+  EnumStyleModalType,
+} from '@helpers/super.modal.helper';
 
 // --- Import Phosphor Icons ---
 import {
@@ -124,8 +130,8 @@ const SettingProfileScreen = () => {
   const { colors, dark } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
   
-  // Lấy hàm set theme từ store (nếu có)
-  const setLightMode = useStore((state) => state.setLightMode); 
+  const setLightMode = useStore((state) => state.setLightMode);
+  const setOnboardingData = useStore((state) => state.setOnboardingData);
   const onboardingData = useStore((state) => state.onboardingData);
   const currentLanguage = useStore((state) => state.language);
 
@@ -153,48 +159,113 @@ const SettingProfileScreen = () => {
     if (setLightMode) setLightMode(!value);
   };
 
-  // --- Navigation Logic ---
+  // Map diet_type (key) sang id dùng trong màn Goal
+  const DIET_KEY_TO_ID: Record<string, string> = useMemo(() => ({
+    BALANCED: '1',
+    LOW_CARB: '2',
+    LOW_FAT: '3',
+    HIGH_PROTEIN: '4',
+    KETO: '5',
+    VEGETARIAN: '6',
+  }), []);
+
+  // --- Navigation Logic: truyền giá trị mặc định từ onboardingData (hoặc fallback) vào màn con ---
   const handleNavigateToGoal = (key: string) => {
-    let params = {};
+    const data = onboardingData;
+    let params: Record<string, unknown> = {};
     switch (key) {
       case 'WEIGHT':
-        params = { type: 'WEIGHT', title: translations.profile.weightGoalTitle, initialValue: 70.0, unit: 'kg' };
+        params = {
+          type: 'WEIGHT',
+          title: translations.profile.weightGoalTitle,
+          initialValue: data?.target_weight ?? 70,
+          unit: 'kg',
+        };
         break;
       case 'CALO':
-        params = { type: 'INPUT', title: translations.profile.caloriesGoalTitle, description: '...', initialValue: '2045', unit: 'kcal', iconType: 'fire' };
+        params = {
+          type: 'INPUT',
+          title: translations.profile.caloriesGoalTitle,
+          description: '...',
+          initialValue: String(data?.target_calories ?? 2045),
+          unit: 'kcal',
+          iconType: 'fire',
+        };
         break;
       case 'DIET':
-        params = { type: 'DIET', title: translations.profile.dietGoalTitle, initialValue: '1' };
+        params = {
+          type: 'DIET',
+          title: translations.profile.dietGoalTitle,
+          initialValue: DIET_KEY_TO_ID[data?.diet_type ?? 'BALANCED'] ?? '1',
+        };
         break;
       case 'STEP':
-        params = { type: 'INPUT', title: translations.profile.stepsGoalTitle, description: '...', initialValue: '10000', unit: translations.profile.stepsUnit, iconType: 'step' };
+        params = {
+          type: 'INPUT',
+          title: translations.profile.stepsGoalTitle,
+          description: '...',
+          initialValue: String(data?.target_steps ?? 10000),
+          unit: translations.profile.stepsUnit,
+          iconType: 'step',
+        };
         break;
       case 'WATER':
-        params = { type: 'INPUT', title: translations.profile.waterGoalTitle, description: '...', initialValue: '2000', unit: translations.profile.waterUnit, iconType: 'water' };
+        params = {
+          type: 'INPUT',
+          title: translations.profile.waterGoalTitle,
+          description: '...',
+          initialValue: String(data?.target_water ?? 2000),
+          unit: translations.profile.waterUnit,
+          iconType: 'water',
+        };
         break;
-      default: return; 
+      default:
+        return;
     }
     navigation.navigate(SCREENS.GOAL, params);
   };
 
-  // --- Logic Restart Onboarding ---
-  const handleRestartOnboarding = () => {
-    // Navigate to the start of the onboarding flow (Current Weight)
-    // We pass empty formData so user starts fresh, or could pass current data if we fetched it.
-    navigation.navigate(SCREENS.CURRENT_WEIGHT, {
-      formData: {
-        currentWeight: "",
-        height: "",
-        age: "",
-        targetWeight: "",
-        gender: "MALE",
-        activityLevel: "MODERATELY_ACTIVE",
-        pace: "NORMAL",
-      },
+  // Build formData cho màn Target Weight (từ onboardingData store, snake_case -> camelCase)
+  const getTargetWeightFormData = useMemo(() => {
+    const d = onboardingData;
+    return {
+      currentWeight: d?.current_weight?.toString() ?? "",
+      height: d?.height?.toString() ?? "",
+      age: d?.age?.toString() ?? "",
+      targetWeight: d?.target_weight?.toString() ?? "",
+      gender: (d?.gender ?? "MALE") as "MALE" | "FEMALE",
+      activityLevel: (d?.activity_level ?? "MODERATELY_ACTIVE") as string,
+      pace: (d?.pace ?? "NORMAL") as string,
+    };
+  }, [onboardingData]);
+
+  const handleNavigateToTargetWeight = () => {
+    navigation.navigate(SCREENS.TARGET_WEIGHT, {
+      formData: getTargetWeightFormData,
+      fromProfile: true,
     });
   };
 
-  console.log("onboard", onboardingData);
+  // --- Logic Restart Onboarding: sạch như vừa cài app ---
+  const handleRestartOnboarding = () => {
+    _setJson(HAS_COMPLETED_ONBOARDING, false);
+    _setJson(ONBOARDING_DRAFT, null);
+    setOnboardingData(null);
+    const emptyFormData = {
+      currentWeight: "",
+      height: "",
+      age: "",
+      targetWeight: "",
+      gender: "MALE" as const,
+      activityLevel: "MODERATELY_ACTIVE" as const,
+      pace: "NORMAL" as const,
+    };
+    navigation.navigate(SCREENS.ONBOARDING_FLOW, {
+      formData: emptyFormData,
+      restart: true,
+    });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={dark ? "light-content" : "dark-content"} backgroundColor={colors.background} />
@@ -224,7 +295,7 @@ const SettingProfileScreen = () => {
 
         {/* Section: Mục tiêu */}
         <SectionGroup title={translations.profile.goals} styles={styles}>
-          <ListItem theme={theme} styles={styles} Icon={Scales} title={translations.profile.weight} value={`${onboardingData?.target_weight || 70} kg`} onPress={() => handleNavigateToGoal('WEIGHT')} />
+          <ListItem theme={theme} styles={styles} Icon={Scales} title={translations.profile.weight} value={`${onboardingData?.target_weight || 70} kg`} onPress={handleNavigateToTargetWeight} />
           <ListItem theme={theme} styles={styles} Icon={Fire} title={translations.profile.calories} value={`${onboardingData?.target_calories || 2045} kcal`} onPress={() => handleNavigateToGoal('CALO')} />
           <ListItem theme={theme} styles={styles} Icon={ChartPieSlice} title={translations.profile.nutrition} value={`${onboardingData?.target_protein || 102}/${onboardingData?.target_carbs || 256}/${onboardingData?.target_fat || 68} g`} />
           <ListItem theme={theme} styles={styles} Icon={ForkKnife} title={translations.profile.diet} value={translations.dietTypes[onboardingData?.diet_type] || onboardingData?.diet_type} onPress={() => handleNavigateToGoal('DIET')} />
@@ -253,7 +324,7 @@ const SettingProfileScreen = () => {
             onSwitchChange={handleToggleDarkMode}
           />
           
-          <ListItem theme={theme} styles={styles} Icon={Translate} title={translations.profile.language} value={getCurrentLanguageName()} onPress={() => navigation.navigate(SCREENS.CHOOSE_LANGUAGE)} />
+          <ListItem theme={theme} styles={styles} Icon={Translate} title={translations.profile.language} value={getCurrentLanguageName()} onPress={() => showSuperModal({ contentModalType: EnumModalContentType.ChooseLanguage, styleModalType: EnumStyleModalType.Bottom })} />
           
           <View style={styles.toggleItemWrapper}>
             <ListItem 

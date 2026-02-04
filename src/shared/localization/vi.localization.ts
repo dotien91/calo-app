@@ -97,6 +97,14 @@ export default {
     paceFastLabel: "Nhanh",
     paceFastDesc: "1 kg/tuần - Cần kiên trì",
     viewResult: "Xem kết quả",
+    activityTitle: "Mức độ hoạt động",
+    activitySubtitle: "Mô tả mức độ hoạt động hàng ngày của bạn",
+    activityDescs: {
+      SEDENTARY: "Ngồi nhiều, ít tập thể dục",
+      LIGHTLY_ACTIVE: "Tập thể dục 1-3 lần/tuần",
+      MODERATELY_ACTIVE: "Tập thể dục 3-5 lần/tuần",
+      VERY_ACTIVE: "Tập thể dục 6-7 lần/tuần",
+    },
   },
 
   // --- Plan Result (onboarding summary) ---

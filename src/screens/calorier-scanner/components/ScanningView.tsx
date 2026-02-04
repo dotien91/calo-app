@@ -28,6 +28,7 @@ import {
 } from 'phosphor-react-native';
 import Svg, { Path, G } from 'react-native-svg';
 import { translations } from '@localization';
+import { ScreenHeight } from '@freakycoder/react-native-helpers';
 
 const { width, height } = Dimensions.get("window");
 
@@ -191,7 +192,7 @@ const renderScanningOverlay = () => {
       ) : showCamera ? (
         <Camera ref={camera} style={StyleSheet.absoluteFill} device={device} isActive={true} photo={true} resizeMode="cover"/>
       ) : (
-        <View style={styles.placeholderCamera}><ActivityIndicator color="#FFF" size="large" /></View>
+        <View style={styles.placeholderCamera}><ActivityIndicator color="#FFF" size="large" style={{ marginTop: ScreenHeight/3.5 }} /></View>
       )}
 
       {/* LỚP 3: UI LOGIC */}

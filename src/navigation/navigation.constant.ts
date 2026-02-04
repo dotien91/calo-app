@@ -38,6 +38,7 @@ import ChatRoomMediaScreen from "@screens/chat/media-club/chat.media.screen";
 // ? Screens - Health & Onboarding (Calorie App Core)
 import OnboardingScreen from "@screens/welcome/onboarding/onboarding.screen";
 import OnboardingFlowScreen from "@screens/welcome/onboarding/onboarding.flow.screen";
+import TargetWeightScreen from "@screens/welcome/onboarding/target.weight.screen";
 import GoalDetailScreen from "@screens/on-boarding/goal.screen";
 import IntroScreen from "@screens/welcome/intro/intro.screen";
 import AddMealScreen from "@screens/add-meal";
@@ -68,6 +69,7 @@ export const ClubStackData: any[] = [];
 
 export const CommonStackData = [
   ...OnboardingStackData, // Import luồng nhập liệu sức khỏe vào Common
+  { name: SCREENS.TARGET_WEIGHT, screen: TargetWeightScreen },
   { name: SCREENS.GOAL, screen: GoalDetailScreen },
   { name: SCREENS.POST_DETAIL, screen: PostDetailScreen },
   { name: SCREENS.CHAT, screen: ChatListScreen },

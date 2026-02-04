@@ -11,6 +11,7 @@ import {
 } from "@shared-components/wheel-picker/MeasurePicker";
 import Button from "@shared-components/button/Button";
 import { createStyles } from "./onboarding.screen.style";
+import { translations } from "@localization";
 
 export interface AgeScreenProps {
   formData?: PlanCalculationData;
@@ -48,7 +49,7 @@ const AgeScreen: React.FC<AgeScreenProps> = (props) => {
   const picker = (
     <MeasurePicker
       type="AGE"
-      unit="tuổi"
+      unit={translations.planResult?.ageUnit ?? "tuổi"}
       initialValue={initialValue}
       onNext={handleNext}
       onValueChange={setCurrentValue}
@@ -59,7 +60,7 @@ const AgeScreen: React.FC<AgeScreenProps> = (props) => {
     <View style={styles.footer}>
       <Button
         style={styles.button}
-        text="Tiếp theo"
+        text={translations.next ?? "Tiếp theo"}
         backgroundColor={palette.primary}
         textColor="#FFFFFF"
         onPress={() => handleNext(currentValue)}

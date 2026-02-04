@@ -122,6 +122,7 @@ export interface UpdateOnboardingGoalsData {
   diet_type?: string;
   target_steps?: number;
   target_water?: number;
+  target_weight?: number;
 }
 
 /**

@@ -97,6 +97,14 @@ export default {
     paceFastLabel: "速い",
     paceFastDesc: "1 kg/週 - 継続が大切",
     viewResult: "結果を見る",
+    activityTitle: "活動レベル",
+    activitySubtitle: "日頃の活動レベルを選んでください",
+    activityDescs: {
+      SEDENTARY: "ほとんど座っている、運動は少なめ",
+      LIGHTLY_ACTIVE: "週1〜3回運動",
+      MODERATELY_ACTIVE: "週3〜5回運動",
+      VERY_ACTIVE: "週6〜7回運動",
+    },
   },
 
   // --- Plan Result (onboarding summary) ---

@@ -41,7 +41,7 @@ const PRODUCTION_DOMAIN_SOCKET_PRODUCTION = "https://socket.api.ikigroup.vn";
 
 // Logic chọn Domain
 const DOMAIN = !isProduction
-  ? DEVELOPER_DOMAIN_DEV
+  ? PRODUCTION_DOMAIN_PRODUCTION
   : PRODUCTION_DOMAIN_PRODUCTION;
 
 const DOMAIN_API = DOMAIN + "/api/"; // Kết quả: http://localhost:3900/api/

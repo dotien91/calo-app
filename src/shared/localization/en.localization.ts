@@ -97,6 +97,14 @@ export default {
     paceFastLabel: "Fast",
     paceFastDesc: "1 kg/week - Requires commitment",
     viewResult: "View result",
+    activityTitle: "Activity level",
+    activitySubtitle: "Describe your daily activity level",
+    activityDescs: {
+      SEDENTARY: "Sitting most of the day, little exercise",
+      LIGHTLY_ACTIVE: "Exercise 1-3 times per week",
+      MODERATELY_ACTIVE: "Exercise 3-5 times per week",
+      VERY_ACTIVE: "Exercise 6-7 times per week",
+    },
   },
 
   // --- Plan Result (onboarding summary) ---
@@ -296,7 +304,7 @@ export default {
     whatonYourMind: "What's on your mind",
     recentActivity: "Recent activity",
     macros: {
-      CARBS: "Carbohydrates",
+      CARBS: "Carbs",
       PROTEIN: "Protein",
       FAT: "Fat",
     },
