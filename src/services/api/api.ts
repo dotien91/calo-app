@@ -19,6 +19,14 @@ const headersDefault = {
   Accept: "application/json, text/plain, */*",
 };
 
+export interface IResponse<T> {
+  data: T;
+  message: string;
+  success: boolean;
+  isError: boolean;
+  failedUrl?: string;
+}
+
 interface RequestOption extends AxiosRequestConfig {
   requestTime?: number;
   retry?: boolean;

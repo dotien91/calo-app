@@ -1,10 +1,13 @@
 import React, { useMemo } from "react";
-import { Text, Pressable, ViewStyle, ColorValue } from "react-native";
+import { Text, Pressable, ViewStyle, TextStyle, ColorValue } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import createStyles from "./Button.style";
 import { palette } from "@theme/themes";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import TextBase from "@shared-components/TextBase";
+
+/** Các kiểu nút có sẵn: primary, outline, disabled, viewmore */
+export type ButtonType = "primary" | "outline" | "disabled" | "viewmore";
 
 interface ICustomStyle {
   button?: ViewStyle;
@@ -19,7 +22,8 @@ interface ButtonProps {
   textColor?: ColorValue;
   SvgSo?: React.JSX.Element;
   disabled?: boolean;
-  type?: string;
+  /** Kiểu nút: primary | outline | disabled | viewmore */
+  type?: ButtonType;
   iconName?: string;
   isFullWidth?: boolean;
   showRightIcon?: boolean;
@@ -48,39 +52,42 @@ export default function Button({
 }: ButtonProps) {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(), [theme]);
-  // const hasIcon = !!SvgSo || !!iconName;
 
-  const colorIcon = () => {
-    switch (type) {
-      case "primary":
-        return palette.white;
-        break;
-      case "outline":
-        return palette.primary;
-        break;
-      case "disabled":
-        return palette.textOpacity4;
-      case "viewmore":
-        return palette.primary;
-        break;
-      default:
-        return palette.text;
-        break;
-    }
+  const typeButtonStyle = useMemo((): Partial<Record<ButtonType, ViewStyle>> => ({
+    primary: styles.btnPrimary,
+    outline: styles.btnOutline,
+    disabled: styles.btnDisabled,
+    viewmore: styles.btnViewmore,
+  }), [styles]);
+
+  const typeTextStyle = useMemo((): Partial<Record<ButtonType, TextStyle>> => ({
+    primary: styles.txtBtnPrimary,
+    outline: styles.txtBtnOutline,
+    disabled: styles.txtBtnDisabled,
+    viewmore: styles.txtBtnOutline,
+  }), [styles]);
+
+  const iconColorByType: Partial<Record<ButtonType, string>> = {
+    primary: palette.white,
+    outline: palette.primary,
+    disabled: palette.textOpacity4,
+    viewmore: palette.primary,
   };
+  const colorIcon = () => (type && iconColorByType[type]) ?? palette.text;
+
+  const buttonStyleByType = type ? typeButtonStyle[type] : undefined;
+  const textStyleByType = type ? typeTextStyle[type] : undefined;
+
   return (
     <Pressable
-      disabled={disabled || type == "disabled"}
+      disabled={disabled || type === "disabled"}
       style={({ pressed }) => {
         return [
           !subText && styles.viewButton,
           !!backgroundColor && { backgroundColor: backgroundColor },
           { opacity: pressed ? 0.8 : 1.0 },
           disabled && { backgroundColor: palette.borderColor },
-          type == "primary" && styles.btnPrimary,
-          type == "outline" && styles.btnOutline,
-          type == "disabled" && styles.btnDisabled,
-          type == "viewmore" && styles.btnViewmore,
+          buttonStyleByType,
           isFullWidth
             ? { width: "100%" }
             : { width: "auto", alignSelf: "start" },
@@ -109,9 +116,7 @@ export default function Button({
         style={[
           styles.textButton,
           !!textColor && { color: textColor },
-          type == "primary" && styles.txtBtnPrimary,
-          (type == "outline" || type == "viewmore") && styles.txtBtnOutline,
-          type == "disabled" && styles.txtBtnDisabled,
+          textStyleByType,
           isSmallButton && { fontSize: 13, fontWeight: "500" },
           isMiddleButton && styles.textMiddleButton,
           customStyle && customStyle?.text,
@@ -125,9 +130,7 @@ export default function Button({
         style={[
           styles.textButton,
           !!textColor && { color: textColor },
-          type == "primary" && styles.txtBtnPrimary,
-          (type == "outline" || type == "viewmore") && styles.txtBtnOutline,
-          type == "disabled" && styles.txtBtnDisabled,
+          textStyleByType,
           isSmallButton && { fontSize: 13, fontWeight: "500" },
           isMiddleButton && styles.textMiddleButton,
           customStyle && customStyle?.text,

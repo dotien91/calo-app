@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { SafeAreaView } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import { useRoute, useTheme } from "@react-navigation/native";
 import { SCREENS } from "constants";
-import { PlanCalculationData, PlanResult } from "@utils/plan.utils";
-import { _setJson, HAS_COMPLETED_ONBOARDING } from "@services/local-storage";
+import { PlanCalculationData, PlanResult, calculatePlan } from "@utils/plan.utils";
+import { _getJson, _setJson, HAS_COMPLETED_ONBOARDING, ONBOARDING_DRAFT } from "@services/local-storage";
 import {
   submitOnboarding,
   OnboardingData,
@@ -39,20 +39,50 @@ const defaultFormData: PlanCalculationData = {
   pace: "NORMAL",
 };
 
+type OnboardingDraft = { formData: PlanCalculationData; step: number };
+
+const loadDraft = (): OnboardingDraft | null => {
+  const raw = _getJson(ONBOARDING_DRAFT);
+  if (!raw || typeof raw !== "object") return null;
+  const step = Number((raw as any).step);
+  const formData = (raw as any).formData;
+  if (!formData || typeof formData !== "object" || !Number.isInteger(step) || step < 0 || step > 7) return null;
+  return { formData: { ...defaultFormData, ...formData }, step };
+};
+
 const OnboardingFlowScreen: React.FC = () => {
   const route = useRoute();
   const initialParams = (route.params as any)?.formData as PlanCalculationData | undefined;
-  
-  const [step, setStep] = useState(0);
-  const [formData, setFormData] = useState<PlanCalculationData>(() =>
-    initialParams ? { ...defaultFormData, ...initialParams } : defaultFormData
-  );
-  const [planResult, setPlanResult] = useState<PlanResult | null>(null);
+  const savedDraft = useMemo(() => loadDraft(), []);
+
+  const [step, setStep] = useState(() => {
+    if (initialParams && !savedDraft) return 0;
+    return savedDraft?.step ?? 0;
+  });
+  const [formData, setFormData] = useState<PlanCalculationData>(() => {
+    if (initialParams) return { ...defaultFormData, ...initialParams };
+    return savedDraft?.formData ?? defaultFormData;
+  });
+  const [planResult, setPlanResult] = useState<PlanResult | null>(() => {
+    if (savedDraft?.step === 7 && savedDraft?.formData) {
+      try {
+        return calculatePlan(savedDraft.formData as PlanCalculationData);
+      } catch {
+        return null;
+      }
+    }
+    return null;
+  });
   const [loading, setLoading] = useState(false);
 
   const setOnboardingData = useStore((state) => state.setOnboardingData);
   const theme = useTheme();
   const { colors } = theme;
+
+  // Lưu draft mỗi khi formData hoặc step thay đổi (để mở app lại vào đúng màn)
+  useEffect(() => {
+    _setJson(ONBOARDING_DRAFT, { formData, step });
+  }, [formData, step]);
 
   // --- ACTIONS ---
 
@@ -84,9 +114,10 @@ const OnboardingFlowScreen: React.FC = () => {
     try {
       setLoading(true);
       const response = await submitOnboarding(onboardingData);
-      if (response.success) {
+      if (!response.isError) {
         setOnboardingData(response.data.onboarding);
         _setJson(HAS_COMPLETED_ONBOARDING, true);
+        _setJson(ONBOARDING_DRAFT, null);
         NavigationService.replace(SCREENS.TABS);
       } else {
         showToast({ type: "error", message: response.message });
@@ -117,7 +148,7 @@ const OnboardingFlowScreen: React.FC = () => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
       {/* Header chung cho toàn bộ flow */}
-      <MeasurePickerHeader onBack={handleBack} progress={progressValue} />
+      <MeasurePickerHeader step={step} onBack={handleBack} progress={progressValue} />
       
       {/* STEP 0: Height */}
       {step === 0 && (

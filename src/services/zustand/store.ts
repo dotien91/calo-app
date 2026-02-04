@@ -92,6 +92,7 @@ const useStore = create<StoreState>()(
                 "setIsMutedAll",
                 "typeFilter",
                 "idFocusVideo",
+                "homeWeeklyFetchedAt",
               ].includes(key),
           ),
         ),

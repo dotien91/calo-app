@@ -4,9 +4,18 @@ import {
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
+  StyleSheet, // <--- Import StyleSheet
 } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import { useRoute, useTheme } from "@react-navigation/native";
+
+// 1. IMPORT PHOSPHOR ICONS
+import { 
+  Armchair, 
+  PersonSimpleWalk, 
+  Barbell, 
+  Lightning 
+} from "phosphor-react-native";
 
 import Button from "@shared-components/button/Button";
 import TextBase from "@shared-components/TextBase";
@@ -21,11 +30,32 @@ export interface ActivityLevelScreenProps {
   onBack?: () => void;
 }
 
+// 2. THÊM ICON VÀO DATA
 const activities = [
-  { key: "SEDENTARY" as const, label: "Ít vận động", desc: "Ngồi nhiều, ít tập thể dục" },
-  { key: "LIGHTLY_ACTIVE" as const, label: "Vận động nhẹ", desc: "Tập thể dục 1-3 lần/tuần" },
-  { key: "MODERATELY_ACTIVE" as const, label: "Vận động vừa", desc: "Tập thể dục 3-5 lần/tuần" },
-  { key: "VERY_ACTIVE" as const, label: "Vận động nhiều", desc: "Tập thể dục 6-7 lần/tuần" },
+  { 
+    key: "SEDENTARY" as const, 
+    label: "Ít vận động", 
+    desc: "Ngồi nhiều, ít tập thể dục",
+    Icon: Armchair 
+  },
+  { 
+    key: "LIGHTLY_ACTIVE" as const, 
+    label: "Vận động nhẹ", 
+    desc: "Tập thể dục 1-3 lần/tuần",
+    Icon: PersonSimpleWalk 
+  },
+  { 
+    key: "MODERATELY_ACTIVE" as const, 
+    label: "Vận động vừa", 
+    desc: "Tập thể dục 3-5 lần/tuần",
+    Icon: Barbell 
+  },
+  { 
+    key: "VERY_ACTIVE" as const, 
+    label: "Vận động nhiều", 
+    desc: "Tập thể dục 6-7 lần/tuần",
+    Icon: Lightning 
+  },
 ];
 
 const ActivityLevelScreen: React.FC<ActivityLevelScreenProps> = (props) => {
@@ -72,37 +102,61 @@ const ActivityLevelScreen: React.FC<ActivityLevelScreenProps> = (props) => {
         </TextBase>
 
         <View style={styles.optionsContainer}>
-          {activities.map((item) => (
-            <TouchableOpacity
-              key={item.key}
-              style={[
-                styles.optionCard,
-                {
-                  borderColor: activityLevel === item.key ? borderSelected : colors.border,
-                  backgroundColor: activityLevel === item.key ? cardSelected : colors.card,
-                },
-              ]}
-              onPress={() =>
-                setActivityLevel(item.key as PlanCalculationData["activityLevel"])
-              }
-            >
-              <TextBase
-                fontSize={18}
-                fontWeight="600"
-                color={activityLevel === item.key ? "white" : "text"}
+          {activities.map((item) => {
+            const isSelected = activityLevel === item.key;
+            // Logic màu sắc
+            const textColor = isSelected ? "white" : "text";
+            const subTextColor = isSelected ? "white" : "textOpacity8";
+            const iconColor = isSelected ? "#FFFFFF" : colors.text;
+            
+            // Lấy Component Icon
+            const IconComponent = item.Icon;
+
+            return (
+              <TouchableOpacity
+                key={item.key}
+                style={[
+                  styles.optionCard,
+                  localStyles.cardRow, // <--- Style layout ngang
+                  {
+                    borderColor: isSelected ? borderSelected : colors.border,
+                    backgroundColor: isSelected ? cardSelected : colors.card,
+                  },
+                ]}
+                onPress={() =>
+                  setActivityLevel(item.key as PlanCalculationData["activityLevel"])
+                }
               >
-                {item.label}
-              </TextBase>
-              <TextBase
-                fontSize={14}
-                fontWeight="400"
-                color={activityLevel === item.key ? "white" : "textOpacity8"}
-                style={styles.optionDesc}
-              >
-                {item.desc}
-              </TextBase>
-            </TouchableOpacity>
-          ))}
+                {/* 3. PHẦN ICON BÊN TRÁI */}
+                <View style={localStyles.iconContainer}>
+                   <IconComponent 
+                      size={32} 
+                      color={iconColor}
+                      weight={isSelected ? "fill" : "regular"} 
+                   />
+                </View>
+
+                {/* PHẦN TEXT BÊN PHẢI */}
+                <View style={localStyles.textContainer}>
+                  <TextBase
+                    fontSize={18}
+                    fontWeight="600"
+                    color={textColor}
+                  >
+                    {item.label}
+                  </TextBase>
+                  <TextBase
+                    fontSize={14}
+                    fontWeight="400"
+                    color={subTextColor}
+                    style={styles.optionDesc}
+                  >
+                    {item.desc}
+                  </TextBase>
+                </View>
+              </TouchableOpacity>
+            );
+          })}
         </View>
       </ScrollView>
 
@@ -118,5 +172,24 @@ const ActivityLevelScreen: React.FC<ActivityLevelScreenProps> = (props) => {
     </Wrapper>
   );
 };
+
+// 4. STYLE BỔ SUNG
+const localStyles = StyleSheet.create({
+  cardRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+  },
+  iconContainer: {
+    marginRight: 16,
+    width: 40,
+    alignItems: 'center',
+  },
+  textContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  }
+});
 
 export default ActivityLevelScreen;

@@ -11,11 +11,11 @@ export enum ENVIRONMENT {
 }
 
 // Xác định môi trường (ưu tiên DEV để test localhost)
-// export const isProduction =
-//   (_getJson("env") || (__DEV__ ? ENVIRONMENT.DEVELOP : ENVIRONMENT.PRODUCT)) ===
-//   ENVIRONMENT.PRODUCT;
+export const isProduction =
+  (_getJson("env") || (__DEV__ ? ENVIRONMENT.DEVELOP : ENVIRONMENT.PRODUCT)) ===
+  ENVIRONMENT.PRODUCT;
 
-export const isProduction = true
+// export const isProduction = true
 // --------------------------------------------------------
 // CẤU HÌNH DOMAIN LOCALHOST
 // --------------------------------------------------------

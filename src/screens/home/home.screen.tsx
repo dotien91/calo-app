@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { View, ScrollView, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useTheme } from '@react-navigation/native';
+import { useTheme, useFocusEffect } from '@react-navigation/native';
 import useStore from '@services/zustand/store';
 import { format } from 'date-fns';
 import { translations } from '@localization';
@@ -18,9 +18,14 @@ import RecentActivity from './components/RecentActivity';
 import { IconProtein, IconFat } from '@assets/svg/CustomeSvg';
 import { GrainsIcon } from 'phosphor-react-native';
 
+/** Sau khoảng này (ms) mới cho fetch lại khi focus Home — tránh gọi API mỗi lần click tab. */
+const HOME_DATA_STALE_MS = 2 * 60 * 1000;
+
 const HomeScreen = () => {
   const theme = useTheme();
   const onboardingData = useStore((state) => state.onboardingData);
+  const homeWeeklyFetchedAt = useStore((state) => state.homeWeeklyFetchedAt);
+  const setHomeWeeklyFetchedAt = useStore((state) => state.setHomeWeeklyFetchedAt);
 
   const styles = useMemo(() => createStyles(theme), [theme]);
   const COLORS = useMemo(() => getHomeColors(theme), [theme]);
@@ -40,16 +45,25 @@ const HomeScreen = () => {
       if (res && Array.isArray(res.week)) {
         setWeeklyData(res.week);
       }
+      setHomeWeeklyFetchedAt(Date.now());
     } catch (err) {
       console.log('Error fetching calories:', err);
     } finally {
       setLoadingWeekly(false);
     }
-  }, []);
+  }, [setHomeWeeklyFetchedAt]);
 
-  useEffect(() => {
-    fetchWeekData();
-  }, [fetchWeekData]);
+  // Chỉ fetch khi chưa từng fetch hoặc dữ liệu đã cũ — tránh gọi API mỗi lần click tab Home (kể cả khi màn bị unmount)
+  useFocusEffect(
+    useCallback(() => {
+      const now = Date.now();
+      const neverFetched = homeWeeklyFetchedAt === 0;
+      const stale = now - homeWeeklyFetchedAt > HOME_DATA_STALE_MS;
+      if (neverFetched || stale) {
+        fetchWeekData();
+      }
+    }, [fetchWeekData, homeWeeklyFetchedAt])
+  );
 
   // Lắng nghe khi cần refresh (vd: sau khi lưu món từ scanner)
   useEffect(() => {

@@ -15,7 +15,7 @@ export const createStyles = (theme: ThemeLike) => {
       backgroundColor: colors.background ?? colors.card,
     },
     scrollView: { flex: 1 },
-    contentContainer: { padding: 16, paddingTop: 40 },
+    contentContainer: { padding: 16, paddingTop: 40, paddingBottom: 100 },
     title: {
       textAlign: "center",
       marginBottom: 12,

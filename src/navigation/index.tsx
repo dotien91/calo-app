@@ -11,7 +11,7 @@ import { SCREENS } from "constants";
 import { DarkTheme, LightTheme } from "@theme/themes";
 // ? Screens
 import useStore from "@services/zustand/store";
-import { _getJson, _setJson, HAS_COMPLETED_ONBOARDING } from "@services/local-storage";
+import { _getJson, _setJson, HAS_COMPLETED_ONBOARDING, ONBOARDING_DRAFT } from "@services/local-storage";
 import { StackIntroData, CommonStackData } from "./navigation.constant";
 import { navigate } from "@helpers/navigation.helper";
 import eventEmitter from "@services/event-emitter";
@@ -30,7 +30,10 @@ const HealthStack = createStackNavigator();
 
 const Navigation = () => {
   const isLightMode = useStore((state) => state.isLightMode);
-  const hasCompletedOnboarding = _getJson(HAS_COMPLETED_ONBOARDING) === true; 
+  const hasCompletedOnboarding = _getJson(HAS_COMPLETED_ONBOARDING) === true;
+  const hasOnboardingDraft = hasCompletedOnboarding ? false : !!_getJson(ONBOARDING_DRAFT);
+  const initialRoute = hasCompletedOnboarding ? SCREENS.TABS : (hasOnboardingDraft ? SCREENS.ONBOARDING_FLOW : SCREENS.INTRO);
+
   React.useEffect((): any => {
     // _setJson(HAS_COMPLETED_ONBOARDING, false);
     return () => (isReadyRef.current = false);
@@ -85,8 +88,6 @@ const Navigation = () => {
             listeners={{
               tabPress: () => {
                 navigate(SCREENS.HOME_TAB);
-                eventEmitter.emit("reload_home_page");
-                eventEmitter.emit("scroll_home_to_top");
               },
             }}
           />
@@ -100,11 +101,6 @@ const Navigation = () => {
           <Tab.Screen
             name={SCREENS.SETTINGPROFILESCREEN_TAB}
             component={SettingProfileScreen}
-            listeners={{
-              tabPress: () => {
-                eventEmitter.emit("reload_list_task");
-              },
-            }}
           />
         </Tab.Navigator>
       </>
@@ -155,7 +151,7 @@ const Navigation = () => {
     >
       <Stack.Navigator 
         screenOptions={{ headerShown: false }}
-        initialRouteName={hasCompletedOnboarding ? SCREENS.TABS : SCREENS.INTRO}
+        initialRouteName={initialRoute}
       >
         {renderStackIntro()}
         {/* Main Tab */}

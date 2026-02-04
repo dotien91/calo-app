@@ -134,6 +134,7 @@ export function useAnalysisImageFood(selectionLimit = 1) {
       name: `cam_${Date.now()}.jpg`, // Tự sinh tên file
       type: 'image/jpeg',            // Ảnh từ camera luôn là jpeg/heic
     };
+    alert(JSON.stringify(fileData))
 
     // Gọi luồng xử lý chung
     await _processAnalyze(fileData);

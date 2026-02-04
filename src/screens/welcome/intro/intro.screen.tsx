@@ -136,10 +136,9 @@ const IntroScreen = () => {
         </Text>
 
         <Button
+          type="primary"
           text={translations.intro?.getStarted ?? "Get Started"}
           onPress={handleStart}
-          backgroundColor={themeColors.primary ?? "#5ED90B"}
-          textColor="#000000"
           style={styles.startButton}
         />
 

@@ -30,11 +30,13 @@ export const getColors = (isLightMode: boolean) =>
 export interface MeasurePickerHeaderProps {
   onBack: () => void;
   progress: number;
+  step: number;
 }
 
 export const MeasurePickerHeader: React.FC<MeasurePickerHeaderProps> = ({
   onBack,
   progress,
+  step,
 }) => {
   const theme = useTheme();
   const COLORS = getColorsFromTheme(theme);
@@ -67,7 +69,7 @@ export const MeasurePickerHeader: React.FC<MeasurePickerHeaderProps> = ({
           color={COLORS.text}
         />
       </TouchableOpacity>
-      <View style={[headerStyles.progressBg, { backgroundColor: COLORS.progressBg }]}>
+      {step !== 7 && <View style={[headerStyles.progressBg, { backgroundColor: COLORS.progressBg }]}>
         {/* Dùng Animated.View thay vì View thường */}
         <Animated.View
           style={[
@@ -75,7 +77,7 @@ export const MeasurePickerHeader: React.FC<MeasurePickerHeaderProps> = ({
             { width: widthInterpolated }, 
           ]}
         />
-      </View>
+      </View>}
       <View style={headerStyles.spacer} />
     </View>
   );
@@ -299,6 +301,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginLeft: 15,
     marginBottom: 5,
+    marginTop: 18,
     fontWeight: "500",
   },
 });

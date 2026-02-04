@@ -4,16 +4,24 @@ import {
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
+  StyleSheet,
 } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import { useRoute, useTheme } from "@react-navigation/native";
 
+// 1. SỬA IMPORT: Bỏ Tortoise, thêm PersonSimpleWalk
+import { 
+  PersonSimpleWalk, // <-- Thay thế cho Tortoise
+  PersonSimpleRun, 
+  RocketLaunch 
+} from "phosphor-react-native";
+
 import Button from "@shared-components/button/Button";
 import TextBase from "@shared-components/TextBase";
 import { SCREENS } from "constants";
-import { palette } from "@theme/themes";
 import { PlanCalculationData, PlanResult, calculatePlan } from "@utils/plan.utils";
 import { createStyles, getOnboardingColors } from "./onboarding.screen.style";
+import { translations } from "@localization";
 
 const defaultFormData: PlanCalculationData = {
   currentWeight: "",
@@ -27,15 +35,14 @@ const defaultFormData: PlanCalculationData = {
 
 export interface PaceScreenProps {
   formData?: PlanCalculationData;
-  /** Khi dùng trong flow: nhận planResult, không navigate */
   onNext?: (planResult: PlanResult) => void;
   onBack?: () => void;
 }
 
-const paces = [
-  { key: "SLOW" as const, label: "Chậm", desc: "0.25 kg/tuần - An toàn và bền vững" },
-  { key: "NORMAL" as const, label: "Bình thường", desc: "0.5 kg/tuần - Cân bằng" },
-  { key: "FAST" as const, label: "Nhanh", desc: "1 kg/tuần - Cần kiên trì" },
+const PACE_OPTIONS: { key: PlanCalculationData["pace"]; Icon: typeof PersonSimpleWalk }[] = [
+  { key: "SLOW", Icon: PersonSimpleWalk },
+  { key: "NORMAL", Icon: PersonSimpleRun },
+  { key: "FAST", Icon: RocketLaunch },
 ];
 
 const PaceScreen: React.FC<PaceScreenProps> = (props) => {
@@ -65,6 +72,11 @@ const PaceScreen: React.FC<PaceScreenProps> = (props) => {
 
   const fromRouter = props.onNext == null;
   const Wrapper = fromRouter ? SafeAreaView : View;
+  const t = (translations.onboarding ?? {}) as Record<string, string>;
+  const getLabel = (key: PlanCalculationData["pace"]) =>
+    ({ SLOW: t.paceSlowLabel, NORMAL: t.paceNormalLabel, FAST: t.paceFastLabel }[key] ?? key);
+  const getDesc = (key: PlanCalculationData["pace"]) =>
+    ({ SLOW: t.paceSlowDesc, NORMAL: t.paceNormalDesc, FAST: t.paceFastDesc }[key] ?? "");
 
   return (
     <Wrapper style={styles.container}>
@@ -74,7 +86,7 @@ const PaceScreen: React.FC<PaceScreenProps> = (props) => {
         showsVerticalScrollIndicator={false}
       >
         <TextBase fontSize={24} fontWeight="700" color="text" style={styles.title}>
-          Tốc độ thay đổi
+          {t.paceTitle ?? "Tốc độ thay đổi"}
         </TextBase>
         <TextBase
           fontSize={16}
@@ -82,55 +94,89 @@ const PaceScreen: React.FC<PaceScreenProps> = (props) => {
           color="textOpacity8"
           style={styles.subtitle}
         >
-          Bạn muốn đạt mục tiêu với tốc độ nào?
+          {t.paceSubtitle ?? "Bạn muốn đạt mục tiêu với tốc độ nào?"}
         </TextBase>
 
         <View style={styles.optionsContainer}>
-          {paces.map((item) => (
-            <TouchableOpacity
-              key={item.key}
-              style={[
-                styles.optionCard,
-                {
-                  borderColor: pace === item.key ? borderSelected : colors.border,
-                  backgroundColor: pace === item.key ? cardSelected : colors.card,
-                },
-              ]}
-              onPress={() =>
-                setPace(item.key as PlanCalculationData["pace"])
-              }
-            >
-              <TextBase
-                fontSize={18}
-                fontWeight="600"
-                color={pace === item.key ? "white" : "text"}
+          {PACE_OPTIONS.map((item) => {
+            const isSelected = pace === item.key;
+            const textColor = isSelected ? "white" : "text";
+            const subTextColor = isSelected ? "white" : "textOpacity8";
+            const iconColor = isSelected ? "#FFFFFF" : colors.text;
+            const IconComponent = item.Icon;
+
+            return (
+              <TouchableOpacity
+                key={item.key}
+                style={[
+                  styles.optionCard,
+                  localStyles.cardRow,
+                  {
+                    borderColor: isSelected ? borderSelected : colors.border,
+                    backgroundColor: isSelected ? cardSelected : colors.card,
+                  },
+                ]}
+                onPress={() => setPace(item.key)}
               >
-                {item.label}
-              </TextBase>
-              <TextBase
-                fontSize={14}
-                fontWeight="400"
-                color={pace === item.key ? "white" : "textOpacity8"}
-                style={styles.optionDesc}
-              >
-                {item.desc}
-              </TextBase>
-            </TouchableOpacity>
-          ))}
+                <View style={localStyles.iconContainer}>
+                  <IconComponent
+                    size={32}
+                    color={iconColor}
+                    weight={isSelected ? "fill" : "regular"}
+                  />
+                </View>
+
+                <View style={localStyles.textContainer}>
+                  <TextBase
+                    fontSize={18}
+                    fontWeight="600"
+                    color={textColor}
+                  >
+                    {getLabel(item.key)}
+                  </TextBase>
+                  <TextBase
+                    fontSize={14}
+                    fontWeight="400"
+                    color={subTextColor}
+                    style={styles.optionDesc}
+                  >
+                    {getDesc(item.key)}
+                  </TextBase>
+                </View>
+              </TouchableOpacity>
+            );
+          })}
         </View>
       </ScrollView>
 
       <View style={styles.footer}>
         <Button
+          type="primary"
           style={styles.button}
-          text="Xem kết quả"
-          backgroundColor={palette.primary}
-          textColor={palette.white}
+          text={t.viewResult ?? "Xem kết quả"}
           onPress={handleFinish}
         />
       </View>
     </Wrapper>
   );
 };
+
+const localStyles = StyleSheet.create({
+  cardRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+  },
+  iconContainer: {
+    marginRight: 16,
+    width: 40,
+    alignItems: 'center',
+  },
+  textContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  }
+});
 
 export default PaceScreen;

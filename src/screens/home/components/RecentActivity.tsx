@@ -8,10 +8,10 @@ import {
 } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 import { format } from 'date-fns';
-import { ForkKnife, GrainsIcon } from 'phosphor-react-native';
+import { ForkKnife } from 'phosphor-react-native';
 import { translations } from '@localization';
-import { IconProtein, IconFat } from '../../../assets/svg/CustomeSvg';
 import { SCREENS } from 'constants';
+import MacroBadgeRow from '@shared-components/MacroBadgeRow';
 import { navigate } from '@helpers/navigation.helper';
 import LoadingList from '@shared-components/loading.list.component';
 
@@ -74,12 +74,6 @@ const FoodItem = ({
     }
   };
 
-  const MACRO_COLORS = {
-    carb: '#F4D03F',    
-    protein: '#E74C3C', 
-    fat: '#2ECC71',     
-  };
-
   return (
     <TouchableOpacity
       activeOpacity={0.8}
@@ -108,29 +102,12 @@ const FoodItem = ({
           
           <View style={[styles.verticalDivider, { backgroundColor: colors.border }]} />
           
-          {/* Carb (Icon Tự Vẽ) */}
-          <View style={styles.macroItem}>
-            <GrainsIcon size={20} color={MACRO_COLORS.carb} />
-            <Text style={[styles.macroText, { color: colors.textOpacity8 }]}>
-              {item.total_carbs}
-            </Text>
-          </View>
-          
-          {/* Protein (Icon Tự Vẽ) */}
-          <View style={styles.macroItem}>
-            <IconProtein size={20} color={MACRO_COLORS.protein} />
-            <Text style={[styles.macroText, { color: colors.textOpacity8 }]}>
-              {item.total_protein}
-            </Text>
-          </View>
-          
-          {/* Fat (Icon Tự Vẽ) */}
-          <View style={styles.macroItem}>
-            <IconFat size={20} color={MACRO_COLORS.fat} />
-            <Text style={[styles.macroText, { color: colors.textOpacity8 }]}>
-              {item.total_fat}
-            </Text>
-          </View>
+          <MacroBadgeRow
+            carbs={item.total_carbs}
+            protein={item.total_protein}
+            fat={item.total_fat}
+            textColor={colors.textOpacity8}
+          />
         </View>
       </View>
 
@@ -288,16 +265,6 @@ const styles = StyleSheet.create({
     width: 1,
     height: 10,
     marginRight: 8,
-  },
-  macroItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginRight: 10,
-  },
-  macroText: {
-    fontSize: 12,
-    fontWeight: '500',
-    marginLeft: 3,
   },
   timeText: {
     fontSize: 12,

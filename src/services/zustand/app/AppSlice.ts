@@ -8,6 +8,9 @@ export interface AppSlice {
   setLanguage: (language: string) => void;
   isShowWelcome: boolean;
   setShowWelcome: (value: boolean) => void;
+  /** Timestamp lần cuối fetch weekly data ở Home (0 = chưa bao giờ). Tránh gọi API mỗi lần click tab Home. */
+  homeWeeklyFetchedAt: number;
+  setHomeWeeklyFetchedAt: (at: number) => void;
 }
 
 const createAppSlice: StoreSlice<AppSlice> = (set) => ({
@@ -17,6 +20,8 @@ const createAppSlice: StoreSlice<AppSlice> = (set) => ({
   setLanguage: (value: string) => set({ language: value }),
   isShowWelcome: true,
   setShowWelcome: (value: boolean) => set({ isShowWelcome: value }),
+  homeWeeklyFetchedAt: 0,
+  setHomeWeeklyFetchedAt: (at: number) => set({ homeWeeklyFetchedAt: at }),
 });
 
 export default createAppSlice;

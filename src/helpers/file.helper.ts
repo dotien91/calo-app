@@ -27,20 +27,6 @@ export const selectMedia = async ({
   }
   if (croping) {
     openPicker({
-      smartAlbums: [
-        "Favorites",
-        "Screenshots",
-        "Generic",
-        "AllHidden",
-        "RecentlyAdded",
-        "Imported",
-        "LivePhotos",
-        "Panoramas",
-        "Bursts",
-        "UserLibrary",
-        "SyncedAlbum",
-        "Regular",
-      ],
       ...config,
     })
       .then(async (image) => {

@@ -7,13 +7,14 @@ import {
 } from "react-native";
 import * as NavigationService from "react-navigation-helpers";
 import { useRoute, useTheme } from "@react-navigation/native";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 import Button from "@shared-components/button/Button";
 import TextBase from "@shared-components/TextBase";
 import { SCREENS } from "constants";
-import { palette } from "@theme/themes";
 import { PlanCalculationData } from "@utils/plan.utils";
 import { createStyles } from "./onboarding.screen.style";
+import { translations } from "@localization";
 
 export interface GenderScreenProps {
   formData?: PlanCalculationData;
@@ -42,6 +43,7 @@ const GenderScreen: React.FC<GenderScreenProps> = (props) => {
 
   const fromRouter = props.onNext == null;
   const Wrapper = fromRouter ? SafeAreaView : View;
+  const t = translations.onboarding ?? {} as Record<string, string>;
 
   return (
     <Wrapper style={styles.container}>
@@ -51,7 +53,7 @@ const GenderScreen: React.FC<GenderScreenProps> = (props) => {
         showsVerticalScrollIndicator={false}
       >
         <TextBase fontSize={24} fontWeight="700" color="text" style={styles.title}>
-          Giới tính
+          {t.genderTitle ?? "Giới tính"}
         </TextBase>
         <TextBase
           fontSize={16}
@@ -59,7 +61,7 @@ const GenderScreen: React.FC<GenderScreenProps> = (props) => {
           color="textOpacity8"
           style={styles.subtitle}
         >
-          Chọn giới tính của bạn
+          {t.genderSubtitle ?? "Chọn giới tính của bạn"}
         </TextBase>
 
         <View style={styles.optionsContainer}>
@@ -73,12 +75,19 @@ const GenderScreen: React.FC<GenderScreenProps> = (props) => {
             ]}
             onPress={() => setGender("MALE")}
           >
+            <Icon
+              type={IconType.Ionicons}
+              name="male"
+              size={40}
+              color={gender === "MALE" ? "#FFFFFF" : colors.text}
+              style={{ marginBottom: 8 }}
+            />
             <TextBase
               fontSize={18}
               fontWeight="600"
               color={gender === "MALE" ? "white" : "text"}
             >
-              Nam
+              {t.genderMale ?? "Nam"}
             </TextBase>
           </TouchableOpacity>
 
@@ -92,12 +101,19 @@ const GenderScreen: React.FC<GenderScreenProps> = (props) => {
             ]}
             onPress={() => setGender("FEMALE")}
           >
+            <Icon
+              type={IconType.Ionicons}
+              name="female"
+              size={40}
+              color={gender === "FEMALE" ? "#FFFFFF" : colors.text}
+              style={{ marginBottom: 8 }}
+            />
             <TextBase
               fontSize={18}
               fontWeight="600"
               color={gender === "FEMALE" ? "white" : "text"}
             >
-              Nữ
+              {t.genderFemale ?? "Nữ"}
             </TextBase>
           </TouchableOpacity>
         </View>
@@ -105,10 +121,9 @@ const GenderScreen: React.FC<GenderScreenProps> = (props) => {
 
       <View style={styles.footer}>
         <Button
+          type="primary"
           style={styles.button}
-          text="Tiếp tục"
-          backgroundColor={palette.primary}
-          textColor={palette.white}
+          text={t.continue ?? translations.next ?? "Tiếp tục"}
           onPress={handleNext}
         />
       </View>

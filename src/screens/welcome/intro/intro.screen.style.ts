@@ -4,7 +4,7 @@ import { Theme } from "@react-navigation/native";
 const { width } = Dimensions.get("window");
 
 // Layout constants (không phụ thuộc theme)
-export const PHONE_WIDTH = width * 0.65;
+export const PHONE_WIDTH = width * 0.55;
 export const PHONE_HEIGHT = PHONE_WIDTH * 2;
 export const FRAME_SIZE = PHONE_WIDTH * 0.7;
 export const STROKE_WIDTH = 4;
@@ -39,7 +39,7 @@ export default (theme: Theme) => {
       flex: 2,
       justifyContent: "center",
       alignItems: "center",
-      paddingTop: 40,
+      paddingTop: 80,
     },
     phoneMockup: {
       width: PHONE_WIDTH,

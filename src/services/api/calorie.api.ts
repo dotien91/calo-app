@@ -1,4 +1,4 @@
-import request, { METHOD } from "./api";
+import request, { IResponse, METHOD } from "./api";
 
 /**
  * Enums for Onboarding
@@ -131,12 +131,12 @@ export interface UpdateOnboardingGoalsData {
  */
 export async function submitOnboarding(
   data: OnboardingData
-): Promise<OnboardingResponse> {
+): Promise<IResponse<OnboardingResponse>> {
   return request({
     method: METHOD.POST,
     urlPath: "calorie/onboarding",
     data,
-  }).then((response: any) => {
+  }).then((response: IResponse<OnboardingResponse>) => {
     return response;
   });
 }
