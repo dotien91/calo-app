@@ -6,7 +6,6 @@ import HomeAffilite from "@screens/affiliate/intro.affiliate.screen";
 import DetailScreen from "@screens/detail/DetailScreen";
 import SettingScreen from "@screens/setting/setting.screen";
 import SettingUser from "@screens/setting-user/setting.user";
-import SmartBanking from "@screens/smart-banking/smart.banking";
 import PaymentSuccess from "@screens/payment-success/payment.success";
 import TabFollow from "@screens/tab-follow/tab.follow";
 import NotificationScreen from "@screens/notification/NotificationScreen";
@@ -44,6 +43,7 @@ import IntroScreen from "@screens/welcome/intro/intro.screen";
 import AddMealScreen from "@screens/add-meal";
 import CalorierScannerScreen from "@screens/calorier-scanner/calorier.scanner.screen";
 import CalorieResultScreen from "@screens/calorier-scanner/calorie.result.screen";
+import RecordWeightScreen from "@screens/track-body/record.weight.screen";
 
 export const DiscoveryStackData: any[] = [];
 
@@ -70,6 +70,7 @@ export const ClubStackData: any[] = [];
 export const CommonStackData = [
   ...OnboardingStackData, // Import luồng nhập liệu sức khỏe vào Common
   { name: SCREENS.TARGET_WEIGHT, screen: TargetWeightScreen },
+  { name: SCREENS.RECORD_WEIGHT, screen: RecordWeightScreen },
   { name: SCREENS.GOAL, screen: GoalDetailScreen },
   { name: SCREENS.POST_DETAIL, screen: PostDetailScreen },
   { name: SCREENS.CHAT, screen: ChatListScreen },
@@ -87,7 +88,6 @@ export const CommonStackData = [
   { name: SCREENS.VERIFY_CODE, screen: VerifyCodeScreen },
   { name: SCREENS.NEW_PASSWORD, screen: NewPasswordScreen },
   { name: SCREENS.SETTING_USER, screen: SettingUser },
-  { name: SCREENS.SMARTBANKING, screen: SmartBanking },
   { name: SCREENS.PAYMENT_SUCCESS, screen: PaymentSuccess },
   { name: SCREENS.TAB_FOLLOW, screen: TabFollow },
   { name: SCREENS.SETTING, screen: SettingScreen },

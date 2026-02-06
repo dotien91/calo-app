@@ -4,24 +4,13 @@ import { useTheme } from '@react-navigation/native';
 import { GrainsIcon } from 'phosphor-react-native';
 import { IconProtein, IconFat } from '@assets/svg/CustomeSvg';
 import { translations } from '@localization';
+import { palette } from '@theme/themes';
 
-export const MACRO_COLORS = {
-  carb: '#3B82F6',
-  protein: '#EF4444',
-  fat: '#EAB308',
-};
-
-/** Fallback khi chưa có translations.home.macros */
-export const MACRO_LABELS = {
-  carb: 'Đường bột',
-  protein: 'Chất đạm',
-  fat: 'Chất béo',
-};
 
 const getMacroLabels = () => ({
-  protein: translations.home?.macros?.PROTEIN ?? MACRO_LABELS.protein,
-  carb: translations.home?.macros?.CARBS ?? MACRO_LABELS.carb,
-  fat: translations.home?.macros?.FAT ?? MACRO_LABELS.fat,
+  protein: translations.home?.macros?.PROTEIN ,
+  carb: translations.home?.macros?.CARBS,
+  fat: translations.home?.macros?.FAT
 });
 
 export type MacroBadgeLayout = 'horizontal' | 'vertical';
@@ -33,7 +22,6 @@ export interface MacroBadgeRowProps {
   layout?: MacroBadgeLayout;
   iconSize?: number;
   textColor?: string;
-  colors?: Partial<typeof MACRO_COLORS>;
   showLabel?: boolean;
   percentages?: { carbs: number; protein: number; fat: number };
   style?: object;
@@ -46,13 +34,11 @@ const MacroBadgeRow: React.FC<MacroBadgeRowProps> = ({
   layout = 'horizontal',
   iconSize = 20,
   textColor,
-  colors: customColors,
   showLabel = false,
   percentages,
   style,
 }) => {
   const { colors: themeColors } = useTheme();
-  const colors = { ...MACRO_COLORS, ...customColors };
   const finalTextColor = textColor ?? themeColors?.text;
   const labelColor = textColor ?? themeColors?.textOpacity8;
   const isVertical = layout === 'vertical';
@@ -75,15 +61,15 @@ const MacroBadgeRow: React.FC<MacroBadgeRowProps> = ({
     <View style={[localStyles.row, isVertical && localStyles.rowVertical, style]}>
       
       <View style={[localStyles.item, isVertical && localStyles.itemVertical]}>
-        <IconProtein size={iconSize} color={colors.protein} />
+      <View style={[localStyles.item, isVertical && localStyles.itemVertical]}>
+        <GrainsIcon size={iconSize} color={themeColors.carb} weight="fill" />
+        {renderTextContent(labels.carb, carbs, percentages?.carbs)}
+      </View>
+        <IconProtein size={iconSize} color={themeColors.protein} />
         {renderTextContent(labels.protein, protein, percentages?.protein)}
       </View>
       <View style={[localStyles.item, isVertical && localStyles.itemVertical]}>
-        <GrainsIcon size={iconSize} color={colors.carb} weight="fill" />
-        {renderTextContent(labels.carb, carbs, percentages?.carbs)}
-      </View>
-      <View style={[localStyles.item, isVertical && localStyles.itemVertical]}>
-        <IconFat size={iconSize} color={colors.fat} />
+        <IconFat size={iconSize} color={themeColors.fat} />
         {renderTextContent(labels.fat, fat, percentages?.fat)}
       </View>
 

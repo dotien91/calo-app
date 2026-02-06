@@ -166,7 +166,7 @@ export const createStyles = (theme: ThemeLike) => {
     macroTitle: {
       color: COLORS.subText,
       fontSize: 12,
-      marginBottom: 6,
+      height: 42,
     },
     macroValue: {
       color: COLORS.text,

@@ -80,9 +80,9 @@ export const CustomTabBar: React.FC<BottomTabBarProps> = ({
       contentModalType: EnumModalContentType.QuickActionMenu,
       styleModalType: EnumStyleModalType.Bottom,
       data: {
-        onNavigate: (screenId: string) => {
+        onNavigate: ({ id, screen }: { id: string; screen: string }) => {
           // Handle navigation based on selected action
-          switch (screenId) {
+          switch (id) {
             case 'activity':
               // Navigate to activity screen
               console.log('Navigate to Activity Log');
@@ -95,22 +95,22 @@ export const CustomTabBar: React.FC<BottomTabBarProps> = ({
               break;
             case 'weight':
               // Navigate to weight screen
-              console.log('Navigate to Weight');
-              // navigate(SCREENS.WEIGHT_SCREEN); // Uncomment when screen exists
+              navigate(screen);
               break;
             case 'breakfast':
             case 'lunch':
             case 'dinner':
             case 'snacks':
               // Navigate to add meal screen with meal type
-              navigate(SCREENS.ADD_MEAL_SCREEN);
+              navigate(screen);
               break;
             case 'scanner':
               // Navigate to calorie scanner
-              navigate(SCREENS.CALORIER_SCANNER);
+              navigate(screen);
               break;
             default:
-              console.log('Unknown action:', screenId);
+              if (screen) navigate(screen);
+              else console.log('Unknown action:', id);
           }
         }
       }

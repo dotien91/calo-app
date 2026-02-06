@@ -15,9 +15,9 @@ import {
   MinusCircle,
 } from 'phosphor-react-native';
 
-// Import Custom Icons
 import { IconCarb, IconProtein, IconFat } from '../../../assets/svg/CustomeSvg';
 import { translations } from '@localization';
+import MacroBadgeRow from '@shared-components/MacroBadgeRow';
 
 const DEFAULT_COLORS = {
   bg: '#000000',
@@ -54,18 +54,15 @@ const IngredientRow = ({
         <Text style={[styles.ingDot, { color: c.subText }]}>•</Text>
         <Text style={[styles.ingCal, { color: c.subText }]}>{item.cal}kcal</Text>
         <View style={[styles.verticalLine, { backgroundColor: c.border }]} />
-        <View style={styles.miniMacro}>
-          <IconCarb size={12} color="#F4D03F" />
-          <Text style={[styles.miniMacroText, { color: c.textSecondary }]}>{item.c}</Text>
-        </View>
-        <View style={styles.miniMacro}>
-          <IconProtein size={12} color="#E74C3C" />
-          <Text style={[styles.miniMacroText, { color: c.textSecondary }]}>{item.p}</Text>
-        </View>
-        <View style={styles.miniMacro}>
-          <IconFat size={12} color="#2ECC71" />
-          <Text style={[styles.miniMacroText, { color: c.textSecondary }]}>{item.f}</Text>
-        </View>
+        <MacroBadgeRow
+          carbs={item.c}
+          protein={item.p}
+          fat={item.f}
+          iconSize={12}
+          textColor={c.textSecondary}
+          showLabel={false}
+          style={styles.miniMacroRow}
+        />
       </View>
     </View>
     {!readOnly && (
@@ -281,6 +278,7 @@ const styles = StyleSheet.create({
   verticalLine: { width: 1, height: 12, marginHorizontal: 8 },
   miniMacro: { flexDirection: 'row', alignItems: 'center', marginRight: 8 },
   miniMacroText: { fontSize: 12, marginLeft: 2 },
+  miniMacroRow: { marginLeft: 8 },
   addIngredientBtn: { flexDirection: 'row', alignItems: 'center', marginTop: 16 },
   addIngredientText: { fontSize: 15, fontWeight: '600', marginLeft: 8 },
   helperText: {

@@ -151,6 +151,11 @@ export const palette = {
   greenTh1: "#5AD693",
   greenTh3: "#2AA764",
   statusBarAudio: "rgba(0, 0, 0, 0.7)",
+
+  //
+  carb: '#3B82F6',
+  protein: '#EF4444',
+  fat: '#EAB308',
 };
 
 interface ExtendedTheme extends Theme {

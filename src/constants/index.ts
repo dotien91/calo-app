@@ -60,7 +60,6 @@ export const SCREENS = {
   ABOUT_ME: "AboutMe",
   SETTING_USER: "SettingUser",
   CHANGELANGUAGE: "ChangeLanguage",
-  SMARTBANKING: "SmartBanking",
   PAYMENT_SUCCESS: "PaymentSuccess",
   COURSE_LEARN_VIDEO_SCREEN: "CourseLearnVideoScreen",
   CALL_PAGE: "Call",
@@ -163,6 +162,7 @@ export const SCREENS = {
   GOAL: "Goal",
   ONBOARDING_FLOW: "OnboardingFlow",
   ONBOARDING_CURRENT_WEIGHT_HEIGHT: "OnboardingCurrentWeightHeight",
+  RECORD_WEIGHT: "RecordWeight",
 };
 
 export const IOS_CLIENT_ID_GOOGLE =

@@ -34,6 +34,7 @@ import ViewMore from "./modal-inner/ViewMore";
 import SubscriptionView from "./modal-inner/SubscriptionView";
 import QuickActionMenu from "./modal-inner/QuickActionMenu";
 import ChooseLanguageView from "./modal-inner/ChooseLanguageView";
+import CalendarPickerView from "./modal-inner/CalendarPickerView";
 
 interface SuperModalProps {}
 
@@ -131,6 +132,20 @@ const SuperModal: React.FC<SuperModalProps> = () => {
         {contentModalType == EnumModalContentType.ChooseLanguage && (
           <ChooseLanguageView closeModal={closeModal} />
         )}
+        {/* Render Calendar Picker */}
+        {contentModalType == EnumModalContentType.CalendarPicker && (
+          <CalendarPickerView
+            selectedDate={data?.selectedDate ?? new Date()}
+            onDateSelect={(date: Date) => {
+              try {
+                data?.onDateSelect?.(date);
+              } finally {
+                closeModal();
+              }
+            }}
+            style={data?.calendarStyle}
+          />
+        )}
       </>
     );
   };
@@ -199,8 +214,23 @@ const SuperModal: React.FC<SuperModalProps> = () => {
      return null;
   }
   if (styleModalType == EnumStyleModalType.Middle) {
-     // ...
-     return null;
+    return (
+      <Modal
+        isVisible={visible}
+        onBackdropPress={closeModal}
+        onBackButtonPress={closeModal}
+        backdropOpacity={data?.backdropOpacity ?? 0.5}
+        animationIn="zoomIn"
+        animationOut="zoomOut"
+        animationInTiming={160}
+        animationOutTiming={160}
+        style={styles.modal}
+      >
+        <View style={[styles.modalInner, data?.style ? data.style : {}]}>
+          {renderContentModal()}
+        </View>
+      </Modal>
+    );
   }
   
   return null;

@@ -51,6 +51,7 @@ export enum EnumModalContentType {
   QuickActionMenu = "quick-action-menu",
   ConfirmEvaluation = "ConfirmEvaluation",
   ChooseLanguage = "choose-language",
+  CalendarPicker = "calendar-picker",
 }
 
 export enum EnumStyleModalType {

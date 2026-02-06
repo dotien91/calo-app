@@ -1,22 +1,24 @@
-import React, { useMemo } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { startOfWeek, addDays, format, isSameDay, isAfter, startOfDay } from 'date-fns';
+import React, { useMemo, useRef } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions, FlatList } from 'react-native';
+import { startOfWeek, addDays, subWeeks, format, isAfter, startOfDay } from 'date-fns';
 import Svg, { Circle } from 'react-native-svg';
 import { Star, Smiley } from 'phosphor-react-native';
 import { translations } from '@localization';
 
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
+
 const DEFAULT_COLORS = {
   text: '#FFFFFF',
   subText: '#8E8E93',
-  accent: '#FACC15', // Vàng (Mặc định)
-  full: '#FFB347',   // [CẬP NHẬT] Cam nhạt (Pastel Orange) cho đồng bộ với AvocadoIcon
+  accent: '#FACC15',
+  full: '#FFB347',
   cardBg: '#2C2C2E',
   iconBg: '#3A3A3C',
   track: '#333333',
   dashed: '#999999'
 };
 
-// --- COMPONENT VÒNG TRÒN TIẾN ĐỘ ---
+// --- COMPONENT VÒNG TRÒN TIẾN ĐỘ (GIỮ NGUYÊN) ---
 interface ProgressProps {
   size?: number;
   progress?: number;
@@ -40,9 +42,6 @@ const DateProgressCircle = ({
 
   const hasDataOrActive = active || (progress > 0);
   const isPastEmpty = !isFuture && !active && progress <= 0;
-
-  // [LOGIC MÀU SẮC]
-  // Nếu progress >= 1 (100%) -> Đổi sang màu CAM NHẠT
   const isFull = progress >= 1;
   const displayColor = isFull ? DEFAULT_COLORS.full : color;
 
@@ -57,8 +56,6 @@ const DateProgressCircle = ({
   return (
     <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
       <Svg width={size} height={size} style={{ position: 'absolute' }}>
-        
-        {/* TRƯỜNG HỢP 1: QUÁ KHỨ + 0 CALO -> NÉT ĐỨT NHẠT */}
         {isPastEmpty && (
           <Circle
             cx={size / 2} cy={size / 2} r={radius}
@@ -69,18 +66,14 @@ const DateProgressCircle = ({
             opacity={0.3} 
           />
         )}
-
-        {/* TRƯỜNG HỢP 2: CÓ DỮ LIỆU HOẶC HÔM NAY */}
         {hasDataOrActive && (
           <>
-            {/* Track nền */}
             <Circle
               cx={size / 2} cy={size / 2} r={radius}
               stroke={DEFAULT_COLORS.track} 
               strokeWidth={strokeWidth}
               fill="transparent"
             />
-            {/* Indicator (Dùng displayColor: Vàng hoặc Cam nhạt) */}
             <Circle
               cx={size / 2} cy={size / 2} r={radius}
               stroke={displayColor} 
@@ -100,28 +93,26 @@ const DateProgressCircle = ({
   );
 };
 
-// --- HEADER SECTION ---
-interface HeaderProps {
-  currentCalories?: number;
+// --- COMPONENT HIỂN THỊ 1 TUẦN ---
+interface WeekRowProps {
+  weekOffset: number; // 0 = tuần này, 1 = tuần trước, v.v.
   targetCalories: number;
-  weeklyData?: any[]; 
-  COLORS?: any;
+  weeklyData: any[];
+  COLORS: any;
   selectedDate?: string;
   onSelectDate?: (date: string) => void;
 }
 
-const HeaderSection = ({ 
-  targetCalories, 
-  weeklyData = [], 
-  COLORS = DEFAULT_COLORS,
-  selectedDate,
-  onSelectDate,
-}: HeaderProps) => {
-  
+const WeekRow = ({ weekOffset, targetCalories, weeklyData, COLORS, selectedDate, onSelectDate }: WeekRowProps) => {
   const weekDays = useMemo(() => {
     const today = new Date();
     const todayStart = startOfDay(today);
-    const start = startOfWeek(today, { weekStartsOn: 1 });
+    
+    // Tính ngày bắt đầu của tuần dựa trên offset
+    // subWeeks(today, 0) -> Tuần này
+    // subWeeks(today, 1) -> Tuần trước
+    const baseDate = subWeeks(today, weekOffset);
+    const start = startOfWeek(baseDate, { weekStartsOn: 1 }); // Thứ 2 là đầu tuần
     
     const list = [];
     for (let i = 0; i < 7; i++) {
@@ -147,7 +138,54 @@ const HeaderSection = ({
       });
     }
     return list;
-  }, [weeklyData, targetCalories]); 
+  }, [weeklyData, targetCalories, weekOffset, selectedDate]);
+
+  return (
+    <View style={styles.weekContainer}>
+      {weekDays.map((item, index) => (
+        <TouchableOpacity
+          key={index}
+          onPress={() => !item.isFuture && onSelectDate && onSelectDate(item.dateString)}
+          style={[
+            styles.dayItem,
+            item.isFuture && { opacity: 0.3 }
+          ]}
+          disabled={item.isFuture}
+        >
+          <Text style={[styles.dayText, { color: COLORS.subText }]}>{item.day}</Text>
+
+          <DateProgressCircle size={42} active={item.active} progress={item.progress} isFuture={item.isFuture} color={COLORS.accent}>
+            <View style={[styles.dateCircle, (!item.active && !(item.progress <= 0 && !item.isFuture)) && { backgroundColor: COLORS.cardBg }]}>
+              <Text style={[styles.dateText, { color: COLORS.text }, item.active && { fontWeight: 'bold' }]}>{item.date}</Text>
+            </View>
+          </DateProgressCircle>
+        </TouchableOpacity>
+      ))}
+    </View>
+  );
+};
+
+// --- HEADER SECTION CHÍNH ---
+interface HeaderProps {
+  currentCalories?: number;
+  targetCalories: number;
+  weeklyData?: any[]; 
+  COLORS?: any;
+  selectedDate?: string;
+  onSelectDate?: (date: string) => void;
+}
+
+const HeaderSection = ({ 
+  targetCalories, 
+  weeklyData = [], 
+  COLORS = DEFAULT_COLORS,
+  selectedDate,
+  onSelectDate,
+}: HeaderProps) => {
+
+  // Tạo mảng offset: [0, 1, 2, 3] -> Tương ứng: Tuần này, Tuần trước, 2 tuần trước, 3 tuần trước
+  // Chúng ta hiển thị 4 tuần (Hiện tại + 3 tuần quá khứ)
+  const weeksData = [0, 1, 2, 3]; 
 
   return (
     <View style={styles.headerSection}>
@@ -167,26 +205,30 @@ const HeaderSection = ({
         </View>
       </View>
 
-      <View style={styles.calendarRow}>
-        {weekDays.map((item, index) => (
-          <TouchableOpacity
-            key={index}
-            onPress={() => !item.isFuture && onSelectDate && onSelectDate(item.dateString)}
-            style={[
-              styles.dayItem,
-              item.isFuture && { opacity: 0.3 }
-            ]}
-            disabled={item.isFuture}
-          >
-            <Text style={[styles.dayText, { color: COLORS.subText }]}>{item.day}</Text>
-
-            <DateProgressCircle size={42} active={item.active} progress={item.progress} isFuture={item.isFuture} color={COLORS.accent}>
-              <View style={[styles.dateCircle, (!item.active && !(item.progress <= 0 && !item.isFuture)) && { backgroundColor: COLORS.cardBg }]}>
-                <Text style={[styles.dateText, { color: COLORS.text }, item.active && { fontWeight: 'bold' }]}>{item.date}</Text>
-              </View>
-            </DateProgressCircle>
-          </TouchableOpacity>
-        ))}
+      {/* Sử dụng FlatList Inverted:
+        - index 0 (Tuần này) sẽ nằm bên Phải cùng.
+        - index 1 (Tuần trước) nằm bên trái nó.
+        => Người dùng vuốt sang phải để xem quá khứ.
+      */}
+      <View style={{ marginHorizontal: -20 }}> {/* Bù lại padding của headerSection để vuốt tràn màn hình */}
+        <FlatList
+          data={weeksData}
+          keyExtractor={(item) => item.toString()}
+          horizontal
+          pagingEnabled // Bắt buộc để vuốt từng trang
+          inverted // Đảo ngược: Mới nhất bên phải
+          showsHorizontalScrollIndicator={false}
+          renderItem={({ item }) => (
+            <WeekRow 
+              weekOffset={item}
+              targetCalories={targetCalories}
+              weeklyData={weeklyData}
+              COLORS={COLORS}
+              selectedDate={selectedDate}
+              onSelectDate={onSelectDate}
+            />
+          )}
+        />
       </View>
     </View>
   );
@@ -213,8 +255,12 @@ const styles = StyleSheet.create({
   badgeText: {
     marginLeft: 6, fontWeight: '600', fontSize: 14,
   },
-  calendarRow: {
-    flexDirection: 'row', justifyContent: 'space-between',
+  // Container cho 1 tuần phải rộng bằng màn hình để paging khớp
+  weekContainer: {
+    width: SCREEN_WIDTH, 
+    paddingHorizontal: 20, // Padding trong mỗi trang tuần
+    flexDirection: 'row', 
+    justifyContent: 'space-between',
   },
   dayItem: {
     alignItems: 'center', width: 42,
