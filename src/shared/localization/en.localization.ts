@@ -368,9 +368,24 @@ export default {
     addIngredient: "Add new ingredient",
     tweakHint: 'Want to refine your result? Tap "Edit result" and tell us!',
     editResult: "Edit result",
+    reanalyze: "Re-analyze with AI",
+    reanalyzeSuccess: "Re-analyzed successfully.",
+    editHintLabel: "Edit hint for AI (optional)",
+    editHintPlaceholder: "E.g. less rice, more vegetables, rename dish...",
     save: "Save",
     mealDetail: "Meal details",
     result: "Result",
+  },
+
+  // --- Quick Action Menu (FAB menu) ---
+  quickAction: {
+    scanFood: "Scan Food",
+    activity: "Activity",
+    water: "Water",
+    weight: "Weight",
+    breakfast: "Breakfast",
+    lunch: "Lunch",
+    dinner: "Dinner",
   },
 
   // --- Intro (first-time welcome) ---

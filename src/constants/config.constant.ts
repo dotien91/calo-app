@@ -21,17 +21,17 @@ export const isProduction =
 // --------------------------------------------------------
 
 // 1. Dùng cho iOS Simulator
-const DEVELOPER_DOMAIN_DEV = "http://localhost:3900";
+const DEVELOPER_DOMAIN_DEV = "http://localhost:4000";
 
 // 2. Dùng cho Android Emulator (Bỏ comment dòng dưới nếu chạy Android)
-// const DEVELOPER_DOMAIN_DEV = "http://10.0.2.2:3900";
+// const DEVELOPER_DOMAIN_DEV = "http://10.0.2.2:4000";
 
 // 3. Dùng cho Máy thật (Thay bằng IP LAN của máy tính bạn)
-// const DEVELOPER_DOMAIN_DEV = "http://192.168.1.55:3900";
+// const DEVELOPER_DOMAIN_DEV = "http://192.168.1.55:4000";
 
 // Cấu hình Socket Local
-const DEVELOPER_DOMAIN_SOCKET_DEV = "http://localhost:3900"; 
-// const DEVELOPER_DOMAIN_SOCKET_DEV = "http://10.0.2.2:3900"; // Cho Android
+const DEVELOPER_DOMAIN_SOCKET_DEV = "http://localhost:4000"; 
+// const DEVELOPER_DOMAIN_SOCKET_DEV = "http://10.0.2.2:4000"; // Cho Android
 
 // --------------------------------------------------------
 // DOMAIN PRODUCTION (Giữ nguyên)
@@ -44,7 +44,7 @@ const DOMAIN = !isProduction
   ? DEVELOPER_DOMAIN_DEV
   : PRODUCTION_DOMAIN_PRODUCTION;
 
-const DOMAIN_API = DOMAIN + "/api/"; // Kết quả: http://localhost:3900/api/
+const DOMAIN_API = DOMAIN + "/api/"; // Kết quả: http://localhost:4000/api/
 
 const DOMAIN_SOCKET = !isProduction
   ? DEVELOPER_DOMAIN_SOCKET_DEV

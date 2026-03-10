@@ -368,9 +368,24 @@ export default {
     addIngredient: "材料を追加",
     tweakHint: '結果を調整しますか？「結果を編集」をタップして教えてください！',
     editResult: "結果を編集",
+    reanalyze: "AIで再解析",
+    reanalyzeSuccess: "再解析が完了しました。",
+    editHintLabel: "AIへの修正ヒント（任意）",
+    editHintPlaceholder: "例：ご飯少なめ、野菜多め、料理名を変更...",
     save: "保存",
     mealDetail: "食事の詳細",
     result: "結果",
+  },
+
+  // --- Quick Action Menu (FAB menu) ---
+  quickAction: {
+    scanFood: "食事をスキャン",
+    activity: "アクティビティ",
+    water: "水分",
+    weight: "体重",
+    breakfast: "朝食",
+    lunch: "昼食",
+    dinner: "夕食",
   },
 
   // --- Intro (first-time welcome) ---

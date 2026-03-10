@@ -368,9 +368,24 @@ export default {
     addIngredient: "Thêm thành phần mới",
     tweakHint: 'Muốn tinh chỉnh kết quả của bạn? Nhấn "Sửa kết quả" và cho chúng tôi biết!',
     editResult: "Sửa kết quả",
+    reanalyze: "Phân tích lại bằng AI",
+    reanalyzeSuccess: "Đã phân tích lại thành công.",
+    editHintLabel: "Gợi ý chỉnh sửa cho AI (tùy chọn)",
+    editHintPlaceholder: "VD: bớt cơm, thêm rau, đổi tên món...",
     save: "Lưu",
     mealDetail: "Chi tiết bữa ăn",
     result: "Kết quả",
+  },
+
+  // --- Quick Action Menu (FAB menu) ---
+  quickAction: {
+    scanFood: "Quét món ăn",
+    activity: "Hoạt động",
+    water: "Nước",
+    weight: "Cân nặng",
+    breakfast: "Bữa sáng",
+    lunch: "Bữa trưa",
+    dinner: "Bữa tối",
   },
 
   // --- Intro (first-time welcome) ---

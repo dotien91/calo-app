@@ -5,13 +5,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 // 1. IMPORT COMPONENTS
 import ScanningView from './components/ScanningView';
 import ScanResultView from './components/ScanResultView';
+import EditResultModal from './components/EditResultModal';
 
 // 2. IMPORT HOOKS & SERVICES
 import { useAnalysisImageFood } from '@helpers/hooks/useAnalysisImageFood';
 import { showToast } from '@helpers/super.modal.helper';
 import { goBack } from '@helpers/navigation.helper';
 import eventEmitter from '@services/event-emitter';
-import { createManualCalorie } from '@services/api/calorie.api';
+import { createManualCalorie, analyzeCalorieFromUrl } from '@services/api/calorie.api';
 import Header from '@shared-components/header/Header';
 import { translations } from '@localization';
 import useStore from '@services/zustand/store';
@@ -27,6 +28,8 @@ const CalorieScannerScreen = () => {
 
   const [viewMode, setViewMode] = useState<ViewMode>('SCANNING');
   const [foodResult, setFoodResult] = useState<any | null>(null);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [reanalyzeLoading, setReanalyzeLoading] = useState(false);
 
   // --- SỬ DỤNG HOOK (Logic chính nằm ở đây) ---
   const {
@@ -118,6 +121,51 @@ const CalorieScannerScreen = () => {
     setFoodResult(null); // Clear UI data
   };
 
+  // --- ACTION: PHÂN TÍCH LẠI TỪ URL + GỢI Ý (trong scanner, chưa lưu) ---
+  const handleReanalyzeFromUrl = async (userEditHint: string) => {
+    if (!foodResult?.image) {
+      showToast({ type: 'error', message: (translations as any).scanner.saveError });
+      return;
+    }
+    try {
+      setReanalyzeLoading(true);
+      const res = await analyzeCalorieFromUrl({
+        image_url: foodResult.image,
+        user_edit_hint: userEditHint || undefined,
+      });
+      const mappedData = {
+        name: res.food_name,
+        time: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }),
+        healthScore: res.health_score || 0,
+        image: res.image_url || foodResult.image,
+        total: {
+          weight: res.total_weight,
+          calories: res.total_calories,
+          carbs: res.total_carbs,
+          protein: res.total_protein,
+          fat: res.total_fat,
+        },
+        ingredients: (res.ingredients || []).map((ing: any, index: number) => ({
+          id: index,
+          name: ing.name,
+          weight: ing.weight,
+          unit: ing.unit,
+          cal: ing.calories,
+          c: ing.carbs,
+          p: ing.protein,
+          f: ing.fat,
+        })),
+      };
+      setFoodResult(mappedData);
+      setShowEditModal(false);
+      showToast({ type: 'success', message: (translations as any).scanner.reanalyzeSuccess ?? 'Đã phân tích lại thành công.' });
+    } catch (_) {
+      showToast({ type: 'error', message: (translations as any).scanner.saveError });
+    } finally {
+      setReanalyzeLoading(false);
+    }
+  };
+
   // --- ACTION: LƯU NHẬT KÝ ---
   const handleSave = async () => {
     if (!foodResult) return;
@@ -175,14 +223,29 @@ const CalorieScannerScreen = () => {
           }}
         />
       ) : (
-        <ScanResultView 
-          data={foodResult} 
-          onBack={handleBackToScan}
-          onSave={handleSave}
-          onRemoveItem={handleRemoveIngredient} 
-          hideHeaderNav
-          COLORS={COLORS}
-        />
+        <>
+          <ScanResultView 
+            data={foodResult} 
+            onBack={handleBackToScan}
+            onSave={handleSave}
+            onRemoveItem={handleRemoveIngredient}
+            onEditResult={() => setShowEditModal(true)}
+            hideHeaderNav
+            COLORS={COLORS}
+          />
+          <EditResultModal
+            visible={showEditModal}
+            onClose={() => setShowEditModal(false)}
+            onReanalyze={handleReanalyzeFromUrl}
+            reanalyzeLoading={reanalyzeLoading}
+            colors={{
+              text: COLORS.text,
+              card: COLORS.card,
+              border: COLORS.border,
+              accent: COLORS.accent ?? '#2ECC71',
+            }}
+          />
+        </>
       )}
     </SafeAreaView>
   );

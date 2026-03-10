@@ -194,6 +194,7 @@ const RecentActivity = ({
 
     navigate(SCREENS.CALORIE_RESULT, {
       data: mappedData,
+      analysisId: record._id,
     });
   };
 

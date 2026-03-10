@@ -78,6 +78,8 @@ interface ScanResultViewProps {
   onBack: () => void;
   onSave?: () => void;
   onRemoveItem?: (id: string) => void;
+  /** Gọi khi bấm "Sửa kết quả" – parent mở modal/sheet chỉnh sửa (scanner: cập state, result: gọi API update) */
+  onEditResult?: () => void;
   readOnly?: boolean;
   hideHeaderNav?: boolean;
   COLORS?: typeof DEFAULT_COLORS;
@@ -88,6 +90,7 @@ const ScanResultView = ({
   onBack,
   onSave,
   onRemoveItem,
+  onEditResult,
   readOnly = false,
   hideHeaderNav = false,
   COLORS: COLORSProp,
@@ -209,8 +212,12 @@ const ScanResultView = ({
           </Text>
         )}
 
-        {!readOnly && (
-          <TouchableOpacity style={[styles.editBtn, { backgroundColor: c.cardSecondary }]}>
+        {onEditResult != null && (
+          <TouchableOpacity
+            style={[styles.editBtn, { backgroundColor: c.cardSecondary }]}
+            onPress={onEditResult}
+            activeOpacity={0.8}
+          >
             <Text style={[styles.editBtnText, { color: c.text }]}>
               {(translations as any).scanner.editResult}
             </Text>

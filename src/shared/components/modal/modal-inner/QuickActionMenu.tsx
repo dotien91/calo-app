@@ -9,6 +9,7 @@ import {
 import { ForkKnife, Drop, Barbell, Moon, Sun, Camera } from 'phosphor-react-native';
 import { palette } from '@theme/themes';
 import { SCREENS } from 'constants';
+import { translations } from '@localization';
 
 const { width } = Dimensions.get('window');
 
@@ -28,16 +29,16 @@ interface QuickActionMenuProps {
 const QuickActionMenu = ({ onClose, onNavigate }: QuickActionMenuProps) => {
 
   const row1Items: ActionItem[] = [
-    { id: 'scanner', label: 'Scan Food', icon: Camera, screen: SCREENS.CALORIER_SCANNER },
-    { id: 'activity', label: 'Activity', icon: Barbell, screen: '' },
-    { id: 'water', label: 'Water', icon: Drop, screen: '' },
+    { id: 'scanner', label: translations.quickAction?.scanFood ?? 'Scan Food', icon: Camera, screen: SCREENS.CALORIER_SCANNER },
+    { id: 'activity', label: translations.quickAction?.activity ?? 'Activity', icon: Barbell, screen: '' },
+    { id: 'water', label: translations.quickAction?.water ?? 'Water', icon: Drop, screen: '' },
   ];
 
   const row2Items: ActionItem[] = [
-    { id: 'weight', label: 'Weight', icon: Moon, screen: SCREENS.RECORD_WEIGHT },
-    { id: 'breakfast', label: 'Breakfast', icon: Sun, screen: SCREENS.ADD_MEAL_SCREEN },
-    { id: 'lunch', label: 'Lunch', icon: ForkKnife, screen: SCREENS.ADD_MEAL_SCREEN },
-    { id: 'dinner', label: 'Dinner', icon: ForkKnife, screen: SCREENS.ADD_MEAL_SCREEN },
+    { id: 'weight', label: translations.quickAction?.weight ?? 'Weight', icon: Moon, screen: SCREENS.RECORD_WEIGHT },
+    { id: 'breakfast', label: translations.quickAction?.breakfast ?? 'Breakfast', icon: Sun, screen: SCREENS.ADD_MEAL_SCREEN },
+    { id: 'lunch', label: translations.quickAction?.lunch ?? 'Lunch', icon: ForkKnife, screen: SCREENS.ADD_MEAL_SCREEN },
+    { id: 'dinner', label: translations.quickAction?.dinner ?? 'Dinner', icon: ForkKnife, screen: SCREENS.ADD_MEAL_SCREEN },
   ];
 
   const RenderItem = ({ item }: { item: ActionItem }) => (

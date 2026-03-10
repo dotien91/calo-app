@@ -199,6 +199,25 @@ export async function analyzeFoodImage(
 }
 
 /**
+ * Phân tích lại từ URL ảnh + gợi ý user (không lưu). Dùng ở màn scanner khi user bấm "Phân tích lại bằng AI".
+ * @param body image_url + user_edit_hint (optional)
+ * @returns Analysis result (cùng format analyze)
+ */
+export async function analyzeCalorieFromUrl(body: {
+  image_url: string;
+  user_edit_hint?: string;
+}): Promise<any> {
+  return request({
+    method: METHOD.POST,
+    urlPath: "calorie/analyze-from-url",
+    data: body,
+  }).then((response: any) => {
+    if (response.isError) throw response;
+    return response.data;
+  });
+}
+
+/**
  * Create manual calorie entry
  * @param data Manual calorie data
  * @returns Created entry
@@ -263,6 +282,63 @@ export async function getCalorieDetail(id: string): Promise<any> {
     urlPath: `calorie/detail/${id}`,
   }).then((response: any) => {
      if (response.isError) throw response;
+    return response.data;
+  });
+}
+
+/**
+ * Phân tích lại bằng AI từ ảnh đã lưu (image_url). Gửi user_edit_hint để AI ưu tiên chỉnh theo ý user.
+ * @param id Analysis ID
+ * @param body.user_edit_hint Gợi ý chỉnh sửa của user (vd: "bớt cơm, thêm rau")
+ * @returns Updated analysis
+ */
+export async function reanalyzeCalorie(
+  id: string,
+  body?: { user_edit_hint?: string },
+): Promise<any> {
+  return request({
+    method: METHOD.POST,
+    urlPath: `calorie/reanalyze/${id}`,
+    data: body ?? {},
+  }).then((response: any) => {
+    if (response.isError) throw response;
+    return response.data;
+  });
+}
+
+/**
+ * Update calorie analysis (sửa kết quả)
+ * @param id Analysis ID
+ * @param data Partial fields to update
+ * @returns Updated analysis
+ */
+export async function updateCalorie(
+  id: string,
+  data: {
+    food_name?: string;
+    image_url?: string;
+    total_weight?: number;
+    total_calories?: number;
+    total_protein?: number;
+    total_carbs?: number;
+    total_fat?: number;
+    ingredients?: Array<{
+      name: string;
+      weight: number;
+      unit?: "g" | "ml";
+      calories: number;
+      carbs: number;
+      protein: number;
+      fat: number;
+    }>;
+  },
+): Promise<any> {
+  return request({
+    method: METHOD.PATCH,
+    urlPath: `calorie/update/${id}`,
+    data,
+  }).then((response: any) => {
+    if (response.isError) throw response;
     return response.data;
   });
 }

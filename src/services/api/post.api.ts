@@ -23,7 +23,7 @@ export async function uploadMedia(file: MediaAsset, onUploadProgress?: any) {
     data: newForm,
     customHeader: { "Content-Type": "multipart/form-data" },
     onUploadProgress: onUploadProgress ? onUploadProgress : () => {},
-    timeOut: 10000,
+    timeOut: 60000,
   }).then((response) => {
     console.log("res", response);
     return response;
@@ -39,7 +39,7 @@ export async function analysisFoodImage(file: MediaAsset, onUploadProgress?: any
     data: newForm,
     customHeader: { "Content-Type": "multipart/form-data" },
     onUploadProgress: onUploadProgress ? onUploadProgress : () => {},
-    timeOut: 10000,
+    timeOut: 60000,
   }).then((response) => {
     console.log("res", response);
     return response;
